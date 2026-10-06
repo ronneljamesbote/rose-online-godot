@@ -26,7 +26,7 @@ cd ../bot && cargo run --release -- ws://127.0.0.1:3000 ranged
 ```
 
 ## Simplifications
-- Player is a fixed test character (about a level 10 soldier, 300 HP); melee 1.2 m range, ranged loadout 10 m.
+- Player is a fixed test character (about a level 10 soldier, 300 HP); Short Sword 1.5 m range, Short Bow 21 m, run speed 425.
 - Damage uses rose-offline's physical PvE formula only (no magic, no PvP). Monster attack speed uses the NPC attack animation length.
 - Monsters fight back when hit; proactive aggro is off by default (`set_aggro_range` per monster type), because ROSE's AI scripts aren't ported.
 - No collision or walkability: move_to only checks zone bounds.
@@ -42,4 +42,12 @@ cd ../bot && cargo run --release -- ws://127.0.0.1:3000 ranged
 | Server memory | 108 MB idle, 130 MB at 50 bots, 247 MB at 200 bots | flat over 30 min (not run yet) |
 | Server CPU at 200 bots | about 70% of one core | |
 | Attack while moving | 5 of 5 hits after kiting started landed while the server saw the player walking | works |
-| Not measured yet | bandwidth per player, 30-minute memory run, feel in a real client | |
+| Real client (rose-offline-client, patch in `client/`) | logs in, spawns in Zant, kills a Woopie Chef with a bow while running away | works |
+| Not measured yet | bandwidth per player, 30-minute memory run | |
+
+## Client demo
+
+`client/` holds the rose-offline-client patch. Screenshots and video of the first fight are in
+`media/` (software rendering in a headless container, so the frame rate is low).
+The `place_player` admin reducer moves a character, for example next to monsters:
+`spacetime call --server local rose place_player '"Tester"' 536400 539320`.
