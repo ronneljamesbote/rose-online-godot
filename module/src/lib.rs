@@ -104,6 +104,8 @@ pub struct Stats {
     pub attack_motion_ms: i32,
     pub attack_range: f32,
     pub move_speed: f32,
+    /// Chase speed for monsters (their run speed); same as move_speed for players.
+    pub run_speed: f32,
     pub is_player: bool,
 }
 
@@ -301,8 +303,10 @@ fn player_stats(entity_id: u64, ranged: bool) -> Stats {
         critical: 40,
         attack_speed: if ranged { 115 } else { 100 },
         attack_motion_ms: 1000,
-        attack_range: if ranged { 1000.0 } else { 120.0 },
+        // Short Bow (item 202) and Short Sword (item 2) ranges, so the client agrees on reach.
+        attack_range: if ranged { 2100.0 } else { 150.0 },
         move_speed: 425.0,
+        run_speed: 425.0,
         is_player: true,
     }
 }
@@ -383,6 +387,7 @@ fn spawn_monster(ctx: &ReducerContext, spawn: &MonsterSpawn, npc: &NpcData) {
         attack_motion_ms: npc.attack_motion_ms,
         attack_range: npc.attack_range,
         move_speed: npc.walk_speed,
+        run_speed: npc.run_speed,
         is_player: false,
     });
     ctx.db.motion().insert(Motion {
@@ -451,6 +456,10 @@ pub fn init(ctx: &ReducerContext) {
 
 #[spacetimedb::reducer(client_connected)]
 pub fn client_connected(ctx: &ReducerContext) {
+    // The admin identity (the CLI that publishes and runs SQL) is not a game client.
+    if ctx.db.admin().identity().find(ctx.sender()).is_some() {
+        return;
+    }
     let zone = ctx.db.zone_info().zone_id().find(DEFAULT_ZONE);
     let mut player = ctx.db.player().identity().find(ctx.sender()).unwrap_or_else(|| {
         let (x, y) = zone.as_ref().map_or((520000.0, 520000.0), |z| (z.start_x, z.start_y));
@@ -633,6 +642,41 @@ pub fn set_aggro_range(ctx: &ReducerContext, npc_id: u16, range: f32) -> Result<
     Ok(())
 }
 
+/// Debug: move a player (online or not) to a spot, e.g. next to monsters for a demo.
+#[spacetimedb::reducer]
+pub fn place_player(ctx: &ReducerContext, name: String, x: f32, y: f32) -> Result<(), String> {
+    require_admin(ctx)?;
+    let players: Vec<Player> = ctx.db.player().iter().filter(|p| p.name == name).collect();
+    if players.is_empty() {
+        return Err("no such player".into());
+    }
+    let t = now_us(ctx);
+    for mut player in players {
+        player.last_x = x;
+        player.last_y = y;
+        if let Some(mut m) = player.entity_id.and_then(|id| ctx.db.motion().entity_id().find(id)) {
+            m.from_x = x;
+            m.from_y = y;
+            m.to_x = x;
+            m.to_y = y;
+            m.started_at_us = t;
+            m.chase_target = None;
+            ctx.db.motion().entity_id().update(m);
+        }
+        ctx.db.player().identity().update(player);
+    }
+    // Clear any entity an earlier admin connection left behind.
+    let ghosts: Vec<Player> = ctx.db.player().iter().filter(|p| ctx.db.admin().identity().find(p.identity).is_some()).collect();
+    for mut g in ghosts {
+        if let Some(id) = g.entity_id.take() {
+            despawn(ctx, id);
+        }
+        g.online = false;
+        ctx.db.player().identity().update(g);
+    }
+    Ok(())
+}
+
 /// Remove all monsters so spawn_tick refills them from the spawn table.
 #[spacetimedb::reducer]
 pub fn reset_monsters(ctx: &ReducerContext) -> Result<(), String> {
@@ -681,7 +725,7 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
             c.attack_target = None;
             c.hp = c.max_hp;
             ctx.db.combat().entity_id().update(c);
-            let speed = ctx.db.stats().entity_id().find(id).map_or(300.0, |s| s.move_speed * 1.5);
+            let speed = ctx.db.stats().entity_id().find(id).map_or(300.0, |s| s.run_speed);
             set_motion(ctx, id, home, speed, None);
             let mut ai = ai.clone();
             ai.returning = true;
@@ -770,7 +814,7 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
                     _ => true,
                 };
                 if needs_repath {
-                    let speed = if stats.is_player { stats.move_speed } else { stats.move_speed * 1.5 };
+                    let speed = stats.run_speed;
                     set_motion(ctx, id, them, speed, Some(target));
                 }
             }
