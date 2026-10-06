@@ -3,7 +3,8 @@
 Server-side prototype from the plan of action, phase 1 and 2. Tested 2026-10-06 against SpacetimeDB 2.10.2 standalone.
 
 - `module/`: the SpacetimeDB module (Rust, wasm32). Tables: player, entity, motion, combat, stats, monster_ai, zone_info, monster_spawn, npc_data, damage_event (event), tick_stats. Reducers: move_to, attack, stop, set_loadout, set_name, plus admin import_npcs, import_zone, set_aggro_range, reset_monsters. Timers: combat_tick (100 ms), spawn_tick (1 s).
-- `import/`: reads a 129_129en install with rose-offline's readers and writes `npcs.json` / `zone.json` (reducer arguments). Expects rose-offline cloned next to this folder (`../rose-offline`).
+- `crates/`: rose-offline's file readers, data and game-rule crates, vendored so they can be changed here (upstream commit in `crates/UPSTREAM.md`).
+- `import/`: reads a 129_129en install with the vendored readers and writes `npcs.json` / `zone.json` (reducer arguments).
 - `bot/`: headless Rust SDK client. `rose-stdb-bot <ws uri> ranged|melee` fights the nearest monster and kites it; `rose-stdb-bot <ws uri> load <n> <secs>` runs n random bots.
 - `data/zone1/`: imported Zant data.
 
@@ -17,7 +18,7 @@ spacetime server add --url http://127.0.0.1:3000 --default local && spacetime lo
 cd module && cargo build --release --target wasm32-unknown-unknown
 spacetime publish --server local --bin-path target/wasm32-unknown-unknown/release/rose_stdb_module.wasm -y rose
 
-cd ../import && cargo run --release -- /path/to/iRose_129_129/data.idx 1 ../data/zone1
+cd .. && cargo run --release -p rose-stdb-import -- /path/to/iRose_129_129/data.idx 1 data/zone1 && cd import
 spacetime call --server local rose import_npcs "$(jq -c '.[0]' ../data/zone1/npcs.json)"
 spacetime call --server local rose import_zone "$(jq -c '.[0]' ../data/zone1/zone.json)" "$(jq -c '.[1]' ../data/zone1/zone.json)"
 
