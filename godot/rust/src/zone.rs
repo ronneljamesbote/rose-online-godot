@@ -6,18 +6,25 @@ use std::{collections::HashMap, path::Path, time::Instant};
 use godot::{
     classes::{
         mesh::{ArrayCustomFormat, ArrayFormat, ArrayType, PrimitiveType},
-        ArrayMesh, MeshInstance3D, Node3D, Shader, ShaderMaterial, Texture2D,
+        ArrayMesh, CollisionShape3D, ConcavePolygonShape3D, Mesh, MeshInstance3D, Node3D, Shader, ShaderMaterial,
+        StaticBody3D, Texture2D,
     },
     prelude::*,
 };
 use rose_data::{SkyboxState, ZoneId};
-use rose_file_readers::{HimFile, IfoFile, IfoObject, LitFile, LitObject, TilFile, ZonFile, ZonTileRotation, ZscFile};
+use rose_file_readers::{
+    HimFile, IfoFile, IfoObject, LitFile, LitObject, TilFile, ZonFile, ZonTileRotation, ZscCollisionFlags, ZscFile,
+};
 
 use crate::{data, material, mesh, texture};
 
 const BLOCK_SIZE: f32 = 160.0;
 /// Zone objects are stored relative to the centre of the 64x64 block grid.
 const OBJECT_OFFSET: f32 = 5200.0;
+/// Physics layer of zone objects that block walking (walls, trees, rocks).
+pub const LAYER_WALLS: u32 = 1;
+/// Physics layer of zone object surfaces characters can stand on (bridges, stairs, floors).
+pub const LAYER_FLOORS: u32 = 2;
 
 #[derive(GodotClass)]
 #[class(base=Node3D, init)]
@@ -55,6 +62,9 @@ struct ObjectSpawner {
     materials: HashMap<(usize, u16, String), Gd<ShaderMaterial>>,
     lightmaps: HashMap<String, Option<Gd<Texture2D>>>,
     parts: usize,
+    /// Collision triangles in zone space, three vertices each (zone_loader.rs's collision groups).
+    walls: Vec<Vector3>,
+    floors: Vec<Vector3>,
 }
 
 impl ObjectSpawner {
@@ -77,7 +87,8 @@ impl ObjectSpawner {
         let Some(object) = zsc.objects.get(zsc_object_id) else { return };
         let mut object_node = Node3D::new_alloc();
         object_node.set_name(name);
-        object_node.set_transform(ifo_transform(object_instance));
+        let object_transform = ifo_transform(object_instance);
+        object_node.set_transform(object_transform);
 
         for (part_index, part) in object.parts.iter().enumerate() {
             let Some(mesh_path) = zsc.meshes.get(part.mesh_id as usize) else { continue };
@@ -103,11 +114,29 @@ impl ObjectSpawner {
             let mut instance = MeshInstance3D::new_alloc();
             instance.set_mesh(&part_mesh);
             instance.set_material_override(&part_material);
-            instance.set_transform(rose_transform(
+            let part_transform = rose_transform(
                 Vector3::new(part.position.x, part.position.z, -part.position.y) / 100.0,
                 rose_quat(part.rotation.x, part.rotation.y, part.rotation.z, part.rotation.w),
                 Vector3::new(part.scale.x, part.scale.z, part.scale.y),
-            ));
+            );
+            instance.set_transform(part_transform);
+
+            // Event objects can be stood on but don't block; warps do neither.
+            if part.collision_shape.is_some() && zsc_index != 3 {
+                let blocks = zsc_index != 2 && !part.collision_flags.contains(ZscCollisionFlags::HEIGHT_ONLY);
+                let walkable = !part.collision_flags.contains(ZscCollisionFlags::NOT_MOVEABLE);
+                if blocks || walkable {
+                    let to_zone = object_transform * part_transform;
+                    let faces: Vec<Vector3> =
+                        part_mesh.clone().upcast::<Mesh>().get_faces().as_slice().iter().map(|v| to_zone * *v).collect();
+                    if blocks {
+                        self.walls.extend_from_slice(&faces);
+                    }
+                    if walkable {
+                        self.floors.extend(faces);
+                    }
+                }
+            }
             if let (Some(lit_part), true) = (lit_part, lightmap.is_some()) {
                 let per_row = lit_part.parts_per_row.max(1);
                 instance.set_instance_shader_parameter(
@@ -122,6 +151,22 @@ impl ObjectSpawner {
 
         parent.add_child(&object_node);
     }
+}
+
+/// One static body holding every triangle of a collision layer.
+fn collision_body(name: &str, layer: u32, faces: &[Vector3]) -> Gd<StaticBody3D> {
+    let mut shape = ConcavePolygonShape3D::new_gd();
+    shape.set_faces(&PackedVector3Array::from(faces));
+    // Index buffers are flipped for Godot's winding, so let rays hit both sides.
+    shape.set_backface_collision_enabled(true);
+    let mut collision = CollisionShape3D::new_alloc();
+    collision.set_shape(&shape);
+    let mut body = StaticBody3D::new_alloc();
+    body.set_name(name);
+    body.set_collision_layer(1 << (layer - 1));
+    body.set_collision_mask(0);
+    body.add_child(&collision);
+    body
 }
 
 fn find_lit<'a>(lit: Option<&'a LitFile>, ifo_object_id: usize) -> Option<&'a LitObject> {
@@ -164,7 +209,13 @@ impl RoseZone {
         water_material.set_shader_parameter("water_textures", &water_textures.to_variant());
 
         self.heights = (0..64 * 64).map(|_| None).collect();
-        let mut spawner = ObjectSpawner { materials: HashMap::new(), lightmaps: HashMap::new(), parts: 0 };
+        let mut spawner = ObjectSpawner {
+            materials: HashMap::new(),
+            lightmaps: HashMap::new(),
+            parts: 0,
+            walls: Vec::new(),
+            floors: Vec::new(),
+        };
         let mut blocks = 0;
         let mut objects = 0;
 
@@ -239,6 +290,10 @@ impl RoseZone {
             }
         }
 
+        for (name, layer, faces) in [("Walls", LAYER_WALLS, &spawner.walls), ("Floors", LAYER_FLOORS, &spawner.floors)] {
+            self.base_mut().add_child(&collision_body(name, layer, faces));
+        }
+
         if let Some(sky) = zone_entry.skybox_id.and_then(|id| game_data.skybox.get_skybox_data(id)) {
             if let Some(sky_mesh) = mesh::load_mesh(&sky.mesh.path().to_string_lossy(), false) {
                 let mut sky_material = ShaderMaterial::new_gd();
@@ -266,6 +321,8 @@ impl RoseZone {
         stats.set("objects", objects);
         stats.set("mesh_parts", spawner.parts as i64);
         stats.set("materials", spawner.materials.len() as i64);
+        stats.set("wall_triangles", (spawner.walls.len() / 3) as i64);
+        stats.set("floor_triangles", (spawner.floors.len() / 3) as i64);
         stats.set("load_ms", started.elapsed().as_millis() as i64);
         self.stats = stats;
         true

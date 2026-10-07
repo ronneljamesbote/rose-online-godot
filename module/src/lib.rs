@@ -624,6 +624,53 @@ pub fn stop(ctx: &ReducerContext) -> Result<(), String> {
     Ok(())
 }
 
+/// How far off its straight path a client may say it hit something.
+const COLLISION_PATH_SLACK_CM: f32 = 100.0;
+/// How far ahead of the server's own position on the path the reported point may be, to
+/// allow for the client starting the move before the server (latency).
+const COLLISION_AHEAD_SLACK_CM: f32 = 300.0;
+
+/// The client's character ran into a wall or an object at (x, y): stop the move there.
+/// The server has no zone geometry, so it only checks that the point lies on the current
+/// move and not ahead of where the server has the character (like rose-next's CANTMOVE).
+#[spacetimedb::reducer]
+pub fn move_collision(ctx: &ReducerContext, x: f32, y: f32) -> Result<(), String> {
+    let (_, id) = my_player(ctx)?;
+    if !x.is_finite() || !y.is_finite() {
+        return Err("bad position".into());
+    }
+    let t = now_us(ctx);
+    let m = ctx.db.motion().entity_id().find(id).ok_or("no motion")?;
+    let (dx, dy) = (m.to_x - m.from_x, m.to_y - m.from_y);
+    let length = (dx * dx + dy * dy).sqrt();
+    if length < 1.0 {
+        return Err("not moving".into());
+    }
+    // Position of the reported point along the path, and its distance from the path.
+    let along = ((x - m.from_x) * dx + (y - m.from_y) * dy) / length;
+    let off_path = ((x - m.from_x) * dy - (y - m.from_y) * dx).abs() / length;
+    let server_along = ((t - m.started_at_us).max(0) as f32 / 1e6 * m.speed).min(length);
+    if off_path > COLLISION_PATH_SLACK_CM
+        || along < -COLLISION_PATH_SLACK_CM
+        || along > length + COLLISION_PATH_SLACK_CM
+        || along > server_along + COLLISION_AHEAD_SLACK_CM
+    {
+        return Err("collision point is not on the current move".into());
+    }
+    let along = along.clamp(0.0, length);
+    let stop = (m.from_x + dx / length * along, m.from_y + dy / length * along);
+    ctx.db.motion().entity_id().update(Motion {
+        from_x: stop.0,
+        from_y: stop.1,
+        to_x: stop.0,
+        to_y: stop.1,
+        started_at_us: t,
+        chase_target: None,
+        ..m
+    });
+    Ok(())
+}
+
 /// Test helper: switch between a melee and a ranged loadout.
 #[spacetimedb::reducer]
 pub fn set_loadout(ctx: &ReducerContext, ranged: bool) -> Result<(), String> {

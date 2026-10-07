@@ -22,6 +22,7 @@ pub mod monster_ai_type;
 pub mod monster_spawn_type;
 pub mod motion_table;
 pub mod motion_type;
+pub mod move_collision_reducer;
 pub mod move_to_reducer;
 pub mod npc_data_type;
 pub mod place_player_reducer;
@@ -54,6 +55,7 @@ pub use monster_ai_type::MonsterAi;
 pub use monster_spawn_type::MonsterSpawn;
 pub use motion_table::*;
 pub use motion_type::Motion;
+pub use move_collision_reducer::move_collision;
 pub use move_to_reducer::move_to;
 pub use npc_data_type::NpcData;
 pub use place_player_reducer::place_player;
@@ -88,6 +90,10 @@ pub enum Reducer {
         zone: ZoneInfo,
         spawns: Vec<MonsterSpawn>,
     },
+    MoveCollision {
+        x: f32,
+        y: f32,
+    },
     MoveTo {
         x: f32,
         y: f32,
@@ -121,6 +127,7 @@ impl __sdk::Reducer for Reducer {
             Reducer::Attack { .. } => "attack",
             Reducer::ImportNpcs { .. } => "import_npcs",
             Reducer::ImportZone { .. } => "import_zone",
+            Reducer::MoveCollision { .. } => "move_collision",
             Reducer::MoveTo { .. } => "move_to",
             Reducer::PlacePlayer { .. } => "place_player",
             Reducer::ResetMonsters => "reset_monsters",
@@ -144,6 +151,12 @@ impl __sdk::Reducer for Reducer {
                 __sats::bsatn::to_vec(&import_zone_reducer::ImportZoneArgs {
                     zone: zone.clone(),
                     spawns: spawns.clone(),
+                })
+            }
+            Reducer::MoveCollision { x, y } => {
+                __sats::bsatn::to_vec(&move_collision_reducer::MoveCollisionArgs {
+                    x: x.clone(),
+                    y: y.clone(),
                 })
             }
             Reducer::MoveTo { x, y } => __sats::bsatn::to_vec(&move_to_reducer::MoveToArgs {

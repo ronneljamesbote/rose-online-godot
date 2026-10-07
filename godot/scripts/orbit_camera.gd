@@ -1,4 +1,5 @@
-## ROSE-style orbit camera: right-drag to rotate, wheel to zoom.
+## ROSE-style orbit camera: right-drag to rotate, wheel to zoom. Zone objects in the way
+## pull it closer, like the Bevy client's orbit_camera_system.rs.
 extends Camera3D
 
 var target: Node3D
@@ -24,5 +25,10 @@ func _process(_delta: float) -> void:
 		return
 	var focus := target.global_position + Vector3(0.0, look_height, 0.0)
 	var offset := Basis.from_euler(Vector3(pitch, yaw, 0.0)) * Vector3(0.0, 0.0, distance)
+	# Pull in in front of walls and floors between the character and the camera.
+	var query := PhysicsRayQueryParameters3D.create(focus, focus + offset, 1 | 2)
+	var hit := get_world_3d().direct_space_state.intersect_ray(query)
+	if not hit.is_empty():
+		offset = offset.normalized() * maxf(focus.distance_to(hit["position"]) - 0.3, 0.5)
 	global_position = focus + offset
 	look_at(focus)

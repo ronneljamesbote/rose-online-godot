@@ -12,6 +12,15 @@ const SWORD := 2  # Short Sword
 const BOW := 202  # Short Bow
 const PREDICTION_TIMEOUT_MS := 1000
 const CORPSE_SECONDS := 3.0
+# Collision, as in rose-offline-client's collision_system.rs.
+const WALLS := 1  # physics layer bits from zone.rs
+const FLOORS := 2
+const BODY_RADIUS := 0.4
+const BODY_HEIGHT := 1.2  # height of the wall probe
+const STEP_HEIGHT := 1.35  # highest step up onto a floor object
+const BLOCKED_TIMEOUT_MS := 1500
+
+signal collided(at: Vector3)
 
 var zone: Node
 var model: Node3D
@@ -29,12 +38,17 @@ var height := 2.0
 var hp := 0
 var max_hp := 0
 var predicted := {}  # from, to (Vector3), started (msec)
+var is_me := false
+var blocked := {}  # at, to (Vector3), since (msec): we hit a wall and wait for the server to stop us
+var placed := false
+var _probe: SphereShape3D
 var _idle := "stop1"
 var _walk := "run"
 
 
-func setup(zone_node: Node, state: Dictionary, is_me: bool) -> void:
+func setup(zone_node: Node, state: Dictionary, is_me_: bool) -> void:
 	zone = zone_node
+	is_me = is_me_
 	entity_id = state["id"]
 	is_monster = state["kind"] == "monster"
 	npc_id = state["npc_id"]
@@ -47,7 +61,7 @@ func setup(zone_node: Node, state: Dictionary, is_me: bool) -> void:
 	label.pixel_size = 0.0015
 	label.font_size = 22
 	label.outline_size = 6
-	if is_me:
+	if is_me_:
 		label.modulate = Color(1.0, 0.95, 0.6)
 	elif is_monster:
 		label.modulate = Color(1.0, 0.75, 0.7)
@@ -124,12 +138,32 @@ func update_state(state: Dictionary, target_position) -> void:
 			moving = travel < from.distance_to(to)
 			server_to = to
 
+	if is_me:
+		var stop = null
+		if not blocked.is_empty():
+			var waited := Time.get_ticks_msec() - int(blocked["since"])
+			if moving and server_to.distance_to(blocked["to"]) < 0.05 and waited < BLOCKED_TIMEOUT_MS:
+				stop = blocked["at"]  # the server still has us walking on; hold at the wall
+			else:
+				blocked = {}
+		elif moving and placed:
+			stop = _wall_hit(Vector3(position.x, 0, position.z), flat)
+			if stop != null:
+				blocked = {"at": stop, "to": server_to, "since": Time.get_ticks_msec()}
+				predicted = {}
+				collided.emit(stop)
+		if stop != null:
+			flat = stop
+			moving = false
+			server_to = stop
+
 	var heading := server_to - flat if moving else Vector3.ZERO
 	if not moving and target_position != null:
 		heading = target_position - flat
 	if Vector2(heading.x, heading.z).length() > 0.01:
 		rotation.y = atan2(heading.x, heading.z)
-	position = Vector3(flat.x, zone.get_terrain_height(flat.x, flat.z), flat.z)
+	position = Vector3(flat.x, _ground_height(flat), flat.z)
+	placed = true
 
 	var is_dead: bool = state.get("dead", false)
 	var swinging: bool = state.get("swinging", false) and predicted.is_empty()
@@ -148,6 +182,39 @@ func update_state(state: Dictionary, target_position) -> void:
 		_play(_idle)
 	dead = is_dead
 	was_swinging = swinging
+
+
+## Where a body walking from one flat position to the next first touches a wall, or null.
+## Like the Bevy client, the probe starts one radius ahead, so walking away from a wall
+## you stand against is never blocked.
+func _wall_hit(from: Vector3, to: Vector3):
+	var motion := to - from
+	if motion.length() < 0.0001:
+		return null
+	if _probe == null:
+		_probe = SphereShape3D.new()
+		_probe.radius = BODY_RADIUS
+	var direction := motion.normalized()
+	var params := PhysicsShapeQueryParameters3D.new()
+	params.shape = _probe
+	params.collision_mask = WALLS
+	params.transform = Transform3D(Basis(), from + direction * BODY_RADIUS + Vector3(0, position.y + BODY_HEIGHT, 0))
+	params.motion = motion
+	var result := get_world_3d().direct_space_state.cast_motion(params)
+	if result.size() < 2 or result[0] >= 1.0:
+		return null
+	return from + direction * maxf(motion.length() * result[0] - 0.1, 0.0)
+
+
+## Terrain height, or the floor object under the feet if that is higher (bridges, stairs).
+func _ground_height(flat: Vector3) -> float:
+	var terrain: float = zone.get_terrain_height(flat.x, flat.z)
+	var top := (position.y if placed else terrain + 50.0) + STEP_HEIGHT
+	if top <= terrain:
+		return terrain
+	var query := PhysicsRayQueryParameters3D.create(Vector3(flat.x, top, flat.z), Vector3(flat.x, terrain, flat.z), FLOORS)
+	var hit := get_world_3d().direct_space_state.intersect_ray(query)
+	return maxf(terrain, hit["position"].y) if not hit.is_empty() else terrain
 
 
 ## The server removed this entity after a killing blow: play the death, then go.

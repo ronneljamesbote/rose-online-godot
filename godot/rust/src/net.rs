@@ -228,6 +228,14 @@ impl RoseNet {
         }
     }
 
+    /// Our character ran into a wall at a Godot position (metres): the server stops the move there.
+    #[func]
+    fn move_collision(&self, x: f32, z: f32) {
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.move_collision(x * 100.0, -z * 100.0).ok();
+        }
+    }
+
     #[func]
     fn attack(&self, target: i64) {
         if let Some(c) = self.conn.as_ref() {
