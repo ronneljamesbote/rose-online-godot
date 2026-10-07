@@ -26,7 +26,7 @@ RUN case "${TARGETARCH:-amd64}" in arm64) arch=aarch64 ;; *) arch=x86_64 ;; esac
     | tar xz -C /usr/local/bin spacetimedb-standalone spacetimedb-cli
 COPY --from=module /src/module/target/wasm32-unknown-unknown/release/rose_stdb_module.wasm /opt/rose/rose_stdb_module.wasm
 COPY --from=module /src/target/release/rose-stdb-import /usr/local/bin/rose-stdb-import
-COPY server/entrypoint.sh server/upload-game-data.sh /opt/rose/
+COPY server/entrypoint.sh server/upload-game-data.sh server/assign-character.sh /opt/rose/
 # Strip Windows line endings in case Git converted them on checkout.
 RUN sed -i "s/\r$//" /opt/rose/*.sh && chmod +x /opt/rose/*.sh
 

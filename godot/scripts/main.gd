@@ -10,7 +10,11 @@
 ##   --time=morning|day|evening|night|TICKS   fixed time of day (default: day, then the clock runs)
 ##   --demo                     scripted run / attack / cancel sequence (for --write-movie)
 ##   --server=URI               play online on this SpacetimeDB server, skipping the start screen
-##   --name=NAME                character name for --server
+##   --name=NAME                character name for --server (servers without accounts)
+##   --email=EMAIL --password=PASSWORD   sign in to this account (or set ROSE_PASSWORD)
+##   --website=URL              the account website (default http://127.0.0.1:3001)
+##   --create=NAME,female,FACE,HAIR   fill in the character creation screen (1-based),
+##                              --create-after=SECONDS then presses Create
 ##   --weapon=bow               equip the bow and arrows from the bag after signing in
 ##   --profile=NAME             identity file to use (user://identity-NAME.token), so two
 ##                              clients on one PC are two players
@@ -47,6 +51,8 @@ var camera: Camera3D
 var options := {}
 var world_ticks := 0.0  # one world tick is 10 seconds
 var loaded_zone := 0
+var loading: CanvasLayer  # loading_screen.gd
+var _loading_zone := 0
 
 
 var _joined_before := false
@@ -149,15 +155,14 @@ func _start(data_idx: String) -> void:
 
 	if options.has("quit-after"):
 		get_tree().create_timer(float(options["quit-after"])).timeout.connect(get_tree().quit)
-	if options.has("server"):
+	if options.has("server") and options.has("email"):
+		_sign_in_from_options()
+	elif options.has("server"):
 		_go_online(options["server"], options.get("name", ""), options.get("weapon", "sword") == "bow")
 	elif options.has("offline") or options.has("demo") or options.has("screenshot") or options.has("free-camera"):
 		_go_offline()
 	else:
-		var panel = preload("res://scripts/connect_panel.gd").new()
-		panel.connect_requested.connect(_go_online)
-		panel.offline_requested.connect(_go_offline)
-		add_child(panel)
+		_show_connect_panel("")
 
 	if options.has("demo"):
 		_run_demo()
@@ -186,12 +191,61 @@ func _load_zone(zone_id: int) -> bool:
 	return true
 
 
-## The server has our character in another zone: load it and show that zone's entities.
+## The server has our character in another zone: load it behind the loading screen and
+## show that zone's entities. The screen goes once our character stands in the new zone.
 func _on_zone_needed(zone_id: int) -> void:
-	if zone_id == loaded_zone:
+	if zone_id == loaded_zone or _loading_zone == zone_id:
 		return
+	_loading_zone = zone_id
+	if loading == null:
+		loading = preload("res://scripts/loading_screen.gd").new()
+		add_child(loading)
+	loading.show_zone(RoseData.zone_name(zone_id))
+	await get_tree().process_frame
+	await get_tree().process_frame
 	if _load_zone(zone_id):
 		online.use_zone(zone)
+	_loading_zone = 0
+	# In case our character never shows up (the server moved us again).
+	get_tree().create_timer(10.0).timeout.connect(func(): if loading: loading.hide_screen())
+
+
+func _show_connect_panel(error: String) -> CanvasLayer:
+	var panel = preload("res://scripts/connect_panel.gd").new()
+	panel.connect_requested.connect(_go_online)
+	panel.offline_requested.connect(_go_offline)
+	add_child(panel)
+	if error != "":
+		panel.show_error(error)
+	return panel
+
+
+## --server with --email and --password (or ROSE_PASSWORD): sign in on --website first.
+func _sign_in_from_options() -> void:
+	var login = preload("res://scripts/account_login.gd").new()
+	add_child(login)
+	var password: String = options.get("password", OS.get_environment("ROSE_PASSWORD"))
+	var answer: Dictionary = await login.login(options.get("website", "http://127.0.0.1:3001"), options["email"], password)
+	login.queue_free()
+	if answer.has("error"):
+		print("rose net: signing in failed: ", answer["error"])
+		_show_connect_panel(answer["error"]).email_edit.text = options["email"]
+		return
+	print("rose net: signed in on the account website")
+	_go_online(options["server"], "", options.get("weapon", "sword") == "bow", answer["token"])
+
+
+## The server turned us away (no account, say) or the connection dropped: back to the start.
+func _on_connection_failed(reason: String) -> void:
+	print("rose net: connection failed: ", reason)
+	if options.has("server") and not options.has("email"):
+		return
+	if loading:
+		loading.hide_screen()
+	online.queue_free()
+	online = null
+	_joined_before = false
+	_show_connect_panel("The server closed the connection: %s" % reason)
 
 
 func _go_offline() -> void:
@@ -204,7 +258,7 @@ func _go_offline() -> void:
 		camera.target = player
 
 
-func _go_online(uri: String, name_text: String, use_bow: bool) -> void:
+func _go_online(uri: String, name_text: String, use_bow: bool, token := "") -> void:
 	var profile: String = options.get("profile", "default")
 	var token_path := ProjectSettings.globalize_path("user://identity-%s.token" % profile)
 	online = preload("res://scripts/online.gd").new()
@@ -212,12 +266,17 @@ func _go_online(uri: String, name_text: String, use_bow: bool) -> void:
 	add_child(online)
 	online.joined.connect(_on_joined)
 	online.zone_needed.connect(_on_zone_needed)
+	online.connection_failed.connect(_on_connection_failed)
+	online.create_preset = options.get("create", "")
+	online.create_after = float(options.get("create-after", "-1"))
 	online.log_positions = options.has("net-log")
 	online.log_damage = options.has("net-log") or options.has("net-demo")
-	online.start(zone, uri, token_path, name_text, use_bow)
+	online.start(zone, uri, token_path, name_text, use_bow, token)
 
 
 func _on_joined(me: Node3D) -> void:
+	if loading:
+		loading.hide_screen()
 	if camera.get("target") != null:
 		camera.target = me
 	# Joining again after a warp keeps the windows and demo of the first join.

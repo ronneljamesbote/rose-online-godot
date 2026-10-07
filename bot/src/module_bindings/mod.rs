@@ -11,7 +11,9 @@ pub mod add_basic_stat_reducer;
 pub mod admin_give_quest_reducer;
 pub mod admin_quest_trigger_reducer;
 pub mod admin_type;
+pub mod assign_character_reducer;
 pub mod attack_reducer;
+pub mod auth_config_type;
 pub mod bank_deposit_reducer;
 pub mod bank_move_reducer;
 pub mod bank_table;
@@ -28,6 +30,7 @@ pub mod combat_type;
 pub mod craft_item_reducer;
 pub mod craft_slot_type;
 pub mod craft_tool_type;
+pub mod create_character_reducer;
 pub mod damage_event_table;
 pub mod damage_event_type;
 pub mod damage_source_type;
@@ -87,6 +90,7 @@ pub mod regen_type;
 pub mod reset_monsters_reducer;
 pub mod send_chat_reducer;
 pub mod set_aggro_range_reducer;
+pub mod set_auth_issuer_reducer;
 pub mod set_basic_stat_reducer;
 pub mod set_hotbar_slot_reducer;
 pub mod set_hp_mp_reducer;
@@ -142,7 +146,9 @@ pub use add_basic_stat_reducer::add_basic_stat;
 pub use admin_give_quest_reducer::admin_give_quest;
 pub use admin_quest_trigger_reducer::admin_quest_trigger;
 pub use admin_type::Admin;
+pub use assign_character_reducer::assign_character;
 pub use attack_reducer::attack;
+pub use auth_config_type::AuthConfig;
 pub use bank_deposit_reducer::bank_deposit;
 pub use bank_move_reducer::bank_move;
 pub use bank_table::*;
@@ -159,6 +165,7 @@ pub use combat_type::Combat;
 pub use craft_item_reducer::craft_item;
 pub use craft_slot_type::CraftSlot;
 pub use craft_tool_type::CraftTool;
+pub use create_character_reducer::create_character;
 pub use damage_event_table::*;
 pub use damage_event_type::DamageEvent;
 pub use damage_source_type::DamageSource;
@@ -218,6 +225,7 @@ pub use regen_type::Regen;
 pub use reset_monsters_reducer::reset_monsters;
 pub use send_chat_reducer::send_chat;
 pub use set_aggro_range_reducer::set_aggro_range;
+pub use set_auth_issuer_reducer::set_auth_issuer;
 pub use set_basic_stat_reducer::set_basic_stat;
 pub use set_hotbar_slot_reducer::set_hotbar_slot;
 pub use set_hp_mp_reducer::set_hp_mp;
@@ -293,6 +301,10 @@ pub enum Reducer {
         player_name: String,
         trigger: String,
     },
+    AssignCharacter {
+        name: String,
+        account: __sdk::Identity,
+    },
     Attack {
         target: u64,
     },
@@ -325,6 +337,12 @@ pub enum Reducer {
         item_type_number: u8,
         item_number: u16,
         materials: Vec<CraftSlot>,
+    },
+    CreateCharacter {
+        name: String,
+        gender: u8,
+        face: u8,
+        hair: u8,
     },
     DisassembleItem {
         tool: CraftTool,
@@ -436,6 +454,9 @@ pub enum Reducer {
         npc_id: u16,
         range: f32,
     },
+    SetAuthIssuer {
+        issuer: String,
+    },
     SetBasicStat {
         name: String,
         stat: u8,
@@ -526,6 +547,7 @@ impl __sdk::Reducer for Reducer {
             Reducer::AddBasicStat { .. } => "add_basic_stat",
             Reducer::AdminGiveQuest { .. } => "admin_give_quest",
             Reducer::AdminQuestTrigger { .. } => "admin_quest_trigger",
+            Reducer::AssignCharacter { .. } => "assign_character",
             Reducer::Attack { .. } => "attack",
             Reducer::BankDeposit { .. } => "bank_deposit",
             Reducer::BankMove { .. } => "bank_move",
@@ -533,6 +555,7 @@ impl __sdk::Reducer for Reducer {
             Reducer::BeginGameDataUpload => "begin_game_data_upload",
             Reducer::CastSkill { .. } => "cast_skill",
             Reducer::CraftItem { .. } => "craft_item",
+            Reducer::CreateCharacter { .. } => "create_character",
             Reducer::DisassembleItem { .. } => "disassemble_item",
             Reducer::DropItem { .. } => "drop_item",
             Reducer::DropMoney { .. } => "drop_money",
@@ -562,6 +585,7 @@ impl __sdk::Reducer for Reducer {
             Reducer::ResetMonsters => "reset_monsters",
             Reducer::SendChat { .. } => "send_chat",
             Reducer::SetAggroRange { .. } => "set_aggro_range",
+            Reducer::SetAuthIssuer { .. } => "set_auth_issuer",
             Reducer::SetBasicStat { .. } => "set_basic_stat",
             Reducer::SetHotbarSlot { .. } => "set_hotbar_slot",
             Reducer::SetHpMp { .. } => "set_hp_mp",
@@ -619,6 +643,12 @@ impl __sdk::Reducer for Reducer {
                 player_name: player_name.clone(),
                 trigger: trigger.clone(),
             }),
+            Reducer::AssignCharacter { name, account } => {
+                __sats::bsatn::to_vec(&assign_character_reducer::AssignCharacterArgs {
+                    name: name.clone(),
+                    account: account.clone(),
+                })
+            }
             Reducer::Attack { target } => __sats::bsatn::to_vec(&attack_reducer::AttackArgs {
                 target: target.clone(),
             }),
@@ -676,6 +706,17 @@ impl __sdk::Reducer for Reducer {
                 item_type_number: item_type_number.clone(),
                 item_number: item_number.clone(),
                 materials: materials.clone(),
+            }),
+            Reducer::CreateCharacter {
+                name,
+                gender,
+                face,
+                hair,
+            } => __sats::bsatn::to_vec(&create_character_reducer::CreateCharacterArgs {
+                name: name.clone(),
+                gender: gender.clone(),
+                face: face.clone(),
+                hair: hair.clone(),
             }),
             Reducer::DisassembleItem { tool, page, index } => {
                 __sats::bsatn::to_vec(&disassemble_item_reducer::DisassembleItemArgs {
@@ -850,6 +891,11 @@ impl __sdk::Reducer for Reducer {
                 __sats::bsatn::to_vec(&set_aggro_range_reducer::SetAggroRangeArgs {
                     npc_id: npc_id.clone(),
                     range: range.clone(),
+                })
+            }
+            Reducer::SetAuthIssuer { issuer } => {
+                __sats::bsatn::to_vec(&set_auth_issuer_reducer::SetAuthIssuerArgs {
+                    issuer: issuer.clone(),
                 })
             }
             Reducer::SetBasicStat { name, stat, value } => {

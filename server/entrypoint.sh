@@ -4,6 +4,7 @@
 # The game data (items, monsters, zones, ...) is uploaded from the ROSE client mounted at
 # /game whenever the server has none; ROSE_UPLOAD_GAME_DATA=1 uploads it again.
 # ROSE_CLEAR_WORLD=1 wipes the world while publishing (needed after a breaking schema change).
+# ROSE_AUTH_ISSUER is the account website the server trusts (empty: no accounts needed).
 set -e
 mkdir -p /data/keys /data/db /data/cli
 if [ ! -f /data/keys/id_ecdsa.p8 ]; then
@@ -38,6 +39,17 @@ else
   echo "rose: restart once with ROSE_CLEAR_WORLD=1 to start a fresh world."
 fi
 export HOME=/data/cli
+# Accounts: trust game tokens from the account website (ROSE_AUTH_ISSUER, see compose.yaml).
+# An empty value lets anyone in without an account.
+if spacetimedb-cli call --server http://127.0.0.1:3000 rose set_auth_issuer "\"${ROSE_AUTH_ISSUER:-}\"" >/dev/null; then
+  if [ -n "${ROSE_AUTH_ISSUER:-}" ]; then
+    echo "rose: only players with an account from ${ROSE_AUTH_ISSUER} can sign in"
+  else
+    echo "rose: ROSE_AUTH_ISSUER is empty, anyone can connect without an account"
+  fi
+else
+  echo "rose: setting the account website failed (see above)"
+fi
 READY=$(spacetimedb-cli sql --server http://127.0.0.1:3000 rose "SELECT ready FROM game_data_status" 2>/dev/null | grep -c true || true)
 if [ "$READY" = "0" ] || [ "${ROSE_UPLOAD_GAME_DATA:-0}" = "1" ]; then
   DATA_IDX=$(find /game -maxdepth 2 -iname data.idx 2>/dev/null | head -n 1)

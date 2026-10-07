@@ -93,6 +93,12 @@ struct Shared {
     /// for a minute, so a resubscribe sends some again).
     chat: Vec<ChatMessage>,
     chat_seen: u64,
+    /// The first subscription has arrived, so a missing player row means no character yet.
+    subscribed: bool,
+    /// Answer to create_character: "ok" or why it was refused.
+    create_result: Option<String>,
+    /// Why the connection failed or closed.
+    connection_error: Option<String>,
     /// Smallest (local receive time - server start time) seen on a fresh motion change.
     /// Covers clock skew between this PC and the server plus the fastest one-way delay.
     clock_offset_us: Option<i64>,
@@ -241,8 +247,14 @@ impl RoseNet {
 impl INode for RoseNet {
     fn process(&mut self, _delta: f64) {
         let Some(c) = self.conn.as_ref() else { return };
-        if let Err(error) = c.frame_tick() {
-            self.fail(format!("{error}"));
+        // The SDK can panic on a connection the server closed; treat that as closed too.
+        match std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| c.frame_tick())) {
+            Ok(Ok(())) => {}
+            Ok(Err(error)) => self.fail(format!("{error}")),
+            Err(_) => {
+                let reason = self.shared.lock().map(|s| s.connection_error.clone()).ok().flatten();
+                self.fail(reason.unwrap_or_else(|| "the server closed the connection".into()));
+            }
         }
     }
 }
@@ -254,16 +266,51 @@ impl RoseNet {
     /// `uri` may end in a database name (`wss://host/rose-friends`); the default is `rose`.
     #[func]
     fn connect_to(&mut self, uri: GString, token_path: GString) -> bool {
-        let (uri, database) = split_database(&uri.to_string());
         let token_path = token_path.to_string();
+        let token = std::fs::read_to_string(&token_path).ok();
+        self.connect(uri.to_string(), token, Some(token_path))
+    }
+
+    /// Connects with a token from the account website (its /api/game/login). The token
+    /// is short lived and is not saved.
+    #[func]
+    fn connect_with_token(&mut self, uri: GString, token: GString) -> bool {
+        self.connect(uri.to_string(), Some(token.to_string()), None)
+    }
+}
+
+impl RoseNet {
+    fn connect(&mut self, uri: String, token: Option<String>, save_token_to: Option<String>) -> bool {
+        let (uri, database) = split_database(&uri);
         let shared = self.shared.clone();
-        let saved = token_path.clone();
+        *shared.lock().unwrap() = Shared::default();
+        let (s0, s1, s2) = (shared.clone(), shared.clone(), shared.clone());
         let result = DbConnection::builder()
             .with_uri(uri)
             .with_database_name(database)
-            .with_token(std::fs::read_to_string(&token_path).ok())
-            .on_connect(move |_, _, token| {
-                std::fs::write(&saved, token).ok();
+            .with_token(token)
+            .on_connect(move |conn, _, token| {
+                if let Some(path) = save_token_to {
+                    std::fs::write(&path, token).ok();
+                }
+                // Subscribe once the server has let us in; a refused connection has no
+                // sender left to subscribe with.
+                conn.subscription_builder()
+                    .on_applied(move |_| s0.lock().unwrap().subscribed = true)
+                    .subscribe_to_all_tables();
+            })
+            .on_connect_error(move |_, error| {
+                let text = format!("{error}");
+                // A connection the module turns away closes before the first message.
+                let text = if text.contains("before receiving the initial connection message") {
+                    "the server turned the connection down. Sign in with your account (or check the server address)".to_string()
+                } else {
+                    text
+                };
+                s1.lock().unwrap().connection_error = Some(text);
+            })
+            .on_disconnect(move |_, error| {
+                s2.lock().unwrap().connection_error = Some(error.map_or("the server closed the connection".into(), |e| format!("{e}")));
             })
             .build();
         let conn = match result {
@@ -298,10 +345,53 @@ impl RoseNet {
             let mut s = s.lock().unwrap();
             s.clock_offset_us = Some(s.clock_offset_us.map_or(sample, |o| o.min(sample)));
         });
-        conn.subscription_builder().subscribe_to_all_tables();
         self.error.clear();
         self.conn = Some(conn);
         true
+    }
+}
+
+#[godot_api(secondary)]
+impl RoseNet {
+    /// Why the connection failed or was closed, or "".
+    #[func]
+    fn get_connection_error(&self) -> GString {
+        GString::from(self.shared.lock().unwrap().connection_error.as_deref().unwrap_or(""))
+    }
+
+    /// Signed in, but this account has no character yet (show the creation screen).
+    #[func]
+    fn needs_character(&self) -> bool {
+        let Some(c) = self.conn.as_ref() else { return false };
+        if !self.shared.lock().unwrap().subscribed {
+            return false;
+        }
+        c.try_identity().is_some_and(|i| c.db.player().identity().find(&i).is_none())
+    }
+
+    /// Make our character (see the module's create_character). The answer comes from
+    /// poll_create_result.
+    #[func]
+    fn create_character(&self, name: GString, female: bool, face: i64, hair: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers
+                .create_character_then(name.to_string(), female as u8, face as u8, hair as u8, move |_, r| {
+                    let answer = match r {
+                        Ok(Ok(())) => "ok".to_string(),
+                        Ok(Err(message)) => message,
+                        Err(error) => format!("{error}"),
+                    };
+                    s.lock().unwrap().create_result = Some(answer);
+                })
+                .ok();
+        }
+    }
+
+    /// "" while waiting, then "ok" or the reason the name or look was refused.
+    #[func]
+    fn poll_create_result(&self) -> GString {
+        GString::from(self.shared.lock().unwrap().create_result.take().unwrap_or_default().as_str())
     }
 
     #[func]

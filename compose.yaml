@@ -1,4 +1,5 @@
-# ROSE game server. From this folder:  docker compose up -d   (see server/README.md)
+# ROSE game server and account website. From this folder:  docker compose up -d
+# (see server/README.md and web/README.md)
 services:
   rose-server:
     build:
@@ -16,7 +17,40 @@ services:
     environment:
       ROSE_CLEAR_WORLD: ${ROSE_CLEAR_WORLD:-0}
       ROSE_UPLOAD_GAME_DATA: ${ROSE_UPLOAD_GAME_DATA:-0}
+      # Only players who signed in on the website below get in. Set it to "" (in .env)
+      # to let anyone in without an account, e.g. for the load-test bots.
+      ROSE_AUTH_ISSUER: ${ROSE_AUTH_ISSUER-http://rose-web:3001}
+    depends_on:
+      - rose-web
+    restart: unless-stopped
+
+  rose-web:
+    build:
+      context: web
+    image: rose-web
+    ports:
+      - "3001:3001"
+    volumes:
+      - rose-web-data:/data
+    environment:
+      # Where players open the website; links in emails point here. Use the address your
+      # players reach (e.g. http://192.168.1.20:3001 on a home network, or your domain).
+      PUBLIC_URL: ${ROSE_WEBSITE_URL:-http://127.0.0.1:3001}
+      # The game server checks tokens against this address, so it must be how the
+      # rose-server container reaches this one. Keep it unchanged: account identities
+      # depend on it.
+      ROSE_AUTH_ISSUER: http://rose-web:3001
+      # Email for password resets. Without SMTP_HOST the reset link is written to this
+      # container's log instead (docker compose logs rose-web).
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      MAIL_FROM: ${MAIL_FROM:-ROSE <no-reply@localhost>}
+      # Set to 1 behind a reverse proxy, so rate limits see the players' addresses.
+      TRUST_PROXY: ${TRUST_PROXY:-0}
     restart: unless-stopped
 
 volumes:
   rose-data:
+  rose-web-data:

@@ -4,6 +4,8 @@ extends Node3D
 
 signal joined(me: Node3D)
 signal zone_needed(zone_id: int)
+## The server turned the connection down or closed it.
+signal connection_failed(reason: String)
 
 const NetEntity := preload("res://scripts/net_entity.gd")
 const CharacterWindow := preload("res://scripts/character_window.gd")
@@ -18,6 +20,7 @@ const SkillWindow := preload("res://scripts/skill_window.gd")
 const ConversationWindow := preload("res://scripts/conversation_window.gd")
 const QuestWindow := preload("res://scripts/quest_window.gd")
 const ChatWindow := preload("res://scripts/chat_window.gd")
+const CharacterCreate := preload("res://scripts/character_create.gd")
 const Hotbar := preload("res://scripts/hotbar.gd")
 const PICK_RADIUS_PX := 60.0
 const ITEM_PICK_RADIUS_PX := 30.0
@@ -61,6 +64,11 @@ var effects_row: HBoxContainer  # our status effects, top centre
 var _next_effects_ms := 0
 var notice_box: VBoxContainer
 var chat_window: PanelContainer
+var character_create: CanvasLayer  # while the account has no character
+var create_preset := ""  # --create=NAME,female,FACE,HAIR fills the creation screen
+var create_after := -1.0  # and --create-after=SECONDS presses Create
+var _failed := false
+var _layer: CanvasLayer
 var ground := {}  # drop id -> Node3D
 var _pickup := -1  # drop we are walking to
 var _talk := -1  # NPC we are walking to
@@ -76,7 +84,9 @@ var _next_log_ms := 0
 var _killed := {}  # entity ids whose last hit killed them
 
 
-func start(zone_node: Node, uri: String, token_path: String, name_text: String, use_bow: bool) -> bool:
+## token is the account website's game token; without one the identity in token_path is used
+## (servers that let anyone in).
+func start(zone_node: Node, uri: String, token_path: String, name_text: String, use_bow: bool, token := "") -> bool:
 	zone = zone_node
 	player_name = name_text
 	ranged = use_bow
@@ -86,6 +96,7 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 
 	var layer := CanvasLayer.new()
 	add_child(layer)
+	_layer = layer
 	hud = _hud_label(layer, Vector2(12, 8))
 	target_hud = _hud_label(layer, Vector2(12, 30))
 	target_hud.add_theme_font_size_override("font_size", 20)
@@ -262,8 +273,11 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	notice_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	layer.add_child(notice_box)
 
-	print("rose net: connecting to ", uri, " (identity in ", token_path, ")")
 	hud.text = "Connecting to %s..." % uri
+	if token != "":
+		print("rose net: connecting to ", uri, " with an account token")
+		return net.connect_with_token(uri, token)
+	print("rose net: connecting to ", uri, " (identity in ", token_path, ")")
 	return net.connect_to(uri, token_path)
 
 
@@ -523,15 +537,36 @@ func _process(_delta: float) -> void:
 		return
 	if not net.is_online():
 		var error := net.get_error()
+		if error == "":
+			error = net.get_connection_error()
 		hud.text = "Not connected" + (": " + error if error != "" else "")
+		if error != "" and not _failed:
+			_failed = true
+			connection_failed.emit(error)
 		return
 	var notice := net.get_server_notice()
 	if notice != "":
 		hud.text = notice
 		return
 	if my_id < 0:
+		# A new account makes its character first.
+		if net.needs_character():
+			if character_create == null:
+				character_create = CharacterCreate.new()
+				character_create.net = net
+				add_child(character_create)
+				if create_preset != "":
+					character_create.preset(create_preset)
+				character_create.auto_create_after = create_after
+				_layer.visible = false
+				hud.text = ""
+			return
 		if not net.is_ready():
 			return
+		if character_create:
+			character_create.queue_free()
+			character_create = null
+			_layer.visible = true
 		my_id = net.my_entity_id()
 		if player_name != "":
 			net.set_player_name(player_name)
