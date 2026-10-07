@@ -1358,6 +1358,113 @@ impl RoseNet {
         true
     }
 
+    /// Trade requests sent to us: [request id, from name] each.
+    #[func]
+    fn get_trade_requests(&self) -> VarArray {
+        let mut out = VarArray::new();
+        let Some(c) = self.conn.as_ref() else { return out };
+        let Some(me) = c.try_identity() else { return out };
+        for r in c.db.trade_request().iter().filter(|r| r.to == me) {
+            let name = c.db.player().identity().find(&r.from).map_or_else(String::new, |p| p.name);
+            let mut a = VarArray::new();
+            a.push(&(r.request_id as i64).to_variant());
+            a.push(&name.to_variant());
+            out.push(&a.to_variant());
+        }
+        out
+    }
+
+    /// Our trade, or {} when not trading: {with (name), with_entity, mine, theirs}, each side
+    /// {items: [item_dict plus page and index], money, locked, accepted}.
+    #[func]
+    fn get_trade(&self) -> VarDictionary {
+        let mut d = VarDictionary::new();
+        let Some(c) = self.conn.as_ref() else { return d };
+        let Some(me) = c.try_identity() else { return d };
+        let Some(t) = c.db.trade().iter().find(|t| t.a == me || t.b == me) else { return d };
+        let side = |items: &str, money: i64, locked: bool, accepted: bool| {
+            let mut sd = VarDictionary::new();
+            let mut list = VarArray::new();
+            for o in serde_json::from_str::<Vec<serde_json::Value>>(items).unwrap_or_default() {
+                let Ok(item) = serde_json::from_value::<rose_data::Item>(o["item"].clone()) else { continue };
+                let mut id = item_dict(&item);
+                id.set("page", o["page"].as_i64().unwrap_or(0));
+                id.set("index", o["index"].as_i64().unwrap_or(0));
+                list.push(&id.to_variant());
+            }
+            sd.set("items", &list);
+            sd.set("money", money);
+            sd.set("locked", locked);
+            sd.set("accepted", accepted);
+            sd
+        };
+        let a = side(&t.a_items, t.a_money, t.a_locked, t.a_accepted);
+        let b = side(&t.b_items, t.b_money, t.b_locked, t.b_accepted);
+        let (mine, theirs, other) = if t.a == me { (a, b, t.b) } else { (b, a, t.a) };
+        let other = c.db.player().identity().find(&other);
+        d.set("with", other.as_ref().map_or_else(String::new, |p| p.name.clone()));
+        d.set("with_entity", other.and_then(|p| p.entity_id).map_or(-1, |e| e as i64));
+        d.set("mine", &mine);
+        d.set("theirs", &theirs);
+        d
+    }
+
+    #[func]
+    fn trade_ask(&self, entity_id: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.trade_ask_then(entity_id as u64, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    #[func]
+    fn trade_answer(&self, request_id: i64, accept: bool) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.trade_answer_then(request_id as u64, accept, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    /// Put these bag items ([page, index, quantity] each) and Zuly on the table.
+    #[func]
+    fn trade_offer(&self, slots: VarArray, money: i64) {
+        let s = self.shared.clone();
+        let Some(c) = self.conn.as_ref() else { return };
+        let slots: Vec<TradeSlot> = slots
+            .iter_shared()
+            .filter_map(|v| v.try_to::<VarArray>().ok())
+            .map(|a| {
+                let n = |i| a.get(i).and_then(|v| v.try_to::<i64>().ok()).unwrap_or(0);
+                TradeSlot { page: n(0) as u8, index: n(1) as u16, quantity: n(2) as u32 }
+            })
+            .collect();
+        c.reducers.trade_offer_then(slots, money, move |_, r| report(&s, r)).ok();
+    }
+
+    #[func]
+    fn trade_lock(&self, locked: bool) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.trade_lock_then(locked, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    #[func]
+    fn trade_accept(&self) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.trade_accept_then(move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    #[func]
+    fn trade_cancel(&self) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.trade_cancel_then(move |_, r| report(&s, r)).ok();
+        }
+    }
+
     /// Our bank: 120 slots (four pages of 30), null when empty.
     #[func]
     fn get_bank(&self) -> VarArray {

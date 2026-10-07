@@ -14,7 +14,7 @@ const AMMO := ["Arrows", "Bullets", "Shells"]
 class Slot:
 	extends Panel
 	var window: Control
-	var kind := ""  # "page", "equipped", "ammo", "store", "bank", "work", "skill" or "hotbar"
+	var kind := ""  # "page", "equipped", "ammo", "store", "bank", "work", "trade", "trade_theirs", "skill" or "hotbar"
 	var index := 0
 	var item = null
 	var icon: TextureRect
@@ -98,8 +98,10 @@ class Slot:
 			return data.kind == "page" or data.kind == "skill" or data.kind == "hotbar"
 		if kind == "bank":
 			return data.kind == "page" or data.kind == "bank"
-		if kind == "work":
+		if kind == "work" or kind == "trade":
 			return data.kind == "page"
+		if kind == "trade_theirs":
+			return false
 		if data.kind == "bank":
 			return kind == "page"
 		return data.kind == "page" and (kind == "page" or kind == "equipped" or kind == "ammo" or kind == "store")
@@ -112,6 +114,7 @@ var net: RoseNet
 var store_window: Control  # store_window.gd; while it is open, right-click sells
 var bank_window: Control  # bank_window.gd; while it is open, right-click deposits
 var work_window: Control  # item_work_window.gd; while it is open, right-click picks the item
+var trade_window: Control  # trade_window.gd; while it is open, right-click offers the item
 var money_label: Label
 var tabs: TabBar
 var page := 0
@@ -247,6 +250,9 @@ func activate(slot: Slot) -> void:
 			elif bank_window != null and bank_window.visible:
 				var quantity: int = 1 if Input.is_key_pressed(KEY_SHIFT) else slot.item.get("quantity", 1)
 				bank_window.deposit(page, slot.index, quantity)
+			elif trade_window != null and trade_window.visible:
+				var quantity: int = 1 if Input.is_key_pressed(KEY_SHIFT) else slot.item.get("quantity", 1)
+				trade_window.add(page, slot.index, quantity)
 			elif work_window != null and work_window.visible:
 				work_window.set_target(page, slot.index)
 			elif slot.item.get("type", "") == "Gem" and slot.item.get("class", "") == "Jewel":
