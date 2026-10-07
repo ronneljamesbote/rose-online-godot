@@ -66,6 +66,8 @@ func attack(id: int) -> void:
 		return
 	my_target = id
 	net.attack(id)
+	if log_damage:
+		print("rose net: attack ", entities[id].label.text, " (entity ", id, ")")
 
 
 func stop() -> void:
