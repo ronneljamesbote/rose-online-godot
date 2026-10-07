@@ -393,7 +393,11 @@ fn despawn(ctx: &ReducerContext, entity_id: u64) {
     ctx.db.stats().entity_id().delete(entity_id);
     ctx.db.monster_ai().entity_id().delete(entity_id);
     clear_damage_sources(ctx, entity_id);
-    // Anyone targeting it loses the target.
+    forget_entity(ctx, entity_id);
+}
+
+/// Anyone targeting or chasing the entity loses it (it died, left or changed zone).
+fn forget_entity(ctx: &ReducerContext, entity_id: u64) {
     for mut c in ctx.db.combat().iter().filter(|c| c.attack_target == Some(entity_id)) {
         c.attack_target = None;
         ctx.db.combat().entity_id().update(c);

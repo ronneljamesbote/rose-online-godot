@@ -477,6 +477,15 @@ impl RoseNet {
         d
     }
 
+    /// We walked into a warp gate (its WARP.STB id).
+    #[func]
+    fn use_warp_gate(&self, warp_id: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.use_warp_gate_then(warp_id as u16, move |_, r| report(&s, r)).ok();
+        }
+    }
+
     #[func]
     fn pickup_item(&self, drop_id: i64) {
         let s = self.shared.clone();

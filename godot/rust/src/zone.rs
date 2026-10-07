@@ -33,6 +33,8 @@ pub struct RoseZone {
     heights: Vec<Option<HimFile>>,
     zone_id: u16,
     stats: VarDictionary,
+    /// Warp gates: WARP.STB id and the box their model fills, in zone space.
+    warps: Vec<(u16, Aabb)>,
 }
 
 fn rose_quat(x: f32, y: f32, z: f32, w: f32) -> Quaternion {
@@ -65,6 +67,7 @@ struct ObjectSpawner {
     /// Collision triangles in zone space, three vertices each (zone_loader.rs's collision groups).
     walls: Vec<Vector3>,
     floors: Vec<Vector3>,
+    warps: Vec<(u16, Aabb)>,
 }
 
 impl ObjectSpawner {
@@ -145,6 +148,14 @@ impl ObjectSpawner {
                 );
                 instance.set_instance_shader_parameter("lightmap_uv_scale", &(1.0 / per_row as f32).to_variant());
             }
+            if zsc_index == 3 {
+                let to_zone = object_transform * part_transform;
+                let aabb = to_zone * part_mesh.get_aabb();
+                match self.warps.last_mut() {
+                    Some((id, last)) if *id == object_instance.warp_id && part_index > 0 => *last = last.merge(aabb),
+                    _ => self.warps.push((object_instance.warp_id, aabb)),
+                }
+            }
             object_node.add_child(&instance);
             self.parts += 1;
         }
@@ -215,6 +226,7 @@ impl RoseZone {
             parts: 0,
             walls: Vec::new(),
             floors: Vec::new(),
+            warps: Vec::new(),
         };
         let mut blocks = 0;
         let mut objects = 0;
@@ -316,6 +328,7 @@ impl RoseZone {
         }
 
         self.zone_id = zone_id as u16;
+        self.warps = std::mem::take(&mut spawner.warps);
         let mut stats = VarDictionary::new();
         stats.set("blocks", blocks);
         stats.set("objects", objects);
@@ -331,6 +344,20 @@ impl RoseZone {
     #[func]
     fn get_stats(&self) -> VarDictionary {
         self.stats.clone()
+    }
+
+    /// Warp gates in this zone: id (WARP.STB row) and the box (position, size) their model fills.
+    #[func]
+    fn get_warps(&self) -> VarArray {
+        let mut out = VarArray::new();
+        for (id, aabb) in self.warps.iter() {
+            let mut d = VarDictionary::new();
+            d.set("id", *id as i64);
+            d.set("position", aabb.position);
+            d.set("size", aabb.size);
+            out.push(&d.to_variant());
+        }
+        out
     }
 
     /// Terrain height in metres at Godot world position (x, z). Mirrors

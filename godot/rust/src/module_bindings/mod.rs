@@ -46,6 +46,7 @@ pub mod player_type;
 pub mod regen_type;
 pub mod reset_monsters_reducer;
 pub mod set_aggro_range_reducer;
+pub mod set_basic_stat_reducer;
 pub mod set_name_reducer;
 pub mod set_world_rates_reducer;
 pub mod spawn_entry_type;
@@ -59,6 +60,8 @@ pub mod unequip_ammo_reducer;
 pub mod unequip_item_reducer;
 pub mod upload_game_files_reducer;
 pub mod use_item_reducer;
+pub mod use_warp_gate_reducer;
+pub mod warp_player_reducer;
 pub mod world_rates_table;
 pub mod world_rates_type;
 pub mod xp_event_table;
@@ -106,6 +109,7 @@ pub use player_type::Player;
 pub use regen_type::Regen;
 pub use reset_monsters_reducer::reset_monsters;
 pub use set_aggro_range_reducer::set_aggro_range;
+pub use set_basic_stat_reducer::set_basic_stat;
 pub use set_name_reducer::set_name;
 pub use set_world_rates_reducer::set_world_rates;
 pub use spawn_entry_type::SpawnEntry;
@@ -119,6 +123,8 @@ pub use unequip_ammo_reducer::unequip_ammo;
 pub use unequip_item_reducer::unequip_item;
 pub use upload_game_files_reducer::upload_game_files;
 pub use use_item_reducer::use_item;
+pub use use_warp_gate_reducer::use_warp_gate;
+pub use warp_player_reducer::warp_player;
 pub use world_rates_table::*;
 pub use world_rates_type::WorldRates;
 pub use xp_event_table::*;
@@ -184,6 +190,11 @@ pub enum Reducer {
         npc_id: u16,
         range: f32,
     },
+    SetBasicStat {
+        name: String,
+        stat: u8,
+        value: i32,
+    },
     SetName {
         name: String,
     },
@@ -206,6 +217,13 @@ pub enum Reducer {
     UseItem {
         page: u8,
         index: u16,
+    },
+    UseWarpGate {
+        warp_id: u16,
+    },
+    WarpPlayer {
+        name: String,
+        zone_id: u16,
     },
 }
 
@@ -231,6 +249,7 @@ impl __sdk::Reducer for Reducer {
             Reducer::PlacePlayer { .. } => "place_player",
             Reducer::ResetMonsters => "reset_monsters",
             Reducer::SetAggroRange { .. } => "set_aggro_range",
+            Reducer::SetBasicStat { .. } => "set_basic_stat",
             Reducer::SetName { .. } => "set_name",
             Reducer::SetWorldRates { .. } => "set_world_rates",
             Reducer::Stop => "stop",
@@ -238,6 +257,8 @@ impl __sdk::Reducer for Reducer {
             Reducer::UnequipItem { .. } => "unequip_item",
             Reducer::UploadGameFiles { .. } => "upload_game_files",
             Reducer::UseItem { .. } => "use_item",
+            Reducer::UseWarpGate { .. } => "use_warp_gate",
+            Reducer::WarpPlayer { .. } => "warp_player",
             _ => unreachable!(),
         }
     }
@@ -320,6 +341,13 @@ impl __sdk::Reducer for Reducer {
                     range: range.clone(),
                 })
             }
+            Reducer::SetBasicStat { name, stat, value } => {
+                __sats::bsatn::to_vec(&set_basic_stat_reducer::SetBasicStatArgs {
+                    name: name.clone(),
+                    stat: stat.clone(),
+                    value: value.clone(),
+                })
+            }
             Reducer::SetName { name } => {
                 __sats::bsatn::to_vec(&set_name_reducer::SetNameArgs { name: name.clone() })
             }
@@ -354,6 +382,17 @@ impl __sdk::Reducer for Reducer {
                 __sats::bsatn::to_vec(&use_item_reducer::UseItemArgs {
                     page: page.clone(),
                     index: index.clone(),
+                })
+            }
+            Reducer::UseWarpGate { warp_id } => {
+                __sats::bsatn::to_vec(&use_warp_gate_reducer::UseWarpGateArgs {
+                    warp_id: warp_id.clone(),
+                })
+            }
+            Reducer::WarpPlayer { name, zone_id } => {
+                __sats::bsatn::to_vec(&warp_player_reducer::WarpPlayerArgs {
+                    name: name.clone(),
+                    zone_id: zone_id.clone(),
                 })
             }
             _ => unreachable!(),
