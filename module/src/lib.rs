@@ -16,6 +16,7 @@ use npcs::npc;
 mod quests;
 mod npc_ai;
 mod party;
+mod pvp;
 mod skills;
 mod trade;
 mod world;
@@ -622,8 +623,12 @@ pub fn attack(ctx: &ReducerContext, target: u64) -> Result<(), String> {
         return Err("dead".into());
     }
     let target_entity = ctx.db.entity().entity_id().find(target).ok_or("no such target")?;
-    if target_entity.kind != EntityKind::Monster {
-        return Err("PvP is not enabled".into());
+    let game = game_data::game(ctx)?;
+    if !pvp::can_attack(ctx, &game, id, target) {
+        return Err(match target_entity.kind {
+            EntityKind::Player => "you can't fight players here".into(),
+            _ => "you can't attack that".to_string(),
+        });
     }
     if !is_alive(ctx, target) {
         return Err("target is dead".into());
@@ -874,13 +879,16 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
         }
         processed += 1;
         let id = c.entity_id;
-        if !is_alive(ctx, target) {
+        let Some(stats) = ctx.db.stats().entity_id().find(id) else { continue };
+        // A player fight ends when the target dies or stops being an enemy (left the PvP
+        // zone, joined our party).
+        let player_target = stats.is_player && ctx.db.entity().entity_id().find(target).is_some_and(|e| e.kind == EntityKind::Player);
+        if !is_alive(ctx, target) || (player_target && !pvp::players_hostile(ctx, &game, id, target)) {
             c.attack_target = None;
             ctx.db.combat().entity_id().update(c);
             stop_chase(ctx, id, target);
             continue;
         }
-        let Some(stats) = ctx.db.stats().entity_id().find(id) else { continue };
         let (Some(me), Some(them)) = (position(ctx, id, t), position(ctx, target, t)) else { continue };
         let dist = distance(me, them);
 
@@ -1065,6 +1073,12 @@ fn kill(ctx: &ReducerContext, game: &GameData, id: u64, stats: &Stats, killer: u
             despawn(ctx, id);
         }
         EntityKind::Player => {
+            let name = |id| ctx.db.player().iter().find(|p| p.entity_id == Some(id));
+            if let (Some(winner), Some(loser)) = (name(killer), name(id)) {
+                let text = format!("{} defeated {}", winner.name, loser.name);
+                items::notify(ctx, winner.identity, text.clone());
+                items::notify(ctx, loser.identity, text);
+            }
             stop_motion(ctx, id);
             if let Some(mut c) = ctx.db.combat().entity_id().find(id) {
                 c.attack_target = None;

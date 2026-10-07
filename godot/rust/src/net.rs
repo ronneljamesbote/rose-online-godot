@@ -1358,6 +1358,34 @@ impl RoseNet {
         true
     }
 
+    /// The PvP state of the zone we are in, from LIST_ZONE.STB: 0 when players can't fight,
+    /// 1 all except clan, 2 all except party, 3 all.
+    #[func]
+    fn zone_pvp(&self) -> i64 {
+        let (Some(c), Some(game)) = (self.conn.as_ref(), crate::data::get()) else { return 0 };
+        let Some(p) = c.try_identity().and_then(|i| c.db.player().identity().find(&i)) else { return 0 };
+        rose_data::ZoneId::new(p.zone_id).and_then(|z| game.zone_list.get_zone(z)).map_or(0, |z| z.pvp_state as i64)
+    }
+
+    /// Whether this entity is another player we may fight here (the server's pvp.rs rules).
+    #[func]
+    fn is_enemy_player(&self, entity_id: i64) -> bool {
+        let Some(c) = self.conn.as_ref() else { return false };
+        let Some(me) = c.try_identity() else { return false };
+        let Some(other) = c.db.player().iter().find(|p| p.entity_id == Some(entity_id as u64)) else { return false };
+        if other.identity == me {
+            return false;
+        }
+        match self.zone_pvp() {
+            2 => {
+                let party = |i: &Identity| c.db.party_member().identity().find(i).map(|m| m.party_id);
+                party(&me).is_none() || party(&me) != party(&other.identity)
+            }
+            1 | 3 => true,
+            _ => false,
+        }
+    }
+
     /// Trade requests sent to us: [request id, from name] each.
     #[func]
     fn get_trade_requests(&self) -> VarArray {

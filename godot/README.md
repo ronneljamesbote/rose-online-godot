@@ -101,6 +101,10 @@ What works now:
   sides put up to ten bag items (right-click them, Shift for one of a stack) and some Zuly
   on the table, lock, and press Trade. Changing an offer unlocks both sides, and walking
   more than 15 m apart ends the trade.
+- PvP: in the zones the game data marks for it (Junon Cartel, Crusader Training Camp, Lion's
+  Plains, the clan fields) the HUD says "PvP zone", other players you may fight have red
+  names, and clicking one attacks; attack skills work on them too. Party members stay
+  allies where the zone says so. Everywhere else players can't hurt each other.
 
 Not yet: monsters walking around objects (the server has no zone geometry), effects and
 particles, animated zone objects, sound, most UI.
@@ -159,7 +163,7 @@ Other options (after `--`):
 - `--offline` skips the start screen.
 - `--net-demo[=square|line|fight|warp|shop|skills|talk|walls]` walks a scripted route, fights the nearest
   monsters, walks through warp gates, buys and sells at the nearest store (`--buy=TEXT` picks
-  what to buy), uses the first two active skills, talks to the nearest NPC matching `--npc=NAME` and picks `--answers=1,2,...` (`q` prints the quest log, `talk` opens the conversation again, `deposit` and `withdraw` move the first item in or out of the bank), crafts (`craft`: the first craft skill makes the item matching `--craft=NAME`, `--times=N` times; in the talk demo `pick=NAME` puts a bag item into the refine or disassemble window, `work` presses its button, `skill=NAME` uses a skill, `use=NAME`, `equip=NAME` and `unequip` use, wear and take off the weapon, `gem=NAME` sets a gem and `wait` waits six seconds), trades (`trade`: with `--trade-with=NAME` it asks that player, without it accepts the first request; `--offer=ITEM` and `--zuly=N` are what it puts up, `--hold=SECONDS` how long it waits before pressing Trade), forms a party (`party`: with `--invite=NAME` it invites that player, without it accepts the first invitation; `--rules=XP,DROPS` sets the rules) and then fights, or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
+  what to buy), uses the first two active skills, talks to the nearest NPC matching `--npc=NAME` and picks `--answers=1,2,...` (`q` prints the quest log, `talk` opens the conversation again, `deposit` and `withdraw` move the first item in or out of the bank), crafts (`craft`: the first craft skill makes the item matching `--craft=NAME`, `--times=N` times; in the talk demo `pick=NAME` puts a bag item into the refine or disassemble window, `work` presses its button, `skill=NAME` uses a skill, `use=NAME`, `equip=NAME` and `unequip` use, wear and take off the weapon, `gem=NAME` sets a gem and `wait` waits six seconds), trades (`trade`: with `--trade-with=NAME` it asks that player, without it accepts the first request; `--offer=ITEM` and `--zuly=N` are what it puts up, `--hold=SECONDS` how long it waits before pressing Trade), fights a player (`pvp`: `--fight=NAME` attacks them, `--leave-party` leaves the party first), forms a party (`party`: with `--invite=NAME` it invites that player, without it accepts the first invitation; `--rules=XP,DROPS` sets the rules) and then fights, or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
   player's position once a second, `--quit-after=SECONDS` quits. The two-client test:
   `--headless ... --name=Alice --profile=alice --net-demo` in one process and
   `... --name=Bob --profile=bob --weapon=bow --net-demo=line --net-log` in another.

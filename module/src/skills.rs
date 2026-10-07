@@ -260,15 +260,21 @@ fn target_allowed(ctx: &ReducerContext, caster: u64, target: u64, skill: &SkillD
     let (caster_team, target_team) = (team(ce.kind), team(te.kind));
     let character = te.kind == EntityKind::Player;
     let monster = te.kind == EntityKind::Monster;
+    // Players are one team, except two players who may fight here (PvP zones).
+    let pvp_enemy = character
+        && ce.kind == EntityKind::Player
+        && crate::game_data::game(ctx).is_ok_and(|game| crate::pvp::players_hostile(ctx, &game, caster, target));
+    let enemy = caster_team != target_team || pvp_enemy;
+    let allied = caster_team == target_team && !pvp_enemy;
     match skill.target_filter {
         SkillTargetFilter::OnlySelf | SkillTargetFilter::Group | SkillTargetFilter::Guild => alive && is_caster,
-        SkillTargetFilter::Allied => alive && caster_team == target_team,
+        SkillTargetFilter::Allied => alive && allied,
         SkillTargetFilter::Monster => alive && monster,
-        SkillTargetFilter::Enemy => alive && target_team != 1 && caster_team != target_team,
-        SkillTargetFilter::EnemyCharacter => alive && caster_team != target_team && character,
+        SkillTargetFilter::Enemy => alive && target_team != 1 && enemy,
+        SkillTargetFilter::EnemyCharacter => alive && enemy && character,
         SkillTargetFilter::Character => alive && character,
         SkillTargetFilter::CharacterOrMonster => alive && (character || monster),
-        SkillTargetFilter::DeadAlliedCharacter => !alive && !is_caster && caster_team == target_team && character,
+        SkillTargetFilter::DeadAlliedCharacter => !alive && !is_caster && allied && character,
         SkillTargetFilter::EnemyMonster => alive && caster_team != target_team && monster,
     }
 }
@@ -575,7 +581,7 @@ pub fn cast_tick(ctx: &ReducerContext, game: &GameData, t: i64) {
             if let (Ok(skill), Some(target)) = (skill(game, cast.skill_id), cast.target) {
                 if matches!(skill.action_mode, SkillActionMode::Attack)
                     && target != id
-                    && ctx.db.entity().entity_id().find(target).is_some_and(|e| e.kind == EntityKind::Monster)
+                    && crate::pvp::can_attack(ctx, game, id, target)
                     && crate::is_alive(ctx, target)
                 {
                     if let Some(mut c) = ctx.db.combat().entity_id().find(id) {

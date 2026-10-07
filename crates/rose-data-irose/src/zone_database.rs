@@ -305,6 +305,7 @@ fn load_zone(
                 )
             })
             .collect(),
+        pvp_state: data.get_zone_pvp_state(id).unwrap_or(0),
         day_cycle: data
             .get_zone_day_cycle_time(id)
             .unwrap_or(WORLD_TICKS_PER_DAY as u32),
@@ -359,6 +360,7 @@ fn load_zone_list_entry(
         zon_file_path: VfsPathBuf::new(data.get_zone_file(id).ok_or(LoadZoneError::NotExists)?),
         zsc_cnst_path: VfsPathBuf::new(data.get_zone_cnst_table(id).unwrap_or("")),
         zsc_deco_path: VfsPathBuf::new(data.get_zone_deco_table(id).unwrap_or("")),
+        pvp_state: data.get_zone_pvp_state(id).unwrap_or(0),
         day_cycle: data
             .get_zone_day_cycle_time(id)
             .unwrap_or(WORLD_TICKS_PER_DAY as u32),
