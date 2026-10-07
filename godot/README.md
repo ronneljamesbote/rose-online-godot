@@ -101,6 +101,13 @@ What works now:
   sides put up to ten bag items (right-click them, Shift for one of a stack) and some Zuly
   on the table, lock, and press Trade. Changing an offer unlocks both sides, and walking
   more than 15 m apart ends the trade.
+- Chat: the box at the bottom left. Enter starts typing and Enter sends. As in iROSE, `!text`
+  shouts to the whole zone, `#text` talks to the party, `@name text` whispers (`/r text`
+  answers the last whisper), and anything else is heard by players within 50 m, with a
+  speech bubble over the speaker.
+- Sitting: X (or the Sit skill) sits down and stands up again. HP comes back faster while
+  sitting, and MP only comes back while sitting. Moving, attacking or using a skill stands
+  you up.
 - PvP: in the zones the game data marks for it (Junon Cartel, Crusader Training Camp, Lion's
   Plains, the clan fields) the HUD says "PvP zone", other players you may fight have red
   names, and clicking one attacks; attack skills work on them too. Party members stay
@@ -135,7 +142,7 @@ godot --path godot -- --data-idx=/path/to/iRose_129_129/data.idx
 Godot 4.6 or newer. `ROSE_DATA_IDX` works instead of `--data-idx`. The start screen offers
 Connect (online) or Play offline. In game: left-click to move, S to stop, right-drag to
 orbit the camera, mouse wheel to zoom. Online, left-click a monster to attack it and Space
-attacks the nearest one, C opens the character window, I the inventory, K the skills, Q the quests, 1-8 use the hotbar, Z picks up the nearest item; offline, Space swings the sword.
+attacks the nearest one, C opens the character window, I the inventory, K the skills, Q the quests, 1-8 use the hotbar, Z picks up the nearest item, X sits or stands, Enter chats; offline, Space swings the sword.
 
 The start screen's server address may end in a database name, `ws://HOST:3000/NAME`
 (default `rose`). Without `--data-idx` the game looks for the last `data.idx` picked, then
@@ -163,7 +170,7 @@ Other options (after `--`):
 - `--offline` skips the start screen.
 - `--net-demo[=square|line|fight|warp|shop|skills|talk|walls]` walks a scripted route, fights the nearest
   monsters, walks through warp gates, buys and sells at the nearest store (`--buy=TEXT` picks
-  what to buy), uses the first two active skills, talks to the nearest NPC matching `--npc=NAME` and picks `--answers=1,2,...` (`q` prints the quest log, `talk` opens the conversation again, `deposit` and `withdraw` move the first item in or out of the bank), crafts (`craft`: the first craft skill makes the item matching `--craft=NAME`, `--times=N` times; in the talk demo `pick=NAME` puts a bag item into the refine or disassemble window, `work` presses its button, `skill=NAME` uses a skill, `use=NAME`, `equip=NAME` and `unequip` use, wear and take off the weapon, `gem=NAME` sets a gem and `wait` waits six seconds), trades (`trade`: with `--trade-with=NAME` it asks that player, without it accepts the first request; `--offer=ITEM` and `--zuly=N` are what it puts up, `--hold=SECONDS` how long it waits before pressing Trade), fights a player (`pvp`: `--fight=NAME` attacks them, `--leave-party` leaves the party first), forms a party (`party`: with `--invite=NAME` it invites that player, without it accepts the first invitation; `--rules=XP,DROPS` sets the rules) and then fights, or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
+  what to buy), uses the first two active skills, talks to the nearest NPC matching `--npc=NAME` and picks `--answers=1,2,...` (`q` prints the quest log, `talk` opens the conversation again, `deposit` and `withdraw` move the first item in or out of the bank), crafts (`craft`: the first craft skill makes the item matching `--craft=NAME`, `--times=N` times; in the talk demo `pick=NAME` puts a bag item into the refine or disassemble window, `work` presses its button, `skill=NAME` uses a skill, `use=NAME`, `equip=NAME` and `unequip` use, wear and take off the weapon, `gem=NAME` sets a gem and `wait` waits six seconds), trades (`trade`: with `--trade-with=NAME` it asks that player, without it accepts the first request; `--offer=ITEM` and `--zuly=N` are what it puts up, `--hold=SECONDS` how long it waits before pressing Trade), fights a player (`pvp`: `--fight=NAME` attacks them, `--leave-party` leaves the party first), chats (`chat`: says each line of `--say=LINE|LINE` every `--say-every` seconds after `--chat-wait`; `--sit-for=SECONDS` sits meanwhile and prints HP and MP), forms a party (`party`: with `--invite=NAME` it invites that player, without it accepts the first invitation; `--rules=XP,DROPS` sets the rules) and then fights, or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
   player's position once a second, `--quit-after=SECONDS` quits. The two-client test:
   `--headless ... --name=Alice --profile=alice --net-demo` in one process and
   `... --name=Bob --profile=bob --weapon=bow --net-demo=line --net-log` in another.

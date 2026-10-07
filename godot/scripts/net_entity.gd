@@ -17,6 +17,7 @@ const BODY_RADIUS := 0.4
 const BODY_HEIGHT := 1.2  # height of the wall probe
 const STEP_HEIGHT := 1.35  # highest step up onto a floor object
 const BLOCKED_TIMEOUT_MS := 1500
+const SPEECH_SECONDS := 6.0
 
 signal collided(at: Vector3)
 
@@ -48,6 +49,9 @@ var is_moving := false
 var _cast_started := 0  # server start time of the skill cast we last played
 var _cast_next := ""  # action motion to play after the casting motion
 var _probe: SphereShape3D
+var sitting := false
+var _speech: Label3D
+var _speech_tween: Tween
 var _idle := "stop1"
 var _walk := "run"
 
@@ -120,6 +124,7 @@ func predict_move(target: Vector3) -> void:
 		return
 	predicted = {"from": Vector3(position.x, 0, position.z), "to": Vector3(target.x, 0, target.z), "started": Time.get_ticks_msec()}
 	was_swinging = false
+	sitting = false
 	_play(_walk, true)
 
 
@@ -183,6 +188,7 @@ func update_state(state: Dictionary, target_position) -> void:
 	placed = true
 
 	var is_dead: bool = state.get("dead", false)
+	var sit: bool = state.get("sitting", false) and predicted.is_empty()
 	var swinging: bool = state.get("swinging", false) and predicted.is_empty()
 	var cast_started: int = state.get("cast_started", 0)
 	if is_dead:
@@ -195,6 +201,14 @@ func update_state(state: Dictionary, target_position) -> void:
 			walk = "run"
 		_play(walk)  # moving cancels a swing at once
 		_cast_next = ""
+		sitting = false
+	elif sit:
+		if not sitting:
+			sitting = true
+			_play("sitting" if anim and anim.has_animation("sitting") else "sit", true)
+	elif sitting:
+		sitting = false
+		_play("standup", true)
 	elif cast_started != 0 and cast_started != _cast_started:
 		_start_cast(state)
 	elif swinging and not was_swinging:
@@ -237,6 +251,32 @@ func _ground_height(flat: Vector3) -> float:
 	var query := PhysicsRayQueryParameters3D.create(Vector3(flat.x, top, flat.z), Vector3(flat.x, terrain, flat.z), FLOORS)
 	var hit := get_world_3d().direct_space_state.intersect_ray(query)
 	return maxf(terrain, hit["position"].y) if not hit.is_empty() else terrain
+
+
+## Show what this player said over their head for a few seconds.
+func say(text: String) -> void:
+	if _speech == null:
+		_speech = Label3D.new()
+		_speech.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		_speech.no_depth_test = true
+		_speech.fixed_size = true
+		_speech.pixel_size = 0.0015
+		_speech.font_size = 20
+		_speech.outline_size = 8
+		_speech.outline_modulate = Color(0, 0, 0, 0.85)
+		_speech.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		_speech.width = 360
+		_speech.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+		add_child(_speech)
+	_speech.text = text
+	_speech.position.y = label.position.y + 0.7
+	_speech.modulate = Color(1, 1, 1, 1)
+	_speech.visible = true
+	if _speech_tween:
+		_speech_tween.kill()
+	_speech_tween = _speech.create_tween()
+	_speech_tween.tween_property(_speech, "modulate:a", 0.0, 0.6).set_delay(SPEECH_SECONDS)
+	_speech_tween.tween_callback(func(): _speech.visible = false)
 
 
 ## The server removed this entity after a killing blow: play the death, then go.
@@ -306,7 +346,7 @@ func _is_busy() -> bool:
 	if anim == null or not anim.is_playing():
 		return false
 	var current := String(anim.current_animation)
-	return current.begins_with("attack") or current == "hit" or current.begins_with("motion_")
+	return current.begins_with("attack") or current == "hit" or current.begins_with("motion_") or current == "standup"
 
 
 func _play(name: String, restart := false) -> void:
@@ -322,6 +362,12 @@ func _play(name: String, restart := false) -> void:
 
 func _on_animation_finished(name: StringName) -> void:
 	var finished := String(name)
+	if finished == "sitting" and sitting and not dead:
+		_play("sit")
+		return
+	if finished == "standup" and not dead and not dying:
+		_play(_idle)
+		return
 	if finished.begins_with("motion_") and _cast_next != "" and not dead and not dying:
 		var next := _cast_next
 		_cast_next = ""

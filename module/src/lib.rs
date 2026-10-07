@@ -8,6 +8,7 @@
 mod ability;
 mod bank;
 mod character;
+mod chat;
 mod craft;
 mod game_data;
 mod items;
@@ -216,6 +217,15 @@ impl Stats {
     }
 }
 
+/// Players sitting down (rose-offline's Sit command). HP comes back faster while sitting and
+/// MP only comes back while sitting. Moving, attacking or using a skill stands them up.
+#[spacetimedb::table(accessor = sitting, public)]
+pub struct Sitting {
+    #[primary_key]
+    pub entity_id: u64,
+    pub since_us: i64,
+}
+
 #[spacetimedb::table(accessor = monster_ai)]
 #[derive(Clone)]
 pub struct MonsterAi {
@@ -409,6 +419,7 @@ fn despawn(ctx: &ReducerContext, entity_id: u64) {
     ctx.db.stats().entity_id().delete(entity_id);
     ctx.db.monster_ai().entity_id().delete(entity_id);
     ctx.db.npc().entity_id().delete(entity_id);
+    ctx.db.sitting().entity_id().delete(entity_id);
     skills::clear_entity(ctx, entity_id);
     clear_damage_sources(ctx, entity_id);
     forget_entity(ctx, entity_id);
@@ -605,6 +616,7 @@ pub fn move_to(ctx: &ReducerContext, x: f32, y: f32) -> Result<(), String> {
         }
     }
     // It also cancels a swing or a cast in progress.
+    stand_up(ctx, id);
     cancel_attack(ctx, id, now_us(ctx));
     skills::cancel_cast(ctx, id);
     let speed = ctx.db.stats().entity_id().find(id).map_or(425.0, |s| s.move_speed);
@@ -634,6 +646,7 @@ pub fn attack(ctx: &ReducerContext, target: u64) -> Result<(), String> {
         return Err("target is dead".into());
     }
     let t = now_us(ctx);
+    stand_up(ctx, id);
     skills::cancel_cast(ctx, id);
     let mut c = ctx.db.combat().entity_id().find(id).ok_or("no combat row")?;
     if c.attack_target == Some(target) {
@@ -664,6 +677,29 @@ pub fn stop(ctx: &ReducerContext) -> Result<(), String> {
     cancel_attack(ctx, id, now_us(ctx));
     skills::cancel_cast(ctx, id);
     Ok(())
+}
+
+/// Sit down, or stand up when sitting. Sitting stops the character and any attack or cast.
+#[spacetimedb::reducer]
+pub fn sit(ctx: &ReducerContext) -> Result<(), String> {
+    let (_, id) = my_player(ctx)?;
+    if ctx.db.sitting().entity_id().find(id).is_some() {
+        stand_up(ctx, id);
+        return Ok(());
+    }
+    if !is_alive(ctx, id) {
+        return Err("dead".into());
+    }
+    let t = now_us(ctx);
+    stop_motion(ctx, id);
+    cancel_attack(ctx, id, t);
+    skills::cancel_cast(ctx, id);
+    ctx.db.sitting().insert(Sitting { entity_id: id, since_us: t });
+    Ok(())
+}
+
+pub(crate) fn stand_up(ctx: &ReducerContext, id: u64) {
+    ctx.db.sitting().entity_id().delete(id);
 }
 
 /// How far off its straight path a client may say it hit something.
@@ -744,6 +780,18 @@ pub fn set_aggro_range(ctx: &ReducerContext, npc_id: u16, range: f32) -> Result<
             ctx.db.monster_ai().entity_id().update(ai);
         }
     }
+    Ok(())
+}
+
+/// Debug: set an online player's HP and MP (clamped to their maximum), e.g. to show recovery.
+#[spacetimedb::reducer]
+pub fn set_hp_mp(ctx: &ReducerContext, name: String, hp: i32, mp: i32) -> Result<(), String> {
+    require_admin(ctx)?;
+    let id = ctx.db.player().iter().find(|p| p.name == name).and_then(|p| p.entity_id).ok_or("no such player online")?;
+    let mut c = ctx.db.combat().entity_id().find(id).ok_or("no combat row")?;
+    c.hp = hp.clamp(1, c.max_hp);
+    c.mp = mp.clamp(0, c.max_mp);
+    ctx.db.combat().entity_id().update(c);
     Ok(())
 }
 
@@ -1080,6 +1128,7 @@ fn kill(ctx: &ReducerContext, game: &GameData, id: u64, stats: &Stats, killer: u
                 items::notify(ctx, loser.identity, text);
             }
             stop_motion(ctx, id);
+            stand_up(ctx, id);
             if let Some(mut c) = ctx.db.combat().entity_id().find(id) {
                 c.attack_target = None;
                 c.dead_until_us = Some(t + PLAYER_RESPAWN_US);
@@ -1131,6 +1180,7 @@ pub fn spawn_tick(ctx: &ReducerContext, _timer: SpawnTickTimer) -> Result<(), St
     npc_ai::npc_ai_tick(ctx, &game, t);
     party::expire_invites(ctx, t);
     trade::expire_requests(ctx, t);
+    chat::expire_messages(ctx, t);
     world::spawn_tick(ctx, &game, t);
 
     // Idle wandering: about one in eight idle monsters takes a short walk each second.
@@ -1154,7 +1204,8 @@ pub fn spawn_tick(ctx: &ReducerContext, _timer: SpawnTickTimer) -> Result<(), St
     Ok(())
 }
 
-/// Every four seconds living players regain HP and MP (rose-offline's passive_recovery_system).
+/// Every four seconds living players regain HP, and MP too while sitting (rose-offline's
+/// passive_recovery_system).
 fn passive_recovery(ctx: &ReducerContext, game: &GameData, t: i64) {
     let Some(mut s) = ctx.db.tick_stats().id().find(0) else { return };
     if t < s.next_recovery_at_us {
@@ -1168,7 +1219,11 @@ fn passive_recovery(ctx: &ReducerContext, game: &GameData, t: i64) {
             continue;
         }
         let Some(av) = ctx.db.stats().entity_id().find(e.entity_id).and_then(|s| s.ability()) else { continue };
-        let state = rose_game_common::data::PassiveRecoveryState::Normal;
+        let state = if ctx.db.sitting().entity_id().find(e.entity_id).is_some() {
+            rose_game_common::data::PassiveRecoveryState::Sitting
+        } else {
+            rose_game_common::data::PassiveRecoveryState::Normal
+        };
         c.hp = (c.hp + game.ability_value_calculator.calculate_passive_recover_hp(&av, state)).min(c.max_hp);
         c.mp = (c.mp + game.ability_value_calculator.calculate_passive_recover_mp(&av, state)).min(c.max_mp);
         ctx.db.combat().entity_id().update(c);
