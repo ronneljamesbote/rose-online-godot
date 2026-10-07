@@ -14,7 +14,7 @@ use spacetimedb_sdk::{
 };
 
 use rose_data::{AmmoIndex, EquipmentIndex};
-use rose_game_common::components::{DroppedItem, Equipment, Inventory};
+use rose_game_common::components::{AbilityValues, DroppedItem, Equipment, Inventory};
 
 use crate::items::item_dict;
 
@@ -204,10 +204,11 @@ impl RoseNet {
         self.my_id().map_or(-1, |id| id as i64)
     }
 
-    /// Every entity in our zone: id, kind ("player" or "monster"), name, npc_id, position
+    /// Every entity in our zone: id, kind ("player", "monster" or "npc"), name, npc_id, position
     /// x/z and destination to_x/to_z (Godot metres), moving, speed (m/s), chasing, level,
     /// range (m), hp, max_hp, mp, max_mp, target (-1 for none), swinging, hit_in (seconds
-    /// until the swing's hit frame), dead, and for players look (see player_look).
+    /// until the swing's hit frame), dead, for players look (see player_look), and for NPCs
+    /// direction (degrees) and store.
     #[func]
     fn get_entities(&self) -> VarArray {
         let mut out = VarArray::new();
@@ -229,7 +230,18 @@ impl RoseNet {
 
             let mut d = VarDictionary::new();
             d.set("id", e.entity_id as i64);
-            d.set("kind", if e.kind == EntityKind::Player { "player" } else { "monster" });
+            d.set(
+                "kind",
+                match e.kind {
+                    EntityKind::Player => "player",
+                    EntityKind::Monster => "monster",
+                    EntityKind::Npc => "npc",
+                },
+            );
+            if let Some(npc) = c.db.npc().entity_id().find(&e.entity_id) {
+                d.set("direction", npc.direction);
+                d.set("store", npc.has_store);
+            }
             d.set("name", e.name.as_str());
             d.set("npc_id", e.npc_id as i64);
             d.set("x", gx);
@@ -475,6 +487,121 @@ impl RoseNet {
         }
         d.set("ammo", &ammo);
         d
+    }
+
+    /// Our store buy and sell rates and the world's price rates.
+    fn price_rates(&self) -> (i32, i32, WorldRates) {
+        let default_rates = WorldRates {
+            id: 0,
+            xp_rate: 0,
+            drop_rate: 0,
+            drop_money_rate: 0,
+            reward_rate: 0,
+            world_price_rate: 100,
+            item_price_rate: 50,
+            town_price_rate: 100,
+        };
+        let Some(c) = self.conn.as_ref() else { return (0, 0, default_rates) };
+        let rates = c.db.world_rates().id().find(&0).unwrap_or(default_rates);
+        let av: Option<AbilityValues> = self
+            .my_id()
+            .and_then(|id| c.db.stats().entity_id().find(&id))
+            .and_then(|st| serde_json::from_str(&st.ability_values).ok());
+        let (buy, sell) = av.map_or((0, 0), |av| (av.get_npc_store_buy_rate(), av.get_npc_store_sell_rate()));
+        (buy, sell, rates)
+    }
+
+    /// An NPC's store: name and tabs, each with a name and items (index, item as in
+    /// get_inventory, price). Empty when the NPC has no store.
+    #[func]
+    fn get_store(&self, entity_id: i64) -> VarDictionary {
+        let mut d = VarDictionary::new();
+        let (Some(c), Some(game)) = (self.conn.as_ref(), crate::data::get()) else { return d };
+        let Some(npc) = c.db.npc().entity_id().find(&(entity_id as u64)) else { return d };
+        let Some(data) = rose_data::NpcId::new(npc.npc_id).and_then(|id| game.npcs.get_npc(id)) else { return d };
+        let (buy_rate, _, rates) = self.price_rates();
+        d.set("name", data.name);
+        let mut tabs = VarArray::new();
+        for (tab_index, tab_id) in data.store_tabs.iter().enumerate() {
+            let Some(tab) = tab_id.and_then(|id| game.npcs.get_store_tab(id)) else { continue };
+            let mut entries: Vec<(u16, rose_data::ItemReference)> = tab.items.iter().map(|(i, r)| (*i, *r)).collect();
+            entries.sort_by_key(|(i, _)| *i);
+            let mut items = VarArray::new();
+            for (index, reference) in entries {
+                let Some(base) = game.items.get_base_item(reference) else { continue };
+                let Some(item) = rose_data::Item::from_item_data(base, 1) else { continue };
+                let price = rose_game_irose::data::npc_store_buy_price(
+                    &game.items,
+                    reference,
+                    buy_rate,
+                    rates.item_price_rate,
+                    rates.town_price_rate,
+                );
+                let mut entry = VarDictionary::new();
+                entry.set("index", index as i64);
+                entry.set("item", &item_dict(&item));
+                entry.set("price", price.unwrap_or(0) as i64);
+                entry.set("stackable", reference.item_type.is_stackable_item());
+                items.push(&entry.to_variant());
+            }
+            let mut t = VarDictionary::new();
+            t.set("tab", tab_index as i64);
+            t.set("name", tab.name);
+            t.set("items", &items);
+            tabs.push(&t.to_variant());
+        }
+        d.set("tabs", &tabs);
+        d
+    }
+
+    /// What a store pays for one of the item in an inventory slot, or -1.
+    #[func]
+    fn sell_price(&self, page: i64, index: i64) -> i64 {
+        let (Some(c), Some(game)) = (self.conn.as_ref(), crate::data::get()) else { return -1 };
+        let Some(p) = c.try_identity().and_then(|i| c.db.player().identity().find(&i)) else { return -1 };
+        let inventory: Inventory = serde_json::from_str(&p.inventory).unwrap_or_default();
+        let page = match page {
+            0 => &inventory.equipment,
+            1 => &inventory.consumables,
+            2 => &inventory.materials,
+            3 => &inventory.vehicles,
+            _ => return -1,
+        };
+        let Some(Some(item)) = page.slots.get(index.max(0) as usize) else { return -1 };
+        let (_, sell_rate, rates) = self.price_rates();
+        rose_game_irose::data::npc_store_sell_price(
+            &game.items,
+            item,
+            sell_rate,
+            rates.world_price_rate,
+            rates.item_price_rate,
+            rates.town_price_rate,
+        )
+        .map_or(-1, |p| p as i64)
+    }
+
+    /// Buy from and sell to an NPC's store in one go. buy: [[tab, index, quantity], ...],
+    /// sell: [[page, index, quantity], ...].
+    #[func]
+    fn store_transaction(&self, npc_entity_id: i64, buy: VarArray, sell: VarArray) {
+        let triple = |v: Variant| -> Option<(i64, i64, i64)> {
+            let a = v.try_to::<VarArray>().ok()?;
+            Some((a.get(0)?.try_to().ok()?, a.get(1)?.try_to().ok()?, a.get(2)?.try_to().ok()?))
+        };
+        let buy: Vec<StoreBuy> = buy
+            .iter_shared()
+            .filter_map(triple)
+            .map(|(tab, index, quantity)| StoreBuy { tab: tab as u8, index: index as u16, quantity: quantity.max(1) as u32 })
+            .collect();
+        let sell: Vec<StoreSell> = sell
+            .iter_shared()
+            .filter_map(triple)
+            .map(|(page, index, quantity)| StoreSell { page: page as u8, index: index as u16, quantity: quantity.max(1) as u32 })
+            .collect();
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.npc_store_transaction_then(npc_entity_id as u64, buy, sell, move |_, r| report(&s, r)).ok();
+        }
     }
 
     /// We walked into a warp gate (its WARP.STB id).

@@ -27,6 +27,7 @@ pub mod game_data_status_table;
 pub mod game_data_status_type;
 pub mod game_file_type;
 pub mod game_file_upload_type;
+pub mod give_money_reducer;
 pub mod give_xp_reducer;
 pub mod ground_item_table;
 pub mod ground_item_type;
@@ -39,6 +40,9 @@ pub mod move_item_reducer;
 pub mod move_to_reducer;
 pub mod notice_table;
 pub mod notice_type;
+pub mod npc_store_transaction_reducer;
+pub mod npc_table;
+pub mod npc_type;
 pub mod pickup_item_reducer;
 pub mod place_player_reducer;
 pub mod player_table;
@@ -48,12 +52,15 @@ pub mod reset_monsters_reducer;
 pub mod set_aggro_range_reducer;
 pub mod set_basic_stat_reducer;
 pub mod set_name_reducer;
+pub mod set_price_rates_reducer;
 pub mod set_world_rates_reducer;
 pub mod spawn_entry_type;
 pub mod spawn_tick_timer_type;
 pub mod stats_table;
 pub mod stats_type;
 pub mod stop_reducer;
+pub mod store_buy_type;
+pub mod store_sell_type;
 pub mod tick_stats_table;
 pub mod tick_stats_type;
 pub mod unequip_ammo_reducer;
@@ -90,6 +97,7 @@ pub use game_data_status_table::*;
 pub use game_data_status_type::GameDataStatus;
 pub use game_file_type::GameFile;
 pub use game_file_upload_type::GameFileUpload;
+pub use give_money_reducer::give_money;
 pub use give_xp_reducer::give_xp;
 pub use ground_item_table::*;
 pub use ground_item_type::GroundItem;
@@ -102,6 +110,9 @@ pub use move_item_reducer::move_item;
 pub use move_to_reducer::move_to;
 pub use notice_table::*;
 pub use notice_type::Notice;
+pub use npc_store_transaction_reducer::npc_store_transaction;
+pub use npc_table::*;
+pub use npc_type::Npc;
 pub use pickup_item_reducer::pickup_item;
 pub use place_player_reducer::place_player;
 pub use player_table::*;
@@ -111,12 +122,15 @@ pub use reset_monsters_reducer::reset_monsters;
 pub use set_aggro_range_reducer::set_aggro_range;
 pub use set_basic_stat_reducer::set_basic_stat;
 pub use set_name_reducer::set_name;
+pub use set_price_rates_reducer::set_price_rates;
 pub use set_world_rates_reducer::set_world_rates;
 pub use spawn_entry_type::SpawnEntry;
 pub use spawn_tick_timer_type::SpawnTickTimer;
 pub use stats_table::*;
 pub use stats_type::Stats;
 pub use stop_reducer::stop;
+pub use store_buy_type::StoreBuy;
+pub use store_sell_type::StoreSell;
 pub use tick_stats_table::*;
 pub use tick_stats_type::TickStats;
 pub use unequip_ammo_reducer::unequip_ammo;
@@ -160,6 +174,10 @@ pub enum Reducer {
         index: u16,
     },
     FinishGameDataUpload,
+    GiveMoney {
+        name: String,
+        amount: i64,
+    },
     GiveXp {
         name: String,
         xp: u64,
@@ -176,6 +194,11 @@ pub enum Reducer {
     MoveTo {
         x: f32,
         y: f32,
+    },
+    NpcStoreTransaction {
+        npc_entity_id: u64,
+        buy: Vec<StoreBuy>,
+        sell: Vec<StoreSell>,
     },
     PickupItem {
         drop_id: u64,
@@ -197,6 +220,11 @@ pub enum Reducer {
     },
     SetName {
         name: String,
+    },
+    SetPriceRates {
+        world_price_rate: i32,
+        item_price_rate: i32,
+        town_price_rate: i32,
     },
     SetWorldRates {
         xp_rate: i32,
@@ -241,16 +269,19 @@ impl __sdk::Reducer for Reducer {
             Reducer::DropMoney { .. } => "drop_money",
             Reducer::EquipItem { .. } => "equip_item",
             Reducer::FinishGameDataUpload => "finish_game_data_upload",
+            Reducer::GiveMoney { .. } => "give_money",
             Reducer::GiveXp { .. } => "give_xp",
             Reducer::MoveCollision { .. } => "move_collision",
             Reducer::MoveItem { .. } => "move_item",
             Reducer::MoveTo { .. } => "move_to",
+            Reducer::NpcStoreTransaction { .. } => "npc_store_transaction",
             Reducer::PickupItem { .. } => "pickup_item",
             Reducer::PlacePlayer { .. } => "place_player",
             Reducer::ResetMonsters => "reset_monsters",
             Reducer::SetAggroRange { .. } => "set_aggro_range",
             Reducer::SetBasicStat { .. } => "set_basic_stat",
             Reducer::SetName { .. } => "set_name",
+            Reducer::SetPriceRates { .. } => "set_price_rates",
             Reducer::SetWorldRates { .. } => "set_world_rates",
             Reducer::Stop => "stop",
             Reducer::UnequipAmmo { .. } => "unequip_ammo",
@@ -299,6 +330,12 @@ impl __sdk::Reducer for Reducer {
             Reducer::FinishGameDataUpload => {
                 __sats::bsatn::to_vec(&finish_game_data_upload_reducer::FinishGameDataUploadArgs {})
             }
+            Reducer::GiveMoney { name, amount } => {
+                __sats::bsatn::to_vec(&give_money_reducer::GiveMoneyArgs {
+                    name: name.clone(),
+                    amount: amount.clone(),
+                })
+            }
             Reducer::GiveXp { name, xp } => __sats::bsatn::to_vec(&give_xp_reducer::GiveXpArgs {
                 name: name.clone(),
                 xp: xp.clone(),
@@ -319,6 +356,15 @@ impl __sdk::Reducer for Reducer {
             Reducer::MoveTo { x, y } => __sats::bsatn::to_vec(&move_to_reducer::MoveToArgs {
                 x: x.clone(),
                 y: y.clone(),
+            }),
+            Reducer::NpcStoreTransaction {
+                npc_entity_id,
+                buy,
+                sell,
+            } => __sats::bsatn::to_vec(&npc_store_transaction_reducer::NpcStoreTransactionArgs {
+                npc_entity_id: npc_entity_id.clone(),
+                buy: buy.clone(),
+                sell: sell.clone(),
             }),
             Reducer::PickupItem { drop_id } => {
                 __sats::bsatn::to_vec(&pickup_item_reducer::PickupItemArgs {
@@ -351,6 +397,15 @@ impl __sdk::Reducer for Reducer {
             Reducer::SetName { name } => {
                 __sats::bsatn::to_vec(&set_name_reducer::SetNameArgs { name: name.clone() })
             }
+            Reducer::SetPriceRates {
+                world_price_rate,
+                item_price_rate,
+                town_price_rate,
+            } => __sats::bsatn::to_vec(&set_price_rates_reducer::SetPriceRatesArgs {
+                world_price_rate: world_price_rate.clone(),
+                item_price_rate: item_price_rate.clone(),
+                town_price_rate: town_price_rate.clone(),
+            }),
             Reducer::SetWorldRates {
                 xp_rate,
                 drop_rate,
@@ -411,6 +466,7 @@ pub struct DbUpdate {
     ground_item: __sdk::TableUpdate<GroundItem>,
     motion: __sdk::TableUpdate<Motion>,
     notice: __sdk::TableUpdate<Notice>,
+    npc: __sdk::TableUpdate<Npc>,
     player: __sdk::TableUpdate<Player>,
     stats: __sdk::TableUpdate<Stats>,
     tick_stats: __sdk::TableUpdate<TickStats>,
@@ -446,6 +502,9 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "notice" => db_update
                     .notice
                     .append(notice_table::parse_table_update(table_update)?),
+                "npc" => db_update
+                    .npc
+                    .append(npc_table::parse_table_update(table_update)?),
                 "player" => db_update
                     .player
                     .append(player_table::parse_table_update(table_update)?),
@@ -507,6 +566,9 @@ impl __sdk::DbUpdate for DbUpdate {
             .apply_diff_to_table::<Motion>("motion", &self.motion)
             .with_updates_by_pk(|row| &row.entity_id);
         diff.notice = self.notice.into_event_diff();
+        diff.npc = cache
+            .apply_diff_to_table::<Npc>("npc", &self.npc)
+            .with_updates_by_pk(|row| &row.entity_id);
         diff.player = cache
             .apply_diff_to_table::<Player>("player", &self.player)
             .with_updates_by_pk(|row| &row.identity);
@@ -550,6 +612,9 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "notice" => db_update
                     .notice
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "npc" => db_update
+                    .npc
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "player" => db_update
                     .player
@@ -603,6 +668,9 @@ impl __sdk::DbUpdate for DbUpdate {
                 "notice" => db_update
                     .notice
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "npc" => db_update
+                    .npc
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "player" => db_update
                     .player
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
@@ -643,6 +711,7 @@ pub struct AppliedDiff<'r> {
     ground_item: __sdk::TableAppliedDiff<'r, GroundItem>,
     motion: __sdk::TableAppliedDiff<'r, Motion>,
     notice: __sdk::TableAppliedDiff<'r, Notice>,
+    npc: __sdk::TableAppliedDiff<'r, Npc>,
     player: __sdk::TableAppliedDiff<'r, Player>,
     stats: __sdk::TableAppliedDiff<'r, Stats>,
     tick_stats: __sdk::TableAppliedDiff<'r, TickStats>,
@@ -677,6 +746,7 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
         callbacks.invoke_table_row_callbacks::<GroundItem>("ground_item", &self.ground_item, event);
         callbacks.invoke_table_row_callbacks::<Motion>("motion", &self.motion, event);
         callbacks.invoke_table_row_callbacks::<Notice>("notice", &self.notice, event);
+        callbacks.invoke_table_row_callbacks::<Npc>("npc", &self.npc, event);
         callbacks.invoke_table_row_callbacks::<Player>("player", &self.player, event);
         callbacks.invoke_table_row_callbacks::<Stats>("stats", &self.stats, event);
         callbacks.invoke_table_row_callbacks::<TickStats>("tick_stats", &self.tick_stats, event);
@@ -1350,6 +1420,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
         ground_item_table::register_table(client_cache);
         motion_table::register_table(client_cache);
         notice_table::register_table(client_cache);
+        npc_table::register_table(client_cache);
         player_table::register_table(client_cache);
         stats_table::register_table(client_cache);
         tick_stats_table::register_table(client_cache);
@@ -1365,6 +1436,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
         "ground_item",
         "motion",
         "notice",
+        "npc",
         "player",
         "stats",
         "tick_stats",

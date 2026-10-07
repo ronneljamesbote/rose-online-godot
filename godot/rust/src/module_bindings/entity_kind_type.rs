@@ -11,6 +11,8 @@ pub enum EntityKind {
     Player,
 
     Monster,
+
+    Npc,
 }
 
 impl __sdk::InModule for EntityKind {

@@ -9,6 +9,8 @@ mod ability;
 mod character;
 mod game_data;
 mod items;
+mod npcs;
+use npcs::npc;
 mod world;
 
 use rand::Rng;
@@ -39,6 +41,7 @@ const RECOVERY_INTERVAL_US: i64 = 4_000_000;
 pub enum EntityKind {
     Player,
     Monster,
+    Npc,
 }
 
 #[spacetimedb::table(accessor = admin)]
@@ -258,6 +261,10 @@ pub struct WorldRates {
     pub drop_rate: i32,
     pub drop_money_rate: i32,
     pub reward_rate: i32,
+    /// Store prices (rose-offline's world_price_rate, item_price_rate, town_price_rate).
+    pub world_price_rate: i32,
+    pub item_price_rate: i32,
+    pub town_price_rate: i32,
 }
 
 /// Per-tick timing, so the go/no-go "combat tick duration" can be read with SQL.
@@ -392,6 +399,7 @@ fn despawn(ctx: &ReducerContext, entity_id: u64) {
     ctx.db.combat().entity_id().delete(entity_id);
     ctx.db.stats().entity_id().delete(entity_id);
     ctx.db.monster_ai().entity_id().delete(entity_id);
+    ctx.db.npc().entity_id().delete(entity_id);
     clear_damage_sources(ctx, entity_id);
     forget_entity(ctx, entity_id);
 }
@@ -472,6 +480,9 @@ fn world_rates_row(ctx: &ReducerContext) -> WorldRates {
         drop_rate: 300,
         drop_money_rate: 300,
         reward_rate: 300,
+        world_price_rate: 100,
+        item_price_rate: 50,
+        town_price_rate: 100,
     })
 }
 
@@ -690,7 +701,17 @@ pub fn move_collision(ctx: &ReducerContext, x: f32, y: f32) -> Result<(), String
 #[spacetimedb::reducer]
 pub fn set_world_rates(ctx: &ReducerContext, xp_rate: i32, drop_rate: i32, drop_money_rate: i32, reward_rate: i32) -> Result<(), String> {
     require_admin(ctx)?;
-    ctx.db.world_rates().id().update(WorldRates { id: 0, xp_rate, drop_rate, drop_money_rate, reward_rate });
+    let rates = world_rates_row(ctx);
+    ctx.db.world_rates().id().update(WorldRates { id: 0, xp_rate, drop_rate, drop_money_rate, reward_rate, ..rates });
+    Ok(())
+}
+
+/// Set the store price rates in percent (rose-offline's defaults: world 100, item 50, town 100).
+#[spacetimedb::reducer]
+pub fn set_price_rates(ctx: &ReducerContext, world_price_rate: i32, item_price_rate: i32, town_price_rate: i32) -> Result<(), String> {
+    require_admin(ctx)?;
+    let rates = world_rates_row(ctx);
+    ctx.db.world_rates().id().update(WorldRates { world_price_rate, item_price_rate, town_price_rate, ..rates });
     Ok(())
 }
 
@@ -1027,6 +1048,7 @@ fn kill(ctx: &ReducerContext, game: &GameData, id: u64, stats: &Stats, killer: u
                 ctx.db.combat().entity_id().update(c);
             }
         }
+        EntityKind::Npc => {}
     }
 }
 

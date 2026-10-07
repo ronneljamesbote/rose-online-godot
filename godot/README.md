@@ -58,6 +58,13 @@ What works now:
   ZSC) and asks the server to warp you when you walk into one; the server sends you to the
   gate's target zone and event position (WARP.STB), and the client loads that zone.
 
+- Town NPCs and stores: the server places every NPC from the zone files, and the client
+  shows them with their names in green. Click one to walk over and open its store: tabs of
+  items with icons and prices from rose-offline's formulas. Right-click buys one,
+  Shift+right-click ten; while the store is open, right-clicking a bag item sells one
+  (Shift sells the stack) and its tooltip shows what the store pays. There is no path
+  finding yet, so a store also opens when a wall stops you within 12 m of the NPC.
+
 Not yet: monsters walking around objects (the server has no zone geometry), skills,
 effects and particles, animated zone objects, sound, most UI.
 
@@ -113,8 +120,8 @@ Other options (after `--`):
 - `--profile=NAME` picks the identity file (`user://identity-NAME.token`), so two clients on
   one PC are two players.
 - `--offline` skips the start screen.
-- `--net-demo[=square|line|fight|warp|walls]` walks a scripted route, fights the nearest monsters,
-  walks through warp gates or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
+- `--net-demo[=square|line|fight|warp|shop|walls]` walks a scripted route, fights the nearest
+  monsters, walks through warp gates, buys and sells at the nearest store, or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
   player's position once a second, `--quit-after=SECONDS` quits. The two-client test:
   `--headless ... --name=Alice --profile=alice --net-demo` in one process and
   `... --name=Bob --profile=bob --weapon=bow --net-demo=line --net-log` in another.

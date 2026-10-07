@@ -88,7 +88,7 @@ fn page_type(page: u8) -> Result<InventoryPageType, String> {
     })
 }
 
-fn inventory_slot(page: u8, index: u16) -> Result<ItemSlot, String> {
+pub(crate) fn inventory_slot(page: u8, index: u16) -> Result<ItemSlot, String> {
     if index as usize >= INVENTORY_PAGE_SIZE {
         return Err("no such inventory slot".into());
     }
@@ -130,7 +130,7 @@ fn ammo_for_class(class: ItemClass) -> Option<AmmoIndex> {
     }
 }
 
-fn player_ability_values(ctx: &ReducerContext, game: &GameData, p: &Player) -> AbilityValues {
+pub(crate) fn player_ability_values(ctx: &ReducerContext, game: &GameData, p: &Player) -> AbilityValues {
     p.entity_id
         .and_then(|id| ctx.db.stats().entity_id().find(id))
         .and_then(|s| serde_json::from_str(&s.ability_values).ok())

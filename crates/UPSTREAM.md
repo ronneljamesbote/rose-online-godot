@@ -25,8 +25,10 @@ To compare with upstream later: clone rose-offline at the commit above and diff 
   that have no IFO file.
 - rose-game-common: `AbilityValues` and its parts serialize with serde.
 - rose-game-irose: random numbers come from `rng.rs`, a seedable generator (the module
-  seeds it each tick), instead of `thread_rng`; `levelup_require_xp` and
-  `basic_stat_increase_cost` are public.
+  seeds it each tick), instead of `thread_rng`; `levelup_require_xp`,
+  `basic_stat_increase_cost`, `npc_store_buy_price` and `npc_store_sell_price` are public
+  free functions (the client uses them for prices); the sell price no longer panics on a
+  non-equipment item of an equipment type.
 
 ## Our own crate
 

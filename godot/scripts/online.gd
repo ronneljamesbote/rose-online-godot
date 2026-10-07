@@ -1,5 +1,5 @@
-## Online play: connects to the SpacetimeDB server and shows every player and monster in
-## the zone, each moving along the server's motion paths, with hits and damage numbers.
+## Online play: connects to the SpacetimeDB server and shows every player, monster and
+## town NPC in the zone, each moving along the server's motion paths, with hits and damage numbers.
 extends Node3D
 
 signal joined(me: Node3D)
@@ -8,11 +8,15 @@ signal zone_needed(zone_id: int)
 const NetEntity := preload("res://scripts/net_entity.gd")
 const CharacterWindow := preload("res://scripts/character_window.gd")
 const InventoryWindow := preload("res://scripts/inventory_window.gd")
+const StoreWindow := preload("res://scripts/store_window.gd")
 const PICK_RADIUS_PX := 60.0
 const ITEM_PICK_RADIUS_PX := 30.0
 const PICKUP_RANGE := 2.5  # metres; the server allows 4
 const NOTICE_SECONDS := 8.0
 const WARP_MARGIN := 3.0  # metres around a warp gate's model that count as walking into it
+const TALK_RANGE := 3.0  # metres from an NPC to open its store
+const TALK_STOPPED_RANGE := 12.0  # or this close, when a wall stopped us on the way
+const NPC_NAME_RANGE := 30.0
 const MONSTER_NAME_RANGE := 15.0  # monster names show within this many metres, or when targeted
 
 var zone: Node
@@ -31,9 +35,11 @@ var xp_bar: ProgressBar
 var xp_label: Label
 var character_window: PanelContainer
 var inventory_window: PanelContainer
+var store_window: PanelContainer
 var notice_box: VBoxContainer
 var ground := {}  # drop id -> Node3D
 var _pickup := -1  # drop we are walking to
+var _talk := -1  # NPC we are walking to
 var _warps: Array = []  # this zone's warp gates: id, position, size
 var _warps_zone: Node = null
 var _next_warp_ms := 0
@@ -89,6 +95,17 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	inventory_window.offset_right = -12
 	layer.add_child(inventory_window)
 
+	store_window = StoreWindow.new()
+	store_window.net = net
+	store_window.online = self
+	store_window.inventory_window = inventory_window
+	store_window.visible = false
+	store_window.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+	store_window.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	store_window.offset_top = 70
+	layer.add_child(store_window)
+	inventory_window.store_window = store_window
+
 	# Messages (pickups, refused actions) above the experience bar, newest at the bottom.
 	notice_box = VBoxContainer.new()
 	notice_box.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
@@ -123,6 +140,8 @@ func use_zone(zone_node: Node) -> void:
 		item.queue_free()
 	ground.clear()
 	_pickup = -1
+	_talk = -1
+	store_window.close_store()
 	me = null
 	_zone_requested = 0
 
@@ -140,6 +159,7 @@ func move_to(target: Vector3) -> void:
 		return
 	my_target = -1
 	_pickup = -1
+	_talk = -1
 	net.move_to(target.x, target.z)
 	me.predict_move(target)
 
@@ -149,6 +169,7 @@ func attack(id: int) -> void:
 		return
 	my_target = id
 	_pickup = -1
+	_talk = -1
 	net.attack(id)
 	if log_damage:
 		print("rose net: attack ", entities[id].label.text, " (entity ", id, ")")
@@ -162,11 +183,20 @@ func stop() -> void:
 ## The monster under the mouse, or -1. Entities have no colliders yet, so this picks the
 ## one whose body centre is nearest the click on screen.
 func pick_monster(camera: Camera3D, screen_position: Vector2) -> int:
+	return _pick_entity(camera, screen_position, false)
+
+
+## The town NPC under the mouse, or -1.
+func pick_npc(camera: Camera3D, screen_position: Vector2) -> int:
+	return _pick_entity(camera, screen_position, true)
+
+
+func _pick_entity(camera: Camera3D, screen_position: Vector2, npcs: bool) -> int:
 	var best := -1
 	var best_distance := PICK_RADIUS_PX
 	for id in entities:
 		var entity: Node3D = entities[id]
-		if not entity.is_monster or entity.dead or entity.dying:
+		if (not entity.is_npc if npcs else not entity.is_monster) or entity.dead or entity.dying:
 			continue
 		var centre: Vector3 = entity.global_position + Vector3(0, entity.height * 0.5, 0)
 		if camera.is_position_behind(centre):
@@ -190,6 +220,32 @@ func pick_item(camera: Camera3D, screen_position: Vector2) -> int:
 		if d < best_distance:
 			best_distance = d
 			best = id
+	return best
+
+
+## Walk to an NPC and open its store when there.
+func talk_to(id: int) -> void:
+	if me == null or not entities.has(id):
+		return
+	var at: Vector3 = entities[id].position
+	if Vector2(at.x - me.position.x, at.z - me.position.z).length() > TALK_RANGE:
+		move_to(at)
+	_talk = id
+
+
+## Nearest town NPC with a store, or -1.
+func nearest_store() -> int:
+	var best := -1
+	var best_distance := INF
+	if me == null:
+		return best
+	for id in entities:
+		var entity: Node3D = entities[id]
+		if entity.is_npc and entity.has_store:
+			var d: float = entity.position.distance_to(me.position)
+			if d < best_distance:
+				best_distance = d
+				best = id
 	return best
 
 
@@ -329,29 +385,44 @@ func _process(_delta: float) -> void:
 			if Vector2(at.x - me.position.x, at.z - me.position.z).length() <= PICKUP_RANGE:
 				net.pickup_item(_pickup)
 				_pickup = -1
+	if me and _talk >= 0:
+		if not entities.has(_talk):
+			_talk = -1
+		else:
+			var npc: Node3D = entities[_talk]
+			var d := Vector2(npc.position.x - me.position.x, npc.position.z - me.position.z).length()
+			if d <= TALK_RANGE or (not me.is_moving and d <= TALK_STOPPED_RANGE):
+				net.stop()
+				if not store_window.open_store(_talk, npc):
+					_notice("%s has nothing to sell" % npc.label.text)
+				_talk = -1
 
 	if me:
 		for id in entities:
 			var entity: Node3D = entities[id]
 			if entity.is_monster and not entity.dying:
 				entity.label.visible = id == my_target or entity.position.distance_to(me.position) < MONSTER_NAME_RANGE
+			elif entity.is_npc:
+				entity.label.visible = entity.position.distance_to(me.position) < NPC_NAME_RANGE
 
 	if log_positions and Time.get_ticks_msec() >= _next_log_ms:
 		_next_log_ms = Time.get_ticks_msec() + 1000
 		var line := []
 		for entity in entities.values():
-			if not entity.is_monster:
+			if not entity.is_monster and not entity.is_npc:
 				line.append("%s (%.2f, %.2f) %s" % [entity.label.text, entity.position.x, entity.position.z, entity.anim.current_animation])
 		print("rose net: t=%d ms  " % Time.get_ticks_msec(), ", ".join(line))
 
 	var monsters := 0
+	var npcs := 0
 	for entity in entities.values():
 		monsters += 1 if entity.is_monster else 0
+		npcs += 1 if entity.is_npc else 0
 	var c := character
 	var level: int = c.get("level", 0)
 	hud.text = "%s   Lv %d   HP %d/%d   MP %d/%d   players %d   monsters %d" % [
 		c.get("name", player_name), level, me.hp if me else 0, me.max_hp if me else 0,
-		me.mp if me else 0, me.max_mp if me else 0, entities.size() - monsters, monsters]
+		me.mp if me else 0, me.max_mp if me else 0, entities.size() - monsters - npcs, monsters]
 	if not c.is_empty():
 		var needed: int = max(int(c["xp_needed"]), 1)
 		xp_bar.value = float(c["xp"]) / needed

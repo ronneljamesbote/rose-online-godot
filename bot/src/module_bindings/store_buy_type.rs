@@ -6,15 +6,12 @@ use spacetimedb_sdk::__codegen::{self as __sdk, __lib, __sats, __ws};
 
 #[derive(__lib::ser::Serialize, __lib::de::Deserialize, Clone, PartialEq, Debug)]
 #[sats(crate = __lib)]
-#[derive(Copy, Eq, Hash)]
-pub enum EntityKind {
-    Player,
-
-    Monster,
-
-    Npc,
+pub struct StoreBuy {
+    pub tab: u8,
+    pub index: u16,
+    pub quantity: u32,
 }
 
-impl __sdk::InModule for EntityKind {
+impl __sdk::InModule for StoreBuy {
     type Module = super::RemoteModule;
 }
