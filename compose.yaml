@@ -1,0 +1,17 @@
+# ROSE game server. From this folder:  docker compose up -d   (see server/README.md)
+services:
+  rose-server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    image: rose-server
+    ports:
+      - "3000:3000"
+    volumes:
+      - rose-data:/data
+    environment:
+      ROSE_CLEAR_WORLD: ${ROSE_CLEAR_WORLD:-0}
+    restart: unless-stopped
+
+volumes:
+  rose-data:
