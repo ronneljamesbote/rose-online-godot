@@ -19,7 +19,6 @@
 ##   --quit-after=SECONDS       quit after this long
 extends Node3D
 
-const DEFAULT_DATA_IDX := "data.idx"
 const START := Vector3(5210.5, 0.0, -5136.7)  # zone start position from LIST_ZONE.STB
 const SETTINGS := "user://settings.cfg"
 
@@ -57,7 +56,6 @@ func _find_data_idx() -> String:
 		exe_dir.path_join("iRose_129_129/data.idx"),
 		exe_dir.path_join("data/data.idx"),
 		exe_dir.path_join("data.idx"),
-		DEFAULT_DATA_IDX,
 	]
 	for candidate in candidates:
 		if candidate != "" and FileAccess.file_exists(candidate):
