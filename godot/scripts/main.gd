@@ -2,7 +2,8 @@
 ## animated character on the terrain.
 ##
 ## Command-line options (after "--"):
-##   --data-idx=PATH            ROSE data.idx (or set ROSE_DATA_IDX)
+##   --data-idx=PATH            ROSE data.idx (or set ROSE_DATA_IDX; otherwise the last one
+##                              picked, a ROSE folder next to the game, or ask)
 ##   --zone=ID                  zone to load (default 1, Canyon City of Zant)
 ##   --free-camera=x,y,z,yaw,pitch   fixed camera, degrees, same convention as the Bevy zone viewer
 ##   --screenshot=PATH          save one frame and quit
@@ -20,6 +21,7 @@ extends Node3D
 
 const DEFAULT_DATA_IDX := "data.idx"
 const START := Vector3(5210.5, 0.0, -5136.7)  # zone start position from LIST_ZONE.STB
+const SETTINGS := "user://settings.cfg"
 
 var zone: RoseZone
 var player: Node3D  # offline character
@@ -35,9 +37,56 @@ func _ready() -> void:
 		var parts := arg.trim_prefix("--").split("=", true, 1)
 		options[parts[0]] = parts[1] if parts.size() > 1 else "true"
 
-	var data_idx: String = options.get("data-idx", OS.get_environment("ROSE_DATA_IDX"))
+	var data_idx := _find_data_idx()
 	if data_idx == "":
-		data_idx = DEFAULT_DATA_IDX
+		_ask_for_data_idx()
+	else:
+		_start(data_idx)
+
+
+## data.idx from --data-idx, ROSE_DATA_IDX, the last one picked, or a ROSE folder next to
+## the game. Empty if none of them exists.
+func _find_data_idx() -> String:
+	var settings := ConfigFile.new()
+	settings.load(SETTINGS)
+	var exe_dir := OS.get_executable_path().get_base_dir()
+	var candidates := [
+		options.get("data-idx", ""),
+		OS.get_environment("ROSE_DATA_IDX"),
+		settings.get_value("data", "data_idx", ""),
+		exe_dir.path_join("iRose_129_129/data.idx"),
+		exe_dir.path_join("data/data.idx"),
+		exe_dir.path_join("data.idx"),
+		DEFAULT_DATA_IDX,
+	]
+	for candidate in candidates:
+		if candidate != "" and FileAccess.file_exists(candidate):
+			return candidate
+	if options.has("data-idx"):
+		push_error("rose: no data.idx at " + options["data-idx"])
+	return ""
+
+
+## First start on a new PC: ask where the ROSE client's data.idx is, and remember it.
+func _ask_for_data_idx() -> void:
+	var dialog := FileDialog.new()
+	dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
+	dialog.title = "Where is the ROSE client? Pick its data.idx"
+	dialog.access = FileDialog.ACCESS_FILESYSTEM
+	dialog.filters = PackedStringArray(["data.idx ; ROSE data index"])
+	dialog.use_native_dialog = true
+	dialog.file_selected.connect(func(path: String):
+		var settings := ConfigFile.new()
+		settings.load(SETTINGS)
+		settings.set_value("data", "data_idx", path)
+		settings.save(SETTINGS)
+		_start(path))
+	dialog.canceled.connect(get_tree().quit)
+	add_child(dialog)
+	dialog.popup_centered_ratio(0.6)
+
+
+func _start(data_idx: String) -> void:
 	var started := Time.get_ticks_msec()
 	if not RoseData.open(data_idx):
 		get_tree().quit(1)

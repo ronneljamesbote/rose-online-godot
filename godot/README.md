@@ -70,6 +70,22 @@ Connect (online) or Play offline. In game: left-click to move, S to stop, right-
 orbit the camera, mouse wheel to zoom. Online, left-click a monster to attack it and Space
 attacks the nearest one; offline, Space swings the sword.
 
+The start screen's server address may end in a database name, `ws://HOST:3000/NAME`
+(default `rose`). Without `--data-idx` the game looks for the last `data.idx` picked, then
+`iRose_129_129/data.idx`, `data/data.idx` or `data.idx` next to the executable, and
+otherwise asks for it once.
+
+### Windows build
+
+`godot/tools/build-windows.sh` builds `dist/ROSE-windows.zip` from Linux: it
+cross-compiles `rose_gd.dll` with mingw-w64 (`rustup target add x86_64-pc-windows-gnu`,
+`apt install gcc-mingw-w64-x86-64`), exports `ROSE.exe` with Godot's Windows release
+template (only `windows_release_x86_64.exe` from the 4.7.2 export templates is needed) and
+zips both with `tools/README-windows.txt`. The DLL only imports Windows system DLLs. Under
+Wine 9 the build loads the data, builds Zant and plays online headless (Wine's `dinput8`
+crashes Godot here, so the test ran with `WINEDLLOVERRIDES=dinput8=d`); it has not been
+run on a real Windows PC yet.
+
 Other options (after `--`):
 
 - `--server=ws://HOST:3000` connects straight away, with `--name=NAME` and

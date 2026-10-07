@@ -32,6 +32,19 @@ fn motion_position(m: &Motion, t_us: i64) -> (f32, f32) {
     (m.from_x + dx * f, m.from_y + dy * f)
 }
 
+/// Splits `ws://host:3000/name` into the server address and the database name.
+fn split_database(uri: &str) -> (String, String) {
+    let uri = uri.trim().trim_end_matches('/');
+    let after_scheme = uri.find("://").map_or(0, |i| i + 3);
+    match uri[after_scheme..].find('/') {
+        Some(slash) if after_scheme + slash + 1 < uri.len() => {
+            let (address, name) = uri.split_at(after_scheme + slash);
+            (address.to_string(), name[1..].to_string())
+        }
+        _ => (uri.to_string(), "rose".to_string()),
+    }
+}
+
 /// ROSE (x, y) in cm to Godot (x, z) in metres.
 fn to_godot(x: f32, y: f32) -> (f32, f32) {
     (x / 100.0, -y / 100.0)
@@ -85,14 +98,16 @@ impl INode for RoseNet {
 impl RoseNet {
     /// Connects and subscribes to every public table. The identity token is kept in
     /// `token_path`, so the same file gives the same character on the next run.
+    /// `uri` may end in a database name (`wss://host/rose-friends`); the default is `rose`.
     #[func]
     fn connect_to(&mut self, uri: GString, token_path: GString) -> bool {
+        let (uri, database) = split_database(&uri.to_string());
         let token_path = token_path.to_string();
         let shared = self.shared.clone();
         let saved = token_path.clone();
         let result = DbConnection::builder()
-            .with_uri(uri.to_string())
-            .with_database_name("rose")
+            .with_uri(uri)
+            .with_database_name(database)
             .with_token(std::fs::read_to_string(&token_path).ok())
             .on_connect(move |_, _, token| {
                 std::fs::write(&saved, token).ok();
