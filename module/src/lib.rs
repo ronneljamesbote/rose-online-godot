@@ -654,6 +654,8 @@ pub fn place_player(ctx: &ReducerContext, name: String, x: f32, y: f32) -> Resul
     for mut player in players {
         player.last_x = x;
         player.last_y = y;
+        // Offline players come back at full HP.
+        player.last_hp = 0;
         if let Some(mut m) = player.entity_id.and_then(|id| ctx.db.motion().entity_id().find(id)) {
             m.from_x = x;
             m.from_y = y;
