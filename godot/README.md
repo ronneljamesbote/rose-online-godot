@@ -16,7 +16,7 @@ What works now:
   server's `attack_hit_ms` (566 / 533 / 600 ms for the sword swings).
 
 - Online play on the SpacetimeDB server (`../module`): a start screen asks for the server,
-  a name and a weapon (Short Sword or Short Bow). The client signs in with an identity token
+  a name. The client signs in with an identity token
   kept in Godot's user folder, so the same PC gets the same character back. Every player in
   the zone shows up with a name tag and runs along the server's motion paths. Your own
   character starts running the moment you click and hands over to the server's path when
@@ -47,6 +47,13 @@ What works now:
   button each (spending stat points at rose-offline's cost), and the ability values the
   server calculated from them.
 
+- Items: monsters drop items and Zuly with their ground models (LIST_FIELDITEM.ZSC) and
+  names; click one, or press Z for the nearest, to walk over and pick it up. I opens the
+  inventory window: equipped items and ammo, the four bag pages with the original icons
+  (ITEM1.TSI) and tooltips, and money. Right-click or double-click equips or uses an item,
+  or takes off an equipped one; drag moves items between slots; Drop (or Delete) drops the
+  selected one. Messages such as "Picked up Banana" or "Needs Level 10" show bottom left.
+
 Not yet: monsters walking around objects (the server has no zone geometry), skills,
 effects and particles, animated zone objects, sound, most UI.
 
@@ -76,7 +83,7 @@ godot --path godot -- --data-idx=/path/to/iRose_129_129/data.idx
 Godot 4.6 or newer. `ROSE_DATA_IDX` works instead of `--data-idx`. The start screen offers
 Connect (online) or Play offline. In game: left-click to move, S to stop, right-drag to
 orbit the camera, mouse wheel to zoom. Online, left-click a monster to attack it and Space
-attacks the nearest one, C opens the character window; offline, Space swings the sword.
+attacks the nearest one, C opens the character window, I the inventory, Z picks up the nearest item; offline, Space swings the sword.
 
 The start screen's server address may end in a database name, `ws://HOST:3000/NAME`
 (default `rose`). Without `--data-idx` the game looks for the last `data.idx` picked, then
@@ -96,8 +103,9 @@ run on a real Windows PC yet.
 
 Other options (after `--`):
 
-- `--server=ws://HOST:3000` connects straight away, with `--name=NAME` and
-  `--weapon=sword|bow`.
+- `--server=ws://HOST:3000` connects straight away, with `--name=NAME`. `--weapon=bow`
+  equips the bow and arrows from the bag once the character meets the bow's requirements.
+- `--open=inventory,character` opens those windows at the start (for screenshots).
 - `--profile=NAME` picks the identity file (`user://identity-NAME.token`), so two clients on
   one PC are two players.
 - `--offline` skips the start screen.

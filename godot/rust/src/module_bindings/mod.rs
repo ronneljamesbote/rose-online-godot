@@ -16,27 +16,36 @@ pub mod combat_type;
 pub mod damage_event_table;
 pub mod damage_event_type;
 pub mod damage_source_type;
+pub mod drop_item_reducer;
+pub mod drop_money_reducer;
 pub mod entity_kind_type;
 pub mod entity_table;
 pub mod entity_type;
+pub mod equip_item_reducer;
 pub mod finish_game_data_upload_reducer;
 pub mod game_data_status_table;
 pub mod game_data_status_type;
 pub mod game_file_type;
 pub mod game_file_upload_type;
 pub mod give_xp_reducer;
+pub mod ground_item_table;
+pub mod ground_item_type;
 pub mod monster_ai_type;
 pub mod monster_spawn_type;
 pub mod motion_table;
 pub mod motion_type;
 pub mod move_collision_reducer;
+pub mod move_item_reducer;
 pub mod move_to_reducer;
+pub mod notice_table;
+pub mod notice_type;
+pub mod pickup_item_reducer;
 pub mod place_player_reducer;
 pub mod player_table;
 pub mod player_type;
+pub mod regen_type;
 pub mod reset_monsters_reducer;
 pub mod set_aggro_range_reducer;
-pub mod set_loadout_reducer;
 pub mod set_name_reducer;
 pub mod set_world_rates_reducer;
 pub mod spawn_entry_type;
@@ -46,7 +55,10 @@ pub mod stats_type;
 pub mod stop_reducer;
 pub mod tick_stats_table;
 pub mod tick_stats_type;
+pub mod unequip_ammo_reducer;
+pub mod unequip_item_reducer;
 pub mod upload_game_files_reducer;
+pub mod use_item_reducer;
 pub mod world_rates_table;
 pub mod world_rates_type;
 pub mod xp_event_table;
@@ -64,27 +76,36 @@ pub use combat_type::Combat;
 pub use damage_event_table::*;
 pub use damage_event_type::DamageEvent;
 pub use damage_source_type::DamageSource;
+pub use drop_item_reducer::drop_item;
+pub use drop_money_reducer::drop_money;
 pub use entity_kind_type::EntityKind;
 pub use entity_table::*;
 pub use entity_type::Entity;
+pub use equip_item_reducer::equip_item;
 pub use finish_game_data_upload_reducer::finish_game_data_upload;
 pub use game_data_status_table::*;
 pub use game_data_status_type::GameDataStatus;
 pub use game_file_type::GameFile;
 pub use game_file_upload_type::GameFileUpload;
 pub use give_xp_reducer::give_xp;
+pub use ground_item_table::*;
+pub use ground_item_type::GroundItem;
 pub use monster_ai_type::MonsterAi;
 pub use monster_spawn_type::MonsterSpawn;
 pub use motion_table::*;
 pub use motion_type::Motion;
 pub use move_collision_reducer::move_collision;
+pub use move_item_reducer::move_item;
 pub use move_to_reducer::move_to;
+pub use notice_table::*;
+pub use notice_type::Notice;
+pub use pickup_item_reducer::pickup_item;
 pub use place_player_reducer::place_player;
 pub use player_table::*;
 pub use player_type::Player;
+pub use regen_type::Regen;
 pub use reset_monsters_reducer::reset_monsters;
 pub use set_aggro_range_reducer::set_aggro_range;
-pub use set_loadout_reducer::set_loadout;
 pub use set_name_reducer::set_name;
 pub use set_world_rates_reducer::set_world_rates;
 pub use spawn_entry_type::SpawnEntry;
@@ -94,7 +115,10 @@ pub use stats_type::Stats;
 pub use stop_reducer::stop;
 pub use tick_stats_table::*;
 pub use tick_stats_type::TickStats;
+pub use unequip_ammo_reducer::unequip_ammo;
+pub use unequip_item_reducer::unequip_item;
 pub use upload_game_files_reducer::upload_game_files;
+pub use use_item_reducer::use_item;
 pub use world_rates_table::*;
 pub use world_rates_type::WorldRates;
 pub use xp_event_table::*;
@@ -117,6 +141,18 @@ pub enum Reducer {
         target: u64,
     },
     BeginGameDataUpload,
+    DropItem {
+        page: u8,
+        index: u16,
+        quantity: u32,
+    },
+    DropMoney {
+        amount: i64,
+    },
+    EquipItem {
+        page: u8,
+        index: u16,
+    },
     FinishGameDataUpload,
     GiveXp {
         name: String,
@@ -126,9 +162,17 @@ pub enum Reducer {
         x: f32,
         y: f32,
     },
+    MoveItem {
+        page: u8,
+        from: u16,
+        to: u16,
+    },
     MoveTo {
         x: f32,
         y: f32,
+    },
+    PickupItem {
+        drop_id: u64,
     },
     PlacePlayer {
         name: String,
@@ -140,9 +184,6 @@ pub enum Reducer {
         npc_id: u16,
         range: f32,
     },
-    SetLoadout {
-        ranged: bool,
-    },
     SetName {
         name: String,
     },
@@ -153,8 +194,18 @@ pub enum Reducer {
         reward_rate: i32,
     },
     Stop,
+    UnequipAmmo {
+        ammo_slot: u8,
+    },
+    UnequipItem {
+        equipment_slot: u8,
+    },
     UploadGameFiles {
         files: Vec<GameFileUpload>,
+    },
+    UseItem {
+        page: u8,
+        index: u16,
     },
 }
 
@@ -168,18 +219,25 @@ impl __sdk::Reducer for Reducer {
             Reducer::AddBasicStat { .. } => "add_basic_stat",
             Reducer::Attack { .. } => "attack",
             Reducer::BeginGameDataUpload => "begin_game_data_upload",
+            Reducer::DropItem { .. } => "drop_item",
+            Reducer::DropMoney { .. } => "drop_money",
+            Reducer::EquipItem { .. } => "equip_item",
             Reducer::FinishGameDataUpload => "finish_game_data_upload",
             Reducer::GiveXp { .. } => "give_xp",
             Reducer::MoveCollision { .. } => "move_collision",
+            Reducer::MoveItem { .. } => "move_item",
             Reducer::MoveTo { .. } => "move_to",
+            Reducer::PickupItem { .. } => "pickup_item",
             Reducer::PlacePlayer { .. } => "place_player",
             Reducer::ResetMonsters => "reset_monsters",
             Reducer::SetAggroRange { .. } => "set_aggro_range",
-            Reducer::SetLoadout { .. } => "set_loadout",
             Reducer::SetName { .. } => "set_name",
             Reducer::SetWorldRates { .. } => "set_world_rates",
             Reducer::Stop => "stop",
+            Reducer::UnequipAmmo { .. } => "unequip_ammo",
+            Reducer::UnequipItem { .. } => "unequip_item",
             Reducer::UploadGameFiles { .. } => "upload_game_files",
+            Reducer::UseItem { .. } => "use_item",
             _ => unreachable!(),
         }
     }
@@ -197,6 +255,26 @@ impl __sdk::Reducer for Reducer {
             Reducer::BeginGameDataUpload => {
                 __sats::bsatn::to_vec(&begin_game_data_upload_reducer::BeginGameDataUploadArgs {})
             }
+            Reducer::DropItem {
+                page,
+                index,
+                quantity,
+            } => __sats::bsatn::to_vec(&drop_item_reducer::DropItemArgs {
+                page: page.clone(),
+                index: index.clone(),
+                quantity: quantity.clone(),
+            }),
+            Reducer::DropMoney { amount } => {
+                __sats::bsatn::to_vec(&drop_money_reducer::DropMoneyArgs {
+                    amount: amount.clone(),
+                })
+            }
+            Reducer::EquipItem { page, index } => {
+                __sats::bsatn::to_vec(&equip_item_reducer::EquipItemArgs {
+                    page: page.clone(),
+                    index: index.clone(),
+                })
+            }
             Reducer::FinishGameDataUpload => {
                 __sats::bsatn::to_vec(&finish_game_data_upload_reducer::FinishGameDataUploadArgs {})
             }
@@ -210,10 +288,22 @@ impl __sdk::Reducer for Reducer {
                     y: y.clone(),
                 })
             }
+            Reducer::MoveItem { page, from, to } => {
+                __sats::bsatn::to_vec(&move_item_reducer::MoveItemArgs {
+                    page: page.clone(),
+                    from: from.clone(),
+                    to: to.clone(),
+                })
+            }
             Reducer::MoveTo { x, y } => __sats::bsatn::to_vec(&move_to_reducer::MoveToArgs {
                 x: x.clone(),
                 y: y.clone(),
             }),
+            Reducer::PickupItem { drop_id } => {
+                __sats::bsatn::to_vec(&pickup_item_reducer::PickupItemArgs {
+                    drop_id: drop_id.clone(),
+                })
+            }
             Reducer::PlacePlayer { name, x, y } => {
                 __sats::bsatn::to_vec(&place_player_reducer::PlacePlayerArgs {
                     name: name.clone(),
@@ -228,11 +318,6 @@ impl __sdk::Reducer for Reducer {
                 __sats::bsatn::to_vec(&set_aggro_range_reducer::SetAggroRangeArgs {
                     npc_id: npc_id.clone(),
                     range: range.clone(),
-                })
-            }
-            Reducer::SetLoadout { ranged } => {
-                __sats::bsatn::to_vec(&set_loadout_reducer::SetLoadoutArgs {
-                    ranged: ranged.clone(),
                 })
             }
             Reducer::SetName { name } => {
@@ -250,9 +335,25 @@ impl __sdk::Reducer for Reducer {
                 reward_rate: reward_rate.clone(),
             }),
             Reducer::Stop => __sats::bsatn::to_vec(&stop_reducer::StopArgs {}),
+            Reducer::UnequipAmmo { ammo_slot } => {
+                __sats::bsatn::to_vec(&unequip_ammo_reducer::UnequipAmmoArgs {
+                    ammo_slot: ammo_slot.clone(),
+                })
+            }
+            Reducer::UnequipItem { equipment_slot } => {
+                __sats::bsatn::to_vec(&unequip_item_reducer::UnequipItemArgs {
+                    equipment_slot: equipment_slot.clone(),
+                })
+            }
             Reducer::UploadGameFiles { files } => {
                 __sats::bsatn::to_vec(&upload_game_files_reducer::UploadGameFilesArgs {
                     files: files.clone(),
+                })
+            }
+            Reducer::UseItem { page, index } => {
+                __sats::bsatn::to_vec(&use_item_reducer::UseItemArgs {
+                    page: page.clone(),
+                    index: index.clone(),
                 })
             }
             _ => unreachable!(),
@@ -268,7 +369,9 @@ pub struct DbUpdate {
     damage_event: __sdk::TableUpdate<DamageEvent>,
     entity: __sdk::TableUpdate<Entity>,
     game_data_status: __sdk::TableUpdate<GameDataStatus>,
+    ground_item: __sdk::TableUpdate<GroundItem>,
     motion: __sdk::TableUpdate<Motion>,
+    notice: __sdk::TableUpdate<Notice>,
     player: __sdk::TableUpdate<Player>,
     stats: __sdk::TableUpdate<Stats>,
     tick_stats: __sdk::TableUpdate<TickStats>,
@@ -295,9 +398,15 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "game_data_status" => db_update
                     .game_data_status
                     .append(game_data_status_table::parse_table_update(table_update)?),
+                "ground_item" => db_update
+                    .ground_item
+                    .append(ground_item_table::parse_table_update(table_update)?),
                 "motion" => db_update
                     .motion
                     .append(motion_table::parse_table_update(table_update)?),
+                "notice" => db_update
+                    .notice
+                    .append(notice_table::parse_table_update(table_update)?),
                 "player" => db_update
                     .player
                     .append(player_table::parse_table_update(table_update)?),
@@ -352,9 +461,13 @@ impl __sdk::DbUpdate for DbUpdate {
         diff.game_data_status = cache
             .apply_diff_to_table::<GameDataStatus>("game_data_status", &self.game_data_status)
             .with_updates_by_pk(|row| &row.id);
+        diff.ground_item = cache
+            .apply_diff_to_table::<GroundItem>("ground_item", &self.ground_item)
+            .with_updates_by_pk(|row| &row.drop_id);
         diff.motion = cache
             .apply_diff_to_table::<Motion>("motion", &self.motion)
             .with_updates_by_pk(|row| &row.entity_id);
+        diff.notice = self.notice.into_event_diff();
         diff.player = cache
             .apply_diff_to_table::<Player>("player", &self.player)
             .with_updates_by_pk(|row| &row.identity);
@@ -390,8 +503,14 @@ impl __sdk::DbUpdate for DbUpdate {
                 "game_data_status" => db_update
                     .game_data_status
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "ground_item" => db_update
+                    .ground_item
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "motion" => db_update
                     .motion
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "notice" => db_update
+                    .notice
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "player" => db_update
                     .player
@@ -436,8 +555,14 @@ impl __sdk::DbUpdate for DbUpdate {
                 "game_data_status" => db_update
                     .game_data_status
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "ground_item" => db_update
+                    .ground_item
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "motion" => db_update
                     .motion
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "notice" => db_update
+                    .notice
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "player" => db_update
                     .player
@@ -476,7 +601,9 @@ pub struct AppliedDiff<'r> {
     damage_event: __sdk::TableAppliedDiff<'r, DamageEvent>,
     entity: __sdk::TableAppliedDiff<'r, Entity>,
     game_data_status: __sdk::TableAppliedDiff<'r, GameDataStatus>,
+    ground_item: __sdk::TableAppliedDiff<'r, GroundItem>,
     motion: __sdk::TableAppliedDiff<'r, Motion>,
+    notice: __sdk::TableAppliedDiff<'r, Notice>,
     player: __sdk::TableAppliedDiff<'r, Player>,
     stats: __sdk::TableAppliedDiff<'r, Stats>,
     tick_stats: __sdk::TableAppliedDiff<'r, TickStats>,
@@ -508,7 +635,9 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
             &self.game_data_status,
             event,
         );
+        callbacks.invoke_table_row_callbacks::<GroundItem>("ground_item", &self.ground_item, event);
         callbacks.invoke_table_row_callbacks::<Motion>("motion", &self.motion, event);
+        callbacks.invoke_table_row_callbacks::<Notice>("notice", &self.notice, event);
         callbacks.invoke_table_row_callbacks::<Player>("player", &self.player, event);
         callbacks.invoke_table_row_callbacks::<Stats>("stats", &self.stats, event);
         callbacks.invoke_table_row_callbacks::<TickStats>("tick_stats", &self.tick_stats, event);
@@ -1179,7 +1308,9 @@ impl __sdk::SpacetimeModule for RemoteModule {
         damage_event_table::register_table(client_cache);
         entity_table::register_table(client_cache);
         game_data_status_table::register_table(client_cache);
+        ground_item_table::register_table(client_cache);
         motion_table::register_table(client_cache);
+        notice_table::register_table(client_cache);
         player_table::register_table(client_cache);
         stats_table::register_table(client_cache);
         tick_stats_table::register_table(client_cache);
@@ -1192,7 +1323,9 @@ impl __sdk::SpacetimeModule for RemoteModule {
         "damage_event",
         "entity",
         "game_data_status",
+        "ground_item",
         "motion",
+        "notice",
         "player",
         "stats",
         "tick_stats",

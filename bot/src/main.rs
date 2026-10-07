@@ -118,7 +118,12 @@ fn main() {
         });
     }
     conn.reducers.set_name(format!("Bot{}", me)).ok();
-    conn.reducers.set_loadout(ranged).ok();
+    if ranged {
+        // New characters carry a Short Bow (equipment page, slot 1) and arrows (materials,
+        // slot 0). The bow needs level 10 and DEX 29: give_xp and set_basic_stat as admin.
+        conn.reducers.equip_item(0, 1).ok();
+        conn.reducers.equip_item(2, 0).ok();
+    }
     println!("my entity {} ({} loadout)", me, if ranged { "ranged" } else { "melee" });
 
     // Wait for monsters to spawn.

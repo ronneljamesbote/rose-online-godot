@@ -13,8 +13,10 @@ use spacetimedb_sdk::{
     DbContext, Table,
 };
 
-use rose_data::EquipmentIndex;
-use rose_game_common::components::Equipment;
+use rose_data::{AmmoIndex, EquipmentIndex};
+use rose_game_common::components::{DroppedItem, Equipment, Inventory};
+
+use crate::items::item_dict;
 
 use crate::module_bindings::*;
 
@@ -81,6 +83,8 @@ fn player_look(p: &Player) -> VarArray {
 struct Shared {
     damage: Vec<DamageEvent>,
     xp: Vec<XpEvent>,
+    /// Messages for the player: server notices and refused actions.
+    notices: Vec<String>,
     /// Smallest (local receive time - server start time) seen on a fresh motion change.
     /// Covers clock skew between this PC and the server plus the fastest one-way delay.
     clock_offset_us: Option<i64>,
@@ -153,6 +157,12 @@ impl RoseNet {
         conn.db.damage_event().on_insert(move |_, ev| s.lock().unwrap().damage.push(ev.clone()));
         let s = shared.clone();
         conn.db.xp_event().on_insert(move |_, ev| s.lock().unwrap().xp.push(ev.clone()));
+        let s = shared.clone();
+        conn.db.notice().on_insert(move |ctx, ev| {
+            if ctx.try_identity() == Some(ev.identity) {
+                s.lock().unwrap().notices.push(ev.text.clone());
+            }
+        });
         let s = shared.clone();
         conn.db.motion().on_update(move |_, _, new| {
             let sample = local_now_us() - new.started_at_us;
@@ -278,7 +288,8 @@ impl RoseNet {
         d.set("xp_needed", rose_game_irose::data::levelup_require_xp(p.level) as i64);
         d.set("stat_points", p.stat_points as i64);
         d.set("skill_points", p.skill_points as i64);
-        d.set("money", p.money);
+        let inventory: Inventory = serde_json::from_str(&p.inventory).unwrap_or_default();
+        d.set("money", inventory.money.0);
         for (key, value) in [
             ("str", p.strength),
             ("dex", p.dexterity),
@@ -325,8 +336,9 @@ impl RoseNet {
     /// Spend stat points: 0 STR, 1 DEX, 2 INT, 3 CON, 4 CHA, 5 SEN.
     #[func]
     fn add_basic_stat(&self, stat: i64) {
+        let s = self.shared.clone();
         if let Some(c) = self.conn.as_ref() {
-            c.reducers.add_basic_stat(stat as u8).ok();
+            c.reducers.add_basic_stat_then(stat as u8, move |_, r| report(&s, r)).ok();
         }
     }
 
@@ -389,10 +401,149 @@ impl RoseNet {
         }
     }
 
+    /// Messages since the last call (picked up items, refused actions).
     #[func]
-    fn set_loadout(&self, ranged: bool) {
+    fn poll_notices(&self) -> PackedStringArray {
+        let notices = std::mem::take(&mut self.shared.lock().unwrap().notices);
+        notices.iter().map(|n| GString::from(n.as_str())).collect()
+    }
+
+    /// Items on the ground in our zone: id, x, z (Godot metres), item (see item_dict; money has
+    /// name "N Zuly" and model 0), mine (we may pick it up now).
+    #[func]
+    fn get_ground_items(&self) -> VarArray {
+        let mut out = VarArray::new();
+        let Some(c) = self.conn.as_ref() else { return out };
+        let Some(p) = c.try_identity().and_then(|i| c.db.player().identity().find(&i)) else { return out };
+        let t = self.server_now_us();
+        for g in c.db.ground_item().iter().filter(|g| g.zone_id == p.zone_id) {
+            let Ok(dropped) = serde_json::from_str::<DroppedItem>(&g.item) else { continue };
+            let item = match &dropped {
+                DroppedItem::Item(item) => item_dict(item),
+                DroppedItem::Money(money) => {
+                    let mut d = VarDictionary::new();
+                    d.set("name", format!("{} Zuly", money.0).as_str());
+                    d.set("model", 0i64);
+                    d.set("type", "Money");
+                    d.set("quantity", money.0);
+                    d
+                }
+            };
+            let (x, z) = to_godot(g.x, g.y);
+            let mut d = VarDictionary::new();
+            d.set("id", g.drop_id as i64);
+            d.set("x", x);
+            d.set("z", z);
+            d.set("item", &item);
+            d.set("mine", g.owner.map_or(true, |o| o == p.identity) || t >= g.owner_until_us);
+            out.push(&d.to_variant());
+        }
+        out
+    }
+
+    /// Our items: money, pages (equipment, consumables, materials, vehicles; 30 slots each,
+    /// null when empty), equipped (11 slots in EquipmentIndex order: face, head, body, back,
+    /// hands, feet, weapon, off-hand, necklace, ring, earring) and ammo (arrows, bullets, shells).
+    #[func]
+    fn get_inventory(&self) -> VarDictionary {
+        let mut d = VarDictionary::new();
+        let Some(c) = self.conn.as_ref() else { return d };
+        let Some(p) = c.try_identity().and_then(|i| c.db.player().identity().find(&i)) else { return d };
+        let inventory: Inventory = serde_json::from_str(&p.inventory).unwrap_or_default();
+        let equipment: Equipment = serde_json::from_str(&p.equipment).unwrap_or_default();
+        d.set("money", inventory.money.0);
+        let mut pages = VarArray::new();
+        for page in [&inventory.equipment, &inventory.consumables, &inventory.materials, &inventory.vehicles] {
+            let mut slots = VarArray::new();
+            for slot in page.slots.iter() {
+                slots.push(&slot.as_ref().map_or(Variant::nil(), |item| item_dict(item).to_variant()));
+            }
+            pages.push(&slots.to_variant());
+        }
+        d.set("pages", &pages);
+        use EquipmentIndex::*;
+        let mut equipped = VarArray::new();
+        for index in [Face, Head, Body, Back, Hands, Feet, Weapon, SubWeapon, Necklace, Ring, Earring] {
+            let item = equipment.get_equipment_item(index).map(|e| rose_data::Item::Equipment(e.clone()));
+            equipped.push(&item.map_or(Variant::nil(), |item| item_dict(&item).to_variant()));
+        }
+        d.set("equipped", &equipped);
+        let mut ammo = VarArray::new();
+        for index in [AmmoIndex::Arrow, AmmoIndex::Bullet, AmmoIndex::Throw] {
+            let item = equipment.get_ammo_item(index).map(|a| rose_data::Item::Stackable(a.clone()));
+            ammo.push(&item.map_or(Variant::nil(), |item| item_dict(&item).to_variant()));
+        }
+        d.set("ammo", &ammo);
+        d
+    }
+
+    #[func]
+    fn pickup_item(&self, drop_id: i64) {
+        let s = self.shared.clone();
         if let Some(c) = self.conn.as_ref() {
-            c.reducers.set_loadout(ranged).ok();
+            c.reducers.pickup_item_then(drop_id as u64, move |_, r| report(&s, r)).ok();
         }
     }
+
+    /// Equip (gear, ammo) from inventory page 0-3, slot 0-29.
+    #[func]
+    fn equip_item(&self, page: i64, index: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.equip_item_then(page as u8, index as u16, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    /// Take off equipped slot 0-10 (see get_inventory's equipped).
+    #[func]
+    fn unequip_item(&self, slot: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.unequip_item_then(slot as u8, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    #[func]
+    fn unequip_ammo(&self, slot: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.unequip_ammo_then(slot as u8, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    #[func]
+    fn use_item(&self, page: i64, index: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.use_item_then(page as u8, index as u16, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    #[func]
+    fn drop_item(&self, page: i64, index: i64, quantity: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.drop_item_then(page as u8, index as u16, quantity.max(1) as u32, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    #[func]
+    fn move_item(&self, page: i64, from: i64, to: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.move_item_then(page as u8, from as u16, to as u16, move |_, r| report(&s, r)).ok();
+        }
+    }
+}
+
+/// A refused reducer call becomes a notice for the player.
+fn report(shared: &Arc<Mutex<Shared>>, result: Result<Result<(), String>, spacetimedb_sdk::__codegen::InternalError>) {
+    let message = match result {
+        Ok(Ok(())) => return,
+        Ok(Err(message)) => message,
+        Err(error) => format!("{error}"),
+    };
+    let mut first = message.chars();
+    let message = first.next().map_or(String::new(), |c| c.to_uppercase().collect::<String>() + first.as_str());
+    shared.lock().unwrap().notices.push(message);
 }

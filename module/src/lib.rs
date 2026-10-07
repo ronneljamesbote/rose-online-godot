@@ -5,14 +5,16 @@
 //! Game rules come from rose-offline's crates (vendored in ../crates); the game databases
 //! are built from client files the host uploads (see game_data.rs).
 
+mod ability;
 mod character;
 mod game_data;
+mod items;
 mod world;
 
 use rand::Rng;
 use rose_game_common::components::AbilityValues;
 use rose_game_data::GameData;
-use spacetimedb::{Identity, ReducerContext, ScheduleAt, SpacetimeType, Table};
+use spacetimedb::{ConnectionId, Identity, ReducerContext, ScheduleAt, SpacetimeType, Table};
 use std::time::Duration;
 
 pub use world::{monster_spawn, zone_info};
@@ -55,6 +57,9 @@ pub struct Player {
     pub entity_id: Option<u64>,
     pub name: String,
     pub online: bool,
+    /// The connection playing this character. A second client on the same identity takes
+    /// the character over, and the first one's disconnect then leaves it alone.
+    pub connection: Option<ConnectionId>,
     pub zone_id: u16,
     pub last_x: f32,
     pub last_y: f32,
@@ -69,7 +74,6 @@ pub struct Player {
     pub xp: u64,
     pub stat_points: u32,
     pub skill_points: u32,
-    pub money: i64,
     pub strength: i32,
     pub dexterity: i32,
     pub intelligence: i32,
@@ -511,6 +515,7 @@ pub fn client_connected(ctx: &ReducerContext) {
         ctx.db.player().insert(character::new_player(&game, ctx.sender(), name, 0, (START_ZONE, x, y)))
     });
     player.online = true;
+    player.connection = ctx.connection_id();
     if player.entity_id.is_none() {
         spawn_player_entity(ctx, &game, &mut player);
     }
@@ -520,6 +525,10 @@ pub fn client_connected(ctx: &ReducerContext) {
 #[spacetimedb::reducer(client_disconnected)]
 pub fn client_disconnected(ctx: &ReducerContext) {
     let Some(mut player) = ctx.db.player().identity().find(ctx.sender()) else { return };
+    if player.connection.is_some() && player.connection != ctx.connection_id() {
+        return;
+    }
+    player.connection = None;
     if let Some(id) = player.entity_id.take() {
         let t = now_us(ctx);
         if let Some(p) = position(ctx, id, t) {
@@ -842,6 +851,9 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
             match c.swing_hit_at_us {
                 // Hit frame reached: resolve the swing.
                 Some(hit_at) if t >= hit_at => {
+                    if stats.is_player {
+                        take_player_ammo(ctx, &game, id, stats.hit_count);
+                    }
                     let defender_stats = ctx.db.stats().entity_id().find(target).unwrap();
                     let (amount, is_critical) = match (stats.ability(), defender_stats.ability()) {
                         (Some(a), Some(d)) => {
@@ -874,7 +886,7 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
                     if killed {
                         c.attack_target = None;
                         ctx.db.combat().entity_id().update(c.clone());
-                        kill(ctx, &game, target, &defender_stats, t);
+                        kill(ctx, &game, target, &defender_stats, id, t);
                     } else {
                         ctx.db.combat().entity_id().update(c);
                     }
@@ -882,6 +894,15 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
                 Some(_) => {}
                 // Ready: start a swing. Schedule from the previous one so ticks don't add drift.
                 None if t >= c.next_attack_at_us => {
+                    // Bows, guns and launchers need ammo for every hit of the swing.
+                    if stats.is_player && !player_has_ammo(ctx, &game, id, stats.hit_count) {
+                        c.attack_target = None;
+                        ctx.db.combat().entity_id().update(c);
+                        if let Some(p) = ctx.db.player().iter().find(|p| p.entity_id == Some(id)) {
+                            items::notify(ctx, p.identity, "Out of ammo");
+                        }
+                        continue;
+                    }
                     let interval = attack_interval_us(&stats);
                     let late = t - c.next_attack_at_us;
                     let start = if late < COMBAT_TICK_MS as i64 * 1000 { c.next_attack_at_us } else { t };
@@ -918,6 +939,21 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
         ctx.db.tick_stats().id().update(s);
     }
     Ok(())
+}
+
+fn player_has_ammo(ctx: &ReducerContext, game: &GameData, id: u64, hit_count: i32) -> bool {
+    let Some(p) = ctx.db.player().iter().find(|p| p.entity_id == Some(id)) else { return true };
+    match items::weapon_ammo(game, &p.equipment()) {
+        Some(ammo) => items::has_ammo(&p, ammo, hit_count.max(1) as u32),
+        None => true,
+    }
+}
+
+fn take_player_ammo(ctx: &ReducerContext, game: &GameData, id: u64, hit_count: i32) {
+    let Some(mut p) = ctx.db.player().iter().find(|p| p.entity_id == Some(id)) else { return };
+    if let Some(ammo) = items::weapon_ammo(game, &p.equipment()) {
+        items::use_ammo(ctx, &mut p, ammo, hit_count.max(1) as u32);
+    }
 }
 
 fn add_damage_source(ctx: &ReducerContext, defender: u64, attacker: u64, amount: u64, t: i64) {
@@ -964,11 +1000,15 @@ fn reward_kill(ctx: &ReducerContext, game: &GameData, monster: u64, monster_stat
     }
 }
 
-fn kill(ctx: &ReducerContext, game: &GameData, id: u64, stats: &Stats, t: i64) {
+fn kill(ctx: &ReducerContext, game: &GameData, id: u64, stats: &Stats, killer: u64, t: i64) {
     let Some(entity) = ctx.db.entity().entity_id().find(id) else { return };
+    items::clear_regen(ctx, id);
     match entity.kind {
         EntityKind::Monster => {
             reward_kill(ctx, game, id, stats, entity.npc_id, t);
+            if let Some(at) = position(ctx, id, t) {
+                items::monster_drop(ctx, game, entity.npc_id, entity.zone_id, at, killer, stats.level);
+            }
             despawn(ctx, id);
         }
         EntityKind::Player => {
@@ -1017,6 +1057,8 @@ pub fn spawn_tick(ctx: &ReducerContext, _timer: SpawnTickTimer) -> Result<(), St
     }
 
     passive_recovery(ctx, &game, t);
+    items::regen_tick(ctx);
+    items::expire_drops(ctx, t);
     world::spawn_tick(ctx, &game, t);
 
     // Idle wandering: about one in eight idle monsters takes a short walk each second.
