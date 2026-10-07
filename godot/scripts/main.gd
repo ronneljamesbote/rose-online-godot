@@ -15,7 +15,7 @@
 ##   --profile=NAME             identity file to use (user://identity-NAME.token), so two
 ##                              clients on one PC are two players
 ##   --offline                  skip the start screen and play offline
-##   --net-demo[=square|line|fight|walls]   online: scripted routes, fights, wall tests
+##   --net-demo[=square|line|fight|walls|warp]   online: scripted routes, fights, wall tests, warp gates
 ##   --net-log                  online: print every player's position once a second
 ##   --open=inventory,character online: open these windows at the start (for screenshots)
 ##   --quit-after=SECONDS       quit after this long
@@ -224,6 +224,9 @@ func _run_net_demo(me: Node3D) -> void:
 	if options["net-demo"] == "walls":
 		_run_walls_demo(origin)
 		return
+	if options["net-demo"] == "warp":
+		_run_warp_demo()
+		return
 	if options["net-demo"] == "line":
 		route = [Vector3(5, 0, 0), Vector3(0, 0, 0)]
 		pause = 3.5
@@ -331,6 +334,34 @@ func _run_walls_demo(origin: Vector3) -> void:
 		online.move_to(origin)
 		await get_tree().create_timer(reach / 4.5 + 1.0).timeout
 	get_tree().quit()
+
+
+## Walks into the nearest warp gate, then (in the zone it leads to) into that zone's
+## nearest one, three times.
+func _run_warp_demo() -> void:
+	var trips := 0
+	while trips < 3:
+		await get_tree().create_timer(4.0).timeout
+		while online.me == null:
+			await get_tree().create_timer(0.5).timeout
+		var me: Node3D = online.me
+		var best = null
+		for warp in online._warps:
+			var centre: Vector3 = warp["position"] + warp["size"] / 2.0
+			if best == null or centre.distance_to(me.position) < best.distance_to(me.position):
+				best = centre
+		if best == null:
+			print("rose net demo: no warp gate here")
+			continue
+		print("rose net demo: zone %d, walk to the warp gate at (%.1f, %.1f), %.0f m away" % [loaded_zone, best.x, best.z, best.distance_to(me.position)])
+		var zone_before := loaded_zone
+		online.move_to(Vector3(best.x, 0, best.z))
+		var waited := 0.0
+		while loaded_zone == zone_before and waited < 120.0:
+			await get_tree().create_timer(0.5).timeout
+			waited += 0.5
+		print("rose net demo: now in zone %d" % loaded_zone)
+		trips += 1
 
 
 ## Fights the nearest monster until it dies, then the next one. Every third fight starts

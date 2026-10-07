@@ -12,6 +12,7 @@ const PICK_RADIUS_PX := 60.0
 const ITEM_PICK_RADIUS_PX := 30.0
 const PICKUP_RANGE := 2.5  # metres; the server allows 4
 const NOTICE_SECONDS := 8.0
+const WARP_MARGIN := 3.0  # metres around a warp gate's model that count as walking into it
 const MONSTER_NAME_RANGE := 15.0  # monster names show within this many metres, or when targeted
 
 var zone: Node
@@ -33,6 +34,10 @@ var inventory_window: PanelContainer
 var notice_box: VBoxContainer
 var ground := {}  # drop id -> Node3D
 var _pickup := -1  # drop we are walking to
+var _warps: Array = []  # this zone's warp gates: id, position, size
+var _warps_zone: Node = null
+var _next_warp_ms := 0
+var _warp_armed := false  # false until we stand outside every gate (we may arrive inside one)
 var _level := 0
 var _zone_requested := 0
 var log_damage := false
@@ -313,6 +318,7 @@ func _process(_delta: float) -> void:
 		my_target = -1
 
 	_update_ground()
+	_check_warps()
 	for text in net.poll_notices():
 		_notice(text)
 	if me and _pickup >= 0:
@@ -364,6 +370,36 @@ func _process(_delta: float) -> void:
 		target_hud.text = "%s   Lv %d   HP %d/%d" % [target.label.text, target.level, target.hp, target.max_hp]
 	else:
 		target_hud.text = ""
+
+
+## Walking into a warp gate's model asks the server to send us through (as the Bevy client
+## does when its collision ray hits a warp object), at most once every five seconds.
+func _check_warps() -> void:
+	if me == null:
+		return
+	if _warps_zone != zone:
+		_warps_zone = zone
+		_warps = zone.get_warps()
+		_warp_armed = false
+		print("rose net: %d warp gates in this zone" % _warps.size())
+	if Time.get_ticks_msec() < _next_warp_ms:
+		return
+	var inside := -1
+	for warp in _warps:
+		# Gates often have a wall right in front of their model, so count the last few
+		# metres before it as inside.
+		var box := AABB(warp["position"], warp["size"]).grow(WARP_MARGIN)
+		var feet := me.position + Vector3(0, 0.5, 0)
+		if box.has_point(Vector3(feet.x, clamp(feet.y, box.position.y, box.end.y), feet.z)):
+			inside = warp["id"]
+			break
+	if inside < 0:
+		_warp_armed = true
+	elif _warp_armed:
+		_warp_armed = false
+		_next_warp_ms = Time.get_ticks_msec() + 5000
+		print("rose net: entering warp gate ", inside)
+		net.use_warp_gate(inside)
 
 
 ## Show the server's ground items: the item's ground model with its name over it.

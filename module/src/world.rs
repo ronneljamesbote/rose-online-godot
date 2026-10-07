@@ -2,14 +2,14 @@
 //! Spawning follows rose-offline's monster_spawn_system (spawn point "tactics").
 
 use rand::Rng;
-use rose_data::{NpcId, NpcMotionAction};
+use rose_data::{NpcId, NpcMotionAction, WarpGateId};
 use rose_game_common::components::StatusEffects;
 use rose_game_data::GameData;
 use spacetimedb::{ReducerContext, SpacetimeType, Table};
 
 use crate::{
-    combat, entity, monster_ai, motion, now_us, stats, Combat, Entity,
-    EntityKind, MonsterAi, Motion, Stats,
+    cancel_attack, combat, entity, game_data::game, monster_ai, motion, my_player, now_us, stats, Combat, Entity,
+    EntityKind, MonsterAi, Motion, Player, Stats,
 };
 
 #[spacetimedb::table(accessor = zone_info, public)]
@@ -238,3 +238,57 @@ pub fn spawn_monster(ctx: &ReducerContext, game: &GameData, spawn: &MonsterSpawn
 }
 
 use crate::player;
+
+/// Move a player's character to another zone (or another spot in the same one).
+pub fn teleport(ctx: &ReducerContext, p: &mut Player, zone_id: u16, at: (f32, f32)) {
+    let t = now_us(ctx);
+    if let Some(id) = p.entity_id {
+        cancel_attack(ctx, id, t);
+        crate::forget_entity(ctx, id);
+        crate::clear_damage_sources(ctx, id);
+        if let Some(mut e) = ctx.db.entity().entity_id().find(id) {
+            e.zone_id = zone_id;
+            ctx.db.entity().entity_id().update(e);
+        }
+        if let Some(mut m) = ctx.db.motion().entity_id().find(id) {
+            m.from_x = at.0;
+            m.from_y = at.1;
+            m.to_x = at.0;
+            m.to_y = at.1;
+            m.started_at_us = t;
+            m.chase_target = None;
+            ctx.db.motion().entity_id().update(m);
+        }
+    }
+    p.zone_id = zone_id;
+    p.last_x = at.0;
+    p.last_y = at.1;
+    ctx.db.player().identity().update(p.clone());
+}
+
+/// The character walked into a warp gate (the client sees the gate's collision): go where
+/// WARP.STB sends it, to the target zone's event object of that name (as rose-offline does;
+/// the server has no zone geometry to check the gate's position).
+#[spacetimedb::reducer]
+pub fn use_warp_gate(ctx: &ReducerContext, warp_id: u16) -> Result<(), String> {
+    let game = game(ctx)?;
+    let (mut p, id) = my_player(ctx)?;
+    if !crate::is_alive(ctx, id) {
+        return Err("dead".into());
+    }
+    let gate = game.warp_gates.get_warp_gate(WarpGateId::new(warp_id)).ok_or("no such warp gate")?;
+    let zone = game.zones.get_zone(gate.target_zone).ok_or("the warp gate leads nowhere")?;
+    let at = zone.event_positions.get(&gate.target_event_object).ok_or("the warp gate leads nowhere")?;
+    teleport(ctx, &mut p, gate.target_zone.get(), (at.x, at.y));
+    Ok(())
+}
+
+/// Debug: send a player (by name, online) to a zone's start position.
+#[spacetimedb::reducer]
+pub fn warp_player(ctx: &ReducerContext, name: String, zone_id: u16) -> Result<(), String> {
+    crate::require_admin(ctx)?;
+    let mut p = ctx.db.player().iter().find(|p| p.name == name).ok_or("no such player")?;
+    let zone = ctx.db.zone_info().zone_id().find(zone_id).ok_or("no such zone")?;
+    teleport(ctx, &mut p, zone_id, (zone.start_x, zone.start_y));
+    Ok(())
+}

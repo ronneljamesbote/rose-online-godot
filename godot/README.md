@@ -54,6 +54,10 @@ What works now:
   or takes off an equipped one; drag moves items between slots; Drop (or Delete) drops the
   selected one. Messages such as "Picked up Banana" or "Needs Level 10" show bottom left.
 
+- Warp gates: the client finds each zone's warp gate objects (event objects of the zone's
+  ZSC) and asks the server to warp you when you walk into one; the server sends you to the
+  gate's target zone and event position (WARP.STB), and the client loads that zone.
+
 Not yet: monsters walking around objects (the server has no zone geometry), skills,
 effects and particles, animated zone objects, sound, most UI.
 
@@ -109,8 +113,8 @@ Other options (after `--`):
 - `--profile=NAME` picks the identity file (`user://identity-NAME.token`), so two clients on
   one PC are two players.
 - `--offline` skips the start screen.
-- `--net-demo[=square|line|fight|walls]` walks a scripted route, fights the nearest monsters
-  or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
+- `--net-demo[=square|line|fight|warp|walls]` walks a scripted route, fights the nearest monsters,
+  walks through warp gates or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
   player's position once a second, `--quit-after=SECONDS` quits. The two-client test:
   `--headless ... --name=Alice --profile=alice --net-demo` in one process and
   `... --name=Bob --profile=bob --weapon=bow --net-demo=line --net-log` in another.
