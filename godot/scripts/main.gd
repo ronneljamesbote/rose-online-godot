@@ -13,7 +13,7 @@
 ##   --profile=NAME             identity file to use (user://identity-NAME.token), so two
 ##                              clients on one PC are two players
 ##   --offline                  skip the start screen and play offline
-##   --net-demo[=square|line|fight]   online: walk a scripted route or fight monsters (tests)
+##   --net-demo[=square|line|fight|walls]   online: scripted routes, fights, wall tests
 ##   --net-log                  online: print every player's position once a second
 ##   --quit-after=SECONDS       quit after this long
 extends Node3D
@@ -144,6 +144,9 @@ func _run_net_demo(me: Node3D) -> void:
 	if options["net-demo"] == "fight":
 		_run_fight_demo()
 		return
+	if options["net-demo"] == "walls":
+		_run_walls_demo(origin)
+		return
 	if options["net-demo"] == "line":
 		route = [Vector3(5, 0, 0), Vector3(0, 0, 0)]
 		pause = 3.5
@@ -226,6 +229,23 @@ func _unhandled_input(event: InputEvent) -> void:
 				player.stop()
 
 
+## Runs 20 m (--wall-reach) out in eight (--wall-directions) directions from the start, coming back each time, to test
+## collision with zone objects.
+func _run_walls_demo(origin: Vector3) -> void:
+	var count := int(options.get("wall-directions", "8"))
+	var reach := float(options.get("wall-reach", "20"))
+	for i in count:
+		var angle := i * TAU / count
+		var target := origin + Vector3(cos(angle), 0, sin(angle)) * reach
+		print("rose net demo: run toward (%.1f, %.1f)" % [target.x, target.z])
+		online.move_to(target)
+		await get_tree().create_timer(reach / 4.5 + 1.0).timeout
+		print("rose net demo: stopped at (%.2f, %.2f), %.1f m out" % [online.me.position.x, online.me.position.z, Vector2(online.me.position.x - origin.x, online.me.position.z - origin.z).length()])
+		online.move_to(origin)
+		await get_tree().create_timer(reach / 4.5 + 1.0).timeout
+	get_tree().quit()
+
+
 ## Fights the nearest monster until it dies, then the next one. Every third fight starts
 ## with a swing cancelled by a step to the side, to show animation cancelling.
 func _run_fight_demo() -> void:
@@ -253,17 +273,24 @@ func _run_fight_demo() -> void:
 			await get_tree().create_timer(0.25).timeout
 
 
-## Marches the mouse ray against the terrain height field (no physics colliders yet).
+## Where the mouse ray meets the ground: zone objects you can walk on (physics ray), or
+## the terrain height field, whichever is nearer.
 func _pick_ground(screen_position: Vector2):
 	var origin := camera.project_ray_origin(screen_position)
 	var direction := camera.project_ray_normal(screen_position)
+	var terrain_hit = null
 	var t := 0.0
 	while t < 500.0:
 		var p := origin + direction * t
 		if p.y <= zone.get_terrain_height(p.x, p.z):
-			return p
+			terrain_hit = p
+			break
 		t += 0.25
-	return null
+	var query := PhysicsRayQueryParameters3D.create(origin, origin + direction * 500.0, 2)
+	var hit := get_world_3d().direct_space_state.intersect_ray(query)
+	if not hit.is_empty() and (terrain_hit == null or origin.distance_to(hit["position"]) < origin.distance_to(terrain_hit)):
+		return hit["position"]
+	return terrain_hit
 
 
 func _say(text: String) -> void:

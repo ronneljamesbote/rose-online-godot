@@ -38,7 +38,7 @@ cd ../bot && cargo run --release -- ws://127.0.0.1:3000 ranged
 - Player is a fixed test character (level 10, 236 HP) with the stats the client calculates for it; Short Sword 2.7 m reach, Short Bow 22.2 m, run speed 450.5.
 - Damage uses rose-offline's physical PvE formula only (no magic, no PvP). Monster attack speed uses the NPC attack animation length.
 - Monsters fight back when hit; proactive aggro is off by default (`set_aggro_range` per monster type), because ROSE's AI scripts aren't ported.
-- No collision or walkability: move_to only checks zone bounds.
+- No zone geometry on the server: move_to only checks zone bounds. The Godot client finds walls itself and calls `move_collision(x, y)`; the server stops the move there if the point is on the current path and not more than 3 m ahead of the server's own position (rose-next's CANTMOVE check). Monsters still walk through objects.
 
 ## Results (2026-10-06, local server, 4-core cloud container)
 

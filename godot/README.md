@@ -31,7 +31,15 @@ What works now:
   before it disappears. Moving cancels a swing at once. The HUD shows your HP and your
   target's HP; monster names show within 15 m or when targeted.
 
-Not yet: collision with objects (characters follow the terrain height only), skills,
+- Collision with zone objects, as in the Bevy client's `collision_system.rs`: parts with a
+  ZSC collision shape become two static trimesh bodies, walls (layer 1) and walkable floors
+  (layer 2). Your own character casts a 0.4 m sphere ahead at 1.2 m height while it runs;
+  on a hit it stops and tells the server (`move_collision`), which stops the move there for
+  everyone. Every character stands on the floor object under its feet (bridges, stairs) if
+  that is higher than the terrain, within a 1.35 m step. Clicks can land on floors, and the
+  camera pulls in when a wall is between it and you.
+
+Not yet: monsters walking around objects (the server has no zone geometry), skills,
 effects and particles, animated zone objects, sound, most UI.
 
 ## Results (2026-10-07, headless, lavapipe software Vulkan)
@@ -43,6 +51,7 @@ effects and particles, animated zone objects, sound, most UI.
 | Draw calls at the zone viewer camera | 279 (539 objects, 173k triangles) |
 | Character | Runs on the terrain, swings, cancels (`media/godot-clip1-run-swing-cancel.mp4`) |
 | Two Godot clients fighting monsters | 182 monsters around the Woopie field; both players fight, hits and kills match the server's damage events (`media/godot-05-monsters-fight.png`, `media/godot-clip3-monsters-fight.mp4`) |
+| Collision | Running 45 m out from the Zant start in 12 directions: 9 runs stopped at buildings, fences and trees, and the server agreed each time (`media/godot-06-wall-stop.png`, `media/godot-clip4-walls.mp4`) |
 | Two Godot clients on one server | Each sees the other run its route; positions agree to the centimetre once a move ends (`media/godot-03-two-clients.png`, `media/godot-clip2-two-clients.mp4`) |
 
 The Bevy client's load time was not measured for comparison.
@@ -68,8 +77,8 @@ Other options (after `--`):
 - `--profile=NAME` picks the identity file (`user://identity-NAME.token`), so two clients on
   one PC are two players.
 - `--offline` skips the start screen.
-- `--net-demo[=square|line|fight]` walks a scripted route or fights the nearest monsters
-  online, `--net-log` prints every
+- `--net-demo[=square|line|fight|walls]` walks a scripted route, fights the nearest monsters
+  or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
   player's position once a second, `--quit-after=SECONDS` quits. The two-client test:
   `--headless ... --name=Alice --profile=alice --net-demo` in one process and
   `... --name=Bob --profile=bob --weapon=bow --net-demo=line --net-log` in another.

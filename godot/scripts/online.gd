@@ -153,6 +153,8 @@ func _process(_delta: float) -> void:
 			add_child(entity)
 			entity.setup(zone, state, id == my_id)
 			entities[id] = entity
+			if id == my_id:
+				entity.collided.connect(_on_collided)
 			if state["kind"] == "player":
 				print("rose net: ", state["name"], " is here (entity ", id, ")")
 		var target_position = null
@@ -197,6 +199,12 @@ func _process(_delta: float) -> void:
 		target_hud.text = "%s   HP %d/%d" % [target.label.text, target.hp, target.max_hp]
 	else:
 		target_hud.text = ""
+
+
+func _on_collided(at: Vector3) -> void:
+	net.move_collision(at.x, at.z)
+	if log_damage:
+		print("rose net: hit a wall at (%.2f, %.2f)" % [at.x, at.z])
 
 
 func _on_damage(hit: Dictionary) -> void:
