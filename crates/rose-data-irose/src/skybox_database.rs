@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use bevy::math::Vec4;
+use glam::Vec4;
 use enum_map::EnumMap;
 use rose_data::{SkyboxData, SkyboxDatabase, SkyboxId, SkyboxState};
 use rose_file_readers::{stb_column, StbFile, VfsPathBuf, VirtualFilesystem};

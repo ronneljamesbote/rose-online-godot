@@ -1,7 +1,6 @@
-use bevy::{ecs::prelude::Component, reflect::Reflect};
 use serde::{Deserialize, Serialize};
 
-#[derive(Component, Copy, Clone, Debug, Serialize, Deserialize, PartialEq, Eq, Reflect)]
+#[derive(Copy, Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub enum MoveMode {
     Walk,
     Run,

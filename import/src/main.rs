@@ -1,121 +1,138 @@
-//! Reads zone and monster data from a ROSE 129_129en install with rose-offline's
-//! readers and writes the JSON arguments for the module's import reducers.
+//! Lists the client files the server's game databases read, or packs them for upload.
 //!
-//! Usage: rose-stdb-import <data.idx> <zone id> <out dir>
+//! Usage:
+//!   rose-stdb-import list <data.idx>       files per folder
+//!   rose-stdb-import time <data.idx>       how long the databases take to build from memory
+//!   rose-stdb-import pack <data.idx> <dir> upload batches for server/upload-game-data.sh
+//!
+//! `pack` writes upload-NNN.json files, each the JSON argument list of the module's
+//! `upload_game_files` reducer (well under the server's request size limit), plus manifest.json.
 
-use std::{collections::BTreeSet, path::Path, sync::Arc};
+use std::{
+    collections::BTreeMap,
+    path::{Path, PathBuf},
+    sync::Mutex,
+    time::Instant,
+};
 
-use rose_data::{NpcDatabaseOptions, NpcMotionAction, ZoneId};
-use rose_data_irose::{get_npc_database, get_string_database, get_zone_database};
-use rose_file_readers::{HostFilesystemDevice, VfsIndex, VirtualFilesystem, ZmoFile};
+use base64::Engine;
+use rose_file_readers::{
+    HostFilesystemDevice, VfsFile, VfsIndex, VfsPath, VirtualFilesystem, VirtualFilesystemDevice,
+};
 use serde_json::json;
 
-fn main() {
-    let args: Vec<String> = std::env::args().collect();
-    let [_, data_idx, zone_id, out_dir] = &args[..] else {
-        eprintln!("usage: rose-stdb-import <data.idx> <zone id> <out dir>");
-        std::process::exit(2);
-    };
-    let data_idx = Path::new(data_idx);
-    let zone_id: u16 = zone_id.parse().expect("zone id");
-    let out_dir = Path::new(out_dir);
-    std::fs::create_dir_all(out_dir).unwrap();
+/// Passes reads through to another device and remembers every file that was read.
+struct RecordingDevice<D> {
+    inner: D,
+    read: &'static Mutex<BTreeMap<PathBuf, Vec<u8>>>,
+}
 
-    let vfs = VirtualFilesystem::new(vec![
-        Box::new(VfsIndex::load(data_idx).expect("load data.idx")),
-        Box::new(HostFilesystemDevice::new(
-            data_idx.parent().map(|p| p.to_path_buf()).unwrap_or_default(),
-        )),
-    ]);
-    let strings = get_string_database(&vfs, 1).expect("strings");
-    let npcs = Arc::new(
-        get_npc_database(&vfs, strings.clone(), &NpcDatabaseOptions { load_frame_data: true })
-            .expect("npcs"),
-    );
-    let zones = get_zone_database(&vfs, strings).expect("zones");
-    let zone = zones.get_zone(ZoneId::new(zone_id).unwrap()).expect("zone not found");
-
-    let size_x = zone.num_sectors_x as f32 * zone.sector_size as f32;
-    let size_y = zone.num_sectors_y as f32 * zone.sector_size as f32;
-    let revive = zone.revive_positions.first().copied().unwrap_or(zone.start_position);
-    let zone_json = json!({
-        "zone_id": zone_id,
-        "name": zone.name,
-        "start_x": zone.start_position.x, "start_y": zone.start_position.y,
-        "revive_x": revive.x, "revive_y": revive.y,
-        "min_x": zone.sectors_base_position.x, "min_y": zone.sectors_base_position.y,
-        "max_x": zone.sectors_base_position.x + size_x, "max_y": zone.sectors_base_position.y + size_y,
-    });
-
-    let mut spawns = Vec::new();
-    let mut used_npcs = BTreeSet::new();
-    let mut next_id = zone_id as u32 * 10_000;
-    for point in &zone.monster_spawns {
-        for (npc_id, count) in &point.basic_spawns {
-            next_id += 1;
-            used_npcs.insert(npc_id.get());
-            spawns.push(json!({
-                "spawn_id": next_id,
-                "zone_id": zone_id,
-                "x": point.position.x, "y": point.position.y,
-                "radius": (point.range * 100) as f32,
-                "npc_id": npc_id.get(),
-                "max_alive": (*count as u32).min(point.limit_count.max(1)),
-                "respawn_secs": point.interval.max(5),
-                "next_spawn_at_us": 0,
-            }));
-        }
+impl<D: VirtualFilesystemDevice> VirtualFilesystemDevice for RecordingDevice<D> {
+    fn open_file(&self, path: &VfsPath) -> Result<VfsFile<'_>, anyhow::Error> {
+        let file = self.inner.open_file(path)?;
+        let bytes = match &file {
+            VfsFile::Buffer(data) => data.clone(),
+            VfsFile::View(data) => data.to_vec(),
+        };
+        self.read.lock().unwrap().insert(path.path().to_path_buf(), bytes);
+        Ok(file)
     }
 
-    let mut npc_rows = Vec::new();
-    for npc_id in &used_npcs {
-        let npc = npcs.get_npc(rose_data::NpcId::new(*npc_id).unwrap()).unwrap();
-        let attack_motion = npcs.get_npc_action_motion(npc.id, NpcMotionAction::Attack);
-        let attack_ms = attack_motion.map_or(1000, |m| m.duration.as_millis() as i32).max(300);
-        // First hit frame of the attack animation; half way through when the file has none.
-        let attack_hit_ms = attack_motion
-            .and_then(|m| vfs.read_file::<ZmoFile, _>(&m.path).ok())
-            .and_then(|zmo| first_hit_ms(&zmo))
-            .unwrap_or(attack_ms / 2)
-            .min(attack_ms);
-        npc_rows.push(json!({
-            "npc_id": npc_id,
-            "name": npc.name,
-            "level": npc.level,
-            "max_hp": npc.level * npc.health_points,
-            "attack_power": npc.attack,
-            "hit": npc.hit,
-            "defence": npc.defence,
-            "avoid": npc.avoid,
-            "attack_speed": npc.attack_speed,
-            "attack_motion_ms": attack_ms,
-            "attack_hit_ms": attack_hit_ms,
-            "attack_range": npc.attack_range as f32,
-            "walk_speed": npc.walk_speed as f32,
-            "run_speed": npc.run_speed as f32,
-            "aggro_range": 0.0,
-        }));
-    }
-
-    std::fs::write(out_dir.join("npcs.json"), json!([npc_rows]).to_string()).unwrap();
-    std::fs::write(out_dir.join("zone.json"), json!([zone_json, spawns]).to_string()).unwrap();
-    println!(
-        "zone {} {}: {} spawn entries, {} monster types -> {}",
-        zone_id, zone.name, spawns.len(), npc_rows.len(), out_dir.display()
-    );
-    for row in &npc_rows {
-        println!("  {} {} lv{} hp{} atk{} def{} spd{} motion{}ms range{}",
-            row["npc_id"], row["name"], row["level"], row["max_hp"], row["attack_power"],
-            row["defence"], row["attack_speed"], row["attack_motion_ms"], row["attack_range"]);
+    fn exists(&self, path: &VfsPath) -> bool {
+        self.inner.exists(path)
     }
 }
 
-/// Time of the first hit frame event in a ZMO attack animation (the same events rose-file-readers
-/// counts as attack frames).
-fn first_hit_ms(zmo: &ZmoFile) -> Option<i32> {
-    let frame = zmo
-        .frame_events
-        .iter()
-        .position(|e| matches!(e, 10 | 20..=28 | 56..=57 | 66..=67))?;
-    Some((frame * 1000 / zmo.fps.max(1)) as i32)
+/// Raw bytes per upload call; SpacetimeDB refuses request bodies much over 1 MB.
+const MAX_CALL_BYTES: usize = 600 << 10;
+
+fn main() {
+    let args: Vec<String> = std::env::args().collect();
+    let (mode, data_idx) = match &args[..] {
+        [_, mode, data_idx, ..] => (mode.as_str(), Path::new(data_idx)),
+        _ => {
+            eprintln!("usage: rose-stdb-import list|time|pack <data.idx> [out dir]");
+            std::process::exit(2);
+        }
+    };
+    let read: &'static Mutex<BTreeMap<PathBuf, Vec<u8>>> = Box::leak(Box::default());
+    let root = data_idx.parent().map(|p| p.to_path_buf()).unwrap_or_default();
+    let vfs = VirtualFilesystem::new(vec![
+        Box::new(RecordingDevice { inner: VfsIndex::load(data_idx).expect("load data.idx"), read }),
+        Box::new(RecordingDevice { inner: HostFilesystemDevice::new(root), read }),
+    ]);
+    let started = Instant::now();
+    rose_game_data::load_game_data(&vfs).expect("load game data");
+    let files = std::mem::take(&mut *read.lock().unwrap());
+    let total: usize = files.values().map(|d| d.len()).sum();
+    eprintln!(
+        "game data: {} files, {:.1} MB, loaded in {} ms",
+        files.len(),
+        total as f64 / 1e6,
+        started.elapsed().as_millis()
+    );
+
+    match mode {
+        "time" => {
+            let mut memory = rose_file_readers::MemoryFilesystemDevice::default();
+            for (path, data) in &files {
+                memory.insert(&path.to_string_lossy(), data.clone());
+            }
+            let vfs = VirtualFilesystem::new(vec![Box::new(memory)]);
+            let started = Instant::now();
+            rose_game_data::load_game_data(&vfs).expect("load from memory");
+            eprintln!("from memory: {} ms", started.elapsed().as_millis());
+            let started = Instant::now();
+            let strings = rose_data_irose::get_string_database(&vfs, 1).unwrap();
+            rose_data_irose::get_zone_database(&vfs, strings).unwrap();
+            eprintln!("zones from memory: {} ms", started.elapsed().as_millis());
+        }
+        "list" => {
+            let mut by_dir: BTreeMap<String, (usize, usize)> = BTreeMap::new();
+            for (path, data) in &files {
+                let dir = path.parent().map(|p| p.to_string_lossy().to_string()).unwrap_or_default();
+                let entry = by_dir.entry(dir).or_default();
+                entry.0 += 1;
+                entry.1 += data.len();
+            }
+            for (dir, (count, bytes)) in by_dir {
+                println!("{:>5} files {:>9} bytes  {}", count, bytes, dir);
+            }
+        }
+        "pack" => {
+            let out_dir = Path::new(args.get(3).expect("out dir"));
+            std::fs::create_dir_all(out_dir).unwrap();
+            let engine = base64::engine::general_purpose::STANDARD;
+            let mut batch = Vec::new();
+            let mut batch_bytes = 0;
+            let mut batches = 0;
+            let flush = |batch: &mut Vec<serde_json::Value>, batches: &mut usize| {
+                if batch.is_empty() {
+                    return;
+                }
+                *batches += 1;
+                let name = out_dir.join(format!("upload-{:03}.json", batches));
+                std::fs::write(name, json!([std::mem::take(batch)]).to_string()).unwrap();
+            };
+            for (path, data) in &files {
+                if batch_bytes + data.len() > MAX_CALL_BYTES {
+                    flush(&mut batch, &mut batches);
+                    batch_bytes = 0;
+                }
+                batch_bytes += data.len();
+                batch.push(json!({ "path": path.to_string_lossy(), "data": engine.encode(data) }));
+            }
+            flush(&mut batch, &mut batches);
+            std::fs::write(
+                out_dir.join("manifest.json"),
+                json!({ "files": files.len(), "bytes": total, "uploads": batches }).to_string(),
+            )
+            .unwrap();
+            eprintln!("packed into {} uploads in {}", batches, out_dir.display());
+        }
+        _ => {
+            eprintln!("unknown mode {mode}");
+            std::process::exit(2);
+        }
+    }
 }

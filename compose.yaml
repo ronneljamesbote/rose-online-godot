@@ -9,8 +9,13 @@ services:
       - "3000:3000"
     volumes:
       - rose-data:/data
+      # The ROSE client folder, the one with data.idx in it. The server reads its item,
+      # monster, skill, quest and zone files from there. Set ROSE_CLIENT (in a .env file
+      # next to this one, or in the shell) to its path, e.g. ROSE_CLIENT=C:\Games\ROSE.
+      - ${ROSE_CLIENT:-./rose-client}:/game:ro
     environment:
       ROSE_CLEAR_WORLD: ${ROSE_CLEAR_WORLD:-0}
+      ROSE_UPLOAD_GAME_DATA: ${ROSE_UPLOAD_GAME_DATA:-0}
     restart: unless-stopped
 
 volumes:

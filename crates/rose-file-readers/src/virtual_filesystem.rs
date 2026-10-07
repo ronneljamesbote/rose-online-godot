@@ -149,6 +149,31 @@ impl VirtualFilesystemDevice for HostFilesystemDevice {
     }
 }
 
+/// Files held in memory, keyed by normalised VFS path (for example game data uploaded to a server).
+#[derive(Default)]
+pub struct MemoryFilesystemDevice {
+    pub files: std::collections::HashMap<PathBuf, Vec<u8>>,
+}
+
+impl MemoryFilesystemDevice {
+    pub fn insert(&mut self, path: &str, data: Vec<u8>) {
+        self.files.insert(VfsPath::normalise_path(path), data);
+    }
+}
+
+impl VirtualFilesystemDevice for MemoryFilesystemDevice {
+    fn open_file(&self, vfs_path: &VfsPath) -> Result<VfsFile<'_>, anyhow::Error> {
+        self.files
+            .get(vfs_path.path())
+            .map(|data| VfsFile::View(data.as_slice()))
+            .ok_or_else(|| VfsError::FileNotFound(vfs_path.path().into()).into())
+    }
+
+    fn exists(&self, vfs_path: &VfsPath) -> bool {
+        self.files.contains_key(vfs_path.path())
+    }
+}
+
 pub struct VirtualFilesystem {
     pub devices: Vec<Box<dyn VirtualFilesystemDevice + Send + Sync>>,
 }

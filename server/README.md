@@ -5,14 +5,23 @@ macOS and Linux (x86_64 or ARM): anything that runs Docker.
 
 ## Start
 
-Install Docker (Docker Desktop on Windows and macOS). Then, in the repository folder:
+Install Docker (Docker Desktop on Windows and macOS). The server reads its items, monsters,
+skills, quests and zones from a ROSE client, so tell it where yours is: make a file named
+`.env` in the repository folder with one line, the folder that has `data.idx` in it, for example
+
+```
+ROSE_CLIENT=C:\Games\iRose_129_129
+```
+
+Then, in the repository folder:
 
 ```sh
 docker compose up -d
 ```
 
-The first run builds the image (it compiles the module, a few minutes) and creates a fresh
-world with Zant's monsters. Players connect to `ws://THIS-PC:3000`; on the same PC that is
+The first run builds the image (it compiles the module, a few minutes), creates a fresh
+world and uploads the game data from that folder (the log shows `game data ready`). The
+container only reads the folder. Players connect to `ws://THIS-PC:3000`; on the same PC that is
 `ws://127.0.0.1:3000`. Friends on the internet need TCP port 3000 forwarded to this PC on
 the router; a rented server only needs port 3000 open in its firewall.
 
@@ -21,6 +30,7 @@ the router; a rented server only needs port 3000 open in its firewall.
 | Watch the log | `docker compose logs -f` |
 | Stop / start again | `docker compose stop` / `docker compose start` |
 | Install a new version of the module (keeps characters) | `docker compose up -d --build` |
+| Upload the game data again (after changing the client files) | `ROSE_UPLOAD_GAME_DATA=1 docker compose up -d`, then `docker compose up -d` once more |
 | Wipe the world (needed after a breaking schema change) | `ROSE_CLEAR_WORLD=1 docker compose up -d --build`, then `docker compose up -d` once more |
 | Run admin commands | `docker compose exec rose-server sh -c 'HOME=/data/cli spacetimedb-cli call --server http://127.0.0.1:3000 rose reset_monsters'` |
 
@@ -31,7 +41,7 @@ followed by `Remove-Item Env:ROSE_CLEAR_WORLD; docker compose up -d`.
 
 Everything lives in the `rose-data` volume, so the container can be rebuilt freely:
 
-- `/data/db`: the world (characters, positions, HP).
+- `/data/db`: the world (characters with their levels, stats and items, and the uploaded game data).
 - `/data/keys`: the key pair that signs player identities, made on the first start. If it
   is lost, every player gets a new character.
 - `/data/cli`: the CLI login that published the module, which is the admin identity.
@@ -46,7 +56,10 @@ folder, `rose-stdb_rose-data` here; `docker volume ls` shows it.)
 `server/Dockerfile` builds the module in a Rust stage, then puts SpacetimeDB 2.10.2's Linux
 binaries and the module on Ubuntu 24.04. `server/entrypoint.sh` makes the key pair on the
 first start, starts SpacetimeDB, and publishes the module on every start: unchanged it is a
-no-op, changed it is an update that keeps the data.
+no-op, changed it is an update that keeps the data. Then, if the module has no game data
+yet (or `ROSE_UPLOAD_GAME_DATA=1`), it runs `upload-game-data.sh` on the `data.idx` it finds
+in `/game`: the import tool packs the files the databases read (about 2,500 files, 33 MB for
+129_129en) and the script sends them to the module's admin reducers in batches.
 
 Tested 2026-10-07 on Linux (Docker 29): fresh start, a Godot client signed in and moved,
 and after `docker restart` the same player came back with its name and position.

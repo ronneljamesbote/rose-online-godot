@@ -1,4 +1,3 @@
-use bevy::ecs::prelude::Component;
 use enum_map::EnumMap;
 use serde::{Deserialize, Serialize};
 use std::time::{Duration, Instant};
@@ -11,7 +10,7 @@ pub struct ActiveStatusEffect {
     pub value: i32,
 }
 
-#[derive(Component, Clone, Default, Debug)]
+#[derive(Clone, Default, Debug)]
 pub struct StatusEffects {
     pub active: EnumMap<StatusEffectType, Option<ActiveStatusEffect>>,
     pub expire_times: EnumMap<StatusEffectType, Option<Instant>>,
@@ -27,7 +26,7 @@ pub struct ActiveStatusEffectRegen {
 
 // This is stored in a separate component as it must change every tick, and we want
 // Changed<StatusEffects> to only be triggered when effects have been added / removed
-#[derive(Component, Clone, Default)]
+#[derive(Clone, Default)]
 pub struct StatusEffectsRegen {
     pub regens: EnumMap<StatusEffectType, Option<ActiveStatusEffectRegen>>,
     pub per_second_tick_counter: Duration,

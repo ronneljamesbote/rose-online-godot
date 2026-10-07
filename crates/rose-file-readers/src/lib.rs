@@ -1,3 +1,4 @@
+#[cfg(not(target_arch = "wasm32"))]
 mod aruavfs;
 mod reader;
 mod virtual_filesystem;
@@ -32,6 +33,7 @@ mod eft;
 mod him;
 mod id;
 mod ifo;
+#[cfg(not(target_arch = "wasm32"))]
 mod irosephvfs;
 mod lit;
 mod ltb;
@@ -39,8 +41,10 @@ mod ptl;
 mod qsd;
 mod stl;
 mod til;
+#[cfg(not(target_arch = "wasm32"))]
 mod titanvfs;
 mod tsi;
+#[cfg(not(target_arch = "wasm32"))]
 mod vfs;
 mod zmd;
 mod zmo;
@@ -52,6 +56,7 @@ mod zsc;
 mod stb;
 
 pub use aip::*;
+#[cfg(not(target_arch = "wasm32"))]
 pub use aruavfs::AruaVfsIndex;
 pub use chr::ChrFile;
 pub use con_::{ConFile, ConMenu, ConMessage, ConMessageType};
@@ -62,6 +67,7 @@ pub use ifo::{
     IfoEffectObject, IfoEventObject, IfoFile, IfoMonsterSpawn, IfoMonsterSpawnPoint, IfoNpc,
     IfoObject, IfoReadOptions, IfoSoundObject,
 };
+#[cfg(not(target_arch = "wasm32"))]
 pub use irosephvfs::IrosePhVfsIndex;
 pub use lit::{LitFile, LitObject, LitObjectPart};
 pub use ltb::LtbFile;
@@ -70,11 +76,13 @@ pub use qsd::*;
 pub use stb::{StbFile, StbReadOptions};
 pub use stl::{StlFile, StlItemEntry, StlNormalEntry, StlQuestEntry, StlReadOptions};
 pub use til::TilFile;
+#[cfg(not(target_arch = "wasm32"))]
 pub use titanvfs::TitanVfsIndex;
 pub use tsi::{TsiFile, TsiSprite, TsiTexture, TsiTextureId};
+#[cfg(not(target_arch = "wasm32"))]
 pub use vfs::VfsIndex;
 pub use virtual_filesystem::{
-    HostFilesystemDevice, VfsError, VfsFile, VfsPath, VfsPathBuf, VirtualFilesystem,
+    HostFilesystemDevice, MemoryFilesystemDevice, VfsError, VfsFile, VfsPath, VfsPathBuf, VirtualFilesystem,
     VirtualFilesystemDevice,
 };
 pub use zmd::ZmdFile;

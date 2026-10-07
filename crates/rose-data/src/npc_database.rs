@@ -1,4 +1,3 @@
-use bevy::reflect::Reflect;
 use enum_map::{Enum, EnumMap};
 use serde::{Deserialize, Serialize};
 use std::{
@@ -12,7 +11,7 @@ use crate::{
     EffectFileId, EffectId, ItemReference, MotionFileData, MotionId, SoundId, StringDatabase,
 };
 
-#[derive(Copy, Clone, Debug, Hash, PartialEq, Eq, Serialize, Deserialize, Reflect)]
+#[derive(Copy, Clone, Debug, Hash, PartialEq, Eq, Serialize, Deserialize)]
 pub struct NpcId(NonZeroU16);
 
 id_wrapper_impl!(NpcId, NonZeroU16, u16);

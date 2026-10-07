@@ -1,7 +1,6 @@
-use bevy::{ecs::prelude::Component, reflect::Reflect};
 use serde::{Deserialize, Serialize};
 
-#[derive(Component, Copy, Clone, Debug, Deserialize, Serialize, Reflect)]
+#[derive(Copy, Clone, Debug, Deserialize, Serialize)]
 pub struct StatPoints {
     pub points: u32,
 }

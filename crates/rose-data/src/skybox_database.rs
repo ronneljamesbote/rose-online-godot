@@ -1,4 +1,4 @@
-use bevy::math::Vec4;
+use glam::Vec4;
 use enum_map::{Enum, EnumMap};
 use rose_file_readers::VfsPathBuf;
 use serde::{Deserialize, Serialize};

@@ -4,6 +4,8 @@
 #![allow(unused, clippy::all)]
 use spacetimedb_sdk::__codegen::{self as __sdk, __lib, __sats, __ws};
 
+use super::spawn_entry_type::SpawnEntry;
+
 #[derive(__lib::ser::Serialize, __lib::de::Deserialize, Clone, PartialEq, Debug)]
 #[sats(crate = __lib)]
 pub struct MonsterSpawn {
@@ -11,11 +13,14 @@ pub struct MonsterSpawn {
     pub zone_id: u16,
     pub x: f32,
     pub y: f32,
-    pub radius: f32,
-    pub npc_id: u16,
-    pub max_alive: u32,
-    pub respawn_secs: u32,
-    pub next_spawn_at_us: i64,
+    pub range: f32,
+    pub interval_secs: u32,
+    pub limit_count: u32,
+    pub tactic_points: u32,
+    pub basic: Vec<SpawnEntry>,
+    pub tactic: Vec<SpawnEntry>,
+    pub current_tactics_value: u32,
+    pub next_check_at_us: i64,
 }
 
 impl __sdk::InModule for MonsterSpawn {
@@ -30,11 +35,14 @@ pub struct MonsterSpawnCols {
     pub zone_id: __sdk::__query_builder::Col<MonsterSpawn, u16>,
     pub x: __sdk::__query_builder::Col<MonsterSpawn, f32>,
     pub y: __sdk::__query_builder::Col<MonsterSpawn, f32>,
-    pub radius: __sdk::__query_builder::Col<MonsterSpawn, f32>,
-    pub npc_id: __sdk::__query_builder::Col<MonsterSpawn, u16>,
-    pub max_alive: __sdk::__query_builder::Col<MonsterSpawn, u32>,
-    pub respawn_secs: __sdk::__query_builder::Col<MonsterSpawn, u32>,
-    pub next_spawn_at_us: __sdk::__query_builder::Col<MonsterSpawn, i64>,
+    pub range: __sdk::__query_builder::Col<MonsterSpawn, f32>,
+    pub interval_secs: __sdk::__query_builder::Col<MonsterSpawn, u32>,
+    pub limit_count: __sdk::__query_builder::Col<MonsterSpawn, u32>,
+    pub tactic_points: __sdk::__query_builder::Col<MonsterSpawn, u32>,
+    pub basic: __sdk::__query_builder::Col<MonsterSpawn, Vec<SpawnEntry>>,
+    pub tactic: __sdk::__query_builder::Col<MonsterSpawn, Vec<SpawnEntry>>,
+    pub current_tactics_value: __sdk::__query_builder::Col<MonsterSpawn, u32>,
+    pub next_check_at_us: __sdk::__query_builder::Col<MonsterSpawn, i64>,
 }
 
 impl __sdk::__query_builder::HasCols for MonsterSpawn {
@@ -45,11 +53,17 @@ impl __sdk::__query_builder::HasCols for MonsterSpawn {
             zone_id: __sdk::__query_builder::Col::new(table_name, "zone_id"),
             x: __sdk::__query_builder::Col::new(table_name, "x"),
             y: __sdk::__query_builder::Col::new(table_name, "y"),
-            radius: __sdk::__query_builder::Col::new(table_name, "radius"),
-            npc_id: __sdk::__query_builder::Col::new(table_name, "npc_id"),
-            max_alive: __sdk::__query_builder::Col::new(table_name, "max_alive"),
-            respawn_secs: __sdk::__query_builder::Col::new(table_name, "respawn_secs"),
-            next_spawn_at_us: __sdk::__query_builder::Col::new(table_name, "next_spawn_at_us"),
+            range: __sdk::__query_builder::Col::new(table_name, "range"),
+            interval_secs: __sdk::__query_builder::Col::new(table_name, "interval_secs"),
+            limit_count: __sdk::__query_builder::Col::new(table_name, "limit_count"),
+            tactic_points: __sdk::__query_builder::Col::new(table_name, "tactic_points"),
+            basic: __sdk::__query_builder::Col::new(table_name, "basic"),
+            tactic: __sdk::__query_builder::Col::new(table_name, "tactic"),
+            current_tactics_value: __sdk::__query_builder::Col::new(
+                table_name,
+                "current_tactics_value",
+            ),
+            next_check_at_us: __sdk::__query_builder::Col::new(table_name, "next_check_at_us"),
         }
     }
 }
@@ -59,6 +73,7 @@ impl __sdk::__query_builder::HasCols for MonsterSpawn {
 /// Provides typed access to indexed columns for query building.
 pub struct MonsterSpawnIxCols {
     pub spawn_id: __sdk::__query_builder::IxCol<MonsterSpawn, u32>,
+    pub zone_id: __sdk::__query_builder::IxCol<MonsterSpawn, u16>,
 }
 
 impl __sdk::__query_builder::HasIxCols for MonsterSpawn {
@@ -66,6 +81,7 @@ impl __sdk::__query_builder::HasIxCols for MonsterSpawn {
     fn ix_cols(table_name: &'static str) -> Self::IxCols {
         MonsterSpawnIxCols {
             spawn_id: __sdk::__query_builder::IxCol::new(table_name, "spawn_id"),
+            zone_id: __sdk::__query_builder::IxCol::new(table_name, "zone_id"),
         }
     }
 }

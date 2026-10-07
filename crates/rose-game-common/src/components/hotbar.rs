@@ -1,4 +1,3 @@
-use bevy::ecs::prelude::Component;
 use serde::{Deserialize, Serialize};
 
 use crate::components::{ItemSlot, SkillSlot};
@@ -16,7 +15,7 @@ pub enum HotbarSlot {
 pub const HOTBAR_PAGE_SIZE: usize = 8;
 pub const HOTBAR_NUM_PAGES: usize = 4;
 
-#[derive(Component, Clone, Debug, Default, Deserialize, Serialize)]
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct Hotbar {
     pub pages: [[Option<HotbarSlot>; HOTBAR_PAGE_SIZE]; HOTBAR_NUM_PAGES],
 }

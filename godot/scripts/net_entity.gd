@@ -8,8 +8,6 @@ extends Node3D
 
 const BLEND := 0.12
 const RUN_SPEED := 4.505  # player move_speed 450.5 cm/s on the server
-const SWORD := 2  # Short Sword
-const BOW := 202  # Short Bow
 const PREDICTION_TIMEOUT_MS := 1000
 const CORPSE_SECONDS := 3.0
 # Collision, as in rose-offline-client's collision_system.rs.
@@ -29,7 +27,7 @@ var label: Label3D
 var entity_id := -1
 var is_monster := false
 var npc_id := 0
-var ranged := false
+var look := []  # male, face, hair, head, body, hands, feet, weapon, sub weapon (players)
 var dead := false
 var dying := false  # the server removed it after a killing blow; playing the death
 var was_swinging := false
@@ -37,6 +35,9 @@ var attack_index := 0
 var height := 2.0
 var hp := 0
 var max_hp := 0
+var mp := 0
+var max_mp := 0
+var level := 0
 var predicted := {}  # from, to (Vector3), started (msec)
 var is_me := false
 var blocked := {}  # at, to (Vector3), since (msec): we hit a wall and wait for the server to stop us
@@ -52,7 +53,7 @@ func setup(zone_node: Node, state: Dictionary, is_me_: bool) -> void:
 	entity_id = state["id"]
 	is_monster = state["kind"] == "monster"
 	npc_id = state["npc_id"]
-	ranged = state.get("ranged", false)
+	look = state.get("look", [])
 	_build()
 	label = Label3D.new()
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
@@ -80,7 +81,8 @@ func _build() -> void:
 		_walk = "move"
 	else:
 		model = RoseCharacter.new()
-		model.build(true, 1, 0, 0, 1, 1, 1, BOW if ranged else SWORD, 0)
+		var l: Array = look if look.size() == 9 else [true, 1, 0, 0, 1, 1, 1, 0, 0]
+		model.build(l[0], l[1], l[2], l[3], l[4], l[5], l[6], l[7], l[8])
 	model.name = "Model"
 	add_child(model)
 	anim = model.get_node_or_null("AnimationPlayer")
@@ -116,11 +118,15 @@ func update_state(state: Dictionary, target_position) -> void:
 	var name_text: String = state["name"]
 	hp = state.get("hp", 0)
 	max_hp = state.get("max_hp", 0)
+	mp = state.get("mp", 0)
+	max_mp = state.get("max_mp", 0)
+	level = state.get("level", 0)
 	if label.text != name_text:
 		label.text = name_text
-	if not is_monster and state.get("ranged", false) != ranged:
-		ranged = state["ranged"]
+	if not is_monster and state.has("look") and state["look"] != look:
+		look = state["look"]
 		_build()
+		label.position.y = height + 0.3
 
 	var server_pos := Vector3(state["x"], 0, state["z"])
 	var server_to := Vector3(state["to_x"], 0, state["to_z"])

@@ -1,4 +1,3 @@
-use bevy::ecs::prelude::Component;
 use serde::{Deserialize, Serialize};
 
 use rose_data::Item;
@@ -23,7 +22,7 @@ impl From<Money> for DroppedItem {
     }
 }
 
-#[derive(Component, Clone)]
+#[derive(Clone)]
 pub struct ItemDrop {
     pub item: Option<DroppedItem>,
 }

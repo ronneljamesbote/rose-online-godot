@@ -20,6 +20,29 @@ use rose_game_common::{
 
 const MAX_BASIC_STAT_VALUE: i32 = 300;
 
+/// Experience needed to go from `level` to the next one.
+pub fn levelup_require_xp(level: u32) -> u64 {
+    match level as u64 {
+        0..=15 => (((level + 3) * (level + 5) * (level + 10)) as f64 * 0.7) as u64,
+        16..=60 => (((level - 5) * (level + 2) * (level + 2)) as f64 * 2.2) as u64,
+        61..=113 => (((level - 11) * (level) * (level + 4)) as f64 * 2.5) as u64,
+        114..=150 => (((level - 31) * (level - 20) * (level + 4)) as f64 * 3.8) as u64,
+        151..=189 => (((level - 67) * (level - 20) * (level - 10)) as f64 * 6.0) as u64,
+        190..=u64::MAX => {
+            ((level - 90) * (level - 120) * (level - 60) * (level - 170) * (level - 188)) as u64
+        }
+    }
+}
+
+/// Stat points it costs to raise a basic stat from `current`, or None at the maximum.
+pub fn basic_stat_increase_cost(current: i32) -> Option<u32> {
+    if current >= MAX_BASIC_STAT_VALUE {
+        None
+    } else {
+        Some((current as f32 * 0.2) as u32)
+    }
+}
+
 pub struct AbilityValuesData {
     item_database: Arc<ItemDatabase>,
     skill_database: Arc<SkillDatabase>,
@@ -352,7 +375,7 @@ impl AbilityValueCalculator for AbilityValuesData {
         defender: &AbilityValues,
         hit_count: i32,
     ) -> Damage {
-        let mut rng = rand::thread_rng();
+        let mut rng = crate::rng::SharedRng;
         let success_rate = calculate_damage_success_rate(&mut rng, attacker, defender);
         if success_rate < 20
             && (rng.gen_range(1..=100)
@@ -402,7 +425,7 @@ impl AbilityValueCalculator for AbilityValuesData {
         skill_data: &SkillData,
         hit_count: i32,
     ) -> Damage {
-        let mut rng = rand::thread_rng();
+        let mut rng = crate::rng::SharedRng;
         let mut damage = match skill_data.damage_type {
             SkillDamageType::WeaponAttack => {
                 let success = ((attacker.get_level() + 20) - defender.get_level()
@@ -708,16 +731,7 @@ impl AbilityValueCalculator for AbilityValuesData {
     }
 
     fn calculate_levelup_require_xp(&self, level: u32) -> u64 {
-        match level as u64 {
-            0..=15 => (((level + 3) * (level + 5) * (level + 10)) as f64 * 0.7) as u64,
-            16..=60 => (((level - 5) * (level + 2) * (level + 2)) as f64 * 2.2) as u64,
-            61..=113 => (((level - 11) * (level) * (level + 4)) as f64 * 2.5) as u64,
-            114..=150 => (((level - 31) * (level - 20) * (level + 4)) as f64 * 3.8) as u64,
-            151..=189 => (((level - 67) * (level - 20) * (level - 10)) as f64 * 6.0) as u64,
-            190..=u64::MAX => {
-                ((level - 90) * (level - 120) * (level - 60) * (level - 170) * (level - 188)) as u64
-            }
-        }
+        levelup_require_xp(level)
     }
 
     fn calculate_levelup_reward_skill_points(&self, level: u32) -> u32 {
@@ -957,7 +971,7 @@ impl AbilityValueCalculator for AbilityValuesData {
             return None;
         }
 
-        let mut rng = rand::thread_rng();
+        let mut rng = crate::rng::SharedRng;
         if rng.gen_range(1..=710) >= equipment_item.durability as i32 + 600 {
             Some(item_slot)
         } else {
@@ -971,7 +985,7 @@ impl AbilityValueCalculator for AbilityValuesData {
         equipment: &Equipment,
         damage: &Damage,
     ) -> Option<ItemSlot> {
-        let mut rng = rand::thread_rng();
+        let mut rng = crate::rng::SharedRng;
         let rand_value = rng.gen_range(1..=400);
 
         if rand_value >= 101 {
