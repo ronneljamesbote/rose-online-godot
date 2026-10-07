@@ -88,6 +88,7 @@ func _on_connect() -> void:
 	var name_text := name_edit.text.strip_edges()
 	var use_bow := weapon_button.selected == 1
 	var settings := ConfigFile.new()
+	settings.load(SETTINGS)
 	settings.set_value("net", "server", server_edit.text.strip_edges())
 	settings.set_value("net", "name", name_text)
 	settings.set_value("net", "bow", use_bow)
