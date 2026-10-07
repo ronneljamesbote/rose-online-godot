@@ -19,12 +19,22 @@ spacetime server add --url http://127.0.0.1:3000 --default local && spacetime lo
 cd module && cargo build --release --target wasm32-unknown-unknown
 spacetime publish --server local --bin-path target/wasm32-unknown-unknown/release/rose_stdb_module.wasm -y rose
 
+# A fresh database already has Zant's monsters and spawns (data/zone1 is built into the
+# module's init). To re-import or import another zone:
 cd .. && cargo run --release -p rose-stdb-import -- /path/to/iRose_129_129/data.idx 1 data/zone1 && cd import
 spacetime call --server local rose import_npcs "$(jq -c '.[0]' ../data/zone1/npcs.json)"
 spacetime call --server local rose import_zone "$(jq -c '.[0]' ../data/zone1/zone.json)" "$(jq -c '.[1]' ../data/zone1/zone.json)"
 
 cd ../bot && cargo run --release -- ws://127.0.0.1:3000 ranged
 ```
+
+### Hosting on Windows
+
+`bash server-windows/build.sh` makes `dist/ROSE-server-windows.zip` with SpacetimeDB for
+Windows, the module, a fresh key pair and two scripts: `start-server.bat` runs the server on
+port 3000 and `install-game.bat` publishes the module (first time, and for updates). Players
+use the Godot client's Windows zip (`godot/tools/build-windows.sh`). Both Windows zips were
+tested under Wine 9 on Linux, not yet on a Windows PC.
 
 ## Combat model
 - Attacking needs the attacker to stand still; clicking to move drops the target (attack-while-moving was removed on 2026-10-07).
