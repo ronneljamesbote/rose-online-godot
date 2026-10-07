@@ -122,3 +122,8 @@ pub fn load_texture_array(paths: &[String]) -> Gd<Texture2DArray> {
     array.create_from_images(&layers);
     array
 }
+
+/// Drops the cached textures while the engine is still running.
+pub fn clear_cache() {
+    TEXTURES.with_borrow_mut(|cache| cache.clear());
+}

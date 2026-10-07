@@ -127,3 +127,9 @@ pub fn object_material(zsc_material: &ZscMaterial, lightmap: Option<Gd<Texture2D
     material.set_shader_parameter("alpha_value", &alpha_value.unwrap_or(1.0).to_variant());
     material
 }
+
+/// Drops the cached shaders while the engine is still running.
+pub fn clear_cache() {
+    SHADERS.with_borrow_mut(|cache| cache.clear());
+    SPECULAR.with_borrow_mut(|cache| *cache = None);
+}
