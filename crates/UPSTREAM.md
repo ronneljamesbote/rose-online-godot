@@ -34,7 +34,8 @@ To compare with upstream later: clone rose-offline at the commit above and diff 
 
 rose-game-data is not from upstream. It builds every database from a virtual filesystem
 (`load_game_data`, ported from rose-offline-server's `irose/data/mod.rs`) and reads the
-starting characters from INIT_AVATAR.STB.
+starting characters from INIT_AVATAR.STB, and the crafting recipes from LIST_PRODUCT.STB
+(`CraftRecipe`, shared with the client).
 
 rose-quest is ours too: quest conditions and the quest variables (ported from
 rose-offline-server's quest system), shared by the module, which runs triggers and their

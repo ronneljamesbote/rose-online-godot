@@ -27,6 +27,8 @@ pub struct GameData {
     pub decoder: Box<dyn DataDecoder + Send + Sync>,
     /// NPC conversation text (ULNGTB_CON.LTB).
     pub ltb_event: LtbFile,
+    /// Crafting recipes (LIST_PRODUCT.STB), by an item's craft_material.
+    pub craft_recipes: Vec<Option<rose_game_data::CraftRecipe>>,
 }
 
 static GAME_DATA: OnceLock<GameData> = OnceLock::new();
@@ -58,6 +60,7 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
         &CharacterMotionDatabaseOptions { load_frame_data: false },
     )?;
 
+    let craft_recipes = rose_game_data::load_craft_recipes(&vfs)?;
     let decoder = rose_data_irose::get_data_decoder();
     let _ = GAME_DATA.set(GameData {
         vfs,
@@ -73,6 +76,7 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
         quests,
         decoder,
         ltb_event,
+        craft_recipes,
     });
     Ok(())
 }

@@ -303,7 +303,7 @@ fn use_cost(av: &AbilityValues, ability_type: AbilityType, value: i32) -> i32 {
 }
 
 /// rose-offline's skill_can_use for a player: cooldowns, costs and the weapon it needs.
-fn check_can_use(ctx: &ReducerContext, game: &GameData, p: &Player, id: u64, skill: &SkillData, t: i64) -> Result<(), String> {
+pub(crate) fn check_can_use(ctx: &ReducerContext, game: &GameData, p: &Player, id: u64, skill: &SkillData, t: i64) -> Result<(), String> {
     if cooldown_until(ctx, id, 0) > t || cooldown_until(ctx, id, cooldown_keys(skill).0) > t {
         return Err(format!("{} isn't ready yet", skill.name));
     }
@@ -336,7 +336,7 @@ fn check_can_use(ctx: &ReducerContext, game: &GameData, p: &Player, id: u64, ski
 }
 
 /// Pay a skill's costs and start its cooldowns (rose-offline's subtract_skill_use_cost).
-fn pay_costs(ctx: &ReducerContext, game: &GameData, id: u64, skill: &SkillData, t: i64) {
+pub(crate) fn pay_costs(ctx: &ReducerContext, game: &GameData, id: u64, skill: &SkillData, t: i64) {
     set_cooldown(ctx, id, 0, t + GLOBAL_COOLDOWN_US);
     let (key, duration) = cooldown_keys(skill);
     if duration > 0 {

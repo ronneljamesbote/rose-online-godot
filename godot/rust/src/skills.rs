@@ -9,7 +9,7 @@ use crate::{
     items::{icon, IconSheet},
 };
 
-fn split_camel_case(raw: &str) -> String {
+pub fn split_camel_case(raw: &str) -> String {
     let mut out = String::new();
     for (i, ch) in raw.chars().enumerate() {
         if i > 0 && ch.is_uppercase() {

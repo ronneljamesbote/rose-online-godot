@@ -22,6 +22,8 @@ pub mod cast_skill_reducer;
 pub mod combat_table;
 pub mod combat_tick_timer_type;
 pub mod combat_type;
+pub mod craft_item_reducer;
+pub mod craft_slot_type;
 pub mod damage_event_table;
 pub mod damage_event_type;
 pub mod damage_source_type;
@@ -36,6 +38,7 @@ pub mod game_data_status_table;
 pub mod game_data_status_type;
 pub mod game_file_type;
 pub mod game_file_upload_type;
+pub mod give_item_reducer;
 pub mod give_money_reducer;
 pub mod give_skill_reducer;
 pub mod give_xp_reducer;
@@ -126,6 +129,8 @@ pub use cast_skill_reducer::cast_skill;
 pub use combat_table::*;
 pub use combat_tick_timer_type::CombatTickTimer;
 pub use combat_type::Combat;
+pub use craft_item_reducer::craft_item;
+pub use craft_slot_type::CraftSlot;
 pub use damage_event_table::*;
 pub use damage_event_type::DamageEvent;
 pub use damage_source_type::DamageSource;
@@ -140,6 +145,7 @@ pub use game_data_status_table::*;
 pub use game_data_status_type::GameDataStatus;
 pub use game_file_type::GameFile;
 pub use game_file_upload_type::GameFileUpload;
+pub use give_item_reducer::give_item;
 pub use give_money_reducer::give_money;
 pub use give_skill_reducer::give_skill;
 pub use give_xp_reducer::give_xp;
@@ -265,6 +271,13 @@ pub enum Reducer {
         x: f32,
         y: f32,
     },
+    CraftItem {
+        skill_page: u8,
+        skill_index: u16,
+        item_type_number: u8,
+        item_number: u16,
+        materials: Vec<CraftSlot>,
+    },
     DropItem {
         page: u8,
         index: u16,
@@ -278,6 +291,12 @@ pub enum Reducer {
         index: u16,
     },
     FinishGameDataUpload,
+    GiveItem {
+        name: String,
+        item_type: u8,
+        item_number: u16,
+        quantity: u32,
+    },
     GiveMoney {
         name: String,
         amount: i64,
@@ -422,10 +441,12 @@ impl __sdk::Reducer for Reducer {
             Reducer::BankWithdraw { .. } => "bank_withdraw",
             Reducer::BeginGameDataUpload => "begin_game_data_upload",
             Reducer::CastSkill { .. } => "cast_skill",
+            Reducer::CraftItem { .. } => "craft_item",
             Reducer::DropItem { .. } => "drop_item",
             Reducer::DropMoney { .. } => "drop_money",
             Reducer::EquipItem { .. } => "equip_item",
             Reducer::FinishGameDataUpload => "finish_game_data_upload",
+            Reducer::GiveItem { .. } => "give_item",
             Reducer::GiveMoney { .. } => "give_money",
             Reducer::GiveSkill { .. } => "give_skill",
             Reducer::GiveXp { .. } => "give_xp",
@@ -540,6 +561,19 @@ impl __sdk::Reducer for Reducer {
                 x: x.clone(),
                 y: y.clone(),
             }),
+            Reducer::CraftItem {
+                skill_page,
+                skill_index,
+                item_type_number,
+                item_number,
+                materials,
+            } => __sats::bsatn::to_vec(&craft_item_reducer::CraftItemArgs {
+                skill_page: skill_page.clone(),
+                skill_index: skill_index.clone(),
+                item_type_number: item_type_number.clone(),
+                item_number: item_number.clone(),
+                materials: materials.clone(),
+            }),
             Reducer::DropItem {
                 page,
                 index,
@@ -563,6 +597,17 @@ impl __sdk::Reducer for Reducer {
             Reducer::FinishGameDataUpload => {
                 __sats::bsatn::to_vec(&finish_game_data_upload_reducer::FinishGameDataUploadArgs {})
             }
+            Reducer::GiveItem {
+                name,
+                item_type,
+                item_number,
+                quantity,
+            } => __sats::bsatn::to_vec(&give_item_reducer::GiveItemArgs {
+                name: name.clone(),
+                item_type: item_type.clone(),
+                item_number: item_number.clone(),
+                quantity: quantity.clone(),
+            }),
             Reducer::GiveMoney { name, amount } => {
                 __sats::bsatn::to_vec(&give_money_reducer::GiveMoneyArgs {
                     name: name.clone(),

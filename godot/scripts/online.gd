@@ -11,6 +11,7 @@ const InventoryWindow := preload("res://scripts/inventory_window.gd")
 const StoreWindow := preload("res://scripts/store_window.gd")
 const BankWindow := preload("res://scripts/bank_window.gd")
 const PartyWindow := preload("res://scripts/party_window.gd")
+const CraftWindow := preload("res://scripts/craft_window.gd")
 const SkillWindow := preload("res://scripts/skill_window.gd")
 const ConversationWindow := preload("res://scripts/conversation_window.gd")
 const QuestWindow := preload("res://scripts/quest_window.gd")
@@ -44,6 +45,7 @@ var inventory_window: PanelContainer
 var store_window: PanelContainer
 var bank_window: PanelContainer
 var party_window: PanelContainer
+var craft_window: PanelContainer
 var player_menu: PopupMenu
 var _menu_player := -1
 var skill_window: PanelContainer
@@ -147,6 +149,14 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	party_window.invite_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	party_window.invite_panel.offset_top = 60
 	layer.add_child(party_window.invite_panel)
+
+	craft_window = CraftWindow.new()
+	craft_window.net = net
+	craft_window.visible = false
+	craft_window.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	craft_window.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	craft_window.grow_vertical = Control.GROW_DIRECTION_BOTH
+	layer.add_child(craft_window)
 
 	# Right-click on another player.
 	player_menu = PopupMenu.new()
@@ -262,6 +272,10 @@ func use_skill(page: int, index: int, skill: Dictionary) -> void:
 		return
 	if skill.get("passive", false):
 		_notice("%s works on its own" % skill.get("name", "That skill"))
+		return
+	if skill.get("type", "") == "Create Window":
+		if not craft_window.open_skill(page, index, skill):
+			_notice("%s isn't in the game yet" % skill.get("name", "That skill"))
 		return
 	var target := my_target if skill.get("target", false) else -1
 	var at: Vector3 = me.position
