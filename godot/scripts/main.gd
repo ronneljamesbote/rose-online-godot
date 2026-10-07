@@ -13,7 +13,7 @@
 ##   --profile=NAME             identity file to use (user://identity-NAME.token), so two
 ##                              clients on one PC are two players
 ##   --offline                  skip the start screen and play offline
-##   --net-demo[=square|line]   online: walk a scripted route (for tests)
+##   --net-demo[=square|line|fight]   online: walk a scripted route or fight monsters (tests)
 ##   --net-log                  online: print every player's position once a second
 ##   --quit-after=SECONDS       quit after this long
 extends Node3D
@@ -124,6 +124,7 @@ func _go_online(uri: String, name_text: String, use_bow: bool) -> void:
 	add_child(online)
 	online.joined.connect(_on_joined)
 	online.log_positions = options.has("net-log")
+	online.log_damage = options.has("net-log") or options.has("net-demo")
 	online.start(zone, uri, token_path, name_text, use_bow)
 
 
@@ -140,6 +141,9 @@ func _run_net_demo(me: Node3D) -> void:
 	var origin := me.position
 	var route := [Vector3(4, 0, 2), Vector3(4, 0, -6), Vector3(-4, 0, -6), Vector3(-4, 0, 2)]
 	var pause := 2.6
+	if options["net-demo"] == "fight":
+		_run_fight_demo()
+		return
 	if options["net-demo"] == "line":
 		route = [Vector3(5, 0, 0), Vector3(0, 0, 0)]
 		pause = 3.5
@@ -183,6 +187,11 @@ func _take_screenshot(path: String) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if online:
+			var monster: int = online.pick_monster(camera, event.position)
+			if monster >= 0:
+				online.attack(monster)
+				return
 		var hit = _pick_ground(event.position)
 		if hit != null:
 			if online:
@@ -190,13 +199,43 @@ func _unhandled_input(event: InputEvent) -> void:
 			elif player:
 				player.move_to(hit)
 	elif event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_SPACE and player:
-			player.attack()
+		if event.keycode == KEY_SPACE:
+			if online:
+				online.attack(online.nearest_monster())
+			elif player:
+				player.attack()
 		elif event.keycode == KEY_S:
 			if online:
 				online.stop()
 			elif player:
 				player.stop()
+
+
+## Fights the nearest monster until it dies, then the next one. Every third fight starts
+## with a swing cancelled by a step to the side, to show animation cancelling.
+func _run_fight_demo() -> void:
+	var fights := 0
+	while true:
+		await get_tree().create_timer(1.5).timeout
+		var target: int = online.nearest_monster()
+		if target < 0:
+			continue
+		print("rose net demo: attack ", online.entities[target].label.text, " (entity ", target, ")")
+		online.attack(target)
+		if fights % 3 == 0:
+			# Wait for the first swing to start, then step away before it lands.
+			var waited := 0.0
+			while online.me and not online.me.was_swinging and waited < 6.0:
+				await get_tree().process_frame
+				waited += get_process_delta_time()
+			await get_tree().create_timer(0.25).timeout
+			print("rose net demo: cancel the swing by stepping aside")
+			online.move_to(online.me.position + Vector3(1.0, 0, 0.5))
+			await get_tree().create_timer(0.6).timeout
+			online.attack(target)
+		fights += 1
+		while online.entities.has(target) and not online.entities[target].dying and online.me and not online.me.dead:
+			await get_tree().create_timer(0.25).timeout
 
 
 ## Marches the mouse ray against the terrain height field (no physics colliders yet).

@@ -5,8 +5,11 @@ use std::{
     sync::{Arc, OnceLock},
 };
 
-use rose_data::{CharacterMotionDatabase, CharacterMotionDatabaseOptions, ItemDatabase, SkyboxDatabase, ZoneList};
-use rose_file_readers::{HostFilesystemDevice, RoseFile, VfsFile, VfsIndex, VirtualFilesystem};
+use rose_data::{
+    CharacterMotionDatabase, CharacterMotionDatabaseOptions, ItemDatabase, NpcDatabase, NpcDatabaseOptions, SkyboxDatabase,
+    ZoneList,
+};
+use rose_file_readers::{ChrFile, HostFilesystemDevice, RoseFile, VfsFile, VfsIndex, VirtualFilesystem};
 
 pub struct GameData {
     pub vfs: VirtualFilesystem,
@@ -14,6 +17,9 @@ pub struct GameData {
     pub skybox: Arc<SkyboxDatabase>,
     pub items: ItemDatabase,
     pub motions: CharacterMotionDatabase,
+    pub npcs: NpcDatabase,
+    /// NPC skeletons, motions and part lists (LIST_NPC.CHR).
+    pub npc_chr: ChrFile,
 }
 
 static GAME_DATA: OnceLock<GameData> = OnceLock::new();
@@ -32,13 +38,15 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
     let strings = rose_data_irose::get_string_database(&vfs, 1)?;
     let zone_list = rose_data_irose::get_zone_list(&vfs, strings.clone())?;
     let skybox = rose_data_irose::get_skybox_database(&vfs)?;
-    let items = rose_data_irose::get_item_database(&vfs, strings)?;
+    let items = rose_data_irose::get_item_database(&vfs, strings.clone())?;
+    let npcs = rose_data_irose::get_npc_database(&vfs, strings, &NpcDatabaseOptions { load_frame_data: false })?;
+    let npc_chr = vfs.read_file::<ChrFile, _>("3DDATA/NPC/LIST_NPC.CHR")?;
     let motions = rose_data_irose::get_character_motion_database(
         &vfs,
         &CharacterMotionDatabaseOptions { load_frame_data: false },
     )?;
 
-    let _ = GAME_DATA.set(GameData { vfs, zone_list, skybox, items, motions });
+    let _ = GAME_DATA.set(GameData { vfs, zone_list, skybox, items, motions, npcs, npc_chr });
     Ok(())
 }
 

@@ -1,5 +1,6 @@
-## A character shown from server state. It stands where the server's motion path puts it,
-## faces where it runs or what it fights, and plays run, stop, attack and die.
+## A player or monster shown from server state. It stands where the server's motion path
+## puts it, faces where it runs or what it fights, and plays run, stop, attack, hit and die.
+## A swing is timed so its hit frame lands when the server resolves the hit.
 ##
 ## Our own character also predicts a click-to-move: it starts running at once and hands
 ## over to the server's path when that arrives.
@@ -10,22 +11,33 @@ const RUN_SPEED := 4.505  # player move_speed 450.5 cm/s on the server
 const SWORD := 2  # Short Sword
 const BOW := 202  # Short Bow
 const PREDICTION_TIMEOUT_MS := 1000
+const CORPSE_SECONDS := 3.0
 
 var zone: Node
-var character: Node3D
+var model: Node3D
 var anim: AnimationPlayer
 var label: Label3D
 var entity_id := -1
+var is_monster := false
+var npc_id := 0
 var ranged := false
 var dead := false
+var dying := false  # the server removed it after a killing blow; playing the death
 var was_swinging := false
 var attack_index := 0
+var height := 2.0
+var hp := 0
+var max_hp := 0
 var predicted := {}  # from, to (Vector3), started (msec)
+var _idle := "stop1"
+var _walk := "run"
 
 
 func setup(zone_node: Node, state: Dictionary, is_me: bool) -> void:
 	zone = zone_node
 	entity_id = state["id"]
+	is_monster = state["kind"] == "monster"
+	npc_id = state["npc_id"]
 	ranged = state.get("ranged", false)
 	_build()
 	label = Label3D.new()
@@ -33,24 +45,46 @@ func setup(zone_node: Node, state: Dictionary, is_me: bool) -> void:
 	label.no_depth_test = true
 	label.fixed_size = true
 	label.pixel_size = 0.0015
-	label.font_size = 24
+	label.font_size = 22
 	label.outline_size = 6
-	label.modulate = Color(1.0, 0.95, 0.6) if is_me else Color(1, 1, 1)
-	label.position.y = 2.1
+	if is_me:
+		label.modulate = Color(1.0, 0.95, 0.6)
+	elif is_monster:
+		label.modulate = Color(1.0, 0.75, 0.7)
+	label.position.y = height + 0.3
 	add_child(label)
 	update_state(state, null)
 
 
 func _build() -> void:
-	if character:
-		character.queue_free()
-	character = RoseCharacter.new()
-	character.name = "Character"
-	add_child(character)
-	character.build(true, 1, 0, 0, 1, 1, 1, BOW if ranged else SWORD, 0)
-	anim = character.get_node("AnimationPlayer")
-	anim.animation_finished.connect(_on_animation_finished)
-	_play("stop1")
+	if model:
+		model.queue_free()
+	if is_monster:
+		model = RoseNpc.new()
+		model.build(npc_id)
+		_idle = "stop"
+		_walk = "move"
+	else:
+		model = RoseCharacter.new()
+		model.build(true, 1, 0, 0, 1, 1, 1, BOW if ranged else SWORD, 0)
+	model.name = "Model"
+	add_child(model)
+	anim = model.get_node_or_null("AnimationPlayer")
+	if anim:
+		anim.animation_finished.connect(_on_animation_finished)
+	height = _model_height()
+	_play(_idle)
+
+
+## Height of the model's bounds in its rest pose, for the name tag.
+func _model_height() -> float:
+	var top := 0.0
+	for node in model.find_children("*", "MeshInstance3D", true, false):
+		var mesh_instance := node as MeshInstance3D
+		var box := mesh_instance.get_aabb()
+		var to_model := model.global_transform.affine_inverse() * mesh_instance.global_transform
+		top = maxf(top, (to_model * box).end.y)
+	return clampf(top * model.scale.y, 1.0, 12.0) if top > 0.0 else 2.0
 
 
 ## Starts running toward a Godot position before the server confirms the move.
@@ -59,16 +93,18 @@ func predict_move(target: Vector3) -> void:
 		return
 	predicted = {"from": Vector3(position.x, 0, position.z), "to": Vector3(target.x, 0, target.z), "started": Time.get_ticks_msec()}
 	was_swinging = false
-	_play("run", true)
+	_play(_walk, true)
 
 
-## Applies one entry from RoseNet.get_entities(). target_position is where the entity we
-## attack stands, or null.
+## Applies one entry from RoseNet.get_entities(). target_position is where the entity it
+## attacks stands, or null.
 func update_state(state: Dictionary, target_position) -> void:
 	var name_text: String = state["name"]
+	hp = state.get("hp", 0)
+	max_hp = state.get("max_hp", 0)
 	if label.text != name_text:
 		label.text = name_text
-	if state.get("ranged", false) != ranged:
+	if not is_monster and state.get("ranged", false) != ranged:
 		ranged = state["ranged"]
 		_build()
 
@@ -101,26 +137,67 @@ func update_state(state: Dictionary, target_position) -> void:
 		if not dead:
 			_play("die", true)
 	elif moving:
-		_play("run")  # moving cancels a swing at once
+		# Monsters walk when they wander or head home and run when they chase.
+		var walk := _walk
+		if is_monster and state.get("chasing", false) and anim and anim.has_animation("run"):
+			walk = "run"
+		_play(walk)  # moving cancels a swing at once
 	elif swinging and not was_swinging:
-		_swing()
-	elif not _is_attacking():
-		_play("stop1")
+		_swing(state.get("hit_in", 0.0))
+	elif not _is_busy():
+		_play(_idle)
 	dead = is_dead
 	was_swinging = swinging
 
 
-func _swing() -> void:
-	var names := ["attack", "attack2", "attack3"]
-	var name: String = names[attack_index % names.size()]
-	attack_index += 1
-	if not anim.has_animation(name):
+## The server removed this entity after a killing blow: play the death, then go.
+func die_and_free() -> void:
+	dying = true
+	label.visible = false
+	_play("die", true)
+	await get_tree().create_timer(CORPSE_SECONDS).timeout
+	queue_free()
+
+
+## A hit landed on this entity: flinch if it is standing idle.
+func on_hit() -> void:
+	if not dead and not dying and not _is_busy() and anim and anim.current_animation == _idle:
+		_play("hit", true)
+
+
+func _swing(hit_in: float) -> void:
+	var name := "attack"
+	if not is_monster:
+		var names := ["attack", "attack2", "attack3"]
+		name = names[attack_index % names.size()]
+		attack_index += 1
+	if anim == null or not anim.has_animation(name):
 		name = "attack"
 	_play(name, true)
+	# Play at the speed that puts the hit frame on the server's hit time (attack speed and
+	# network delay both change it a little).
+	if anim and anim.has_animation(name) and hit_in > 0.05:
+		anim.speed_scale = clampf(hit_time(name) / hit_in, 0.7, 1.6)
 
 
-func _is_attacking() -> bool:
-	return anim.is_playing() and String(anim.current_animation).begins_with("attack")
+## Time of the first damage frame in an attack motion, using the same frame event ids
+## (10, 20-28, 56-57, 66-67) as the server's attack_hit_ms import.
+func hit_time(name: String) -> float:
+	var animation := anim.get_animation(name)
+	var events: PackedInt32Array = animation.get_meta("frame_events", PackedInt32Array())
+	var fps: float = animation.get_meta("fps", 30.0)
+	for frame in events.size():
+		var e := events[frame]
+		if e == 10 or (e >= 20 and e <= 28) or e == 56 or e == 57 or e == 66 or e == 67:
+			return frame / fps
+	return animation.length / 2.0
+
+
+func _is_busy() -> bool:
+	if anim == null or not anim.is_playing():
+		return false
+	var current := String(anim.current_animation)
+	return current.begins_with("attack") or current == "hit"
 
 
 func _play(name: String, restart := false) -> void:
@@ -130,9 +207,11 @@ func _play(name: String, restart := false) -> void:
 		return
 	if restart:
 		anim.stop()
+	anim.speed_scale = 1.0
 	anim.play(name, BLEND)
 
 
 func _on_animation_finished(name: StringName) -> void:
-	if String(name).begins_with("attack") and not dead:
-		_play("stop1")
+	var finished := String(name)
+	if (finished.begins_with("attack") or finished == "hit") and not dead and not dying:
+		_play(_idle)

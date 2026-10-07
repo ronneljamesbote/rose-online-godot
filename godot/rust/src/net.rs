@@ -150,8 +150,9 @@ impl RoseNet {
     }
 
     /// Every entity in our zone: id, kind ("player" or "monster"), name, npc_id, position
-    /// x/z and destination to_x/to_z (Godot metres), moving, hp, max_hp, target (-1 for
-    /// none), swinging, dead, and ranged for players.
+    /// x/z and destination to_x/to_z (Godot metres), moving, speed (m/s), chasing, hp,
+    /// max_hp, target (-1 for none), swinging, hit_in (seconds until the swing's hit frame),
+    /// dead, and ranged for players.
     #[func]
     fn get_entities(&self) -> VarArray {
         let mut out = VarArray::new();
@@ -181,12 +182,15 @@ impl RoseNet {
             d.set("to_x", tx);
             d.set("to_z", tz);
             d.set("moving", moving);
+            d.set("speed", m.speed / 100.0);
+            d.set("chasing", m.chase_target.is_some());
             d.set("ranged", ranged.get(&e.entity_id).copied().unwrap_or(false));
             if let Some(cb) = c.db.combat().entity_id().find(&e.entity_id) {
                 d.set("hp", cb.hp);
                 d.set("max_hp", cb.max_hp);
                 d.set("target", cb.attack_target.map_or(-1, |t| t as i64));
                 d.set("swinging", cb.swing_hit_at_us.is_some());
+                d.set("hit_in", cb.swing_hit_at_us.map_or(0.0, |at| (at - t) as f64 / 1e6));
                 d.set("dead", cb.dead_until_us.is_some_and(|until| until > t) || cb.hp <= 0);
             }
             out.push(&d.to_variant());

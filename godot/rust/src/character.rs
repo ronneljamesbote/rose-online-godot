@@ -5,11 +5,11 @@ use enum_map::Enum;
 use godot::{
     classes::{
         animation::{InterpolationType, LoopMode, TrackType},
-        Animation, AnimationLibrary, AnimationPlayer, BoneAttachment3D, MeshInstance3D, Node3D, Skeleton3D,
+        Animation, AnimationLibrary, AnimationPlayer, BoneAttachment3D, MeshInstance3D, Node3D, Skeleton3D, Skin,
     },
     prelude::*,
 };
-use rose_data::CharacterMotionAction;
+use rose_data::{CharacterMotionAction, NpcId, NpcMotionAction};
 use rose_file_readers::{ZmdFile, ZmoChannel, ZmoFile, ZscFile};
 
 use crate::{data, material, mesh};
@@ -131,6 +131,56 @@ fn build_animation(zmo: &ZmoFile, dummy_offset: usize, looping: bool) -> Gd<Anim
     animation
 }
 
+/// Adds one ZSC object's parts: skinned parts under the skeleton, rigid parts on their
+/// bone or dummy bone (spawn_model in model_loader.rs).
+fn attach_object(
+    skeleton: &mut Gd<Skeleton3D>,
+    skin: Option<&Gd<Skin>>,
+    zsc: &ZscFile,
+    object_id: usize,
+    dummy_offset: usize,
+    default_bone: Option<usize>,
+) {
+    let Some(object) = zsc.objects.get(object_id) else { return };
+    for object_part in object.parts.iter() {
+        let Some(zsc_material) = zsc.materials.get(object_part.material_id as usize) else { continue };
+        let Some(mesh_path) = zsc.meshes.get(object_part.mesh_id as usize) else { continue };
+        let Some(part_mesh) = mesh::load_mesh(&mesh_path.path().to_string_lossy(), zsc_material.is_skin) else { continue };
+        let mut instance = MeshInstance3D::new_alloc();
+        instance.set_mesh(&part_mesh);
+        instance.set_material_override(&material::object_material(zsc_material, None));
+
+        let link_bone = object_part
+            .bone_index
+            .map(|b| b as usize)
+            .or(object_part.dummy_index.map(|d| d as usize + dummy_offset))
+            .or(default_bone);
+        if zsc_material.is_skin {
+            if let Some(skin) = skin {
+                instance.set_skin(skin);
+            }
+            instance.set_skeleton_path(&NodePath::from(".."));
+            skeleton.add_child(&instance);
+        } else if let Some(bone) = link_bone {
+            let mut attachment = BoneAttachment3D::new_alloc();
+            attachment.set_bone_name(&bone_name(bone, dummy_offset));
+            skeleton.add_child(&attachment);
+            attachment.add_child(&instance);
+        } else {
+            // Rigid parts with no bone sit on the model's own transform; inside the
+            // skeleton node that is the same place.
+            skeleton.add_child(&instance);
+        }
+    }
+}
+
+fn add_player(node: &mut Gd<Node3D>, library: Gd<AnimationLibrary>) {
+    let mut player = AnimationPlayer::new_alloc();
+    player.set_name("AnimationPlayer");
+    player.add_animation_library("", &library);
+    node.add_child(&player);
+}
+
 fn action_name(action: CharacterMotionAction) -> String {
     format!("{action:?}").to_lowercase()
 }
@@ -174,35 +224,7 @@ impl RoseCharacter {
                 continue;
             }
             let Some(zsc) = data::read_file::<ZscFile>(part.list(male)) else { continue };
-            let Some(object) = zsc.objects.get(id as usize) else { continue };
-            for object_part in object.parts.iter() {
-                let Some(zsc_material) = zsc.materials.get(object_part.material_id as usize) else { continue };
-                let Some(mesh_path) = zsc.meshes.get(object_part.mesh_id as usize) else { continue };
-                let Some(part_mesh) = mesh::load_mesh(&mesh_path.path().to_string_lossy(), zsc_material.is_skin) else { continue };
-                let mut instance = MeshInstance3D::new_alloc();
-                instance.set_mesh(&part_mesh);
-                instance.set_material_override(&material::object_material(zsc_material, None));
-
-                let link_bone = object_part
-                    .bone_index
-                    .map(|b| b as usize)
-                    .or(object_part.dummy_index.map(|d| d as usize + dummy_offset))
-                    .or(part.default_bone(dummy_offset));
-                if zsc_material.is_skin {
-                    if let Some(skin) = skin.as_ref() {
-                        instance.set_skin(skin);
-                    }
-                    instance.set_skeleton_path(&NodePath::from(".."));
-                    skeleton.add_child(&instance);
-                } else if let Some(bone) = link_bone {
-                    let mut attachment = BoneAttachment3D::new_alloc();
-                    attachment.set_bone_name(&bone_name(bone, dummy_offset));
-                    skeleton.add_child(&attachment);
-                    attachment.add_child(&instance);
-                } else {
-                    skeleton.add_child(&instance);
-                }
-            }
+            attach_object(&mut skeleton, skin.as_ref(), &zsc, id as usize, dummy_offset, part.default_bone(dummy_offset));
         }
 
         // Motions for the equipped weapon type, with the same fallbacks as load_character_action_motions.
@@ -228,10 +250,77 @@ impl RoseCharacter {
             library.add_animation(&action_name(action), &build_animation(&zmo, dummy_offset, looping));
         }
 
-        let mut player = AnimationPlayer::new_alloc();
-        player.set_name("AnimationPlayer");
-        player.add_animation_library("", &library);
-        self.base_mut().add_child(&player);
+        add_player(&mut self.to_gd().upcast(), library);
         true
     }
+}
+
+/// Monsters and NPCs from LIST_NPC.CHR and PART_NPC.ZSC (spawn_npc_model in model_loader.rs).
+#[derive(GodotClass)]
+#[class(base=Node3D, init)]
+pub struct RoseNpc {
+    base: Base<Node3D>,
+}
+
+#[godot_api]
+impl RoseNpc {
+    /// Builds the model for an NPC id, scaled as in LIST_NPC.STB. Animations are named after
+    /// NpcMotionAction in lower case: stop, move, attack, hit, die, run.
+    #[func]
+    fn build(&mut self, npc_id: i32) -> bool {
+        let Some(game_data) = data::get() else {
+            godot_error!("rose: call RoseData.open() first");
+            return false;
+        };
+        let Some(npc_id) = u16::try_from(npc_id).ok().and_then(NpcId::new) else { return false };
+        let Some(model) = game_data.npc_chr.npcs.get(&npc_id.get()) else {
+            godot_warn!("rose: no model for npc {}", npc_id.get());
+            return false;
+        };
+        let zmd = game_data
+            .npc_chr
+            .skeleton_files
+            .get(model.skeleton_index as usize)
+            .and_then(|path| data::read_file::<ZmdFile>(path));
+        let Some(zmd) = zmd else { return false };
+        let dummy_offset = zmd.bones.len();
+        let mut skeleton = build_skeleton(&zmd);
+        let skin = skeleton.create_skin_from_rest_transforms();
+        self.base_mut().add_child(&skeleton);
+
+        let Some(zsc) = npc_zsc() else { return false };
+        for model_id in model.model_ids.iter() {
+            attach_object(&mut skeleton, skin.as_ref(), zsc, *model_id as usize, dummy_offset, None);
+        }
+        let npc = game_data.npcs.get_npc(npc_id);
+        if let Some(npc) = npc {
+            for (list, part) in [
+                ("3DDATA/WEAPON/LIST_WEAPON.ZSC", npc.right_hand_part_index),
+                ("3DDATA/WEAPON/LIST_SUBWPN.ZSC", npc.left_hand_part_index),
+            ] {
+                if part != 0 {
+                    if let Some(weapon_zsc) = data::read_file::<ZscFile>(list) {
+                        attach_object(&mut skeleton, skin.as_ref(), &weapon_zsc, part as usize, dummy_offset, None);
+                    }
+                }
+            }
+            self.base_mut().set_scale(Vector3::ONE * npc.scale);
+        }
+
+        let mut library = AnimationLibrary::new_gd();
+        for index in 0..NpcMotionAction::LENGTH {
+            let action = NpcMotionAction::from_usize(index);
+            let Some(motion) = game_data.npcs.get_npc_action_motion(npc_id, action) else { continue };
+            let Some(zmo) = data::read_file::<ZmoFile>(&motion.path.path().to_string_lossy()) else { continue };
+            let looping = matches!(action, NpcMotionAction::Stop | NpcMotionAction::Move | NpcMotionAction::Run);
+            library.add_animation(&format!("{action:?}").to_lowercase(), &build_animation(&zmo, dummy_offset, looping));
+        }
+        add_player(&mut self.to_gd().upcast(), library);
+        true
+    }
+}
+
+fn npc_zsc() -> Option<&'static ZscFile> {
+    static ZSC: std::sync::OnceLock<Option<ZscFile>> = std::sync::OnceLock::new();
+    ZSC.get_or_init(|| data::read_file::<ZscFile>("3DDATA/NPC/PART_NPC.ZSC")).as_ref()
 }

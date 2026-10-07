@@ -22,9 +22,17 @@ What works now:
   character starts running the moment you click and hands over to the server's path when
   it arrives.
 
-Not yet: monsters and fighting online (the server has them, the client does not show them
-yet), collision with objects (characters follow the terrain height only), effects and
-particles, animated zone objects, sound, most UI.
+- Monsters from the server, built from `LIST_NPC.CHR` and `PART_NPC.ZSC` with their
+  motions (stop, walk, run, attack, hit, die) and the NPC scale from `LIST_NPC.STB`.
+- Fighting online: click a monster (or press Space for the nearest one) to attack it; the
+  server runs to it and swings. Each swing plays at the speed that puts its hit frame on the
+  server's hit time. Damage numbers rise over whoever is hit ("Miss" for 0, yellow for
+  criticals, red when it is you), idle monsters flinch, and a killed monster plays its death
+  before it disappears. Moving cancels a swing at once. The HUD shows your HP and your
+  target's HP; monster names show within 15 m or when targeted.
+
+Not yet: collision with objects (characters follow the terrain height only), skills,
+effects and particles, animated zone objects, sound, most UI.
 
 ## Results (2026-10-07, headless, lavapipe software Vulkan)
 
@@ -34,6 +42,7 @@ particles, animated zone objects, sound, most UI.
 | Zone load (release build) | 0.6-0.7 s for the zone, 20-35 ms for the data tables |
 | Draw calls at the zone viewer camera | 279 (539 objects, 173k triangles) |
 | Character | Runs on the terrain, swings, cancels (`media/godot-clip1-run-swing-cancel.mp4`) |
+| Two Godot clients fighting monsters | 182 monsters around the Woopie field; both players fight, hits and kills match the server's damage events (`media/godot-05-monsters-fight.png`, `media/godot-clip3-monsters-fight.mp4`) |
 | Two Godot clients on one server | Each sees the other run its route; positions agree to the centimetre once a move ends (`media/godot-03-two-clients.png`, `media/godot-clip2-two-clients.mp4`) |
 
 The Bevy client's load time was not measured for comparison.
@@ -49,7 +58,8 @@ godot --path godot -- --data-idx=/path/to/iRose_129_129/data.idx
 
 Godot 4.6 or newer. `ROSE_DATA_IDX` works instead of `--data-idx`. The start screen offers
 Connect (online) or Play offline. In game: left-click to move, S to stop, right-drag to
-orbit the camera, mouse wheel to zoom; offline, Space swings the sword.
+orbit the camera, mouse wheel to zoom. Online, left-click a monster to attack it and Space
+attacks the nearest one; offline, Space swings the sword.
 
 Other options (after `--`):
 
@@ -58,7 +68,8 @@ Other options (after `--`):
 - `--profile=NAME` picks the identity file (`user://identity-NAME.token`), so two clients on
   one PC are two players.
 - `--offline` skips the start screen.
-- `--net-demo[=square|line]` walks a scripted route online, `--net-log` prints every
+- `--net-demo[=square|line|fight]` walks a scripted route or fights the nearest monsters
+  online, `--net-log` prints every
   player's position once a second, `--quit-after=SECONDS` quits. The two-client test:
   `--headless ... --name=Alice --profile=alice --net-demo` in one process and
   `... --name=Bob --profile=bob --weapon=bow --net-demo=line --net-log` in another.
@@ -80,6 +91,8 @@ Other options (after `--`):
   those are cut to level 0 and their mipmaps are generated after loading.
 - `shaders/` holds the ports of the WGSL shaders. Textures are sampled raw and all maths runs
   in gamma space like the original, then converted to linear at the end, so colours match.
+- `rust/src/character.rs` also holds `RoseNpc`, the monster and NPC model builder (port of
+  `spawn_npc_model`).
 - `rust/src/net.rs` is the `RoseNet` node: the SpacetimeDB connection (SDK 2.10.2, bindings
   in `module_bindings/` generated from `../module`). It handles messages in `_process`, and
   GDScript polls `get_entities()` for positions on the motion paths at the current server
