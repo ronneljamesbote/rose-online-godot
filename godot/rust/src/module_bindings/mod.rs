@@ -8,6 +8,7 @@ use spacetimedb_sdk::__codegen::{self as __sdk, __lib, __sats, __ws};
 
 pub mod abandon_quest_reducer;
 pub mod add_basic_stat_reducer;
+pub mod admin_give_quest_reducer;
 pub mod admin_quest_trigger_reducer;
 pub mod admin_type;
 pub mod attack_reducer;
@@ -93,6 +94,7 @@ pub mod zone_info_type;
 
 pub use abandon_quest_reducer::abandon_quest;
 pub use add_basic_stat_reducer::add_basic_stat;
+pub use admin_give_quest_reducer::admin_give_quest;
 pub use admin_quest_trigger_reducer::admin_quest_trigger;
 pub use admin_type::Admin;
 pub use attack_reducer::attack;
@@ -190,6 +192,12 @@ pub enum Reducer {
     },
     AddBasicStat {
         stat: u8,
+    },
+    AdminGiveQuest {
+        player_name: String,
+        quest_id: u32,
+        item_number: u32,
+        quantity: u32,
     },
     AdminQuestTrigger {
         player_name: String,
@@ -335,6 +343,7 @@ impl __sdk::Reducer for Reducer {
         match self {
             Reducer::AbandonQuest { .. } => "abandon_quest",
             Reducer::AddBasicStat { .. } => "add_basic_stat",
+            Reducer::AdminGiveQuest { .. } => "admin_give_quest",
             Reducer::AdminQuestTrigger { .. } => "admin_quest_trigger",
             Reducer::Attack { .. } => "attack",
             Reducer::BeginGameDataUpload => "begin_game_data_upload",
@@ -387,6 +396,17 @@ impl __sdk::Reducer for Reducer {
                     stat: stat.clone(),
                 })
             }
+            Reducer::AdminGiveQuest {
+                player_name,
+                quest_id,
+                item_number,
+                quantity,
+            } => __sats::bsatn::to_vec(&admin_give_quest_reducer::AdminGiveQuestArgs {
+                player_name: player_name.clone(),
+                quest_id: quest_id.clone(),
+                item_number: item_number.clone(),
+                quantity: quantity.clone(),
+            }),
             Reducer::AdminQuestTrigger {
                 player_name,
                 trigger,
