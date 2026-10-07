@@ -169,6 +169,21 @@ func _apply_lighting(lighting: Dictionary) -> void:
 func _process(delta: float) -> void:
 	if zone == null or options.has("screenshot"):
 		return
+	if online and options.has("net-log") and Engine.get_process_frames() % 60 == 0:
+		# For click tests: the monster drawn nearest the middle of the screen.
+		var middle := get_viewport().get_visible_rect().size / 2.0
+		var best := ""
+		var best_distance := INF
+		for id in online.entities:
+			var monster: Node3D = online.entities[id]
+			var centre := monster.global_position + Vector3(0, monster.height * 0.5, 0)
+			if monster.is_monster and not camera.is_position_behind(centre):
+				var at := camera.unproject_position(centre)
+				if at.distance_to(middle) < best_distance:
+					best_distance = at.distance_to(middle)
+					best = "rose net: monster %s (entity %d) on screen at %s" % [monster.label.text, id, at]
+		if best != "":
+			print(best)
 	world_ticks += delta / 10.0
 	_apply_lighting(zone.get_lighting_at(int(world_ticks), fmod(world_ticks, 1.0)))
 
