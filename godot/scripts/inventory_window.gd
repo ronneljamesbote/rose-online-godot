@@ -14,7 +14,7 @@ const AMMO := ["Arrows", "Bullets", "Shells"]
 class Slot:
 	extends Panel
 	var window: Control
-	var kind := ""  # "page", "equipped", "ammo", "store", "skill" or "hotbar"
+	var kind := ""  # "page", "equipped", "ammo", "store", "bank", "skill" or "hotbar"
 	var index := 0
 	var item = null
 	var icon: TextureRect
@@ -82,7 +82,7 @@ class Slot:
 			accept_event()
 
 	func _get_drag_data(_at: Vector2) -> Variant:
-		if item == null or not (kind == "page" or kind == "skill" or kind == "hotbar"):
+		if item == null or not (kind == "page" or kind == "skill" or kind == "hotbar" or kind == "bank"):
 			return null
 		var preview := TextureRect.new()
 		preview.texture = icon.texture
@@ -96,6 +96,10 @@ class Slot:
 			return false
 		if kind == "hotbar":
 			return data.kind == "page" or data.kind == "skill" or data.kind == "hotbar"
+		if kind == "bank":
+			return data.kind == "page" or data.kind == "bank"
+		if data.kind == "bank":
+			return kind == "page"
 		return data.kind == "page" and (kind == "page" or kind == "equipped" or kind == "ammo" or kind == "store")
 
 	func _drop_data(_at: Vector2, data: Variant) -> void:
@@ -104,6 +108,7 @@ class Slot:
 
 var net: RoseNet
 var store_window: Control  # store_window.gd; while it is open, right-click sells
+var bank_window: Control  # bank_window.gd; while it is open, right-click deposits
 var money_label: Label
 var tabs: TabBar
 var page := 0
@@ -236,6 +241,9 @@ func activate(slot: Slot) -> void:
 			if store_window != null and store_window.visible:
 				var quantity: int = slot.item.get("quantity", 1) if Input.is_key_pressed(KEY_SHIFT) else 1
 				store_window.sell(page, slot.index, quantity)
+			elif bank_window != null and bank_window.visible:
+				var quantity: int = 1 if Input.is_key_pressed(KEY_SHIFT) else slot.item.get("quantity", 1)
+				bank_window.deposit(page, slot.index, quantity)
 			elif page == 1:
 				net.use_item(page, slot.index)
 			else:
@@ -243,7 +251,9 @@ func activate(slot: Slot) -> void:
 
 
 func dropped(from: Slot, to: Slot) -> void:
-	if to.kind == "page":
+	if from.kind == "bank":
+		bank_window.withdraw(from.index, from.item.get("quantity", 1))
+	elif to.kind == "page":
 		net.move_item(page, from.index, to.index)
 	else:
 		net.equip_item(page, from.index)

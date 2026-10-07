@@ -12,6 +12,11 @@ pub mod admin_give_quest_reducer;
 pub mod admin_quest_trigger_reducer;
 pub mod admin_type;
 pub mod attack_reducer;
+pub mod bank_deposit_reducer;
+pub mod bank_move_reducer;
+pub mod bank_table;
+pub mod bank_type;
+pub mod bank_withdraw_reducer;
 pub mod begin_game_data_upload_reducer;
 pub mod cast_skill_reducer;
 pub mod combat_table;
@@ -98,6 +103,11 @@ pub use admin_give_quest_reducer::admin_give_quest;
 pub use admin_quest_trigger_reducer::admin_quest_trigger;
 pub use admin_type::Admin;
 pub use attack_reducer::attack;
+pub use bank_deposit_reducer::bank_deposit;
+pub use bank_move_reducer::bank_move;
+pub use bank_table::*;
+pub use bank_type::Bank;
+pub use bank_withdraw_reducer::bank_withdraw;
 pub use begin_game_data_upload_reducer::begin_game_data_upload;
 pub use cast_skill_reducer::cast_skill;
 pub use combat_table::*;
@@ -205,6 +215,21 @@ pub enum Reducer {
     },
     Attack {
         target: u64,
+    },
+    BankDeposit {
+        npc_entity_id: u64,
+        page: u8,
+        index: u16,
+        quantity: u32,
+    },
+    BankMove {
+        from: u16,
+        to: u16,
+    },
+    BankWithdraw {
+        npc_entity_id: u64,
+        slot: u16,
+        quantity: u32,
     },
     BeginGameDataUpload,
     CastSkill {
@@ -346,6 +371,9 @@ impl __sdk::Reducer for Reducer {
             Reducer::AdminGiveQuest { .. } => "admin_give_quest",
             Reducer::AdminQuestTrigger { .. } => "admin_quest_trigger",
             Reducer::Attack { .. } => "attack",
+            Reducer::BankDeposit { .. } => "bank_deposit",
+            Reducer::BankMove { .. } => "bank_move",
+            Reducer::BankWithdraw { .. } => "bank_withdraw",
             Reducer::BeginGameDataUpload => "begin_game_data_upload",
             Reducer::CastSkill { .. } => "cast_skill",
             Reducer::DropItem { .. } => "drop_item",
@@ -416,6 +444,32 @@ impl __sdk::Reducer for Reducer {
             }),
             Reducer::Attack { target } => __sats::bsatn::to_vec(&attack_reducer::AttackArgs {
                 target: target.clone(),
+            }),
+            Reducer::BankDeposit {
+                npc_entity_id,
+                page,
+                index,
+                quantity,
+            } => __sats::bsatn::to_vec(&bank_deposit_reducer::BankDepositArgs {
+                npc_entity_id: npc_entity_id.clone(),
+                page: page.clone(),
+                index: index.clone(),
+                quantity: quantity.clone(),
+            }),
+            Reducer::BankMove { from, to } => {
+                __sats::bsatn::to_vec(&bank_move_reducer::BankMoveArgs {
+                    from: from.clone(),
+                    to: to.clone(),
+                })
+            }
+            Reducer::BankWithdraw {
+                npc_entity_id,
+                slot,
+                quantity,
+            } => __sats::bsatn::to_vec(&bank_withdraw_reducer::BankWithdrawArgs {
+                npc_entity_id: npc_entity_id.clone(),
+                slot: slot.clone(),
+                quantity: quantity.clone(),
             }),
             Reducer::BeginGameDataUpload => {
                 __sats::bsatn::to_vec(&begin_game_data_upload_reducer::BeginGameDataUploadArgs {})
@@ -626,6 +680,7 @@ impl __sdk::Reducer for Reducer {
 #[allow(non_snake_case)]
 #[doc(hidden)]
 pub struct DbUpdate {
+    bank: __sdk::TableUpdate<Bank>,
     combat: __sdk::TableUpdate<Combat>,
     damage_event: __sdk::TableUpdate<DamageEvent>,
     entity: __sdk::TableUpdate<Entity>,
@@ -651,6 +706,9 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
         let mut db_update = DbUpdate::default();
         for table_update in __sdk::transaction_update_iter_table_updates(raw) {
             match &table_update.table_name[..] {
+                "bank" => db_update
+                    .bank
+                    .append(bank_table::parse_table_update(table_update)?),
                 "combat" => db_update
                     .combat
                     .append(combat_table::parse_table_update(table_update)?),
@@ -728,6 +786,9 @@ impl __sdk::DbUpdate for DbUpdate {
     ) -> AppliedDiff<'_> {
         let mut diff = AppliedDiff::default();
 
+        diff.bank = cache
+            .apply_diff_to_table::<Bank>("bank", &self.bank)
+            .with_updates_by_pk(|row| &row.identity);
         diff.combat = cache
             .apply_diff_to_table::<Combat>("combat", &self.combat)
             .with_updates_by_pk(|row| &row.entity_id);
@@ -780,6 +841,9 @@ impl __sdk::DbUpdate for DbUpdate {
         let mut db_update = DbUpdate::default();
         for table_rows in raw.tables {
             match &table_rows.table[..] {
+                "bank" => db_update
+                    .bank
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "combat" => db_update
                     .combat
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
@@ -844,6 +908,9 @@ impl __sdk::DbUpdate for DbUpdate {
         let mut db_update = DbUpdate::default();
         for table_rows in raw.tables {
             match &table_rows.table[..] {
+                "bank" => db_update
+                    .bank
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "combat" => db_update
                     .combat
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
@@ -910,6 +977,7 @@ impl __sdk::DbUpdate for DbUpdate {
 #[allow(non_snake_case)]
 #[doc(hidden)]
 pub struct AppliedDiff<'r> {
+    bank: __sdk::TableAppliedDiff<'r, Bank>,
     combat: __sdk::TableAppliedDiff<'r, Combat>,
     damage_event: __sdk::TableAppliedDiff<'r, DamageEvent>,
     entity: __sdk::TableAppliedDiff<'r, Entity>,
@@ -940,6 +1008,7 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
         event: &EventContext,
         callbacks: &mut __sdk::DbCallbacks<RemoteModule>,
     ) {
+        callbacks.invoke_table_row_callbacks::<Bank>("bank", &self.bank, event);
         callbacks.invoke_table_row_callbacks::<Combat>("combat", &self.combat, event);
         callbacks.invoke_table_row_callbacks::<DamageEvent>(
             "damage_event",
@@ -1633,6 +1702,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
     type QueryBuilder = __sdk::QueryBuilder;
 
     fn register_tables(client_cache: &mut __sdk::ClientCache<Self>) {
+        bank_table::register_table(client_cache);
         combat_table::register_table(client_cache);
         damage_event_table::register_table(client_cache);
         entity_table::register_table(client_cache);
@@ -1652,6 +1722,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
         zone_info_table::register_table(client_cache);
     }
     const ALL_TABLE_NAMES: &'static [&'static str] = &[
+        "bank",
         "combat",
         "damage_event",
         "entity",

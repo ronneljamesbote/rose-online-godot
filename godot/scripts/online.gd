@@ -9,6 +9,7 @@ const NetEntity := preload("res://scripts/net_entity.gd")
 const CharacterWindow := preload("res://scripts/character_window.gd")
 const InventoryWindow := preload("res://scripts/inventory_window.gd")
 const StoreWindow := preload("res://scripts/store_window.gd")
+const BankWindow := preload("res://scripts/bank_window.gd")
 const SkillWindow := preload("res://scripts/skill_window.gd")
 const ConversationWindow := preload("res://scripts/conversation_window.gd")
 const QuestWindow := preload("res://scripts/quest_window.gd")
@@ -40,6 +41,7 @@ var xp_label: Label
 var character_window: PanelContainer
 var inventory_window: PanelContainer
 var store_window: PanelContainer
+var bank_window: PanelContainer
 var skill_window: PanelContainer
 var conversation_window: PanelContainer
 var quest_window: PanelContainer
@@ -115,6 +117,17 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	store_window.offset_top = 70
 	layer.add_child(store_window)
 	inventory_window.store_window = store_window
+
+	bank_window = BankWindow.new()
+	bank_window.net = net
+	bank_window.online = self
+	bank_window.inventory_window = inventory_window
+	bank_window.visible = false
+	bank_window.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+	bank_window.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	bank_window.offset_top = 70
+	layer.add_child(bank_window)
+	inventory_window.bank_window = bank_window
 
 	skill_window = SkillWindow.new()
 	skill_window.net = net
@@ -193,6 +206,7 @@ func use_zone(zone_node: Node) -> void:
 	_pickup = -1
 	_talk = -1
 	store_window.close_store()
+	bank_window.close_bank()
 	conversation_window.close_conversation()
 	me = null
 	_zone_requested = 0
@@ -315,6 +329,7 @@ func talk_to(id: int) -> void:
 ## Open an NPC's conversation, or its store when it has nothing to say.
 func _open_npc(id: int, npc: Node3D) -> void:
 	store_window.close_store()
+	bank_window.close_bank()
 	if conversation_window.open(id, npc):
 		return
 	if not store_window.open_store(id, npc):
@@ -491,8 +506,9 @@ func _process(_delta: float) -> void:
 		if window[0] == "store" and entities.has(npc_id):
 			if not store_window.open_store(npc_id, entities[npc_id]):
 				_notice("%s has nothing to sell" % entities[npc_id].label.text)
-		elif window[0] == "bank":
-			_notice("The bank is not in the game yet")
+		elif window[0] == "bank" and entities.has(npc_id):
+			store_window.close_store()
+			bank_window.open_bank(npc_id, entities[npc_id])
 
 	if me:
 		for id in entities:
