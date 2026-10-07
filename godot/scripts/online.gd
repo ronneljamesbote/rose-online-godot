@@ -10,13 +10,15 @@ const CharacterWindow := preload("res://scripts/character_window.gd")
 const InventoryWindow := preload("res://scripts/inventory_window.gd")
 const StoreWindow := preload("res://scripts/store_window.gd")
 const SkillWindow := preload("res://scripts/skill_window.gd")
+const ConversationWindow := preload("res://scripts/conversation_window.gd")
+const QuestWindow := preload("res://scripts/quest_window.gd")
 const Hotbar := preload("res://scripts/hotbar.gd")
 const PICK_RADIUS_PX := 60.0
 const ITEM_PICK_RADIUS_PX := 30.0
 const PICKUP_RANGE := 2.5  # metres; the server allows 4
 const NOTICE_SECONDS := 8.0
 const WARP_MARGIN := 3.0  # metres around a warp gate's model that count as walking into it
-const TALK_RANGE := 3.0  # metres from an NPC to open its store
+const TALK_RANGE := 3.0  # metres from an NPC to talk to it
 const TALK_STOPPED_RANGE := 12.0  # or this close, when a wall stopped us on the way
 const NPC_NAME_RANGE := 30.0
 const MONSTER_NAME_RANGE := 15.0  # monster names show within this many metres, or when targeted
@@ -39,6 +41,8 @@ var character_window: PanelContainer
 var inventory_window: PanelContainer
 var store_window: PanelContainer
 var skill_window: PanelContainer
+var conversation_window: PanelContainer
+var quest_window: PanelContainer
 var hotbar: PanelContainer
 var effects_row: HBoxContainer  # our status effects, top centre
 var _next_effects_ms := 0
@@ -119,6 +123,25 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	skill_window.position = Vector2(12, 70)
 	layer.add_child(skill_window)
 
+	conversation_window = ConversationWindow.new()
+	conversation_window.net = net
+	conversation_window.online = self
+	conversation_window.visible = false
+	conversation_window.set_anchors_and_offsets_preset(Control.PRESET_CENTER_LEFT)
+	conversation_window.offset_left = 40
+	conversation_window.grow_vertical = Control.GROW_DIRECTION_BOTH
+	layer.add_child(conversation_window)
+
+	quest_window = QuestWindow.new()
+	quest_window.net = net
+	quest_window.visible = false
+	# On the right, so it stays clear of conversations on the left.
+	quest_window.set_anchors_and_offsets_preset(Control.PRESET_CENTER_RIGHT)
+	quest_window.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	quest_window.grow_vertical = Control.GROW_DIRECTION_BOTH
+	quest_window.offset_right = -12
+	layer.add_child(quest_window)
+
 	hotbar = Hotbar.new()
 	hotbar.net = net
 	hotbar.online = self
@@ -170,6 +193,7 @@ func use_zone(zone_node: Node) -> void:
 	_pickup = -1
 	_talk = -1
 	store_window.close_store()
+	conversation_window.close_conversation()
 	me = null
 	_zone_requested = 0
 
@@ -184,6 +208,10 @@ func toggle_inventory_window() -> void:
 
 func toggle_skill_window() -> void:
 	skill_window.visible = not skill_window.visible
+
+
+func toggle_quest_window() -> void:
+	quest_window.visible = not quest_window.visible
 
 
 ## Use a skill from a skill slot: on the current target when it needs one (the server
@@ -274,7 +302,7 @@ func pick_item(camera: Camera3D, screen_position: Vector2) -> int:
 	return best
 
 
-## Walk to an NPC and open its store when there.
+## Walk to an NPC and talk to it when there.
 func talk_to(id: int) -> void:
 	if me == null or not entities.has(id):
 		return
@@ -282,6 +310,15 @@ func talk_to(id: int) -> void:
 	if Vector2(at.x - me.position.x, at.z - me.position.z).length() > TALK_RANGE:
 		move_to(at)
 	_talk = id
+
+
+## Open an NPC's conversation, or its store when it has nothing to say.
+func _open_npc(id: int, npc: Node3D) -> void:
+	store_window.close_store()
+	if conversation_window.open(id, npc):
+		return
+	if not store_window.open_store(id, npc):
+		_notice("%s has nothing to say" % npc.label.text)
 
 
 ## Nearest town NPC with a store, or -1.
@@ -447,9 +484,15 @@ func _process(_delta: float) -> void:
 			var d := Vector2(npc.position.x - me.position.x, npc.position.z - me.position.z).length()
 			if d <= TALK_RANGE or (not me.is_moving and d <= TALK_STOPPED_RANGE):
 				net.stop()
-				if not store_window.open_store(_talk, npc):
-					_notice("%s has nothing to sell" % npc.label.text)
+				_open_npc(_talk, npc)
 				_talk = -1
+	for window in net.poll_windows():
+		var npc_id: int = window[1]
+		if window[0] == "store" and entities.has(npc_id):
+			if not store_window.open_store(npc_id, entities[npc_id]):
+				_notice("%s has nothing to sell" % entities[npc_id].label.text)
+		elif window[0] == "bank":
+			_notice("The bank is not in the game yet")
 
 	if me:
 		for id in entities:

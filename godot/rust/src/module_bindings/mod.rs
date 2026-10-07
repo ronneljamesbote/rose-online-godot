@@ -6,7 +6,9 @@
 #![allow(unused, clippy::all)]
 use spacetimedb_sdk::__codegen::{self as __sdk, __lib, __sats, __ws};
 
+pub mod abandon_quest_reducer;
 pub mod add_basic_stat_reducer;
+pub mod admin_quest_trigger_reducer;
 pub mod admin_type;
 pub mod attack_reducer;
 pub mod begin_game_data_upload_reducer;
@@ -50,6 +52,7 @@ pub mod pickup_item_reducer;
 pub mod place_player_reducer;
 pub mod player_table;
 pub mod player_type;
+pub mod quest_trigger_reducer;
 pub mod regen_type;
 pub mod reset_monsters_reducer;
 pub mod set_aggro_range_reducer;
@@ -57,6 +60,7 @@ pub mod set_basic_stat_reducer;
 pub mod set_hotbar_slot_reducer;
 pub mod set_job_reducer;
 pub mod set_name_reducer;
+pub mod set_npc_variable_reducer;
 pub mod set_price_rates_reducer;
 pub mod set_world_rates_reducer;
 pub mod skill_cast_table;
@@ -87,7 +91,9 @@ pub mod xp_event_type;
 pub mod zone_info_table;
 pub mod zone_info_type;
 
+pub use abandon_quest_reducer::abandon_quest;
 pub use add_basic_stat_reducer::add_basic_stat;
+pub use admin_quest_trigger_reducer::admin_quest_trigger;
 pub use admin_type::Admin;
 pub use attack_reducer::attack;
 pub use begin_game_data_upload_reducer::begin_game_data_upload;
@@ -131,6 +137,7 @@ pub use pickup_item_reducer::pickup_item;
 pub use place_player_reducer::place_player;
 pub use player_table::*;
 pub use player_type::Player;
+pub use quest_trigger_reducer::quest_trigger;
 pub use regen_type::Regen;
 pub use reset_monsters_reducer::reset_monsters;
 pub use set_aggro_range_reducer::set_aggro_range;
@@ -138,6 +145,7 @@ pub use set_basic_stat_reducer::set_basic_stat;
 pub use set_hotbar_slot_reducer::set_hotbar_slot;
 pub use set_job_reducer::set_job;
 pub use set_name_reducer::set_name;
+pub use set_npc_variable_reducer::set_npc_variable;
 pub use set_price_rates_reducer::set_price_rates;
 pub use set_world_rates_reducer::set_world_rates;
 pub use skill_cast_table::*;
@@ -176,8 +184,16 @@ pub use zone_info_type::ZoneInfo;
 /// to indicate which reducer caused the event.
 
 pub enum Reducer {
+    AbandonQuest {
+        slot: u8,
+        quest_id: u32,
+    },
     AddBasicStat {
         stat: u8,
+    },
+    AdminQuestTrigger {
+        player_name: String,
+        trigger: String,
     },
     Attack {
         target: u64,
@@ -245,6 +261,9 @@ pub enum Reducer {
         x: f32,
         y: f32,
     },
+    QuestTrigger {
+        name: String,
+    },
     ResetMonsters,
     SetAggroRange {
         npc_id: u16,
@@ -267,6 +286,11 @@ pub enum Reducer {
     },
     SetName {
         name: String,
+    },
+    SetNpcVariable {
+        npc_id: u16,
+        variable_id: u8,
+        value: i32,
     },
     SetPriceRates {
         world_price_rate: i32,
@@ -309,7 +333,9 @@ impl __sdk::InModule for Reducer {
 impl __sdk::Reducer for Reducer {
     fn reducer_name(&self) -> &'static str {
         match self {
+            Reducer::AbandonQuest { .. } => "abandon_quest",
             Reducer::AddBasicStat { .. } => "add_basic_stat",
+            Reducer::AdminQuestTrigger { .. } => "admin_quest_trigger",
             Reducer::Attack { .. } => "attack",
             Reducer::BeginGameDataUpload => "begin_game_data_upload",
             Reducer::CastSkill { .. } => "cast_skill",
@@ -327,12 +353,14 @@ impl __sdk::Reducer for Reducer {
             Reducer::NpcStoreTransaction { .. } => "npc_store_transaction",
             Reducer::PickupItem { .. } => "pickup_item",
             Reducer::PlacePlayer { .. } => "place_player",
+            Reducer::QuestTrigger { .. } => "quest_trigger",
             Reducer::ResetMonsters => "reset_monsters",
             Reducer::SetAggroRange { .. } => "set_aggro_range",
             Reducer::SetBasicStat { .. } => "set_basic_stat",
             Reducer::SetHotbarSlot { .. } => "set_hotbar_slot",
             Reducer::SetJob { .. } => "set_job",
             Reducer::SetName { .. } => "set_name",
+            Reducer::SetNpcVariable { .. } => "set_npc_variable",
             Reducer::SetPriceRates { .. } => "set_price_rates",
             Reducer::SetWorldRates { .. } => "set_world_rates",
             Reducer::Stop => "stop",
@@ -348,11 +376,24 @@ impl __sdk::Reducer for Reducer {
     #[allow(clippy::clone_on_copy)]
     fn args_bsatn(&self) -> Result<Vec<u8>, __sats::bsatn::EncodeError> {
         match self {
+            Reducer::AbandonQuest { slot, quest_id } => {
+                __sats::bsatn::to_vec(&abandon_quest_reducer::AbandonQuestArgs {
+                    slot: slot.clone(),
+                    quest_id: quest_id.clone(),
+                })
+            }
             Reducer::AddBasicStat { stat } => {
                 __sats::bsatn::to_vec(&add_basic_stat_reducer::AddBasicStatArgs {
                     stat: stat.clone(),
                 })
             }
+            Reducer::AdminQuestTrigger {
+                player_name,
+                trigger,
+            } => __sats::bsatn::to_vec(&admin_quest_trigger_reducer::AdminQuestTriggerArgs {
+                player_name: player_name.clone(),
+                trigger: trigger.clone(),
+            }),
             Reducer::Attack { target } => __sats::bsatn::to_vec(&attack_reducer::AttackArgs {
                 target: target.clone(),
             }),
@@ -455,6 +496,11 @@ impl __sdk::Reducer for Reducer {
                     y: y.clone(),
                 })
             }
+            Reducer::QuestTrigger { name } => {
+                __sats::bsatn::to_vec(&quest_trigger_reducer::QuestTriggerArgs {
+                    name: name.clone(),
+                })
+            }
             Reducer::ResetMonsters => {
                 __sats::bsatn::to_vec(&reset_monsters_reducer::ResetMonstersArgs {})
             }
@@ -489,6 +535,15 @@ impl __sdk::Reducer for Reducer {
             Reducer::SetName { name } => {
                 __sats::bsatn::to_vec(&set_name_reducer::SetNameArgs { name: name.clone() })
             }
+            Reducer::SetNpcVariable {
+                npc_id,
+                variable_id,
+                value,
+            } => __sats::bsatn::to_vec(&set_npc_variable_reducer::SetNpcVariableArgs {
+                npc_id: npc_id.clone(),
+                variable_id: variable_id.clone(),
+                value: value.clone(),
+            }),
             Reducer::SetPriceRates {
                 world_price_rate,
                 item_price_rate,

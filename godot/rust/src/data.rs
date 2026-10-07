@@ -6,10 +6,10 @@ use std::{
 };
 
 use rose_data::{
-    CharacterMotionDatabase, CharacterMotionDatabaseOptions, ItemDatabase, JobClassDatabase, NpcDatabase, NpcDatabaseOptions, SkillDatabase,
-    SkyboxDatabase, StatusEffectDatabase, ZoneList,
+    CharacterMotionDatabase, CharacterMotionDatabaseOptions, DataDecoder, ItemDatabase, JobClassDatabase, NpcDatabase, NpcDatabaseOptions,
+    QuestDatabase, SkillDatabase, SkyboxDatabase, StatusEffectDatabase, ZoneList,
 };
-use rose_file_readers::{ChrFile, HostFilesystemDevice, RoseFile, VfsFile, VfsIndex, VirtualFilesystem};
+use rose_file_readers::{ChrFile, HostFilesystemDevice, LtbFile, RoseFile, VfsFile, VfsIndex, VirtualFilesystem};
 
 pub struct GameData {
     pub vfs: VirtualFilesystem,
@@ -23,6 +23,10 @@ pub struct GameData {
     pub status_effects: StatusEffectDatabase,
     /// NPC skeletons, motions and part lists (LIST_NPC.CHR).
     pub npc_chr: ChrFile,
+    pub quests: QuestDatabase,
+    pub decoder: Box<dyn DataDecoder + Send + Sync>,
+    /// NPC conversation text (ULNGTB_CON.LTB).
+    pub ltb_event: LtbFile,
 }
 
 static GAME_DATA: OnceLock<GameData> = OnceLock::new();
@@ -45,14 +49,31 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
     let job_classes = rose_data_irose::get_job_class_database(&vfs, strings.clone())?;
     let skills = rose_data_irose::get_skill_database(&vfs, strings.clone())?;
     let status_effects = rose_data_irose::get_status_effect_database(&vfs, strings.clone())?;
+    let quests = rose_data_irose::get_quest_database(&vfs, strings.clone())?;
     let npcs = rose_data_irose::get_npc_database(&vfs, strings, &NpcDatabaseOptions { load_frame_data: false })?;
+    let ltb_event = vfs.read_file::<LtbFile, _>("3DDATA/EVENT/ULNGTB_CON.LTB")?;
     let npc_chr = vfs.read_file::<ChrFile, _>("3DDATA/NPC/LIST_NPC.CHR")?;
     let motions = rose_data_irose::get_character_motion_database(
         &vfs,
         &CharacterMotionDatabaseOptions { load_frame_data: false },
     )?;
 
-    let _ = GAME_DATA.set(GameData { vfs, zone_list, skybox, items, job_classes, motions, npcs, skills, status_effects, npc_chr });
+    let decoder = rose_data_irose::get_data_decoder();
+    let _ = GAME_DATA.set(GameData {
+        vfs,
+        zone_list,
+        skybox,
+        items,
+        job_classes,
+        motions,
+        npcs,
+        skills,
+        status_effects,
+        npc_chr,
+        quests,
+        decoder,
+        ltb_event,
+    });
     Ok(())
 }
 

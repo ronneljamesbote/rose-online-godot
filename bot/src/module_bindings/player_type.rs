@@ -36,6 +36,7 @@ pub struct Player {
     pub skill_list: String,
     pub quest_state: String,
     pub hotbar: String,
+    pub union_membership: String,
 }
 
 impl __sdk::InModule for Player {
@@ -75,6 +76,7 @@ pub struct PlayerCols {
     pub skill_list: __sdk::__query_builder::Col<Player, String>,
     pub quest_state: __sdk::__query_builder::Col<Player, String>,
     pub hotbar: __sdk::__query_builder::Col<Player, String>,
+    pub union_membership: __sdk::__query_builder::Col<Player, String>,
 }
 
 impl __sdk::__query_builder::HasCols for Player {
@@ -110,6 +112,7 @@ impl __sdk::__query_builder::HasCols for Player {
             skill_list: __sdk::__query_builder::Col::new(table_name, "skill_list"),
             quest_state: __sdk::__query_builder::Col::new(table_name, "quest_state"),
             hotbar: __sdk::__query_builder::Col::new(table_name, "hotbar"),
+            union_membership: __sdk::__query_builder::Col::new(table_name, "union_membership"),
         }
     }
 }

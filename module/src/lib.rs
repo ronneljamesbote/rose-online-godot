@@ -11,6 +11,8 @@ mod game_data;
 mod items;
 mod npcs;
 use npcs::npc;
+mod quests;
+mod npc_ai;
 mod skills;
 mod world;
 
@@ -89,6 +91,7 @@ pub struct Player {
     pub skill_list: String,
     pub quest_state: String,
     pub hotbar: String,
+    pub union_membership: String,
 }
 
 #[spacetimedb::table(accessor = entity, public)]
@@ -1044,6 +1047,14 @@ fn kill(ctx: &ReducerContext, game: &GameData, id: u64, stats: &Stats, killer: u
     match entity.kind {
         EntityKind::Monster => {
             reward_kill(ctx, game, id, stats, entity.npc_id, t);
+            // The killer runs the monster's death trigger (quest kill counts and quest drops).
+            if let Some(npc) = rose_data::NpcId::new(entity.npc_id).and_then(|n| game.npcs.get_npc(n)) {
+                if !npc.death_quest_trigger_name.is_empty() {
+                    if let Some(p) = ctx.db.player().iter().find(|p| p.entity_id == Some(killer)) {
+                        quests::run_trigger(ctx, game, p.identity, &npc.death_quest_trigger_name);
+                    }
+                }
+            }
             if let Some(at) = position(ctx, id, t) {
                 items::monster_drop(ctx, game, entity.npc_id, entity.zone_id, at, killer, stats.level);
             }
@@ -1099,6 +1110,7 @@ pub fn spawn_tick(ctx: &ReducerContext, _timer: SpawnTickTimer) -> Result<(), St
     items::regen_tick(ctx);
     items::expire_drops(ctx, t);
     skills::status_tick(ctx, &game, t);
+    npc_ai::npc_ai_tick(ctx, &game, t);
     world::spawn_tick(ctx, &game, t);
 
     // Idle wandering: about one in eight idle monsters takes a short walk each second.

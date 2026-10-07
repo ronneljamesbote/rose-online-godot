@@ -15,12 +15,13 @@
 ##   --profile=NAME             identity file to use (user://identity-NAME.token), so two
 ##                              clients on one PC are two players
 ##   --offline                  skip the start screen and play offline
-##   --net-demo[=square|line|fight|walls|warp|shop|skills]   online: scripted routes, fights,
+##   --net-demo[=square|line|fight|walls|warp|shop|skills|talk]   online: scripted routes, fights,
 ##                              wall tests, warp gates, buying and selling at the nearest
-##                              store (--buy=TEXT: what to buy), or the first two active
-##                              skills (a buff, then an attack)
+##                              store (--buy=TEXT: what to buy), the first two active
+##                              skills (a buff, then an attack), or a talk with the NPC
+##                              --npc=NAME, answering --answers=1,2,... (q: list quests)
 ##   --net-log                  online: print every player's position once a second
-##   --open=inventory,character,skills   online: open these windows at the start (for screenshots)
+##   --open=inventory,character,skills,quests   online: open these windows at the start (for screenshots)
 ##   --quit-after=SECONDS       quit after this long
 extends Node3D
 
@@ -36,6 +37,8 @@ var options := {}
 var world_ticks := 0.0  # one world tick is 10 seconds
 var loaded_zone := 0
 
+
+var _joined_before := false
 
 func _ready() -> void:
 	for arg in OS.get_cmdline_user_args():
@@ -206,6 +209,10 @@ func _go_online(uri: String, name_text: String, use_bow: bool) -> void:
 func _on_joined(me: Node3D) -> void:
 	if camera.get("target") != null:
 		camera.target = me
+	# Joining again after a warp keeps the windows and demo of the first join.
+	if _joined_before:
+		return
+	_joined_before = true
 	var windows: String = options.get("open", "")
 	if "inventory" in windows:
 		online.toggle_inventory_window()
@@ -213,6 +220,8 @@ func _on_joined(me: Node3D) -> void:
 		online.toggle_character_window()
 	if "skills" in windows:
 		online.toggle_skill_window()
+	if "quests" in windows:
+		online.toggle_quest_window()
 	if options.has("net-demo"):
 		_run_net_demo(me)
 
@@ -237,6 +246,9 @@ func _run_net_demo(me: Node3D) -> void:
 		return
 	if options["net-demo"] == "skills":
 		_run_skills_demo()
+		return
+	if options["net-demo"] == "talk":
+		_run_talk_demo()
 		return
 	if options["net-demo"] == "line":
 		route = [Vector3(5, 0, 0), Vector3(0, 0, 0)]
@@ -332,6 +344,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			online.toggle_inventory_window()
 		elif event.keycode == KEY_K and online:
 			online.toggle_skill_window()
+		elif event.keycode == KEY_Q and online:
+			online.toggle_quest_window()
 		elif event.keycode >= KEY_1 and event.keycode <= KEY_8 and online:
 			online.hotbar.use_slot(event.keycode - KEY_1)
 		elif event.keycode == KEY_Z and online:
@@ -412,6 +426,71 @@ func _run_skills_demo() -> void:
 			await get_tree().create_timer(3.0).timeout
 
 
+## Walks to the NPC named --npc (part of the name), prints what it says, and answers with
+## --answers (1-based, comma separated; "q" prints the quest list), then prints our quests.
+func _run_talk_demo() -> void:
+	await get_tree().create_timer(3.0).timeout
+	var wanted := String(options.get("npc", "")).to_lower()
+	var npc := -1
+	var nearest := INF
+	for id in online.entities:
+		var entity: Node3D = online.entities[id]
+		var d: float = entity.position.distance_to(online.me.position)
+		if entity.is_npc and wanted in String(entity.label.text).to_lower() and d < nearest:
+			npc = id
+			nearest = d
+	if npc < 0:
+		var names := []
+		for id in online.entities:
+			if online.entities[id].is_npc:
+				names.append(online.entities[id].label.text)
+		print("rose net demo: no NPC called ", wanted, " here, only ", names)
+		return
+	print("rose net demo: walk to %s, %.0f m away" % [online.entities[npc].label.text, online.entities[npc].position.distance_to(online.me.position)])
+	online.talk_to(npc)
+	var waited := 0.0
+	while not online.conversation_window.visible and not online.store_window.visible and waited < 60.0:
+		await get_tree().create_timer(0.5).timeout
+		waited += 0.5
+	_print_conversation()
+	var answers := String(options.get("answers", ""))
+	for answer in answers.split(",", false):
+		await get_tree().create_timer(1.5).timeout
+		if answer == "q":
+			_print_quests()
+			continue
+		if answer == "talk":
+			online.talk_to(npc)
+			await get_tree().create_timer(1.0).timeout
+			_print_conversation()
+			continue
+		print("rose net demo: answer ", answer)
+		online.conversation_window.choose(int(answer) - 1)
+		await get_tree().create_timer(0.5).timeout
+		_print_conversation()
+	await get_tree().create_timer(2.0).timeout
+	_print_quests()
+
+
+func _print_conversation() -> void:
+	var d: Dictionary = online.net.get_conversation()
+	if not d.get("open", false):
+		print("rose net demo: (no conversation)", " store open" if online.store_window.visible else "")
+		return
+	print("rose net demo: %s says: %s" % [d["title"], d["message"]])
+	var responses: Array = d["responses"]
+	for i in responses.size():
+		print("rose net demo:   %d. %s" % [i + 1, responses[i]])
+
+
+func _print_quests() -> void:
+	var quests: Array = online.net.get_quests()
+	print("rose net demo: %d quests" % quests.size())
+	for q in quests:
+		var items: Array = q["items"].map(func(i): return "%s x%d" % [i["name"], i["quantity"]])
+		print("rose net demo:   %s (slot %d, id %d) items %s" % [q["name"], q["slot"], q["id"], items])
+
+
 ## Walks to the nearest store, buys the first item of each tab, then sells one of them back.
 func _run_shop_demo() -> void:
 	await get_tree().create_timer(3.0).timeout
@@ -425,6 +504,15 @@ func _run_shop_demo() -> void:
 	while not online.store_window.visible and waited < 60.0:
 		await get_tree().create_timer(0.5).timeout
 		waited += 0.5
+		# The NPC talks first: pick the answer that opens its store.
+		if online.conversation_window.visible:
+			var responses: Array = online.net.get_conversation().get("responses", [])
+			for i in responses.size():
+				var text := String(responses[i]).to_lower()
+				if "trade" in text or "store" in text or "shop" in text or "buy" in text:
+					print("rose net demo: answer ", responses[i])
+					online.conversation_window.choose(i)
+					break
 	if not online.store_window.visible:
 		print("rose net demo: the store did not open")
 		return

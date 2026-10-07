@@ -70,7 +70,7 @@ pub fn notify(ctx: &ReducerContext, identity: Identity, text: impl Into<String>)
     ctx.db.notice().insert(Notice { identity, text: text.into() });
 }
 
-fn item_name(game: &GameData, item: &Item) -> String {
+pub(crate) fn item_name(game: &GameData, item: &Item) -> String {
     let name = game.items.get_base_item(item.get_item_reference()).map_or("an item", |d| d.name);
     match item {
         Item::Stackable(s) if s.quantity > 1 => format!("{} {name}", s.quantity),
@@ -139,7 +139,7 @@ pub(crate) fn player_ability_values(ctx: &ReducerContext, game: &GameData, p: &P
 
 // ---------------------------------------------------------------- drops
 
-fn drop_on_ground(
+pub(crate) fn drop_on_ground(
     ctx: &ReducerContext,
     zone_id: u16,
     at: (f32, f32),

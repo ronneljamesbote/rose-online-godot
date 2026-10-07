@@ -3,8 +3,10 @@
 use godot::prelude::*;
 
 mod character;
+mod conversation;
 mod data;
 mod items;
+mod lua4;
 mod material;
 mod mesh;
 #[allow(clippy::all, unused)]

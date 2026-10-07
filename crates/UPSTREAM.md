@@ -35,3 +35,9 @@ To compare with upstream later: clone rose-offline at the commit above and diff 
 rose-game-data is not from upstream. It builds every database from a virtual filesystem
 (`load_game_data`, ported from rose-offline-server's `irose/data/mod.rs`) and reads the
 starting characters from INIT_AVATAR.STB.
+
+rose-quest is ours too: quest conditions and the quest variables (ported from
+rose-offline-server's quest system), shared by the module, which runs triggers and their
+rewards, and the client, which checks a trigger's conditions before asking the server to
+run it. The Lua 4 VM in `godot/rust/src/lua4` is copied from rose-offline-client's
+`scripting/lua4`, with only its module paths changed.

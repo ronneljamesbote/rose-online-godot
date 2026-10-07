@@ -16,7 +16,11 @@ use spacetimedb_sdk::{
 use rose_data::{AmmoIndex, EquipmentIndex};
 use rose_game_common::components::{AbilityValues, DroppedItem, Equipment, Hotbar, HotbarSlot, Inventory, ItemSlot, SkillList};
 
-use crate::items::item_dict;
+use crate::{
+    conversation::{self, Action, ClientWorld, Conversation, ScriptContext, WorldNpc},
+    items::item_dict,
+};
+use rose_quest::{QuestCharacter, QuestNpc};
 
 use crate::module_bindings::*;
 
@@ -97,6 +101,9 @@ pub struct RoseNet {
     conn: Option<DbConnection>,
     shared: Arc<Mutex<Shared>>,
     error: String,
+    conversation: Option<Conversation>,
+    /// Stores and banks a conversation opened, for GDScript to show.
+    windows: Vec<(String, u64)>,
 }
 
 impl RoseNet {
@@ -107,6 +114,103 @@ impl RoseNet {
     fn my_id(&self) -> Option<u64> {
         let c = self.conn.as_ref()?;
         c.try_identity().and_then(|i| c.db.player().identity().find(&i)).and_then(|p| p.entity_id)
+    }
+
+    /// Our character as the quest rules see it.
+    fn quest_character(&self) -> Option<QuestCharacter> {
+        let c = self.conn.as_ref()?;
+        let p = c.try_identity().and_then(|i| c.db.player().identity().find(&i))?;
+        let id = p.entity_id?;
+        let combat = c.db.combat().entity_id().find(&id);
+        let (x, y) = c
+            .db
+            .motion()
+            .entity_id()
+            .find(&id)
+            .map_or((p.last_x, p.last_y), |m| motion_position(&m, self.server_now_us()));
+        let ability_values = c.db.stats().entity_id().find(&id).and_then(|st| serde_json::from_str(&st.ability_values).ok())?;
+        let zone_id = c.db.entity().entity_id().find(&id).map_or(p.zone_id, |e| e.zone_id);
+        Some(QuestCharacter {
+            gender: p.gender,
+            face: p.face,
+            hair: p.hair,
+            job: p.job,
+            level: p.level,
+            xp: p.xp,
+            stat_points: p.stat_points,
+            skill_points: p.skill_points,
+            basic_stats: rose_game_common::components::BasicStats {
+                strength: p.strength,
+                dexterity: p.dexterity,
+                intelligence: p.intelligence,
+                concentration: p.concentration,
+                charm: p.charm,
+                sense: p.sense,
+            },
+            ability_values,
+            hp: combat.as_ref().map_or(p.last_hp, |c| c.hp),
+            mp: combat.as_ref().map_or(p.last_mp, |c| c.mp),
+            zone_id,
+            x,
+            y,
+            team: 2,
+            equipment: serde_json::from_str(&p.equipment).unwrap_or_default(),
+            inventory: serde_json::from_str(&p.inventory).unwrap_or_default(),
+            skill_list: serde_json::from_str(&p.skill_list).unwrap_or_default(),
+            quest_state: serde_json::from_str(&p.quest_state).unwrap_or_default(),
+            union_membership: serde_json::from_str(&p.union_membership).unwrap_or_default(),
+        })
+    }
+
+    fn client_world(&self, zone_id: u16) -> ClientWorld {
+        let t = self.server_now_us();
+        let mut npcs = Vec::new();
+        if let Some(c) = self.conn.as_ref() {
+            for n in c.db.npc().iter() {
+                let (x, y) = c.db.motion().entity_id().find(&n.entity_id).map_or((0.0, 0.0), |m| motion_position(&m, t));
+                npcs.push(WorldNpc {
+                    npc_id: n.npc_id,
+                    npc: QuestNpc { entity_id: n.entity_id, zone_id: n.zone_id, x, y },
+                    variables: n.variables.clone(),
+                });
+            }
+        }
+        ClientWorld { t, zone_id, npcs, party: None }
+    }
+
+    /// Run `f` on the open conversation with a fresh script context, then carry out what
+    /// the scripts asked for.
+    fn with_conversation<R>(&mut self, f: impl FnOnce(&mut Option<Conversation>, &mut ScriptContext) -> R) -> Option<R> {
+        let game = crate::data::get()?;
+        let ch = self.quest_character()?;
+        let name = self
+            .conn
+            .as_ref()
+            .and_then(|c| c.try_identity().and_then(|i| c.db.player().identity().find(&i)))
+            .map(|p| p.name)
+            .unwrap_or_default();
+        let mut world = self.client_world(ch.zone_id);
+        let mut actions = Vec::new();
+        let mut conversation = self.conversation.take();
+        let result = {
+            let mut cx = ScriptContext { game, ch: &ch, world: &mut world, name: &name, actions: &mut actions };
+            f(&mut conversation, &mut cx)
+        };
+        self.conversation = conversation;
+        for action in actions {
+            match action {
+                Action::QuestTrigger(trigger) => {
+                    let s = self.shared.clone();
+                    if let Some(c) = self.conn.as_ref() {
+                        c.reducers.quest_trigger_then(trigger, move |_, r| report(&s, r)).ok();
+                    }
+                }
+                Action::OpenStore(entity) => self.windows.push(("store".into(), entity)),
+                Action::OpenBank(entity) => self.windows.push(("bank".into(), entity)),
+                Action::Notice(text) => self.shared.lock().unwrap().notices.push(text),
+            }
+        }
+        Some(result)
     }
 
     fn fail(&mut self, error: String) {
@@ -745,6 +849,107 @@ impl RoseNet {
         let s = self.shared.clone();
         if let Some(c) = self.conn.as_ref() {
             c.reducers.npc_store_transaction_then(npc_entity_id as u64, buy, sell, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    /// Talk to a town NPC: opens its conversation. False when it has nothing to say.
+    #[func]
+    fn open_conversation(&mut self, npc_entity_id: i64) -> bool {
+        let (Some(c), Some(game)) = (self.conn.as_ref(), crate::data::get()) else { return false };
+        let Some(npc) = c.db.npc().entity_id().find(&(npc_entity_id as u64)) else { return false };
+        let Some(path) = conversation::conversation_path(game, &npc.conversation) else { return false };
+        let title = c.db.entity().entity_id().find(&npc.entity_id).map(|e| e.name).unwrap_or_default();
+        let entity = npc.entity_id;
+        self.with_conversation(|conv, cx| {
+            *conv = Conversation::open(&path, Some(entity), title, cx);
+            conv.is_some()
+        })
+        .unwrap_or(false)
+    }
+
+    /// The open conversation: open, npc (entity id), title, message and responses (BBCode).
+    #[func]
+    fn get_conversation(&self) -> VarDictionary {
+        let mut d = VarDictionary::new();
+        d.set("open", self.conversation.is_some());
+        if let Some(conv) = self.conversation.as_ref() {
+            d.set("npc", conv.npc_entity.map_or(-1, |id| id as i64));
+            d.set("title", conv.title.as_str());
+            d.set("message", conv.message.as_str());
+            let mut responses = VarArray::new();
+            for r in conv.responses.iter() {
+                responses.push(&GString::from(r.text.as_str()).to_variant());
+            }
+            d.set("responses", &responses);
+        }
+        d
+    }
+
+    /// Pick response `index` (0-based) of the open conversation.
+    #[func]
+    fn choose_response(&mut self, index: i64) {
+        self.with_conversation(|conv, cx| {
+            if let Some(c) = conv.as_mut() {
+                if !c.choose(cx, index.max(0) as usize) {
+                    *conv = None;
+                }
+            }
+        });
+    }
+
+    #[func]
+    fn close_conversation(&mut self) {
+        self.conversation = None;
+    }
+
+    /// Windows a conversation opened since the last call: [kind ("store" or "bank"), npc entity id].
+    #[func]
+    fn poll_windows(&mut self) -> VarArray {
+        let mut out = VarArray::new();
+        for (kind, entity) in self.windows.drain(..) {
+            let mut a = VarArray::new();
+            a.push(&GString::from(kind.as_str()).to_variant());
+            a.push(&(entity as i64).to_variant());
+            out.push(&a.to_variant());
+        }
+        out
+    }
+
+    /// Our active quests: slot, id, name, description, items (as in get_inventory, with
+    /// quantity) and time_left (seconds, -1 for none).
+    #[func]
+    fn get_quests(&self) -> VarArray {
+        let mut out = VarArray::new();
+        let (Some(c), Some(game)) = (self.conn.as_ref(), crate::data::get()) else { return out };
+        let Some(p) = c.try_identity().and_then(|i| c.db.player().identity().find(&i)) else { return out };
+        let state: rose_game_common::components::QuestState = serde_json::from_str(&p.quest_state).unwrap_or_default();
+        let now = rose_quest::world_ticks(self.server_now_us());
+        for (slot, quest) in state.active_quests.iter().enumerate() {
+            let Some(quest) = quest else { continue };
+            let data = game.quests.get_quest_data(quest.quest_id);
+            let mut d = VarDictionary::new();
+            d.set("slot", slot as i64);
+            d.set("id", quest.quest_id as i64);
+            d.set("name", data.map_or_else(|| format!("Quest {}", quest.quest_id), |q| q.name.to_string()).as_str());
+            let description = data.map_or("", |q| q.description);
+            d.set("description", conversation::format_text(description, &p.name, p.level).as_str());
+            let mut items = VarArray::new();
+            for item in quest.items.iter().flatten() {
+                items.push(&item_dict(item).to_variant());
+            }
+            d.set("items", &items);
+            let left = quest.expire_time.map_or(-1, |e| (e.0.saturating_sub(now.0) * 10) as i64);
+            d.set("time_left", left);
+            out.push(&d.to_variant());
+        }
+        out
+    }
+
+    #[func]
+    fn abandon_quest(&self, slot: i64, quest_id: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.abandon_quest_then(slot as u8, quest_id as u32, move |_, r| report(&s, r)).ok();
         }
     }
 
