@@ -24,6 +24,7 @@ pub mod motion_table;
 pub mod motion_type;
 pub mod move_to_reducer;
 pub mod npc_data_type;
+pub mod place_player_reducer;
 pub mod player_table;
 pub mod player_type;
 pub mod reset_monsters_reducer;
@@ -55,6 +56,7 @@ pub use motion_table::*;
 pub use motion_type::Motion;
 pub use move_to_reducer::move_to;
 pub use npc_data_type::NpcData;
+pub use place_player_reducer::place_player;
 pub use player_table::*;
 pub use player_type::Player;
 pub use reset_monsters_reducer::reset_monsters;
@@ -90,6 +92,11 @@ pub enum Reducer {
         x: f32,
         y: f32,
     },
+    PlacePlayer {
+        name: String,
+        x: f32,
+        y: f32,
+    },
     ResetMonsters,
     SetAggroRange {
         npc_id: u16,
@@ -115,6 +122,7 @@ impl __sdk::Reducer for Reducer {
             Reducer::ImportNpcs { .. } => "import_npcs",
             Reducer::ImportZone { .. } => "import_zone",
             Reducer::MoveTo { .. } => "move_to",
+            Reducer::PlacePlayer { .. } => "place_player",
             Reducer::ResetMonsters => "reset_monsters",
             Reducer::SetAggroRange { .. } => "set_aggro_range",
             Reducer::SetLoadout { .. } => "set_loadout",
@@ -142,6 +150,13 @@ impl __sdk::Reducer for Reducer {
                 x: x.clone(),
                 y: y.clone(),
             }),
+            Reducer::PlacePlayer { name, x, y } => {
+                __sats::bsatn::to_vec(&place_player_reducer::PlacePlayerArgs {
+                    name: name.clone(),
+                    x: x.clone(),
+                    y: y.clone(),
+                })
+            }
             Reducer::ResetMonsters => {
                 __sats::bsatn::to_vec(&reset_monsters_reducer::ResetMonstersArgs {})
             }

@@ -12,7 +12,6 @@ pub struct DamageEvent {
     pub amount: i32,
     pub is_critical: bool,
     pub killed: bool,
-    pub attacker_moving: bool,
     pub at_us: i64,
 }
 
@@ -29,7 +28,6 @@ pub struct DamageEventCols {
     pub amount: __sdk::__query_builder::Col<DamageEvent, i32>,
     pub is_critical: __sdk::__query_builder::Col<DamageEvent, bool>,
     pub killed: __sdk::__query_builder::Col<DamageEvent, bool>,
-    pub attacker_moving: __sdk::__query_builder::Col<DamageEvent, bool>,
     pub at_us: __sdk::__query_builder::Col<DamageEvent, i64>,
 }
 
@@ -42,7 +40,6 @@ impl __sdk::__query_builder::HasCols for DamageEvent {
             amount: __sdk::__query_builder::Col::new(table_name, "amount"),
             is_critical: __sdk::__query_builder::Col::new(table_name, "is_critical"),
             killed: __sdk::__query_builder::Col::new(table_name, "killed"),
-            attacker_moving: __sdk::__query_builder::Col::new(table_name, "attacker_moving"),
             at_us: __sdk::__query_builder::Col::new(table_name, "at_us"),
         }
     }

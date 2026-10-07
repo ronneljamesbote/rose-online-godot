@@ -1,5 +1,6 @@
-//! Headless test client: connects, picks the nearest monster, fights it, then
-//! kites it while moving to prove attack-while-moving. Prints a timeline.
+//! Headless test client: connects, picks the nearest monster, fights it, and checks
+//! animation cancelling: moving mid-swing cancels it (no damage, cooldown refunded),
+//! moving right after a hit is free but keeps the cooldown. Prints a timeline.
 //!
 //! Usage: rose-stdb-bot [ws://127.0.0.1:3000] [melee|ranged]
 
@@ -14,7 +15,7 @@ use std::{
 
 #[derive(Default)]
 struct Log {
-    hits: Vec<(Instant, u64, u64, i32, bool, bool, bool)>,
+    hits: Vec<(Instant, u64, u64, i32, bool, bool)>,
     my_motion_updates: Vec<Instant>,
 }
 
@@ -93,7 +94,7 @@ fn main() {
     {
         let log = log.clone();
         spacetimedb_sdk::__codegen::WithInsert::on_insert(&conn.db.damage_event(), move |_, ev| {
-            log.lock().unwrap().hits.push((Instant::now(), ev.attacker, ev.defender, ev.amount, ev.is_critical, ev.killed, ev.attacker_moving));
+            log.lock().unwrap().hits.push((Instant::now(), ev.attacker, ev.defender, ev.amount, ev.is_critical, ev.killed));
         });
     }
     conn.subscription_builder().subscribe_to_all_tables();
@@ -163,54 +164,77 @@ fn main() {
     conn.reducers.attack(target_id).unwrap();
     println!("[{:5.1}s] attack #{} (chasing)", start.elapsed().as_secs_f32(), target_id);
 
-    let mut kiting_started: Option<Instant> = None;
-    let deadline = Instant::now() + Duration::from_secs(120);
-    let mut kite_dir = 1.0f32;
-    while Instant::now() < deadline {
-        std::thread::sleep(Duration::from_millis(100));
-        let alive = conn.db.entity().entity_id().find(&target_id).is_some();
-        let my_combat = conn.db.combat().entity_id().find(&me).unwrap();
-        if !alive {
-            println!("[{:5.1}s] target died", start.elapsed().as_secs_f32());
-            break;
-        }
-        if my_combat.dead_until_us.is_some() {
-            println!("[{:5.1}s] we died", start.elapsed().as_secs_f32());
-            break;
-        }
-        // After the first hits land, start kiting: keep walking back and forth while the target is set.
-        let my_hits = log.lock().unwrap().hits.iter().filter(|h| h.1 == me).count();
-        if my_hits >= 2 && kiting_started.is_none() {
-            kiting_started = Some(Instant::now());
-            println!("[{:5.1}s] start kiting: move_to while keeping the attack target", start.elapsed().as_secs_f32());
-        }
-        if let Some(k) = kiting_started {
-            let m = conn.db.motion().entity_id().find(&me).unwrap();
-            let moving = { let p = pos(&m, now_us()); (p.0 - m.to_x).abs() > 1.0 || (p.1 - m.to_y).abs() > 1.0 };
-            if !moving {
-                // Walk 3 m sideways, alternating, staying inside bow range.
-                let p = pos(&m, now_us());
-                kite_dir = -kite_dir;
-                conn.reducers.move_to(p.0 + 300.0 * kite_dir, p.1 + 150.0).unwrap();
+    let t0 = Instant::now();
+    let deadline = t0 + Duration::from_secs(120);
+    let my_hits = |log: &Arc<Mutex<Log>>| log.lock().unwrap().hits.iter().filter(|h| h.1 == me).count();
+    let combat = |conn: &DbConnection| conn.db.combat().entity_id().find(&me).unwrap();
+    let wait = |what: &str, f: &dyn Fn() -> bool| -> bool {
+        while Instant::now() < deadline {
+            if f() {
+                return true;
             }
-            let _ = k;
+            if conn.db.entity().entity_id().find(&target_id).is_none() || combat(&conn).dead_until_us.is_some() {
+                println!("[{:5.1}s] fight ended while waiting for {}", start.elapsed().as_secs_f32(), what);
+                return false;
+            }
+            std::thread::sleep(Duration::from_millis(10));
+        }
+        false
+    };
+    let step_away = |conn: &DbConnection| {
+        let m = conn.db.motion().entity_id().find(&me).unwrap();
+        let p = pos(&m, now_us());
+        conn.reducers.move_to(p.0 + 200.0, p.1 + 100.0).unwrap();
+    };
+    let mut checks: Vec<(&str, bool)> = Vec::new();
+
+    // 1. Fight normally until two hits land.
+    if wait("two hits", &|| my_hits(&log) >= 2) {
+        println!("[{:5.1}s] two hits landed", start.elapsed().as_secs_f32());
+
+        // 2. Cancel during the wind-up: move as soon as the next swing starts.
+        if wait("a swing to start", &|| combat(&conn).swing_hit_at_us.is_some()) {
+            let hits_before = my_hits(&log);
+            let hit_at = combat(&conn).swing_hit_at_us.unwrap();
+            step_away(&conn);
+            std::thread::sleep(Duration::from_millis(300));
+            let c = combat(&conn);
+            println!("[{:5.1}s] moved {:.0} ms before the hit frame", start.elapsed().as_secs_f32(), (hit_at - now_us() + 300_000) as f64 / 1000.0);
+            checks.push(("moving clears the attack target", c.attack_target.is_none()));
+            checks.push(("moving mid-swing cancels it", c.swing_hit_at_us.is_none()));
+            checks.push(("cancelled swing refunds the cooldown", c.next_attack_at_us <= now_us()));
+            std::thread::sleep(Duration::from_millis(1500));
+            checks.push(("cancelled swing deals no damage", my_hits(&log) == hits_before));
+
+            // 3. Attack again: the swing starts right away instead of waiting out a cooldown.
+            let hits_before = my_hits(&log);
+            let again = Instant::now();
+            conn.reducers.attack(target_id).unwrap();
+            if wait("the next hit", &|| my_hits(&log) > hits_before) {
+                let ms = again.elapsed().as_secs_f64() * 1000.0;
+                println!("[{:5.1}s] re-attack to hit: {:.0} ms (includes walking back into range)", start.elapsed().as_secs_f32(), ms);
+
+                // 4. Cancel the recovery: move right after the hit. Movement starts at once,
+                //    but the attack-speed cooldown still applies to the next swing.
+                let m_before = conn.db.motion().entity_id().find(&me).unwrap().started_at_us;
+                let moved = Instant::now();
+                step_away(&conn);
+                let ok = wait("our move", &|| conn.db.motion().entity_id().find(&me).unwrap().started_at_us != m_before);
+                println!("[{:5.1}s] move after hit applied in {:.1} ms", start.elapsed().as_secs_f32(), moved.elapsed().as_secs_f64() * 1000.0);
+                checks.push(("moving after the hit starts immediately", ok));
+                checks.push(("recovery cancel keeps the cooldown", combat(&conn).next_attack_at_us > now_us()));
+            }
         }
     }
 
-    // Summarise: hits we landed while our own motion said we were moving.
     let l = log.lock().unwrap();
     let mine: Vec<_> = l.hits.iter().filter(|h| h.1 == me).collect();
     let taken: Vec<_> = l.hits.iter().filter(|h| h.2 == me).collect();
-    let hits_while_kiting = kiting_started.map_or(0, |k| mine.iter().filter(|h| h.0 >= k).count());
     println!("hits landed: {} (total {} dmg, {} crits, {} misses)", mine.len(), mine.iter().map(|h| h.3).sum::<i32>(),
         mine.iter().filter(|h| h.4).count(), mine.iter().filter(|h| h.3 == 0).count());
-    println!("hits landed after kiting started: {}, of which the server saw us moving: {}", hits_while_kiting,
-        mine.iter().filter(|h| h.6).count());
     println!("hits taken: {} (total {} dmg)", taken.len(), taken.iter().map(|h| h.3).sum::<i32>());
-    let gaps: Vec<f64> = mine.windows(2).map(|w| (w[1].0 - w[0].0).as_secs_f64() * 1000.0).collect();
-    if !gaps.is_empty() {
-        println!("swing gaps (ms): min {:.0} max {:.0} avg {:.0}", gaps.iter().cloned().fold(f64::MAX, f64::min),
-            gaps.iter().cloned().fold(0.0, f64::max), gaps.iter().sum::<f64>() / gaps.len() as f64);
+    for (name, ok) in &checks {
+        println!("{} {}", if *ok { "PASS" } else { "FAIL" }, name);
     }
     if let Some(ts) = conn.db.tick_stats().id().find(&0) {
         println!("combat ticks: {}, worst gap between ticks {:.0} ms", ts.ticks, ts.max_gap_us as f64 / 1000.0);

@@ -12,6 +12,7 @@ pub struct Combat {
     pub max_hp: i32,
     pub attack_target: Option<u64>,
     pub next_attack_at_us: i64,
+    pub swing_hit_at_us: Option<i64>,
     pub dead_until_us: Option<i64>,
 }
 
@@ -28,6 +29,7 @@ pub struct CombatCols {
     pub max_hp: __sdk::__query_builder::Col<Combat, i32>,
     pub attack_target: __sdk::__query_builder::Col<Combat, Option<u64>>,
     pub next_attack_at_us: __sdk::__query_builder::Col<Combat, i64>,
+    pub swing_hit_at_us: __sdk::__query_builder::Col<Combat, Option<i64>>,
     pub dead_until_us: __sdk::__query_builder::Col<Combat, Option<i64>>,
 }
 
@@ -40,6 +42,7 @@ impl __sdk::__query_builder::HasCols for Combat {
             max_hp: __sdk::__query_builder::Col::new(table_name, "max_hp"),
             attack_target: __sdk::__query_builder::Col::new(table_name, "attack_target"),
             next_attack_at_us: __sdk::__query_builder::Col::new(table_name, "next_attack_at_us"),
+            swing_hit_at_us: __sdk::__query_builder::Col::new(table_name, "swing_hit_at_us"),
             dead_until_us: __sdk::__query_builder::Col::new(table_name, "dead_until_us"),
         }
     }

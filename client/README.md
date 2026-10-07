@@ -6,8 +6,13 @@
 - `src/protocol/stdb/`: login and world steps are answered locally (one server, one channel,
   one fixed "Tester" character). The game step connects to the `rose` database and turns
   table changes into the client's normal ServerMessages: spawns, moves, attacks, damage, revive.
-- Click to move calls `move_to`; clicking a monster calls `attack`. Moving keeps the attack
-  target, so the server keeps shooting while you run.
+- Click to move calls `move_to`; clicking a monster calls `attack`. Moving drops the target.
+- The client's own Attack command chases and animates; the adapter doesn't echo the server's chase
+  path back for your own character (that echo replaced the attack with a plain move, so sword swings
+  never played). Damage is shown when the server resolves the hit frame.
+- Animation cancelling: Move or Stop (and picking another target) interrupt the attack animation
+  immediately instead of waiting for it to finish (`systems/command_system.rs`).
+- `ability_values_system` logs the character's calculated stats; the module's `player_stats()` uses them.
 - The SpacetimeDB token is saved in the client's data folder (`stdb_token`), so the character
   keeps its identity, position and HP between runs.
 - `ROSE_STDB_RANGED=1` gives the character a Short Bow (21 m range) instead of a Short Sword.
@@ -28,7 +33,6 @@ Regenerate the bindings after changing the module:
 `spacetime generate --lang rust --out-dir src/protocol/stdb/module_bindings --bin-path <module wasm>`.
 
 ## Known gaps
-- The HUD shows the client's own max HP (236) while the server uses 300.
 - Character creation, inventory, skills, chat and NPCs are not wired; only the messages above.
 - No client-side collision is sent to the server, so you can walk up cliffs.
 - On a case-sensitive file system the client needs `trose.exe` (lowercase) next to `TRose.exe`
