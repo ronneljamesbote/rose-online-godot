@@ -6,13 +6,25 @@ mod character;
 mod data;
 mod material;
 mod mesh;
+#[allow(clippy::all, unused)]
+mod module_bindings;
+mod net;
 mod texture;
 mod zone;
 
 struct RoseExtension;
 
 #[gdextension]
-unsafe impl ExtensionLibrary for RoseExtension {}
+unsafe impl ExtensionLibrary for RoseExtension {
+    /// The caches hold Godot objects, so they must be emptied before the engine shuts down.
+    fn on_stage_deinit(stage: InitStage) {
+        if stage == InitStage::MainLoop {
+            material::clear_cache();
+            mesh::clear_cache();
+            texture::clear_cache();
+        }
+    }
+}
 
 /// Entry point for GDScript: opens the client data once per process.
 #[derive(GodotClass)]

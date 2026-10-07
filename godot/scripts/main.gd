@@ -8,13 +8,23 @@
 ##   --screenshot=PATH          save one frame and quit
 ##   --time=morning|day|evening|night|TICKS   fixed time of day (default: day, then the clock runs)
 ##   --demo                     scripted run / attack / cancel sequence (for --write-movie)
+##   --server=URI               play online on this SpacetimeDB server, skipping the start screen
+##   --name=NAME, --weapon=sword|bow   character for --server
+##   --profile=NAME             identity file to use (user://identity-NAME.token), so two
+##                              clients on one PC are two players
+##   --offline                  skip the start screen and play offline
+##   --net-demo[=square|line]   online: walk a scripted route (for tests)
+##   --net-log                  online: print every player's position once a second
+##   --quit-after=SECONDS       quit after this long
 extends Node3D
 
 const DEFAULT_DATA_IDX := "data.idx"
 const START := Vector3(5210.5, 0.0, -5136.7)  # zone start position from LIST_ZONE.STB
 
 var zone: RoseZone
-var player: Node3D
+var player: Node3D  # offline character
+var online: Node3D  # online world, when connected
+var camera_anchor: Node3D
 var camera: Camera3D
 var options := {}
 var world_ticks := 0.0  # one world tick is 10 seconds
@@ -46,11 +56,9 @@ func _ready() -> void:
 	_apply_lighting(zone.get_lighting_at(int(world_ticks), 0.0))
 	print("rose: lighting ", zone.get_lighting_at(int(world_ticks), 0.0))
 
-	player = preload("res://scripts/player.gd").new()
-	player.name = "Player"
-	add_child(player)
-	player.setup(zone, true, {"face": 1, "hair": 0, "body": 1, "hands": 1, "feet": 1, "weapon": 2})
-	player.place(START)
+	camera_anchor = Node3D.new()
+	add_child(camera_anchor)
+	camera_anchor.position = Vector3(START.x, zone.get_terrain_height(START.x, START.z), START.z)
 
 	if options.has("free-camera"):
 		var v: PackedFloat64Array = options["free-camera"].split_floats(",")
@@ -59,7 +67,7 @@ func _ready() -> void:
 		camera.rotation = Vector3(deg_to_rad(v[4]), deg_to_rad(v[3]), 0.0)
 	else:
 		camera = preload("res://scripts/orbit_camera.gd").new()
-		camera.target = player
+		camera.target = camera_anchor
 	camera.fov = float(options.get("fov", "45"))
 	camera.near = 0.1
 	camera.far = 1000.0
@@ -80,10 +88,68 @@ func _ready() -> void:
 	world_environment.environment = environment
 	add_child(world_environment)
 
+	if options.has("quit-after"):
+		get_tree().create_timer(float(options["quit-after"])).timeout.connect(get_tree().quit)
+	if options.has("server"):
+		_go_online(options["server"], options.get("name", ""), options.get("weapon", "sword") == "bow")
+	elif options.has("offline") or options.has("demo") or options.has("screenshot") or options.has("free-camera"):
+		_go_offline()
+	else:
+		var panel = preload("res://scripts/connect_panel.gd").new()
+		panel.connect_requested.connect(_go_online)
+		panel.offline_requested.connect(_go_offline)
+		add_child(panel)
+
 	if options.has("demo"):
 		_run_demo()
 	if options.has("screenshot"):
 		_take_screenshot(options["screenshot"])
+
+
+func _go_offline() -> void:
+	player = preload("res://scripts/player.gd").new()
+	player.name = "Player"
+	add_child(player)
+	player.setup(zone, true, {"face": 1, "hair": 0, "body": 1, "hands": 1, "feet": 1, "weapon": 2})
+	player.place(START)
+	if camera.get("target") != null:
+		camera.target = player
+
+
+func _go_online(uri: String, name_text: String, use_bow: bool) -> void:
+	var profile: String = options.get("profile", "default")
+	var token_path := ProjectSettings.globalize_path("user://identity-%s.token" % profile)
+	online = preload("res://scripts/online.gd").new()
+	online.name = "Online"
+	add_child(online)
+	online.joined.connect(_on_joined)
+	online.log_positions = options.has("net-log")
+	online.start(zone, uri, token_path, name_text, use_bow)
+
+
+func _on_joined(me: Node3D) -> void:
+	if camera.get("target") != null:
+		camera.target = me
+	if options.has("net-demo"):
+		_run_net_demo(me)
+
+
+## Walks a route from where the character joined, forever: "square" (default) goes round
+## the start point 4 m out, "line" goes back and forth 5 m east.
+func _run_net_demo(me: Node3D) -> void:
+	var origin := me.position
+	var route := [Vector3(4, 0, 2), Vector3(4, 0, -6), Vector3(-4, 0, -6), Vector3(-4, 0, 2)]
+	var pause := 2.6
+	if options["net-demo"] == "line":
+		route = [Vector3(5, 0, 0), Vector3(0, 0, 0)]
+		pause = 3.5
+	var i := 0
+	while true:
+		await get_tree().create_timer(pause).timeout
+		var target: Vector3 = origin + route[i % route.size()]
+		print("rose net demo: move to ", target)
+		online.move_to(target)
+		i += 1
 
 
 func _apply_lighting(lighting: Dictionary) -> void:
@@ -119,12 +185,18 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var hit = _pick_ground(event.position)
 		if hit != null:
-			player.move_to(hit)
+			if online:
+				online.move_to(hit)
+			elif player:
+				player.move_to(hit)
 	elif event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_SPACE:
+		if event.keycode == KEY_SPACE and player:
 			player.attack()
 		elif event.keycode == KEY_S:
-			player.stop()
+			if online:
+				online.stop()
+			elif player:
+				player.stop()
 
 
 ## Marches the mouse ray against the terrain height field (no physics colliders yet).

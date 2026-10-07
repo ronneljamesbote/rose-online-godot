@@ -90,3 +90,8 @@ pub fn build_mesh(zms: &ZmsFile, skinned: bool) -> Option<Gd<ArrayMesh>> {
     mesh.add_surface_from_arrays(PrimitiveType::TRIANGLES, &arrays);
     Some(mesh)
 }
+
+/// Drops the cached meshes while the engine is still running.
+pub fn clear_cache() {
+    MESHES.with_borrow_mut(|cache| cache.clear());
+}
