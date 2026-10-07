@@ -711,3 +711,22 @@ pub fn admin_quest_trigger(ctx: &ReducerContext, player_name: String, trigger: S
     log::info!("admin quest trigger {trigger} for {player_name}: {ok}");
     Ok(())
 }
+
+/// Debug: give a player a quest, with `quantity` of quest item `item_number` in it (0 for
+/// none), as if a trigger had. For testing the later steps of a quest chain.
+#[spacetimedb::reducer]
+pub fn admin_give_quest(ctx: &ReducerContext, player_name: String, quest_id: u32, item_number: u32, quantity: u32) -> Result<(), String> {
+    crate::require_admin(ctx)?;
+    let game = game(ctx)?;
+    let p = ctx.db.player().iter().find(|p| p.name == player_name).ok_or("no such player")?;
+    let mut rewards = vec![QsdReward::AddQuest { id: quest_id as usize }];
+    if quantity > 0 {
+        let item = QsdItem { item_number: item_number as usize, item_type: 13 };
+        rewards.push(QsdReward::AddItem { item, quantity: quantity as usize });
+    }
+    let trigger = rose_data::QuestTrigger { name: String::new(), conditions: Vec::new(), rewards, next_trigger_name: None };
+    let mut run = Run::new(ctx, &game, p);
+    let ok = run.apply_rewards(&mut QuestContext::default(), &trigger);
+    run.finish();
+    if ok { Ok(()) } else { Err("could not add the quest".into()) }
+}
