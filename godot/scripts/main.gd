@@ -20,7 +20,9 @@
 ##                              store (--buy=TEXT: what to buy), the first two active
 ##                              skills (a buff, then an attack), or a talk with the NPC
 ##                              --npc=NAME, answering --answers=1,2,... (q: list quests;
-##                              deposit/withdraw: the bank), or a party (--invite=NAME
+##                              deposit/withdraw: the bank; pick=NAME puts a bag item in
+##                              the refine/disassemble window, work presses its button,
+##                              gem=NAME sets a gem, skill=NAME uses a skill), or a party (--invite=NAME
 ##                              invites, else accept; --rules=XP,ITEMS) that then fights,
 ##                              or crafting with the first craft skill (--craft=NAME,
 ##                              --times=N)
@@ -495,6 +497,57 @@ func _run_talk_demo() -> void:
 			await get_tree().create_timer(1.0).timeout
 			_print_bank()
 			continue
+		if answer.begins_with("pick="):
+			var found := _find_bag_item(answer.trim_prefix("pick="))
+			if found.is_empty():
+				print("rose net demo: no ", answer.trim_prefix("pick="), " in the bag")
+			else:
+				online.work_window.set_target(found[0], found[1])
+				await get_tree().create_timer(1.5).timeout
+				print("rose net demo: %s: %s | %s" % [online.work_window.title.text, online.work_window.info.text.replace("\n", " / "), online.work_window.cost.text])
+			continue
+		if answer == "work":
+			online.work_window.work()
+			await get_tree().create_timer(2.5).timeout
+			print("rose net demo: now: %s" % online.work_window.info.text.replace("\n", " / "))
+			continue
+		if answer.begins_with("skill="):
+			# Use our skill with this name (e.g. Item Refining opens the refine window).
+			var pages: Array = online.net.get_skills()
+			for page in pages.size():
+				for index in pages[page].size():
+					var skill = pages[page][index]
+					if skill != null and answer.trim_prefix("skill=").to_lower() in String(skill["name"]).to_lower():
+						online.use_skill(page, index, skill)
+			await get_tree().create_timer(1.0).timeout
+			continue
+		if answer == "wait":
+			await get_tree().create_timer(6.0).timeout
+			continue
+		if answer.begins_with("equip="):
+			var found := _find_bag_item(answer.trim_prefix("equip="))
+			if not found.is_empty():
+				online.net.equip_item(found[0], found[1])
+				await get_tree().create_timer(1.0).timeout
+			continue
+		if answer.begins_with("use="):
+			var found := _find_bag_item(answer.trim_prefix("use="))
+			if not found.is_empty():
+				online.net.use_item(found[0], found[1])
+				await get_tree().create_timer(1.5).timeout
+			continue
+		if answer == "unequip":
+			online.net.unequip_item(6)
+			await get_tree().create_timer(1.0).timeout
+			continue
+		if answer.begins_with("gem="):
+			var found := _find_bag_item(answer.trim_prefix("gem="))
+			if not found.is_empty():
+				online.net.insert_gem(found[0], found[1])
+				await get_tree().create_timer(1.5).timeout
+				var weapon = online.net.get_inventory()["equipped"][6]
+				print("rose net demo: weapon now: ", weapon["tooltip"].replace("\n", " / ") if weapon else "none")
+			continue
 		if answer == "talk":
 			online.talk_to(npc)
 			await get_tree().create_timer(1.0).timeout
@@ -508,10 +561,21 @@ func _run_talk_demo() -> void:
 	_print_quests()
 
 
+## [page, index] of the first bag item whose name has this text, else [].
+func _find_bag_item(text: String) -> Array:
+	var pages: Array = online.net.get_inventory()["pages"]
+	for page in pages.size():
+		for i in pages[page].size():
+			var item = pages[page][i]
+			if item != null and text.to_lower() in String(item["name"]).to_lower():
+				return [page, i]
+	return []
+
+
 func _print_conversation() -> void:
 	var d: Dictionary = online.net.get_conversation()
 	if not d.get("open", false):
-		var open := " store open" if online.store_window.visible else (" bank open" if online.bank_window.visible else "")
+		var open := " store open" if online.store_window.visible else (" bank open" if online.bank_window.visible else (" %s open" % online.work_window.mode if online.work_window.visible else ""))
 		print("rose net demo: (no conversation)", open)
 		return
 	print("rose net demo: %s says: %s" % [d["title"], d["message"]])

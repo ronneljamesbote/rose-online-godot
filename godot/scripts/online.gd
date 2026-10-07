@@ -12,6 +12,7 @@ const StoreWindow := preload("res://scripts/store_window.gd")
 const BankWindow := preload("res://scripts/bank_window.gd")
 const PartyWindow := preload("res://scripts/party_window.gd")
 const CraftWindow := preload("res://scripts/craft_window.gd")
+const ItemWorkWindow := preload("res://scripts/item_work_window.gd")
 const SkillWindow := preload("res://scripts/skill_window.gd")
 const ConversationWindow := preload("res://scripts/conversation_window.gd")
 const QuestWindow := preload("res://scripts/quest_window.gd")
@@ -46,6 +47,7 @@ var store_window: PanelContainer
 var bank_window: PanelContainer
 var party_window: PanelContainer
 var craft_window: PanelContainer
+var work_window: PanelContainer
 var player_menu: PopupMenu
 var _menu_player := -1
 var skill_window: PanelContainer
@@ -158,6 +160,17 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	craft_window.grow_vertical = Control.GROW_DIRECTION_BOTH
 	layer.add_child(craft_window)
 
+	work_window = ItemWorkWindow.new()
+	work_window.net = net
+	work_window.online = self
+	work_window.inventory_window = inventory_window
+	work_window.visible = false
+	work_window.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+	work_window.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	work_window.offset_top = 70
+	layer.add_child(work_window)
+	inventory_window.work_window = work_window
+
 	# Right-click on another player.
 	player_menu = PopupMenu.new()
 	player_menu.add_item("Invite to party", 0)
@@ -244,6 +257,7 @@ func use_zone(zone_node: Node) -> void:
 	_talk = -1
 	store_window.close_store()
 	bank_window.close_bank()
+	work_window.close_window()
 	conversation_window.close_conversation()
 	me = null
 	_zone_requested = 0
@@ -274,7 +288,12 @@ func use_skill(page: int, index: int, skill: Dictionary) -> void:
 		_notice("%s works on its own" % skill.get("name", "That skill"))
 		return
 	if skill.get("type", "") == "Create Window":
-		if not craft_window.open_skill(page, index, skill):
+		var kind: String = net.craft_skill_kind(page, index)
+		if kind == "refine" or kind == "disassemble":
+			store_window.close_store()
+			bank_window.close_bank()
+			work_window.open_skill(kind, page, index, skill)
+		elif kind == "" or not craft_window.open_skill(page, index, skill):
 			_notice("%s isn't in the game yet" % skill.get("name", "That skill"))
 		return
 	var target := my_target if skill.get("target", false) else -1
@@ -385,6 +404,7 @@ func talk_to(id: int) -> void:
 func _open_npc(id: int, npc: Node3D) -> void:
 	store_window.close_store()
 	bank_window.close_bank()
+	work_window.close_window()
 	if conversation_window.open(id, npc):
 		return
 	if not store_window.open_store(id, npc):
@@ -564,6 +584,9 @@ func _process(_delta: float) -> void:
 		elif window[0] == "bank" and entities.has(npc_id):
 			store_window.close_store()
 			bank_window.open_bank(npc_id, entities[npc_id])
+		elif (window[0] == "refine" or window[0] == "disassemble") and entities.has(npc_id):
+			store_window.close_store()
+			work_window.open_npc(window[0], npc_id, entities[npc_id])
 
 	if me:
 		for id in entities:

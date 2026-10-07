@@ -24,9 +24,11 @@ pub mod combat_tick_timer_type;
 pub mod combat_type;
 pub mod craft_item_reducer;
 pub mod craft_slot_type;
+pub mod craft_tool_type;
 pub mod damage_event_table;
 pub mod damage_event_type;
 pub mod damage_source_type;
+pub mod disassemble_item_reducer;
 pub mod drop_item_reducer;
 pub mod drop_money_reducer;
 pub mod entity_kind_type;
@@ -44,6 +46,7 @@ pub mod give_skill_reducer;
 pub mod give_xp_reducer;
 pub mod ground_item_table;
 pub mod ground_item_type;
+pub mod insert_gem_reducer;
 pub mod level_up_skill_reducer;
 pub mod monster_ai_type;
 pub mod monster_spawn_type;
@@ -75,6 +78,7 @@ pub mod place_player_reducer;
 pub mod player_table;
 pub mod player_type;
 pub mod quest_trigger_reducer;
+pub mod refine_item_reducer;
 pub mod regen_type;
 pub mod reset_monsters_reducer;
 pub mod set_aggro_range_reducer;
@@ -131,9 +135,11 @@ pub use combat_tick_timer_type::CombatTickTimer;
 pub use combat_type::Combat;
 pub use craft_item_reducer::craft_item;
 pub use craft_slot_type::CraftSlot;
+pub use craft_tool_type::CraftTool;
 pub use damage_event_table::*;
 pub use damage_event_type::DamageEvent;
 pub use damage_source_type::DamageSource;
+pub use disassemble_item_reducer::disassemble_item;
 pub use drop_item_reducer::drop_item;
 pub use drop_money_reducer::drop_money;
 pub use entity_kind_type::EntityKind;
@@ -151,6 +157,7 @@ pub use give_skill_reducer::give_skill;
 pub use give_xp_reducer::give_xp;
 pub use ground_item_table::*;
 pub use ground_item_type::GroundItem;
+pub use insert_gem_reducer::insert_gem;
 pub use level_up_skill_reducer::level_up_skill;
 pub use monster_ai_type::MonsterAi;
 pub use monster_spawn_type::MonsterSpawn;
@@ -182,6 +189,7 @@ pub use place_player_reducer::place_player;
 pub use player_table::*;
 pub use player_type::Player;
 pub use quest_trigger_reducer::quest_trigger;
+pub use refine_item_reducer::refine_item;
 pub use regen_type::Regen;
 pub use reset_monsters_reducer::reset_monsters;
 pub use set_aggro_range_reducer::set_aggro_range;
@@ -278,6 +286,11 @@ pub enum Reducer {
         item_number: u16,
         materials: Vec<CraftSlot>,
     },
+    DisassembleItem {
+        tool: CraftTool,
+        page: u8,
+        index: u16,
+    },
     DropItem {
         page: u8,
         index: u16,
@@ -308,6 +321,11 @@ pub enum Reducer {
     GiveXp {
         name: String,
         xp: u64,
+    },
+    InsertGem {
+        equipment_slot: u8,
+        page: u8,
+        index: u16,
     },
     LevelUpSkill {
         page: u8,
@@ -361,6 +379,12 @@ pub enum Reducer {
     },
     QuestTrigger {
         name: String,
+    },
+    RefineItem {
+        tool: CraftTool,
+        page: u8,
+        index: u16,
+        materials: Vec<CraftSlot>,
     },
     ResetMonsters,
     SetAggroRange {
@@ -442,6 +466,7 @@ impl __sdk::Reducer for Reducer {
             Reducer::BeginGameDataUpload => "begin_game_data_upload",
             Reducer::CastSkill { .. } => "cast_skill",
             Reducer::CraftItem { .. } => "craft_item",
+            Reducer::DisassembleItem { .. } => "disassemble_item",
             Reducer::DropItem { .. } => "drop_item",
             Reducer::DropMoney { .. } => "drop_money",
             Reducer::EquipItem { .. } => "equip_item",
@@ -450,6 +475,7 @@ impl __sdk::Reducer for Reducer {
             Reducer::GiveMoney { .. } => "give_money",
             Reducer::GiveSkill { .. } => "give_skill",
             Reducer::GiveXp { .. } => "give_xp",
+            Reducer::InsertGem { .. } => "insert_gem",
             Reducer::LevelUpSkill { .. } => "level_up_skill",
             Reducer::MoveCollision { .. } => "move_collision",
             Reducer::MoveItem { .. } => "move_item",
@@ -465,6 +491,7 @@ impl __sdk::Reducer for Reducer {
             Reducer::PickupItem { .. } => "pickup_item",
             Reducer::PlacePlayer { .. } => "place_player",
             Reducer::QuestTrigger { .. } => "quest_trigger",
+            Reducer::RefineItem { .. } => "refine_item",
             Reducer::ResetMonsters => "reset_monsters",
             Reducer::SetAggroRange { .. } => "set_aggro_range",
             Reducer::SetBasicStat { .. } => "set_basic_stat",
@@ -574,6 +601,13 @@ impl __sdk::Reducer for Reducer {
                 item_number: item_number.clone(),
                 materials: materials.clone(),
             }),
+            Reducer::DisassembleItem { tool, page, index } => {
+                __sats::bsatn::to_vec(&disassemble_item_reducer::DisassembleItemArgs {
+                    tool: tool.clone(),
+                    page: page.clone(),
+                    index: index.clone(),
+                })
+            }
             Reducer::DropItem {
                 page,
                 index,
@@ -623,6 +657,15 @@ impl __sdk::Reducer for Reducer {
             Reducer::GiveXp { name, xp } => __sats::bsatn::to_vec(&give_xp_reducer::GiveXpArgs {
                 name: name.clone(),
                 xp: xp.clone(),
+            }),
+            Reducer::InsertGem {
+                equipment_slot,
+                page,
+                index,
+            } => __sats::bsatn::to_vec(&insert_gem_reducer::InsertGemArgs {
+                equipment_slot: equipment_slot.clone(),
+                page: page.clone(),
+                index: index.clone(),
             }),
             Reducer::LevelUpSkill { page, index } => {
                 __sats::bsatn::to_vec(&level_up_skill_reducer::LevelUpSkillArgs {
@@ -706,6 +749,17 @@ impl __sdk::Reducer for Reducer {
                     name: name.clone(),
                 })
             }
+            Reducer::RefineItem {
+                tool,
+                page,
+                index,
+                materials,
+            } => __sats::bsatn::to_vec(&refine_item_reducer::RefineItemArgs {
+                tool: tool.clone(),
+                page: page.clone(),
+                index: index.clone(),
+                materials: materials.clone(),
+            }),
             Reducer::ResetMonsters => {
                 __sats::bsatn::to_vec(&reset_monsters_reducer::ResetMonstersArgs {})
             }
