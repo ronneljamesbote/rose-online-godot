@@ -28,13 +28,10 @@ spacetime call --server local rose import_zone "$(jq -c '.[0]' ../data/zone1/zon
 cd ../bot && cargo run --release -- ws://127.0.0.1:3000 ranged
 ```
 
-### Hosting on Windows
+### Hosting with Docker
 
-`bash server-windows/build.sh` makes `dist/ROSE-server-windows.zip` with SpacetimeDB for
-Windows, the module, a fresh key pair and two scripts: `start-server.bat` runs the server on
-port 3000 and `install-game.bat` publishes the module (first time, and for updates). Players
-use the Godot client's Windows zip (`godot/tools/build-windows.sh`). Both Windows zips were
-tested under Wine 9 on Linux, not yet on a Windows PC.
+`docker compose up -d` in this folder builds and runs the whole server (SpacetimeDB plus the
+module, seeded with Zant's monsters) on any OS with Docker; see `server/README.md`.
 
 ## Combat model
 - Attacking needs the attacker to stand still; clicking to move drops the target (attack-while-moving was removed on 2026-10-07).
