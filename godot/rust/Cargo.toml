@@ -1,0 +1,15 @@
+[package]
+name = "rose-gd"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+godot = { version = "0.5.5", features = ["api-4-6"] }
+rose-data = { path = "../../crates/rose-data" }
+rose-data-irose = { path = "../../crates/rose-data-irose" }
+rose-file-readers = { path = "../../crates/rose-file-readers" }
+enum-map = { workspace = true }
+anyhow = { workspace = true }

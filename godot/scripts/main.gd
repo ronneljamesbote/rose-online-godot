@@ -1,0 +1,172 @@
+## Proof of concept: loads Canyon City of Zant from the original data files and puts an
+## animated character on the terrain.
+##
+## Command-line options (after "--"):
+##   --data-idx=PATH            ROSE data.idx (or set ROSE_DATA_IDX)
+##   --zone=ID                  zone to load (default 1, Canyon City of Zant)
+##   --free-camera=x,y,z,yaw,pitch   fixed camera, degrees, same convention as the Bevy zone viewer
+##   --screenshot=PATH          save one frame and quit
+##   --time=morning|day|evening|night|TICKS   fixed time of day (default: day, then the clock runs)
+##   --demo                     scripted run / attack / cancel sequence (for --write-movie)
+extends Node3D
+
+const DEFAULT_DATA_IDX := "data.idx"
+const START := Vector3(5210.5, 0.0, -5136.7)  # zone start position from LIST_ZONE.STB
+
+var zone: RoseZone
+var player: Node3D
+var camera: Camera3D
+var options := {}
+var world_ticks := 0.0  # one world tick is 10 seconds
+
+
+func _ready() -> void:
+	for arg in OS.get_cmdline_user_args():
+		var parts := arg.trim_prefix("--").split("=", true, 1)
+		options[parts[0]] = parts[1] if parts.size() > 1 else "true"
+
+	var data_idx: String = options.get("data-idx", OS.get_environment("ROSE_DATA_IDX"))
+	if data_idx == "":
+		data_idx = DEFAULT_DATA_IDX
+	var started := Time.get_ticks_msec()
+	if not RoseData.open(data_idx):
+		get_tree().quit(1)
+		return
+	print("rose: data tables loaded in %d ms" % (Time.get_ticks_msec() - started))
+
+	zone = RoseZone.new()
+	zone.name = "Zone"
+	add_child(zone)
+	if not zone.load_zone(int(options.get("zone", "1"))):
+		get_tree().quit(1)
+		return
+	print("rose: zone loaded ", zone.get_stats(), " day cycle ", zone.get_day_cycle(), " morning/day/evening/night start ", [zone.get_state_start("morning"), zone.get_state_start("day"), zone.get_state_start("evening"), zone.get_state_start("night")])
+	var time: String = options.get("time", "day")
+	world_ticks = float(time) if time.is_valid_int() else float(zone.get_state_start(time)) + 1.0
+	_apply_lighting(zone.get_lighting_at(int(world_ticks), 0.0))
+	print("rose: lighting ", zone.get_lighting_at(int(world_ticks), 0.0))
+
+	player = preload("res://scripts/player.gd").new()
+	player.name = "Player"
+	add_child(player)
+	player.setup(zone, true, {"face": 1, "hair": 0, "body": 1, "hands": 1, "feet": 1, "weapon": 2})
+	player.place(START)
+
+	if options.has("free-camera"):
+		var v: PackedFloat64Array = options["free-camera"].split_floats(",")
+		camera = Camera3D.new()
+		camera.position = Vector3(v[0], v[1], v[2])
+		camera.rotation = Vector3(deg_to_rad(v[4]), deg_to_rad(v[3]), 0.0)
+	else:
+		camera = preload("res://scripts/orbit_camera.gd").new()
+		camera.target = player
+	camera.fov = float(options.get("fov", "45"))
+	camera.near = 0.1
+	camera.far = 1000.0
+	add_child(camera)
+	camera.make_current()
+
+	# Colours already match rose-offline-client without it, so glow (its bloom) is opt-in.
+	var environment := Environment.new()
+	environment.background_mode = Environment.BG_COLOR
+	environment.background_color = Color(0.2, 0.2, 0.2)
+	environment.tonemap_mode = Environment.TONE_MAPPER_LINEAR
+	environment.glow_enabled = options.get("glow", "false") == "true"
+	environment.glow_normalized = true
+	environment.glow_intensity = float(options.get("glow-intensity", "0.6"))
+	environment.glow_bloom = float(options.get("glow-bloom", "0.15"))
+	environment.glow_blend_mode = Environment.GLOW_BLEND_MODE_SOFTLIGHT
+	var world_environment := WorldEnvironment.new()
+	world_environment.environment = environment
+	add_child(world_environment)
+
+	if options.has("demo"):
+		_run_demo()
+	if options.has("screenshot"):
+		_take_screenshot(options["screenshot"])
+
+
+func _apply_lighting(lighting: Dictionary) -> void:
+	RenderingServer.global_shader_parameter_set("rose_map_ambient", lighting["map_ambient"])
+	RenderingServer.global_shader_parameter_set("rose_character_ambient", lighting["character_ambient"])
+	RenderingServer.global_shader_parameter_set("rose_character_diffuse", lighting["character_diffuse"])
+	RenderingServer.global_shader_parameter_set("rose_light_direction", lighting["light_direction"])
+	RenderingServer.global_shader_parameter_set("rose_fog_color", lighting["fog_color"])
+	RenderingServer.global_shader_parameter_set("rose_fog_density", lighting["fog_density"])
+	RenderingServer.global_shader_parameter_set("rose_sky_day_weight", lighting["day_weight"])
+
+
+func _process(delta: float) -> void:
+	if zone == null or options.has("screenshot"):
+		return
+	world_ticks += delta / 10.0
+	_apply_lighting(zone.get_lighting_at(int(world_ticks), fmod(world_ticks, 1.0)))
+
+
+func _take_screenshot(path: String) -> void:
+	for i in 10:
+		await get_tree().process_frame
+	await RenderingServer.frame_post_draw
+	get_viewport().get_texture().get_image().save_png(path)
+	print("rose: saved ", path, " (draw calls %d, objects %d, primitives %d)" % [
+		Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME),
+		Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME),
+		Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME)])
+	get_tree().quit()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		var hit = _pick_ground(event.position)
+		if hit != null:
+			player.move_to(hit)
+	elif event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_SPACE:
+			player.attack()
+		elif event.keycode == KEY_S:
+			player.stop()
+
+
+## Marches the mouse ray against the terrain height field (no physics colliders yet).
+func _pick_ground(screen_position: Vector2):
+	var origin := camera.project_ray_origin(screen_position)
+	var direction := camera.project_ray_normal(screen_position)
+	var t := 0.0
+	while t < 500.0:
+		var p := origin + direction * t
+		if p.y <= zone.get_terrain_height(p.x, p.z):
+			return p
+		t += 0.25
+	return null
+
+
+func _say(text: String) -> void:
+	print("rose demo: ", text)
+
+
+## Run, swing, cancel the swing by moving, swing again and let it finish.
+func _run_demo() -> void:
+	var tree := get_tree()
+	await tree.create_timer(1.0).timeout
+	for name in ["attack", "attack2", "attack3"]:
+		_say("%s: %d ms, hit at %d ms" % [name, player.anim.get_animation(name).length * 1000.0, player.hit_time(name) * 1000.0])
+	_say("run")
+	player.move_to(START + Vector3(8.0, 0.0, -6.0))
+	await tree.create_timer(2.5).timeout
+	_say("attack (full swing)")
+	player.attack()
+	await tree.create_timer(1.6).timeout
+	_say("attack, cancelled by moving")
+	player.attack()
+	await tree.create_timer(0.35).timeout
+	player.move_to(START + Vector3(2.0, 0.0, -10.0))
+	await tree.create_timer(2.0).timeout
+	_say("attack combo")
+	player.attack()
+	await tree.create_timer(1.3).timeout
+	player.attack()
+	await tree.create_timer(1.3).timeout
+	player.attack()
+	await tree.create_timer(1.6).timeout
+	_say("done")
+	tree.quit()

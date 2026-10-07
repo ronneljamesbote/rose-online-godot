@@ -1,0 +1,49 @@
+; Engine configuration file.
+config_version=5
+
+[application]
+
+config/name="ROSE (Godot)"
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.6")
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
+[rendering]
+
+renderer/rendering_method="forward_plus"
+anti_aliasing/quality/msaa_3d=2
+
+[shader_globals]
+
+rose_map_ambient={
+"type": "vec3",
+"value": Vector3(1, 1, 1)
+}
+rose_character_ambient={
+"type": "vec3",
+"value": Vector3(1, 1, 1)
+}
+rose_character_diffuse={
+"type": "vec3",
+"value": Vector3(1, 1, 1)
+}
+rose_light_direction={
+"type": "vec3",
+"value": Vector3(0.612372, 0.707107, -0.353553)
+}
+rose_fog_color={
+"type": "vec3",
+"value": Vector3(0.784, 0.784, 0.784)
+}
+rose_fog_density={
+"type": "float",
+"value": 0.0018
+}
+rose_sky_day_weight={
+"type": "float",
+"value": 1.0
+}
