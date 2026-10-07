@@ -95,7 +95,7 @@ pub(crate) fn inventory_slot(page: u8, index: u16) -> Result<ItemSlot, String> {
     Ok(ItemSlot::Inventory(page_type(page)?, index as usize))
 }
 
-fn equipment_index(index: u8) -> Result<EquipmentIndex, String> {
+pub(crate) fn equipment_index(index: u8) -> Result<EquipmentIndex, String> {
     use EquipmentIndex::*;
     [Face, Head, Body, Back, Hands, Feet, Weapon, SubWeapon, Necklace, Ring, Earring]
         .get(index as usize)
@@ -621,7 +621,10 @@ pub fn give_item(ctx: &ReducerContext, name: String, item_type: u8, item_number:
         .map(|t| rose_data::ItemReference::new(t, item_number as usize))
         .ok_or("no such item type")?;
     let data = game.items.get_base_item(reference).ok_or("no such item")?;
-    let item = Item::from_item_data(data, quantity.max(1)).ok_or("no such item")?;
+    let mut item = Item::from_item_data(data, quantity.max(1)).ok_or("no such item")?;
+    if let Item::Equipment(e) = &mut item {
+        e.has_socket = data.rare_type == crate::craft::RARE_TYPE_SOCKETED;
+    }
     let mut inventory = p.inventory();
     inventory.try_add_item(item).map_err(|_| "their inventory is full")?;
     p.set_inventory(&inventory);

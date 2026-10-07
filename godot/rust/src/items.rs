@@ -130,6 +130,7 @@ pub fn item_dict(item: &Item) -> VarDictionary {
         }
     }
     if let Item::Equipment(e) = item {
+        d.set("grade", e.grade as i64);
         if e.grade > 0 {
             lines[0] = format!("{} +{}", lines[0], e.grade);
         }
@@ -137,8 +138,18 @@ pub fn item_dict(item: &Item) -> VarDictionary {
         if e.is_crafted {
             lines.push("Crafted".to_string());
         }
-        if e.has_socket {
-            lines.push(if e.gem >= 300 { "Gem socketed".to_string() } else { "Empty gem socket".to_string() });
+        // Gem numbers above 300 are set gems; lower ones are a bonus option.
+        if let Some(gem) = (e.gem > 0).then(|| game.items.get_gem_item(e.gem as usize)).flatten() {
+            let bonus = gem_bonus(gem);
+            lines.push(if e.gem > 300 { format!("Gem: {} ({bonus})", gem.item_data.name) } else { format!("Bonus: {bonus}") });
+        }
+        if e.has_socket && e.gem <= 300 {
+            lines.push("Empty gem socket".to_string());
+        }
+    }
+    if reference.item_type == ItemType::Gem {
+        if let Some(gem) = game.items.get_gem_item(reference.item_number) {
+            lines.push(gem_bonus(gem));
         }
     }
     for (ability, value) in base.add_ability.iter() {
@@ -165,6 +176,11 @@ pub fn item_dict(item: &Item) -> VarDictionary {
     }
     d.set("tooltip", lines.join("\n").as_str());
     d
+}
+
+/// A gem's stat bonuses, like "Attack +4, Hit +2".
+fn gem_bonus(gem: &rose_data::GemItemData) -> String {
+    gem.gem_add_ability.iter().map(|(ability, value)| format!("{} {:+}", ability_name(*ability), value)).collect::<Vec<_>>().join(", ")
 }
 
 fn field_item_zsc() -> Option<&'static ZscFile> {

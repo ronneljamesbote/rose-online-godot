@@ -215,9 +215,9 @@ impl RoseNet {
                     }
                 }
                 Action::OpenStore(entity) => self.windows.push(("store".into(), entity)),
-                Action::OpenBank => {
+                Action::OpenWindow(kind) => {
                     if let Some(npc) = talking {
-                        self.windows.push(("bank".into(), npc));
+                        self.windows.push((kind.into(), npc));
                     }
                 }
                 Action::Notice(text) => self.shared.lock().unwrap().notices.push(text),
@@ -1164,25 +1164,7 @@ impl RoseNet {
             d.set("number", reference.item_number as i64);
             d.set("item", &crate::items::item_dict(&item));
             d.set("level", level as i64);
-            let mut materials = VarArray::new();
-            for m in recipe.materials.iter().flatten() {
-                let mut md = VarDictionary::new();
-                match m.item.and_then(|r| game.items.get_base_item(r)).and_then(|d| rose_data::Item::from_item_data(d, 1)) {
-                    Some(item) => {
-                        let item_d = crate::items::item_dict(&item);
-                        md.set("name", &item_d.get("name").unwrap_or_default());
-                        md.set("icon", &item_d.get("icon").unwrap_or_default());
-                    }
-                    None => {
-                        let class = game.decoder.decode_item_class(recipe.raw_material_class as usize)
-                            .map_or_else(|| "material".to_string(), |c| crate::skills::split_camel_case(&format!("{c:?}")));
-                        md.set("name", format!("any {class}"));
-                    }
-                }
-                md.set("quantity", m.quantity as i64);
-                materials.push(&md.to_variant());
-            }
-            d.set("materials", &materials);
+            d.set("materials", &recipe_materials(game, recipe));
             out.push(&d.to_variant());
         }
         out
@@ -1192,7 +1174,7 @@ impl RoseNet {
     /// step, [-1, -1] where we have none.
     #[func]
     fn find_craft_materials(&self, item_type: i64, item_number: i64) -> VarArray {
-        let mut out = VarArray::new();
+        let out = VarArray::new();
         let (Some(c), Some(game)) = (self.conn.as_ref(), crate::data::get()) else { return out };
         let Some(p) = c.try_identity().and_then(|i| c.db.player().identity().find(&i)) else { return out };
         let Some(reference) = rose_data_irose::decode_item_type(item_type as usize)
@@ -1209,33 +1191,7 @@ impl RoseNet {
             return out;
         };
         let inventory: Inventory = serde_json::from_str(&p.inventory).unwrap_or_default();
-        let pages = [&inventory.equipment, &inventory.consumables, &inventory.materials, &inventory.vehicles];
-        let mut used: Vec<(usize, usize)> = Vec::new();
-        for (step, material) in recipe.materials.iter().enumerate() {
-            let Some(material) = material else { continue };
-            let mut found = (-1i64, -1i64);
-            'pages: for (page_index, page) in pages.iter().enumerate() {
-                for (slot_index, slot) in page.slots.iter().enumerate() {
-                    let Some(item) = slot else { continue };
-                    let r = item.get_item_reference();
-                    let enough = matches!(item, rose_data::Item::Equipment(_)) || item.get_quantity() >= material.quantity;
-                    let class = game.items.get_base_item(r).map(|d| d.class);
-                    if enough
-                        && !used.contains(&(page_index, slot_index))
-                        && class.is_some_and(|class| recipe.accepts(step, r, class))
-                    {
-                        used.push((page_index, slot_index));
-                        found = (page_index as i64, slot_index as i64);
-                        break 'pages;
-                    }
-                }
-            }
-            let mut a = VarArray::new();
-            a.push(&found.0.to_variant());
-            a.push(&found.1.to_variant());
-            out.push(&a.to_variant());
-        }
-        out
+        find_recipe_slots(game, &inventory, recipe, None)
     }
 
     /// Craft with the skill in this slot; `slots` are [page, index] per recipe step.
@@ -1243,17 +1199,163 @@ impl RoseNet {
     fn craft_item(&self, page: i64, index: i64, item_type: i64, item_number: i64, slots: VarArray) {
         let s = self.shared.clone();
         let Some(c) = self.conn.as_ref() else { return };
-        let materials: Vec<CraftSlot> = slots
-            .iter_shared()
-            .filter_map(|v| v.try_to::<VarArray>().ok())
-            .map(|a| CraftSlot {
-                page: a.get(0).and_then(|v| v.try_to::<i64>().ok()).unwrap_or(0) as u8,
-                index: a.get(1).and_then(|v| v.try_to::<i64>().ok()).unwrap_or(0) as u16,
-            })
-            .collect();
+        let materials = craft_slots(&slots);
         c.reducers
             .craft_item_then(page as u8, index as u16, item_type as u8, item_number as u16, materials, move |_, r| report(&s, r))
             .ok();
+    }
+
+    /// What the craft skill in this slot does: "craft", "refine", "disassemble", or "" when
+    /// it isn't a craft skill.
+    #[func]
+    fn craft_skill_kind(&self, page: i64, index: i64) -> GString {
+        match self.craft_skill(page, index).map(|s| s.item_make_number) {
+            Some(MAKE_DISASSEMBLE) => "disassemble",
+            Some(MAKE_REFINE) => "refine",
+            Some(_) => "craft",
+            None => "",
+        }
+        .into()
+    }
+
+    fn my_inventory(&self) -> Option<Inventory> {
+        let c = self.conn.as_ref()?;
+        let p = c.try_identity().and_then(|i| c.db.player().identity().find(&i))?;
+        serde_json::from_str(&p.inventory).ok()
+    }
+
+    fn bag_item(inventory: &Inventory, page: i64, index: i64) -> Option<&rose_data::Item> {
+        let pages = [&inventory.equipment, &inventory.consumables, &inventory.materials, &inventory.vehicles];
+        pages.get(page as usize)?.slots.get(index as usize)?.as_ref()
+    }
+
+    /// Refining this bag item: {item, grade, materials (as get_craft_items), slots (as
+    /// find_craft_materials), mp, zuly, ready}, or {error} when it can't be refined.
+    #[func]
+    fn get_refine_info(&self, page: i64, index: i64) -> VarDictionary {
+        let mut d = VarDictionary::new();
+        let (Some(inventory), Some(game)) = (self.my_inventory(), crate::data::get()) else { return d };
+        let Some(item) = Self::bag_item(&inventory, page, index) else { return d };
+        d.set("item", &item_dict(item));
+        let rose_data::Item::Equipment(e) = item else {
+            d.set("error", "Only equipment can be refined");
+            return d;
+        };
+        if e.grade >= 9 {
+            d.set("error", "This is the highest grade");
+            return d;
+        }
+        let base = if e.item.item_type == rose_data::ItemType::Weapon { 1 } else { 11 };
+        let Some(recipe) = game.craft_recipes.get(base + e.grade as usize).and_then(|r| r.as_ref()) else {
+            d.set("error", "This can't be refined");
+            return d;
+        };
+        let quality = game.items.get_base_item(e.item).map_or(0, |d| d.quality) as i64;
+        let grade = e.grade as i64;
+        let slots = find_recipe_slots(game, &inventory, recipe, Some((page as usize, index as usize)));
+        let ready = slots.iter_shared().all(|v| v.try_to::<VarArray>().ok().and_then(|a| a.get(0)).and_then(|v| v.try_to::<i64>().ok()).unwrap_or(-1) >= 0);
+        d.set("grade", grade);
+        d.set("materials", &recipe_materials(game, recipe));
+        d.set("slots", &slots);
+        d.set("mp", ((grade + 4) as f32 * (quality + 20) as f32 * 0.9) as i64);
+        d.set("zuly", ((grade * (grade + 1) * quality * (quality + 20)) as f32 * 0.2) as i64);
+        d.set("ready", ready);
+        d
+    }
+
+    /// Disassembling this bag item: {item, gem (the set gem's name, when it gives that back),
+    /// outputs (material names), mp, zuly}, or {error}.
+    #[func]
+    fn get_disassemble_info(&self, page: i64, index: i64) -> VarDictionary {
+        let mut d = VarDictionary::new();
+        let (Some(inventory), Some(game)) = (self.my_inventory(), crate::data::get()) else { return d };
+        let Some(item) = Self::bag_item(&inventory, page, index) else { return d };
+        d.set("item", &item_dict(item));
+        let Some(data) = game.items.get_base_item(item.get_item_reference()) else { return d };
+        let quality = data.quality as i64;
+        if let rose_data::Item::Equipment(e) = item {
+            if e.has_socket && e.gem > 300 {
+                let gem = game.items.get_base_item(rose_data::ItemReference::gem(e.gem as usize));
+                let gem_quality = gem.map_or(0, |g| g.quality) as i64;
+                d.set("gem", gem.map_or("the gem", |g| g.name));
+                d.set("mp", quality / 2 + gem_quality);
+                d.set("zuly", quality * 5 + 50);
+                return d;
+            }
+        }
+        let Some(recipe) = (data.craft_material != 0).then(|| game.craft_recipes.get(data.craft_material as usize)).flatten().and_then(|r| r.as_ref()) else {
+            d.set("error", "This can't be taken apart");
+            return d;
+        };
+        let mut outputs = VarArray::new();
+        for (step, m) in recipe.materials.iter().enumerate() {
+            let Some(m) = m else { break };
+            let output = match m.item {
+                Some(item) => Some(item),
+                None if step == 0 => {
+                    let grade = ((quality - 20) / 12).clamp(1, 10) as usize;
+                    Some(rose_data::ItemReference::new(rose_data::ItemType::Material, (recipe.raw_material_class as usize).saturating_sub(421) * 10 + grade))
+                }
+                None => None,
+            };
+            if let Some(name) = output.and_then(|r| game.items.get_base_item(r)).map(|d| d.name) {
+                outputs.push(&GString::from(name).to_variant());
+            }
+        }
+        d.set("outputs", &outputs);
+        d.set("mp", quality + 30);
+        d.set("zuly", quality * 10 + 20);
+        d
+    }
+
+    fn craft_tool(npc: i64, skill_page: i64, skill_index: i64) -> CraftTool {
+        if npc >= 0 {
+            CraftTool::Npc(npc as u64)
+        } else {
+            CraftTool::Skill(CraftSlot { page: skill_page as u8, index: skill_index as u16 })
+        }
+    }
+
+    /// Refine a bag item at an NPC (`npc` its entity id) or with the skill in a skill slot
+    /// (`npc` -1); `slots` as find_craft_materials.
+    #[func]
+    fn refine_item(&self, npc: i64, skill_page: i64, skill_index: i64, page: i64, index: i64, slots: VarArray) {
+        let s = self.shared.clone();
+        let Some(c) = self.conn.as_ref() else { return };
+        let tool = Self::craft_tool(npc, skill_page, skill_index);
+        c.reducers.refine_item_then(tool, page as u8, index as u16, craft_slots(&slots), move |_, r| report(&s, r)).ok();
+    }
+
+    /// Disassemble a bag item, as refine_item.
+    #[func]
+    fn disassemble_item(&self, npc: i64, skill_page: i64, skill_index: i64, page: i64, index: i64) {
+        let s = self.shared.clone();
+        let Some(c) = self.conn.as_ref() else { return };
+        let tool = Self::craft_tool(npc, skill_page, skill_index);
+        c.reducers.disassemble_item_then(tool, page as u8, index as u16, move |_, r| report(&s, r)).ok();
+    }
+
+    /// Set this bag gem into the first equipped item with an empty socket. False (with a
+    /// notice) when no worn item has one.
+    #[func]
+    fn insert_gem(&self, page: i64, index: i64) -> bool {
+        let Some(c) = self.conn.as_ref() else { return false };
+        let Some(p) = c.try_identity().and_then(|i| c.db.player().identity().find(&i)) else { return false };
+        let equipment: Equipment = serde_json::from_str(&p.equipment).unwrap_or_default();
+        use EquipmentIndex::*;
+        let order = [Face, Head, Body, Back, Hands, Feet, Weapon, SubWeapon, Necklace, Ring, Earring];
+        let preferred = [Weapon, SubWeapon, Body, Head, Hands, Feet, Back, Necklace, Ring, Earring, Face];
+        let Some(slot) = preferred
+            .iter()
+            .find(|&&i| equipment.get_equipment_item(i).is_some_and(|e| e.has_socket && e.gem <= 300))
+            .and_then(|i| order.iter().position(|o| o == i))
+        else {
+            self.shared.lock().unwrap().notices.push("None of your worn items has an empty gem socket".into());
+            return false;
+        };
+        let s = self.shared.clone();
+        c.reducers.insert_gem_then(slot as u8, page as u8, index as u16, move |_, r| report(&s, r)).ok();
+        true
     }
 
     /// Our bank: 120 slots (four pages of 30), null when empty.
@@ -1316,4 +1418,80 @@ fn report(shared: &Arc<Mutex<Shared>>, result: Result<Result<(), String>, spacet
     let mut first = message.chars();
     let message = first.next().map_or(String::new(), |c| c.to_uppercase().collect::<String>() + first.as_str());
     shared.lock().unwrap().notices.push(message);
+}
+
+/// Skill item_make_number of Item Disassembly and Item Refining.
+const MAKE_DISASSEMBLE: u32 = 41;
+const MAKE_REFINE: u32 = 42;
+
+/// A recipe's materials for the UI: [{name, quantity, icon?}].
+fn recipe_materials(game: &crate::data::GameData, recipe: &rose_game_data::CraftRecipe) -> VarArray {
+    let mut materials = VarArray::new();
+    for m in recipe.materials.iter().flatten() {
+        let mut md = VarDictionary::new();
+        match m.item.and_then(|r| game.items.get_base_item(r)).and_then(|d| rose_data::Item::from_item_data(d, 1)) {
+            Some(item) => {
+                let item_d = item_dict(&item);
+                md.set("name", &item_d.get("name").unwrap_or_default());
+                md.set("icon", &item_d.get("icon").unwrap_or_default());
+            }
+            None => {
+                let class = game
+                    .decoder
+                    .decode_item_class(recipe.raw_material_class as usize)
+                    .map_or_else(|| "material".to_string(), |c| crate::skills::split_camel_case(&format!("{c:?}")));
+                md.set("name", format!("any {class}"));
+            }
+        }
+        md.set("quantity", m.quantity as i64);
+        materials.push(&md.to_variant());
+    }
+    materials
+}
+
+/// Bag slots holding enough of each recipe step's material: [page, index] per step, [-1, -1]
+/// where we have none. `skip` is a slot not to use (the item being worked on).
+fn find_recipe_slots(
+    game: &crate::data::GameData,
+    inventory: &Inventory,
+    recipe: &rose_game_data::CraftRecipe,
+    skip: Option<(usize, usize)>,
+) -> VarArray {
+    let mut out = VarArray::new();
+    let pages = [&inventory.equipment, &inventory.consumables, &inventory.materials, &inventory.vehicles];
+    let mut used: Vec<(usize, usize)> = skip.into_iter().collect();
+    for (step, material) in recipe.materials.iter().enumerate() {
+        let Some(material) = material else { continue };
+        let mut found = (-1i64, -1i64);
+        'pages: for (page_index, page) in pages.iter().enumerate() {
+            for (slot_index, slot) in page.slots.iter().enumerate() {
+                let Some(item) = slot else { continue };
+                let r = item.get_item_reference();
+                let enough = matches!(item, rose_data::Item::Equipment(_)) || item.get_quantity() >= material.quantity;
+                let class = game.items.get_base_item(r).map(|d| d.class);
+                if enough && !used.contains(&(page_index, slot_index)) && class.is_some_and(|class| recipe.accepts(step, r, class)) {
+                    used.push((page_index, slot_index));
+                    found = (page_index as i64, slot_index as i64);
+                    break 'pages;
+                }
+            }
+        }
+        let mut a = VarArray::new();
+        a.push(&found.0.to_variant());
+        a.push(&found.1.to_variant());
+        out.push(&a.to_variant());
+    }
+    out
+}
+
+/// [page, index] arrays from GDScript as reducer slots.
+fn craft_slots(slots: &VarArray) -> Vec<CraftSlot> {
+    slots
+        .iter_shared()
+        .filter_map(|v| v.try_to::<VarArray>().ok())
+        .map(|a| CraftSlot {
+            page: a.get(0).and_then(|v| v.try_to::<i64>().ok()).unwrap_or(0) as u8,
+            index: a.get(1).and_then(|v| v.try_to::<i64>().ok()).unwrap_or(0) as u16,
+        })
+        .collect()
 }
