@@ -284,6 +284,14 @@ fn remove_member(ctx: &ReducerContext, party: Party, identity: Identity, text: &
     }
 }
 
+/// Take someone out of their party, if they are in one (an admin moving a character).
+pub fn forget_member(ctx: &ReducerContext, identity: Identity) {
+    if let Some(party) = party_of(ctx, identity) {
+        let text = format!("{} left the party", name(ctx, identity));
+        remove_member(ctx, party, identity, &text);
+    }
+}
+
 #[spacetimedb::reducer]
 pub fn party_leave(ctx: &ReducerContext) -> Result<(), String> {
     let (p, _) = my_player(ctx)?;

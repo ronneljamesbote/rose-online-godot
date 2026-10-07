@@ -194,7 +194,7 @@ impl StbInitAvatar {
 }
 
 impl CharacterCreator {
-    fn load(vfs: &VirtualFilesystem) -> Result<Self, anyhow::Error> {
+    pub fn load(vfs: &VirtualFilesystem) -> Result<Self, anyhow::Error> {
         let data = StbInitAvatar(vfs.read_file::<StbFile, _>("3DDATA/STB/INIT_AVATAR.STB")?);
         let male = data.character(0).context("INIT_AVATAR row 0")?;
         let female = data.character(1).context("INIT_AVATAR row 1")?;

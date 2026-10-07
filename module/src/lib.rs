@@ -6,6 +6,7 @@
 //! are built from client files the host uploads (see game_data.rs).
 
 mod ability;
+mod account;
 mod bank;
 mod character;
 mod chat;
@@ -443,7 +444,7 @@ fn clear_damage_sources(ctx: &ReducerContext, defender: u64) {
     }
 }
 
-fn spawn_player_entity(ctx: &ReducerContext, game: &GameData, player: &mut Player) {
+pub(crate) fn spawn_player_entity(ctx: &ReducerContext, game: &GameData, player: &mut Player) {
     let entity = ctx.db.entity().insert(Entity {
         entity_id: 0,
         kind: EntityKind::Player,
@@ -537,14 +538,22 @@ pub fn init(ctx: &ReducerContext) {
 
 /// Puts the connecting player's character in the world, creating it on first connect.
 /// Without game data nobody can play yet; the client shows game_data_status instead.
+/// With accounts on (account::set_auth_issuer), only players who signed in on the website get
+/// in, and a new account makes its character with create_character. Without them every new
+/// identity gets a test character right away.
 #[spacetimedb::reducer(client_connected)]
-pub fn client_connected(ctx: &ReducerContext) {
+pub fn client_connected(ctx: &ReducerContext) -> Result<(), String> {
     // The admin identity (the CLI that publishes and runs SQL) is not a game client.
     if ctx.db.admin().identity().find(ctx.sender()).is_some() {
-        return;
+        return Ok(());
     }
-    let Ok(game) = game_data::game(ctx) else { return };
-    let mut player = ctx.db.player().identity().find(ctx.sender()).unwrap_or_else(|| {
+    account::check_connection(ctx)?;
+    let Ok(game) = game_data::game(ctx) else { return Ok(()) };
+    let existing = ctx.db.player().identity().find(ctx.sender());
+    if existing.is_none() && account::accounts_required(ctx) {
+        return Ok(());
+    }
+    let mut player = existing.unwrap_or_else(|| {
         let hex = ctx.sender().to_hex().to_string();
         let name = format!("Tester{}", &hex[hex.len() - 4..]);
         let (x, y) = START_POSITION;
@@ -556,6 +565,7 @@ pub fn client_connected(ctx: &ReducerContext) {
         spawn_player_entity(ctx, &game, &mut player);
     }
     ctx.db.player().identity().update(player);
+    Ok(())
 }
 
 #[spacetimedb::reducer(client_disconnected)]
@@ -586,11 +596,17 @@ pub fn client_disconnected(ctx: &ReducerContext) {
 
 #[spacetimedb::reducer]
 pub fn set_name(ctx: &ReducerContext, name: String) -> Result<(), String> {
-    let name = name.trim().to_string();
-    if name.is_empty() || name.len() > 20 {
-        return Err("name must be 1-20 characters".into());
+    if account::accounts_required(ctx) {
+        return Err("names are chosen when the character is made".into());
     }
+    let name = name.trim().to_string();
     let (mut player, id) = my_player(ctx)?;
+    if player.name == name {
+        return Ok(());
+    }
+    if let Some(problem) = account::name_problem(ctx, &name, Some(player.identity)) {
+        return Err(problem);
+    }
     player.name = name.clone();
     ctx.db.player().identity().update(player);
     if let Some(mut e) = ctx.db.entity().entity_id().find(id) {

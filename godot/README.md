@@ -15,9 +15,16 @@ What works now:
   during a swing ends it at once. Hit times come from the ZMO frame events and match the
   server's `attack_hit_ms` (566 / 533 / 600 ms for the sword swings).
 
-- Online play on the SpacetimeDB server (`../module`): a start screen asks for the server,
-  a name. The client signs in with an identity token
-  kept in Godot's user folder, so the same PC gets the same character back. Every player in
+- Online play on the SpacetimeDB server (`../module`). The start screen asks for the email
+  and password of an account made on the website (`../web`), plus the server and website
+  addresses; its links open the website's sign-up and forgotten-password pages. The client
+  sends the password to the website only and connects with the 15-minute token it gets
+  back; the password is never saved. An account without a character gets the character
+  creation screen first (name, male or female, one of seven faces and five hair styles,
+  with a turning preview in the starting clothes). A loading screen with the zone's name
+  (`LOADING.DDS`) covers signing in and every zone change. On a server without accounts the
+  client signs in with an identity token kept in Godot's user folder, so the same PC gets
+  the same character back. Every player in
   the zone shows up with a name tag and runs along the server's motion paths. Your own
   character starts running the moment you click and hands over to the server's path when
   it arrives.
@@ -140,7 +147,7 @@ godot --path godot -- --data-idx=/path/to/iRose_129_129/data.idx
 ```
 
 Godot 4.6 or newer. `ROSE_DATA_IDX` works instead of `--data-idx`. The start screen offers
-Connect (online) or Play offline. In game: left-click to move, S to stop, right-drag to
+Sign in (online) or Play offline. In game: left-click to move, S to stop, right-drag to
 orbit the camera, mouse wheel to zoom. Online, left-click a monster to attack it and Space
 attacks the nearest one, C opens the character window, I the inventory, K the skills, Q the quests, 1-8 use the hotbar, Z picks up the nearest item, X sits or stands, Enter chats; offline, Space swings the sword.
 
@@ -162,7 +169,10 @@ run on a real Windows PC yet.
 
 Other options (after `--`):
 
-- `--server=ws://HOST:3000` connects straight away, with `--name=NAME`. `--weapon=bow`
+- `--server=ws://HOST:3000` connects straight away, with `--name=NAME` on a server without
+  accounts. With accounts add `--email=EMAIL --website=http://HOST:3001` and the password in
+  `ROSE_PASSWORD` (or `--password=`); `--create=NAME,female,FACE,HAIR` fills in the
+  character creation screen and `--create-after=SECONDS` presses Create. `--weapon=bow`
   equips the bow and arrows from the bag once the character meets the bow's requirements.
 - `--open=inventory,character,skills,quests` opens those windows at the start (for screenshots).
 - `--profile=NAME` picks the identity file (`user://identity-NAME.token`), so two clients on
@@ -200,7 +210,8 @@ Other options (after `--`):
   time. The server's clock is estimated from the fastest motion update seen, so a PC whose
   clock is off still shows the right positions.
 - `scripts/` holds the GDScript scene setup, the offline player (`player.gd`), the online
-  world (`online.gd`, `net_entity.gd`), the start screen and the camera.
+  world (`online.gd`, `net_entity.gd`), the start screen (`connect_panel.gd`, `account_login.gd`), character creation
+  (`character_create.gd`), the loading screen (`loading_screen.gd`) and the camera.
 
 Coordinates follow the Bevy client: ROSE (x, y, z) in centimetres becomes Godot
 (x, z, -y) in metres. Godot treats clockwise triangles as front faces, so every index
