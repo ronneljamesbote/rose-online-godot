@@ -16,8 +16,10 @@ pub struct Stats {
     pub critical: i32,
     pub attack_speed: i32,
     pub attack_motion_ms: i32,
+    pub attack_hit_ms: i32,
     pub attack_range: f32,
     pub move_speed: f32,
+    pub run_speed: f32,
     pub is_player: bool,
 }
 
@@ -38,8 +40,10 @@ pub struct StatsCols {
     pub critical: __sdk::__query_builder::Col<Stats, i32>,
     pub attack_speed: __sdk::__query_builder::Col<Stats, i32>,
     pub attack_motion_ms: __sdk::__query_builder::Col<Stats, i32>,
+    pub attack_hit_ms: __sdk::__query_builder::Col<Stats, i32>,
     pub attack_range: __sdk::__query_builder::Col<Stats, f32>,
     pub move_speed: __sdk::__query_builder::Col<Stats, f32>,
+    pub run_speed: __sdk::__query_builder::Col<Stats, f32>,
     pub is_player: __sdk::__query_builder::Col<Stats, bool>,
 }
 
@@ -56,8 +60,10 @@ impl __sdk::__query_builder::HasCols for Stats {
             critical: __sdk::__query_builder::Col::new(table_name, "critical"),
             attack_speed: __sdk::__query_builder::Col::new(table_name, "attack_speed"),
             attack_motion_ms: __sdk::__query_builder::Col::new(table_name, "attack_motion_ms"),
+            attack_hit_ms: __sdk::__query_builder::Col::new(table_name, "attack_hit_ms"),
             attack_range: __sdk::__query_builder::Col::new(table_name, "attack_range"),
             move_speed: __sdk::__query_builder::Col::new(table_name, "move_speed"),
+            run_speed: __sdk::__query_builder::Col::new(table_name, "run_speed"),
             is_player: __sdk::__query_builder::Col::new(table_name, "is_player"),
         }
     }

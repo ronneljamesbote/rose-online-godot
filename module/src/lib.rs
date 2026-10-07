@@ -84,7 +84,11 @@ pub struct Combat {
     pub hp: i32,
     pub max_hp: i32,
     pub attack_target: Option<u64>,
+    /// Earliest start of the next swing (attack speed cooldown).
     pub next_attack_at_us: i64,
+    /// Set while a swing is winding up: when its hit frame lands. Moving or stopping before
+    /// then cancels the swing and refunds the cooldown (animation cancelling).
+    pub swing_hit_at_us: Option<i64>,
     pub dead_until_us: Option<i64>,
 }
 
@@ -102,6 +106,8 @@ pub struct Stats {
     pub attack_speed: i32,
     /// Attack animation length at attack speed 100.
     pub attack_motion_ms: i32,
+    /// Time from the start of the attack animation to its hit frame, at attack speed 100.
+    pub attack_hit_ms: i32,
     pub attack_range: f32,
     pub move_speed: f32,
     /// Chase speed for monsters (their run speed); same as move_speed for players.
@@ -167,6 +173,7 @@ pub struct NpcData {
     pub avoid: i32,
     pub attack_speed: i32,
     pub attack_motion_ms: i32,
+    pub attack_hit_ms: i32,
     pub attack_range: f32,
     pub walk_speed: f32,
     pub run_speed: f32,
@@ -181,8 +188,6 @@ pub struct DamageEvent {
     pub amount: i32,
     pub is_critical: bool,
     pub killed: bool,
-    /// True when the attacker was walking at the moment of the swing (attack while moving).
-    pub attacker_moving: bool,
     pub at_us: i64,
 }
 
@@ -291,22 +296,49 @@ fn attack_interval_us(stats: &Stats) -> i64 {
     stats.attack_motion_ms as i64 * 1000 * 100 / speed
 }
 
-/// Fixed test character until character creation exists: roughly a level 10 soldier.
+/// Wind-up of a swing: start of the attack animation to its hit frame, scaled like the motion.
+fn attack_windup_us(stats: &Stats) -> i64 {
+    let speed = stats.attack_speed.max(30) as i64;
+    stats.attack_hit_ms as i64 * 1000 * 100 / speed
+}
+
+/// Drop the attack target. A swing that has not reached its hit frame yet is cancelled and its
+/// cooldown refunded; after the hit, the rest of the animation is simply skipped.
+fn cancel_attack(ctx: &ReducerContext, id: u64, t: i64) {
+    let Some(mut c) = ctx.db.combat().entity_id().find(id) else { return };
+    if c.attack_target.is_none() && c.swing_hit_at_us.is_none() {
+        return;
+    }
+    if c.swing_hit_at_us.take().is_some() {
+        c.next_attack_at_us = t;
+    }
+    c.attack_target = None;
+    ctx.db.combat().entity_id().update(c);
+}
+
+/// Fixed test character until character creation exists: the level 10 "Tester" the client
+/// patch logs in with. Values are what the client itself calculates for that character
+/// (logged by its ability_values_system), so both sides agree on reach, speed and swing timing.
+const PLAYER_MAX_HP: i32 = 236;
+
 fn player_stats(entity_id: u64, ranged: bool) -> Stats {
     Stats {
         entity_id,
         level: 10,
-        attack_power: if ranged { 52 } else { 60 },
-        hit: 70,
-        defence: 35,
-        avoid: 30,
-        critical: 40,
-        attack_speed: if ranged { 115 } else { 100 },
-        attack_motion_ms: 1000,
-        // Short Bow (item 202) and Short Sword (item 2) ranges, so the client agrees on reach.
-        attack_range: if ranged { 2100.0 } else { 150.0 },
-        move_speed: 425.0,
-        run_speed: 425.0,
+        attack_power: if ranged { 58 } else { 34 },
+        hit: if ranged { 119 } else { 115 },
+        defence: 29,
+        avoid: 118,
+        critical: 17,
+        attack_speed: if ranged { 100 } else { 107 },
+        // Attack animation length and hit frame from the client's own ZMO files
+        // (import's attack_timing: ONEHAND_ATTACK0x_M1 and BOW_ATTACK_M1).
+        attack_motion_ms: if ranged { 1566 } else { 1233 },
+        attack_hit_ms: if ranged { 900 } else { 566 },
+        // Short Bow (item 202) and Short Sword (item 2) reach as the client computes it.
+        attack_range: if ranged { 2220.0 } else { 270.0 },
+        move_speed: 450.5,
+        run_speed: 450.5,
         is_player: true,
     }
 }
@@ -337,7 +369,7 @@ fn spawn_player_entity(ctx: &ReducerContext, player: &mut Player) {
     });
     let id = entity.entity_id;
     let stats = ctx.db.stats().insert(player_stats(id, player.ranged));
-    let max_hp = 300;
+    let max_hp = PLAYER_MAX_HP;
     let hp = if player.last_hp > 0 { player.last_hp.min(max_hp) } else { max_hp };
     let t = now_us(ctx);
     ctx.db.motion().insert(Motion {
@@ -356,6 +388,7 @@ fn spawn_player_entity(ctx: &ReducerContext, player: &mut Player) {
         max_hp,
         attack_target: None,
         next_attack_at_us: t,
+        swing_hit_at_us: None,
         dead_until_us: None,
     });
     player.entity_id = Some(id);
@@ -385,6 +418,7 @@ fn spawn_monster(ctx: &ReducerContext, spawn: &MonsterSpawn, npc: &NpcData) {
         critical: (npc.level as f32 * 2.5) as i32,
         attack_speed: npc.attack_speed,
         attack_motion_ms: npc.attack_motion_ms,
+        attack_hit_ms: npc.attack_hit_ms,
         attack_range: npc.attack_range,
         move_speed: npc.walk_speed,
         run_speed: npc.run_speed,
@@ -406,6 +440,7 @@ fn spawn_monster(ctx: &ReducerContext, spawn: &MonsterSpawn, npc: &NpcData) {
         max_hp: npc.max_hp,
         attack_target: None,
         next_attack_at_us: t,
+        swing_hit_at_us: None,
         dead_until_us: None,
     });
     ctx.db.monster_ai().insert(MonsterAi {
@@ -534,6 +569,8 @@ pub fn move_to(ctx: &ReducerContext, x: f32, y: f32) -> Result<(), String> {
             return Err("outside the zone".into());
         }
     }
+    // Moving ends the attack (no attacking while moving); it also cancels a swing in progress.
+    cancel_attack(ctx, id, now_us(ctx));
     let speed = ctx.db.stats().entity_id().find(id).map_or(425.0, |s| s.move_speed);
     set_motion(ctx, id, (x, y), speed, None);
     Ok(())
@@ -556,16 +593,25 @@ pub fn attack(ctx: &ReducerContext, target: u64) -> Result<(), String> {
     if !is_alive(ctx, target) {
         return Err("target is dead".into());
     }
+    let t = now_us(ctx);
     let mut c = ctx.db.combat().entity_id().find(id).ok_or("no combat row")?;
+    if c.attack_target == Some(target) {
+        return Ok(());
+    }
+    // Switching targets cancels a swing that hasn't landed yet.
+    if c.swing_hit_at_us.take().is_some() {
+        c.next_attack_at_us = t;
+    }
     c.attack_target = Some(target);
     ctx.db.combat().entity_id().update(c);
 
-    let t = now_us(ctx);
+    // Stand still to attack; out of range, run to the target first like ROSE does.
     let stats = ctx.db.stats().entity_id().find(id).ok_or("no stats")?;
     let (me, them) = (position(ctx, id, t).unwrap(), position(ctx, target, t).unwrap());
-    let moving = ctx.db.motion().entity_id().find(id).map_or(false, |m| m.is_moving(t));
-    if distance(me, them) > stats.attack_range + RANGE_SLACK_CM && !moving {
+    if distance(me, them) > stats.attack_range + RANGE_SLACK_CM {
         set_motion(ctx, id, them, stats.move_speed, Some(target));
+    } else {
+        stop_motion(ctx, id);
     }
     Ok(())
 }
@@ -574,12 +620,7 @@ pub fn attack(ctx: &ReducerContext, target: u64) -> Result<(), String> {
 pub fn stop(ctx: &ReducerContext) -> Result<(), String> {
     let (_, id) = my_player(ctx)?;
     stop_motion(ctx, id);
-    if let Some(mut c) = ctx.db.combat().entity_id().find(id) {
-        if c.attack_target.is_some() {
-            c.attack_target = None;
-            ctx.db.combat().entity_id().update(c);
-        }
-    }
+    cancel_attack(ctx, id, now_us(ctx));
     Ok(())
 }
 
@@ -775,50 +816,59 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
 
         if dist <= stats.attack_range + RANGE_SLACK_CM {
             stop_chase(ctx, id, target);
-            if t >= c.next_attack_at_us {
-                let defender_stats = ctx.db.stats().entity_id().find(target).unwrap();
-                let dmg = damage::roll(&mut rng, &stats, &defender_stats);
-                let mut dc = ctx.db.combat().entity_id().find(target).unwrap();
-                dc.hp = (dc.hp - dmg.amount).max(0);
-                let killed = dc.hp == 0;
-                // Monsters fight back when hit.
-                if !defender_stats.is_player && dc.attack_target.is_none() && !killed {
-                    dc.attack_target = Some(id);
+            match c.swing_hit_at_us {
+                // Hit frame reached: resolve the swing.
+                Some(hit_at) if t >= hit_at => {
+                    let defender_stats = ctx.db.stats().entity_id().find(target).unwrap();
+                    let dmg = damage::roll(&mut rng, &stats, &defender_stats);
+                    let mut dc = ctx.db.combat().entity_id().find(target).unwrap();
+                    dc.hp = (dc.hp - dmg.amount).max(0);
+                    let killed = dc.hp == 0;
+                    // Monsters fight back when hit.
+                    if !defender_stats.is_player && dc.attack_target.is_none() && !killed {
+                        dc.attack_target = Some(id);
+                    }
+                    ctx.db.combat().entity_id().update(dc);
+                    ctx.db.damage_event().insert(DamageEvent {
+                        attacker: id,
+                        defender: target,
+                        amount: dmg.amount,
+                        is_critical: dmg.is_critical,
+                        killed,
+                        at_us: t,
+                    });
+                    c.swing_hit_at_us = None;
+                    if killed {
+                        c.attack_target = None;
+                        kill(ctx, target, t);
+                    }
+                    ctx.db.combat().entity_id().update(c);
                 }
-                ctx.db.combat().entity_id().update(dc);
-                ctx.db.damage_event().insert(DamageEvent {
-                    attacker: id,
-                    defender: target,
-                    amount: dmg.amount,
-                    is_critical: dmg.is_critical,
-                    killed,
-                    attacker_moving: ctx.db.motion().entity_id().find(id).map_or(false, |m| m.is_moving(t)),
-                    at_us: t,
-                });
-                // Schedule from the previous swing so ticks don't add drift.
-                let interval = attack_interval_us(&stats);
-                c.next_attack_at_us = (c.next_attack_at_us + interval).max(t + interval - COMBAT_TICK_MS as i64 * 1000);
-                if killed {
-                    c.attack_target = None;
-                    kill(ctx, target, t);
+                Some(_) => {}
+                // Ready: start a swing. Schedule from the previous one so ticks don't add drift.
+                None if t >= c.next_attack_at_us => {
+                    let interval = attack_interval_us(&stats);
+                    let late = t - c.next_attack_at_us;
+                    let start = if late < COMBAT_TICK_MS as i64 * 1000 { c.next_attack_at_us } else { t };
+                    c.next_attack_at_us = start + interval;
+                    c.swing_hit_at_us = Some(start + attack_windup_us(&stats));
+                    ctx.db.combat().entity_id().update(c);
                 }
-                ctx.db.combat().entity_id().update(c);
+                None => {}
             }
         } else {
+            // Target left range mid-swing: the swing misses its moment, no cooldown spent.
+            if c.swing_hit_at_us.take().is_some() {
+                c.next_attack_at_us = t;
+                ctx.db.combat().entity_id().update(c);
+            }
             let motion = ctx.db.motion().entity_id().find(id);
-            let chasing = motion.as_ref().map_or(false, |m| m.chase_target == Some(target));
-            let moving = motion.as_ref().map_or(false, |m| m.is_moving(t));
-            // Monsters always chase. Players chase only if they asked to (attack out of range);
-            // a player who clicked to move keeps walking and keeps the target (attack while moving).
-            if !stats.is_player || chasing || !moving {
-                let needs_repath = match &motion {
-                    Some(m) if m.chase_target == Some(target) => distance((m.to_x, m.to_y), them) > CHASE_REPATH_CM,
-                    _ => true,
-                };
-                if needs_repath {
-                    let speed = stats.run_speed;
-                    set_motion(ctx, id, them, speed, Some(target));
-                }
+            let needs_repath = match &motion {
+                Some(m) if m.chase_target == Some(target) => distance((m.to_x, m.to_y), them) > CHASE_REPATH_CM,
+                _ => true,
+            };
+            if needs_repath {
+                set_motion(ctx, id, them, stats.run_speed, Some(target));
             }
         }
     }

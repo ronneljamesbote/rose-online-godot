@@ -7,7 +7,7 @@ use std::{collections::BTreeSet, path::Path, sync::Arc};
 
 use rose_data::{NpcDatabaseOptions, NpcMotionAction, ZoneId};
 use rose_data_irose::{get_npc_database, get_string_database, get_zone_database};
-use rose_file_readers::{HostFilesystemDevice, VfsIndex, VirtualFilesystem};
+use rose_file_readers::{HostFilesystemDevice, VfsIndex, VirtualFilesystem, ZmoFile};
 use serde_json::json;
 
 fn main() {
@@ -70,10 +70,14 @@ fn main() {
     let mut npc_rows = Vec::new();
     for npc_id in &used_npcs {
         let npc = npcs.get_npc(rose_data::NpcId::new(*npc_id).unwrap()).unwrap();
-        let attack_ms = npcs
-            .get_npc_action_motion(npc.id, NpcMotionAction::Attack)
-            .map_or(1000, |m| m.duration.as_millis() as i32)
-            .max(300);
+        let attack_motion = npcs.get_npc_action_motion(npc.id, NpcMotionAction::Attack);
+        let attack_ms = attack_motion.map_or(1000, |m| m.duration.as_millis() as i32).max(300);
+        // First hit frame of the attack animation; half way through when the file has none.
+        let attack_hit_ms = attack_motion
+            .and_then(|m| vfs.read_file::<ZmoFile, _>(&m.path).ok())
+            .and_then(|zmo| first_hit_ms(&zmo))
+            .unwrap_or(attack_ms / 2)
+            .min(attack_ms);
         npc_rows.push(json!({
             "npc_id": npc_id,
             "name": npc.name,
@@ -85,6 +89,7 @@ fn main() {
             "avoid": npc.avoid,
             "attack_speed": npc.attack_speed,
             "attack_motion_ms": attack_ms,
+            "attack_hit_ms": attack_hit_ms,
             "attack_range": npc.attack_range as f32,
             "walk_speed": npc.walk_speed as f32,
             "run_speed": npc.run_speed as f32,
@@ -103,4 +108,14 @@ fn main() {
             row["npc_id"], row["name"], row["level"], row["max_hp"], row["attack_power"],
             row["defence"], row["attack_speed"], row["attack_motion_ms"], row["attack_range"]);
     }
+}
+
+/// Time of the first hit frame event in a ZMO attack animation (the same events rose-file-readers
+/// counts as attack frames).
+fn first_hit_ms(zmo: &ZmoFile) -> Option<i32> {
+    let frame = zmo
+        .frame_events
+        .iter()
+        .position(|e| matches!(e, 10 | 20..=28 | 56..=57 | 66..=67))?;
+    Some((frame * 1000 / zmo.fps.max(1)) as i32)
 }
