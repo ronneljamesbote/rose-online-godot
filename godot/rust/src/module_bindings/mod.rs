@@ -54,6 +54,19 @@ pub mod notice_type;
 pub mod npc_store_transaction_reducer;
 pub mod npc_table;
 pub mod npc_type;
+pub mod party_accept_reducer;
+pub mod party_decline_reducer;
+pub mod party_invitation_table;
+pub mod party_invite_reducer;
+pub mod party_invite_type;
+pub mod party_kick_reducer;
+pub mod party_leave_reducer;
+pub mod party_member_table;
+pub mod party_member_type;
+pub mod party_set_leader_reducer;
+pub mod party_set_rules_reducer;
+pub mod party_table;
+pub mod party_type;
 pub mod pickup_item_reducer;
 pub mod place_player_reducer;
 pub mod player_table;
@@ -145,6 +158,19 @@ pub use notice_type::Notice;
 pub use npc_store_transaction_reducer::npc_store_transaction;
 pub use npc_table::*;
 pub use npc_type::Npc;
+pub use party_accept_reducer::party_accept;
+pub use party_decline_reducer::party_decline;
+pub use party_invitation_table::*;
+pub use party_invite_reducer::party_invite;
+pub use party_invite_type::PartyInvite;
+pub use party_kick_reducer::party_kick;
+pub use party_leave_reducer::party_leave;
+pub use party_member_table::*;
+pub use party_member_type::PartyMember;
+pub use party_set_leader_reducer::party_set_leader;
+pub use party_set_rules_reducer::party_set_rules;
+pub use party_table::*;
+pub use party_type::Party;
 pub use pickup_item_reducer::pickup_item;
 pub use place_player_reducer::place_player;
 pub use player_table::*;
@@ -286,6 +312,26 @@ pub enum Reducer {
         buy: Vec<StoreBuy>,
         sell: Vec<StoreSell>,
     },
+    PartyAccept {
+        invite_id: u64,
+    },
+    PartyDecline {
+        invite_id: u64,
+    },
+    PartyInvite {
+        target_entity_id: u64,
+    },
+    PartyKick {
+        member: __sdk::Identity,
+    },
+    PartyLeave,
+    PartySetLeader {
+        member: __sdk::Identity,
+    },
+    PartySetRules {
+        xp_sharing: u8,
+        item_sharing: u8,
+    },
     PickupItem {
         drop_id: u64,
     },
@@ -388,6 +434,13 @@ impl __sdk::Reducer for Reducer {
             Reducer::MoveItem { .. } => "move_item",
             Reducer::MoveTo { .. } => "move_to",
             Reducer::NpcStoreTransaction { .. } => "npc_store_transaction",
+            Reducer::PartyAccept { .. } => "party_accept",
+            Reducer::PartyDecline { .. } => "party_decline",
+            Reducer::PartyInvite { .. } => "party_invite",
+            Reducer::PartyKick { .. } => "party_kick",
+            Reducer::PartyLeave => "party_leave",
+            Reducer::PartySetLeader { .. } => "party_set_leader",
+            Reducer::PartySetRules { .. } => "party_set_rules",
             Reducer::PickupItem { .. } => "pickup_item",
             Reducer::PlacePlayer { .. } => "place_player",
             Reducer::QuestTrigger { .. } => "quest_trigger",
@@ -558,6 +611,39 @@ impl __sdk::Reducer for Reducer {
                 buy: buy.clone(),
                 sell: sell.clone(),
             }),
+            Reducer::PartyAccept { invite_id } => {
+                __sats::bsatn::to_vec(&party_accept_reducer::PartyAcceptArgs {
+                    invite_id: invite_id.clone(),
+                })
+            }
+            Reducer::PartyDecline { invite_id } => {
+                __sats::bsatn::to_vec(&party_decline_reducer::PartyDeclineArgs {
+                    invite_id: invite_id.clone(),
+                })
+            }
+            Reducer::PartyInvite { target_entity_id } => {
+                __sats::bsatn::to_vec(&party_invite_reducer::PartyInviteArgs {
+                    target_entity_id: target_entity_id.clone(),
+                })
+            }
+            Reducer::PartyKick { member } => {
+                __sats::bsatn::to_vec(&party_kick_reducer::PartyKickArgs {
+                    member: member.clone(),
+                })
+            }
+            Reducer::PartyLeave => __sats::bsatn::to_vec(&party_leave_reducer::PartyLeaveArgs {}),
+            Reducer::PartySetLeader { member } => {
+                __sats::bsatn::to_vec(&party_set_leader_reducer::PartySetLeaderArgs {
+                    member: member.clone(),
+                })
+            }
+            Reducer::PartySetRules {
+                xp_sharing,
+                item_sharing,
+            } => __sats::bsatn::to_vec(&party_set_rules_reducer::PartySetRulesArgs {
+                xp_sharing: xp_sharing.clone(),
+                item_sharing: item_sharing.clone(),
+            }),
             Reducer::PickupItem { drop_id } => {
                 __sats::bsatn::to_vec(&pickup_item_reducer::PickupItemArgs {
                     drop_id: drop_id.clone(),
@@ -689,6 +775,9 @@ pub struct DbUpdate {
     motion: __sdk::TableUpdate<Motion>,
     notice: __sdk::TableUpdate<Notice>,
     npc: __sdk::TableUpdate<Npc>,
+    party: __sdk::TableUpdate<Party>,
+    party_invitation: __sdk::TableUpdate<PartyInvite>,
+    party_member: __sdk::TableUpdate<PartyMember>,
     player: __sdk::TableUpdate<Player>,
     skill_cast: __sdk::TableUpdate<SkillCast>,
     skill_cooldown: __sdk::TableUpdate<SkillCooldownRow>,
@@ -733,6 +822,15 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "npc" => db_update
                     .npc
                     .append(npc_table::parse_table_update(table_update)?),
+                "party" => db_update
+                    .party
+                    .append(party_table::parse_table_update(table_update)?),
+                "party_invitation" => db_update
+                    .party_invitation
+                    .append(party_invitation_table::parse_table_update(table_update)?),
+                "party_member" => db_update
+                    .party_member
+                    .append(party_member_table::parse_table_update(table_update)?),
                 "player" => db_update
                     .player
                     .append(player_table::parse_table_update(table_update)?),
@@ -809,6 +907,15 @@ impl __sdk::DbUpdate for DbUpdate {
         diff.npc = cache
             .apply_diff_to_table::<Npc>("npc", &self.npc)
             .with_updates_by_pk(|row| &row.entity_id);
+        diff.party = cache
+            .apply_diff_to_table::<Party>("party", &self.party)
+            .with_updates_by_pk(|row| &row.party_id);
+        diff.party_invitation = cache
+            .apply_diff_to_table::<PartyInvite>("party_invitation", &self.party_invitation)
+            .with_updates_by_pk(|row| &row.invite_id);
+        diff.party_member = cache
+            .apply_diff_to_table::<PartyMember>("party_member", &self.party_member)
+            .with_updates_by_pk(|row| &row.identity);
         diff.player = cache
             .apply_diff_to_table::<Player>("player", &self.player)
             .with_updates_by_pk(|row| &row.identity);
@@ -867,6 +974,15 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "npc" => db_update
                     .npc
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "party" => db_update
+                    .party
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "party_invitation" => db_update
+                    .party_invitation
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "party_member" => db_update
+                    .party_member
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "player" => db_update
                     .player
@@ -935,6 +1051,15 @@ impl __sdk::DbUpdate for DbUpdate {
                 "npc" => db_update
                     .npc
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "party" => db_update
+                    .party
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "party_invitation" => db_update
+                    .party_invitation
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "party_member" => db_update
+                    .party_member
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "player" => db_update
                     .player
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
@@ -986,6 +1111,9 @@ pub struct AppliedDiff<'r> {
     motion: __sdk::TableAppliedDiff<'r, Motion>,
     notice: __sdk::TableAppliedDiff<'r, Notice>,
     npc: __sdk::TableAppliedDiff<'r, Npc>,
+    party: __sdk::TableAppliedDiff<'r, Party>,
+    party_invitation: __sdk::TableAppliedDiff<'r, PartyInvite>,
+    party_member: __sdk::TableAppliedDiff<'r, PartyMember>,
     player: __sdk::TableAppliedDiff<'r, Player>,
     skill_cast: __sdk::TableAppliedDiff<'r, SkillCast>,
     skill_cooldown: __sdk::TableAppliedDiff<'r, SkillCooldownRow>,
@@ -1025,6 +1153,17 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
         callbacks.invoke_table_row_callbacks::<Motion>("motion", &self.motion, event);
         callbacks.invoke_table_row_callbacks::<Notice>("notice", &self.notice, event);
         callbacks.invoke_table_row_callbacks::<Npc>("npc", &self.npc, event);
+        callbacks.invoke_table_row_callbacks::<Party>("party", &self.party, event);
+        callbacks.invoke_table_row_callbacks::<PartyInvite>(
+            "party_invitation",
+            &self.party_invitation,
+            event,
+        );
+        callbacks.invoke_table_row_callbacks::<PartyMember>(
+            "party_member",
+            &self.party_member,
+            event,
+        );
         callbacks.invoke_table_row_callbacks::<Player>("player", &self.player, event);
         callbacks.invoke_table_row_callbacks::<SkillCast>("skill_cast", &self.skill_cast, event);
         callbacks.invoke_table_row_callbacks::<SkillCooldownRow>(
@@ -1711,6 +1850,9 @@ impl __sdk::SpacetimeModule for RemoteModule {
         motion_table::register_table(client_cache);
         notice_table::register_table(client_cache);
         npc_table::register_table(client_cache);
+        party_table::register_table(client_cache);
+        party_invitation_table::register_table(client_cache);
+        party_member_table::register_table(client_cache);
         player_table::register_table(client_cache);
         skill_cast_table::register_table(client_cache);
         skill_cooldown_table::register_table(client_cache);
@@ -1731,6 +1873,9 @@ impl __sdk::SpacetimeModule for RemoteModule {
         "motion",
         "notice",
         "npc",
+        "party",
+        "party_invitation",
+        "party_member",
         "player",
         "skill_cast",
         "skill_cooldown",

@@ -10,7 +10,7 @@ use std::sync::{Arc, Mutex};
 use godot::{classes::INode, prelude::*};
 use spacetimedb_sdk::{
     __codegen::{WithInsert, WithUpdate},
-    DbContext, Table,
+    DbContext, Identity, Table,
 };
 
 use rose_data::{AmmoIndex, EquipmentIndex};
@@ -175,7 +175,13 @@ impl RoseNet {
                 });
             }
         }
-        ClientWorld { t, zone_id, npcs, party: None }
+        let party = self.conn.as_ref().and_then(|c| {
+            let me = c.try_identity()?;
+            let party = c.db.party().party_id().find(&c.db.party_member().identity().find(&me)?.party_id)?;
+            let member_count = c.db.party_member().iter().filter(|m| m.party_id == party.party_id).count();
+            Some(rose_quest::QuestParty { is_leader: party.owner == me, level: 1, member_count })
+        });
+        ClientWorld { t, zone_id, npcs, party }
     }
 
     /// Run `f` on the open conversation with a fresh script context, then carry out what
@@ -424,6 +430,7 @@ impl RoseNet {
         d.set("name", p.name.as_str());
         d.set("zone", p.zone_id as i64);
         d.set("level", p.level as i64);
+        d.set("job", p.job as i64);
         d.set("xp", p.xp as i64);
         d.set("xp_needed", rose_game_irose::data::levelup_require_xp(p.level) as i64);
         d.set("stat_points", p.stat_points as i64);
@@ -1016,6 +1023,106 @@ impl RoseNet {
         let s = self.shared.clone();
         if let Some(c) = self.conn.as_ref() {
             c.reducers.drop_item_then(page as u8, index as u16, quantity.max(1) as u32, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    /// Our party: leader (are we), xp_sharing (0 equal, 1 by level), item_sharing (0 equal,
+    /// 1 in turn) and members in joining order (identity, name, level, online, leader,
+    /// entity or -1, hp, max_hp). Empty when we aren't in one.
+    #[func]
+    fn get_party(&self) -> VarDictionary {
+        let mut d = VarDictionary::new();
+        let Some(c) = self.conn.as_ref() else { return d };
+        let Some(me) = c.try_identity() else { return d };
+        let Some(party) = c.db.party_member().identity().find(&me).and_then(|m| c.db.party().party_id().find(&m.party_id)) else {
+            return d;
+        };
+        let mut members: Vec<_> = c.db.party_member().iter().filter(|m| m.party_id == party.party_id).collect();
+        members.sort_by_key(|m| m.joined_us);
+        let mut list = VarArray::new();
+        for m in members {
+            let Some(p) = c.db.player().identity().find(&m.identity) else { continue };
+            let mut e = VarDictionary::new();
+            e.set("identity", m.identity.to_hex().to_string());
+            e.set("name", p.name.clone());
+            e.set("level", p.level as i64);
+            e.set("online", p.online);
+            e.set("leader", m.identity == party.owner);
+            e.set("me", m.identity == me);
+            let combat = p.entity_id.and_then(|id| c.db.combat().entity_id().find(&id));
+            e.set("entity", p.entity_id.map_or(-1, |id| id as i64));
+            e.set("hp", combat.as_ref().map_or(0, |c| c.hp as i64));
+            e.set("max_hp", combat.as_ref().map_or(1, |c| c.max_hp.max(1) as i64));
+            list.push(&e.to_variant());
+        }
+        d.set("leader", party.owner == me);
+        d.set("xp_sharing", party.xp_sharing as i64);
+        d.set("item_sharing", party.item_sharing as i64);
+        d.set("members", &list);
+        d
+    }
+
+    /// Party invitations to us: [invite_id, from name].
+    #[func]
+    fn get_party_invites(&self) -> VarArray {
+        let mut out = VarArray::new();
+        let Some(c) = self.conn.as_ref() else { return out };
+        let Some(me) = c.try_identity() else { return out };
+        for i in c.db.party_invitation().iter().filter(|i| i.to == me) {
+            let name = c.db.player().identity().find(&i.from).map_or_else(String::new, |p| p.name);
+            let mut a = VarArray::new();
+            a.push(&(i.invite_id as i64).to_variant());
+            a.push(&name.to_variant());
+            out.push(&a.to_variant());
+        }
+        out
+    }
+
+    #[func]
+    fn party_invite(&self, entity_id: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.party_invite_then(entity_id as u64, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    #[func]
+    fn party_answer(&self, invite_id: i64, accept: bool) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            if accept {
+                c.reducers.party_accept_then(invite_id as u64, move |_, r| report(&s, r)).ok();
+            } else {
+                c.reducers.party_decline_then(invite_id as u64, move |_, r| report(&s, r)).ok();
+            }
+        }
+    }
+
+    #[func]
+    fn party_leave(&self) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.party_leave_then(move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    /// The leader removes a member, or hands them the lead.
+    #[func]
+    fn party_member_action(&self, identity: GString, action: GString) {
+        let s = self.shared.clone();
+        let (Some(c), Ok(member)) = (self.conn.as_ref(), Identity::from_hex(identity.to_string())) else { return };
+        match action.to_string().as_str() {
+            "kick" => c.reducers.party_kick_then(member, move |_, r| report(&s, r)).ok(),
+            "lead" => c.reducers.party_set_leader_then(member, move |_, r| report(&s, r)).ok(),
+            _ => None,
+        };
+    }
+
+    #[func]
+    fn party_set_rules(&self, xp_sharing: i64, item_sharing: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.party_set_rules_then(xp_sharing as u8, item_sharing as u8, move |_, r| report(&s, r)).ok();
         }
     }
 

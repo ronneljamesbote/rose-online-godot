@@ -80,6 +80,11 @@ What works now:
   items and an Abandon button. Clans and event objects are not in yet.
 - Bank: the storage keeper's "[My Storage]" answer opens the storage window next to the
   inventory (four pages of 30). Right-click or drag to move items between bag and storage.
+- Parties: right-click another player and pick "Invite to party"; they get an Accept or
+  Decline box. The party frame (bottom right) shows each member's level and HP; the leader
+  (star) right-clicks a member to hand over the lead or remove them, and picks how
+  experience (equally or by level) and drops (picker with Zuly split, or in turn) are
+  shared among members within 50 m. The character window now shows the job.
 
 Not yet: monsters walking around objects (the server has no zone geometry), effects and
 particles, animated zone objects, sound, most UI.
@@ -138,7 +143,7 @@ Other options (after `--`):
 - `--offline` skips the start screen.
 - `--net-demo[=square|line|fight|warp|shop|skills|talk|walls]` walks a scripted route, fights the nearest
   monsters, walks through warp gates, buys and sells at the nearest store (`--buy=TEXT` picks
-  what to buy), uses the first two active skills, talks to the nearest NPC matching `--npc=NAME` and picks `--answers=1,2,...` (`q` prints the quest log, `talk` opens the conversation again, `deposit` and `withdraw` move the first item in or out of the bank), or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
+  what to buy), uses the first two active skills, talks to the nearest NPC matching `--npc=NAME` and picks `--answers=1,2,...` (`q` prints the quest log, `talk` opens the conversation again, `deposit` and `withdraw` move the first item in or out of the bank), forms a party (`party`: with `--invite=NAME` it invites that player, without it accepts the first invitation; `--rules=XP,DROPS` sets the rules) and then fights, or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
   player's position once a second, `--quit-after=SECONDS` quits. The two-client test:
   `--headless ... --name=Alice --profile=alice --net-demo` in one process and
   `... --name=Bob --profile=bob --weapon=bow --net-demo=line --net-log` in another.

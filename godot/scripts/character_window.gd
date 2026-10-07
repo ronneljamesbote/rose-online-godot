@@ -7,6 +7,10 @@ const STATS := [["str", "Strength"], ["dex", "Dexterity"], ["int", "Intelligence
 const VALUES := [["attack", "Attack"], ["defence", "Defence"], ["hit", "Hit"], ["avoid", "Avoid"],
 	["critical", "Critical"], ["resistance", "Magic resist"], ["attack_speed", "Attack speed"]]
 
+## Job ids (the Job ability value) to names.
+const JOBS := {0: "Visitor", 111: "Soldier", 121: "Knight", 122: "Champion", 211: "Muse", 221: "Mage",
+	222: "Cleric", 311: "Hawker", 321: "Raider", 322: "Scout", 411: "Dealer", 421: "Bourgeois", 422: "Artisan"}
+
 var net: RoseNet
 var header: Label
 var points: Label
@@ -74,7 +78,7 @@ func _process(_delta: float) -> void:
 	var c: Dictionary = net.get_character()
 	if c.is_empty():
 		return
-	header.text = "%s   Level %d" % [c["name"], c["level"]]
+	header.text = "%s   Level %d   %s" % [c["name"], c["level"], JOBS.get(c.get("job", 0), "Visitor")]
 	points.text = "Stat points %d   Skill points %d" % [c["stat_points"], c["skill_points"]]
 	for entry in STATS:
 		var key: String = entry[0]
