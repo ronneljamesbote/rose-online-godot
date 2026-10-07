@@ -28,7 +28,9 @@
 ##                              --times=N), or a trade (--trade-with=NAME asks, else
 ##                              accept; --offer=ITEM puts a bag item up, --zuly=N money,
 ##                              --hold=SECONDS waits before pressing Trade), or a PvP
-##                              fight with --fight=NAME (--leave-party first)
+##                              fight with --fight=NAME (--leave-party first), or chat
+##                              (--say=LINE|LINE... one every --say-every=SECONDS, after
+##                              --chat-wait=SECONDS; --sit-for=SECONDS sits and logs MP)
 ##   --net-log                  online: print every player's position once a second
 ##   --open=inventory,character,skills,quests   online: open these windows at the start (for screenshots)
 ##   --quit-after=SECONDS       quit after this long
@@ -269,6 +271,9 @@ func _run_net_demo(me: Node3D) -> void:
 	if options["net-demo"] == "pvp":
 		_run_pvp_demo()
 		return
+	if options["net-demo"] == "chat":
+		_run_chat_demo()
+		return
 	if options["net-demo"] == "line":
 		route = [Vector3(5, 0, 0), Vector3(0, 0, 0)]
 		pause = 3.5
@@ -378,6 +383,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			online.hotbar.use_slot(event.keycode - KEY_1)
 		elif event.keycode == KEY_Z and online:
 			online.pickup(online.nearest_item())
+		elif event.keycode == KEY_X and online:
+			online.sit()
+		elif (event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER) and online:
+			online.chat_window.focus_input()
 
 
 ## Runs 20 m (--wall-reach) out in eight (--wall-directions) directions from the start, coming back each time, to test
@@ -754,6 +763,26 @@ func _run_pvp_demo() -> void:
 		print("rose net demo: me HP %d/%d, %s HP %s" % [online.me.hp, online.me.max_hp, wanted, "%d/%d" % [them.hp, them.max_hp] if them else "?"])
 		if them == null or them.dead or online.me.dead:
 			break
+
+
+func _run_chat_demo() -> void:
+	await get_tree().create_timer(float(options.get("chat-wait", "4"))).timeout
+	var sit_for := float(options.get("sit-for", "0"))
+	if sit_for > 0:
+		print("rose net demo: sit down, HP %d/%d MP %d/%d" % [online.me.hp, online.me.max_hp, online.me.mp, online.me.max_mp])
+		online.sit()
+	for line in String(options.get("say", "")).split("|", false):
+		print("rose net demo: say ", line)
+		online.chat_window.say(line)
+		await get_tree().create_timer(float(options.get("say-every", "3"))).timeout
+	if sit_for > 0:
+		var waited := 0.0
+		while waited < sit_for:
+			await get_tree().create_timer(4.0).timeout
+			waited += 4.0
+			print("rose net demo: sitting %s, HP %d/%d MP %d/%d" % [online.me.sitting, online.me.hp, online.me.max_hp, online.me.mp, online.me.max_mp])
+		print("rose net demo: stand up")
+		online.sit()
 
 
 func _print_trade() -> void:

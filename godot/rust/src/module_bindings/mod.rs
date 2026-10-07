@@ -19,6 +19,9 @@ pub mod bank_type;
 pub mod bank_withdraw_reducer;
 pub mod begin_game_data_upload_reducer;
 pub mod cast_skill_reducer;
+pub mod chat_channel_type;
+pub mod chat_limit_type;
+pub mod chat_message_type;
 pub mod combat_table;
 pub mod combat_tick_timer_type;
 pub mod combat_type;
@@ -55,6 +58,7 @@ pub mod motion_type;
 pub mod move_collision_reducer;
 pub mod move_item_reducer;
 pub mod move_to_reducer;
+pub mod my_chat_table;
 pub mod notice_table;
 pub mod notice_type;
 pub mod npc_store_transaction_reducer;
@@ -81,14 +85,19 @@ pub mod quest_trigger_reducer;
 pub mod refine_item_reducer;
 pub mod regen_type;
 pub mod reset_monsters_reducer;
+pub mod send_chat_reducer;
 pub mod set_aggro_range_reducer;
 pub mod set_basic_stat_reducer;
 pub mod set_hotbar_slot_reducer;
+pub mod set_hp_mp_reducer;
 pub mod set_job_reducer;
 pub mod set_name_reducer;
 pub mod set_npc_variable_reducer;
 pub mod set_price_rates_reducer;
 pub mod set_world_rates_reducer;
+pub mod sit_reducer;
+pub mod sitting_table;
+pub mod sitting_type;
 pub mod skill_cast_table;
 pub mod skill_cast_type;
 pub mod skill_cooldown_row_type;
@@ -141,6 +150,9 @@ pub use bank_type::Bank;
 pub use bank_withdraw_reducer::bank_withdraw;
 pub use begin_game_data_upload_reducer::begin_game_data_upload;
 pub use cast_skill_reducer::cast_skill;
+pub use chat_channel_type::ChatChannel;
+pub use chat_limit_type::ChatLimit;
+pub use chat_message_type::ChatMessage;
 pub use combat_table::*;
 pub use combat_tick_timer_type::CombatTickTimer;
 pub use combat_type::Combat;
@@ -177,6 +189,7 @@ pub use motion_type::Motion;
 pub use move_collision_reducer::move_collision;
 pub use move_item_reducer::move_item;
 pub use move_to_reducer::move_to;
+pub use my_chat_table::*;
 pub use notice_table::*;
 pub use notice_type::Notice;
 pub use npc_store_transaction_reducer::npc_store_transaction;
@@ -203,14 +216,19 @@ pub use quest_trigger_reducer::quest_trigger;
 pub use refine_item_reducer::refine_item;
 pub use regen_type::Regen;
 pub use reset_monsters_reducer::reset_monsters;
+pub use send_chat_reducer::send_chat;
 pub use set_aggro_range_reducer::set_aggro_range;
 pub use set_basic_stat_reducer::set_basic_stat;
 pub use set_hotbar_slot_reducer::set_hotbar_slot;
+pub use set_hp_mp_reducer::set_hp_mp;
 pub use set_job_reducer::set_job;
 pub use set_name_reducer::set_name;
 pub use set_npc_variable_reducer::set_npc_variable;
 pub use set_price_rates_reducer::set_price_rates;
 pub use set_world_rates_reducer::set_world_rates;
+pub use sit_reducer::sit;
+pub use sitting_table::*;
+pub use sitting_type::Sitting;
 pub use skill_cast_table::*;
 pub use skill_cast_type::SkillCast;
 pub use skill_cooldown_row_type::SkillCooldownRow;
@@ -409,6 +427,11 @@ pub enum Reducer {
         materials: Vec<CraftSlot>,
     },
     ResetMonsters,
+    SendChat {
+        channel: ChatChannel,
+        to: String,
+        text: String,
+    },
     SetAggroRange {
         npc_id: u16,
         range: f32,
@@ -423,6 +446,11 @@ pub enum Reducer {
         kind: u8,
         page: u8,
         slot: u16,
+    },
+    SetHpMp {
+        name: String,
+        hp: i32,
+        mp: i32,
     },
     SetJob {
         name: String,
@@ -447,6 +475,7 @@ pub enum Reducer {
         drop_money_rate: i32,
         reward_rate: i32,
     },
+    Sit,
     Stop,
     TradeAccept,
     TradeAnswer {
@@ -531,14 +560,17 @@ impl __sdk::Reducer for Reducer {
             Reducer::QuestTrigger { .. } => "quest_trigger",
             Reducer::RefineItem { .. } => "refine_item",
             Reducer::ResetMonsters => "reset_monsters",
+            Reducer::SendChat { .. } => "send_chat",
             Reducer::SetAggroRange { .. } => "set_aggro_range",
             Reducer::SetBasicStat { .. } => "set_basic_stat",
             Reducer::SetHotbarSlot { .. } => "set_hotbar_slot",
+            Reducer::SetHpMp { .. } => "set_hp_mp",
             Reducer::SetJob { .. } => "set_job",
             Reducer::SetName { .. } => "set_name",
             Reducer::SetNpcVariable { .. } => "set_npc_variable",
             Reducer::SetPriceRates { .. } => "set_price_rates",
             Reducer::SetWorldRates { .. } => "set_world_rates",
+            Reducer::Sit => "sit",
             Reducer::Stop => "stop",
             Reducer::TradeAccept => "trade_accept",
             Reducer::TradeAnswer { .. } => "trade_answer",
@@ -807,6 +839,13 @@ impl __sdk::Reducer for Reducer {
             Reducer::ResetMonsters => {
                 __sats::bsatn::to_vec(&reset_monsters_reducer::ResetMonstersArgs {})
             }
+            Reducer::SendChat { channel, to, text } => {
+                __sats::bsatn::to_vec(&send_chat_reducer::SendChatArgs {
+                    channel: channel.clone(),
+                    to: to.clone(),
+                    text: text.clone(),
+                })
+            }
             Reducer::SetAggroRange { npc_id, range } => {
                 __sats::bsatn::to_vec(&set_aggro_range_reducer::SetAggroRangeArgs {
                     npc_id: npc_id.clone(),
@@ -831,6 +870,13 @@ impl __sdk::Reducer for Reducer {
                 page: page.clone(),
                 slot: slot.clone(),
             }),
+            Reducer::SetHpMp { name, hp, mp } => {
+                __sats::bsatn::to_vec(&set_hp_mp_reducer::SetHpMpArgs {
+                    name: name.clone(),
+                    hp: hp.clone(),
+                    mp: mp.clone(),
+                })
+            }
             Reducer::SetJob { name, job } => __sats::bsatn::to_vec(&set_job_reducer::SetJobArgs {
                 name: name.clone(),
                 job: job.clone(),
@@ -867,6 +913,7 @@ impl __sdk::Reducer for Reducer {
                 drop_money_rate: drop_money_rate.clone(),
                 reward_rate: reward_rate.clone(),
             }),
+            Reducer::Sit => __sats::bsatn::to_vec(&sit_reducer::SitArgs {}),
             Reducer::Stop => __sats::bsatn::to_vec(&stop_reducer::StopArgs {}),
             Reducer::TradeAccept => {
                 __sats::bsatn::to_vec(&trade_accept_reducer::TradeAcceptArgs {})
@@ -944,12 +991,14 @@ pub struct DbUpdate {
     game_data_status: __sdk::TableUpdate<GameDataStatus>,
     ground_item: __sdk::TableUpdate<GroundItem>,
     motion: __sdk::TableUpdate<Motion>,
+    my_chat: __sdk::TableUpdate<ChatMessage>,
     notice: __sdk::TableUpdate<Notice>,
     npc: __sdk::TableUpdate<Npc>,
     party: __sdk::TableUpdate<Party>,
     party_invitation: __sdk::TableUpdate<PartyInvite>,
     party_member: __sdk::TableUpdate<PartyMember>,
     player: __sdk::TableUpdate<Player>,
+    sitting: __sdk::TableUpdate<Sitting>,
     skill_cast: __sdk::TableUpdate<SkillCast>,
     skill_cooldown: __sdk::TableUpdate<SkillCooldownRow>,
     stats: __sdk::TableUpdate<Stats>,
@@ -989,6 +1038,9 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "motion" => db_update
                     .motion
                     .append(motion_table::parse_table_update(table_update)?),
+                "my_chat" => db_update
+                    .my_chat
+                    .append(my_chat_table::parse_table_update(table_update)?),
                 "notice" => db_update
                     .notice
                     .append(notice_table::parse_table_update(table_update)?),
@@ -1007,6 +1059,9 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "player" => db_update
                     .player
                     .append(player_table::parse_table_update(table_update)?),
+                "sitting" => db_update
+                    .sitting
+                    .append(sitting_table::parse_table_update(table_update)?),
                 "skill_cast" => db_update
                     .skill_cast
                     .append(skill_cast_table::parse_table_update(table_update)?),
@@ -1098,6 +1153,9 @@ impl __sdk::DbUpdate for DbUpdate {
         diff.player = cache
             .apply_diff_to_table::<Player>("player", &self.player)
             .with_updates_by_pk(|row| &row.identity);
+        diff.sitting = cache
+            .apply_diff_to_table::<Sitting>("sitting", &self.sitting)
+            .with_updates_by_pk(|row| &row.entity_id);
         diff.skill_cast = cache
             .apply_diff_to_table::<SkillCast>("skill_cast", &self.skill_cast)
             .with_updates_by_pk(|row| &row.entity_id);
@@ -1126,6 +1184,7 @@ impl __sdk::DbUpdate for DbUpdate {
         diff.zone_info = cache
             .apply_diff_to_table::<ZoneInfo>("zone_info", &self.zone_info)
             .with_updates_by_pk(|row| &row.zone_id);
+        diff.my_chat = cache.apply_diff_to_table::<ChatMessage>("my_chat", &self.my_chat);
 
         diff
     }
@@ -1154,6 +1213,9 @@ impl __sdk::DbUpdate for DbUpdate {
                 "motion" => db_update
                     .motion
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "my_chat" => db_update
+                    .my_chat
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "notice" => db_update
                     .notice
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
@@ -1171,6 +1233,9 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "player" => db_update
                     .player
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "sitting" => db_update
+                    .sitting
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "skill_cast" => db_update
                     .skill_cast
@@ -1236,6 +1301,9 @@ impl __sdk::DbUpdate for DbUpdate {
                 "motion" => db_update
                     .motion
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "my_chat" => db_update
+                    .my_chat
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "notice" => db_update
                     .notice
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
@@ -1253,6 +1321,9 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "player" => db_update
                     .player
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "sitting" => db_update
+                    .sitting
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "skill_cast" => db_update
                     .skill_cast
@@ -1306,12 +1377,14 @@ pub struct AppliedDiff<'r> {
     game_data_status: __sdk::TableAppliedDiff<'r, GameDataStatus>,
     ground_item: __sdk::TableAppliedDiff<'r, GroundItem>,
     motion: __sdk::TableAppliedDiff<'r, Motion>,
+    my_chat: __sdk::TableAppliedDiff<'r, ChatMessage>,
     notice: __sdk::TableAppliedDiff<'r, Notice>,
     npc: __sdk::TableAppliedDiff<'r, Npc>,
     party: __sdk::TableAppliedDiff<'r, Party>,
     party_invitation: __sdk::TableAppliedDiff<'r, PartyInvite>,
     party_member: __sdk::TableAppliedDiff<'r, PartyMember>,
     player: __sdk::TableAppliedDiff<'r, Player>,
+    sitting: __sdk::TableAppliedDiff<'r, Sitting>,
     skill_cast: __sdk::TableAppliedDiff<'r, SkillCast>,
     skill_cooldown: __sdk::TableAppliedDiff<'r, SkillCooldownRow>,
     stats: __sdk::TableAppliedDiff<'r, Stats>,
@@ -1350,6 +1423,7 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
         );
         callbacks.invoke_table_row_callbacks::<GroundItem>("ground_item", &self.ground_item, event);
         callbacks.invoke_table_row_callbacks::<Motion>("motion", &self.motion, event);
+        callbacks.invoke_table_row_callbacks::<ChatMessage>("my_chat", &self.my_chat, event);
         callbacks.invoke_table_row_callbacks::<Notice>("notice", &self.notice, event);
         callbacks.invoke_table_row_callbacks::<Npc>("npc", &self.npc, event);
         callbacks.invoke_table_row_callbacks::<Party>("party", &self.party, event);
@@ -1364,6 +1438,7 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
             event,
         );
         callbacks.invoke_table_row_callbacks::<Player>("player", &self.player, event);
+        callbacks.invoke_table_row_callbacks::<Sitting>("sitting", &self.sitting, event);
         callbacks.invoke_table_row_callbacks::<SkillCast>("skill_cast", &self.skill_cast, event);
         callbacks.invoke_table_row_callbacks::<SkillCooldownRow>(
             "skill_cooldown",
@@ -2053,12 +2128,14 @@ impl __sdk::SpacetimeModule for RemoteModule {
         game_data_status_table::register_table(client_cache);
         ground_item_table::register_table(client_cache);
         motion_table::register_table(client_cache);
+        my_chat_table::register_table(client_cache);
         notice_table::register_table(client_cache);
         npc_table::register_table(client_cache);
         party_table::register_table(client_cache);
         party_invitation_table::register_table(client_cache);
         party_member_table::register_table(client_cache);
         player_table::register_table(client_cache);
+        sitting_table::register_table(client_cache);
         skill_cast_table::register_table(client_cache);
         skill_cooldown_table::register_table(client_cache);
         stats_table::register_table(client_cache);
@@ -2078,12 +2155,14 @@ impl __sdk::SpacetimeModule for RemoteModule {
         "game_data_status",
         "ground_item",
         "motion",
+        "my_chat",
         "notice",
         "npc",
         "party",
         "party_invitation",
         "party_member",
         "player",
+        "sitting",
         "skill_cast",
         "skill_cooldown",
         "stats",

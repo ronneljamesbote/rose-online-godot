@@ -89,6 +89,10 @@ struct Shared {
     xp: Vec<XpEvent>,
     /// Messages for the player: server notices and refused actions.
     notices: Vec<String>,
+    /// Chat messages not yet shown, and the newest message id seen (the server keeps them
+    /// for a minute, so a resubscribe sends some again).
+    chat: Vec<ChatMessage>,
+    chat_seen: u64,
     /// Smallest (local receive time - server start time) seen on a fresh motion change.
     /// Covers clock skew between this PC and the server plus the fastest one-way delay.
     clock_offset_us: Option<i64>,
@@ -281,6 +285,14 @@ impl RoseNet {
             }
         });
         let s = shared.clone();
+        Table::on_insert(&conn.db.my_chat(), move |_, m| {
+            let mut s = s.lock().unwrap();
+            if m.id > s.chat_seen {
+                s.chat_seen = m.id;
+                s.chat.push(m.clone());
+            }
+        });
+        let s = shared.clone();
         conn.db.motion().on_update(move |_, _, new| {
             let sample = local_now_us() - new.started_at_us;
             let mut s = s.lock().unwrap();
@@ -372,6 +384,7 @@ impl RoseNet {
                     }
                 }
             }
+            d.set("sitting", c.db.sitting().entity_id().find(&e.entity_id).is_some());
             if let Some(npc) = c.db.npc().entity_id().find(&e.entity_id) {
                 d.set("direction", npc.direction);
                 d.set("store", npc.has_store);
@@ -545,6 +558,68 @@ impl RoseNet {
     fn set_player_name(&self, name: GString) {
         if let Some(c) = self.conn.as_ref() {
             c.reducers.set_name(name.to_string()).ok();
+        }
+    }
+
+    /// Send a chat line with the iROSE prefixes: "!text" shouts to the zone, "#text" talks
+    /// to the party, "@name text" whispers, anything else is heard by players nearby.
+    #[func]
+    fn send_chat(&self, line: GString) {
+        let line = line.to_string();
+        let line = line.trim();
+        let (channel, to, text) = if let Some(text) = line.strip_prefix('!') {
+            (ChatChannel::Shout, "", text)
+        } else if let Some(text) = line.strip_prefix('#') {
+            (ChatChannel::Party, "", text)
+        } else if let Some(rest) = line.strip_prefix('@') {
+            let (to, text) = rest.split_once(' ').unwrap_or((rest, ""));
+            (ChatChannel::Whisper, to, text)
+        } else {
+            (ChatChannel::Nearby, "", line)
+        };
+        if text.trim().is_empty() {
+            return;
+        }
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.send_chat_then(channel, to.to_string(), text.to_string(), move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    /// Chat messages since the last call: channel (nearby, shout, party, whisper), from,
+    /// to (whispers), text, entity (the speaker) and mine (we sent it).
+    #[func]
+    fn poll_chat(&self) -> VarArray {
+        let messages = std::mem::take(&mut self.shared.lock().unwrap().chat);
+        let my_id = self.my_id();
+        let mut out = VarArray::new();
+        for m in messages {
+            let mut d = VarDictionary::new();
+            d.set(
+                "channel",
+                match m.channel {
+                    ChatChannel::Nearby => "nearby",
+                    ChatChannel::Shout => "shout",
+                    ChatChannel::Party => "party",
+                    ChatChannel::Whisper => "whisper",
+                },
+            );
+            d.set("from", m.from_name.as_str());
+            d.set("to", m.to_name.as_str());
+            d.set("text", m.text.as_str());
+            d.set("entity", m.from_entity.map_or(-1, |e| e as i64));
+            d.set("mine", m.from_entity.is_some() && m.from_entity == my_id);
+            out.push(&d.to_variant());
+        }
+        out
+    }
+
+    /// Sit down, or stand up.
+    #[func]
+    fn sit(&self) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.sit_then(move |_, r| report(&s, r)).ok();
         }
     }
 

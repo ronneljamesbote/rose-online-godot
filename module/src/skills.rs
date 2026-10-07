@@ -463,6 +463,7 @@ pub fn start_cast(
 ) -> Result<(), String> {
     let t = now_us(ctx);
     check_can_use(ctx, game, p, id, skill, t)?;
+    crate::stand_up(ctx, id);
     let self_skill = skill.skill_type.is_self_skill();
     let target = if self_skill { None } else { target };
     if let Some(target) = target {
@@ -515,6 +516,7 @@ pub fn cast_skill(ctx: &ReducerContext, page: u8, index: u16, target: Option<u64
         SkillType::Passive => return Err(format!("{} works on its own", skill.name)),
         SkillType::BasicAction => {
             return match (skill.basic_command, target) {
+                (Some(SkillBasicCommand::Sit), _) => crate::sit(ctx),
                 (Some(SkillBasicCommand::Attack), Some(target)) => crate::attack(ctx, target),
                 (Some(SkillBasicCommand::Attack), None) => Err("pick a target first".into()),
                 _ => Err(format!("{} isn't in the game yet", skill.name)),

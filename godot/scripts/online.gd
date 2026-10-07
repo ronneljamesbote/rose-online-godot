@@ -17,6 +17,7 @@ const TradeWindow := preload("res://scripts/trade_window.gd")
 const SkillWindow := preload("res://scripts/skill_window.gd")
 const ConversationWindow := preload("res://scripts/conversation_window.gd")
 const QuestWindow := preload("res://scripts/quest_window.gd")
+const ChatWindow := preload("res://scripts/chat_window.gd")
 const Hotbar := preload("res://scripts/hotbar.gd")
 const PICK_RADIUS_PX := 60.0
 const ITEM_PICK_RADIUS_PX := 30.0
@@ -59,6 +60,7 @@ var hotbar: PanelContainer
 var effects_row: HBoxContainer  # our status effects, top centre
 var _next_effects_ms := 0
 var notice_box: VBoxContainer
+var chat_window: PanelContainer
 var ground := {}  # drop id -> Node3D
 var _pickup := -1  # drop we are walking to
 var _talk := -1  # NPC we are walking to
@@ -242,12 +244,21 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	effects_row.offset_top = 8
 	layer.add_child(effects_row)
 
-	# Messages (pickups, refused actions) above the experience bar, newest at the bottom.
+	# The chat box above the experience bar, bottom left.
+	chat_window = ChatWindow.new()
+	chat_window.net = net
+	chat_window.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
+	chat_window.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	chat_window.offset_left = 12
+	chat_window.offset_bottom = -22
+	layer.add_child(chat_window)
+
+	# Messages (pickups, refused actions) above the chat box, newest at the bottom.
 	notice_box = VBoxContainer.new()
 	notice_box.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
 	notice_box.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	notice_box.offset_left = 12
-	notice_box.offset_bottom = -40
+	notice_box.offset_bottom = -222
 	notice_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	layer.add_child(notice_box)
 
@@ -353,6 +364,16 @@ func attack(id: int) -> void:
 func stop() -> void:
 	my_target = -1
 	net.stop()
+
+
+## Sit down, or stand up (MP only comes back while sitting).
+func sit() -> void:
+	if me == null:
+		return
+	my_target = -1
+	_pickup = -1
+	_talk = -1
+	net.sit()
 
 
 ## The monster under the mouse, or -1. Entities have no colliders yet, so this picks the
@@ -587,6 +608,13 @@ func _process(_delta: float) -> void:
 		_update_effects()
 	for text in net.poll_notices():
 		_notice(text)
+	for m in net.poll_chat():
+		chat_window.add_message(m)
+		if log_damage:
+			print("rose net: chat %s %s%s: %s" % [m["channel"], m["from"], " -> " + m["to"] if m["to"] != "" else "", m["text"]])
+		# Players nearby see what was said over the speaker's head.
+		if m["channel"] == "nearby" and entities.has(m["entity"]):
+			entities[m["entity"]].say(m["text"])
 	if me and _pickup >= 0:
 		if not ground.has(_pickup):
 			_pickup = -1
