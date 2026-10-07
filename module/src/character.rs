@@ -4,7 +4,7 @@
 
 use glam::Vec3;
 use rose_data::{
-    AmmoIndex, CharacterMotionAction, EquipmentItem, ItemClass, ItemReference, ItemType, StackableItem,
+    CharacterMotionAction, EquipmentItem, ItemClass, ItemReference, ItemType, StackableItem,
     ZoneId,
 };
 use rose_data_irose::{IroseSkillPageType, SKILL_PAGE_SIZE};
@@ -140,6 +140,7 @@ pub fn new_player(game: &GameData, identity: Identity, name: String, gender: u8,
         entity_id: None,
         name,
         online: true,
+        connection: None,
         zone_id: zone.0,
         last_x: zone.1,
         last_y: zone.2,
@@ -153,7 +154,6 @@ pub fn new_player(game: &GameData, identity: Identity, name: String, gender: u8,
         xp: 0,
         stat_points: 0,
         skill_points: 0,
-        money: 0,
         strength: 0,
         dexterity: 0,
         intelligence: 0,
@@ -167,28 +167,35 @@ pub fn new_player(game: &GameData, identity: Identity, name: String, gender: u8,
         hotbar: to_json(&Hotbar::default()),
     };
     player.set_basic_stats(&start.basic_stats);
-    // Until there is an inventory screen, every character starts with a sword to fight with.
-    equip_test_weapon(game, &mut equipment, false);
+    starter_kit(game, &mut equipment, &mut inventory);
     player.set_equipment(&equipment);
     player.set_inventory(&inventory);
     player
 }
 
-/// Test loadout: a Short Sword, or a Short Bow with arrows.
-fn equip_test_weapon(game: &GameData, equipment: &mut Equipment, ranged: bool) {
-    let weapon = ItemReference::new(ItemType::Weapon, if ranged { SHORT_BOW } else { SHORT_SWORD });
-    if let Some(item) = game.items.get_base_item(weapon).and_then(EquipmentItem::from_item_data) {
-        equipment.equip_item(item).ok();
-    }
-    *equipment.get_ammo_slot_mut(AmmoIndex::Arrow) = if ranged {
+/// Our addition to INIT_AVATAR, which has no weapon: a Short Sword in hand, and a Short Bow
+/// with arrows in the bag to try ranged combat.
+fn starter_kit(game: &GameData, equipment: &mut Equipment, inventory: &mut Inventory) {
+    let weapon = |number| {
         game.items
-            .iter_items(ItemType::Material)
-            .filter_map(|item| game.items.get_base_item(item))
-            .find(|item| item.class == ItemClass::Arrow)
-            .and_then(|item| StackableItem::from_item_data(item, STARTING_ARROWS))
-    } else {
-        None
+            .get_base_item(ItemReference::new(ItemType::Weapon, number))
+            .and_then(EquipmentItem::from_item_data)
     };
+    if let Some(sword) = weapon(SHORT_SWORD) {
+        equipment.equip_item(sword).ok();
+    }
+    if let Some(bow) = weapon(SHORT_BOW) {
+        inventory.try_add_item(bow.into()).ok();
+    }
+    let arrows = game
+        .items
+        .iter_items(ItemType::Material)
+        .filter_map(|item| game.items.get_base_item(item))
+        .find(|item| item.class == ItemClass::Arrow)
+        .and_then(|item| StackableItem::from_item_data(item, STARTING_ARROWS));
+    if let Some(arrows) = arrows {
+        inventory.try_add_item(arrows.into()).ok();
+    }
 }
 
 pub fn ability_values(game: &GameData, player: &Player) -> AbilityValues {
@@ -302,14 +309,16 @@ pub fn add_basic_stat(ctx: &ReducerContext, stat: u8) -> Result<(), String> {
     Ok(())
 }
 
-/// Test helper until the inventory exists: swap between the sword and the bow.
+/// Debug: set a player's basic stat by name (stat as in add_basic_stat).
 #[spacetimedb::reducer]
-pub fn set_loadout(ctx: &ReducerContext, ranged: bool) -> Result<(), String> {
+pub fn set_basic_stat(ctx: &ReducerContext, name: String, stat: u8, value: i32) -> Result<(), String> {
+    crate::require_admin(ctx)?;
     let game = game(ctx)?;
-    let (mut p, _) = my_player(ctx)?;
-    let mut equipment = p.equipment();
-    equip_test_weapon(&game, &mut equipment, ranged);
-    p.set_equipment(&equipment);
+    let stat = stat_type(stat).ok_or("no such stat")?;
+    let mut p = ctx.db.player().iter().find(|p| p.name == name).ok_or("no such player")?;
+    let mut basic = p.basic_stats();
+    basic.set(stat, value.max(1));
+    p.set_basic_stats(&basic);
     ctx.db.player().identity().update(p.clone());
     refresh_player(ctx, &game, &p, false);
     Ok(())

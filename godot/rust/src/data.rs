@@ -6,7 +6,7 @@ use std::{
 };
 
 use rose_data::{
-    CharacterMotionDatabase, CharacterMotionDatabaseOptions, ItemDatabase, NpcDatabase, NpcDatabaseOptions, SkyboxDatabase,
+    CharacterMotionDatabase, CharacterMotionDatabaseOptions, ItemDatabase, JobClassDatabase, NpcDatabase, NpcDatabaseOptions, SkyboxDatabase,
     ZoneList,
 };
 use rose_file_readers::{ChrFile, HostFilesystemDevice, RoseFile, VfsFile, VfsIndex, VirtualFilesystem};
@@ -16,6 +16,7 @@ pub struct GameData {
     pub zone_list: ZoneList,
     pub skybox: Arc<SkyboxDatabase>,
     pub items: ItemDatabase,
+    pub job_classes: JobClassDatabase,
     pub motions: CharacterMotionDatabase,
     pub npcs: NpcDatabase,
     /// NPC skeletons, motions and part lists (LIST_NPC.CHR).
@@ -39,6 +40,7 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
     let zone_list = rose_data_irose::get_zone_list(&vfs, strings.clone())?;
     let skybox = rose_data_irose::get_skybox_database(&vfs)?;
     let items = rose_data_irose::get_item_database(&vfs, strings.clone())?;
+    let job_classes = rose_data_irose::get_job_class_database(&vfs, strings.clone())?;
     let npcs = rose_data_irose::get_npc_database(&vfs, strings, &NpcDatabaseOptions { load_frame_data: false })?;
     let npc_chr = vfs.read_file::<ChrFile, _>("3DDATA/NPC/LIST_NPC.CHR")?;
     let motions = rose_data_irose::get_character_motion_database(
@@ -46,7 +48,7 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
         &CharacterMotionDatabaseOptions { load_frame_data: false },
     )?;
 
-    let _ = GAME_DATA.set(GameData { vfs, zone_list, skybox, items, motions, npcs, npc_chr });
+    let _ = GAME_DATA.set(GameData { vfs, zone_list, skybox, items, job_classes, motions, npcs, npc_chr });
     Ok(())
 }
 

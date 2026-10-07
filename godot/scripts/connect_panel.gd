@@ -1,4 +1,4 @@
-## Start screen: server address, character name and weapon, or play offline.
+## Start screen: server address and character name, or play offline.
 ## The last values are kept in user://settings.cfg.
 extends CanvasLayer
 
@@ -9,7 +9,6 @@ const SETTINGS := "user://settings.cfg"
 
 var server_edit: LineEdit
 var name_edit: LineEdit
-var weapon_button: OptionButton
 
 
 func _ready() -> void:
@@ -40,19 +39,6 @@ func _ready() -> void:
 	name_edit = _field(box, "Name", settings.get_value("net", "name", ""))
 	name_edit.max_length = 20
 	name_edit.placeholder_text = "1-20 characters"
-
-	var row := HBoxContainer.new()
-	box.add_child(row)
-	var weapon_label := Label.new()
-	weapon_label.text = "Weapon"
-	weapon_label.custom_minimum_size.x = 70
-	row.add_child(weapon_label)
-	weapon_button = OptionButton.new()
-	weapon_button.add_item("Short Sword")
-	weapon_button.add_item("Short Bow")
-	weapon_button.selected = 1 if settings.get_value("net", "bow", false) else 0
-	weapon_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	row.add_child(weapon_button)
 
 	var buttons := HBoxContainer.new()
 	buttons.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -86,12 +72,10 @@ func _field(box: VBoxContainer, caption: String, value: String) -> LineEdit:
 
 func _on_connect() -> void:
 	var name_text := name_edit.text.strip_edges()
-	var use_bow := weapon_button.selected == 1
 	var settings := ConfigFile.new()
 	settings.load(SETTINGS)
 	settings.set_value("net", "server", server_edit.text.strip_edges())
 	settings.set_value("net", "name", name_text)
-	settings.set_value("net", "bow", use_bow)
 	settings.save(SETTINGS)
-	connect_requested.emit(server_edit.text.strip_edges(), name_text, use_bow)
+	connect_requested.emit(server_edit.text.strip_edges(), name_text, false)
 	queue_free()

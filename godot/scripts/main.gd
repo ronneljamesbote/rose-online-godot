@@ -10,12 +10,14 @@
 ##   --time=morning|day|evening|night|TICKS   fixed time of day (default: day, then the clock runs)
 ##   --demo                     scripted run / attack / cancel sequence (for --write-movie)
 ##   --server=URI               play online on this SpacetimeDB server, skipping the start screen
-##   --name=NAME, --weapon=sword|bow   character for --server
+##   --name=NAME                character name for --server
+##   --weapon=bow               equip the bow and arrows from the bag after signing in
 ##   --profile=NAME             identity file to use (user://identity-NAME.token), so two
 ##                              clients on one PC are two players
 ##   --offline                  skip the start screen and play offline
 ##   --net-demo[=square|line|fight|walls]   online: scripted routes, fights, wall tests
 ##   --net-log                  online: print every player's position once a second
+##   --open=inventory,character online: open these windows at the start (for screenshots)
 ##   --quit-after=SECONDS       quit after this long
 extends Node3D
 
@@ -201,6 +203,11 @@ func _go_online(uri: String, name_text: String, use_bow: bool) -> void:
 func _on_joined(me: Node3D) -> void:
 	if camera.get("target") != null:
 		camera.target = me
+	var windows: String = options.get("open", "")
+	if "inventory" in windows:
+		online.toggle_inventory_window()
+	if "character" in windows:
+		online.toggle_character_window()
 	if options.has("net-demo"):
 		_run_net_demo(me)
 
@@ -280,6 +287,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			if monster >= 0:
 				online.attack(monster)
 				return
+			var item: int = online.pick_item(camera, event.position)
+			if item >= 0:
+				online.pickup(item)
+				return
 		var hit = _pick_ground(event.position)
 		if hit != null:
 			if online:
@@ -299,6 +310,10 @@ func _unhandled_input(event: InputEvent) -> void:
 				player.stop()
 		elif event.keycode == KEY_C and online:
 			online.toggle_character_window()
+		elif event.keycode == KEY_I and online:
+			online.toggle_inventory_window()
+		elif event.keycode == KEY_Z and online:
+			online.pickup(online.nearest_item())
 
 
 ## Runs 20 m (--wall-reach) out in eight (--wall-directions) directions from the start, coming back each time, to test
@@ -343,6 +358,16 @@ func _run_fight_demo() -> void:
 		fights += 1
 		while online.entities.has(target) and not online.entities[target].dying and online.me and not online.me.dead:
 			await get_tree().create_timer(0.25).timeout
+		# Pick up what it dropped (drops land a moment after the kill).
+		await get_tree().create_timer(0.5).timeout
+		var item: int = online.nearest_item()
+		if item >= 0:
+			print("rose net demo: pick up ", online.ground[item].get_node("Label").text)
+			online.pickup(item)
+			var waited := 0.0
+			while online.ground.has(item) and waited < 5.0:
+				await get_tree().create_timer(0.25).timeout
+				waited += 0.25
 
 
 ## Where the mouse ray meets the ground: zone objects you can walk on (physics ray), or

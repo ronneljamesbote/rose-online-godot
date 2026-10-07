@@ -4,6 +4,7 @@ use godot::prelude::*;
 
 mod character;
 mod data;
+mod items;
 mod material;
 mod mesh;
 #[allow(clippy::all, unused)]
@@ -19,6 +20,7 @@ unsafe impl ExtensionLibrary for RoseExtension {
     /// The caches hold Godot objects, so they must be emptied before the engine shuts down.
     fn on_stage_deinit(stage: InitStage) {
         if stage == InitStage::MainLoop {
+            items::clear_cache();
             material::clear_cache();
             mesh::clear_cache();
             texture::clear_cache();
@@ -45,5 +47,11 @@ impl RoseData {
                 false
             }
         }
+    }
+
+    /// The inventory icon with this index, or null.
+    #[func]
+    fn item_icon(index: i32) -> Option<Gd<godot::classes::Texture2D>> {
+        items::item_icon(index.max(0) as u32)
     }
 }

@@ -7,7 +7,11 @@ signal zone_needed(zone_id: int)
 
 const NetEntity := preload("res://scripts/net_entity.gd")
 const CharacterWindow := preload("res://scripts/character_window.gd")
+const InventoryWindow := preload("res://scripts/inventory_window.gd")
 const PICK_RADIUS_PX := 60.0
+const ITEM_PICK_RADIUS_PX := 30.0
+const PICKUP_RANGE := 2.5  # metres; the server allows 4
+const NOTICE_SECONDS := 8.0
 const MONSTER_NAME_RANGE := 15.0  # monster names show within this many metres, or when targeted
 
 var zone: Node
@@ -17,12 +21,18 @@ var me: Node3D
 var my_id := -1
 var my_target := -1
 var player_name := ""
-var ranged := false
+var ranged := false  # equip the bow and arrows from the bag once signed in (--weapon=bow)
+var _ranged_equipped := false
+var _next_equip_try_ms := 0
 var hud: Label
 var target_hud: Label
 var xp_bar: ProgressBar
 var xp_label: Label
 var character_window: PanelContainer
+var inventory_window: PanelContainer
+var notice_box: VBoxContainer
+var ground := {}  # drop id -> Node3D
+var _pickup := -1  # drop we are walking to
 var _level := 0
 var _zone_requested := 0
 var log_damage := false
@@ -65,6 +75,24 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	character_window.position = Vector2(12, 70)
 	layer.add_child(character_window)
 
+	inventory_window = InventoryWindow.new()
+	inventory_window.net = net
+	inventory_window.visible = false
+	inventory_window.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+	inventory_window.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	inventory_window.offset_top = 70
+	inventory_window.offset_right = -12
+	layer.add_child(inventory_window)
+
+	# Messages (pickups, refused actions) above the experience bar, newest at the bottom.
+	notice_box = VBoxContainer.new()
+	notice_box.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
+	notice_box.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	notice_box.offset_left = 12
+	notice_box.offset_bottom = -40
+	notice_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	layer.add_child(notice_box)
+
 	print("rose net: connecting to ", uri, " (identity in ", token_path, ")")
 	hud.text = "Connecting to %s..." % uri
 	return net.connect_to(uri, token_path)
@@ -86,6 +114,10 @@ func use_zone(zone_node: Node) -> void:
 	for entity in entities.values():
 		entity.queue_free()
 	entities.clear()
+	for item in ground.values():
+		item.queue_free()
+	ground.clear()
+	_pickup = -1
 	me = null
 	_zone_requested = 0
 
@@ -94,10 +126,15 @@ func toggle_character_window() -> void:
 	character_window.visible = not character_window.visible
 
 
+func toggle_inventory_window() -> void:
+	inventory_window.visible = not inventory_window.visible
+
+
 func move_to(target: Vector3) -> void:
 	if me == null:
 		return
 	my_target = -1
+	_pickup = -1
 	net.move_to(target.x, target.z)
 	me.predict_move(target)
 
@@ -106,6 +143,7 @@ func attack(id: int) -> void:
 	if me == null or not entities.has(id):
 		return
 	my_target = id
+	_pickup = -1
 	net.attack(id)
 	if log_damage:
 		print("rose net: attack ", entities[id].label.text, " (entity ", id, ")")
@@ -130,6 +168,46 @@ func pick_monster(camera: Camera3D, screen_position: Vector2) -> int:
 			continue
 		var d := camera.unproject_position(centre).distance_to(screen_position)
 		if d < best_distance:
+			best_distance = d
+			best = id
+	return best
+
+
+## The ground item under the mouse, or -1.
+func pick_item(camera: Camera3D, screen_position: Vector2) -> int:
+	var best := -1
+	var best_distance := ITEM_PICK_RADIUS_PX
+	for id in ground:
+		var item: Node3D = ground[id]
+		if camera.is_position_behind(item.global_position):
+			continue
+		var d := camera.unproject_position(item.global_position + Vector3(0, 0.2, 0)).distance_to(screen_position)
+		if d < best_distance:
+			best_distance = d
+			best = id
+	return best
+
+
+## Walk to a ground item and pick it up when there.
+func pickup(id: int) -> void:
+	if me == null or not ground.has(id):
+		return
+	var at: Vector3 = ground[id].position
+	if Vector2(at.x - me.position.x, at.z - me.position.z).length() > PICKUP_RANGE:
+		move_to(at)
+	_pickup = id
+
+
+## Nearest ground item we may take, within 10 m, or -1.
+func nearest_item() -> int:
+	var best := -1
+	var best_distance := 10.0
+	if me == null:
+		return best
+	for id in ground:
+		var item: Node3D = ground[id]
+		var d: float = item.position.distance_to(me.position)
+		if item.get_meta("mine", true) and d < best_distance:
 			best_distance = d
 			best = id
 	return best
@@ -168,8 +246,10 @@ func _process(_delta: float) -> void:
 		my_id = net.my_entity_id()
 		if player_name != "":
 			net.set_player_name(player_name)
-		net.set_loadout(ranged)
 		print("rose net: signed in as entity ", my_id)
+	if ranged and not _ranged_equipped and Time.get_ticks_msec() >= _next_equip_try_ms:
+		_next_equip_try_ms = Time.get_ticks_msec() + 2000
+		_ranged_equipped = _equip_bow()
 
 	var character: Dictionary = net.get_character()
 	var my_zone: int = character.get("zone", 0)
@@ -232,6 +312,18 @@ func _process(_delta: float) -> void:
 	if not entities.has(my_target):
 		my_target = -1
 
+	_update_ground()
+	for text in net.poll_notices():
+		_notice(text)
+	if me and _pickup >= 0:
+		if not ground.has(_pickup):
+			_pickup = -1
+		else:
+			var at: Vector3 = ground[_pickup].position
+			if Vector2(at.x - me.position.x, at.z - me.position.z).length() <= PICKUP_RANGE:
+				net.pickup_item(_pickup)
+				_pickup = -1
+
 	if me:
 		for id in entities:
 			var entity: Node3D = entities[id]
@@ -272,6 +364,88 @@ func _process(_delta: float) -> void:
 		target_hud.text = "%s   Lv %d   HP %d/%d" % [target.label.text, target.level, target.hp, target.max_hp]
 	else:
 		target_hud.text = ""
+
+
+## Show the server's ground items: the item's ground model with its name over it.
+func _update_ground() -> void:
+	var seen := {}
+	for state in net.get_ground_items():
+		var id: int = state["id"]
+		seen[id] = true
+		var item: Dictionary = state["item"]
+		if not ground.has(id):
+			var node := Node3D.new()
+			var model := RoseFieldItem.new()
+			model.build(item.get("model", 0))
+			node.add_child(model)
+			var label := Label3D.new()
+			label.name = "Label"
+			label.text = item.get("name", "?")
+			if item.get("quantity", 1) > 1 and item.get("type", "") != "Money":
+				label.text = "%s (%d)" % [label.text, item["quantity"]]
+			label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+			label.no_depth_test = true
+			label.fixed_size = true
+			label.pixel_size = 0.0012
+			label.font_size = 22
+			label.outline_size = 6
+			label.position = Vector3(0, 0.6, 0)
+			node.add_child(label)
+			add_child(node)
+			var x: float = state["x"]
+			var z: float = state["z"]
+			node.position = Vector3(x, zone.get_terrain_height(x, z), z)
+			ground[id] = node
+		var mine: bool = state["mine"]
+		ground[id].set_meta("mine", mine)
+		var colour := Color(1.0, 0.85, 0.3) if item.get("type", "") == "Money" else Color.WHITE
+		ground[id].get_node("Label").modulate = colour if mine else Color(0.6, 0.6, 0.6)
+	for id in ground.keys():
+		if not seen.has(id):
+			ground[id].queue_free()
+			ground.erase(id)
+
+
+func _notice(text: String) -> void:
+	var label := Label.new()
+	label.text = text
+	label.add_theme_color_override("font_shadow_color", Color.BLACK)
+	label.add_theme_constant_override("shadow_offset_x", 1)
+	label.add_theme_constant_override("shadow_offset_y", 1)
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	notice_box.add_child(label)
+	while notice_box.get_child_count() > 6:
+		var oldest := notice_box.get_child(0)
+		notice_box.remove_child(oldest)
+		oldest.queue_free()
+	var tween := label.create_tween()
+	tween.tween_property(label, "modulate:a", 0.0, 1.0).set_delay(NOTICE_SECONDS)
+	tween.tween_callback(label.queue_free)
+	if log_damage:
+		print("rose net: notice: ", text)
+
+
+## Equip the first bow in the bag and the first arrows. True once both are on.
+func _equip_bow() -> bool:
+	var inventory: Dictionary = net.get_inventory()
+	if inventory.is_empty():
+		return false
+	var weapon = inventory["equipped"][6]
+	var has_bow: bool = weapon != null and weapon.get("class", "") == "Bow"
+	var has_arrows: bool = inventory["ammo"][0] != null
+	if not has_bow:
+		var items: Array = inventory["pages"][0]
+		for i in items.size():
+			if items[i] != null and items[i].get("class", "") == "Bow":
+				net.equip_item(0, i)
+				break
+	if not has_arrows:
+		var materials: Array = inventory["pages"][2]
+		for i in materials.size():
+			if materials[i] != null and materials[i].get("class", "") == "Arrow":
+				net.equip_item(2, i)
+				break
+	return has_bow and has_arrows
 
 
 func _on_collided(at: Vector3) -> void:
