@@ -174,9 +174,9 @@ pub fn spawn_tick(ctx: &ReducerContext, game: &GameData, t: i64) {
 }
 
 /// Ability values, attack timing and hit count of an NPC type, as a Stats row.
-pub fn npc_stats(game: &GameData, entity_id: u64, npc_id: u16) -> Option<Stats> {
+pub fn npc_stats(game: &GameData, entity_id: u64, npc_id: u16, effects: &StatusEffects) -> Option<Stats> {
     let id = NpcId::new(npc_id)?;
-    let av = game.ability_value_calculator.calculate_npc(id, &StatusEffects::default(), None, None)?;
+    let av = game.ability_value_calculator.calculate_npc(id, effects, None, None)?;
     let attack = game.npcs.get_npc_action_motion(id, NpcMotionAction::Attack);
     let attack_motion_ms = attack.map_or(1000, |m| m.duration.as_millis() as i32).max(300);
     let attack_hit_ms = attack
@@ -201,7 +201,7 @@ pub fn spawn_monster(ctx: &ReducerContext, game: &GameData, spawn: &MonsterSpawn
         name: npc.name.to_string(),
     });
     let id = entity.entity_id;
-    let Some(stats) = npc_stats(game, id, npc_id) else {
+    let Some(stats) = npc_stats(game, id, npc_id, &StatusEffects::default()) else {
         ctx.db.entity().entity_id().delete(id);
         return;
     };
@@ -245,6 +245,7 @@ pub fn teleport(ctx: &ReducerContext, p: &mut Player, zone_id: u16, at: (f32, f3
     let t = now_us(ctx);
     if let Some(id) = p.entity_id {
         cancel_attack(ctx, id, t);
+        crate::skills::cancel_cast(ctx, id);
         crate::forget_entity(ctx, id);
         crate::clear_damage_sources(ctx, id);
         if let Some(mut e) = ctx.db.entity().entity_id().find(id) {

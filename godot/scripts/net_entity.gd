@@ -45,6 +45,8 @@ var is_me := false
 var blocked := {}  # at, to (Vector3), since (msec): we hit a wall and wait for the server to stop us
 var placed := false
 var is_moving := false
+var _cast_started := 0  # server start time of the skill cast we last played
+var _cast_next := ""  # action motion to play after the casting motion
 var _probe: SphereShape3D
 var _idle := "stop1"
 var _walk := "run"
@@ -182,6 +184,7 @@ func update_state(state: Dictionary, target_position) -> void:
 
 	var is_dead: bool = state.get("dead", false)
 	var swinging: bool = state.get("swinging", false) and predicted.is_empty()
+	var cast_started: int = state.get("cast_started", 0)
 	if is_dead:
 		if not dead:
 			_play("die", true)
@@ -191,6 +194,9 @@ func update_state(state: Dictionary, target_position) -> void:
 		if is_monster and state.get("chasing", false) and anim and anim.has_animation("run"):
 			walk = "run"
 		_play(walk)  # moving cancels a swing at once
+		_cast_next = ""
+	elif cast_started != 0 and cast_started != _cast_started:
+		_start_cast(state)
 	elif swinging and not was_swinging:
 		_swing(state.get("hit_in", 0.0))
 	elif not _is_busy():
@@ -276,11 +282,31 @@ func hit_time(name: String) -> float:
 	return animation.length / 2.0
 
 
+## A skill cast started on the server: play its casting motion so it ends when the skill
+## takes effect, then its action motion.
+func _start_cast(state: Dictionary) -> void:
+	_cast_started = state["cast_started"]
+	_cast_next = ""
+	if anim == null or not model.has_method("add_motion"):
+		return
+	var cast_motion: int = state.get("cast_motion", -1)
+	var action_motion: int = state.get("action_motion", -1)
+	var cast_anim: String = model.add_motion(cast_motion) if cast_motion >= 0 else ""
+	var action_anim: String = model.add_motion(action_motion) if action_motion >= 0 else ""
+	var effect_in: float = state.get("cast_effect_in", 0.0)
+	if cast_anim != "" and effect_in > 0.05:
+		_play(cast_anim, true)
+		anim.speed_scale = clampf(anim.get_animation(cast_anim).length / effect_in, 0.5, 2.0)
+		_cast_next = action_anim
+	elif action_anim != "":
+		_play(action_anim, true)
+
+
 func _is_busy() -> bool:
 	if anim == null or not anim.is_playing():
 		return false
 	var current := String(anim.current_animation)
-	return current.begins_with("attack") or current == "hit"
+	return current.begins_with("attack") or current == "hit" or current.begins_with("motion_")
 
 
 func _play(name: String, restart := false) -> void:
@@ -296,5 +322,13 @@ func _play(name: String, restart := false) -> void:
 
 func _on_animation_finished(name: StringName) -> void:
 	var finished := String(name)
+	if finished.begins_with("motion_") and _cast_next != "" and not dead and not dying:
+		var next := _cast_next
+		_cast_next = ""
+		_play(next, true)
+		return
+	if finished.begins_with("motion_") and not dead and not dying:
+		_play(_idle)
+		return
 	if (finished.begins_with("attack") or finished == "hit") and not dead and not dying:
 		_play(_idle)

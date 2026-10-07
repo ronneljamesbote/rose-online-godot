@@ -15,10 +15,12 @@
 ##   --profile=NAME             identity file to use (user://identity-NAME.token), so two
 ##                              clients on one PC are two players
 ##   --offline                  skip the start screen and play offline
-##   --net-demo[=square|line|fight|walls|warp|shop]   online: scripted routes, fights, wall
-##                              tests, warp gates, buying and selling at the nearest store
+##   --net-demo[=square|line|fight|walls|warp|shop|skills]   online: scripted routes, fights,
+##                              wall tests, warp gates, buying and selling at the nearest
+##                              store (--buy=TEXT: what to buy), or the first two active
+##                              skills (a buff, then an attack)
 ##   --net-log                  online: print every player's position once a second
-##   --open=inventory,character online: open these windows at the start (for screenshots)
+##   --open=inventory,character,skills   online: open these windows at the start (for screenshots)
 ##   --quit-after=SECONDS       quit after this long
 extends Node3D
 
@@ -209,6 +211,8 @@ func _on_joined(me: Node3D) -> void:
 		online.toggle_inventory_window()
 	if "character" in windows:
 		online.toggle_character_window()
+	if "skills" in windows:
+		online.toggle_skill_window()
 	if options.has("net-demo"):
 		_run_net_demo(me)
 
@@ -230,6 +234,9 @@ func _run_net_demo(me: Node3D) -> void:
 		return
 	if options["net-demo"] == "shop":
 		_run_shop_demo()
+		return
+	if options["net-demo"] == "skills":
+		_run_skills_demo()
 		return
 	if options["net-demo"] == "line":
 		route = [Vector3(5, 0, 0), Vector3(0, 0, 0)]
@@ -323,6 +330,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			online.toggle_character_window()
 		elif event.keycode == KEY_I and online:
 			online.toggle_inventory_window()
+		elif event.keycode == KEY_K and online:
+			online.toggle_skill_window()
+		elif event.keycode >= KEY_1 and event.keycode <= KEY_8 and online:
+			online.hotbar.use_slot(event.keycode - KEY_1)
 		elif event.keycode == KEY_Z and online:
 			online.pickup(online.nearest_item())
 
@@ -372,6 +383,35 @@ func _run_warp_demo() -> void:
 		trips += 1
 
 
+## Puts the first two active skills on the hotbar, uses the first (a buff) and then the
+## second on the nearest monster, over and over, between normal attacks.
+func _run_skills_demo() -> void:
+	await get_tree().create_timer(4.0).timeout
+	var active: Array = online.net.get_skills()[1]
+	var names := []
+	for i in 2:
+		if active[i] != null:
+			online.net.set_hotbar(i, "skill", 1, i)
+			names.append(active[i]["name"])
+	print("rose net demo: hotbar skills ", names)
+	while true:
+		await get_tree().create_timer(1.0).timeout
+		online.hotbar.use_slot(0)
+		print("rose net demo: use %s, MP %d" % [names[0] if names.size() > 0 else "?", online.me.mp])
+		await get_tree().create_timer(3.0).timeout
+		var effects: Array = online.net.get_status_effects(online.my_id)
+		print("rose net demo: status effects ", effects.map(func(e): return "%s %.0f s" % [e["name"], e["seconds"]]))
+		for round in 3:
+			var target: int = online.nearest_monster()
+			if target < 0:
+				break
+			online.attack(target)
+			await get_tree().create_timer(0.3).timeout
+			online.hotbar.use_slot(1)
+			print("rose net demo: use %s on %s, MP %d" % [names[1] if names.size() > 1 else "?", online.entities[target].label.text if online.entities.has(target) else "?", online.me.mp])
+			await get_tree().create_timer(3.0).timeout
+
+
 ## Walks to the nearest store, buys the first item of each tab, then sells one of them back.
 func _run_shop_demo() -> void:
 	await get_tree().create_timer(3.0).timeout
@@ -395,14 +435,26 @@ func _run_shop_demo() -> void:
 			names.append("%s %d" % [entry["item"]["name"], entry["price"]])
 		print("rose net demo: %s, tab %s: %s" % [store["name"], t["name"], ", ".join(names)])
 	var money_before: int = online.net.get_inventory()["money"]
+	var wanted: String = options.get("buy", "")
 	for t in store["tabs"].size():
 		online.store_window.tabs.current_tab = t
 		await get_tree().create_timer(1.0).timeout
-		var entry: Dictionary = store["tabs"][t]["items"][0]
-		print("rose net demo: buy %s for %d Zuly" % [entry["item"]["name"], entry["price"]])
-		online.store_window.buy(entry["index"], 1)
-		await get_tree().create_timer(1.0).timeout
+		for entry in store["tabs"][t]["items"]:
+			if wanted != "" and not wanted.to_lower() in String(entry["item"]["name"]).to_lower():
+				continue
+			print("rose net demo: buy %s for %d Zuly" % [entry["item"]["name"], entry["price"]])
+			online.store_window.buy(entry["index"], 1)
+			await get_tree().create_timer(1.0).timeout
+			break
 	print("rose net demo: Zuly %d -> %d" % [money_before, online.net.get_inventory()["money"]])
+	# Read what we bought: skill books teach their skill, scrolls cast theirs.
+	var use_page: Array = online.net.get_inventory()["pages"][1]
+	for i in use_page.size():
+		var item = use_page[i]
+		if item != null and (item.get("class", "") == "Skill Book" or item.get("class", "") == "Magic Item"):
+			print("rose net demo: use ", item["name"])
+			online.net.use_item(1, i)
+			await get_tree().create_timer(4.0).timeout
 	await get_tree().create_timer(2.0).timeout
 	var pages: Array = online.net.get_inventory()["pages"]
 	for i in pages[0].size():

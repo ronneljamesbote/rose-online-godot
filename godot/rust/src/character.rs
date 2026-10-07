@@ -55,6 +55,9 @@ impl Part {
 #[class(base=Node3D, init)]
 pub struct RoseCharacter {
     base: Base<Node3D>,
+    gender: usize,
+    weapon_motion_type: usize,
+    dummy_offset: usize,
 }
 
 fn bone_name(index: usize, dummy_offset: usize) -> String {
@@ -234,6 +237,9 @@ impl RoseCharacter {
             0
         };
         let gender = if male { 0 } else { 1 };
+        self.gender = gender;
+        self.weapon_motion_type = weapon_motion_type;
+        self.dummy_offset = dummy_offset;
         let mut library = AnimationLibrary::new_gd();
         for index in 0..CharacterMotionAction::LENGTH {
             let action = CharacterMotionAction::from_usize(index);
@@ -252,6 +258,30 @@ impl RoseCharacter {
 
         add_player(&mut self.to_gd().upcast(), library);
         true
+    }
+
+    /// Adds a skill motion (a MotionId from LIST_SKILL.STB, looked up in TYPE_MOTION.STB for
+    /// the equipped weapon) to the animation player. Returns its animation name ("motion_ID"),
+    /// or "" when there is none.
+    #[func]
+    fn add_motion(&mut self, motion_id: i32) -> GString {
+        let name = format!("motion_{motion_id}");
+        let Some(player) = self.base().try_get_node_as::<AnimationPlayer>("AnimationPlayer") else {
+            return GString::new();
+        };
+        if player.has_animation(name.as_str()) {
+            return GString::from(name.as_str());
+        }
+        let (Some(game_data), Some(id)) = (data::get(), u16::try_from(motion_id).ok().map(rose_data::MotionId::new)) else {
+            return GString::new();
+        };
+        let Some(motion) = game_data.motions.find_first_character_motion(id, self.weapon_motion_type, self.gender) else {
+            return GString::new();
+        };
+        let Some(zmo) = data::read_file::<ZmoFile>(&motion.path.path().to_string_lossy()) else { return GString::new() };
+        let Some(mut library) = player.get_animation_library("") else { return GString::new() };
+        library.add_animation(name.as_str(), &build_animation(&zmo, self.dummy_offset, false));
+        GString::from(name.as_str())
     }
 }
 

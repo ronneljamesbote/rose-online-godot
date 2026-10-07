@@ -10,6 +10,7 @@ pub mod add_basic_stat_reducer;
 pub mod admin_type;
 pub mod attack_reducer;
 pub mod begin_game_data_upload_reducer;
+pub mod cast_skill_reducer;
 pub mod combat_table;
 pub mod combat_tick_timer_type;
 pub mod combat_type;
@@ -28,9 +29,11 @@ pub mod game_data_status_type;
 pub mod game_file_type;
 pub mod game_file_upload_type;
 pub mod give_money_reducer;
+pub mod give_skill_reducer;
 pub mod give_xp_reducer;
 pub mod ground_item_table;
 pub mod ground_item_type;
+pub mod level_up_skill_reducer;
 pub mod monster_ai_type;
 pub mod monster_spawn_type;
 pub mod motion_table;
@@ -51,13 +54,21 @@ pub mod regen_type;
 pub mod reset_monsters_reducer;
 pub mod set_aggro_range_reducer;
 pub mod set_basic_stat_reducer;
+pub mod set_hotbar_slot_reducer;
+pub mod set_job_reducer;
 pub mod set_name_reducer;
 pub mod set_price_rates_reducer;
 pub mod set_world_rates_reducer;
+pub mod skill_cast_table;
+pub mod skill_cast_type;
+pub mod skill_cooldown_row_type;
+pub mod skill_cooldown_table;
 pub mod spawn_entry_type;
 pub mod spawn_tick_timer_type;
 pub mod stats_table;
 pub mod stats_type;
+pub mod status_effect_row_type;
+pub mod status_effect_table;
 pub mod stop_reducer;
 pub mod store_buy_type;
 pub mod store_sell_type;
@@ -80,6 +91,7 @@ pub use add_basic_stat_reducer::add_basic_stat;
 pub use admin_type::Admin;
 pub use attack_reducer::attack;
 pub use begin_game_data_upload_reducer::begin_game_data_upload;
+pub use cast_skill_reducer::cast_skill;
 pub use combat_table::*;
 pub use combat_tick_timer_type::CombatTickTimer;
 pub use combat_type::Combat;
@@ -98,9 +110,11 @@ pub use game_data_status_type::GameDataStatus;
 pub use game_file_type::GameFile;
 pub use game_file_upload_type::GameFileUpload;
 pub use give_money_reducer::give_money;
+pub use give_skill_reducer::give_skill;
 pub use give_xp_reducer::give_xp;
 pub use ground_item_table::*;
 pub use ground_item_type::GroundItem;
+pub use level_up_skill_reducer::level_up_skill;
 pub use monster_ai_type::MonsterAi;
 pub use monster_spawn_type::MonsterSpawn;
 pub use motion_table::*;
@@ -121,13 +135,21 @@ pub use regen_type::Regen;
 pub use reset_monsters_reducer::reset_monsters;
 pub use set_aggro_range_reducer::set_aggro_range;
 pub use set_basic_stat_reducer::set_basic_stat;
+pub use set_hotbar_slot_reducer::set_hotbar_slot;
+pub use set_job_reducer::set_job;
 pub use set_name_reducer::set_name;
 pub use set_price_rates_reducer::set_price_rates;
 pub use set_world_rates_reducer::set_world_rates;
+pub use skill_cast_table::*;
+pub use skill_cast_type::SkillCast;
+pub use skill_cooldown_row_type::SkillCooldownRow;
+pub use skill_cooldown_table::*;
 pub use spawn_entry_type::SpawnEntry;
 pub use spawn_tick_timer_type::SpawnTickTimer;
 pub use stats_table::*;
 pub use stats_type::Stats;
+pub use status_effect_row_type::StatusEffectRow;
+pub use status_effect_table::*;
 pub use stop_reducer::stop;
 pub use store_buy_type::StoreBuy;
 pub use store_sell_type::StoreSell;
@@ -161,6 +183,13 @@ pub enum Reducer {
         target: u64,
     },
     BeginGameDataUpload,
+    CastSkill {
+        page: u8,
+        index: u16,
+        target: Option<u64>,
+        x: f32,
+        y: f32,
+    },
     DropItem {
         page: u8,
         index: u16,
@@ -178,9 +207,17 @@ pub enum Reducer {
         name: String,
         amount: i64,
     },
+    GiveSkill {
+        name: String,
+        skill_id: u16,
+    },
     GiveXp {
         name: String,
         xp: u64,
+    },
+    LevelUpSkill {
+        page: u8,
+        index: u16,
     },
     MoveCollision {
         x: f32,
@@ -217,6 +254,16 @@ pub enum Reducer {
         name: String,
         stat: u8,
         value: i32,
+    },
+    SetHotbarSlot {
+        index: u8,
+        kind: u8,
+        page: u8,
+        slot: u16,
+    },
+    SetJob {
+        name: String,
+        job: u16,
     },
     SetName {
         name: String,
@@ -265,12 +312,15 @@ impl __sdk::Reducer for Reducer {
             Reducer::AddBasicStat { .. } => "add_basic_stat",
             Reducer::Attack { .. } => "attack",
             Reducer::BeginGameDataUpload => "begin_game_data_upload",
+            Reducer::CastSkill { .. } => "cast_skill",
             Reducer::DropItem { .. } => "drop_item",
             Reducer::DropMoney { .. } => "drop_money",
             Reducer::EquipItem { .. } => "equip_item",
             Reducer::FinishGameDataUpload => "finish_game_data_upload",
             Reducer::GiveMoney { .. } => "give_money",
+            Reducer::GiveSkill { .. } => "give_skill",
             Reducer::GiveXp { .. } => "give_xp",
+            Reducer::LevelUpSkill { .. } => "level_up_skill",
             Reducer::MoveCollision { .. } => "move_collision",
             Reducer::MoveItem { .. } => "move_item",
             Reducer::MoveTo { .. } => "move_to",
@@ -280,6 +330,8 @@ impl __sdk::Reducer for Reducer {
             Reducer::ResetMonsters => "reset_monsters",
             Reducer::SetAggroRange { .. } => "set_aggro_range",
             Reducer::SetBasicStat { .. } => "set_basic_stat",
+            Reducer::SetHotbarSlot { .. } => "set_hotbar_slot",
+            Reducer::SetJob { .. } => "set_job",
             Reducer::SetName { .. } => "set_name",
             Reducer::SetPriceRates { .. } => "set_price_rates",
             Reducer::SetWorldRates { .. } => "set_world_rates",
@@ -307,6 +359,19 @@ impl __sdk::Reducer for Reducer {
             Reducer::BeginGameDataUpload => {
                 __sats::bsatn::to_vec(&begin_game_data_upload_reducer::BeginGameDataUploadArgs {})
             }
+            Reducer::CastSkill {
+                page,
+                index,
+                target,
+                x,
+                y,
+            } => __sats::bsatn::to_vec(&cast_skill_reducer::CastSkillArgs {
+                page: page.clone(),
+                index: index.clone(),
+                target: target.clone(),
+                x: x.clone(),
+                y: y.clone(),
+            }),
             Reducer::DropItem {
                 page,
                 index,
@@ -336,10 +401,22 @@ impl __sdk::Reducer for Reducer {
                     amount: amount.clone(),
                 })
             }
+            Reducer::GiveSkill { name, skill_id } => {
+                __sats::bsatn::to_vec(&give_skill_reducer::GiveSkillArgs {
+                    name: name.clone(),
+                    skill_id: skill_id.clone(),
+                })
+            }
             Reducer::GiveXp { name, xp } => __sats::bsatn::to_vec(&give_xp_reducer::GiveXpArgs {
                 name: name.clone(),
                 xp: xp.clone(),
             }),
+            Reducer::LevelUpSkill { page, index } => {
+                __sats::bsatn::to_vec(&level_up_skill_reducer::LevelUpSkillArgs {
+                    page: page.clone(),
+                    index: index.clone(),
+                })
+            }
             Reducer::MoveCollision { x, y } => {
                 __sats::bsatn::to_vec(&move_collision_reducer::MoveCollisionArgs {
                     x: x.clone(),
@@ -394,6 +471,21 @@ impl __sdk::Reducer for Reducer {
                     value: value.clone(),
                 })
             }
+            Reducer::SetHotbarSlot {
+                index,
+                kind,
+                page,
+                slot,
+            } => __sats::bsatn::to_vec(&set_hotbar_slot_reducer::SetHotbarSlotArgs {
+                index: index.clone(),
+                kind: kind.clone(),
+                page: page.clone(),
+                slot: slot.clone(),
+            }),
+            Reducer::SetJob { name, job } => __sats::bsatn::to_vec(&set_job_reducer::SetJobArgs {
+                name: name.clone(),
+                job: job.clone(),
+            }),
             Reducer::SetName { name } => {
                 __sats::bsatn::to_vec(&set_name_reducer::SetNameArgs { name: name.clone() })
             }
@@ -468,7 +560,10 @@ pub struct DbUpdate {
     notice: __sdk::TableUpdate<Notice>,
     npc: __sdk::TableUpdate<Npc>,
     player: __sdk::TableUpdate<Player>,
+    skill_cast: __sdk::TableUpdate<SkillCast>,
+    skill_cooldown: __sdk::TableUpdate<SkillCooldownRow>,
     stats: __sdk::TableUpdate<Stats>,
+    status_effect: __sdk::TableUpdate<StatusEffectRow>,
     tick_stats: __sdk::TableUpdate<TickStats>,
     world_rates: __sdk::TableUpdate<WorldRates>,
     xp_event: __sdk::TableUpdate<XpEvent>,
@@ -508,9 +603,18 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "player" => db_update
                     .player
                     .append(player_table::parse_table_update(table_update)?),
+                "skill_cast" => db_update
+                    .skill_cast
+                    .append(skill_cast_table::parse_table_update(table_update)?),
+                "skill_cooldown" => db_update
+                    .skill_cooldown
+                    .append(skill_cooldown_table::parse_table_update(table_update)?),
                 "stats" => db_update
                     .stats
                     .append(stats_table::parse_table_update(table_update)?),
+                "status_effect" => db_update
+                    .status_effect
+                    .append(status_effect_table::parse_table_update(table_update)?),
                 "tick_stats" => db_update
                     .tick_stats
                     .append(tick_stats_table::parse_table_update(table_update)?),
@@ -572,9 +676,18 @@ impl __sdk::DbUpdate for DbUpdate {
         diff.player = cache
             .apply_diff_to_table::<Player>("player", &self.player)
             .with_updates_by_pk(|row| &row.identity);
+        diff.skill_cast = cache
+            .apply_diff_to_table::<SkillCast>("skill_cast", &self.skill_cast)
+            .with_updates_by_pk(|row| &row.entity_id);
+        diff.skill_cooldown = cache
+            .apply_diff_to_table::<SkillCooldownRow>("skill_cooldown", &self.skill_cooldown)
+            .with_updates_by_pk(|row| &row.id);
         diff.stats = cache
             .apply_diff_to_table::<Stats>("stats", &self.stats)
             .with_updates_by_pk(|row| &row.entity_id);
+        diff.status_effect = cache
+            .apply_diff_to_table::<StatusEffectRow>("status_effect", &self.status_effect)
+            .with_updates_by_pk(|row| &row.id);
         diff.tick_stats = cache
             .apply_diff_to_table::<TickStats>("tick_stats", &self.tick_stats)
             .with_updates_by_pk(|row| &row.id);
@@ -619,8 +732,17 @@ impl __sdk::DbUpdate for DbUpdate {
                 "player" => db_update
                     .player
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "skill_cast" => db_update
+                    .skill_cast
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "skill_cooldown" => db_update
+                    .skill_cooldown
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "stats" => db_update
                     .stats
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "status_effect" => db_update
+                    .status_effect
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "tick_stats" => db_update
                     .tick_stats
@@ -674,8 +796,17 @@ impl __sdk::DbUpdate for DbUpdate {
                 "player" => db_update
                     .player
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "skill_cast" => db_update
+                    .skill_cast
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "skill_cooldown" => db_update
+                    .skill_cooldown
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "stats" => db_update
                     .stats
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "status_effect" => db_update
+                    .status_effect
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "tick_stats" => db_update
                     .tick_stats
@@ -713,7 +844,10 @@ pub struct AppliedDiff<'r> {
     notice: __sdk::TableAppliedDiff<'r, Notice>,
     npc: __sdk::TableAppliedDiff<'r, Npc>,
     player: __sdk::TableAppliedDiff<'r, Player>,
+    skill_cast: __sdk::TableAppliedDiff<'r, SkillCast>,
+    skill_cooldown: __sdk::TableAppliedDiff<'r, SkillCooldownRow>,
     stats: __sdk::TableAppliedDiff<'r, Stats>,
+    status_effect: __sdk::TableAppliedDiff<'r, StatusEffectRow>,
     tick_stats: __sdk::TableAppliedDiff<'r, TickStats>,
     world_rates: __sdk::TableAppliedDiff<'r, WorldRates>,
     xp_event: __sdk::TableAppliedDiff<'r, XpEvent>,
@@ -748,7 +882,18 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
         callbacks.invoke_table_row_callbacks::<Notice>("notice", &self.notice, event);
         callbacks.invoke_table_row_callbacks::<Npc>("npc", &self.npc, event);
         callbacks.invoke_table_row_callbacks::<Player>("player", &self.player, event);
+        callbacks.invoke_table_row_callbacks::<SkillCast>("skill_cast", &self.skill_cast, event);
+        callbacks.invoke_table_row_callbacks::<SkillCooldownRow>(
+            "skill_cooldown",
+            &self.skill_cooldown,
+            event,
+        );
         callbacks.invoke_table_row_callbacks::<Stats>("stats", &self.stats, event);
+        callbacks.invoke_table_row_callbacks::<StatusEffectRow>(
+            "status_effect",
+            &self.status_effect,
+            event,
+        );
         callbacks.invoke_table_row_callbacks::<TickStats>("tick_stats", &self.tick_stats, event);
         callbacks.invoke_table_row_callbacks::<WorldRates>("world_rates", &self.world_rates, event);
         callbacks.invoke_table_row_callbacks::<XpEvent>("xp_event", &self.xp_event, event);
@@ -1422,7 +1567,10 @@ impl __sdk::SpacetimeModule for RemoteModule {
         notice_table::register_table(client_cache);
         npc_table::register_table(client_cache);
         player_table::register_table(client_cache);
+        skill_cast_table::register_table(client_cache);
+        skill_cooldown_table::register_table(client_cache);
         stats_table::register_table(client_cache);
+        status_effect_table::register_table(client_cache);
         tick_stats_table::register_table(client_cache);
         world_rates_table::register_table(client_cache);
         xp_event_table::register_table(client_cache);
@@ -1438,7 +1586,10 @@ impl __sdk::SpacetimeModule for RemoteModule {
         "notice",
         "npc",
         "player",
+        "skill_cast",
+        "skill_cooldown",
         "stats",
+        "status_effect",
         "tick_stats",
         "world_rates",
         "xp_event",

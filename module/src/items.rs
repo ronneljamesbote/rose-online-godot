@@ -134,7 +134,7 @@ pub(crate) fn player_ability_values(ctx: &ReducerContext, game: &GameData, p: &P
     p.entity_id
         .and_then(|id| ctx.db.stats().entity_id().find(id))
         .and_then(|s| serde_json::from_str(&s.ability_values).ok())
-        .unwrap_or_else(|| character::ability_values(game, p))
+        .unwrap_or_else(|| character::ability_values(ctx, game, p))
 }
 
 // ---------------------------------------------------------------- drops
@@ -515,8 +515,19 @@ pub fn use_item(ctx: &ReducerContext, page: u8, index: u16) -> Result<(), String
     }
     let data = game.items.get_consumable_item(item.get_item_number()).ok_or("unknown item")?;
     match data.item_data.class {
-        ItemClass::MagicItem | ItemClass::SkillBook | ItemClass::EngineFuel | ItemClass::RepairTool | ItemClass::TimeCoupon => {
+        ItemClass::EngineFuel | ItemClass::RepairTool | ItemClass::TimeCoupon => {
             return Err("that can't be used yet".into());
+        }
+        ItemClass::SkillBook => {
+            let skill_id = data.learn_skill_id.ok_or("the book is blank")?;
+            inventory.try_take_quantity(slot, 1).ok_or("nothing there")?;
+            p.set_inventory(&inventory);
+            return crate::skills::learn_skill(ctx, &game, &mut p, skill_id);
+        }
+        ItemClass::MagicItem => {
+            let skill_id = data.use_skill_id.ok_or("nothing happens")?;
+            let item = item.clone();
+            return crate::skills::use_scroll(ctx, &game, &p, id, slot, &item, skill_id);
         }
         _ => {}
     }
