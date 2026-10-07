@@ -14,6 +14,7 @@ mod npcs;
 use npcs::npc;
 mod quests;
 mod npc_ai;
+mod party;
 mod skills;
 mod world;
 
@@ -995,6 +996,7 @@ fn stop_chase(ctx: &ReducerContext, id: u64, target: u64) {
 fn reward_kill(ctx: &ReducerContext, game: &GameData, monster: u64, monster_stats: &Stats, npc_id: u16, t: i64) {
     let Some(npc) = rose_data::NpcId::new(npc_id).and_then(|id| game.npcs.get_npc(id)) else { return };
     let rates = world_rates_row(ctx);
+    let at = position(ctx, monster, t).unwrap_or_default();
     for source in ctx.db.damage_source().defender().filter(monster) {
         if t - source.last_at_us > DAMAGE_REWARD_EXPIRE_US {
             continue;
@@ -1009,9 +1011,7 @@ fn reward_kill(ctx: &ReducerContext, game: &GameData, monster: u64, monster_stat
             rates.xp_rate,
         );
         if xp > 0 {
-            character::reward_xp(ctx, game, player.identity, xp as u64);
-            let level = ctx.db.player().identity().find(player.identity).map_or(0, |p| p.level);
-            ctx.db.xp_event().insert(XpEvent { identity: player.identity, xp: xp as u64, level });
+            party::reward_kill_xp(ctx, game, &player, xp as u64, at, t);
         }
     }
 }
@@ -1112,6 +1112,7 @@ pub fn spawn_tick(ctx: &ReducerContext, _timer: SpawnTickTimer) -> Result<(), St
     items::expire_drops(ctx, t);
     skills::status_tick(ctx, &game, t);
     npc_ai::npc_ai_tick(ctx, &game, t);
+    party::expire_invites(ctx, t);
     world::spawn_tick(ctx, &game, t);
 
     // Idle wandering: about one in eight idle monsters takes a short walk each second.

@@ -191,7 +191,7 @@ pub fn expire_drops(ctx: &ReducerContext, t: i64) {
 #[spacetimedb::reducer]
 pub fn pickup_item(ctx: &ReducerContext, drop_id: u64) -> Result<(), String> {
     let game = game(ctx)?;
-    let (mut p, id) = my_player(ctx)?;
+    let (p, id) = my_player(ctx)?;
     if !crate::is_alive(ctx, id) {
         return Err("dead".into());
     }
@@ -201,17 +201,30 @@ pub fn pickup_item(ctx: &ReducerContext, drop_id: u64) -> Result<(), String> {
     if ground.zone_id != p.zone_id || distance(me, (ground.x, ground.y)) > PICKUP_RANGE_CM {
         return Err("too far away".into());
     }
-    if ground.owner.is_some_and(|o| o != p.identity) && t < ground.owner_until_us {
+    // Drops belong to the killer (and their party) for a while.
+    if ground.owner.is_some_and(|o| o != p.identity && !crate::party::same_party(ctx, o, p.identity)) && t < ground.owner_until_us {
         return Err("that belongs to someone else".into());
     }
     let dropped: DroppedItem = serde_json::from_str(&ground.item).map_err(|e| e.to_string())?;
+    let at = (ground.x, ground.y);
+    let receiver = crate::party::pickup_receiver(ctx, &p, &dropped, at, t);
+    let mut r = if receiver == p.identity { p.clone() } else { ctx.db.player().identity().find(receiver).ok_or("no such player")? };
     match dropped {
         DroppedItem::Money(money) => {
-            let mut inventory = p.inventory();
-            inventory.try_add_money(money).map_err(|_| "you can't carry more money")?;
-            p.set_inventory(&inventory);
-            ctx.db.player().identity().update(p.clone());
-            notify(ctx, p.identity, format!("Picked up {} Zuly", money.0));
+            let shares = crate::party::split_money(ctx, &p, money.0, at, t).unwrap_or_else(|| vec![(r.identity, money.0)]);
+            for (identity, amount) in shares {
+                let Some(mut m) = ctx.db.player().identity().find(identity) else { continue };
+                let mut inventory = m.inventory();
+                if inventory.try_add_money(Money(amount)).is_err() {
+                    if identity == p.identity {
+                        return Err("you can't carry more money".into());
+                    }
+                    continue;
+                }
+                m.set_inventory(&inventory);
+                ctx.db.player().identity().update(m);
+                notify(ctx, identity, format!("Picked up {amount} Zuly"));
+            }
         }
         DroppedItem::Item(item) => {
             let automatic = item.get_item_type() == ItemType::Consumable
@@ -221,14 +234,26 @@ pub fn pickup_item(ctx: &ReducerContext, drop_id: u64) -> Result<(), String> {
                     .is_some_and(|d| d.item_data.class == ItemClass::AutomaticConsumption);
             let name = item_name(&game, &item);
             if automatic {
-                apply_consumable(ctx, &game, &mut p, id, item.get_item_number());
+                let entity_id = r.entity_id.unwrap_or(id);
+                apply_consumable(ctx, &game, &mut r, entity_id, item.get_item_number());
             } else {
-                let mut inventory = p.inventory();
-                inventory.try_add_item(item).map_err(|_| "your inventory is full")?;
-                p.set_inventory(&inventory);
-                ctx.db.player().identity().update(p.clone());
+                let mut inventory = r.inventory();
+                if let Err(item) = inventory.try_add_item(item) {
+                    if r.identity == p.identity {
+                        return Err("your inventory is full".into());
+                    }
+                    // Their bag is full: the picker keeps it.
+                    r = p.clone();
+                    inventory = r.inventory();
+                    inventory.try_add_item(item).map_err(|_| "your inventory is full")?;
+                }
+                r.set_inventory(&inventory);
+                ctx.db.player().identity().update(r.clone());
             }
-            notify(ctx, p.identity, format!("Picked up {name}"));
+            notify(ctx, r.identity, format!("Picked up {name}"));
+            if r.identity != p.identity {
+                notify(ctx, p.identity, format!("{name} went to {}", r.name));
+            }
         }
     }
     ctx.db.ground_item().drop_id().delete(drop_id);

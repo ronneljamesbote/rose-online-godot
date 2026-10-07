@@ -15,11 +15,13 @@
 ##   --profile=NAME             identity file to use (user://identity-NAME.token), so two
 ##                              clients on one PC are two players
 ##   --offline                  skip the start screen and play offline
-##   --net-demo[=square|line|fight|walls|warp|shop|skills|talk]   online: scripted routes, fights,
+##   --net-demo[=square|line|fight|walls|warp|shop|skills|talk|party]   online: scripted routes, fights,
 ##                              wall tests, warp gates, buying and selling at the nearest
 ##                              store (--buy=TEXT: what to buy), the first two active
 ##                              skills (a buff, then an attack), or a talk with the NPC
-##                              --npc=NAME, answering --answers=1,2,... (q: list quests)
+##                              --npc=NAME, answering --answers=1,2,... (q: list quests;
+##                              deposit/withdraw: the bank), or a party (--invite=NAME
+##                              invites, else accept; --rules=XP,ITEMS) that then fights
 ##   --net-log                  online: print every player's position once a second
 ##   --open=inventory,character,skills,quests   online: open these windows at the start (for screenshots)
 ##   --quit-after=SECONDS       quit after this long
@@ -250,6 +252,9 @@ func _run_net_demo(me: Node3D) -> void:
 	if options["net-demo"] == "talk":
 		_run_talk_demo()
 		return
+	if options["net-demo"] == "party":
+		_run_party_demo()
+		return
 	if options["net-demo"] == "line":
 		route = [Vector3(5, 0, 0), Vector3(0, 0, 0)]
 		pause = 3.5
@@ -307,6 +312,11 @@ func _take_screenshot(path: String) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if online and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
+		var other: int = online.pick_player(camera, event.position)
+		if other >= 0:
+			online.open_player_menu(other, event.position)
+			return
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		if online:
 			var monster: int = online.pick_monster(camera, event.position)
@@ -503,6 +513,61 @@ func _print_conversation() -> void:
 	var responses: Array = d["responses"]
 	for i in responses.size():
 		print("rose net demo:   %d. %s" % [i + 1, responses[i]])
+
+
+## Party test with two clients: with --invite=NAME, invite that player once they are near;
+## without, accept the first invitation. Then both fight, printing the party now and then.
+func _run_party_demo() -> void:
+	var wanted := String(options.get("invite", ""))
+	if not online.net.get_party().is_empty():
+		# Start from scratch: leave the party of an earlier run.
+		print("rose net demo: leave the old party")
+		online.net.party_leave()
+		await get_tree().create_timer(3.0).timeout
+	var waited := 0.0
+	while waited < 90.0 and not _party_has(wanted):
+		await get_tree().create_timer(1.0).timeout
+		waited += 1.0
+		if wanted != "":
+			for id in online.entities:
+				if online.entities[id].label.text == wanted:
+					print("rose net demo: invite ", wanted)
+					online.net.party_invite(id)
+					await get_tree().create_timer(4.0).timeout
+					break
+		elif not online.net.get_party_invites().is_empty():
+			# --accept-after=SECONDS leaves the invitation up for a screenshot.
+			await get_tree().create_timer(float(options.get("accept-after", "0"))).timeout
+			print("rose net demo: accept invitation from ", online.net.get_party_invites()[0][1])
+			online.party_window.answer_invite(true)
+	_print_party()
+	if options.has("rules"):
+		var r := String(options["rules"]).split(",")
+		online.net.party_set_rules(int(r[0]), int(r[1]))
+	get_tree().create_timer(20.0).timeout.connect(_print_party)
+	get_tree().create_timer(50.0).timeout.connect(_print_party)
+	_run_fight_demo()
+
+
+## In a party, with this member when a name is given.
+func _party_has(member: String) -> bool:
+	var party: Dictionary = online.net.get_party()
+	if party.is_empty():
+		return false
+	if member == "":
+		return true
+	return party["members"].any(func(m): return m["name"] == member)
+
+
+func _print_party() -> void:
+	var party: Dictionary = online.net.get_party()
+	if party.is_empty():
+		print("rose net demo: no party")
+		return
+	var members := []
+	for m in party["members"]:
+		members.append("%s%s Lv %d HP %d/%d" % ["*" if m["leader"] else "", m["name"], m["level"], m["hp"], m["max_hp"]])
+	print("rose net demo: party xp %d items %d: %s" % [party["xp_sharing"], party["item_sharing"], members])
 
 
 func _print_bank() -> void:

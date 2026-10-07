@@ -10,6 +10,7 @@ const CharacterWindow := preload("res://scripts/character_window.gd")
 const InventoryWindow := preload("res://scripts/inventory_window.gd")
 const StoreWindow := preload("res://scripts/store_window.gd")
 const BankWindow := preload("res://scripts/bank_window.gd")
+const PartyWindow := preload("res://scripts/party_window.gd")
 const SkillWindow := preload("res://scripts/skill_window.gd")
 const ConversationWindow := preload("res://scripts/conversation_window.gd")
 const QuestWindow := preload("res://scripts/quest_window.gd")
@@ -42,6 +43,9 @@ var character_window: PanelContainer
 var inventory_window: PanelContainer
 var store_window: PanelContainer
 var bank_window: PanelContainer
+var party_window: PanelContainer
+var player_menu: PopupMenu
+var _menu_player := -1
 var skill_window: PanelContainer
 var conversation_window: PanelContainer
 var quest_window: PanelContainer
@@ -128,6 +132,29 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	bank_window.offset_top = 70
 	layer.add_child(bank_window)
 	inventory_window.bank_window = bank_window
+
+	party_window = PartyWindow.new()
+	party_window.net = net
+	party_window.visible = false
+	# Bottom right, clear of the notices on the left.
+	party_window.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
+	party_window.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	party_window.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	party_window.offset_right = -12
+	party_window.offset_bottom = -12
+	layer.add_child(party_window)
+	party_window.invite_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	party_window.invite_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	party_window.invite_panel.offset_top = 60
+	layer.add_child(party_window.invite_panel)
+
+	# Right-click on another player.
+	player_menu = PopupMenu.new()
+	player_menu.add_item("Invite to party", 0)
+	player_menu.id_pressed.connect(func(id):
+		if id == 0 and _menu_player >= 0:
+			net.party_invite(_menu_player))
+	layer.add_child(player_menu)
 
 	skill_window = SkillWindow.new()
 	skill_window.net = net
@@ -276,20 +303,34 @@ func stop() -> void:
 ## The monster under the mouse, or -1. Entities have no colliders yet, so this picks the
 ## one whose body centre is nearest the click on screen.
 func pick_monster(camera: Camera3D, screen_position: Vector2) -> int:
-	return _pick_entity(camera, screen_position, false)
+	return _pick_entity(camera, screen_position, "monster")
 
 
 ## The town NPC under the mouse, or -1.
 func pick_npc(camera: Camera3D, screen_position: Vector2) -> int:
-	return _pick_entity(camera, screen_position, true)
+	return _pick_entity(camera, screen_position, "npc")
 
 
-func _pick_entity(camera: Camera3D, screen_position: Vector2, npcs: bool) -> int:
+## Another player under the mouse, or -1.
+func pick_player(camera: Camera3D, screen_position: Vector2) -> int:
+	return _pick_entity(camera, screen_position, "player")
+
+
+## Right-click on another player: what we can do with them.
+func open_player_menu(id: int, at: Vector2) -> void:
+	_menu_player = id
+	player_menu.position = Vector2i(at)
+	player_menu.popup()
+
+
+func _pick_entity(camera: Camera3D, screen_position: Vector2, kind := "monster") -> int:
 	var best := -1
 	var best_distance := PICK_RADIUS_PX
 	for id in entities:
 		var entity: Node3D = entities[id]
-		if (not entity.is_npc if npcs else not entity.is_monster) or entity.dead or entity.dying:
+		var is_player: bool = not entity.is_npc and not entity.is_monster and entity != me
+		var wanted: bool = entity.is_npc if kind == "npc" else (is_player if kind == "player" else entity.is_monster)
+		if not wanted or entity.dead or entity.dying:
 			continue
 		var centre: Vector3 = entity.global_position + Vector3(0, entity.height * 0.5, 0)
 		if camera.is_position_behind(centre):

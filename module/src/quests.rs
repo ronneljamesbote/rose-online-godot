@@ -24,6 +24,7 @@ const QUEST_SPAWN_ID: u32 = u32::MAX;
 
 struct ServerWorld<'a> {
     ctx: &'a ReducerContext,
+    identity: Identity,
     zone_id: u16,
     t: i64,
 }
@@ -62,7 +63,7 @@ impl QuestWorld for ServerWorld<'_> {
     }
 
     fn party(&self) -> Option<QuestParty> {
-        None
+        crate::party::quest_party(self.ctx, self.identity)
     }
 }
 
@@ -641,7 +642,7 @@ pub fn run_trigger(ctx: &ReducerContext, game: &GameData, identity: Identity, na
     let Some(p) = ctx.db.player().identity().find(identity) else { return false };
     let Some(first) = rose_quest::find_trigger(&game.quests, name) else { return false };
     let mut run = Run::new(ctx, game, p);
-    let mut world = ServerWorld { ctx, zone_id: run.ch.zone_id, t: run.t };
+    let mut world = ServerWorld { ctx, identity, zone_id: run.ch.zone_id, t: run.t };
     let mut cx = QuestContext::default();
     let mut trigger = Some(first);
     let mut success = false;
