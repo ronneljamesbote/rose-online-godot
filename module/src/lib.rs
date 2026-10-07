@@ -129,7 +129,7 @@ pub struct MonsterAi {
 }
 
 #[spacetimedb::table(accessor = zone_info)]
-#[derive(Clone)]
+#[derive(Clone, serde::Deserialize)]
 pub struct ZoneInfo {
     #[primary_key]
     pub zone_id: u16,
@@ -145,7 +145,7 @@ pub struct ZoneInfo {
 }
 
 #[spacetimedb::table(accessor = monster_spawn)]
-#[derive(Clone)]
+#[derive(Clone, serde::Deserialize)]
 pub struct MonsterSpawn {
     #[primary_key]
     pub spawn_id: u32,
@@ -160,7 +160,7 @@ pub struct MonsterSpawn {
 }
 
 #[spacetimedb::table(accessor = npc_data)]
-#[derive(Clone)]
+#[derive(Clone, serde::Deserialize)]
 pub struct NpcData {
     #[primary_key]
     pub npc_id: u16,
@@ -487,6 +487,24 @@ pub fn init(ctx: &ReducerContext) {
         scheduled_id: 0,
         scheduled_at: ScheduleAt::Interval(Duration::from_millis(SPAWN_TICK_MS).into()),
     });
+    seed_zone_data(ctx);
+}
+
+/// Monster types and Zant's spawn points from the import tool (data/zone1), built into the
+/// module so a fresh server is playable after one publish. import_npcs and import_zone
+/// still replace them later.
+fn seed_zone_data(ctx: &ReducerContext) {
+    let (npcs,): (Vec<NpcData>,) =
+        serde_json::from_str(include_str!("../../data/zone1/npcs.json")).expect("data/zone1/npcs.json");
+    for npc in npcs {
+        ctx.db.npc_data().insert(npc);
+    }
+    let (zone, spawns): (ZoneInfo, Vec<MonsterSpawn>) =
+        serde_json::from_str(include_str!("../../data/zone1/zone.json")).expect("data/zone1/zone.json");
+    ctx.db.zone_info().insert(zone);
+    for spawn in spawns {
+        ctx.db.monster_spawn().insert(spawn);
+    }
 }
 
 #[spacetimedb::reducer(client_connected)]
