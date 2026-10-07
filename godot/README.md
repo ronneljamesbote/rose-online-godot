@@ -65,8 +65,16 @@ What works now:
   (Shift sells the stack) and its tooltip shows what the store pays. There is no path
   finding yet, so a store also opens when a wall stops you within 12 m of the NPC.
 
-Not yet: monsters walking around objects (the server has no zone geometry), skills,
-effects and particles, animated zone objects, sound, most UI.
+- Skills: K opens the skill window (basic, active, passive and clan pages with the original
+  icons and tooltips, and Level up for skill points). Skill books from the stores teach
+  skills; scrolls cast theirs (return scrolls warp you home). Drag skills or items onto the
+  hotbar at the bottom and use them with 1-8 or a right-click. Attack skills go on the
+  current target, buffs on yourself; the character plays the skill's casting and action
+  motions, and buffs and debuffs show as icons at the top. There are no skill effects
+  (particles) yet, and summons, resurrection and emotes are not in yet.
+
+Not yet: monsters walking around objects (the server has no zone geometry), effects and
+particles, animated zone objects, sound, most UI.
 
 ## Results (2026-10-07, headless, lavapipe software Vulkan)
 
@@ -94,7 +102,7 @@ godot --path godot -- --data-idx=/path/to/iRose_129_129/data.idx
 Godot 4.6 or newer. `ROSE_DATA_IDX` works instead of `--data-idx`. The start screen offers
 Connect (online) or Play offline. In game: left-click to move, S to stop, right-drag to
 orbit the camera, mouse wheel to zoom. Online, left-click a monster to attack it and Space
-attacks the nearest one, C opens the character window, I the inventory, Z picks up the nearest item; offline, Space swings the sword.
+attacks the nearest one, C opens the character window, I the inventory, K the skills, 1-8 use the hotbar, Z picks up the nearest item; offline, Space swings the sword.
 
 The start screen's server address may end in a database name, `ws://HOST:3000/NAME`
 (default `rose`). Without `--data-idx` the game looks for the last `data.idx` picked, then
@@ -116,12 +124,13 @@ Other options (after `--`):
 
 - `--server=ws://HOST:3000` connects straight away, with `--name=NAME`. `--weapon=bow`
   equips the bow and arrows from the bag once the character meets the bow's requirements.
-- `--open=inventory,character` opens those windows at the start (for screenshots).
+- `--open=inventory,character,skills` opens those windows at the start (for screenshots).
 - `--profile=NAME` picks the identity file (`user://identity-NAME.token`), so two clients on
   one PC are two players.
 - `--offline` skips the start screen.
-- `--net-demo[=square|line|fight|warp|shop|walls]` walks a scripted route, fights the nearest
-  monsters, walks through warp gates, buys and sells at the nearest store, or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
+- `--net-demo[=square|line|fight|warp|shop|skills|walls]` walks a scripted route, fights the nearest
+  monsters, walks through warp gates, buys and sells at the nearest store (`--buy=TEXT` picks
+  what to buy), uses the first two active skills, or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
   player's position once a second, `--quit-after=SECONDS` quits. The two-client test:
   `--headless ... --name=Alice --profile=alice --net-demo` in one process and
   `... --name=Bob --profile=bob --weapon=bow --net-demo=line --net-log` in another.

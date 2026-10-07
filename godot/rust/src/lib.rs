@@ -10,6 +10,7 @@ mod mesh;
 #[allow(clippy::all, unused)]
 mod module_bindings;
 mod net;
+mod skills;
 mod texture;
 mod zone;
 

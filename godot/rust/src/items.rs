@@ -13,13 +13,28 @@ use rose_file_readers::{TsiFile, ZscFile};
 
 use crate::{data, material, mesh, texture};
 
-fn icon_sheet() -> Option<&'static TsiFile> {
-    static TSI: OnceLock<Option<TsiFile>> = OnceLock::new();
-    TSI.get_or_init(|| data::read_file::<TsiFile>("3DDATA/CONTROL/RES/ITEM1.TSI")).as_ref()
+/// The UI sprite sheets icons come from.
+#[derive(Clone, Copy, PartialEq, Eq, Hash)]
+pub enum IconSheet {
+    Item,
+    Skill,
+    State,
+}
+
+fn icon_sheet(sheet: IconSheet) -> Option<&'static TsiFile> {
+    static ITEM: OnceLock<Option<TsiFile>> = OnceLock::new();
+    static SKILL: OnceLock<Option<TsiFile>> = OnceLock::new();
+    static STATE: OnceLock<Option<TsiFile>> = OnceLock::new();
+    let (lock, path) = match sheet {
+        IconSheet::Item => (&ITEM, "3DDATA/CONTROL/RES/ITEM1.TSI"),
+        IconSheet::Skill => (&SKILL, "3DDATA/CONTROL/RES/SKILLICON.TSI"),
+        IconSheet::State => (&STATE, "3DDATA/CONTROL/RES/STATEICON.TSI"),
+    };
+    lock.get_or_init(|| data::read_file::<TsiFile>(path)).as_ref()
 }
 
 thread_local! {
-    static ICONS: std::cell::RefCell<HashMap<u32, Gd<AtlasTexture>>> = Default::default();
+    static ICONS: std::cell::RefCell<HashMap<(IconSheet, u32), Gd<AtlasTexture>>> = Default::default();
 }
 
 pub fn clear_cache() {
@@ -28,10 +43,15 @@ pub fn clear_cache() {
 
 /// The inventory icon with this index (BaseItemData::icon_index).
 pub fn item_icon(index: u32) -> Option<Gd<Texture2D>> {
-    if let Some(icon) = ICONS.with(|icons| icons.borrow().get(&index).cloned()) {
+    icon(IconSheet::Item, index)
+}
+
+/// A sprite from one of the icon sheets (items, skills, status effects).
+pub fn icon(sheet_type: IconSheet, index: u32) -> Option<Gd<Texture2D>> {
+    if let Some(icon) = ICONS.with(|icons| icons.borrow().get(&(sheet_type, index)).cloned()) {
         return Some(icon.upcast());
     }
-    let sheet = icon_sheet()?;
+    let sheet = icon_sheet(sheet_type)?;
     let sprite = sheet.sprites.get(index as usize)?;
     let file = sheet.textures.get(sprite.texture_id as usize)?;
     let atlas_texture = texture::load_texture(&format!("3DDATA/CONTROL/RES/{}", file.filename))?;
@@ -41,7 +61,7 @@ pub fn item_icon(index: u32) -> Option<Gd<Texture2D>> {
         Vector2::new(sprite.left as f32, sprite.top as f32),
         Vector2::new((sprite.right - sprite.left) as f32, (sprite.bottom - sprite.top) as f32),
     ));
-    ICONS.with(|icons| icons.borrow_mut().insert(index, icon.clone()));
+    ICONS.with(|icons| icons.borrow_mut().insert((sheet_type, index), icon.clone()));
     Some(icon.upcast())
 }
 

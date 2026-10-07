@@ -9,6 +9,8 @@ const NetEntity := preload("res://scripts/net_entity.gd")
 const CharacterWindow := preload("res://scripts/character_window.gd")
 const InventoryWindow := preload("res://scripts/inventory_window.gd")
 const StoreWindow := preload("res://scripts/store_window.gd")
+const SkillWindow := preload("res://scripts/skill_window.gd")
+const Hotbar := preload("res://scripts/hotbar.gd")
 const PICK_RADIUS_PX := 60.0
 const ITEM_PICK_RADIUS_PX := 30.0
 const PICKUP_RANGE := 2.5  # metres; the server allows 4
@@ -36,6 +38,10 @@ var xp_label: Label
 var character_window: PanelContainer
 var inventory_window: PanelContainer
 var store_window: PanelContainer
+var skill_window: PanelContainer
+var hotbar: PanelContainer
+var effects_row: HBoxContainer  # our status effects, top centre
+var _next_effects_ms := 0
 var notice_box: VBoxContainer
 var ground := {}  # drop id -> Node3D
 var _pickup := -1  # drop we are walking to
@@ -106,6 +112,28 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	layer.add_child(store_window)
 	inventory_window.store_window = store_window
 
+	skill_window = SkillWindow.new()
+	skill_window.net = net
+	skill_window.online = self
+	skill_window.visible = false
+	skill_window.position = Vector2(12, 70)
+	layer.add_child(skill_window)
+
+	hotbar = Hotbar.new()
+	hotbar.net = net
+	hotbar.online = self
+	hotbar.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
+	hotbar.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	hotbar.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	hotbar.offset_bottom = -40
+	layer.add_child(hotbar)
+
+	effects_row = HBoxContainer.new()
+	effects_row.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	effects_row.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	effects_row.offset_top = 8
+	layer.add_child(effects_row)
+
 	# Messages (pickups, refused actions) above the experience bar, newest at the bottom.
 	notice_box = VBoxContainer.new()
 	notice_box.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
@@ -152,6 +180,29 @@ func toggle_character_window() -> void:
 
 func toggle_inventory_window() -> void:
 	inventory_window.visible = not inventory_window.visible
+
+
+func toggle_skill_window() -> void:
+	skill_window.visible = not skill_window.visible
+
+
+## Use a skill from a skill slot: on the current target when it needs one (the server
+## falls back to ourselves for skills that may), at the target's feet for area skills.
+func use_skill(page: int, index: int, skill: Dictionary) -> void:
+	if me == null:
+		return
+	if skill.get("passive", false):
+		_notice("%s works on its own" % skill.get("name", "That skill"))
+		return
+	var target := my_target if skill.get("target", false) else -1
+	var at: Vector3 = me.position
+	if skill.get("area", false) and my_target >= 0 and entities.has(my_target):
+		at = entities[my_target].position
+	_pickup = -1
+	_talk = -1
+	net.cast_skill(page, index, target, at.x, at.z)
+	if log_damage:
+		print("rose net: use skill ", skill.get("name", "?"), " on ", target)
 
 
 func move_to(target: Vector3) -> void:
@@ -375,6 +426,9 @@ func _process(_delta: float) -> void:
 
 	_update_ground()
 	_check_warps()
+	if Time.get_ticks_msec() >= _next_effects_ms:
+		_next_effects_ms = Time.get_ticks_msec() + 500
+		_update_effects()
 	for text in net.poll_notices():
 		_notice(text)
 	if me and _pickup >= 0:
@@ -471,6 +525,25 @@ func _check_warps() -> void:
 		_next_warp_ms = Time.get_ticks_msec() + 5000
 		print("rose net: entering warp gate ", inside)
 		net.use_warp_gate(inside)
+
+
+## Our buffs and debuffs as icons at the top of the screen, with what they are and how long they last.
+func _update_effects() -> void:
+	var effects: Array = net.get_status_effects(my_id) if my_id >= 0 else []
+	while effects_row.get_child_count() > effects.size():
+		var last := effects_row.get_child(effects_row.get_child_count() - 1)
+		effects_row.remove_child(last)
+		last.queue_free()
+	while effects_row.get_child_count() < effects.size():
+		var icon := TextureRect.new()
+		icon.custom_minimum_size = Vector2(28, 28)
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		effects_row.add_child(icon)
+	for i in effects.size():
+		var icon: TextureRect = effects_row.get_child(i)
+		icon.texture = effects[i].get("icon")
+		icon.tooltip_text = "%s (%d s)" % [effects[i]["name"], int(effects[i]["seconds"])]
 
 
 ## Show the server's ground items: the item's ground model with its name over it.

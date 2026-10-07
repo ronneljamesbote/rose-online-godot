@@ -11,6 +11,7 @@ mod game_data;
 mod items;
 mod npcs;
 use npcs::npc;
+mod skills;
 mod world;
 
 use rand::Rng;
@@ -400,6 +401,7 @@ fn despawn(ctx: &ReducerContext, entity_id: u64) {
     ctx.db.stats().entity_id().delete(entity_id);
     ctx.db.monster_ai().entity_id().delete(entity_id);
     ctx.db.npc().entity_id().delete(entity_id);
+    skills::clear_entity(ctx, entity_id);
     clear_damage_sources(ctx, entity_id);
     forget_entity(ctx, entity_id);
 }
@@ -431,7 +433,7 @@ fn spawn_player_entity(ctx: &ReducerContext, game: &GameData, player: &mut Playe
         name: player.name.clone(),
     });
     let id = entity.entity_id;
-    let stats = ctx.db.stats().insert(character::player_stats(game, id, player));
+    let stats = ctx.db.stats().insert(character::player_stats(ctx, game, id, player));
     let hp = if player.last_hp > 0 { player.last_hp.min(stats.max_hp) } else { stats.max_hp };
     let mp = if player.last_hp > 0 { player.last_mp.clamp(0, stats.max_mp) } else { stats.max_mp };
     let t = now_us(ctx);
@@ -593,8 +595,9 @@ pub fn move_to(ctx: &ReducerContext, x: f32, y: f32) -> Result<(), String> {
             return Err("outside the zone".into());
         }
     }
-    // It also cancels a swing in progress.
+    // It also cancels a swing or a cast in progress.
     cancel_attack(ctx, id, now_us(ctx));
+    skills::cancel_cast(ctx, id);
     let speed = ctx.db.stats().entity_id().find(id).map_or(425.0, |s| s.move_speed);
     set_motion(ctx, id, (x, y), speed, None);
     Ok(())
@@ -618,6 +621,7 @@ pub fn attack(ctx: &ReducerContext, target: u64) -> Result<(), String> {
         return Err("target is dead".into());
     }
     let t = now_us(ctx);
+    skills::cancel_cast(ctx, id);
     let mut c = ctx.db.combat().entity_id().find(id).ok_or("no combat row")?;
     if c.attack_target == Some(target) {
         return Ok(());
@@ -645,6 +649,7 @@ pub fn stop(ctx: &ReducerContext) -> Result<(), String> {
     let (_, id) = my_player(ctx)?;
     stop_motion(ctx, id);
     cancel_attack(ctx, id, now_us(ctx));
+    skills::cancel_cast(ctx, id);
     Ok(())
 }
 
@@ -887,34 +892,14 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
                         }
                         _ => (0, false),
                     };
-                    let mut dc = ctx.db.combat().entity_id().find(target).unwrap();
-                    let dealt = amount.min(dc.hp);
-                    dc.hp = (dc.hp - amount).max(0);
-                    let killed = dc.hp == 0;
-                    // Monsters fight back when hit.
-                    if !defender_stats.is_player && dc.attack_target.is_none() && !killed {
-                        dc.attack_target = Some(id);
-                    }
-                    ctx.db.combat().entity_id().update(dc);
-                    if !defender_stats.is_player && dealt > 0 {
-                        add_damage_source(ctx, target, id, dealt as u64, t);
-                    }
-                    ctx.db.damage_event().insert(DamageEvent {
-                        attacker: id,
-                        defender: target,
-                        amount,
-                        is_critical,
-                        killed,
-                        at_us: t,
-                    });
                     c.swing_hit_at_us = None;
-                    if killed {
+                    // Write our row first: a kill updates everyone who targets the dead.
+                    let will_kill = ctx.db.combat().entity_id().find(target).is_some_and(|d| d.hp <= amount);
+                    if will_kill {
                         c.attack_target = None;
-                        ctx.db.combat().entity_id().update(c.clone());
-                        kill(ctx, &game, target, &defender_stats, id, t);
-                    } else {
-                        ctx.db.combat().entity_id().update(c);
                     }
+                    ctx.db.combat().entity_id().update(c);
+                    deal_damage(ctx, &game, id, target, amount, is_critical, t);
                 }
                 Some(_) => {}
                 // Ready: start a swing. Schedule from the previous one so ticks don't add drift.
@@ -953,6 +938,8 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
             }
         }
     }
+
+    skills::cast_tick(ctx, &game, t);
 
     if let Some(mut s) = ctx.db.tick_stats().id().find(0) {
         if s.last_at_us > 0 {
@@ -1025,6 +1012,32 @@ fn reward_kill(ctx: &ReducerContext, game: &GameData, monster: u64, monster_stat
     }
 }
 
+/// Damage from an attack or a skill: lower HP, make a monster fight back, record who did how
+/// much (for the experience share), tell clients, and kill at 0 HP. True if it killed.
+fn deal_damage(ctx: &ReducerContext, game: &GameData, attacker: u64, defender: u64, amount: i32, is_critical: bool, t: i64) -> bool {
+    let Some(defender_stats) = ctx.db.stats().entity_id().find(defender) else { return false };
+    let Some(mut dc) = ctx.db.combat().entity_id().find(defender) else { return false };
+    if dc.hp <= 0 || dc.dead_until_us.is_some() {
+        return false;
+    }
+    let dealt = amount.min(dc.hp);
+    dc.hp = (dc.hp - amount).max(0);
+    let killed = dc.hp == 0;
+    // Monsters fight back when hit.
+    if !defender_stats.is_player && dc.attack_target.is_none() && !killed {
+        dc.attack_target = Some(attacker);
+    }
+    ctx.db.combat().entity_id().update(dc);
+    if !defender_stats.is_player && dealt > 0 {
+        add_damage_source(ctx, defender, attacker, dealt as u64, t);
+    }
+    ctx.db.damage_event().insert(DamageEvent { attacker, defender, amount, is_critical, killed, at_us: t });
+    if killed {
+        kill(ctx, game, defender, &defender_stats, attacker, t);
+    }
+    killed
+}
+
 fn kill(ctx: &ReducerContext, game: &GameData, id: u64, stats: &Stats, killer: u64, t: i64) {
     let Some(entity) = ctx.db.entity().entity_id().find(id) else { return };
     items::clear_regen(ctx, id);
@@ -1085,6 +1098,7 @@ pub fn spawn_tick(ctx: &ReducerContext, _timer: SpawnTickTimer) -> Result<(), St
     passive_recovery(ctx, &game, t);
     items::regen_tick(ctx);
     items::expire_drops(ctx, t);
+    skills::status_tick(ctx, &game, t);
     world::spawn_tick(ctx, &game, t);
 
     // Idle wandering: about one in eight idle monsters takes a short walk each second.

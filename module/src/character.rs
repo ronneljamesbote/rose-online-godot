@@ -79,6 +79,10 @@ impl Player {
         from_json(&self.skill_list)
     }
 
+    pub fn set_skill_list(&mut self, skill_list: &SkillList) {
+        self.skill_list = to_json(skill_list);
+    }
+
     pub fn character_info(&self) -> CharacterInfo {
         CharacterInfo {
             name: self.name.clone(),
@@ -198,20 +202,22 @@ fn starter_kit(game: &GameData, equipment: &mut Equipment, inventory: &mut Inven
     }
 }
 
-pub fn ability_values(game: &GameData, player: &Player) -> AbilityValues {
+/// A player's ability values, with the status effects on their character.
+pub fn ability_values(ctx: &ReducerContext, game: &GameData, player: &Player) -> AbilityValues {
+    let effects = player.entity_id.map_or_else(StatusEffects::default, |id| crate::skills::status_effects(ctx, id));
     game.ability_value_calculator.calculate(
         &player.character_info(),
         &Level::new(player.level),
         &player.equipment(),
         &player.basic_stats(),
         &player.skill_list(),
-        &StatusEffects::default(),
+        &effects,
     )
 }
 
 /// Stats row for a player's entity: ability values plus the attack motion of their weapon.
-pub fn player_stats(game: &GameData, entity_id: u64, player: &Player) -> Stats {
-    let av = ability_values(game, player);
+pub fn player_stats(ctx: &ReducerContext, game: &GameData, entity_id: u64, player: &Player) -> Stats {
+    let av = ability_values(ctx, game, player);
     let weapon_motion = player
         .equipment()
         .get_equipment_item(rose_data::EquipmentIndex::Weapon)
@@ -234,7 +240,7 @@ pub fn player_stats(game: &GameData, entity_id: u64, player: &Player) -> Stats {
 /// Recalculate a player's stats after a level, stat or equipment change.
 pub fn refresh_player(ctx: &ReducerContext, game: &GameData, player: &Player, full_heal: bool) {
     let Some(id) = player.entity_id else { return };
-    let stats = player_stats(game, id, player);
+    let stats = player_stats(ctx, game, id, player);
     if let Some(mut c) = ctx.db.combat().entity_id().find(id) {
         c.max_hp = stats.max_hp;
         c.max_mp = stats.max_mp;

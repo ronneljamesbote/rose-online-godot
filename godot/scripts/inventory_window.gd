@@ -14,7 +14,7 @@ const AMMO := ["Arrows", "Bullets", "Shells"]
 class Slot:
 	extends Panel
 	var window: Control
-	var kind := ""  # "page", "equipped" or "ammo"
+	var kind := ""  # "page", "equipped", "ammo", "store", "skill" or "hotbar"
 	var index := 0
 	var item = null
 	var icon: TextureRect
@@ -82,7 +82,7 @@ class Slot:
 			accept_event()
 
 	func _get_drag_data(_at: Vector2) -> Variant:
-		if item == null or kind != "page":
+		if item == null or not (kind == "page" or kind == "skill" or kind == "hotbar"):
 			return null
 		var preview := TextureRect.new()
 		preview.texture = icon.texture
@@ -92,7 +92,11 @@ class Slot:
 		return self
 
 	func _can_drop_data(_at: Vector2, data: Variant) -> bool:
-		return data is Slot and data.kind == "page" and (kind == "page" or kind == "equipped" or kind == "ammo" or kind == "store")
+		if not (data is Slot):
+			return false
+		if kind == "hotbar":
+			return data.kind == "page" or data.kind == "skill" or data.kind == "hotbar"
+		return data.kind == "page" and (kind == "page" or kind == "equipped" or kind == "ammo" or kind == "store")
 
 	func _drop_data(_at: Vector2, data: Variant) -> void:
 		window.dropped(data, self)

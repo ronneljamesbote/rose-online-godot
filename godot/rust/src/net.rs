@@ -14,7 +14,7 @@ use spacetimedb_sdk::{
 };
 
 use rose_data::{AmmoIndex, EquipmentIndex};
-use rose_game_common::components::{AbilityValues, DroppedItem, Equipment, Inventory};
+use rose_game_common::components::{AbilityValues, DroppedItem, Equipment, Hotbar, HotbarSlot, Inventory, ItemSlot, SkillList};
 
 use crate::items::item_dict;
 
@@ -207,8 +207,10 @@ impl RoseNet {
     /// Every entity in our zone: id, kind ("player", "monster" or "npc"), name, npc_id, position
     /// x/z and destination to_x/to_z (Godot metres), moving, speed (m/s), chasing, level,
     /// range (m), hp, max_hp, mp, max_mp, target (-1 for none), swinging, hit_in (seconds
-    /// until the swing's hit frame), dead, for players look (see player_look), and for NPCs
-    /// direction (degrees) and store.
+    /// until the swing's hit frame), dead, for players look (see player_look), for NPCs
+    /// direction (degrees) and store, and while casting a skill cast_skill, cast_started (a
+    /// server time, to tell casts apart), cast_motion and action_motion (motion ids, -1 for
+    /// none), cast_effect_in and cast_ends_in (seconds) and cast_target.
     #[func]
     fn get_entities(&self) -> VarArray {
         let mut out = VarArray::new();
@@ -238,6 +240,21 @@ impl RoseNet {
                     EntityKind::Npc => "npc",
                 },
             );
+            if let Some(cast) = c.db.skill_cast().entity_id().find(&e.entity_id) {
+                if let Some(started) = cast.started_at_us {
+                    let skill = crate::data::get()
+                        .and_then(|g| rose_data::SkillId::new(cast.skill_id).and_then(|id| g.skills.get_skill(id)));
+                    d.set("cast_skill", cast.skill_id as i64);
+                    d.set("cast_started", started);
+                    d.set("cast_motion", skill.and_then(|s| s.casting_motion_id).map_or(-1, |m| m.get() as i64));
+                    d.set("action_motion", skill.and_then(|s| s.action_motion_id).map_or(-1, |m| m.get() as i64));
+                    d.set("cast_effect_in", (cast.effect_at_us - t) as f64 / 1e6);
+                    d.set("cast_ends_in", (cast.ends_at_us - t) as f64 / 1e6);
+                    if let Some(target) = cast.target {
+                        d.set("cast_target", target as i64);
+                    }
+                }
+            }
             if let Some(npc) = c.db.npc().entity_id().find(&e.entity_id) {
                 d.set("direction", npc.direction);
                 d.set("store", npc.has_store);
@@ -487,6 +504,133 @@ impl RoseNet {
         }
         d.set("ammo", &ammo);
         d
+    }
+
+    /// Our skills by page (0 basic, 1 active, 2 passive, 3 clan): each page 30 slots, null
+    /// or a skill as skills::skill_dict, plus cooldown (seconds left).
+    #[func]
+    fn get_skills(&self) -> VarArray {
+        let mut pages = VarArray::new();
+        let (Some(c), Some(game)) = (self.conn.as_ref(), crate::data::get()) else { return pages };
+        let Some(p) = c.try_identity().and_then(|i| c.db.player().identity().find(&i)) else { return pages };
+        let skill_list: SkillList = serde_json::from_str(&p.skill_list).unwrap_or_default();
+        let t = self.server_now_us();
+        let cooldowns: Vec<SkillCooldownRow> = p
+            .entity_id
+            .map(|id| c.db.skill_cooldown().iter().filter(|r| r.entity_id == id).collect())
+            .unwrap_or_default();
+        for page_type in 0..4usize {
+            let mut slots = VarArray::new();
+            if let Some(page) = skill_list.get_page(page_type) {
+                for slot in page.skills.iter() {
+                    let skill = slot.and_then(|id| game.skills.get_skill(id));
+                    let Some(skill) = skill else {
+                        slots.push(&Variant::nil());
+                        continue;
+                    };
+                    let mut d = crate::skills::skill_dict(skill);
+                    let key = match skill.cooldown {
+                        rose_data::SkillCooldown::Skill { .. } => skill.id.get() as u32,
+                        rose_data::SkillCooldown::Group { group, .. } => 100_000 + group.get() as u32,
+                    };
+                    let until = cooldowns.iter().filter(|r| r.key == key).map(|r| r.until_us).max().unwrap_or(0);
+                    d.set("cooldown", ((until - t).max(0)) as f64 / 1e6);
+                    slots.push(&d.to_variant());
+                }
+            }
+            pages.push(&slots.to_variant());
+        }
+        pages
+    }
+
+    #[func]
+    fn level_up_skill(&self, page: i64, index: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.level_up_skill_then(page as u8, index as u16, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    /// Use the skill in a skill slot on an entity (-1 for none) or a ground point (Godot x, z).
+    #[func]
+    fn cast_skill(&self, page: i64, index: i64, target: i64, x: f32, z: f32) {
+        let s = self.shared.clone();
+        let target = (target >= 0).then_some(target as u64);
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.cast_skill_then(page as u8, index as u16, target, x * 100.0, -z * 100.0, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    /// The first hotbar page: 8 entries, null or {kind ("item" or "skill"), page, index}
+    /// plus the item (as in get_inventory) or skill (as in get_skills).
+    #[func]
+    fn get_hotbar(&self) -> VarArray {
+        let mut out = VarArray::new();
+        let (Some(c), Some(game)) = (self.conn.as_ref(), crate::data::get()) else { return out };
+        let Some(p) = c.try_identity().and_then(|i| c.db.player().identity().find(&i)) else { return out };
+        let hotbar: Hotbar = serde_json::from_str(&p.hotbar).unwrap_or_default();
+        let inventory: Inventory = serde_json::from_str(&p.inventory).unwrap_or_default();
+        let skill_list: SkillList = serde_json::from_str(&p.skill_list).unwrap_or_default();
+        for slot in hotbar.pages[0].iter() {
+            let entry = match slot {
+                Some(HotbarSlot::Inventory(item_slot @ ItemSlot::Inventory(page, index))) => inventory.get_item(*item_slot).map(|item| {
+                    let mut d = item_dict(item);
+                    d.set("kind", "item");
+                    d.set("page", *page as i64);
+                    d.set("index", *index as i64);
+                    d
+                }),
+                Some(HotbarSlot::Skill(skill_slot)) => skill_list
+                    .get_skill(*skill_slot)
+                    .and_then(|id| game.skills.get_skill(id))
+                    .map(|skill| {
+                        let mut d = crate::skills::skill_dict(skill);
+                        d.set("kind", "skill");
+                        d.set("page", skill_slot.0 as i64);
+                        d.set("index", skill_slot.1 as i64);
+                        d
+                    }),
+                _ => None,
+            };
+            out.push(&entry.map_or(Variant::nil(), |d| d.to_variant()));
+        }
+        out
+    }
+
+    /// Put an item ("item", page, index) or a skill ("skill", page, index) on a hotbar slot,
+    /// or clear it ("").
+    #[func]
+    fn set_hotbar(&self, slot: i64, kind: GString, page: i64, index: i64) {
+        let kind = match kind.to_string().as_str() {
+            "item" => 1,
+            "skill" => 2,
+            _ => 0,
+        };
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.set_hotbar_slot_then(slot as u8, kind, page as u8, index as u16, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    /// Status effects on an entity: name, icon, seconds (left).
+    #[func]
+    fn get_status_effects(&self, entity_id: i64) -> VarArray {
+        let mut out = VarArray::new();
+        let (Some(c), Some(game)) = (self.conn.as_ref(), crate::data::get()) else { return out };
+        let t = self.server_now_us();
+        for row in c.db.status_effect().iter().filter(|r| r.entity_id == entity_id as u64) {
+            let Some(data) = rose_data::StatusEffectId::new(row.status_effect_id).and_then(|id| game.status_effects.get_status_effect(id)) else {
+                continue;
+            };
+            let mut d = VarDictionary::new();
+            d.set("name", data.name);
+            if let Some(texture) = crate::items::icon(crate::items::IconSheet::State, data.icon_id) {
+                d.set("icon", &texture);
+            }
+            d.set("seconds", ((row.expires_at_us - t).max(0)) as f64 / 1e6);
+            out.push(&d.to_variant());
+        }
+        out
     }
 
     /// Our store buy and sell rates and the world's price rates.
