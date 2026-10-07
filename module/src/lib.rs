@@ -17,6 +17,7 @@ mod quests;
 mod npc_ai;
 mod party;
 mod skills;
+mod trade;
 mod world;
 
 use rand::Rng;
@@ -552,6 +553,7 @@ pub fn client_disconnected(ctx: &ReducerContext) {
         return;
     }
     player.connection = None;
+    trade::cancel_for(ctx, player.identity);
     if let Some(id) = player.entity_id.take() {
         let t = now_us(ctx);
         if let Some(p) = position(ctx, id, t) {
@@ -1114,6 +1116,7 @@ pub fn spawn_tick(ctx: &ReducerContext, _timer: SpawnTickTimer) -> Result<(), St
     skills::status_tick(ctx, &game, t);
     npc_ai::npc_ai_tick(ctx, &game, t);
     party::expire_invites(ctx, t);
+    trade::expire_requests(ctx, t);
     world::spawn_tick(ctx, &game, t);
 
     // Idle wandering: about one in eight idle monsters takes a short walk each second.

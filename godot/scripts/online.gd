@@ -13,6 +13,7 @@ const BankWindow := preload("res://scripts/bank_window.gd")
 const PartyWindow := preload("res://scripts/party_window.gd")
 const CraftWindow := preload("res://scripts/craft_window.gd")
 const ItemWorkWindow := preload("res://scripts/item_work_window.gd")
+const TradeWindow := preload("res://scripts/trade_window.gd")
 const SkillWindow := preload("res://scripts/skill_window.gd")
 const ConversationWindow := preload("res://scripts/conversation_window.gd")
 const QuestWindow := preload("res://scripts/quest_window.gd")
@@ -48,6 +49,7 @@ var bank_window: PanelContainer
 var party_window: PanelContainer
 var craft_window: PanelContainer
 var work_window: PanelContainer
+var trade_window: PanelContainer
 var player_menu: PopupMenu
 var _menu_player := -1
 var skill_window: PanelContainer
@@ -171,12 +173,32 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	layer.add_child(work_window)
 	inventory_window.work_window = work_window
 
+	trade_window = TradeWindow.new()
+	trade_window.net = net
+	trade_window.online = self
+	trade_window.inventory_window = inventory_window
+	trade_window.visible = false
+	trade_window.set_anchors_and_offsets_preset(Control.PRESET_CENTER_LEFT)
+	trade_window.grow_vertical = Control.GROW_DIRECTION_BOTH
+	trade_window.offset_left = 20
+	layer.add_child(trade_window)
+	trade_window.request_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	trade_window.request_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	trade_window.request_panel.offset_top = 140
+	layer.add_child(trade_window.request_panel)
+	inventory_window.trade_window = trade_window
+
 	# Right-click on another player.
 	player_menu = PopupMenu.new()
 	player_menu.add_item("Invite to party", 0)
+	player_menu.add_item("Trade", 1)
 	player_menu.id_pressed.connect(func(id):
-		if id == 0 and _menu_player >= 0:
-			net.party_invite(_menu_player))
+		if _menu_player < 0:
+			return
+		if id == 0:
+			net.party_invite(_menu_player)
+		elif id == 1:
+			net.trade_ask(_menu_player))
 	layer.add_child(player_menu)
 
 	skill_window = SkillWindow.new()

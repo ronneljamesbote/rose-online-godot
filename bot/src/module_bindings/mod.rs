@@ -104,6 +104,17 @@ pub mod store_buy_type;
 pub mod store_sell_type;
 pub mod tick_stats_table;
 pub mod tick_stats_type;
+pub mod trade_accept_reducer;
+pub mod trade_answer_reducer;
+pub mod trade_ask_reducer;
+pub mod trade_cancel_reducer;
+pub mod trade_lock_reducer;
+pub mod trade_offer_reducer;
+pub mod trade_request_table;
+pub mod trade_request_type;
+pub mod trade_slot_type;
+pub mod trade_table;
+pub mod trade_type;
 pub mod unequip_ammo_reducer;
 pub mod unequip_item_reducer;
 pub mod upload_game_files_reducer;
@@ -215,6 +226,17 @@ pub use store_buy_type::StoreBuy;
 pub use store_sell_type::StoreSell;
 pub use tick_stats_table::*;
 pub use tick_stats_type::TickStats;
+pub use trade_accept_reducer::trade_accept;
+pub use trade_answer_reducer::trade_answer;
+pub use trade_ask_reducer::trade_ask;
+pub use trade_cancel_reducer::trade_cancel;
+pub use trade_lock_reducer::trade_lock;
+pub use trade_offer_reducer::trade_offer;
+pub use trade_request_table::*;
+pub use trade_request_type::TradeRequest;
+pub use trade_slot_type::TradeSlot;
+pub use trade_table::*;
+pub use trade_type::Trade;
 pub use unequip_ammo_reducer::unequip_ammo;
 pub use unequip_item_reducer::unequip_item;
 pub use upload_game_files_reducer::upload_game_files;
@@ -426,6 +448,22 @@ pub enum Reducer {
         reward_rate: i32,
     },
     Stop,
+    TradeAccept,
+    TradeAnswer {
+        request_id: u64,
+        accept: bool,
+    },
+    TradeAsk {
+        target_entity_id: u64,
+    },
+    TradeCancel,
+    TradeLock {
+        locked: bool,
+    },
+    TradeOffer {
+        slots: Vec<TradeSlot>,
+        money: i64,
+    },
     UnequipAmmo {
         ammo_slot: u8,
     },
@@ -502,6 +540,12 @@ impl __sdk::Reducer for Reducer {
             Reducer::SetPriceRates { .. } => "set_price_rates",
             Reducer::SetWorldRates { .. } => "set_world_rates",
             Reducer::Stop => "stop",
+            Reducer::TradeAccept => "trade_accept",
+            Reducer::TradeAnswer { .. } => "trade_answer",
+            Reducer::TradeAsk { .. } => "trade_ask",
+            Reducer::TradeCancel => "trade_cancel",
+            Reducer::TradeLock { .. } => "trade_lock",
+            Reducer::TradeOffer { .. } => "trade_offer",
             Reducer::UnequipAmmo { .. } => "unequip_ammo",
             Reducer::UnequipItem { .. } => "unequip_item",
             Reducer::UploadGameFiles { .. } => "upload_game_files",
@@ -824,6 +868,34 @@ impl __sdk::Reducer for Reducer {
                 reward_rate: reward_rate.clone(),
             }),
             Reducer::Stop => __sats::bsatn::to_vec(&stop_reducer::StopArgs {}),
+            Reducer::TradeAccept => {
+                __sats::bsatn::to_vec(&trade_accept_reducer::TradeAcceptArgs {})
+            }
+            Reducer::TradeAnswer { request_id, accept } => {
+                __sats::bsatn::to_vec(&trade_answer_reducer::TradeAnswerArgs {
+                    request_id: request_id.clone(),
+                    accept: accept.clone(),
+                })
+            }
+            Reducer::TradeAsk { target_entity_id } => {
+                __sats::bsatn::to_vec(&trade_ask_reducer::TradeAskArgs {
+                    target_entity_id: target_entity_id.clone(),
+                })
+            }
+            Reducer::TradeCancel => {
+                __sats::bsatn::to_vec(&trade_cancel_reducer::TradeCancelArgs {})
+            }
+            Reducer::TradeLock { locked } => {
+                __sats::bsatn::to_vec(&trade_lock_reducer::TradeLockArgs {
+                    locked: locked.clone(),
+                })
+            }
+            Reducer::TradeOffer { slots, money } => {
+                __sats::bsatn::to_vec(&trade_offer_reducer::TradeOfferArgs {
+                    slots: slots.clone(),
+                    money: money.clone(),
+                })
+            }
             Reducer::UnequipAmmo { ammo_slot } => {
                 __sats::bsatn::to_vec(&unequip_ammo_reducer::UnequipAmmoArgs {
                     ammo_slot: ammo_slot.clone(),
@@ -883,6 +955,8 @@ pub struct DbUpdate {
     stats: __sdk::TableUpdate<Stats>,
     status_effect: __sdk::TableUpdate<StatusEffectRow>,
     tick_stats: __sdk::TableUpdate<TickStats>,
+    trade: __sdk::TableUpdate<Trade>,
+    trade_request: __sdk::TableUpdate<TradeRequest>,
     world_rates: __sdk::TableUpdate<WorldRates>,
     xp_event: __sdk::TableUpdate<XpEvent>,
     zone_info: __sdk::TableUpdate<ZoneInfo>,
@@ -948,6 +1022,12 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "tick_stats" => db_update
                     .tick_stats
                     .append(tick_stats_table::parse_table_update(table_update)?),
+                "trade" => db_update
+                    .trade
+                    .append(trade_table::parse_table_update(table_update)?),
+                "trade_request" => db_update
+                    .trade_request
+                    .append(trade_request_table::parse_table_update(table_update)?),
                 "world_rates" => db_update
                     .world_rates
                     .append(world_rates_table::parse_table_update(table_update)?),
@@ -1033,6 +1113,12 @@ impl __sdk::DbUpdate for DbUpdate {
         diff.tick_stats = cache
             .apply_diff_to_table::<TickStats>("tick_stats", &self.tick_stats)
             .with_updates_by_pk(|row| &row.id);
+        diff.trade = cache
+            .apply_diff_to_table::<Trade>("trade", &self.trade)
+            .with_updates_by_pk(|row| &row.trade_id);
+        diff.trade_request = cache
+            .apply_diff_to_table::<TradeRequest>("trade_request", &self.trade_request)
+            .with_updates_by_pk(|row| &row.request_id);
         diff.world_rates = cache
             .apply_diff_to_table::<WorldRates>("world_rates", &self.world_rates)
             .with_updates_by_pk(|row| &row.id);
@@ -1100,6 +1186,12 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "tick_stats" => db_update
                     .tick_stats
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "trade" => db_update
+                    .trade
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "trade_request" => db_update
+                    .trade_request
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "world_rates" => db_update
                     .world_rates
@@ -1177,6 +1269,12 @@ impl __sdk::DbUpdate for DbUpdate {
                 "tick_stats" => db_update
                     .tick_stats
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "trade" => db_update
+                    .trade
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "trade_request" => db_update
+                    .trade_request
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "world_rates" => db_update
                     .world_rates
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
@@ -1219,6 +1317,8 @@ pub struct AppliedDiff<'r> {
     stats: __sdk::TableAppliedDiff<'r, Stats>,
     status_effect: __sdk::TableAppliedDiff<'r, StatusEffectRow>,
     tick_stats: __sdk::TableAppliedDiff<'r, TickStats>,
+    trade: __sdk::TableAppliedDiff<'r, Trade>,
+    trade_request: __sdk::TableAppliedDiff<'r, TradeRequest>,
     world_rates: __sdk::TableAppliedDiff<'r, WorldRates>,
     xp_event: __sdk::TableAppliedDiff<'r, XpEvent>,
     zone_info: __sdk::TableAppliedDiff<'r, ZoneInfo>,
@@ -1277,6 +1377,12 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
             event,
         );
         callbacks.invoke_table_row_callbacks::<TickStats>("tick_stats", &self.tick_stats, event);
+        callbacks.invoke_table_row_callbacks::<Trade>("trade", &self.trade, event);
+        callbacks.invoke_table_row_callbacks::<TradeRequest>(
+            "trade_request",
+            &self.trade_request,
+            event,
+        );
         callbacks.invoke_table_row_callbacks::<WorldRates>("world_rates", &self.world_rates, event);
         callbacks.invoke_table_row_callbacks::<XpEvent>("xp_event", &self.xp_event, event);
         callbacks.invoke_table_row_callbacks::<ZoneInfo>("zone_info", &self.zone_info, event);
@@ -1958,6 +2064,8 @@ impl __sdk::SpacetimeModule for RemoteModule {
         stats_table::register_table(client_cache);
         status_effect_table::register_table(client_cache);
         tick_stats_table::register_table(client_cache);
+        trade_table::register_table(client_cache);
+        trade_request_table::register_table(client_cache);
         world_rates_table::register_table(client_cache);
         xp_event_table::register_table(client_cache);
         zone_info_table::register_table(client_cache);
@@ -1981,6 +2089,8 @@ impl __sdk::SpacetimeModule for RemoteModule {
         "stats",
         "status_effect",
         "tick_stats",
+        "trade",
+        "trade_request",
         "world_rates",
         "xp_event",
         "zone_info",
