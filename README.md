@@ -7,6 +7,7 @@ Server-side prototype from the plan of action, phase 1 and 2. Tested 2026-10-06 
 - `import/`: reads a 129_129en install with the vendored readers and writes `npcs.json` / `zone.json` (reducer arguments). `attack_timing` prints a weapon's attack animation length and hit frame.
 - `bot/`: headless Rust SDK client. `rose-stdb-bot <ws uri> ranged|melee` fights the nearest monster and checks animation cancelling; `rose-stdb-bot <ws uri> load <n> <secs>` runs n random bots.
 - `data/zone1/`: imported Zant data.
+- `godot/`: the Godot 4 client, step 1 (Zant and an animated character from the original data files, no networking yet). See `godot/README.md`.
 
 ## Run
 
