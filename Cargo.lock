@@ -1760,13 +1760,27 @@ dependencies = [
  "anyhow",
  "enum-map",
  "godot",
+ "log",
+ "num-traits",
  "rose-data",
  "rose-data-irose",
  "rose-file-readers",
  "rose-game-common",
  "rose-game-irose",
+ "rose-quest",
  "serde_json",
  "spacetimedb-sdk",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "rose-quest"
+version = "0.1.0"
+dependencies = [
+ "log",
+ "rose-data",
+ "rose-file-readers",
+ "rose-game-common",
 ]
 
 [[package]]

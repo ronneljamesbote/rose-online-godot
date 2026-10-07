@@ -13,6 +13,8 @@ pub struct Npc {
     pub direction: f32,
     pub conversation: String,
     pub has_store: bool,
+    pub variables: Vec<i32>,
+    pub next_idle_us: i64,
 }
 
 impl __sdk::InModule for Npc {
@@ -29,6 +31,8 @@ pub struct NpcCols {
     pub direction: __sdk::__query_builder::Col<Npc, f32>,
     pub conversation: __sdk::__query_builder::Col<Npc, String>,
     pub has_store: __sdk::__query_builder::Col<Npc, bool>,
+    pub variables: __sdk::__query_builder::Col<Npc, Vec<i32>>,
+    pub next_idle_us: __sdk::__query_builder::Col<Npc, i64>,
 }
 
 impl __sdk::__query_builder::HasCols for Npc {
@@ -41,6 +45,8 @@ impl __sdk::__query_builder::HasCols for Npc {
             direction: __sdk::__query_builder::Col::new(table_name, "direction"),
             conversation: __sdk::__query_builder::Col::new(table_name, "conversation"),
             has_store: __sdk::__query_builder::Col::new(table_name, "has_store"),
+            variables: __sdk::__query_builder::Col::new(table_name, "variables"),
+            next_idle_us: __sdk::__query_builder::Col::new(table_name, "next_idle_us"),
         }
     }
 }

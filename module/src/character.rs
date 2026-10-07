@@ -10,7 +10,7 @@ use rose_data::{
 use rose_data_irose::{IroseSkillPageType, SKILL_PAGE_SIZE};
 use rose_game_common::components::{
     AbilityValues, BasicStatType, BasicStats, CharacterGender, CharacterInfo, Equipment, Hotbar,
-    Inventory, Level, QuestState, SkillList, SkillPage, StatusEffects,
+    Inventory, Level, QuestState, SkillList, SkillPage, StatusEffects, UnionMembership,
 };
 use rose_game_data::GameData;
 use serde::{de::DeserializeOwned, Serialize};
@@ -81,6 +81,22 @@ impl Player {
 
     pub fn set_skill_list(&mut self, skill_list: &SkillList) {
         self.skill_list = to_json(skill_list);
+    }
+
+    pub fn quest_state(&self) -> QuestState {
+        from_json(&self.quest_state)
+    }
+
+    pub fn set_quest_state(&mut self, quest_state: &QuestState) {
+        self.quest_state = to_json(quest_state);
+    }
+
+    pub fn union_membership(&self) -> UnionMembership {
+        from_json(&self.union_membership)
+    }
+
+    pub fn set_union_membership(&mut self, union_membership: &UnionMembership) {
+        self.union_membership = to_json(union_membership);
     }
 
     pub fn character_info(&self) -> CharacterInfo {
@@ -169,6 +185,7 @@ pub fn new_player(game: &GameData, identity: Identity, name: String, gender: u8,
         skill_list: to_json(&skill_list),
         quest_state: to_json(&QuestState::default()),
         hotbar: to_json(&Hotbar::default()),
+        union_membership: to_json(&UnionMembership::default()),
     };
     player.set_basic_stats(&start.basic_stats);
     starter_kit(game, &mut equipment, &mut inventory);
@@ -278,6 +295,10 @@ pub fn reward_xp(ctx: &ReducerContext, game: &GameData, identity: Identity, xp: 
     ctx.db.player().identity().update(p.clone());
     if levelled {
         refresh_player(ctx, game, &p, true);
+        // Every level gained runs its level up trigger (experience_points_system).
+        for level in (level_before + 1)..=p.level {
+            crate::quests::run_trigger(ctx, game, identity, &format!("levelup_{level}"));
+        }
     }
 }
 

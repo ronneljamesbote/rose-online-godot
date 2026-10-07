@@ -72,6 +72,12 @@ What works now:
   current target, buffs on yourself; the character plays the skill's casting and action
   motions, and buffs and debuffs show as icons at the top. There are no skill effects
   (particles) yet, and summons, resurrection and emotes are not in yet.
+- Conversations and quests: clicking a town NPC opens its conversation (the original CON
+  dialog scripts, run by a Lua 4 VM ported from rose-offline-client) instead of going
+  straight to the store; pick answers with the mouse or 1-9. Quest conditions are checked
+  on the client and the server runs the trigger, so quests, rewards and quest items come
+  from the server. Q opens the quest log: each quest's description, time left, quest
+  items and an Abandon button. Clans, event objects and the bank are not in yet.
 
 Not yet: monsters walking around objects (the server has no zone geometry), effects and
 particles, animated zone objects, sound, most UI.
@@ -102,7 +108,7 @@ godot --path godot -- --data-idx=/path/to/iRose_129_129/data.idx
 Godot 4.6 or newer. `ROSE_DATA_IDX` works instead of `--data-idx`. The start screen offers
 Connect (online) or Play offline. In game: left-click to move, S to stop, right-drag to
 orbit the camera, mouse wheel to zoom. Online, left-click a monster to attack it and Space
-attacks the nearest one, C opens the character window, I the inventory, K the skills, 1-8 use the hotbar, Z picks up the nearest item; offline, Space swings the sword.
+attacks the nearest one, C opens the character window, I the inventory, K the skills, Q the quests, 1-8 use the hotbar, Z picks up the nearest item; offline, Space swings the sword.
 
 The start screen's server address may end in a database name, `ws://HOST:3000/NAME`
 (default `rose`). Without `--data-idx` the game looks for the last `data.idx` picked, then
@@ -124,13 +130,13 @@ Other options (after `--`):
 
 - `--server=ws://HOST:3000` connects straight away, with `--name=NAME`. `--weapon=bow`
   equips the bow and arrows from the bag once the character meets the bow's requirements.
-- `--open=inventory,character,skills` opens those windows at the start (for screenshots).
+- `--open=inventory,character,skills,quests` opens those windows at the start (for screenshots).
 - `--profile=NAME` picks the identity file (`user://identity-NAME.token`), so two clients on
   one PC are two players.
 - `--offline` skips the start screen.
-- `--net-demo[=square|line|fight|warp|shop|skills|walls]` walks a scripted route, fights the nearest
+- `--net-demo[=square|line|fight|warp|shop|skills|talk|walls]` walks a scripted route, fights the nearest
   monsters, walks through warp gates, buys and sells at the nearest store (`--buy=TEXT` picks
-  what to buy), uses the first two active skills, or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
+  what to buy), uses the first two active skills, talks to the nearest NPC matching `--npc=NAME` and picks `--answers=1,2,...` (`q` prints the quest log, `talk` opens the conversation again), or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
   player's position once a second, `--quit-after=SECONDS` quits. The two-client test:
   `--headless ... --name=Alice --profile=alice --net-demo` in one process and
   `... --name=Bob --profile=bob --weapon=bow --net-demo=line --net-log` in another.

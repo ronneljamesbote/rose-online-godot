@@ -12,6 +12,8 @@ use crate::{
 
 /// How close a character must be to trade with a store (NPC_STORE_TRANSACTION_MAX_DISTANCE).
 const STORE_RANGE_CM: f32 = 6000.0;
+/// Object variables per NPC (rose-offline's ObjectVariables).
+const NPC_VARIABLES: usize = 20;
 
 /// A town NPC: the entity's standing direction, its conversation (quest script) and
 /// whether it has a store.
@@ -27,6 +29,10 @@ pub struct Npc {
     pub direction: f32,
     pub conversation: String,
     pub has_store: bool,
+    /// The NPC's object variables, which quests read and change.
+    pub variables: Vec<i32>,
+    /// When the NPC next runs its idle script.
+    pub next_idle_us: i64,
 }
 
 /// Buy `quantity` of the item at `index` of the NPC's store tab `tab` (gear is always 1).
@@ -73,14 +79,17 @@ pub fn spawn_npcs(ctx: &ReducerContext, game: &GameData) {
                 speed: 0.0,
                 chase_target: None,
             });
-            ctx.db.npc().insert(Npc {
+            let row = ctx.db.npc().insert(Npc {
                 entity_id: entity.entity_id,
                 zone_id: zone.id.get(),
                 npc_id: spawn.npc_id.get(),
                 direction: spawn.direction,
                 conversation: spawn.conversation.get().to_string(),
                 has_store: data.store_tabs.iter().any(|t| t.is_some()),
+                variables: vec![0; NPC_VARIABLES],
+                next_idle_us: t,
             });
+            crate::npc_ai::npc_created(ctx, game, &row, t);
         }
     }
 }
