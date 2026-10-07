@@ -77,7 +77,9 @@ What works now:
   straight to the store; pick answers with the mouse or 1-9. Quest conditions are checked
   on the client and the server runs the trigger, so quests, rewards and quest items come
   from the server. Q opens the quest log: each quest's description, time left, quest
-  items and an Abandon button. Clans, event objects and the bank are not in yet.
+  items and an Abandon button. Clans and event objects are not in yet.
+- Bank: the storage keeper's "[My Storage]" answer opens the storage window next to the
+  inventory (four pages of 30). Right-click or drag to move items between bag and storage.
 
 Not yet: monsters walking around objects (the server has no zone geometry), effects and
 particles, animated zone objects, sound, most UI.
@@ -136,7 +138,7 @@ Other options (after `--`):
 - `--offline` skips the start screen.
 - `--net-demo[=square|line|fight|warp|shop|skills|talk|walls]` walks a scripted route, fights the nearest
   monsters, walks through warp gates, buys and sells at the nearest store (`--buy=TEXT` picks
-  what to buy), uses the first two active skills, talks to the nearest NPC matching `--npc=NAME` and picks `--answers=1,2,...` (`q` prints the quest log, `talk` opens the conversation again), or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
+  what to buy), uses the first two active skills, talks to the nearest NPC matching `--npc=NAME` and picks `--answers=1,2,...` (`q` prints the quest log, `talk` opens the conversation again, `deposit` and `withdraw` move the first item in or out of the bank), or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
   player's position once a second, `--quit-after=SECONDS` quits. The two-client test:
   `--headless ... --name=Alice --profile=alice --net-demo` in one process and
   `... --name=Bob --profile=bob --weapon=bow --net-demo=line --net-log` in another.

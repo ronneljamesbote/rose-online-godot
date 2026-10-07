@@ -192,10 +192,13 @@ impl RoseNet {
         let mut world = self.client_world(ch.zone_id);
         let mut actions = Vec::new();
         let mut conversation = self.conversation.take();
+        let before = conversation.as_ref().and_then(|c| c.npc_entity);
         let result = {
             let mut cx = ScriptContext { game, ch: &ch, world: &mut world, name: &name, actions: &mut actions };
             f(&mut conversation, &mut cx)
         };
+        // The NPC we are talking to, for windows the scripts open on it.
+        let talking = conversation.as_ref().and_then(|c| c.npc_entity).or(before);
         self.conversation = conversation;
         for action in actions {
             match action {
@@ -206,7 +209,11 @@ impl RoseNet {
                     }
                 }
                 Action::OpenStore(entity) => self.windows.push(("store".into(), entity)),
-                Action::OpenBank(entity) => self.windows.push(("bank".into(), entity)),
+                Action::OpenBank => {
+                    if let Some(npc) = talking {
+                        self.windows.push(("bank".into(), npc));
+                    }
+                }
                 Action::Notice(text) => self.shared.lock().unwrap().notices.push(text),
             }
         }
@@ -1009,6 +1016,47 @@ impl RoseNet {
         let s = self.shared.clone();
         if let Some(c) = self.conn.as_ref() {
             c.reducers.drop_item_then(page as u8, index as u16, quantity.max(1) as u32, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    /// Our bank: 120 slots (four pages of 30), null when empty.
+    #[func]
+    fn get_bank(&self) -> VarArray {
+        let mut out = VarArray::new();
+        let Some(c) = self.conn.as_ref() else { return out };
+        let Some(id) = c.try_identity() else { return out };
+        let slots: Vec<Option<rose_data::Item>> =
+            c.db.bank().identity().find(&id).and_then(|b| serde_json::from_str(&b.slots).ok()).unwrap_or_default();
+        for i in 0..120 {
+            let item = slots.get(i).and_then(|s| s.as_ref());
+            out.push(&item.map_or(Variant::nil(), |item| item_dict(item).to_variant()));
+        }
+        out
+    }
+
+    #[func]
+    fn bank_deposit(&self, npc_entity_id: i64, page: i64, index: i64, quantity: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers
+                .bank_deposit_then(npc_entity_id as u64, page as u8, index as u16, quantity.max(1) as u32, move |_, r| report(&s, r))
+                .ok();
+        }
+    }
+
+    #[func]
+    fn bank_withdraw(&self, npc_entity_id: i64, slot: i64, quantity: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.bank_withdraw_then(npc_entity_id as u64, slot as u16, quantity.max(1) as u32, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    #[func]
+    fn bank_move(&self, from: i64, to: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.bank_move_then(from as u16, to as u16, move |_, r| report(&s, r)).ok();
         }
     }
 

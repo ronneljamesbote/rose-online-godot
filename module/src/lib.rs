@@ -6,6 +6,7 @@
 //! are built from client files the host uploads (see game_data.rs).
 
 mod ability;
+mod bank;
 mod character;
 mod game_data;
 mod items;

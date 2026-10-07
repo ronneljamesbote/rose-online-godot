@@ -70,7 +70,7 @@ const FUNCTIONS: [&str; 26] = [
 pub enum Action {
     QuestTrigger(String),
     OpenStore(u64),
-    OpenBank(u64),
+    OpenBank,
     Notice(String),
 }
 
@@ -222,7 +222,7 @@ impl ScriptContext<'_> {
                 Some(vec![])
             }
             "GF_openBank" => {
-                self.actions.push(Action::OpenBank(arg_usize(args, 0).unwrap_or(0) as u64));
+                self.actions.push(Action::OpenBank);
                 Some(vec![])
             }
             "GF_appraisal" | "GF_repair" | "GF_openUpgrade" | "GF_openSeparate" | "GF_openDeliveryStore" => {
