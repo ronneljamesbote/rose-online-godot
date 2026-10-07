@@ -55,6 +55,9 @@ pub struct ZoneData {
     pub evening_time: u32,
     pub night_time: u32,
     pub skybox_id: Option<SkyboxId>,
+    /// LIST_ZONE.STB's PvP column: 0 none, 1 all except clan, 2 all except party, 3 all,
+    /// 11 clan zone.
+    pub pvp_state: u32,
 }
 
 impl ZoneData {

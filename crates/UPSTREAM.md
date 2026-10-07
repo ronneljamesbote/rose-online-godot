@@ -22,7 +22,7 @@ To compare with upstream later: clone rose-offline at the commit above and diff 
   the memory-mapped VFS readers are left out on wasm32; `ZmoFile::first_attack_frame_time`.
 - rose-data / rose-data-irose: motions carry `first_attack_time` (the attack hit frame);
   NPC and character motions load without animation data; the zone loader skips map blocks
-  that have no IFO file.
+  that have no IFO file; zones carry their PvP state (`pvp_state`, LIST_ZONE.STB column 18).
 - rose-game-common: `AbilityValues` and its parts serialize with serde.
 - rose-game-irose: random numbers come from `rng.rs`, a seedable generator (the module
   seeds it each tick), instead of `thread_rng`; `levelup_require_xp`,

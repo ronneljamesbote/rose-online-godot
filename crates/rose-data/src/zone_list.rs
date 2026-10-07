@@ -14,6 +14,8 @@ pub struct ZoneListEntry {
     pub zon_file_path: VfsPathBuf,
     pub zsc_cnst_path: VfsPathBuf,
     pub zsc_deco_path: VfsPathBuf,
+    /// As ZoneData::pvp_state.
+    pub pvp_state: u32,
     pub day_cycle: u32,
     pub morning_time: u32,
     pub day_time: u32,

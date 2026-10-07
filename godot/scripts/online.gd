@@ -371,6 +371,11 @@ func pick_player(camera: Camera3D, screen_position: Vector2) -> int:
 	return _pick_entity(camera, screen_position, "player")
 
 
+## A player we may fight here (PvP zones) under the mouse, or -1.
+func pick_enemy_player(camera: Camera3D, screen_position: Vector2) -> int:
+	return _pick_entity(camera, screen_position, "enemy")
+
+
 ## Right-click on another player: what we can do with them.
 func open_player_menu(id: int, at: Vector2) -> void:
 	_menu_player = id
@@ -385,6 +390,8 @@ func _pick_entity(camera: Camera3D, screen_position: Vector2, kind := "monster")
 		var entity: Node3D = entities[id]
 		var is_player: bool = not entity.is_npc and not entity.is_monster and entity != me
 		var wanted: bool = entity.is_npc if kind == "npc" else (is_player if kind == "player" else entity.is_monster)
+		if kind == "enemy":
+			wanted = is_player and net.is_enemy_player(id)
 		if not wanted or entity.dead or entity.dying:
 			continue
 		var centre: Vector3 = entity.global_position + Vector3(0, entity.height * 0.5, 0)
@@ -610,6 +617,7 @@ func _process(_delta: float) -> void:
 			store_window.close_store()
 			work_window.open_npc(window[0], npc_id, entities[npc_id])
 
+	var pvp: bool = net.zone_pvp() > 0
 	if me:
 		for id in entities:
 			var entity: Node3D = entities[id]
@@ -617,6 +625,9 @@ func _process(_delta: float) -> void:
 				entity.label.visible = id == my_target or entity.position.distance_to(me.position) < MONSTER_NAME_RANGE
 			elif entity.is_npc:
 				entity.label.visible = entity.position.distance_to(me.position) < NPC_NAME_RANGE
+			elif entity != me:
+				# Players we may fight (PvP zones) have red names.
+				entity.label.modulate = Color(1, 0.4, 0.35) if pvp and net.is_enemy_player(id) else Color.WHITE
 
 	if log_positions and Time.get_ticks_msec() >= _next_log_ms:
 		_next_log_ms = Time.get_ticks_msec() + 1000
@@ -636,6 +647,8 @@ func _process(_delta: float) -> void:
 	hud.text = "%s   Lv %d   HP %d/%d   MP %d/%d   players %d   monsters %d" % [
 		c.get("name", player_name), level, me.hp if me else 0, me.max_hp if me else 0,
 		me.mp if me else 0, me.max_mp if me else 0, entities.size() - monsters - npcs, monsters]
+	if pvp:
+		hud.text += "   PvP zone"
 	if not c.is_empty():
 		var needed: int = max(int(c["xp_needed"]), 1)
 		xp_bar.value = float(c["xp"]) / needed
