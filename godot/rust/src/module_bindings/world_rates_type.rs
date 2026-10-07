@@ -12,6 +12,9 @@ pub struct WorldRates {
     pub drop_rate: i32,
     pub drop_money_rate: i32,
     pub reward_rate: i32,
+    pub world_price_rate: i32,
+    pub item_price_rate: i32,
+    pub town_price_rate: i32,
 }
 
 impl __sdk::InModule for WorldRates {
@@ -27,6 +30,9 @@ pub struct WorldRatesCols {
     pub drop_rate: __sdk::__query_builder::Col<WorldRates, i32>,
     pub drop_money_rate: __sdk::__query_builder::Col<WorldRates, i32>,
     pub reward_rate: __sdk::__query_builder::Col<WorldRates, i32>,
+    pub world_price_rate: __sdk::__query_builder::Col<WorldRates, i32>,
+    pub item_price_rate: __sdk::__query_builder::Col<WorldRates, i32>,
+    pub town_price_rate: __sdk::__query_builder::Col<WorldRates, i32>,
 }
 
 impl __sdk::__query_builder::HasCols for WorldRates {
@@ -38,6 +44,9 @@ impl __sdk::__query_builder::HasCols for WorldRates {
             drop_rate: __sdk::__query_builder::Col::new(table_name, "drop_rate"),
             drop_money_rate: __sdk::__query_builder::Col::new(table_name, "drop_money_rate"),
             reward_rate: __sdk::__query_builder::Col::new(table_name, "reward_rate"),
+            world_price_rate: __sdk::__query_builder::Col::new(table_name, "world_price_rate"),
+            item_price_rate: __sdk::__query_builder::Col::new(table_name, "item_price_rate"),
+            town_price_rate: __sdk::__query_builder::Col::new(table_name, "town_price_rate"),
         }
     }
 }

@@ -1,4 +1,4 @@
-## A player or monster shown from server state. It stands where the server's motion path
+## A player, monster or town NPC shown from server state. It stands where the server's motion path
 ## puts it, faces where it runs or what it fights, and plays run, stop, attack, hit and die.
 ## A swing is timed so its hit frame lands when the server resolves the hit.
 ##
@@ -26,6 +26,8 @@ var anim: AnimationPlayer
 var label: Label3D
 var entity_id := -1
 var is_monster := false
+var is_npc := false  # a town NPC: stands still, facing its direction
+var has_store := false
 var npc_id := 0
 var look := []  # male, face, hair, head, body, hands, feet, weapon, sub weapon (players)
 var dead := false
@@ -42,6 +44,7 @@ var predicted := {}  # from, to (Vector3), started (msec)
 var is_me := false
 var blocked := {}  # at, to (Vector3), since (msec): we hit a wall and wait for the server to stop us
 var placed := false
+var is_moving := false
 var _probe: SphereShape3D
 var _idle := "stop1"
 var _walk := "run"
@@ -52,6 +55,8 @@ func setup(zone_node: Node, state: Dictionary, is_me_: bool) -> void:
 	is_me = is_me_
 	entity_id = state["id"]
 	is_monster = state["kind"] == "monster"
+	is_npc = state["kind"] == "npc"
+	has_store = state.get("store", false)
 	npc_id = state["npc_id"]
 	look = state.get("look", [])
 	_build()
@@ -66,15 +71,19 @@ func setup(zone_node: Node, state: Dictionary, is_me_: bool) -> void:
 		label.modulate = Color(1.0, 0.95, 0.6)
 	elif is_monster:
 		label.modulate = Color(1.0, 0.75, 0.7)
+	elif is_npc:
+		label.modulate = Color(0.65, 1.0, 0.65)
 	label.position.y = height + 0.3
 	add_child(label)
+	if is_npc:
+		rotation.y = deg_to_rad(state.get("direction", 0.0))
 	update_state(state, null)
 
 
 func _build() -> void:
 	if model:
 		model.queue_free()
-	if is_monster:
+	if is_monster or is_npc:
 		model = RoseNpc.new()
 		model.build(npc_id)
 		_idle = "stop"
@@ -166,7 +175,7 @@ func update_state(state: Dictionary, target_position) -> void:
 	var heading := server_to - flat if moving else Vector3.ZERO
 	if not moving and target_position != null:
 		heading = target_position - flat
-	if Vector2(heading.x, heading.z).length() > 0.01:
+	if Vector2(heading.x, heading.z).length() > 0.01 and not is_npc:
 		rotation.y = atan2(heading.x, heading.z)
 	position = Vector3(flat.x, _ground_height(flat), flat.z)
 	placed = true
@@ -188,6 +197,7 @@ func update_state(state: Dictionary, target_position) -> void:
 		_play(_idle)
 	dead = is_dead
 	was_swinging = swinging
+	is_moving = moving
 
 
 ## Where a body walking from one flat position to the next first touches a wall, or null.

@@ -15,7 +15,8 @@
 ##   --profile=NAME             identity file to use (user://identity-NAME.token), so two
 ##                              clients on one PC are two players
 ##   --offline                  skip the start screen and play offline
-##   --net-demo[=square|line|fight|walls|warp]   online: scripted routes, fights, wall tests, warp gates
+##   --net-demo[=square|line|fight|walls|warp|shop]   online: scripted routes, fights, wall
+##                              tests, warp gates, buying and selling at the nearest store
 ##   --net-log                  online: print every player's position once a second
 ##   --open=inventory,character online: open these windows at the start (for screenshots)
 ##   --quit-after=SECONDS       quit after this long
@@ -227,6 +228,9 @@ func _run_net_demo(me: Node3D) -> void:
 	if options["net-demo"] == "warp":
 		_run_warp_demo()
 		return
+	if options["net-demo"] == "shop":
+		_run_shop_demo()
+		return
 	if options["net-demo"] == "line":
 		route = [Vector3(5, 0, 0), Vector3(0, 0, 0)]
 		pause = 3.5
@@ -289,6 +293,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			var monster: int = online.pick_monster(camera, event.position)
 			if monster >= 0:
 				online.attack(monster)
+				return
+			var npc: int = online.pick_npc(camera, event.position)
+			if npc >= 0:
+				online.talk_to(npc)
 				return
 			var item: int = online.pick_item(camera, event.position)
 			if item >= 0:
@@ -362,6 +370,48 @@ func _run_warp_demo() -> void:
 			waited += 0.5
 		print("rose net demo: now in zone %d" % loaded_zone)
 		trips += 1
+
+
+## Walks to the nearest store, buys the first item of each tab, then sells one of them back.
+func _run_shop_demo() -> void:
+	await get_tree().create_timer(3.0).timeout
+	var npc: int = online.nearest_store()
+	if npc < 0:
+		print("rose net demo: no store in this zone")
+		return
+	print("rose net demo: walk to %s, %.0f m away" % [online.entities[npc].label.text, online.entities[npc].position.distance_to(online.me.position)])
+	online.talk_to(npc)
+	var waited := 0.0
+	while not online.store_window.visible and waited < 60.0:
+		await get_tree().create_timer(0.5).timeout
+		waited += 0.5
+	if not online.store_window.visible:
+		print("rose net demo: the store did not open")
+		return
+	var store: Dictionary = online.store_window.store
+	for t in store["tabs"]:
+		var names := []
+		for entry in t["items"]:
+			names.append("%s %d" % [entry["item"]["name"], entry["price"]])
+		print("rose net demo: %s, tab %s: %s" % [store["name"], t["name"], ", ".join(names)])
+	var money_before: int = online.net.get_inventory()["money"]
+	for t in store["tabs"].size():
+		online.store_window.tabs.current_tab = t
+		await get_tree().create_timer(1.0).timeout
+		var entry: Dictionary = store["tabs"][t]["items"][0]
+		print("rose net demo: buy %s for %d Zuly" % [entry["item"]["name"], entry["price"]])
+		online.store_window.buy(entry["index"], 1)
+		await get_tree().create_timer(1.0).timeout
+	print("rose net demo: Zuly %d -> %d" % [money_before, online.net.get_inventory()["money"]])
+	await get_tree().create_timer(2.0).timeout
+	var pages: Array = online.net.get_inventory()["pages"]
+	for i in pages[0].size():
+		if pages[0][i] != null and online.net.sell_price(0, i) >= 0:
+			print("rose net demo: sell %s for %d Zuly" % [pages[0][i]["name"], online.net.sell_price(0, i)])
+			online.store_window.sell(0, i, 1)
+			break
+	await get_tree().create_timer(2.0).timeout
+	print("rose net demo: Zuly now %d" % online.net.get_inventory()["money"])
 
 
 ## Fights the nearest monster until it dies, then the next one. Every third fight starts

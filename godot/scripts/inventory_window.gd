@@ -1,6 +1,7 @@
 ## Inventory window (I): equipped items and ammo, the four inventory pages, and money.
 ## Right-click (or double-click) an item to equip or use it, or an equipped item to take it
-## off. Drag items between slots of a page; select one and press Drop to drop it.
+## off. Drag items between slots of a page; select one and press Drop to drop it. While a
+## store is open, right-click sells instead (Shift sells the whole stack).
 extends PanelContainer
 
 const SLOT_SIZE := 44
@@ -91,13 +92,14 @@ class Slot:
 		return self
 
 	func _can_drop_data(_at: Vector2, data: Variant) -> bool:
-		return data is Slot and data.kind == "page" and (kind == "page" or kind == "equipped" or kind == "ammo")
+		return data is Slot and data.kind == "page" and (kind == "page" or kind == "equipped" or kind == "ammo" or kind == "store")
 
 	func _drop_data(_at: Vector2, data: Variant) -> void:
 		window.dropped(data, self)
 
 
 var net: RoseNet
+var store_window: Control  # store_window.gd; while it is open, right-click sells
 var money_label: Label
 var tabs: TabBar
 var page := 0
@@ -175,14 +177,27 @@ func _refresh(force: bool) -> void:
 	_last_inventory = inventory
 	money_label.text = "%d Zuly" % inventory["money"]
 	var items: Array = inventory["pages"][page]
+	var selling: bool = store_window != null and store_window.visible
 	for i in page_slots.size():
-		page_slots[i].show_item(items[i])
+		var item = items[i]
+		if selling and item != null:
+			var price: int = net.sell_price(page, i)
+			if price >= 0:
+				item = item.duplicate()
+				item["tooltip"] = "Sells for %d Zuly each\n%s" % [price, item.get("tooltip", "")]
+		page_slots[i].show_item(item)
 	for i in equipped_slots.size():
 		equipped_slots[i].show_item(inventory["equipped"][i])
 	for i in ammo_slots.size():
 		ammo_slots[i].show_item(inventory["ammo"][i])
 	if selected and selected.item == null:
 		_clear_selection()
+
+
+## Show or hide sell prices in the tooltips (a store opened or closed).
+func refresh_prices() -> void:
+	if net != null:
+		_refresh(true)
 
 
 func select(slot: Slot) -> void:
@@ -214,7 +229,10 @@ func activate(slot: Slot) -> void:
 		"ammo":
 			net.unequip_ammo(slot.index)
 		"page":
-			if page == 1:
+			if store_window != null and store_window.visible:
+				var quantity: int = slot.item.get("quantity", 1) if Input.is_key_pressed(KEY_SHIFT) else 1
+				store_window.sell(page, slot.index, quantity)
+			elif page == 1:
 				net.use_item(page, slot.index)
 			else:
 				net.equip_item(page, slot.index)

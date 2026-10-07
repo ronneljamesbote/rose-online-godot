@@ -107,6 +107,7 @@ pub fn setup_zones(ctx: &ReducerContext, game: &GameData) {
             });
         }
     }
+    crate::npcs::spawn_npcs(ctx, game);
 }
 
 /// One spawn check for a spawn point: which monsters to add, as rose-offline decides it.

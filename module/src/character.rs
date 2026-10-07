@@ -323,3 +323,15 @@ pub fn set_basic_stat(ctx: &ReducerContext, name: String, stat: u8, value: i32) 
     refresh_player(ctx, &game, &p, false);
     Ok(())
 }
+
+/// Debug: give a player (by name) Zuly.
+#[spacetimedb::reducer]
+pub fn give_money(ctx: &ReducerContext, name: String, amount: i64) -> Result<(), String> {
+    crate::require_admin(ctx)?;
+    let mut p = ctx.db.player().iter().find(|p| p.name == name).ok_or("no such player")?;
+    let mut inventory = p.inventory();
+    inventory.money = rose_game_common::components::Money((inventory.money.0 + amount).max(0));
+    p.set_inventory(&inventory);
+    ctx.db.player().identity().update(p);
+    Ok(())
+}
