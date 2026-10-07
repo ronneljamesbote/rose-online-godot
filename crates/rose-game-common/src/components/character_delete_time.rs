@@ -1,11 +1,10 @@
 use std::time::{Duration, SystemTime};
 
-use bevy::ecs::prelude::Component;
 use serde::{Deserialize, Serialize};
 
 const DELETE_CHARACTER_DURATION: Duration = Duration::from_secs(60 * 60);
 
-#[derive(Component, Copy, Clone, Debug, Deserialize, Serialize)]
+#[derive(Copy, Clone, Debug, Deserialize, Serialize)]
 pub struct CharacterDeleteTime {
     pub start_time: SystemTime,
 }

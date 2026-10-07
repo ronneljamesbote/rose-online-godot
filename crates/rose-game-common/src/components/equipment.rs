@@ -1,4 +1,3 @@
-use bevy::ecs::prelude::Component;
 use enum_map::EnumMap;
 use serde::{Deserialize, Serialize};
 
@@ -7,7 +6,7 @@ use rose_data::{
     VehiclePartIndex, WeaponItemData,
 };
 
-#[derive(Component, Clone, Debug, Default, Deserialize, Serialize)]
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct Equipment {
     pub equipped_items: EnumMap<EquipmentIndex, Option<EquipmentItem>>,
     pub equipped_vehicle: EnumMap<VehiclePartIndex, Option<EquipmentItem>>,

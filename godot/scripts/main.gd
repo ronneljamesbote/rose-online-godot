@@ -29,6 +29,7 @@ var camera_anchor: Node3D
 var camera: Camera3D
 var options := {}
 var world_ticks := 0.0  # one world tick is 10 seconds
+var loaded_zone := 0
 
 
 func _ready() -> void:
@@ -91,17 +92,9 @@ func _start(data_idx: String) -> void:
 		return
 	print("rose: data tables loaded in %d ms" % (Time.get_ticks_msec() - started))
 
-	zone = RoseZone.new()
-	zone.name = "Zone"
-	add_child(zone)
-	if not zone.load_zone(int(options.get("zone", "1"))):
+	if not _load_zone(int(options.get("zone", "1"))):
 		get_tree().quit(1)
 		return
-	print("rose: zone loaded ", zone.get_stats(), " day cycle ", zone.get_day_cycle(), " morning/day/evening/night start ", [zone.get_state_start("morning"), zone.get_state_start("day"), zone.get_state_start("evening"), zone.get_state_start("night")])
-	var time: String = options.get("time", "day")
-	world_ticks = float(time) if time.is_valid_int() else float(zone.get_state_start(time)) + 1.0
-	_apply_lighting(zone.get_lighting_at(int(world_ticks), 0.0))
-	print("rose: lighting ", zone.get_lighting_at(int(world_ticks), 0.0))
 
 	camera_anchor = Node3D.new()
 	add_child(camera_anchor)
@@ -153,6 +146,35 @@ func _start(data_idx: String) -> void:
 		_take_screenshot(options["screenshot"])
 
 
+## Loads a zone in place of the current one, with its lighting at the current time of day.
+func _load_zone(zone_id: int) -> bool:
+	if zone:
+		zone.queue_free()
+		remove_child(zone)
+	zone = RoseZone.new()
+	zone.name = "Zone"
+	add_child(zone)
+	move_child(zone, 0)
+	if not zone.load_zone(zone_id):
+		return false
+	loaded_zone = zone_id
+	zone.set_meta("zone_id", zone_id)
+	print("rose: zone ", zone_id, " loaded ", zone.get_stats(), " day cycle ", zone.get_day_cycle(), " morning/day/evening/night start ", [zone.get_state_start("morning"), zone.get_state_start("day"), zone.get_state_start("evening"), zone.get_state_start("night")])
+	if world_ticks == 0.0:
+		var time: String = options.get("time", "day")
+		world_ticks = float(time) if time.is_valid_int() else float(zone.get_state_start(time)) + 1.0
+	_apply_lighting(zone.get_lighting_at(int(world_ticks), 0.0))
+	return true
+
+
+## The server has our character in another zone: load it and show that zone's entities.
+func _on_zone_needed(zone_id: int) -> void:
+	if zone_id == loaded_zone:
+		return
+	if _load_zone(zone_id):
+		online.use_zone(zone)
+
+
 func _go_offline() -> void:
 	player = preload("res://scripts/player.gd").new()
 	player.name = "Player"
@@ -170,6 +192,7 @@ func _go_online(uri: String, name_text: String, use_bow: bool) -> void:
 	online.name = "Online"
 	add_child(online)
 	online.joined.connect(_on_joined)
+	online.zone_needed.connect(_on_zone_needed)
 	online.log_positions = options.has("net-log")
 	online.log_damage = options.has("net-log") or options.has("net-demo")
 	online.start(zone, uri, token_path, name_text, use_bow)
@@ -274,6 +297,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				online.stop()
 			elif player:
 				player.stop()
+		elif event.keycode == KEY_C and online:
+			online.toggle_character_window()
 
 
 ## Runs 20 m (--wall-reach) out in eight (--wall-directions) directions from the start, coming back each time, to test

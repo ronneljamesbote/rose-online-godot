@@ -1,4 +1,3 @@
-use bevy::ecs::prelude::Component;
 use serde::{Deserialize, Serialize};
 
 use rose_data::{SkillData, SkillDatabase, SkillId, SkillPageType};
@@ -65,7 +64,7 @@ impl SkillPage {
     }
 }
 
-#[derive(Component, Clone, Debug, Default, Deserialize, Serialize)]
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct SkillList {
     pub pages: Vec<SkillPage>,
 }

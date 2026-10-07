@@ -44,7 +44,7 @@ impl DropTable for DropTableData {
         let npc_drop_money_rate = npc_data.map_or(0, |n| n.drop_money_rate);
         let npc_level = npc_data.map_or(0, |n| n.level);
 
-        let mut rng = rand::thread_rng();
+        let mut rng = crate::rng::SharedRng;
         let drop_var = ((world_drop_item_rate as f32 + npc_drop_item_rate as f32
             - rng.gen_range::<i32, _>(1..=100) as f32
             - (level_difference as f32 + 16.0) * 3.5

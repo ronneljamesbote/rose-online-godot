@@ -26,6 +26,15 @@ impl ZmoFile {
     pub fn get_duration(&self) -> Duration {
         Duration::from_nanos((self.num_frames as u64 * 1_000_000_000) / self.fps as u64)
     }
+
+    /// Time of the first attack (damage) frame event, if the motion has one.
+    pub fn first_attack_frame_time(&self) -> Option<Duration> {
+        let frame = self
+            .frame_events
+            .iter()
+            .position(|e| matches!(e, 10 | 20..=28 | 56..=57 | 66..=67))?;
+        Some(Duration::from_nanos((frame as u64 * 1_000_000_000) / self.fps.max(1) as u64))
+    }
 }
 
 pub enum ZmoChannel {

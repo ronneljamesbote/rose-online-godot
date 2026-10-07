@@ -6,25 +6,31 @@
 #![allow(unused, clippy::all)]
 use spacetimedb_sdk::__codegen::{self as __sdk, __lib, __sats, __ws};
 
+pub mod add_basic_stat_reducer;
 pub mod admin_type;
 pub mod attack_reducer;
+pub mod begin_game_data_upload_reducer;
 pub mod combat_table;
 pub mod combat_tick_timer_type;
 pub mod combat_type;
 pub mod damage_event_table;
 pub mod damage_event_type;
+pub mod damage_source_type;
 pub mod entity_kind_type;
 pub mod entity_table;
 pub mod entity_type;
-pub mod import_npcs_reducer;
-pub mod import_zone_reducer;
+pub mod finish_game_data_upload_reducer;
+pub mod game_data_status_table;
+pub mod game_data_status_type;
+pub mod game_file_type;
+pub mod game_file_upload_type;
+pub mod give_xp_reducer;
 pub mod monster_ai_type;
 pub mod monster_spawn_type;
 pub mod motion_table;
 pub mod motion_type;
 pub mod move_collision_reducer;
 pub mod move_to_reducer;
-pub mod npc_data_type;
 pub mod place_player_reducer;
 pub mod player_table;
 pub mod player_type;
@@ -32,32 +38,47 @@ pub mod reset_monsters_reducer;
 pub mod set_aggro_range_reducer;
 pub mod set_loadout_reducer;
 pub mod set_name_reducer;
+pub mod set_world_rates_reducer;
+pub mod spawn_entry_type;
 pub mod spawn_tick_timer_type;
+pub mod stats_table;
 pub mod stats_type;
 pub mod stop_reducer;
 pub mod tick_stats_table;
 pub mod tick_stats_type;
+pub mod upload_game_files_reducer;
+pub mod world_rates_table;
+pub mod world_rates_type;
+pub mod xp_event_table;
+pub mod xp_event_type;
+pub mod zone_info_table;
 pub mod zone_info_type;
 
+pub use add_basic_stat_reducer::add_basic_stat;
 pub use admin_type::Admin;
 pub use attack_reducer::attack;
+pub use begin_game_data_upload_reducer::begin_game_data_upload;
 pub use combat_table::*;
 pub use combat_tick_timer_type::CombatTickTimer;
 pub use combat_type::Combat;
 pub use damage_event_table::*;
 pub use damage_event_type::DamageEvent;
+pub use damage_source_type::DamageSource;
 pub use entity_kind_type::EntityKind;
 pub use entity_table::*;
 pub use entity_type::Entity;
-pub use import_npcs_reducer::import_npcs;
-pub use import_zone_reducer::import_zone;
+pub use finish_game_data_upload_reducer::finish_game_data_upload;
+pub use game_data_status_table::*;
+pub use game_data_status_type::GameDataStatus;
+pub use game_file_type::GameFile;
+pub use game_file_upload_type::GameFileUpload;
+pub use give_xp_reducer::give_xp;
 pub use monster_ai_type::MonsterAi;
 pub use monster_spawn_type::MonsterSpawn;
 pub use motion_table::*;
 pub use motion_type::Motion;
 pub use move_collision_reducer::move_collision;
 pub use move_to_reducer::move_to;
-pub use npc_data_type::NpcData;
 pub use place_player_reducer::place_player;
 pub use player_table::*;
 pub use player_type::Player;
@@ -65,11 +86,20 @@ pub use reset_monsters_reducer::reset_monsters;
 pub use set_aggro_range_reducer::set_aggro_range;
 pub use set_loadout_reducer::set_loadout;
 pub use set_name_reducer::set_name;
+pub use set_world_rates_reducer::set_world_rates;
+pub use spawn_entry_type::SpawnEntry;
 pub use spawn_tick_timer_type::SpawnTickTimer;
+pub use stats_table::*;
 pub use stats_type::Stats;
 pub use stop_reducer::stop;
 pub use tick_stats_table::*;
 pub use tick_stats_type::TickStats;
+pub use upload_game_files_reducer::upload_game_files;
+pub use world_rates_table::*;
+pub use world_rates_type::WorldRates;
+pub use xp_event_table::*;
+pub use xp_event_type::XpEvent;
+pub use zone_info_table::*;
 pub use zone_info_type::ZoneInfo;
 
 #[derive(Clone, PartialEq, Debug)]
@@ -80,15 +110,17 @@ pub use zone_info_type::ZoneInfo;
 /// to indicate which reducer caused the event.
 
 pub enum Reducer {
+    AddBasicStat {
+        stat: u8,
+    },
     Attack {
         target: u64,
     },
-    ImportNpcs {
-        npcs: Vec<NpcData>,
-    },
-    ImportZone {
-        zone: ZoneInfo,
-        spawns: Vec<MonsterSpawn>,
+    BeginGameDataUpload,
+    FinishGameDataUpload,
+    GiveXp {
+        name: String,
+        xp: u64,
     },
     MoveCollision {
         x: f32,
@@ -114,7 +146,16 @@ pub enum Reducer {
     SetName {
         name: String,
     },
+    SetWorldRates {
+        xp_rate: i32,
+        drop_rate: i32,
+        drop_money_rate: i32,
+        reward_rate: i32,
+    },
     Stop,
+    UploadGameFiles {
+        files: Vec<GameFileUpload>,
+    },
 }
 
 impl __sdk::InModule for Reducer {
@@ -124,9 +165,11 @@ impl __sdk::InModule for Reducer {
 impl __sdk::Reducer for Reducer {
     fn reducer_name(&self) -> &'static str {
         match self {
+            Reducer::AddBasicStat { .. } => "add_basic_stat",
             Reducer::Attack { .. } => "attack",
-            Reducer::ImportNpcs { .. } => "import_npcs",
-            Reducer::ImportZone { .. } => "import_zone",
+            Reducer::BeginGameDataUpload => "begin_game_data_upload",
+            Reducer::FinishGameDataUpload => "finish_game_data_upload",
+            Reducer::GiveXp { .. } => "give_xp",
             Reducer::MoveCollision { .. } => "move_collision",
             Reducer::MoveTo { .. } => "move_to",
             Reducer::PlacePlayer { .. } => "place_player",
@@ -134,25 +177,33 @@ impl __sdk::Reducer for Reducer {
             Reducer::SetAggroRange { .. } => "set_aggro_range",
             Reducer::SetLoadout { .. } => "set_loadout",
             Reducer::SetName { .. } => "set_name",
+            Reducer::SetWorldRates { .. } => "set_world_rates",
             Reducer::Stop => "stop",
+            Reducer::UploadGameFiles { .. } => "upload_game_files",
             _ => unreachable!(),
         }
     }
     #[allow(clippy::clone_on_copy)]
     fn args_bsatn(&self) -> Result<Vec<u8>, __sats::bsatn::EncodeError> {
         match self {
+            Reducer::AddBasicStat { stat } => {
+                __sats::bsatn::to_vec(&add_basic_stat_reducer::AddBasicStatArgs {
+                    stat: stat.clone(),
+                })
+            }
             Reducer::Attack { target } => __sats::bsatn::to_vec(&attack_reducer::AttackArgs {
                 target: target.clone(),
             }),
-            Reducer::ImportNpcs { npcs } => {
-                __sats::bsatn::to_vec(&import_npcs_reducer::ImportNpcsArgs { npcs: npcs.clone() })
+            Reducer::BeginGameDataUpload => {
+                __sats::bsatn::to_vec(&begin_game_data_upload_reducer::BeginGameDataUploadArgs {})
             }
-            Reducer::ImportZone { zone, spawns } => {
-                __sats::bsatn::to_vec(&import_zone_reducer::ImportZoneArgs {
-                    zone: zone.clone(),
-                    spawns: spawns.clone(),
-                })
+            Reducer::FinishGameDataUpload => {
+                __sats::bsatn::to_vec(&finish_game_data_upload_reducer::FinishGameDataUploadArgs {})
             }
+            Reducer::GiveXp { name, xp } => __sats::bsatn::to_vec(&give_xp_reducer::GiveXpArgs {
+                name: name.clone(),
+                xp: xp.clone(),
+            }),
             Reducer::MoveCollision { x, y } => {
                 __sats::bsatn::to_vec(&move_collision_reducer::MoveCollisionArgs {
                     x: x.clone(),
@@ -187,7 +238,23 @@ impl __sdk::Reducer for Reducer {
             Reducer::SetName { name } => {
                 __sats::bsatn::to_vec(&set_name_reducer::SetNameArgs { name: name.clone() })
             }
+            Reducer::SetWorldRates {
+                xp_rate,
+                drop_rate,
+                drop_money_rate,
+                reward_rate,
+            } => __sats::bsatn::to_vec(&set_world_rates_reducer::SetWorldRatesArgs {
+                xp_rate: xp_rate.clone(),
+                drop_rate: drop_rate.clone(),
+                drop_money_rate: drop_money_rate.clone(),
+                reward_rate: reward_rate.clone(),
+            }),
             Reducer::Stop => __sats::bsatn::to_vec(&stop_reducer::StopArgs {}),
+            Reducer::UploadGameFiles { files } => {
+                __sats::bsatn::to_vec(&upload_game_files_reducer::UploadGameFilesArgs {
+                    files: files.clone(),
+                })
+            }
             _ => unreachable!(),
         }
     }
@@ -200,9 +267,14 @@ pub struct DbUpdate {
     combat: __sdk::TableUpdate<Combat>,
     damage_event: __sdk::TableUpdate<DamageEvent>,
     entity: __sdk::TableUpdate<Entity>,
+    game_data_status: __sdk::TableUpdate<GameDataStatus>,
     motion: __sdk::TableUpdate<Motion>,
     player: __sdk::TableUpdate<Player>,
+    stats: __sdk::TableUpdate<Stats>,
     tick_stats: __sdk::TableUpdate<TickStats>,
+    world_rates: __sdk::TableUpdate<WorldRates>,
+    xp_event: __sdk::TableUpdate<XpEvent>,
+    zone_info: __sdk::TableUpdate<ZoneInfo>,
 }
 
 impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
@@ -220,15 +292,30 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "entity" => db_update
                     .entity
                     .append(entity_table::parse_table_update(table_update)?),
+                "game_data_status" => db_update
+                    .game_data_status
+                    .append(game_data_status_table::parse_table_update(table_update)?),
                 "motion" => db_update
                     .motion
                     .append(motion_table::parse_table_update(table_update)?),
                 "player" => db_update
                     .player
                     .append(player_table::parse_table_update(table_update)?),
+                "stats" => db_update
+                    .stats
+                    .append(stats_table::parse_table_update(table_update)?),
                 "tick_stats" => db_update
                     .tick_stats
                     .append(tick_stats_table::parse_table_update(table_update)?),
+                "world_rates" => db_update
+                    .world_rates
+                    .append(world_rates_table::parse_table_update(table_update)?),
+                "xp_event" => db_update
+                    .xp_event
+                    .append(xp_event_table::parse_table_update(table_update)?),
+                "zone_info" => db_update
+                    .zone_info
+                    .append(zone_info_table::parse_table_update(table_update)?),
 
                 unknown => {
                     return Err(__sdk::InternalError::unknown_name(
@@ -262,15 +349,28 @@ impl __sdk::DbUpdate for DbUpdate {
         diff.entity = cache
             .apply_diff_to_table::<Entity>("entity", &self.entity)
             .with_updates_by_pk(|row| &row.entity_id);
+        diff.game_data_status = cache
+            .apply_diff_to_table::<GameDataStatus>("game_data_status", &self.game_data_status)
+            .with_updates_by_pk(|row| &row.id);
         diff.motion = cache
             .apply_diff_to_table::<Motion>("motion", &self.motion)
             .with_updates_by_pk(|row| &row.entity_id);
         diff.player = cache
             .apply_diff_to_table::<Player>("player", &self.player)
             .with_updates_by_pk(|row| &row.identity);
+        diff.stats = cache
+            .apply_diff_to_table::<Stats>("stats", &self.stats)
+            .with_updates_by_pk(|row| &row.entity_id);
         diff.tick_stats = cache
             .apply_diff_to_table::<TickStats>("tick_stats", &self.tick_stats)
             .with_updates_by_pk(|row| &row.id);
+        diff.world_rates = cache
+            .apply_diff_to_table::<WorldRates>("world_rates", &self.world_rates)
+            .with_updates_by_pk(|row| &row.id);
+        diff.xp_event = self.xp_event.into_event_diff();
+        diff.zone_info = cache
+            .apply_diff_to_table::<ZoneInfo>("zone_info", &self.zone_info)
+            .with_updates_by_pk(|row| &row.zone_id);
 
         diff
     }
@@ -287,14 +387,29 @@ impl __sdk::DbUpdate for DbUpdate {
                 "entity" => db_update
                     .entity
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "game_data_status" => db_update
+                    .game_data_status
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "motion" => db_update
                     .motion
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "player" => db_update
                     .player
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "stats" => db_update
+                    .stats
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "tick_stats" => db_update
                     .tick_stats
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "world_rates" => db_update
+                    .world_rates
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "xp_event" => db_update
+                    .xp_event
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "zone_info" => db_update
+                    .zone_info
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 unknown => {
                     return Err(
@@ -318,14 +433,29 @@ impl __sdk::DbUpdate for DbUpdate {
                 "entity" => db_update
                     .entity
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "game_data_status" => db_update
+                    .game_data_status
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "motion" => db_update
                     .motion
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "player" => db_update
                     .player
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "stats" => db_update
+                    .stats
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "tick_stats" => db_update
                     .tick_stats
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "world_rates" => db_update
+                    .world_rates
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "xp_event" => db_update
+                    .xp_event
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "zone_info" => db_update
+                    .zone_info
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 unknown => {
                     return Err(
@@ -345,9 +475,14 @@ pub struct AppliedDiff<'r> {
     combat: __sdk::TableAppliedDiff<'r, Combat>,
     damage_event: __sdk::TableAppliedDiff<'r, DamageEvent>,
     entity: __sdk::TableAppliedDiff<'r, Entity>,
+    game_data_status: __sdk::TableAppliedDiff<'r, GameDataStatus>,
     motion: __sdk::TableAppliedDiff<'r, Motion>,
     player: __sdk::TableAppliedDiff<'r, Player>,
+    stats: __sdk::TableAppliedDiff<'r, Stats>,
     tick_stats: __sdk::TableAppliedDiff<'r, TickStats>,
+    world_rates: __sdk::TableAppliedDiff<'r, WorldRates>,
+    xp_event: __sdk::TableAppliedDiff<'r, XpEvent>,
+    zone_info: __sdk::TableAppliedDiff<'r, ZoneInfo>,
     __unused: std::marker::PhantomData<&'r ()>,
 }
 
@@ -368,9 +503,18 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
             event,
         );
         callbacks.invoke_table_row_callbacks::<Entity>("entity", &self.entity, event);
+        callbacks.invoke_table_row_callbacks::<GameDataStatus>(
+            "game_data_status",
+            &self.game_data_status,
+            event,
+        );
         callbacks.invoke_table_row_callbacks::<Motion>("motion", &self.motion, event);
         callbacks.invoke_table_row_callbacks::<Player>("player", &self.player, event);
+        callbacks.invoke_table_row_callbacks::<Stats>("stats", &self.stats, event);
         callbacks.invoke_table_row_callbacks::<TickStats>("tick_stats", &self.tick_stats, event);
+        callbacks.invoke_table_row_callbacks::<WorldRates>("world_rates", &self.world_rates, event);
+        callbacks.invoke_table_row_callbacks::<XpEvent>("xp_event", &self.xp_event, event);
+        callbacks.invoke_table_row_callbacks::<ZoneInfo>("zone_info", &self.zone_info, event);
     }
 }
 
@@ -1034,16 +1178,26 @@ impl __sdk::SpacetimeModule for RemoteModule {
         combat_table::register_table(client_cache);
         damage_event_table::register_table(client_cache);
         entity_table::register_table(client_cache);
+        game_data_status_table::register_table(client_cache);
         motion_table::register_table(client_cache);
         player_table::register_table(client_cache);
+        stats_table::register_table(client_cache);
         tick_stats_table::register_table(client_cache);
+        world_rates_table::register_table(client_cache);
+        xp_event_table::register_table(client_cache);
+        zone_info_table::register_table(client_cache);
     }
     const ALL_TABLE_NAMES: &'static [&'static str] = &[
         "combat",
         "damage_event",
         "entity",
+        "game_data_status",
         "motion",
         "player",
+        "stats",
         "tick_stats",
+        "world_rates",
+        "xp_event",
+        "zone_info",
     ];
 }

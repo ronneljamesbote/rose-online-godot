@@ -1,13 +1,21 @@
-//! ROSE on SpacetimeDB: movement and combat prototype.
+//! ROSE on SpacetimeDB.
 //!
 //! Units follow rose-offline: positions in cm, speeds in cm/s, times stored as
 //! microseconds since the Unix epoch so clients can evaluate motion paths too.
+//! Game rules come from rose-offline's crates (vendored in ../crates); the game databases
+//! are built from client files the host uploads (see game_data.rs).
 
-mod damage;
+mod character;
+mod game_data;
+mod world;
 
 use rand::Rng;
+use rose_game_common::components::AbilityValues;
+use rose_game_data::GameData;
 use spacetimedb::{Identity, ReducerContext, ScheduleAt, SpacetimeType, Table};
 use std::time::Duration;
+
+pub use world::{monster_spawn, zone_info};
 
 const COMBAT_TICK_MS: u64 = 100;
 const SPAWN_TICK_MS: u64 = 1000;
@@ -17,7 +25,13 @@ const MONSTER_LEASH_CM: f32 = 3000.0;
 const CHASE_REPATH_CM: f32 = 100.0;
 /// Extra reach so an entity that stopped exactly at range still swings.
 const RANGE_SLACK_CM: f32 = 50.0;
-const DEFAULT_ZONE: u16 = 1;
+/// New characters start where rose-offline starts them, on Birth Island.
+const START_ZONE: u16 = 20;
+const START_POSITION: (f32, f32) = (530500.0, 539500.0);
+/// Damage older than this earns no experience (rose-offline's DAMAGE_REWARD_EXPIRE_TIME).
+const DAMAGE_REWARD_EXPIRE_US: i64 = 5 * 60 * 1_000_000;
+/// Passive HP and MP recovery interval (rose-offline's passive_recovery_system).
+const RECOVERY_INTERVAL_US: i64 = 4_000_000;
 
 #[derive(SpacetimeType, Clone, Copy, PartialEq, Eq, Debug)]
 pub enum EntityKind {
@@ -31,6 +45,8 @@ pub struct Admin {
     identity: Identity,
 }
 
+/// One character per identity. Components that rose-offline keeps as structs (equipment,
+/// inventory, skills, quests, hotbar) are stored as their serde JSON.
 #[spacetimedb::table(accessor = player, public)]
 #[derive(Clone)]
 pub struct Player {
@@ -43,8 +59,28 @@ pub struct Player {
     pub last_x: f32,
     pub last_y: f32,
     pub last_hp: i32,
-    /// Test loadout: false = melee, true = ranged (bow).
-    pub ranged: bool,
+    pub last_mp: i32,
+    /// 0 male, 1 female.
+    pub gender: u8,
+    pub face: u8,
+    pub hair: u8,
+    pub job: u16,
+    pub level: u32,
+    pub xp: u64,
+    pub stat_points: u32,
+    pub skill_points: u32,
+    pub money: i64,
+    pub strength: i32,
+    pub dexterity: i32,
+    pub intelligence: i32,
+    pub concentration: i32,
+    pub charm: i32,
+    pub sense: i32,
+    pub equipment: String,
+    pub inventory: String,
+    pub skill_list: String,
+    pub quest_state: String,
+    pub hotbar: String,
 }
 
 #[spacetimedb::table(accessor = entity, public)]
@@ -83,6 +119,8 @@ pub struct Combat {
     pub entity_id: u64,
     pub hp: i32,
     pub max_hp: i32,
+    pub mp: i32,
+    pub max_mp: i32,
     pub attack_target: Option<u64>,
     /// Earliest start of the next swing (attack speed cooldown).
     pub next_attack_at_us: i64,
@@ -92,15 +130,20 @@ pub struct Combat {
     pub dead_until_us: Option<i64>,
 }
 
-#[spacetimedb::table(accessor = stats)]
+/// An entity's ability values (rose-game-common's AbilityValues), with the ones combat and
+/// the HUD use as columns and the whole struct as JSON for the damage formulas.
+#[spacetimedb::table(accessor = stats, public)]
 #[derive(Clone)]
 pub struct Stats {
     #[primary_key]
     pub entity_id: u64,
     pub level: i32,
+    pub max_hp: i32,
+    pub max_mp: i32,
     pub attack_power: i32,
     pub hit: i32,
     pub defence: i32,
+    pub resistance: i32,
     pub avoid: i32,
     pub critical: i32,
     pub attack_speed: i32,
@@ -108,11 +151,53 @@ pub struct Stats {
     pub attack_motion_ms: i32,
     /// Time from the start of the attack animation to its hit frame, at attack speed 100.
     pub attack_hit_ms: i32,
+    /// Attack frames in the attack animation (the hit count the damage formula takes).
+    pub hit_count: i32,
     pub attack_range: f32,
     pub move_speed: f32,
     /// Chase speed for monsters (their run speed); same as move_speed for players.
     pub run_speed: f32,
     pub is_player: bool,
+    pub ability_values: String,
+}
+
+impl Stats {
+    pub fn from_ability_values(
+        entity_id: u64,
+        av: &AbilityValues,
+        is_player: bool,
+        attack_motion_ms: i32,
+        attack_hit_ms: i32,
+        hit_count: i32,
+    ) -> Self {
+        let run_speed = av.get_run_speed();
+        Stats {
+            entity_id,
+            level: av.get_level(),
+            max_hp: av.get_max_health(),
+            max_mp: av.get_max_mana(),
+            attack_power: av.get_attack_power(),
+            hit: av.get_hit(),
+            defence: av.get_defence(),
+            resistance: av.get_resistance(),
+            avoid: av.get_avoid(),
+            critical: av.get_critical(),
+            attack_speed: av.get_attack_speed(),
+            attack_motion_ms,
+            attack_hit_ms,
+            hit_count,
+            attack_range: av.get_attack_range() as f32,
+            // Players always run; monsters walk unless they chase.
+            move_speed: if is_player { run_speed } else { av.get_walk_speed() },
+            run_speed,
+            is_player,
+            ability_values: serde_json::to_string(av).unwrap_or_default(),
+        }
+    }
+
+    fn ability(&self) -> Option<AbilityValues> {
+        serde_json::from_str(&self.ability_values).ok()
+    }
 }
 
 #[spacetimedb::table(accessor = monster_ai)]
@@ -128,57 +213,17 @@ pub struct MonsterAi {
     pub returning: bool,
 }
 
-#[spacetimedb::table(accessor = zone_info)]
-#[derive(Clone, serde::Deserialize)]
-pub struct ZoneInfo {
+/// Who hurt a monster and how much, for the experience share when it dies.
+#[spacetimedb::table(accessor = damage_source)]
+pub struct DamageSource {
     #[primary_key]
-    pub zone_id: u16,
-    pub name: String,
-    pub start_x: f32,
-    pub start_y: f32,
-    pub revive_x: f32,
-    pub revive_y: f32,
-    pub min_x: f32,
-    pub min_y: f32,
-    pub max_x: f32,
-    pub max_y: f32,
-}
-
-#[spacetimedb::table(accessor = monster_spawn)]
-#[derive(Clone, serde::Deserialize)]
-pub struct MonsterSpawn {
-    #[primary_key]
-    pub spawn_id: u32,
-    pub zone_id: u16,
-    pub x: f32,
-    pub y: f32,
-    pub radius: f32,
-    pub npc_id: u16,
-    pub max_alive: u32,
-    pub respawn_secs: u32,
-    pub next_spawn_at_us: i64,
-}
-
-#[spacetimedb::table(accessor = npc_data)]
-#[derive(Clone, serde::Deserialize)]
-pub struct NpcData {
-    #[primary_key]
-    pub npc_id: u16,
-    pub name: String,
-    pub level: i32,
-    pub max_hp: i32,
-    pub attack_power: i32,
-    pub hit: i32,
-    pub defence: i32,
-    pub avoid: i32,
-    pub attack_speed: i32,
-    pub attack_motion_ms: i32,
-    pub attack_hit_ms: i32,
-    pub attack_range: f32,
-    pub walk_speed: f32,
-    pub run_speed: f32,
-    /// 0 = only fights back when hit.
-    pub aggro_range: f32,
+    #[auto_inc]
+    pub id: u64,
+    #[index(btree)]
+    pub defender: u64,
+    pub attacker: u64,
+    pub total_damage: u64,
+    pub last_at_us: i64,
 }
 
 #[spacetimedb::table(accessor = damage_event, public, event)]
@@ -191,6 +236,26 @@ pub struct DamageEvent {
     pub at_us: i64,
 }
 
+/// Experience gained, so clients can show "+N XP".
+#[spacetimedb::table(accessor = xp_event, public, event)]
+pub struct XpEvent {
+    pub identity: Identity,
+    pub xp: u64,
+    pub level: u32,
+}
+
+/// Server rates in percent, as rose-offline's WorldRates (its defaults).
+#[spacetimedb::table(accessor = world_rates, public)]
+#[derive(Clone)]
+pub struct WorldRates {
+    #[primary_key]
+    pub id: u8,
+    pub xp_rate: i32,
+    pub drop_rate: i32,
+    pub drop_money_rate: i32,
+    pub reward_rate: i32,
+}
+
 /// Per-tick timing, so the go/no-go "combat tick duration" can be read with SQL.
 #[spacetimedb::table(accessor = tick_stats, public)]
 pub struct TickStats {
@@ -200,6 +265,7 @@ pub struct TickStats {
     pub last_tick_entities: u32,
     pub max_gap_us: i64,
     pub last_at_us: i64,
+    pub next_recovery_at_us: i64,
 }
 
 #[spacetimedb::table(accessor = combat_tick_timer, scheduled(combat_tick))]
@@ -282,7 +348,7 @@ fn stop_motion(ctx: &ReducerContext, entity_id: u64) {
     }
 }
 
-fn require_admin(ctx: &ReducerContext) -> Result<(), String> {
+pub(crate) fn require_admin(ctx: &ReducerContext) -> Result<(), String> {
     if ctx.db.admin().identity().find(ctx.sender()).is_some() {
         Ok(())
     } else {
@@ -316,39 +382,13 @@ fn cancel_attack(ctx: &ReducerContext, id: u64, t: i64) {
     ctx.db.combat().entity_id().update(c);
 }
 
-/// Fixed test character until character creation exists: the level 10 "Tester" the client
-/// patch logs in with. Values are what the client itself calculates for that character
-/// (logged by its ability_values_system), so both sides agree on reach, speed and swing timing.
-const PLAYER_MAX_HP: i32 = 236;
-
-fn player_stats(entity_id: u64, ranged: bool) -> Stats {
-    Stats {
-        entity_id,
-        level: 10,
-        attack_power: if ranged { 58 } else { 34 },
-        hit: if ranged { 119 } else { 115 },
-        defence: 29,
-        avoid: 118,
-        critical: 17,
-        attack_speed: if ranged { 100 } else { 107 },
-        // Attack animation length and hit frame from the client's own ZMO files
-        // (import's attack_timing: ONEHAND_ATTACK0x_M1 and BOW_ATTACK_M1).
-        attack_motion_ms: if ranged { 1566 } else { 1233 },
-        attack_hit_ms: if ranged { 900 } else { 566 },
-        // Short Bow (item 202) and Short Sword (item 2) reach as the client computes it.
-        attack_range: if ranged { 2220.0 } else { 270.0 },
-        move_speed: 450.5,
-        run_speed: 450.5,
-        is_player: true,
-    }
-}
-
 fn despawn(ctx: &ReducerContext, entity_id: u64) {
     ctx.db.entity().entity_id().delete(entity_id);
     ctx.db.motion().entity_id().delete(entity_id);
     ctx.db.combat().entity_id().delete(entity_id);
     ctx.db.stats().entity_id().delete(entity_id);
     ctx.db.monster_ai().entity_id().delete(entity_id);
+    clear_damage_sources(ctx, entity_id);
     // Anyone targeting it loses the target.
     for mut c in ctx.db.combat().iter().filter(|c| c.attack_target == Some(entity_id)) {
         c.attack_target = None;
@@ -359,7 +399,14 @@ fn despawn(ctx: &ReducerContext, entity_id: u64) {
     }
 }
 
-fn spawn_player_entity(ctx: &ReducerContext, player: &mut Player) {
+fn clear_damage_sources(ctx: &ReducerContext, defender: u64) {
+    let ids: Vec<u64> = ctx.db.damage_source().defender().filter(defender).map(|d| d.id).collect();
+    for id in ids {
+        ctx.db.damage_source().id().delete(id);
+    }
+}
+
+fn spawn_player_entity(ctx: &ReducerContext, game: &GameData, player: &mut Player) {
     let entity = ctx.db.entity().insert(Entity {
         entity_id: 0,
         kind: EntityKind::Player,
@@ -368,9 +415,9 @@ fn spawn_player_entity(ctx: &ReducerContext, player: &mut Player) {
         name: player.name.clone(),
     });
     let id = entity.entity_id;
-    let stats = ctx.db.stats().insert(player_stats(id, player.ranged));
-    let max_hp = PLAYER_MAX_HP;
-    let hp = if player.last_hp > 0 { player.last_hp.min(max_hp) } else { max_hp };
+    let stats = ctx.db.stats().insert(character::player_stats(game, id, player));
+    let hp = if player.last_hp > 0 { player.last_hp.min(stats.max_hp) } else { stats.max_hp };
+    let mp = if player.last_hp > 0 { player.last_mp.clamp(0, stats.max_mp) } else { stats.max_mp };
     let t = now_us(ctx);
     ctx.db.motion().insert(Motion {
         entity_id: id,
@@ -385,72 +432,15 @@ fn spawn_player_entity(ctx: &ReducerContext, player: &mut Player) {
     ctx.db.combat().insert(Combat {
         entity_id: id,
         hp,
-        max_hp,
+        max_hp: stats.max_hp,
+        mp,
+        max_mp: stats.max_mp,
         attack_target: None,
         next_attack_at_us: t,
         swing_hit_at_us: None,
         dead_until_us: None,
     });
     player.entity_id = Some(id);
-}
-
-fn spawn_monster(ctx: &ReducerContext, spawn: &MonsterSpawn, npc: &NpcData) {
-    let mut rng = ctx.rng();
-    let angle: f32 = rng.gen_range(0.0..std::f32::consts::TAU);
-    let r: f32 = rng.gen_range(0.0..spawn.radius.max(1.0));
-    let (x, y) = (spawn.x + angle.cos() * r, spawn.y + angle.sin() * r);
-    let entity = ctx.db.entity().insert(Entity {
-        entity_id: 0,
-        kind: EntityKind::Monster,
-        npc_id: npc.npc_id,
-        zone_id: spawn.zone_id,
-        name: npc.name.clone(),
-    });
-    let id = entity.entity_id;
-    let t = now_us(ctx);
-    ctx.db.stats().insert(Stats {
-        entity_id: id,
-        level: npc.level,
-        attack_power: npc.attack_power,
-        hit: npc.hit,
-        defence: npc.defence,
-        avoid: npc.avoid,
-        critical: (npc.level as f32 * 2.5) as i32,
-        attack_speed: npc.attack_speed,
-        attack_motion_ms: npc.attack_motion_ms,
-        attack_hit_ms: npc.attack_hit_ms,
-        attack_range: npc.attack_range,
-        move_speed: npc.walk_speed,
-        run_speed: npc.run_speed,
-        is_player: false,
-    });
-    ctx.db.motion().insert(Motion {
-        entity_id: id,
-        from_x: x,
-        from_y: y,
-        to_x: x,
-        to_y: y,
-        started_at_us: t,
-        speed: npc.walk_speed,
-        chase_target: None,
-    });
-    ctx.db.combat().insert(Combat {
-        entity_id: id,
-        hp: npc.max_hp,
-        max_hp: npc.max_hp,
-        attack_target: None,
-        next_attack_at_us: t,
-        swing_hit_at_us: None,
-        dead_until_us: None,
-    });
-    ctx.db.monster_ai().insert(MonsterAi {
-        entity_id: id,
-        spawn_id: spawn.spawn_id,
-        home_x: x,
-        home_y: y,
-        aggro_range: npc.aggro_range,
-        returning: false,
-    });
 }
 
 fn my_player(ctx: &ReducerContext) -> Result<(Player, u64), String> {
@@ -467,6 +457,27 @@ fn is_alive(ctx: &ReducerContext, entity_id: u64) -> bool {
         .map_or(false, |c| c.dead_until_us.is_none() && c.hp > 0)
 }
 
+fn world_rates_row(ctx: &ReducerContext) -> WorldRates {
+    ctx.db.world_rates().id().find(0).unwrap_or(WorldRates {
+        id: 0,
+        xp_rate: 300,
+        drop_rate: 300,
+        drop_money_rate: 300,
+        reward_rate: 300,
+    })
+}
+
+fn start_timers(ctx: &ReducerContext) {
+    ctx.db.combat_tick_timer().insert(CombatTickTimer {
+        scheduled_id: 0,
+        scheduled_at: ScheduleAt::Interval(Duration::from_millis(COMBAT_TICK_MS).into()),
+    });
+    ctx.db.spawn_tick_timer().insert(SpawnTickTimer {
+        scheduled_id: 0,
+        scheduled_at: ScheduleAt::Interval(Duration::from_millis(SPAWN_TICK_MS).into()),
+    });
+}
+
 // ---------------------------------------------------------------- lifecycle
 
 #[spacetimedb::reducer(init)]
@@ -478,60 +489,30 @@ pub fn init(ctx: &ReducerContext) {
         last_tick_entities: 0,
         max_gap_us: 0,
         last_at_us: 0,
+        next_recovery_at_us: 0,
     });
-    ctx.db.combat_tick_timer().insert(CombatTickTimer {
-        scheduled_id: 0,
-        scheduled_at: ScheduleAt::Interval(Duration::from_millis(COMBAT_TICK_MS).into()),
-    });
-    ctx.db.spawn_tick_timer().insert(SpawnTickTimer {
-        scheduled_id: 0,
-        scheduled_at: ScheduleAt::Interval(Duration::from_millis(SPAWN_TICK_MS).into()),
-    });
-    seed_zone_data(ctx);
+    ctx.db.world_rates().insert(world_rates_row(ctx));
+    start_timers(ctx);
 }
 
-/// Monster types and Zant's spawn points from the import tool (data/zone1), built into the
-/// module so a fresh server is playable after one publish. import_npcs and import_zone
-/// still replace them later.
-fn seed_zone_data(ctx: &ReducerContext) {
-    let (npcs,): (Vec<NpcData>,) =
-        serde_json::from_str(include_str!("../../data/zone1/npcs.json")).expect("data/zone1/npcs.json");
-    for npc in npcs {
-        ctx.db.npc_data().insert(npc);
-    }
-    let (zone, spawns): (ZoneInfo, Vec<MonsterSpawn>) =
-        serde_json::from_str(include_str!("../../data/zone1/zone.json")).expect("data/zone1/zone.json");
-    ctx.db.zone_info().insert(zone);
-    for spawn in spawns {
-        ctx.db.monster_spawn().insert(spawn);
-    }
-}
-
+/// Puts the connecting player's character in the world, creating it on first connect.
+/// Without game data nobody can play yet; the client shows game_data_status instead.
 #[spacetimedb::reducer(client_connected)]
 pub fn client_connected(ctx: &ReducerContext) {
     // The admin identity (the CLI that publishes and runs SQL) is not a game client.
     if ctx.db.admin().identity().find(ctx.sender()).is_some() {
         return;
     }
-    let zone = ctx.db.zone_info().zone_id().find(DEFAULT_ZONE);
+    let Ok(game) = game_data::game(ctx) else { return };
     let mut player = ctx.db.player().identity().find(ctx.sender()).unwrap_or_else(|| {
-        let (x, y) = zone.as_ref().map_or((520000.0, 520000.0), |z| (z.start_x, z.start_y));
         let hex = ctx.sender().to_hex().to_string();
-        ctx.db.player().insert(Player {
-            identity: ctx.sender(),
-            entity_id: None,
-            name: format!("Tester{}", &hex[hex.len() - 4..]),
-            online: true,
-            zone_id: DEFAULT_ZONE,
-            last_x: x,
-            last_y: y,
-            last_hp: 0,
-            ranged: false,
-        })
+        let name = format!("Tester{}", &hex[hex.len() - 4..]);
+        let (x, y) = START_POSITION;
+        ctx.db.player().insert(character::new_player(&game, ctx.sender(), name, 0, (START_ZONE, x, y)))
     });
     player.online = true;
     if player.entity_id.is_none() {
-        spawn_player_entity(ctx, &mut player);
+        spawn_player_entity(ctx, &game, &mut player);
     }
     ctx.db.player().identity().update(player);
 }
@@ -547,6 +528,7 @@ pub fn client_disconnected(ctx: &ReducerContext) {
         }
         if let Some(c) = ctx.db.combat().entity_id().find(id) {
             player.last_hp = c.hp;
+            player.last_mp = c.mp;
         }
         despawn(ctx, id);
     }
@@ -572,7 +554,7 @@ pub fn set_name(ctx: &ReducerContext, name: String) -> Result<(), String> {
     Ok(())
 }
 
-/// Click-to-move. Keeps the attack target, which is what makes attack-while-moving work.
+/// Click-to-move. Moving ends the attack (no attacking while moving).
 #[spacetimedb::reducer]
 pub fn move_to(ctx: &ReducerContext, x: f32, y: f32) -> Result<(), String> {
     let (player, id) = my_player(ctx)?;
@@ -587,7 +569,7 @@ pub fn move_to(ctx: &ReducerContext, x: f32, y: f32) -> Result<(), String> {
             return Err("outside the zone".into());
         }
     }
-    // Moving ends the attack (no attacking while moving); it also cancels a swing in progress.
+    // It also cancels a swing in progress.
     cancel_attack(ctx, id, now_us(ctx));
     let speed = ctx.db.stats().entity_id().find(id).map_or(425.0, |s| s.move_speed);
     set_motion(ctx, id, (x, y), speed, None);
@@ -689,56 +671,21 @@ pub fn move_collision(ctx: &ReducerContext, x: f32, y: f32) -> Result<(), String
     Ok(())
 }
 
-/// Test helper: switch between a melee and a ranged loadout.
-#[spacetimedb::reducer]
-pub fn set_loadout(ctx: &ReducerContext, ranged: bool) -> Result<(), String> {
-    let (mut player, id) = my_player(ctx)?;
-    player.ranged = ranged;
-    ctx.db.player().identity().update(player);
-    ctx.db.stats().entity_id().update(player_stats(id, ranged));
-    Ok(())
-}
-
 // ---------------------------------------------------------------- admin reducers
 
+/// Set the server rates in percent (rose-offline's defaults are 300).
 #[spacetimedb::reducer]
-pub fn import_npcs(ctx: &ReducerContext, npcs: Vec<NpcData>) -> Result<(), String> {
+pub fn set_world_rates(ctx: &ReducerContext, xp_rate: i32, drop_rate: i32, drop_money_rate: i32, reward_rate: i32) -> Result<(), String> {
     require_admin(ctx)?;
-    for npc in npcs {
-        if ctx.db.npc_data().npc_id().find(npc.npc_id).is_some() {
-            ctx.db.npc_data().npc_id().update(npc);
-        } else {
-            ctx.db.npc_data().insert(npc);
-        }
-    }
-    Ok(())
-}
-
-#[spacetimedb::reducer]
-pub fn import_zone(ctx: &ReducerContext, zone: ZoneInfo, spawns: Vec<MonsterSpawn>) -> Result<(), String> {
-    require_admin(ctx)?;
-    let zone_id = zone.zone_id;
-    if ctx.db.zone_info().zone_id().find(zone_id).is_some() {
-        ctx.db.zone_info().zone_id().update(zone);
-    } else {
-        ctx.db.zone_info().insert(zone);
-    }
-    for s in ctx.db.monster_spawn().iter().filter(|s| s.zone_id == zone_id) {
-        ctx.db.monster_spawn().spawn_id().delete(s.spawn_id);
-    }
-    for s in spawns {
-        ctx.db.monster_spawn().insert(s);
-    }
+    ctx.db.world_rates().id().update(WorldRates { id: 0, xp_rate, drop_rate, drop_money_rate, reward_rate });
     Ok(())
 }
 
 /// Make a monster type attack players that come within `range` cm (0 = only fights back).
+/// Lasts until the monsters respawn; monster AI scripts are not ported yet.
 #[spacetimedb::reducer]
 pub fn set_aggro_range(ctx: &ReducerContext, npc_id: u16, range: f32) -> Result<(), String> {
     require_admin(ctx)?;
-    let mut npc = ctx.db.npc_data().npc_id().find(npc_id).ok_or("no such npc")?;
-    npc.aggro_range = range;
-    ctx.db.npc_data().npc_id().update(npc);
     for e in ctx.db.entity().iter().filter(|e| e.npc_id == npc_id && e.kind == EntityKind::Monster) {
         if let Some(mut ai) = ctx.db.monster_ai().entity_id().find(e.entity_id) {
             ai.aggro_range = range;
@@ -762,30 +709,38 @@ pub fn place_player(ctx: &ReducerContext, name: String, x: f32, y: f32) -> Resul
         player.last_y = y;
         // Offline players come back at full HP.
         player.last_hp = 0;
-        if let Some(mut m) = player.entity_id.and_then(|id| ctx.db.motion().entity_id().find(id)) {
-            m.from_x = x;
-            m.from_y = y;
-            m.to_x = x;
-            m.to_y = y;
-            m.started_at_us = t;
-            m.chase_target = None;
-            ctx.db.motion().entity_id().update(m);
+        if let Some(id) = player.entity_id {
+            if let Some(mut m) = ctx.db.motion().entity_id().find(id) {
+                m.from_x = x;
+                m.from_y = y;
+                m.to_x = x;
+                m.to_y = y;
+                m.started_at_us = t;
+                m.chase_target = None;
+                ctx.db.motion().entity_id().update(m);
+            }
+            if let Some(mut c) = ctx.db.combat().entity_id().find(id) {
+                c.hp = c.max_hp;
+                ctx.db.combat().entity_id().update(c);
+            }
         }
         ctx.db.player().identity().update(player);
-    }
-    // Clear any entity an earlier admin connection left behind.
-    let ghosts: Vec<Player> = ctx.db.player().iter().filter(|p| ctx.db.admin().identity().find(p.identity).is_some()).collect();
-    for mut g in ghosts {
-        if let Some(id) = g.entity_id.take() {
-            despawn(ctx, id);
-        }
-        g.online = false;
-        ctx.db.player().identity().update(g);
     }
     Ok(())
 }
 
-/// Remove all monsters so spawn_tick refills them from the spawn table.
+/// Debug: give a player experience (by name).
+#[spacetimedb::reducer]
+pub fn give_xp(ctx: &ReducerContext, name: String, xp: u64) -> Result<(), String> {
+    require_admin(ctx)?;
+    let game = game_data::game(ctx)?;
+    let player = ctx.db.player().iter().find(|p| p.name == name).ok_or("no such player")?;
+    character::reward_xp(ctx, &game, player.identity, xp);
+    ctx.db.xp_event().insert(XpEvent { identity: player.identity, xp, level: 0 });
+    Ok(())
+}
+
+/// Remove all monsters so the spawn points refill.
 #[spacetimedb::reducer]
 pub fn reset_monsters(ctx: &ReducerContext) -> Result<(), String> {
     require_admin(ctx)?;
@@ -794,7 +749,8 @@ pub fn reset_monsters(ctx: &ReducerContext) -> Result<(), String> {
         despawn(ctx, id);
     }
     for mut s in ctx.db.monster_spawn().iter() {
-        s.next_spawn_at_us = 0;
+        s.next_check_at_us = 0;
+        s.current_tactics_value = 0;
         ctx.db.monster_spawn().spawn_id().update(s);
     }
     Ok(())
@@ -807,8 +763,9 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
     if ctx.sender() != ctx.database_identity() {
         return Err("timer only".into());
     }
+    let Ok(game) = game_data::game(ctx) else { return Ok(()) };
     let t = now_us(ctx);
-    let mut rng = ctx.rng();
+    rose_game_irose::rng::reseed(ctx.rng().gen());
 
     // Monster AI first: aggro, leash, chase.
     for ai in ctx.db.monster_ai().iter() {
@@ -833,6 +790,7 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
             c.attack_target = None;
             c.hp = c.max_hp;
             ctx.db.combat().entity_id().update(c);
+            clear_damage_sources(ctx, id);
             let speed = ctx.db.stats().entity_id().find(id).map_or(300.0, |s| s.run_speed);
             set_motion(ctx, id, home, speed, None);
             let mut ai = ai.clone();
@@ -885,29 +843,41 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
                 // Hit frame reached: resolve the swing.
                 Some(hit_at) if t >= hit_at => {
                     let defender_stats = ctx.db.stats().entity_id().find(target).unwrap();
-                    let dmg = damage::roll(&mut rng, &stats, &defender_stats);
+                    let (amount, is_critical) = match (stats.ability(), defender_stats.ability()) {
+                        (Some(a), Some(d)) => {
+                            let dmg = game.ability_value_calculator.calculate_damage(&a, &d, stats.hit_count);
+                            (dmg.amount as i32, dmg.is_critical)
+                        }
+                        _ => (0, false),
+                    };
                     let mut dc = ctx.db.combat().entity_id().find(target).unwrap();
-                    dc.hp = (dc.hp - dmg.amount).max(0);
+                    let dealt = amount.min(dc.hp);
+                    dc.hp = (dc.hp - amount).max(0);
                     let killed = dc.hp == 0;
                     // Monsters fight back when hit.
                     if !defender_stats.is_player && dc.attack_target.is_none() && !killed {
                         dc.attack_target = Some(id);
                     }
                     ctx.db.combat().entity_id().update(dc);
+                    if !defender_stats.is_player && dealt > 0 {
+                        add_damage_source(ctx, target, id, dealt as u64, t);
+                    }
                     ctx.db.damage_event().insert(DamageEvent {
                         attacker: id,
                         defender: target,
-                        amount: dmg.amount,
-                        is_critical: dmg.is_critical,
+                        amount,
+                        is_critical,
                         killed,
                         at_us: t,
                     });
                     c.swing_hit_at_us = None;
                     if killed {
                         c.attack_target = None;
-                        kill(ctx, target, t);
+                        ctx.db.combat().entity_id().update(c.clone());
+                        kill(ctx, &game, target, &defender_stats, t);
+                    } else {
+                        ctx.db.combat().entity_id().update(c);
                     }
-                    ctx.db.combat().entity_id().update(c);
                 }
                 Some(_) => {}
                 // Ready: start a swing. Schedule from the previous one so ticks don't add drift.
@@ -950,6 +920,16 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
     Ok(())
 }
 
+fn add_damage_source(ctx: &ReducerContext, defender: u64, attacker: u64, amount: u64, t: i64) {
+    if let Some(mut d) = ctx.db.damage_source().defender().filter(defender).find(|d| d.attacker == attacker) {
+        d.total_damage += amount;
+        d.last_at_us = t;
+        ctx.db.damage_source().id().update(d);
+    } else {
+        ctx.db.damage_source().insert(DamageSource { id: 0, defender, attacker, total_damage: amount, last_at_us: t });
+    }
+}
+
 fn stop_chase(ctx: &ReducerContext, id: u64, target: u64) {
     if let Some(m) = ctx.db.motion().entity_id().find(id) {
         if m.chase_target == Some(target) {
@@ -958,16 +938,37 @@ fn stop_chase(ctx: &ReducerContext, id: u64, target: u64) {
     }
 }
 
-fn kill(ctx: &ReducerContext, id: u64, t: i64) {
+/// Experience for everyone who hurt a monster in the last five minutes, by rose-offline's
+/// calculate_give_xp (parties come later).
+fn reward_kill(ctx: &ReducerContext, game: &GameData, monster: u64, monster_stats: &Stats, npc_id: u16, t: i64) {
+    let Some(npc) = rose_data::NpcId::new(npc_id).and_then(|id| game.npcs.get_npc(id)) else { return };
+    let rates = world_rates_row(ctx);
+    for source in ctx.db.damage_source().defender().filter(monster) {
+        if t - source.last_at_us > DAMAGE_REWARD_EXPIRE_US {
+            continue;
+        }
+        let Some(player) = ctx.db.player().iter().find(|p| p.entity_id == Some(source.attacker)) else { continue };
+        let xp = game.ability_value_calculator.calculate_give_xp(
+            player.level as i32,
+            source.total_damage as i32,
+            monster_stats.level,
+            monster_stats.max_hp,
+            npc.reward_xp as i32,
+            rates.xp_rate,
+        );
+        if xp > 0 {
+            character::reward_xp(ctx, game, player.identity, xp as u64);
+            let level = ctx.db.player().identity().find(player.identity).map_or(0, |p| p.level);
+            ctx.db.xp_event().insert(XpEvent { identity: player.identity, xp: xp as u64, level });
+        }
+    }
+}
+
+fn kill(ctx: &ReducerContext, game: &GameData, id: u64, stats: &Stats, t: i64) {
     let Some(entity) = ctx.db.entity().entity_id().find(id) else { return };
     match entity.kind {
         EntityKind::Monster => {
-            if let Some(ai) = ctx.db.monster_ai().entity_id().find(id) {
-                if let Some(mut s) = ctx.db.monster_spawn().spawn_id().find(ai.spawn_id) {
-                    s.next_spawn_at_us = t + s.respawn_secs as i64 * 1_000_000;
-                    ctx.db.monster_spawn().spawn_id().update(s);
-                }
-            }
+            reward_kill(ctx, game, id, stats, entity.npc_id, t);
             despawn(ctx, id);
         }
         EntityKind::Player => {
@@ -990,6 +991,7 @@ pub fn spawn_tick(ctx: &ReducerContext, _timer: SpawnTickTimer) -> Result<(), St
     if ctx.sender() != ctx.database_identity() {
         return Err("timer only".into());
     }
+    let Ok(game) = game_data::game(ctx) else { return Ok(()) };
     let t = now_us(ctx);
 
     // Revive dead players at the zone's revive point.
@@ -1009,26 +1011,16 @@ pub fn spawn_tick(ctx: &ReducerContext, _timer: SpawnTickTimer) -> Result<(), St
         });
         let mut c = c.clone();
         c.hp = c.max_hp;
+        c.mp = c.max_mp;
         c.dead_until_us = None;
         ctx.db.combat().entity_id().update(c);
     }
 
-    // Only zones with a player in them get monsters.
-    let active_zones: Vec<u16> = ctx.db.player().iter().filter(|p| p.online).map(|p| p.zone_id).collect();
-    let mut rng = ctx.rng();
-    for spawn in ctx.db.monster_spawn().iter().filter(|s| active_zones.contains(&s.zone_id)) {
-        if spawn.next_spawn_at_us > t {
-            continue;
-        }
-        let Some(npc) = ctx.db.npc_data().npc_id().find(spawn.npc_id) else { continue };
-        let alive = ctx.db.monster_ai().spawn_id().filter(spawn.spawn_id).count() as u32;
-        if alive < spawn.max_alive {
-            spawn_monster(ctx, &spawn, &npc);
-            // One per spawn point per second, like a trickle rather than a burst.
-        }
-    }
+    passive_recovery(ctx, &game, t);
+    world::spawn_tick(ctx, &game, t);
 
     // Idle wandering: about one in eight idle monsters takes a short walk each second.
+    let mut rng = ctx.rng();
     for ai in ctx.db.monster_ai().iter() {
         let id = ai.entity_id;
         let Some(c) = ctx.db.combat().entity_id().find(id) else { continue };
@@ -1040,10 +1032,31 @@ pub fn spawn_tick(ctx: &ReducerContext, _timer: SpawnTickTimer) -> Result<(), St
         }
         let Some(spawn) = ctx.db.monster_spawn().spawn_id().find(ai.spawn_id) else { continue };
         let angle: f32 = rng.gen_range(0.0..std::f32::consts::TAU);
-        let r: f32 = rng.gen_range(0.0..spawn.radius.max(100.0));
+        let r: f32 = rng.gen_range(0.0..spawn.range.max(100.0));
         let to = (spawn.x + angle.cos() * r, spawn.y + angle.sin() * r);
         let speed = ctx.db.stats().entity_id().find(id).map_or(200.0, |s| s.move_speed);
         set_motion(ctx, id, to, speed, None);
     }
     Ok(())
+}
+
+/// Every four seconds living players regain HP and MP (rose-offline's passive_recovery_system).
+fn passive_recovery(ctx: &ReducerContext, game: &GameData, t: i64) {
+    let Some(mut s) = ctx.db.tick_stats().id().find(0) else { return };
+    if t < s.next_recovery_at_us {
+        return;
+    }
+    s.next_recovery_at_us = t + RECOVERY_INTERVAL_US;
+    ctx.db.tick_stats().id().update(s);
+    for e in ctx.db.entity().iter().filter(|e| e.kind == EntityKind::Player) {
+        let Some(mut c) = ctx.db.combat().entity_id().find(e.entity_id) else { continue };
+        if c.hp <= 0 || c.dead_until_us.is_some() || (c.hp >= c.max_hp && c.mp >= c.max_mp) {
+            continue;
+        }
+        let Some(av) = ctx.db.stats().entity_id().find(e.entity_id).and_then(|s| s.ability()) else { continue };
+        let state = rose_game_common::data::PassiveRecoveryState::Normal;
+        c.hp = (c.hp + game.ability_value_calculator.calculate_passive_recover_hp(&av, state)).min(c.max_hp);
+        c.mp = (c.mp + game.ability_value_calculator.calculate_passive_recover_mp(&av, state)).min(c.max_mp);
+        ctx.db.combat().entity_id().update(c);
+    }
 }

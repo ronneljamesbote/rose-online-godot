@@ -1,4 +1,3 @@
-use bevy::ecs::prelude::Component;
 use enum_map::Enum;
 use serde::{Deserialize, Serialize};
 use std::{
@@ -219,7 +218,7 @@ pub enum ItemSlot {
     Vehicle(VehiclePartIndex),
 }
 
-#[derive(Component, Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Inventory {
     pub money: Money,
     pub equipment: InventoryPage,

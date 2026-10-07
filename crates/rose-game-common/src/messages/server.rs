@@ -1,4 +1,4 @@
-use bevy::math::{Vec2, Vec3};
+use glam::{Vec2, Vec3};
 use enum_map::EnumMap;
 use serde::{Deserialize, Serialize};
 use std::{num::NonZeroUsize, time::Duration};

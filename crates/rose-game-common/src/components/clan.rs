@@ -1,9 +1,27 @@
 use std::num::{NonZeroU16, NonZeroU32};
 
-use bevy::prelude::{Deref, DerefMut};
 use serde::{Deserialize, Serialize};
 
-#[derive(Deref, DerefMut, Copy, Clone, Debug, Serialize, Deserialize)]
+macro_rules! deref_newtype {
+    ($name:ident, $inner:ty) => {
+        impl std::ops::Deref for $name {
+            type Target = $inner;
+            fn deref(&self) -> &$inner {
+                &self.0
+            }
+        }
+        impl std::ops::DerefMut for $name {
+            fn deref_mut(&mut self) -> &mut $inner {
+                &mut self.0
+            }
+        }
+    };
+}
+deref_newtype!(ClanUniqueId, NonZeroU32);
+deref_newtype!(ClanLevel, NonZeroU32);
+deref_newtype!(ClanPoints, u64);
+
+#[derive(Copy, Clone, Debug, Serialize, Deserialize)]
 pub struct ClanUniqueId(pub NonZeroU32);
 
 impl ClanUniqueId {
@@ -12,7 +30,7 @@ impl ClanUniqueId {
     }
 }
 
-#[derive(Deref, DerefMut, Copy, Clone, Debug, Serialize, Deserialize)]
+#[derive(Copy, Clone, Debug, Serialize, Deserialize)]
 pub struct ClanLevel(pub NonZeroU32);
 
 impl ClanLevel {
@@ -21,7 +39,7 @@ impl ClanLevel {
     }
 }
 
-#[derive(Deref, DerefMut, Copy, Clone, Debug, Serialize, Deserialize)]
+#[derive(Copy, Clone, Debug, Serialize, Deserialize)]
 pub struct ClanPoints(pub u64);
 
 #[derive(Copy, Clone, Debug, Serialize, Deserialize)]

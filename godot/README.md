@@ -39,6 +39,14 @@ What works now:
   that is higher than the terrain, within a 1.35 m step. Clicks can land on floors, and the
   camera pulls in when a wall is between it and you.
 
+- Characters with levels: the client loads the zone the server says your character is in
+  (new characters start on Birth Island) and builds every player from the equipment the
+  server stores. Kills give experience ("+N XP" over you, "Level up!" on a new level), the
+  bar at the bottom shows progress to the next level, and the HUD shows level, HP and MP.
+  C opens the character window: level, stat and skill points, the six basic stats with a +
+  button each (spending stat points at rose-offline's cost), and the ability values the
+  server calculated from them.
+
 Not yet: monsters walking around objects (the server has no zone geometry), skills,
 effects and particles, animated zone objects, sound, most UI.
 
@@ -68,7 +76,7 @@ godot --path godot -- --data-idx=/path/to/iRose_129_129/data.idx
 Godot 4.6 or newer. `ROSE_DATA_IDX` works instead of `--data-idx`. The start screen offers
 Connect (online) or Play offline. In game: left-click to move, S to stop, right-drag to
 orbit the camera, mouse wheel to zoom. Online, left-click a monster to attack it and Space
-attacks the nearest one; offline, Space swings the sword.
+attacks the nearest one, C opens the character window; offline, Space swings the sword.
 
 The start screen's server address may end in a database name, `ws://HOST:3000/NAME`
 (default `rose`). Without `--data-idx` the game looks for the last `data.idx` picked, then

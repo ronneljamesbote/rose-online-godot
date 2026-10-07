@@ -13,6 +13,9 @@ use spacetimedb_sdk::{
     DbContext, Table,
 };
 
+use rose_data::EquipmentIndex;
+use rose_game_common::components::Equipment;
+
 use crate::module_bindings::*;
 
 fn local_now_us() -> i64 {
@@ -50,9 +53,34 @@ fn to_godot(x: f32, y: f32) -> (f32, f32) {
     (x / 100.0, -y / 100.0)
 }
 
+/// Item numbers the character model is built from: male, face, hair, head, body, hands,
+/// feet, weapon, sub weapon (RoseCharacter.build's arguments).
+fn player_look(p: &Player) -> VarArray {
+    let equipment: Equipment = serde_json::from_str(&p.equipment).unwrap_or_default();
+    let item = |index: EquipmentIndex| {
+        equipment.get_equipment_item(index).map_or(0, |item| item.item.item_number as i64)
+    };
+    let mut look = VarArray::new();
+    look.push(&(p.gender == 0).to_variant());
+    for value in [
+        p.face as i64,
+        p.hair as i64,
+        item(EquipmentIndex::Head),
+        item(EquipmentIndex::Body),
+        item(EquipmentIndex::Hands),
+        item(EquipmentIndex::Feet),
+        item(EquipmentIndex::Weapon),
+        item(EquipmentIndex::SubWeapon),
+    ] {
+        look.push(&value.to_variant());
+    }
+    look
+}
+
 #[derive(Default)]
 struct Shared {
     damage: Vec<DamageEvent>,
+    xp: Vec<XpEvent>,
     /// Smallest (local receive time - server start time) seen on a fresh motion change.
     /// Covers clock skew between this PC and the server plus the fastest one-way delay.
     clock_offset_us: Option<i64>,
@@ -124,6 +152,8 @@ impl RoseNet {
         let s = shared.clone();
         conn.db.damage_event().on_insert(move |_, ev| s.lock().unwrap().damage.push(ev.clone()));
         let s = shared.clone();
+        conn.db.xp_event().on_insert(move |_, ev| s.lock().unwrap().xp.push(ev.clone()));
+        let s = shared.clone();
         conn.db.motion().on_update(move |_, _, new| {
             let sample = local_now_us() - new.started_at_us;
             let mut s = s.lock().unwrap();
@@ -165,17 +195,17 @@ impl RoseNet {
     }
 
     /// Every entity in our zone: id, kind ("player" or "monster"), name, npc_id, position
-    /// x/z and destination to_x/to_z (Godot metres), moving, speed (m/s), chasing, hp,
-    /// max_hp, target (-1 for none), swinging, hit_in (seconds until the swing's hit frame),
-    /// dead, and ranged for players.
+    /// x/z and destination to_x/to_z (Godot metres), moving, speed (m/s), chasing, level,
+    /// range (m), hp, max_hp, mp, max_mp, target (-1 for none), swinging, hit_in (seconds
+    /// until the swing's hit frame), dead, and for players look (see player_look).
     #[func]
     fn get_entities(&self) -> VarArray {
         let mut out = VarArray::new();
         let Some(c) = self.conn.as_ref() else { return out };
         let t = self.server_now_us();
         let zone = self.my_id().and_then(|id| c.db.entity().entity_id().find(&id)).map(|e| e.zone_id);
-        let ranged: std::collections::HashMap<u64, bool> =
-            c.db.player().iter().filter_map(|p| p.entity_id.map(|id| (id, p.ranged))).collect();
+        let looks: std::collections::HashMap<u64, VarArray> =
+            c.db.player().iter().filter_map(|p| p.entity_id.map(|id| (id, player_look(&p)))).collect();
 
         for e in c.db.entity().iter() {
             if zone.is_some_and(|z| z != e.zone_id) {
@@ -199,10 +229,18 @@ impl RoseNet {
             d.set("moving", moving);
             d.set("speed", m.speed / 100.0);
             d.set("chasing", m.chase_target.is_some());
-            d.set("ranged", ranged.get(&e.entity_id).copied().unwrap_or(false));
+            if let Some(look) = looks.get(&e.entity_id) {
+                d.set("look", look);
+            }
+            if let Some(st) = c.db.stats().entity_id().find(&e.entity_id) {
+                d.set("level", st.level);
+                d.set("range", st.attack_range / 100.0);
+            }
             if let Some(cb) = c.db.combat().entity_id().find(&e.entity_id) {
                 d.set("hp", cb.hp);
                 d.set("max_hp", cb.max_hp);
+                d.set("mp", cb.mp);
+                d.set("max_mp", cb.max_mp);
                 d.set("target", cb.attack_target.map_or(-1, |t| t as i64));
                 d.set("swinging", cb.swing_hit_at_us.is_some());
                 d.set("hit_in", cb.swing_hit_at_us.map_or(0.0, |at| (at - t) as f64 / 1e6));
@@ -211,6 +249,85 @@ impl RoseNet {
             out.push(&d.to_variant());
         }
         out
+    }
+
+    /// Why there is nothing to play yet, or "" when the server has its game data.
+    #[func]
+    fn get_server_notice(&self) -> GString {
+        let Some(c) = self.conn.as_ref() else { return GString::new() };
+        match c.db.game_data_status().id().find(&0) {
+            Some(s) if s.ready => GString::new(),
+            Some(s) if !s.error.is_empty() => GString::from(format!("The server's game data failed to load: {}", s.error).as_str()),
+            _ => GString::from("The server has no game data yet. Its host needs to run upload-game-data.sh."),
+        }
+    }
+
+    /// Our character: name, zone, level, xp, xp_needed, stat_points, skill_points, money, the six
+    /// basic stats (str, dex, int, con, cha, sen) with their raise costs (str_cost, ...; -1 at
+    /// the maximum), and the ability values attack, defence, hit, avoid, critical, resistance,
+    /// attack_speed, move_speed, range. Empty until the character is in the world.
+    #[func]
+    fn get_character(&self) -> VarDictionary {
+        let mut d = VarDictionary::new();
+        let Some(c) = self.conn.as_ref() else { return d };
+        let Some(p) = c.try_identity().and_then(|i| c.db.player().identity().find(&i)) else { return d };
+        d.set("name", p.name.as_str());
+        d.set("zone", p.zone_id as i64);
+        d.set("level", p.level as i64);
+        d.set("xp", p.xp as i64);
+        d.set("xp_needed", rose_game_irose::data::levelup_require_xp(p.level) as i64);
+        d.set("stat_points", p.stat_points as i64);
+        d.set("skill_points", p.skill_points as i64);
+        d.set("money", p.money);
+        for (key, value) in [
+            ("str", p.strength),
+            ("dex", p.dexterity),
+            ("int", p.intelligence),
+            ("con", p.concentration),
+            ("cha", p.charm),
+            ("sen", p.sense),
+        ] {
+            d.set(key, value);
+            let cost = rose_game_irose::data::basic_stat_increase_cost(value).map_or(-1, |c| c as i64);
+            d.set(format!("{key}_cost").as_str(), cost);
+        }
+        if let Some(st) = p.entity_id.and_then(|id| c.db.stats().entity_id().find(&id)) {
+            d.set("attack", st.attack_power);
+            d.set("defence", st.defence);
+            d.set("hit", st.hit);
+            d.set("avoid", st.avoid);
+            d.set("critical", st.critical);
+            d.set("resistance", st.resistance);
+            d.set("attack_speed", st.attack_speed);
+            d.set("move_speed", st.move_speed);
+            d.set("range", st.attack_range / 100.0);
+        }
+        d
+    }
+
+    /// Experience we gained since the last call: xp, level (0 for an admin grant).
+    #[func]
+    fn poll_xp_events(&self) -> VarArray {
+        let mut out = VarArray::new();
+        let me = self.conn.as_ref().and_then(|c| c.try_identity());
+        for ev in std::mem::take(&mut self.shared.lock().unwrap().xp) {
+            if Some(ev.identity) != me {
+                continue;
+            }
+            let mut d = VarDictionary::new();
+            d.set("xp", ev.xp as i64);
+            d.set("level", ev.level as i64);
+            out.push(&d.to_variant());
+        }
+        out
+    }
+
+    /// Spend stat points: 0 STR, 1 DEX, 2 INT, 3 CON, 4 CHA, 5 SEN.
+    #[func]
+    fn add_basic_stat(&self, stat: i64) {
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.add_basic_stat(stat as u8).ok();
+        }
     }
 
     /// Hits since the last call: attacker, defender, amount, critical, killed.

@@ -9,18 +9,23 @@ use spacetimedb_sdk::__codegen::{self as __sdk, __lib, __sats, __ws};
 pub struct Stats {
     pub entity_id: u64,
     pub level: i32,
+    pub max_hp: i32,
+    pub max_mp: i32,
     pub attack_power: i32,
     pub hit: i32,
     pub defence: i32,
+    pub resistance: i32,
     pub avoid: i32,
     pub critical: i32,
     pub attack_speed: i32,
     pub attack_motion_ms: i32,
     pub attack_hit_ms: i32,
+    pub hit_count: i32,
     pub attack_range: f32,
     pub move_speed: f32,
     pub run_speed: f32,
     pub is_player: bool,
+    pub ability_values: String,
 }
 
 impl __sdk::InModule for Stats {
@@ -33,18 +38,23 @@ impl __sdk::InModule for Stats {
 pub struct StatsCols {
     pub entity_id: __sdk::__query_builder::Col<Stats, u64>,
     pub level: __sdk::__query_builder::Col<Stats, i32>,
+    pub max_hp: __sdk::__query_builder::Col<Stats, i32>,
+    pub max_mp: __sdk::__query_builder::Col<Stats, i32>,
     pub attack_power: __sdk::__query_builder::Col<Stats, i32>,
     pub hit: __sdk::__query_builder::Col<Stats, i32>,
     pub defence: __sdk::__query_builder::Col<Stats, i32>,
+    pub resistance: __sdk::__query_builder::Col<Stats, i32>,
     pub avoid: __sdk::__query_builder::Col<Stats, i32>,
     pub critical: __sdk::__query_builder::Col<Stats, i32>,
     pub attack_speed: __sdk::__query_builder::Col<Stats, i32>,
     pub attack_motion_ms: __sdk::__query_builder::Col<Stats, i32>,
     pub attack_hit_ms: __sdk::__query_builder::Col<Stats, i32>,
+    pub hit_count: __sdk::__query_builder::Col<Stats, i32>,
     pub attack_range: __sdk::__query_builder::Col<Stats, f32>,
     pub move_speed: __sdk::__query_builder::Col<Stats, f32>,
     pub run_speed: __sdk::__query_builder::Col<Stats, f32>,
     pub is_player: __sdk::__query_builder::Col<Stats, bool>,
+    pub ability_values: __sdk::__query_builder::Col<Stats, String>,
 }
 
 impl __sdk::__query_builder::HasCols for Stats {
@@ -53,18 +63,23 @@ impl __sdk::__query_builder::HasCols for Stats {
         StatsCols {
             entity_id: __sdk::__query_builder::Col::new(table_name, "entity_id"),
             level: __sdk::__query_builder::Col::new(table_name, "level"),
+            max_hp: __sdk::__query_builder::Col::new(table_name, "max_hp"),
+            max_mp: __sdk::__query_builder::Col::new(table_name, "max_mp"),
             attack_power: __sdk::__query_builder::Col::new(table_name, "attack_power"),
             hit: __sdk::__query_builder::Col::new(table_name, "hit"),
             defence: __sdk::__query_builder::Col::new(table_name, "defence"),
+            resistance: __sdk::__query_builder::Col::new(table_name, "resistance"),
             avoid: __sdk::__query_builder::Col::new(table_name, "avoid"),
             critical: __sdk::__query_builder::Col::new(table_name, "critical"),
             attack_speed: __sdk::__query_builder::Col::new(table_name, "attack_speed"),
             attack_motion_ms: __sdk::__query_builder::Col::new(table_name, "attack_motion_ms"),
             attack_hit_ms: __sdk::__query_builder::Col::new(table_name, "attack_hit_ms"),
+            hit_count: __sdk::__query_builder::Col::new(table_name, "hit_count"),
             attack_range: __sdk::__query_builder::Col::new(table_name, "attack_range"),
             move_speed: __sdk::__query_builder::Col::new(table_name, "move_speed"),
             run_speed: __sdk::__query_builder::Col::new(table_name, "run_speed"),
             is_player: __sdk::__query_builder::Col::new(table_name, "is_player"),
+            ability_values: __sdk::__query_builder::Col::new(table_name, "ability_values"),
         }
     }
 }

@@ -1,6 +1,11 @@
-# The server image only needs the module and its seed data.
+# The server image needs the Rust workspace (module, rule crates, import tool) and server/.
 *
+!Cargo.toml
+!Cargo.lock
+!crates/
 !module/
-!data/
+!import/
+!godot/rust/
 !server/
 module/target/
+godot/rust/target/

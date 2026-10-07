@@ -1,4 +1,4 @@
-use bevy::math::{Vec2, Vec3};
+use glam::{Vec2, Vec3};
 use serde::{Deserialize, Serialize};
 
 use crate::{

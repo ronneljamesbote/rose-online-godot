@@ -12,6 +12,7 @@ pub struct TickStats {
     pub last_tick_entities: u32,
     pub max_gap_us: i64,
     pub last_at_us: i64,
+    pub next_recovery_at_us: i64,
 }
 
 impl __sdk::InModule for TickStats {
@@ -27,6 +28,7 @@ pub struct TickStatsCols {
     pub last_tick_entities: __sdk::__query_builder::Col<TickStats, u32>,
     pub max_gap_us: __sdk::__query_builder::Col<TickStats, i64>,
     pub last_at_us: __sdk::__query_builder::Col<TickStats, i64>,
+    pub next_recovery_at_us: __sdk::__query_builder::Col<TickStats, i64>,
 }
 
 impl __sdk::__query_builder::HasCols for TickStats {
@@ -38,6 +40,10 @@ impl __sdk::__query_builder::HasCols for TickStats {
             last_tick_entities: __sdk::__query_builder::Col::new(table_name, "last_tick_entities"),
             max_gap_us: __sdk::__query_builder::Col::new(table_name, "max_gap_us"),
             last_at_us: __sdk::__query_builder::Col::new(table_name, "last_at_us"),
+            next_recovery_at_us: __sdk::__query_builder::Col::new(
+                table_name,
+                "next_recovery_at_us",
+            ),
         }
     }
 }

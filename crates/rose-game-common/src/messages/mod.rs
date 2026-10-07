@@ -1,10 +1,9 @@
-use bevy::reflect::Reflect;
 use serde::{Deserialize, Serialize};
 
 pub mod client;
 pub mod server;
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize, Reflect)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct ClientEntityId(pub usize);
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]

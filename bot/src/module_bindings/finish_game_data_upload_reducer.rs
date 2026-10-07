@@ -4,48 +4,43 @@
 #![allow(unused, clippy::all)]
 use spacetimedb_sdk::__codegen::{self as __sdk, __lib, __sats, __ws};
 
-use super::npc_data_type::NpcData;
-
 #[derive(__lib::ser::Serialize, __lib::de::Deserialize, Clone, PartialEq, Debug)]
 #[sats(crate = __lib)]
-pub(super) struct ImportNpcsArgs {
-    pub npcs: Vec<NpcData>,
-}
+pub(super) struct FinishGameDataUploadArgs {}
 
-impl From<ImportNpcsArgs> for super::Reducer {
-    fn from(args: ImportNpcsArgs) -> Self {
-        Self::ImportNpcs { npcs: args.npcs }
+impl From<FinishGameDataUploadArgs> for super::Reducer {
+    fn from(args: FinishGameDataUploadArgs) -> Self {
+        Self::FinishGameDataUpload
     }
 }
 
-impl __sdk::InModule for ImportNpcsArgs {
+impl __sdk::InModule for FinishGameDataUploadArgs {
     type Module = super::RemoteModule;
 }
 
 #[allow(non_camel_case_types)]
-/// Extension trait for access to the reducer `import_npcs`.
+/// Extension trait for access to the reducer `finish_game_data_upload`.
 ///
 /// Implemented for [`super::RemoteReducers`].
-pub trait import_npcs {
-    /// Request that the remote module invoke the reducer `import_npcs` to run as soon as possible.
+pub trait finish_game_data_upload {
+    /// Request that the remote module invoke the reducer `finish_game_data_upload` to run as soon as possible.
     ///
     /// This method returns immediately, and errors only if we are unable to send the request.
     /// The reducer will run asynchronously in the future,
     ///  and this method provides no way to listen for its completion status.
-    /// /// Use [`import_npcs:import_npcs_then`] to run a callback after the reducer completes.
-    fn import_npcs(&self, npcs: Vec<NpcData>) -> __sdk::Result<()> {
-        self.import_npcs_then(npcs, |_, _| {})
+    /// /// Use [`finish_game_data_upload:finish_game_data_upload_then`] to run a callback after the reducer completes.
+    fn finish_game_data_upload(&self) -> __sdk::Result<()> {
+        self.finish_game_data_upload_then(|_, _| {})
     }
 
-    /// Request that the remote module invoke the reducer `import_npcs` to run as soon as possible,
+    /// Request that the remote module invoke the reducer `finish_game_data_upload` to run as soon as possible,
     /// registering `callback` to run when we are notified that the reducer completed.
     ///
     /// This method returns immediately, and errors only if we are unable to send the request.
     /// The reducer will run asynchronously in the future,
     ///  and its status can be observed with the `callback`.
-    fn import_npcs_then(
+    fn finish_game_data_upload_then(
         &self,
-        npcs: Vec<NpcData>,
 
         callback: impl FnOnce(&super::ReducerEventContext, Result<Result<(), String>, __sdk::InternalError>)
             + Send
@@ -53,16 +48,15 @@ pub trait import_npcs {
     ) -> __sdk::Result<()>;
 }
 
-impl import_npcs for super::RemoteReducers {
-    fn import_npcs_then(
+impl finish_game_data_upload for super::RemoteReducers {
+    fn finish_game_data_upload_then(
         &self,
-        npcs: Vec<NpcData>,
 
         callback: impl FnOnce(&super::ReducerEventContext, Result<Result<(), String>, __sdk::InternalError>)
             + Send
             + 'static,
     ) -> __sdk::Result<()> {
         self.imp
-            .invoke_reducer_with_callback(ImportNpcsArgs { npcs }, callback)
+            .invoke_reducer_with_callback(FinishGameDataUploadArgs {}, callback)
     }
 }

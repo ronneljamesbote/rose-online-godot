@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use bevy::math::{Quat, Vec2, Vec3, Vec3Swizzles};
+use glam::{Quat, Vec2, Vec3, Vec3Swizzles};
 use log::debug;
 
 use rose_data::{
@@ -104,7 +104,7 @@ fn create_npc_spawn(npc: &IfoNpc, object_offset: Vec3) -> ZoneNpcSpawn {
             npc.object.rotation.z,
             npc.object.rotation.w,
         )
-        .to_euler(bevy::math::EulerRot::XYZ)
+        .to_euler(glam::EulerRot::XYZ)
         .2
         .to_degrees(),
         conversation: NpcConversationId::new(npc.quest_file_name.to_string()),
@@ -187,10 +187,12 @@ fn load_zone(
 
     for block_y in 0..64u32 {
         for block_x in 0..64u32 {
-            if let Ok(ifo_file) = vfs.read_file_with::<IfoFile, _>(
-                zone_base_directory.join(format!("{}_{}.IFO", block_x, block_y)),
-                &ifo_read_options,
-            ) {
+            // Most of the 64x64 blocks have no file; checking first skips building an error for each.
+            let ifo_path = zone_base_directory.join(format!("{}_{}.IFO", block_x, block_y));
+            if !vfs.exists(ifo_path.as_path()) {
+                continue;
+            }
+            if let Ok(ifo_file) = vfs.read_file_with::<IfoFile, _>(ifo_path, &ifo_read_options) {
                 monster_spawns.extend(
                     ifo_file
                         .monster_spawns

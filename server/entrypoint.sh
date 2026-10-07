@@ -1,6 +1,8 @@
 #!/bin/sh
 # Starts SpacetimeDB and installs (or updates) the rose module on every start.
-# First start: makes the identity key pair; the module's init seeds Zant's monsters.
+# First start: makes the identity key pair.
+# The game data (items, monsters, zones, ...) is uploaded from the ROSE client mounted at
+# /game whenever the server has none; ROSE_UPLOAD_GAME_DATA=1 uploads it again.
 # ROSE_CLEAR_WORLD=1 wipes the world while publishing (needed after a breaking schema change).
 set -e
 mkdir -p /data/keys /data/db /data/cli
@@ -30,9 +32,22 @@ CLEAR=""
 [ "${ROSE_CLEAR_WORLD:-0}" = "1" ] && CLEAR="--delete-data=always" && echo "rose: ROSE_CLEAR_WORLD=1, wiping the world"
 if HOME=/data/cli spacetimedb-cli publish --server http://127.0.0.1:3000 \
      --bin-path /opt/rose/rose_stdb_module.wasm -y $CLEAR rose; then
-  echo "rose: server ready on port 3000"
+  echo "rose: module installed"
 else
   echo "rose: installing the module failed (see above). If it reports a breaking schema change,"
   echo "rose: restart once with ROSE_CLEAR_WORLD=1 to start a fresh world."
 fi
+export HOME=/data/cli
+READY=$(spacetimedb-cli sql --server http://127.0.0.1:3000 rose "SELECT ready FROM game_data_status" 2>/dev/null | grep -c true || true)
+if [ "$READY" = "0" ] || [ "${ROSE_UPLOAD_GAME_DATA:-0}" = "1" ]; then
+  DATA_IDX=$(find /game -maxdepth 2 -iname data.idx 2>/dev/null | head -n 1)
+  if [ -n "$DATA_IDX" ]; then
+    echo "rose: uploading the game data from $DATA_IDX"
+    /opt/rose/upload-game-data.sh "$DATA_IDX" || echo "rose: the game data upload failed (see above)"
+  else
+    echo "rose: no data.idx under /game. Set ROSE_CLIENT to your ROSE client folder (see"
+    echo "rose: compose.yaml) and restart; until then nobody can play."
+  fi
+fi
+echo "rose: server ready on port 3000"
 wait $SERVER

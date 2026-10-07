@@ -3,7 +3,6 @@ use crate::{
     SoundId, StatusEffectId, StringDatabase, ZoneId,
 };
 use arrayvec::ArrayVec;
-use bevy::reflect::Reflect;
 use num_derive::FromPrimitive;
 use serde::{Deserialize, Serialize};
 use std::{
@@ -103,7 +102,7 @@ pub enum SkillIds {
     ItemDisassembly = 2621,
 }
 
-#[derive(Copy, Clone, Debug, Deserialize, Serialize, Hash, PartialEq, Eq, Reflect)]
+#[derive(Copy, Clone, Debug, Deserialize, Serialize, Hash, PartialEq, Eq)]
 pub struct SkillId(NonZeroU16);
 
 id_wrapper_impl!(SkillId, NonZeroU16, u16);

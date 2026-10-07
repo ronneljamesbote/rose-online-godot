@@ -4,54 +4,43 @@
 #![allow(unused, clippy::all)]
 use spacetimedb_sdk::__codegen::{self as __sdk, __lib, __sats, __ws};
 
-use super::monster_spawn_type::MonsterSpawn;
-use super::zone_info_type::ZoneInfo;
-
 #[derive(__lib::ser::Serialize, __lib::de::Deserialize, Clone, PartialEq, Debug)]
 #[sats(crate = __lib)]
-pub(super) struct ImportZoneArgs {
-    pub zone: ZoneInfo,
-    pub spawns: Vec<MonsterSpawn>,
-}
+pub(super) struct BeginGameDataUploadArgs {}
 
-impl From<ImportZoneArgs> for super::Reducer {
-    fn from(args: ImportZoneArgs) -> Self {
-        Self::ImportZone {
-            zone: args.zone,
-            spawns: args.spawns,
-        }
+impl From<BeginGameDataUploadArgs> for super::Reducer {
+    fn from(args: BeginGameDataUploadArgs) -> Self {
+        Self::BeginGameDataUpload
     }
 }
 
-impl __sdk::InModule for ImportZoneArgs {
+impl __sdk::InModule for BeginGameDataUploadArgs {
     type Module = super::RemoteModule;
 }
 
 #[allow(non_camel_case_types)]
-/// Extension trait for access to the reducer `import_zone`.
+/// Extension trait for access to the reducer `begin_game_data_upload`.
 ///
 /// Implemented for [`super::RemoteReducers`].
-pub trait import_zone {
-    /// Request that the remote module invoke the reducer `import_zone` to run as soon as possible.
+pub trait begin_game_data_upload {
+    /// Request that the remote module invoke the reducer `begin_game_data_upload` to run as soon as possible.
     ///
     /// This method returns immediately, and errors only if we are unable to send the request.
     /// The reducer will run asynchronously in the future,
     ///  and this method provides no way to listen for its completion status.
-    /// /// Use [`import_zone:import_zone_then`] to run a callback after the reducer completes.
-    fn import_zone(&self, zone: ZoneInfo, spawns: Vec<MonsterSpawn>) -> __sdk::Result<()> {
-        self.import_zone_then(zone, spawns, |_, _| {})
+    /// /// Use [`begin_game_data_upload:begin_game_data_upload_then`] to run a callback after the reducer completes.
+    fn begin_game_data_upload(&self) -> __sdk::Result<()> {
+        self.begin_game_data_upload_then(|_, _| {})
     }
 
-    /// Request that the remote module invoke the reducer `import_zone` to run as soon as possible,
+    /// Request that the remote module invoke the reducer `begin_game_data_upload` to run as soon as possible,
     /// registering `callback` to run when we are notified that the reducer completed.
     ///
     /// This method returns immediately, and errors only if we are unable to send the request.
     /// The reducer will run asynchronously in the future,
     ///  and its status can be observed with the `callback`.
-    fn import_zone_then(
+    fn begin_game_data_upload_then(
         &self,
-        zone: ZoneInfo,
-        spawns: Vec<MonsterSpawn>,
 
         callback: impl FnOnce(&super::ReducerEventContext, Result<Result<(), String>, __sdk::InternalError>)
             + Send
@@ -59,17 +48,15 @@ pub trait import_zone {
     ) -> __sdk::Result<()>;
 }
 
-impl import_zone for super::RemoteReducers {
-    fn import_zone_then(
+impl begin_game_data_upload for super::RemoteReducers {
+    fn begin_game_data_upload_then(
         &self,
-        zone: ZoneInfo,
-        spawns: Vec<MonsterSpawn>,
 
         callback: impl FnOnce(&super::ReducerEventContext, Result<Result<(), String>, __sdk::InternalError>)
             + Send
             + 'static,
     ) -> __sdk::Result<()> {
         self.imp
-            .invoke_reducer_with_callback(ImportZoneArgs { zone, spawns }, callback)
+            .invoke_reducer_with_callback(BeginGameDataUploadArgs {}, callback)
     }
 }
