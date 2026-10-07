@@ -85,6 +85,12 @@ What works now:
   (star) right-clicks a member to hand over the lead or remove them, and picks how
   experience (equally or by level) and drops (picker with Zuly split, or in turn) are
   shared among members within 50 m. The character window now shows the job.
+- Crafting: using a craft skill (Dealers learn Sword Craft, Armor Craft, Gem Cutting and the
+  rest) opens the crafting window: what the skill makes at its level, each item's
+  materials with what your bag holds, and Craft. Every material is a step that can fail
+  and use up what went in so far; a made item gets its durability and maybe a bonus option
+  from how well the steps went, and crafting gives experience either way. Refining,
+  disassembly and gem sockets are not in yet.
 
 Not yet: monsters walking around objects (the server has no zone geometry), effects and
 particles, animated zone objects, sound, most UI.
@@ -143,7 +149,7 @@ Other options (after `--`):
 - `--offline` skips the start screen.
 - `--net-demo[=square|line|fight|warp|shop|skills|talk|walls]` walks a scripted route, fights the nearest
   monsters, walks through warp gates, buys and sells at the nearest store (`--buy=TEXT` picks
-  what to buy), uses the first two active skills, talks to the nearest NPC matching `--npc=NAME` and picks `--answers=1,2,...` (`q` prints the quest log, `talk` opens the conversation again, `deposit` and `withdraw` move the first item in or out of the bank), forms a party (`party`: with `--invite=NAME` it invites that player, without it accepts the first invitation; `--rules=XP,DROPS` sets the rules) and then fights, or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
+  what to buy), uses the first two active skills, talks to the nearest NPC matching `--npc=NAME` and picks `--answers=1,2,...` (`q` prints the quest log, `talk` opens the conversation again, `deposit` and `withdraw` move the first item in or out of the bank), crafts (`craft`: the first craft skill makes the item matching `--craft=NAME`, `--times=N` times), forms a party (`party`: with `--invite=NAME` it invites that player, without it accepts the first invitation; `--rules=XP,DROPS` sets the rules) and then fights, or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
   player's position once a second, `--quit-after=SECONDS` quits. The two-client test:
   `--headless ... --name=Alice --profile=alice --net-demo` in one process and
   `... --name=Bob --profile=bob --weapon=bow --net-demo=line --net-log` in another.

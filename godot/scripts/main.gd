@@ -15,13 +15,15 @@
 ##   --profile=NAME             identity file to use (user://identity-NAME.token), so two
 ##                              clients on one PC are two players
 ##   --offline                  skip the start screen and play offline
-##   --net-demo[=square|line|fight|walls|warp|shop|skills|talk|party]   online: scripted routes, fights,
+##   --net-demo[=square|line|fight|walls|warp|shop|skills|talk|party|craft]   online: scripted routes, fights,
 ##                              wall tests, warp gates, buying and selling at the nearest
 ##                              store (--buy=TEXT: what to buy), the first two active
 ##                              skills (a buff, then an attack), or a talk with the NPC
 ##                              --npc=NAME, answering --answers=1,2,... (q: list quests;
 ##                              deposit/withdraw: the bank), or a party (--invite=NAME
-##                              invites, else accept; --rules=XP,ITEMS) that then fights
+##                              invites, else accept; --rules=XP,ITEMS) that then fights,
+##                              or crafting with the first craft skill (--craft=NAME,
+##                              --times=N)
 ##   --net-log                  online: print every player's position once a second
 ##   --open=inventory,character,skills,quests   online: open these windows at the start (for screenshots)
 ##   --quit-after=SECONDS       quit after this long
@@ -254,6 +256,9 @@ func _run_net_demo(me: Node3D) -> void:
 		return
 	if options["net-demo"] == "party":
 		_run_party_demo()
+		return
+	if options["net-demo"] == "craft":
+		_run_craft_demo()
 		return
 	if options["net-demo"] == "line":
 		route = [Vector3(5, 0, 0), Vector3(0, 0, 0)]
@@ -547,6 +552,39 @@ func _run_party_demo() -> void:
 	get_tree().create_timer(20.0).timeout.connect(_print_party)
 	get_tree().create_timer(50.0).timeout.connect(_print_party)
 	_run_fight_demo()
+
+
+## Opens the first craft skill, picks the item matching --craft=NAME and crafts it
+## --times=N times (default 3), a few seconds apart.
+func _run_craft_demo() -> void:
+	await get_tree().create_timer(4.0).timeout
+	var pages: Array = online.net.get_skills()
+	for page in pages.size():
+		for index in pages[page].size():
+			var skill = pages[page][index]
+			if skill == null or skill["type"] != "Create Window":
+				continue
+			online.use_skill(page, index, skill)
+			await get_tree().create_timer(1.0).timeout
+			if not online.craft_window.visible:
+				continue
+			var wanted := String(options.get("craft", "")).to_lower()
+			var w = online.craft_window
+			print("rose net demo: %s makes %d items" % [skill["name"], w.entries.size()])
+			for i in w.entries.size():
+				if wanted in String(w.entries[i]["item"]["name"]).to_lower():
+					w.list.select(i)
+					w._select(i)
+					break
+			await get_tree().create_timer(1.5).timeout
+			var e: Dictionary = w.entries[w.selected]
+			print("rose net demo: craft %s from %s" % [e["item"]["name"], e["materials"].map(func(m): return "%s x%d" % [m["name"], m["quantity"]])])
+			for n in int(options.get("times", "3")):
+				print("rose net demo: materials ", w._slots)
+				w.craft()
+				await get_tree().create_timer(4.0).timeout
+			return
+	print("rose net demo: no craft skill")
 
 
 ## In a party, with this member when a name is given.

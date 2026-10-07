@@ -610,3 +610,22 @@ pub fn clear_regen(ctx: &ReducerContext, entity_id: u64) {
         ctx.db.regen().id().delete(id);
     }
 }
+
+/// Debug: give a player an item (iROSE item type number, item number, quantity).
+#[spacetimedb::reducer]
+pub fn give_item(ctx: &ReducerContext, name: String, item_type: u8, item_number: u16, quantity: u32) -> Result<(), String> {
+    crate::require_admin(ctx)?;
+    let game = game(ctx)?;
+    let mut p = ctx.db.player().iter().find(|p| p.name == name).ok_or("no such player")?;
+    let reference = rose_data_irose::decode_item_type(item_type as usize)
+        .map(|t| rose_data::ItemReference::new(t, item_number as usize))
+        .ok_or("no such item type")?;
+    let data = game.items.get_base_item(reference).ok_or("no such item")?;
+    let item = Item::from_item_data(data, quantity.max(1)).ok_or("no such item")?;
+    let mut inventory = p.inventory();
+    inventory.try_add_item(item).map_err(|_| "their inventory is full")?;
+    p.set_inventory(&inventory);
+    ctx.db.player().identity().update(p);
+    Ok(())
+}
+

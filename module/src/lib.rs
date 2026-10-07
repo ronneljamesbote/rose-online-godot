@@ -8,6 +8,7 @@
 mod ability;
 mod bank;
 mod character;
+mod craft;
 mod game_data;
 mod items;
 mod npcs;

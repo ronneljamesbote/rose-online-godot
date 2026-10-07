@@ -134,6 +134,12 @@ pub fn item_dict(item: &Item) -> VarDictionary {
             lines[0] = format!("{} +{}", lines[0], e.grade);
         }
         lines.push(format!("Durability {}   Life {}%", e.durability, e.life / 10));
+        if e.is_crafted {
+            lines.push("Crafted".to_string());
+        }
+        if e.has_socket {
+            lines.push(if e.gem >= 300 { "Gem socketed".to_string() } else { "Empty gem socket".to_string() });
+        }
     }
     for (ability, value) in base.add_ability.iter() {
         lines.push(format!("{} {:+}", ability_name(*ability), value));

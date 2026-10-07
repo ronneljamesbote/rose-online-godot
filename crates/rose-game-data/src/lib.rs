@@ -6,12 +6,12 @@ use std::sync::Arc;
 
 use anyhow::Context;
 use rose_data::{
-    AiDatabase, CharacterMotionDatabase, CharacterMotionDatabaseOptions, DataDecoder, ItemDatabase,
+    AiDatabase, CharacterMotionDatabase, CharacterMotionDatabaseOptions, DataDecoder, ItemClass, ItemDatabase,
     ItemReference, JobClassDatabase, NpcDatabase, NpcDatabaseOptions, QuestDatabase, SkillDatabase,
     SkillId, SkillIds, StatusEffectDatabase, StringDatabase, WarpGateDatabase, ZoneDatabase,
 };
 use rose_data_irose::{
-    decode_item_base1000, get_ai_database, get_character_motion_database, get_data_decoder,
+    decode_item_base1000, encode_item_class, get_ai_database, get_character_motion_database, get_data_decoder,
     get_item_database, get_job_class_database, get_npc_database, get_quest_database,
     get_skill_database, get_status_effect_database, get_string_database, get_warp_gate_database,
     get_zone_database,
@@ -39,6 +39,8 @@ pub struct GameData {
     pub string_database: Arc<StringDatabase>,
     pub warp_gates: Arc<WarpGateDatabase>,
     pub zones: Arc<ZoneDatabase>,
+    /// Crafting recipes from LIST_PRODUCT.STB, by an item's `craft_material`.
+    pub craft_recipes: Vec<Option<CraftRecipe>>,
 }
 
 pub fn load_game_data(vfs: &VirtualFilesystem) -> Result<GameData, anyhow::Error> {
@@ -68,12 +70,68 @@ pub fn load_game_data(vfs: &VirtualFilesystem) -> Result<GameData, anyhow::Error
             get_status_effect_database(vfs, string_database.clone()).context("status effect database")?,
         ),
         warp_gates: Arc::new(get_warp_gate_database(vfs).context("warp gate database")?),
+        craft_recipes: load_craft_recipes(vfs).context("crafting recipes")?,
         items,
         npcs,
         skills,
         zones,
         string_database,
     })
+}
+
+/// One crafting step's material: a given item, or for the first step (`item` None) any
+/// item of the recipe's raw material class.
+#[derive(Clone, Debug)]
+pub struct CraftMaterial {
+    pub item: Option<ItemReference>,
+    pub quantity: u32,
+}
+
+/// A LIST_PRODUCT.STB row: up to four materials, used one step after another.
+#[derive(Clone, Debug)]
+pub struct CraftRecipe {
+    /// The item class number (ITEM STB column 4) the first material may be any item of.
+    pub raw_material_class: u32,
+    pub materials: [Option<CraftMaterial>; 4],
+}
+
+impl CraftRecipe {
+    pub fn material_count(&self) -> usize {
+        self.materials.iter().filter(|m| m.is_some()).count()
+    }
+
+    /// Whether an item (with its class) can be this step's material.
+    pub fn accepts(&self, step: usize, item: ItemReference, class: ItemClass) -> bool {
+        match self.materials.get(step).and_then(|m| m.as_ref()) {
+            Some(CraftMaterial { item: Some(wanted), .. }) => item == *wanted,
+            Some(CraftMaterial { item: None, .. }) => item_class_number(class) == self.raw_material_class,
+            None => false,
+        }
+    }
+}
+
+/// The class number of an item class, as LIST_PRODUCT.STB names raw materials.
+pub fn item_class_number(class: ItemClass) -> u32 {
+    encode_item_class(class).unwrap_or(0) as u32
+}
+
+pub fn load_craft_recipes(vfs: &VirtualFilesystem) -> Result<Vec<Option<CraftRecipe>>, anyhow::Error> {
+    let stb = vfs.read_file::<StbFile, _>("3DDATA/STB/LIST_PRODUCT.STB")?;
+    let mut recipes = Vec::with_capacity(stb.rows());
+    for row in 0..stb.rows() {
+        let raw_material_class = stb.try_get_int(row, 1).unwrap_or(0).max(0) as u32;
+        let mut materials: [Option<CraftMaterial>; 4] = Default::default();
+        for (step, slot) in materials.iter_mut().enumerate() {
+            let number = stb.try_get_int(row, 2 + step * 2).unwrap_or(0).max(0) as usize;
+            let quantity = stb.try_get_int(row, 3 + step * 2).unwrap_or(0).max(0) as u32;
+            let item = decode_item_base1000(number);
+            if item.is_some() || (step == 0 && raw_material_class != 0 && quantity > 0) {
+                *slot = Some(CraftMaterial { item, quantity: quantity.max(1) });
+            }
+        }
+        recipes.push(materials[0].is_some().then_some(CraftRecipe { raw_material_class, materials }));
+    }
+    Ok(recipes)
 }
 
 /// Starting stats, gear and skills for a new character, from INIT_AVATAR.STB.
