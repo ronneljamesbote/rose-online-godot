@@ -7,7 +7,8 @@ services:
       dockerfile: server/Dockerfile
     image: rose-server
     ports:
-      - "3000:3000"
+      # With HTTPS (below) set ROSE_BIND=127.0.0.1, so players can only come in through it.
+      - "${ROSE_BIND:-0.0.0.0}:3000:3000"
     volumes:
       - rose-data:/data
       # The ROSE client folder, the one with data.idx in it. The server reads its item,
@@ -29,7 +30,7 @@ services:
       context: web
     image: rose-web
     ports:
-      - "3001:3001"
+      - "${ROSE_BIND:-0.0.0.0}:3001:3001"
     volumes:
       - rose-web-data:/data
     environment:
@@ -40,6 +41,10 @@ services:
       # rose-server container reaches this one. Keep it unchanged: account identities
       # depend on it.
       ROSE_AUTH_ISSUER: http://rose-web:3001
+      # Where the website reads who is online and the players' characters.
+      GAME_SERVER_URL: http://rose-server:3000
+      # 1: accounts must confirm their email before playing. Unset: on when SMTP_HOST is set.
+      ROSE_REQUIRE_VERIFIED_EMAIL: ${ROSE_REQUIRE_VERIFIED_EMAIL:-}
       # Email for password resets. Without SMTP_HOST the reset link is written to this
       # container's log instead (docker compose logs rose-web).
       SMTP_HOST: ${SMTP_HOST:-}
@@ -47,10 +52,30 @@ services:
       SMTP_USER: ${SMTP_USER:-}
       SMTP_PASS: ${SMTP_PASS:-}
       MAIL_FROM: ${MAIL_FROM:-ROSE <no-reply@localhost>}
-      # Set to 1 behind a reverse proxy, so rate limits see the players' addresses.
+      # Set to 1 behind a reverse proxy (the HTTPS one below), so rate limits see the
+      # players' addresses.
       TRUST_PROXY: ${TRUST_PROXY:-0}
+    restart: unless-stopped
+
+  # HTTPS for both, for a server on the internet: set ROSE_DOMAIN and COMPOSE_PROFILES=https
+  # in .env (see server/README.md). Not started otherwise.
+  caddy:
+    image: caddy:2
+    profiles: ["https"]
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./server/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+    environment:
+      ROSE_DOMAIN: ${ROSE_DOMAIN:-}
+    depends_on:
+      - rose-web
+      - rose-server
     restart: unless-stopped
 
 volumes:
   rose-data:
   rose-web-data:
+  caddy-data:

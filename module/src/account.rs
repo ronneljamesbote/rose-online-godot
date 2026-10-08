@@ -51,6 +51,12 @@ pub fn check_connection(ctx: &ReducerContext) -> Result<(), String> {
     Ok(())
 }
 
+/// The website's own connection (its subject starts with "service:"): it reads public
+/// tables for the who's-online page and never plays, so it gets no character.
+pub fn is_service(ctx: &ReducerContext) -> bool {
+    ctx.sender_auth().jwt().is_some_and(|jwt| jwt.subject().starts_with("service:"))
+}
+
 /// Admin: trust tokens from this website (its ROSE_AUTH_ISSUER), or "" to let anyone in.
 #[spacetimedb::reducer]
 pub fn set_auth_issuer(ctx: &ReducerContext, issuer: String) -> Result<(), String> {
@@ -85,6 +91,9 @@ pub fn name_problem(ctx: &ReducerContext, name: &str, except: Option<Identity>) 
 #[spacetimedb::reducer]
 pub fn create_character(ctx: &ReducerContext, name: String, gender: u8, face: u8, hair: u8) -> Result<(), String> {
     check_connection(ctx)?;
+    if is_service(ctx) {
+        return Err("the website can't make characters".into());
+    }
     if ctx.db.player().identity().find(ctx.sender()).is_some() {
         return Err("this account already has a character".into());
     }

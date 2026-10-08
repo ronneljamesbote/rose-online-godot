@@ -7,6 +7,7 @@ export interface ApiResult {
   error?: string;
   field?: string;
   message?: string;
+  verify_required?: boolean;
 }
 
 /** Posts a form's values as JSON and keeps the answer for the page to show. */
