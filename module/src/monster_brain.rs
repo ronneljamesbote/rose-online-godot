@@ -11,7 +11,7 @@ use rand::Rng;
 use rose_data::NpcId;
 use rose_file_readers::{
     AipAbilityType, AipAction, AipAttackNearbyStat, AipCondition, AipConditionFindNearbyEntities, AipDamageType,
-    AipDistanceOrigin, AipFile, AipHaveStatusTarget, AipMoveMode, AipMoveOrigin, AipNearbyAlly, AipTrigger,
+    AipDistanceOrigin, AipFile, AipHaveStatusTarget, AipHaveStatusType, AipMoveMode, AipMoveOrigin, AipNearbyAlly, AipSkillTarget, AipTrigger,
 };
 use rose_game_data::GameData;
 use spacetimedb::{ReducerContext, Table};
@@ -41,6 +41,10 @@ struct Body {
     defence: i32,
     resistance: i32,
     target: Option<u64>,
+    /// A player's summon: on the players' side, not the monsters'.
+    summoned: bool,
+    /// Hidden (Stealth or a disguise): monsters can't pick it as a new target.
+    hidden: bool,
 }
 
 impl Body {
@@ -72,6 +76,8 @@ fn body(ctx: &ReducerContext, id: u64, t: i64) -> Option<Body> {
         defence: s.defence,
         resistance: s.resistance,
         target: c.attack_target,
+        summoned: skills::owner_of(ctx, id).is_some(),
+        hidden: skills::is_invisible(ctx, id),
     })
 }
 
@@ -122,7 +128,10 @@ impl Run<'_> {
             if b.id == self.me.id || b.hp <= 0 {
                 continue;
             }
-            let allied = b.kind == EntityKind::Monster;
+            let allied = b.kind == EntityKind::Monster && !b.summoned;
+            if !allied && b.hidden {
+                continue;
+            }
             if allied != f.is_allied || !f.level_diff_range.contains(&(self.me.level - b.level)) {
                 continue;
             }
@@ -187,12 +196,17 @@ impl Run<'_> {
             AipCondition::TargetAbilityValue(operator, ability, value) => {
                 self.target().is_some_and(|b| compare(*operator, b.ability(*ability), *value))
             }
-            AipCondition::HasStatusEffect(who, _, have) => {
+            AipCondition::HasStatusEffect(who, kind, have) => {
                 let id = match who {
                     AipHaveStatusTarget::This => Some(self.me.id),
                     AipHaveStatusTarget::Target => self.me.target,
                 };
-                id.is_some_and(|id| skills::has_status_effects(self.ctx, id) == *have)
+                let kind = match kind {
+                    AipHaveStatusType::Good => Some(true),
+                    AipHaveStatusType::Bad => Some(false),
+                    AipHaveStatusType::Any => None,
+                };
+                id.is_some_and(|id| skills::has_status_effects(self.ctx, id, kind) == *have)
             }
             AipCondition::IsDaytime(day) => is_daytime(self.game, self.zone_id, self.t) == *day,
             AipCondition::ZoneTime(range) => range.contains(&zone_time(self.game, self.zone_id, self.t)),
@@ -204,6 +218,12 @@ impl Run<'_> {
 
     fn attack(&mut self, target: u64) {
         if target == self.me.id || !crate::is_alive(self.ctx, target) {
+            return;
+        }
+        // A taunted monster only fights its taunter; hidden characters can't be picked.
+        if skills::taunter(self.ctx, self.me.id).is_some_and(|taunter| taunter != target)
+            || (self.me.target != Some(target) && skills::is_invisible(self.ctx, target))
+        {
             return;
         }
         if let Some(mut c) = self.ctx.db.combat().entity_id().find(self.me.id) {
@@ -270,7 +290,8 @@ impl Run<'_> {
                 let pick = zone
                     .bodies(self.ctx, self.t)
                     .iter()
-                    .filter(|b| b.kind == EntityKind::Player && b.hp > 0 && distance(me.pos, b.pos) <= *range as f32)
+                    .filter(|b| (b.kind == EntityKind::Player || b.summoned) && !b.hidden && b.hp > 0)
+                    .filter(|b| distance(me.pos, b.pos) <= *range as f32)
                     .map(|b| (b.id, b.ability(*ability)));
                 let chosen = match choice {
                     AipAttackNearbyStat::Lowest => pick.min_by_key(|(_, v)| *v),
@@ -286,7 +307,7 @@ impl Run<'_> {
                 let allies: Vec<u64> = zone
                     .bodies(self.ctx, self.t)
                     .iter()
-                    .filter(|b| b.id != me.id && b.kind == EntityKind::Monster && b.hp > 0 && b.target.is_none())
+                    .filter(|b| b.id != me.id && b.kind == EntityKind::Monster && !b.summoned && b.hp > 0 && b.target.is_none())
                     // This one distance is in metres in the AIP files.
                     .filter(|b| distance(me.pos, b.pos) <= *range as f32 * 100.0)
                     .filter(|b| match ally {
@@ -306,8 +327,19 @@ impl Run<'_> {
                 // The zone list is read again next time, with the new targets.
                 zone.bodies = None;
             }
-            // Speech and emotes are shown by the client; summons, skills, transformations,
-            // item drops and the rest come later.
+            AipAction::UseSkill(target, skill_id, motion_id) => {
+                let target = match target {
+                    AipSkillTarget::FindChar => self.find_char.map(|(id, _)| id),
+                    AipSkillTarget::Target => self.me.target,
+                    AipSkillTarget::This => Some(self.me.id),
+                    AipSkillTarget::NearChar => self.near_char.map(|(id, _)| id),
+                };
+                if let (Some(target), Ok(skill_id)) = (target, u16::try_from(*skill_id)) {
+                    skills::npc_cast(self.ctx, self.game, self.me.id, skill_id, target, *motion_id, self.t);
+                }
+            }
+            // Speech and emotes are shown by the client; summons, transformations, item
+            // drops and the rest come later.
             _ => {}
         }
     }
@@ -369,7 +401,11 @@ pub fn idle_tick(ctx: &ReducerContext, game: &GameData, t: i64) {
         let Some(trigger) = program.trigger_on_idle.as_ref() else { continue };
         let Some(me) = body(ctx, id, t) else { continue };
         // Idle means standing still with nothing to fight.
-        if me.hp <= 0 || me.target.is_some() || ctx.db.motion().entity_id().find(id).is_some_and(|m| m.is_moving(t)) {
+        if me.hp <= 0
+            || me.target.is_some()
+            || skills::is_disabled(ctx, id)
+            || ctx.db.motion().entity_id().find(id).is_some_and(|m| m.is_moving(t))
+        {
             continue;
         }
         let zone = match zone_cache.iter().position(|z| z.zone_id == zone_id) {
@@ -387,10 +423,14 @@ pub fn idle_tick(ctx: &ReducerContext, game: &GameData, t: i64) {
 /// A monster was hit and lived: its damaged trigger decides what it does (most fight back,
 /// some call friends, timid ones run from strong players). Without one it fights back.
 pub fn on_damaged(ctx: &ReducerContext, game: &GameData, id: u64, attacker: u64, damage: i32, t: i64) {
+    if skills::is_disabled(ctx, id) {
+        return;
+    }
     let Some(me) = body(ctx, id, t) else { return };
     let Some(e) = ctx.db.entity().entity_id().find(id) else { return };
-    let Some(ai) = ctx.db.monster_ai().entity_id().find(id) else { return };
-    if let Some(program) = program(game, e.npc_id).filter(|p| p.trigger_on_damaged.is_some()) {
+    // Summons have no AI program of their own (skills::summon_tick): they fight back.
+    let ai = ctx.db.monster_ai().entity_id().find(id);
+    if let (Some(ai), Some(program)) = (ai, program(game, e.npc_id).filter(|p| p.trigger_on_damaged.is_some())) {
         // A monster already fighting only sometimes reacts to someone new.
         let busy = me.target.is_some() && (program.damage_trigger_new_target_chance as i32) < ctx.rng().gen_range(0..100);
         if !busy {
@@ -407,6 +447,28 @@ pub fn on_damaged(ctx: &ReducerContext, game: &GameData, id: u64, attacker: u64,
         if c.attack_target.is_none() && c.hp > 0 {
             c.attack_target = Some(attacker);
             ctx.db.combat().entity_id().update(c);
+        }
+    }
+}
+
+/// A monster's swing landed: the skills in its attack trigger (iROSE's attack_move trigger).
+/// Only the events that use a skill are run, and only their skills: the trigger's other
+/// events mostly make the monster step about mid-fight, which rose-offline doesn't do
+/// either.
+pub fn on_attack(ctx: &ReducerContext, game: &GameData, id: u64, t: i64) {
+    let Some(ai) = ctx.db.monster_ai().entity_id().find(id) else { return };
+    let Some(e) = ctx.db.entity().entity_id().find(id) else { return };
+    let Some(trigger) = program(game, e.npc_id).and_then(|p| p.trigger_on_attack_move.as_ref()) else { return };
+    let Some(me) = body(ctx, id, t) else { return };
+    let mut zone = Zone { zone_id: e.zone_id, bodies: None };
+    let mut run = Run { ctx, game, t, me, ai, zone_id: e.zone_id, attacker: None, damage: 0, find_char: None, near_char: None };
+    let uses_skill = |a: &AipAction| matches!(a, AipAction::UseSkill(..));
+    for event in trigger.events.iter().filter(|e| e.actions.iter().any(uses_skill)) {
+        if event.conditions.iter().all(|c| run.check(&mut zone, c)) {
+            for action in event.actions.iter().filter(|a| uses_skill(a)) {
+                run.act(&mut zone, action);
+            }
+            return;
         }
     }
 }

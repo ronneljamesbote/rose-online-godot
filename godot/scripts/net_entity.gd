@@ -64,6 +64,9 @@ var _cast_anims: Array[String] = []  # the casting and action motions of that ca
 var _event_anim := ""  # animation whose frame events we last sent to fx
 var _event_frame := -1  # last frame of it whose events were sent
 var _died_sound := false
+var is_summon := false  # a player's summon: fights on the players' side
+var hidden := false  # under Stealth or a disguise: drawn faded
+var _conditions: Label3D  # stunned, asleep, silenced, taunted
 
 
 func setup(zone_node: Node, state: Dictionary, is_me_: bool) -> void:
@@ -75,6 +78,7 @@ func setup(zone_node: Node, state: Dictionary, is_me_: bool) -> void:
 	has_store = state.get("store", false)
 	npc_id = state["npc_id"]
 	look = state.get("look", [])
+	is_summon = state.has("summon_owner")
 	_build()
 	label = Label3D.new()
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
@@ -85,6 +89,8 @@ func setup(zone_node: Node, state: Dictionary, is_me_: bool) -> void:
 	label.outline_size = 6
 	if is_me_:
 		label.modulate = Color(1.0, 0.95, 0.6)
+	elif is_summon:
+		label.modulate = Color(0.7, 0.85, 1.0)
 	elif is_monster:
 		label.modulate = Color(1.0, 0.75, 0.7)
 	elif is_npc:
@@ -115,6 +121,32 @@ func _build() -> void:
 		anim.animation_finished.connect(_on_animation_finished)
 	height = _model_height()
 	_play(_idle)
+	_apply_fade()
+
+
+## "Asleep", "Stunned" and the like, in small letters under the name tag.
+func _show_conditions(text: String) -> void:
+	if _conditions == null:
+		if text == "":
+			return
+		_conditions = Label3D.new()
+		_conditions.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		_conditions.no_depth_test = true
+		_conditions.fixed_size = true
+		_conditions.pixel_size = 0.0012
+		_conditions.font_size = 20
+		_conditions.outline_size = 6
+		_conditions.modulate = Color(1.0, 0.85, 0.4)
+		_conditions.offset = Vector2(0, -26)
+		label.add_child(_conditions)
+	_conditions.text = text
+	_conditions.visible = text != ""
+
+
+## Stealth and disguises leave the model see-through.
+func _apply_fade() -> void:
+	for node in model.find_children("*", "GeometryInstance3D", true, false):
+		(node as GeometryInstance3D).transparency = 0.65 if hidden else 0.0
 
 
 ## Height of the model's bounds in its rest pose, for the name tag.
@@ -154,6 +186,11 @@ func update_state(state: Dictionary, target_position) -> void:
 		_last_target_id = target_id
 	if label.text != name_text:
 		label.text = name_text
+	_show_conditions(state.get("conditions", ""))
+	var is_hidden: bool = state.get("hidden", false)
+	if is_hidden != hidden:
+		hidden = is_hidden
+		_apply_fade()
 	if not is_monster and state.has("look") and state["look"] != look:
 		look = state["look"]
 		_build()

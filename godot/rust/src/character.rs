@@ -290,6 +290,8 @@ impl RoseCharacter {
 #[class(base=Node3D, init)]
 pub struct RoseNpc {
     base: Base<Node3D>,
+    npc_id: u16,
+    dummy_offset: usize,
 }
 
 #[godot_api]
@@ -314,6 +316,8 @@ impl RoseNpc {
             .and_then(|path| data::read_file::<ZmdFile>(path));
         let Some(zmd) = zmd else { return false };
         let dummy_offset = zmd.bones.len();
+        self.npc_id = npc_id.get();
+        self.dummy_offset = dummy_offset;
         let mut skeleton = build_skeleton(&zmd);
         let skin = skeleton.create_skin_from_rest_transforms();
         self.base_mut().add_child(&skeleton);
@@ -347,6 +351,29 @@ impl RoseNpc {
         }
         add_player(&mut self.to_gd().upcast(), library);
         true
+    }
+
+    /// Adds one of the NPC's own motions (by its index in LIST_NPC.CHR, as monster skills
+    /// name them) to the animation player. Returns its animation name ("motion_ID"), or "".
+    #[func]
+    fn add_motion(&mut self, motion_id: i32) -> GString {
+        let name = format!("motion_{motion_id}");
+        let Some(player) = self.base().try_get_node_as::<AnimationPlayer>("AnimationPlayer") else {
+            return GString::new();
+        };
+        if player.has_animation(name.as_str()) {
+            return GString::from(name.as_str());
+        }
+        let (Some(game_data), Some(npc_id), Some(id)) =
+            (data::get(), NpcId::new(self.npc_id), u16::try_from(motion_id).ok().map(rose_data::MotionId::new))
+        else {
+            return GString::new();
+        };
+        let Some(motion) = game_data.npcs.get_npc_motion(npc_id, id) else { return GString::new() };
+        let Some(zmo) = data::read_file::<ZmoFile>(&motion.path.path().to_string_lossy()) else { return GString::new() };
+        let Some(mut library) = player.get_animation_library("") else { return GString::new() };
+        library.add_animation(name.as_str(), &build_animation(&zmo, self.dummy_offset, false));
+        GString::from(name.as_str())
     }
 }
 

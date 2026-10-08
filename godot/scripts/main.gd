@@ -372,6 +372,9 @@ func _run_net_demo(me: Node3D) -> void:
 	if options["net-demo"] == "chat":
 		_run_chat_demo()
 		return
+	if options["net-demo"] == "steps":
+		_run_steps_demo(String(options.get("steps", "")))
+		return
 	if options["net-demo"] == "line":
 		route = [Vector3(5, 0, 0), Vector3(0, 0, 0)]
 		pause = 3.5
@@ -478,6 +481,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			var npc: int = online.pick_npc(camera, event.position)
 			if npc >= 0:
 				online.talk_to(npc)
+				return
+			var friend: int = online.pick_friend(camera, event.position)
+			if friend >= 0:
+				online.select(friend)
 				return
 			var item: int = online.pick_item(camera, event.position)
 			if item >= 0:
@@ -614,6 +621,87 @@ func _run_skills_demo() -> void:
 			online.hotbar.use_slot(1)
 			print("rose net demo: use %s on %s, MP %d" % [names[1] if names.size() > 1 else "?", online.entities[target].label.text if online.entities.has(target) else "?", online.me.mp])
 			await get_tree().create_timer(3.0).timeout
+
+
+## Runs --steps, separated by ";", for testing: "wait 2", "skill ID TARGET" (TARGET is
+## nearest, self, none, a player's name or of:NAME, what that player fights; the default
+## keeps the current one), "attack
+## nearest", "select NAME", "move DX DZ" (metres), "accept" (a party invitation),
+## "waitdead NAME" and "status" (prints our status effects and the target's).
+func _run_steps_demo(steps: String) -> void:
+	await get_tree().create_timer(3.0).timeout
+	for step in steps.split(";", false):
+		var words := step.strip_edges().split(" ", false)
+		if words.is_empty() or online.me == null:
+			continue
+		var arg: String = words[1] if words.size() > 1 else ""
+		match words[0]:
+			"wait":
+				await get_tree().create_timer(float(arg)).timeout
+			"skill":
+				var wanted := int(arg)
+				var found := false
+				var pages: Array = online.net.get_skills()
+				for page in pages.size():
+					for index in pages[page].size():
+						var skill = pages[page][index]
+						if skill != null and int(skill["id"]) == wanted and not found:
+							found = true
+							if words.size() > 2:
+								_steps_target(words[2])
+							print("rose net demo: use %s (%d) on %d" % [skill["name"], wanted, online.my_target])
+							online.use_skill(page, index, skill)
+				if not found:
+					print("rose net demo: no skill ", wanted)
+			"attack":
+				_steps_target(arg)
+				if online.my_target >= 0:
+					online.attack(online.my_target)
+			"select":
+				_steps_target(arg)
+			"move":
+				var dz := float(words[2]) if words.size() > 2 else 0.0
+				online.move_to(online.me.position + Vector3(float(arg), 0, dz))
+			"accept":
+				for i in 20:
+					if not online.net.get_party_invites().is_empty():
+						online.net.party_answer(online.net.get_party_invites()[0][0], true)
+						print("rose net demo: joined the party")
+						break
+					await get_tree().create_timer(0.5).timeout
+			"waitdead":
+				for i in 40:
+					_steps_target(arg)
+					if online.my_target >= 0 and online.entities[online.my_target].dead:
+						print("rose net demo: %s is down" % arg)
+						break
+					await get_tree().create_timer(0.25).timeout
+			"status":
+				var mine: Array = online.net.get_status_effects(online.my_id)
+				var theirs: Array = online.net.get_status_effects(online.my_target) if online.my_target >= 0 else []
+				var names := func(e): return "%s %.0f s" % [e["name"], e["seconds"]]
+				print("rose net demo: my effects ", mine.map(names), ", target's ", theirs.map(names))
+
+
+func _steps_target(which: String) -> void:
+	match which:
+		"nearest":
+			online.my_target = online.nearest_monster()
+		"self":
+			online.my_target = online.my_id
+		"none":
+			online.my_target = -1
+		_ when which.begins_with("of:"):
+			# What that player is fighting.
+			for id in online.entities:
+				if online.entities[id].label.text == which.substr(3):
+					online.my_target = online.entities[id].target_id
+					if online.my_target < 0:
+						print("rose net demo: %s isn't fighting anything" % which.substr(3))
+		_:
+			for id in online.entities:
+				if online.entities[id].label.text == which:
+					online.my_target = id
 
 
 ## Walks to the NPC named --npc (part of the name), prints what it says, and answers with

@@ -55,6 +55,7 @@ pub mod ground_item_type;
 pub mod insert_gem_reducer;
 pub mod level_up_skill_reducer;
 pub mod monster_ai_type;
+pub mod monster_idle_type;
 pub mod monster_spawn_type;
 pub mod motion_table;
 pub mod motion_type;
@@ -64,6 +65,8 @@ pub mod move_to_reducer;
 pub mod my_chat_table;
 pub mod notice_table;
 pub mod notice_type;
+pub mod npc_cast_motion_table;
+pub mod npc_cast_motion_type;
 pub mod npc_store_transaction_reducer;
 pub mod npc_table;
 pub mod npc_type;
@@ -115,6 +118,9 @@ pub mod status_effect_table;
 pub mod stop_reducer;
 pub mod store_buy_type;
 pub mod store_sell_type;
+pub mod summon_table;
+pub mod summon_type;
+pub mod taunt_type;
 pub mod tick_stats_table;
 pub mod tick_stats_type;
 pub mod trade_accept_reducer;
@@ -190,6 +196,7 @@ pub use ground_item_type::GroundItem;
 pub use insert_gem_reducer::insert_gem;
 pub use level_up_skill_reducer::level_up_skill;
 pub use monster_ai_type::MonsterAi;
+pub use monster_idle_type::MonsterIdle;
 pub use monster_spawn_type::MonsterSpawn;
 pub use motion_table::*;
 pub use motion_type::Motion;
@@ -199,6 +206,8 @@ pub use move_to_reducer::move_to;
 pub use my_chat_table::*;
 pub use notice_table::*;
 pub use notice_type::Notice;
+pub use npc_cast_motion_table::*;
+pub use npc_cast_motion_type::NpcCastMotion;
 pub use npc_store_transaction_reducer::npc_store_transaction;
 pub use npc_table::*;
 pub use npc_type::Npc;
@@ -250,6 +259,9 @@ pub use status_effect_table::*;
 pub use stop_reducer::stop;
 pub use store_buy_type::StoreBuy;
 pub use store_sell_type::StoreSell;
+pub use summon_table::*;
+pub use summon_type::Summon;
+pub use taunt_type::Taunt;
 pub use tick_stats_table::*;
 pub use tick_stats_type::TickStats;
 pub use trade_accept_reducer::trade_accept;
@@ -1040,6 +1052,7 @@ pub struct DbUpdate {
     my_chat: __sdk::TableUpdate<ChatMessage>,
     notice: __sdk::TableUpdate<Notice>,
     npc: __sdk::TableUpdate<Npc>,
+    npc_cast_motion: __sdk::TableUpdate<NpcCastMotion>,
     party: __sdk::TableUpdate<Party>,
     party_invitation: __sdk::TableUpdate<PartyInvite>,
     party_member: __sdk::TableUpdate<PartyMember>,
@@ -1049,6 +1062,7 @@ pub struct DbUpdate {
     skill_cooldown: __sdk::TableUpdate<SkillCooldownRow>,
     stats: __sdk::TableUpdate<Stats>,
     status_effect: __sdk::TableUpdate<StatusEffectRow>,
+    summon: __sdk::TableUpdate<Summon>,
     tick_stats: __sdk::TableUpdate<TickStats>,
     trade: __sdk::TableUpdate<Trade>,
     trade_request: __sdk::TableUpdate<TradeRequest>,
@@ -1093,6 +1107,9 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "npc" => db_update
                     .npc
                     .append(npc_table::parse_table_update(table_update)?),
+                "npc_cast_motion" => db_update
+                    .npc_cast_motion
+                    .append(npc_cast_motion_table::parse_table_update(table_update)?),
                 "party" => db_update
                     .party
                     .append(party_table::parse_table_update(table_update)?),
@@ -1120,6 +1137,9 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "status_effect" => db_update
                     .status_effect
                     .append(status_effect_table::parse_table_update(table_update)?),
+                "summon" => db_update
+                    .summon
+                    .append(summon_table::parse_table_update(table_update)?),
                 "tick_stats" => db_update
                     .tick_stats
                     .append(tick_stats_table::parse_table_update(table_update)?),
@@ -1187,6 +1207,9 @@ impl __sdk::DbUpdate for DbUpdate {
         diff.npc = cache
             .apply_diff_to_table::<Npc>("npc", &self.npc)
             .with_updates_by_pk(|row| &row.entity_id);
+        diff.npc_cast_motion = cache
+            .apply_diff_to_table::<NpcCastMotion>("npc_cast_motion", &self.npc_cast_motion)
+            .with_updates_by_pk(|row| &row.entity_id);
         diff.party = cache
             .apply_diff_to_table::<Party>("party", &self.party)
             .with_updates_by_pk(|row| &row.party_id);
@@ -1214,6 +1237,9 @@ impl __sdk::DbUpdate for DbUpdate {
         diff.status_effect = cache
             .apply_diff_to_table::<StatusEffectRow>("status_effect", &self.status_effect)
             .with_updates_by_pk(|row| &row.id);
+        diff.summon = cache
+            .apply_diff_to_table::<Summon>("summon", &self.summon)
+            .with_updates_by_pk(|row| &row.entity_id);
         diff.tick_stats = cache
             .apply_diff_to_table::<TickStats>("tick_stats", &self.tick_stats)
             .with_updates_by_pk(|row| &row.id);
@@ -1268,6 +1294,9 @@ impl __sdk::DbUpdate for DbUpdate {
                 "npc" => db_update
                     .npc
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "npc_cast_motion" => db_update
+                    .npc_cast_motion
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "party" => db_update
                     .party
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
@@ -1294,6 +1323,9 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "status_effect" => db_update
                     .status_effect
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "summon" => db_update
+                    .summon
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "tick_stats" => db_update
                     .tick_stats
@@ -1356,6 +1388,9 @@ impl __sdk::DbUpdate for DbUpdate {
                 "npc" => db_update
                     .npc
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "npc_cast_motion" => db_update
+                    .npc_cast_motion
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "party" => db_update
                     .party
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
@@ -1382,6 +1417,9 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "status_effect" => db_update
                     .status_effect
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "summon" => db_update
+                    .summon
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "tick_stats" => db_update
                     .tick_stats
@@ -1426,6 +1464,7 @@ pub struct AppliedDiff<'r> {
     my_chat: __sdk::TableAppliedDiff<'r, ChatMessage>,
     notice: __sdk::TableAppliedDiff<'r, Notice>,
     npc: __sdk::TableAppliedDiff<'r, Npc>,
+    npc_cast_motion: __sdk::TableAppliedDiff<'r, NpcCastMotion>,
     party: __sdk::TableAppliedDiff<'r, Party>,
     party_invitation: __sdk::TableAppliedDiff<'r, PartyInvite>,
     party_member: __sdk::TableAppliedDiff<'r, PartyMember>,
@@ -1435,6 +1474,7 @@ pub struct AppliedDiff<'r> {
     skill_cooldown: __sdk::TableAppliedDiff<'r, SkillCooldownRow>,
     stats: __sdk::TableAppliedDiff<'r, Stats>,
     status_effect: __sdk::TableAppliedDiff<'r, StatusEffectRow>,
+    summon: __sdk::TableAppliedDiff<'r, Summon>,
     tick_stats: __sdk::TableAppliedDiff<'r, TickStats>,
     trade: __sdk::TableAppliedDiff<'r, Trade>,
     trade_request: __sdk::TableAppliedDiff<'r, TradeRequest>,
@@ -1472,6 +1512,11 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
         callbacks.invoke_table_row_callbacks::<ChatMessage>("my_chat", &self.my_chat, event);
         callbacks.invoke_table_row_callbacks::<Notice>("notice", &self.notice, event);
         callbacks.invoke_table_row_callbacks::<Npc>("npc", &self.npc, event);
+        callbacks.invoke_table_row_callbacks::<NpcCastMotion>(
+            "npc_cast_motion",
+            &self.npc_cast_motion,
+            event,
+        );
         callbacks.invoke_table_row_callbacks::<Party>("party", &self.party, event);
         callbacks.invoke_table_row_callbacks::<PartyInvite>(
             "party_invitation",
@@ -1497,6 +1542,7 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
             &self.status_effect,
             event,
         );
+        callbacks.invoke_table_row_callbacks::<Summon>("summon", &self.summon, event);
         callbacks.invoke_table_row_callbacks::<TickStats>("tick_stats", &self.tick_stats, event);
         callbacks.invoke_table_row_callbacks::<Trade>("trade", &self.trade, event);
         callbacks.invoke_table_row_callbacks::<TradeRequest>(
@@ -2177,6 +2223,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
         my_chat_table::register_table(client_cache);
         notice_table::register_table(client_cache);
         npc_table::register_table(client_cache);
+        npc_cast_motion_table::register_table(client_cache);
         party_table::register_table(client_cache);
         party_invitation_table::register_table(client_cache);
         party_member_table::register_table(client_cache);
@@ -2186,6 +2233,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
         skill_cooldown_table::register_table(client_cache);
         stats_table::register_table(client_cache);
         status_effect_table::register_table(client_cache);
+        summon_table::register_table(client_cache);
         tick_stats_table::register_table(client_cache);
         trade_table::register_table(client_cache);
         trade_request_table::register_table(client_cache);
@@ -2204,6 +2252,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
         "my_chat",
         "notice",
         "npc",
+        "npc_cast_motion",
         "party",
         "party_invitation",
         "party_member",
@@ -2213,6 +2262,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
         "skill_cooldown",
         "stats",
         "status_effect",
+        "summon",
         "tick_stats",
         "trade",
         "trade_request",

@@ -77,8 +77,11 @@ What works now:
   skills; scrolls cast theirs (return scrolls warp you home). Drag skills or items onto the
   hotbar at the bottom and use them with 1-8 or a right-click. Attack skills go on the
   current target, buffs on yourself; the character plays the skill's casting and action
-  motions, and buffs and debuffs show as icons at the top. Summons, resurrection and
-  emotes are not in yet.
+  motions, and buffs and debuffs show as icons at the top. Left-click another player (a
+  fallen one too) to target them for heals or Resurrection. Stunned, asleep, silenced and
+  taunted characters say so under their name; Stealth leaves a character see-through.
+  Summons fight beside you, emotes and Jump play their motions, and the Pick Up, Party,
+  Trade, Auto Targetting and Select Self actions work from the hotbar too.
 - Conversations and quests: clicking a town NPC opens its conversation (the original CON
   dialog scripts, run by a Lua 4 VM ported from rose-offline-client) instead of going
   straight to the store; pick answers with the mouse or 1-9. Quest conditions are checked

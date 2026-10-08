@@ -429,7 +429,8 @@ impl RoseNet {
     /// until the swing's hit frame), dead, for players look (see player_look), for NPCs
     /// direction (degrees) and store, and while casting a skill cast_skill, cast_started (a
     /// server time, to tell casts apart), cast_motion and action_motion (motion ids, -1 for
-    /// none), cast_effect_in and cast_ends_in (seconds) and cast_target.
+    /// none), cast_effect_in and cast_ends_in (seconds) and cast_target; summon_owner for
+    /// summons, hidden under Stealth, conditions ("Asleep", "Stunned" and so on).
     #[func]
     fn get_entities(&self) -> VarArray {
         let mut out = VarArray::new();
@@ -465,8 +466,14 @@ impl RoseNet {
                         .and_then(|g| rose_data::SkillId::new(cast.skill_id).and_then(|id| g.skills.get_skill(id)));
                     d.set("cast_skill", cast.skill_id as i64);
                     d.set("cast_started", started);
-                    d.set("cast_motion", skill.and_then(|s| s.casting_motion_id).map_or(-1, |m| m.get() as i64));
-                    d.set("action_motion", skill.and_then(|s| s.action_motion_id).map_or(-1, |m| m.get() as i64));
+                    // Monsters cast with their own motions, which the server names.
+                    if let Some(motions) = c.db.npc_cast_motion().entity_id().find(&e.entity_id) {
+                        d.set("cast_motion", motions.cast_motion as i64);
+                        d.set("action_motion", motions.action_motion as i64);
+                    } else {
+                        d.set("cast_motion", skill.and_then(|s| s.casting_motion_id).map_or(-1, |m| m.get() as i64));
+                        d.set("action_motion", skill.and_then(|s| s.action_motion_id).map_or(-1, |m| m.get() as i64));
+                    }
                     d.set("cast_effect_in", (cast.effect_at_us - t) as f64 / 1e6);
                     d.set("cast_ends_in", (cast.ends_at_us - t) as f64 / 1e6);
                     if let Some(target) = cast.target {
@@ -475,6 +482,26 @@ impl RoseNet {
                 }
             }
             d.set("sitting", c.db.sitting().entity_id().find(&e.entity_id).is_some());
+            if let Some(summon) = c.db.summon().entity_id().find(&e.entity_id) {
+                d.set("summon_owner", summon.owner as i64);
+            }
+            // Stealth or a disguise: drawn faded. Stun, sleep, silence and taunt: named
+            // under the name tag ("conditions").
+            use rose_data::StatusEffectType as S;
+            let index = |t: S| enum_map::Enum::into_usize(t) as u8;
+            let mut conditions: Vec<&str> = Vec::new();
+            for r in c.db.status_effect().iter().filter(|r| r.entity_id == e.entity_id) {
+                if r.effect_type == index(S::Disguise) || r.effect_type == index(S::Transparent) {
+                    d.set("hidden", true);
+                }
+                let shown = [(S::Fainting, "Stunned"), (S::Sleep, "Asleep"), (S::Dumb, "Silenced"), (S::Taunt, "Taunted")];
+                if let Some((_, name)) = shown.iter().find(|(t, _)| index(*t) == r.effect_type) {
+                    conditions.push(name);
+                }
+            }
+            if !conditions.is_empty() {
+                d.set("conditions", conditions.join(", ").as_str());
+            }
             if let Some(npc) = c.db.npc().entity_id().find(&e.entity_id) {
                 d.set("direction", npc.direction);
                 d.set("store", npc.has_store);
