@@ -77,8 +77,8 @@ What works now:
   skills; scrolls cast theirs (return scrolls warp you home). Drag skills or items onto the
   hotbar at the bottom and use them with 1-8 or a right-click. Attack skills go on the
   current target, buffs on yourself; the character plays the skill's casting and action
-  motions, and buffs and debuffs show as icons at the top. There are no skill effects
-  (particles) yet, and summons, resurrection and emotes are not in yet.
+  motions, and buffs and debuffs show as icons at the top. Summons, resurrection and
+  emotes are not in yet.
 - Conversations and quests: clicking a town NPC opens its conversation (the original CON
   dialog scripts, run by a Lua 4 VM ported from rose-offline-client) instead of going
   straight to the store; pick answers with the mouse or 1-9. Quest conditions are checked
@@ -120,8 +120,26 @@ What works now:
   names, and clicking one attacks; attack skills work on them too. Party members stay
   allies where the zone says so. Everywhere else players can't hurt each other.
 
-Not yet: monsters walking around objects (the server has no zone geometry), effects and
-particles, animated zone objects, sound, most UI.
+- Sound (`rust/src/audio.rs`, `scripts/fx.gd`), ported from rose-offline-client's
+  animation sound, background music and NPC idle sound systems: each zone's day and night
+  music (`LIST_ZONE.STB`), ambient sounds placed in the zone files, footsteps by terrain tile
+  (`LIST_STEPSOUND.STB`, the zone's footstep type), weapon swings and hits by weapon and by
+  the hit monster's material (`LIST_HITSOUND.STB`), bow and gun shots, skill sounds, and
+  monster idle, attack, hurt and death sounds. They play at the animation frame events in
+  the ZMO files, as in the original. O opens the sound window with Music and Sound effects
+  sliders (saved in `settings.cfg`).
+- Effects (`rust/src/effect.rs`, `shaders/rose_effect.gdshaderinc`), ported from
+  rose-offline-client's EFT/PTL particle and effect mesh systems: particles with every
+  keyframe type (size, colour, velocity, texture atlas, rotation) and the original blend
+  modes, and effect meshes with ZMO vertex animation. Zones show their placed effects
+  (chimney smoke, fountains, torches that only burn at night). Weapons show their hit
+  sparks (critical hits their own), bows and guns fire their arrows and bullets, skills
+  show their casting effect on the hands, their bolt flying to the target, their hit and
+  extra hits, and their effect on the caster for buffs. Level ups and monster deaths show
+  theirs too.
+
+Not yet: monsters walking around objects (the server has no zone geometry), animated zone
+objects, most UI.
 
 ## Results (2026-10-07, headless, lavapipe software Vulkan)
 

@@ -1,13 +1,14 @@
 //! Process-wide access to the ROSE data files and the parsed data tables.
 
 use std::{
-    path::Path,
+    path::{Path, PathBuf},
     sync::{Arc, OnceLock},
 };
 
 use rose_data::{
-    CharacterMotionDatabase, CharacterMotionDatabaseOptions, DataDecoder, ItemDatabase, JobClassDatabase, NpcDatabase, NpcDatabaseOptions,
-    QuestDatabase, SkillDatabase, SkyboxDatabase, StatusEffectDatabase, ZoneList,
+    AnimationEventFlags, CharacterMotionDatabase, CharacterMotionDatabaseOptions, DataDecoder, EffectDatabase, ItemDatabase,
+    JobClassDatabase, NpcDatabase, NpcDatabaseOptions, QuestDatabase, SkillDatabase, SkyboxDatabase, SoundDatabase,
+    StatusEffectDatabase, ZoneList,
 };
 use rose_file_readers::{ChrFile, HostFilesystemDevice, LtbFile, RoseFile, VfsFile, VfsIndex, VirtualFilesystem};
 
@@ -29,6 +30,12 @@ pub struct GameData {
     pub ltb_event: LtbFile,
     /// Crafting recipes (LIST_PRODUCT.STB), by an item's craft_material.
     pub craft_recipes: Vec<Option<rose_game_data::CraftRecipe>>,
+    pub sounds: Arc<SoundDatabase>,
+    pub effects: Arc<EffectDatabase>,
+    /// What each ZMO frame event id does (footstep, hit, fire, ...).
+    pub event_flags: Vec<AnimationEventFlags>,
+    /// The install folder, for loose files outside the VFS (the Sound folder).
+    pub root: PathBuf,
 }
 
 static GAME_DATA: OnceLock<GameData> = OnceLock::new();
@@ -38,11 +45,10 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
         return Ok(());
     }
 
+    let root = data_idx.parent().map(|p| p.to_path_buf()).unwrap_or_default();
     let vfs = VirtualFilesystem::new(vec![
         Box::new(VfsIndex::load(data_idx)?),
-        Box::new(HostFilesystemDevice::new(
-            data_idx.parent().map(|p| p.to_path_buf()).unwrap_or_default(),
-        )),
+        Box::new(HostFilesystemDevice::new(root.clone())),
     ]);
     let strings = rose_data_irose::get_string_database(&vfs, 1)?;
     let zone_list = rose_data_irose::get_zone_list(&vfs, strings.clone())?;
@@ -62,6 +68,8 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
 
     let craft_recipes = rose_game_data::load_craft_recipes(&vfs)?;
     let decoder = rose_data_irose::get_data_decoder();
+    let sounds = rose_data_irose::get_sound_database(&vfs)?;
+    let effects = rose_data_irose::get_effect_database(&vfs)?;
     let _ = GAME_DATA.set(GameData {
         vfs,
         zone_list,
@@ -77,6 +85,10 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
         decoder,
         ltb_event,
         craft_recipes,
+        sounds,
+        effects,
+        event_flags: rose_data_irose::get_animation_event_flags(),
+        root,
     });
     Ok(())
 }
@@ -86,10 +98,28 @@ pub fn get() -> Option<&'static GameData> {
 }
 
 pub fn read_bytes(path: &str) -> Option<Vec<u8>> {
-    match get()?.vfs.open_file(path).ok()? {
-        VfsFile::Buffer(buffer) => Some(buffer),
-        VfsFile::View(view) => Some(view.into()),
+    let game_data = get()?;
+    match game_data.vfs.open_file(path) {
+        Ok(VfsFile::Buffer(buffer)) => Some(buffer),
+        Ok(VfsFile::View(view)) => Some(view.into()),
+        // The VFS upper-cases paths; loose files on a case-sensitive disk need a search.
+        Err(_) => std::fs::read(find_ignoring_case(&game_data.root, path)?).ok(),
     }
+}
+
+/// A file under `root` whose path matches `path` ignoring case and slash direction.
+fn find_ignoring_case(root: &Path, path: &str) -> Option<PathBuf> {
+    let mut at = root.to_path_buf();
+    for part in path.replace('\\', "/").split('/').filter(|p| !p.is_empty()) {
+        let exact = at.join(part);
+        if exact.exists() {
+            at = exact;
+            continue;
+        }
+        let entry = std::fs::read_dir(&at).ok()?.flatten().find(|e| e.file_name().to_string_lossy().eq_ignore_ascii_case(part))?;
+        at = entry.path();
+    }
+    at.is_file().then_some(at)
 }
 
 pub fn read_file<T: RoseFile>(path: &str) -> Option<T>

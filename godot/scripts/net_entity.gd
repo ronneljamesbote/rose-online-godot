@@ -54,6 +54,16 @@ var _speech: Label3D
 var _speech_tween: Tween
 var _idle := "stop1"
 var _walk := "run"
+var target_id := -1  # entity it attacks or casts at
+var cast_skill := 0  # skill of the last cast, for skill sounds and effects
+var cast_target := -1  # what that cast was aimed at (-1: itself or the ground)
+var cast_target_node: Node3D  # that target, kept while it plays its death after the hit
+var last_target_node: Node3D  # what it last attacked, kept while it plays its death
+var _last_target_id := -1
+var _cast_anims: Array[String] = []  # the casting and action motions of that cast
+var _event_anim := ""  # animation whose frame events we last sent to fx
+var _event_frame := -1  # last frame of it whose events were sent
+var _died_sound := false
 
 
 func setup(zone_node: Node, state: Dictionary, is_me_: bool) -> void:
@@ -137,6 +147,11 @@ func update_state(state: Dictionary, target_position) -> void:
 	mp = state.get("mp", 0)
 	max_mp = state.get("max_mp", 0)
 	level = state.get("level", 0)
+	target_id = state.get("target", -1)
+	if target_id >= 0 and (target_id != _last_target_id or last_target_node == null):
+		var fx := preload("res://scripts/fx.gd").find(self)
+		last_target_node = fx.entity_by_id(target_id) if fx else null
+		_last_target_id = target_id
 	if label.text != name_text:
 		label.text = name_text
 	if not is_monster and state.has("look") and state["look"] != look:
@@ -194,6 +209,7 @@ func update_state(state: Dictionary, target_position) -> void:
 	if is_dead:
 		if not dead:
 			_play("die", true)
+			_death_sound()
 	elif moving:
 		# Monsters walk when they wander or head home and run when they chase.
 		var walk := _walk
@@ -284,6 +300,7 @@ func die_and_free() -> void:
 	dying = true
 	label.visible = false
 	_play("die", true)
+	_death_sound()
 	await get_tree().create_timer(CORPSE_SECONDS).timeout
 	queue_free()
 
@@ -327,6 +344,13 @@ func hit_time(name: String) -> float:
 func _start_cast(state: Dictionary) -> void:
 	_cast_started = state["cast_started"]
 	_cast_next = ""
+	# The server forgets the cast once its action is over, but the action motion's frame
+	# events (projectiles, hits) still need it, so it is kept until the next cast.
+	cast_skill = state.get("cast_skill", 0)
+	cast_target = state.get("cast_target", -1)
+	var fx := preload("res://scripts/fx.gd").find(self)
+	cast_target_node = fx.entity_by_id(cast_target) if fx else null
+	_cast_anims.clear()
 	if anim == null or not model.has_method("add_motion"):
 		return
 	var cast_motion: int = state.get("cast_motion", -1)
@@ -334,12 +358,65 @@ func _start_cast(state: Dictionary) -> void:
 	var cast_anim: String = model.add_motion(cast_motion) if cast_motion >= 0 else ""
 	var action_anim: String = model.add_motion(action_motion) if action_motion >= 0 else ""
 	var effect_in: float = state.get("cast_effect_in", 0.0)
+	_cast_anims.assign([cast_anim, action_anim])
 	if cast_anim != "" and effect_in > 0.05:
 		_play(cast_anim, true)
 		anim.speed_scale = clampf(anim.get_animation(cast_anim).length / effect_in, 0.5, 2.0)
 		_cast_next = action_anim
 	elif action_anim != "":
 		_play(action_anim, true)
+
+
+## The skill whose motion is playing now, or 0.
+func active_skill() -> int:
+	if anim != null and String(anim.current_animation) in _cast_anims:
+		return cast_skill
+	return 0
+
+
+func _death_sound() -> void:
+	if (is_monster or is_npc) and not _died_sound:
+		_died_sound = true
+		var fx := preload("res://scripts/fx.gd").find(self)
+		if fx:
+			fx.npc_died(self)
+
+
+## Sends the frame events (footsteps, swings, hits) the animation passed since last frame.
+func _process(_delta: float) -> void:
+	if anim == null or not anim.is_playing():
+		return
+	var name := String(anim.current_animation)
+	var animation := anim.get_animation(name)
+	if animation == null:
+		return
+	var events: PackedInt32Array = animation.get_meta("frame_events", PackedInt32Array())
+	var fps: float = animation.get_meta("fps", 30.0)
+	var frame := mini(int(anim.current_animation_position * fps), events.size() - 1)
+	var looped := false
+	if name != _event_anim:
+		_event_anim = name
+		_event_frame = -1
+	elif frame < _event_frame:
+		looped = true
+	if frame == _event_frame or events.is_empty():
+		return
+	var fx := preload("res://scripts/fx.gd").find(self)
+	if fx == null:
+		_event_frame = frame
+		return
+	if looped:
+		for f in range(_event_frame + 1, events.size()):
+			if events[f] != 0:
+				fx.frame_event(self, events[f])
+		_event_frame = -1
+		# Monsters and NPCs sometimes make their idle noise, once per idle loop at most.
+		if (is_monster or is_npc) and name == _idle and randf() < 0.2:
+			fx.npc_sound(self, "idle")
+	for f in range(_event_frame + 1, frame + 1):
+		if events[f] != 0:
+			fx.frame_event(self, events[f])
+	_event_frame = frame
 
 
 func _is_busy() -> bool:
@@ -356,6 +433,8 @@ func _play(name: String, restart := false) -> void:
 		return
 	if restart:
 		anim.stop()
+		_event_anim = name
+		_event_frame = -1
 	anim.speed_scale = 1.0
 	anim.play(name, BLEND)
 

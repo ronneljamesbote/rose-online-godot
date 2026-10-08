@@ -13,10 +13,11 @@ use godot::{
 };
 use rose_data::{SkyboxState, ZoneId};
 use rose_file_readers::{
-    HimFile, IfoFile, IfoObject, LitFile, LitObject, TilFile, ZonFile, ZonTileRotation, ZscCollisionFlags, ZscFile,
+    HimFile, IfoFile, IfoObject, LitFile, LitObject, TilFile, ZonFile, ZonTileRotation, ZscCollisionFlags, ZscEffectType,
+    ZscFile,
 };
 
-use crate::{data, material, mesh, texture};
+use crate::{data, effect::RoseEffect, material, mesh, texture};
 
 const BLOCK_SIZE: f32 = 160.0;
 /// Zone objects are stored relative to the centre of the 64x64 block grid.
@@ -31,6 +32,14 @@ pub const LAYER_FLOORS: u32 = 2;
 pub struct RoseZone {
     base: Base<Node3D>,
     heights: Vec<Option<HimFile>>,
+    /// Tile map per block, and each ZON tile's texture number (for footstep sounds).
+    tiles: Vec<Option<TilFile>>,
+    tile_textures: Vec<usize>,
+    /// Looping ambient sounds (IFO sound objects): position, file, range in metres.
+    ambient_sounds: Vec<(Vector3, String, f32)>,
+    /// Effects placed in the zone (IFO effect objects, ZSC object effects): transform in
+    /// zone space, EFT file, and whether it only shows at night.
+    effect_spots: Vec<(Transform3D, String, bool)>,
     zone_id: u16,
     stats: VarDictionary,
     /// Warp gates: WARP.STB id and the box their model fills, in zone space.
@@ -68,6 +77,7 @@ struct ObjectSpawner {
     walls: Vec<Vector3>,
     floors: Vec<Vector3>,
     warps: Vec<(u16, Aabb)>,
+    effect_spots: Vec<(Transform3D, String, bool)>,
 }
 
 impl ObjectSpawner {
@@ -160,6 +170,17 @@ impl ObjectSpawner {
             self.parts += 1;
         }
 
+        for effect in object.effects.iter() {
+            let Some(path) = zsc.effects.get(effect.effect_id as usize) else { continue };
+            let effect_transform = rose_transform(
+                Vector3::new(effect.position.x, effect.position.z, -effect.position.y) / 100.0,
+                rose_quat(effect.rotation.x, effect.rotation.y, effect.rotation.z, effect.rotation.w),
+                Vector3::new(effect.scale.x, effect.scale.z, effect.scale.y),
+            );
+            let night_only = matches!(effect.effect_type, ZscEffectType::DayNight);
+            self.effect_spots.push((object_transform * effect_transform, path.path().to_string_lossy().to_string(), night_only));
+        }
+
         parent.add_child(&object_node);
     }
 }
@@ -220,6 +241,9 @@ impl RoseZone {
         water_material.set_shader_parameter("water_textures", &water_textures.to_variant());
 
         self.heights = (0..64 * 64).map(|_| None).collect();
+        self.tiles = (0..64 * 64).map(|_| None).collect();
+        self.tile_textures = zon.tiles.iter().map(|t| (t.layer2 + t.offset2) as usize).collect();
+        self.ambient_sounds.clear();
         let mut spawner = ObjectSpawner {
             materials: HashMap::new(),
             lightmaps: HashMap::new(),
@@ -227,6 +251,7 @@ impl RoseZone {
             walls: Vec::new(),
             floors: Vec::new(),
             warps: Vec::new(),
+            effect_spots: Vec::new(),
         };
         let mut blocks = 0;
         let mut objects = 0;
@@ -295,9 +320,20 @@ impl RoseZone {
                     spawn_list(zsc_event.as_ref(), 2, &events, "Event");
                     let warps: Vec<_> = ifo.warps.iter().enumerate().map(|(i, o)| (i, o, 1, None)).collect();
                     spawn_list(zsc_special.as_ref(), 3, &warps, "Warp");
+
+                    for effect in ifo.effect_objects.iter() {
+                        let path = effect.effect_path.path().to_string_lossy().to_string();
+                        spawner.effect_spots.push((ifo_transform(&effect.object), path, false));
+                    }
+                    for sound in ifo.sound_objects.iter() {
+                        let position = ifo_transform(&sound.object).origin;
+                        let path = sound.sound_path.path().to_string_lossy().to_string();
+                        self.ambient_sounds.push((position, path, sound.range as f32 / 10.0));
+                    }
                 }
 
                 self.heights[block_x + block_y * 64] = Some(him);
+                self.tiles[block_x + block_y * 64] = til;
                 self.base_mut().add_child(&block_node);
             }
         }
@@ -329,6 +365,28 @@ impl RoseZone {
 
         self.zone_id = zone_id as u16;
         self.warps = std::mem::take(&mut spawner.warps);
+        self.effect_spots = std::mem::take(&mut spawner.effect_spots);
+        // Zone effects (torches, fountains, glows). Night-only ones start hidden.
+        let mut effects = 0;
+        for (name, night) in [("Effects", false), ("NightEffects", true)] {
+            let mut group = Node3D::new_alloc();
+            group.set_name(name);
+            group.set_visible(!night);
+            for (transform, path, night_only) in self.effect_spots.iter() {
+                if *night_only != night {
+                    continue;
+                }
+                let mut effect = RoseEffect::new_alloc();
+                if effect.bind_mut().load_path(path) {
+                    effect.set_transform(*transform);
+                    group.add_child(&effect);
+                    effects += 1;
+                } else {
+                    effect.free();
+                }
+            }
+            self.base_mut().add_child(&group);
+        }
         let mut stats = VarDictionary::new();
         stats.set("blocks", blocks);
         stats.set("objects", objects);
@@ -336,6 +394,8 @@ impl RoseZone {
         stats.set("materials", spawner.materials.len() as i64);
         stats.set("wall_triangles", (spawner.walls.len() / 3) as i64);
         stats.set("floor_triangles", (spawner.floors.len() / 3) as i64);
+        stats.set("effects", effects as i64);
+        stats.set("ambient_sounds", self.ambient_sounds.len() as i64);
         stats.set("load_ms", started.elapsed().as_millis() as i64);
         self.stats = stats;
         true
@@ -377,6 +437,41 @@ impl RoseZone {
         let h0 = him.get_clamped(ix, iy) * (1.0 - wx) + him.get_clamped(ix + 1, iy) * wx;
         let h1 = him.get_clamped(ix, iy + 1) * (1.0 - wx) + him.get_clamped(ix + 1, iy + 1) * wx;
         (h0 * (1.0 - wy) + h1 * wy) / 100.0
+    }
+
+    /// The terrain texture number under Godot world position (x, z), which picks the
+    /// footstep sound (ZoneLoaderAsset::get_tile_index).
+    #[func]
+    fn get_tile_index(&self, x: f32, z: f32) -> i32 {
+        let (x, y) = (x * 100.0, -z * 100.0);
+        let block_x = x / (BLOCK_SIZE * 100.0);
+        let block_y = 65.0 - (y / (BLOCK_SIZE * 100.0));
+        let index = block_x.clamp(0.0, 63.0) as usize + block_y.clamp(0.0, 63.0) as usize * 64;
+        let Some(til) = self.tiles.get(index).and_then(|t| t.as_ref()) else { return 0 };
+        let tile = til.get_clamped((til.width as f32 * block_x.fract()) as usize, (til.height as f32 * block_y.fract()) as usize);
+        self.tile_textures.get(tile as usize).copied().unwrap_or(0) as i32
+    }
+
+    /// Shows the zone's night-only effects (evening and night) or hides them.
+    #[func]
+    fn set_night_effects(&mut self, night: bool) {
+        if let Some(mut group) = self.base().get_node_or_null("NightEffects").and_then(|n| n.try_cast::<Node3D>().ok()) {
+            group.set_visible(night);
+        }
+    }
+
+    /// Looping ambient sounds placed in the zone: position, path and range (metres).
+    #[func]
+    fn get_ambient_sounds(&self) -> VarArray {
+        let mut out = VarArray::new();
+        for (position, path, range) in self.ambient_sounds.iter() {
+            let mut d = VarDictionary::new();
+            d.set("position", *position);
+            d.set("path", path.as_str());
+            d.set("range", *range);
+            out.push(&d.to_variant());
+        }
+        out
     }
 
     /// Length of the zone's day in world ticks (10 s each).
