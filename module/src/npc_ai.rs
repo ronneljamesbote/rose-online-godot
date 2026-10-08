@@ -22,7 +22,7 @@ const SAY_RANGE_CM: f32 = 2000.0;
 /// Longest chain of NPC quest triggers one action follows.
 const MAX_CHAIN: usize = 16;
 
-fn compare(operator: AipOperatorType, a: i32, b: i32) -> bool {
+pub fn compare(operator: AipOperatorType, a: i32, b: i32) -> bool {
     match operator {
         AipOperatorType::Equals => a == b,
         AipOperatorType::GreaterThan => a > b,
@@ -42,7 +42,7 @@ pub fn zone_time(game: &GameData, zone_id: u16, t: i64) -> u32 {
     }
 }
 
-fn is_daytime(game: &GameData, zone_id: u16, t: i64) -> bool {
+pub fn is_daytime(game: &GameData, zone_id: u16, t: i64) -> bool {
     let Some(zone) = ZoneId::new(zone_id).and_then(|z| game.zones.get_zone(z)) else { return true };
     let time = zone_time(game, zone_id, t);
     (zone.day_time / 2..=(zone.evening_time + zone.night_time) / 2).contains(&time)

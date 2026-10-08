@@ -13,6 +13,7 @@ mod chat;
 mod craft;
 mod game_data;
 mod items;
+mod monster_brain;
 mod npcs;
 use npcs::npc;
 mod quests;
@@ -34,7 +35,7 @@ pub use world::{monster_spawn, zone_info};
 const COMBAT_TICK_MS: u64 = 100;
 const SPAWN_TICK_MS: u64 = 1000;
 const PLAYER_RESPAWN_US: i64 = 5_000_000;
-const MONSTER_LEASH_CM: f32 = 3000.0;
+pub(crate) const MONSTER_LEASH_CM: f32 = 3000.0;
 /// Re-path a chase only when the target has moved this far from the current destination.
 const CHASE_REPATH_CM: f32 = 100.0;
 /// Extra reach so an entity that stopped exactly at range still swings.
@@ -419,6 +420,7 @@ fn despawn(ctx: &ReducerContext, entity_id: u64) {
     ctx.db.combat().entity_id().delete(entity_id);
     ctx.db.stats().entity_id().delete(entity_id);
     ctx.db.monster_ai().entity_id().delete(entity_id);
+    monster_brain::forget(ctx, entity_id);
     ctx.db.npc().entity_id().delete(entity_id);
     ctx.db.sitting().entity_id().delete(entity_id);
     skills::clear_entity(ctx, entity_id);
@@ -548,6 +550,9 @@ pub fn client_connected(ctx: &ReducerContext) -> Result<(), String> {
         return Ok(());
     }
     account::check_connection(ctx)?;
+    if account::is_service(ctx) {
+        return Ok(());
+    }
     let Ok(game) = game_data::game(ctx) else { return Ok(()) };
     let existing = ctx.db.player().identity().find(ctx.sender());
     if existing.is_none() && account::accounts_required(ctx) {
@@ -1102,10 +1107,6 @@ fn deal_damage(ctx: &ReducerContext, game: &GameData, attacker: u64, defender: u
     let dealt = amount.min(dc.hp);
     dc.hp = (dc.hp - amount).max(0);
     let killed = dc.hp == 0;
-    // Monsters fight back when hit.
-    if !defender_stats.is_player && dc.attack_target.is_none() && !killed {
-        dc.attack_target = Some(attacker);
-    }
     ctx.db.combat().entity_id().update(dc);
     if !defender_stats.is_player && dealt > 0 {
         add_damage_source(ctx, defender, attacker, dealt as u64, t);
@@ -1113,6 +1114,9 @@ fn deal_damage(ctx: &ReducerContext, game: &GameData, attacker: u64, defender: u
     ctx.db.damage_event().insert(DamageEvent { attacker, defender, amount, is_critical, killed, at_us: t });
     if killed {
         kill(ctx, game, defender, &defender_stats, attacker, t);
+    } else if !defender_stats.is_player {
+        // The monster's damaged trigger: fight back, call friends for help.
+        monster_brain::on_damaged(ctx, game, defender, attacker, dealt, t);
     }
     killed
 }
@@ -1199,24 +1203,8 @@ pub fn spawn_tick(ctx: &ReducerContext, _timer: SpawnTickTimer) -> Result<(), St
     chat::expire_messages(ctx, t);
     world::spawn_tick(ctx, &game, t);
 
-    // Idle wandering: about one in eight idle monsters takes a short walk each second.
-    let mut rng = ctx.rng();
-    for ai in ctx.db.monster_ai().iter() {
-        let id = ai.entity_id;
-        let Some(c) = ctx.db.combat().entity_id().find(id) else { continue };
-        if c.attack_target.is_some() || ai.returning || !rng.gen_ratio(1, 8) {
-            continue;
-        }
-        if ctx.db.motion().entity_id().find(id).map_or(true, |m| m.is_moving(t)) {
-            continue;
-        }
-        let Some(spawn) = ctx.db.monster_spawn().spawn_id().find(ai.spawn_id) else { continue };
-        let angle: f32 = rng.gen_range(0.0..std::f32::consts::TAU);
-        let r: f32 = rng.gen_range(0.0..spawn.range.max(100.0));
-        let to = (spawn.x + angle.cos() * r, spawn.y + angle.sin() * r);
-        let speed = ctx.db.stats().entity_id().find(id).map_or(200.0, |s| s.move_speed);
-        set_motion(ctx, id, to, speed, None);
-    }
+    // Idle monsters run their AIP idle trigger: most wander, aggressive ones look for players.
+    monster_brain::idle_tick(ctx, &game, t);
     Ok(())
 }
 

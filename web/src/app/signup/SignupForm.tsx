@@ -10,6 +10,7 @@ export default function SignupForm() {
   const { busy, result, submit } = useSubmit("/api/signup");
   const [mismatch, setMismatch] = useState(false);
   const [done, setDone] = useState("");
+  const [verifyRequired, setVerifyRequired] = useState(false);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -22,19 +23,24 @@ export default function SignupForm() {
     }
     setMismatch(false);
     const answer = await submit({ email, password });
-    if (answer.ok) setDone(email.trim().toLowerCase());
+    if (answer.ok) {
+      setVerifyRequired(!!answer.verify_required);
+      setDone(email.trim().toLowerCase());
+    }
   }
 
   if (done) {
     return (
       <div className="card">
-        <h1>You're all set</h1>
+        <h1>You&apos;re all set</h1>
         <p className="lead">
-          Your account <strong>{done}</strong> is ready. Start the game and sign in with this email and your password.
+          Your account <strong>{done}</strong> is ready. We sent you an email with a link to confirm the address
+          {verifyRequired ? "; open it before you play." : "."} Then start the game and sign in with this email and your
+          password.
         </p>
-        <Link className="button" href="/">
-          Back to the start
-        </Link>
+        <a className="button" href="/account">
+          Go to my account
+        </a>
       </div>
     );
   }

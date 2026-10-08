@@ -1,9 +1,9 @@
-import { createHash, randomBytes } from "node:crypto";
 import { PUBLIC_URL, RESET_TOKEN_MINUTES } from "@/lib/config";
 import { addPasswordReset, deleteExpiredResets, findAccountByEmail } from "@/lib/db";
 import { sendMail } from "@/lib/mail";
 import { allow } from "@/lib/rate-limit";
 import { clientIp, json, readJson } from "@/lib/request";
+import { newToken } from "@/lib/tokens";
 import { normalizeEmail } from "@/lib/validate";
 
 const HOUR_MS = 60 * 60 * 1000;
@@ -24,9 +24,8 @@ export async function POST(request: Request) {
   const account = findAccountByEmail(email);
   if (account) {
     // The link carries the token; only its hash is stored.
-    const token = randomBytes(32).toString("base64url");
-    const tokenHash = createHash("sha256").update(token).digest("hex");
-    addPasswordReset(tokenHash, account.id, Date.now() + RESET_TOKEN_MINUTES * 60 * 1000);
+    const { token, hash } = newToken();
+    addPasswordReset(hash, account.id, Date.now() + RESET_TOKEN_MINUTES * 60 * 1000);
     const link = `${PUBLIC_URL}/reset-password#token=${token}`;
     // Sent in the background, so the answer comes back as fast as for an unknown email.
     sendMail(

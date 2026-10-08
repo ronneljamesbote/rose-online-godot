@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { currentSession } from "@/lib/session";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -8,7 +9,8 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const signedIn = await currentSession();
   return (
     <html lang="en">
       <body>
@@ -16,6 +18,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Link href="/" className="brand">
             ROSE <span>Online</span>
           </Link>
+          <nav>
+            <Link href="/online">Who&apos;s online</Link>
+            {signedIn ? (
+              <Link href="/account" className="nav-account">
+                My account
+              </Link>
+            ) : (
+              <>
+                <Link href="/login">Sign in</Link>
+                <Link href="/signup" className="nav-account">
+                  Create account
+                </Link>
+              </>
+            )}
+          </nav>
         </header>
         <main>{children}</main>
       </body>

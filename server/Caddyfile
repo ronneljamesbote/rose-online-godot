@@ -1,0 +1,13 @@
+# HTTPS in front of the game server and the website (docker compose --profile https).
+# Caddy gets and renews a free Let's Encrypt certificate for ROSE_DOMAIN by itself; the
+# domain must point at this machine and ports 80 and 443 must be open.
+#
+# Players then use https://ROSE_DOMAIN for the website and wss://ROSE_DOMAIN as the
+# game's server address: SpacetimeDB's paths all start with /v1/, everything else is the
+# website.
+{$ROSE_DOMAIN} {
+	@game path /v1/*
+	reverse_proxy @game rose-server:3000
+	reverse_proxy rose-web:3001
+	header Strict-Transport-Security "max-age=31536000"
+}

@@ -596,6 +596,11 @@ pub fn cast_tick(ctx: &ReducerContext, game: &GameData, t: i64) {
     }
 }
 
+/// Whether the entity has any status effect on it (the monster AI's status checks).
+pub fn has_status_effects(ctx: &ReducerContext, entity_id: u64) -> bool {
+    ctx.db.status_effect().entity_id().filter(entity_id).next().is_some()
+}
+
 fn capitalise(text: &str) -> String {
     let mut chars = text.chars();
     chars.next().map_or(String::new(), |c| c.to_uppercase().collect::<String>() + chars.as_str())

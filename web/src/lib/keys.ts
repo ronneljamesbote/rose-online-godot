@@ -41,6 +41,20 @@ export async function jwks(): Promise<{ keys: JWK[] }> {
   return { keys: [(await signingKey()).publicJwk] };
 }
 
+/** The website's own token for reading the game server (who's online, characters). Its
+ * subject starts with "service:", so the game server never makes a character for it. */
+export async function serviceToken(): Promise<string> {
+  const key = await signingKey();
+  return new SignJWT({})
+    .setProtectedHeader({ alg: ALG, kid: key.kid, typ: "JWT" })
+    .setIssuer(AUTH_ISSUER)
+    .setSubject("service:website")
+    .setAudience(AUTH_AUDIENCE)
+    .setIssuedAt()
+    .setExpirationTime("10m")
+    .sign(key.privateKey);
+}
+
 /** A token the game client connects with. The subject is the account id, so SpacetimeDB
  * gives every account the same identity each time. */
 export async function gameToken(accountId: string): Promise<string> {
