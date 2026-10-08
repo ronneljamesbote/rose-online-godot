@@ -25,7 +25,7 @@ const DROP_OWNER_US: i64 = 60_000_000;
 /// Drops land up to this far from the monster (ITEM_DROP_RADIUS), in cm.
 const DROP_RADIUS_CM: f32 = 200.0;
 /// How close a character must be to pick something up.
-const PICKUP_RANGE_CM: f32 = 400.0;
+pub(crate) const PICKUP_RANGE_CM: f32 = 400.0;
 
 #[spacetimedb::table(accessor = ground_item, public)]
 #[derive(Clone)]
@@ -194,6 +194,9 @@ pub fn pickup_item(ctx: &ReducerContext, drop_id: u64) -> Result<(), String> {
     let (p, id) = my_player(ctx)?;
     if !crate::is_alive(ctx, id) {
         return Err("dead".into());
+    }
+    if let Some(reason) = crate::skills::disabled_reason(ctx, id) {
+        return Err(reason.into());
     }
     let ground = ctx.db.ground_item().drop_id().find(drop_id).ok_or("it is gone")?;
     let t = now_us(ctx);
@@ -531,6 +534,9 @@ pub fn use_item(ctx: &ReducerContext, page: u8, index: u16) -> Result<(), String
     let (mut p, id) = my_player(ctx)?;
     if !crate::is_alive(ctx, id) {
         return Err("dead".into());
+    }
+    if let Some(reason) = crate::skills::disabled_reason(ctx, id) {
+        return Err(reason.into());
     }
     let slot = inventory_slot(page, index)?;
     let mut inventory = p.inventory();

@@ -30,6 +30,7 @@ pub fn next_level(skill: &SkillData) -> Option<&'static SkillData> {
 
 /// Everything a skill slot or tooltip shows: id, name, level, icon, type, passive,
 /// target (whether it needs a target entity), area (whether it aims at the ground),
+/// command (a basic action's SkillBasicCommand, such as "AutoTarget"),
 /// next_cost (skill points for the next level, -1 at the highest) and tooltip.
 pub fn skill_dict(skill: &SkillData) -> VarDictionary {
     let mut d = VarDictionary::new();
@@ -44,6 +45,9 @@ pub fn skill_dict(skill: &SkillData) -> VarDictionary {
     d.set("passive", matches!(skill.skill_type, SkillType::Passive));
     d.set("target", skill.skill_type.is_target_skill());
     d.set("area", matches!(skill.skill_type, SkillType::AreaTarget));
+    if let (SkillType::BasicAction, Some(command)) = (skill.skill_type, skill.basic_command) {
+        d.set("command", format!("{command:?}").as_str());
+    }
     let next = next_level(skill);
     d.set("next_cost", next.map_or(-1, |n| n.learn_point_cost as i64));
 

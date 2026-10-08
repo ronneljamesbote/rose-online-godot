@@ -628,6 +628,9 @@ pub fn move_to(ctx: &ReducerContext, x: f32, y: f32) -> Result<(), String> {
     if !is_alive(ctx, id) {
         return Err("dead".into());
     }
+    if let Some(reason) = skills::disabled_reason(ctx, id) {
+        return Err(reason.into());
+    }
     if !x.is_finite() || !y.is_finite() {
         return Err("bad position".into());
     }
@@ -666,9 +669,18 @@ pub fn attack(ctx: &ReducerContext, target: u64) -> Result<(), String> {
     if !is_alive(ctx, target) {
         return Err("target is dead".into());
     }
+    if let Some(reason) = skills::disabled_reason(ctx, id) {
+        return Err(reason.into());
+    }
     let t = now_us(ctx);
+    // Nobody can start a fight with a hidden character.
+    let current = ctx.db.combat().entity_id().find(id).and_then(|c| c.attack_target);
+    if current != Some(target) && skills::is_invisible(ctx, target) {
+        return Err("you can't see them".into());
+    }
     stand_up(ctx, id);
     skills::cancel_cast(ctx, id);
+    skills::break_disguise(ctx, &game, id);
     let mut c = ctx.db.combat().entity_id().find(id).ok_or("no combat row")?;
     if c.attack_target == Some(target) {
         return Ok(());
@@ -710,6 +722,9 @@ pub fn sit(ctx: &ReducerContext) -> Result<(), String> {
     }
     if !is_alive(ctx, id) {
         return Err("dead".into());
+    }
+    if let Some(reason) = skills::disabled_reason(ctx, id) {
+        return Err(reason.into());
     }
     let t = now_us(ctx);
     stop_motion(ctx, id);
@@ -892,7 +907,7 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
     for ai in ctx.db.monster_ai().iter() {
         let id = ai.entity_id;
         let Some(c) = ctx.db.combat().entity_id().find(id) else { continue };
-        if c.dead_until_us.is_some() {
+        if c.dead_until_us.is_some() || skills::is_disabled(ctx, id) {
             continue;
         }
         let Some(pos) = position(ctx, id, t) else { continue };
@@ -924,7 +939,7 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
                 .db
                 .entity()
                 .iter()
-                .filter(|e| e.kind == EntityKind::Player && is_alive(ctx, e.entity_id))
+                .filter(|e| e.kind == EntityKind::Player && is_alive(ctx, e.entity_id) && !skills::is_invisible(ctx, e.entity_id))
                 .filter_map(|e| position(ctx, e.entity_id, t).map(|p| (e.entity_id, distance(pos, p))))
                 .filter(|(_, d)| *d <= ai.aggro_range)
                 .min_by(|a, b| a.1.total_cmp(&b.1));
@@ -935,6 +950,9 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
             }
         }
     }
+
+    skills::taunt_tick(ctx);
+    skills::summon_tick(ctx, &game, t);
 
     // Attacks for everyone with a target.
     let attackers: Vec<Combat> = ctx.db.combat().iter().filter(|c| c.attack_target.is_some()).collect();
@@ -948,11 +966,20 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
         }
         processed += 1;
         let id = c.entity_id;
+        // Stunned or asleep: no swinging. A monster busy with a skill swings after it.
+        if skills::is_disabled(ctx, id) || skills::is_casting(ctx, id) {
+            continue;
+        }
         let Some(stats) = ctx.db.stats().entity_id().find(id) else { continue };
-        // A player fight ends when the target dies or stops being an enemy (left the PvP
-        // zone, joined our party).
-        let player_target = stats.is_player && ctx.db.entity().entity_id().find(target).is_some_and(|e| e.kind == EntityKind::Player);
-        if !is_alive(ctx, target) || (player_target && !pvp::players_hostile(ctx, &game, id, target)) {
+        // A fight between players (or their summons) ends when the target dies or stops
+        // being an enemy (left the PvP zone, joined our party).
+        let player_side = |id| {
+            ctx.db.entity().entity_id().find(id).is_some_and(|e| e.kind == EntityKind::Player)
+                || skills::owner_of(ctx, id).is_some()
+        };
+        let player_fight = player_side(id) && player_side(target);
+        let hostile = || pvp::players_hostile(ctx, &game, skills::controller(ctx, id), skills::controller(ctx, target));
+        if !is_alive(ctx, target) || (player_fight && !hostile()) {
             c.attack_target = None;
             ctx.db.combat().entity_id().update(c);
             stop_chase(ctx, id, target);
@@ -984,7 +1011,11 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
                         c.attack_target = None;
                     }
                     ctx.db.combat().entity_id().update(c);
-                    deal_damage(ctx, &game, id, target, amount, is_critical, t);
+                    let killed = deal_damage(ctx, &game, id, target, amount, is_critical, t);
+                    // Monsters run their attack trigger after each swing (some use skills).
+                    if !killed && !stats.is_player {
+                        monster_brain::on_attack(ctx, &game, id, t);
+                    }
                 }
                 Some(_) => {}
                 // Ready: start a swing. Schedule from the previous one so ticks don't add drift.
@@ -1108,23 +1139,47 @@ fn deal_damage(ctx: &ReducerContext, game: &GameData, attacker: u64, defender: u
     dc.hp = (dc.hp - amount).max(0);
     let killed = dc.hp == 0;
     ctx.db.combat().entity_id().update(dc);
+    // A summon's damage counts as its owner's (experience, drops, quests).
+    let credited = skills::controller(ctx, attacker);
     if !defender_stats.is_player && dealt > 0 {
-        add_damage_source(ctx, defender, attacker, dealt as u64, t);
+        add_damage_source(ctx, defender, credited, dealt as u64, t);
     }
     ctx.db.damage_event().insert(DamageEvent { attacker, defender, amount, is_critical, killed, at_us: t });
     if killed {
-        kill(ctx, game, defender, &defender_stats, attacker, t);
-    } else if !defender_stats.is_player {
+        kill(ctx, game, defender, &defender_stats, credited, t);
+        return true;
+    }
+    // Any hit or miss wakes a sleeper.
+    skills::wake(ctx, game, defender);
+    // A damage shield sends part of the hit back (never lethal).
+    let reflect = if attacker != defender { skills::shield_reflect(ctx, defender, dealt) } else { 0 };
+    if reflect > 0 {
+        if let Some(mut ac) = ctx.db.combat().entity_id().find(attacker).filter(|ac| ac.hp > 1 && ac.dead_until_us.is_none()) {
+            ac.hp = (ac.hp - reflect).max(1);
+            ctx.db.combat().entity_id().update(ac);
+            ctx.db.damage_event().insert(DamageEvent {
+                attacker: defender,
+                defender: attacker,
+                amount: reflect,
+                is_critical: false,
+                killed: false,
+                at_us: t,
+            });
+        }
+    }
+    if !defender_stats.is_player {
         // The monster's damaged trigger: fight back, call friends for help.
         monster_brain::on_damaged(ctx, game, defender, attacker, dealt, t);
     }
-    killed
+    false
 }
 
 fn kill(ctx: &ReducerContext, game: &GameData, id: u64, stats: &Stats, killer: u64, t: i64) {
     let Some(entity) = ctx.db.entity().entity_id().find(id) else { return };
     items::clear_regen(ctx, id);
     match entity.kind {
+        // A summon just leaves: no experience, drops or quest triggers.
+        EntityKind::Monster if skills::owner_of(ctx, id).is_some() => despawn(ctx, id),
         EntityKind::Monster => {
             reward_kill(ctx, game, id, stats, entity.npc_id, t);
             // The killer runs the monster's death trigger (quest kill counts and quest drops).

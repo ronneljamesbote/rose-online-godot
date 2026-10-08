@@ -41,10 +41,15 @@ pub fn players_hostile(ctx: &ReducerContext, game: &GameData, a: u64, b: u64) ->
     }
 }
 
-/// Whether `attacker` may attack `target`: monsters always, players where PvP allows.
+/// Whether `attacker` (a player or a summon) may attack `target`: wild monsters always,
+/// players and their summons where PvP allows.
 pub fn can_attack(ctx: &ReducerContext, game: &GameData, attacker: u64, target: u64) -> bool {
+    let attacker = crate::skills::controller(ctx, attacker);
     match ctx.db.entity().entity_id().find(target).map(|e| e.kind) {
-        Some(EntityKind::Monster) => true,
+        Some(EntityKind::Monster) => match crate::skills::owner_of(ctx, target) {
+            Some(owner) => players_hostile(ctx, game, attacker, owner),
+            None => true,
+        },
         Some(EntityKind::Player) => players_hostile(ctx, game, attacker, target),
         _ => false,
     }

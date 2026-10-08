@@ -175,8 +175,20 @@ pub fn spawn_tick(ctx: &ReducerContext, game: &GameData, t: i64) {
 
 /// Ability values, attack timing and hit count of an NPC type, as a Stats row.
 pub fn npc_stats(game: &GameData, entity_id: u64, npc_id: u16, effects: &StatusEffects) -> Option<Stats> {
+    npc_stats_for(game, entity_id, npc_id, effects, None)
+}
+
+/// npc_stats for a summon too: its stats grow with its owner's level and the summoning
+/// skill's level (owner_level, skill_level).
+pub fn npc_stats_for(
+    game: &GameData,
+    entity_id: u64,
+    npc_id: u16,
+    effects: &StatusEffects,
+    summon: Option<(i32, i32)>,
+) -> Option<Stats> {
     let id = NpcId::new(npc_id)?;
-    let av = game.ability_value_calculator.calculate_npc(id, effects, None, None)?;
+    let av = game.ability_value_calculator.calculate_npc(id, effects, summon.map(|s| s.0), summon.map(|s| s.1))?;
     let attack = game.npcs.get_npc_action_motion(id, NpcMotionAction::Attack);
     let attack_motion_ms = attack.map_or(1000, |m| m.duration.as_millis() as i32).max(300);
     let attack_hit_ms = attack

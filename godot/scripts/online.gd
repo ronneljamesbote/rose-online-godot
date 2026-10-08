@@ -343,7 +343,15 @@ func use_skill(page: int, index: int, skill: Dictionary) -> void:
 		elif kind == "" or not craft_window.open_skill(page, index, skill):
 			_notice("%s isn't in the game yet" % skill.get("name", "That skill"))
 		return
-	var target := my_target if skill.get("target", false) else -1
+	var command: String = skill.get("command", "")
+	if command == "AutoTarget":
+		my_target = nearest_monster()
+		return
+	if command == "SelfTarget":
+		my_target = my_id
+		return
+	# Basic actions (party invite, trade) work on the current target too.
+	var target := my_target if skill.get("target", false) or command != "" else -1
 	var at: Vector3 = me.position
 	if skill.get("area", false) and my_target >= 0 and entities.has(my_target):
 		at = entities[my_target].position
@@ -406,6 +414,20 @@ func pick_player(camera: Camera3D, screen_position: Vector2) -> int:
 	return _pick_entity(camera, screen_position, "player")
 
 
+## Another player under the mouse, fallen ones too (to heal or resurrect them), or -1.
+func pick_friend(camera: Camera3D, screen_position: Vector2) -> int:
+	return _pick_entity(camera, screen_position, "friend")
+
+
+## Make an entity the target for skills without attacking it.
+func select(id: int) -> void:
+	if me == null or not entities.has(id):
+		return
+	my_target = id
+	_pickup = -1
+	_talk = -1
+
+
 ## A player we may fight here (PvP zones) under the mouse, or -1.
 func pick_enemy_player(camera: Camera3D, screen_position: Vector2) -> int:
 	return _pick_entity(camera, screen_position, "enemy")
@@ -424,10 +446,12 @@ func _pick_entity(camera: Camera3D, screen_position: Vector2, kind := "monster")
 	for id in entities:
 		var entity: Node3D = entities[id]
 		var is_player: bool = not entity.is_npc and not entity.is_monster and entity != me
-		var wanted: bool = entity.is_npc if kind == "npc" else (is_player if kind == "player" else entity.is_monster)
+		var wanted: bool = entity.is_npc if kind == "npc" else (is_player if kind in ["player", "friend"] else entity.is_monster)
 		if kind == "enemy":
 			wanted = is_player and net.is_enemy_player(id)
-		if not wanted or entity.dead or entity.dying:
+		elif kind == "monster":
+			wanted = entity.is_monster and not entity.is_summon
+		if not wanted or entity.dying or (entity.dead and kind != "friend"):
 			continue
 		var centre: Vector3 = entity.global_position + Vector3(0, entity.height * 0.5, 0)
 		if camera.is_position_behind(centre):
@@ -524,7 +548,7 @@ func nearest_monster() -> int:
 		return best
 	for id in entities:
 		var entity: Node3D = entities[id]
-		if entity.is_monster and not entity.dead and not entity.dying:
+		if entity.is_monster and not entity.is_summon and not entity.dead and not entity.dying:
 			var d: float = entity.position.distance_to(me.position)
 			if d < best_distance:
 				best_distance = d
