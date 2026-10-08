@@ -110,10 +110,28 @@ func _ask_for_data_idx() -> void:
 	dialog.popup_centered_ratio(0.6)
 
 
+## The ROSE client could not be read (usually a file missing from an incomplete unzip):
+## say which file, then let the player pick another data.idx or quit.
+func _show_data_error(data_idx: String, error: String) -> void:
+	var dialog := ConfirmationDialog.new()
+	dialog.title = "ROSE client files not found"
+	dialog.dialog_text = ("Could not load the ROSE client at\n%s\n\n%s\n\n"
+		+ "Unpack the full iROSE 129_129 client again (all .VFS files next to data.idx),\n"
+		+ "or pick a different data.idx.") % [data_idx, error]
+	dialog.ok_button_text = "Pick data.idx"
+	dialog.cancel_button_text = "Quit"
+	dialog.confirmed.connect(func():
+		dialog.queue_free()
+		_ask_for_data_idx())
+	dialog.canceled.connect(func(): get_tree().quit(1))
+	add_child(dialog)
+	dialog.popup_centered()
+
+
 func _start(data_idx: String) -> void:
 	var started := Time.get_ticks_msec()
 	if not RoseData.open(data_idx):
-		get_tree().quit(1)
+		_show_data_error(data_idx, RoseData.open_error())
 		return
 	print("rose: data tables loaded in %d ms" % (Time.get_ticks_msec() - started))
 

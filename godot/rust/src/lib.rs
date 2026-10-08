@@ -31,6 +31,10 @@ unsafe impl ExtensionLibrary for RoseExtension {
     }
 }
 
+thread_local! {
+    static OPEN_ERROR: std::cell::RefCell<String> = const { std::cell::RefCell::new(String::new()) };
+}
+
 /// Entry point for GDScript: opens the client data once per process.
 #[derive(GodotClass)]
 #[class(base=RefCounted, init)]
@@ -47,9 +51,16 @@ impl RoseData {
             Ok(()) => true,
             Err(error) => {
                 godot_error!("rose: could not open {data_idx}: {error:#}");
+                OPEN_ERROR.with_borrow_mut(|e| *e = format!("{error:#}"));
                 false
             }
         }
+    }
+
+    /// Why the last open() failed, for showing to the player.
+    #[func]
+    fn open_error() -> GString {
+        OPEN_ERROR.with_borrow(|e| GString::from(e.as_str()))
     }
 
     /// The inventory icon with this index, or null.
