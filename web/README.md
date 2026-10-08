@@ -1,8 +1,9 @@
 # ROSE account website
 
-A small Next.js 16 site where players make an account (email and password), and reset a
-forgotten password by email. The game signs in through it too: it sends the email and
-password to `/api/game/login` and gets a short-lived token that the game server accepts.
+A small Next.js 16 site where players make an account (email and password), confirm their
+email, sign in to see their account, reset a forgotten password by email, and see who is
+playing. The game signs in through it too: it sends the email and password to
+`/api/game/login` and gets a short-lived token that the game server accepts.
 `docker compose up -d` in the repository folder runs it on port 3001 next to the game
 server (see server/README.md for the settings).
 
@@ -10,13 +11,23 @@ server (see server/README.md for the settings).
 
 | Path | What it does |
 |---|---|
-| `/` | Start page with links to the two forms |
-| `/signup` | Make an account: email (one account per email) and a password, typed twice |
+| `/` | Start page with links to the forms |
+| `/signup` | Make an account: email (one account per email) and a password, typed twice. Sends the confirmation email and signs you in |
+| `/login` | Sign in with email and password; goes on to `/account` |
+| `/account` | Signed in only: email with its confirmed state (and a button to send a new link), member since, password last changed; your character (name, level, job, whether it is in the game); change password; the devices signed in, with "Sign out other devices" |
+| `/online` | Who's online: how many players are in the game, with each character's name, job and level. Anyone can open it, and it refreshes itself every 15 seconds |
+| `/verify-email#token=...` | The page the confirmation email links to |
 | `/forgot-password` | Sends a reset link to the email, if it has an account |
-| `/reset-password#token=...` | The page the email links to: choose a new password |
-| `POST /api/signup`, `/api/forgot-password`, `/api/reset-password` | What the forms call (JSON) |
+| `/reset-password#token=...` | The page the reset email links to: choose a new password |
+| `POST /api/signup`, `/api/login`, `/api/logout`, `/api/verify-email`, `/api/forgot-password`, `/api/reset-password` | What the forms call (JSON) |
+| `POST /api/account/password`, `/api/account/resend-verification`, `/api/account/sign-out-others` | The account page's buttons (signed in only) |
+| `GET /api/online` | The who's-online list as JSON (count and players) |
 | `POST /api/game/login` | `{email, password}` → `{token, expires_in}` for the game |
 | `/.well-known/openid-configuration`, `/.well-known/jwks.json` | Where SpacetimeDB finds the public key that checks game tokens |
+
+The account and who's-online pages read the characters from the game server's database
+(`GAME_SERVER_URL`, SQL over HTTP with the website's own service token; only public
+tables are read).
 
 ## Security
 
@@ -34,7 +45,20 @@ server (see server/README.md for the settings).
 - Rate limits (in memory): 10 sign-in tries per account and 100 per address every 15
   minutes, 3 reset emails per account and 30 per address an hour, 20 sign-ups per address
   an hour. Behind a reverse proxy set `TRUST_PROXY=1` so the limits see real addresses.
-- The forms only take JSON from this site: a post from another site's page is refused.
+- Website sessions: signing in sets a cookie holding 32 random bytes; the database keeps
+  only their SHA-256. The cookie is HttpOnly and SameSite=Lax, and on HTTPS it is Secure
+  with the `__Host-` prefix. A session lasts 30 days from the last visit. Changing the
+  password signs out every other device, and a password reset signs out all of them.
+- Email confirmation: the confirmation link works like a reset link (32 random bytes,
+  only the hash kept, 24 hours, fragment only). With `ROSE_REQUIRE_VERIFIED_EMAIL=1` the
+  game refuses to sign in an account whose email isn't confirmed yet (the website still
+  lets it in, to send a new link). It defaults to on when `SMTP_HOST` is set and off
+  otherwise, since without email nobody could confirm.
+- The forms only take JSON from pages of this site: the browser's `Origin` must be
+  `PUBLIC_URL` or have the same host as the address the browser asked for (the `Host`
+  header, or `X-Forwarded-Host` with `TRUST_PROXY=1`), so the site works whether it is
+  opened as localhost, 127.0.0.1 or a LAN address, and a post from another site's page is
+  refused.
   Pages send a Content-Security-Policy, `X-Frame-Options: DENY` and `Referrer-Policy:
   no-referrer`.
 - Game tokens are ES256 JWTs signed with a key made on first start (in `DATA_DIR`, mode
@@ -42,8 +66,8 @@ server (see server/README.md for the settings).
   audience. The game server only lets in connections whose token comes from this issuer
   (`module/src/account.rs`). The password never reaches the game server, and the game
   never saves it.
-- Use HTTPS when the site is on the internet (a reverse proxy such as Caddy in front of
-  port 3001); without it, passwords cross the network readable.
+- Use HTTPS when the site is on the internet; without it, passwords cross the network
+  readable. The compose file has a Caddy service for it (server/README.md, "HTTPS").
 
 ## Settings (environment)
 
@@ -52,8 +76,11 @@ server (see server/README.md for the settings).
 | `PUBLIC_URL` | `http://127.0.0.1:3001` | Where players open the site; used in email links |
 | `ROSE_AUTH_ISSUER` | `PUBLIC_URL` | Issuer in game tokens; the game server fetches its keys from here |
 | `DATA_DIR` | `./data` | Accounts database (`accounts.sqlite`) and `signing-key.json`; keep private |
-| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM` | unset, 587 | Email for reset links; without a host the link is written to the log |
-| `TRUST_PROXY` | `0` | `1` to take the client address from `X-Forwarded-For` |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM` | unset, 587 | Email for confirmation and reset links; without a host the link is written to the log |
+| `ROSE_REQUIRE_VERIFIED_EMAIL` | `1` with `SMTP_HOST`, else `0` | Game sign-in needs a confirmed email |
+| `GAME_SERVER_URL` | `http://127.0.0.1:3000` | The game server's HTTP address, for the account and who's-online pages |
+| `GAME_DATABASE` | `rose` | The game's database name on that server |
+| `TRUST_PROXY` | `0` | `1` behind a reverse proxy: take the client address from `X-Forwarded-For` and the host from `X-Forwarded-Host` |
 
 ## Development
 

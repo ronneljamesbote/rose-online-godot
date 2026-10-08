@@ -37,6 +37,11 @@
 ##                              --chat-wait=SECONDS; --sit-for=SECONDS sits and logs MP)
 ##   --net-log                  online: print every player's position once a second
 ##   --open=inventory,character,skills,quests   online: open these windows at the start (for screenshots)
+##   --mute                     no music or sound (or --music=0..1 --effects=0..1 for this run;
+##                              the O key opens the sound window, which saves them)
+##   --effect=PATH,PATH...      play these EFT effects in front of the camera, over and over
+##                              (--screenshot-after=SECONDS waits before --screenshot)
+##   --sound-log                print each sound effect played
 ##   --quit-after=SECONDS       quit after this long
 extends Node3D
 
@@ -52,6 +57,7 @@ var options := {}
 var world_ticks := 0.0  # one world tick is 10 seconds
 var loaded_zone := 0
 var loading: CanvasLayer  # loading_screen.gd
+var fx: Node  # fx.gd: music, sounds and effects
 var _loading_zone := 0
 
 
@@ -117,6 +123,14 @@ func _start(data_idx: String) -> void:
 		return
 	print("rose: data tables loaded in %d ms" % (Time.get_ticks_msec() - started))
 
+	fx = preload("res://scripts/fx.gd").new()
+	fx.name = "Fx"
+	add_child(fx)
+	fx.log_sounds = options.has("sound-log")
+	if options.has("mute"):
+		fx.set_volumes(0.0, 0.0, false)
+	elif options.has("music") or options.has("effects"):
+		fx.set_volumes(float(options.get("music", fx.music_volume)), float(options.get("effects", fx.effects_volume)), false)
 	if not _load_zone(int(options.get("zone", "1"))):
 		get_tree().quit(1)
 		return
@@ -138,6 +152,7 @@ func _start(data_idx: String) -> void:
 	camera.far = 1000.0
 	add_child(camera)
 	camera.make_current()
+	fx.camera = camera
 
 	# Colours already match rose-offline-client without it, so glow (its bloom) is opt-in.
 	var environment := Environment.new()
@@ -166,6 +181,8 @@ func _start(data_idx: String) -> void:
 
 	if options.has("demo"):
 		_run_demo()
+	if options.has("effect"):
+		_run_effect_test(options["effect"].split(","))
 	if options.has("screenshot"):
 		_take_screenshot(options["screenshot"])
 
@@ -187,7 +204,10 @@ func _load_zone(zone_id: int) -> bool:
 	if world_ticks == 0.0:
 		var time: String = options.get("time", "day")
 		world_ticks = float(time) if time.is_valid_int() else float(zone.get_state_start(time)) + 1.0
-	_apply_lighting(zone.get_lighting_at(int(world_ticks), 0.0))
+	var lighting := zone.get_lighting_at(int(world_ticks), 0.0)
+	_apply_lighting(lighting)
+	fx.use_zone(zone, zone_id)
+	fx.set_time_state(lighting.get("state", "day"))
 	return true
 
 
@@ -264,6 +284,7 @@ func _go_online(uri: String, name_text: String, use_bow: bool, token := "") -> v
 	online = preload("res://scripts/online.gd").new()
 	online.name = "Online"
 	add_child(online)
+	fx.online = online
 	online.joined.connect(_on_joined)
 	online.zone_needed.connect(_on_zone_needed)
 	online.connection_failed.connect(_on_connection_failed)
@@ -374,10 +395,41 @@ func _process(delta: float) -> void:
 		if best != "":
 			print(best)
 	world_ticks += delta / 10.0
-	_apply_lighting(zone.get_lighting_at(int(world_ticks), fmod(world_ticks, 1.0)))
+	var lighting := zone.get_lighting_at(int(world_ticks), fmod(world_ticks, 1.0))
+	_apply_lighting(lighting)
+	fx.set_time_state(lighting.get("state", "day"))
+
+
+## Plays EFT effects in a row 10 m in front of the camera, each again once it ends.
+func _run_effect_test(paths: PackedStringArray) -> void:
+	for i in 3:
+		await get_tree().process_frame
+	var forward := -camera.global_basis.z
+	forward.y = 0.0
+	forward = forward.normalized()
+	var side := forward.cross(Vector3.UP)
+	var centre := camera.global_position + forward * 10.0
+	var target = camera.get("target")
+	if target is Node3D:
+		centre = target.global_position + forward * 3.0
+	var spots := []
+	for i in paths.size():
+		var at := centre + side * (i - (paths.size() - 1) / 2.0) * 3.0
+		at.y = zone.get_terrain_height(at.x, at.z)
+		spots.append(at)
+	var playing := {}
+	while true:
+		for i in paths.size():
+			if not is_instance_valid(playing.get(i)):
+				playing[i] = fx.spawn_effect(paths[i], spots[i])
+				if playing[i] == null:
+					push_warning("rose: effect %s shows nothing" % paths[i])
+		await get_tree().create_timer(0.5).timeout
 
 
 func _take_screenshot(path: String) -> void:
+	if options.has("screenshot-after"):
+		await get_tree().create_timer(float(options["screenshot-after"])).timeout
 	for i in 10:
 		await get_tree().process_frame
 	await RenderingServer.frame_post_draw
@@ -444,8 +496,26 @@ func _unhandled_input(event: InputEvent) -> void:
 			online.pickup(online.nearest_item())
 		elif event.keycode == KEY_X and online:
 			online.sit()
+		elif event.keycode == KEY_O:
+			_toggle_sound_window()
 		elif (event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER) and online:
 			online.chat_window.focus_input()
+
+
+var _sound_window: PanelContainer
+
+
+func _toggle_sound_window() -> void:
+	if _sound_window == null:
+		var layer := CanvasLayer.new()
+		layer.layer = 5
+		add_child(layer)
+		_sound_window = preload("res://scripts/sound_window.gd").new()
+		_sound_window.fx = fx
+		_sound_window.position = Vector2(12, 300)
+		layer.add_child(_sound_window)
+		return
+	_sound_window.visible = not _sound_window.visible
 
 
 ## Runs 20 m (--wall-reach) out in eight (--wall-directions) directions from the start, coming back each time, to test
@@ -498,11 +568,17 @@ func _run_warp_demo() -> void:
 func _run_skills_demo() -> void:
 	await get_tree().create_timer(4.0).timeout
 	var active: Array = online.net.get_skills()[1]
-	var names := []
-	for i in 2:
+	# The first active skill (a buff on ourselves) and the last one learned (used on monsters).
+	var slots := []
+	for i in active.size():
 		if active[i] != null:
-			online.net.set_hotbar(i, "skill", 1, i)
-			names.append(active[i]["name"])
+			slots.append(i)
+	if slots.size() > 2:
+		slots = [slots[0], slots[-1]]
+	var names := []
+	for n in slots.size():
+		online.net.set_hotbar(n, "skill", 1, slots[n])
+		names.append(active[slots[n]]["name"])
 	print("rose net demo: hotbar skills ", names)
 	while true:
 		await get_tree().create_timer(1.0).timeout

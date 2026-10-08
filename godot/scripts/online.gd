@@ -723,6 +723,9 @@ func _process(_delta: float) -> void:
 			_float_text(me, "+%d XP" % gained, Color(0.6, 0.9, 1.0), 26)
 		if _level > 0 and level > _level:
 			_float_text(me, "Level up!", Color(1.0, 0.85, 0.2), 40, 1.6)
+			var fx := preload("res://scripts/fx.gd").find(self)
+			if fx:
+				fx.level_up(me)
 	if level > 0:
 		_level = level
 	if my_target >= 0:
@@ -817,6 +820,10 @@ func _update_ground() -> void:
 		ground[id].get_node("Label").modulate = colour if mine else Color(0.6, 0.6, 0.6)
 	for id in ground.keys():
 		if not seen.has(id):
+			if id == _pickup and me and me.position.distance_to(ground[id].position) < PICKUP_RANGE + 1.0:
+				var fx := preload("res://scripts/fx.gd").find(self)
+				if fx:
+					fx.picked_up()
 			ground[id].queue_free()
 			ground.erase(id)
 

@@ -43,8 +43,36 @@ SMTP_PASS=the-smtp-password
 MAIL_FROM=ROSE <you@example.com>
 ```
 
-Without `SMTP_HOST` no email goes out: the reset link is written to the website's log
-(`docker compose logs rose-web`), which is enough while testing. Never commit `.env`.
+Without `SMTP_HOST` no email goes out: confirmation and reset links are written to the
+website's log (`docker compose logs rose-web`), which is enough while testing. Never commit
+`.env`. With `SMTP_HOST` set, new accounts must confirm their email before the game lets
+them in; `ROSE_REQUIRE_VERIFIED_EMAIL=0` (or `=1`) in `.env` turns that off (or on).
+
+The website's "Who's online" page (`/online`) lists the players in the game with their
+character's name, job and level; signed-in players see their account and character on
+`/account`.
+
+## HTTPS
+
+For a server on the internet, put both behind HTTPS so passwords and game traffic are
+encrypted. The compose file has a Caddy service that gets and renews a free Let's Encrypt
+certificate by itself. You need a domain name (a free one from DuckDNS works) pointing at
+the server, and TCP ports 80 and 443 open. Add to `.env`:
+
+```
+ROSE_DOMAIN=rose.example.com
+COMPOSE_PROFILES=https
+ROSE_WEBSITE_URL=https://rose.example.com
+ROSE_BIND=127.0.0.1
+TRUST_PROXY=1
+```
+
+then `docker compose up -d`. Players open `https://rose.example.com` for the website and
+use `wss://rose.example.com` as the server and `https://rose.example.com` as the website
+in the game's start screen. `ROSE_BIND=127.0.0.1` closes ports 3000 and 3001 to the
+outside, so everything goes through HTTPS; `TRUST_PROXY=1` lets the website see players'
+real addresses for its rate limits. Caddy sends game paths (`/v1/...`) to the game server
+and everything else to the website (`server/Caddyfile`).
 
 | Task | Command |
 |---|---|

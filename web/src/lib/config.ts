@@ -29,9 +29,10 @@ export const SESSION_DAYS = 30;
 export const SECURE_COOKIES = PUBLIC_URL.startsWith("https://");
 
 /** Accounts must confirm their email before playing. Defaults to on when email can be sent
- * (SMTP_HOST set), since without email nobody could confirm. */
+ * (SMTP_HOST set), since without email nobody could confirm. Empty counts as unset, as
+ * compose passes the variable through even when .env leaves it out. */
 export const REQUIRE_VERIFIED_EMAIL =
-  (process.env.ROSE_REQUIRE_VERIFIED_EMAIL ?? (process.env.SMTP_HOST ? "1" : "0")) === "1";
+  (process.env.ROSE_REQUIRE_VERIFIED_EMAIL || (process.env.SMTP_HOST ? "1" : "0")) === "1";
 
 /** The game server's HTTP address and database, for the who's-online list and the
  * character shown on the account page. */

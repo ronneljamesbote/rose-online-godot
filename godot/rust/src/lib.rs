@@ -2,9 +2,11 @@
 
 use godot::prelude::*;
 
+mod audio;
 mod character;
 mod conversation;
 mod data;
+mod effect;
 mod items;
 mod lua4;
 mod material;
@@ -23,6 +25,8 @@ unsafe impl ExtensionLibrary for RoseExtension {
     /// The caches hold Godot objects, so they must be emptied before the engine shuts down.
     fn on_stage_deinit(stage: InitStage) {
         if stage == InitStage::MainLoop {
+            audio::clear_cache();
+            effect::clear_cache();
             items::clear_cache();
             material::clear_cache();
             mesh::clear_cache();
