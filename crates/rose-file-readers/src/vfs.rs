@@ -1,3 +1,4 @@
+use anyhow::Context;
 use encoding_rs::EUC_KR;
 use memmap::{Mmap, MmapOptions};
 use std::{
@@ -31,7 +32,8 @@ impl VfsIndex {
             .parent()
             .map(|path| path.into())
             .unwrap_or_else(PathBuf::new);
-        let data = std::fs::read(index_path)?;
+        let data = std::fs::read(index_path)
+            .with_context(|| format!("could not read {}", index_path.display()))?;
         let mut reader = RoseFileReader::from(&data);
 
         let base_version = reader.read_u32()?;
@@ -56,7 +58,9 @@ impl VfsIndex {
                 continue;
             }
 
-            let file = File::open(index_root_path.join(String::from(filename)))?;
+            let vfs_path = index_root_path.join(String::from(filename));
+            let file = File::open(&vfs_path)
+                .with_context(|| format!("missing game file {}", vfs_path.display()))?;
             let mmap = unsafe { MmapOptions::new().map(&file)? };
 
             let mut storage = Storage {
