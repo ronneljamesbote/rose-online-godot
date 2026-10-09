@@ -1,6 +1,8 @@
 ## Personal shops (the Vending action), as iROSE's private store.
 ## Setting up: pick bag items, how many of each and a price for one, give the shop a title
 ## and open it; the character sits down and others see the title over it.
+## A shop can also buy: search for an item by name, add it to the buy list with how many
+## and the price for one, and others sell theirs to you (you pay when they do).
 ## Browsing: left-click a player with a shop sign to see what they sell and buy.
 extends PanelContainer
 
@@ -17,7 +19,13 @@ var hint: Label
 var mode := ""  # "setup", "mine" or "browse"
 var store_entity := -1
 var _setup_rows := []  # [check, quantity, price, page, index]
+var _want_rows := []  # [row, item dict, quantity, price]
+var want_box: VBoxContainer  # setup: the search and the buy list
+var search_box: LineEdit
+var search_results: VBoxContainer
+var wants_list: VBoxContainer
 var _last := {}
+var list_scroll: ScrollContainer
 
 
 func _ready() -> void:
@@ -48,13 +56,33 @@ func _ready() -> void:
 	title_box.max_length = 50
 	box.add_child(title_box)
 
-	var scroll := ScrollContainer.new()
-	scroll.custom_minimum_size = Vector2(450, 300)
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	box.add_child(scroll)
+	list_scroll = ScrollContainer.new()
+	list_scroll.custom_minimum_size = Vector2(450, 300)
+	list_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	box.add_child(list_scroll)
 	rows = VBoxContainer.new()
 	rows.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.add_child(rows)
+	list_scroll.add_child(rows)
+
+	# Setup only: what the shop wants to buy.
+	want_box = VBoxContainer.new()
+	box.add_child(want_box)
+	var want_title := Label.new()
+	want_title.text = "Buy list (search for an item, then Add)"
+	want_box.add_child(want_title)
+	search_box = LineEdit.new()
+	search_box.placeholder_text = "Item name"
+	search_box.text_changed.connect(_search)
+	want_box.add_child(search_box)
+	search_results = VBoxContainer.new()
+	want_box.add_child(search_results)
+	var wants_scroll := ScrollContainer.new()
+	wants_scroll.custom_minimum_size = Vector2(450, 110)
+	wants_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	want_box.add_child(wants_scroll)
+	wants_list = VBoxContainer.new()
+	wants_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	wants_scroll.add_child(wants_list)
 
 	action_button = Button.new()
 	action_button.focus_mode = Control.FOCUS_NONE
@@ -67,7 +95,7 @@ func _ready() -> void:
 
 
 func is_typing() -> bool:
-	return title_box.has_focus()
+	return title_box.has_focus() or search_box.has_focus()
 
 
 ## The Vending action: set up our shop, or show it when it is already open.
@@ -77,12 +105,22 @@ func open_setup() -> void:
 		return
 	mode = "setup"
 	store_entity = -1
+	# Both lists have to fit on a 720-pixel screen.
+	list_scroll.custom_minimum_size.y = 170
 	title_label.text = "Open a shop"
 	title_box.visible = true
+	want_box.visible = true
+	action_button.visible = true
 	action_button.text = "Open shop"
-	hint.text = "Tick what to sell, how many and the price for one. Up to %d items." % MAX_ITEMS
+	hint.text = "Tick what to sell, how many and the price for one. Up to %d items to sell and %d to buy." % [MAX_ITEMS, MAX_ITEMS]
 	_clear()
 	_setup_rows = []
+	_want_rows = []
+	for child in wants_list.get_children():
+		child.queue_free()
+	for child in search_results.get_children():
+		child.queue_free()
+	search_box.text = ""
 	var inventory: Dictionary = net.get_inventory()
 	var pages: Array = inventory.get("pages", [])
 	for page in pages.size():
@@ -112,6 +150,7 @@ func open_setup() -> void:
 			row.add_child(price)
 			_setup_rows.append([check, quantity, price, page, index])
 	visible = true
+	reset_size()
 
 
 ## A shop someone else (or we) opened on this entity.
@@ -124,24 +163,30 @@ func browse(entity_id: int) -> void:
 		return
 	mode = "browse"
 	store_entity = entity_id
+	list_scroll.custom_minimum_size.y = 300
 	title_box.visible = false
+	want_box.visible = false
 	action_button.visible = false
-	hint.text = "Pick how many and press Buy."
+	hint.text = "Pick how many and press Buy, or Sell what the shop is buying."
 	_last = {}
 	_refresh()
 	visible = true
+	reset_size()
 
 
 func _show_mine() -> void:
 	mode = "mine"
 	store_entity = online.my_id
+	list_scroll.custom_minimum_size.y = 300
 	title_box.visible = false
+	want_box.visible = false
 	action_button.visible = true
 	action_button.text = "Close shop"
 	hint.text = "You can't move, fight or use skills while the shop is open."
 	_last = {}
 	_refresh()
 	visible = true
+	reset_size()
 
 
 func _action() -> void:
@@ -150,13 +195,17 @@ func _action() -> void:
 		for r in _setup_rows:
 			if r[0].button_pressed:
 				listings.append([r[3], r[4], int(r[1].value), int(r[2].value)])
-		if listings.is_empty():
-			online._notice("Tick at least one item to sell")
+		var wanted := []
+		for w in _want_rows:
+			wanted.append([w[1]["type"], int(w[1]["number"]), int(w[2].value), int(w[3].value)])
+		if listings.is_empty() and wanted.is_empty():
+			online._notice("Tick something to sell or add something to buy")
 			return
-		if listings.size() > MAX_ITEMS:
-			online._notice("A shop holds at most %d items" % MAX_ITEMS)
+		if listings.size() > MAX_ITEMS or wanted.size() > MAX_ITEMS:
+			online._notice("A shop sells and buys at most %d items each" % MAX_ITEMS)
 			return
-		net.store_open(title_box.text, listings)
+		net.store_open(title_box.text, listings, wanted)
+		search_box.release_focus()
 		title_box.release_focus()
 		visible = false
 	elif mode == "mine":
@@ -207,7 +256,7 @@ func _refresh() -> void:
 	_last = store
 	title_label.text = "%s\n%s" % [store["title"], store["owner"]]
 	_clear()
-	if store["items"].is_empty():
+	if store["items"].is_empty() and store.get("wants", []).is_empty():
 		var none := Label.new()
 		none.text = "Sold out"
 		rows.add_child(none)
@@ -232,6 +281,108 @@ func _refresh() -> void:
 		var id: int = item["id"]
 		buy.pressed.connect(func(): net.store_buy(store_entity, id, int(quantity.value)))
 		row.add_child(buy)
+	var wants: Array = store.get("wants", [])
+	if not wants.is_empty():
+		var header := Label.new()
+		header.text = "Buying"
+		header.add_theme_font_size_override("font_size", 16)
+		rows.add_child(header)
+	for want in wants:
+		var row := _item_row(want)
+		var price := Label.new()
+		price.text = "%s z" % _zuly(int(want["price"]))
+		price.custom_minimum_size = Vector2(64, 0)
+		price.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		row.add_child(price)
+		if mode != "browse":
+			continue
+		var have: int = want.get("have", 0)
+		if have <= 0:
+			var none := Label.new()
+			none.text = "you have none"
+			none.modulate = Color(1, 1, 1, 0.5)
+			row.add_child(none)
+			continue
+		var quantity := SpinBox.new()
+		quantity.min_value = 1
+		quantity.max_value = max(mini(have, int(want["quantity"])), 1)
+		quantity.editable = quantity.max_value > 1
+		quantity.custom_minimum_size = Vector2(70, 0)
+		row.add_child(quantity)
+		var sell := Button.new()
+		sell.text = "Sell"
+		sell.focus_mode = Control.FOCUS_NONE
+		var want_id: int = want["id"]
+		var page: int = want["page"]
+		var index: int = want["index"]
+		sell.pressed.connect(func(): net.store_sell(store_entity, want_id, page, index, int(quantity.value)))
+		row.add_child(sell)
+
+
+## Setup: items matching the search, each with an Add button.
+func _search(text: String) -> void:
+	for child in search_results.get_children():
+		child.queue_free()
+	for item in net.find_items(text).slice(0, 4):
+		var row := HBoxContainer.new()
+		search_results.add_child(row)
+		var icon := TextureRect.new()
+		icon.custom_minimum_size = Vector2(24, 24)
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		if item.has("icon"):
+			icon.texture = item["icon"]
+		row.add_child(icon)
+		var label := Label.new()
+		label.text = item.get("name", "?")
+		label.tooltip_text = item.get("tooltip", "")
+		label.mouse_filter = Control.MOUSE_FILTER_PASS
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(label)
+		var add := Button.new()
+		add.text = "Add"
+		add.focus_mode = Control.FOCUS_NONE
+		add.pressed.connect(func(): add_want(item))
+		row.add_child(add)
+
+
+## Setup: put an item on the buy list.
+func add_want(item: Dictionary) -> void:
+	if _want_rows.size() >= MAX_ITEMS:
+		online._notice("A shop buys at most %d items" % MAX_ITEMS)
+		return
+	var row := HBoxContainer.new()
+	wants_list.add_child(row)
+	var label := Label.new()
+	label.text = "Buy " + String(item.get("name", "?"))
+	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	label.clip_text = true
+	row.add_child(label)
+	var quantity := SpinBox.new()
+	quantity.min_value = 1
+	var stackable: bool = String(item.get("type", "")) in ["Consumable", "Gem", "Material", "Quest"]
+	quantity.max_value = 999 if stackable else 1
+	quantity.editable = stackable
+	quantity.custom_minimum_size = Vector2(70, 0)
+	quantity.tooltip_text = "How many to buy"
+	row.add_child(quantity)
+	var price := SpinBox.new()
+	price.min_value = 1
+	price.max_value = 4294967295
+	price.value = 100
+	price.suffix = "z"
+	price.custom_minimum_size = Vector2(110, 0)
+	price.tooltip_text = "Price for one"
+	row.add_child(price)
+	var remove := Button.new()
+	remove.text = "X"
+	remove.focus_mode = Control.FOCUS_NONE
+	var entry := [row, item, quantity, price]
+	remove.pressed.connect(func():
+		_want_rows.erase(entry)
+		row.queue_free())
+	row.add_child(remove)
+	_want_rows.append(entry)
 
 
 static func _zuly(amount: int) -> String:

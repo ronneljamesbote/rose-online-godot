@@ -195,7 +195,7 @@ pub fn pickup_item(ctx: &ReducerContext, drop_id: u64) -> Result<(), String> {
     if !crate::is_alive(ctx, id) {
         return Err("dead".into());
     }
-    if let Some(reason) = crate::skills::disabled_reason(ctx, id) {
+    if let Some(reason) = crate::skills::disabled_reason(ctx, id).or(crate::vehicle::passenger_refusal(ctx, id)) {
         return Err(reason.into());
     }
     let ground = ctx.db.ground_item().drop_id().find(drop_id).ok_or("it is gone")?;

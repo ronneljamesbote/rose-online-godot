@@ -507,6 +507,10 @@ impl RoseNet {
                     d.set("vehicle", &vehicle_parts(&p));
                 }
             }
+            // A passenger: the driver whose back seat it sits on.
+            if let Some(ride) = c.db.passenger().guest().find(&e.entity_id) {
+                d.set("riding", ride.driver as i64);
+            }
             if let Some(summon) = c.db.summon().entity_id().find(&e.entity_id) {
                 d.set("summon_owner", summon.owner as i64);
             }
@@ -607,6 +611,12 @@ impl RoseNet {
             d.set("fuel", engine.life as i64);
         }
         d.set("driving", p.entity_id.is_some_and(|id| c.db.driving().entity_id().find(&id).is_some()));
+        d.set("passenger", p.entity_id.is_some_and(|id| c.db.passenger().guest().find(&id).is_some()));
+        let has_seat = equipment
+            .get_vehicle_item(VehiclePartIndex::Arms)
+            .and_then(|a| crate::data::get()?.items.get_vehicle_item(a.item.item_number))
+            .is_some_and(|v| v.has_seat);
+        d.set("has_seat", has_seat);
         d.set("stat_points", p.stat_points as i64);
         d.set("skill_points", p.skill_points as i64);
         let inventory: Inventory = serde_json::from_str(&p.inventory).unwrap_or_default();
@@ -1377,7 +1387,127 @@ impl RoseNet {
             items.push(&it.to_variant());
         }
         d.set("items", &items);
+        // The buy list, with where our matching bag item is (page and index, -1 if none).
+        let bag = self.my_inventory();
+        let mut wants = VarArray::new();
+        let mut rows: Vec<_> = c.db.store_want().iter().filter(|r| r.store_entity == store.entity_id).collect();
+        rows.sort_by_key(|r| r.id);
+        for r in rows {
+            let Ok(reference) = serde_json::from_str::<rose_data::ItemReference>(&r.item) else { continue };
+            let Some(base) = crate::data::get().and_then(|g| g.items.get_base_item(reference)) else { continue };
+            let Some(item) = rose_data::Item::from_item_data(base, r.quantity.max(1)) else { continue };
+            let mut it = crate::items::item_dict(&item);
+            it.set("id", r.id as i64);
+            it.set("price", r.price);
+            let (mut page, mut index, mut have) = (-1i64, -1i64, 0i64);
+            if let Some(bag) = bag.as_ref() {
+                let pages = [&bag.equipment, &bag.consumables, &bag.materials, &bag.vehicles];
+                for (pi, pg) in pages.iter().enumerate() {
+                    for (si, slot) in pg.slots.iter().enumerate() {
+                        let Some(mine) = slot else { continue };
+                        let usable = match mine {
+                            rose_data::Item::Equipment(e) => e.life > 0,
+                            _ => true,
+                        };
+                        if mine.get_item_reference() == reference && usable {
+                            if page < 0 {
+                                (page, index) = (pi as i64, si as i64);
+                            }
+                            have += mine.get_quantity() as i64;
+                        }
+                    }
+                }
+            }
+            it.set("page", page);
+            it.set("index", index);
+            it.set("have", have);
+            wants.push(&it.to_variant());
+        }
+        d.set("wants", &wants);
         d
+    }
+
+    /// Items whose name contains `text` (any case), for a shop's buy list: up to 20 item
+    /// dictionaries that players may trade.
+    #[func]
+    fn find_items(&self, text: GString) -> VarArray {
+        let mut out = VarArray::new();
+        let wanted = text.to_string().to_lowercase();
+        let Some(game) = crate::data::get() else { return out };
+        if wanted.trim().len() < 2 {
+            return out;
+        }
+        use rose_data::ItemType as T;
+        for item_type in [
+            T::Material, T::Gem, T::Consumable, T::Weapon, T::SubWeapon, T::Head, T::Body, T::Hands, T::Feet, T::Back,
+            T::Face, T::Jewellery, T::Vehicle,
+        ] {
+            for reference in game.items.iter_items(item_type) {
+                let Some(base) = game.items.get_base_item(reference) else { continue };
+                if base.name.is_empty() || base.trade_restriction & 0x02 != 0 || !base.name.to_lowercase().contains(wanted.trim()) {
+                    continue;
+                }
+                let Some(item) = rose_data::Item::from_item_data(base, 1) else { continue };
+                out.push(&crate::items::item_dict(&item).to_variant());
+                if out.len() >= 20 {
+                    return out;
+                }
+            }
+        }
+        out
+    }
+
+    /// Sell `quantity` of our bag item at page/index to a shop's buy list entry.
+    #[func]
+    fn store_sell(&self, store_entity: i64, want_id: i64, page: i64, index: i64, quantity: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers
+                .store_sell_then(store_entity as u64, want_id as u64, page.max(0) as u8, index.max(0) as u16, quantity.max(0) as u32, move |_, r| {
+                    report(&s, r)
+                })
+                .ok();
+        }
+    }
+
+    /// Ride offers made to us: [offer id, driver name].
+    #[func]
+    fn get_ride_offers(&self) -> VarArray {
+        let mut out = VarArray::new();
+        let Some(c) = self.conn.as_ref() else { return out };
+        let Some(me) = c.try_identity().and_then(|i| c.db.player().identity().find(&i)).and_then(|p| p.entity_id) else { return out };
+        for o in c.db.ride_offer().iter().filter(|o| o.guest == me) {
+            let name = c.db.entity().entity_id().find(&o.driver).map_or_else(String::new, |e| e.name);
+            let mut a = VarArray::new();
+            a.push(&(o.id as i64).to_variant());
+            a.push(&name.to_variant());
+            out.push(&a.to_variant());
+        }
+        out
+    }
+
+    #[func]
+    fn ride_offer_to(&self, entity_id: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.ride_offer_to_then(entity_id as u64, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    #[func]
+    fn ride_answer(&self, offer_id: i64, accept: bool) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.ride_answer_then(offer_id as u64, accept, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    #[func]
+    fn ride_leave(&self) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.ride_leave_then(move |_, r| report(&s, r)).ok();
+        }
     }
 
     /// Titles of the open shops by entity id, for the signs over their owners.
@@ -1392,9 +1522,10 @@ impl RoseNet {
         d
     }
 
-    /// Open our shop: `listings` holds [page, index, quantity, price] for each item.
+    /// Open our shop: `listings` holds [page, index, quantity, price] for each item to sell,
+    /// `wanted` holds [type name, item number, quantity, price] for each item to buy.
     #[func]
-    fn store_open(&self, title: GString, listings: VarArray) {
+    fn store_open(&self, title: GString, listings: VarArray, wanted: VarArray) {
         let s = self.shared.clone();
         let Some(c) = self.conn.as_ref() else { return };
         let listings: Vec<StoreListing> = listings
@@ -1405,7 +1536,16 @@ impl RoseNet {
                 Some(StoreListing { page: n(0) as u8, index: n(1) as u16, quantity: n(2).max(0) as u32, price: n(3) })
             })
             .collect();
-        c.reducers.store_open_then(title.to_string(), listings, move |_, r| report(&s, r)).ok();
+        let wanted: Vec<StoreWanted> = wanted
+            .iter_shared()
+            .filter_map(|v| {
+                let a = v.try_to::<VarArray>().ok()?;
+                let n = |i: usize| a.get(i).and_then(|x| x.try_to::<i64>().ok()).unwrap_or(0);
+                let item_type = a.get(0)?.try_to::<GString>().ok()?.to_string();
+                Some(StoreWanted { item_type, item_number: n(1).max(0) as u32, quantity: n(2).max(0) as u32, price: n(3) })
+            })
+            .collect();
+        c.reducers.store_open_then(title.to_string(), listings, wanted, move |_, r| report(&s, r)).ok();
     }
 
     #[func]

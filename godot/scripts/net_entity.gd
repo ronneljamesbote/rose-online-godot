@@ -35,6 +35,8 @@ var vehicle := []  # body, engine, legs, arms item numbers while driving a cart 
 var driver: Node3D  # while driving: the character on the vehicle's seat
 var driver_anim: AnimationPlayer
 var predict_speed := RUN_SPEED
+var riding := -1  # as a passenger: the driver whose back seat we sit on
+var _ride_body := 0  # the vehicle body whose seated motions we added
 var dead := false
 var dying := false  # the server removed it after a killing blow; playing the death
 var was_swinging := false
@@ -108,6 +110,7 @@ func setup(zone_node: Node, state: Dictionary, is_me_: bool) -> void:
 
 
 func _build() -> void:
+	_ride_body = 0
 	if model:
 		model.queue_free()
 	if is_monster or is_npc:
@@ -213,10 +216,10 @@ func update_state(state: Dictionary, target_position) -> void:
 	if is_hidden != hidden:
 		hidden = is_hidden
 		_apply_fade()
-	var riding: Array = state.get("vehicle", [])
-	if not is_monster and ((state.has("look") and state["look"] != look) or riding != vehicle):
+	var parts: Array = state.get("vehicle", [])
+	if not is_monster and ((state.has("look") and state["look"] != look) or parts != vehicle):
 		look = state.get("look", look)
-		vehicle = riding
+		vehicle = parts
 		predict_speed = RUN_SPEED
 		_build()
 		label.position.y = height + 0.3
@@ -265,6 +268,17 @@ func update_state(state: Dictionary, target_position) -> void:
 		rotation.y = atan2(heading.x, heading.z)
 	position = Vector3(flat.x, _ground_height(flat), flat.z)
 	placed = true
+
+	riding = state.get("riding", -1)
+	if riding >= 0:
+		_sit_on_back_seat()
+		dead = state.get("dead", false)
+		is_moving = moving
+		return
+	elif model and model.top_level:
+		model.top_level = false
+		model.transform = Transform3D.IDENTITY
+		_play(_idle, true)
 
 	var is_dead: bool = state.get("dead", false)
 	var sit: bool = state.get("sitting", false) and predicted.is_empty()
@@ -480,8 +494,40 @@ func _death_sound() -> void:
 			fx.npc_died(self)
 
 
+## How far behind the driver a passenger sits when the cart has no back-seat bone.
+const BACK_SEAT_M := 0.55
+
+
+## As a passenger: sit on the driver's back seat (dummy 10, or behind the driver's seat when
+## the model has none) and play the vehicle's seated motion, like CObjCART::Create(CObjCHAR*).
+func _sit_on_back_seat() -> void:
+	var fx := preload("res://scripts/fx.gd").find(self)
+	var driver_node: Node3D = fx.entity_by_id(riding) if fx else null
+	if driver_node == null or not (driver_node.model is RoseVehicle) or not (model is RoseCharacter):
+		return
+	var seat: Node3D = driver_node.model.back_seat()
+	# The iROSE cart bodies here have only 8 dummy bones, so most have no bone 10:
+	# sit just behind the driver instead (models face +Z).
+	var behind := Vector3.ZERO
+	if seat == null:
+		seat = driver_node.model.seat()
+		behind = Vector3(0, 0.05, -BACK_SEAT_M)
+	if seat == null:
+		return
+	model.top_level = true
+	model.global_transform = seat.global_transform.translated_local(behind)
+	var body: int = driver_node.vehicle[0] if driver_node.vehicle.size() == 4 else 0
+	if body != _ride_body and body > 0:
+		_ride_body = body
+		model.add_drive_motions(body)
+	if anim and anim.has_animation("drive_stop") and anim.current_animation != "drive_stop":
+		anim.play("drive_stop", BLEND)
+
+
 ## Sends the frame events (footsteps, swings, hits) the animation passed since last frame.
 func _process(_delta: float) -> void:
+	if riding >= 0:
+		_sit_on_back_seat()
 	if anim == null or not anim.is_playing():
 		return
 	var name := String(anim.current_animation)
