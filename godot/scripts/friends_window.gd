@@ -34,7 +34,7 @@ func _ready() -> void:
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	top.add_child(title)
 	count_label = Label.new()
-	count_label.modulate = Color(1, 1, 1, 0.6)
+	count_label.theme_type_variation = "MutedLabel"
 	top.add_child(count_label)
 
 	rows = VBoxContainer.new()
@@ -108,14 +108,14 @@ func _process(_delta: float) -> void:
 	if friends.is_empty():
 		var none := Label.new()
 		none.text = "No friends yet"
-		none.modulate = Color(1, 1, 1, 0.6)
+		none.theme_type_variation = "MutedLabel"
 		rows.add_child(none)
 	for f in friends:
 		var row := HBoxContainer.new()
 		rows.add_child(row)
 		var dot := Label.new()
 		dot.text = "●"
-		dot.modulate = Color(0.4, 1, 0.4) if f["online"] else Color(0.5, 0.5, 0.5)
+		dot.modulate = UI.color("colors.good") if f["online"] else UI.color("colors.muted")
 		row.add_child(dot)
 		var label := Label.new()
 		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -123,7 +123,7 @@ func _process(_delta: float) -> void:
 			label.text = "%s  Lv %d %s\n%s" % [f["name"], f["level"], CharacterWindow.JOBS.get(int(f["job"]), "Visitor"), f["zone"]]
 		else:
 			label.text = "%s  Lv %d\noffline" % [f["name"], f["level"]]
-			label.modulate = Color(1, 1, 1, 0.6)
+			label.theme_type_variation = "MutedLabel"
 		label.add_theme_font_size_override("font_size", 13)
 		row.add_child(label)
 		var whisper := Button.new()

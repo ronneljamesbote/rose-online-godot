@@ -90,7 +90,7 @@ func _ready() -> void:
 	box.add_child(action_button)
 	hint = Label.new()
 	hint.add_theme_font_size_override("font_size", 12)
-	hint.modulate = Color(1, 1, 1, 0.6)
+	hint.theme_type_variation = "MutedLabel"
 	box.add_child(hint)
 
 
@@ -239,7 +239,7 @@ func _item_row(item: Dictionary) -> HBoxContainer:
 	if int(item.get("quantity", 1)) > 1:
 		var count := Label.new()
 		count.text = "x%d" % item["quantity"]
-		count.modulate = Color(1, 1, 1, 0.75)
+		count.theme_type_variation = "MutedLabel"
 		row.add_child(count)
 	return row
 
@@ -300,7 +300,7 @@ func _refresh() -> void:
 		if have <= 0:
 			var none := Label.new()
 			none.text = "you have none"
-			none.modulate = Color(1, 1, 1, 0.5)
+			none.theme_type_variation = "MutedLabel"
 			row.add_child(none)
 			continue
 		var quantity := SpinBox.new()

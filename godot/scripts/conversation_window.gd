@@ -88,7 +88,7 @@ func _refresh() -> void:
 	var lines := []
 	var responses: Array = d["responses"]
 	for i in responses.size():
-		lines.append("[url=%d][color=#ffd27a]%d.[/color] %s[/url]" % [i, i + 1, responses[i]])
+		lines.append("[url=%d][color=#%s]%d.[/color] %s[/url]" % [i, UI.color("colors.accent").to_html(false), i + 1, responses[i]])
 	answers.text = "\n".join(lines)
 	answers.visible = not responses.is_empty()
 	visible = true

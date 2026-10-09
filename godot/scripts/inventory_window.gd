@@ -53,7 +53,7 @@ class Slot:
 			var name_label := Label.new()
 			name_label.text = caption
 			name_label.add_theme_font_size_override("font_size", 9)
-			name_label.modulate = Color(1, 1, 1, 0.45)
+			name_label.theme_type_variation = "MutedLabel"
 			name_label.position = Vector2(3, 1)
 			name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			add_child(name_label)
@@ -75,7 +75,7 @@ class Slot:
 
 	func _draw() -> void:
 		if selected:
-			draw_rect(Rect2(Vector2.ZERO, size), Color(1.0, 0.85, 0.3), false, 2.0)
+			draw_rect(Rect2(Vector2.ZERO, size), UI.color("colors.accent"), false, 2.0)
 
 	func _gui_input(event: InputEvent) -> void:
 		if event is InputEventMouseButton and event.pressed:
@@ -183,7 +183,7 @@ func _ready() -> void:
 	box.add_child(HSeparator.new())
 
 	repair_hint = Label.new()
-	repair_hint.add_theme_color_override("font_color", Color(1.0, 0.85, 0.4))
+	repair_hint.theme_type_variation = "AccentLabel"
 	repair_hint.autowrap_mode = TextServer.AUTOWRAP_WORD
 	repair_hint.visible = false
 	box.add_child(repair_hint)

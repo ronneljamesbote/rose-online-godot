@@ -29,6 +29,7 @@ func _ready() -> void:
 	center.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(center)
 	var panel := PanelContainer.new()
+	panel.theme_type_variation = "QuestionPanel"
 	panel.custom_minimum_size = Vector2(420, 0)
 	center.add_child(panel)
 	var margin := MarginContainer.new()
@@ -42,7 +43,8 @@ func _ready() -> void:
 	var title := Label.new()
 	title.text = "ROSE"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size", 30)
+	title.theme_type_variation = "HeaderLabel"
+	title.add_theme_font_size_override("font_size", 40)
 	box.add_child(title)
 
 	email_edit = _field(box, "Email", settings.get_value("net", "email", ""))
@@ -53,7 +55,7 @@ func _ready() -> void:
 	website_edit = _field(box, "Website", settings.get_value("net", "website", "http://127.0.0.1:3001"))
 
 	error_label = Label.new()
-	error_label.add_theme_color_override("font_color", Color(1, 0.55, 0.5))
+	error_label.theme_type_variation = "BadLabel"
 	error_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	error_label.custom_minimum_size.x = 380
 	error_label.visible = false
@@ -65,6 +67,7 @@ func _ready() -> void:
 	box.add_child(buttons)
 	sign_in_button = Button.new()
 	sign_in_button.text = "Sign in"
+	sign_in_button.theme_type_variation = "ButtonPrimary"
 	sign_in_button.custom_minimum_size.x = 120
 	sign_in_button.pressed.connect(_on_sign_in)
 	buttons.add_child(sign_in_button)

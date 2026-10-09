@@ -73,6 +73,9 @@ var xp_line: Control
 var map_window: Control
 var options_window: Control
 var _next_party_ms := 0
+## --ui-sample: fills the buff rows and party frames with made-up entries, for screenshots.
+var ui_sample := false
+var ui_sample_screen := ""  # --ui-screen=death shows the death screen
 var _next_quests_ms := 0
 var character_window: PanelContainer
 var inventory_window: PanelContainer
@@ -889,7 +892,13 @@ func _process(_delta: float) -> void:
 	xp_line.refresh(c)
 	if Time.get_ticks_msec() >= _next_party_ms:
 		_next_party_ms = Time.get_ticks_msec() + 300
-		party_frames.refresh(net.get_party())
+		var party: Dictionary = net.get_party()
+		if ui_sample and party.is_empty():
+			party = {"members": [
+				{"identity": "a", "name": "Helper", "level": 31, "online": true, "leader": true, "hp": 520, "max_hp": 610},
+				{"identity": "b", "name": "Lowbie", "level": 12, "online": true, "hp": 88, "max_hp": 240},
+				{"identity": "c", "name": "Mairin", "level": 27, "online": false, "hp": 0, "max_hp": 450}]}
+		party_frames.refresh(party)
 	if Time.get_ticks_msec() >= _next_quests_ms:
 		_next_quests_ms = Time.get_ticks_msec() + 1000
 		quest_tracker.refresh(net.get_quests())
@@ -901,7 +910,10 @@ func _process(_delta: float) -> void:
 		_ride_offer = int(offers[0][0])
 		ride_label.text = "%s offers you a ride" % offers[0][1]
 		ride_panel.visible = true
-	revive_window.refresh(c)
+	if ui_sample_screen == "death":
+		revive_window.refresh({"fallen": true, "penalty_xp": 1240, "auto_revive_in": 547, "save_zone": "Zant"})
+	else:
+		revive_window.refresh(c)
 	if Time.get_ticks_msec() >= _next_signs_ms:
 		_next_signs_ms = Time.get_ticks_msec() + 400
 		var titles: Dictionary = net.get_store_titles()
@@ -958,7 +970,11 @@ func _check_warps() -> void:
 
 ## Our buffs and debuffs as icons at the top of the screen, with what they are and how long they last.
 func _update_effects() -> void:
-	effects_rows.refresh(net.get_status_effects(my_id) if my_id >= 0 else [])
+	var effects: Array = net.get_status_effects(my_id) if my_id >= 0 else []
+	if ui_sample:
+		for e in [["Blessing", 1590, 312.0, false], ["Haste", 1588, 95.0, false], ["Shield", 1724, 41.0, false], ["Poisoned", 1785, 12.0, true], ["Slowed", 1735, 6.0, true]]:
+			effects.append({"name": e[0], "icon": RoseData.item_icon(e[1]), "seconds": e[2], "bad": e[3]})
+	effects_rows.refresh(effects)
 
 
 ## Show the server's ground items: the item's ground model with its name over it.

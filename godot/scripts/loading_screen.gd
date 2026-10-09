@@ -37,14 +37,15 @@ func _ready() -> void:
 	_root.add_child(bottom)
 	_title = Label.new()
 	_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_title.add_theme_font_size_override("font_size", 28)
-	_title.add_theme_color_override("font_shadow_color", Color.BLACK)
-	_title.add_theme_constant_override("shadow_offset_x", 2)
-	_title.add_theme_constant_override("shadow_offset_y", 2)
+	_title.theme_type_variation = "HeaderLabel"
+	_title.add_theme_font_size_override("font_size", 30)
+	_title.add_theme_color_override("font_color", Color.WHITE)
+	_title.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.8))
+	_title.add_theme_constant_override("outline_size", 8)
 	bottom.add_child(_title)
 	_bar = ProgressBar.new()
 	_bar.show_percentage = false
-	_bar.custom_minimum_size.y = 8
+	_bar.custom_minimum_size.y = 10
 	_bar.max_value = 1.0
 	bottom.add_child(_bar)
 	_root.visible = false

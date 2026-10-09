@@ -97,7 +97,7 @@ func _draw_tags(camera: Camera3D, font: Font, s: float) -> void:
 		party[int(m.get("entity", -1))] = true
 	var my_level: int = me.level
 	var tag_outline := UI.color("tags.outline")
-	var fs := int(round(13 * s))
+	var fs := int(round(14 * s))
 	for id in online.entities:
 		var e: Node3D = online.entities[id]
 		if e.label:
@@ -136,10 +136,11 @@ func _draw_tags(camera: Camera3D, font: Font, s: float) -> void:
 				colour = UI.color("colors.enemy").lightened(0.2)
 		if not show or text == "":
 			continue
-		var head: float = e.height + 0.3
+		# Where the old 3D name label sat: each model's own height.
+		var above: Vector3 = e.label.global_position if e.label else e.global_position + Vector3(0, e.height + 0.3, 0)
 		if e.get("shop_title") != null and e.shop_title != "":
-			head += 0.45  # above the shop sign
-		var p = _screen(camera, e.global_position + Vector3(0, head, 0))
+			above.y += 0.45  # above the shop sign
+		var p = _screen(camera, above)
 		if p == null:
 			continue
 		var alpha := 1.0 if e != me else 0.95
@@ -152,7 +153,7 @@ func _draw_tags(camera: Camera3D, font: Font, s: float) -> void:
 		var x: float = p.x - total * 0.5
 		if level_text != "":
 			_text(font, Vector2(x, y), level_text, fs - 2, Color(level_colour, alpha), Color(tag_outline, alpha), 4)
-		_text(font, Vector2(x + level_w, y), text, fs, Color(colour, alpha), Color(tag_outline, alpha), 4)
+		_text(font, Vector2(x + level_w, y), text, fs, Color(colour, alpha), Color(tag_outline, alpha), 5)
 		if bar and e.max_hp > 0:
 			var w := 64.0 * s
 			var h := maxf(4.0, 5.0 * s)
@@ -267,7 +268,8 @@ func _draw_bubbles(camera: Camera3D, font: Font, s: float) -> void:
 		if not is_instance_valid(entity) or now > b["until"]:
 			_bubbles.erase(entity)
 			continue
-		var p = _screen(camera, entity.global_position + Vector3(0, entity.height + 0.3, 0))
+		var above: Vector3 = entity.label.global_position if entity.label else entity.global_position + Vector3(0, entity.height + 0.3, 0)
+		var p = _screen(camera, above + Vector3(0, 0.25, 0))
 		if p == null:
 			continue
 		var width := 220.0 * s

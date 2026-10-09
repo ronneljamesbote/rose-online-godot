@@ -34,8 +34,20 @@ static func build(ui: Node) -> Theme:
 	t.set_stylebox("panel", "WindowPanel", panel.duplicate().set_margin_all(0))
 	t.set_type_variation("HudPanel", "PanelContainer")
 	t.set_stylebox("panel", "HudPanel", panel.duplicate().set_margins(10, 8, 10, 8))
+	# The chat box: a lighter panel so the world shows through.
+	var chat: UiBox = panel.duplicate().set_margins(8, 8, 8, 8)
+	for i in chat.colors.size():
+		chat.colors[i].a *= 0.55
+	chat.shadow_color.a *= 0.5
+	t.set_type_variation("ChatPanel", "PanelContainer")
+	t.set_stylebox("panel", "ChatPanel", chat)
+	# Pop-up questions and the sign-in and creation cards sit on busy backgrounds
+	# without the window blur, so they are nearly opaque.
+	var question: UiBox = panel.duplicate().set_margins(18, 14, 18, 14)
+	for i in question.colors.size():
+		question.colors[i].a = maxf(question.colors[i].a, 0.95)
 	t.set_type_variation("QuestionPanel", "PanelContainer")
-	t.set_stylebox("panel", "QuestionPanel", panel.duplicate().set_margins(16, 12, 16, 12))
+	t.set_stylebox("panel", "QuestionPanel", question)
 	t.set_type_variation("Clear", "PanelContainer")
 	t.set_stylebox("panel", "Clear", StyleBoxEmpty.new())
 
@@ -94,6 +106,17 @@ static func build(ui: Node) -> Theme:
 	b2.shadow_offset = 1
 	b2.set_margins(12, 4, 12, 4)
 	_button(t, "Button", b2, c.call("button2.text"), muted, c.call("colors.hover"))
+	# A toggle button that is on (Male / Female) looks like the selected tab.
+	var on := UiBoxScript.make(c.call("tab.top"), c.call("tab.bottom"), btn_radius)
+	if str(ui.value_at("tab.style")) != "pill":
+		on = UiBoxScript.make(Color(accent, 0.28), Color(accent, 0.12), btn_radius)
+		on.border_width = 1.0
+		on.border_color = accent
+	on.set_margins(12, 4, 12, 4)
+	t.set_stylebox("pressed", "Button", on)
+	t.set_stylebox("hover_pressed", "Button", on)
+	t.set_color("font_pressed_color", "Button", c.call("tab.text_on"))
+	t.set_color("font_hover_pressed_color", "Button", c.call("tab.text_on"))
 	var b1 := UiBoxScript.make(c.call("button.top"), c.call("button.bottom"), btn_radius)
 	b1.colors = PackedColorArray([c.call("button.top"), c.call("button.middle"), c.call("button.bottom")])
 	b1.stops = PackedFloat32Array([0.0, 0.5, 1.0])

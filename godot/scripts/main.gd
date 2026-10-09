@@ -327,6 +327,18 @@ func _on_joined(me: Node3D) -> void:
 	if _joined_before:
 		return
 	_joined_before = true
+	online.ui_sample = options.has("ui-sample")
+	# --ui-screen=death|create|login|loading shows that screen over the game (screenshots).
+	online.ui_sample_screen = options.get("ui-screen", "")
+	match online.ui_sample_screen:
+		"create":
+			var create = preload("res://scripts/character_create.gd").new()
+			add_child(create)
+		"login":
+			_show_connect_panel("")
+		"loading":
+			if loading:
+				loading.show_zone("Junon Polis")
 	var windows: String = options.get("open", "")
 	for which in ["inventory", "character", "skill", "quest", "party", "friends", "map", "options"]:
 		if which in windows:
@@ -1349,9 +1361,9 @@ func _run_fight_demo() -> void:
 			await get_tree().create_timer(0.25).timeout
 		# Pick up what it dropped (drops land a moment after the kill).
 		await get_tree().create_timer(0.5).timeout
-		var item: int = online.nearest_item()
+		var item: int = online.nearest_item() if not options.has("no-pickup") else -1
 		if item >= 0:
-			print("rose net demo: pick up ", online.ground[item].get_node("Label").text)
+			print("rose net demo: pick up ", online.ground[item].get_meta("item", {}).get("name", "?"))
 			online.pickup(item)
 			var waited := 0.0
 			while online.ground.has(item) and waited < 5.0:
