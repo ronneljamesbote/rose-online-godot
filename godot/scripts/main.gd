@@ -632,7 +632,7 @@ func _run_skills_demo() -> void:
 ## "waitdead NAME", "status" (prints our status effects and the target's), "revive save|here",
 ## "invite NAME" (to our party), "friend NAME", "friendaccept", "unfriend NAME",
 ## "friends [open]" (prints our friends list, opens the window),
-## "shop TITLE|PAGE,INDEX,QTY,PRICE|...", "shopsetup", "closeshop", "browse NAME",
+## "shop TITLE|PAGE,INDEX,QTY,PRICE|...", "shopsetup", "wantsearch TEXT|QTY|PRICE", "shopopen TITLE", "closeshop", "browse NAME",
 ## "buy NAME N QTY", "money", "equip PAGE INDEX", "use PAGE INDEX", "unequippart N", "drive",
 ## "inventory [close] [TAB]", "vehicle" (prints our vehicle parts, fuel and stats), "savepoint" and "me" (prints our zone, level, experience and whether we lie fallen).
 func _run_steps_demo(steps: String) -> void:
@@ -706,12 +706,60 @@ func _run_steps_demo(steps: String) -> void:
 					online.net.party_invite(online.my_target)
 			"shop":
 				# shop TITLE|PAGE,INDEX,QTY,PRICE|...: open our shop with these bag slots.
+				# A part "want:TYPE,NUMBER,QTY,PRICE" asks to buy instead.
 				var parts := step.strip_edges().substr(5).split("|")
 				var listings := []
+				var wanted := []
 				for part in parts.slice(1):
+					if part.begins_with("want:"):
+						var w := part.trim_prefix("want:").split(",")
+						wanted.append([w[0], int(w[1]), int(w[2]), int(w[3])])
+						continue
 					var n := part.split(",")
 					listings.append([int(n[0]), int(n[1]), int(n[2]), int(n[3])])
-				online.net.store_open(parts[0], listings)
+				online.net.store_open(parts[0], listings, wanted)
+			"wantsearch":
+				# wantsearch TEXT: type into the buy list search of the setup window and add the first hit.
+				# wantsearch TEXT|QTY|PRICE also sets the amount and price.
+				var want := step.strip_edges().substr(11).split("|")
+				online.shop_window.search_box.text = want[0]
+				online.shop_window._search(want[0])
+				var hits: Array = online.net.find_items(want[0])
+				if not hits.is_empty():
+					online.shop_window.add_want(hits[0])
+					var row: Array = online.shop_window._want_rows[-1]
+					if want.size() > 2:
+						row[2].value = int(want[1])
+						row[3].value = int(want[2])
+			"shopopen":
+				# shopopen TITLE: press Open shop in the setup window.
+				online.shop_window.title_box.text = step.strip_edges().substr(9)
+				online.shop_window._action()
+			"sell":
+				# sell NAME N QTY: sell QTY to the shop's Nth buy list entry (from 0).
+				_steps_target(arg)
+				var shop: Dictionary = online.net.get_personal_store(online.my_target)
+				if shop.is_empty() or shop.get("wants", []).size() <= int(words[2]):
+					print("rose net demo: %s has no such buy list entry" % arg)
+				else:
+					var w: Dictionary = shop["wants"][int(words[2])]
+					online.net.store_sell(online.my_target, int(w["id"]), int(w["page"]), int(w["index"]), int(words[3]))
+					print("rose net demo: selling %s x%s for %d each (have %d)" % [w["name"], words[3], w["price"], w["have"]])
+			"ride":
+				# ride NAME: offer that player a ride.
+				_steps_target(arg)
+				if online.my_target >= 0:
+					online.net.ride_offer_to(online.my_target)
+			"rideaccept":
+				for i in 60:
+					var offers: Array = online.net.get_ride_offers()
+					if not offers.is_empty():
+						print("rose net demo: ride offers ", offers)
+						online.net.ride_answer(int(offers[0][0]), true)
+						break
+					await get_tree().create_timer(0.25).timeout
+			"rideleave":
+				online.net.ride_leave()
 			"shopsetup":
 				online.shop_window.open_setup()
 			"closeshop":
@@ -765,6 +813,7 @@ func _run_steps_demo(steps: String) -> void:
 				var c: Dictionary = online.net.get_character()
 				print("rose net demo: me zone %d level %d xp %d/%d debt %d fallen %s hp %d" % [c.get("zone", 0), c.get("level", 0),
 					c.get("xp", 0), c.get("xp_needed", 0), c.get("xp_debt", 0), c.get("fallen", false), online.me.hp])
+				print("rose net demo: me at %.1f, %.1f driving %s passenger %s" % [online.me.position.x, online.me.position.z, c.get("driving", false), c.get("passenger", false)])
 			"status":
 				var mine: Array = online.net.get_status_effects(online.my_id)
 				var theirs: Array = online.net.get_status_effects(online.my_target) if online.my_target >= 0 else []

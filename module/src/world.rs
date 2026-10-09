@@ -255,11 +255,14 @@ use crate::player;
 /// Move a player's character to another zone (or another spot in the same one).
 pub fn teleport(ctx: &ReducerContext, p: &mut Player, zone_id: u16, at: (f32, f32)) {
     let t = now_us(ctx);
+    // A driver's passenger comes along (and gets off there), as in rose-next's warp.
+    let rider = p.entity_id.and_then(|id| crate::vehicle::passenger_of(ctx, id));
     if let Some(id) = p.entity_id {
         crate::shop::close(ctx, id);
         if let Ok(game) = game(ctx) {
             crate::vehicle::get_off(ctx, &game, id);
         }
+        crate::vehicle::leave_seat(ctx, id);
         cancel_attack(ctx, id, t);
         crate::skills::cancel_cast(ctx, id);
         crate::forget_entity(ctx, id);
@@ -282,6 +285,9 @@ pub fn teleport(ctx: &ReducerContext, p: &mut Player, zone_id: u16, at: (f32, f3
     p.last_x = at.0;
     p.last_y = at.1;
     ctx.db.player().identity().update(p.clone());
+    if let Some(mut guest) = rider.and_then(|g| ctx.db.player().iter().find(|q| q.entity_id == Some(g))) {
+        teleport(ctx, &mut guest, zone_id, (at.0 + 100.0, at.1));
+    }
 }
 
 /// The character walked into a warp gate (the client sees the gate's collision): go where

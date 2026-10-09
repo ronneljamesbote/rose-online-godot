@@ -4,62 +4,67 @@
 #![allow(unused, clippy::all)]
 use spacetimedb_sdk::__codegen::{self as __sdk, __lib, __sats, __ws};
 
-use super::store_listing_type::StoreListing;
-use super::store_wanted_type::StoreWanted;
-
 #[derive(__lib::ser::Serialize, __lib::de::Deserialize, Clone, PartialEq, Debug)]
 #[sats(crate = __lib)]
-pub(super) struct StoreOpenArgs {
-    pub title: String,
-    pub listings: Vec<StoreListing>,
-    pub wanted: Vec<StoreWanted>,
+pub(super) struct StoreSellArgs {
+    pub store_entity: u64,
+    pub want_id: u64,
+    pub page: u8,
+    pub index: u16,
+    pub quantity: u32,
 }
 
-impl From<StoreOpenArgs> for super::Reducer {
-    fn from(args: StoreOpenArgs) -> Self {
-        Self::StoreOpen {
-            title: args.title,
-            listings: args.listings,
-            wanted: args.wanted,
+impl From<StoreSellArgs> for super::Reducer {
+    fn from(args: StoreSellArgs) -> Self {
+        Self::StoreSell {
+            store_entity: args.store_entity,
+            want_id: args.want_id,
+            page: args.page,
+            index: args.index,
+            quantity: args.quantity,
         }
     }
 }
 
-impl __sdk::InModule for StoreOpenArgs {
+impl __sdk::InModule for StoreSellArgs {
     type Module = super::RemoteModule;
 }
 
 #[allow(non_camel_case_types)]
-/// Extension trait for access to the reducer `store_open`.
+/// Extension trait for access to the reducer `store_sell`.
 ///
 /// Implemented for [`super::RemoteReducers`].
-pub trait store_open {
-    /// Request that the remote module invoke the reducer `store_open` to run as soon as possible.
+pub trait store_sell {
+    /// Request that the remote module invoke the reducer `store_sell` to run as soon as possible.
     ///
     /// This method returns immediately, and errors only if we are unable to send the request.
     /// The reducer will run asynchronously in the future,
     ///  and this method provides no way to listen for its completion status.
-    /// /// Use [`store_open:store_open_then`] to run a callback after the reducer completes.
-    fn store_open(
+    /// /// Use [`store_sell:store_sell_then`] to run a callback after the reducer completes.
+    fn store_sell(
         &self,
-        title: String,
-        listings: Vec<StoreListing>,
-        wanted: Vec<StoreWanted>,
+        store_entity: u64,
+        want_id: u64,
+        page: u8,
+        index: u16,
+        quantity: u32,
     ) -> __sdk::Result<()> {
-        self.store_open_then(title, listings, wanted, |_, _| {})
+        self.store_sell_then(store_entity, want_id, page, index, quantity, |_, _| {})
     }
 
-    /// Request that the remote module invoke the reducer `store_open` to run as soon as possible,
+    /// Request that the remote module invoke the reducer `store_sell` to run as soon as possible,
     /// registering `callback` to run when we are notified that the reducer completed.
     ///
     /// This method returns immediately, and errors only if we are unable to send the request.
     /// The reducer will run asynchronously in the future,
     ///  and its status can be observed with the `callback`.
-    fn store_open_then(
+    fn store_sell_then(
         &self,
-        title: String,
-        listings: Vec<StoreListing>,
-        wanted: Vec<StoreWanted>,
+        store_entity: u64,
+        want_id: u64,
+        page: u8,
+        index: u16,
+        quantity: u32,
 
         callback: impl FnOnce(&super::ReducerEventContext, Result<Result<(), String>, __sdk::InternalError>)
             + Send
@@ -67,22 +72,26 @@ pub trait store_open {
     ) -> __sdk::Result<()>;
 }
 
-impl store_open for super::RemoteReducers {
-    fn store_open_then(
+impl store_sell for super::RemoteReducers {
+    fn store_sell_then(
         &self,
-        title: String,
-        listings: Vec<StoreListing>,
-        wanted: Vec<StoreWanted>,
+        store_entity: u64,
+        want_id: u64,
+        page: u8,
+        index: u16,
+        quantity: u32,
 
         callback: impl FnOnce(&super::ReducerEventContext, Result<Result<(), String>, __sdk::InternalError>)
             + Send
             + 'static,
     ) -> __sdk::Result<()> {
         self.imp.invoke_reducer_with_callback(
-            StoreOpenArgs {
-                title,
-                listings,
-                wanted,
+            StoreSellArgs {
+                store_entity,
+                want_id,
+                page,
+                index,
+                quantity,
             },
             callback,
         )

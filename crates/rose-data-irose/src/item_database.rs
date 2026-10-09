@@ -229,6 +229,7 @@ impl StbItem {
     stb_column! { 35, get_vehicle_attack_range, i32 }
     stb_column! { 36, get_vehicle_attack_power, i32 }
     stb_column! { 37, get_vehicle_attack_speed, i32 }
+    stb_column! { 39, get_vehicle_seat_type, u32 }
     stb_column! { 40, get_vehicle_base_motion_index, u32 }
     stb_column! { 41, get_vehicle_base_avatar_motion_index, u32 }
     stb_column! { 42, get_vehicle_ride_effect_file_id, EffectFileId }
@@ -488,6 +489,12 @@ fn load_vehicle_item(
 
     base_item_data.equip_job_class_requirement = data.get_vehicle_job_class_requirement(id);
 
+    // The add-on chair (303) has no name in this client's string table.
+    let has_seat = data.get_vehicle_seat_type(id) == Some(1);
+    if has_seat && base_item_data.name.is_empty() {
+        base_item_data.name = "Back Seat";
+    }
+
     Some(VehicleItemData {
         item_data: base_item_data,
         vehicle_part: data.get_vehicle_part_index(id)?.try_into().ok()?,
@@ -516,6 +523,9 @@ fn load_vehicle_item(
         bullet_effect_id: data.get_vehicle_bullet_effect_id(id),
         bullet_fire_point: data.get_vehicle_bullet_fire_point(id).unwrap_or(8),
         dummy_effect_file_ids: data.get_vehicle_dummy_effect_file_ids(id),
+        // rose-next reads PAT_ITEM_ABILITY_TYPE == 1 (a chair) from column 66 of its newer
+        // LIST_PAT; this client's table has it in column 39.
+        has_seat,
     })
 }
 

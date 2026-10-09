@@ -371,6 +371,13 @@ impl RoseVehicle {
         seat.set_name("Seat");
         seat.set_bone_name(&bone_name(dummy_offset, dummy_offset));
         skeleton.add_child(&seat);
+        // A passenger sits on dummy bone 10 (CObjCART::Create(CObjCHAR*) links it there).
+        if zmd.dummy_bones.len() > 10 {
+            let mut back = BoneAttachment3D::new_alloc();
+            back.set_name("BackSeat");
+            back.set_bone_name(&bone_name(dummy_offset + 10, dummy_offset));
+            skeleton.add_child(&back);
+        }
 
         let weapon = game_data.items.get_vehicle_item(arms.max(0) as usize).map_or(0, |v| v.base_motion_index as usize);
         let library = vehicle_motions(body_data.base_motion_index as usize, weapon, is_cart, dummy_offset, "");
@@ -382,6 +389,12 @@ impl RoseVehicle {
     #[func]
     fn seat(&self) -> Option<Gd<Node3D>> {
         self.base().try_get_node_as::<Node3D>("Skeleton3D/Seat")
+    }
+
+    /// Where a passenger goes (dummy bone 10), or null when the vehicle has none.
+    #[func]
+    fn back_seat(&self) -> Option<Gd<Node3D>> {
+        self.base().try_get_node_as::<Node3D>("Skeleton3D/BackSeat")
     }
 }
 

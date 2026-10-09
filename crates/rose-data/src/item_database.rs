@@ -484,6 +484,8 @@ pub struct VehicleItemData {
     pub bullet_effect_id: Option<EffectId>,
     pub bullet_fire_point: u32,
     pub dummy_effect_file_ids: [Option<EffectFileId>; 8],
+    /// A second seat (the add-on chair): the driver can take a passenger.
+    pub has_seat: bool,
 }
 
 #[derive(Debug)]

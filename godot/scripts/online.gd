@@ -58,6 +58,9 @@ var craft_window: PanelContainer
 var work_window: PanelContainer
 var trade_window: PanelContainer
 var player_menu: PopupMenu
+var ride_panel: PanelContainer
+var ride_label: Label
+var _ride_offer := -1
 var _menu_player := -1
 var skill_window: PanelContainer
 var conversation_window: PanelContainer
@@ -214,6 +217,7 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	player_menu.add_item("Trade", 1)
 	player_menu.add_item("Add friend", 2)
 	player_menu.add_item("Visit shop", 3)
+	player_menu.add_item("Offer a ride", 4)
 	player_menu.id_pressed.connect(func(id):
 		if _menu_player < 0:
 			return
@@ -224,7 +228,9 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 		elif id == 2 and entities.has(_menu_player):
 			net.friend_ask(entities[_menu_player].label.text)
 		elif id == 3:
-			shop_window.browse(_menu_player))
+			shop_window.browse(_menu_player)
+		elif id == 4:
+			net.ride_offer_to(_menu_player))
 	layer.add_child(player_menu)
 
 	skill_window = SkillWindow.new()
@@ -300,9 +306,8 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	shop_window.net = net
 	shop_window.online = self
 	shop_window.visible = false
-	shop_window.set_anchors_and_offsets_preset(Control.PRESET_CENTER_LEFT)
-	shop_window.grow_vertical = Control.GROW_DIRECTION_BOTH
-	shop_window.offset_left = 20
+	# Under the top HUD line, so the tall setup window fits on screen.
+	shop_window.position = Vector2(20, 40)
 	layer.add_child(shop_window)
 
 	friends_window = FriendsWindow.new()
@@ -318,6 +323,33 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	friends_window.request_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	friends_window.request_panel.offset_top = 200
 	layer.add_child(friends_window.request_panel)
+
+	# A driver offers us a ride.
+	ride_panel = PanelContainer.new()
+	ride_panel.visible = false
+	var ride_margin := MarginContainer.new()
+	for side in ["left", "right", "top", "bottom"]:
+		ride_margin.add_theme_constant_override("margin_" + side, 10)
+	ride_panel.add_child(ride_margin)
+	var ride_box := HBoxContainer.new()
+	ride_box.add_theme_constant_override("separation", 8)
+	ride_margin.add_child(ride_box)
+	ride_label = Label.new()
+	ride_box.add_child(ride_label)
+	for answer in [["Get on", true], ["No thanks", false]]:
+		var b := Button.new()
+		b.text = answer[0]
+		b.focus_mode = Control.FOCUS_NONE
+		b.pressed.connect(func():
+			if _ride_offer >= 0:
+				net.ride_answer(_ride_offer, answer[1])
+			_ride_offer = -1
+			ride_panel.visible = false)
+		ride_box.add_child(b)
+	ride_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	ride_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	ride_panel.offset_top = 260
+	layer.add_child(ride_panel)
 
 	hud.text = "Connecting to %s..." % uri
 	if token != "":
@@ -423,6 +455,15 @@ func _in_shop() -> bool:
 	return false
 
 
+## On someone's back seat: we go where they drive (X gets off).
+func _riding(tell := false) -> bool:
+	if me != null and me.riding >= 0:
+		if tell:
+			_notice("You are riding with someone: X gets off")
+		return true
+	return false
+
+
 ## Driving with an empty tank: the vehicle won't move until refuelled.
 func _out_of_fuel() -> bool:
 	var c: Dictionary = net.get_character()
@@ -433,7 +474,7 @@ func _out_of_fuel() -> bool:
 
 
 func move_to(target: Vector3) -> void:
-	if me == null or _in_shop() or _out_of_fuel():
+	if me == null or _in_shop() or _out_of_fuel() or _riding(true):
 		return
 	my_target = -1
 	_pickup = -1
@@ -458,9 +499,12 @@ func stop() -> void:
 	net.stop()
 
 
-## Sit down, or stand up (MP only comes back while sitting).
+## Sit down, or stand up (MP only comes back while sitting). A passenger gets off instead.
 func sit() -> void:
 	if me == null:
+		return
+	if _riding():
+		net.ride_leave()
 		return
 	my_target = -1
 	_pickup = -1
@@ -811,6 +855,16 @@ func _process(_delta: float) -> void:
 		hud.text += "   PvP zone"
 	if c.get("driving", false):
 		hud.text += "   Fuel %d%%" % (int(c.get("fuel", 0)) / 10)
+	if me and me.riding >= 0 and entities.has(me.riding):
+		hud.text += "   Riding with %s (X gets off)" % entities[me.riding].label.text
+	var offers: Array = net.get_ride_offers()
+	if offers.is_empty():
+		_ride_offer = -1
+		ride_panel.visible = false
+	elif int(offers[0][0]) != _ride_offer:
+		_ride_offer = int(offers[0][0])
+		ride_label.text = "%s offers you a ride" % offers[0][1]
+		ride_panel.visible = true
 	revive_window.refresh(c)
 	if Time.get_ticks_msec() >= _next_signs_ms:
 		_next_signs_ms = Time.get_ticks_msec() + 400

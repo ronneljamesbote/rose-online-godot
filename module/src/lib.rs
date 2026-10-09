@@ -370,6 +370,7 @@ fn set_motion(ctx: &ReducerContext, entity_id: u64, to: (f32, f32), speed: f32, 
     } else {
         ctx.db.motion().insert(row);
     }
+    vehicle::sync_passenger(ctx, entity_id);
 }
 
 /// Stop where the entity is now. Only writes the row if it was actually moving.
@@ -644,6 +645,9 @@ pub fn move_to(ctx: &ReducerContext, x: f32, y: f32) -> Result<(), String> {
     if !is_alive(ctx, id) {
         return Err("dead".into());
     }
+    if let Some(reason) = vehicle::passenger_refusal(ctx, id) {
+        return Err(reason.into());
+    }
     if let Some(reason) = skills::disabled_reason(ctx, id) {
         return Err(reason.into());
     }
@@ -693,6 +697,9 @@ pub fn attack(ctx: &ReducerContext, target: u64) -> Result<(), String> {
     }
     if !is_alive(ctx, target) {
         return Err("target is dead".into());
+    }
+    if let Some(reason) = vehicle::passenger_refusal(ctx, id) {
+        return Err(reason.into());
     }
     if let Some(reason) = skills::disabled_reason(ctx, id) {
         return Err(reason.into());
@@ -750,6 +757,9 @@ pub fn sit(ctx: &ReducerContext) -> Result<(), String> {
     }
     if !is_alive(ctx, id) {
         return Err("dead".into());
+    }
+    if let Some(reason) = vehicle::passenger_refusal(ctx, id) {
+        return Err(reason.into());
     }
     if let Some(reason) = skills::disabled_reason(ctx, id) {
         return Err(reason.into());
@@ -812,6 +822,7 @@ pub fn move_collision(ctx: &ReducerContext, x: f32, y: f32) -> Result<(), String
         chase_target: None,
         ..m
     });
+    vehicle::sync_passenger(ctx, id);
     Ok(())
 }
 
@@ -884,6 +895,7 @@ pub fn place_player(ctx: &ReducerContext, name: String, x: f32, y: f32) -> Resul
                 m.started_at_us = t;
                 m.chase_target = None;
                 ctx.db.motion().entity_id().update(m);
+                vehicle::sync_passenger(ctx, id);
             }
             if let Some(mut c) = ctx.db.combat().entity_id().find(id) {
                 c.hp = c.max_hp;
@@ -1249,6 +1261,7 @@ fn kill(ctx: &ReducerContext, game: &GameData, id: u64, stats: &Stats, killer: u
             stop_motion(ctx, id);
             stand_up(ctx, id);
             vehicle::get_off(ctx, game, id);
+            vehicle::leave_seat(ctx, id);
             death::player_died(ctx, game, id, killer, t);
             if let Some(mut c) = ctx.db.combat().entity_id().find(id) {
                 c.attack_target = None;

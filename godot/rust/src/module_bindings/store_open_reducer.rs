@@ -5,12 +5,14 @@
 use spacetimedb_sdk::__codegen::{self as __sdk, __lib, __sats, __ws};
 
 use super::store_listing_type::StoreListing;
+use super::store_wanted_type::StoreWanted;
 
 #[derive(__lib::ser::Serialize, __lib::de::Deserialize, Clone, PartialEq, Debug)]
 #[sats(crate = __lib)]
 pub(super) struct StoreOpenArgs {
     pub title: String,
     pub listings: Vec<StoreListing>,
+    pub wanted: Vec<StoreWanted>,
 }
 
 impl From<StoreOpenArgs> for super::Reducer {
@@ -18,6 +20,7 @@ impl From<StoreOpenArgs> for super::Reducer {
         Self::StoreOpen {
             title: args.title,
             listings: args.listings,
+            wanted: args.wanted,
         }
     }
 }
@@ -37,8 +40,13 @@ pub trait store_open {
     /// The reducer will run asynchronously in the future,
     ///  and this method provides no way to listen for its completion status.
     /// /// Use [`store_open:store_open_then`] to run a callback after the reducer completes.
-    fn store_open(&self, title: String, listings: Vec<StoreListing>) -> __sdk::Result<()> {
-        self.store_open_then(title, listings, |_, _| {})
+    fn store_open(
+        &self,
+        title: String,
+        listings: Vec<StoreListing>,
+        wanted: Vec<StoreWanted>,
+    ) -> __sdk::Result<()> {
+        self.store_open_then(title, listings, wanted, |_, _| {})
     }
 
     /// Request that the remote module invoke the reducer `store_open` to run as soon as possible,
@@ -51,6 +59,7 @@ pub trait store_open {
         &self,
         title: String,
         listings: Vec<StoreListing>,
+        wanted: Vec<StoreWanted>,
 
         callback: impl FnOnce(&super::ReducerEventContext, Result<Result<(), String>, __sdk::InternalError>)
             + Send
@@ -63,12 +72,19 @@ impl store_open for super::RemoteReducers {
         &self,
         title: String,
         listings: Vec<StoreListing>,
+        wanted: Vec<StoreWanted>,
 
         callback: impl FnOnce(&super::ReducerEventContext, Result<Result<(), String>, __sdk::InternalError>)
             + Send
             + 'static,
     ) -> __sdk::Result<()> {
-        self.imp
-            .invoke_reducer_with_callback(StoreOpenArgs { title, listings }, callback)
+        self.imp.invoke_reducer_with_callback(
+            StoreOpenArgs {
+                title,
+                listings,
+                wanted,
+            },
+            callback,
+        )
     }
 }

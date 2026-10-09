@@ -9,13 +9,20 @@
 //! The engine's life is its fuel: getting on, each attack and every 10 seconds use the
 //! engine's fuel rate. With no fuel left the vehicle stops and can't move or attack until
 //! refuelled with Engine Fuel. Zones can forbid carts or castle gear (LIST_ZONE column 30).
-//! Dying or leaving gets you off. Passengers (a second seat) aren't here yet.
+//! Dying or leaving gets you off.
+//!
+//! Passengers (rose-next's Recv_cli_CART_RIDE): a driver whose vehicle has a second seat (an
+//! arms part with a chair, LIST_PAT ability type 1) can offer a nearby player a ride. They
+//! accept or decline (an unanswered offer lapses after 30 seconds). The passenger sits on the
+//! back seat, goes where the vehicle goes and can't move, fight, use skills or open a shop;
+//! they can get off at any time. Both get off when the driver gets off, dies, leaves or
+//! changes zone; a driver who warps takes the passenger along, who then gets off.
 
 use rose_data::{EquipmentItem, Item, ItemType, SkillType, VehiclePartIndex, VehicleType};
 use rose_game_data::GameData;
 use spacetimedb::{ReducerContext, Table};
 
-use crate::{character, game_data::game, items, my_player, now_us, player, Player};
+use crate::{character, entity, motion, game_data::game, items, my_player, now_us, player, EntityKind, Player};
 
 /// GameStaticConfig::FUEL_DECREASE_TIME.
 const FUEL_TICK_US: i64 = 10_000_000;
@@ -78,7 +85,7 @@ pub fn drive_toggle(ctx: &ReducerContext) -> Result<(), String> {
     if !crate::is_alive(ctx, id) {
         return Err("dead".into());
     }
-    if let Some(reason) = crate::skills::disabled_reason(ctx, id) {
+    if let Some(reason) = crate::skills::disabled_reason(ctx, id).or(passenger_refusal(ctx, id)) {
         return Err(reason.into());
     }
     if crate::shop::is_open(ctx, id) {
@@ -117,6 +124,7 @@ pub fn get_off(ctx: &ReducerContext, game: &GameData, id: u64) {
     if ctx.db.driving().entity_id().find(id).is_none() {
         return;
     }
+    drop_passenger(ctx, id);
     ctx.db.driving().entity_id().delete(id);
     crate::stop_motion(ctx, id);
     crate::cancel_attack(ctx, id, now_us(ctx));
@@ -126,13 +134,23 @@ pub fn get_off(ctx: &ReducerContext, game: &GameData, id: u64) {
     }
 }
 
-/// Drop the driving row of an entity that is going away.
+/// Drop the driving and riding rows of an entity that is going away.
 pub fn forget(ctx: &ReducerContext, id: u64) {
+    drop_passenger(ctx, id);
+    leave_seat(ctx, id);
+    let invites: Vec<u64> = ctx.db.ride_offer().iter().filter(|o| o.driver == id || o.guest == id).map(|o| o.id).collect();
+    for invite in invites {
+        ctx.db.ride_offer().id().delete(invite);
+    }
     ctx.db.driving().entity_id().delete(id);
 }
 
 /// Every 10 seconds of driving uses fuel.
 pub fn tick(ctx: &ReducerContext, game: &GameData, t: i64) {
+    let lapsed: Vec<u64> = ctx.db.ride_offer().iter().filter(|o| o.expires_us <= t).map(|o| o.id).collect();
+    for id in lapsed {
+        ctx.db.ride_offer().id().delete(id);
+    }
     let due: Vec<Driving> = ctx.db.driving().iter().filter(|d| d.next_fuel_us <= t).collect();
     for mut d in due {
         let Some(mut p) = ctx.db.player().iter().find(|p| p.entity_id == Some(d.entity_id)) else {
@@ -264,5 +282,185 @@ pub fn unequip_vehicle_part(ctx: &ReducerContext, part: u8) -> Result<(), String
     p.set_equipment(&equipment);
     ctx.db.player().identity().update(p.clone());
     character::refresh_player(ctx, &game, &p, false);
+    Ok(())
+}
+
+// ---------------------------------------------------------------- passengers
+
+/// An offer from a driver to take a player along (CART_RIDE_REQ).
+const RIDE_OFFER_US: i64 = 30_000_000;
+/// How close the passenger must be. rose-next uses Ride Request's scope (skill 25), which is
+/// empty in this client's data; this is our own choice.
+const RIDE_RANGE_CM: f32 = 600.0;
+
+/// A passenger on the back seat of `driver`'s vehicle.
+#[spacetimedb::table(accessor = passenger, public)]
+#[derive(Clone)]
+pub struct Passenger {
+    #[primary_key]
+    pub guest: u64,
+    #[unique]
+    pub driver: u64,
+    pub since_us: i64,
+}
+
+#[spacetimedb::table(accessor = ride_offer, public)]
+#[derive(Clone)]
+pub struct RideOffer {
+    #[primary_key]
+    #[auto_inc]
+    pub id: u64,
+    pub driver: u64,
+    pub guest: u64,
+    pub expires_us: i64,
+}
+
+pub fn is_passenger(ctx: &ReducerContext, id: u64) -> bool {
+    ctx.db.passenger().guest().find(id).is_some()
+}
+
+/// Why a passenger can't do something, or None for everyone else.
+pub fn passenger_refusal(ctx: &ReducerContext, id: u64) -> Option<&'static str> {
+    is_passenger(ctx, id).then_some("you are riding as a passenger (get off first)")
+}
+
+fn has_seat(game: &GameData, p: &Player) -> bool {
+    p.equipment()
+        .get_vehicle_item(VehiclePartIndex::Arms)
+        .and_then(|a| game.items.get_vehicle_item(a.item.item_number))
+        .is_some_and(|v| v.has_seat)
+}
+
+fn player_of(ctx: &ReducerContext, id: u64) -> Option<Player> {
+    ctx.db.player().iter().find(|p| p.entity_id == Some(id))
+}
+
+/// The passenger goes where the driver goes: same path, same speed.
+pub fn sync_passenger(ctx: &ReducerContext, driver: u64) {
+    let Some(ride) = ctx.db.passenger().driver().find(driver) else { return };
+    let Some(m) = ctx.db.motion().entity_id().find(driver) else { return };
+    let row = crate::Motion { entity_id: ride.guest, chase_target: None, ..m };
+    if ctx.db.motion().entity_id().find(ride.guest).is_some() {
+        ctx.db.motion().entity_id().update(row);
+    } else {
+        ctx.db.motion().insert(row);
+    }
+}
+
+/// The driver's passenger gets off where they are.
+fn drop_passenger(ctx: &ReducerContext, driver: u64) {
+    if let Some(ride) = ctx.db.passenger().driver().find(driver) {
+        leave_seat(ctx, ride.guest);
+    }
+}
+
+/// Get off the back seat (nothing if not riding).
+pub fn leave_seat(ctx: &ReducerContext, guest: u64) {
+    let Some(ride) = ctx.db.passenger().guest().find(guest) else { return };
+    ctx.db.passenger().guest().delete(guest);
+    crate::stop_motion(ctx, guest);
+    if let Some(g) = player_of(ctx, guest) {
+        if let Some(d) = player_of(ctx, ride.driver) {
+            items::notify(ctx, d.identity, format!("{} got off", g.name));
+        }
+    }
+}
+
+/// The driver's passenger, if any (for warps: they come along).
+pub fn passenger_of(ctx: &ReducerContext, driver: u64) -> Option<u64> {
+    ctx.db.passenger().driver().find(driver).map(|r| r.guest)
+}
+
+/// Offer the player on `guest_entity` a ride (the Ride Request action).
+#[spacetimedb::reducer]
+pub fn ride_offer_to(ctx: &ReducerContext, guest_entity: u64) -> Result<(), String> {
+    let game = game(ctx)?;
+    let (p, id) = my_player(ctx)?;
+    if !is_driving(ctx, id) {
+        return Err("get on your vehicle first".into());
+    }
+    if !has_seat(&game, &p) {
+        return Err("your vehicle needs a second seat (an add-on chair)".into());
+    }
+    if ctx.db.passenger().driver().find(id).is_some() {
+        return Err("someone is already riding with you".into());
+    }
+    if guest_entity == id {
+        return Err("pick another player".into());
+    }
+    let target = ctx.db.entity().entity_id().find(guest_entity).filter(|e| e.kind == EntityKind::Player).ok_or("pick another player")?;
+    let guest = player_of(ctx, guest_entity).ok_or("they aren't here")?;
+    check_guest(ctx, &p, id, &guest, guest_entity, target.zone_id)?;
+    let t = now_us(ctx);
+    let old: Vec<u64> = ctx.db.ride_offer().iter().filter(|o| o.driver == id).map(|o| o.id).collect();
+    for o in old {
+        ctx.db.ride_offer().id().delete(o);
+    }
+    ctx.db.ride_offer().insert(RideOffer { id: 0, driver: id, guest: guest_entity, expires_us: t + RIDE_OFFER_US });
+    items::notify(ctx, p.identity, format!("You offered {} a ride", guest.name));
+    Ok(())
+}
+
+fn check_guest(ctx: &ReducerContext, driver: &Player, driver_id: u64, guest: &Player, guest_id: u64, guest_zone: u16) -> Result<(), String> {
+    let t = now_us(ctx);
+    let near = match (crate::position(ctx, driver_id, t), crate::position(ctx, guest_id, t)) {
+        (Some(a), Some(b)) => guest_zone == driver.zone_id && crate::distance(a, b) <= RIDE_RANGE_CM,
+        _ => false,
+    };
+    if !near {
+        return Err(format!("{} is too far away", guest.name));
+    }
+    if is_driving(ctx, guest_id) || is_passenger(ctx, guest_id) {
+        return Err(format!("{} is already riding", guest.name));
+    }
+    if !crate::is_alive(ctx, guest_id) {
+        return Err(format!("{} is down", guest.name));
+    }
+    if crate::shop::is_open(ctx, guest_id) {
+        return Err(format!("{} has a shop open", guest.name));
+    }
+    Ok(())
+}
+
+/// Accept or decline a ride offer made to us.
+#[spacetimedb::reducer]
+pub fn ride_answer(ctx: &ReducerContext, offer_id: u64, accept: bool) -> Result<(), String> {
+    let game = game(ctx)?;
+    let (me, id) = my_player(ctx)?;
+    let offer = ctx.db.ride_offer().id().find(offer_id).filter(|o| o.guest == id).ok_or("that offer has lapsed")?;
+    ctx.db.ride_offer().id().delete(offer_id);
+    let driver = player_of(ctx, offer.driver).ok_or("they have left")?;
+    if !accept {
+        items::notify(ctx, driver.identity, format!("{} doesn't want a ride", me.name));
+        return Ok(());
+    }
+    if !is_driving(ctx, offer.driver) || !has_seat(&game, &driver) {
+        return Err(format!("{} isn't driving any more", driver.name));
+    }
+    if ctx.db.passenger().driver().find(offer.driver).is_some() {
+        return Err("someone else got on first".into());
+    }
+    check_guest(ctx, &driver, offer.driver, &me, id, me.zone_id)?;
+    if crate::trade::trade_of(ctx, me.identity).is_some() {
+        return Err("you are trading".into());
+    }
+    let t = now_us(ctx);
+    crate::stand_up(ctx, id);
+    crate::cancel_attack(ctx, id, t);
+    crate::skills::cancel_cast(ctx, id);
+    ctx.db.passenger().insert(Passenger { guest: id, driver: offer.driver, since_us: t });
+    sync_passenger(ctx, offer.driver);
+    items::notify(ctx, driver.identity, format!("{} got on", me.name));
+    Ok(())
+}
+
+/// Get off someone's vehicle.
+#[spacetimedb::reducer]
+pub fn ride_leave(ctx: &ReducerContext) -> Result<(), String> {
+    let (_, id) = my_player(ctx)?;
+    if !is_passenger(ctx, id) {
+        return Err("you aren't riding with anyone".into());
+    }
+    leave_seat(ctx, id);
     Ok(())
 }

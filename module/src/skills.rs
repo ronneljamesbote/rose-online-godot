@@ -475,7 +475,7 @@ fn use_cost(av: &AbilityValues, ability_type: AbilityType, value: i32) -> i32 {
 
 /// rose-offline's skill_can_use for a player: cooldowns, costs and the weapon it needs.
 pub(crate) fn check_can_use(ctx: &ReducerContext, game: &GameData, p: &Player, id: u64, skill: &SkillData, t: i64) -> Result<(), String> {
-    if let Some(reason) = disabled_reason(ctx, id) {
+    if let Some(reason) = disabled_reason(ctx, id).or(crate::vehicle::passenger_refusal(ctx, id)) {
         return Err(reason.into());
     }
     if has_status(ctx, id, StatusEffectType::Dumb) {
@@ -767,7 +767,10 @@ pub fn cast_skill(ctx: &ReducerContext, page: u8, index: u16, target: Option<u64
                 (Some(B::PartyInvite), Some(target)) => crate::party::party_invite(ctx, target),
                 (Some(B::Trade), Some(target)) => crate::trade::trade_ask(ctx, target),
                 (Some(B::AddFriend), Some(target)) => crate::friends::friend_ask_entity(ctx, target),
-                (Some(B::Attack | B::PartyInvite | B::Trade | B::AddFriend), None) => Err("pick a target first".into()),
+                (Some(B::VehiclePassengerInvite), Some(target)) => crate::vehicle::ride_offer_to(ctx, target),
+                // Ride Request (skill 25) has no command in this client's data.
+                (None, Some(target)) if skill.id.get() == 25 => crate::vehicle::ride_offer_to(ctx, target),
+                (Some(B::Attack | B::PartyInvite | B::Trade | B::AddFriend | B::VehiclePassengerInvite), None) => Err("pick a target first".into()),
                 // Picking a target is done by the game client.
                 (Some(B::AutoTarget | B::SelfTarget), _) => Ok(()),
                 _ => Err(format!("{} isn't in the game yet", skill.name)),

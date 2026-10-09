@@ -99,6 +99,8 @@ pub mod party_set_leader_reducer;
 pub mod party_set_rules_reducer;
 pub mod party_table;
 pub mod party_type;
+pub mod passenger_table;
+pub mod passenger_type;
 pub mod personal_store_table;
 pub mod personal_store_type;
 pub mod pickup_item_reducer;
@@ -112,6 +114,11 @@ pub mod reset_monsters_reducer;
 pub mod revive_player_reducer;
 pub mod revive_shield_table;
 pub mod revive_shield_type;
+pub mod ride_answer_reducer;
+pub mod ride_leave_reducer;
+pub mod ride_offer_table;
+pub mod ride_offer_to_reducer;
+pub mod ride_offer_type;
 pub mod save_point_table;
 pub mod save_point_type;
 pub mod send_chat_reducer;
@@ -147,7 +154,11 @@ pub mod store_item_table;
 pub mod store_item_type;
 pub mod store_listing_type;
 pub mod store_open_reducer;
+pub mod store_sell_reducer;
 pub mod store_sell_type;
+pub mod store_want_table;
+pub mod store_want_type;
+pub mod store_wanted_type;
 pub mod summon_table;
 pub mod summon_type;
 pub mod taunt_type;
@@ -273,6 +284,8 @@ pub use party_set_leader_reducer::party_set_leader;
 pub use party_set_rules_reducer::party_set_rules;
 pub use party_table::*;
 pub use party_type::Party;
+pub use passenger_table::*;
+pub use passenger_type::Passenger;
 pub use personal_store_table::*;
 pub use personal_store_type::PersonalStore;
 pub use pickup_item_reducer::pickup_item;
@@ -286,6 +299,11 @@ pub use reset_monsters_reducer::reset_monsters;
 pub use revive_player_reducer::revive_player;
 pub use revive_shield_table::*;
 pub use revive_shield_type::ReviveShield;
+pub use ride_answer_reducer::ride_answer;
+pub use ride_leave_reducer::ride_leave;
+pub use ride_offer_table::*;
+pub use ride_offer_to_reducer::ride_offer_to;
+pub use ride_offer_type::RideOffer;
 pub use save_point_table::*;
 pub use save_point_type::SavePoint;
 pub use send_chat_reducer::send_chat;
@@ -321,7 +339,11 @@ pub use store_item_table::*;
 pub use store_item_type::StoreItem;
 pub use store_listing_type::StoreListing;
 pub use store_open_reducer::store_open;
+pub use store_sell_reducer::store_sell;
 pub use store_sell_type::StoreSell;
+pub use store_want_table::*;
+pub use store_want_type::StoreWant;
+pub use store_wanted_type::StoreWanted;
 pub use summon_table::*;
 pub use summon_type::Summon;
 pub use taunt_type::Taunt;
@@ -549,6 +571,14 @@ pub enum Reducer {
     RevivePlayer {
         at_save_point: bool,
     },
+    RideAnswer {
+        offer_id: u64,
+        accept: bool,
+    },
+    RideLeave,
+    RideOfferTo {
+        guest_entity: u64,
+    },
     SendChat {
         channel: ChatChannel,
         to: String,
@@ -612,6 +642,14 @@ pub enum Reducer {
     StoreOpen {
         title: String,
         listings: Vec<StoreListing>,
+        wanted: Vec<StoreWanted>,
+    },
+    StoreSell {
+        store_entity: u64,
+        want_id: u64,
+        page: u8,
+        index: u16,
+        quantity: u32,
     },
     TradeAccept,
     TradeAnswer {
@@ -709,6 +747,9 @@ impl __sdk::Reducer for Reducer {
             Reducer::RefineItem { .. } => "refine_item",
             Reducer::ResetMonsters => "reset_monsters",
             Reducer::RevivePlayer { .. } => "revive_player",
+            Reducer::RideAnswer { .. } => "ride_answer",
+            Reducer::RideLeave => "ride_leave",
+            Reducer::RideOfferTo { .. } => "ride_offer_to",
             Reducer::SendChat { .. } => "send_chat",
             Reducer::SetAggroRange { .. } => "set_aggro_range",
             Reducer::SetAuthIssuer { .. } => "set_auth_issuer",
@@ -726,6 +767,7 @@ impl __sdk::Reducer for Reducer {
             Reducer::StoreBuy { .. } => "store_buy",
             Reducer::StoreClose => "store_close",
             Reducer::StoreOpen { .. } => "store_open",
+            Reducer::StoreSell { .. } => "store_sell",
             Reducer::TradeAccept => "trade_accept",
             Reducer::TradeAnswer { .. } => "trade_answer",
             Reducer::TradeAsk { .. } => "trade_ask",
@@ -1053,6 +1095,18 @@ impl __sdk::Reducer for Reducer {
                     at_save_point: at_save_point.clone(),
                 })
             }
+            Reducer::RideAnswer { offer_id, accept } => {
+                __sats::bsatn::to_vec(&ride_answer_reducer::RideAnswerArgs {
+                    offer_id: offer_id.clone(),
+                    accept: accept.clone(),
+                })
+            }
+            Reducer::RideLeave => __sats::bsatn::to_vec(&ride_leave_reducer::RideLeaveArgs {}),
+            Reducer::RideOfferTo { guest_entity } => {
+                __sats::bsatn::to_vec(&ride_offer_to_reducer::RideOfferToArgs {
+                    guest_entity: guest_entity.clone(),
+                })
+            }
             Reducer::SendChat { channel, to, text } => {
                 __sats::bsatn::to_vec(&send_chat_reducer::SendChatArgs {
                     channel: channel.clone(),
@@ -1147,12 +1201,28 @@ impl __sdk::Reducer for Reducer {
                 quantity: quantity.clone(),
             }),
             Reducer::StoreClose => __sats::bsatn::to_vec(&store_close_reducer::StoreCloseArgs {}),
-            Reducer::StoreOpen { title, listings } => {
-                __sats::bsatn::to_vec(&store_open_reducer::StoreOpenArgs {
-                    title: title.clone(),
-                    listings: listings.clone(),
-                })
-            }
+            Reducer::StoreOpen {
+                title,
+                listings,
+                wanted,
+            } => __sats::bsatn::to_vec(&store_open_reducer::StoreOpenArgs {
+                title: title.clone(),
+                listings: listings.clone(),
+                wanted: wanted.clone(),
+            }),
+            Reducer::StoreSell {
+                store_entity,
+                want_id,
+                page,
+                index,
+                quantity,
+            } => __sats::bsatn::to_vec(&store_sell_reducer::StoreSellArgs {
+                store_entity: store_entity.clone(),
+                want_id: want_id.clone(),
+                page: page.clone(),
+                index: index.clone(),
+                quantity: quantity.clone(),
+            }),
             Reducer::TradeAccept => {
                 __sats::bsatn::to_vec(&trade_accept_reducer::TradeAcceptArgs {})
             }
@@ -1245,9 +1315,11 @@ pub struct DbUpdate {
     party: __sdk::TableUpdate<Party>,
     party_invitation: __sdk::TableUpdate<PartyInvite>,
     party_member: __sdk::TableUpdate<PartyMember>,
+    passenger: __sdk::TableUpdate<Passenger>,
     personal_store: __sdk::TableUpdate<PersonalStore>,
     player: __sdk::TableUpdate<Player>,
     revive_shield: __sdk::TableUpdate<ReviveShield>,
+    ride_offer: __sdk::TableUpdate<RideOffer>,
     save_point: __sdk::TableUpdate<SavePoint>,
     sitting: __sdk::TableUpdate<Sitting>,
     skill_cast: __sdk::TableUpdate<SkillCast>,
@@ -1255,6 +1327,7 @@ pub struct DbUpdate {
     stats: __sdk::TableUpdate<Stats>,
     status_effect: __sdk::TableUpdate<StatusEffectRow>,
     store_item: __sdk::TableUpdate<StoreItem>,
+    store_want: __sdk::TableUpdate<StoreWant>,
     summon: __sdk::TableUpdate<Summon>,
     tick_stats: __sdk::TableUpdate<TickStats>,
     trade: __sdk::TableUpdate<Trade>,
@@ -1325,6 +1398,9 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "party_member" => db_update
                     .party_member
                     .append(party_member_table::parse_table_update(table_update)?),
+                "passenger" => db_update
+                    .passenger
+                    .append(passenger_table::parse_table_update(table_update)?),
                 "personal_store" => db_update
                     .personal_store
                     .append(personal_store_table::parse_table_update(table_update)?),
@@ -1334,6 +1410,9 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "revive_shield" => db_update
                     .revive_shield
                     .append(revive_shield_table::parse_table_update(table_update)?),
+                "ride_offer" => db_update
+                    .ride_offer
+                    .append(ride_offer_table::parse_table_update(table_update)?),
                 "save_point" => db_update
                     .save_point
                     .append(save_point_table::parse_table_update(table_update)?),
@@ -1355,6 +1434,9 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "store_item" => db_update
                     .store_item
                     .append(store_item_table::parse_table_update(table_update)?),
+                "store_want" => db_update
+                    .store_want
+                    .append(store_want_table::parse_table_update(table_update)?),
                 "summon" => db_update
                     .summon
                     .append(summon_table::parse_table_update(table_update)?),
@@ -1446,6 +1528,9 @@ impl __sdk::DbUpdate for DbUpdate {
         diff.party_member = cache
             .apply_diff_to_table::<PartyMember>("party_member", &self.party_member)
             .with_updates_by_pk(|row| &row.identity);
+        diff.passenger = cache
+            .apply_diff_to_table::<Passenger>("passenger", &self.passenger)
+            .with_updates_by_pk(|row| &row.guest);
         diff.personal_store = cache
             .apply_diff_to_table::<PersonalStore>("personal_store", &self.personal_store)
             .with_updates_by_pk(|row| &row.entity_id);
@@ -1455,6 +1540,9 @@ impl __sdk::DbUpdate for DbUpdate {
         diff.revive_shield = cache
             .apply_diff_to_table::<ReviveShield>("revive_shield", &self.revive_shield)
             .with_updates_by_pk(|row| &row.entity_id);
+        diff.ride_offer = cache
+            .apply_diff_to_table::<RideOffer>("ride_offer", &self.ride_offer)
+            .with_updates_by_pk(|row| &row.id);
         diff.save_point = cache
             .apply_diff_to_table::<SavePoint>("save_point", &self.save_point)
             .with_updates_by_pk(|row| &row.identity);
@@ -1475,6 +1563,9 @@ impl __sdk::DbUpdate for DbUpdate {
             .with_updates_by_pk(|row| &row.id);
         diff.store_item = cache
             .apply_diff_to_table::<StoreItem>("store_item", &self.store_item)
+            .with_updates_by_pk(|row| &row.id);
+        diff.store_want = cache
+            .apply_diff_to_table::<StoreWant>("store_want", &self.store_want)
             .with_updates_by_pk(|row| &row.id);
         diff.summon = cache
             .apply_diff_to_table::<Summon>("summon", &self.summon)
@@ -1563,6 +1654,9 @@ impl __sdk::DbUpdate for DbUpdate {
                 "party_member" => db_update
                     .party_member
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "passenger" => db_update
+                    .passenger
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "personal_store" => db_update
                     .personal_store
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
@@ -1571,6 +1665,9 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "revive_shield" => db_update
                     .revive_shield
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "ride_offer" => db_update
+                    .ride_offer
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "save_point" => db_update
                     .save_point
@@ -1592,6 +1689,9 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "store_item" => db_update
                     .store_item
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "store_want" => db_update
+                    .store_want
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "summon" => db_update
                     .summon
@@ -1684,6 +1784,9 @@ impl __sdk::DbUpdate for DbUpdate {
                 "party_member" => db_update
                     .party_member
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "passenger" => db_update
+                    .passenger
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "personal_store" => db_update
                     .personal_store
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
@@ -1692,6 +1795,9 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "revive_shield" => db_update
                     .revive_shield
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "ride_offer" => db_update
+                    .ride_offer
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "save_point" => db_update
                     .save_point
@@ -1713,6 +1819,9 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "store_item" => db_update
                     .store_item
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "store_want" => db_update
+                    .store_want
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "summon" => db_update
                     .summon
@@ -1771,9 +1880,11 @@ pub struct AppliedDiff<'r> {
     party: __sdk::TableAppliedDiff<'r, Party>,
     party_invitation: __sdk::TableAppliedDiff<'r, PartyInvite>,
     party_member: __sdk::TableAppliedDiff<'r, PartyMember>,
+    passenger: __sdk::TableAppliedDiff<'r, Passenger>,
     personal_store: __sdk::TableAppliedDiff<'r, PersonalStore>,
     player: __sdk::TableAppliedDiff<'r, Player>,
     revive_shield: __sdk::TableAppliedDiff<'r, ReviveShield>,
+    ride_offer: __sdk::TableAppliedDiff<'r, RideOffer>,
     save_point: __sdk::TableAppliedDiff<'r, SavePoint>,
     sitting: __sdk::TableAppliedDiff<'r, Sitting>,
     skill_cast: __sdk::TableAppliedDiff<'r, SkillCast>,
@@ -1781,6 +1892,7 @@ pub struct AppliedDiff<'r> {
     stats: __sdk::TableAppliedDiff<'r, Stats>,
     status_effect: __sdk::TableAppliedDiff<'r, StatusEffectRow>,
     store_item: __sdk::TableAppliedDiff<'r, StoreItem>,
+    store_want: __sdk::TableAppliedDiff<'r, StoreWant>,
     summon: __sdk::TableAppliedDiff<'r, Summon>,
     tick_stats: __sdk::TableAppliedDiff<'r, TickStats>,
     trade: __sdk::TableAppliedDiff<'r, Trade>,
@@ -1844,6 +1956,7 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
             &self.party_member,
             event,
         );
+        callbacks.invoke_table_row_callbacks::<Passenger>("passenger", &self.passenger, event);
         callbacks.invoke_table_row_callbacks::<PersonalStore>(
             "personal_store",
             &self.personal_store,
@@ -1855,6 +1968,7 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
             &self.revive_shield,
             event,
         );
+        callbacks.invoke_table_row_callbacks::<RideOffer>("ride_offer", &self.ride_offer, event);
         callbacks.invoke_table_row_callbacks::<SavePoint>("save_point", &self.save_point, event);
         callbacks.invoke_table_row_callbacks::<Sitting>("sitting", &self.sitting, event);
         callbacks.invoke_table_row_callbacks::<SkillCast>("skill_cast", &self.skill_cast, event);
@@ -1870,6 +1984,7 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
             event,
         );
         callbacks.invoke_table_row_callbacks::<StoreItem>("store_item", &self.store_item, event);
+        callbacks.invoke_table_row_callbacks::<StoreWant>("store_want", &self.store_want, event);
         callbacks.invoke_table_row_callbacks::<Summon>("summon", &self.summon, event);
         callbacks.invoke_table_row_callbacks::<TickStats>("tick_stats", &self.tick_stats, event);
         callbacks.invoke_table_row_callbacks::<Trade>("trade", &self.trade, event);
@@ -2560,9 +2675,11 @@ impl __sdk::SpacetimeModule for RemoteModule {
         party_table::register_table(client_cache);
         party_invitation_table::register_table(client_cache);
         party_member_table::register_table(client_cache);
+        passenger_table::register_table(client_cache);
         personal_store_table::register_table(client_cache);
         player_table::register_table(client_cache);
         revive_shield_table::register_table(client_cache);
+        ride_offer_table::register_table(client_cache);
         save_point_table::register_table(client_cache);
         sitting_table::register_table(client_cache);
         skill_cast_table::register_table(client_cache);
@@ -2570,6 +2687,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
         stats_table::register_table(client_cache);
         status_effect_table::register_table(client_cache);
         store_item_table::register_table(client_cache);
+        store_want_table::register_table(client_cache);
         summon_table::register_table(client_cache);
         tick_stats_table::register_table(client_cache);
         trade_table::register_table(client_cache);
@@ -2598,9 +2716,11 @@ impl __sdk::SpacetimeModule for RemoteModule {
         "party",
         "party_invitation",
         "party_member",
+        "passenger",
         "personal_store",
         "player",
         "revive_shield",
+        "ride_offer",
         "save_point",
         "sitting",
         "skill_cast",
@@ -2608,6 +2728,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
         "stats",
         "status_effect",
         "store_item",
+        "store_want",
         "summon",
         "tick_stats",
         "trade",
