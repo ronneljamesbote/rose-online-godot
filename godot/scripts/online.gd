@@ -201,6 +201,7 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 
 	inventory_window = InventoryWindow.new()
 	inventory_window.net = net
+	inventory_window.online = self
 	inventory_window.visible = false
 	_window(inventory_window, "inventory", "Inventory", Vector2(1, 0.55), Vector2(-12, 0), true)
 
@@ -861,6 +862,9 @@ func _process(_delta: float) -> void:
 		elif (window[0] == "refine" or window[0] == "disassemble") and entities.has(npc_id):
 			store_window.close_store()
 			work_window.open_npc(window[0], npc_id, entities[npc_id])
+		elif window[0] == "repair" and entities.has(npc_id):
+			store_window.close_store()
+			inventory_window.start_npc_repair(npc_id, entities[npc_id])
 
 	# Name tags and item labels are drawn by world_overlay.gd.
 	var pvp: bool = net.zone_pvp() > 0
