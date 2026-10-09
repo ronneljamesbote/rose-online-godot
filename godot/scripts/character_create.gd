@@ -25,15 +25,24 @@ var auto_create_after := -1.0  # --create-after=SECONDS presses Create by itself
 
 
 func _ready() -> void:
+	# The whole screen behind the creation panel, in the theme's colours.
+	var backdrop := TextureRect.new()
+	backdrop.set_anchors_preset(Control.PRESET_FULL_RECT)
+	backdrop.texture = RoseData.texture("3DDATA/CONTROL/RES/LOADING.DDS")
+	backdrop.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	backdrop.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	backdrop.modulate = Color(0.45, 0.45, 0.55)
+	add_child(backdrop)
 	var root := HBoxContainer.new()
 	root.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
 	root.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	root.grow_vertical = Control.GROW_DIRECTION_BOTH
-	root.add_theme_constant_override("separation", 0)
+	root.add_theme_constant_override("separation", 16)
 	add_child(root)
 
 	var panel := PanelContainer.new()
-	panel.custom_minimum_size = Vector2(340, 420)
+	panel.theme_type_variation = "QuestionPanel"
+	panel.custom_minimum_size = Vector2(340, 460)
 	root.add_child(panel)
 	var margin := MarginContainer.new()
 	for side in ["left", "right", "top", "bottom"]:
@@ -45,6 +54,7 @@ func _ready() -> void:
 
 	var title := Label.new()
 	title.text = "Create your character"
+	title.theme_type_variation = "HeaderLabel"
 	title.add_theme_font_size_override("font_size", 22)
 	box.add_child(title)
 
@@ -72,18 +82,19 @@ func _ready() -> void:
 	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	box.add_child(spacer)
 	error_label = Label.new()
-	error_label.add_theme_color_override("font_color", Color(1, 0.55, 0.5))
+	error_label.theme_type_variation = "BadLabel"
 	error_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	error_label.custom_minimum_size.x = 300
 	box.add_child(error_label)
 	create_button = Button.new()
 	create_button.text = "Create character"
+	create_button.theme_type_variation = "ButtonPrimary"
 	create_button.pressed.connect(_create)
 	box.add_child(create_button)
 
 	# The preview: the character on its own, slowly turning.
 	var view_container := SubViewportContainer.new()
-	view_container.custom_minimum_size = Vector2(340, 420)
+	view_container.custom_minimum_size = Vector2(380, 500)
 	view_container.stretch = true
 	root.add_child(view_container)
 	var viewport := SubViewport.new()
@@ -92,7 +103,7 @@ func _ready() -> void:
 	view_container.add_child(viewport)
 	var environment := Environment.new()
 	environment.background_mode = Environment.BG_COLOR
-	environment.background_color = Color(0.11, 0.09, 0.15)
+	environment.background_color = Color(UI.color("panel.bottom").darkened(0.45), 1.0)
 	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	environment.ambient_light_color = Color(0.7, 0.7, 0.75)
 	var world_environment := WorldEnvironment.new()
@@ -115,7 +126,7 @@ func _ready() -> void:
 func _caption(text: String) -> Label:
 	var label := Label.new()
 	label.text = text
-	label.add_theme_color_override("font_color", Color(0.75, 0.72, 0.82))
+	label.theme_type_variation = "MutedLabel"
 	return label
 
 

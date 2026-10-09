@@ -58,7 +58,7 @@ func _ready() -> void:
 	hint = Label.new()
 	hint.text = "Right-click buys 1, Shift+right-click 10.\nRight-click a bag item to sell 1, Shift for the stack."
 	hint.add_theme_font_size_override("font_size", 12)
-	hint.modulate = Color(1, 1, 1, 0.6)
+	hint.theme_type_variation = "MutedLabel"
 	box.add_child(hint)
 
 

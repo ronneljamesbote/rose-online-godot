@@ -117,7 +117,7 @@ func _show_materials() -> void:
 		var label := Label.new()
 		label.text = "Step %d: %s x%d%s" % [i + 1, m["name"], m["quantity"], "" if have else "   (missing)"]
 		if not have:
-			label.modulate = Color(1, 0.55, 0.5)
+			label.theme_type_variation = "BadLabel"
 		row.add_child(label)
 		materials_box.add_child(row)
 	craft_button.disabled = not ready

@@ -126,16 +126,11 @@ func _member_row(m: Dictionary, i_lead: bool) -> Control:
 	label.text = "%s%s  Lv %d%s" % ["★ " if m["leader"] else "", m["name"], m["level"], "" if m["online"] else "  (offline)"]
 	label.add_theme_font_size_override("font_size", 13)
 	if not m["online"]:
-		label.modulate = Color(1, 1, 1, 0.5)
+		label.theme_type_variation = "MutedLabel"
 	row.add_child(label)
-	var bar := ProgressBar.new()
-	bar.custom_minimum_size = Vector2(0, 8)
-	bar.show_percentage = false
-	bar.max_value = m["max_hp"]
-	bar.value = m["hp"] if m["online"] else 0
-	var fill := StyleBoxFlat.new()
-	fill.bg_color = Color(0.8, 0.2, 0.2)
-	bar.add_theme_stylebox_override("fill", fill)
+	var bar := UiBar.new("hp")
+	bar.height_scale = 0.8
+	bar.set_values(m["hp"] if m["online"] else 0, m["max_hp"])
 	row.add_child(bar)
 	if i_lead and not m["me"]:
 		row.mouse_filter = Control.MOUSE_FILTER_STOP

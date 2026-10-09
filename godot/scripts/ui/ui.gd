@@ -13,6 +13,7 @@ const BUILTIN := ["arumic", "twilight", "junon-air", "clear"]
 const DEFAULT_THEME := "arumic"
 const SETTINGS := "user://settings.cfg"
 const LAYOUT := "user://ui_layout.cfg"
+const WRITTEN := "user://themes_written.cfg"  # checksums of the built-in theme files we wrote
 const FONTS := {
 	"nunito": "res://ui/fonts/Nunito.ttf",
 	"baloo 2": "res://ui/fonts/Baloo2.ttf",
@@ -74,13 +75,21 @@ func themes_dir() -> String:
 func reload_themes() -> void:
 	var dir := themes_dir()
 	DirAccess.make_dir_recursive_absolute(dir)
+	# A built-in theme file the player never changed is updated with the game; one they
+	# edited is left alone.
+	var written := ConfigFile.new()
+	written.load(WRITTEN)
 	for id in BUILTIN:
 		var target := dir.path_join(id + ".toml")
-		if not FileAccess.file_exists(target):
-			var text := FileAccess.get_file_as_string(BUILTIN_DIR.path_join(id + ".toml"))
+		var text := FileAccess.get_file_as_string(BUILTIN_DIR.path_join(id + ".toml"))
+		var current := FileAccess.get_file_as_string(target) if FileAccess.file_exists(target) else ""
+		var untouched: bool = current == "" or current.md5_text() == written.get_value("md5", id, "")
+		if untouched and current != text:
 			var f := FileAccess.open(target, FileAccess.WRITE)
 			if f:
 				f.store_string(text)
+				written.set_value("md5", id, text.md5_text())
+	written.save(WRITTEN)
 	var raw := {}
 	# Built-in copies first, so a theme can always fall back on them.
 	for id in BUILTIN:

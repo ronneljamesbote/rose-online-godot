@@ -23,7 +23,7 @@ func _ready() -> void:
 	box.add_child(title)
 	empty = Label.new()
 	empty.text = "No quests. Talk to people in town to find some."
-	empty.modulate = Color(1, 1, 1, 0.6)
+	empty.theme_type_variation = "MutedLabel"
 	box.add_child(empty)
 	list = VBoxContainer.new()
 	list.add_theme_constant_override("separation", 10)
@@ -51,8 +51,8 @@ func _quest_entry(quest: Dictionary) -> Control:
 	box.add_child(top)
 	var name := Label.new()
 	name.text = quest["name"]
-	name.theme_type_variation = "HeaderLabel"
-	name.add_theme_color_override("font_color", Color(1.0, 0.85, 0.5))
+	name.theme_type_variation = "AccentLabel"
+	name.add_theme_font_size_override("font_size", int(UI.num("font.size", 14)) + 2)
 	name.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	top.add_child(name)
 	if quest["time_left"] >= 0:

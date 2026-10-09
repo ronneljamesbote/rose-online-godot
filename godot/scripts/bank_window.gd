@@ -58,7 +58,7 @@ func _ready() -> void:
 	var hint := Label.new()
 	hint.text = "Right-click takes the stack, Shift one.\nRight-click a bag item to store it."
 	hint.add_theme_font_size_override("font_size", 12)
-	hint.modulate = Color(1, 1, 1, 0.6)
+	hint.theme_type_variation = "MutedLabel"
 	box.add_child(hint)
 
 

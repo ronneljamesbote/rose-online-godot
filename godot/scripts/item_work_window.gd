@@ -165,7 +165,7 @@ func _material_row(texture, text: String, have: bool) -> Control:
 	var label := Label.new()
 	label.text = text
 	if not have:
-		label.modulate = Color(1, 0.55, 0.5)
+		label.theme_type_variation = "BadLabel"
 	row.add_child(label)
 	return row
 
