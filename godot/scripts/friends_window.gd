@@ -30,7 +30,7 @@ func _ready() -> void:
 	box.add_child(top)
 	var title := Label.new()
 	title.text = "Friends"
-	title.add_theme_font_size_override("font_size", 16)
+	title.theme_type_variation = "HeaderLabel"
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	top.add_child(title)
 	count_label = Label.new()

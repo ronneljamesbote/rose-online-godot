@@ -146,6 +146,8 @@ pub fn item_dict(item: &Item) -> VarDictionary {
     if let Item::Equipment(e) = item {
         d.set("grade", e.grade as i64);
         d.set("life", e.life as i64);
+        d.set("socket", e.has_socket);
+        d.set("bonus", e.gem > 0 && e.gem <= 300);
         if e.grade > 0 {
             lines[0] = format!("{} +{}", lines[0], e.grade);
         }

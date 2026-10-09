@@ -17,7 +17,7 @@ func _ready() -> void:
 	margin.add_child(box)
 	var header := Label.new()
 	header.text = "Sound"
-	header.add_theme_font_size_override("font_size", 18)
+	header.theme_type_variation = "HeaderLabel"
 	box.add_child(header)
 	box.add_child(HSeparator.new())
 	_music = _slider(box, "Music", fx.music_volume)

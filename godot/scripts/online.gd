@@ -25,6 +25,19 @@ const Hotbar := preload("res://scripts/hotbar.gd")
 const ReviveWindow := preload("res://scripts/revive_window.gd")
 const FriendsWindow := preload("res://scripts/friends_window.gd")
 const ShopWindow := preload("res://scripts/shop_window.gd")
+const PlayerFrame := preload("res://scripts/ui/hud/player_frame.gd")
+const TargetFrame := preload("res://scripts/ui/hud/target_frame.gd")
+const PartyFrames := preload("res://scripts/ui/hud/party_frames.gd")
+const EffectRows := preload("res://scripts/ui/hud/effect_rows.gd")
+const Minimap := preload("res://scripts/ui/hud/minimap.gd")
+const HudMenu := preload("res://scripts/ui/hud/menu_bar.gd")
+const QuestTracker := preload("res://scripts/ui/hud/quest_tracker.gd")
+const Notices := preload("res://scripts/ui/hud/notices.gd")
+const CartGauge := preload("res://scripts/ui/hud/cart_gauge.gd")
+const XpLine := preload("res://scripts/ui/hud/xp_line.gd")
+const ZoneMap := preload("res://scripts/ui/zone_map.gd")
+const OptionsWindow := preload("res://scripts/ui/options_window.gd")
+const WorldOverlay := preload("res://scripts/ui/world_overlay.gd")
 const PICK_RADIUS_PX := 60.0
 const ITEM_PICK_RADIUS_PX := 30.0
 const PICKUP_RANGE := 2.5  # metres; the server allows 4
@@ -45,10 +58,22 @@ var player_name := ""
 var ranged := false  # equip the bow and arrows from the bag once signed in (--weapon=bow)
 var _ranged_equipped := false
 var _next_equip_try_ms := 0
-var hud: Label
-var target_hud: Label
-var xp_bar: ProgressBar
-var xp_label: Label
+var hud: Label  # connection and server messages
+var ui_root: UiRoot
+var world_overlay: Node  # name tags, item labels, bubbles, damage numbers
+var player_frame: Control
+var target_frame: Control
+var party_frames: Control
+var effects_rows: Control
+var minimap: Control
+var quest_tracker: Control
+var menu_bar: Control
+var cart_gauge: Control
+var xp_line: Control
+var map_window: Control
+var options_window: Control
+var _next_party_ms := 0
+var _next_quests_ms := 0
 var character_window: PanelContainer
 var inventory_window: PanelContainer
 var store_window: PanelContainer
@@ -69,9 +94,8 @@ var hotbar: PanelContainer
 var revive_window: PanelContainer
 var friends_window: PanelContainer
 var shop_window: PanelContainer
-var effects_row: HBoxContainer  # our status effects, top centre
 var _next_effects_ms := 0
-var notice_box: VBoxContainer
+var notice_box: Control
 var chat_window: PanelContainer
 var character_create: CanvasLayer  # while the account has no character
 var create_preset := ""  # --create=NAME,female,FACE,HAIR fills the creation screen
@@ -107,48 +131,85 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	var layer := CanvasLayer.new()
 	add_child(layer)
 	_layer = layer
-	hud = _hud_label(layer, Vector2(12, 8))
-	target_hud = _hud_label(layer, Vector2(12, 30))
-	target_hud.add_theme_font_size_override("font_size", 20)
+	# Name tags, item labels, bubbles and damage numbers sit under the interface.
+	world_overlay = WorldOverlay.new()
+	world_overlay.online = self
+	add_child(world_overlay)
+	ui_root = UiRoot.new()
+	ui_root.name = "UiRoot"
+	layer.add_child(ui_root)
+	# Connection and server messages, top centre.
+	hud = Label.new()
+	hud.theme_type_variation = "HeaderLabel"
+	hud.add_theme_color_override("font_color", Color.WHITE)
+	hud.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.85))
+	hud.add_theme_constant_override("outline_size", 5)
+	hud.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	hud.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	hud.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	hud.offset_top = 96
+	hud.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	ui_root.add_child(hud)
 
-	# Experience bar along the bottom of the screen.
-	xp_bar = ProgressBar.new()
-	xp_bar.show_percentage = false
-	xp_bar.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	xp_bar.offset_top = -14
-	xp_bar.max_value = 1.0
-	xp_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	layer.add_child(xp_bar)
-	xp_label = _hud_label(layer, Vector2.ZERO)
-	xp_label.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
-	xp_label.offset_top = -34
-	xp_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	xp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	# HUD widgets; each can be dragged by the grip that shows on hover.
+	player_frame = PlayerFrame.new()
+	_widget(player_frame, "player", Vector2(0, 0), Vector2(12, 12))
+	party_frames = PartyFrames.new()
+	_widget(party_frames, "party_frames", Vector2(0, 0), Vector2(12, 112))
+	target_frame = TargetFrame.new()
+	target_frame.visible = false
+	_widget(target_frame, "target", Vector2(0.5, 0), Vector2(0, 12))
+	effects_rows = EffectRows.new()
+	_widget(effects_rows, "effects", Vector2(0, 0), Vector2(310, 14))
+	minimap = Minimap.new()
+	minimap.online = self
+	_widget(minimap, "minimap", Vector2(1, 0), Vector2(-12, 12))
+	quest_tracker = QuestTracker.new()
+	quest_tracker.open_quests.connect(toggle_quest_window)
+	_widget(quest_tracker, "quest_tracker", Vector2(1, 0), Vector2(-12, 236))
+	menu_bar = HudMenu.new()
+	menu_bar.open.connect(_on_menu)
+	_widget(menu_bar, "menu", Vector2(1, 1), Vector2(-12, -12))
+	cart_gauge = CartGauge.new()
+	cart_gauge.visible = false
+	_widget(cart_gauge, "cart", Vector2(0.5, 1), Vector2(0, -112))
+
+	# The hotbar with the experience line under it.
+	var bottom := VBoxContainer.new()
+	bottom.add_theme_constant_override("separation", 6)
+	bottom.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hotbar = Hotbar.new()
+	hotbar.net = net
+	hotbar.online = self
+	hotbar.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	bottom.add_child(hotbar)
+	xp_line = XpLine.new()
+	bottom.add_child(xp_line)
+	_widget(bottom, "hotbar", Vector2(0.5, 1), Vector2(0, -10))
+
+	# The chat box bottom left, with messages (pickups, refused actions) above it.
+	chat_window = ChatWindow.new()
+	chat_window.net = net
+	_widget(chat_window, "chat", Vector2(0, 1), Vector2(12, -12))
+	notice_box = Notices.new()
+	_widget(notice_box, "notices", Vector2(0, 1), Vector2(12, -250))
 
 	character_window = CharacterWindow.new()
 	character_window.net = net
 	character_window.visible = false
-	character_window.position = Vector2(12, 70)
-	layer.add_child(character_window)
+	_window(character_window, "character", "Character", Vector2(0, 0), Vector2(12, 150), true).adopt_header = false
 
 	inventory_window = InventoryWindow.new()
 	inventory_window.net = net
 	inventory_window.visible = false
-	inventory_window.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
-	inventory_window.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-	inventory_window.offset_top = 70
-	inventory_window.offset_right = -12
-	layer.add_child(inventory_window)
+	_window(inventory_window, "inventory", "Inventory", Vector2(1, 0.55), Vector2(-12, 0), true)
 
 	store_window = StoreWindow.new()
 	store_window.net = net
 	store_window.online = self
 	store_window.inventory_window = inventory_window
 	store_window.visible = false
-	store_window.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
-	store_window.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-	store_window.offset_top = 70
-	layer.add_child(store_window)
+	_window(store_window, "store", "Store", Vector2(0.5, 0.5), Vector2(-160, 0)).close_method = "close_store"
 	inventory_window.store_window = store_window
 
 	bank_window = BankWindow.new()
@@ -156,44 +217,26 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	bank_window.online = self
 	bank_window.inventory_window = inventory_window
 	bank_window.visible = false
-	bank_window.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
-	bank_window.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-	bank_window.offset_top = 70
-	layer.add_child(bank_window)
+	_window(bank_window, "storage", "Storage", Vector2(0.5, 0.5), Vector2(-160, 0)).close_method = "close_bank"
 	inventory_window.bank_window = bank_window
 
 	party_window = PartyWindow.new()
 	party_window.net = net
 	party_window.visible = false
-	# Bottom right, clear of the notices on the left.
-	party_window.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
-	party_window.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-	party_window.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	party_window.offset_right = -12
-	party_window.offset_bottom = -12
-	layer.add_child(party_window)
-	party_window.invite_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
-	party_window.invite_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	party_window.invite_panel.offset_top = 60
-	layer.add_child(party_window.invite_panel)
+	_window(party_window, "party", "Party", Vector2(1, 1), Vector2(-12, -70), true)
+	_popup(party_window.invite_panel, 60)
 
 	craft_window = CraftWindow.new()
 	craft_window.net = net
 	craft_window.visible = false
-	craft_window.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	craft_window.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	craft_window.grow_vertical = Control.GROW_DIRECTION_BOTH
-	layer.add_child(craft_window)
+	_window(craft_window, "craft", "Crafting", Vector2(0.5, 0.5), Vector2.ZERO)
 
 	work_window = ItemWorkWindow.new()
 	work_window.net = net
 	work_window.online = self
 	work_window.inventory_window = inventory_window
 	work_window.visible = false
-	work_window.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
-	work_window.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-	work_window.offset_top = 70
-	layer.add_child(work_window)
+	_window(work_window, "item_work", "Refine", Vector2(0.5, 0.5), Vector2(-160, 0)).close_method = "close_window"
 	inventory_window.work_window = work_window
 
 	trade_window = TradeWindow.new()
@@ -201,14 +244,8 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	trade_window.online = self
 	trade_window.inventory_window = inventory_window
 	trade_window.visible = false
-	trade_window.set_anchors_and_offsets_preset(Control.PRESET_CENTER_LEFT)
-	trade_window.grow_vertical = Control.GROW_DIRECTION_BOTH
-	trade_window.offset_left = 20
-	layer.add_child(trade_window)
-	trade_window.request_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
-	trade_window.request_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	trade_window.request_panel.offset_top = 140
-	layer.add_child(trade_window.request_panel)
+	_window(trade_window, "trade", "Trade", Vector2(0, 0.5), Vector2(20, 0)).close_method = "cancel_trade"
+	_popup(trade_window.request_panel, 140)
 	inventory_window.trade_window = trade_window
 
 	# Right-click on another player.
@@ -237,119 +274,72 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	skill_window.net = net
 	skill_window.online = self
 	skill_window.visible = false
-	skill_window.position = Vector2(12, 70)
-	layer.add_child(skill_window)
+	_window(skill_window, "skills", "Skills", Vector2(0, 0.5), Vector2(12, 0), true)
 
 	conversation_window = ConversationWindow.new()
 	conversation_window.net = net
 	conversation_window.online = self
 	conversation_window.visible = false
-	conversation_window.set_anchors_and_offsets_preset(Control.PRESET_CENTER_LEFT)
-	conversation_window.offset_left = 40
-	conversation_window.grow_vertical = Control.GROW_DIRECTION_BOTH
-	layer.add_child(conversation_window)
+	_window(conversation_window, "conversation", "Conversation", Vector2(0, 0.5), Vector2(40, 0)).close_method = "close_conversation"
 
 	quest_window = QuestWindow.new()
 	quest_window.net = net
 	quest_window.visible = false
 	# On the right, so it stays clear of conversations on the left.
-	quest_window.set_anchors_and_offsets_preset(Control.PRESET_CENTER_RIGHT)
-	quest_window.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-	quest_window.grow_vertical = Control.GROW_DIRECTION_BOTH
-	quest_window.offset_right = -12
-	layer.add_child(quest_window)
-
-	hotbar = Hotbar.new()
-	hotbar.net = net
-	hotbar.online = self
-	hotbar.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
-	hotbar.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	hotbar.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	hotbar.offset_bottom = -40
-	layer.add_child(hotbar)
+	_window(quest_window, "quests", "Quests", Vector2(1, 0.5), Vector2(-12, 0), true)
 
 	revive_window = ReviveWindow.new()
 	revive_window.net = net
 	revive_window.visible = false
-	revive_window.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	revive_window.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	revive_window.grow_vertical = Control.GROW_DIRECTION_BOTH
-	revive_window.offset_top = 150  # below the fallen character
-	revive_window.offset_bottom = 150
-	layer.add_child(revive_window)
-
-	effects_row = HBoxContainer.new()
-	effects_row.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
-	effects_row.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	effects_row.offset_top = 8
-	layer.add_child(effects_row)
-
-	# The chat box above the experience bar, bottom left.
-	chat_window = ChatWindow.new()
-	chat_window.net = net
-	chat_window.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
-	chat_window.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	chat_window.offset_left = 12
-	chat_window.offset_bottom = -22
-	layer.add_child(chat_window)
-
-	# Messages (pickups, refused actions) above the chat box, newest at the bottom.
-	notice_box = VBoxContainer.new()
-	notice_box.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
-	notice_box.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	notice_box.offset_left = 12
-	notice_box.offset_bottom = -222
-	notice_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	layer.add_child(notice_box)
+	revive_window.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	ui_root.add_child(revive_window)
 
 	shop_window = ShopWindow.new()
 	shop_window.net = net
 	shop_window.online = self
 	shop_window.visible = false
-	# Under the top HUD line, so the tall setup window fits on screen.
-	shop_window.position = Vector2(20, 40)
-	layer.add_child(shop_window)
+	_window(shop_window, "shop", "Shop", Vector2(0, 0), Vector2(12, 150))
 
 	friends_window = FriendsWindow.new()
 	friends_window.net = net
 	friends_window.chat_window = chat_window
 	friends_window.visible = false
-	friends_window.set_anchors_and_offsets_preset(Control.PRESET_CENTER_RIGHT)
-	friends_window.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-	friends_window.grow_vertical = Control.GROW_DIRECTION_BOTH
-	friends_window.offset_right = -12
-	layer.add_child(friends_window)
-	friends_window.request_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
-	friends_window.request_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	friends_window.request_panel.offset_top = 200
-	layer.add_child(friends_window.request_panel)
+	_window(friends_window, "friends", "Friends", Vector2(1, 0.5), Vector2(-12, 0), true)
+	_popup(friends_window.request_panel, 200)
+
+	map_window = ZoneMap.new()
+	map_window.online = self
+	map_window.visible = false
+	_window(map_window, "map", "Map", Vector2(0.5, 0.5), Vector2.ZERO, true)
+
+	options_window = OptionsWindow.new()
+	options_window.visible = false
+	_window(options_window, "options", "Options", Vector2(0.5, 0.5), Vector2.ZERO)
 
 	# A driver offers us a ride.
 	ride_panel = PanelContainer.new()
 	ride_panel.visible = false
-	var ride_margin := MarginContainer.new()
-	for side in ["left", "right", "top", "bottom"]:
-		ride_margin.add_theme_constant_override("margin_" + side, 10)
-	ride_panel.add_child(ride_margin)
 	var ride_box := HBoxContainer.new()
 	ride_box.add_theme_constant_override("separation", 8)
-	ride_margin.add_child(ride_box)
+	ride_panel.add_child(ride_box)
 	ride_label = Label.new()
 	ride_box.add_child(ride_label)
 	for answer in [["Get on", true], ["No thanks", false]]:
 		var b := Button.new()
 		b.text = answer[0]
 		b.focus_mode = Control.FOCUS_NONE
+		if answer[1]:
+			b.theme_type_variation = "ButtonPrimary"
 		b.pressed.connect(func():
 			if _ride_offer >= 0:
 				net.ride_answer(_ride_offer, answer[1])
 			_ride_offer = -1
 			ride_panel.visible = false)
 		ride_box.add_child(b)
-	ride_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
-	ride_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	ride_panel.offset_top = 260
-	layer.add_child(ride_panel)
+	_popup(ride_panel, 260)
+	for frame in ui_root.get_children():
+		if frame is UiWindow:
+			frame.restore_open()
 
 	hud.text = "Connecting to %s..." % uri
 	if token != "":
@@ -359,14 +349,53 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	return net.connect_to(uri, token_path)
 
 
-func _hud_label(layer: CanvasLayer, at: Vector2) -> Label:
-	var label := Label.new()
-	label.position = at
-	label.add_theme_color_override("font_shadow_color", Color.BLACK)
-	label.add_theme_constant_override("shadow_offset_x", 1)
-	label.add_theme_constant_override("shadow_offset_y", 1)
-	layer.add_child(label)
-	return label
+## Puts a window in a frame (title bar, drag, scale, close) on the interface.
+func _window(content: Control, id: String, title: String, anchor: Vector2, offset: Vector2, remember := false) -> UiWindow:
+	var frame := UiWindow.wrap(content, id, title, anchor, offset)
+	frame.remember_open = remember
+	ui_root.add_child(frame)
+	return frame
+
+
+## Puts a HUD piece on the interface; the player can drag it.
+func _widget(content: Control, id: String, anchor: Vector2, offset: Vector2) -> UiWidget:
+	var widget := UiWidget.wrap(content, id, anchor, offset)
+	ui_root.add_child(widget)
+	return widget
+
+
+## A question that pops up at the top centre (party invites, trade requests).
+func _popup(panel: Control, from_top: float) -> void:
+	if panel.get_parent():
+		panel.get_parent().remove_child(panel)
+	panel.theme_type_variation = "QuestionPanel"
+	panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	panel.offset_top = from_top
+	ui_root.add_child(panel)
+
+
+## The menu bar's buttons.
+func _on_menu(which: String) -> void:
+	match which:
+		"character": toggle_character_window()
+		"inventory": toggle_inventory_window()
+		"skills": toggle_skill_window()
+		"quests": toggle_quest_window()
+		"party": toggle_party_window()
+		"friends": toggle_friends_window()
+		"map": toggle_map_window()
+		"options": toggle_options_window()
+
+
+## Esc: closes the window on top. False when none was open.
+func close_top_window() -> bool:
+	for i in range(ui_root.get_child_count() - 1, -1, -1):
+		var child := ui_root.get_child(i)
+		if child is UiWindow and child.visible:
+			child.close()
+			return true
+	return false
 
 
 ## The main scene loaded the zone our character is in: rebuild everything on it.
@@ -406,6 +435,18 @@ func toggle_friends_window() -> void:
 
 func toggle_quest_window() -> void:
 	quest_window.visible = not quest_window.visible
+
+
+func toggle_party_window() -> void:
+	party_window.visible = not party_window.visible
+
+
+func toggle_map_window() -> void:
+	map_window.visible = not map_window.visible
+
+
+func toggle_options_window() -> void:
+	options_window.visible = not options_window.visible
 
 
 ## Use a skill from a skill slot: on the current target when it needs one (the server
@@ -821,17 +862,9 @@ func _process(_delta: float) -> void:
 			store_window.close_store()
 			work_window.open_npc(window[0], npc_id, entities[npc_id])
 
+	# Name tags and item labels are drawn by world_overlay.gd.
 	var pvp: bool = net.zone_pvp() > 0
-	if me:
-		for id in entities:
-			var entity: Node3D = entities[id]
-			if entity.is_monster and not entity.dying:
-				entity.label.visible = id == my_target or entity.position.distance_to(me.position) < MONSTER_NAME_RANGE
-			elif entity.is_npc:
-				entity.label.visible = entity.position.distance_to(me.position) < NPC_NAME_RANGE
-			elif entity != me:
-				# Players we may fight (PvP zones) have red names.
-				entity.label.modulate = Color(1, 0.4, 0.35) if pvp and net.is_enemy_player(id) else Color.WHITE
+	world_overlay.pvp = pvp
 
 	if log_positions and Time.get_ticks_msec() >= _next_log_ms:
 		_next_log_ms = Time.get_ticks_msec() + 1000
@@ -841,22 +874,21 @@ func _process(_delta: float) -> void:
 				line.append("%s (%.2f, %.2f) %s" % [entity.label.text, entity.position.x, entity.position.z, entity.anim.current_animation])
 		print("rose net: t=%d ms  " % Time.get_ticks_msec(), ", ".join(line))
 
-	var monsters := 0
-	var npcs := 0
-	for entity in entities.values():
-		monsters += 1 if entity.is_monster else 0
-		npcs += 1 if entity.is_npc else 0
 	var c := character
 	var level: int = c.get("level", 0)
-	hud.text = "%s   Lv %d   HP %d/%d   MP %d/%d   players %d   monsters %d" % [
-		c.get("name", player_name), level, me.hp if me else 0, me.max_hp if me else 0,
-		me.mp if me else 0, me.max_mp if me else 0, entities.size() - monsters - npcs, monsters]
-	if pvp:
-		hud.text += "   PvP zone"
-	if c.get("driving", false):
-		hud.text += "   Fuel %d%%" % (int(c.get("fuel", 0)) / 10)
+	hud.text = ""
 	if me and me.riding >= 0 and entities.has(me.riding):
-		hud.text += "   Riding with %s (X gets off)" % entities[me.riding].label.text
+		hud.text = "Riding with %s (X gets off)" % entities[me.riding].label.text
+	minimap.pvp = pvp
+	player_frame.refresh(c, me)
+	cart_gauge.refresh(c)
+	xp_line.refresh(c)
+	if Time.get_ticks_msec() >= _next_party_ms:
+		_next_party_ms = Time.get_ticks_msec() + 300
+		party_frames.refresh(net.get_party())
+	if Time.get_ticks_msec() >= _next_quests_ms:
+		_next_quests_ms = Time.get_ticks_msec() + 1000
+		quest_tracker.refresh(net.get_quests())
 	var offers: Array = net.get_ride_offers()
 	if offers.is_empty():
 		_ride_offer = -1
@@ -873,12 +905,6 @@ func _process(_delta: float) -> void:
 			var entity: Node3D = entities[id]
 			if entity.has_method("show_shop_sign") and not entity.is_monster and not entity.is_npc:
 				entity.show_shop_sign(titles.get(id, ""))
-	if not c.is_empty():
-		var needed: int = max(int(c["xp_needed"]), 1)
-		xp_bar.value = float(c["xp"]) / needed
-		xp_label.text = "XP %d / %d  (%.1f%%)" % [c["xp"], needed, 100.0 * c["xp"] / needed]
-		if c["stat_points"] > 0:
-			xp_label.text += "   %d stat points (C)" % c["stat_points"]
 	if me:
 		if gained > 0:
 			_float_text(me, "+%d XP" % gained, Color(0.6, 0.9, 1.0), 26)
@@ -889,11 +915,11 @@ func _process(_delta: float) -> void:
 				fx.level_up(me)
 	if level > 0:
 		_level = level
-	if my_target >= 0:
+	if my_target >= 0 and my_target != my_id:
 		var target: Node3D = entities[my_target]
-		target_hud.text = "%s   Lv %d   HP %d/%d" % [target.label.text, target.level, target.hp, target.max_hp]
+		target_frame.refresh(target, target.is_monster or (pvp and net.is_enemy_player(my_target)))
 	else:
-		target_hud.text = ""
+		target_frame.refresh(null, false)
 
 
 ## Walking into a warp gate's model asks the server to send us through (as the Bevy client
@@ -928,21 +954,7 @@ func _check_warps() -> void:
 
 ## Our buffs and debuffs as icons at the top of the screen, with what they are and how long they last.
 func _update_effects() -> void:
-	var effects: Array = net.get_status_effects(my_id) if my_id >= 0 else []
-	while effects_row.get_child_count() > effects.size():
-		var last := effects_row.get_child(effects_row.get_child_count() - 1)
-		effects_row.remove_child(last)
-		last.queue_free()
-	while effects_row.get_child_count() < effects.size():
-		var icon := TextureRect.new()
-		icon.custom_minimum_size = Vector2(28, 28)
-		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		effects_row.add_child(icon)
-	for i in effects.size():
-		var icon: TextureRect = effects_row.get_child(i)
-		icon.texture = effects[i].get("icon")
-		icon.tooltip_text = "%s (%d s)" % [effects[i]["name"], int(effects[i]["seconds"])]
+	effects_rows.refresh(net.get_status_effects(my_id) if my_id >= 0 else [])
 
 
 ## Show the server's ground items: the item's ground model with its name over it.
@@ -957,28 +969,14 @@ func _update_ground() -> void:
 			var model := RoseFieldItem.new()
 			model.build(item.get("model", 0))
 			node.add_child(model)
-			var label := Label3D.new()
-			label.name = "Label"
-			label.text = item.get("name", "?")
-			if item.get("quantity", 1) > 1 and item.get("type", "") != "Money":
-				label.text = "%s (%d)" % [label.text, item["quantity"]]
-			label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-			label.no_depth_test = true
-			label.fixed_size = true
-			label.pixel_size = 0.0012
-			label.font_size = 22
-			label.outline_size = 6
-			label.position = Vector3(0, 0.6, 0)
-			node.add_child(label)
 			add_child(node)
 			var x: float = state["x"]
 			var z: float = state["z"]
 			node.position = Vector3(x, zone.get_terrain_height(x, z), z)
 			ground[id] = node
-		var mine: bool = state["mine"]
-		ground[id].set_meta("mine", mine)
-		var colour := Color(1.0, 0.85, 0.3) if item.get("type", "") == "Money" else Color.WHITE
-		ground[id].get_node("Label").modulate = colour if mine else Color(0.6, 0.6, 0.6)
+		ground[id].set_meta("mine", state["mine"])
+		ground[id].set_meta("item", item)
+		ground[id].set_meta("drop_id", id)
 	for id in ground.keys():
 		if not seen.has(id):
 			if id == _pickup and me and me.position.distance_to(ground[id].position) < PICKUP_RANGE + 1.0:
@@ -990,20 +988,7 @@ func _update_ground() -> void:
 
 
 func _notice(text: String) -> void:
-	var label := Label.new()
-	label.text = text
-	label.add_theme_color_override("font_shadow_color", Color.BLACK)
-	label.add_theme_constant_override("shadow_offset_x", 1)
-	label.add_theme_constant_override("shadow_offset_y", 1)
-	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	notice_box.add_child(label)
-	while notice_box.get_child_count() > 6:
-		var oldest := notice_box.get_child(0)
-		notice_box.remove_child(oldest)
-		oldest.queue_free()
-	var tween := label.create_tween()
-	tween.tween_property(label, "modulate:a", 0.0, 1.0).set_delay(NOTICE_SECONDS)
-	tween.tween_callback(label.queue_free)
+	notice_box.add(text)
 	if log_damage:
 		print("rose net: notice: ", text)
 
@@ -1064,19 +1049,4 @@ func _float_number(defender: Node3D, hit: Dictionary) -> void:
 
 ## Text that rises and fades above an entity.
 func _float_text(over: Node3D, text: String, colour: Color, size: int, seconds := 1.0) -> void:
-	var label := Label3D.new()
-	label.text = text
-	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	label.no_depth_test = true
-	label.fixed_size = true
-	label.pixel_size = 0.0015
-	label.font_size = size
-	label.outline_size = 8
-	label.modulate = colour
-	add_child(label)
-	label.global_position = over.global_position + Vector3(randf_range(-0.3, 0.3), over.height * 0.8, 0)
-	var tween := label.create_tween()
-	tween.set_parallel(true)
-	tween.tween_property(label, "global_position:y", label.global_position.y + 1.2, seconds)
-	tween.tween_property(label, "modulate:a", 0.0, seconds).set_delay(seconds * 0.4)
-	tween.chain().tween_callback(label.queue_free)
+	world_overlay.float_text(over, text, colour, size, seconds)

@@ -31,7 +31,7 @@ func _ready() -> void:
 	margin.add_child(box)
 
 	header = Label.new()
-	header.add_theme_font_size_override("font_size", 18)
+	header.theme_type_variation = "HeaderLabel"
 	box.add_child(header)
 	points = Label.new()
 	box.add_child(points)

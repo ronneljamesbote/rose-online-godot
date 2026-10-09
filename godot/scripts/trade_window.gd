@@ -37,7 +37,7 @@ func _ready() -> void:
 	box.add_theme_constant_override("separation", 6)
 	margin.add_child(box)
 	title = Label.new()
-	title.add_theme_font_size_override("font_size", 18)
+	title.theme_type_variation = "HeaderLabel"
 	box.add_child(title)
 
 	var columns := HBoxContainer.new()
@@ -115,6 +115,11 @@ func _column(parent: Control, caption: String, kind: String, slots: Array) -> VB
 		grid.add_child(slot)
 		slots.append(slot)
 	return column
+
+
+## The window's close button: calls the trade off.
+func cancel_trade() -> void:
+	net.trade_cancel()
 
 
 func answer_request(accept: bool) -> void:

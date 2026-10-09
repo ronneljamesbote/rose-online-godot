@@ -19,7 +19,7 @@ func _ready() -> void:
 	margin.add_child(box)
 	var title := Label.new()
 	title.text = "Quests"
-	title.add_theme_font_size_override("font_size", 18)
+	title.theme_type_variation = "HeaderLabel"
 	box.add_child(title)
 	empty = Label.new()
 	empty.text = "No quests. Talk to people in town to find some."
@@ -51,7 +51,7 @@ func _quest_entry(quest: Dictionary) -> Control:
 	box.add_child(top)
 	var name := Label.new()
 	name.text = quest["name"]
-	name.add_theme_font_size_override("font_size", 16)
+	name.theme_type_variation = "HeaderLabel"
 	name.add_theme_color_override("font_color", Color(1.0, 0.85, 0.5))
 	name.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	top.add_child(name)
