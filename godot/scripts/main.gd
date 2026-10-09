@@ -813,7 +813,7 @@ func _run_steps_demo(steps: String) -> void:
 				var c: Dictionary = online.net.get_character()
 				print("rose net demo: me zone %d level %d xp %d/%d debt %d fallen %s hp %d" % [c.get("zone", 0), c.get("level", 0),
 					c.get("xp", 0), c.get("xp_needed", 0), c.get("xp_debt", 0), c.get("fallen", false), online.me.hp])
-				print("rose net demo: me at %.1f, %.1f driving %s passenger %s" % [online.me.position.x, online.me.position.z, c.get("driving", false), c.get("passenger", false)])
+				print("rose net demo: me at %.1f, %.1f driving %s passenger %s stamina %d" % [online.me.position.x, online.me.position.z, c.get("driving", false), c.get("passenger", false), c.get("stamina", 0)])
 			"status":
 				var mine: Array = online.net.get_status_effects(online.my_id)
 				var theirs: Array = online.net.get_status_effects(online.my_target) if online.my_target >= 0 else []

@@ -591,6 +591,7 @@ impl RoseNet {
         d.set("level", p.level as i64);
         d.set("job", p.job as i64);
         d.set("xp", p.xp as i64);
+        d.set("stamina", c.db.stamina().identity().find(&p.identity).map_or(0, |s| s.value) as i64);
         // Experience owed from deaths adds to what the level needs.
         let debt = c.db.xp_debt().identity().find(&p.identity).map_or(0, |d| d.xp);
         d.set("xp_needed", (rose_game_irose::data::levelup_require_xp(p.level) + debt) as i64);

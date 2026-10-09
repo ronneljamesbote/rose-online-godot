@@ -1,13 +1,15 @@
 //! Reading and changing a character's values by AbilityType, as rose-offline's
 //! ability_values_get_value / ability_values_add_value (used by item requirements, potions,
-//! and later quests). Values the module does not track yet (stamina, unions, fame) read as 0.
+//! and later quests). Values the module does not track yet (unions, fame) read as 0.
 
 use rose_data::AbilityType;
 use rose_game_common::components::{AbilityValues, Money};
 
+use spacetimedb::ReducerContext;
+
 use crate::{Combat, Player};
 
-pub fn get_value(p: &Player, c: Option<&Combat>, av: &AbilityValues, ability: AbilityType) -> Option<i32> {
+pub fn get_value(ctx: &ReducerContext, p: &Player, c: Option<&Combat>, av: &AbilityValues, ability: AbilityType) -> Option<i32> {
     Some(match ability {
         AbilityType::Gender => p.gender as i32,
         AbilityType::Job => p.job as i32,
@@ -39,7 +41,8 @@ pub fn get_value(p: &Player, c: Option<&Combat>, av: &AbilityValues, ability: Ab
         AbilityType::SaveMana => av.get_save_mana(),
         AbilityType::DropRate => av.get_drop_rate(),
         AbilityType::Fuel => crate::vehicle::engine_life(p),
-        AbilityType::Union | AbilityType::Rank | AbilityType::Fame | AbilityType::Stamina => 0,
+        AbilityType::Stamina => crate::stamina::get(ctx, p.identity) as i32,
+        AbilityType::Union | AbilityType::Rank | AbilityType::Fame => 0,
         _ => return None,
     })
 }
@@ -50,7 +53,7 @@ fn add(value: u32, add: i32) -> u32 {
 
 /// Add to a value. Returns false for types that can't be changed (yet).
 /// Basic stat changes need `character::refresh_player` afterwards.
-pub fn add_value(p: &mut Player, c: Option<&mut Combat>, ability: AbilityType, value: i32) -> bool {
+pub fn add_value(ctx: &ReducerContext, p: &mut Player, c: Option<&mut Combat>, ability: AbilityType, value: i32) -> bool {
     match ability {
         AbilityType::Strength => p.strength = (p.strength + value).max(0),
         AbilityType::Dexterity => p.dexterity = (p.dexterity + value).max(0),
@@ -74,6 +77,7 @@ pub fn add_value(p: &mut Player, c: Option<&mut Combat>, ability: AbilityType, v
             Some(c) => c.mp = (c.mp + value).clamp(0, c.max_mp),
             None => return false,
         },
+        AbilityType::Stamina => crate::stamina::add(ctx, p.identity, value),
         _ => return false,
     }
     true

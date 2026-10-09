@@ -75,6 +75,7 @@ impl QuestWorld for ServerWorld<'_> {
 /// What a trigger chain does after the character is written back.
 enum After {
     Xp(u64),
+    Stamina(i32),
     Drop(Item),
     Teleport(u16, f32, f32),
     Spawn { npc_id: u16, count: usize, zone_id: u16, x: f32, y: f32, range: f32 },
@@ -164,6 +165,7 @@ impl<'a> Run<'a> {
                     let level = ctx.db.player().identity().find(identity).map_or(0, |p| p.level);
                     ctx.db.xp_event().insert(XpEvent { identity, xp, level });
                 }
+                After::Stamina(value) => crate::stamina::add(ctx, identity, value),
                 After::Drop(item) => {
                     let Some(p) = ctx.db.player().identity().find(identity) else { continue };
                     let at = p.entity_id.and_then(|id| position(ctx, id, self.t)).unwrap_or((p.last_x, p.last_y));
@@ -296,7 +298,8 @@ impl<'a> Run<'a> {
                 let text = if value >= 0 { format!("Received {value} Zuly") } else { format!("Paid {} Zuly", -value) };
                 self.after.push(After::Notice(text));
             }
-            AbilityType::Stamina | AbilityType::Fame => {}
+            AbilityType::Stamina => self.after.push(After::Stamina(value)),
+            AbilityType::Fame => {}
             other => match rose_quest::union_point_index(other) {
                 Some(i) => ch.union_membership.points[i] = add_u32(ch.union_membership.points[i], value),
                 None => return false,
