@@ -11,6 +11,7 @@ pub mod add_basic_stat_reducer;
 pub mod admin_clear_quests_reducer;
 pub mod admin_give_quest_reducer;
 pub mod admin_quest_trigger_reducer;
+pub mod admin_set_item_life_reducer;
 pub mod admin_set_job_var_reducer;
 pub mod admin_teleport_to_npc_reducer;
 pub mod admin_type;
@@ -110,6 +111,8 @@ pub mod player_type;
 pub mod quest_trigger_reducer;
 pub mod refine_item_reducer;
 pub mod regen_type;
+pub mod repair_at_npc_reducer;
+pub mod repair_with_item_reducer;
 pub mod reset_monsters_reducer;
 pub mod revive_player_reducer;
 pub mod revive_shield_table;
@@ -199,6 +202,7 @@ pub use add_basic_stat_reducer::add_basic_stat;
 pub use admin_clear_quests_reducer::admin_clear_quests;
 pub use admin_give_quest_reducer::admin_give_quest;
 pub use admin_quest_trigger_reducer::admin_quest_trigger;
+pub use admin_set_item_life_reducer::admin_set_item_life;
 pub use admin_set_job_var_reducer::admin_set_job_var;
 pub use admin_teleport_to_npc_reducer::admin_teleport_to_npc;
 pub use admin_type::Admin;
@@ -298,6 +302,8 @@ pub use player_type::Player;
 pub use quest_trigger_reducer::quest_trigger;
 pub use refine_item_reducer::refine_item;
 pub use regen_type::Regen;
+pub use repair_at_npc_reducer::repair_at_npc;
+pub use repair_with_item_reducer::repair_with_item;
 pub use reset_monsters_reducer::reset_monsters;
 pub use revive_player_reducer::revive_player;
 pub use revive_shield_table::*;
@@ -409,6 +415,13 @@ pub enum Reducer {
     AdminQuestTrigger {
         player_name: String,
         trigger: String,
+    },
+    AdminSetItemLife {
+        player_name: String,
+        kind: u8,
+        slot: u8,
+        index: u16,
+        life: u16,
     },
     AdminSetJobVar {
         player_name: String,
@@ -573,6 +586,19 @@ pub enum Reducer {
         index: u16,
         materials: Vec<CraftSlot>,
     },
+    RepairAtNpc {
+        npc_entity: u64,
+        kind: u8,
+        slot: u8,
+        index: u16,
+    },
+    RepairWithItem {
+        tool_page: u8,
+        tool_index: u16,
+        kind: u8,
+        slot: u8,
+        index: u16,
+    },
     ResetMonsters,
     RevivePlayer {
         at_save_point: bool,
@@ -714,6 +740,7 @@ impl __sdk::Reducer for Reducer {
             Reducer::AdminClearQuests { .. } => "admin_clear_quests",
             Reducer::AdminGiveQuest { .. } => "admin_give_quest",
             Reducer::AdminQuestTrigger { .. } => "admin_quest_trigger",
+            Reducer::AdminSetItemLife { .. } => "admin_set_item_life",
             Reducer::AdminSetJobVar { .. } => "admin_set_job_var",
             Reducer::AdminTeleportToNpc { .. } => "admin_teleport_to_npc",
             Reducer::AssignCharacter { .. } => "assign_character",
@@ -755,6 +782,8 @@ impl __sdk::Reducer for Reducer {
             Reducer::PlacePlayer { .. } => "place_player",
             Reducer::QuestTrigger { .. } => "quest_trigger",
             Reducer::RefineItem { .. } => "refine_item",
+            Reducer::RepairAtNpc { .. } => "repair_at_npc",
+            Reducer::RepairWithItem { .. } => "repair_with_item",
             Reducer::ResetMonsters => "reset_monsters",
             Reducer::RevivePlayer { .. } => "revive_player",
             Reducer::RideAnswer { .. } => "ride_answer",
@@ -831,6 +860,19 @@ impl __sdk::Reducer for Reducer {
             } => __sats::bsatn::to_vec(&admin_quest_trigger_reducer::AdminQuestTriggerArgs {
                 player_name: player_name.clone(),
                 trigger: trigger.clone(),
+            }),
+            Reducer::AdminSetItemLife {
+                player_name,
+                kind,
+                slot,
+                index,
+                life,
+            } => __sats::bsatn::to_vec(&admin_set_item_life_reducer::AdminSetItemLifeArgs {
+                player_name: player_name.clone(),
+                kind: kind.clone(),
+                slot: slot.clone(),
+                index: index.clone(),
+                life: life.clone(),
             }),
             Reducer::AdminSetJobVar {
                 player_name,
@@ -1097,6 +1139,30 @@ impl __sdk::Reducer for Reducer {
                 page: page.clone(),
                 index: index.clone(),
                 materials: materials.clone(),
+            }),
+            Reducer::RepairAtNpc {
+                npc_entity,
+                kind,
+                slot,
+                index,
+            } => __sats::bsatn::to_vec(&repair_at_npc_reducer::RepairAtNpcArgs {
+                npc_entity: npc_entity.clone(),
+                kind: kind.clone(),
+                slot: slot.clone(),
+                index: index.clone(),
+            }),
+            Reducer::RepairWithItem {
+                tool_page,
+                tool_index,
+                kind,
+                slot,
+                index,
+            } => __sats::bsatn::to_vec(&repair_with_item_reducer::RepairWithItemArgs {
+                tool_page: tool_page.clone(),
+                tool_index: tool_index.clone(),
+                kind: kind.clone(),
+                slot: slot.clone(),
+                index: index.clone(),
             }),
             Reducer::ResetMonsters => {
                 __sats::bsatn::to_vec(&reset_monsters_reducer::ResetMonstersArgs {})

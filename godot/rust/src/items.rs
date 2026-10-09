@@ -156,7 +156,11 @@ pub fn item_dict(item: &Item) -> VarDictionary {
             lines.push(format!("Fuel {}%", e.life / 10));
         } else {
             lines.push(format!("Durability {}   Life {}%", e.durability, e.life / 10));
+            if e.life == 0 {
+                lines.push("Broken: no stats until repaired".to_string());
+            }
         }
+        d.set("durability", e.durability as i64);
         if e.is_crafted {
             lines.push("Crafted".to_string());
         }

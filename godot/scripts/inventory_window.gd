@@ -1,7 +1,8 @@
 ## Inventory window (I): equipped items and ammo, the four inventory pages, and money.
 ## Right-click (or double-click) an item to equip or use it, or an equipped item to take it
 ## off. Drag items between slots of a page; select one and press Drop to drop it. While a
-## store is open, right-click sells instead (Shift sells the whole stack).
+## store is open, right-click sells instead (Shift sells the whole stack). In repair mode (an
+## NPC's repair menu, or right-clicking a hammer) right-click repairs the item instead.
 extends PanelContainer
 
 const SLOT_SIZE := 44
@@ -65,6 +66,8 @@ class Slot:
 			tooltip_text = ""
 		else:
 			icon.texture = item.get("icon")
+			# Broken gear (life 0) is tinted red until repaired.
+			icon.modulate = Color(1.0, 0.35, 0.35) if item.has("life") and int(item["life"]) == 0 else Color.WHITE
 			var quantity: int = item.get("quantity", 1)
 			count.text = str(quantity) if quantity > 1 else ""
 			tooltip_text = "%s\n%s" % [item.get("name", "?"), item.get("tooltip", "")]
@@ -112,6 +115,7 @@ class Slot:
 
 
 var net: RoseNet
+var online: Node  # online.gd, for where we stand
 var store_window: Control  # store_window.gd; while it is open, right-click sells
 var bank_window: Control  # bank_window.gd; while it is open, right-click deposits
 var work_window: Control  # item_work_window.gd; while it is open, right-click picks the item
@@ -128,6 +132,11 @@ var drive_button: Button
 var selected: Slot
 var drop_button: Button
 var _last_inventory := {}
+var repair_hint: Label
+var repair_npc := -1  # NPC entity repairing for Zuly, -1 when none
+var repair_npc_node: Node3D
+var repair_tool := []  # [page, index] of the hammer in use, empty when none
+const REPAIR_RANGE := 15.0  # metres, as the server's NPC range
 
 
 func _ready() -> void:
@@ -173,6 +182,12 @@ func _ready() -> void:
 	ride.add_child(drive_button)
 	box.add_child(HSeparator.new())
 
+	repair_hint = Label.new()
+	repair_hint.add_theme_color_override("font_color", Color(1.0, 0.85, 0.4))
+	repair_hint.autowrap_mode = TextServer.AUTOWRAP_WORD
+	repair_hint.visible = false
+	box.add_child(repair_hint)
+
 	tabs = TabBar.new()
 	for name in PAGES:
 		tabs.add_tab(name)
@@ -204,6 +219,10 @@ var _next_drive_check_ms := 0
 
 
 func _process(_delta: float) -> void:
+	if repair_npc >= 0 and (not visible or not is_instance_valid(repair_npc_node) or _far_from_repair_npc()):
+		end_repair()
+	if not visible and not repair_tool.is_empty():
+		end_repair()
 	if visible and net != null:
 		_refresh(false)
 		if Time.get_ticks_msec() >= _next_drive_check_ms:
@@ -265,9 +284,77 @@ func _clear_selection() -> void:
 		drop_button.disabled = true
 
 
+## An NPC's repair menu: right-click items to repair them for Zuly until the window closes.
+func start_npc_repair(npc_id: int, npc_node: Node3D) -> void:
+	repair_tool = []
+	repair_npc = npc_id
+	repair_npc_node = npc_node
+	visible = true
+	var who: String = npc_node.label.text if npc_node.get("label") else "NPC"
+	_show_repair_hint("Repair with %s: right-click a worn item (Esc to stop)" % who)
+
+
+## A hammer was used: the next right-clicked item gets repaired with it.
+func start_tool_repair(tool_page: int, tool_index: int, tool_name: String) -> void:
+	repair_npc = -1
+	repair_tool = [tool_page, tool_index]
+	_show_repair_hint("%s: right-click the item to repair (Esc to cancel)" % tool_name)
+
+
+func end_repair() -> void:
+	repair_npc = -1
+	repair_npc_node = null
+	repair_tool = []
+	if repair_hint:
+		repair_hint.visible = false
+
+
+func _show_repair_hint(text: String) -> void:
+	repair_hint.text = text
+	repair_hint.visible = true
+	reset_size()
+
+
+func _far_from_repair_npc() -> bool:
+	var me = online.get("me") if online else null
+	if me == null or not is_instance_valid(me):
+		return false
+	var d := Vector2(repair_npc_node.position.x - me.position.x, repair_npc_node.position.z - me.position.z).length()
+	return d > REPAIR_RANGE
+
+
+## Repair the item in this slot with the NPC or hammer in use.
+func _repair(slot: Slot) -> bool:
+	var kind := -1
+	var at := slot.index
+	var index := 0
+	match slot.kind:
+		"equipped":
+			kind = 0
+		"vehicle":
+			kind = 1
+		"page":
+			kind = 2
+			at = page
+			index = slot.index
+	if kind < 0:
+		return false
+	if repair_npc >= 0:
+		net.repair_at_npc(repair_npc, kind, at, index)
+	else:
+		net.repair_with_item(repair_tool[0], repair_tool[1], kind, at, index)
+		end_repair()
+	return true
+
+
 ## Right-click: equip or use an inventory item, take off an equipped one.
 func activate(slot: Slot) -> void:
 	if slot.item == null:
+		return
+	if slot.kind == "page" and page == 1 and slot.item.get("class", "") == "Repair Tool":
+		start_tool_repair(page, slot.index, slot.item.get("name", "Hammer"))
+		return
+	if (repair_npc >= 0 or not repair_tool.is_empty()) and _repair(slot):
 		return
 	match slot.kind:
 		"equipped":
@@ -314,5 +401,9 @@ func _drop_selected() -> void:
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE and (repair_npc >= 0 or not repair_tool.is_empty()):
+		end_repair()
+		get_viewport().set_input_as_handled()
+		return
 	if visible and event is InputEventKey and event.pressed and event.keycode == KEY_DELETE and selected:
 		_drop_selected()

@@ -1458,6 +1458,35 @@ impl RoseNet {
         out
     }
 
+    /// Repair at an NPC: kind 0 = equipped slot, 1 = vehicle part, 2 = bag (slot is the page).
+    #[func]
+    fn repair_at_npc(&self, npc: i64, kind: i64, slot: i64, index: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers
+                .repair_at_npc_then(npc as u64, kind.max(0) as u8, slot.max(0) as u8, index.max(0) as u16, move |_, r| report(&s, r))
+                .ok();
+        }
+    }
+
+    /// Repair with the hammer at (tool_page, tool_index); the target as in repair_at_npc.
+    #[func]
+    fn repair_with_item(&self, tool_page: i64, tool_index: i64, kind: i64, slot: i64, index: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers
+                .repair_with_item_then(
+                    tool_page.max(0) as u8,
+                    tool_index.max(0) as u16,
+                    kind.max(0) as u8,
+                    slot.max(0) as u8,
+                    index.max(0) as u16,
+                    move |_, r| report(&s, r),
+                )
+                .ok();
+        }
+    }
+
     /// Sell `quantity` of our bag item at page/index to a shop's buy list entry.
     #[func]
     fn store_sell(&self, store_entity: i64, want_id: i64, page: i64, index: i64, quantity: i64) {

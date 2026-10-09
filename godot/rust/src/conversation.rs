@@ -72,7 +72,7 @@ const FUNCTIONS: [&str; 28] = [
 pub enum Action {
     QuestTrigger(String),
     OpenStore(u64),
-    /// A window for the NPC we talk to: "bank", "refine" or "disassemble".
+    /// A window for the NPC we talk to: "bank", "refine", "disassemble" or "repair".
     OpenWindow(&'static str),
     Notice(String),
     /// Save this zone as where we get up after dying.
@@ -244,7 +244,11 @@ impl ScriptContext<'_> {
                 self.actions.push(Action::OpenWindow("disassemble"));
                 Some(vec![])
             }
-            "GF_appraisal" | "GF_repair" | "GF_openDeliveryStore" => {
+            "GF_repair" => {
+                self.actions.push(Action::OpenWindow("repair"));
+                Some(vec![])
+            }
+            "GF_appraisal" | "GF_openDeliveryStore" => {
                 self.actions.push(Action::Notice("That service is not in the game yet".into()));
                 Some(vec![])
             }
