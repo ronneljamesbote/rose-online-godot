@@ -130,6 +130,8 @@ pub fn assign_character(ctx: &ReducerContext, name: String, account: Identity) -
     }
     let old = p.identity;
     party::forget_member(ctx, old);
+    crate::friends::rekey(ctx, old, account);
+    crate::death::rekey(ctx, old, account);
     ctx.db.player().identity().delete(old);
     p.identity = account;
     p.connection = None;

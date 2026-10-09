@@ -36,7 +36,7 @@ const SV_CONSTANTS: [(&str, i32); 15] = [
 
 /// Script functions this client answers. The NPC motion and effect functions only change
 /// how the NPC looks while talking, so they do nothing yet.
-const FUNCTIONS: [&str; 26] = [
+const FUNCTIONS: [&str; 28] = [
     "QF_checkQuestCondition",
     "QF_doQuestTrigger",
     "QF_findQuest",
@@ -63,6 +63,8 @@ const FUNCTIONS: [&str; 26] = [
     "GF_openUpgrade",
     "GF_openSeparate",
     "GF_openDeliveryStore",
+    "GF_setRevivePosition",
+    "GF_getReviveZoneName",
 ];
 
 /// What a conversation asks the game to do.
@@ -73,6 +75,8 @@ pub enum Action {
     /// A window for the NPC we talk to: "bank", "refine" or "disassemble".
     OpenWindow(&'static str),
     Notice(String),
+    /// Save this zone as where we get up after dying.
+    SetSavePoint,
 }
 
 /// A town NPC as the scripts see it.
@@ -89,6 +93,8 @@ pub struct ClientWorld {
     pub zone_id: u16,
     pub npcs: Vec<WorldNpc>,
     pub party: Option<QuestParty>,
+    /// The zone our save point is in.
+    pub save_zone_name: Option<String>,
 }
 
 impl QuestWorld for ClientWorld {
@@ -120,6 +126,10 @@ impl QuestWorld for ClientWorld {
 
     fn party(&self) -> Option<QuestParty> {
         self.party
+    }
+
+    fn job_classes(&self) -> Option<&rose_data::JobClassDatabase> {
+        crate::data::get().map(|g| &g.job_classes)
     }
 }
 
@@ -237,6 +247,13 @@ impl ScriptContext<'_> {
             "GF_appraisal" | "GF_repair" | "GF_openDeliveryStore" => {
                 self.actions.push(Action::Notice("That service is not in the game yet".into()));
                 Some(vec![])
+            }
+            "GF_setRevivePosition" => {
+                self.actions.push(Action::SetSavePoint);
+                Some(vec![])
+            }
+            "GF_getReviveZoneName" => {
+                Some(vec![self.world.save_zone_name.clone().map_or(Lua4Value::Nil, Lua4Value::String)])
             }
             "GF_GetMotionUseFile" => one(0),
             "GF_SetMotion" | "GF_organizeClan" | "GF_disorganizeClan" => Some(vec![]),
@@ -420,11 +437,12 @@ impl Conversation {
             let Some(text) = cx.game.ltb_event.get_string(string_id as usize, 2) else { continue };
             let text = format_text(&text, cx.name, cx.ch.level);
             if shows_menu {
-                // The NPC's message, then the choices under it.
+                // The NPC's message, then the choices under it. Like iROSE (CEvent::Conversation)
+                // the loop goes on: a later message whose check passes replaces this one, so
+                // the last match wins (a plain greeting comes first, quest lines after it).
                 self.message = text;
                 self.responses.clear();
                 self.run_menu(cx, value);
-                return true;
             } else {
                 self.responses.push(Response { text, action_function: action, menu_index: value });
             }

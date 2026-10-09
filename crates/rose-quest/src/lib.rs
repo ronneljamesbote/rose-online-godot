@@ -103,6 +103,21 @@ pub trait QuestWorld {
     /// One of an NPC's twenty object variables.
     fn npc_variable(&self, npc_entity_id: u64, variable_id: usize) -> Option<i32>;
     fn party(&self) -> Option<QuestParty>;
+    /// LIST_CLASS, for job conditions.
+    fn job_classes(&self) -> Option<&rose_data::JobClassDatabase>;
+}
+
+/// Whether a job belongs to a LIST_CLASS row (CUserDATA::Check_JobCollection): a row
+/// whose first job is 0 (row 0, Visitor, and blank rows) takes everyone, a row past the
+/// table takes no one.
+pub fn job_in_class(classes: &rose_data::JobClassDatabase, class_id: i32, job: u16) -> bool {
+    if class_id < 0 || class_id as usize >= classes.len() {
+        return false;
+    }
+    match u16::try_from(class_id).ok().and_then(rose_data::JobClassId::new).and_then(|id| classes.get(id)) {
+        Some(class) => class.jobs.is_empty() || class.jobs.iter().any(|j| j.get() == job),
+        None => true,
+    }
 }
 
 /// State carried from one condition or reward to the next while a trigger chain runs.
@@ -303,6 +318,13 @@ pub fn check_conditions(
 ) -> bool {
     for condition in trigger.conditions.iter() {
         let ok = match *condition {
+            // A job condition names a LIST_CLASS row (a set of jobs) and ignores its operator
+            // (Check_UserVAR in io_quest.cpp): "Job 1" means any soldier job.
+            QsdCondition::AbilityValue { ability_type, value, .. }
+                if decoder.decode_ability_type(ability_type.get()) == Some(AbilityType::Job) =>
+            {
+                world.job_classes().is_some_and(|classes| job_in_class(classes, value, ch.job))
+            }
             QsdCondition::AbilityValue { ability_type, operator, value } => decoder
                 .decode_ability_type(ability_type.get())
                 .and_then(|ability| ability_value(ch, ability))

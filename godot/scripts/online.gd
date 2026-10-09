@@ -22,6 +22,9 @@ const QuestWindow := preload("res://scripts/quest_window.gd")
 const ChatWindow := preload("res://scripts/chat_window.gd")
 const CharacterCreate := preload("res://scripts/character_create.gd")
 const Hotbar := preload("res://scripts/hotbar.gd")
+const ReviveWindow := preload("res://scripts/revive_window.gd")
+const FriendsWindow := preload("res://scripts/friends_window.gd")
+const ShopWindow := preload("res://scripts/shop_window.gd")
 const PICK_RADIUS_PX := 60.0
 const ITEM_PICK_RADIUS_PX := 30.0
 const PICKUP_RANGE := 2.5  # metres; the server allows 4
@@ -60,6 +63,9 @@ var skill_window: PanelContainer
 var conversation_window: PanelContainer
 var quest_window: PanelContainer
 var hotbar: PanelContainer
+var revive_window: PanelContainer
+var friends_window: PanelContainer
+var shop_window: PanelContainer
 var effects_row: HBoxContainer  # our status effects, top centre
 var _next_effects_ms := 0
 var notice_box: VBoxContainer
@@ -82,6 +88,7 @@ var log_damage := false
 var log_positions := false  # print every player's position once a second
 var _next_log_ms := 0
 var _killed := {}  # entity ids whose last hit killed them
+var _next_signs_ms := 0
 
 
 ## token is the account website's game token; without one the identity in token_path is used
@@ -205,13 +212,19 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	player_menu = PopupMenu.new()
 	player_menu.add_item("Invite to party", 0)
 	player_menu.add_item("Trade", 1)
+	player_menu.add_item("Add friend", 2)
+	player_menu.add_item("Visit shop", 3)
 	player_menu.id_pressed.connect(func(id):
 		if _menu_player < 0:
 			return
 		if id == 0:
 			net.party_invite(_menu_player)
 		elif id == 1:
-			net.trade_ask(_menu_player))
+			net.trade_ask(_menu_player)
+		elif id == 2 and entities.has(_menu_player):
+			net.friend_ask(entities[_menu_player].label.text)
+		elif id == 3:
+			shop_window.browse(_menu_player))
 	layer.add_child(player_menu)
 
 	skill_window = SkillWindow.new()
@@ -249,6 +262,16 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	hotbar.offset_bottom = -40
 	layer.add_child(hotbar)
 
+	revive_window = ReviveWindow.new()
+	revive_window.net = net
+	revive_window.visible = false
+	revive_window.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	revive_window.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	revive_window.grow_vertical = Control.GROW_DIRECTION_BOTH
+	revive_window.offset_top = 150  # below the fallen character
+	revive_window.offset_bottom = 150
+	layer.add_child(revive_window)
+
 	effects_row = HBoxContainer.new()
 	effects_row.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
 	effects_row.grow_horizontal = Control.GROW_DIRECTION_BOTH
@@ -272,6 +295,29 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	notice_box.offset_bottom = -222
 	notice_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	layer.add_child(notice_box)
+
+	shop_window = ShopWindow.new()
+	shop_window.net = net
+	shop_window.online = self
+	shop_window.visible = false
+	shop_window.set_anchors_and_offsets_preset(Control.PRESET_CENTER_LEFT)
+	shop_window.grow_vertical = Control.GROW_DIRECTION_BOTH
+	shop_window.offset_left = 20
+	layer.add_child(shop_window)
+
+	friends_window = FriendsWindow.new()
+	friends_window.net = net
+	friends_window.chat_window = chat_window
+	friends_window.visible = false
+	friends_window.set_anchors_and_offsets_preset(Control.PRESET_CENTER_RIGHT)
+	friends_window.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	friends_window.grow_vertical = Control.GROW_DIRECTION_BOTH
+	friends_window.offset_right = -12
+	layer.add_child(friends_window)
+	friends_window.request_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	friends_window.request_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	friends_window.request_panel.offset_top = 200
+	layer.add_child(friends_window.request_panel)
 
 	hud.text = "Connecting to %s..." % uri
 	if token != "":
@@ -322,6 +368,10 @@ func toggle_skill_window() -> void:
 	skill_window.visible = not skill_window.visible
 
 
+func toggle_friends_window() -> void:
+	friends_window.visible = not friends_window.visible
+
+
 func toggle_quest_window() -> void:
 	quest_window.visible = not quest_window.visible
 
@@ -344,6 +394,9 @@ func use_skill(page: int, index: int, skill: Dictionary) -> void:
 			_notice("%s isn't in the game yet" % skill.get("name", "That skill"))
 		return
 	var command: String = skill.get("command", "")
+	if command == "PrivateStore":
+		shop_window.open_setup()
+		return
 	if command == "AutoTarget":
 		my_target = nearest_monster()
 		return
@@ -362,8 +415,25 @@ func use_skill(page: int, index: int, skill: Dictionary) -> void:
 		print("rose net: use skill ", skill.get("name", "?"), " on ", target)
 
 
+## Our personal shop is open: we stay put until it closes.
+func _in_shop() -> bool:
+	if me != null and me.shop_title != "":
+		_notice("Close your shop first (X stands up)")
+		return true
+	return false
+
+
+## Driving with an empty tank: the vehicle won't move until refuelled.
+func _out_of_fuel() -> bool:
+	var c: Dictionary = net.get_character()
+	if c.get("driving", false) and int(c.get("fuel", 0)) <= 0:
+		_notice("Out of fuel: use Engine Fuel or get off")
+		return true
+	return false
+
+
 func move_to(target: Vector3) -> void:
-	if me == null:
+	if me == null or _in_shop() or _out_of_fuel():
 		return
 	my_target = -1
 	_pickup = -1
@@ -373,7 +443,7 @@ func move_to(target: Vector3) -> void:
 
 
 func attack(id: int) -> void:
-	if me == null or not entities.has(id):
+	if me == null or not entities.has(id) or _in_shop():
 		return
 	my_target = id
 	_pickup = -1
@@ -426,6 +496,9 @@ func select(id: int) -> void:
 	my_target = id
 	_pickup = -1
 	_talk = -1
+	# Clicking a player with a shop sign shows what they sell.
+	if id != my_id and entities[id].get("shop_title") != null and entities[id].shop_title != "":
+		shop_window.browse(id)
 
 
 ## A player we may fight here (PvP zones) under the mouse, or -1.
@@ -736,6 +809,16 @@ func _process(_delta: float) -> void:
 		me.mp if me else 0, me.max_mp if me else 0, entities.size() - monsters - npcs, monsters]
 	if pvp:
 		hud.text += "   PvP zone"
+	if c.get("driving", false):
+		hud.text += "   Fuel %d%%" % (int(c.get("fuel", 0)) / 10)
+	revive_window.refresh(c)
+	if Time.get_ticks_msec() >= _next_signs_ms:
+		_next_signs_ms = Time.get_ticks_msec() + 400
+		var titles: Dictionary = net.get_store_titles()
+		for id in entities:
+			var entity: Node3D = entities[id]
+			if entity.has_method("show_shop_sign") and not entity.is_monster and not entity.is_npc:
+				entity.show_shop_sign(titles.get(id, ""))
 	if not c.is_empty():
 		var needed: int = max(int(c["xp_needed"]), 1)
 		xp_bar.value = float(c["xp"]) / needed

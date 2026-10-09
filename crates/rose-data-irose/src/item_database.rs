@@ -23,6 +23,7 @@ impl StbItem {
         self.0.rows()
     }
 
+    stb_column! { 3, get_trade_restriction, u32 }
     stb_column! { 4, get_item_class, IroseItemClass }
     stb_column! { 5, get_base_price, u32 }
     stb_column! { 6, get_price_rate, u32 }
@@ -295,6 +296,7 @@ fn load_base_item(
 
     Some(BaseItemData {
         id: ItemReference::new(item_type, id),
+        trade_restriction: data.get_trade_restriction(id).unwrap_or(0),
         name: item_strings
             .as_ref()
             .map_or("", |x| unsafe { std::mem::transmute(x.name) }),
@@ -477,6 +479,8 @@ fn load_vehicle_item(
 ) -> Option<VehicleItemData> {
     let mut base_item_data = load_base_item(data, string_database, ItemType::Vehicle, id, true)?;
 
+    // LIST_PAT uses columns 17-18 for the version, not union requirements.
+    base_item_data.equip_union_requirement.clear();
     base_item_data.equip_ability_requirement.clear();
     if let Some(requirement) = data.get_vehicle_ability_requirement(id) {
         base_item_data.equip_ability_requirement.push(requirement);

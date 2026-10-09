@@ -58,6 +58,11 @@ pub struct ZoneData {
     /// LIST_ZONE.STB's PvP column: 0 none, 1 all except clan, 2 all except party, 3 all,
     /// 11 clan zone.
     pub pvp_state: u32,
+    /// LIST_ZONE.STB's planet column (1 Junon, 2 Luna, ...): a save point only works on the
+    /// planet it was saved on.
+    pub planet: u32,
+    /// LIST_ZONE.STB column 30: 1 no carts, 2 no castle gear, 3 neither.
+    pub vehicle_use_flags: u32,
 }
 
 impl ZoneData {

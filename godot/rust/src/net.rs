@@ -13,7 +13,7 @@ use spacetimedb_sdk::{
     DbContext, Identity, Table,
 };
 
-use rose_data::{AmmoIndex, EquipmentIndex};
+use rose_data::{AmmoIndex, EquipmentIndex, VehiclePartIndex};
 use rose_game_common::components::{AbilityValues, DroppedItem, Equipment, Hotbar, HotbarSlot, Inventory, ItemSlot, SkillList};
 
 use crate::{
@@ -81,6 +81,16 @@ fn player_look(p: &Player) -> VarArray {
         look.push(&value.to_variant());
     }
     look
+}
+
+/// Item numbers of the body, engine, legs and arms on a player's vehicle (0 for none).
+fn vehicle_parts(p: &Player) -> VarArray {
+    let equipment: Equipment = serde_json::from_str(&p.equipment).unwrap_or_default();
+    let mut parts = VarArray::new();
+    for index in [VehiclePartIndex::Body, VehiclePartIndex::Engine, VehiclePartIndex::Leg, VehiclePartIndex::Arms] {
+        parts.push(&equipment.get_vehicle_item(index).map_or(0, |e| e.item.item_number as i64).to_variant());
+    }
+    parts
 }
 
 #[derive(Default)]
@@ -191,7 +201,11 @@ impl RoseNet {
             let member_count = c.db.party_member().iter().filter(|m| m.party_id == party.party_id).count();
             Some(rose_quest::QuestParty { is_leader: party.owner == me, level: 1, member_count })
         });
-        ClientWorld { t, zone_id, npcs, party }
+        let save_zone_name = self.conn.as_ref().and_then(|c| {
+            let save = c.db.save_point().identity().find(&c.try_identity()?)?;
+            Some(c.db.zone_info().zone_id().find(&save.zone_id)?.name)
+        });
+        ClientWorld { t, zone_id, npcs, party, save_zone_name }
     }
 
     /// Run `f` on the open conversation with a fresh script context, then carry out what
@@ -231,6 +245,12 @@ impl RoseNet {
                     }
                 }
                 Action::Notice(text) => self.shared.lock().unwrap().notices.push(text),
+                Action::SetSavePoint => {
+                    let s = self.shared.clone();
+                    if let Some(c) = self.conn.as_ref() {
+                        c.reducers.set_save_point_then(move |_, r| report(&s, r)).ok();
+                    }
+                }
             }
         }
         Some(result)
@@ -482,6 +502,11 @@ impl RoseNet {
                 }
             }
             d.set("sitting", c.db.sitting().entity_id().find(&e.entity_id).is_some());
+            if c.db.driving().entity_id().find(&e.entity_id).is_some() {
+                if let Some(p) = c.db.player().iter().find(|p| p.entity_id == Some(e.entity_id)) {
+                    d.set("vehicle", &vehicle_parts(&p));
+                }
+            }
             if let Some(summon) = c.db.summon().entity_id().find(&e.entity_id) {
                 d.set("summon_owner", summon.owner as i64);
             }
@@ -562,7 +587,26 @@ impl RoseNet {
         d.set("level", p.level as i64);
         d.set("job", p.job as i64);
         d.set("xp", p.xp as i64);
-        d.set("xp_needed", rose_game_irose::data::levelup_require_xp(p.level) as i64);
+        // Experience owed from deaths adds to what the level needs.
+        let debt = c.db.xp_debt().identity().find(&p.identity).map_or(0, |d| d.xp);
+        d.set("xp_needed", (rose_game_irose::data::levelup_require_xp(p.level) + debt) as i64);
+        d.set("xp_debt", debt as i64);
+        // While fallen: seconds until we get up by ourselves, and where the save point is.
+        if let Some(f) = p.entity_id.and_then(|id| c.db.fallen().entity_id().find(&id)) {
+            d.set("fallen", true);
+            d.set("auto_revive_in", ((f.auto_revive_at_us - self.server_now_us()) / 1_000_000).max(0));
+            d.set("penalty_xp", f.penalty_xp as i64);
+        }
+        if let Some(save) = c.db.save_point().identity().find(&p.identity) {
+            let zone = c.db.zone_info().zone_id().find(&save.zone_id).map_or_else(String::new, |z| z.name);
+            d.set("save_zone", zone.as_str());
+        }
+        // The engine's life is the vehicle's fuel (0-1000).
+        let equipment: Equipment = serde_json::from_str(&p.equipment).unwrap_or_default();
+        if let Some(engine) = equipment.get_vehicle_item(VehiclePartIndex::Engine) {
+            d.set("fuel", engine.life as i64);
+        }
+        d.set("driving", p.entity_id.is_some_and(|id| c.db.driving().entity_id().find(&id).is_some()));
         d.set("stat_points", p.stat_points as i64);
         d.set("skill_points", p.skill_points as i64);
         let inventory: Inventory = serde_json::from_str(&p.inventory).unwrap_or_default();
@@ -740,6 +784,24 @@ impl RoseNet {
         }
     }
 
+    /// Get up after dying: at the save point, or at this zone's revive point.
+    #[func]
+    fn revive(&self, at_save_point: bool) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.revive_player_then(at_save_point, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    /// Save this zone as where we get up after dying (what GF_setRevivePosition asks for).
+    #[func]
+    fn set_save_point(&self) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.set_save_point_then(move |_, r| report(&s, r)).ok();
+        }
+    }
+
     /// Messages since the last call (picked up items, refused actions).
     #[func]
     fn poll_notices(&self) -> PackedStringArray {
@@ -813,6 +875,12 @@ impl RoseNet {
             ammo.push(&item.map_or(Variant::nil(), |item| item_dict(&item).to_variant()));
         }
         d.set("ammo", &ammo);
+        let mut vehicle = VarArray::new();
+        for index in [VehiclePartIndex::Body, VehiclePartIndex::Engine, VehiclePartIndex::Leg, VehiclePartIndex::Arms] {
+            let item = equipment.get_vehicle_item(index).map(|e| rose_data::Item::Equipment(e.clone()));
+            vehicle.push(&item.map_or(Variant::nil(), |item| item_dict(&item).to_variant()));
+        }
+        d.set("vehicle", &vehicle);
         d
     }
 
@@ -1194,6 +1262,24 @@ impl RoseNet {
         }
     }
 
+    /// Take off a vehicle part: 0 body, 1 engine, 2 legs, 3 arms.
+    #[func]
+    fn unequip_vehicle_part(&self, part: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.unequip_vehicle_part_then(part as u8, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    /// Get on or off our cart or castle gear.
+    #[func]
+    fn drive_toggle(&self) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.drive_toggle_then(move |_, r| report(&s, r)).ok();
+        }
+    }
+
     #[func]
     fn unequip_ammo(&self, slot: i64) {
         let s = self.shared.clone();
@@ -1268,6 +1354,132 @@ impl RoseNet {
             out.push(&a.to_variant());
         }
         out
+    }
+
+    /// The personal shop on this entity: title, owner, mine (bool), items (each an item
+    /// dictionary plus id and price). Empty if it has none.
+    #[func]
+    fn get_personal_store(&self, entity_id: i64) -> VarDictionary {
+        let mut d = VarDictionary::new();
+        let Some(c) = self.conn.as_ref() else { return d };
+        let Some(store) = c.db.personal_store().entity_id().find(&(entity_id as u64)) else { return d };
+        d.set("title", store.title.as_str());
+        d.set("owner", c.db.player().identity().find(&store.owner).map_or_else(String::new, |p| p.name).as_str());
+        d.set("mine", c.try_identity() == Some(store.owner));
+        let mut items = VarArray::new();
+        let mut rows: Vec<_> = c.db.store_item().iter().filter(|r| r.store_entity == store.entity_id).collect();
+        rows.sort_by_key(|r| r.id);
+        for r in rows {
+            let Ok(item) = serde_json::from_str::<rose_data::Item>(&r.item) else { continue };
+            let mut it = crate::items::item_dict(&item);
+            it.set("id", r.id as i64);
+            it.set("price", r.price);
+            items.push(&it.to_variant());
+        }
+        d.set("items", &items);
+        d
+    }
+
+    /// Titles of the open shops by entity id, for the signs over their owners.
+    #[func]
+    fn get_store_titles(&self) -> VarDictionary {
+        let mut d = VarDictionary::new();
+        if let Some(c) = self.conn.as_ref() {
+            for s in c.db.personal_store().iter() {
+                d.set(s.entity_id as i64, s.title.as_str());
+            }
+        }
+        d
+    }
+
+    /// Open our shop: `listings` holds [page, index, quantity, price] for each item.
+    #[func]
+    fn store_open(&self, title: GString, listings: VarArray) {
+        let s = self.shared.clone();
+        let Some(c) = self.conn.as_ref() else { return };
+        let listings: Vec<StoreListing> = listings
+            .iter_shared()
+            .filter_map(|v| {
+                let a = v.try_to::<VarArray>().ok()?;
+                let n = |i: usize| a.get(i).and_then(|x| x.try_to::<i64>().ok()).unwrap_or(0);
+                Some(StoreListing { page: n(0) as u8, index: n(1) as u16, quantity: n(2).max(0) as u32, price: n(3) })
+            })
+            .collect();
+        c.reducers.store_open_then(title.to_string(), listings, move |_, r| report(&s, r)).ok();
+    }
+
+    #[func]
+    fn store_close(&self) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.store_close_then(move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    #[func]
+    fn store_buy(&self, store_entity: i64, store_item_id: i64, quantity: i64) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.store_buy_then(store_entity as u64, store_item_id as u64, quantity.max(0) as u32, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    /// Our friends: name, online, level, job, zone (empty while offline), online ones first.
+    #[func]
+    fn get_friends(&self) -> VarArray {
+        let mut out = VarArray::new();
+        let Some(c) = self.conn.as_ref() else { return out };
+        let mut friends: Vec<_> = c.db.my_friends().iter().collect();
+        friends.sort_by(|a, b| b.online.cmp(&a.online).then_with(|| a.name.to_lowercase().cmp(&b.name.to_lowercase())));
+        for f in friends {
+            let mut d = VarDictionary::new();
+            d.set("name", f.name.as_str());
+            d.set("online", f.online);
+            d.set("level", f.level as i64);
+            d.set("job", f.job as i64);
+            d.set("zone", f.zone.as_str());
+            out.push(&d.to_variant());
+        }
+        out
+    }
+
+    /// Friend requests sent to us: [request id, from name].
+    #[func]
+    fn get_friend_requests(&self) -> VarArray {
+        let mut out = VarArray::new();
+        let Some(c) = self.conn.as_ref() else { return out };
+        for r in c.db.my_friend_requests().iter() {
+            let mut a = VarArray::new();
+            a.push(&(r.request_id as i64).to_variant());
+            a.push(&r.from_name.to_variant());
+            out.push(&a.to_variant());
+        }
+        out
+    }
+
+    /// Ask a player (by name) to be friends.
+    #[func]
+    fn friend_ask(&self, name: GString) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.friend_ask_then(name.to_string(), move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    #[func]
+    fn friend_answer(&self, request_id: i64, accept: bool) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.friend_answer_then(request_id as u64, accept, move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    #[func]
+    fn friend_remove(&self, name: GString) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.friend_remove_then(name.to_string(), move |_, r| report(&s, r)).ok();
+        }
     }
 
     #[func]

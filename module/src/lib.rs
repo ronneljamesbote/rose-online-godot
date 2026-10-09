@@ -11,6 +11,10 @@ mod bank;
 mod character;
 mod chat;
 mod craft;
+mod death;
+mod friends;
+mod shop;
+mod vehicle;
 mod game_data;
 mod items;
 mod monster_brain;
@@ -34,7 +38,6 @@ pub use world::{monster_spawn, zone_info};
 
 const COMBAT_TICK_MS: u64 = 100;
 const SPAWN_TICK_MS: u64 = 1000;
-const PLAYER_RESPAWN_US: i64 = 5_000_000;
 pub(crate) const MONSTER_LEASH_CM: f32 = 3000.0;
 /// Re-path a chase only when the target has moved this far from the current destination.
 const CHASE_REPATH_CM: f32 = 100.0;
@@ -415,6 +418,8 @@ fn cancel_attack(ctx: &ReducerContext, id: u64, t: i64) {
 }
 
 fn despawn(ctx: &ReducerContext, entity_id: u64) {
+    shop::close(ctx, entity_id);
+    vehicle::forget(ctx, entity_id);
     ctx.db.entity().entity_id().delete(entity_id);
     ctx.db.motion().entity_id().delete(entity_id);
     ctx.db.combat().entity_id().delete(entity_id);
@@ -564,6 +569,9 @@ pub fn client_connected(ctx: &ReducerContext) -> Result<(), String> {
         let (x, y) = START_POSITION;
         ctx.db.player().insert(character::new_player(&game, ctx.sender(), name, 0, (START_ZONE, x, y)))
     });
+    if !player.online {
+        friends::announce(ctx, &player, true);
+    }
     player.online = true;
     player.connection = ctx.connection_id();
     if player.entity_id.is_none() {
@@ -581,6 +589,13 @@ pub fn client_disconnected(ctx: &ReducerContext) {
     }
     player.connection = None;
     trade::cancel_for(ctx, player.identity);
+    // Leaving while fallen gets up at the zone's revive point first (iROSE saves the
+    // character there), so logging out isn't a way back up on the spot with full HP.
+    if let (Some(id), Ok(game)) = (player.entity_id, game_data::game(ctx)) {
+        if ctx.db.combat().entity_id().find(id).is_some_and(|c| c.dead_until_us.is_some()) {
+            death::revive(ctx, &game, &mut player, id, false, now_us(ctx));
+        }
+    }
     if let Some(id) = player.entity_id.take() {
         let t = now_us(ctx);
         if let Some(p) = position(ctx, id, t) {
@@ -594,6 +609,7 @@ pub fn client_disconnected(ctx: &ReducerContext) {
         despawn(ctx, id);
     }
     player.online = false;
+    friends::announce(ctx, &player, false);
     ctx.db.player().identity().update(player);
 }
 
@@ -631,6 +647,12 @@ pub fn move_to(ctx: &ReducerContext, x: f32, y: f32) -> Result<(), String> {
     if let Some(reason) = skills::disabled_reason(ctx, id) {
         return Err(reason.into());
     }
+    if shop::is_open(ctx, id) {
+        return Err("close your shop first".into());
+    }
+    if vehicle::is_driving(ctx, id) && vehicle::engine_life(&player) <= 0 {
+        return Err("out of fuel".into());
+    }
     if !x.is_finite() || !y.is_finite() {
         return Err("bad position".into());
     }
@@ -652,6 +674,9 @@ pub fn move_to(ctx: &ReducerContext, x: f32, y: f32) -> Result<(), String> {
 #[spacetimedb::reducer]
 pub fn attack(ctx: &ReducerContext, target: u64) -> Result<(), String> {
     let (_, id) = my_player(ctx)?;
+    if shop::is_open(ctx, id) {
+        return Err("close your shop first".into());
+    }
     if target == id {
         return Err("can't attack yourself".into());
     }
@@ -720,6 +745,9 @@ pub fn sit(ctx: &ReducerContext) -> Result<(), String> {
         stand_up(ctx, id);
         return Ok(());
     }
+    if vehicle::is_driving(ctx, id) {
+        return Err("you can't sit while driving".into());
+    }
     if !is_alive(ctx, id) {
         return Err("dead".into());
     }
@@ -736,6 +764,8 @@ pub fn sit(ctx: &ReducerContext) -> Result<(), String> {
 
 pub(crate) fn stand_up(ctx: &ReducerContext, id: u64) {
     ctx.db.sitting().entity_id().delete(id);
+    // A personal shop is open only while its owner sits.
+    shop::close(ctx, id);
 }
 
 /// How far off its straight path a client may say it hit something.
@@ -1020,8 +1050,19 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
                 Some(_) => {}
                 // Ready: start a swing. Schedule from the previous one so ticks don't add drift.
                 None if t >= c.next_attack_at_us => {
+                    // A vehicle attack uses fuel; with none left it can't attack.
+                    if stats.is_player && vehicle::is_driving(ctx, id) {
+                        let Some(mut p) = ctx.db.player().iter().find(|p| p.entity_id == Some(id)) else { continue };
+                        if vehicle::engine_life(&p) <= 0 {
+                            c.attack_target = None;
+                            ctx.db.combat().entity_id().update(c);
+                            items::notify(ctx, p.identity, "Out of fuel");
+                            continue;
+                        }
+                        vehicle::use_fuel(ctx, &game, &mut p, None);
+                    }
                     // Bows, guns and launchers need ammo for every hit of the swing.
-                    if stats.is_player && !player_has_ammo(ctx, &game, id, stats.hit_count) {
+                    else if stats.is_player && !player_has_ammo(ctx, &game, id, stats.hit_count) {
                         c.attack_target = None;
                         ctx.db.combat().entity_id().update(c);
                         if let Some(p) = ctx.db.player().iter().find(|p| p.entity_id == Some(id)) {
@@ -1078,6 +1119,9 @@ fn player_has_ammo(ctx: &ReducerContext, game: &GameData, id: u64, hit_count: i3
 }
 
 fn take_player_ammo(ctx: &ReducerContext, game: &GameData, id: u64, hit_count: i32) {
+    if vehicle::is_driving(ctx, id) {
+        return;
+    }
     let Some(mut p) = ctx.db.player().iter().find(|p| p.entity_id == Some(id)) else { return };
     if let Some(ammo) = items::weapon_ammo(game, &p.equipment()) {
         items::use_ammo(ctx, &mut p, ammo, hit_count.max(1) as u32);
@@ -1132,7 +1176,7 @@ fn reward_kill(ctx: &ReducerContext, game: &GameData, monster: u64, monster_stat
 fn deal_damage(ctx: &ReducerContext, game: &GameData, attacker: u64, defender: u64, amount: i32, is_critical: bool, t: i64) -> bool {
     let Some(defender_stats) = ctx.db.stats().entity_id().find(defender) else { return false };
     let Some(mut dc) = ctx.db.combat().entity_id().find(defender) else { return false };
-    if dc.hp <= 0 || dc.dead_until_us.is_some() {
+    if dc.hp <= 0 || dc.dead_until_us.is_some() || death::is_shielded(ctx, defender, t) {
         return false;
     }
     let dealt = amount.min(dc.hp);
@@ -1204,9 +1248,11 @@ fn kill(ctx: &ReducerContext, game: &GameData, id: u64, stats: &Stats, killer: u
             }
             stop_motion(ctx, id);
             stand_up(ctx, id);
+            vehicle::get_off(ctx, game, id);
+            death::player_died(ctx, game, id, killer, t);
             if let Some(mut c) = ctx.db.combat().entity_id().find(id) {
                 c.attack_target = None;
-                c.dead_until_us = Some(t + PLAYER_RESPAWN_US);
+                c.dead_until_us = Some(t + death::AUTO_REVIVE_US);
                 ctx.db.combat().entity_id().update(c);
             }
             for mut c in ctx.db.combat().iter().filter(|c| c.attack_target == Some(id)) {
@@ -1226,27 +1272,9 @@ pub fn spawn_tick(ctx: &ReducerContext, _timer: SpawnTickTimer) -> Result<(), St
     let Ok(game) = game_data::game(ctx) else { return Ok(()) };
     let t = now_us(ctx);
 
-    // Revive dead players at the zone's revive point.
-    for c in ctx.db.combat().iter().filter(|c| c.dead_until_us.map_or(false, |d| d <= t)) {
-        let Some(e) = ctx.db.entity().entity_id().find(c.entity_id) else { continue };
-        let revive = ctx.db.zone_info().zone_id().find(e.zone_id).map_or((520000.0, 520000.0), |z| (z.revive_x, z.revive_y));
-        let speed = ctx.db.stats().entity_id().find(c.entity_id).map_or(425.0, |s| s.move_speed);
-        ctx.db.motion().entity_id().update(Motion {
-            entity_id: c.entity_id,
-            from_x: revive.0,
-            from_y: revive.1,
-            to_x: revive.0,
-            to_y: revive.1,
-            started_at_us: t,
-            speed,
-            chase_target: None,
-        });
-        let mut c = c.clone();
-        c.hp = c.max_hp;
-        c.mp = c.max_mp;
-        c.dead_until_us = None;
-        ctx.db.combat().entity_id().update(c);
-    }
+    // Fallen players who waited too long get up at the zone's revive point.
+    death::tick(ctx, &game, t);
+    vehicle::tick(ctx, &game, t);
 
     passive_recovery(ctx, &game, t);
     items::regen_tick(ctx);
@@ -1255,6 +1283,7 @@ pub fn spawn_tick(ctx: &ReducerContext, _timer: SpawnTickTimer) -> Result<(), St
     npc_ai::npc_ai_tick(ctx, &game, t);
     party::expire_invites(ctx, t);
     trade::expire_requests(ctx, t);
+    friends::expire_requests(ctx, t);
     chat::expire_messages(ctx, t);
     world::spawn_tick(ctx, &game, t);
 
@@ -1275,6 +1304,10 @@ fn passive_recovery(ctx: &ReducerContext, game: &GameData, t: i64) {
     for e in ctx.db.entity().iter().filter(|e| e.kind == EntityKind::Player) {
         let Some(mut c) = ctx.db.combat().entity_id().find(e.entity_id) else { continue };
         if c.hp <= 0 || c.dead_until_us.is_some() || (c.hp >= c.max_hp && c.mp >= c.max_mp) {
+            continue;
+        }
+        // No recovery while driving (Check_PerFRAME spends that time on fuel).
+        if vehicle::is_driving(ctx, e.entity_id) {
             continue;
         }
         let Some(av) = ctx.db.stats().entity_id().find(e.entity_id).and_then(|s| s.ability()) else { continue };

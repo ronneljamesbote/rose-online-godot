@@ -8,13 +8,14 @@ const SLOT_SIZE := 44
 const PAGES := ["Equip", "Use", "Etc", "Ride"]
 const EQUIPPED := ["Face", "Head", "Body", "Back", "Hands", "Feet", "Weapon", "Off-hand", "Necklace", "Ring", "Earring"]
 const AMMO := ["Arrows", "Bullets", "Shells"]
+const VEHICLE := ["Frame", "Engine", "Wheels", "Arms"]
 
 
 ## One item slot: icon, quantity, tooltip; reports clicks and drags back to the window.
 class Slot:
 	extends Panel
 	var window: Control
-	var kind := ""  # "page", "equipped", "ammo", "store", "bank", "work", "trade", "trade_theirs", "skill" or "hotbar"
+	var kind := ""  # "page", "equipped", "ammo", "vehicle", "store", "bank", "work", "trade", "trade_theirs", "skill" or "hotbar"
 	var index := 0
 	var item = null
 	var icon: TextureRect
@@ -104,7 +105,7 @@ class Slot:
 			return false
 		if data.kind == "bank":
 			return kind == "page"
-		return data.kind == "page" and (kind == "page" or kind == "equipped" or kind == "ammo" or kind == "store")
+		return data.kind == "page" and (kind == "page" or kind == "equipped" or kind == "ammo" or kind == "vehicle" or kind == "store")
 
 	func _drop_data(_at: Vector2, data: Variant) -> void:
 		window.dropped(data, self)
@@ -121,6 +122,9 @@ var page := 0
 var page_slots: Array = []
 var equipped_slots: Array = []
 var ammo_slots: Array = []
+var vehicle_slots: Array = []
+var fuel_label: Label
+var drive_button: Button
 var selected: Slot
 var drop_button: Button
 var _last_inventory := {}
@@ -151,6 +155,22 @@ func _ready() -> void:
 		var slot := Slot.new(self, "ammo", i, AMMO[i])
 		equipped_grid.add_child(slot)
 		ammo_slots.append(slot)
+	# The cart or castle gear: its four parts, fuel (the engine's life) and getting on.
+	var ride := HBoxContainer.new()
+	box.add_child(ride)
+	for i in VEHICLE.size():
+		var slot := Slot.new(self, "vehicle", i, VEHICLE[i])
+		ride.add_child(slot)
+		vehicle_slots.append(slot)
+	fuel_label = Label.new()
+	fuel_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	fuel_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	ride.add_child(fuel_label)
+	drive_button = Button.new()
+	drive_button.text = "Drive"
+	drive_button.focus_mode = Control.FOCUS_NONE
+	drive_button.pressed.connect(func(): net.drive_toggle())
+	ride.add_child(drive_button)
 	box.add_child(HSeparator.new())
 
 	tabs = TabBar.new()
@@ -180,9 +200,15 @@ func _ready() -> void:
 	bottom.add_child(drop_button)
 
 
+var _next_drive_check_ms := 0
+
+
 func _process(_delta: float) -> void:
 	if visible and net != null:
 		_refresh(false)
+		if Time.get_ticks_msec() >= _next_drive_check_ms:
+			_next_drive_check_ms = Time.get_ticks_msec() + 300
+			drive_button.text = "Get off" if net.get_character().get("driving", false) else "Drive"
 
 
 func _refresh(force: bool) -> void:
@@ -205,6 +231,11 @@ func _refresh(force: bool) -> void:
 		equipped_slots[i].show_item(inventory["equipped"][i])
 	for i in ammo_slots.size():
 		ammo_slots[i].show_item(inventory["ammo"][i])
+	var parts: Array = inventory.get("vehicle", [null, null, null, null])
+	for i in vehicle_slots.size():
+		vehicle_slots[i].show_item(parts[i])
+	fuel_label.text = "Fuel %d%%" % (int(parts[1].get("life", 0)) / 10) if parts[1] != null else ""
+	drive_button.disabled = parts[0] == null
 	if selected and selected.item == null:
 		_clear_selection()
 
@@ -243,6 +274,8 @@ func activate(slot: Slot) -> void:
 			net.unequip_item(slot.index)
 		"ammo":
 			net.unequip_ammo(slot.index)
+		"vehicle":
+			net.unequip_vehicle_part(slot.index)
 		"page":
 			if store_window != null and store_window.visible:
 				var quantity: int = slot.item.get("quantity", 1) if Input.is_key_pressed(KEY_SHIFT) else 1

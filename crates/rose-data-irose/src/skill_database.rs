@@ -289,7 +289,14 @@ pub fn get_skill_database(
     let mut skills = Vec::with_capacity(data.rows());
     skills.push(None); // SkillId 0
     for id in 1..data.rows() {
-        skills.push(load_skill(&data, &string_database, id));
+        let mut skill = load_skill(&data, &string_database, id);
+        // The client has no names for its castle gear skills.
+        if let Some(skill) = skill.as_mut().filter(|s| s.name.is_empty()) {
+            if skill.required_equipment_class.contains(&rose_data::ItemClass::CastleGearBody) {
+                skill.name = "Castle Gear Skill";
+            }
+        }
+        skills.push(skill);
     }
 
     debug!("Loaded {} skills", skills.len());

@@ -256,6 +256,10 @@ use crate::player;
 pub fn teleport(ctx: &ReducerContext, p: &mut Player, zone_id: u16, at: (f32, f32)) {
     let t = now_us(ctx);
     if let Some(id) = p.entity_id {
+        crate::shop::close(ctx, id);
+        if let Ok(game) = game(ctx) {
+            crate::vehicle::get_off(ctx, &game, id);
+        }
         cancel_attack(ctx, id, t);
         crate::skills::cancel_cast(ctx, id);
         crate::forget_entity(ctx, id);
@@ -304,5 +308,17 @@ pub fn warp_player(ctx: &ReducerContext, name: String, zone_id: u16) -> Result<(
     let mut p = ctx.db.player().iter().find(|p| p.name == name).ok_or("no such player")?;
     let zone = ctx.db.zone_info().zone_id().find(zone_id).ok_or("no such zone")?;
     teleport(ctx, &mut p, zone_id, (zone.start_x, zone.start_y));
+    Ok(())
+}
+
+/// Debug: put a player (by name) two metres from an NPC (by NPC id), for testing quests.
+#[spacetimedb::reducer]
+pub fn admin_teleport_to_npc(ctx: &ReducerContext, name: String, npc_id: u16) -> Result<(), String> {
+    crate::require_admin(ctx)?;
+    let mut p = ctx.db.player().iter().find(|p| p.name == name).ok_or("no such player")?;
+    use crate::npcs::npc;
+    let npc = ctx.db.npc().iter().find(|n| n.npc_id == npc_id).ok_or("no such NPC")?;
+    let at = crate::position(ctx, npc.entity_id, now_us(ctx)).ok_or("the NPC isn't placed")?;
+    teleport(ctx, &mut p, npc.zone_id, (at.0 + 200.0, at.1));
     Ok(())
 }
