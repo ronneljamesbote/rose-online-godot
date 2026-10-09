@@ -381,6 +381,11 @@ func show_shop_sign(title: String) -> void:
 
 ## Show what this player said over their head for a few seconds.
 func say(text: String) -> void:
+	# The interface draws chat bubbles when it is there (world_overlay.gd).
+	var overlay := get_tree().get_first_node_in_group("world_overlay")
+	if overlay:
+		overlay.bubble(self, text)
+		return
 	if _speech == null:
 		_speech = Label3D.new()
 		_speech.billboard = BaseMaterial3D.BILLBOARD_ENABLED

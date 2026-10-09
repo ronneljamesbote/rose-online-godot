@@ -29,7 +29,7 @@ func _ready() -> void:
 
 	var title := Label.new()
 	title.text = "Skills"
-	title.add_theme_font_size_override("font_size", 18)
+	title.theme_type_variation = "HeaderLabel"
 	box.add_child(title)
 
 	tabs = TabBar.new()

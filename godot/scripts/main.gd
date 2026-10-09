@@ -67,6 +67,11 @@ func _ready() -> void:
 	for arg in OS.get_cmdline_user_args():
 		var parts := arg.trim_prefix("--").split("=", true, 1)
 		options[parts[0]] = parts[1] if parts.size() > 1 else "true"
+	# --theme=clear and --ui-scale=1.25 set the interface options (for screenshots).
+	if options.has("theme"):
+		UI.set_setting("theme", options["theme"])
+	if options.has("ui-scale"):
+		UI.set_setting("scale", float(options["ui-scale"]))
 
 	var data_idx := _find_data_idx()
 	if data_idx == "":
@@ -323,14 +328,9 @@ func _on_joined(me: Node3D) -> void:
 		return
 	_joined_before = true
 	var windows: String = options.get("open", "")
-	if "inventory" in windows:
-		online.toggle_inventory_window()
-	if "character" in windows:
-		online.toggle_character_window()
-	if "skills" in windows:
-		online.toggle_skill_window()
-	if "quests" in windows:
-		online.toggle_quest_window()
+	for which in ["inventory", "character", "skill", "quest", "party", "friends", "map", "options"]:
+		if which in windows:
+			online.get(which + "_window").visible = true
 	if options.has("net-demo"):
 		_run_net_demo(me)
 
@@ -517,12 +517,20 @@ func _unhandled_input(event: InputEvent) -> void:
 			online.toggle_quest_window()
 		elif event.keycode == KEY_F and online:
 			online.toggle_friends_window()
+		elif event.keycode == KEY_P and online:
+			online.toggle_party_window()
+		elif event.keycode == KEY_M and online:
+			online.toggle_map_window()
+		elif event.keycode == KEY_ESCAPE and online:
+			online.close_top_window()
 		elif event.keycode >= KEY_1 and event.keycode <= KEY_8 and online:
 			online.hotbar.use_slot(event.keycode - KEY_1)
 		elif event.keycode == KEY_Z and online:
 			online.pickup(online.nearest_item())
 		elif event.keycode == KEY_X and online:
 			online.sit()
+		elif event.keycode == KEY_O and online:
+			online.toggle_options_window()
 		elif event.keycode == KEY_O:
 			_toggle_sound_window()
 		elif (event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER) and online:

@@ -109,4 +109,78 @@ impl RoseData {
             .map_or(String::new(), |z| z.name.to_string());
         GString::from(name.as_str())
     }
+
+    /// The zone's minimap from LIST_ZONE.STB: {path, start_x, start_y}, or {} when it has none.
+    #[func]
+    fn zone_minimap(zone_id: i32) -> VarDictionary {
+        let mut dict = VarDictionary::new();
+        let zone = data::get()
+            .and_then(|g| rose_data::ZoneId::new(zone_id.clamp(0, u16::MAX as i32) as u16).and_then(|id| g.zone_list.get_zone(id)));
+        if let Some(zone) = zone {
+            if let Some(path) = &zone.minimap_path {
+                dict.set("path", path.path().to_string_lossy().to_string());
+                dict.set("start_x", zone.minimap_start_x as i64);
+                dict.set("start_y", zone.minimap_start_y as i64);
+            }
+        }
+        dict
+    }
+}
+
+/// Reads TOML text (the player-editable UI theme files) for GDScript.
+#[derive(GodotClass)]
+#[class(base=RefCounted, init)]
+struct RoseToml {
+    base: Base<RefCounted>,
+}
+
+#[godot_api]
+impl RoseToml {
+    /// Parses TOML into a Dictionary. On a syntax error the result is
+    /// {"__error": "line N, column M: message"} instead.
+    #[func]
+    fn parse(text: GString) -> VarDictionary {
+        match text.to_string().parse::<toml::Table>() {
+            Ok(table) => toml_table(&table),
+            Err(error) => {
+                let mut dict = VarDictionary::new();
+                dict.set("__error", error.message().to_string() + &toml_error_place(&text.to_string(), error.span()));
+                dict
+            }
+        }
+    }
+}
+
+fn toml_error_place(text: &str, span: Option<std::ops::Range<usize>>) -> String {
+    let Some(span) = span else { return String::new() };
+    let before = &text[..span.start.min(text.len())];
+    let line = before.matches('\n').count() + 1;
+    let column = before.len() - before.rfind('\n').map_or(0, |i| i + 1) + 1;
+    format!(" (line {line}, column {column})")
+}
+
+fn toml_table(table: &toml::Table) -> VarDictionary {
+    let mut dict = VarDictionary::new();
+    for (key, value) in table {
+        dict.set(key.as_str(), &toml_value(value));
+    }
+    dict
+}
+
+fn toml_value(value: &toml::Value) -> Variant {
+    match value {
+        toml::Value::String(s) => s.to_variant(),
+        toml::Value::Integer(i) => i.to_variant(),
+        toml::Value::Float(f) => f.to_variant(),
+        toml::Value::Boolean(b) => b.to_variant(),
+        toml::Value::Datetime(d) => d.to_string().to_variant(),
+        toml::Value::Array(items) => {
+            let mut array = VarArray::new();
+            for item in items {
+                array.push(&toml_value(item));
+            }
+            array.to_variant()
+        }
+        toml::Value::Table(table) => toml_table(table).to_variant(),
+    }
 }

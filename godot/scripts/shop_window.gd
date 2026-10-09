@@ -41,7 +41,7 @@ func _ready() -> void:
 	var top := HBoxContainer.new()
 	box.add_child(top)
 	title_label = Label.new()
-	title_label.add_theme_font_size_override("font_size", 18)
+	title_label.theme_type_variation = "HeaderLabel"
 	title_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	title_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	top.add_child(title_label)
@@ -285,7 +285,7 @@ func _refresh() -> void:
 	if not wants.is_empty():
 		var header := Label.new()
 		header.text = "Buying"
-		header.add_theme_font_size_override("font_size", 16)
+		header.theme_type_variation = "HeaderLabel"
 		rows.add_child(header)
 	for want in wants:
 		var row := _item_row(want)

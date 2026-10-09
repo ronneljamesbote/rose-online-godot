@@ -21,7 +21,7 @@ func _ready() -> void:
 
 	var title := Label.new()
 	title.text = "You have fallen"
-	title.add_theme_font_size_override("font_size", 18)
+	title.theme_type_variation = "HeaderLabel"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(title)
 	info = Label.new()

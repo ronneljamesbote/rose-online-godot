@@ -1013,6 +1013,8 @@ impl RoseNet {
             };
             let mut d = VarDictionary::new();
             d.set("name", data.name);
+            d.set("description", data.description);
+            d.set("bad", data.status_effect_type.is_bad());
             if let Some(texture) = crate::items::icon(crate::items::IconSheet::State, data.icon_id) {
                 d.set("icon", &texture);
             }
