@@ -290,7 +290,7 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	quest_window.net = net
 	quest_window.visible = false
 	# On the right, so it stays clear of conversations on the left.
-	_window(quest_window, "quests", "Quests", Vector2(1, 0.55), Vector2(-384, 0), true)
+	_window(quest_window, "quests", "Quests", Vector2(1, 0.72), Vector2(-384, 0), true)
 
 	revive_window = ReviveWindow.new()
 	revive_window.net = net
