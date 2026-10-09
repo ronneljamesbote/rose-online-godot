@@ -40,6 +40,15 @@ impl JobClassDatabase {
         self.job_classes.iter().filter_map(|data| data.as_ref())
     }
 
+    /// Rows in LIST_CLASS, empty ones included.
+    pub fn len(&self) -> usize {
+        self.job_classes.len()
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.job_classes.is_empty()
+    }
+
     pub fn get(&self, id: JobClassId) -> Option<&JobClassData> {
         self.job_classes
             .get(id.get() as usize)

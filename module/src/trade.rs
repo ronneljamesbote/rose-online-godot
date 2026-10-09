@@ -102,6 +102,9 @@ pub fn trade_ask(ctx: &ReducerContext, target_entity_id: u64) -> Result<(), Stri
     if trade_of(ctx, p.identity).is_some() {
         return Err("you are already trading".into());
     }
+    if p.entity_id.is_some_and(|id| crate::shop::is_open(ctx, id)) || crate::shop::is_open(ctx, target_entity_id) {
+        return Err("no trading while a shop is open".into());
+    }
     if trade_of(ctx, target.identity).is_some() {
         return Err(format!("{} is busy trading", target.name));
     }
@@ -151,7 +154,7 @@ pub fn trade_answer(ctx: &ReducerContext, request_id: u64, accept: bool) -> Resu
 }
 
 /// Check an offer against a bag and turn it into what the other side sees.
-fn check_offer(inventory: &Inventory, slots: &[TradeSlot], money: i64) -> Result<Vec<OfferedItem>, String> {
+fn check_offer(game: &rose_game_data::GameData, inventory: &Inventory, slots: &[TradeSlot], money: i64) -> Result<Vec<OfferedItem>, String> {
     if slots.len() > MAX_TRADE_ITEMS {
         return Err(format!("you can trade at most {MAX_TRADE_ITEMS} items at once"));
     }
@@ -165,6 +168,9 @@ fn check_offer(inventory: &Inventory, slots: &[TradeSlot], money: i64) -> Result
         }
         let item = inventory.get_item(items::inventory_slot(s.page, s.index)?).ok_or("that item is gone")?;
         let mut item = item.clone();
+        if !crate::shop::exchangeable(game, &item) {
+            return Err("that item can't be traded".into());
+        }
         if let Item::Stackable(stack) = &mut item {
             if s.quantity == 0 || s.quantity > stack.quantity {
                 return Err("you don't have that many".into());
@@ -179,9 +185,10 @@ fn check_offer(inventory: &Inventory, slots: &[TradeSlot], money: i64) -> Result
 /// Put these bag items and Zuly on the table, replacing our earlier offer.
 #[spacetimedb::reducer]
 pub fn trade_offer(ctx: &ReducerContext, slots: Vec<TradeSlot>, money: i64) -> Result<(), String> {
+    let game = crate::game_data::game(ctx)?;
     let (p, _) = my_player(ctx)?;
     let mut trade = trade_of(ctx, p.identity).ok_or("you aren't trading")?;
-    let offered = serde_json::to_string(&check_offer(&p.inventory(), &slots, money)?).unwrap_or_default();
+    let offered = serde_json::to_string(&check_offer(&game, &p.inventory(), &slots, money)?).unwrap_or_default();
     if trade.a == p.identity {
         trade.a_items = offered;
         trade.a_money = money;

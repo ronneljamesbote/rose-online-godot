@@ -24,12 +24,17 @@ const QUEST_SPAWN_ID: u32 = u32::MAX;
 
 struct ServerWorld<'a> {
     ctx: &'a ReducerContext,
+    game: &'a GameData,
     identity: Identity,
     zone_id: u16,
     t: i64,
 }
 
 impl QuestWorld for ServerWorld<'_> {
+    fn job_classes(&self) -> Option<&rose_data::JobClassDatabase> {
+        Some(&self.game.job_class)
+    }
+
     fn world_ticks(&self) -> WorldTicks {
         rose_quest::world_ticks(self.t)
     }
@@ -612,8 +617,12 @@ impl<'a> Run<'a> {
                     self.spawn_monster(cx, npc, count, location, distance)
                 }
                 QsdReward::NpcMessage { message_type, string_id } => self.npc_message(message_type, string_id),
-                // Teams and revive points are not in the game yet.
-                QsdReward::SetTeamNumber { .. } | QsdReward::SetRevivePosition { .. } => true,
+                QsdReward::SetRevivePosition { x, y } => {
+                    crate::death::save(self.ctx, self.p.identity, self.ch.zone_id, (x, y));
+                    true
+                }
+                // Teams are not in the game yet.
+                QsdReward::SetTeamNumber { .. } => true,
                 // No clans yet.
                 QsdReward::ClanLevelIncrease
                 | QsdReward::ClanMoney { .. }
@@ -642,7 +651,7 @@ pub fn run_trigger(ctx: &ReducerContext, game: &GameData, identity: Identity, na
     let Some(p) = ctx.db.player().identity().find(identity) else { return false };
     let Some(first) = rose_quest::find_trigger(&game.quests, name) else { return false };
     let mut run = Run::new(ctx, game, p);
-    let mut world = ServerWorld { ctx, identity, zone_id: run.ch.zone_id, t: run.t };
+    let mut world = ServerWorld { ctx, game, identity, zone_id: run.ch.zone_id, t: run.t };
     let mut cx = QuestContext::default();
     let mut trigger = Some(first);
     let mut success = false;
@@ -730,4 +739,31 @@ pub fn admin_give_quest(ctx: &ReducerContext, player_name: String, quest_id: u32
     let ok = run.apply_rewards(&mut QuestContext::default(), &trigger);
     run.finish();
     if ok { Ok(()) } else { Err("could not add the quest".into()) }
+}
+
+/// Debug: set one of a player's job variables (the job change quests keep their progress
+/// there), for testing a job chain again on the same character.
+#[spacetimedb::reducer]
+pub fn admin_set_job_var(ctx: &ReducerContext, player_name: String, index: u32, value: u16) -> Result<(), String> {
+    crate::require_admin(ctx)?;
+    let mut p = ctx.db.player().iter().find(|p| p.name == player_name).ok_or("no such player")?;
+    let mut state = p.quest_state();
+    *state.job_variables.get_mut(index as usize).ok_or("no such job variable")? = value;
+    p.set_quest_state(&state);
+    ctx.db.player().identity().update(p);
+    Ok(())
+}
+
+/// Debug: drop all of a player's active quests, for testing a quest chain again.
+#[spacetimedb::reducer]
+pub fn admin_clear_quests(ctx: &ReducerContext, player_name: String) -> Result<(), String> {
+    crate::require_admin(ctx)?;
+    let mut p = ctx.db.player().iter().find(|p| p.name == player_name).ok_or("no such player")?;
+    let mut state = p.quest_state();
+    for quest in state.active_quests.iter_mut() {
+        *quest = None;
+    }
+    p.set_quest_state(&state);
+    ctx.db.player().identity().update(p);
+    Ok(())
 }

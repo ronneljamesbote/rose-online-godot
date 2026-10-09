@@ -31,6 +31,10 @@ var is_npc := false  # a town NPC: stands still, facing its direction
 var has_store := false
 var npc_id := 0
 var look := []  # male, face, hair, head, body, hands, feet, weapon, sub weapon (players)
+var vehicle := []  # body, engine, legs, arms item numbers while driving a cart or castle gear
+var driver: Node3D  # while driving: the character on the vehicle's seat
+var driver_anim: AnimationPlayer
+var predict_speed := RUN_SPEED
 var dead := false
 var dying := false  # the server removed it after a killing blow; playing the death
 var was_swinging := false
@@ -78,6 +82,7 @@ func setup(zone_node: Node, state: Dictionary, is_me_: bool) -> void:
 	has_store = state.get("store", false)
 	npc_id = state["npc_id"]
 	look = state.get("look", [])
+	vehicle = state.get("vehicle", [])
 	is_summon = state.has("summon_owner")
 	_build()
 	label = Label3D.new()
@@ -111,9 +116,26 @@ func _build() -> void:
 		_idle = "stop"
 		_walk = "move"
 	else:
-		model = RoseCharacter.new()
+		var character := RoseCharacter.new()
 		var l: Array = look if look.size() == 9 else [true, 1, 0, 0, 1, 1, 1, 0, 0]
-		model.build(l[0], l[1], l[2], l[3], l[4], l[5], l[6], l[7], l[8])
+		character.build(l[0], l[1], l[2], l[3], l[4], l[5], l[6], l[7], l[8])
+		model = character
+		driver = null
+		driver_anim = null
+		_idle = "stop1"
+		_walk = "run"
+		var cart := RoseVehicle.new() if vehicle.size() == 4 else null
+		if cart and cart.build(vehicle[0], vehicle[1], vehicle[2], vehicle[3]):
+			# The character rides on the vehicle's seat and plays its driving motions.
+			character.add_drive_motions(vehicle[0])
+			cart.seat().add_child(character)
+			driver = character
+			driver_anim = character.get_node_or_null("AnimationPlayer")
+			model = cart
+			_idle = "stop"
+			_walk = "move"
+		elif cart:
+			cart.free()
 	model.name = "Model"
 	add_child(model)
 	anim = model.get_node_or_null("AnimationPlayer")
@@ -191,8 +213,11 @@ func update_state(state: Dictionary, target_position) -> void:
 	if is_hidden != hidden:
 		hidden = is_hidden
 		_apply_fade()
-	if not is_monster and state.has("look") and state["look"] != look:
-		look = state["look"]
+	var riding: Array = state.get("vehicle", [])
+	if not is_monster and ((state.has("look") and state["look"] != look) or riding != vehicle):
+		look = state.get("look", look)
+		vehicle = riding
+		predict_speed = RUN_SPEED
 		_build()
 		label.position.y = height + 0.3
 
@@ -207,7 +232,7 @@ func update_state(state: Dictionary, target_position) -> void:
 		else:
 			var from: Vector3 = predicted["from"]
 			var to: Vector3 = predicted["to"]
-			var travel := minf(elapsed * RUN_SPEED, from.distance_to(to))
+			var travel := minf(elapsed * predict_speed, from.distance_to(to))
 			flat = from + (to - from).normalized() * travel if from.distance_to(to) > 0.01 else to
 			moving = travel < from.distance_to(to)
 			server_to = to
@@ -231,6 +256,8 @@ func update_state(state: Dictionary, target_position) -> void:
 			moving = false
 			server_to = stop
 
+	if moving and predicted.is_empty() and state.get("speed", 0.0) > 0.5:
+		predict_speed = state["speed"]
 	var heading := server_to - flat if moving else Vector3.ZERO
 	if not moving and target_position != null:
 		heading = target_position - flat
@@ -306,6 +333,38 @@ func _ground_height(flat: Vector3) -> float:
 	return maxf(terrain, hit["position"].y) if not hit.is_empty() else terrain
 
 
+var _shop_sign: Label3D  # an open personal shop's title
+var shop_title := ""
+
+
+## Show (or with "" take down) the sign of this player's personal shop.
+func show_shop_sign(title: String) -> void:
+	if title == shop_title:
+		return
+	shop_title = title
+	if title == "":
+		if _shop_sign:
+			_shop_sign.visible = false
+		return
+	if _shop_sign == null:
+		_shop_sign = Label3D.new()
+		_shop_sign.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		_shop_sign.no_depth_test = true
+		_shop_sign.fixed_size = true
+		_shop_sign.pixel_size = 0.0015
+		_shop_sign.font_size = 22
+		_shop_sign.modulate = Color(1.0, 0.85, 0.35)
+		_shop_sign.outline_size = 10
+		_shop_sign.outline_modulate = Color(0.25, 0.12, 0.0, 0.9)
+		_shop_sign.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		_shop_sign.width = 420
+		_shop_sign.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+		add_child(_shop_sign)
+	_shop_sign.text = "[ %s ]" % title
+	_shop_sign.position.y = label.position.y + 0.5
+	_shop_sign.visible = true
+
+
 ## Show what this player said over their head for a few seconds.
 func say(text: String) -> void:
 	if _speech == null:
@@ -351,16 +410,18 @@ func on_hit() -> void:
 func _swing(hit_in: float) -> void:
 	var name := "attack"
 	if not is_monster:
-		var names := ["attack", "attack2", "attack3"]
+		var names := ["attack1", "attack2", "attack3"] if driver else ["attack", "attack2", "attack3"]
 		name = names[attack_index % names.size()]
 		attack_index += 1
 	if anim == null or not anim.has_animation(name):
-		name = "attack"
+		name = "attack1" if driver else "attack"
 	_play(name, true)
 	# Play at the speed that puts the hit frame on the server's hit time (attack speed and
 	# network delay both change it a little).
 	if anim and anim.has_animation(name) and hit_in > 0.05:
 		anim.speed_scale = clampf(hit_time(name) / hit_in, 0.7, 1.6)
+		if driver_anim:
+			driver_anim.speed_scale = anim.speed_scale
 
 
 ## Time of the first damage frame in an attack motion, using the same frame event ids
@@ -474,6 +535,12 @@ func _play(name: String, restart := false) -> void:
 		_event_frame = -1
 	anim.speed_scale = 1.0
 	anim.play(name, BLEND)
+	# The driver plays the same motion as the vehicle under it.
+	if driver_anim and driver_anim.has_animation("drive_" + name):
+		if restart:
+			driver_anim.stop()
+		driver_anim.speed_scale = 1.0
+		driver_anim.play("drive_" + name, BLEND)
 
 
 func _on_animation_finished(name: StringName) -> void:

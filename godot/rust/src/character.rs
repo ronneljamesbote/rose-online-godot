@@ -9,7 +9,7 @@ use godot::{
     },
     prelude::*,
 };
-use rose_data::{CharacterMotionAction, NpcId, NpcMotionAction};
+use rose_data::{CharacterMotionAction, NpcId, NpcMotionAction, VehicleMotionAction, VehicleType};
 use rose_file_readers::{ZmdFile, ZmoChannel, ZmoFile, ZscFile};
 
 use crate::{data, material, mesh};
@@ -282,6 +282,106 @@ impl RoseCharacter {
         let Some(mut library) = player.get_animation_library("") else { return GString::new() };
         library.add_animation(name.as_str(), &build_animation(&zmo, self.dummy_offset, false));
         GString::from(name.as_str())
+    }
+
+    /// Adds the driver's motions for a vehicle body (its base_avatar_motion_index) as
+    /// drive_stop, drive_move, drive_attack1 and so on. Returns false when there are none.
+    #[func]
+    fn add_drive_motions(&mut self, body: i32) -> bool {
+        let Some(game_data) = data::get() else { return false };
+        let Some(vehicle) = game_data.items.get_vehicle_item(body.max(0) as usize) else { return false };
+        let Some(player) = self.base().try_get_node_as::<AnimationPlayer>("AnimationPlayer") else { return false };
+        let Some(mut library) = player.get_animation_library("") else { return false };
+        let motions = vehicle_motions(
+            vehicle.base_avatar_motion_index as usize,
+            0,
+            matches!(vehicle.vehicle_type, VehicleType::Cart),
+            self.dummy_offset,
+            "drive_",
+        );
+        let names = motions.get_animation_list();
+        for name in names.iter_shared() {
+            if !library.has_animation(&name) {
+                if let Some(animation) = motions.get_animation(&name) {
+                    library.add_animation(&name, &animation);
+                }
+            }
+        }
+        !names.is_empty()
+    }
+}
+
+/// Vehicle motions, as animation names: stop, move, attack1-3, die, special1-2. Carts only
+/// have one attack.
+fn vehicle_motions(base_motion_index: usize, weapon: usize, is_cart: bool, dummy_offset: usize, prefix: &str) -> Gd<AnimationLibrary> {
+    let mut library = AnimationLibrary::new_gd();
+    let Some(game_data) = data::get() else { return library };
+    for index in 0..VehicleMotionAction::LENGTH {
+        let action = VehicleMotionAction::from_usize(index);
+        let lookup = if is_cart && matches!(action, VehicleMotionAction::Attack2 | VehicleMotionAction::Attack3) {
+            VehicleMotionAction::Attack1
+        } else {
+            action
+        };
+        let Some(motion) = game_data.motions.get_vehicle_action_motion(lookup, base_motion_index, weapon) else { continue };
+        let Some(zmo) = data::read_file::<ZmoFile>(&motion.path.path().to_string_lossy()) else { continue };
+        let looping = matches!(action, VehicleMotionAction::Stop | VehicleMotionAction::Move);
+        library.add_animation(
+            &format!("{prefix}{}", format!("{action:?}").to_lowercase()),
+            &build_animation(&zmo, dummy_offset, looping),
+        );
+    }
+    library
+}
+
+/// Carts and castle gear (spawn_vehicle_model in model_loader.rs): the body's skeleton with
+/// the four parts from LIST_PAT.ZSC; the driver sits on dummy bone 0.
+#[derive(GodotClass)]
+#[class(base=Node3D, init)]
+pub struct RoseVehicle {
+    base: Base<Node3D>,
+}
+
+#[godot_api]
+impl RoseVehicle {
+    /// Builds a vehicle from part item numbers (0 = none; a body is needed). Animations are
+    /// stop, move, attack1-3, die, special1 and special2. Returns false without a body.
+    #[func]
+    fn build(&mut self, body: i32, engine: i32, leg: i32, arms: i32) -> bool {
+        let Some(game_data) = data::get() else { return false };
+        let Some(body_data) = game_data.items.get_vehicle_item(body.max(0) as usize) else { return false };
+        let is_cart = matches!(body_data.vehicle_type, VehicleType::Cart);
+        let skeleton_path = if is_cart {
+            "3DDATA/PAT/CART/CART01.ZMD"
+        } else {
+            "3DDATA/PAT/CASTLEGEAR/CASTLEGEAR02/CASTLEGEAR02.ZMD"
+        };
+        let Some(zmd) = data::read_file::<ZmdFile>(skeleton_path) else { return false };
+        let Some(zsc) = data::read_file::<ZscFile>("3DDATA/PAT/LIST_PAT.ZSC") else { return false };
+        let dummy_offset = zmd.bones.len();
+        let mut skeleton = build_skeleton(&zmd);
+        let skin = skeleton.create_skin_from_rest_transforms();
+        self.base_mut().add_child(&skeleton);
+        for part in [body, engine, leg, arms] {
+            if part > 0 {
+                attach_object(&mut skeleton, skin.as_ref(), &zsc, part as usize, dummy_offset, None);
+            }
+        }
+        let mut seat = BoneAttachment3D::new_alloc();
+        seat.set_name("Seat");
+        seat.set_bone_name(&bone_name(dummy_offset, dummy_offset));
+        skeleton.add_child(&seat);
+
+        let weapon = game_data.items.get_vehicle_item(arms.max(0) as usize).map_or(0, |v| v.base_motion_index as usize);
+        let library = vehicle_motions(body_data.base_motion_index as usize, weapon, is_cart, dummy_offset, "");
+        add_player(&mut self.to_gd().upcast(), library);
+        true
+    }
+
+    /// Where the driver goes (dummy bone 0), or null before build.
+    #[func]
+    fn seat(&self) -> Option<Gd<Node3D>> {
+        self.base().try_get_node_as::<Node3D>("Skeleton3D/Seat")
     }
 }
 

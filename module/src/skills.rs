@@ -296,7 +296,7 @@ fn check_requirements(ctx: &ReducerContext, game: &GameData, p: &Player, skill: 
         return Err(format!("needs {} skill points", skill.learn_point_cost));
     }
     if let Some(job_class) = skill.required_job_class.and_then(|id| game.job_class.get(id)) {
-        if !job_class.jobs.contains(&JobId::new(p.job)) {
+        if !job_class.jobs.is_empty() && !job_class.jobs.contains(&JobId::new(p.job)) {
             return Err(format!("only {} can learn this", job_class.name));
         }
     }
@@ -496,7 +496,14 @@ pub(crate) fn check_can_use(ctx: &ReducerContext, game: &GameData, p: &Player, i
             });
         }
     }
-    if !skill.required_equipment_class.is_empty() {
+    if let Some(refusal) = crate::vehicle::skill_refusal(ctx, game, p, id, skill) {
+        return Err(refusal);
+    }
+    let vehicle_skill = skill
+        .required_equipment_class
+        .iter()
+        .any(|c| matches!(c, rose_data::ItemClass::CartBody | rose_data::ItemClass::CastleGearBody));
+    if !skill.required_equipment_class.is_empty() && !vehicle_skill {
         let equipment = p.equipment();
         let class = |index| {
             equipment
@@ -539,6 +546,11 @@ pub(crate) fn pay_costs(ctx: &ReducerContext, game: &GameData, id: u64, skill: &
             AbilityType::Experience => {
                 p.xp = p.xp.saturating_sub(cost.max(0) as u64);
                 player_changed = true;
+            }
+            AbilityType::Fuel => {
+                let mut fuel_user = p.clone();
+                crate::vehicle::use_fuel(ctx, game, &mut fuel_user, Some(cost));
+                p = fuel_user;
             }
             AbilityType::Money => {
                 let mut inventory = p.inventory();
@@ -738,18 +750,24 @@ pub fn cast_skill(ctx: &ReducerContext, page: u8, index: u16, target: Option<u64
     if let Some(reason) = disabled_reason(ctx, id) {
         return Err(reason.into());
     }
+    // Sitting (standing up) is the only action while our shop is open.
+    if crate::shop::is_open(ctx, id) && !matches!(skill.basic_command, Some(SkillBasicCommand::Sit)) {
+        return Err("close your shop first".into());
+    }
     match skill.skill_type {
         SkillType::Passive => return Err(format!("{} works on its own", skill.name)),
         SkillType::BasicAction => {
             use SkillBasicCommand as B;
             return match (skill.basic_command, target) {
                 (Some(B::Sit), _) => crate::sit(ctx),
+                (Some(B::DriveVehicle), _) => crate::vehicle::drive_toggle(ctx),
                 (Some(B::Attack), Some(target)) => crate::attack(ctx, target),
                 (Some(B::PickupItem), _) => pickup_nearest(ctx, &p, id),
                 (Some(B::Jump | B::AirJump), _) => self_motion_cast(ctx, &game, &p, id, skill),
                 (Some(B::PartyInvite), Some(target)) => crate::party::party_invite(ctx, target),
                 (Some(B::Trade), Some(target)) => crate::trade::trade_ask(ctx, target),
-                (Some(B::Attack | B::PartyInvite | B::Trade), None) => Err("pick a target first".into()),
+                (Some(B::AddFriend), Some(target)) => crate::friends::friend_ask_entity(ctx, target),
+                (Some(B::Attack | B::PartyInvite | B::Trade | B::AddFriend), None) => Err("pick a target first".into()),
                 // Picking a target is done by the game client.
                 (Some(B::AutoTarget | B::SelfTarget), _) => Ok(()),
                 _ => Err(format!("{} isn't in the game yet", skill.name)),
@@ -904,7 +922,10 @@ fn take_effect(ctx: &ReducerContext, game: &GameData, cast: &SkillCast, t: i64) 
         }
         SkillType::Resurrection => {
             for target in targets(ctx, cast, skill, t) {
-                resurrect(ctx, game, target);
+                if resurrect(ctx, game, target) {
+                    // Some of the experience the death cost comes back (Cancel_PenalEXP).
+                    crate::death::refund(ctx, target, skill.power as u64);
+                }
             }
             Ok(())
         }
@@ -1097,6 +1118,13 @@ fn apply_effects(ctx: &ReducerContext, game: &GameData, caster: u64, target: u64
     }
 }
 
+/// Remove an entity's buffs (getting on or off a vehicle, iROSE's ClearAllGOOD).
+pub fn clear_good(ctx: &ReducerContext, game: &GameData, entity_id: u64) {
+    if clear_status(ctx, game, entity_id, StatusEffectType::ClearGood) {
+        refresh_entity(ctx, game, entity_id);
+    }
+}
+
 /// A cleansing effect: ClearGood takes buffs, ClearBad debuffs and taunts, ClearAll both
 /// (not taunts), ClearInvisible ends Stealth and disguises (iROSE's CEndurePACK::ClearSTATUS).
 /// True if anything was removed.
@@ -1132,24 +1160,30 @@ fn clear_status(ctx: &ReducerContext, game: &GameData, entity_id: u64, clear: St
     !rows.is_empty()
 }
 
-/// Bring a dead player back where they fell, with some of their HP (iROSE's resurrection;
-/// there is no death experience penalty here to give back).
-fn resurrect(ctx: &ReducerContext, game: &GameData, target: u64) {
-    if ctx.db.combat().entity_id().find(target).is_none_or(|c| c.dead_until_us.is_none()) {
-        return;
-    }
-    let rows: Vec<u64> = ctx.db.status_effect().entity_id().filter(target).map(|r| r.id).collect();
+/// Remove every status effect on an entity and recalculate its stats.
+pub fn clear_all_status(ctx: &ReducerContext, game: &GameData, entity_id: u64) {
+    let rows: Vec<u64> = ctx.db.status_effect().entity_id().filter(entity_id).map(|r| r.id).collect();
     for id in rows {
         ctx.db.status_effect().id().delete(id);
     }
+    refresh_entity(ctx, game, entity_id);
+}
+
+/// Bring a dead player back where they fell, with some of their HP (iROSE's resurrection).
+/// True if they were dead.
+fn resurrect(ctx: &ReducerContext, game: &GameData, target: u64) -> bool {
+    if ctx.db.combat().entity_id().find(target).is_none_or(|c| c.dead_until_us.is_none()) {
+        return false;
+    }
     // The share of HP is of the maximum without the buffs that just ended.
-    refresh_entity(ctx, game, target);
-    let Some(mut c) = ctx.db.combat().entity_id().find(target) else { return };
+    clear_all_status(ctx, game, target);
+    let Some(mut c) = ctx.db.combat().entity_id().find(target) else { return false };
     c.dead_until_us = None;
     c.hp = (c.max_hp * RESURRECT_HP_PERCENT / 100).max(1);
     c.attack_target = None;
     c.swing_hit_at_us = None;
     ctx.db.combat().entity_id().update(c);
+    true
 }
 
 /// How many summon points a player has: 50 plus what their passive skills add.

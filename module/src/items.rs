@@ -313,6 +313,10 @@ pub fn move_item(ctx: &ReducerContext, page: u8, from: u16, to: u16) -> Result<(
 
 // ---------------------------------------------------------------- equipment
 
+pub fn check_requirements(ctx: &ReducerContext, game: &GameData, p: &Player, item: &rose_data::BaseItemData) -> Result<(), String> {
+    meets_requirements(ctx, game, p, item)
+}
+
 fn meets_requirements(ctx: &ReducerContext, game: &GameData, p: &Player, item: &rose_data::BaseItemData) -> Result<(), String> {
     if let Some(job_class) = item.equip_job_class_requirement.and_then(|id| game.job_class.get(id)) {
         if !job_class.jobs.is_empty() && !job_class.jobs.contains(&JobId::new(p.job)) {
@@ -353,6 +357,12 @@ pub fn equip_item(ctx: &ReducerContext, page: u8, index: u16) -> Result<(), Stri
     let mut equipment = p.equipment();
     let item = inventory.get_item(slot).ok_or("nothing there")?.clone();
     let data = game.items.get_base_item(item.get_item_reference()).ok_or("unknown item")?;
+    if item.get_item_type() == ItemType::Vehicle {
+        crate::vehicle::equip_part(ctx, &game, &mut p, page, index)?;
+        ctx.db.player().identity().update(p.clone());
+        character::refresh_player(ctx, &game, &p, false);
+        return Ok(());
+    }
 
     match item {
         Item::Stackable(stack) => {
@@ -546,7 +556,15 @@ pub fn use_item(ctx: &ReducerContext, page: u8, index: u16) -> Result<(), String
     }
     let data = game.items.get_consumable_item(item.get_item_number()).ok_or("unknown item")?;
     match data.item_data.class {
-        ItemClass::EngineFuel | ItemClass::RepairTool | ItemClass::TimeCoupon => {
+        ItemClass::EngineFuel => {
+            let add = data.add_fuel;
+            inventory.try_take_quantity(slot, 1).ok_or("nothing there")?;
+            crate::vehicle::refuel(&mut p, add)?;
+            p.set_inventory(&inventory);
+            ctx.db.player().identity().update(p);
+            return Ok(());
+        }
+        ItemClass::RepairTool | ItemClass::TimeCoupon => {
             return Err("that can't be used yet".into());
         }
         ItemClass::SkillBook => {

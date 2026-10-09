@@ -515,6 +515,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			online.toggle_skill_window()
 		elif event.keycode == KEY_Q and online:
 			online.toggle_quest_window()
+		elif event.keycode == KEY_F and online:
+			online.toggle_friends_window()
 		elif event.keycode >= KEY_1 and event.keycode <= KEY_8 and online:
 			online.hotbar.use_slot(event.keycode - KEY_1)
 		elif event.keycode == KEY_Z and online:
@@ -627,7 +629,12 @@ func _run_skills_demo() -> void:
 ## nearest, self, none, a player's name or of:NAME, what that player fights; the default
 ## keeps the current one), "attack
 ## nearest", "select NAME", "move DX DZ" (metres), "accept" (a party invitation),
-## "waitdead NAME" and "status" (prints our status effects and the target's).
+## "waitdead NAME", "status" (prints our status effects and the target's), "revive save|here",
+## "invite NAME" (to our party), "friend NAME", "friendaccept", "unfriend NAME",
+## "friends [open]" (prints our friends list, opens the window),
+## "shop TITLE|PAGE,INDEX,QTY,PRICE|...", "shopsetup", "closeshop", "browse NAME",
+## "buy NAME N QTY", "money", "equip PAGE INDEX", "use PAGE INDEX", "unequippart N", "drive",
+## "inventory [close] [TAB]", "vehicle" (prints our vehicle parts, fuel and stats), "savepoint" and "me" (prints our zone, level, experience and whether we lie fallen).
 func _run_steps_demo(steps: String) -> void:
 	await get_tree().create_timer(3.0).timeout
 	for step in steps.split(";", false):
@@ -676,6 +683,88 @@ func _run_steps_demo(steps: String) -> void:
 						print("rose net demo: %s is down" % arg)
 						break
 					await get_tree().create_timer(0.25).timeout
+			"friend":
+				online.net.friend_ask(arg)
+			"friendaccept":
+				for i in 40:
+					var requests: Array = online.net.get_friend_requests()
+					if not requests.is_empty():
+						online.net.friend_answer(int(requests[0][0]), true)
+						print("rose net demo: accepted %s as a friend" % requests[0][1])
+						break
+					await get_tree().create_timer(0.25).timeout
+			"unfriend":
+				online.net.friend_remove(arg)
+			"friends":
+				if arg == "open":
+					online.friends_window.visible = true
+				var list: Array = online.net.get_friends()
+				print("rose net demo: friends ", list.map(func(f): return "%s %s %s" % [f["name"], "online" if f["online"] else "offline", f["zone"]]))
+			"invite":
+				_steps_target(arg)
+				if online.my_target >= 0:
+					online.net.party_invite(online.my_target)
+			"shop":
+				# shop TITLE|PAGE,INDEX,QTY,PRICE|...: open our shop with these bag slots.
+				var parts := step.strip_edges().substr(5).split("|")
+				var listings := []
+				for part in parts.slice(1):
+					var n := part.split(",")
+					listings.append([int(n[0]), int(n[1]), int(n[2]), int(n[3])])
+				online.net.store_open(parts[0], listings)
+			"shopsetup":
+				online.shop_window.open_setup()
+			"closeshop":
+				online.net.store_close()
+			"browse":
+				_steps_target(arg)
+				if online.my_target >= 0:
+					online.shop_window.browse(online.my_target)
+			"buy":
+				# buy NAME N QTY: buy QTY of the shop's Nth item (from 0).
+				_steps_target(arg)
+				var store: Dictionary = online.net.get_personal_store(online.my_target)
+				if store.is_empty():
+					print("rose net demo: %s has no shop" % arg)
+				else:
+					var it: Dictionary = store["items"][int(words[2])]
+					online.net.store_buy(online.my_target, int(it["id"]), int(words[3]))
+					print("rose net demo: buying %s x%s for %d each" % [it["name"], words[3], it["price"]])
+			"bag":
+				var pages: Array = online.net.get_inventory().get("pages", [])
+				for page in pages.size():
+					for index in pages[page].size():
+						var it = pages[page][index]
+						if it != null:
+							print("rose net demo: bag %d,%d %s x%d %s" % [page, index, it["name"], it["quantity"], "" if it.get("tradeable", true) else "(no trade)"])
+			"money":
+				print("rose net demo: money ", online.net.get_inventory().get("money", 0))
+			"equip":
+				online.net.equip_item(int(arg), int(words[2]))
+			"use":
+				online.net.use_item(int(arg), int(words[2]))
+			"unequippart":
+				online.net.unequip_vehicle_part(int(arg))
+			"drive":
+				online.net.drive_toggle()
+			"inventory":
+				online.inventory_window.visible = arg != "close"
+				if words.size() > 2:
+					online.inventory_window.tabs.current_tab = int(words[2])
+			"vehicle":
+				var c: Dictionary = online.net.get_character()
+				var parts: Array = online.net.get_inventory().get("vehicle", [])
+				print("rose net demo: vehicle %s driving %s fuel %d speed %.0f attack %d range %.1f" % [
+					parts.map(func(p): return p["name"] if p != null else "-"), c.get("driving", false),
+					c.get("fuel", -1), c.get("move_speed", 0.0), c.get("attack", 0), c.get("range", 0.0)])
+			"revive":
+				online.net.revive(arg == "save")
+			"savepoint":
+				online.net.set_save_point()
+			"me":
+				var c: Dictionary = online.net.get_character()
+				print("rose net demo: me zone %d level %d xp %d/%d debt %d fallen %s hp %d" % [c.get("zone", 0), c.get("level", 0),
+					c.get("xp", 0), c.get("xp_needed", 0), c.get("xp_debt", 0), c.get("fallen", false), online.me.hp])
 			"status":
 				var mine: Array = online.net.get_status_effects(online.my_id)
 				var theirs: Array = online.net.get_status_effects(online.my_target) if online.my_target >= 0 else []

@@ -324,6 +324,9 @@ impl ItemClass {
 #[derive(Debug)]
 pub struct BaseItemData {
     pub id: ItemReference,
+    /// Item STB column 3: bit 0x02 means it can't be dropped, traded or sold to players
+    /// (iROSE's ITEM_DONT_DROP_EXCHANGE).
+    pub trade_restriction: u32,
     pub name: &'static str,
     pub description: &'static str,
     pub class: ItemClass,

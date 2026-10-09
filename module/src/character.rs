@@ -234,7 +234,33 @@ pub fn ability_values(ctx: &ReducerContext, game: &GameData, player: &Player) ->
 
 /// Stats row for a player's entity: ability values plus the attack motion of their weapon.
 pub fn player_stats(ctx: &ReducerContext, game: &GameData, entity_id: u64, player: &Player) -> Stats {
-    let av = ability_values(ctx, game, player);
+    let mut av = ability_values(ctx, game, player);
+    // Driving: the vehicle's attack, speed and range replace ours, and its arms swing.
+    if crate::vehicle::is_driving(ctx, entity_id) {
+        av.is_driving = true;
+        let equipment = player.equipment();
+        let part = |i| {
+            equipment
+                .get_vehicle_item(i)
+                .and_then(|e| game.items.get_vehicle_item(e.item.item_number))
+                .map_or(0, |v| v.base_motion_index as usize)
+        };
+        let attack = game.motions.get_vehicle_action_motion(
+            rose_data::VehicleMotionAction::Attack1,
+            part(rose_data::VehiclePartIndex::Body),
+            part(rose_data::VehiclePartIndex::Arms),
+        );
+        let attack_motion_ms = attack.map_or(1000, |m| m.duration.as_millis() as i32).max(300);
+        let attack_hit_ms = attack
+            .and_then(|m| m.first_attack_time)
+            .map_or(attack_motion_ms / 2, |d| d.as_millis() as i32)
+            .min(attack_motion_ms);
+        let hit_count = attack.map_or(1, |m| m.total_attack_frames.max(1) as i32);
+        let mut stats = Stats::from_ability_values(entity_id, &av, true, attack_motion_ms, attack_hit_ms, hit_count);
+        stats.move_speed = av.get_vehicle_move_speed();
+        stats.run_speed = stats.move_speed;
+        return stats;
+    }
     let weapon_motion = player
         .equipment()
         .get_equipment_item(rose_data::EquipmentIndex::Weapon)
@@ -281,17 +307,23 @@ pub fn reward_xp(ctx: &ReducerContext, game: &GameData, identity: Identity, xp: 
     let Some(mut p) = ctx.db.player().identity().find(identity) else { return };
     p.xp = p.xp.saturating_add(xp);
     let level_before = p.level;
+    // Experience owed from deaths adds to what this level needs (iROSE's m_lPenalEXP).
+    let mut owed = crate::death::debt(ctx, identity);
     loop {
-        let need = game.ability_value_calculator.calculate_levelup_require_xp(p.level);
+        let need = game.ability_value_calculator.calculate_levelup_require_xp(p.level) + owed;
         if p.xp < need {
             break;
         }
         p.level += 1;
         p.xp -= need;
+        owed = 0;
         p.skill_points += game.ability_value_calculator.calculate_levelup_reward_skill_points(p.level);
         p.stat_points += game.ability_value_calculator.calculate_levelup_reward_stat_points(p.level);
     }
     let levelled = p.level != level_before;
+    if levelled {
+        crate::death::clear_debt(ctx, identity);
+    }
     ctx.db.player().identity().update(p.clone());
     if levelled {
         refresh_player(ctx, game, &p, true);

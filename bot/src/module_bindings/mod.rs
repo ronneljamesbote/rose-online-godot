@@ -8,8 +8,11 @@ use spacetimedb_sdk::__codegen::{self as __sdk, __lib, __sats, __ws};
 
 pub mod abandon_quest_reducer;
 pub mod add_basic_stat_reducer;
+pub mod admin_clear_quests_reducer;
 pub mod admin_give_quest_reducer;
 pub mod admin_quest_trigger_reducer;
+pub mod admin_set_job_var_reducer;
+pub mod admin_teleport_to_npc_reducer;
 pub mod admin_type;
 pub mod assign_character_reducer;
 pub mod attack_reducer;
@@ -35,13 +38,24 @@ pub mod damage_event_table;
 pub mod damage_event_type;
 pub mod damage_source_type;
 pub mod disassemble_item_reducer;
+pub mod drive_toggle_reducer;
+pub mod driving_table;
+pub mod driving_type;
 pub mod drop_item_reducer;
 pub mod drop_money_reducer;
 pub mod entity_kind_type;
 pub mod entity_table;
 pub mod entity_type;
 pub mod equip_item_reducer;
+pub mod fallen_table;
+pub mod fallen_type;
 pub mod finish_game_data_upload_reducer;
+pub mod friend_answer_reducer;
+pub mod friend_ask_reducer;
+pub mod friend_entry_type;
+pub mod friend_remove_reducer;
+pub mod friend_request_type;
+pub mod friend_type;
 pub mod game_data_status_table;
 pub mod game_data_status_type;
 pub mod game_file_type;
@@ -63,6 +77,8 @@ pub mod move_collision_reducer;
 pub mod move_item_reducer;
 pub mod move_to_reducer;
 pub mod my_chat_table;
+pub mod my_friend_requests_table;
+pub mod my_friends_table;
 pub mod notice_table;
 pub mod notice_type;
 pub mod npc_cast_motion_table;
@@ -83,6 +99,8 @@ pub mod party_set_leader_reducer;
 pub mod party_set_rules_reducer;
 pub mod party_table;
 pub mod party_type;
+pub mod personal_store_table;
+pub mod personal_store_type;
 pub mod pickup_item_reducer;
 pub mod place_player_reducer;
 pub mod player_table;
@@ -91,6 +109,11 @@ pub mod quest_trigger_reducer;
 pub mod refine_item_reducer;
 pub mod regen_type;
 pub mod reset_monsters_reducer;
+pub mod revive_player_reducer;
+pub mod revive_shield_table;
+pub mod revive_shield_type;
+pub mod save_point_table;
+pub mod save_point_type;
 pub mod send_chat_reducer;
 pub mod set_aggro_range_reducer;
 pub mod set_auth_issuer_reducer;
@@ -101,6 +124,7 @@ pub mod set_job_reducer;
 pub mod set_name_reducer;
 pub mod set_npc_variable_reducer;
 pub mod set_price_rates_reducer;
+pub mod set_save_point_reducer;
 pub mod set_world_rates_reducer;
 pub mod sit_reducer;
 pub mod sitting_table;
@@ -116,7 +140,13 @@ pub mod stats_type;
 pub mod status_effect_row_type;
 pub mod status_effect_table;
 pub mod stop_reducer;
+pub mod store_buy_reducer;
 pub mod store_buy_type;
+pub mod store_close_reducer;
+pub mod store_item_table;
+pub mod store_item_type;
+pub mod store_listing_type;
+pub mod store_open_reducer;
 pub mod store_sell_type;
 pub mod summon_table;
 pub mod summon_type;
@@ -136,12 +166,15 @@ pub mod trade_table;
 pub mod trade_type;
 pub mod unequip_ammo_reducer;
 pub mod unequip_item_reducer;
+pub mod unequip_vehicle_part_reducer;
 pub mod upload_game_files_reducer;
 pub mod use_item_reducer;
 pub mod use_warp_gate_reducer;
 pub mod warp_player_reducer;
 pub mod world_rates_table;
 pub mod world_rates_type;
+pub mod xp_debt_table;
+pub mod xp_debt_type;
 pub mod xp_event_table;
 pub mod xp_event_type;
 pub mod zone_info_table;
@@ -149,8 +182,11 @@ pub mod zone_info_type;
 
 pub use abandon_quest_reducer::abandon_quest;
 pub use add_basic_stat_reducer::add_basic_stat;
+pub use admin_clear_quests_reducer::admin_clear_quests;
 pub use admin_give_quest_reducer::admin_give_quest;
 pub use admin_quest_trigger_reducer::admin_quest_trigger;
+pub use admin_set_job_var_reducer::admin_set_job_var;
+pub use admin_teleport_to_npc_reducer::admin_teleport_to_npc;
 pub use admin_type::Admin;
 pub use assign_character_reducer::assign_character;
 pub use attack_reducer::attack;
@@ -176,13 +212,24 @@ pub use damage_event_table::*;
 pub use damage_event_type::DamageEvent;
 pub use damage_source_type::DamageSource;
 pub use disassemble_item_reducer::disassemble_item;
+pub use drive_toggle_reducer::drive_toggle;
+pub use driving_table::*;
+pub use driving_type::Driving;
 pub use drop_item_reducer::drop_item;
 pub use drop_money_reducer::drop_money;
 pub use entity_kind_type::EntityKind;
 pub use entity_table::*;
 pub use entity_type::Entity;
 pub use equip_item_reducer::equip_item;
+pub use fallen_table::*;
+pub use fallen_type::Fallen;
 pub use finish_game_data_upload_reducer::finish_game_data_upload;
+pub use friend_answer_reducer::friend_answer;
+pub use friend_ask_reducer::friend_ask;
+pub use friend_entry_type::FriendEntry;
+pub use friend_remove_reducer::friend_remove;
+pub use friend_request_type::FriendRequest;
+pub use friend_type::Friend;
 pub use game_data_status_table::*;
 pub use game_data_status_type::GameDataStatus;
 pub use game_file_type::GameFile;
@@ -204,6 +251,8 @@ pub use move_collision_reducer::move_collision;
 pub use move_item_reducer::move_item;
 pub use move_to_reducer::move_to;
 pub use my_chat_table::*;
+pub use my_friend_requests_table::*;
+pub use my_friends_table::*;
 pub use notice_table::*;
 pub use notice_type::Notice;
 pub use npc_cast_motion_table::*;
@@ -224,6 +273,8 @@ pub use party_set_leader_reducer::party_set_leader;
 pub use party_set_rules_reducer::party_set_rules;
 pub use party_table::*;
 pub use party_type::Party;
+pub use personal_store_table::*;
+pub use personal_store_type::PersonalStore;
 pub use pickup_item_reducer::pickup_item;
 pub use place_player_reducer::place_player;
 pub use player_table::*;
@@ -232,6 +283,11 @@ pub use quest_trigger_reducer::quest_trigger;
 pub use refine_item_reducer::refine_item;
 pub use regen_type::Regen;
 pub use reset_monsters_reducer::reset_monsters;
+pub use revive_player_reducer::revive_player;
+pub use revive_shield_table::*;
+pub use revive_shield_type::ReviveShield;
+pub use save_point_table::*;
+pub use save_point_type::SavePoint;
 pub use send_chat_reducer::send_chat;
 pub use set_aggro_range_reducer::set_aggro_range;
 pub use set_auth_issuer_reducer::set_auth_issuer;
@@ -242,6 +298,7 @@ pub use set_job_reducer::set_job;
 pub use set_name_reducer::set_name;
 pub use set_npc_variable_reducer::set_npc_variable;
 pub use set_price_rates_reducer::set_price_rates;
+pub use set_save_point_reducer::set_save_point;
 pub use set_world_rates_reducer::set_world_rates;
 pub use sit_reducer::sit;
 pub use sitting_table::*;
@@ -257,7 +314,13 @@ pub use stats_type::Stats;
 pub use status_effect_row_type::StatusEffectRow;
 pub use status_effect_table::*;
 pub use stop_reducer::stop;
+pub use store_buy_reducer::store_buy;
 pub use store_buy_type::StoreBuy;
+pub use store_close_reducer::store_close;
+pub use store_item_table::*;
+pub use store_item_type::StoreItem;
+pub use store_listing_type::StoreListing;
+pub use store_open_reducer::store_open;
 pub use store_sell_type::StoreSell;
 pub use summon_table::*;
 pub use summon_type::Summon;
@@ -277,12 +340,15 @@ pub use trade_table::*;
 pub use trade_type::Trade;
 pub use unequip_ammo_reducer::unequip_ammo;
 pub use unequip_item_reducer::unequip_item;
+pub use unequip_vehicle_part_reducer::unequip_vehicle_part;
 pub use upload_game_files_reducer::upload_game_files;
 pub use use_item_reducer::use_item;
 pub use use_warp_gate_reducer::use_warp_gate;
 pub use warp_player_reducer::warp_player;
 pub use world_rates_table::*;
 pub use world_rates_type::WorldRates;
+pub use xp_debt_table::*;
+pub use xp_debt_type::XpDebt;
 pub use xp_event_table::*;
 pub use xp_event_type::XpEvent;
 pub use zone_info_table::*;
@@ -303,6 +369,9 @@ pub enum Reducer {
     AddBasicStat {
         stat: u8,
     },
+    AdminClearQuests {
+        player_name: String,
+    },
     AdminGiveQuest {
         player_name: String,
         quest_id: u32,
@@ -312,6 +381,15 @@ pub enum Reducer {
     AdminQuestTrigger {
         player_name: String,
         trigger: String,
+    },
+    AdminSetJobVar {
+        player_name: String,
+        index: u32,
+        value: u16,
+    },
+    AdminTeleportToNpc {
+        name: String,
+        npc_id: u16,
     },
     AssignCharacter {
         name: String,
@@ -361,6 +439,7 @@ pub enum Reducer {
         page: u8,
         index: u16,
     },
+    DriveToggle,
     DropItem {
         page: u8,
         index: u16,
@@ -374,6 +453,16 @@ pub enum Reducer {
         index: u16,
     },
     FinishGameDataUpload,
+    FriendAnswer {
+        request_id: u64,
+        accept: bool,
+    },
+    FriendAsk {
+        name: String,
+    },
+    FriendRemove {
+        name: String,
+    },
     GiveItem {
         name: String,
         item_type: u8,
@@ -457,6 +546,9 @@ pub enum Reducer {
         materials: Vec<CraftSlot>,
     },
     ResetMonsters,
+    RevivePlayer {
+        at_save_point: bool,
+    },
     SendChat {
         channel: ChatChannel,
         to: String,
@@ -502,6 +594,7 @@ pub enum Reducer {
         item_price_rate: i32,
         town_price_rate: i32,
     },
+    SetSavePoint,
     SetWorldRates {
         xp_rate: i32,
         drop_rate: i32,
@@ -510,6 +603,16 @@ pub enum Reducer {
     },
     Sit,
     Stop,
+    StoreBuy {
+        store_entity: u64,
+        store_item_id: u64,
+        quantity: u32,
+    },
+    StoreClose,
+    StoreOpen {
+        title: String,
+        listings: Vec<StoreListing>,
+    },
     TradeAccept,
     TradeAnswer {
         request_id: u64,
@@ -531,6 +634,9 @@ pub enum Reducer {
     },
     UnequipItem {
         equipment_slot: u8,
+    },
+    UnequipVehiclePart {
+        part: u8,
     },
     UploadGameFiles {
         files: Vec<GameFileUpload>,
@@ -557,8 +663,11 @@ impl __sdk::Reducer for Reducer {
         match self {
             Reducer::AbandonQuest { .. } => "abandon_quest",
             Reducer::AddBasicStat { .. } => "add_basic_stat",
+            Reducer::AdminClearQuests { .. } => "admin_clear_quests",
             Reducer::AdminGiveQuest { .. } => "admin_give_quest",
             Reducer::AdminQuestTrigger { .. } => "admin_quest_trigger",
+            Reducer::AdminSetJobVar { .. } => "admin_set_job_var",
+            Reducer::AdminTeleportToNpc { .. } => "admin_teleport_to_npc",
             Reducer::AssignCharacter { .. } => "assign_character",
             Reducer::Attack { .. } => "attack",
             Reducer::BankDeposit { .. } => "bank_deposit",
@@ -569,10 +678,14 @@ impl __sdk::Reducer for Reducer {
             Reducer::CraftItem { .. } => "craft_item",
             Reducer::CreateCharacter { .. } => "create_character",
             Reducer::DisassembleItem { .. } => "disassemble_item",
+            Reducer::DriveToggle => "drive_toggle",
             Reducer::DropItem { .. } => "drop_item",
             Reducer::DropMoney { .. } => "drop_money",
             Reducer::EquipItem { .. } => "equip_item",
             Reducer::FinishGameDataUpload => "finish_game_data_upload",
+            Reducer::FriendAnswer { .. } => "friend_answer",
+            Reducer::FriendAsk { .. } => "friend_ask",
+            Reducer::FriendRemove { .. } => "friend_remove",
             Reducer::GiveItem { .. } => "give_item",
             Reducer::GiveMoney { .. } => "give_money",
             Reducer::GiveSkill { .. } => "give_skill",
@@ -595,6 +708,7 @@ impl __sdk::Reducer for Reducer {
             Reducer::QuestTrigger { .. } => "quest_trigger",
             Reducer::RefineItem { .. } => "refine_item",
             Reducer::ResetMonsters => "reset_monsters",
+            Reducer::RevivePlayer { .. } => "revive_player",
             Reducer::SendChat { .. } => "send_chat",
             Reducer::SetAggroRange { .. } => "set_aggro_range",
             Reducer::SetAuthIssuer { .. } => "set_auth_issuer",
@@ -605,9 +719,13 @@ impl __sdk::Reducer for Reducer {
             Reducer::SetName { .. } => "set_name",
             Reducer::SetNpcVariable { .. } => "set_npc_variable",
             Reducer::SetPriceRates { .. } => "set_price_rates",
+            Reducer::SetSavePoint => "set_save_point",
             Reducer::SetWorldRates { .. } => "set_world_rates",
             Reducer::Sit => "sit",
             Reducer::Stop => "stop",
+            Reducer::StoreBuy { .. } => "store_buy",
+            Reducer::StoreClose => "store_close",
+            Reducer::StoreOpen { .. } => "store_open",
             Reducer::TradeAccept => "trade_accept",
             Reducer::TradeAnswer { .. } => "trade_answer",
             Reducer::TradeAsk { .. } => "trade_ask",
@@ -616,6 +734,7 @@ impl __sdk::Reducer for Reducer {
             Reducer::TradeOffer { .. } => "trade_offer",
             Reducer::UnequipAmmo { .. } => "unequip_ammo",
             Reducer::UnequipItem { .. } => "unequip_item",
+            Reducer::UnequipVehiclePart { .. } => "unequip_vehicle_part",
             Reducer::UploadGameFiles { .. } => "upload_game_files",
             Reducer::UseItem { .. } => "use_item",
             Reducer::UseWarpGate { .. } => "use_warp_gate",
@@ -637,6 +756,11 @@ impl __sdk::Reducer for Reducer {
                     stat: stat.clone(),
                 })
             }
+            Reducer::AdminClearQuests { player_name } => {
+                __sats::bsatn::to_vec(&admin_clear_quests_reducer::AdminClearQuestsArgs {
+                    player_name: player_name.clone(),
+                })
+            }
             Reducer::AdminGiveQuest {
                 player_name,
                 quest_id,
@@ -655,6 +779,21 @@ impl __sdk::Reducer for Reducer {
                 player_name: player_name.clone(),
                 trigger: trigger.clone(),
             }),
+            Reducer::AdminSetJobVar {
+                player_name,
+                index,
+                value,
+            } => __sats::bsatn::to_vec(&admin_set_job_var_reducer::AdminSetJobVarArgs {
+                player_name: player_name.clone(),
+                index: index.clone(),
+                value: value.clone(),
+            }),
+            Reducer::AdminTeleportToNpc { name, npc_id } => {
+                __sats::bsatn::to_vec(&admin_teleport_to_npc_reducer::AdminTeleportToNpcArgs {
+                    name: name.clone(),
+                    npc_id: npc_id.clone(),
+                })
+            }
             Reducer::AssignCharacter { name, account } => {
                 __sats::bsatn::to_vec(&assign_character_reducer::AssignCharacterArgs {
                     name: name.clone(),
@@ -737,6 +876,9 @@ impl __sdk::Reducer for Reducer {
                     index: index.clone(),
                 })
             }
+            Reducer::DriveToggle => {
+                __sats::bsatn::to_vec(&drive_toggle_reducer::DriveToggleArgs {})
+            }
             Reducer::DropItem {
                 page,
                 index,
@@ -759,6 +901,20 @@ impl __sdk::Reducer for Reducer {
             }
             Reducer::FinishGameDataUpload => {
                 __sats::bsatn::to_vec(&finish_game_data_upload_reducer::FinishGameDataUploadArgs {})
+            }
+            Reducer::FriendAnswer { request_id, accept } => {
+                __sats::bsatn::to_vec(&friend_answer_reducer::FriendAnswerArgs {
+                    request_id: request_id.clone(),
+                    accept: accept.clone(),
+                })
+            }
+            Reducer::FriendAsk { name } => {
+                __sats::bsatn::to_vec(&friend_ask_reducer::FriendAskArgs { name: name.clone() })
+            }
+            Reducer::FriendRemove { name } => {
+                __sats::bsatn::to_vec(&friend_remove_reducer::FriendRemoveArgs {
+                    name: name.clone(),
+                })
             }
             Reducer::GiveItem {
                 name,
@@ -892,6 +1048,11 @@ impl __sdk::Reducer for Reducer {
             Reducer::ResetMonsters => {
                 __sats::bsatn::to_vec(&reset_monsters_reducer::ResetMonstersArgs {})
             }
+            Reducer::RevivePlayer { at_save_point } => {
+                __sats::bsatn::to_vec(&revive_player_reducer::RevivePlayerArgs {
+                    at_save_point: at_save_point.clone(),
+                })
+            }
             Reducer::SendChat { channel, to, text } => {
                 __sats::bsatn::to_vec(&send_chat_reducer::SendChatArgs {
                     channel: channel.clone(),
@@ -960,6 +1121,9 @@ impl __sdk::Reducer for Reducer {
                 item_price_rate: item_price_rate.clone(),
                 town_price_rate: town_price_rate.clone(),
             }),
+            Reducer::SetSavePoint => {
+                __sats::bsatn::to_vec(&set_save_point_reducer::SetSavePointArgs {})
+            }
             Reducer::SetWorldRates {
                 xp_rate,
                 drop_rate,
@@ -973,6 +1137,22 @@ impl __sdk::Reducer for Reducer {
             }),
             Reducer::Sit => __sats::bsatn::to_vec(&sit_reducer::SitArgs {}),
             Reducer::Stop => __sats::bsatn::to_vec(&stop_reducer::StopArgs {}),
+            Reducer::StoreBuy {
+                store_entity,
+                store_item_id,
+                quantity,
+            } => __sats::bsatn::to_vec(&store_buy_reducer::StoreBuyArgs {
+                store_entity: store_entity.clone(),
+                store_item_id: store_item_id.clone(),
+                quantity: quantity.clone(),
+            }),
+            Reducer::StoreClose => __sats::bsatn::to_vec(&store_close_reducer::StoreCloseArgs {}),
+            Reducer::StoreOpen { title, listings } => {
+                __sats::bsatn::to_vec(&store_open_reducer::StoreOpenArgs {
+                    title: title.clone(),
+                    listings: listings.clone(),
+                })
+            }
             Reducer::TradeAccept => {
                 __sats::bsatn::to_vec(&trade_accept_reducer::TradeAcceptArgs {})
             }
@@ -1011,6 +1191,11 @@ impl __sdk::Reducer for Reducer {
                     equipment_slot: equipment_slot.clone(),
                 })
             }
+            Reducer::UnequipVehiclePart { part } => {
+                __sats::bsatn::to_vec(&unequip_vehicle_part_reducer::UnequipVehiclePartArgs {
+                    part: part.clone(),
+                })
+            }
             Reducer::UploadGameFiles { files } => {
                 __sats::bsatn::to_vec(&upload_game_files_reducer::UploadGameFilesArgs {
                     files: files.clone(),
@@ -1045,28 +1230,37 @@ pub struct DbUpdate {
     bank: __sdk::TableUpdate<Bank>,
     combat: __sdk::TableUpdate<Combat>,
     damage_event: __sdk::TableUpdate<DamageEvent>,
+    driving: __sdk::TableUpdate<Driving>,
     entity: __sdk::TableUpdate<Entity>,
+    fallen: __sdk::TableUpdate<Fallen>,
     game_data_status: __sdk::TableUpdate<GameDataStatus>,
     ground_item: __sdk::TableUpdate<GroundItem>,
     motion: __sdk::TableUpdate<Motion>,
     my_chat: __sdk::TableUpdate<ChatMessage>,
+    my_friend_requests: __sdk::TableUpdate<FriendRequest>,
+    my_friends: __sdk::TableUpdate<FriendEntry>,
     notice: __sdk::TableUpdate<Notice>,
     npc: __sdk::TableUpdate<Npc>,
     npc_cast_motion: __sdk::TableUpdate<NpcCastMotion>,
     party: __sdk::TableUpdate<Party>,
     party_invitation: __sdk::TableUpdate<PartyInvite>,
     party_member: __sdk::TableUpdate<PartyMember>,
+    personal_store: __sdk::TableUpdate<PersonalStore>,
     player: __sdk::TableUpdate<Player>,
+    revive_shield: __sdk::TableUpdate<ReviveShield>,
+    save_point: __sdk::TableUpdate<SavePoint>,
     sitting: __sdk::TableUpdate<Sitting>,
     skill_cast: __sdk::TableUpdate<SkillCast>,
     skill_cooldown: __sdk::TableUpdate<SkillCooldownRow>,
     stats: __sdk::TableUpdate<Stats>,
     status_effect: __sdk::TableUpdate<StatusEffectRow>,
+    store_item: __sdk::TableUpdate<StoreItem>,
     summon: __sdk::TableUpdate<Summon>,
     tick_stats: __sdk::TableUpdate<TickStats>,
     trade: __sdk::TableUpdate<Trade>,
     trade_request: __sdk::TableUpdate<TradeRequest>,
     world_rates: __sdk::TableUpdate<WorldRates>,
+    xp_debt: __sdk::TableUpdate<XpDebt>,
     xp_event: __sdk::TableUpdate<XpEvent>,
     zone_info: __sdk::TableUpdate<ZoneInfo>,
 }
@@ -1086,9 +1280,15 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "damage_event" => db_update
                     .damage_event
                     .append(damage_event_table::parse_table_update(table_update)?),
+                "driving" => db_update
+                    .driving
+                    .append(driving_table::parse_table_update(table_update)?),
                 "entity" => db_update
                     .entity
                     .append(entity_table::parse_table_update(table_update)?),
+                "fallen" => db_update
+                    .fallen
+                    .append(fallen_table::parse_table_update(table_update)?),
                 "game_data_status" => db_update
                     .game_data_status
                     .append(game_data_status_table::parse_table_update(table_update)?),
@@ -1101,6 +1301,12 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "my_chat" => db_update
                     .my_chat
                     .append(my_chat_table::parse_table_update(table_update)?),
+                "my_friend_requests" => db_update
+                    .my_friend_requests
+                    .append(my_friend_requests_table::parse_table_update(table_update)?),
+                "my_friends" => db_update
+                    .my_friends
+                    .append(my_friends_table::parse_table_update(table_update)?),
                 "notice" => db_update
                     .notice
                     .append(notice_table::parse_table_update(table_update)?),
@@ -1119,9 +1325,18 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "party_member" => db_update
                     .party_member
                     .append(party_member_table::parse_table_update(table_update)?),
+                "personal_store" => db_update
+                    .personal_store
+                    .append(personal_store_table::parse_table_update(table_update)?),
                 "player" => db_update
                     .player
                     .append(player_table::parse_table_update(table_update)?),
+                "revive_shield" => db_update
+                    .revive_shield
+                    .append(revive_shield_table::parse_table_update(table_update)?),
+                "save_point" => db_update
+                    .save_point
+                    .append(save_point_table::parse_table_update(table_update)?),
                 "sitting" => db_update
                     .sitting
                     .append(sitting_table::parse_table_update(table_update)?),
@@ -1137,6 +1352,9 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "status_effect" => db_update
                     .status_effect
                     .append(status_effect_table::parse_table_update(table_update)?),
+                "store_item" => db_update
+                    .store_item
+                    .append(store_item_table::parse_table_update(table_update)?),
                 "summon" => db_update
                     .summon
                     .append(summon_table::parse_table_update(table_update)?),
@@ -1152,6 +1370,9 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "world_rates" => db_update
                     .world_rates
                     .append(world_rates_table::parse_table_update(table_update)?),
+                "xp_debt" => db_update
+                    .xp_debt
+                    .append(xp_debt_table::parse_table_update(table_update)?),
                 "xp_event" => db_update
                     .xp_event
                     .append(xp_event_table::parse_table_update(table_update)?),
@@ -1191,8 +1412,14 @@ impl __sdk::DbUpdate for DbUpdate {
             .apply_diff_to_table::<Combat>("combat", &self.combat)
             .with_updates_by_pk(|row| &row.entity_id);
         diff.damage_event = self.damage_event.into_event_diff();
+        diff.driving = cache
+            .apply_diff_to_table::<Driving>("driving", &self.driving)
+            .with_updates_by_pk(|row| &row.entity_id);
         diff.entity = cache
             .apply_diff_to_table::<Entity>("entity", &self.entity)
+            .with_updates_by_pk(|row| &row.entity_id);
+        diff.fallen = cache
+            .apply_diff_to_table::<Fallen>("fallen", &self.fallen)
             .with_updates_by_pk(|row| &row.entity_id);
         diff.game_data_status = cache
             .apply_diff_to_table::<GameDataStatus>("game_data_status", &self.game_data_status)
@@ -1219,8 +1446,17 @@ impl __sdk::DbUpdate for DbUpdate {
         diff.party_member = cache
             .apply_diff_to_table::<PartyMember>("party_member", &self.party_member)
             .with_updates_by_pk(|row| &row.identity);
+        diff.personal_store = cache
+            .apply_diff_to_table::<PersonalStore>("personal_store", &self.personal_store)
+            .with_updates_by_pk(|row| &row.entity_id);
         diff.player = cache
             .apply_diff_to_table::<Player>("player", &self.player)
+            .with_updates_by_pk(|row| &row.identity);
+        diff.revive_shield = cache
+            .apply_diff_to_table::<ReviveShield>("revive_shield", &self.revive_shield)
+            .with_updates_by_pk(|row| &row.entity_id);
+        diff.save_point = cache
+            .apply_diff_to_table::<SavePoint>("save_point", &self.save_point)
             .with_updates_by_pk(|row| &row.identity);
         diff.sitting = cache
             .apply_diff_to_table::<Sitting>("sitting", &self.sitting)
@@ -1237,6 +1473,9 @@ impl __sdk::DbUpdate for DbUpdate {
         diff.status_effect = cache
             .apply_diff_to_table::<StatusEffectRow>("status_effect", &self.status_effect)
             .with_updates_by_pk(|row| &row.id);
+        diff.store_item = cache
+            .apply_diff_to_table::<StoreItem>("store_item", &self.store_item)
+            .with_updates_by_pk(|row| &row.id);
         diff.summon = cache
             .apply_diff_to_table::<Summon>("summon", &self.summon)
             .with_updates_by_pk(|row| &row.entity_id);
@@ -1252,11 +1491,17 @@ impl __sdk::DbUpdate for DbUpdate {
         diff.world_rates = cache
             .apply_diff_to_table::<WorldRates>("world_rates", &self.world_rates)
             .with_updates_by_pk(|row| &row.id);
+        diff.xp_debt = cache
+            .apply_diff_to_table::<XpDebt>("xp_debt", &self.xp_debt)
+            .with_updates_by_pk(|row| &row.identity);
         diff.xp_event = self.xp_event.into_event_diff();
         diff.zone_info = cache
             .apply_diff_to_table::<ZoneInfo>("zone_info", &self.zone_info)
             .with_updates_by_pk(|row| &row.zone_id);
         diff.my_chat = cache.apply_diff_to_table::<ChatMessage>("my_chat", &self.my_chat);
+        diff.my_friend_requests = cache
+            .apply_diff_to_table::<FriendRequest>("my_friend_requests", &self.my_friend_requests);
+        diff.my_friends = cache.apply_diff_to_table::<FriendEntry>("my_friends", &self.my_friends);
 
         diff
     }
@@ -1273,8 +1518,14 @@ impl __sdk::DbUpdate for DbUpdate {
                 "damage_event" => db_update
                     .damage_event
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "driving" => db_update
+                    .driving
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "entity" => db_update
                     .entity
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "fallen" => db_update
+                    .fallen
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "game_data_status" => db_update
                     .game_data_status
@@ -1287,6 +1538,12 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "my_chat" => db_update
                     .my_chat
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "my_friend_requests" => db_update
+                    .my_friend_requests
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "my_friends" => db_update
+                    .my_friends
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "notice" => db_update
                     .notice
@@ -1306,8 +1563,17 @@ impl __sdk::DbUpdate for DbUpdate {
                 "party_member" => db_update
                     .party_member
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "personal_store" => db_update
+                    .personal_store
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "player" => db_update
                     .player
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "revive_shield" => db_update
+                    .revive_shield
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "save_point" => db_update
+                    .save_point
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "sitting" => db_update
                     .sitting
@@ -1324,6 +1590,9 @@ impl __sdk::DbUpdate for DbUpdate {
                 "status_effect" => db_update
                     .status_effect
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "store_item" => db_update
+                    .store_item
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "summon" => db_update
                     .summon
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
@@ -1338,6 +1607,9 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "world_rates" => db_update
                     .world_rates
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "xp_debt" => db_update
+                    .xp_debt
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "xp_event" => db_update
                     .xp_event
@@ -1367,8 +1639,14 @@ impl __sdk::DbUpdate for DbUpdate {
                 "damage_event" => db_update
                     .damage_event
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "driving" => db_update
+                    .driving
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "entity" => db_update
                     .entity
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "fallen" => db_update
+                    .fallen
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "game_data_status" => db_update
                     .game_data_status
@@ -1381,6 +1659,12 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "my_chat" => db_update
                     .my_chat
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "my_friend_requests" => db_update
+                    .my_friend_requests
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "my_friends" => db_update
+                    .my_friends
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "notice" => db_update
                     .notice
@@ -1400,8 +1684,17 @@ impl __sdk::DbUpdate for DbUpdate {
                 "party_member" => db_update
                     .party_member
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "personal_store" => db_update
+                    .personal_store
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "player" => db_update
                     .player
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "revive_shield" => db_update
+                    .revive_shield
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "save_point" => db_update
+                    .save_point
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "sitting" => db_update
                     .sitting
@@ -1418,6 +1711,9 @@ impl __sdk::DbUpdate for DbUpdate {
                 "status_effect" => db_update
                     .status_effect
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "store_item" => db_update
+                    .store_item
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "summon" => db_update
                     .summon
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
@@ -1432,6 +1728,9 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "world_rates" => db_update
                     .world_rates
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "xp_debt" => db_update
+                    .xp_debt
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "xp_event" => db_update
                     .xp_event
@@ -1457,28 +1756,37 @@ pub struct AppliedDiff<'r> {
     bank: __sdk::TableAppliedDiff<'r, Bank>,
     combat: __sdk::TableAppliedDiff<'r, Combat>,
     damage_event: __sdk::TableAppliedDiff<'r, DamageEvent>,
+    driving: __sdk::TableAppliedDiff<'r, Driving>,
     entity: __sdk::TableAppliedDiff<'r, Entity>,
+    fallen: __sdk::TableAppliedDiff<'r, Fallen>,
     game_data_status: __sdk::TableAppliedDiff<'r, GameDataStatus>,
     ground_item: __sdk::TableAppliedDiff<'r, GroundItem>,
     motion: __sdk::TableAppliedDiff<'r, Motion>,
     my_chat: __sdk::TableAppliedDiff<'r, ChatMessage>,
+    my_friend_requests: __sdk::TableAppliedDiff<'r, FriendRequest>,
+    my_friends: __sdk::TableAppliedDiff<'r, FriendEntry>,
     notice: __sdk::TableAppliedDiff<'r, Notice>,
     npc: __sdk::TableAppliedDiff<'r, Npc>,
     npc_cast_motion: __sdk::TableAppliedDiff<'r, NpcCastMotion>,
     party: __sdk::TableAppliedDiff<'r, Party>,
     party_invitation: __sdk::TableAppliedDiff<'r, PartyInvite>,
     party_member: __sdk::TableAppliedDiff<'r, PartyMember>,
+    personal_store: __sdk::TableAppliedDiff<'r, PersonalStore>,
     player: __sdk::TableAppliedDiff<'r, Player>,
+    revive_shield: __sdk::TableAppliedDiff<'r, ReviveShield>,
+    save_point: __sdk::TableAppliedDiff<'r, SavePoint>,
     sitting: __sdk::TableAppliedDiff<'r, Sitting>,
     skill_cast: __sdk::TableAppliedDiff<'r, SkillCast>,
     skill_cooldown: __sdk::TableAppliedDiff<'r, SkillCooldownRow>,
     stats: __sdk::TableAppliedDiff<'r, Stats>,
     status_effect: __sdk::TableAppliedDiff<'r, StatusEffectRow>,
+    store_item: __sdk::TableAppliedDiff<'r, StoreItem>,
     summon: __sdk::TableAppliedDiff<'r, Summon>,
     tick_stats: __sdk::TableAppliedDiff<'r, TickStats>,
     trade: __sdk::TableAppliedDiff<'r, Trade>,
     trade_request: __sdk::TableAppliedDiff<'r, TradeRequest>,
     world_rates: __sdk::TableAppliedDiff<'r, WorldRates>,
+    xp_debt: __sdk::TableAppliedDiff<'r, XpDebt>,
     xp_event: __sdk::TableAppliedDiff<'r, XpEvent>,
     zone_info: __sdk::TableAppliedDiff<'r, ZoneInfo>,
     __unused: std::marker::PhantomData<&'r ()>,
@@ -1501,7 +1809,9 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
             &self.damage_event,
             event,
         );
+        callbacks.invoke_table_row_callbacks::<Driving>("driving", &self.driving, event);
         callbacks.invoke_table_row_callbacks::<Entity>("entity", &self.entity, event);
+        callbacks.invoke_table_row_callbacks::<Fallen>("fallen", &self.fallen, event);
         callbacks.invoke_table_row_callbacks::<GameDataStatus>(
             "game_data_status",
             &self.game_data_status,
@@ -1510,6 +1820,12 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
         callbacks.invoke_table_row_callbacks::<GroundItem>("ground_item", &self.ground_item, event);
         callbacks.invoke_table_row_callbacks::<Motion>("motion", &self.motion, event);
         callbacks.invoke_table_row_callbacks::<ChatMessage>("my_chat", &self.my_chat, event);
+        callbacks.invoke_table_row_callbacks::<FriendRequest>(
+            "my_friend_requests",
+            &self.my_friend_requests,
+            event,
+        );
+        callbacks.invoke_table_row_callbacks::<FriendEntry>("my_friends", &self.my_friends, event);
         callbacks.invoke_table_row_callbacks::<Notice>("notice", &self.notice, event);
         callbacks.invoke_table_row_callbacks::<Npc>("npc", &self.npc, event);
         callbacks.invoke_table_row_callbacks::<NpcCastMotion>(
@@ -1528,7 +1844,18 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
             &self.party_member,
             event,
         );
+        callbacks.invoke_table_row_callbacks::<PersonalStore>(
+            "personal_store",
+            &self.personal_store,
+            event,
+        );
         callbacks.invoke_table_row_callbacks::<Player>("player", &self.player, event);
+        callbacks.invoke_table_row_callbacks::<ReviveShield>(
+            "revive_shield",
+            &self.revive_shield,
+            event,
+        );
+        callbacks.invoke_table_row_callbacks::<SavePoint>("save_point", &self.save_point, event);
         callbacks.invoke_table_row_callbacks::<Sitting>("sitting", &self.sitting, event);
         callbacks.invoke_table_row_callbacks::<SkillCast>("skill_cast", &self.skill_cast, event);
         callbacks.invoke_table_row_callbacks::<SkillCooldownRow>(
@@ -1542,6 +1869,7 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
             &self.status_effect,
             event,
         );
+        callbacks.invoke_table_row_callbacks::<StoreItem>("store_item", &self.store_item, event);
         callbacks.invoke_table_row_callbacks::<Summon>("summon", &self.summon, event);
         callbacks.invoke_table_row_callbacks::<TickStats>("tick_stats", &self.tick_stats, event);
         callbacks.invoke_table_row_callbacks::<Trade>("trade", &self.trade, event);
@@ -1551,6 +1879,7 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
             event,
         );
         callbacks.invoke_table_row_callbacks::<WorldRates>("world_rates", &self.world_rates, event);
+        callbacks.invoke_table_row_callbacks::<XpDebt>("xp_debt", &self.xp_debt, event);
         callbacks.invoke_table_row_callbacks::<XpEvent>("xp_event", &self.xp_event, event);
         callbacks.invoke_table_row_callbacks::<ZoneInfo>("zone_info", &self.zone_info, event);
     }
@@ -2216,28 +2545,37 @@ impl __sdk::SpacetimeModule for RemoteModule {
         bank_table::register_table(client_cache);
         combat_table::register_table(client_cache);
         damage_event_table::register_table(client_cache);
+        driving_table::register_table(client_cache);
         entity_table::register_table(client_cache);
+        fallen_table::register_table(client_cache);
         game_data_status_table::register_table(client_cache);
         ground_item_table::register_table(client_cache);
         motion_table::register_table(client_cache);
         my_chat_table::register_table(client_cache);
+        my_friend_requests_table::register_table(client_cache);
+        my_friends_table::register_table(client_cache);
         notice_table::register_table(client_cache);
         npc_table::register_table(client_cache);
         npc_cast_motion_table::register_table(client_cache);
         party_table::register_table(client_cache);
         party_invitation_table::register_table(client_cache);
         party_member_table::register_table(client_cache);
+        personal_store_table::register_table(client_cache);
         player_table::register_table(client_cache);
+        revive_shield_table::register_table(client_cache);
+        save_point_table::register_table(client_cache);
         sitting_table::register_table(client_cache);
         skill_cast_table::register_table(client_cache);
         skill_cooldown_table::register_table(client_cache);
         stats_table::register_table(client_cache);
         status_effect_table::register_table(client_cache);
+        store_item_table::register_table(client_cache);
         summon_table::register_table(client_cache);
         tick_stats_table::register_table(client_cache);
         trade_table::register_table(client_cache);
         trade_request_table::register_table(client_cache);
         world_rates_table::register_table(client_cache);
+        xp_debt_table::register_table(client_cache);
         xp_event_table::register_table(client_cache);
         zone_info_table::register_table(client_cache);
     }
@@ -2245,28 +2583,37 @@ impl __sdk::SpacetimeModule for RemoteModule {
         "bank",
         "combat",
         "damage_event",
+        "driving",
         "entity",
+        "fallen",
         "game_data_status",
         "ground_item",
         "motion",
         "my_chat",
+        "my_friend_requests",
+        "my_friends",
         "notice",
         "npc",
         "npc_cast_motion",
         "party",
         "party_invitation",
         "party_member",
+        "personal_store",
         "player",
+        "revive_shield",
+        "save_point",
         "sitting",
         "skill_cast",
         "skill_cooldown",
         "stats",
         "status_effect",
+        "store_item",
         "summon",
         "tick_stats",
         "trade",
         "trade_request",
         "world_rates",
+        "xp_debt",
         "xp_event",
         "zone_info",
     ];

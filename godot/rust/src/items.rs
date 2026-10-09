@@ -109,6 +109,7 @@ pub fn item_dict(item: &Item) -> VarDictionary {
         return d;
     };
     d.set("name", base.name);
+    d.set("tradeable", base.trade_restriction & 0x02 == 0);
     d.set("model", base.field_model_index as i64);
     d.set("class", class_name(base.class).as_str());
     if let Some(icon) = item_icon(base.icon_index) {
@@ -122,6 +123,19 @@ pub fn item_dict(item: &Item) -> VarDictionary {
                 lines.push(format!("Attack {}   Range {:.1} m", w.attack_power, w.attack_range as f32 / 100.0));
             }
         }
+        ItemType::Vehicle => {
+            if let Some(v) = game.items.get_vehicle_item(reference.item_number) {
+                if v.move_speed > 0 {
+                    lines.push(format!("Speed {}", v.move_speed));
+                }
+                if v.attack_power > 0 {
+                    lines.push(format!("Attack {}   Range {:.1} m", v.attack_power, v.attack_range as f32 / 100.0));
+                }
+                if v.fuel_use_rate > 0 {
+                    lines.push(format!("Uses {} fuel", v.fuel_use_rate));
+                }
+            }
+        }
         ItemType::Consumable | ItemType::Material | ItemType::Gem | ItemType::Quest => {}
         _ => {
             if base.defence > 0 || base.resistance > 0 {
@@ -131,10 +145,18 @@ pub fn item_dict(item: &Item) -> VarDictionary {
     }
     if let Item::Equipment(e) = item {
         d.set("grade", e.grade as i64);
+        d.set("life", e.life as i64);
         if e.grade > 0 {
             lines[0] = format!("{} +{}", lines[0], e.grade);
         }
-        lines.push(format!("Durability {}   Life {}%", e.durability, e.life / 10));
+        let is_engine = game.items.get_vehicle_item(reference.item_number).is_some_and(|v| {
+            reference.item_type == ItemType::Vehicle && v.vehicle_part == rose_data::VehiclePartIndex::Engine
+        });
+        if is_engine {
+            lines.push(format!("Fuel {}%", e.life / 10));
+        } else {
+            lines.push(format!("Durability {}   Life {}%", e.durability, e.life / 10));
+        }
         if e.is_crafted {
             lines.push("Crafted".to_string());
         }

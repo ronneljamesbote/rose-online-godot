@@ -306,6 +306,8 @@ fn load_zone(
             })
             .collect(),
         pvp_state: data.get_zone_pvp_state(id).unwrap_or(0),
+        planet: data.get_zone_planet(id).unwrap_or(0),
+        vehicle_use_flags: data.get_zone_vehicle_use_flags(id).unwrap_or(0),
         day_cycle: data
             .get_zone_day_cycle_time(id)
             .unwrap_or(WORLD_TICKS_PER_DAY as u32),

@@ -38,6 +38,7 @@ pub fn get_value(p: &Player, c: Option<&Combat>, av: &AbilityValues, ability: Ab
         AbilityType::Mana => c.map_or(0, |c| c.mp),
         AbilityType::SaveMana => av.get_save_mana(),
         AbilityType::DropRate => av.get_drop_rate(),
+        AbilityType::Fuel => crate::vehicle::engine_life(p),
         AbilityType::Union | AbilityType::Rank | AbilityType::Fame | AbilityType::Stamina => 0,
         _ => return None,
     })
