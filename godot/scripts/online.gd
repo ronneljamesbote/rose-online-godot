@@ -200,7 +200,7 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	character_window = CharacterWindow.new()
 	character_window.net = net
 	character_window.visible = false
-	_window(character_window, "character", "Character", Vector2(0, 0), Vector2(12, 150), true).adopt_header = false
+	_window(character_window, "character", "Character", Vector2(0, 0.35), Vector2(230, 0), true).adopt_header = false
 
 	inventory_window = InventoryWindow.new()
 	inventory_window.net = net
@@ -278,7 +278,7 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	skill_window.net = net
 	skill_window.online = self
 	skill_window.visible = false
-	_window(skill_window, "skills", "Skills", Vector2(0, 0.5), Vector2(12, 0), true)
+	_window(skill_window, "skills", "Skills", Vector2(0, 0.35), Vector2(530, 0), true)
 
 	conversation_window = ConversationWindow.new()
 	conversation_window.net = net
@@ -290,7 +290,7 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	quest_window.net = net
 	quest_window.visible = false
 	# On the right, so it stays clear of conversations on the left.
-	_window(quest_window, "quests", "Quests", Vector2(1, 0.5), Vector2(-12, 0), true)
+	_window(quest_window, "quests", "Quests", Vector2(1, 0.55), Vector2(-384, 0), true)
 
 	revive_window = ReviveWindow.new()
 	revive_window.net = net
@@ -308,7 +308,7 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	friends_window.net = net
 	friends_window.chat_window = chat_window
 	friends_window.visible = false
-	_window(friends_window, "friends", "Friends", Vector2(1, 0.5), Vector2(-12, 0), true)
+	_window(friends_window, "friends", "Friends", Vector2(1, 0.55), Vector2(-384, 0), true)
 	_popup(friends_window.request_panel, 200)
 
 	map_window = ZoneMap.new()
