@@ -340,6 +340,9 @@ fn vehicle_motions(base_motion_index: usize, weapon: usize, is_cart: bool, dummy
 #[class(base=Node3D, init)]
 pub struct RoseVehicle {
     base: Base<Node3D>,
+    /// The arms part's motion column (PAT_RELATIVE_MOTION_POS), which picks skill motions.
+    weapon_motion_type: usize,
+    dummy_offset: usize,
 }
 
 #[godot_api]
@@ -380,6 +383,8 @@ impl RoseVehicle {
         }
 
         let weapon = game_data.items.get_vehicle_item(arms.max(0) as usize).map_or(0, |v| v.base_motion_index as usize);
+        self.weapon_motion_type = weapon;
+        self.dummy_offset = dummy_offset;
         let library = vehicle_motions(body_data.base_motion_index as usize, weapon, is_cart, dummy_offset, "");
         add_player(&mut self.to_gd().upcast(), library);
         true
@@ -395,6 +400,30 @@ impl RoseVehicle {
     #[func]
     fn back_seat(&self) -> Option<Gd<Node3D>> {
         self.base().try_get_node_as::<Node3D>("Skeleton3D/BackSeat")
+    }
+
+    /// Adds a skill's casting or action motion for this vehicle ("motion_ID"), or returns "".
+    /// As CObjCART::Get_MOTION, the motion table's column is the arms part's motion column
+    /// (column 0 when that has none), so castle gear swings the arms it carries.
+    #[func]
+    fn add_motion(&mut self, motion_id: i32) -> GString {
+        let name = format!("motion_{motion_id}");
+        let Some(player) = self.base().try_get_node_as::<AnimationPlayer>("AnimationPlayer") else {
+            return GString::new();
+        };
+        if player.has_animation(name.as_str()) {
+            return GString::from(name.as_str());
+        }
+        let (Some(game_data), Some(id)) = (data::get(), u16::try_from(motion_id).ok().map(rose_data::MotionId::new)) else {
+            return GString::new();
+        };
+        let Some(motion) = game_data.motions.find_first_character_motion(id, self.weapon_motion_type, 0) else {
+            return GString::new();
+        };
+        let Some(zmo) = data::read_file::<ZmoFile>(&motion.path.path().to_string_lossy()) else { return GString::new() };
+        let Some(mut library) = player.get_animation_library("") else { return GString::new() };
+        library.add_animation(name.as_str(), &build_animation(&zmo, self.dummy_offset, false));
+        GString::from(name.as_str())
     }
 }
 

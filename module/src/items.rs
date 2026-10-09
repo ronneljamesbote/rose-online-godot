@@ -329,7 +329,7 @@ fn meets_requirements(ctx: &ReducerContext, game: &GameData, p: &Player, item: &
     let av = player_ability_values(ctx, game, p);
     let combat = p.entity_id.and_then(|id| ctx.db.combat().entity_id().find(id));
     for &(ability_type, required) in item.equip_ability_requirement.iter() {
-        let value = ability::get_value(p, combat.as_ref(), &av, ability_type).unwrap_or(0);
+        let value = ability::get_value(ctx, p, combat.as_ref(), &av, ability_type).unwrap_or(0);
         if value < required as i32 {
             return Err(format!("needs {ability_type:?} {required}"));
         }
@@ -523,7 +523,7 @@ fn apply_consumable(ctx: &ReducerContext, game: &GameData, p: &mut Player, entit
         applied
     } else if let Some((ability_type, value)) = data.add_ability {
         let mut combat = ctx.db.combat().entity_id().find(entity_id);
-        let changed = ability::add_value(p, combat.as_mut(), ability_type, value);
+        let changed = ability::add_value(ctx, p, combat.as_mut(), ability_type, value);
         if let Some(c) = combat {
             ctx.db.combat().entity_id().update(c);
         }
@@ -583,7 +583,7 @@ pub fn use_item(ctx: &ReducerContext, page: u8, index: u16) -> Result<(), String
     if let Some((ability_type, required)) = data.ability_requirement {
         let av = player_ability_values(ctx, &game, &p);
         let combat = ctx.db.combat().entity_id().find(id);
-        let value = ability::get_value(&p, combat.as_ref(), &av, ability_type).unwrap_or(0);
+        let value = ability::get_value(ctx, &p, combat.as_ref(), &av, ability_type).unwrap_or(0);
         if value < required {
             return Err(format!("needs {ability_type:?} {required}"));
         }

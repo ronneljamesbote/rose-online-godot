@@ -317,7 +317,7 @@ fn check_requirements(ctx: &ReducerContext, game: &GameData, p: &Player, skill: 
     let av = items::player_ability_values(ctx, game, p);
     let c = p.entity_id.and_then(|id| ctx.db.combat().entity_id().find(id));
     for &(ability_type, value) in skill.required_ability.iter() {
-        if ability::get_value(p, c.as_ref(), &av, ability_type).unwrap_or(0) < value {
+        if ability::get_value(ctx, p, c.as_ref(), &av, ability_type).unwrap_or(0) < value {
             return Err(format!("needs {ability_type:?} {value}"));
         }
     }
@@ -487,11 +487,12 @@ pub(crate) fn check_can_use(ctx: &ReducerContext, game: &GameData, p: &Player, i
     let av = items::player_ability_values(ctx, game, p);
     let c = ctx.db.combat().entity_id().find(id);
     for &(ability_type, value) in skill.use_ability.iter() {
-        let have = ability::get_value(p, c.as_ref(), &av, ability_type).unwrap_or(0);
+        let have = ability::get_value(ctx, p, c.as_ref(), &av, ability_type).unwrap_or(0);
         if have < use_cost(&av, ability_type, value) {
             return Err(match ability_type {
                 AbilityType::Mana => "not enough MP".into(),
                 AbilityType::Health => "not enough HP".into(),
+                AbilityType::Stamina => format!("needs {value} Stamina (you have {have})"),
                 other => format!("needs {other:?} {value}"),
             });
         }
@@ -547,6 +548,7 @@ pub(crate) fn pay_costs(ctx: &ReducerContext, game: &GameData, id: u64, skill: &
                 p.xp = p.xp.saturating_sub(cost.max(0) as u64);
                 player_changed = true;
             }
+            AbilityType::Stamina => crate::stamina::add(ctx, p.identity, -cost),
             AbilityType::Fuel => {
                 let mut fuel_user = p.clone();
                 crate::vehicle::use_fuel(ctx, game, &mut fuel_user, Some(cost));
@@ -570,14 +572,24 @@ pub(crate) fn pay_costs(ctx: &ReducerContext, game: &GameData, id: u64, skill: &
 }
 
 /// Length of a character motion for this skill, scaled by its speed.
-fn motion_us(game: &GameData, p: &Player, motion_id: Option<rose_data::MotionId>, speed: f32) -> i64 {
-    let weapon_motion = p
-        .equipment()
-        .get_equipment_item(EquipmentIndex::Weapon)
-        .and_then(|item| game.items.get_weapon_item(item.item.item_number))
-        .map_or(0, |weapon| weapon.motion_type as usize);
+/// A driver's skill plays on the vehicle, whose arms part picks the motion column.
+fn motion_us(ctx: &ReducerContext, game: &GameData, p: &Player, id: u64, motion_id: Option<rose_data::MotionId>, speed: f32) -> i64 {
+    let equipment = p.equipment();
+    let (weapon_motion, gender) = if crate::vehicle::is_driving(ctx, id) {
+        let arms = equipment
+            .get_vehicle_item(rose_data::VehiclePartIndex::Arms)
+            .and_then(|a| game.items.get_vehicle_item(a.item.item_number))
+            .map_or(0, |v| v.base_motion_index as usize);
+        (arms, 0)
+    } else {
+        let weapon = equipment
+            .get_equipment_item(EquipmentIndex::Weapon)
+            .and_then(|item| game.items.get_weapon_item(item.item.item_number))
+            .map_or(0, |weapon| weapon.motion_type as usize);
+        (weapon, p.gender as usize)
+    };
     motion_id
-        .and_then(|id| game.motions.find_first_character_motion(id, weapon_motion, p.gender as usize))
+        .and_then(|id| game.motions.find_first_character_motion(id, weapon_motion, gender))
         .map_or(0, |m| (m.duration.as_micros() as f32 * if speed > 0.0 { speed } else { 1.0 }) as i64)
 }
 
@@ -623,8 +635,8 @@ fn advance_cast(ctx: &ReducerContext, game: &GameData, mut cast: SkillCast, t: i
     stop_motion(ctx, id);
     check_can_use(ctx, game, &p, id, skill, t)?;
     pay_costs(ctx, game, id, skill, t);
-    let casting = motion_us(game, &p, skill.casting_motion_id, skill.casting_motion_speed);
-    let action = motion_us(game, &p, skill.action_motion_id, skill.action_motion_speed);
+    let casting = motion_us(ctx, game, &p, id, skill.casting_motion_id, skill.casting_motion_speed);
+    let action = motion_us(ctx, game, &p, id, skill.action_motion_id, skill.action_motion_speed);
     cast.started_at_us = Some(t);
     cast.effect_at_us = t + casting;
     cast.ends_at_us = t + (casting + action).max(MIN_CAST_US);
@@ -701,8 +713,8 @@ fn self_motion_cast(ctx: &ReducerContext, game: &GameData, p: &Player, id: u64, 
     cancel_cast(ctx, id);
     stop_motion(ctx, id);
     pay_costs(ctx, game, id, skill, t);
-    let casting = motion_us(game, p, skill.casting_motion_id, skill.casting_motion_speed);
-    let action = motion_us(game, p, skill.action_motion_id, skill.action_motion_speed);
+    let casting = motion_us(ctx, game, p, id, skill.casting_motion_id, skill.casting_motion_speed);
+    let action = motion_us(ctx, game, p, id, skill.action_motion_id, skill.action_motion_speed);
     ctx.db.skill_cast().insert(SkillCast {
         entity_id: id,
         skill_id: skill.id.get(),

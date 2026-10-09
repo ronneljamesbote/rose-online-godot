@@ -132,6 +132,7 @@ pub mod set_name_reducer;
 pub mod set_npc_variable_reducer;
 pub mod set_price_rates_reducer;
 pub mod set_save_point_reducer;
+pub mod set_stamina_reducer;
 pub mod set_world_rates_reducer;
 pub mod sit_reducer;
 pub mod sitting_table;
@@ -142,6 +143,8 @@ pub mod skill_cooldown_row_type;
 pub mod skill_cooldown_table;
 pub mod spawn_entry_type;
 pub mod spawn_tick_timer_type;
+pub mod stamina_table;
+pub mod stamina_type;
 pub mod stats_table;
 pub mod stats_type;
 pub mod status_effect_row_type;
@@ -317,6 +320,7 @@ pub use set_name_reducer::set_name;
 pub use set_npc_variable_reducer::set_npc_variable;
 pub use set_price_rates_reducer::set_price_rates;
 pub use set_save_point_reducer::set_save_point;
+pub use set_stamina_reducer::set_stamina;
 pub use set_world_rates_reducer::set_world_rates;
 pub use sit_reducer::sit;
 pub use sitting_table::*;
@@ -327,6 +331,8 @@ pub use skill_cooldown_row_type::SkillCooldownRow;
 pub use skill_cooldown_table::*;
 pub use spawn_entry_type::SpawnEntry;
 pub use spawn_tick_timer_type::SpawnTickTimer;
+pub use stamina_table::*;
+pub use stamina_type::Stamina;
 pub use stats_table::*;
 pub use stats_type::Stats;
 pub use status_effect_row_type::StatusEffectRow;
@@ -625,6 +631,10 @@ pub enum Reducer {
         town_price_rate: i32,
     },
     SetSavePoint,
+    SetStamina {
+        name: String,
+        value: u32,
+    },
     SetWorldRates {
         xp_rate: i32,
         drop_rate: i32,
@@ -761,6 +771,7 @@ impl __sdk::Reducer for Reducer {
             Reducer::SetNpcVariable { .. } => "set_npc_variable",
             Reducer::SetPriceRates { .. } => "set_price_rates",
             Reducer::SetSavePoint => "set_save_point",
+            Reducer::SetStamina { .. } => "set_stamina",
             Reducer::SetWorldRates { .. } => "set_world_rates",
             Reducer::Sit => "sit",
             Reducer::Stop => "stop",
@@ -1178,6 +1189,12 @@ impl __sdk::Reducer for Reducer {
             Reducer::SetSavePoint => {
                 __sats::bsatn::to_vec(&set_save_point_reducer::SetSavePointArgs {})
             }
+            Reducer::SetStamina { name, value } => {
+                __sats::bsatn::to_vec(&set_stamina_reducer::SetStaminaArgs {
+                    name: name.clone(),
+                    value: value.clone(),
+                })
+            }
             Reducer::SetWorldRates {
                 xp_rate,
                 drop_rate,
@@ -1324,6 +1341,7 @@ pub struct DbUpdate {
     sitting: __sdk::TableUpdate<Sitting>,
     skill_cast: __sdk::TableUpdate<SkillCast>,
     skill_cooldown: __sdk::TableUpdate<SkillCooldownRow>,
+    stamina: __sdk::TableUpdate<Stamina>,
     stats: __sdk::TableUpdate<Stats>,
     status_effect: __sdk::TableUpdate<StatusEffectRow>,
     store_item: __sdk::TableUpdate<StoreItem>,
@@ -1425,6 +1443,9 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "skill_cooldown" => db_update
                     .skill_cooldown
                     .append(skill_cooldown_table::parse_table_update(table_update)?),
+                "stamina" => db_update
+                    .stamina
+                    .append(stamina_table::parse_table_update(table_update)?),
                 "stats" => db_update
                     .stats
                     .append(stats_table::parse_table_update(table_update)?),
@@ -1555,6 +1576,9 @@ impl __sdk::DbUpdate for DbUpdate {
         diff.skill_cooldown = cache
             .apply_diff_to_table::<SkillCooldownRow>("skill_cooldown", &self.skill_cooldown)
             .with_updates_by_pk(|row| &row.id);
+        diff.stamina = cache
+            .apply_diff_to_table::<Stamina>("stamina", &self.stamina)
+            .with_updates_by_pk(|row| &row.identity);
         diff.stats = cache
             .apply_diff_to_table::<Stats>("stats", &self.stats)
             .with_updates_by_pk(|row| &row.entity_id);
@@ -1680,6 +1704,9 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "skill_cooldown" => db_update
                     .skill_cooldown
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "stamina" => db_update
+                    .stamina
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "stats" => db_update
                     .stats
@@ -1811,6 +1838,9 @@ impl __sdk::DbUpdate for DbUpdate {
                 "skill_cooldown" => db_update
                     .skill_cooldown
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "stamina" => db_update
+                    .stamina
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "stats" => db_update
                     .stats
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
@@ -1889,6 +1919,7 @@ pub struct AppliedDiff<'r> {
     sitting: __sdk::TableAppliedDiff<'r, Sitting>,
     skill_cast: __sdk::TableAppliedDiff<'r, SkillCast>,
     skill_cooldown: __sdk::TableAppliedDiff<'r, SkillCooldownRow>,
+    stamina: __sdk::TableAppliedDiff<'r, Stamina>,
     stats: __sdk::TableAppliedDiff<'r, Stats>,
     status_effect: __sdk::TableAppliedDiff<'r, StatusEffectRow>,
     store_item: __sdk::TableAppliedDiff<'r, StoreItem>,
@@ -1977,6 +2008,7 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
             &self.skill_cooldown,
             event,
         );
+        callbacks.invoke_table_row_callbacks::<Stamina>("stamina", &self.stamina, event);
         callbacks.invoke_table_row_callbacks::<Stats>("stats", &self.stats, event);
         callbacks.invoke_table_row_callbacks::<StatusEffectRow>(
             "status_effect",
@@ -2684,6 +2716,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
         sitting_table::register_table(client_cache);
         skill_cast_table::register_table(client_cache);
         skill_cooldown_table::register_table(client_cache);
+        stamina_table::register_table(client_cache);
         stats_table::register_table(client_cache);
         status_effect_table::register_table(client_cache);
         store_item_table::register_table(client_cache);
@@ -2725,6 +2758,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
         "sitting",
         "skill_cast",
         "skill_cooldown",
+        "stamina",
         "stats",
         "status_effect",
         "store_item",

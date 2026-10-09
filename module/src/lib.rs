@@ -25,6 +25,7 @@ mod npc_ai;
 mod party;
 mod pvp;
 mod skills;
+mod stamina;
 mod trade;
 mod world;
 

@@ -136,7 +136,9 @@ pub fn reward_kill_xp(ctx: &ReducerContext, game: &GameData, p: &Player, xp: u64
         }
     }
     for (identity, xp) in shares {
+        let level_before = ctx.db.player().identity().find(identity).map_or(1, |p| p.level);
         character::reward_xp(ctx, game, identity, xp);
+        crate::stamina::reward(ctx, game, identity, xp, level_before);
         let level = ctx.db.player().identity().find(identity).map_or(0, |p| p.level);
         ctx.db.xp_event().insert(XpEvent { identity, xp, level });
     }

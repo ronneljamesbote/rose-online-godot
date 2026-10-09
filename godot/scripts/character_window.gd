@@ -5,7 +5,8 @@ extends PanelContainer
 const STATS := [["str", "Strength"], ["dex", "Dexterity"], ["int", "Intelligence"],
 	["con", "Concentration"], ["cha", "Charm"], ["sen", "Sense"]]
 const VALUES := [["attack", "Attack"], ["defence", "Defence"], ["hit", "Hit"], ["avoid", "Avoid"],
-	["critical", "Critical"], ["resistance", "Magic resist"], ["attack_speed", "Attack speed"]]
+	["critical", "Critical"], ["resistance", "Magic resist"], ["attack_speed", "Attack speed"],
+	["stamina", "Stamina (of 5000)"]]
 
 ## Job ids (the Job ability value) to names.
 const JOBS := {0: "Visitor", 111: "Soldier", 121: "Knight", 122: "Champion", 211: "Muse", 221: "Mage",

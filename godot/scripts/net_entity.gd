@@ -581,12 +581,16 @@ func _play(name: String, restart := false) -> void:
 		_event_frame = -1
 	anim.speed_scale = 1.0
 	anim.play(name, BLEND)
-	# The driver plays the same motion as the vehicle under it.
-	if driver_anim and driver_anim.has_animation("drive_" + name):
+	# The driver plays the same motion as the vehicle under it. A vehicle skill has no
+	# driver motion of its own: sit through the casting and swing with the action.
+	var drive := "drive_" + name
+	if name.begins_with("motion_") and _cast_anims.size() == 2:
+		drive = "drive_attack1" if name == _cast_anims[1] else "drive_stop"
+	if driver_anim and driver_anim.has_animation(drive):
 		if restart:
 			driver_anim.stop()
 		driver_anim.speed_scale = 1.0
-		driver_anim.play("drive_" + name, BLEND)
+		driver_anim.play(drive, BLEND)
 
 
 func _on_animation_finished(name: StringName) -> void:
