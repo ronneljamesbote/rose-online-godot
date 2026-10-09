@@ -39,6 +39,12 @@ class _Map extends Control:
 		var img := Rect2((size - tex.get_size() * k) * 0.5, tex.get_size() * k)
 		draw_texture_rect(tex, img, false)
 		var font := get_theme_font("bold_font", "Fonts")
+		# Short names (without the [job] part) where they fit; a name that would cover
+		# another is left out, and the NPC under the mouse always shows its full name.
+		var mouse := get_local_mouse_position()
+		var placed: Array[Rect2] = []
+		var hovered := ""
+		var hovered_at := Vector2.ZERO
 		for id in online.entities:
 			var e: Node3D = online.entities[id]
 			if not e.is_npc or e.label == null:
@@ -48,8 +54,24 @@ class _Map extends Control:
 				continue
 			draw_circle(at, 4.0, Color(0, 0, 0, 0.6), true, -1.0, true)
 			draw_circle(at, 3.0, Color(0.55, 0.95, 0.5), true, -1.0, true)
-			draw_string_outline(font, at + Vector2(6, 4), e.label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, 3, Color(0, 0, 0, 0.8))
-			draw_string(font, at + Vector2(6, 4), e.label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color.WHITE)
+			var full: String = e.label.text
+			if at.distance_to(mouse) < 7.0:
+				hovered = full
+				hovered_at = at
+				continue
+			var short := full.get_slice("]", 1).strip_edges() if full.begins_with("[") else full
+			var w := font.get_string_size(short, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
+			var tag := Rect2(at + Vector2(6, -8), Vector2(w, 12)).grow(1)
+			var free := true
+			for r in placed:
+				if r.intersects(tag):
+					free = false
+					break
+			if free:
+				placed.append(tag)
+				_name(font, at, short)
+		if hovered != "":
+			_name(font, hovered_at, hovered)
 		for m in online.net.get_party().get("members", []):
 			var pid := int(m.get("entity", -1))
 			if online.entities.has(pid) and pid != online.my_id:
@@ -64,3 +86,8 @@ class _Map extends Control:
 				points.append(at + v.rotated(angle))
 			draw_colored_polygon(points, UI.color("map.me"))
 			draw_polyline(points + PackedVector2Array([points[0]]), Color.WHITE, 1.5, true)
+
+
+	func _name(font: Font, at: Vector2, text: String) -> void:
+		draw_string_outline(font, at + Vector2(6, 4), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, 3, Color(0, 0, 0, 0.8))
+		draw_string(font, at + Vector2(6, 4), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color.WHITE)
