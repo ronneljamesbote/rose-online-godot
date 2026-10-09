@@ -31,7 +31,7 @@ const MAKE_REFINE: u32 = 42;
 const MAX_GRADE: u8 = 9;
 const MAX_DURABILITY: i32 = 120;
 /// How close an NPC must be for its services.
-const NPC_RANGE_CM: f32 = 1500.0;
+pub(crate) const NPC_RANGE_CM: f32 = 1500.0;
 
 #[derive(SpacetimeType, Clone, Copy, Debug)]
 pub struct CraftSlot {

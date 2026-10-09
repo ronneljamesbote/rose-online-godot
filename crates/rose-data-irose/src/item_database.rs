@@ -434,6 +434,7 @@ fn load_consumeable_item(
         confile_index: data.get_consumeable_confile_index(id).unwrap_or(0),
         ability_requirement: data.get_consumeable_ability_requirement(id),
         add_ability: data.get_consumeable_add_ability(id),
+        add_data_value: data.0.try_get_int(id, 20).unwrap_or(0),
         learn_skill_id: data.get_consumeable_learn_skill_id(id),
         use_skill_id: data.get_consumeable_use_skill_id(id),
         apply_status_effect: data.get_consumeable_apply_status_effect(id),
