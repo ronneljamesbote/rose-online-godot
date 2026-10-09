@@ -57,18 +57,20 @@ func _ready() -> void:
 		var factor: float = z[1]
 		b.pressed.connect(func(): zoom = clampf(zoom * factor, 0.35, 2.5); view.queue_redraw())
 		top.add_child(b)
-	var labels := HBoxContainer.new()
+	# Zone name over the coordinates, both centred under the map.
+	var labels := VBoxContainer.new()
+	labels.add_theme_constant_override("separation", -4)
 	labels.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(labels)
 	zone_label = Label.new()
 	zone_label.theme_type_variation = "AccentLabel"
-	zone_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	zone_label.clip_text = true
 	labels.add_child(zone_label)
 	place_label = Label.new()
 	place_label.theme_type_variation = "MutedLabel"
 	labels.add_child(place_label)
 	for l in [zone_label, place_label]:
+		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		l.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.75))
 		l.add_theme_constant_override("outline_size", 4)
 	UI.theme_changed.connect(_restyle)
