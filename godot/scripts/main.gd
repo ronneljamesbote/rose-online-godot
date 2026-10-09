@@ -674,6 +674,8 @@ func _run_steps_demo(steps: String) -> void:
 					online.attack(online.my_target)
 			"select":
 				_steps_target(arg)
+			"leaveparty":
+				online.net.party_leave()
 			"move":
 				var dz := float(words[2]) if words.size() > 2 else 0.0
 				online.move_to(online.me.position + Vector3(float(arg), 0, dz))
@@ -955,6 +957,26 @@ func _run_talk_demo() -> void:
 				var weapon = online.net.get_inventory()["equipped"][6]
 				print("rose net demo: weapon now: ", weapon["tooltip"].replace("\n", " / ") if weapon else "none")
 			continue
+		if answer.begins_with("act=") or answer.begins_with("show="):
+			# Right-click (act) or print (show) an inventory slot: e6 = equipped weapon,
+			# v3 = vehicle arms, anything else = the first bag item with that name.
+			var slot = _inventory_slot(answer.get_slice("=", 1))
+			if slot == null:
+				print("rose net demo: no slot ", answer)
+			elif answer.begins_with("act="):
+				online.inventory_window.activate(slot)
+				await get_tree().create_timer(1.5).timeout
+				print("rose net demo: repair hint: ", online.inventory_window.repair_hint.text if online.inventory_window.repair_hint.visible else "(none)")
+			else:
+				# Hover it too, so the tooltip shows on screen.
+				get_viewport().warp_mouse(slot.get_global_rect().get_center())
+				print("rose net demo: %s: %s" % [slot.item.get("name", "?"), String(slot.item.get("tooltip", "")).replace("\n", " / ")] if slot.item else "rose net demo: empty slot")
+				await get_tree().create_timer(2.5).timeout
+			continue
+		if answer == "stats":
+			var c: Dictionary = online.net.get_character()
+			print("rose net demo: attack %d defence %d" % [c.get("attack", 0), c.get("defence", 0)])
+			continue
 		if answer == "talk":
 			online.talk_to(npc)
 			await get_tree().create_timer(1.0).timeout
@@ -966,6 +988,24 @@ func _run_talk_demo() -> void:
 		_print_conversation()
 	await get_tree().create_timer(2.0).timeout
 	_print_quests()
+
+
+## The inventory window slot for e<N> (equipped), v<N> (vehicle part) or a bag item name.
+func _inventory_slot(text: String):
+	var inv = online.inventory_window
+	inv.visible = true
+	inv._refresh(true)
+	if text.length() >= 2 and text[0] == "e" and text.substr(1).is_valid_int():
+		return inv.equipped_slots[int(text.substr(1))]
+	if text.length() >= 2 and text[0] == "v" and text.substr(1).is_valid_int():
+		return inv.vehicle_slots[int(text.substr(1))]
+	var found := _find_bag_item(text)
+	if found.is_empty():
+		return null
+	inv.tabs.current_tab = found[0]
+	inv.page = found[0]
+	inv._refresh(true)
+	return inv.page_slots[found[1]]
 
 
 ## [page, index] of the first bag item whose name has this text, else [].

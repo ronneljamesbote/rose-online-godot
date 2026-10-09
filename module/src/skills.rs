@@ -915,6 +915,7 @@ fn take_effect(ctx: &ReducerContext, game: &GameData, cast: &SkillCast, t: i64) 
                     apply_effects(ctx, game, caster, target, skill, t);
                 }
             }
+            weapon_wear(ctx, game, caster, skill);
             Ok(())
         }
         SkillType::SelfBoundDuration
@@ -933,6 +934,7 @@ fn take_effect(ctx: &ReducerContext, game: &GameData, cast: &SkillCast, t: i64) 
             if damage(ctx, game, caster, target, skill, t).is_some_and(|amount| amount > 0) {
                 apply_effects(ctx, game, caster, target, skill, t);
             }
+            weapon_wear(ctx, game, caster, skill);
             Ok(())
         }
         SkillType::Resurrection => {
@@ -981,6 +983,14 @@ fn targets(ctx: &ReducerContext, cast: &SkillCast, skill: &SkillData, t: i64) ->
 
 fn ability_values_of(ctx: &ReducerContext, id: u64) -> Option<AbilityValues> {
     ctx.db.stats().entity_id().find(id).and_then(|s| serde_json::from_str(&s.ability_values).ok())
+}
+
+/// A damaging skill wears the caster's weapon, except natural magic (as iROSE's
+/// SKILL_DAMAGE_TYPE 3 check before Dec_WeaponLife).
+fn weapon_wear(ctx: &ReducerContext, game: &GameData, caster: u64, skill: &SkillData) {
+    if !matches!(skill.damage_type, rose_data::SkillDamageType::NaturalMagic) {
+        crate::durability::weapon_used(ctx, game, caster);
+    }
 }
 
 /// Skill damage on one target; Some(amount) when it landed.

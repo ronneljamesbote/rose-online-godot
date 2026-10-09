@@ -12,6 +12,7 @@ mod character;
 mod chat;
 mod craft;
 mod death;
+mod durability;
 mod friends;
 mod shop;
 mod vehicle;
@@ -1054,6 +1055,7 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
                         c.attack_target = None;
                     }
                     ctx.db.combat().entity_id().update(c);
+                    durability::weapon_used(ctx, &game, id);
                     let killed = deal_damage(ctx, &game, id, target, amount, is_critical, t);
                     // Monsters run their attack trigger after each swing (some use skills).
                     if !killed && !stats.is_player {
@@ -1196,6 +1198,9 @@ fn deal_damage(ctx: &ReducerContext, game: &GameData, attacker: u64, defender: u
     dc.hp = (dc.hp - amount).max(0);
     let killed = dc.hp == 0;
     ctx.db.combat().entity_id().update(dc);
+    if defender_stats.is_player && attacker != defender {
+        durability::hit_taken(ctx, game, defender, amount);
+    }
     // A summon's damage counts as its owner's (experience, drops, quests).
     let credited = skills::controller(ctx, attacker);
     if !defender_stats.is_player && dealt > 0 {

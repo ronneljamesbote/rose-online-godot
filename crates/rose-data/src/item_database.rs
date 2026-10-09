@@ -428,6 +428,9 @@ pub struct ConsumableItemData {
     pub add_fuel: i32,
     pub ability_requirement: Option<(AbilityType, i32)>,
     pub add_ability: Option<(AbilityType, i32)>,
+    /// LIST_USEITEM column 20 on its own (USEITEM_ADD_DATA_VALUE): a repair hammer with a
+    /// value other than 0 never lowers durability.
+    pub add_data_value: i32,
     pub learn_skill_id: Option<SkillId>,
     pub use_skill_id: Option<SkillId>,
     pub apply_status_effect: Option<(StatusEffectId, i32)>,
