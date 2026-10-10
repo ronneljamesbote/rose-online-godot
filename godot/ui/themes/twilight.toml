@@ -111,10 +111,13 @@ border_color = "rgba(190, 182, 255, 0.2)"
 text = "#ecebff"
 
 [tooltip]
-opacity = 1.0              # background opacity, 1 = solid; the window opacity setting does not change it
-top = "rgba(40, 37, 80, 0.97)"
-bottom = "rgba(16, 15, 34, 0.97)"
-border_color = "rgba(190, 182, 255, 0.25)"
+# Tooltips (and menus) use the theme's colours but stand apart from windows and HUD
+# panels: Twilight's violet, darker than its windows, with a gold border.
+opacity = 0.88             # background, 0 = invisible to 1 = solid; the window opacity setting does not change it
+top = "#2c2858"
+bottom = "#100f22"
+border_color = "rgba(242, 201, 107, 0.7)"
+radius = 3
 text = "#ecebff"
 
 [portrait]

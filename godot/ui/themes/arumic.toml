@@ -125,11 +125,14 @@ border_color = "rgba(132, 140, 222, 0.45)"
 text = "#2f3366"
 
 [tooltip]
-opacity = 1.0              # background opacity, 1 = solid; the window opacity setting does not change it
-top = "#ffffff"
-bottom = "rgba(238, 236, 255, 0.98)"
-border_color = "rgba(132, 140, 222, 0.45)"
-text = "#2f3366"
+# Tooltips (and menus) use the theme's colours but stand apart from windows and HUD
+# panels: Arumic's periwinkle and indigo, deeper than its light windows, with a gold border.
+opacity = 0.88             # background, 0 = invisible to 1 = solid; the window opacity setting does not change it
+top = "#5a61c9"
+bottom = "#2f3366"
+border_color = "rgba(233, 165, 42, 0.8)"
+radius = 3
+text = "#ffffff"
 
 [portrait]
 center = "#ffffff"

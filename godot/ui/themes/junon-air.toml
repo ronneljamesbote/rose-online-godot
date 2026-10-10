@@ -111,11 +111,14 @@ border_color = "rgba(35, 58, 87, 0.12)"
 text = "#233a57"
 
 [tooltip]
-opacity = 1.0              # background opacity, 1 = solid; the window opacity setting does not change it
-top = "#ffffff"
-bottom = "rgba(236, 245, 255, 0.97)"
-border_color = "rgba(255, 255, 255, 0.9)"
-text = "#233a57"
+# Tooltips (and menus) use the theme's colours but stand apart from windows and HUD
+# panels: Junon Air's sky navy, deeper than its light windows, with a gold border.
+opacity = 0.88             # background, 0 = invisible to 1 = solid; the window opacity setting does not change it
+top = "#34587f"
+bottom = "#1b2d45"
+border_color = "rgba(224, 165, 49, 0.8)"
+radius = 3
+text = "#ffffff"
 
 [portrait]
 center = "#ffffff"
