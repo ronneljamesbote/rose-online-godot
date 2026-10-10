@@ -14,3 +14,5 @@ source:
 # Retribution upon the Blasphemous
 
 Both the Righteous Crusaders and the Ferrell Guild have blasphemed the Junon Order, and they must be punished in the name of Junon. Let them feel our righteous wrath!  
+
+> Open question: this quest has no steps here because its quest file (`PvP10.qsd` or `PvP13-01.qsd`) fails to load: `crates/rose-file-readers/src/qsd.rs` reads the zone-team trigger reward (type 19) with a wrong layout. Part of [[backlog/faction-wars|Faction wars]].

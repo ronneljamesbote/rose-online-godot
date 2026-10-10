@@ -147,3 +147,5 @@ the passenger comes along and arrives 1 metre to the side, on foot.
 
 > Open question: the parts' Defence and other stat bonuses (for example a frame's Defence +26) are read into the vehicle's bonuses, but defence while driving only uses your normal gear plus the parts' grade bonus, so those bonuses are not applied.
 > Open question: engines list a maximum fuel (LIST_PAT column 31, e.g. 1600 for the First Engine), but every engine's tank holds 1000.
+
+> Open question: LIST_PAT.STB gives arms and body parts their own fuel rates, but only the engine's rate is used.
