@@ -49,8 +49,8 @@ Then:
 
 - works on [[quests/3607-weak-mana-waves-from-lunar|Weak Mana Waves from Lunar]]
 - 25 × [[items/quest/316-krawfy-long-antenna|Krawfy Long Antenna]] is taken
-- you get [[items/consumable/5-health-bottle-m|Health Bottle (M)]] (item count: 5)
-- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]] (item count: 5)
+- you get [[items/consumable/5-health-bottle-m|Health Bottle (M)]], base count 5 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]], base count 5 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 8 to your UnionPoint4
 - the quest ends (removed from your list)
 
@@ -69,8 +69,8 @@ Then:
 
 - works on [[quests/3607-weak-mana-waves-from-lunar|Weak Mana Waves from Lunar]]
 - 25 × [[items/quest/316-krawfy-long-antenna|Krawfy Long Antenna]] is taken
-- you get [[items/consumable/5-health-bottle-m|Health Bottle (M)]] (item count: 5)
-- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]] (item count: 5)
+- you get [[items/consumable/5-health-bottle-m|Health Bottle (M)]], base count 5 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]], base count 5 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 3 to your UnionPoint4
 - the quest ends (removed from your list)
 

@@ -35,8 +35,8 @@ Checks:
 Then:
 
 - works on [[quests/144-the-truth-of-the-golden-dagger|The Truth of the Golden Dagger]]
-- experience: 20000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/material/153-blue-hearts|Blue Hearts]] (item count: 1)
+- experience, base 20000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/material/153-blue-hearts|Blue Hearts]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/145-information-on-lunar|Information on Lunar]] (progress kept)
 - set episode variable 0 to 44
 
@@ -65,6 +65,6 @@ Checks:
 Then:
 
 - works on [[quests/145-information-on-lunar|Information on Lunar]]
-- experience: 20000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 20000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/147-pavrick-the-craftsman-on-lunar|Pavrick, the Craftsman on Lunar]] (progress kept)
 - set episode variable 0 to 45

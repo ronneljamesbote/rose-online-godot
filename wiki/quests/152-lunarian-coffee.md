@@ -74,10 +74,10 @@ Then:
 
 - works on [[quests/152-lunarian-coffee|Lunarian Coffee]]
 - 1 × [[items/quest/620-lunarian-coffee|Lunarian Coffee]] is taken
-- money: 60000 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/381-ice-charm|Ice Charm]] (item count: 2)
-- you get [[items/consumable/382-spark-charm|Spark Charm]] (item count: 2)
-- you get [[items/consumable/383-blood-charm|Blood Charm]] (item count: 2)
+- Zuly, base 60000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/381-ice-charm|Ice Charm]], base count 2 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/382-spark-charm|Spark Charm]], base count 2 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/383-blood-charm|Blood Charm]], base count 2 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 - then runs step `152-03`
 

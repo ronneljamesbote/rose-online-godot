@@ -39,7 +39,7 @@ Then:
 - 5 × [[items/quest/111-small-metal-board|Small Metal Board]] is taken
 - 5 × [[items/quest/112-fleece|Fleece]] is taken
 - the quest becomes [[quests/1003-dealer-job-change-quest|Dealer Job Change Quest]]
-- you get [[items/consumable/1-health-vial-s|Health Vial (S)]] (item count: 5)
+- you get [[items/consumable/1-health-vial-s|Health Vial (S)]], base count 5 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 
 ### `1003-01`
 

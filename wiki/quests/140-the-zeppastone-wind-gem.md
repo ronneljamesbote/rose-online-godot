@@ -32,7 +32,7 @@ Checks:
 Then:
 
 - works on [[quests/139-punwell-in-windmill-village|Punwell in Windmill Village]]
-- experience: 10000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 10000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/140-the-zeppastone-wind-gem|The Zeppastone Wind Gem]]
 - set episode variable 0 to 39
 
@@ -61,7 +61,7 @@ Then:
 
 - works on [[quests/140-the-zeppastone-wind-gem|The Zeppastone Wind Gem]]
 - 1 × [[items/quest/509-zeppastone-wind-gem|Zeppastone Wind Gem]] is taken
-- experience: 30000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 30000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/141-the-prince-of-akram|The Prince of Akram]] (progress kept)
 - set episode variable 0 to 40
 

@@ -88,7 +88,7 @@ Then:
 
 - works on [[quests/1006-an-eye-for-the-marketplace|An Eye for the Marketplace]]
 - add 2 to job variable 0
-- money: 250 (money, scaled by your level, see [[rules/quests|Quests]])
+- Zuly, base 250 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `1006-02` is tried instead.
@@ -104,7 +104,7 @@ Then:
 
 - works on [[quests/1006-an-eye-for-the-marketplace|An Eye for the Marketplace]]
 - add 2 to job variable 0
-- experience: 200 (money, scaled by your level, see [[rules/quests|Quests]])
+- experience, base 200 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `1006-03` is tried instead.
@@ -120,7 +120,7 @@ Then:
 
 - works on [[quests/1006-an-eye-for-the-marketplace|An Eye for the Marketplace]]
 - add 2 to job variable 0
-- money: 150 (money, scaled by your level, see [[rules/quests|Quests]])
+- Zuly, base 150 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1006-04`

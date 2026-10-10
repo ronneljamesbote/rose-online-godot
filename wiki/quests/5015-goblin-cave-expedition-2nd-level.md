@@ -62,7 +62,7 @@ Checks:
 Then:
 
 - works on [[quests/5015-goblin-cave-expedition-2nd-level|Goblin Cave Expedition (2nd Level)]]
-- money: 680 (money, fixed, see [[rules/quests|Quests]])
+- Zuly, base 680 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `5015-31`

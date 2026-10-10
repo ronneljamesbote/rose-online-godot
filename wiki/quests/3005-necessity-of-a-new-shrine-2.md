@@ -69,8 +69,8 @@ Then:
 - works on [[quests/3005-necessity-of-a-new-shrine-2|Necessity of a New Shrine (2)]]
 - 18 × [[items/quest/22-iron-fragment|Iron Fragment]] is taken
 - add 8 to your UnionPoint1
-- experience: 120 (XP, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/57-vital-jam-2|Vital Jam (+2)]] (item count: 1)
+- experience, base 120 (reward formula 1: grows with your level and Charm, see [[rules/quests|Quests]])
+- you get [[items/consumable/57-vital-jam-2|Vital Jam (+2)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `3005-04` is tried instead.
@@ -89,8 +89,8 @@ Then:
 - works on [[quests/3005-necessity-of-a-new-shrine-2|Necessity of a New Shrine (2)]]
 - 18 × [[items/quest/22-iron-fragment|Iron Fragment]] is taken
 - add 3 to your UnionPoint1
-- experience: 12000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/consumable/57-vital-jam-2|Vital Jam (+2)]] (item count: 1)
+- experience, base 12000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/57-vital-jam-2|Vital Jam (+2)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `3005-31`

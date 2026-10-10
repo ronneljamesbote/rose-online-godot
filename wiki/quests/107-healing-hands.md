@@ -37,8 +37,8 @@ Checks:
 Then:
 
 - works on [[quests/106-healing-hands|Healing Hands]]
-- experience: 300 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/consumable/103-grapes|Grapes]] (item count: 10)
+- experience, base 300 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/103-grapes|Grapes]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/107-healing-hands|Healing Hands]] (progress kept)
 - set episode variable 0 to 4
 
@@ -92,12 +92,12 @@ Then:
 
 - works on [[quests/107-healing-hands|Healing Hands]]
 - you get 1 × [[items/quest/605-antidote-recipe|Antidote Recipe]]
-- you get [[items/consumable/105-orange|Orange]] (item count: 10)
-- you get [[items/head/5-islamic-bandana|Islamic Bandana]] (item count: 1)
-- you get [[items/body/5-yellow-wild-jeans|Yellow Wild Jeans]] (item count: 1)
-- you get [[items/hands/5-safe-gloves|Safe Gloves]] (item count: 1)
-- you get [[items/feet/5-dash-shoes|Dash Shoes]] (item count: 1)
-- experience: 400 (XP, not scaled by level, see [[rules/quests|Quests]])
+- you get [[items/consumable/105-orange|Orange]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/head/5-islamic-bandana|Islamic Bandana]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/body/5-yellow-wild-jeans|Yellow Wild Jeans]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/hands/5-safe-gloves|Safe Gloves]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/feet/5-dash-shoes|Dash Shoes]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- experience, base 400 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 - set episode variable 0 to 5
 - then runs step `107-09`
@@ -118,11 +118,11 @@ Then:
 
 - works on [[quests/107-healing-hands|Healing Hands]]
 - you get 1 × [[items/quest/605-antidote-recipe|Antidote Recipe]]
-- experience: 400 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/head/5-islamic-bandana|Islamic Bandana]] (item count: 1)
-- you get [[items/body/5-yellow-wild-jeans|Yellow Wild Jeans]] (item count: 1)
-- you get [[items/hands/5-safe-gloves|Safe Gloves]] (item count: 1)
-- you get [[items/feet/5-dash-shoes|Dash Shoes]] (item count: 1)
+- experience, base 400 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/head/5-islamic-bandana|Islamic Bandana]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/body/5-yellow-wild-jeans|Yellow Wild Jeans]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/hands/5-safe-gloves|Safe Gloves]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/feet/5-dash-shoes|Dash Shoes]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 - set episode variable 0 to 5
 - then runs step `107-09`
@@ -140,7 +140,7 @@ Then:
 
 - works on [[quests/107-healing-hands|Healing Hands]]
 - you get 1 × [[items/quest/605-antidote-recipe|Antidote Recipe]]
-- experience: 250 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 250 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 - set episode variable 0 to 5
 - then runs step `107-09`

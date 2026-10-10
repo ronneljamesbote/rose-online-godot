@@ -35,7 +35,7 @@ Checks:
 Then:
 
 - works on [[quests/1982-the-prince-of-akram|The Prince of Akram]]
-- experience: 1000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 1000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/1983-the-search-for-the-prince|The Search for the Prince]]
 - quest switch 129 on
 
@@ -52,7 +52,7 @@ Checks:
 Then:
 
 - works on [[quests/1983-the-search-for-the-prince|The Search for the Prince]]
-- experience: 1000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 1000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/1984-the-ominous-kenji-stone|The Ominous Kenji Stone]]
 - quest switch 130 on
 

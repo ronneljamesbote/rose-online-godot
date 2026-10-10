@@ -38,9 +38,9 @@ Then:
 - works on [[quests/131-eva-the-sorcerer|Eva the Sorcerer]]
 - 20 × [[items/quest/616-flame-of-courage|Flame of Courage]] is taken
 - 5 × [[items/quest/617-flame-of-passion|Flame of Passion]] is taken
-- you get [[items/consumable/3-health-vial-l|Health Vial (L)]] (item count: 20)
-- you get [[items/consumable/23-mana-vial-l|Mana Vial (L)]] (item count: 20)
-- experience: 30000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- you get [[items/consumable/3-health-vial-l|Health Vial (L)]], base count 20 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/23-mana-vial-l|Mana Vial (L)]], base count 20 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- experience, base 30000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/132-forbidden-spell|Forbidden Spell]] (progress kept)
 - set episode variable 0 to 31
 
@@ -67,6 +67,6 @@ Checks:
 Then:
 
 - works on [[quests/132-forbidden-spell|Forbidden Spell]]
-- experience: 10000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 10000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/133-forbidden-spell|Forbidden Spell]]
 - set episode variable 0 to 32

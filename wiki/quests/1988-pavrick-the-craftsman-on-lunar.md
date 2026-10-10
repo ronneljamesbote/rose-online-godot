@@ -35,7 +35,7 @@ Checks:
 Then:
 
 - works on [[quests/1986-information-on-lunar|Information on Lunar]]
-- experience: 5000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 5000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/1988-pavrick-the-craftsman-on-lunar|Pavrick, the Craftsman on Lunar]] (progress kept)
 - quest switch 133 on
 
@@ -51,7 +51,7 @@ Checks:
 Then:
 
 - works on [[quests/1987-the-truth-of-the-golden-dagger-2|The Truth of the Golden Dagger (2)]]
-- experience: 5000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 5000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/1988-pavrick-the-craftsman-on-lunar|Pavrick, the Craftsman on Lunar]] (progress kept)
 - quest switch 133 on
 
@@ -111,9 +111,9 @@ Then:
 
 - works on [[quests/1988-pavrick-the-craftsman-on-lunar|Pavrick, the Craftsman on Lunar]]
 - 1 × [[items/quest/511-luna-whiskey|Luna Whiskey]] is taken
-- experience: 8000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- money: 15000 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/2-health-vial-m|Health Vial (M)]] (item count: 5)
-- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]] (item count: 5)
+- experience, base 8000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- Zuly, base 15000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/2-health-vial-m|Health Vial (M)]], base count 5 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]], base count 5 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - quest switch 134 on
 - the quest becomes [[quests/1989-the-royal-golden-dagger|The Royal Golden Dagger]] (progress kept)

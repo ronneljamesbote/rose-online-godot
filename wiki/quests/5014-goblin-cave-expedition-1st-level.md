@@ -54,7 +54,7 @@ Checks:
 Then:
 
 - works on [[quests/5014-goblin-cave-expedition-1st-level|Goblin Cave Expedition (1st Level)]]
-- money: 450 (money, fixed, see [[rules/quests|Quests]])
+- Zuly, base 450 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `5014-10`

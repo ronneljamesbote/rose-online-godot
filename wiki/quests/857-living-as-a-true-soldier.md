@@ -36,7 +36,7 @@ Checks:
 Then:
 
 - works on [[quests/856-living-as-a-true-soldier|Living as a True Soldier]]
-- you get [[items/consumable/5-health-bottle-m|Health Bottle (M)]] (item count: 10)
+- you get [[items/consumable/5-health-bottle-m|Health Bottle (M)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/857-living-as-a-true-soldier|Living as a True Soldier]]
 
 ### `857-01`
@@ -53,7 +53,7 @@ Then:
 - works on [[quests/857-living-as-a-true-soldier|Living as a True Soldier]]
 - 4 × [[items/quest/131-queen-bibi-s-staff|Queen Bibi's Staff]] is taken
 - add 2 to job variable 0
-- you get [[items/weapon/5-long-sword|Long Sword]] (item count: 1)
+- you get [[items/weapon/5-long-sword|Long Sword]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `857-02`
@@ -70,7 +70,7 @@ Then:
 - works on [[quests/857-living-as-a-true-soldier|Living as a True Soldier]]
 - 4 × [[items/quest/131-queen-bibi-s-staff|Queen Bibi's Staff]] is taken
 - add 2 to job variable 0
-- you get [[items/weapon/164-scimitar|Scimitar]] (item count: 1)
+- you get [[items/weapon/164-scimitar|Scimitar]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `857-03`
@@ -87,7 +87,7 @@ Then:
 - works on [[quests/857-living-as-a-true-soldier|Living as a True Soldier]]
 - 4 × [[items/quest/131-queen-bibi-s-staff|Queen Bibi's Staff]] is taken
 - add 2 to job variable 0
-- you get [[items/weapon/132-small-axe|Small Axe]] (item count: 1)
+- you get [[items/weapon/132-small-axe|Small Axe]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `857-31`

@@ -51,8 +51,8 @@ Then:
 
 - works on [[quests/5041-the-lost-engagement-ring|The Lost Engagement Ring]]
 - 1 × [[items/quest/508-methio-s-engagement-ring|Methio's Engagement Ring]] is taken
-- experience: 300 (XP, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/56-vital-jam-1|Vital Jam (+1)]] (item count: 1)
+- experience, base 300 (reward formula 1: grows with your level and Charm, see [[rules/quests|Quests]])
+- you get [[items/consumable/56-vital-jam-1|Vital Jam (+1)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - quest switch 32 on
 - the quest ends (removed from your list)
 
@@ -69,8 +69,8 @@ Then:
 
 - works on [[quests/5041-the-lost-engagement-ring|The Lost Engagement Ring]]
 - 1 × [[items/quest/508-methio-s-engagement-ring|Methio's Engagement Ring]] is taken
-- experience: 5100 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/consumable/56-vital-jam-1|Vital Jam (+1)]] (item count: 1)
+- experience, base 5100 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/56-vital-jam-1|Vital Jam (+1)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - quest switch 32 on
 - the quest ends (removed from your list)
 

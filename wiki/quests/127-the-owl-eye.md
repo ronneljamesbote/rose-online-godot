@@ -35,7 +35,7 @@ Then:
 
 - works on [[quests/126-falsehoods|Falsehoods]]
 - 1 × [[items/quest/615-small-letter|Small Letter]] is taken
-- money: 5000 (money, scaled by your level, see [[rules/quests|Quests]])
+- Zuly, base 5000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/127-the-owl-eye|The Owl Eye]] (progress kept)
 - set episode variable 0 to 26
 
@@ -64,8 +64,8 @@ Then:
 
 - works on [[quests/127-the-owl-eye|The Owl Eye]]
 - 20 × [[items/quest/24-gold-fragment|Gold Fragment]] is taken
-- experience: 5000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- money: 500 (money, fixed, see [[rules/quests|Quests]])
+- experience, base 5000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- Zuly, base 500 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 - set episode variable 0 to 27
 - then runs step `127-03`

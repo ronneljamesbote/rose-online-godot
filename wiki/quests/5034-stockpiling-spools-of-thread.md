@@ -43,7 +43,7 @@ Checks:
 Then:
 
 - works on [[quests/5034-stockpiling-spools-of-thread|Stockpiling Spools of Thread]]
-- money: 27 (money, fixed, see [[rules/quests|Quests]])
+- Zuly, base 27 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 - then runs step `5034-01`
 
@@ -59,7 +59,7 @@ Checks:
 Then:
 
 - works on [[quests/5034-stockpiling-spools-of-thread|Stockpiling Spools of Thread]]
-- money: 27 (money, fixed, see [[rules/quests|Quests]])
+- Zuly, base 27 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `5034-31`

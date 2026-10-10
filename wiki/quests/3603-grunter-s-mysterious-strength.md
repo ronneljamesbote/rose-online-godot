@@ -51,7 +51,7 @@ Then:
 - works on [[quests/3603-grunter-s-mysterious-strength|Grunter's Mysterious Strength]]
 - 14 × [[items/quest/307-grunter-foot|Grunter Foot]] is taken
 - add 4 to your UnionPoint4
-- experience: 100 (XP, scaled by your level, see [[rules/quests|Quests]])
+- experience, base 100 (reward formula 1: grows with your level and Charm, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `3603-03` is tried instead.
@@ -70,7 +70,7 @@ Then:
 - works on [[quests/3603-grunter-s-mysterious-strength|Grunter's Mysterious Strength]]
 - 14 × [[items/quest/307-grunter-foot|Grunter Foot]] is taken
 - add 1 to your UnionPoint4
-- experience: 10000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 10000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `3603-31`

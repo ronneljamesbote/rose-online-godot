@@ -49,8 +49,8 @@ Checks:
 Then:
 
 - works on [[quests/5052-hunting-practice-2|Hunting Practice (2)]]
-- money: 250 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/104-kiwi|Kiwi]] (item count: 8)
+- Zuly, base 250 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/104-kiwi|Kiwi]], base count 8 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - quest switch 78 on
 - the quest ends (removed from your list)
 
@@ -80,8 +80,8 @@ Checks:
 Then:
 
 - works on [[quests/5052-hunting-practice-2|Hunting Practice (2)]]
-- money: 250 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/104-kiwi|Kiwi]] (item count: 8)
+- Zuly, base 250 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/104-kiwi|Kiwi]], base count 8 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - quest switch 78 on
 - the quest ends (removed from your list)
 

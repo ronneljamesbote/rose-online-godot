@@ -49,8 +49,8 @@ Checks:
 Then:
 
 - works on [[quests/5051-hunting-practice-1|Hunting Practice (1)]]
-- you get [[items/consumable/103-grapes|Grapes]] (item count: 10)
-- money: 200 (money, scaled by your level, see [[rules/quests|Quests]])
+- you get [[items/consumable/103-grapes|Grapes]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- Zuly, base 200 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - quest switch 77 on
 - the quest ends (removed from your list)
 
@@ -80,8 +80,8 @@ Checks:
 Then:
 
 - works on [[quests/5051-hunting-practice-1|Hunting Practice (1)]]
-- you get [[items/consumable/103-grapes|Grapes]] (item count: 10)
-- money: 200 (money, scaled by your level, see [[rules/quests|Quests]])
+- you get [[items/consumable/103-grapes|Grapes]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- Zuly, base 200 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - quest switch 77 on
 - the quest ends (removed from your list)
 

@@ -72,7 +72,7 @@ Checks:
 Then:
 
 - works on [[quests/3001-shannon-s-medical-treatment|Shannon's Medical Treatment]]
-- experience: 80 (XP, scaled by your level, see [[rules/quests|Quests]])
+- experience, base 80 (reward formula 1: grows with your level and Charm, see [[rules/quests|Quests]])
 - add 1 to your UnionPoint1
 - the quest ends (removed from your list)
 
@@ -92,6 +92,6 @@ Checks:
 Then:
 
 - works on [[quests/3001-shannon-s-medical-treatment|Shannon's Medical Treatment]]
-- experience: 5000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 5000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 1 to your UnionPoint1
 - the quest ends (removed from your list)

@@ -51,7 +51,7 @@ Then:
 - works on [[quests/956-why-did-toddy-steal-the-jewels|Why Did Toddy Steal the Jewels?]]
 - 7 × [[items/quest/114-crystal-necklace|Crystal Necklace]] is taken
 - add 1 to job variable 0
-- you get [[items/weapon/204-orc-bow|Orc Bow]] (item count: 1)
+- you get [[items/weapon/204-orc-bow|Orc Bow]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `956-02`
@@ -69,7 +69,7 @@ Then:
 - works on [[quests/956-why-did-toddy-steal-the-jewels|Why Did Toddy Steal the Jewels?]]
 - 7 × [[items/quest/114-crystal-necklace|Crystal Necklace]] is taken
 - add 1 to job variable 0
-- you get [[items/weapon/403-katar|Katar]] (item count: 1)
+- you get [[items/weapon/403-katar|Katar]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `956-03`
@@ -87,7 +87,7 @@ Then:
 - works on [[quests/956-why-did-toddy-steal-the-jewels|Why Did Toddy Steal the Jewels?]]
 - 7 × [[items/quest/114-crystal-necklace|Crystal Necklace]] is taken
 - add 1 to job variable 0
-- money: 1800 (money, scaled by your level, see [[rules/quests|Quests]])
+- Zuly, base 1800 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `956-08`

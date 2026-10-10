@@ -54,5 +54,5 @@ Then:
 - set your Job to 311
 - add 1 to job variable 0
 - HP set to 100% and MP to 100%
-- you get [[items/hands/91-hunter-gloves|Hunter Gloves]] (item count: 1)
+- you get [[items/hands/91-hunter-gloves|Hunter Gloves]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)

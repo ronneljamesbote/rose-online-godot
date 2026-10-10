@@ -52,7 +52,7 @@ Then:
 - works on [[quests/5032-piety-and-a-bribe|Piety and a Bribe?]]
 - 1 × [[items/quest/506-pearl-oysters|Pearl Oysters]] is taken
 - you get 1 × [[items/quest/507-elder-appointment-letter|Elder Appointment Letter]]
-- you get [[items/feet/3-waterproof-shoes|Waterproof Shoes]] (item count: 1)
+- you get [[items/feet/3-waterproof-shoes|Waterproof Shoes]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - quest switch 16 on
 
 ### `5032-03`
@@ -68,6 +68,6 @@ Then:
 
 - works on [[quests/5032-piety-and-a-bribe|Piety and a Bribe?]]
 - 1 × [[items/quest/507-elder-appointment-letter|Elder Appointment Letter]] is taken
-- money: 700 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/56-vital-jam-1|Vital Jam (+1)]] (item count: 1)
+- Zuly, base 700 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/56-vital-jam-1|Vital Jam (+1)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)

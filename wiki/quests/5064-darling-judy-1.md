@@ -56,8 +56,8 @@ Then:
 
 - works on [[quests/5064-darling-judy-1|Darling Judy (1)]]
 - 20 × [[items/quest/904-cherry-blossom|Cherry Blossom]] is taken
-- you get [[items/head/154-spring-flower-hat|Spring Flower Hat]] (item count: 1)
-- you get [[items/consumable/438-cherry-smouly|Cherry Smouly]] (item count: 2)
+- you get [[items/head/154-spring-flower-hat|Spring Flower Hat]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/438-cherry-smouly|Cherry Smouly]], base count 2 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/5065-darling-judy-2|Darling Judy (2)]]
 - quest switch 488 on
 

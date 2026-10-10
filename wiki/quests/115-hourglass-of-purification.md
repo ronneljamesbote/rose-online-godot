@@ -61,8 +61,8 @@ Checks:
 Then:
 
 - works on [[quests/115-hourglass-of-purification|Hourglass of Purification]]
-- experience: 1000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- money: 5000 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/jewellery/13-talisman-ring|Talisman Ring]] (item count: 1)
+- experience, base 1000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- Zuly, base 5000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/jewellery/13-talisman-ring|Talisman Ring]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/116-a-favor-for-karitte|A Favor for Karitte]]
 - set episode variable 0 to 13

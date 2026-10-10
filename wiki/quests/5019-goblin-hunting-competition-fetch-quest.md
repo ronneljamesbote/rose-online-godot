@@ -81,9 +81,9 @@ Then:
 
 - works on [[quests/5019-goblin-hunting-competition-fetch-quest|Goblin Hunting Competition (Fetch Quest)]]
 - 55 × [[items/quest/500-proof-of-monster-extermination|Proof of Monster Extermination]] is taken
-- money: 30000 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/59-vital-jam-10|Vital Jam (+10)]] (item count: 1)
-- you get [[items/consumable/58-vital-jam-5|Vital Jam (+5)]] (item count: 1)
+- Zuly, base 30000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/59-vital-jam-10|Vital Jam (+10)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/58-vital-jam-5|Vital Jam (+5)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 1 to the NPC's variable 3
 - the quest ends (removed from your list)
 
@@ -103,8 +103,8 @@ Then:
 
 - works on [[quests/5019-goblin-hunting-competition-fetch-quest|Goblin Hunting Competition (Fetch Quest)]]
 - 55 × [[items/quest/500-proof-of-monster-extermination|Proof of Monster Extermination]] is taken
-- money: 20000 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/59-vital-jam-10|Vital Jam (+10)]] (item count: 1)
+- Zuly, base 20000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/59-vital-jam-10|Vital Jam (+10)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 1 to the NPC's variable 3
 - the quest ends (removed from your list)
 
@@ -124,8 +124,8 @@ Then:
 
 - works on [[quests/5019-goblin-hunting-competition-fetch-quest|Goblin Hunting Competition (Fetch Quest)]]
 - 55 × [[items/quest/500-proof-of-monster-extermination|Proof of Monster Extermination]] is taken
-- money: 10000 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/58-vital-jam-5|Vital Jam (+5)]] (item count: 1)
+- Zuly, base 10000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/58-vital-jam-5|Vital Jam (+5)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 1 to the NPC's variable 3
 - the quest ends (removed from your list)
 
@@ -145,8 +145,8 @@ Then:
 
 - works on [[quests/5019-goblin-hunting-competition-fetch-quest|Goblin Hunting Competition (Fetch Quest)]]
 - 55 × [[items/quest/500-proof-of-monster-extermination|Proof of Monster Extermination]] is taken
-- money: 2500 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/56-vital-jam-1|Vital Jam (+1)]] (item count: 1)
+- Zuly, base 2500 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/56-vital-jam-1|Vital Jam (+1)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `5019-31`

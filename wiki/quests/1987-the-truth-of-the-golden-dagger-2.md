@@ -29,7 +29,7 @@ Checks:
 Then:
 
 - works on [[quests/1987-the-truth-of-the-golden-dagger-2|The Truth of the Golden Dagger (2)]]
-- experience: 5000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 5000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/1988-pavrick-the-craftsman-on-lunar|Pavrick, the Craftsman on Lunar]] (progress kept)
 - quest switch 133 on
 

@@ -54,9 +54,9 @@ Then:
 
 - works on [[quests/5001-wine-delivery-part-time-job|Wine Delivery (Part Time Job)]]
 - 2 × [[items/quest/801-red-wine|Red Wine]] is taken
-- money: 1500 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/5-health-bottle-m|Health Bottle (M)]] (item count: 10)
-- you get [[items/consumable/56-vital-jam-1|Vital Jam (+1)]] (item count: 1)
+- Zuly, base 1500 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/5-health-bottle-m|Health Bottle (M)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/56-vital-jam-1|Vital Jam (+1)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `5001-03`

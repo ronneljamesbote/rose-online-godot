@@ -57,9 +57,9 @@ Then:
 - works on [[quests/128-the-owl-eye|The Owl Eye]]
 - 10 × [[items/quest/613-hard-fruit|Hard Fruit]] is taken
 - you get 1 × [[items/quest/614-owl-eye|Owl Eye]]
-- experience: 20000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/consumable/2-health-vial-m|Health Vial (M)]] (item count: 20)
-- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]] (item count: 20)
+- experience, base 20000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/2-health-vial-m|Health Vial (M)]], base count 20 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]], base count 20 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/129-the-owl-eye|The Owl Eye]] (progress kept)
 - set episode variable 0 to 28
 

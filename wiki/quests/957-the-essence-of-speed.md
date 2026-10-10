@@ -51,8 +51,8 @@ Then:
 
 - works on [[quests/957-the-essence-of-speed|The Essence of Speed]]
 - 10 × [[items/quest/500-proof-of-monster-extermination|Proof of Monster Extermination]] is taken
-- you get [[items/weapon/205-white-wing-bow|White Wing Bow]] (item count: 1)
-- you get [[items/jewellery/85-pierced-necklace|Pierced Necklace]] (item count: 1)
+- you get [[items/weapon/205-white-wing-bow|White Wing Bow]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/jewellery/85-pierced-necklace|Pierced Necklace]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - set job variable 0 to 6
 - the quest ends (removed from your list)
 
@@ -69,8 +69,8 @@ Then:
 
 - works on [[quests/957-the-essence-of-speed|The Essence of Speed]]
 - 10 × [[items/quest/500-proof-of-monster-extermination|Proof of Monster Extermination]] is taken
-- you get [[items/weapon/404-rake-hand|Rake Hand]] (item count: 1)
-- you get [[items/jewellery/85-pierced-necklace|Pierced Necklace]] (item count: 1)
+- you get [[items/weapon/404-rake-hand|Rake Hand]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/jewellery/85-pierced-necklace|Pierced Necklace]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - set job variable 0 to 6
 - the quest ends (removed from your list)
 

@@ -34,7 +34,7 @@ Checks:
 Then:
 
 - works on [[quests/136-the-scheme|The Scheme]]
-- experience: 70000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 70000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/137-the-road-to-justice|The Road to Justice]]
 - set episode variable 0 to 36
 
@@ -61,6 +61,6 @@ Checks:
 Then:
 
 - works on [[quests/137-the-road-to-justice|The Road to Justice]]
-- experience: 10000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 10000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/138-the-road-to-justice|The Road to Justice]]
 - set episode variable 0 to 37

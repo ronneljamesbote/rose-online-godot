@@ -34,7 +34,7 @@ Checks:
 Then:
 
 - works on [[quests/124-magic-of-anima-lake|Magic of Anima Lake]]
-- experience: 2000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 2000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/125-falsehoods|Falsehoods]]
 - set episode variable 0 to 24
 
@@ -62,6 +62,6 @@ Then:
 
 - works on [[quests/125-falsehoods|Falsehoods]]
 - you get 1 × [[items/quest/615-small-letter|Small Letter]]
-- experience: 2000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 2000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/126-falsehoods|Falsehoods]] (progress kept)
 - set episode variable 0 to 25

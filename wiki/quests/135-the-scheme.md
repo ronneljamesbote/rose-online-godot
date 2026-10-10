@@ -35,7 +35,7 @@ Checks:
 Then:
 
 - works on [[quests/134-the-scheme|The Scheme]]
-- money: 30000 (money, scaled by your level, see [[rules/quests|Quests]])
+- Zuly, base 30000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/135-the-scheme|The Scheme]] (progress kept)
 - set episode variable 0 to 34
 

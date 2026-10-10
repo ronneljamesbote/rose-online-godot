@@ -36,7 +36,7 @@ Checks:
 Then:
 
 - works on [[quests/112-hourglass-of-purification|Hourglass of Purification]]
-- experience: 400 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 400 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/113-hourglass-of-purification|Hourglass of Purification]]
 - set episode variable 0 to 10
 
@@ -64,9 +64,9 @@ Checks:
 Then:
 
 - works on [[quests/113-hourglass-of-purification|Hourglass of Purification]]
-- experience: 1000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/consumable/105-orange|Orange]] (item count: 10)
-- experience: 10 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 1000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/105-orange|Orange]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- experience, base 10 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/114-hourglass-of-purification|Hourglass of Purification]] (progress kept)
 - set episode variable 0 to 11
 

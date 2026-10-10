@@ -36,7 +36,7 @@ Then:
 
 - works on [[quests/153-kay-s-request|Kay's Request]]
 - 11 × [[items/quest/621-old-box|Old Box]] is taken
-- you get [[items/weapon/507-viking-sword|Viking Sword]] (item count: 1)
+- you get [[items/weapon/507-viking-sword|Viking Sword]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/154-kay-s-request|Kay's Request]] (progress kept)
 - set episode variable 0 to 53
 
@@ -65,7 +65,7 @@ Then:
 
 - works on [[quests/153-kay-s-request|Kay's Request]]
 - 11 × [[items/quest/621-old-box|Old Box]] is taken
-- you get [[items/weapon/538-morning-star|Morning Star]] (item count: 1)
+- you get [[items/weapon/538-morning-star|Morning Star]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/154-kay-s-request|Kay's Request]] (progress kept)
 - set episode variable 0 to 53
 
@@ -82,7 +82,7 @@ Then:
 
 - works on [[quests/153-kay-s-request|Kay's Request]]
 - 11 × [[items/quest/621-old-box|Old Box]] is taken
-- you get [[items/weapon/564-dark-bow-gun|Dark Bow Gun]] (item count: 1)
+- you get [[items/weapon/564-dark-bow-gun|Dark Bow Gun]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/154-kay-s-request|Kay's Request]] (progress kept)
 - set episode variable 0 to 53
 
@@ -99,7 +99,7 @@ Then:
 
 - works on [[quests/153-kay-s-request|Kay's Request]]
 - 11 × [[items/quest/621-old-box|Old Box]] is taken
-- you get [[items/weapon/585-executioner|Executioner]] (item count: 1)
+- you get [[items/weapon/585-executioner|Executioner]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/154-kay-s-request|Kay's Request]] (progress kept)
 - set episode variable 0 to 53
 
@@ -116,7 +116,7 @@ Then:
 
 - works on [[quests/153-kay-s-request|Kay's Request]]
 - 11 × [[items/quest/621-old-box|Old Box]] is taken
-- you get [[items/weapon/616-silver-axe|Silver Axe]] (item count: 1)
+- you get [[items/weapon/616-silver-axe|Silver Axe]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/154-kay-s-request|Kay's Request]] (progress kept)
 - set episode variable 0 to 53
 
@@ -133,7 +133,7 @@ Then:
 
 - works on [[quests/153-kay-s-request|Kay's Request]]
 - 11 × [[items/quest/621-old-box|Old Box]] is taken
-- you get [[items/weapon/646-lightning-spear|Lightning Spear]] (item count: 1)
+- you get [[items/weapon/646-lightning-spear|Lightning Spear]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/154-kay-s-request|Kay's Request]] (progress kept)
 - set episode variable 0 to 53
 
@@ -150,7 +150,7 @@ Then:
 
 - works on [[quests/153-kay-s-request|Kay's Request]]
 - 11 × [[items/quest/621-old-box|Old Box]] is taken
-- you get [[items/weapon/676-half-elf-bow|Half-Elf Bow]] (item count: 1)
+- you get [[items/weapon/676-half-elf-bow|Half-Elf Bow]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/154-kay-s-request|Kay's Request]] (progress kept)
 - set episode variable 0 to 53
 
@@ -167,7 +167,7 @@ Then:
 
 - works on [[quests/153-kay-s-request|Kay's Request]]
 - 11 × [[items/quest/621-old-box|Old Box]] is taken
-- you get [[items/weapon/706-beretta|Beretta]] (item count: 1)
+- you get [[items/weapon/706-beretta|Beretta]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/154-kay-s-request|Kay's Request]] (progress kept)
 - set episode variable 0 to 53
 
@@ -184,7 +184,7 @@ Then:
 
 - works on [[quests/153-kay-s-request|Kay's Request]]
 - 11 × [[items/quest/621-old-box|Old Box]] is taken
-- you get [[items/weapon/734-mythril-launcher|Mythril Launcher]] (item count: 1)
+- you get [[items/weapon/734-mythril-launcher|Mythril Launcher]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/154-kay-s-request|Kay's Request]] (progress kept)
 - set episode variable 0 to 53
 
@@ -201,7 +201,7 @@ Then:
 
 - works on [[quests/153-kay-s-request|Kay's Request]]
 - 11 × [[items/quest/621-old-box|Old Box]] is taken
-- you get [[items/weapon/767-anima-staff|Anima Staff]] (item count: 1)
+- you get [[items/weapon/767-anima-staff|Anima Staff]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/154-kay-s-request|Kay's Request]] (progress kept)
 - set episode variable 0 to 53
 
@@ -218,7 +218,7 @@ Then:
 
 - works on [[quests/153-kay-s-request|Kay's Request]]
 - 11 × [[items/quest/621-old-box|Old Box]] is taken
-- you get [[items/weapon/796-blizzard-wand|Blizzard Wand]] (item count: 1)
+- you get [[items/weapon/796-blizzard-wand|Blizzard Wand]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/154-kay-s-request|Kay's Request]] (progress kept)
 - set episode variable 0 to 53
 
@@ -235,7 +235,7 @@ Then:
 
 - works on [[quests/153-kay-s-request|Kay's Request]]
 - 11 × [[items/quest/621-old-box|Old Box]] is taken
-- you get [[items/weapon/828-dual-patar|Dual Patar]] (item count: 1)
+- you get [[items/weapon/828-dual-patar|Dual Patar]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/154-kay-s-request|Kay's Request]] (progress kept)
 - set episode variable 0 to 53
 
@@ -252,7 +252,7 @@ Then:
 
 - works on [[quests/153-kay-s-request|Kay's Request]]
 - 11 × [[items/quest/621-old-box|Old Box]] is taken
-- you get [[items/weapon/856-viking-sword-axe|Viking Sword & Axe]] (item count: 1)
+- you get [[items/weapon/856-viking-sword-axe|Viking Sword & Axe]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/154-kay-s-request|Kay's Request]] (progress kept)
 - set episode variable 0 to 53
 
@@ -267,6 +267,6 @@ Checks:
 Then:
 
 - works on [[quests/154-kay-s-request|Kay's Request]]
-- experience: 50000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 50000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/155-suspicious-researchers|Suspicious Researchers]]
 - set episode variable 0 to 54

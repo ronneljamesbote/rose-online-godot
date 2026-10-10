@@ -51,7 +51,7 @@ Then:
 - works on [[quests/3602-coal-mine-moldies-under-arumic-watch|Coal Mine Moldies under Arumic Watch]]
 - 12 × [[items/quest/308-moldie-eyelash|Moldie Eyelash]] is taken
 - add 3 to your UnionPoint4
-- experience: 100 (XP, scaled by your level, see [[rules/quests|Quests]])
+- experience, base 100 (reward formula 1: grows with your level and Charm, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `3602-03` is tried instead.
@@ -70,7 +70,7 @@ Then:
 - works on [[quests/3602-coal-mine-moldies-under-arumic-watch|Coal Mine Moldies under Arumic Watch]]
 - 12 × [[items/quest/308-moldie-eyelash|Moldie Eyelash]] is taken
 - add 1 to your UnionPoint4
-- experience: 5000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 5000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `3602-31`

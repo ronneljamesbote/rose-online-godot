@@ -56,8 +56,8 @@ Then:
 
 - works on [[quests/5003-dalping-hunt-fetch-quest|Dalping Hunt (Fetch Quest)]]
 - 13 × [[items/quest/802-dalping-egg|Dalping Egg]] is taken
-- money: 3500 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/57-vital-jam-2|Vital Jam (+2)]] (item count: 1)
+- Zuly, base 3500 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/57-vital-jam-2|Vital Jam (+2)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 1 to the NPC's variable 3
 - the quest ends (removed from your list)
 
@@ -78,8 +78,8 @@ Then:
 
 - works on [[quests/5003-dalping-hunt-fetch-quest|Dalping Hunt (Fetch Quest)]]
 - 13 × [[items/quest/802-dalping-egg|Dalping Egg]] is taken
-- money: 700 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/56-vital-jam-1|Vital Jam (+1)]] (item count: 1)
+- Zuly, base 700 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/56-vital-jam-1|Vital Jam (+1)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 1 to the NPC's variable 3
 - the quest ends (removed from your list)
 

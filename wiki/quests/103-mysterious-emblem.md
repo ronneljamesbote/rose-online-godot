@@ -47,6 +47,6 @@ Checks:
 Then:
 
 - works on [[quests/103-mysterious-emblem|Mysterious Emblem]]
-- experience: 200 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 200 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/104-mysterious-emblem|Mysterious Emblem]] (progress kept)
 - set episode variable 0 to 2

@@ -54,8 +54,8 @@ Then:
 
 - works on [[quests/860-hovert-s-mementos|Hovert's Mementos]]
 - set job variable 0 to 7
-- you get [[items/weapon/35-onion-mace|Onion Mace]] (item count: 1)
-- you get [[items/jewellery/88-pointed-necklace|Pointed Necklace]] (item count: 1)
+- you get [[items/weapon/35-onion-mace|Onion Mace]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/jewellery/88-pointed-necklace|Pointed Necklace]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `860-02`
@@ -74,8 +74,8 @@ Then:
 
 - works on [[quests/860-hovert-s-mementos|Hovert's Mementos]]
 - set job variable 0 to 7
-- you get [[items/weapon/133-battle-axe|Battle Axe]] (item count: 1)
-- you get [[items/jewellery/88-pointed-necklace|Pointed Necklace]] (item count: 1)
+- you get [[items/weapon/133-battle-axe|Battle Axe]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/jewellery/88-pointed-necklace|Pointed Necklace]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `860-03`
@@ -94,7 +94,7 @@ Then:
 
 - works on [[quests/860-hovert-s-mementos|Hovert's Mementos]]
 - set job variable 0 to 7
-- you get [[items/weapon/35-onion-mace|Onion Mace]] (item count: 1)
+- you get [[items/weapon/35-onion-mace|Onion Mace]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `860-04`
@@ -113,5 +113,5 @@ Then:
 
 - works on [[quests/860-hovert-s-mementos|Hovert's Mementos]]
 - set job variable 0 to 7
-- you get [[items/weapon/133-battle-axe|Battle Axe]] (item count: 1)
+- you get [[items/weapon/133-battle-axe|Battle Axe]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)

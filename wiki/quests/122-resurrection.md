@@ -37,9 +37,9 @@ Then:
 - works on [[quests/121-banned-recipe|Banned Recipe]]
 - 5 × [[items/quest/610-five-color-scale|Five-Color Scale]] is taken
 - you get 1 × [[items/quest/611-resurrection-medicine|Resurrection Medicine]]
-- experience: 3200 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/consumable/309-strength-scroll-solo|Strength Scroll (Solo)]] (item count: 3)
-- you get [[items/consumable/310-defense-scroll-solo|Defense Scroll (Solo)]] (item count: 3)
+- experience, base 3200 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/309-strength-scroll-solo|Strength Scroll (Solo)]], base count 3 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/310-defense-scroll-solo|Defense Scroll (Solo)]], base count 3 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/122-resurrection|Resurrection]] (progress kept)
 - set episode variable 0 to 19
 

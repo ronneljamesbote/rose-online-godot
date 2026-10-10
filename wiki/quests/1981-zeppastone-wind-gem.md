@@ -47,9 +47,9 @@ Then:
 
 - works on [[quests/1981-zeppastone-wind-gem|Zeppastone Wind Gem]]
 - 1 × [[items/quest/509-zeppastone-wind-gem|Zeppastone Wind Gem]] is taken
-- experience: 5000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/consumable/2-health-vial-m|Health Vial (M)]] (item count: 10)
-- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]] (item count: 10)
+- experience, base 5000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/2-health-vial-m|Health Vial (M)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/1982-the-prince-of-akram|The Prince of Akram]]
 - quest switch 128 on
 

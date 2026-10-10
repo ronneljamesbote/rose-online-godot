@@ -43,7 +43,7 @@ Checks:
 Then:
 
 - works on [[quests/5035-stockpiling-on-flanae-petals|Stockpiling on Flanae Petals]]
-- money: 35 (money, fixed, see [[rules/quests|Quests]])
+- Zuly, base 35 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 - then runs step `5035-01`
 
@@ -59,7 +59,7 @@ Checks:
 Then:
 
 - works on [[quests/5035-stockpiling-on-flanae-petals|Stockpiling on Flanae Petals]]
-- money: 35 (money, fixed, see [[rules/quests|Quests]])
+- Zuly, base 35 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `5035-31`

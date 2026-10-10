@@ -49,7 +49,7 @@ Then:
 - works on [[quests/3801-it-might-be-worth-more-later|It Might be Worth More Later]]
 - 12 × [[items/quest/301-porkie-spine|Porkie Spine]] is taken
 - add 1 to your UnionPoint5
-- experience: 100 (XP, scaled by your level, see [[rules/quests|Quests]])
+- experience, base 100 (reward formula 1: grows with your level and Charm, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `3801-03` is tried instead.
@@ -68,7 +68,7 @@ Then:
 - works on [[quests/3801-it-might-be-worth-more-later|It Might be Worth More Later]]
 - 12 × [[items/quest/301-porkie-spine|Porkie Spine]] is taken
 - add 1 to your UnionPoint5
-- experience: 5000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 5000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `3801-31`

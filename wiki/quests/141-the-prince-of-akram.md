@@ -36,7 +36,7 @@ Then:
 
 - works on [[quests/140-the-zeppastone-wind-gem|The Zeppastone Wind Gem]]
 - 1 × [[items/quest/509-zeppastone-wind-gem|Zeppastone Wind Gem]] is taken
-- experience: 30000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 30000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/141-the-prince-of-akram|The Prince of Akram]] (progress kept)
 - set episode variable 0 to 40
 
@@ -63,7 +63,7 @@ Checks:
 Then:
 
 - works on [[quests/141-the-prince-of-akram|The Prince of Akram]]
-- you get [[items/consumable/11-vital-water-m|Vital Water (M)]] (item count: 10)
-- you get [[items/consumable/30-spiritual-water-m|Spiritual Water (M)]] (item count: 10)
+- you get [[items/consumable/11-vital-water-m|Vital Water (M)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/30-spiritual-water-m|Spiritual Water (M)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/142-the-search-for-the-prince|The Search for the Prince]]
 - set episode variable 0 to 41

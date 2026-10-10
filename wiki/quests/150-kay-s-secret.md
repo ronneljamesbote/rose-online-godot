@@ -34,7 +34,7 @@ Checks:
 Then:
 
 - works on [[quests/149-an-interesting-proposal|An Interesting Proposal]]
-- experience: 30000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 30000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/150-kay-s-secret|Kay's Secret]]
 - set episode variable 0 to 49
 
@@ -61,6 +61,6 @@ Checks:
 Then:
 
 - works on [[quests/150-kay-s-secret|Kay's Secret]]
-- experience: 30000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 30000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/151-lunarian-coffee|Lunarian Coffee]]
 - set episode variable 0 to 50
