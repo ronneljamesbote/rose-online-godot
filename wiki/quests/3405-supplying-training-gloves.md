@@ -67,8 +67,8 @@ Then:
 - works on [[quests/3405-supplying-training-gloves|Supplying Training Gloves]]
 - 8 × [[items/quest/305-training-gloves|Training Gloves]] is taken
 - add 8 to your UnionPoint3
-- experience: 120 (XP, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/57-vital-jam-2|Vital Jam (+2)]] (item count: 1)
+- experience, base 120 (reward formula 1: grows with your level and Charm, see [[rules/quests|Quests]])
+- you get [[items/consumable/57-vital-jam-2|Vital Jam (+2)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `3405-04` is tried instead.
@@ -87,8 +87,8 @@ Then:
 - works on [[quests/3405-supplying-training-gloves|Supplying Training Gloves]]
 - 8 × [[items/quest/305-training-gloves|Training Gloves]] is taken
 - add 3 to your UnionPoint3
-- experience: 12000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/consumable/57-vital-jam-2|Vital Jam (+2)]] (item count: 1)
+- experience, base 12000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/57-vital-jam-2|Vital Jam (+2)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `3405-31`

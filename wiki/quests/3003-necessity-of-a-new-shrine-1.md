@@ -51,7 +51,7 @@ Then:
 - works on [[quests/3003-necessity-of-a-new-shrine-1|Necessity of a New Shrine (1)]]
 - 12 × [[items/quest/302-thick-pulpwood|Thick Pulpwood]] is taken
 - add 4 to your UnionPoint1
-- experience: 100 (XP, scaled by your level, see [[rules/quests|Quests]])
+- experience, base 100 (reward formula 1: grows with your level and Charm, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `3003-03` is tried instead.
@@ -70,7 +70,7 @@ Then:
 - works on [[quests/3003-necessity-of-a-new-shrine-1|Necessity of a New Shrine (1)]]
 - 12 × [[items/quest/302-thick-pulpwood|Thick Pulpwood]] is taken
 - add 1 to your UnionPoint1
-- experience: 6000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 6000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `3003-31`

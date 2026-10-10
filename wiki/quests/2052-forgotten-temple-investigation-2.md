@@ -53,8 +53,8 @@ Checks:
 Then:
 
 - works on [[quests/2052-forgotten-temple-investigation-2|Forgotten Temple Investigation (2)]]
-- money: 3000 (money, fixed, see [[rules/quests|Quests]])
-- money: 120000 (money, scaled by your level, see [[rules/quests|Quests]])
+- Zuly, base 3000 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
+- Zuly, base 120000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `2052-04` is tried instead.
@@ -70,9 +70,9 @@ Checks:
 Then:
 
 - works on [[quests/2052-forgotten-temple-investigation-2|Forgotten Temple Investigation (2)]]
-- money: 3000 (money, fixed, see [[rules/quests|Quests]])
-- money: 120000 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/material/83-lisent-pb|Lisent (Pb)]] (item count: 10)
+- Zuly, base 3000 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
+- Zuly, base 120000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/material/83-lisent-pb|Lisent (Pb)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `2052-05` is tried instead.
@@ -87,10 +87,10 @@ Checks:
 Then:
 
 - works on [[quests/2052-forgotten-temple-investigation-2|Forgotten Temple Investigation (2)]]
-- money: 3000 (money, fixed, see [[rules/quests|Quests]])
-- money: 120000 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/material/83-lisent-pb|Lisent (Pb)]] (item count: 10)
-- you get [[items/material/152-green-hearts|Green Hearts]] (item count: 1)
+- Zuly, base 3000 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
+- Zuly, base 120000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/material/83-lisent-pb|Lisent (Pb)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/material/152-green-hearts|Green Hearts]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `2052-07`
@@ -104,7 +104,7 @@ Checks:
 Then:
 
 - works on [[quests/2052-forgotten-temple-investigation-2|Forgotten Temple Investigation (2)]]
-- money: 3000 (money, fixed, see [[rules/quests|Quests]])
+- Zuly, base 3000 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `2053-07` is tried instead.

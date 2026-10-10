@@ -76,7 +76,7 @@ Then:
 
 - works on [[quests/1008-the-humble-smith|The Humble Smith]]
 - set job variable 0 to 6
-- you get [[items/weapon/234-iron-rifle|Iron Rifle]] (item count: 1)
+- you get [[items/weapon/234-iron-rifle|Iron Rifle]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1008-05`
@@ -92,7 +92,7 @@ Then:
 
 - works on [[quests/1008-the-humble-smith|The Humble Smith]]
 - set job variable 0 to 6
-- you get [[items/weapon/262-basic-launcher|Basic Launcher]] (item count: 1)
+- you get [[items/weapon/262-basic-launcher|Basic Launcher]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1008-31`

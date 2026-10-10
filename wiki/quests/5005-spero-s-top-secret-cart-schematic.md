@@ -52,5 +52,5 @@ Then:
 - works on [[quests/5005-spero-s-top-secret-cart-schematic|Spero's Top Secret Cart Schematic]]
 - 1 × [[items/quest/505-top-secret-cart-schematic|Top Secret Cart Schematic]] is taken
 - quest switch 33 on
-- experience: 220 (XP, scaled by your level, see [[rules/quests|Quests]])
+- experience, base 220 (reward formula 1: grows with your level and Charm, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)

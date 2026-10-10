@@ -36,7 +36,7 @@ Then:
 
 - works on [[quests/129-the-owl-eye|The Owl Eye]]
 - you get 1 × [[items/quest/615-small-letter|Small Letter]]
-- experience: 7000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 7000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/130-eva-the-sorcerer|Eva the Sorcerer]] (progress kept)
 - set episode variable 0 to 29
 
@@ -66,6 +66,6 @@ Then:
 
 - works on [[quests/130-eva-the-sorcerer|Eva the Sorcerer]]
 - 1 × [[items/quest/615-small-letter|Small Letter]] is taken
-- experience: 7000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 7000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/131-eva-the-sorcerer|Eva the Sorcerer]] (progress kept)
 - set episode variable 0 to 30

@@ -34,8 +34,8 @@ Checks:
 Then:
 
 - works on [[quests/141-the-prince-of-akram|The Prince of Akram]]
-- you get [[items/consumable/11-vital-water-m|Vital Water (M)]] (item count: 10)
-- you get [[items/consumable/30-spiritual-water-m|Spiritual Water (M)]] (item count: 10)
+- you get [[items/consumable/11-vital-water-m|Vital Water (M)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/30-spiritual-water-m|Spiritual Water (M)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/142-the-search-for-the-prince|The Search for the Prince]]
 - set episode variable 0 to 41
 
@@ -62,6 +62,6 @@ Checks:
 Then:
 
 - works on [[quests/142-the-search-for-the-prince|The Search for the Prince]]
-- experience: 20000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 20000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/143-the-ominous-kenji-stone|The Ominous Kenji Stone]]
 - set episode variable 0 to 42

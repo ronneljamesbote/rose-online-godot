@@ -35,7 +35,7 @@ Checks:
 Then:
 
 - works on [[quests/145-information-on-lunar|Information on Lunar]]
-- experience: 20000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 20000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/147-pavrick-the-craftsman-on-lunar|Pavrick, the Craftsman on Lunar]] (progress kept)
 - set episode variable 0 to 45
 
@@ -66,10 +66,10 @@ Then:
 
 - works on [[quests/147-pavrick-the-craftsman-on-lunar|Pavrick, the Craftsman on Lunar]]
 - 1 × [[items/quest/511-luna-whiskey|Luna Whiskey]] is taken
-- experience: 60000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- money: 40000 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/12-vital-water-l|Vital Water (L)]] (item count: 7)
-- you get [[items/consumable/31-spiritual-water-l|Spiritual Water (L)]] (item count: 7)
+- experience, base 60000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- Zuly, base 40000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/12-vital-water-l|Vital Water (L)]], base count 7 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/31-spiritual-water-l|Spiritual Water (L)]], base count 7 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/148-the-royal-golden-dagger|The Royal Golden Dagger]] (progress kept)
 - set episode variable 0 to 47
 

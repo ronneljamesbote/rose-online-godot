@@ -36,9 +36,9 @@ Checks:
 Then:
 
 - works on [[quests/1984-the-ominous-kenji-stone|The Ominous Kenji Stone]]
-- experience: 5000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/consumable/2-health-vial-m|Health Vial (M)]] (item count: 10)
-- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]] (item count: 10)
+- experience, base 5000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/2-health-vial-m|Health Vial (M)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - you get 1 × [[items/quest/510-golden-dagger|Golden Dagger]]
 - the quest becomes [[quests/1985-the-truth-of-the-golden-dagger|The Truth of the Golden Dagger]] (progress kept)
 - quest switch 131 on
@@ -56,9 +56,9 @@ Checks:
 Then:
 
 - works on [[quests/1985-the-truth-of-the-golden-dagger|The Truth of the Golden Dagger]]
-- experience: 1000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/consumable/2-health-vial-m|Health Vial (M)]] (item count: 10)
-- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]] (item count: 10)
+- experience, base 1000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/2-health-vial-m|Health Vial (M)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/1986-information-on-lunar|Information on Lunar]] (progress kept)
 - quest switch 132 on
 

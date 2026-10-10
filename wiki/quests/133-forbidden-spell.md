@@ -34,7 +34,7 @@ Checks:
 Then:
 
 - works on [[quests/132-forbidden-spell|Forbidden Spell]]
-- experience: 10000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 10000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/133-forbidden-spell|Forbidden Spell]]
 - set episode variable 0 to 32
 
@@ -61,6 +61,6 @@ Checks:
 Then:
 
 - works on [[quests/133-forbidden-spell|Forbidden Spell]]
-- experience: 10000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 10000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/134-the-scheme|The Scheme]]
 - set episode variable 0 to 33

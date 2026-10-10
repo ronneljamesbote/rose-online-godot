@@ -36,10 +36,10 @@ Then:
 
 - works on [[quests/157-skin-of-steel|Skin of Steel]]
 - 5 × [[items/quest/622-mana-charger|Mana Charger]] is taken
-- experience: 80000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/material/152-green-hearts|Green Hearts]] (item count: 2)
-- you get [[items/material/154-pink-hearts|Pink Hearts]] (item count: 2)
-- you get [[items/consumable/383-blood-charm|Blood Charm]] (item count: 10)
+- experience, base 80000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/material/152-green-hearts|Green Hearts]], base count 2 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/material/154-pink-hearts|Pink Hearts]], base count 2 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/383-blood-charm|Blood Charm]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/158-leaders-in-the-abyss|Leaders in the Abyss]] (progress kept)
 - set episode variable 0 to 57
 
@@ -68,11 +68,11 @@ Then:
 
 - works on [[quests/158-leaders-in-the-abyss|Leaders in the Abyss]]
 - 3 × [[items/quest/619-scarlet-heart|Scarlet Heart]] is taken
-- experience: 150000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/consumable/437-goblin-king|Goblin King]] (item count: 5)
-- you get [[items/material/155-red-hearts|Red Hearts]] (item count: 2)
-- you get [[items/material/156-golden-hearts|Golden Hearts]] (item count: 2)
-- you get [[items/material/157-white-hearts|White Hearts]] (item count: 2)
+- experience, base 150000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/437-goblin-king|Goblin King]], base count 5 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/material/155-red-hearts|Red Hearts]], base count 2 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/material/156-golden-hearts|Golden Hearts]], base count 2 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/material/157-white-hearts|White Hearts]], base count 2 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 - set episode variable 0 to 58
 

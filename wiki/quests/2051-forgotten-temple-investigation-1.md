@@ -57,8 +57,8 @@ Checks:
 Then:
 
 - works on [[quests/2051-forgotten-temple-investigation-1|Forgotten Temple Investigation (1)]]
-- money: 3000 (money, fixed, see [[rules/quests|Quests]])
-- money: 80000 (money, scaled by your level, see [[rules/quests|Quests]])
+- Zuly, base 3000 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
+- Zuly, base 80000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `2051-04` is tried instead.
@@ -74,9 +74,9 @@ Checks:
 Then:
 
 - works on [[quests/2051-forgotten-temple-investigation-1|Forgotten Temple Investigation (1)]]
-- money: 3000 (money, fixed, see [[rules/quests|Quests]])
-- money: 80000 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/material/82-lisent-cu|Lisent (Cu)]] (item count: 7)
+- Zuly, base 3000 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
+- Zuly, base 80000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/material/82-lisent-cu|Lisent (Cu)]], base count 7 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `2051-05` is tried instead.
@@ -91,10 +91,10 @@ Checks:
 Then:
 
 - works on [[quests/2051-forgotten-temple-investigation-1|Forgotten Temple Investigation (1)]]
-- money: 3000 (money, fixed, see [[rules/quests|Quests]])
-- money: 80000 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/material/82-lisent-cu|Lisent (Cu)]] (item count: 7)
-- you get [[items/material/151-black-hearts|Black Hearts]] (item count: 1)
+- Zuly, base 3000 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
+- Zuly, base 80000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/material/82-lisent-cu|Lisent (Cu)]], base count 7 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/material/151-black-hearts|Black Hearts]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `2051-07`
@@ -110,7 +110,7 @@ Checks:
 Then:
 
 - works on [[quests/2051-forgotten-temple-investigation-1|Forgotten Temple Investigation (1)]]
-- money: 3000 (money, fixed, see [[rules/quests|Quests]])
+- Zuly, base 3000 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `2052-07` is tried instead.

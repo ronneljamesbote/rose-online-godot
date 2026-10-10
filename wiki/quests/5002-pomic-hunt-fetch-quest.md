@@ -56,8 +56,8 @@ Then:
 
 - works on [[quests/5002-pomic-hunt-fetch-quest|Pomic Hunt (Fetch Quest)]]
 - 10 × [[items/quest/110-pomic-skin|Pomic Skin]] is taken
-- money: 2000 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/57-vital-jam-2|Vital Jam (+2)]] (item count: 1)
+- Zuly, base 2000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/57-vital-jam-2|Vital Jam (+2)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 1 to the NPC's variable 3
 - the quest ends (removed from your list)
 
@@ -79,8 +79,8 @@ Then:
 - works on [[quests/5002-pomic-hunt-fetch-quest|Pomic Hunt (Fetch Quest)]]
 - add 1 to the NPC's variable 3
 - 10 × [[items/quest/110-pomic-skin|Pomic Skin]] is taken
-- money: 500 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/56-vital-jam-1|Vital Jam (+1)]] (item count: 1)
+- Zuly, base 500 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/56-vital-jam-1|Vital Jam (+1)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `5002-04`

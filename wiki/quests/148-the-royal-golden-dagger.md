@@ -36,10 +36,10 @@ Then:
 
 - works on [[quests/147-pavrick-the-craftsman-on-lunar|Pavrick, the Craftsman on Lunar]]
 - 1 × [[items/quest/511-luna-whiskey|Luna Whiskey]] is taken
-- experience: 60000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- money: 40000 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/12-vital-water-l|Vital Water (L)]] (item count: 7)
-- you get [[items/consumable/31-spiritual-water-l|Spiritual Water (L)]] (item count: 7)
+- experience, base 60000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- Zuly, base 40000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/12-vital-water-l|Vital Water (L)]], base count 7 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/31-spiritual-water-l|Spiritual Water (L)]], base count 7 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/148-the-royal-golden-dagger|The Royal Golden Dagger]] (progress kept)
 - set episode variable 0 to 47
 
@@ -69,8 +69,8 @@ Then:
 
 - works on [[quests/148-the-royal-golden-dagger|The Royal Golden Dagger]]
 - 1 × [[items/quest/510-golden-dagger|Golden Dagger]] is taken
-- experience: 40000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/gem/351-peridot-1|Peridot 1]] (item count: 2)
-- you get [[items/gem/331-topaz-1|Topaz 1]] (item count: 2)
+- experience, base 40000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/gem/351-peridot-1|Peridot 1]], base count 2 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/gem/331-topaz-1|Topaz 1]], base count 2 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/149-an-interesting-proposal|An Interesting Proposal]] (progress kept)
 - set episode variable 0 to 48

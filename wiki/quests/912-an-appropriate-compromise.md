@@ -50,7 +50,7 @@ Checks:
 Then:
 
 - works on [[quests/912-an-appropriate-compromise|An Appropriate Compromise]]
-- you get [[items/weapon/304-mage-s-rod|Mage's Rod]] (item count: 1)
+- you get [[items/weapon/304-mage-s-rod|Mage's Rod]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 3 to job variable 0
 - the quest ends (removed from your list)
 
@@ -65,7 +65,7 @@ Checks:
 Then:
 
 - works on [[quests/912-an-appropriate-compromise|An Appropriate Compromise]]
-- you get [[items/weapon/334-elven-wand|Elven Wand]] (item count: 1)
+- you get [[items/weapon/334-elven-wand|Elven Wand]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 3 to job variable 0
 - the quest ends (removed from your list)
 
@@ -80,7 +80,7 @@ Checks:
 Then:
 
 - works on [[quests/912-an-appropriate-compromise|An Appropriate Compromise]]
-- you get [[items/jewellery/83-textual-necklace|Textual Necklace]] (item count: 1)
-- you get [[items/jewellery/153-textual-earring|Textual Earring]] (item count: 1)
+- you get [[items/jewellery/83-textual-necklace|Textual Necklace]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/jewellery/153-textual-earring|Textual Earring]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 3 to job variable 0
 - the quest ends (removed from your list)

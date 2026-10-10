@@ -143,15 +143,17 @@ pub fn condition(cx: &Ctx, c: &QsdCondition) -> String {
     }
 }
 
-fn equation(e: usize) -> &'static str {
-    match e {
-        0 => "XP, not scaled by level",
-        1 => "XP, scaled by your level",
-        2 => "money, fixed",
-        3 => "money, scaled by your level",
-        5 => "item count",
+/// What a QSD reward formula depends on (the formulas are on rules/quests).
+fn equation(e: usize) -> String {
+    let what = match e {
+        0 => "base plus a bonus from Charm, smaller at higher levels",
+        1 => "grows with your level and Charm",
+        2 => "base × times the quest was repeated",
+        3 | 5 => "base plus a bonus from Charm, smaller at higher levels",
+        4 | 6 => "grows with level and Charm",
         _ => "unknown formula",
-    }
+    };
+    format!("reward formula {e}: {what}")
 }
 
 pub fn reward(cx: &Ctx, r: &QsdReward) -> String {
@@ -173,13 +175,17 @@ pub fn reward(cx: &Ctx, r: &QsdReward) -> String {
             set_op(*operator, &format!("your {}", cx.ability_id_name(ability_type.get())), *value)
         }
         QsdReward::CalculatedExperiencePoints { equation: e, value } => {
-            format!("experience: {value} ({}, see [[rules/quests|Quests]])", equation(*e))
+            format!("experience, base {value} ({}, see [[rules/quests|Quests]])", equation(*e))
         }
         QsdReward::CalculatedMoney { equation: e, value } => {
-            format!("money: {value} ({}, see [[rules/quests|Quests]])", equation(*e))
+            format!("Zuly, base {value} ({}, see [[rules/quests|Quests]])", equation(*e))
         }
         QsdReward::CalculatedItem { equation: e, value, item, .. } => {
-            format!("you get {} ({}: {value})", cx.item_link_sn(item.to_sn()), equation(*e))
+            format!(
+                "you get {}, base count {value} ({}, see [[rules/quests|Quests]])",
+                cx.item_link_sn(item.to_sn()),
+                equation(*e)
+            )
         }
         QsdReward::SetHealthManaPercent { health_percent, mana_percent } => {
             format!("HP set to {health_percent}% and MP to {mana_percent}%")

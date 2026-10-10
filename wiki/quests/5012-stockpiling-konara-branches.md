@@ -54,7 +54,7 @@ Checks:
 Then:
 
 - works on [[quests/5012-stockpiling-konara-branches|Stockpiling Konara Branches]]
-- money: 89 (money, fixed, see [[rules/quests|Quests]])
+- Zuly, base 89 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `5012-31`

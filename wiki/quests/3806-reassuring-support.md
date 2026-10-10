@@ -49,8 +49,8 @@ Then:
 
 - works on [[quests/3806-reassuring-support|Reassuring Support]]
 - 20 × [[items/quest/314-doonga-s-sausage|Doonga's Sausage]] is taken
-- you get [[items/consumable/3-health-vial-l|Health Vial (L)]] (item count: 5)
-- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]] (item count: 5)
+- you get [[items/consumable/3-health-vial-l|Health Vial (L)]], base count 5 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]], base count 5 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 6 to your UnionPoint5
 - the quest ends (removed from your list)
 
@@ -69,8 +69,8 @@ Then:
 
 - works on [[quests/3806-reassuring-support|Reassuring Support]]
 - 20 × [[items/quest/314-doonga-s-sausage|Doonga's Sausage]] is taken
-- you get [[items/consumable/3-health-vial-l|Health Vial (L)]] (item count: 5)
-- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]] (item count: 5)
+- you get [[items/consumable/3-health-vial-l|Health Vial (L)]], base count 5 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]], base count 5 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 2 to your UnionPoint5
 - the quest ends (removed from your list)
 

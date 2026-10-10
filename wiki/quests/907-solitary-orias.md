@@ -55,7 +55,7 @@ Checks:
 Then:
 
 - works on [[quests/907-solitary-orias|Solitary Orias]]
-- you get [[items/weapon/303-animal-rod|Animal Rod]] (item count: 1)
+- you get [[items/weapon/303-animal-rod|Animal Rod]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 2 to job variable 0
 - the quest ends (removed from your list)
 
@@ -73,7 +73,7 @@ Checks:
 Then:
 
 - works on [[quests/907-solitary-orias|Solitary Orias]]
-- you get [[items/weapon/333-sorcerer-s-wand|Sorcerer's Wand]] (item count: 1)
+- you get [[items/weapon/333-sorcerer-s-wand|Sorcerer's Wand]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 2 to job variable 0
 - the quest ends (removed from your list)
 
@@ -91,6 +91,6 @@ Checks:
 Then:
 
 - works on [[quests/907-solitary-orias|Solitary Orias]]
-- money: 1800 (money, scaled by your level, see [[rules/quests|Quests]])
+- Zuly, base 1800 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 2 to job variable 0
 - the quest ends (removed from your list)

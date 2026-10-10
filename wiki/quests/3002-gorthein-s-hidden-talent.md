@@ -48,7 +48,7 @@ Then:
 
 - works on [[quests/3002-gorthein-s-hidden-talent|Gorthein's Hidden Talent]]
 - 10 × [[items/quest/301-porkie-spine|Porkie Spine]] is taken
-- experience: 100 (XP, scaled by your level, see [[rules/quests|Quests]])
+- experience, base 100 (reward formula 1: grows with your level and Charm, see [[rules/quests|Quests]])
 - add 3 to your UnionPoint1
 - the quest ends (removed from your list)
 
@@ -67,7 +67,7 @@ Then:
 
 - works on [[quests/3002-gorthein-s-hidden-talent|Gorthein's Hidden Talent]]
 - 10 × [[items/quest/301-porkie-spine|Porkie Spine]] is taken
-- experience: 5000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 5000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 1 to your UnionPoint1
 - the quest ends (removed from your list)
 

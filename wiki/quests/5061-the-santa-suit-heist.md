@@ -65,8 +65,8 @@ Then:
 
 - works on [[quests/5061-the-santa-suit-heist|The Santa Suit Heist]]
 - 8 × [[items/quest/901-stolen-santa-suit|Stolen Santa Suit]] is taken
-- you get [[items/feet/152-santa-boots|Santa Boots]] (item count: 1)
-- you get consumable 912 (item count: 2)
+- you get [[items/feet/152-santa-boots|Santa Boots]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get consumable 912, base count 2 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 
 ### `5061-12`
 
@@ -79,8 +79,8 @@ Then:
 
 - works on [[quests/5061-the-santa-suit-heist|The Santa Suit Heist]]
 - 13 × [[items/quest/901-stolen-santa-suit|Stolen Santa Suit]] is taken
-- you get [[items/hands/152-santa-gloves|Santa Gloves]] (item count: 1)
-- you get consumable 912 (item count: 2)
+- you get [[items/hands/152-santa-gloves|Santa Gloves]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get consumable 912, base count 2 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 
 ### `5061-13`
 
@@ -93,8 +93,8 @@ Then:
 
 - works on [[quests/5061-the-santa-suit-heist|The Santa Suit Heist]]
 - 20 × [[items/quest/901-stolen-santa-suit|Stolen Santa Suit]] is taken
-- you get [[items/head/152-santa-hat|Santa Hat]] (item count: 1)
-- you get consumable 912 (item count: 2)
+- you get [[items/head/152-santa-hat|Santa Hat]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get consumable 912, base count 2 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 
 ### `5061-14`
 
@@ -107,8 +107,8 @@ Then:
 
 - works on [[quests/5061-the-santa-suit-heist|The Santa Suit Heist]]
 - 28 × [[items/quest/901-stolen-santa-suit|Stolen Santa Suit]] is taken
-- you get [[items/body/152-santa-sweater|Santa Sweater]] (item count: 1)
-- you get consumable 912 (item count: 2)
+- you get [[items/body/152-santa-sweater|Santa Sweater]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get consumable 912, base count 2 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 
 ### `5061-31`
 

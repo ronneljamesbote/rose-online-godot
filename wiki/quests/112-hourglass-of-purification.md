@@ -34,7 +34,7 @@ Checks:
 Then:
 
 - works on [[quests/111-the-truth-to-the-rumors|The Truth to the Rumors]]
-- experience: 300 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 300 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/112-hourglass-of-purification|Hourglass of Purification]]
 - set episode variable 0 to 9
 
@@ -61,6 +61,6 @@ Checks:
 Then:
 
 - works on [[quests/112-hourglass-of-purification|Hourglass of Purification]]
-- experience: 400 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 400 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/113-hourglass-of-purification|Hourglass of Purification]]
 - set episode variable 0 to 10

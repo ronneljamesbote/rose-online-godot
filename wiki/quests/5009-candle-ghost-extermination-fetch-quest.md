@@ -80,8 +80,8 @@ Then:
 
 - works on [[quests/5009-candle-ghost-extermination-fetch-quest|Candle Ghost Extermination (Fetch Quest)]]
 - 20 × [[items/quest/809-candle-ghost-mask|Candle Ghost Mask]] is taken
-- you get [[items/consumable/12-vital-water-l|Vital Water (L)]] (item count: 15)
-- you get [[items/consumable/31-spiritual-water-l|Spiritual Water (L)]] (item count: 15)
+- you get [[items/consumable/12-vital-water-l|Vital Water (L)]], base count 15 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/31-spiritual-water-l|Spiritual Water (L)]], base count 15 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 1 to the NPC's variable 3
 - the quest ends (removed from your list)
 
@@ -101,8 +101,8 @@ Then:
 
 - works on [[quests/5009-candle-ghost-extermination-fetch-quest|Candle Ghost Extermination (Fetch Quest)]]
 - 20 × [[items/quest/809-candle-ghost-mask|Candle Ghost Mask]] is taken
-- you get [[items/consumable/12-vital-water-l|Vital Water (L)]] (item count: 10)
-- you get [[items/consumable/31-spiritual-water-l|Spiritual Water (L)]] (item count: 10)
+- you get [[items/consumable/12-vital-water-l|Vital Water (L)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/31-spiritual-water-l|Spiritual Water (L)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 1 to the NPC's variable 3
 - the quest ends (removed from your list)
 
@@ -122,8 +122,8 @@ Then:
 
 - works on [[quests/5009-candle-ghost-extermination-fetch-quest|Candle Ghost Extermination (Fetch Quest)]]
 - 20 × [[items/quest/809-candle-ghost-mask|Candle Ghost Mask]] is taken
-- you get [[items/consumable/11-vital-water-m|Vital Water (M)]] (item count: 10)
-- you get [[items/consumable/30-spiritual-water-m|Spiritual Water (M)]] (item count: 10)
+- you get [[items/consumable/11-vital-water-m|Vital Water (M)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/30-spiritual-water-m|Spiritual Water (M)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 1 to the NPC's variable 3
 - the quest ends (removed from your list)
 
@@ -144,8 +144,8 @@ Then:
 
 - works on [[quests/5009-candle-ghost-extermination-fetch-quest|Candle Ghost Extermination (Fetch Quest)]]
 - 20 × [[items/quest/809-candle-ghost-mask|Candle Ghost Mask]] is taken
-- you get [[items/consumable/10-vital-water-s|Vital Water (S)]] (item count: 10)
-- you get [[items/consumable/29-spiritual-water-s|Spiritual Water (S)]] (item count: 10)
+- you get [[items/consumable/10-vital-water-s|Vital Water (S)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/29-spiritual-water-s|Spiritual Water (S)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 1 to the NPC's variable 3
 - the quest ends (removed from your list)
 
@@ -166,8 +166,8 @@ Then:
 
 - works on [[quests/5009-candle-ghost-extermination-fetch-quest|Candle Ghost Extermination (Fetch Quest)]]
 - 20 × [[items/quest/809-candle-ghost-mask|Candle Ghost Mask]] is taken
-- you get [[items/consumable/10-vital-water-s|Vital Water (S)]] (item count: 5)
-- you get [[items/consumable/29-spiritual-water-s|Spiritual Water (S)]] (item count: 5)
+- you get [[items/consumable/10-vital-water-s|Vital Water (S)]], base count 5 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/29-spiritual-water-s|Spiritual Water (S)]], base count 5 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 1 to the NPC's variable 3
 - the quest ends (removed from your list)
 
@@ -187,8 +187,8 @@ Then:
 
 - works on [[quests/5009-candle-ghost-extermination-fetch-quest|Candle Ghost Extermination (Fetch Quest)]]
 - 20 × [[items/quest/809-candle-ghost-mask|Candle Ghost Mask]] is taken
-- you get [[items/consumable/10-vital-water-s|Vital Water (S)]] (item count: 1)
-- you get [[items/consumable/29-spiritual-water-s|Spiritual Water (S)]] (item count: 1)
+- you get [[items/consumable/10-vital-water-s|Vital Water (S)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/29-spiritual-water-s|Spiritual Water (S)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 1 to the NPC's variable 3
 - the quest ends (removed from your list)
 
@@ -209,8 +209,8 @@ Then:
 
 - works on [[quests/5009-candle-ghost-extermination-fetch-quest|Candle Ghost Extermination (Fetch Quest)]]
 - 20 × [[items/quest/809-candle-ghost-mask|Candle Ghost Mask]] is taken
-- you get [[items/consumable/12-vital-water-l|Vital Water (L)]] (item count: 10)
-- you get [[items/consumable/31-spiritual-water-l|Spiritual Water (L)]] (item count: 10)
+- you get [[items/consumable/12-vital-water-l|Vital Water (L)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/31-spiritual-water-l|Spiritual Water (L)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 1 to the NPC's variable 3
 - set the NPC's variable 19 to 0
 - the quest ends (removed from your list)

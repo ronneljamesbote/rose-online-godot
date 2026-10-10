@@ -46,7 +46,7 @@ Checks:
 Then:
 
 - works on [[quests/5011-stockpiling-maple-branches|Stockpiling Maple Branches]]
-- money: 75 (money, fixed, see [[rules/quests|Quests]])
+- Zuly, base 75 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `5011-31`

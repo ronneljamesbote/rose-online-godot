@@ -35,7 +35,7 @@ Then:
 
 - you get the quest [[quests/108-healing-hands|Healing Hands]]
 - works on [[quests/108-healing-hands|Healing Hands]]
-- experience: 200 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 200 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - you get 1 × [[items/quest/605-antidote-recipe|Antidote Recipe]]
 
 ### `107-07`
@@ -73,6 +73,6 @@ Checks:
 Then:
 
 - works on [[quests/108-healing-hands|Healing Hands]]
-- experience: 300 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 300 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/109-sacrificed-soul|Sacrificed Soul]]
 - set episode variable 0 to 6

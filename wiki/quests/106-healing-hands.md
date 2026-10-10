@@ -72,8 +72,8 @@ Checks:
 Then:
 
 - works on [[quests/106-healing-hands|Healing Hands]]
-- experience: 300 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/consumable/103-grapes|Grapes]] (item count: 10)
+- experience, base 300 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/103-grapes|Grapes]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/107-healing-hands|Healing Hands]] (progress kept)
 - set episode variable 0 to 4
 

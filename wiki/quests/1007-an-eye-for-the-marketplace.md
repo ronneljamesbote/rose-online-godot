@@ -52,7 +52,7 @@ Then:
 
 - works on [[quests/1007-an-eye-for-the-marketplace|An Eye for the Marketplace]]
 - add 2 to job variable 0
-- you get [[items/weapon/5-long-sword|Long Sword]] (item count: 1)
+- you get [[items/weapon/5-long-sword|Long Sword]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `1007-02` is tried instead.
@@ -69,7 +69,7 @@ Then:
 
 - works on [[quests/1007-an-eye-for-the-marketplace|An Eye for the Marketplace]]
 - add 2 to job variable 0
-- you get [[items/weapon/5-long-sword|Long Sword]] (item count: 1)
+- you get [[items/weapon/5-long-sword|Long Sword]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `1007-03` is tried instead.
@@ -86,7 +86,7 @@ Then:
 
 - works on [[quests/1007-an-eye-for-the-marketplace|An Eye for the Marketplace]]
 - add 2 to job variable 0
-- you get [[items/weapon/5-long-sword|Long Sword]] (item count: 1)
+- you get [[items/weapon/5-long-sword|Long Sword]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1007-04`
@@ -104,7 +104,7 @@ Then:
 
 - works on [[quests/1007-an-eye-for-the-marketplace|An Eye for the Marketplace]]
 - add 2 to job variable 0
-- you get [[items/weapon/233-gloria-gun|Gloria Gun]] (item count: 1)
+- you get [[items/weapon/233-gloria-gun|Gloria Gun]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `1007-05` is tried instead.
@@ -121,7 +121,7 @@ Then:
 
 - works on [[quests/1007-an-eye-for-the-marketplace|An Eye for the Marketplace]]
 - add 2 to job variable 0
-- you get [[items/weapon/233-gloria-gun|Gloria Gun]] (item count: 1)
+- you get [[items/weapon/233-gloria-gun|Gloria Gun]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `1007-06` is tried instead.
@@ -138,7 +138,7 @@ Then:
 
 - works on [[quests/1007-an-eye-for-the-marketplace|An Eye for the Marketplace]]
 - add 2 to job variable 0
-- you get [[items/weapon/233-gloria-gun|Gloria Gun]] (item count: 1)
+- you get [[items/weapon/233-gloria-gun|Gloria Gun]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1007-07`
@@ -156,7 +156,7 @@ Then:
 
 - works on [[quests/1007-an-eye-for-the-marketplace|An Eye for the Marketplace]]
 - add 2 to job variable 0
-- money: 1800 (money, scaled by your level, see [[rules/quests|Quests]])
+- Zuly, base 1800 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `1007-08` is tried instead.
@@ -173,7 +173,7 @@ Then:
 
 - works on [[quests/1007-an-eye-for-the-marketplace|An Eye for the Marketplace]]
 - add 2 to job variable 0
-- money: 1800 (money, scaled by your level, see [[rules/quests|Quests]])
+- Zuly, base 1800 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `1007-09` is tried instead.
@@ -190,7 +190,7 @@ Then:
 
 - works on [[quests/1007-an-eye-for-the-marketplace|An Eye for the Marketplace]]
 - add 2 to job variable 0
-- money: 1800 (money, scaled by your level, see [[rules/quests|Quests]])
+- Zuly, base 1800 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1007-31`

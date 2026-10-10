@@ -35,7 +35,7 @@ Checks:
 Then:
 
 - works on [[quests/109-sacrificed-soul|Sacrificed Soul]]
-- experience: 300 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 300 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/110-the-truth-to-the-rumors|The Truth to the Rumors]]
 - set episode variable 0 to 7
 
@@ -62,6 +62,6 @@ Checks:
 Then:
 
 - works on [[quests/110-the-truth-to-the-rumors|The Truth to the Rumors]]
-- experience: 300 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 300 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/111-the-truth-to-the-rumors|The Truth to the Rumors]]
 - set episode variable 0 to 8

@@ -92,8 +92,8 @@ Then:
 
 - works on [[quests/3004-propagation-risking-danger|Propagation Risking Danger]]
 - add 5 to your UnionPoint1
-- experience: 80 (XP, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/57-vital-jam-2|Vital Jam (+2)]] (item count: 1)
+- experience, base 80 (reward formula 1: grows with your level and Charm, see [[rules/quests|Quests]])
+- you get [[items/consumable/57-vital-jam-2|Vital Jam (+2)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `3004-05` is tried instead.
@@ -113,6 +113,6 @@ Then:
 
 - works on [[quests/3004-propagation-risking-danger|Propagation Risking Danger]]
 - add 2 to your UnionPoint1
-- experience: 5000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/consumable/57-vital-jam-2|Vital Jam (+2)]] (item count: 1)
+- experience, base 5000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/57-vital-jam-2|Vital Jam (+2)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)

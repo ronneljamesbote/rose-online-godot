@@ -50,8 +50,8 @@ Checks:
 Then:
 
 - works on [[quests/5053-hunting-practice-3|Hunting Practice (3)]]
-- money: 400 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/102-banana|Banana]] (item count: 20)
+- Zuly, base 400 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/102-banana|Banana]], base count 20 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - quest switch 79 on
 - the quest ends (removed from your list)
 
@@ -85,8 +85,8 @@ Checks:
 Then:
 
 - works on [[quests/5053-hunting-practice-3|Hunting Practice (3)]]
-- money: 400 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/102-banana|Banana]] (item count: 20)
+- Zuly, base 400 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/102-banana|Banana]], base count 20 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - quest switch 79 on
 - the quest ends (removed from your list)
 

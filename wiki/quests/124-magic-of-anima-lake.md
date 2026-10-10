@@ -38,12 +38,12 @@ Then:
 - works on [[quests/123-resurrection|Resurrection]]
 - 1 × [[items/quest/601-enigmatic-emblem|Enigmatic Emblem]] is taken
 - 1 × [[items/quest/612-small-necklace|Small Necklace]] is taken
-- experience: 6000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/consumable/352-junon-polis-return-scroll|Junon Polis Return Scroll]] (item count: 5)
-- you get [[items/head/314-joker-jester|Joker Jester]] (item count: 1)
-- you get [[items/body/214-islamic-dress|Islamic Dress]] (item count: 1)
-- you get [[items/hands/214-gloves-of-iguje|Gloves of Iguje]] (item count: 1)
-- you get [[items/feet/214-land-walkers|Land Walkers]] (item count: 1)
+- experience, base 6000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/352-junon-polis-return-scroll|Junon Polis Return Scroll]], base count 5 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/head/314-joker-jester|Joker Jester]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/body/214-islamic-dress|Islamic Dress]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/hands/214-gloves-of-iguje|Gloves of Iguje]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/feet/214-land-walkers|Land Walkers]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/124-magic-of-anima-lake|Magic of Anima Lake]] (progress kept)
 - set episode variable 0 to 20
 
@@ -70,6 +70,6 @@ Checks:
 Then:
 
 - works on [[quests/124-magic-of-anima-lake|Magic of Anima Lake]]
-- experience: 2000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 2000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/125-falsehoods|Falsehoods]]
 - set episode variable 0 to 24

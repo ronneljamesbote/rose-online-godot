@@ -79,8 +79,8 @@ Then:
 - works on [[quests/5017-moldie-s-strange-mineral-fetch-quest|Moldie's Strange Mineral (Fetch Quest)]]
 - 10 × [[items/quest/807-black-mineral|Black Mineral]] is taken
 - 10 × [[items/quest/808-green-mineral|Green Mineral]] is taken
-- money: 15000 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/58-vital-jam-5|Vital Jam (+5)]] (item count: 2)
+- Zuly, base 15000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/58-vital-jam-5|Vital Jam (+5)]], base count 2 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 1 to the NPC's variable 3
 - the quest ends (removed from your list)
 
@@ -102,8 +102,8 @@ Then:
 - works on [[quests/5017-moldie-s-strange-mineral-fetch-quest|Moldie's Strange Mineral (Fetch Quest)]]
 - 10 × [[items/quest/807-black-mineral|Black Mineral]] is taken
 - 10 × [[items/quest/808-green-mineral|Green Mineral]] is taken
-- money: 10000 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/58-vital-jam-5|Vital Jam (+5)]] (item count: 1)
+- Zuly, base 10000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/58-vital-jam-5|Vital Jam (+5)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 1 to the NPC's variable 3
 - the quest ends (removed from your list)
 
@@ -125,8 +125,8 @@ Then:
 - works on [[quests/5017-moldie-s-strange-mineral-fetch-quest|Moldie's Strange Mineral (Fetch Quest)]]
 - 10 × [[items/quest/807-black-mineral|Black Mineral]] is taken
 - 10 × [[items/quest/808-green-mineral|Green Mineral]] is taken
-- money: 5000 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/57-vital-jam-2|Vital Jam (+2)]] (item count: 1)
+- Zuly, base 5000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/57-vital-jam-2|Vital Jam (+2)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - add 1 to the NPC's variable 3
 - the quest ends (removed from your list)
 
@@ -148,8 +148,8 @@ Then:
 - works on [[quests/5017-moldie-s-strange-mineral-fetch-quest|Moldie's Strange Mineral (Fetch Quest)]]
 - 10 × [[items/quest/807-black-mineral|Black Mineral]] is taken
 - 10 × [[items/quest/808-green-mineral|Green Mineral]] is taken
-- money: 1000 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/56-vital-jam-1|Vital Jam (+1)]] (item count: 1)
+- Zuly, base 1000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/56-vital-jam-1|Vital Jam (+1)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `5017-31`

@@ -50,7 +50,7 @@ Then:
 - works on [[quests/852-solider-job-change-quest|Solider Job Change Quest]]
 - 10 × [[items/quest/103-honeybee-stinger|HoneyBee Stinger]] is taken
 - the quest becomes [[quests/853-solider-job-change-quest|Solider Job Change Quest]]
-- you get [[items/consumable/1-health-vial-s|Health Vial (S)]] (item count: 5)
+- you get [[items/consumable/1-health-vial-s|Health Vial (S)]], base count 5 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 
 ### `852-03`
 

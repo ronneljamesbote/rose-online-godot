@@ -48,7 +48,7 @@ Checks:
 Then:
 
 - works on [[quests/856-living-as-a-true-soldier|Living as a True Soldier]]
-- you get [[items/consumable/5-health-bottle-m|Health Bottle (M)]] (item count: 10)
+- you get [[items/consumable/5-health-bottle-m|Health Bottle (M)]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/857-living-as-a-true-soldier|Living as a True Soldier]]
 
 ### `856-31`

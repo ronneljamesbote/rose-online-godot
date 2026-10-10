@@ -35,7 +35,7 @@ Then:
 
 - works on [[quests/125-falsehoods|Falsehoods]]
 - you get 1 × [[items/quest/615-small-letter|Small Letter]]
-- experience: 2000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 2000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/126-falsehoods|Falsehoods]] (progress kept)
 - set episode variable 0 to 25
 
@@ -65,6 +65,6 @@ Then:
 
 - works on [[quests/126-falsehoods|Falsehoods]]
 - 1 × [[items/quest/615-small-letter|Small Letter]] is taken
-- money: 5000 (money, scaled by your level, see [[rules/quests|Quests]])
+- Zuly, base 5000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/127-the-owl-eye|The Owl Eye]] (progress kept)
 - set episode variable 0 to 26

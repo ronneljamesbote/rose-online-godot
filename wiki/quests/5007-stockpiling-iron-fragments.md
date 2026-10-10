@@ -49,7 +49,7 @@ Checks:
 Then:
 
 - works on [[quests/5007-stockpiling-iron-fragments|Stockpiling Iron Fragments]]
-- money: 54 (money, fixed, see [[rules/quests|Quests]])
+- Zuly, base 54 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `5007-31`

@@ -34,9 +34,9 @@ Checks:
 Then:
 
 - works on [[quests/138-the-road-to-justice|The Road to Justice]]
-- money: 20000 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/material/151-black-hearts|Black Hearts]] (item count: 1)
-- you get [[items/material/152-green-hearts|Green Hearts]] (item count: 1)
+- Zuly, base 20000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/material/151-black-hearts|Black Hearts]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/material/152-green-hearts|Green Hearts]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/139-punwell-in-windmill-village|Punwell in Windmill Village]]
 - set episode variable 0 to 38
 
@@ -63,6 +63,6 @@ Checks:
 Then:
 
 - works on [[quests/139-punwell-in-windmill-village|Punwell in Windmill Village]]
-- experience: 10000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 10000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/140-the-zeppastone-wind-gem|The Zeppastone Wind Gem]]
 - set episode variable 0 to 39

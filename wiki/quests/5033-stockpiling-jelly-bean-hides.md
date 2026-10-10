@@ -46,7 +46,7 @@ Checks:
 Then:
 
 - works on [[quests/5033-stockpiling-jelly-bean-hides|Stockpiling Jelly Bean Hides]]
-- money: 20 (money, fixed, see [[rules/quests|Quests]])
+- Zuly, base 20 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 - then runs step `5033-01`
 
@@ -62,7 +62,7 @@ Checks:
 Then:
 
 - works on [[quests/5033-stockpiling-jelly-bean-hides|Stockpiling Jelly Bean Hides]]
-- money: 20 (money, fixed, see [[rules/quests|Quests]])
+- Zuly, base 20 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `5033-31`

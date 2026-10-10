@@ -35,7 +35,7 @@ Then:
 
 - works on [[quests/116-a-favor-for-karitte|A Favor for Karitte]]
 - you get 1 × [[items/quest/602-gypsy-s-permit|Gypsy's Permit]]
-- experience: 500 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 500 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/117-proof|Proof]] (progress kept)
 - set episode variable 0 to 14
 

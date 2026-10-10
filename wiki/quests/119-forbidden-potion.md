@@ -39,8 +39,8 @@ Then:
 - 20 × [[items/quest/607-wild-animal-claw|Wild Animal Claw]] is taken
 - 20 × [[items/quest/608-sharp-stinger|Sharp Stinger]] is taken
 - you get 1 × [[items/quest/602-gypsy-s-permit|Gypsy's Permit]]
-- experience: 2500 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/consumable/123-apple-juice|Apple Juice]] (item count: 30)
+- experience, base 2500 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/123-apple-juice|Apple Juice]], base count 30 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/119-forbidden-potion|Forbidden Potion]] (progress kept)
 - set episode variable 0 to 16
 

@@ -57,7 +57,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/301-garnet-1|Garnet 1]] (item count: 1)
+- you get [[items/gem/301-garnet-1|Garnet 1]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-12`
@@ -73,7 +73,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/311-ruby-1|Ruby 1]] (item count: 1)
+- you get [[items/gem/311-ruby-1|Ruby 1]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-13`
@@ -89,7 +89,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/321-sapphire-1|Sapphire 1]] (item count: 1)
+- you get [[items/gem/321-sapphire-1|Sapphire 1]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-14`
@@ -105,7 +105,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/331-topaz-1|Topaz 1]] (item count: 1)
+- you get [[items/gem/331-topaz-1|Topaz 1]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-15`
@@ -121,7 +121,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/341-emerald-1|Emerald 1]] (item count: 1)
+- you get [[items/gem/341-emerald-1|Emerald 1]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-16`
@@ -137,7 +137,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/351-peridot-1|Peridot 1]] (item count: 1)
+- you get [[items/gem/351-peridot-1|Peridot 1]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-17`
@@ -153,7 +153,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/361-diamond-1|Diamond 1]] (item count: 1)
+- you get [[items/gem/361-diamond-1|Diamond 1]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-21`
@@ -169,7 +169,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/302-garnet-2|Garnet 2]] (item count: 1)
+- you get [[items/gem/302-garnet-2|Garnet 2]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-22`
@@ -185,7 +185,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/312-ruby-2|Ruby 2]] (item count: 1)
+- you get [[items/gem/312-ruby-2|Ruby 2]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-23`
@@ -201,7 +201,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/322-sapphire-2|Sapphire 2]] (item count: 1)
+- you get [[items/gem/322-sapphire-2|Sapphire 2]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-24`
@@ -217,7 +217,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/332-topaz-2|Topaz 2]] (item count: 1)
+- you get [[items/gem/332-topaz-2|Topaz 2]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-25`
@@ -233,7 +233,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/342-emerald-2|Emerald 2]] (item count: 1)
+- you get [[items/gem/342-emerald-2|Emerald 2]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-26`
@@ -249,7 +249,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/352-peridot-2|Peridot 2]] (item count: 1)
+- you get [[items/gem/352-peridot-2|Peridot 2]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-27`
@@ -265,7 +265,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/362-diamond-2|Diamond 2]] (item count: 1)
+- you get [[items/gem/362-diamond-2|Diamond 2]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-31`
@@ -280,7 +280,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/303-garnet-3|Garnet 3]] (item count: 1)
+- you get [[items/gem/303-garnet-3|Garnet 3]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-32`
@@ -295,7 +295,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/313-ruby-3|Ruby 3]] (item count: 1)
+- you get [[items/gem/313-ruby-3|Ruby 3]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-33`
@@ -310,7 +310,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/323-sapphire-3|Sapphire 3]] (item count: 1)
+- you get [[items/gem/323-sapphire-3|Sapphire 3]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-34`
@@ -325,7 +325,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/333-topaz-3|Topaz 3]] (item count: 1)
+- you get [[items/gem/333-topaz-3|Topaz 3]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-35`
@@ -340,7 +340,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/343-emerald-3|Emerald 3]] (item count: 1)
+- you get [[items/gem/343-emerald-3|Emerald 3]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-36`
@@ -355,7 +355,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/353-peridot-3|Peridot 3]] (item count: 1)
+- you get [[items/gem/353-peridot-3|Peridot 3]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-37`
@@ -370,7 +370,7 @@ Checks:
 Then:
 
 - works on [[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]
-- you get [[items/gem/363-diamond-3|Diamond 3]] (item count: 1)
+- you get [[items/gem/363-diamond-3|Diamond 3]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `1980-41`

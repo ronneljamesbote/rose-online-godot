@@ -35,9 +35,9 @@ Then:
 
 - works on [[quests/148-the-royal-golden-dagger|The Royal Golden Dagger]]
 - 1 × [[items/quest/510-golden-dagger|Golden Dagger]] is taken
-- experience: 40000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/gem/351-peridot-1|Peridot 1]] (item count: 2)
-- you get [[items/gem/331-topaz-1|Topaz 1]] (item count: 2)
+- experience, base 40000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/gem/351-peridot-1|Peridot 1]], base count 2 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/gem/331-topaz-1|Topaz 1]], base count 2 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/149-an-interesting-proposal|An Interesting Proposal]] (progress kept)
 - set episode variable 0 to 48
 
@@ -64,6 +64,6 @@ Checks:
 Then:
 
 - works on [[quests/149-an-interesting-proposal|An Interesting Proposal]]
-- experience: 30000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 30000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/150-kay-s-secret|Kay's Secret]]
 - set episode variable 0 to 49

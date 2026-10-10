@@ -32,7 +32,7 @@ Checks:
 Then:
 
 - works on [[quests/154-kay-s-request|Kay's Request]]
-- experience: 50000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 50000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/155-suspicious-researchers|Suspicious Researchers]]
 - set episode variable 0 to 54
 
@@ -65,10 +65,10 @@ Then:
 
 - works on [[quests/155-suspicious-researchers|Suspicious Researchers]]
 - 4 × [[items/quest/622-mana-charger|Mana Charger]] is taken
-- you get [[items/consumable/316-advanced-strength-scroll-solo|Advanced Strength Scroll (Solo)]] (item count: 3)
-- you get [[items/consumable/317-advanced-defense-scroll-solo|Advanced Defense Scroll (Solo)]] (item count: 3)
-- experience: 40000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/consumable/381-ice-charm|Ice Charm]] (item count: 10)
+- you get [[items/consumable/316-advanced-strength-scroll-solo|Advanced Strength Scroll (Solo)]], base count 3 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/317-advanced-defense-scroll-solo|Advanced Defense Scroll (Solo)]], base count 3 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- experience, base 40000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/381-ice-charm|Ice Charm]], base count 10 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/156-monsters-in-the-desert|Monsters in the Desert]] (progress kept)
 - set episode variable 0 to 55
 

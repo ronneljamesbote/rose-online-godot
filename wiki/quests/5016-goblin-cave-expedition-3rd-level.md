@@ -67,7 +67,7 @@ Checks:
 Then:
 
 - works on [[quests/5016-goblin-cave-expedition-3rd-level|Goblin Cave Expedition (3rd Level)]]
-- money: 810 (money, fixed, see [[rules/quests|Quests]])
+- Zuly, base 810 (reward formula 2: base × times the quest was repeated, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 ### `5016-31`

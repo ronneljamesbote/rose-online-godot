@@ -55,7 +55,7 @@ Then:
 
 - works on [[quests/5004-ulysses-price-chart-delivery|Ulysses' Price Chart Delivery]]
 - 1 × [[items/quest/803-daily-price-checklist|Daily Price Checklist]] is taken
-- experience: 100 (XP, scaled by your level, see [[rules/quests|Quests]])
+- experience, base 100 (reward formula 1: grows with your level and Charm, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 
 If the checks fail, step `5004-04` is tried instead.
@@ -75,7 +75,7 @@ Then:
 
 - works on [[quests/5004-ulysses-price-chart-delivery|Ulysses' Price Chart Delivery]]
 - 1 × [[items/quest/803-daily-price-checklist|Daily Price Checklist]] is taken
-- experience: 100 (XP, scaled by your level, see [[rules/quests|Quests]])
+- experience, base 100 (reward formula 1: grows with your level and Charm, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 - then runs step `5031-01`
 
@@ -93,5 +93,5 @@ Then:
 
 - works on [[quests/5004-ulysses-price-chart-delivery|Ulysses' Price Chart Delivery]]
 - 1 × [[items/quest/803-daily-price-checklist|Daily Price Checklist]] is taken
-- experience: 4000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 4000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)

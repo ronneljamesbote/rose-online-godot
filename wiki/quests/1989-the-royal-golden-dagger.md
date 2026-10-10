@@ -35,10 +35,10 @@ Then:
 
 - works on [[quests/1988-pavrick-the-craftsman-on-lunar|Pavrick, the Craftsman on Lunar]]
 - 1 × [[items/quest/511-luna-whiskey|Luna Whiskey]] is taken
-- experience: 8000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- money: 15000 (money, scaled by your level, see [[rules/quests|Quests]])
-- you get [[items/consumable/2-health-vial-m|Health Vial (M)]] (item count: 5)
-- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]] (item count: 5)
+- experience, base 8000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- Zuly, base 15000 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/2-health-vial-m|Health Vial (M)]], base count 5 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/22-mana-vial-m|Mana Vial (M)]], base count 5 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - quest switch 134 on
 - the quest becomes [[quests/1989-the-royal-golden-dagger|The Royal Golden Dagger]] (progress kept)
 
@@ -68,8 +68,8 @@ Then:
 
 - works on [[quests/1989-the-royal-golden-dagger|The Royal Golden Dagger]]
 - 1 × [[items/quest/510-golden-dagger|Golden Dagger]] is taken
-- experience: 12000 (XP, not scaled by level, see [[rules/quests|Quests]])
-- you get [[items/gem/351-peridot-1|Peridot 1]] (item count: 1)
-- you get [[items/gem/331-topaz-1|Topaz 1]] (item count: 1)
+- experience, base 12000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/gem/351-peridot-1|Peridot 1]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/gem/331-topaz-1|Topaz 1]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 - quest switch 135 on

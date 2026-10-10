@@ -34,7 +34,7 @@ Checks:
 Then:
 
 - works on [[quests/150-kay-s-secret|Kay's Secret]]
-- experience: 30000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- experience, base 30000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/151-lunarian-coffee|Lunarian Coffee]]
 - set episode variable 0 to 50
 
@@ -63,9 +63,9 @@ Then:
 
 - works on [[quests/151-lunarian-coffee|Lunarian Coffee]]
 - 20 × [[items/quest/313-doonga-claw|Doonga Claw]] is taken
-- you get [[items/consumable/6-health-bottle-l|Health Bottle (L)]] (item count: 30)
-- you get [[items/consumable/26-mana-bottle-l|Mana Bottle (L)]] (item count: 30)
-- experience: 30000 (XP, not scaled by level, see [[rules/quests|Quests]])
+- you get [[items/consumable/6-health-bottle-l|Health Bottle (L)]], base count 30 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- you get [[items/consumable/26-mana-bottle-l|Mana Bottle (L)]], base count 30 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- experience, base 30000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
 - then runs step `151-03`
 
