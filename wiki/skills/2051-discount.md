@@ -8,7 +8,6 @@ type: Passive
 job: Dealer Job
 max_level: 10
 target: Yourself
-warps_to: '[[zones/59-luna-clan-field|Luna Clan Field]]'
 skill_books:
 - '[[items/consumable/804-discount|Discount]]'
 levels:

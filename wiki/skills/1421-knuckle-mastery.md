@@ -9,7 +9,6 @@ job: Hawker Job
 max_level: 20
 target: Yourself
 needs_weapon: Katar, Dual Swords
-warps_to: zone 48
 skill_books:
 - '[[items/consumable/752-knuckle-mastery|Knuckle Mastery]]'
 - '[[items/consumable/954-special-shop-a-coupon|Special Shop A Coupon]]'

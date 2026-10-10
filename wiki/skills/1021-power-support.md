@@ -4,11 +4,10 @@ id: 1021
 name: Power Support
 status: in-game
 icon: skill/71
-type: 'Continuing '
+type: Continuing
 job: Muse Job
 max_level: 10
 target: Ally
-warps_to: zone 18
 skill_books:
 - '[[items/consumable/719-power-support|Power Support]]'
 levels:

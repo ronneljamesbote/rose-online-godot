@@ -4,11 +4,10 @@ id: 1031
 name: Weaken
 status: in-game
 icon: skill/205
-type: 'Continuing '
+type: Continuing
 job: Muse Job
 max_level: 10
 target: Hostile Character
-warps_to: zone 18
 skill_books:
 - '[[items/consumable/720-weaken|Weaken]]'
 levels:
@@ -22,7 +21,7 @@ levels:
   duration: 20
   success: 50
   effects: Atk Power Down
-  changes: Attack Power +16%
+  changes: Attack Power -16%
 - level: 2
   id: 1032
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 7'
@@ -33,7 +32,7 @@ levels:
   duration: 23
   success: 53
   effects: Atk Power Down
-  changes: Attack Power +19%
+  changes: Attack Power -19%
 - level: 3
   id: 1033
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 8'
@@ -44,7 +43,7 @@ levels:
   duration: 26
   success: 56
   effects: Atk Power Down
-  changes: Attack Power +22%
+  changes: Attack Power -22%
 - level: 4
   id: 1034
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 9'
@@ -55,7 +54,7 @@ levels:
   duration: 29
   success: 59
   effects: Atk Power Down
-  changes: Attack Power +25%
+  changes: Attack Power -25%
 - level: 5
   id: 1035
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 10'
@@ -66,7 +65,7 @@ levels:
   duration: 30
   success: 62
   effects: Atk Power Down
-  changes: Attack Power +28%
+  changes: Attack Power -28%
 - level: 6
   id: 1036
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 11'
@@ -77,7 +76,7 @@ levels:
   duration: 30
   success: 65
   effects: Atk Power Down, Slow Attack
-  changes: Attack Power +30%, Attack Speed +20%
+  changes: Attack Power -30%, Attack Speed -20%
 - level: 7
   id: 1037
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 12'
@@ -88,7 +87,7 @@ levels:
   duration: 33
   success: 68
   effects: Atk Power Down, Slow Attack
-  changes: Attack Power +32%, Attack Speed +25%
+  changes: Attack Power -32%, Attack Speed -25%
 - level: 8
   id: 1038
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 13'
@@ -99,7 +98,7 @@ levels:
   duration: 36
   success: 71
   effects: Atk Power Down, Slow Attack
-  changes: Attack Power +34%, Attack Speed +30%
+  changes: Attack Power -34%, Attack Speed -30%
 - level: 9
   id: 1039
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 14'
@@ -110,7 +109,7 @@ levels:
   duration: 39
   success: 74
   effects: Atk Power Down, Slow Attack
-  changes: Attack Power +36%, Attack Speed +35%
+  changes: Attack Power -36%, Attack Speed -35%
 - level: 10
   id: 1040
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 15'
@@ -121,7 +120,7 @@ levels:
   duration: 42
   success: 80
   effects: Atk Power Down, Slow Attack
-  changes: Attack Power +38%, Attack Speed +40%
+  changes: Attack Power -38%, Attack Speed -40%
 source:
   data: LIST_SKILL.STB rows 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039, 1040
   code: module/src/skills.rs

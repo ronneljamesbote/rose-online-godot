@@ -8,7 +8,6 @@ type: Passive
 job: Soldier Job
 max_level: 20
 target: Yourself
-warps_to: '[[zones/54-crystal-snowfields|Crystal Snowfields]]'
 skill_books:
 - '[[items/consumable/10-vital-water-s|Vital Water (S)]]'
 - '[[items/consumable/108-beef-jerky|Beef Jerky]]'

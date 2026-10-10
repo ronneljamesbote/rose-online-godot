@@ -8,7 +8,6 @@ type: Continuing (Self)
 job: Cleric Job
 max_level: 10
 target: Party Member
-warps_to: '[[zones/19-zone-19|Zone 19]]'
 skill_books:
 - '[[items/consumable/718-defense-aura|Defense Aura]]'
 levels:

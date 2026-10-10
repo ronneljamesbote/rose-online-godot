@@ -8,7 +8,6 @@ type: Passive
 job: Dealer Job
 max_level: 20
 target: Yourself
-warps_to: zone 13
 skill_books:
 - '[[items/consumable/808-weapon-research|Weapon Research]]'
 levels:

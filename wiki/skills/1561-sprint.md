@@ -8,7 +8,6 @@ type: Continuing (Self)
 job: Hawker Job
 max_level: 10
 target: Yourself
-warps_to: '[[zones/23-breezy-hills|Breezy Hills]]'
 skill_books:
 - '[[items/consumable/760-sprint|Sprint]]'
 levels:

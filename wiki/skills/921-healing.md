@@ -8,7 +8,6 @@ type: Magic Recovery (Self)
 job: Muse Job
 max_level: 10
 target: Party Member
-warps_to: zone 16
 skill_books:
 - '[[items/consumable/709-healing|Healing]]'
 levels:

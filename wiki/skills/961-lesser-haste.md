@@ -4,11 +4,10 @@ id: 961
 name: Lesser Haste
 status: in-game
 icon: skill/81
-type: 'Continuing '
+type: Continuing
 job: Muse Job
 max_level: 10
 target: Ally
-warps_to: '[[zones/23-breezy-hills|Breezy Hills]]'
 skill_books:
 - '[[items/consumable/713-lesser-haste|Lesser Haste]]'
 levels:

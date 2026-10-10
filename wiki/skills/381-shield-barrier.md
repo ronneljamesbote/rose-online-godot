@@ -9,7 +9,6 @@ job: Soldier Job
 max_level: 10
 target: Party Member
 needs_weapon: Shield
-warps_to: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
 skill_books:
 - '[[items/consumable/664-shield-barrier|Shield Barrier]]'
 levels:

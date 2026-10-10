@@ -8,7 +8,6 @@ type: Passive
 job: Soldier Job
 max_level: 10
 target: Yourself
-warps_to: '[[zones/52-mana-snowfields|Mana Snowfields]]'
 skill_books:
 - '[[items/consumable/657-quick-step|Quick Step]]'
 levels:

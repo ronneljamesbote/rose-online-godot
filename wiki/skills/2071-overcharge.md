@@ -8,7 +8,6 @@ type: Passive
 job: Bourgeois Job
 max_level: 10
 target: Yourself
-warps_to: zone 60
 skill_books:
 - '[[items/consumable/805-overcharge|Overcharge]]'
 levels:

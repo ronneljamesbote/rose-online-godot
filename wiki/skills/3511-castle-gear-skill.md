@@ -10,7 +10,6 @@ max_level: 1
 target: Hostile Character
 damage_type: magic attack
 needs_weapon: Castle Gear Body
-warps_to: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
 levels:
 - level: 1
   id: 3511
@@ -22,7 +21,7 @@ levels:
   duration: 15
   success: 60
   effects: Magic Resistance Down
-  changes: Magic Resistance +25%
+  changes: Magic Resistance -25%
 source:
   data: LIST_SKILL.STB rows 3511
   code: module/src/skills.rs

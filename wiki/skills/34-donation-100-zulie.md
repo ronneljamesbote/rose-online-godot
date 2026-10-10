@@ -8,7 +8,6 @@ type: Magic Recovery
 job: any
 max_level: 0
 target: Ally
-warps_to: zone 40
 skill_books:
 - '[[items/consumable/624-donation-100-zulie|Donation (100 Zulie)]]'
 levels:

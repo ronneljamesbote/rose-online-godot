@@ -4,11 +4,10 @@ id: 1221
 name: Hit Support
 status: in-game
 icon: skill/211
-type: 'Continuing '
+type: Continuing
 job: Muse Job
 max_level: 10
 target: Ally
-warps_to: '[[zones/20-birth-island|Birth Island]]'
 skill_books:
 - '[[items/consumable/739-hit-support|Hit Support]]'
 levels:

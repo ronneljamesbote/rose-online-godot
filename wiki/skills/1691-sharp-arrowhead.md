@@ -9,7 +9,6 @@ job: Scout Job
 max_level: 10
 target: Yourself
 needs_weapon: Bow, Crossbow
-warps_to: zone 18
 skill_books:
 - '[[items/consumable/774-sharp-arrowhead|Sharp Arrowhead]]'
 levels:

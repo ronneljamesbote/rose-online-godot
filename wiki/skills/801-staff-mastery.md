@@ -9,7 +9,6 @@ job: Muse Job
 max_level: 20
 target: Yourself
 needs_weapon: Magic Staff, Magic Tool
-warps_to: zone 46
 skill_books:
 - '[[items/consumable/701-staff-mastery|Staff Mastery]]'
 levels:

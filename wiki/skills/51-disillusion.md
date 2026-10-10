@@ -8,7 +8,6 @@ type: Emotion
 job: any
 max_level: 10
 target: All Members
-warps_to: zone 76
 levels:
 - level: 0
   id: 51

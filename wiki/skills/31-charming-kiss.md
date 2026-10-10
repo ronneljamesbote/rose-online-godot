@@ -8,7 +8,6 @@ type: Magic Recovery
 job: any
 max_level: 1
 target: Ally
-warps_to: zone 17
 skill_books:
 - '[[items/consumable/621-charming-kiss|Charming Kiss]]'
 levels:

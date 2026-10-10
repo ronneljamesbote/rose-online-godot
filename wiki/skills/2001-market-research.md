@@ -8,7 +8,6 @@ type: Passive
 job: Dealer Job
 max_level: 20
 target: Yourself
-warps_to: zone 14
 skill_books:
 - '[[items/consumable/801-market-research|Market Research]]'
 levels:

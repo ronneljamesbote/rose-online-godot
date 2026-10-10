@@ -8,7 +8,6 @@ type: Passive
 job: Hawker Job
 max_level: 10
 target: Yourself
-warps_to: '[[zones/56-forgotten-temple-b1|Forgotten Temple (B1)]]'
 skill_books:
 - '[[items/consumable/753-relax|Relax]]'
 levels:

@@ -8,7 +8,6 @@ type: Passive
 job: Soldier Job
 max_level: 20
 target: Yourself
-warps_to: '[[zones/53-arumic-valley|Arumic Valley]]'
 skill_books:
 - '[[items/consumable/655-armor-mastery|Armor Mastery]]'
 levels:

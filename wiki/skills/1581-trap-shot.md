@@ -10,7 +10,6 @@ max_level: 10
 target: Hostile Character
 damage_type: weapon attack
 needs_weapon: Bow, Crossbow
-warps_to: '[[zones/23-breezy-hills|Breezy Hills]]'
 skill_books:
 - '[[items/consumable/762-trap-shot|Trap Shot]]'
 levels:
@@ -24,7 +23,7 @@ levels:
   duration: 20
   success: 70
   effects: Slow
-  changes: Movement Speed +40%
+  changes: Movement Speed -40%
 - level: 2
   id: 1582
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 6'
@@ -35,7 +34,7 @@ levels:
   duration: 21
   success: 72
   effects: Slow
-  changes: Movement Speed +42%
+  changes: Movement Speed -42%
 - level: 3
   id: 1583
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 7'
@@ -46,7 +45,7 @@ levels:
   duration: 22
   success: 74
   effects: Slow
-  changes: Movement Speed +44%
+  changes: Movement Speed -44%
 - level: 4
   id: 1584
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 8'
@@ -57,7 +56,7 @@ levels:
   duration: 23
   success: 76
   effects: Slow
-  changes: Movement Speed +46%
+  changes: Movement Speed -46%
 - level: 5
   id: 1585
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 9'
@@ -68,7 +67,7 @@ levels:
   duration: 24
   success: 78
   effects: Slow
-  changes: Movement Speed +48%
+  changes: Movement Speed -48%
 - level: 6
   id: 1586
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 10'
@@ -79,7 +78,7 @@ levels:
   duration: 24
   success: 80
   effects: Slow, Slow Attack
-  changes: Movement Speed +49%, Attack Speed +30%
+  changes: Movement Speed -49%, Attack Speed -30%
 - level: 7
   id: 1587
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 12'
@@ -90,7 +89,7 @@ levels:
   duration: 25
   success: 82
   effects: Slow, Slow Attack
-  changes: Movement Speed +50%, Attack Speed +35%
+  changes: Movement Speed -50%, Attack Speed -35%
 - level: 8
   id: 1588
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 14'
@@ -101,7 +100,7 @@ levels:
   duration: 25
   success: 84
   effects: Slow, Slow Attack
-  changes: Movement Speed +51%, Attack Speed +40%
+  changes: Movement Speed -51%, Attack Speed -40%
 - level: 9
   id: 1589
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 16'
@@ -112,7 +111,7 @@ levels:
   duration: 26
   success: 86
   effects: Slow, Slow Attack
-  changes: Movement Speed +52%, Attack Speed +45%
+  changes: Movement Speed -52%, Attack Speed -45%
 - level: 10
   id: 1590
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 18'
@@ -123,7 +122,7 @@ levels:
   duration: 26
   success: 90
   effects: Slow, Slow Attack
-  changes: Movement Speed +53%, Attack Speed +50%
+  changes: Movement Speed -53%, Attack Speed -50%
 source:
   data: LIST_SKILL.STB rows 1581, 1582, 1583, 1584, 1585, 1586, 1587, 1588, 1589, 1590
   code: module/src/skills.rs

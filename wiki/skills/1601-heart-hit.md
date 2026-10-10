@@ -9,7 +9,6 @@ job: Hawker Job
 max_level: 10
 target: Hostile Character
 damage_type: magic attack
-warps_to: '[[zones/24-el-verloon-desert|El Verloon Desert]]'
 skill_books:
 - '[[items/consumable/764-heart-hit|Heart Hit]]'
 levels:
@@ -24,7 +23,7 @@ levels:
   duration: 15
   success: 30
   effects: Slow Attack
-  changes: Attack Speed +30%
+  changes: Attack Speed -30%
 - level: 2
   id: 1602
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 8'
@@ -36,7 +35,7 @@ levels:
   duration: 15
   success: 33
   effects: Slow Attack
-  changes: Attack Speed +33%
+  changes: Attack Speed -33%
 - level: 3
   id: 1603
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 9'
@@ -48,7 +47,7 @@ levels:
   duration: 16
   success: 36
   effects: Slow Attack
-  changes: Attack Speed +36%
+  changes: Attack Speed -36%
 - level: 4
   id: 1604
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 10'
@@ -60,7 +59,7 @@ levels:
   duration: 16
   success: 39
   effects: Slow Attack
-  changes: Attack Speed +39%
+  changes: Attack Speed -39%
 - level: 5
   id: 1605
   learn_points: 46
@@ -71,7 +70,7 @@ levels:
   duration: 17
   success: 42
   effects: Slow Attack
-  changes: Attack Speed +42%
+  changes: Attack Speed -42%
 - level: 6
   id: 1606
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 11'
@@ -83,7 +82,7 @@ levels:
   duration: 17
   success: 46
   effects: Slow Attack
-  changes: Attack Speed +45%
+  changes: Attack Speed -45%
 - level: 7
   id: 1607
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 12'
@@ -95,7 +94,7 @@ levels:
   duration: 18
   success: 50
   effects: Slow Attack
-  changes: Attack Speed +48%
+  changes: Attack Speed -48%
 - level: 8
   id: 1608
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 13'
@@ -107,7 +106,7 @@ levels:
   duration: 18
   success: 54
   effects: Slow Attack
-  changes: Attack Speed +51%
+  changes: Attack Speed -51%
 - level: 9
   id: 1609
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 14'
@@ -119,7 +118,7 @@ levels:
   duration: 19
   success: 58
   effects: Slow Attack
-  changes: Attack Speed +54%
+  changes: Attack Speed -54%
 - level: 10
   id: 1610
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 15'
@@ -131,7 +130,7 @@ levels:
   duration: 20
   success: 62
   effects: Slow Attack
-  changes: Attack Speed +60%
+  changes: Attack Speed -60%
 source:
   data: LIST_SKILL.STB rows 1601, 1602, 1603, 1604, 1605, 1606, 1607, 1608, 1609, 1610
   code: module/src/skills.rs

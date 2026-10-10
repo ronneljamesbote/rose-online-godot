@@ -8,7 +8,6 @@ type: Magic Recovery (Self)
 job: Raider Job
 max_level: 10
 target: Yourself
-warps_to: zone 17
 skill_books:
 - '[[items/consumable/788-mana-blood|Mana Blood]]'
 levels:

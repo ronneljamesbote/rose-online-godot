@@ -8,7 +8,6 @@ type: Magic Recovery
 job: any
 max_level: 0
 target: All Members
-warps_to: zone 16
 skill_books:
 - '[[items/consumable/634-recovery-kiss|Recovery Kiss]]'
 levels:

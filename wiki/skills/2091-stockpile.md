@@ -8,7 +8,6 @@ type: Passive
 job: Dealer Job
 max_level: 10
 target: Yourself
-warps_to: zone 63
 skill_books:
 - '[[items/consumable/806-stockpile|Stockpile]]'
 levels:

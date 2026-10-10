@@ -8,7 +8,6 @@ type: Continuing (Self)
 job: Cleric Job
 max_level: 10
 target: Party Member
-warps_to: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
 skill_books:
 - '[[items/consumable/742-evasion-aura|Evasion Aura]]'
 levels:

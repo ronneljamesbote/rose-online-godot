@@ -9,7 +9,6 @@ job: Knight Job
 max_level: 10
 target: Yourself
 needs_weapon: One-Handed Sword, One-Handed Blunt Weapon
-warps_to: zone 42
 skill_books:
 - '[[items/consumable/107-boiled-egg|Boiled Egg]]'
 - '[[items/consumable/652-one-handed-mastery|One-Handed Mastery]]'

@@ -4,11 +4,10 @@ id: 1001
 name: Freeze
 status: in-game
 icon: skill/202
-type: 'Continuing '
+type: Continuing
 job: Mage Job
 max_level: 5
 target: Hostile Character
-warps_to: '[[zones/23-breezy-hills|Breezy Hills]]'
 skill_books:
 - '[[items/consumable/717-freeze|Freeze]]'
 levels:
@@ -22,7 +21,7 @@ levels:
   duration: 20
   success: 60
   effects: Slow
-  changes: Movement Speed +50%
+  changes: Movement Speed -50%
 - level: 2
   id: 1002
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 12'
@@ -33,7 +32,7 @@ levels:
   duration: 22
   success: 63
   effects: Slow
-  changes: Movement Speed +55%
+  changes: Movement Speed -55%
 - level: 3
   id: 1003
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 14'
@@ -44,7 +43,7 @@ levels:
   duration: 24
   success: 66
   effects: Slow
-  changes: Movement Speed +60%
+  changes: Movement Speed -60%
 - level: 4
   id: 1004
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 16'
@@ -55,7 +54,7 @@ levels:
   duration: 26
   success: 69
   effects: Slow
-  changes: Movement Speed +65%
+  changes: Movement Speed -65%
 - level: 5
   id: 1005
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 18'
@@ -66,7 +65,7 @@ levels:
   duration: 30
   success: 72
   effects: Slow
-  changes: Movement Speed +70%
+  changes: Movement Speed -70%
 source:
   data: LIST_SKILL.STB rows 1001, 1002, 1003, 1004, 1005
   code: module/src/skills.rs

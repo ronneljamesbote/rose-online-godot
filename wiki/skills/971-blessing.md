@@ -8,7 +8,6 @@ type: Continuing (Self)
 job: Muse Job
 max_level: 10
 target: Party Member
-warps_to: zone 38
 skill_books:
 - '[[items/consumable/714-blessing|Blessing]]'
 levels:
