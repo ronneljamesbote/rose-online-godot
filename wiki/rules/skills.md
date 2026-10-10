@@ -141,6 +141,10 @@ also put several skills in a **cooldown group** that shares one cooldown, but no
 current iROSE data uses a group. On top of that, any skill starts the 0.25 s global
 cooldown.
 
+While a skill's own cooldown runs, its icon in the hotbar and the skill window is darkened
+by a sweep that shrinks clockwise, with the seconds left in the middle. The short global
+cooldown isn't shown.
+
 ### Scrolls
 
 Scrolls (magic items) cast a skill on you or your target when used, and are used up when

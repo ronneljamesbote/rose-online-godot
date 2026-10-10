@@ -696,6 +696,12 @@ impl RoseNet {
         self.shared.lock().unwrap().clock_offset_us.unwrap_or(0) as f64 / 1000.0
     }
 
+    /// The server's clock in milliseconds, as this PC estimates it (see cooldown_end_ms).
+    #[func]
+    fn server_time_ms(&self) -> f64 {
+        self.server_now_us() as f64 / 1000.0
+    }
+
     /// Click-to-move to a Godot position (metres).
     #[func]
     fn move_to(&self, x: f32, z: f32) {
@@ -896,18 +902,14 @@ impl RoseNet {
     }
 
     /// Our skills by page (0 basic, 1 active, 2 passive, 3 clan): each page 30 slots, null
-    /// or a skill as skills::skill_dict, plus cooldown (seconds left).
+    /// or a skill as skills::skill_dict plus its cooldown (see set_cooldown).
     #[func]
     fn get_skills(&self) -> VarArray {
         let mut pages = VarArray::new();
         let (Some(c), Some(game)) = (self.conn.as_ref(), crate::data::get()) else { return pages };
         let Some(p) = c.try_identity().and_then(|i| c.db.player().identity().find(&i)) else { return pages };
         let skill_list: SkillList = serde_json::from_str(&p.skill_list).unwrap_or_default();
-        let t = self.server_now_us();
-        let cooldowns: Vec<SkillCooldownRow> = p
-            .entity_id
-            .map(|id| c.db.skill_cooldown().iter().filter(|r| r.entity_id == id).collect())
-            .unwrap_or_default();
+        let cooldowns = our_cooldowns(c, &p);
         for page_type in 0..4usize {
             let mut slots = VarArray::new();
             if let Some(page) = skill_list.get_page(page_type) {
@@ -918,12 +920,7 @@ impl RoseNet {
                         continue;
                     };
                     let mut d = crate::skills::skill_dict(skill);
-                    let key = match skill.cooldown {
-                        rose_data::SkillCooldown::Skill { .. } => skill.id.get() as u32,
-                        rose_data::SkillCooldown::Group { group, .. } => 100_000 + group.get() as u32,
-                    };
-                    let until = cooldowns.iter().filter(|r| r.key == key).map(|r| r.until_us).max().unwrap_or(0);
-                    d.set("cooldown", ((until - t).max(0)) as f64 / 1e6);
+                    set_cooldown(&mut d, skill, &cooldowns);
                     slots.push(&d.to_variant());
                 }
             }
@@ -951,7 +948,7 @@ impl RoseNet {
     }
 
     /// The first hotbar page: 8 entries, null or {kind ("item" or "skill"), page, index}
-    /// plus the item (as in get_inventory) or skill (as in get_skills).
+    /// plus the item (as in get_inventory) or skill (as in get_skills, with its cooldown).
     #[func]
     fn get_hotbar(&self) -> VarArray {
         let mut out = VarArray::new();
@@ -960,6 +957,7 @@ impl RoseNet {
         let hotbar: Hotbar = serde_json::from_str(&p.hotbar).unwrap_or_default();
         let inventory: Inventory = serde_json::from_str(&p.inventory).unwrap_or_default();
         let skill_list: SkillList = serde_json::from_str(&p.skill_list).unwrap_or_default();
+        let cooldowns = our_cooldowns(c, &p);
         for slot in hotbar.pages[0].iter() {
             let entry = match slot {
                 Some(HotbarSlot::Inventory(item_slot @ ItemSlot::Inventory(page, index))) => inventory.get_item(*item_slot).map(|item| {
@@ -974,6 +972,7 @@ impl RoseNet {
                     .and_then(|id| game.skills.get_skill(id))
                     .map(|skill| {
                         let mut d = crate::skills::skill_dict(skill);
+                        set_cooldown(&mut d, skill, &cooldowns);
                         d.set("kind", "skill");
                         d.set("page", skill_slot.0 as i64);
                         d.set("index", skill_slot.1 as i64);
@@ -2205,4 +2204,26 @@ fn craft_slots(slots: &VarArray) -> Vec<CraftSlot> {
             index: a.get(1).and_then(|v| v.try_to::<i64>().ok()).unwrap_or(0) as u16,
         })
         .collect()
+}
+
+
+/// Our cooldown rows (module/src/skills.rs: key 0 is the global cooldown, a skill id its
+/// own, 100000 + n a group's).
+fn our_cooldowns(c: &DbConnection, p: &Player) -> Vec<SkillCooldownRow> {
+    p.entity_id
+        .map(|id| c.db.skill_cooldown().iter().filter(|r| r.entity_id == id).collect())
+        .unwrap_or_default()
+}
+
+/// Adds a skill's cooldown to its dictionary: cooldown_end_ms (server clock, see
+/// server_time_ms; 0 when none was started) and cooldown_total (its full length in
+/// seconds). Both only change when the skill is used, so polling them is cheap.
+fn set_cooldown(d: &mut VarDictionary, skill: &rose_data::SkillData, cooldowns: &[SkillCooldownRow]) {
+    let (key, duration) = match skill.cooldown {
+        rose_data::SkillCooldown::Skill { duration } => (skill.id.get() as u32, duration),
+        rose_data::SkillCooldown::Group { group, duration } => (100_000 + group.get() as u32, duration),
+    };
+    let until = cooldowns.iter().filter(|r| r.key == key).map(|r| r.until_us).max().unwrap_or(0);
+    d.set("cooldown_end_ms", until as f64 / 1000.0);
+    d.set("cooldown_total", duration.as_secs_f64());
 }
