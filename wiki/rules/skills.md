@@ -142,8 +142,8 @@ current iROSE data uses a group. On top of that, any skill starts the 0.25 s glo
 cooldown.
 
 While a skill's own cooldown runs, its icon in the hotbar and the skill window is darkened
-by a sweep that shrinks clockwise, with the seconds left in the middle. The short global
-cooldown isn't shown.
+by a sweep that shrinks clockwise, with the seconds left in the middle. After any skill,
+every skill icon also shows a quick sweep (no number) for the 0.25 s global cooldown.
 
 ### Scrolls
 

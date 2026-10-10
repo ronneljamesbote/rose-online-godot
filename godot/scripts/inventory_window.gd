@@ -119,6 +119,8 @@ class Slot:
 		var colour: Color = UI.color("slot.cooldown", Color(0, 0, 0, 0.6))
 		for piece in Geometry2D.intersect_polygons(points, box):
 			shade.draw_colored_polygon(piece, colour)
+		if cooldown_total < 1.0:
+			return  # the global cooldown: too short for a number
 		var text := str(ceili(left)) if left >= 1.0 else "%.1f" % left
 		var font := get_theme_font("font", "SlotCount")
 		var font_size := get_theme_font_size("font_size", "SlotCount") + 2
