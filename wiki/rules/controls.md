@@ -47,6 +47,7 @@ source:
     - godot/scripts/chat_window.gd
     - godot/scripts/ui/options_window.gd
     - godot/scripts/ui/ui_window.gd
+    - godot/scripts/ui/theme_builder.gd (tooltips)
     - godot/scripts/ui/world_overlay.gd
     - godot/scripts/ui/hud/minimap.gd (to_map)
     - godot/scripts/ui/zone_map.gd
@@ -150,7 +151,9 @@ Esc or clicking outside the chat box stops typing.
 - **Options** (O) has three tabs:
   - **Interface**: the theme (four built-in themes, or your own theme files in the
     `themes` folder next to the game), interface size (75% to 150%), window opacity (40%
-    to 100%), blur behind windows, lock windows in place, and reset layout.
+    to 100%), blur behind windows, lock windows in place, and reset layout. Window
+    opacity does not fade tooltips and menus: they are solid on every theme (a theme
+    file can change that with `opacity` under `[tooltip]`).
   - **World labels**: your own name tag, chat bubbles, damage numbers, and whether item
     labels on the ground show always or only while Alt is held. Labels show for items
     within 30 m.
