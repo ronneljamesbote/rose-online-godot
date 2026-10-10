@@ -35,6 +35,7 @@ const QuestTracker := preload("res://scripts/ui/hud/quest_tracker.gd")
 const Notices := preload("res://scripts/ui/hud/notices.gd")
 const CartGauge := preload("res://scripts/ui/hud/cart_gauge.gd")
 const XpLine := preload("res://scripts/ui/hud/xp_line.gd")
+const HoverTooltip := preload("res://scripts/ui/hud/hover_tooltip.gd")
 const ZoneMap := preload("res://scripts/ui/zone_map.gd")
 const OptionsWindow := preload("res://scripts/ui/options_window.gd")
 const WorldOverlay := preload("res://scripts/ui/world_overlay.gd")
@@ -173,6 +174,10 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	menu_bar = HudMenu.new()
 	menu_bar.open.connect(_on_menu)
 	_widget(menu_bar, "menu", Vector2(1, 1), Vector2(-12, -12))
+	# What the mouse is over in the world, bottom right above the menu bar.
+	var hover_tip := HoverTooltip.new()
+	hover_tip.online = self
+	ui_root.add_child(hover_tip)
 	cart_gauge = CartGauge.new()
 	cart_gauge.visible = false
 	_widget(cart_gauge, "cart", Vector2(0.5, 1), Vector2(0, -112))
