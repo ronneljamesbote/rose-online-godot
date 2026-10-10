@@ -1,0 +1,75 @@
+---
+kind: monster
+id: 477
+name: Tirwin
+status: in-game
+level: 136
+hp: 52
+attack: 577
+hit: 389
+defence: 339
+resistance: 596
+avoid: 213
+attack_speed: 91
+attack_range: 12
+damage: magic
+walk_speed: 246
+run_speed: 567
+xp: 104
+drop_item_rate: 51
+drop_money_rate: 30
+zones: 1
+drops:
+- item: '[[items/consumable/182-clan-point-2|Clan Point (+2)]]'
+  slots_of_30: 1
+- item: '[[items/consumable/151-hp-point-50|HP Point (+50)]]'
+  slots_of_30: 1
+- item: '[[items/consumable/183-clan-point-3|Clan Point (+3)]]'
+  slots_of_30: 1
+- item: '[[items/consumable/152-hp-point-100|HP Point (+100)]]'
+  slots_of_30: 1
+- item: '[[items/material/80-rainbow-powder|Rainbow Powder]]'
+  slots_of_30: 3
+- item: '[[items/material/81-lisent-fe|Lisent (Fe)]]'
+  slots_of_30: 3
+- item: '[[items/material/66-iricer|Iricer]]'
+  slots_of_30: 2
+- item: '[[items/material/82-lisent-cu|Lisent (Cu)]]'
+  slots_of_30: 3
+- item: '[[items/material/83-lisent-pb|Lisent (Pb)]]'
+  slots_of_30: 2
+- item: '[[items/material/67-hime|Hime]]'
+  slots_of_30: 1
+- item: '[[items/material/84-lisent-al|Lisent (Al)]]'
+  slots_of_30: 1
+- item: '[[items/material/68-low-enthiric|Low Enthiric]]'
+  slots_of_30: 1
+- item: '[[items/consumable/184-clan-point-5|Clan Point (+5)]]'
+  slots_of_30: 1
+spawns:
+- zone: '[[zones/59-luna-clan-field|Luna Clan Field]]'
+  x: 5319.5
+  y: 5352.5
+  count: 1
+  group: basic
+- zone: '[[zones/59-luna-clan-field|Luna Clan Field]]'
+  x: 5545.1
+  y: 5129.7
+  count: 1
+  group: basic
+- zone: '[[zones/59-luna-clan-field|Luna Clan Field]]'
+  x: 5320.6
+  y: 4904
+  count: 1
+  group: basic
+source:
+  data: LIST_NPC.STB row 477, ITEM_DROP.STB row 280
+  code:
+  - module/src/monster_brain.rs
+  - crates/rose-game-irose/src/data/drop_table.rs
+---
+# Tirwin
+
+Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
+how the XP value turns into experience is on [[rules/experience|Experience]].

@@ -1,0 +1,21 @@
+[package]
+name = "wiki-gen"
+version.workspace = true
+edition.workspace = true
+publish = false
+
+# Writes the first draft of the wiki's table pages (skills, monsters, NPCs, quests, items,
+# zones) and their maps and icons from the iROSE client data. See tools/wiki-gen/README.md.
+
+[dependencies]
+rose-data = { path = "../../crates/rose-data" }
+rose-data-irose = { path = "../../crates/rose-data-irose" }
+rose-file-readers = { path = "../../crates/rose-file-readers" }
+rose-game-common = { path = "../../crates/rose-game-common" }
+rose-game-data = { path = "../../crates/rose-game-data" }
+anyhow = { workspace = true }
+serde_yaml = { workspace = true }
+serde_json = { workspace = true }
+num-traits = { workspace = true }
+thiserror = { workspace = true }
+arrayvec = { workspace = true }
