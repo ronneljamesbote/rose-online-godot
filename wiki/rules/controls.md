@@ -49,6 +49,8 @@ source:
     - godot/scripts/ui/ui_window.gd
     - godot/scripts/ui/theme_builder.gd (tooltips)
     - godot/scripts/ui/hud/hover_tooltip.gd
+    - godot/scripts/ui/hint_label.gd
+    - godot/scripts/character_window.gd (HINTS)
     - godot/scripts/ui/world_overlay.gd
     - godot/scripts/ui/hud/minimap.gd (to_map)
     - godot/scripts/ui/zone_map.gd
@@ -143,6 +145,8 @@ Esc or clicking outside the chat box stops typing.
 - Every window has a title bar to drag it, a minimise and a close button, and a corner
   grip to resize it from 75% to 150%. Windows and HUD pieces snap to the screen edges and
   remember where they were and whether they were open.
+- Pointing at a stat or value in the character window (C), or at the stat and skill
+  points, shows a tooltip saying what it does and what one more point of a stat adds.
 - Clicking a quest in the quest tracker opens the quest window.
 - Pointing at a monster, a town NPC or an item on the ground (or its label) shows a tooltip
   in the bottom right corner of the screen, above the menu: a monster's level and life, an
