@@ -48,7 +48,8 @@ source:
     - godot/scripts/ui/options_window.gd
     - godot/scripts/ui/ui_window.gd
     - godot/scripts/ui/world_overlay.gd
-    - godot/scripts/ui/hud/minimap.gd
+    - godot/scripts/ui/hud/minimap.gd (to_map)
+    - godot/scripts/ui/zone_map.gd
     - godot/scripts/ui/hud/quest_tracker.gd
   data: ""
 ---
@@ -139,6 +140,11 @@ Esc or clicking outside the chat box stops typing.
   grip to resize it from 75% to 150%. Windows and HUD pieces snap to the screen edges and
   remember where they were and whether they were open.
 - Clicking a quest in the quest tracker opens the quest window.
+- The **minimap** (top right) and the **zone map** (M) always have north up. They show you
+  as an arrow, town NPCs as green dots (named on the zone map), party members in blue and,
+  on the minimap, monsters in red. The map image is the zone's own picture, the same one
+  each zone page shows, with 2.5 m per pixel; its top left corner is the zone page's map
+  `left` and `top`.
 - **Options** (O) has three tabs:
   - **Interface**: the theme (four built-in themes, or your own theme files in the
     `themes` folder next to the game), interface size (75% to 150%), window opacity (40%
