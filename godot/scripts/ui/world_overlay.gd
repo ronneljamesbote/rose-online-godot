@@ -22,7 +22,7 @@ var pvp := false
 var _canvas: Control
 var _floats: Array = []  # {at: Vector3, text, colour, size, born, seconds, dx}
 var _bubbles := {}  # entity -> {text, until}
-var _labels: Array = []  # this frame's item labels: {rect: Rect2, id}
+var _labels: Array = []  # this frame's item labels: {rect: Rect2, id, mine}
 
 
 func _ready() -> void:
@@ -63,10 +63,18 @@ func _input(event: InputEvent) -> void:
 		if get_viewport().gui_get_hovered_control() != null:
 			return
 		for label in _labels:
-			if label["rect"].has_point(event.position):
+			if label["mine"] and label["rect"].has_point(event.position):
 				online.pickup(label["id"])
 				get_viewport().set_input_as_handled()
 				return
+
+
+## The ground item whose label is under this screen position, or -1.
+func item_label_at(at: Vector2) -> int:
+	for label in _labels:
+		if label["rect"].has_point(at):
+			return label["id"]
+	return -1
 
 
 func _draw_all() -> void:
@@ -253,8 +261,7 @@ func _draw_items(camera: Camera3D, font: Font, s: float) -> void:
 		_canvas.draw_rect(rect, Color(0.04, 0.04, 0.06, 0.82 * alpha))
 		_canvas.draw_rect(rect, Color(colour, 0.85 * alpha), false, 1.0)
 		_canvas.draw_string(font, rect.position + Vector2(pad.x, pad.y + fs * 0.82), label["text"], HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Color(colour, alpha))
-		if label["mine"]:
-			_labels.append({"rect": rect, "id": label["id"]})
+		_labels.append({"rect": rect, "id": label["id"], "mine": label["mine"]})
 
 
 func _draw_bubbles(camera: Camera3D, font: Font, s: float) -> void:

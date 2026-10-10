@@ -314,14 +314,22 @@ static func build(ui: Node) -> Theme:
 	t.set_stylebox("separator", "VSeparator", vline)
 
 	# Tooltips and menus.
-	var tip := UiBoxScript.make(c.call("tooltip.top"), c.call("tooltip.bottom"), small_radius)
+	# Their background alpha is the theme's tooltip.opacity, whatever the window opacity
+	# setting or the colours' own alpha, so they stand apart from windows.
+	var tip_opacity := clampf(n.call("tooltip.opacity", 0.88), 0.0, 1.0)
+	var tip := UiBoxScript.make(Color(c.call("tooltip.top"), tip_opacity), Color(c.call("tooltip.bottom"), tip_opacity), n.call("tooltip.radius", 3))
 	tip.border_width = 1.0
 	tip.border_color = c.call("tooltip.border_color")
-	tip.shadow_color = Color(0, 0, 0, 0.35 if dark else 0.18)
-	tip.shadow_size = 8
-	tip.shadow_offset = 3
+	tip.shadow_color = c.call("tooltip.shadow_color")
+	tip.shadow_size = n.call("tooltip.shadow_size", 12)
+	tip.shadow_offset = n.call("tooltip.shadow_offset", 4)
 	tip.set_margins(10, 6, 10, 6)
-	t.set_stylebox("panel", "TooltipPanel", tip)
+	# The tooltip pop-up clips at its edges, so the box sits inside it with room for the shadow.
+	var room := tip.shadow_size if tip.shadow_color.a > 0.0 else 0.0
+	var tooltip_box: UiBox = tip.duplicate()
+	tooltip_box.inset = Vector4(room, maxf(room - tip.shadow_offset, 0.0), room, room + tip.shadow_offset)
+	tooltip_box.set_margins(10 + room, 6 + tooltip_box.inset.y, 10 + room, 6 + tooltip_box.inset.w)
+	t.set_stylebox("panel", "TooltipPanel", tooltip_box)
 	t.set_color("font_color", "TooltipLabel", c.call("tooltip.text"))
 	t.set_color("font_outline_color", "TooltipLabel", Color(0, 0, 0, 0))
 	var menu_panel: UiBox = tip.duplicate()
