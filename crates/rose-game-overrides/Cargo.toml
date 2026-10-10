@@ -1,0 +1,14 @@
+[package]
+name = "rose-game-overrides"
+version = { workspace = true }
+edition = { workspace = true }
+publish = false
+
+# overrides/game-data.toml: our changes to the iROSE game data, applied by the client and
+# by the server's game data upload. See overrides/README.md.
+
+[dependencies]
+rose-file-readers = { path = "../rose-file-readers" }
+anyhow = { workspace = true }
+serde = { workspace = true }
+toml = "0.8"

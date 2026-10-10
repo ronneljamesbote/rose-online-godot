@@ -1,0 +1,15 @@
+# Our changes to the iROSE game data. See README.md in this folder.
+#
+# Each [[stb]] entry sets one cell of one STB table. The game client applies them when it
+# loads its data and the server's game data upload applies them to what it sends, so both
+# sides see the same value. Every entry names the wiki page that asks for it, and that page
+# shows the new value.
+#
+# Example (not active):
+#
+# [[stb]]
+# file = "3DDATA/STB/LIST_WEAPON.STB"
+# row = 2                 # Short Sword (wiki/items/weapon/2-short-sword.md)
+# column = 35             # attack power
+# value = 12
+# note = "Short Sword hits a bit harder, wiki/items/weapon/2-short-sword.md"

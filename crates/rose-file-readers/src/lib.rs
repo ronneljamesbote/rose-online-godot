@@ -73,7 +73,7 @@ pub use lit::{LitFile, LitObject, LitObjectPart};
 pub use ltb::LtbFile;
 pub use ptl::{PtlFile, PtlKeyframe, PtlKeyframeData, PtlSequence, PtlUpdateCoords};
 pub use qsd::*;
-pub use stb::{StbFile, StbReadOptions};
+pub use stb::{patch_stb, StbFile, StbReadOptions};
 pub use stl::{StlFile, StlItemEntry, StlNormalEntry, StlQuestEntry, StlReadOptions};
 pub use til::TilFile;
 #[cfg(not(target_arch = "wasm32"))]

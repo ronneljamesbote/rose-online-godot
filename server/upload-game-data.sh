@@ -2,7 +2,8 @@
 # Uploads the game databases' source files from a ROSE client folder to the server.
 # Usage: upload-game-data.sh <path to data.idx> [server URL] [database name]
 # Needs rose-stdb-import (the import tool), spacetimedb-cli logged in as the admin
-# (the identity that published the module) and curl.
+# (the identity that published the module) and curl. Applies the data changes in
+# ROSE_OVERRIDES (default: overrides/game-data.toml in the current folder).
 set -e
 DATA_IDX=${1:?usage: upload-game-data.sh <data.idx> [server] [database]}
 SERVER=${2:-http://127.0.0.1:3000}
