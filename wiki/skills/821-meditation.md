@@ -8,7 +8,6 @@ type: Passive
 job: Muse Job
 max_level: 20
 target: Yourself
-warps_to: '[[zones/55-freezing-plateau|Freezing Plateau]]'
 skill_books:
 - '[[items/consumable/702-meditation|Meditation]]'
 levels:

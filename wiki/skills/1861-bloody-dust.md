@@ -9,7 +9,6 @@ job: Raider Job
 max_level: 10
 target: Hostile Character
 damage_type: magic attack
-warps_to: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
 skill_books:
 - '[[items/consumable/791-bloody-dust|Bloody Dust]]'
 levels:
@@ -24,7 +23,7 @@ levels:
   duration: 16
   success: 46
   effects: Dodge Rate Down
-  changes: Dodge Rate +30%
+  changes: Dodge Rate -30%
 - level: 2
   id: 1862
   needs: '[[skills/1831-mana-blood|Mana Blood]] level 9'
@@ -36,7 +35,7 @@ levels:
   duration: 18
   success: 48
   effects: Dodge Rate Down
-  changes: Dodge Rate +31%
+  changes: Dodge Rate -31%
 - level: 3
   id: 1863
   needs: '[[skills/1831-mana-blood|Mana Blood]] level 10'
@@ -48,7 +47,7 @@ levels:
   duration: 20
   success: 50
   effects: Dodge Rate Down
-  changes: Dodge Rate +32%
+  changes: Dodge Rate -32%
 - level: 4
   id: 1864
   learn_points: 54
@@ -59,7 +58,7 @@ levels:
   duration: 22
   success: 52
   effects: Dodge Rate Down
-  changes: Dodge Rate +33%
+  changes: Dodge Rate -33%
 - level: 5
   id: 1865
   learn_points: 62
@@ -70,7 +69,7 @@ levels:
   duration: 24
   success: 54
   effects: Dodge Rate Down
-  changes: Dodge Rate +34%
+  changes: Dodge Rate -34%
 - level: 6
   id: 1866
   learn_points: 71
@@ -81,7 +80,7 @@ levels:
   duration: 26
   success: 56
   effects: Dodge Rate Down
-  changes: Dodge Rate +35%
+  changes: Dodge Rate -35%
 - level: 7
   id: 1867
   learn_points: 81
@@ -92,7 +91,7 @@ levels:
   duration: 28
   success: 58
   effects: Dodge Rate Down
-  changes: Dodge Rate +36%
+  changes: Dodge Rate -36%
 - level: 8
   id: 1868
   learn_points: 93
@@ -103,7 +102,7 @@ levels:
   duration: 30
   success: 60
   effects: Dodge Rate Down
-  changes: Dodge Rate +37%
+  changes: Dodge Rate -37%
 - level: 9
   id: 1869
   learn_points: 106
@@ -114,7 +113,7 @@ levels:
   duration: 32
   success: 62
   effects: Dodge Rate Down
-  changes: Dodge Rate +38%
+  changes: Dodge Rate -38%
 - level: 10
   id: 1870
   learn_points: 121
@@ -125,7 +124,7 @@ levels:
   duration: 34
   success: 64
   effects: Dodge Rate Down
-  changes: Dodge Rate +40%
+  changes: Dodge Rate -40%
 source:
   data: LIST_SKILL.STB rows 1861, 1862, 1863, 1864, 1865, 1866, 1867, 1868, 1869, 1870
   code: module/src/skills.rs

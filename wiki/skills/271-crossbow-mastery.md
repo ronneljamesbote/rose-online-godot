@@ -9,7 +9,6 @@ job: Soldier Job
 max_level: 10
 target: Yourself
 needs_weapon: Crossbow
-warps_to: zone 47
 skill_books:
 - '[[items/consumable/113-plum|Plum]]'
 - '[[items/consumable/656-crossbow-mastery|Crossbow Mastery]]'

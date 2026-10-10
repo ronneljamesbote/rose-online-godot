@@ -142,7 +142,7 @@ levels:
   duration: 12
   success: 15
   effects: Dodge Rate Down
-  changes: Dodge Rate +30 +15%
+  changes: Dodge Rate -30 -15%
 - level: 20
   id: 340
   learn_points: 71
@@ -152,7 +152,7 @@ levels:
   duration: 15
   success: 20
   effects: Dodge Rate Down
-  changes: Dodge Rate +40 +20%
+  changes: Dodge Rate -40 -20%
 source:
   data: LIST_SKILL.STB rows 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340
   code: module/src/skills.rs

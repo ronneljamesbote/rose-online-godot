@@ -8,7 +8,6 @@ type: Passive
 job: Muse Job
 max_level: 20
 target: Yourself
-warps_to: '[[zones/61-refuge-xita|Refuge Xita]]'
 skill_books:
 - '[[items/consumable/703-spell-mastery|Spell Mastery]]'
 levels:

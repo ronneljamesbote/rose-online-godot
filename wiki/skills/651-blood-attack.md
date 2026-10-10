@@ -10,7 +10,6 @@ max_level: 10
 target: Hostile Character
 damage_type: weapon attack
 needs_weapon: One-Handed Sword, One-Handed Blunt Weapon, Two-Handed Sword, Spear, Two-Handed Axe
-warps_to: zone 16
 skill_books:
 - '[[items/consumable/690-blood-attack|Blood Attack]]'
 levels:

@@ -64,7 +64,7 @@ levels:
   duration: 12
   success: 30
   effects: Slow
-  changes: Movement Speed +40%
+  changes: Movement Speed -40%
 - level: 7
   id: 987
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 12'
@@ -76,7 +76,7 @@ levels:
   duration: 13
   success: 34
   effects: Slow
-  changes: Movement Speed +44%
+  changes: Movement Speed -44%
 - level: 8
   id: 988
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 14'
@@ -88,7 +88,7 @@ levels:
   duration: 14
   success: 38
   effects: Slow
-  changes: Movement Speed +48%
+  changes: Movement Speed -48%
 - level: 9
   id: 989
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 16'
@@ -100,7 +100,7 @@ levels:
   duration: 15
   success: 42
   effects: Slow
-  changes: Movement Speed +52%
+  changes: Movement Speed -52%
 - level: 10
   id: 990
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 18'
@@ -112,7 +112,7 @@ levels:
   duration: 20
   success: 50
   effects: Slow
-  changes: Movement Speed +60%
+  changes: Movement Speed -60%
 source:
   data: LIST_SKILL.STB rows 981, 982, 983, 984, 985, 986, 987, 988, 989, 990
   code: module/src/skills.rs

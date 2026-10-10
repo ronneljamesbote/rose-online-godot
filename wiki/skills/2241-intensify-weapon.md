@@ -9,7 +9,6 @@ job: Dealer Job
 max_level: 10
 target: Yourself
 needs_weapon: Gun, Launcher
-warps_to: '[[zones/24-el-verloon-desert|El Verloon Desert]]'
 skill_books:
 - '[[items/consumable/818-intensify-weapon|Intensify Weapon]]'
 levels:

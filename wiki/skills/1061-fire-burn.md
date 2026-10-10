@@ -10,7 +10,6 @@ max_level: 10
 target: Hostile Character
 damage_type: magic attack
 needs_weapon: Magic Staff, Magic Tool
-warps_to: '[[zones/19-zone-19|Zone 19]]'
 skill_books:
 - '[[items/consumable/723-fire-burn|Fire Burn]]'
 levels:
@@ -25,7 +24,7 @@ levels:
   duration: 15
   success: 25
   effects: Def Down
-  changes: Defense +10%
+  changes: Defense -10%
 - level: 2
   id: 1062
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 11'
@@ -37,7 +36,7 @@ levels:
   duration: 16
   success: 25
   effects: Def Down
-  changes: Defense +11%
+  changes: Defense -11%
 - level: 3
   id: 1063
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 12'
@@ -49,7 +48,7 @@ levels:
   duration: 17
   success: 25
   effects: Def Down
-  changes: Defense +12%
+  changes: Defense -12%
 - level: 4
   id: 1064
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 13'
@@ -61,7 +60,7 @@ levels:
   duration: 18
   success: 25
   effects: Def Down
-  changes: Defense +13%
+  changes: Defense -13%
 - level: 5
   id: 1065
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 14'
@@ -73,7 +72,7 @@ levels:
   duration: 19
   success: 25
   effects: Def Down
-  changes: Defense +14%
+  changes: Defense -14%
 - level: 6
   id: 1066
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 15'
@@ -86,7 +85,7 @@ levels:
   duration: 20
   success: 26
   effects: Def Down
-  changes: Defense +15%
+  changes: Defense -15%
 - level: 7
   id: 1067
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 16'
@@ -99,7 +98,7 @@ levels:
   duration: 21
   success: 27
   effects: Def Down
-  changes: Defense +16%
+  changes: Defense -16%
 - level: 8
   id: 1068
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 17'
@@ -112,7 +111,7 @@ levels:
   duration: 22
   success: 28
   effects: Def Down
-  changes: Defense +17%
+  changes: Defense -17%
 - level: 9
   id: 1069
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 18'
@@ -125,7 +124,7 @@ levels:
   duration: 23
   success: 29
   effects: Def Down
-  changes: Defense +18%
+  changes: Defense -18%
 - level: 10
   id: 1070
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 20'
@@ -138,7 +137,7 @@ levels:
   duration: 24
   success: 33
   effects: Def Down
-  changes: Defense +20%
+  changes: Defense -20%
 source:
   data: LIST_SKILL.STB rows 1061, 1062, 1063, 1064, 1065, 1066, 1067, 1068, 1069, 1070
   code: module/src/skills.rs

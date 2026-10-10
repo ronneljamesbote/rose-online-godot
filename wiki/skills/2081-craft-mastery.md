@@ -8,7 +8,6 @@ type: Passive
 job: Dealer Job
 max_level: 10
 target: Yourself
-warps_to: '[[zones/55-freezing-plateau|Freezing Plateau]]'
 skill_books:
 - '[[items/consumable/811-craft-mastery|Craft Mastery]]'
 levels:

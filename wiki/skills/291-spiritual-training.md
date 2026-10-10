@@ -8,7 +8,6 @@ type: Passive
 job: Soldier Job
 max_level: 10
 target: Yourself
-warps_to: '[[zones/55-freezing-plateau|Freezing Plateau]]'
 skill_books:
 - '[[items/consumable/4-health-bottle-s|Health Bottle (S)]]'
 - '[[items/consumable/22-mana-vial-m|Mana Vial (M)]]'

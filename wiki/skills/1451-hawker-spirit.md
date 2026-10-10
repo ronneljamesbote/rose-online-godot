@@ -8,7 +8,6 @@ type: Continuing (Self)
 job: Hawker Job
 max_level: 10
 target: Yourself
-warps_to: '[[zones/20-birth-island|Birth Island]]'
 skill_books:
 - '[[items/consumable/754-hawker-spirit|Hawker Spirit]]'
 levels:

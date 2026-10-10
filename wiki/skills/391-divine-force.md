@@ -9,7 +9,6 @@ job: Soldier Job
 max_level: 10
 target: Hostile Character
 damage_type: magic attack
-warps_to: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
 skill_books:
 - '[[items/consumable/2-health-vial-m|Health Vial (M)]]'
 - '[[items/consumable/25-mana-bottle-m|Mana Bottle (M)]]'
@@ -30,7 +29,7 @@ levels:
   duration: 15
   success: 60
   effects: Magic Resistance Down
-  changes: Magic Resistance +25%
+  changes: Magic Resistance -25%
 - level: 2
   id: 392
   needs: '[[skills/291-spiritual-training|Spiritual Training]] level 7'
@@ -42,7 +41,7 @@ levels:
   duration: 15
   success: 62
   effects: Magic Resistance Down
-  changes: Magic Resistance +26%
+  changes: Magic Resistance -26%
 - level: 3
   id: 393
   needs: '[[skills/291-spiritual-training|Spiritual Training]] level 8'
@@ -54,7 +53,7 @@ levels:
   duration: 15
   success: 64
   effects: Magic Resistance Down
-  changes: Magic Resistance +27%
+  changes: Magic Resistance -27%
 - level: 4
   id: 394
   needs: '[[skills/291-spiritual-training|Spiritual Training]] level 9'
@@ -66,7 +65,7 @@ levels:
   duration: 15
   success: 66
   effects: Magic Resistance Down
-  changes: Magic Resistance +28%
+  changes: Magic Resistance -28%
 - level: 5
   id: 395
   needs: '[[skills/291-spiritual-training|Spiritual Training]] level 10'
@@ -78,7 +77,7 @@ levels:
   duration: 15
   success: 68
   effects: Magic Resistance Down
-  changes: Magic Resistance +29%
+  changes: Magic Resistance -29%
 - level: 6
   id: 396
   learn_points: 46
@@ -90,7 +89,7 @@ levels:
   duration: 18
   success: 70
   effects: Magic Resistance Down
-  changes: Magic Resistance +30%
+  changes: Magic Resistance -30%
 - level: 7
   id: 397
   learn_points: 57
@@ -102,7 +101,7 @@ levels:
   duration: 19
   success: 72
   effects: Magic Resistance Down
-  changes: Magic Resistance +31%
+  changes: Magic Resistance -31%
 - level: 8
   id: 398
   learn_points: 70
@@ -114,7 +113,7 @@ levels:
   duration: 20
   success: 74
   effects: Magic Resistance Down
-  changes: Magic Resistance +32%
+  changes: Magic Resistance -32%
 - level: 9
   id: 399
   learn_points: 86
@@ -126,7 +125,7 @@ levels:
   duration: 21
   success: 76
   effects: Magic Resistance Down
-  changes: Magic Resistance +33%
+  changes: Magic Resistance -33%
 - level: 10
   id: 400
   learn_points: 105
@@ -138,7 +137,7 @@ levels:
   duration: 23
   success: 78
   effects: Magic Resistance Down
-  changes: Magic Resistance +35%
+  changes: Magic Resistance -35%
 source:
   data: LIST_SKILL.STB rows 391, 392, 393, 394, 395, 396, 397, 398, 399, 400
   code: module/src/skills.rs

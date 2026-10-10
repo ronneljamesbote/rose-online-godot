@@ -149,7 +149,7 @@ levels:
   duration: 10
   success: 15
   effects: Slow
-  changes: Movement Speed +30%
+  changes: Movement Speed -30%
 - level: 20
   id: 1540
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 20'
@@ -160,7 +160,7 @@ levels:
   duration: 15
   success: 20
   effects: Slow
-  changes: Movement Speed +50%
+  changes: Movement Speed -50%
 source:
   data: LIST_SKILL.STB rows 1521, 1522, 1523, 1524, 1525, 1526, 1527, 1528, 1529, 1530, 1531, 1532, 1533, 1534, 1535, 1536, 1537, 1538, 1539, 1540
   code: module/src/skills.rs

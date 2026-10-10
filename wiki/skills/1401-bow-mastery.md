@@ -9,7 +9,6 @@ job: Hawker Job
 max_level: 20
 target: Yourself
 needs_weapon: Bow
-warps_to: zone 44
 skill_books:
 - '[[items/consumable/751-bow-mastery|Bow Mastery]]'
 levels:

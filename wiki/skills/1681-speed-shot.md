@@ -9,7 +9,6 @@ job: Hawker Job
 max_level: 10
 target: Yourself
 needs_weapon: Bow, Crossbow
-warps_to: '[[zones/24-el-verloon-desert|El Verloon Desert]]'
 skill_books:
 - '[[items/consumable/773-speed-shot|Speed Shot]]'
 levels:

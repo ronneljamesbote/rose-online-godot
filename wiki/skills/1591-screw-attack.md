@@ -10,7 +10,6 @@ max_level: 10
 target: Hostile Character
 damage_type: weapon attack
 needs_weapon: Katar, Dual Swords
-warps_to: '[[zones/19-zone-19|Zone 19]]'
 skill_books:
 - '[[items/consumable/763-screw-attack|Screw Attack]]'
 levels:
@@ -25,7 +24,7 @@ levels:
   duration: 20
   success: 35
   effects: Def Down
-  changes: Defense +20 +10%
+  changes: Defense -20 -10%
 - level: 2
   id: 1592
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 7'
@@ -37,7 +36,7 @@ levels:
   duration: 20
   success: 37
   effects: Def Down
-  changes: Defense +20 +11%
+  changes: Defense -20 -11%
 - level: 3
   id: 1593
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 8'
@@ -49,7 +48,7 @@ levels:
   duration: 20
   success: 39
   effects: Def Down
-  changes: Defense +20 +12%
+  changes: Defense -20 -12%
 - level: 4
   id: 1594
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 9'
@@ -61,7 +60,7 @@ levels:
   duration: 20
   success: 41
   effects: Def Down
-  changes: Defense +20 +13%
+  changes: Defense -20 -13%
 - level: 5
   id: 1595
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 10'
@@ -73,7 +72,7 @@ levels:
   duration: 20
   success: 43
   effects: Def Down
-  changes: Defense +20 +14%
+  changes: Defense -20 -14%
 - level: 6
   id: 1596
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 11'
@@ -85,7 +84,7 @@ levels:
   duration: 20
   success: 45
   effects: Def Down
-  changes: Defense +30 +15%
+  changes: Defense -30 -15%
 - level: 7
   id: 1597
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 12'
@@ -97,7 +96,7 @@ levels:
   duration: 20
   success: 47
   effects: Def Down
-  changes: Defense +30 +16%
+  changes: Defense -30 -16%
 - level: 8
   id: 1598
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 13'
@@ -109,7 +108,7 @@ levels:
   duration: 20
   success: 49
   effects: Def Down
-  changes: Defense +30 +17%
+  changes: Defense -30 -17%
 - level: 9
   id: 1599
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 14'
@@ -121,7 +120,7 @@ levels:
   duration: 20
   success: 51
   effects: Def Down
-  changes: Defense +30 +18%
+  changes: Defense -30 -18%
 - level: 10
   id: 1600
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 15'
@@ -133,7 +132,7 @@ levels:
   duration: 20
   success: 55
   effects: Def Down
-  changes: Defense +30 +20%
+  changes: Defense -30 -20%
 source:
   data: LIST_SKILL.STB rows 1591, 1592, 1593, 1594, 1595, 1596, 1597, 1598, 1599, 1600
   code: module/src/skills.rs

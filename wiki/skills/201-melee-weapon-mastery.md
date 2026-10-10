@@ -9,7 +9,6 @@ job: Soldier Job
 max_level: 10
 target: Yourself
 needs_weapon: One-Handed Sword, One-Handed Blunt Weapon, Two-Handed Sword, Spear, Two-Handed Axe
-warps_to: zone 42
 skill_books:
 - '[[items/consumable/651-melee-weapon-mastery|Melee Weapon Mastery]]'
 levels:

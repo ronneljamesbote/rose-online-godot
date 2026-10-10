@@ -9,7 +9,6 @@ job: Hawker Job
 max_level: 20
 target: Yourself
 needs_weapon: Bow, Katar, Dual Swords
-warps_to: zone 49
 skill_books:
 - '[[items/consumable/755-combat-mastery|Combat Mastery]]'
 levels:

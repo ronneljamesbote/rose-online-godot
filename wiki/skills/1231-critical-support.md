@@ -4,11 +4,10 @@ id: 1231
 name: Critical Support
 status: in-game
 icon: skill/214
-type: 'Continuing '
+type: Continuing
 job: Cleric Job
 max_level: 10
 target: Ally
-warps_to: '[[zones/26-forest-of-wisdom|Forest of Wisdom]]'
 skill_books:
 - '[[items/consumable/740-critical-support|Critical Support]]'
 levels:

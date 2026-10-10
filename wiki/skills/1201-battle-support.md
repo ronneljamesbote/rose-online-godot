@@ -4,11 +4,10 @@ id: 1201
 name: Battle Support
 status: in-game
 icon: skill/212
-type: 'Continuing '
+type: Continuing
 job: Cleric Job
 max_level: 10
 target: Ally
-warps_to: '[[zones/24-el-verloon-desert|El Verloon Desert]]'
 skill_books:
 - '[[items/consumable/737-battle-support|Battle Support]]'
 levels:

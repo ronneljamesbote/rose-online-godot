@@ -9,7 +9,6 @@ job: Champion Job
 max_level: 10
 target: Yourself
 needs_weapon: Two-Handed Sword, Spear, Two-Handed Axe
-warps_to: zone 43
 skill_books:
 - '[[items/consumable/653-two-handed-mastery|Two-Handed Mastery]]'
 levels:

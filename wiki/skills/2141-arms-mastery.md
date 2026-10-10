@@ -9,7 +9,6 @@ job: Dealer Job
 max_level: 20
 target: Yourself
 needs_weapon: Gun, Launcher
-warps_to: zone 50
 skill_books:
 - '[[items/consumable/810-arms-mastery|Arms Mastery]]'
 levels:

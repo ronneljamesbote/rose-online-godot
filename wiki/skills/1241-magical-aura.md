@@ -8,7 +8,6 @@ type: Continuing (Self)
 job: Cleric Job
 max_level: 10
 target: Party Member
-warps_to: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
 skill_books:
 - '[[items/consumable/741-magical-aura|Magical Aura]]'
 levels:

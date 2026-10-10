@@ -65,7 +65,7 @@ levels:
   duration: 20
   success: 22
   effects: Def Down, Magic Resistance Down
-  changes: Defense +30%, Magic Resistance +30%
+  changes: Defense -30%, Magic Resistance -30%
 - level: 7
   id: 907
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 12'
@@ -77,7 +77,7 @@ levels:
   duration: 20
   success: 24
   effects: Def Down, Magic Resistance Down
-  changes: Defense +30%, Magic Resistance +30%
+  changes: Defense -30%, Magic Resistance -30%
 - level: 8
   id: 908
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 14'
@@ -89,7 +89,7 @@ levels:
   duration: 20
   success: 26
   effects: Def Down, Magic Resistance Down
-  changes: Defense +30%, Magic Resistance +30%
+  changes: Defense -30%, Magic Resistance -30%
 - level: 9
   id: 909
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 16'
@@ -101,7 +101,7 @@ levels:
   duration: 20
   success: 28
   effects: Def Down, Magic Resistance Down
-  changes: Defense +30%, Magic Resistance +30%
+  changes: Defense -30%, Magic Resistance -30%
 - level: 10
   id: 910
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 18'
@@ -113,7 +113,7 @@ levels:
   duration: 20
   success: 30
   effects: Def Down, Magic Resistance Down
-  changes: Defense +30%, Magic Resistance +30%
+  changes: Defense -30%, Magic Resistance -30%
 source:
   data: LIST_SKILL.STB rows 901, 902, 903, 904, 905, 906, 907, 908, 909, 910
   code: module/src/skills.rs

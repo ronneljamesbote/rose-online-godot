@@ -8,7 +8,6 @@ type: Magic Recovery
 job: any
 max_level: 0
 target: Ally
-warps_to: zone 16
 skill_books:
 - '[[items/consumable/622-massage|Massage]]'
 levels:

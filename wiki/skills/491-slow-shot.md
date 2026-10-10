@@ -10,7 +10,6 @@ max_level: 10
 target: Hostile Character
 damage_type: weapon attack
 needs_weapon: Crossbow
-warps_to: '[[zones/23-breezy-hills|Breezy Hills]]'
 skill_books:
 - '[[items/consumable/7-herbal-medicine-s|Herbal Medicine (S)]]'
 - '[[items/consumable/11-vital-water-m|Vital Water (M)]]'
@@ -32,7 +31,7 @@ levels:
   duration: 16
   success: 70
   effects: Slow
-  changes: Movement Speed +40%
+  changes: Movement Speed -40%
 - level: 2
   id: 492
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 6'
@@ -43,7 +42,7 @@ levels:
   duration: 17
   success: 72
   effects: Slow
-  changes: Movement Speed +42%
+  changes: Movement Speed -42%
 - level: 3
   id: 493
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 7'
@@ -54,7 +53,7 @@ levels:
   duration: 18
   success: 74
   effects: Slow
-  changes: Movement Speed +44%
+  changes: Movement Speed -44%
 - level: 4
   id: 494
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 8'
@@ -65,7 +64,7 @@ levels:
   duration: 19
   success: 76
   effects: Slow
-  changes: Movement Speed +46%
+  changes: Movement Speed -46%
 - level: 5
   id: 495
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 9'
@@ -76,7 +75,7 @@ levels:
   duration: 20
   success: 78
   effects: Slow
-  changes: Movement Speed +48%
+  changes: Movement Speed -48%
 - level: 6
   id: 496
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 10'
@@ -87,7 +86,7 @@ levels:
   duration: 20
   success: 80
   effects: Slow
-  changes: Movement Speed +49%
+  changes: Movement Speed -49%
 - level: 7
   id: 497
   learn_points: 42
@@ -97,7 +96,7 @@ levels:
   duration: 20
   success: 82
   effects: Slow
-  changes: Movement Speed +50%
+  changes: Movement Speed -50%
 - level: 8
   id: 498
   learn_points: 49
@@ -107,7 +106,7 @@ levels:
   duration: 20
   success: 84
   effects: Slow
-  changes: Movement Speed +51%
+  changes: Movement Speed -51%
 - level: 9
   id: 499
   learn_points: 57
@@ -117,7 +116,7 @@ levels:
   duration: 20
   success: 86
   effects: Slow
-  changes: Movement Speed +52%
+  changes: Movement Speed -52%
 - level: 10
   id: 500
   learn_points: 66
@@ -127,7 +126,7 @@ levels:
   duration: 20
   success: 90
   effects: Slow
-  changes: Movement Speed +53%
+  changes: Movement Speed -53%
 source:
   data: LIST_SKILL.STB rows 491, 492, 493, 494, 495, 496, 497, 498, 499, 500
   code: module/src/skills.rs

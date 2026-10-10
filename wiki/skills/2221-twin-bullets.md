@@ -150,7 +150,7 @@ levels:
   duration: 10
   success: 15
   effects: Slow
-  changes: Movement Speed +30%
+  changes: Movement Speed -30%
 - level: 20
   id: 2240
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 20'
@@ -161,7 +161,7 @@ levels:
   duration: 15
   success: 20
   effects: Slow
-  changes: Movement Speed +50%
+  changes: Movement Speed -50%
 source:
   data: LIST_SKILL.STB rows 2221, 2222, 2223, 2224, 2225, 2226, 2227, 2228, 2229, 2230, 2231, 2232, 2233, 2234, 2235, 2236, 2237, 2238, 2239, 2240
   code: module/src/skills.rs

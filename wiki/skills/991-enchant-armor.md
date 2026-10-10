@@ -8,7 +8,6 @@ type: Continuing (Self)
 job: Muse Job
 max_level: 10
 target: Yourself
-warps_to: '[[zones/19-zone-19|Zone 19]]'
 skill_books:
 - '[[items/consumable/6-health-bottle-l|Health Bottle (L)]]'
 - '[[items/consumable/9-herbal-medicine-l|Herbal Medicine (L)]]'

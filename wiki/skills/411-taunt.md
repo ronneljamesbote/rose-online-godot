@@ -4,7 +4,7 @@ id: 411
 name: Taunt
 status: in-game
 icon: skill/62
-type: 'Continuing '
+type: Continuing
 job: Soldier Job
 max_level: 3
 target: Hostile Monster

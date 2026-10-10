@@ -8,7 +8,6 @@ type: Passive
 job: Dealer Job
 max_level: 10
 target: Yourself
-warps_to: '[[zones/62-shady-jungle|Shady Jungle]]'
 skill_books:
 - '[[items/consumable/807-hire-mercenary|Hire Mercenary]]'
 levels:

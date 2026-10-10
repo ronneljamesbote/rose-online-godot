@@ -2,7 +2,7 @@
 
 use std::collections::BTreeMap;
 
-use rose_data::{AbilityType, ItemData, ItemType, SkillCooldown, SkillData, SkillDamageType};
+use rose_data::{AbilityType, ItemData, ItemType, SkillCooldown, SkillData, SkillDamageType, SkillType};
 use serde_yaml::Value;
 
 use crate::{
@@ -47,7 +47,7 @@ pub fn write(cx: &Ctx, pages: &mut Pages) {
         p.set("status", "in-game");
         p.set("icon", format!("skill/{}", first.icon_number));
         let t = game.string_database.get_skill_type(first.skill_type);
-        p.set("type", if t.is_empty() { format!("{:?}", first.skill_type) } else { t.to_string() });
+        p.set("type", if t.trim().is_empty() { format!("{:?}", first.skill_type) } else { t.trim().to_string() });
         if let Some(j) = first.required_job_class {
             p.set("job", cx.job_class_name(j));
         } else {
@@ -76,7 +76,10 @@ pub fn write(cx: &Ctx, pages: &mut Pages) {
         if let Some(n) = first.summon_npc_id {
             p.set("summons", cx.npc_link(n.get()));
         }
-        if let Some(z) = first.warp_zone_id {
+        // Columns 21-23 are the warp target only for warp skills; other skills keep their
+        // added stats there.
+        let warp = matches!(first.skill_type, SkillType::Warp);
+        if let (true, Some(z)) = (warp, first.warp_zone_id) {
             p.set("warps_to", cx.zone_link(z.get()));
         }
         if let Some(b) = books.get(&base) {
@@ -103,21 +106,35 @@ pub fn write(cx: &Ctx, pages: &mut Pages) {
                 let cost: Vec<String> =
                     s.use_ability.iter().map(|(a, v)| format!("{} {v}", cx.ability_name(*a))).collect();
                 let effects: Vec<String> = s.status_effects.iter().flatten().map(|e| cx.status_effect_name(*e)).collect();
-                let adds: Vec<String> = s
-                    .add_ability
-                    .iter()
-                    .flatten()
-                    .map(|a| {
-                        let mut t = format!("{}", cx.ability_name(a.ability_type));
-                        if a.value != 0 {
-                            t += &format!(" {}{}", if a.value > 0 { "+" } else { "" }, a.value);
-                        }
-                        if a.rate != 0 {
-                            t += &format!(" {}{}%", if a.rate > 0 { "+" } else { "" }, a.rate);
-                        }
-                        t
-                    })
-                    .collect();
+                // A "Decrease..." status effect (Slow, Weaken, ...) takes the added stats away.
+                let sign = if s.status_effects.iter().flatten().any(|e| {
+                    game.status_effects
+                        .get_status_effect(*e)
+                        .is_some_and(|d| format!("{:?}", d.status_effect_type).starts_with("Decrease"))
+                }) {
+                    -1
+                } else {
+                    1
+                };
+                let adds: Vec<String> = if warp {
+                    Vec::new()
+                } else {
+                    s.add_ability
+                        .iter()
+                        .flatten()
+                        .map(|a| {
+                            let (value, rate) = (a.value * sign, a.rate * sign);
+                            let mut t = format!("{}", cx.ability_name(a.ability_type));
+                            if value != 0 {
+                                t += &format!(" {}{}", if value > 0 { "+" } else { "" }, value);
+                            }
+                            if rate != 0 {
+                                t += &format!(" {}{}%", if rate > 0 { "+" } else { "" }, rate);
+                            }
+                            t
+                        })
+                        .collect()
+                };
                 let cooldown = match s.cooldown {
                     SkillCooldown::Skill { duration } | SkillCooldown::Group { duration, .. } => duration.as_secs_f32(),
                 };

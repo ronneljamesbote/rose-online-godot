@@ -9,7 +9,6 @@ job: Soldier Job
 max_level: 10
 target: Yourself
 needs_weapon: Shield
-warps_to: '[[zones/19-zone-19|Zone 19]]'
 skill_books:
 - '[[items/consumable/668-endure|Endure]]'
 levels:
@@ -21,7 +20,7 @@ levels:
   cooldown: 6
   duration: 60
   effects: Def Up, Slow
-  changes: Defense +50, Movement Speed +200
+  changes: Defense -50, Movement Speed -200
 - level: 2
   id: 422
   needs: '[[skills/251-defense-training|Defense Training]] level 7'
@@ -30,7 +29,7 @@ levels:
   cooldown: 6
   duration: 60
   effects: Def Up, Slow
-  changes: Defense +60, Movement Speed +190
+  changes: Defense -60, Movement Speed -190
 - level: 3
   id: 423
   needs: '[[skills/251-defense-training|Defense Training]] level 8'
@@ -39,7 +38,7 @@ levels:
   cooldown: 6
   duration: 60
   effects: Def Up, Slow
-  changes: Defense +70, Movement Speed +180
+  changes: Defense -70, Movement Speed -180
 - level: 4
   id: 424
   needs: '[[skills/251-defense-training|Defense Training]] level 9'
@@ -48,7 +47,7 @@ levels:
   cooldown: 6
   duration: 60
   effects: Def Up, Slow
-  changes: Defense +80, Movement Speed +170
+  changes: Defense -80, Movement Speed -170
 - level: 5
   id: 425
   needs: '[[skills/251-defense-training|Defense Training]] level 10'
@@ -57,7 +56,7 @@ levels:
   cooldown: 6
   duration: 60
   effects: Def Up, Slow
-  changes: Defense +90, Movement Speed +160
+  changes: Defense -90, Movement Speed -160
 - level: 6
   id: 426
   needs: '[[skills/251-defense-training|Defense Training]] level 11'
@@ -66,7 +65,7 @@ levels:
   cooldown: 6
   duration: 60
   effects: Def Up, Slow
-  changes: Defense +100, Movement Speed +150
+  changes: Defense -100, Movement Speed -150
 - level: 7
   id: 427
   needs: '[[skills/251-defense-training|Defense Training]] level 13'
@@ -75,7 +74,7 @@ levels:
   cooldown: 6
   duration: 60
   effects: Def Up, Slow
-  changes: Defense +115, Movement Speed +145
+  changes: Defense -115, Movement Speed -145
 - level: 8
   id: 428
   needs: '[[skills/251-defense-training|Defense Training]] level 15'
@@ -84,7 +83,7 @@ levels:
   cooldown: 6
   duration: 60
   effects: Def Up, Slow
-  changes: Defense +130, Movement Speed +140
+  changes: Defense -130, Movement Speed -140
 - level: 9
   id: 429
   needs: '[[skills/251-defense-training|Defense Training]] level 17'
@@ -93,7 +92,7 @@ levels:
   cooldown: 6
   duration: 60
   effects: Def Up, Slow
-  changes: Defense +145, Movement Speed +135
+  changes: Defense -145, Movement Speed -135
 - level: 10
   id: 430
   needs: '[[skills/251-defense-training|Defense Training]] level 19'
@@ -102,7 +101,7 @@ levels:
   cooldown: 6
   duration: 60
   effects: Def Up, Slow
-  changes: Defense +160, Movement Speed +130
+  changes: Defense -160, Movement Speed -130
 source:
   data: LIST_SKILL.STB rows 421, 422, 423, 424, 425, 426, 427, 428, 429, 430
   code: module/src/skills.rs

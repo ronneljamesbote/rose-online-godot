@@ -8,7 +8,6 @@ type: Magic Recovery
 job: any
 max_level: 1
 target: Ally
-warps_to: zone 16
 skill_books:
 - '[[items/consumable/161-mp-point-30|MP Point (+30)]]'
 - '[[items/consumable/190-clan-point-30|Clan Point (+30)]]'

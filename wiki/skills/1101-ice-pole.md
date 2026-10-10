@@ -10,7 +10,6 @@ max_level: 10
 target: Hostile Character
 damage_type: magic attack
 needs_weapon: Magic Staff, Magic Tool
-warps_to: '[[zones/23-breezy-hills|Breezy Hills]]'
 skill_books:
 - '[[items/consumable/727-ice-pole|Ice Pole]]'
 levels:
@@ -26,7 +25,7 @@ levels:
   duration: 15
   success: 30
   effects: Slow
-  changes: Movement Speed +50%
+  changes: Movement Speed -50%
 - level: 2
   id: 1102
   learn_points: 45
@@ -38,7 +37,7 @@ levels:
   duration: 16
   success: 31
   effects: Slow
-  changes: Movement Speed +50%
+  changes: Movement Speed -50%
 - level: 3
   id: 1103
   learn_points: 51
@@ -50,7 +49,7 @@ levels:
   duration: 17
   success: 32
   effects: Slow
-  changes: Movement Speed +50%
+  changes: Movement Speed -50%
 - level: 4
   id: 1104
   learn_points: 57
@@ -62,7 +61,7 @@ levels:
   duration: 18
   success: 33
   effects: Slow
-  changes: Movement Speed +50%
+  changes: Movement Speed -50%
 - level: 5
   id: 1105
   learn_points: 64
@@ -74,7 +73,7 @@ levels:
   duration: 19
   success: 34
   effects: Slow
-  changes: Movement Speed +50%
+  changes: Movement Speed -50%
 - level: 6
   id: 1106
   learn_points: 71
@@ -86,7 +85,7 @@ levels:
   duration: 20
   success: 35
   effects: Slow
-  changes: Movement Speed +50%
+  changes: Movement Speed -50%
 - level: 7
   id: 1107
   learn_points: 79
@@ -98,7 +97,7 @@ levels:
   duration: 21
   success: 36
   effects: Slow
-  changes: Movement Speed +50%
+  changes: Movement Speed -50%
 - level: 8
   id: 1108
   learn_points: 88
@@ -110,7 +109,7 @@ levels:
   duration: 22
   success: 37
   effects: Slow
-  changes: Movement Speed +50%
+  changes: Movement Speed -50%
 - level: 9
   id: 1109
   learn_points: 98
@@ -122,7 +121,7 @@ levels:
   duration: 23
   success: 38
   effects: Slow
-  changes: Movement Speed +50%
+  changes: Movement Speed -50%
 - level: 10
   id: 1110
   learn_points: 109
@@ -134,7 +133,7 @@ levels:
   duration: 24
   success: 42
   effects: Slow
-  changes: Movement Speed +50%
+  changes: Movement Speed -50%
 source:
   data: LIST_SKILL.STB rows 1101, 1102, 1103, 1104, 1105, 1106, 1107, 1108, 1109, 1110
   code: module/src/skills.rs

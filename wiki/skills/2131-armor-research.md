@@ -8,7 +8,6 @@ type: Passive
 job: Dealer Job
 max_level: 10
 target: Yourself
-warps_to: '[[zones/53-arumic-valley|Arumic Valley]]'
 skill_books:
 - '[[items/consumable/809-armor-research|Armor Research]]'
 levels:

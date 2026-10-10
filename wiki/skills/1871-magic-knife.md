@@ -9,7 +9,6 @@ job: Raider Job
 max_level: 10
 target: Hostile Character
 damage_type: magic attack
-warps_to: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
 skill_books:
 - '[[items/consumable/792-magic-knife|Magic Knife]]'
 levels:
@@ -24,7 +23,7 @@ levels:
   duration: 12
   success: 80
   effects: Magic Resistance Down
-  changes: Magic Resistance +20 +12%
+  changes: Magic Resistance -20 -12%
 - level: 2
   id: 1872
   needs: '[[skills/1831-mana-blood|Mana Blood]] level 6'
@@ -36,7 +35,7 @@ levels:
   duration: 14
   success: 82
   effects: Magic Resistance Down
-  changes: Magic Resistance +22 +14%
+  changes: Magic Resistance -22 -14%
 - level: 3
   id: 1873
   needs: '[[skills/1831-mana-blood|Mana Blood]] level 7'
@@ -48,7 +47,7 @@ levels:
   duration: 16
   success: 84
   effects: Magic Resistance Down
-  changes: Magic Resistance +24 +16%
+  changes: Magic Resistance -24 -16%
 - level: 4
   id: 1874
   needs: '[[skills/1831-mana-blood|Mana Blood]] level 8'
@@ -60,7 +59,7 @@ levels:
   duration: 18
   success: 86
   effects: Magic Resistance Down
-  changes: Magic Resistance +26 +18%
+  changes: Magic Resistance -26 -18%
 - level: 5
   id: 1875
   needs: '[[skills/1831-mana-blood|Mana Blood]] level 9'
@@ -72,7 +71,7 @@ levels:
   duration: 20
   success: 88
   effects: Magic Resistance Down
-  changes: Magic Resistance +28 +20%
+  changes: Magic Resistance -28 -20%
 - level: 6
   id: 1876
   needs: '[[skills/1831-mana-blood|Mana Blood]] level 10'
@@ -84,7 +83,7 @@ levels:
   duration: 22
   success: 90
   effects: Magic Resistance Down
-  changes: Magic Resistance +30 +22%
+  changes: Magic Resistance -30 -22%
 - level: 7
   id: 1877
   learn_points: 52
@@ -95,7 +94,7 @@ levels:
   duration: 24
   success: 92
   effects: Magic Resistance Down
-  changes: Magic Resistance +32 +24%
+  changes: Magic Resistance -32 -24%
 - level: 8
   id: 1878
   learn_points: 57
@@ -106,7 +105,7 @@ levels:
   duration: 26
   success: 94
   effects: Magic Resistance Down
-  changes: Magic Resistance +34 +26%
+  changes: Magic Resistance -34 -26%
 - level: 9
   id: 1879
   learn_points: 62
@@ -117,7 +116,7 @@ levels:
   duration: 28
   success: 96
   effects: Magic Resistance Down
-  changes: Magic Resistance +36 +28%
+  changes: Magic Resistance -36 -28%
 - level: 10
   id: 1880
   learn_points: 67
@@ -128,7 +127,7 @@ levels:
   duration: 30
   success: 98
   effects: Magic Resistance Down
-  changes: Magic Resistance +40 +30%
+  changes: Magic Resistance -40 -30%
 source:
   data: LIST_SKILL.STB rows 1871, 1872, 1873, 1874, 1875, 1876, 1877, 1878, 1879, 1880
   code: module/src/skills.rs
