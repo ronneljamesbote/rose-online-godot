@@ -112,10 +112,13 @@ border_color = "rgba(255, 255, 255, 0.14)"
 text = "#ffffff"
 
 [tooltip]
-opacity = 1.0              # background opacity, 1 = solid; the window opacity setting does not change it
-top = "rgba(34, 34, 58, 0.92)"
-bottom = "rgba(10, 10, 24, 0.92)"
-border_color = "rgba(0, 0, 0, 0)"
+# Tooltips (and menus) use the theme's colours but stand apart from windows and HUD
+# panels: near black, darker than Clear's see-through panels, with a gold border.
+opacity = 0.88             # background, 0 = invisible to 1 = solid; the window opacity setting does not change it
+top = "#1a1a2c"
+bottom = "#050509"
+border_color = "rgba(255, 211, 122, 0.7)"
+radius = 3
 text = "#ffffff"
 
 [portrait]

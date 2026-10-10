@@ -314,10 +314,10 @@ static func build(ui: Node) -> Theme:
 	t.set_stylebox("separator", "VSeparator", vline)
 
 	# Tooltips and menus.
-	# Tooltips stay readable over anything: their background alpha is the theme's
-	# tooltip.opacity (1 = solid), whatever the window opacity setting or the colours' alpha.
-	var tip_opacity := clampf(n.call("tooltip.opacity", 1.0), 0.0, 1.0)
-	var tip := UiBoxScript.make(Color(c.call("tooltip.top"), tip_opacity), Color(c.call("tooltip.bottom"), tip_opacity), small_radius)
+	# Their background alpha is the theme's tooltip.opacity, whatever the window opacity
+	# setting or the colours' own alpha, so they stand apart from windows.
+	var tip_opacity := clampf(n.call("tooltip.opacity", 0.88), 0.0, 1.0)
+	var tip := UiBoxScript.make(Color(c.call("tooltip.top"), tip_opacity), Color(c.call("tooltip.bottom"), tip_opacity), n.call("tooltip.radius", 3))
 	tip.border_width = 1.0
 	tip.border_color = c.call("tooltip.border_color")
 	tip.shadow_color = Color(0, 0, 0, 0.35 if dark else 0.18)
