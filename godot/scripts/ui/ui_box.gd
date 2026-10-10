@@ -20,6 +20,9 @@ extends StyleBox
 @export var inner_shadow_size := 4.0
 ## Glossy sheen over the top half (bars), 0 to 1.
 @export var sheen := 0.0
+## Draw the box this far inside its rect (left, top, right, bottom), so its drop shadow fits
+## in controls that clip what is drawn outside them, such as tooltip pop-ups.
+@export var inset := Vector4.ZERO
 
 var _shadow_box: StyleBoxFlat
 var _border_box: StyleBoxFlat
@@ -46,6 +49,7 @@ func set_margin_all(m: float) -> UiBox:
 
 
 func _draw(to_canvas_item: RID, rect: Rect2) -> void:
+	rect = rect.grow_individual(-inset.x, -inset.y, -inset.z, -inset.w)
 	var r := minf(radius, minf(rect.size.x, rect.size.y) * 0.5)
 	if shadow_size > 0.0 and shadow_color.a > 0.0:
 		if _shadow_box == null:

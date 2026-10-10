@@ -153,7 +153,7 @@ Esc or clicking outside the chat box stops typing.
     `themes` folder next to the game), interface size (75% to 150%), window opacity (40%
     to 100%), blur behind windows, lock windows in place, and reset layout. Window
     opacity does not change tooltips and menus: on every theme they are 88% opaque, in a
-    deeper shade of the theme's colours with a gold border, so they stand apart from
+    deeper shade of the theme's colours with a drop shadow, so they stand apart from
     windows (a theme file can change this under `[tooltip]`).
   - **World labels**: your own name tag, chat bubbles, damage numbers, and whether item
     labels on the ground show always or only while Alt is held. Labels show for items
