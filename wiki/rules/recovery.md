@@ -123,3 +123,5 @@ There is no waiting time between uses.
 **Worked example:** you drink a Health Vial (L) (800 HP) and eat an Apple 2 seconds later.
 The vial has given 152 HP; the Apple replaces it, so you get 100 more over 4 seconds and the
 other 648 HP of the vial are lost. A Mana Vial taken at the same time keeps running.
+
+> Open question: there is no wait between using potions or food; a new one simply replaces the one running. The LIST_USEITEM.STB cooldown columns may be read from the wrong columns. Not checked against iROSE.

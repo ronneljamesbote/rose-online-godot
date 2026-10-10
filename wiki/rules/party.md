@@ -128,3 +128,7 @@ Start a chat line with `#` to talk to your party. See [[rules/chat|Chat]].
 - The share range (50 m) and invite range (30 m) are our values.
 
 > Open question: dead members within 50 m still receive a share of kill experience and drops; the code does not check whether a member is alive.
+
+> Open question: LIST_ZONE.STB columns 28 and 29 (party experience settings per zone) are not read; the party bonus above is the same in every zone.
+
+> Open question: when Zuly is shared with a member who can't carry more, their share is lost instead of staying with the picker.

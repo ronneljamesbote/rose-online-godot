@@ -282,7 +282,7 @@ Weight passives only count while you wear a bag on your back.
 **Worked example:** level 1, 15 STR: 1100 + 5 + 90 = **1195**.
 
 > Open question: max weight is worked out but nothing in the game checks it yet, so
-> carrying more than it does not slow you down or stop pickups.
+> carrying more than it does not slow you down or stop pickups. See [[backlog/bag-weight|Bag weight]].
 
 ## Second job bonus
 

@@ -14,3 +14,5 @@ source:
 # Supremacy of Mana Theory
 
 The Righteous Crusaders and Ferrell Guild have taken our magic lightly, but were frequently defeated when they challenged us. Once again, they must be taught the reality of Mana Theory. Let us show them the true power of Arumic magic!  
+
+> Open question: this quest has no steps here because its quest file (`PvP10.qsd` or `PvP13-01.qsd`) fails to load: `crates/rose-file-readers/src/qsd.rs` reads the zone-team trigger reward (type 19) with a wrong layout. Part of [[backlog/faction-wars|Faction wars]].
