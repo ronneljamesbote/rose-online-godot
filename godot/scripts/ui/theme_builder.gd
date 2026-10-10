@@ -36,16 +36,14 @@ static func build(ui: Node) -> Theme:
 	t.set_stylebox("panel", "HudPanel", panel.duplicate().set_margins(10, 8, 10, 8))
 	# The chat box: a lighter panel so the world shows through.
 	var chat: UiBox = panel.duplicate().set_margins(8, 8, 8, 8)
-	for i in chat.colors.size():
-		chat.colors[i].a *= 0.55
+	chat.colors = _alpha(chat.colors, 0.55)
 	chat.shadow_color.a *= 0.5
 	t.set_type_variation("ChatPanel", "PanelContainer")
 	t.set_stylebox("panel", "ChatPanel", chat)
 	# Pop-up questions and the sign-in and creation cards sit on busy backgrounds
 	# without the window blur, so they are nearly opaque.
 	var question: UiBox = panel.duplicate().set_margins(18, 14, 18, 14)
-	for i in question.colors.size():
-		question.colors[i].a = maxf(question.colors[i].a, 0.95)
+	question.colors = _alpha(panel.colors, 1.0, 0.95)
 	t.set_type_variation("QuestionPanel", "PanelContainer")
 	t.set_stylebox("panel", "QuestionPanel", question)
 	t.set_type_variation("Clear", "PanelContainer")
@@ -351,9 +349,7 @@ static func _panel(ui: Node) -> UiBox:
 	var box := UiBoxScript.make(ui.color("panel.top"), ui.color("panel.bottom"), ui.num("panel.radius", 10))
 	box.colors = PackedColorArray([ui.color("panel.top"), ui.color("panel.middle"), ui.color("panel.bottom")])
 	box.stops = PackedFloat32Array([0.0, 0.5, 1.0])
-	var opacity := clampf(float(ui.settings.get("opacity", 1.0)), 0.3, 1.0)
-	for i in box.colors.size():
-		box.colors[i].a *= opacity
+	box.colors = _alpha(box.colors, clampf(float(ui.settings.get("opacity", 1.0)), 0.3, 1.0))
 	box.border_width = ui.num("panel.border_width", 1)
 	box.border_color = ui.color("panel.border_color")
 	box.shadow_color = ui.color("panel.shadow_color")
@@ -361,6 +357,16 @@ static func _panel(ui: Node) -> UiBox:
 	box.shadow_offset = ui.num("panel.shadow_offset", 5)
 	box.highlight = ui.color("panel.highlight")
 	return box
+
+
+## A copy of the colours with their alpha multiplied by `factor`, then raised to at least
+## `at_least`. Always a new array: a duplicated UiBox shares its colours with the original,
+## so changing them in place (colors[i].a = ...) changed every panel at once.
+static func _alpha(cols: PackedColorArray, factor: float, at_least := 0.0) -> PackedColorArray:
+	var out := PackedColorArray()
+	for col in cols:
+		out.append(Color(col, maxf(col.a * factor, at_least)))
+	return out
 
 
 static func _button(t: Theme, type: String, normal: UiBox, font: Color, disabled_font: Color, hover_tint: Color) -> void:
