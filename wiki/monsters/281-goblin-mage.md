@@ -4,7 +4,8 @@ id: 281
 name: Goblin Mage
 status: in-game
 level: 88
-hp: 26
+hp: 2288
+hp_per_level: 26
 attack: 322
 hit: 199
 defence: 202
@@ -228,5 +229,6 @@ source:
 # Goblin Mage
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

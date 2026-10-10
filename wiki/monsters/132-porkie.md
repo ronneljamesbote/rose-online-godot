@@ -4,7 +4,8 @@ id: 132
 name: Porkie
 status: in-game
 level: 33
-hp: 26
+hp: 858
+hp_per_level: 26
 attack: 83
 hit: 101
 defence: 95
@@ -337,5 +338,6 @@ source:
 # Porkie
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

@@ -4,7 +4,8 @@ id: 102
 name: Woopie Chef
 status: in-game
 level: 17
-hp: 23
+hp: 391
+hp_per_level: 23
 attack: 54
 hit: 74
 defence: 37
@@ -198,5 +199,6 @@ source:
 # Woopie Chef
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

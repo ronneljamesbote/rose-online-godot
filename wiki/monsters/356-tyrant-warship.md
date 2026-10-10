@@ -4,7 +4,8 @@ id: 356
 name: Tyrant WarShip
 status: in-game
 level: 114
-hp: 213
+hp: 24282
+hp_per_level: 213
 attack: 552
 hit: 342
 defence: 460
@@ -206,5 +207,6 @@ source:
 # Tyrant WarShip
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

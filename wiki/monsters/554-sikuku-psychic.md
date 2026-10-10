@@ -4,7 +4,8 @@ id: 554
 name: Sikuku Psychic
 status: in-game
 level: 160
-hp: 31
+hp: 4960
+hp_per_level: 31
 attack: 772
 hit: 474
 defence: 422
@@ -83,5 +84,6 @@ source:
 # Sikuku Psychic
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

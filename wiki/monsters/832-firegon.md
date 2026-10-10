@@ -4,7 +4,8 @@ id: 832
 name: Firegon
 status: in-game
 level: 73
-hp: 1946
+hp: 142058
+hp_per_level: 1946
 attack: 241
 hit: 222
 defence: 196
@@ -29,5 +30,6 @@ source:
 # Firegon
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

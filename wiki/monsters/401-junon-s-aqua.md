@@ -4,7 +4,8 @@ id: 401
 name: Junon's Aqua
 status: in-game
 level: 47
-hp: 194
+hp: 9118
+hp_per_level: 194
 attack: 265
 hit: 180
 defence: 180
@@ -72,5 +73,6 @@ source:
 # Junon's Aqua
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

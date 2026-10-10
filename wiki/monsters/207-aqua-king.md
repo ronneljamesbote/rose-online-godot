@@ -4,7 +4,8 @@ id: 207
 name: Aqua King
 status: in-game
 level: 40
-hp: 160
+hp: 6400
+hp_per_level: 160
 attack: 197
 hit: 150
 defence: 155
@@ -105,5 +106,6 @@ source:
 # Aqua King
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

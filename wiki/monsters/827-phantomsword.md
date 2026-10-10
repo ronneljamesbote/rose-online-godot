@@ -4,7 +4,8 @@ id: 827
 name: PhantomSword
 status: in-game
 level: 60
-hp: 1704
+hp: 102240
+hp_per_level: 1704
 attack: 213
 hit: 179
 defence: 159
@@ -29,5 +30,6 @@ source:
 # PhantomSword
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

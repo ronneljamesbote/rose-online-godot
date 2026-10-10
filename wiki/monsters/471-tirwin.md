@@ -4,7 +4,8 @@ id: 471
 name: Tirwin
 status: in-game
 level: 78
-hp: 43
+hp: 3354
+hp_per_level: 43
 attack: 302
 hit: 229
 defence: 165
@@ -126,5 +127,6 @@ source:
 # Tirwin
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

@@ -4,7 +4,8 @@ id: 185
 name: Ranger Clown
 status: in-game
 level: 48
-hp: 26
+hp: 1248
+hp_per_level: 26
 attack: 161
 hit: 122
 defence: 101
@@ -179,5 +180,6 @@ source:
 # Ranger Clown
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

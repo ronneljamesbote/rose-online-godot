@@ -4,7 +4,8 @@ id: 183
 name: Fighter Clown
 status: in-game
 level: 52
-hp: 31
+hp: 1612
+hp_per_level: 31
 attack: 137
 hit: 124
 defence: 128
@@ -163,5 +164,6 @@ source:
 # Fighter Clown
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

@@ -4,7 +4,8 @@ id: 376
 name: Dreadnaught King
 status: in-game
 level: 133
-hp: 436
+hp: 57988
+hp_per_level: 436
 attack: 687
 hit: 406
 defence: 592
@@ -191,5 +192,6 @@ source:
 # Dreadnaught King
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

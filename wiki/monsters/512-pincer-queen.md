@@ -4,7 +4,8 @@ id: 512
 name: Pincer Queen
 status: in-game
 level: 153
-hp: 38
+hp: 5814
+hp_per_level: 38
 attack: 655
 hit: 440
 defence: 570
@@ -112,5 +113,6 @@ source:
 # Pincer Queen
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

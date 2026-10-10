@@ -4,7 +4,8 @@ id: 217
 name: Krawfy Guardian
 status: in-game
 level: 85
-hp: 397
+hp: 33745
+hp_per_level: 397
 attack: 466
 hit: 341
 defence: 339
@@ -64,5 +65,6 @@ source:
 # Krawfy Guardian
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

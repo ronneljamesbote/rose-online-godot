@@ -4,7 +4,8 @@ id: 145
 name: Kaiman Hunter
 status: in-game
 level: 63
-hp: 24
+hp: 1512
+hp_per_level: 24
 attack: 241
 hit: 169
 defence: 170
@@ -232,5 +233,6 @@ source:
 # Kaiman Hunter
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

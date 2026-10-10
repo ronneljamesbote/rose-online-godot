@@ -4,7 +4,8 @@ id: 379
 name: Elder Mammoth
 status: in-game
 level: 126
-hp: 358
+hp: 45108
+hp_per_level: 358
 attack: 637
 hit: 384
 defence: 535
@@ -231,5 +232,6 @@ source:
 # Elder Mammoth
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

@@ -4,7 +4,8 @@ id: 526
 name: Poison Weaver
 status: in-game
 level: 156
-hp: 35
+hp: 5460
+hp_per_level: 35
 attack: 752
 hit: 441
 defence: 473
@@ -103,5 +104,6 @@ source:
 # Poison Weaver
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

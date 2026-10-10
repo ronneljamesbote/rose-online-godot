@@ -4,7 +4,8 @@ id: 73
 name: Red Pomic
 status: in-game
 level: 15
-hp: 28
+hp: 420
+hp_per_level: 28
 attack: 55
 hit: 68
 defence: 43
@@ -199,5 +200,6 @@ source:
 # Red Pomic
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

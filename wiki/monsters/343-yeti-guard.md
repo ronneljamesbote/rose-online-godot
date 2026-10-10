@@ -4,7 +4,8 @@ id: 343
 name: Yeti Guard
 status: in-game
 level: 101
-hp: 57
+hp: 5757
+hp_per_level: 57
 attack: 400
 hit: 229
 defence: 393
@@ -274,5 +275,6 @@ source:
 # Yeti Guard
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

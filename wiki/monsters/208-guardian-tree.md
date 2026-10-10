@@ -4,7 +4,8 @@ id: 208
 name: Guardian Tree
 status: in-game
 level: 57
-hp: 172
+hp: 9804
+hp_per_level: 172
 attack: 272
 hit: 185
 defence: 216
@@ -132,5 +133,6 @@ source:
 # Guardian Tree
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

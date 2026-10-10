@@ -4,7 +4,8 @@ id: 921
 name: Doonga
 status: in-game
 level: 67
-hp: 2781
+hp: 186327
+hp_per_level: 2781
 attack: 218
 hit: 158
 defence: 210
@@ -29,5 +30,6 @@ source:
 # Doonga
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

@@ -4,7 +4,8 @@ id: 877
 name: Terror Knight
 status: in-game
 level: 81
-hp: 2300
+hp: 186300
+hp_per_level: 2300
 attack: 268
 hit: 209
 defence: 214
@@ -29,5 +30,6 @@ source:
 # Terror Knight
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

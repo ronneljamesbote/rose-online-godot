@@ -4,7 +4,8 @@ id: 169
 name: Grandmaster Golem
 status: in-game
 level: 90
-hp: 220
+hp: 19800
+hp_per_level: 220
 attack: 429
 hit: 260
 defence: 350
@@ -114,5 +115,6 @@ source:
 # Grandmaster Golem
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

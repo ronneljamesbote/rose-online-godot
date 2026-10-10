@@ -4,7 +4,8 @@ id: 274
 name: Goblin Server
 status: in-game
 level: 52
-hp: 28
+hp: 1456
+hp_per_level: 28
 attack: 189
 hit: 132
 defence: 150
@@ -144,5 +145,6 @@ source:
 # Goblin Server
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

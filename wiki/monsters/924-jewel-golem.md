@@ -4,7 +4,8 @@ id: 924
 name: Jewel Golem
 status: in-game
 level: 62
-hp: 2593
+hp: 160766
+hp_per_level: 2593
 attack: 222
 hit: 179
 defence: 202
@@ -29,5 +30,6 @@ source:
 # Jewel Golem
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

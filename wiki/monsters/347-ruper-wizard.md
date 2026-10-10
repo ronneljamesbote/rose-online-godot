@@ -4,7 +4,8 @@ id: 347
 name: Ruper Wizard
 status: in-game
 level: 102
-hp: 41
+hp: 4182
+hp_per_level: 41
 attack: 420
 hit: 234
 defence: 244
@@ -172,5 +173,6 @@ source:
 # Ruper Wizard
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

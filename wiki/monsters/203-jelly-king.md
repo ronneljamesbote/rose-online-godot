@@ -4,7 +4,8 @@ id: 203
 name: Jelly King
 status: in-game
 level: 13
-hp: 49
+hp: 637
+hp_per_level: 49
 attack: 44
 hit: 84
 defence: 57
@@ -97,5 +98,6 @@ source:
 # Jelly King
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

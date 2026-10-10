@@ -4,7 +4,8 @@ id: 922
 name: Doonga Warrior
 status: in-game
 level: 72
-hp: 2981
+hp: 214632
+hp_per_level: 2981
 attack: 238
 hit: 165
 defence: 257
@@ -29,5 +30,6 @@ source:
 # Doonga Warrior
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

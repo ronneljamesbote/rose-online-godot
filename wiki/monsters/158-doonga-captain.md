@@ -4,7 +4,8 @@ id: 158
 name: Doonga Captain
 status: in-game
 level: 72
-hp: 48
+hp: 3456
+hp_per_level: 48
 attack: 311
 hit: 191
 defence: 235
@@ -209,5 +210,6 @@ source:
 # Doonga Captain
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

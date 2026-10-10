@@ -4,7 +4,8 @@ id: 326
 name: Green Gem
 status: in-game
 level: 80
-hp: 684
+hp: 54720
+hp_per_level: 684
 attack: 360
 hit: 247
 defence: 222
@@ -125,5 +126,6 @@ source:
 # Green Gem
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

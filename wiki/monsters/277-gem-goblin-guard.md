@@ -4,7 +4,8 @@ id: 277
 name: Gem Goblin Guard
 status: in-game
 level: 85
-hp: 39
+hp: 3315
+hp_per_level: 39
 attack: 298
 hit: 208
 defence: 324
@@ -358,5 +359,6 @@ source:
 # Gem Goblin Guard
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

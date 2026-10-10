@@ -4,7 +4,8 @@ id: 286
 name: Master Goblin
 status: in-game
 level: 100
-hp: 204
+hp: 20400
+hp_per_level: 204
 attack: 480
 hit: 303
 defence: 394
@@ -126,5 +127,6 @@ source:
 # Master Goblin
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

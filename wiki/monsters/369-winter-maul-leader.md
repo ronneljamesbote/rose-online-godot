@@ -4,7 +4,8 @@ id: 369
 name: Winter Maul Leader
 status: in-game
 level: 122
-hp: 85
+hp: 10370
+hp_per_level: 85
 attack: 590
 hit: 323
 defence: 495
@@ -313,5 +314,6 @@ source:
 # Winter Maul Leader
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].
