@@ -28,6 +28,9 @@ services:
   rose-web:
     build:
       context: web
+      # The game wiki's pages (wiki/), served at /wiki.
+      additional_contexts:
+        wiki: ./wiki
     image: rose-web
     ports:
       - "${ROSE_BIND:-0.0.0.0}:3001:3001"

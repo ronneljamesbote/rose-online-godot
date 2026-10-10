@@ -2,7 +2,8 @@
 # Starts SpacetimeDB and installs (or updates) the rose module on every start.
 # First start: makes the identity key pair.
 # The game data (items, monsters, zones, ...) is uploaded from the ROSE client mounted at
-# /game whenever the server has none; ROSE_UPLOAD_GAME_DATA=1 uploads it again.
+# /game whenever the server has none or overrides/game-data.toml changed;
+# ROSE_UPLOAD_GAME_DATA=1 uploads it again.
 # ROSE_CLEAR_WORLD=1 wipes the world while publishing (needed after a breaking schema change).
 # ROSE_AUTH_ISSUER is the account website the server trusts (empty: no accounts needed).
 set -e
@@ -51,11 +52,22 @@ else
   echo "rose: setting the account website failed (see above)"
 fi
 READY=$(spacetimedb-cli sql --server http://127.0.0.1:3000 rose "SELECT ready FROM game_data_status" 2>/dev/null | grep -c true || true)
+# A changed overrides file (built into the image) needs a new upload too.
+export ROSE_OVERRIDES=/opt/rose/overrides/game-data.toml
+OVERRIDES_SUM=$(sha256sum "$ROSE_OVERRIDES" | cut -d" " -f1)
+if [ "$READY" != "0" ] && [ "$OVERRIDES_SUM" != "$(cat /data/overrides.sha256 2>/dev/null)" ]; then
+  echo "rose: the game data overrides changed, uploading the game data again"
+  ROSE_UPLOAD_GAME_DATA=1
+fi
 if [ "$READY" = "0" ] || [ "${ROSE_UPLOAD_GAME_DATA:-0}" = "1" ]; then
   DATA_IDX=$(find /game -maxdepth 2 -iname data.idx 2>/dev/null | head -n 1)
   if [ -n "$DATA_IDX" ]; then
     echo "rose: uploading the game data from $DATA_IDX"
-    /opt/rose/upload-game-data.sh "$DATA_IDX" || echo "rose: the game data upload failed (see above)"
+    if /opt/rose/upload-game-data.sh "$DATA_IDX"; then
+      echo "$OVERRIDES_SUM" > /data/overrides.sha256
+    else
+      echo "rose: the game data upload failed (see above)"
+    fi
   else
     echo "rose: no data.idx under /game. Set ROSE_CLIENT to your ROSE client folder (see"
     echo "rose: compose.yaml) and restart; until then nobody can play."

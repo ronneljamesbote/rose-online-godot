@@ -7,6 +7,8 @@
 //!
 //! `pack` writes upload-NNN.json files, each the JSON argument list of the module's
 //! `upload_game_files` reducer (well under the server's request size limit), plus manifest.json.
+//! It first applies our data changes: the file named by ROSE_OVERRIDES, else
+//! overrides/game-data.toml in the current folder (see overrides/README.md).
 
 use std::{
     collections::BTreeMap,
@@ -63,7 +65,15 @@ fn main() {
     ]);
     let started = Instant::now();
     rose_game_data::load_game_data(&vfs).expect("load game data");
-    let files = std::mem::take(&mut *read.lock().unwrap());
+    let mut files = std::mem::take(&mut *read.lock().unwrap());
+    if mode == "pack" {
+        let path = std::env::var_os("ROSE_OVERRIDES")
+            .map(PathBuf::from)
+            .unwrap_or_else(|| PathBuf::from(rose_game_overrides::OVERRIDES_FILE));
+        let overrides = rose_game_overrides::Overrides::load(&path).expect("read the overrides file");
+        let cells = overrides.patch_files(&mut files).expect("apply the overrides");
+        eprintln!("overrides: {} changed cells from {}", cells, path.display());
+    }
     let total: usize = files.values().map(|d| d.len()).sum();
     eprintln!(
         "game data: {} files, {:.1} MB, loaded in {} ms",

@@ -170,6 +170,56 @@ impl StbFile {
     }
 }
 
+/// Change cells of an STB file (narrow strings, as iROSE ships them) and return the new
+/// file. `cells` are (row, column, text) as [`StbFile::try_get`] numbers them: row 0 is the
+/// first data row, column 0 the first column after the row name. The cells are the last
+/// part of the file, so offsets before them stay valid.
+pub fn patch_stb(file: &[u8], cells: &[(usize, usize, String)]) -> Result<Vec<u8>, anyhow::Error> {
+    let u32_at = |at: usize| -> Result<usize, anyhow::Error> {
+        let bytes = file.get(at..at + 4).ok_or_else(|| anyhow!("STB file too short"))?;
+        Ok(u32::from_le_bytes(bytes.try_into()?) as usize)
+    };
+    if file.get(0..3) != Some(b"STB".as_slice()) {
+        return Err(anyhow!("not an STB file"));
+    }
+    let data_position = u32_at(4)?;
+    let rows = u32_at(8)?.saturating_sub(1);
+    let columns = u32_at(12)?.saturating_sub(1);
+
+    let mut values: Vec<&[u8]> = Vec::with_capacity(rows * columns);
+    let mut at = data_position;
+    for _ in 0..rows * columns {
+        let len = file
+            .get(at..at + 2)
+            .map(|b| u16::from_le_bytes([b[0], b[1]]) as usize)
+            .ok_or_else(|| anyhow!("STB cell data ends early"))?;
+        values.push(file.get(at + 2..at + 2 + len).ok_or_else(|| anyhow!("STB cell data ends early"))?);
+        at += 2 + len;
+    }
+    let rest = &file[at..];
+
+    let mut changed: HashMap<usize, &[u8]> = HashMap::new();
+    for (row, column, text) in cells {
+        if *row >= rows || *column >= columns {
+            return Err(anyhow!("cell row {row} column {column} is outside the file ({rows} rows, {columns} columns)"));
+        }
+        if text.len() > u16::MAX as usize {
+            return Err(anyhow!("cell row {row} column {column} is too long"));
+        }
+        changed.insert(row * columns + column, text.as_bytes());
+    }
+
+    let mut out = Vec::with_capacity(file.len() + 64);
+    out.extend_from_slice(&file[..data_position]);
+    for (index, value) in values.iter().enumerate() {
+        let value = changed.get(&index).copied().unwrap_or(value);
+        out.extend_from_slice(&(value.len() as u16).to_le_bytes());
+        out.extend_from_slice(value);
+    }
+    out.extend_from_slice(rest);
+    Ok(out)
+}
+
 #[macro_export]
 macro_rules! stb_column {
     (
