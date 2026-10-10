@@ -21,6 +21,7 @@ class Slot:
 	var item = null
 	var icon: TextureRect
 	var count: Label
+	var key_label: Label  # the hotbar key (1-8), when the slot has one
 	var selected := false
 
 	func _init(owner_window: Control, slot_kind: String, slot_index: int, caption := "") -> void:
@@ -43,20 +44,18 @@ class Slot:
 		count.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
 		count.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 		count.grow_vertical = Control.GROW_DIRECTION_BEGIN
-		count.add_theme_font_size_override("font_size", 12)
-		count.add_theme_color_override("font_shadow_color", Color.BLACK)
-		count.add_theme_constant_override("shadow_offset_x", 1)
-		count.add_theme_constant_override("shadow_offset_y", 1)
+		count.offset_right = -3
+		count.theme_type_variation = "SlotCount"
 		count.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(count)
 		if caption != "":
-			var name_label := Label.new()
-			name_label.text = caption
-			name_label.add_theme_font_size_override("font_size", 9)
-			name_label.theme_type_variation = "MutedLabel"
-			name_label.position = Vector2(3, 1)
-			name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			add_child(name_label)
+			# Faint on an empty slot; on a filled one it sits on a small chip over the icon.
+			key_label = Label.new()
+			key_label.text = caption
+			key_label.theme_type_variation = "SlotKey"
+			key_label.position = Vector2(2, 1)
+			key_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			add_child(key_label)
 
 	func show_item(new_item) -> void:
 		item = new_item
@@ -71,6 +70,9 @@ class Slot:
 			var quantity: int = item.get("quantity", 1)
 			count.text = str(quantity) if quantity > 1 else ""
 			tooltip_text = "%s\n%s" % [item.get("name", "?"), item.get("tooltip", "")]
+		if key_label != null:
+			key_label.theme_type_variation = "SlotKey" if item == null else "SlotKeyFilled"
+			key_label.reset_size()
 		queue_redraw()
 
 	func _draw() -> void:

@@ -173,6 +173,32 @@ static func build(ui: Node) -> Theme:
 	t.set_stylebox("panel", "Slot", slot)
 	t.set_color("label", "Slot", c.call("slot.label"))
 	t.set_color("key", "Slot", c.call("colors.key"))
+	# Text drawn over slot icons: the stack count and the hotbar key. Both get an outline
+	# (and the key a chip once the slot is filled) so they read on top of any icon. Themes
+	# edited before these values existed get the fallbacks here.
+	t.set_type_variation("SlotCount", "Label")
+	t.set_font("font", "SlotCount", bold)
+	t.set_font_size("font_size", "SlotCount", int(n.call("slot.count_size", 12)))
+	t.set_color("font_color", "SlotCount", ui.color("slot.count", Color.WHITE))
+	t.set_color("font_outline_color", "SlotCount", ui.color("slot.count_outline", Color(0, 0, 0, 0.9)))
+	t.set_constant("outline_size", "SlotCount", int(n.call("slot.count_outline_size", 4)))
+	t.set_type_variation("SlotKey", "Label")
+	t.set_font("font", "SlotKey", bold)
+	t.set_font_size("font_size", "SlotKey", int(n.call("slot.key_size", 10)))
+	t.set_color("font_color", "SlotKey", c.call("slot.label"))
+	t.set_constant("outline_size", "SlotKey", 0)
+	t.set_stylebox("normal", "SlotKey", StyleBoxEmpty.new())
+	t.set_type_variation("SlotKeyFilled", "SlotKey")
+	t.set_color("font_color", "SlotKeyFilled", c.call("colors.key"))
+	t.set_color("font_outline_color", "SlotKeyFilled", ui.color("slot.key_outline", Color(0, 0, 0, 0)))
+	t.set_constant("outline_size", "SlotKeyFilled", int(n.call("slot.key_outline_size", 0)))
+	var chip := StyleBoxFlat.new()
+	chip.bg_color = ui.color("slot.key_background", Color(0, 0, 0, 0.6) if dark else Color(1, 1, 1, 0.88))
+	chip.set_corner_radius_all(4)
+	chip.set_content_margin_all(0)
+	chip.content_margin_left = 3
+	chip.content_margin_right = 3
+	t.set_stylebox("normal", "SlotKeyFilled", chip)
 
 	# Text fields.
 	var field := UiBoxScript.make(c.call("field.background"), c.call("field.background"), small_radius)
