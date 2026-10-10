@@ -79,7 +79,8 @@ Every character has six **basic stats**: Strength, Dexterity, Intelligence, Conc
 Charm and Sense. You raise them with **stat points**, which you get every time you level up
 (see [[rules/experience|Experience]]). From the basic stats, your level, your job and your
 equipment the game works out your **derived values**: HP, MP, attack, defence, hit, avoid
-and the rest. The character window (C) shows both.
+and the rest. The character window (C) shows both; pointing at one shows a tooltip with a
+short version of what this page says about it.
 
 What the derived values do in a fight is on [[rules/combat|Combat]]. How HP and MP come
 back is on [[rules/recovery|Recovery]].
