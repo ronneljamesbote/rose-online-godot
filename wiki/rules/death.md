@@ -116,3 +116,7 @@ A player killed by another player loses no experience. Both players see "*winner
 
 - iROSE waits for ever for a fallen character to choose. Here a character who hasn't chosen
   gets up by itself at the revive point after 10 minutes.
+
+> Open question: Resurrection adds the refunded experience without checking for a level up, so a refund that passes the next level only levels you up at your next kill.
+
+> Open question: LIST_ZONE.STB columns 31 to 33 (more revive settings per zone) are not read; only the revive points are used.
