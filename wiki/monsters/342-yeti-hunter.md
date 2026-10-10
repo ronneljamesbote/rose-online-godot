@@ -4,7 +4,8 @@ id: 342
 name: Yeti Hunter
 status: in-game
 level: 95
-hp: 42
+hp: 3990
+hp_per_level: 42
 attack: 413
 hit: 245
 defence: 281
@@ -640,5 +641,6 @@ source:
 # Yeti Hunter
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

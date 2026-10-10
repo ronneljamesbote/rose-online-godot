@@ -4,7 +4,8 @@ id: 206
 name: Wild Gorilla
 status: in-game
 level: 43
-hp: 35
+hp: 1505
+hp_per_level: 35
 attack: 169
 hit: 131
 defence: 132
@@ -95,5 +96,6 @@ source:
 # Wild Gorilla
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

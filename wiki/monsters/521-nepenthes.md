@@ -4,7 +4,8 @@ id: 521
 name: Nepenthes
 status: in-game
 level: 147
-hp: 37
+hp: 5439
+hp_per_level: 37
 attack: 718
 hit: 460
 defence: 446
@@ -156,5 +157,6 @@ source:
 # Nepenthes
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

@@ -4,7 +4,8 @@ id: 172
 name: Aqua Warrior
 status: in-game
 level: 31
-hp: 26
+hp: 806
+hp_per_level: 26
 attack: 122
 hit: 114
 defence: 99
@@ -178,5 +179,6 @@ source:
 # Aqua Warrior
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

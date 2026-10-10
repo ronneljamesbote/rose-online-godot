@@ -4,7 +4,8 @@ id: 887
 name: Hawk
 status: in-game
 level: 78
-hp: 1502
+hp: 117156
+hp_per_level: 1502
 attack: 267
 hit: 263
 defence: 201
@@ -29,5 +30,6 @@ source:
 # Hawk
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

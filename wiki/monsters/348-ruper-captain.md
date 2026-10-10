@@ -4,7 +4,8 @@ id: 348
 name: Ruper Captain
 status: in-game
 level: 106
-hp: 68
+hp: 7208
+hp_per_level: 68
 attack: 477
 hit: 289
 defence: 399
@@ -107,5 +108,6 @@ source:
 # Ruper Captain
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

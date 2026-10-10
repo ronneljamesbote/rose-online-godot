@@ -4,7 +4,8 @@ id: 818
 name: ButterFly
 status: in-game
 level: 53
-hp: 1320
+hp: 69960
+hp_per_level: 1320
 attack: 152
 hit: 156
 defence: 131
@@ -29,5 +30,6 @@ source:
 # ButterFly
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

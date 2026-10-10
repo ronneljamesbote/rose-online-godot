@@ -4,7 +4,8 @@ id: 67
 name: Queen HoneyBee
 status: in-game
 level: 26
-hp: 20
+hp: 520
+hp_per_level: 20
 attack: 85
 hit: 90
 defence: 51
@@ -153,5 +154,6 @@ source:
 # Queen HoneyBee
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

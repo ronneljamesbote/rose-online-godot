@@ -4,7 +4,8 @@ id: 82
 name: Beetle Fighter
 status: in-game
 level: 22
-hp: 27
+hp: 594
+hp_per_level: 27
 attack: 80
 hit: 78
 defence: 57
@@ -172,5 +173,6 @@ source:
 # Beetle Fighter
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

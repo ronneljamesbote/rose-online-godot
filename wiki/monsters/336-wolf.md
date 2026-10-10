@@ -4,7 +4,8 @@ id: 336
 name: Wolf
 status: in-game
 level: 85
-hp: 35
+hp: 2975
+hp_per_level: 35
 attack: 356
 hit: 198
 defence: 250
@@ -482,5 +483,6 @@ source:
 # Wolf
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

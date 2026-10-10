@@ -4,7 +4,8 @@ id: 71
 name: Needle Pomic
 status: in-game
 level: 12
-hp: 25
+hp: 300
+hp_per_level: 25
 attack: 42
 hit: 70
 defence: 45
@@ -226,5 +227,6 @@ source:
 # Needle Pomic
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

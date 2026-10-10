@@ -4,7 +4,8 @@ id: 848
 name: Elemental
 status: in-game
 level: 77
-hp: 2531
+hp: 194887
+hp_per_level: 2531
 attack: 278
 hit: 232
 defence: 232
@@ -29,5 +30,6 @@ source:
 # Elemental
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

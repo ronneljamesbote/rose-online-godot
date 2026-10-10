@@ -4,7 +4,8 @@ id: 212
 name: Krawfy King
 status: in-game
 level: 75
-hp: 186
+hp: 13950
+hp_per_level: 186
 attack: 356
 hit: 225
 defence: 286
@@ -104,5 +105,6 @@ source:
 # Krawfy King
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

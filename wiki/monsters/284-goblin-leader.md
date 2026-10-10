@@ -4,7 +4,8 @@ id: 284
 name: Goblin Leader
 status: in-game
 level: 77
-hp: 48
+hp: 3696
+hp_per_level: 48
 attack: 335
 hit: 202
 defence: 253
@@ -112,5 +113,6 @@ source:
 # Goblin Leader
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

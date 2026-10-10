@@ -4,7 +4,8 @@ id: 173
 name: Aqua Captain
 status: in-game
 level: 34
-hp: 44
+hp: 1496
+hp_per_level: 44
 attack: 140
 hit: 119
 defence: 112
@@ -159,5 +160,6 @@ source:
 # Aqua Captain
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

@@ -4,7 +4,8 @@ id: 301
 name: Mini Bee
 status: in-game
 level: 9
-hp: 17
+hp: 153
+hp_per_level: 17
 attack: 10
 hit: 34
 defence: 45
@@ -54,5 +55,6 @@ source:
 # Mini Bee
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

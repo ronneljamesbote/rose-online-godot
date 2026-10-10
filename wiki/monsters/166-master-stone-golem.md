@@ -4,7 +4,8 @@ id: 166
 name: Master Stone Golem
 status: in-game
 level: 80
-hp: 178
+hp: 14240
+hp_per_level: 178
 attack: 380
 hit: 237
 defence: 307
@@ -137,5 +138,6 @@ source:
 # Master Stone Golem
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

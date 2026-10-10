@@ -4,7 +4,8 @@ id: 395
 name: Astarot
 status: in-game
 level: 145
-hp: 448
+hp: 64960
+hp_per_level: 448
 attack: 816
 hit: 536
 defence: 637
@@ -79,5 +80,6 @@ source:
 # Astarot
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

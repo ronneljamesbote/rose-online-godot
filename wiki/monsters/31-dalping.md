@@ -4,7 +4,8 @@ id: 31
 name: Dalping
 status: in-game
 level: 21
-hp: 25
+hp: 525
+hp_per_level: 25
 attack: 73
 hit: 83
 defence: 65
@@ -142,5 +143,6 @@ source:
 # Dalping
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

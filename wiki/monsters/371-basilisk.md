@@ -4,7 +4,8 @@ id: 371
 name: Basilisk
 status: in-game
 level: 121
-hp: 64
+hp: 7744
+hp_per_level: 64
 attack: 492
 hit: 287
 defence: 527
@@ -400,5 +401,6 @@ source:
 # Basilisk
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

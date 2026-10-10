@@ -4,7 +4,8 @@ id: 216
 name: Grunter Guardian
 status: in-game
 level: 70
-hp: 375
+hp: 26250
+hp_per_level: 375
 attack: 391
 hit: 289
 defence: 266
@@ -67,5 +68,6 @@ source:
 # Grunter Guardian
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

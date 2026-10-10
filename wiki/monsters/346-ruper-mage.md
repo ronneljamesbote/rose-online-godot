@@ -4,7 +4,8 @@ id: 346
 name: Ruper Mage
 status: in-game
 level: 98
-hp: 40
+hp: 3920
+hp_per_level: 40
 attack: 397
 hit: 225
 defence: 232
@@ -440,5 +441,6 @@ source:
 # Ruper Mage
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

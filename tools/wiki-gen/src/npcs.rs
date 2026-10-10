@@ -33,7 +33,9 @@ pub fn write_monsters(cx: &Ctx, pages: &mut Pages) {
         p.set("name", name.as_str());
         p.set("status", "in-game");
         p.set("level", npc.level as i64);
-        p.set("hp", npc.health_points as i64);
+        // The data holds HP per level; a monster's real max HP is level × that.
+        p.set("hp", (npc.level as i64) * (npc.health_points as i64));
+        p.set("hp_per_level", npc.health_points as i64);
         p.set("attack", npc.attack as i64);
         p.set("hit", npc.hit as i64);
         p.set("defence", npc.defence as i64);
@@ -94,6 +96,7 @@ pub fn write_monsters(cx: &Ctx, pages: &mut Pages) {
         p.line(format!("# {name}"));
         p.line("");
         p.line("Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.");
+        p.line("HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.");
         p.line("How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];");
         p.line("how the XP value turns into experience is on [[rules/experience|Experience]].");
         pages.add(p);

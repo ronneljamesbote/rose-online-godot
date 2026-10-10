@@ -4,7 +4,8 @@ id: 386
 name: Lunar Keeper
 status: in-game
 level: 131
-hp: 44
+hp: 5764
+hp_per_level: 44
 attack: 564
 hit: 304
 defence: 322
@@ -94,5 +95,6 @@ source:
 # Lunar Keeper
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

@@ -4,7 +4,8 @@ id: 163
 name: Master Golem
 status: in-game
 level: 84
-hp: 181
+hp: 15204
+hp_per_level: 181
 attack: 383
 hit: 260
 defence: 266
@@ -116,5 +117,6 @@ source:
 # Master Golem
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

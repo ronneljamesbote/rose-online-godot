@@ -4,7 +4,8 @@ id: 258
 name: Elder BloodBat
 status: in-game
 level: 60
-hp: 32
+hp: 1920
+hp_per_level: 32
 attack: 231
 hit: 137
 defence: 150
@@ -133,5 +134,6 @@ source:
 # Elder BloodBat
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

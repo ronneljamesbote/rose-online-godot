@@ -4,7 +4,8 @@ id: 536
 name: Sikuku Spearman
 status: in-game
 level: 140
-hp: 34
+hp: 4760
+hp_per_level: 34
 attack: 677
 hit: 412
 defence: 447
@@ -130,5 +131,6 @@ source:
 # Sikuku Spearman
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

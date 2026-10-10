@@ -4,7 +4,8 @@ id: 261
 name: Goblin Jar
 status: in-game
 level: 45
-hp: 33
+hp: 1485
+hp_per_level: 33
 attack: 146
 hit: 131
 defence: 169
@@ -133,5 +134,6 @@ source:
 # Goblin Jar
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

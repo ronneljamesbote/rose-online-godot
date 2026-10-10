@@ -4,7 +4,8 @@ id: 21
 name: Pumpkin
 status: in-game
 level: 9
-hp: 23
+hp: 207
+hp_per_level: 23
 attack: 32
 hit: 65
 defence: 39
@@ -134,5 +135,6 @@ source:
 # Pumpkin
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

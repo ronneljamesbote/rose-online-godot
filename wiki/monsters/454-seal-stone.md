@@ -4,7 +4,8 @@ id: 454
 name: Seal Stone
 status: in-game
 level: 108
-hp: 79
+hp: 8532
+hp_per_level: 79
 attack: 410
 hit: 273
 defence: 453
@@ -110,5 +111,6 @@ source:
 # Seal Stone
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

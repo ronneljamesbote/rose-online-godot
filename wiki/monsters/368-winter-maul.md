@@ -4,7 +4,8 @@ id: 368
 name: Winter Maul
 status: in-game
 level: 114
-hp: 53
+hp: 6042
+hp_per_level: 53
 attack: 566
 hit: 310
 defence: 395
@@ -416,5 +417,6 @@ source:
 # Winter Maul
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

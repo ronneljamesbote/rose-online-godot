@@ -4,7 +4,8 @@ id: 111
 name: Moldie
 status: in-game
 level: 37
-hp: 26
+hp: 962
+hp_per_level: 26
 attack: 91
 hit: 107
 defence: 106
@@ -414,5 +415,6 @@ source:
 # Moldie
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

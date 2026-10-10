@@ -4,7 +4,8 @@ id: 75
 name: Pomic Fighter
 status: in-game
 level: 19
-hp: 27
+hp: 513
+hp_per_level: 27
 attack: 73
 hit: 74
 defence: 51
@@ -266,5 +267,6 @@ source:
 # Pomic Fighter
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

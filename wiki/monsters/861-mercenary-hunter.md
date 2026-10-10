@@ -4,7 +4,8 @@ id: 861
 name: Mercenary Hunter
 status: in-game
 level: 64
-hp: 1750
+hp: 112000
+hp_per_level: 1750
 attack: 208
 hit: 199
 defence: 168
@@ -29,5 +30,6 @@ source:
 # Mercenary Hunter
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

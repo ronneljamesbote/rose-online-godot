@@ -4,7 +4,8 @@ id: 931
 name: Slag
 status: in-game
 level: 82
-hp: 2768
+hp: 226976
+hp_per_level: 2768
 attack: 321
 hit: 191
 defence: 224
@@ -29,5 +30,6 @@ source:
 # Slag
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

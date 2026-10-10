@@ -4,7 +4,8 @@ id: 204
 name: Wandering Rackie
 status: in-game
 level: 20
-hp: 34
+hp: 680
+hp_per_level: 34
 attack: 57
 hit: 94
 defence: 71
@@ -97,5 +98,6 @@ source:
 # Wandering Rackie
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

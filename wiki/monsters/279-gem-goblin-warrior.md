@@ -4,7 +4,8 @@ id: 279
 name: Gem Goblin Warrior
 status: in-game
 level: 89
-hp: 33
+hp: 2937
+hp_per_level: 33
 attack: 382
 hit: 227
 defence: 293
@@ -422,5 +423,6 @@ source:
 # Gem Goblin Warrior
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

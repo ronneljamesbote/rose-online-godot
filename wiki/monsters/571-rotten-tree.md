@@ -4,7 +4,8 @@ id: 571
 name: Rotten Tree
 status: in-game
 level: 147
-hp: 29
+hp: 4263
+hp_per_level: 29
 attack: 697
 hit: 449
 defence: 501
@@ -146,5 +147,6 @@ source:
 # Rotten Tree
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

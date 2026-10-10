@@ -4,7 +4,8 @@ id: 332
 name: Elder Slag
 status: in-game
 level: 82
-hp: 35
+hp: 2870
+hp_per_level: 35
 attack: 336
 hit: 191
 defence: 224
@@ -350,5 +351,6 @@ source:
 # Elder Slag
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

@@ -4,7 +4,8 @@ id: 61
 name: Needle HoneyBee
 status: in-game
 level: 11
-hp: 25
+hp: 275
+hp_per_level: 25
 attack: 38
 hit: 68
 defence: 43
@@ -186,5 +187,6 @@ source:
 # Needle HoneyBee
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].

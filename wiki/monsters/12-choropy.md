@@ -4,7 +4,8 @@ id: 12
 name: Choropy
 status: in-game
 level: 6
-hp: 26
+hp: 156
+hp_per_level: 26
 attack: 10
 hit: 61
 defence: 33
@@ -623,5 +624,6 @@ source:
 # Choropy
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
+HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].
