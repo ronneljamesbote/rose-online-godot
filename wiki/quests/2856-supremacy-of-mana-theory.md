@@ -1,0 +1,16 @@
+---
+kind: quest
+id: 2856
+name: Supremacy of Mana Theory
+status: in-game
+time_limit_minutes: 70
+steps: 0
+source:
+  data: 'LIST_QUEST.STB row 2856; QSD triggers '
+  code:
+  - module/src/quests.rs
+  - crates/rose-quest/src/lib.rs
+---
+# Supremacy of Mana Theory
+
+The Righteous Crusaders and Ferrell Guild have taken our magic lightly, but were frequently defeated when they challenged us. Once again, they must be taught the reality of Mana Theory. Let us show them the true power of Arumic magic!  

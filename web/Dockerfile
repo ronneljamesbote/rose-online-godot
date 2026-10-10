@@ -1,4 +1,4 @@
-# ROSE account website (sign up, forgot password, and game sign-in). Built by the
+# ROSE account website (sign up, forgot password, game sign-in and the wiki). Built by the
 # repository's compose.yaml; see web/README.md.
 
 FROM node:22-alpine AS build
@@ -10,9 +10,11 @@ RUN npm run build
 
 FROM node:22-alpine
 WORKDIR /app
-ENV NODE_ENV=production PORT=3001 HOSTNAME=0.0.0.0 DATA_DIR=/data NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production PORT=3001 HOSTNAME=0.0.0.0 DATA_DIR=/data NEXT_TELEMETRY_DISABLED=1 WIKI_DIR=/app/wiki
 COPY --from=build /app/.next/standalone ./
 COPY --from=build /app/.next/static ./.next/static
+# The wiki pages (compose.yaml passes the repository's wiki/ folder as the "wiki" context).
+COPY --from=wiki . ./wiki
 # Accounts and the token signing key. Keep this volume private and backed up.
 RUN mkdir -p /data && chown node:node /data
 USER node

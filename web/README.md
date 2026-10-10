@@ -2,7 +2,7 @@
 
 A small Next.js 16 site where players make an account (email and password), confirm their
 email, sign in to see their account, reset a forgotten password by email, and see who is
-playing. The game signs in through it too: it sends the email and password to
+playing, and it serves the game wiki at `/wiki`. The game signs in through it too: it sends the email and password to
 `/api/game/login` and gets a short-lived token that the game server accepts.
 `docker compose up -d` in the repository folder runs it on port 3001 next to the game
 server (see server/README.md for the settings).
@@ -24,6 +24,14 @@ server (see server/README.md for the settings).
 | `GET /api/online` | The who's-online list as JSON (count and players) |
 | `POST /api/game/login` | `{email, password}` → `{token, expires_in}` for the game |
 | `/.well-known/openid-configuration`, `/.well-known/jwks.json` | Where SpacetimeDB finds the public key that checks game tokens |
+| `/wiki`, `/wiki/<page>` | The game wiki: the Markdown pages in the repository's `wiki/` folder, shown as web pages (see wiki/README.md). Anyone can read it |
+| `GET /api/wiki/search` | Every wiki page's name, kind and ID, for the search box |
+| `/wiki-assets/<file>` | The wiki's pictures (`wiki/assets`): zone maps and icon sheets |
+
+The wiki is read from `WIKI_DIR` (default: `wiki/` next to the site, else `../wiki`). In
+Docker, compose.yaml passes the repository's `wiki/` folder into the image, so a wiki change
+shows after `docker compose build rose-web`. During `npm run dev` pages reload on save.
+`node scripts/check-wiki.mjs` checks every page's data block and links.
 
 The account and who's-online pages read the characters from the game server's database
 (`GAME_SERVER_URL`, SQL over HTTP with the website's own service token; only public

@@ -18,6 +18,8 @@ const csp = [
 const nextConfig: NextConfig = {
   output: "standalone",
   poweredByHeader: false,
+  // next dev would otherwise write web/AGENTS.md; the repository's agent rules are AGENTS.md at the root.
+  agentRules: false,
   serverExternalPackages: ["nodemailer"],
   async rewrites() {
     return [

@@ -11,6 +11,7 @@ COPY module module
 COPY import import
 # Workspace member manifests must exist for cargo to read the workspace.
 COPY godot/rust godot/rust
+COPY tools tools
 RUN cd module && cargo build --release --target wasm32-unknown-unknown
 # The import tool packs the game data from a ROSE client folder for upload.
 RUN cargo build --release -p rose-stdb-import
@@ -27,6 +28,8 @@ RUN case "${TARGETARCH:-amd64}" in arm64) arch=aarch64 ;; *) arch=x86_64 ;; esac
 COPY --from=module /src/module/target/wasm32-unknown-unknown/release/rose_stdb_module.wasm /opt/rose/rose_stdb_module.wasm
 COPY --from=module /src/target/release/rose-stdb-import /usr/local/bin/rose-stdb-import
 COPY server/entrypoint.sh server/upload-game-data.sh server/assign-character.sh /opt/rose/
+# Our changes to the game data, applied when the game data is uploaded (overrides/README.md).
+COPY overrides/game-data.toml /opt/rose/overrides/game-data.toml
 # Strip Windows line endings in case Git converted them on checkout.
 RUN sed -i "s/\r$//" /opt/rose/*.sh && chmod +x /opt/rose/*.sh
 

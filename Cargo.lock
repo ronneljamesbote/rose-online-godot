@@ -1754,6 +1754,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "rose-game-overrides"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "rose-file-readers",
+ "serde",
+ "toml",
+]
+
+[[package]]
 name = "rose-gd"
 version = "0.1.0"
 dependencies = [
@@ -1768,6 +1778,7 @@ dependencies = [
  "rose-game-common",
  "rose-game-data",
  "rose-game-irose",
+ "rose-game-overrides",
  "rose-quest",
  "serde_json",
  "spacetimedb-sdk",
@@ -1795,6 +1806,7 @@ dependencies = [
  "rose-data-irose",
  "rose-file-readers",
  "rose-game-data",
+ "rose-game-overrides",
  "serde_json",
 ]
 
@@ -2024,6 +2036,19 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 3.0.6",
+]
+
+[[package]]
+name = "serde_yaml"
+version = "0.9.34+deprecated"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6a8b1a1a2ebf674015cc02edccce75287f1a0130d394307b36743c2f5d504b47"
+dependencies = [
+ "indexmap 2.14.2",
+ "itoa",
+ "ryu",
+ "serde",
+ "unsafe-libyaml",
 ]
 
 [[package]]
@@ -2531,6 +2556,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d245f478577f809a851594d02313b640fb437e0bb33866753cff937863096954"
 
 [[package]]
+name = "unsafe-libyaml"
+version = "0.2.11"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "673aac59facbab8a9007c7f6108d11f63b603f7cabff99fabf650fea5c32b861"
+
+[[package]]
 name = "url"
 version = "2.5.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2643,6 +2674,23 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "23f0c9c52aa7cd7d77769a4cfe2a9adb1b331f489a41d912ce14513d5ab995c6"
 dependencies = [
  "unicode-ident",
+]
+
+[[package]]
+name = "wiki-gen"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "arrayvec",
+ "num-traits",
+ "rose-data",
+ "rose-data-irose",
+ "rose-file-readers",
+ "rose-game-common",
+ "rose-game-data",
+ "serde_json",
+ "serde_yaml",
+ "thiserror 1.0.69",
 ]
 
 [[package]]

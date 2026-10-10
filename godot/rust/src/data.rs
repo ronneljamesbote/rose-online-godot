@@ -40,16 +40,40 @@ pub struct GameData {
 
 static GAME_DATA: OnceLock<GameData> = OnceLock::new();
 
+/// Our changes to the game data (overrides/game-data.toml), the same file the server's
+/// upload applies: ROSE_OVERRIDES, else the overrides folder next to the game, else the
+/// repository's (when running from the Godot editor).
+fn apply_overrides(vfs: &mut VirtualFilesystem) -> Result<(), anyhow::Error> {
+    let candidates = std::env::var_os("ROSE_OVERRIDES").map(PathBuf::from).into_iter().chain(
+        [
+            std::env::current_exe().ok().and_then(|exe| exe.parent().map(|d| d.join(rose_game_overrides::OVERRIDES_FILE))),
+            std::env::current_dir().ok().map(|d| d.join("..").join(rose_game_overrides::OVERRIDES_FILE)),
+        ]
+        .into_iter()
+        .flatten(),
+    );
+    for path in candidates {
+        if path.is_file() {
+            let overrides = rose_game_overrides::Overrides::load(&path)?;
+            let cells = overrides.apply(vfs)?;
+            godot::global::godot_print!("rose: {} game data changes from {}", cells, path.display());
+            return Ok(());
+        }
+    }
+    Ok(())
+}
+
 pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
     if GAME_DATA.get().is_some() {
         return Ok(());
     }
 
     let root = data_idx.parent().map(|p| p.to_path_buf()).unwrap_or_default();
-    let vfs = VirtualFilesystem::new(vec![
+    let mut vfs = VirtualFilesystem::new(vec![
         Box::new(VfsIndex::load(data_idx)?),
         Box::new(HostFilesystemDevice::new(root.clone())),
     ]);
+    apply_overrides(&mut vfs)?;
     let strings = rose_data_irose::get_string_database(&vfs, 1)?;
     let zone_list = rose_data_irose::get_zone_list(&vfs, strings.clone())?;
     let skybox = rose_data_irose::get_skybox_database(&vfs)?;
