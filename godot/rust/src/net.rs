@@ -2215,7 +2215,8 @@ fn our_cooldowns(c: &DbConnection, p: &Player) -> Vec<SkillCooldownRow> {
         .unwrap_or_default()
 }
 
-/// Adds a skill's cooldown to its dictionary: cooldown_end_ms (server clock, see
+/// Adds a skill's cooldown (its own, or the global one when that ends later) to its
+/// dictionary: cooldown_end_ms (server clock, see
 /// server_time_ms; 0 when none was started) and cooldown_total (its full length in
 /// seconds). Both only change when the skill is used, so polling them is cheap.
 fn set_cooldown(d: &mut VarDictionary, skill: &rose_data::SkillData, cooldowns: &[SkillCooldownRow]) {
@@ -2223,7 +2224,13 @@ fn set_cooldown(d: &mut VarDictionary, skill: &rose_data::SkillData, cooldowns: 
         rose_data::SkillCooldown::Skill { duration } => (skill.id.get() as u32, duration),
         rose_data::SkillCooldown::Group { group, duration } => (100_000 + group.get() as u32, duration),
     };
-    let until = cooldowns.iter().filter(|r| r.key == key).map(|r| r.until_us).max().unwrap_or(0);
+    let ends = |k: u32| cooldowns.iter().filter(|r| r.key == k).map(|r| r.until_us).max().unwrap_or(0);
+    let (own, global) = (ends(key), ends(0));
+    // The 0.25 s global cooldown after any skill shows when it outlasts the skill's own.
+    let (until, total) = if global > own { (global, GLOBAL_COOLDOWN_S) } else { (own, duration.as_secs_f64()) };
     d.set("cooldown_end_ms", until as f64 / 1000.0);
-    d.set("cooldown_total", duration.as_secs_f64());
+    d.set("cooldown_total", total);
 }
+
+/// module/src/skills.rs GLOBAL_COOLDOWN_US, in seconds.
+const GLOBAL_COOLDOWN_S: f64 = 0.25;
