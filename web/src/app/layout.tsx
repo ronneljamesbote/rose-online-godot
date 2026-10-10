@@ -19,6 +19,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             ROSE <span>Online</span>
           </Link>
           <nav>
+            <Link href="/wiki">Wiki</Link>
             <Link href="/online">Who&apos;s online</Link>
             {signedIn ? (
               <Link href="/account" className="nav-account">
