@@ -58,3 +58,5 @@ same as typing `@name` in the chat box. See [[rules/chat|Chat]].
 Press **Remove** on a friend's row. They are taken off your list and you are taken off
 theirs. You see "Removed *name* from your friends" and they see "*name* removed you from
 their friends".
+
+> Open question: adding a friend matches their name in any upper or lower case, but removing one (or other lookups by name) needs the exact case. Should removing ignore case too?

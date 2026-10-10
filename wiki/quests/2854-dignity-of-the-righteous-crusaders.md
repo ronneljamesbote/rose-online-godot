@@ -14,3 +14,5 @@ source:
 # Dignity of the Righteous Crusaders
 
 It's lonely to be number one, and you'll always have enemies. Let's show that jealous Junon Order just how powerful we really are, and confirm our superiority!  
+
+> Open question: this quest has no steps here because its quest file (`PvP10.qsd` or `PvP13-01.qsd`) fails to load: `crates/rose-file-readers/src/qsd.rs` reads the zone-team trigger reward (type 19) with a wrong layout. Part of [[backlog/faction-wars|Faction wars]].

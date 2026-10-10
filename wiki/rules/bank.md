@@ -69,4 +69,4 @@ Storing and taking items is free. Zuly can't be stored.
 - In iROSE the last 30 slots (page 4) were for premium accounts only; here everyone gets
   all four pages.
 
-> Open question: iROSE charged a small Zuly fee for storing items and let you keep Zuly in storage. Our storage is free and holds no Zuly. Is that what we want?
+> Open question: iROSE charged a small Zuly fee for storing items (see [[backlog/storage-fees|Storage fees]]); our storage is free. Is that what we want? (Zuly could not be stored in iROSE either: the client says "Cannot place Zulie in Storage".)
