@@ -106,6 +106,8 @@ While a dialog is open, 1 to 9 pick its answers and Esc ends it.
 - Drag items to move them between bag slots.
 - Drag a skill or a bag item onto the **hotbar** to put it there. Drag between hotbar slots
   to swap them. Right-click a hotbar slot to use it, and Shift + right-click to empty it.
+  Each filled slot shows its key (1 to 8) in the top-left corner, stacked items show their
+  count, and a skill that is cooling down shows a dark sweep and the seconds left.
 - While another window is open, right-clicking a bag item acts on it:
 
 | Window open | Right-click | Shift + right-click |

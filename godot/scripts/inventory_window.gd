@@ -21,6 +21,10 @@ class Slot:
 	var item = null
 	var icon: TextureRect
 	var count: Label
+	var key_label: Label  # the hotbar key (1-8), when the slot has one
+	var shade: Control  # the cooldown sweep and seconds over a skill's icon
+	var cooldown_end_ms := 0.0  # server clock (RoseNet.server_time_ms)
+	var cooldown_total := 0.0  # seconds
 	var selected := false
 
 	func _init(owner_window: Control, slot_kind: String, slot_index: int, caption := "") -> void:
@@ -39,24 +43,27 @@ class Slot:
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(icon)
+		shade = Control.new()
+		shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		shade.draw.connect(_draw_cooldown)
+		add_child(shade)
 		count = Label.new()
 		count.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
 		count.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 		count.grow_vertical = Control.GROW_DIRECTION_BEGIN
-		count.add_theme_font_size_override("font_size", 12)
-		count.add_theme_color_override("font_shadow_color", Color.BLACK)
-		count.add_theme_constant_override("shadow_offset_x", 1)
-		count.add_theme_constant_override("shadow_offset_y", 1)
+		count.offset_right = -3
+		count.theme_type_variation = "SlotCount"
 		count.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(count)
 		if caption != "":
-			var name_label := Label.new()
-			name_label.text = caption
-			name_label.add_theme_font_size_override("font_size", 9)
-			name_label.theme_type_variation = "MutedLabel"
-			name_label.position = Vector2(3, 1)
-			name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			add_child(name_label)
+			# Faint on an empty slot; on a filled one it sits on a small chip over the icon.
+			key_label = Label.new()
+			key_label.text = caption
+			key_label.theme_type_variation = "SlotKey"
+			key_label.position = Vector2(2, 1)
+			key_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			add_child(key_label)
 
 	func show_item(new_item) -> void:
 		item = new_item
@@ -71,7 +78,56 @@ class Slot:
 			var quantity: int = item.get("quantity", 1)
 			count.text = str(quantity) if quantity > 1 else ""
 			tooltip_text = "%s\n%s" % [item.get("name", "?"), item.get("tooltip", "")]
+		cooldown_end_ms = float(item.get("cooldown_end_ms", 0.0)) if item != null else 0.0
+		cooldown_total = float(item.get("cooldown_total", 0.0)) if item != null else 0.0
+		set_process(cooldown_end_ms > 0.0)
+		shade.queue_redraw()
+		if key_label != null:
+			key_label.theme_type_variation = "SlotKey" if item == null else "SlotKeyFilled"
+			key_label.reset_size()
 		queue_redraw()
+
+	## Seconds left on the skill's cooldown, 0 when it is ready.
+	func cooldown_left() -> float:
+		var net = window.get("net")
+		if cooldown_end_ms <= 0.0 or net == null:
+			return 0.0
+		return maxf(0.0, (cooldown_end_ms - net.server_time_ms()) / 1000.0)
+
+	func _process(_delta: float) -> void:
+		shade.queue_redraw()
+		if cooldown_left() <= 0.0:
+			set_process(false)
+
+	## A dark sweep over the part of the cooldown still to run (clockwise from the top,
+	## shrinking as it runs) and the seconds left in the middle.
+	func _draw_cooldown() -> void:
+		var left := cooldown_left()
+		if left <= 0.0:
+			return
+		var rect := Rect2(Vector2(2, 2), size - Vector2(4, 4))
+		var part := clampf(left / cooldown_total, 0.0, 1.0) if cooldown_total > 0.0 else 1.0
+		var centre := rect.get_center()
+		var reach := rect.size.length()
+		var points := PackedVector2Array([centre])
+		var start := -PI / 2 + TAU * (1.0 - part)
+		var steps := maxi(2, int(ceil(part * 48)))
+		for i in steps + 1:
+			var a := start + TAU * part * i / steps
+			points.append(centre + Vector2(cos(a), sin(a)) * reach)
+		var box := PackedVector2Array([rect.position, Vector2(rect.end.x, rect.position.y), rect.end, Vector2(rect.position.x, rect.end.y)])
+		var colour: Color = UI.color("slot.cooldown", Color(0, 0, 0, 0.6))
+		for piece in Geometry2D.intersect_polygons(points, box):
+			shade.draw_colored_polygon(piece, colour)
+		if cooldown_total < 1.0:
+			return  # the global cooldown: too short for a number
+		var text := str(ceili(left)) if left >= 1.0 else "%.1f" % left
+		var font := get_theme_font("font", "SlotCount")
+		var font_size := get_theme_font_size("font_size", "SlotCount") + 2
+		var width := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
+		var at := Vector2(centre.x - width / 2, centre.y + font.get_ascent(font_size) / 2 - 1)
+		shade.draw_string_outline(font, at, text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, get_theme_constant("outline_size", "SlotCount"), get_theme_color("font_outline_color", "SlotCount"))
+		shade.draw_string(font, at, text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, get_theme_color("font_color", "SlotCount"))
 
 	func _draw() -> void:
 		if selected:
