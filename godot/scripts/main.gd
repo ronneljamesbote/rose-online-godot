@@ -67,11 +67,13 @@ func _ready() -> void:
 	for arg in OS.get_cmdline_user_args():
 		var parts := arg.trim_prefix("--").split("=", true, 1)
 		options[parts[0]] = parts[1] if parts.size() > 1 else "true"
-	# --theme=clear and --ui-scale=1.25 set the interface options (for screenshots).
+	# --theme=clear, --ui-scale=1.25 and --ui-opacity=0.5 set the interface options (for screenshots).
 	if options.has("theme"):
 		UI.set_setting("theme", options["theme"])
 	if options.has("ui-scale"):
 		UI.set_setting("scale", float(options["ui-scale"]))
+	if options.has("ui-opacity"):
+		UI.set_setting("opacity", float(options["ui-opacity"]))
 
 	var data_idx := _find_data_idx()
 	if data_idx == "":

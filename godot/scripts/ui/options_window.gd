@@ -181,9 +181,19 @@ func _slider(grid: GridContainer, text: String, key: String, low: float, high: f
 	value.custom_minimum_size.x = 48
 	value.text = "%d%%" % roundi(slider.value * 100.0) if percent else str(slider.value)
 	row.add_child(value)
-	slider.value_changed.connect(func(v): value.text = "%d%%" % roundi(v * 100.0) if percent else str(v))
-	# Applied when the slider is let go, so the window doesn't jump while dragging.
-	slider.drag_ended.connect(func(_changed): UI.set_setting(key, slider.value))
+	# Interface size is applied when the slider is let go, so the window doesn't jump while
+	# dragging; opacity follows the slider. A click on the track or the mouse wheel moves
+	# the slider without a drag, so those apply at once.
+	var dragging := [false]
+	slider.drag_started.connect(func(): dragging[0] = true)
+	slider.drag_ended.connect(func(_changed):
+		dragging[0] = false
+		if UI.settings.get(key) != slider.value:
+			UI.set_setting(key, slider.value))
+	slider.value_changed.connect(func(v):
+		value.text = "%d%%" % roundi(v * 100.0) if percent else str(v)
+		if key == "opacity" or not dragging[0]:
+			UI.set_setting(key, v))
 
 
 func _plain_slider(grid: GridContainer, text: String, at: float) -> HSlider:
