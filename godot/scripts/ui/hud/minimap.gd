@@ -3,8 +3,9 @@
 ## M opens the big zone map.
 extends VBoxContainer
 
-## The zone's minimap image has 64 pixels per 160 m map block, starting at the block
-## LIST_ZONE.STB gives (as in the original client).
+## The zone's minimap image has 64 pixels per 160 m map block. Its top left corner is one
+## block west and one block north of the start block LIST_ZONE.STB gives (warp gates and
+## town NPCs land on the spots drawn on the image only with that shift).
 const METRES_PER_PIXEL := 2.5
 const BLOCK := 160.0
 
@@ -118,7 +119,7 @@ func _load(zone_id: int) -> void:
 
 ## Map image pixel of a world position.
 func to_map(at: Vector3) -> Vector2:
-	return Vector2((at.x - _start.x * BLOCK) / METRES_PER_PIXEL, (at.z + BLOCK * (65.0 - _start.y)) / METRES_PER_PIXEL)
+	return Vector2((at.x - (_start.x - 1.0) * BLOCK) / METRES_PER_PIXEL, (at.z + BLOCK * (66.0 - _start.y)) / METRES_PER_PIXEL)
 
 
 class _View extends Control:
