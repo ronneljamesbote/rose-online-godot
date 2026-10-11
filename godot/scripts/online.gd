@@ -48,7 +48,7 @@ const TALK_RANGE := 3.0  # metres from an NPC to talk to it
 const TALK_STOPPED_RANGE := 12.0  # or this close, when a wall stopped us on the way
 const NPC_NAME_RANGE := 30.0
 const MONSTER_NAME_RANGE := 15.0  # monster names show within this many metres, or when targeted
-const CLICK_MARKER_EFFECT := "3DDATA/EFFECT/MOVEDOWN_01.EFT"  # FILE_EFFECT.STB row 170: rings sinking into the ground
+const CLICK_MARKER_EFFECT := "3DDATA/EFFECT/FLAT_POINT_01.EFT"  # FILE_EFFECT.STB row 296, the target effect TRose.exe loads
 
 var zone: Node
 var net: RoseNet
@@ -113,7 +113,7 @@ var _layer: CanvasLayer
 var ground := {}  # drop id -> Node3D
 var _pickup := -1  # drop we are walking to
 var _talk := -1  # NPC we are walking to
-var _click_marker: Node3D  # the rings where we clicked the ground, until we get there
+var _click_marker: Node3D  # the marker where we last clicked the ground
 var _warps: Array = []  # this zone's warp gates: id, position, size
 var _warps_zone: Node = null
 var _next_warp_ms := 0
@@ -541,8 +541,8 @@ func move_to(target: Vector3) -> bool:
 	return true
 
 
-## A left click on the ground: walk there and mark the spot with the sinking rings, as
-## iROSE does. The rings go when we arrive, stop, or do something else.
+## A left click on the ground: walk there and drop iROSE's marker on the spot, a glowing
+## crystal that falls in and fades out by itself. A new click replaces it.
 func click_ground(target: Vector3) -> void:
 	if not move_to(target):
 		return
@@ -550,15 +550,6 @@ func click_ground(target: Vector3) -> void:
 	var fx := preload("res://scripts/fx.gd").find(self)
 	if fx:
 		_click_marker = fx.spawn_effect(CLICK_MARKER_EFFECT, target)
-
-
-func _update_click_marker() -> void:
-	if _click_marker == null:
-		return
-	if not is_instance_valid(_click_marker):
-		_click_marker = null
-	elif me == null or me.dead or not me.is_moving or my_target >= 0 or _pickup >= 0 or _talk >= 0:
-		_clear_click_marker()
 
 
 func _clear_click_marker() -> void:
@@ -893,7 +884,6 @@ func _process(_delta: float) -> void:
 		my_target = -1
 
 	_update_ground()
-	_update_click_marker()
 	_check_warps()
 	if Time.get_ticks_msec() >= _next_effects_ms:
 		_next_effects_ms = Time.get_ticks_msec() + 500
