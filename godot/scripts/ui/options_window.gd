@@ -97,7 +97,7 @@ func _interface_page() -> Control:
 	var cursor_row := HBoxContainer.new()
 	cursor_row.add_theme_constant_override("separation", 16)
 	box.add_child(cursor_row)
-	_check(cursor_row, "ROSE mouse cursor", "game_cursor")
+	_check(cursor_row, "Cursor Size", "game_cursor")
 	var cursor_size := OptionButton.new()
 	cursor_size.focus_mode = Control.FOCUS_NONE
 	cursor_size.tooltip_text = "Cursor size"
