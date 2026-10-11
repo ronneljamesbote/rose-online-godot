@@ -48,6 +48,7 @@ const TALK_RANGE := 3.0  # metres from an NPC to talk to it
 const TALK_STOPPED_RANGE := 12.0  # or this close, when a wall stopped us on the way
 const NPC_NAME_RANGE := 30.0
 const MONSTER_NAME_RANGE := 15.0  # monster names show within this many metres, or when targeted
+const CLICK_MARKER_EFFECT := "3DDATA/EFFECT/MOVEDOWN_01.EFT"  # FILE_EFFECT.STB row 170: rings sinking into the ground
 
 var zone: Node
 var net: RoseNet
@@ -112,6 +113,7 @@ var _layer: CanvasLayer
 var ground := {}  # drop id -> Node3D
 var _pickup := -1  # drop we are walking to
 var _talk := -1  # NPC we are walking to
+var _click_marker: Node3D  # the rings where we clicked the ground, until we get there
 var _warps: Array = []  # this zone's warp gates: id, position, size
 var _warps_zone: Node = null
 var _next_warp_ms := 0
@@ -527,14 +529,42 @@ func _out_of_fuel() -> bool:
 	return false
 
 
-func move_to(target: Vector3) -> void:
+## Walks to a point. Returns false if we can't move now (in a shop, out of fuel, a passenger).
+func move_to(target: Vector3) -> bool:
 	if me == null or _in_shop() or _out_of_fuel() or _riding(true):
-		return
+		return false
 	my_target = -1
 	_pickup = -1
 	_talk = -1
 	net.move_to(target.x, target.z)
 	me.predict_move(target)
+	return true
+
+
+## A left click on the ground: walk there and mark the spot with the sinking rings, as
+## iROSE does. The rings go when we arrive, stop, or do something else.
+func click_ground(target: Vector3) -> void:
+	if not move_to(target):
+		return
+	_clear_click_marker()
+	var fx := preload("res://scripts/fx.gd").find(self)
+	if fx:
+		_click_marker = fx.spawn_effect(CLICK_MARKER_EFFECT, target)
+
+
+func _update_click_marker() -> void:
+	if _click_marker == null:
+		return
+	if not is_instance_valid(_click_marker):
+		_click_marker = null
+	elif me == null or me.dead or not me.is_moving or my_target >= 0 or _pickup >= 0 or _talk >= 0:
+		_clear_click_marker()
+
+
+func _clear_click_marker() -> void:
+	if _click_marker and is_instance_valid(_click_marker):
+		_click_marker.queue_free()
+	_click_marker = null
 
 
 func attack(id: int) -> void:
@@ -863,6 +893,7 @@ func _process(_delta: float) -> void:
 		my_target = -1
 
 	_update_ground()
+	_update_click_marker()
 	_check_warps()
 	if Time.get_ticks_msec() >= _next_effects_ms:
 		_next_effects_ms = Time.get_ticks_msec() + 500
