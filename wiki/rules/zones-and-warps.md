@@ -10,6 +10,9 @@ warp_gate_margin_m: 3
 warp_gate_cooldown_s: 5
 loading_screen_timeout_s: 10
 revive_spread_m: 5
+sector_size_min_m: 50
+sector_size_max_m: 120
+view_sectors: 3 by 3 (your sector and the eight around it)
 start_zone: "[[zones/20-birth-island|Birth Island]]"
 planets:
   - { planet: 1, name: Junon }
@@ -51,6 +54,7 @@ day_cycles:
 source:
   code:
     - module/src/world.rs (setup_zones, teleport, use_warp_gate, warp_player)
+    - module/src/area.rs (entity_sector, sector_of, refresh)
     - module/src/lib.rs (move_to, move_collision, client_connected, client_disconnected, spawn_player_entity)
     - module/src/death.rs (revive, revive_point, set_save_point, save)
     - module/src/skills.rs (warp skills)
@@ -58,6 +62,7 @@ source:
     - crates/rose-data-irose/src/zone_database.rs (load_zone)
     - crates/rose-quest/src/lib.rs (world_ticks)
     - godot/scripts/online.gd (_check_warps)
+    - godot/rust/src/net.rs (update_interest, Area, get_entities)
     - godot/scripts/main.gd (_load_zone, _on_zone_needed, world_ticks)
     - godot/scripts/loading_screen.gd
     - godot/rust/src/zone.rs (get_warps, get_lighting_at)
@@ -102,6 +107,25 @@ $= 5760 - 512 \times 2.5 = 4480$ m.
 The server refuses a move to a point outside the zone's rectangle: from the corner of the
 lowest map block to the far edge of the highest, rounded down to whole sectors (the sector
 size is in LIST_ZONE.STB). See "What the server checks" below.
+
+## What you see around you
+
+A zone is cut into square **sectors**. Their size is set per zone in LIST_ZONE.STB, from
+**50 m** to **120 m** (smaller or larger values are raised or lowered to these). You see
+the monsters, players and dropped items in your own sector and the **eight sectors around
+it**, as in iROSE: at least one sector in every direction, at most two. Monsters further
+away are not sent to your game at all, so they are not drawn and cost nothing. The server
+checks five times a second which sector everyone is in, so something that walks into view
+appears within a fifth of a second.
+
+Two kinds of things are known zone-wide, because the map needs them: the zone's **town
+NPCs** (named on the M map) and the **players** of the zone (your party members show on the
+map wherever they are). Outside your view they are not drawn, and the minimap only marks
+the NPCs and your party members among them. Your party members' HP bars work in any zone.
+
+**Worked example.** [[zones/20-birth-island|Birth Island]] is 7 by 7 map blocks
+(1,120 m) with 50 m sectors. Standing anywhere, you see 50 to 100 m around you: a square of
+150 m. With 866 monsters on the island, about 120 of them are in that square.
 
 ## Warp gates
 

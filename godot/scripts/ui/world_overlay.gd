@@ -110,7 +110,7 @@ func _draw_tags(camera: Camera3D, font: Font, s: float) -> void:
 		var e: Node3D = online.entities[id]
 		if e.label:
 			e.label.visible = false
-		if e.dying or (e.dead and e.is_monster):
+		if not e.visible or e.dying or (e.dead and e.is_monster):
 			continue
 		var d: float = e.position.distance_to(me.position)
 		var show := false

@@ -123,6 +123,10 @@ var _level := 0
 var _zone_requested := 0
 var log_damage := false
 var log_positions := false  # print every player's position once a second
+var log_perf := false  # print frame rate, entities drawn and frame times every 2 seconds
+var _next_perf_ms := 0
+var _perf_entities_us := 0  # time spent in net.get_entities since the last perf line
+var _perf_frames := 0
 var _next_log_ms := 0
 var _killed := {}  # entity ids whose last hit killed them
 var _next_signs_ms := 0
@@ -718,7 +722,7 @@ func _pick_entity(camera: Camera3D, screen_position: Vector2, kind := "monster")
 			wanted = is_player and net.is_enemy_player(id)
 		elif kind == "monster":
 			wanted = entity.is_monster and not entity.is_summon
-		if not wanted or entity.dying or (entity.dead and kind != "friend"):
+		if not wanted or not entity.visible or entity.dying or (entity.dead and kind != "friend"):
 			continue
 		var centre: Vector3 = entity.global_position + Vector3(0, entity.height * 0.5, 0)
 		if camera.is_position_behind(centre):
@@ -876,7 +880,10 @@ func _process(_delta: float) -> void:
 	if _zone_requested > 0:
 		return
 
+	var perf_start := Time.get_ticks_usec()
 	var states: Array = net.get_entities()
+	_perf_entities_us += Time.get_ticks_usec() - perf_start
+	_perf_frames += 1
 	var by_id := {}
 	for state in states:
 		by_id[state["id"]] = state
@@ -915,6 +922,9 @@ func _process(_delta: float) -> void:
 		if target_state != null:
 			target_position = Vector3(target_state["x"], 0, target_state["z"])
 		entities[id].update_state(state, target_position)
+		# Town NPCs and players outside the sectors around us are known (the zone map shows
+		# them) but not drawn; monsters out there are not sent at all.
+		entities[id].visible = not state.get("far", false)
 
 	if me == null and entities.has(my_id):
 		me = entities[my_id]
@@ -979,6 +989,24 @@ func _process(_delta: float) -> void:
 	var pvp: bool = net.zone_pvp() > 0
 	world_overlay.pvp = pvp
 
+	if log_perf and Time.get_ticks_msec() >= _next_perf_ms:
+		_next_perf_ms = Time.get_ticks_msec() + 2000
+		var drawn := 0
+		var monsters := 0
+		for entity in entities.values():
+			if entity.visible:
+				drawn += 1
+				if entity.is_monster:
+					monsters += 1
+		print("rose perf: fps %d  known %d  nodes %d  drawn %d  monsters drawn %d  get_entities %.2f ms  frame %.2f ms  objects %d  draw calls %d  scene nodes %d" % [
+			Engine.get_frames_per_second(), states.size(), entities.size(), drawn, monsters,
+			_perf_entities_us / 1000.0 / maxi(_perf_frames, 1),
+			Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0,
+			Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME),
+			Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME),
+			Performance.get_monitor(Performance.OBJECT_NODE_COUNT)])
+		_perf_entities_us = 0
+		_perf_frames = 0
 	if log_positions and Time.get_ticks_msec() >= _next_log_ms:
 		_next_log_ms = Time.get_ticks_msec() + 1000
 		var line := []
