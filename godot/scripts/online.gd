@@ -542,7 +542,8 @@ func move_to(target: Vector3) -> bool:
 
 
 ## A left click on the ground: walk there and drop iROSE's marker on the spot, a glowing
-## crystal that falls in and fades out by itself. A new click replaces it.
+## crystal that falls in and fades out. It goes at once when we arrive or stop, or when
+## another click sends us somewhere else.
 func click_ground(target: Vector3) -> void:
 	if not move_to(target):
 		return
@@ -550,6 +551,15 @@ func click_ground(target: Vector3) -> void:
 	var fx := preload("res://scripts/fx.gd").find(self)
 	if fx:
 		_click_marker = fx.spawn_effect(CLICK_MARKER_EFFECT, target)
+
+
+func _update_click_marker() -> void:
+	if _click_marker == null:
+		return
+	if not is_instance_valid(_click_marker):
+		_click_marker = null
+	elif me == null or me.dead or not me.is_moving or my_target >= 0 or _pickup >= 0 or _talk >= 0:
+		_clear_click_marker()
 
 
 func _clear_click_marker() -> void:
@@ -884,6 +894,7 @@ func _process(_delta: float) -> void:
 		my_target = -1
 
 	_update_ground()
+	_update_click_marker()
 	_check_warps()
 	if Time.get_ticks_msec() >= _next_effects_ms:
 		_next_effects_ms = Time.get_ticks_msec() + 500
