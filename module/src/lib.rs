@@ -644,6 +644,15 @@ pub fn set_name(ctx: &ReducerContext, name: String) -> Result<(), String> {
 #[spacetimedb::reducer]
 pub fn move_to(ctx: &ReducerContext, x: f32, y: f32) -> Result<(), String> {
     let (player, id) = my_player(ctx)?;
+    // A skill that is locked in: walk off once it takes effect.
+    if skills::queue_if_locked(ctx, id, skills::QueuedCommand::Move { x, y }) {
+        return Ok(());
+    }
+    move_to_as(ctx, player, id, x, y)
+}
+
+/// Walk a character to a point (the move_to reducer, or a move queued during a cast).
+pub(crate) fn move_to_as(ctx: &ReducerContext, player: Player, id: u64, x: f32, y: f32) -> Result<(), String> {
     if !is_alive(ctx, id) {
         return Err("dead".into());
     }
@@ -680,6 +689,14 @@ pub fn move_to(ctx: &ReducerContext, x: f32, y: f32) -> Result<(), String> {
 #[spacetimedb::reducer]
 pub fn attack(ctx: &ReducerContext, target: u64) -> Result<(), String> {
     let (_, id) = my_player(ctx)?;
+    if skills::queue_if_locked(ctx, id, skills::QueuedCommand::Attack { target }) {
+        return Ok(());
+    }
+    attack_as(ctx, id, target)
+}
+
+/// Start a character auto-attacking (the attack reducer, or an attack queued during a cast).
+pub(crate) fn attack_as(ctx: &ReducerContext, id: u64, target: u64) -> Result<(), String> {
     if shop::is_open(ctx, id) {
         return Err("close your shop first".into());
     }
@@ -740,16 +757,30 @@ pub fn attack(ctx: &ReducerContext, target: u64) -> Result<(), String> {
 #[spacetimedb::reducer]
 pub fn stop(ctx: &ReducerContext) -> Result<(), String> {
     let (_, id) = my_player(ctx)?;
+    if skills::queue_if_locked(ctx, id, skills::QueuedCommand::Stop) {
+        return Ok(());
+    }
+    stop_as(ctx, id);
+    Ok(())
+}
+
+pub(crate) fn stop_as(ctx: &ReducerContext, id: u64) {
     stop_motion(ctx, id);
     cancel_attack(ctx, id, now_us(ctx));
     skills::cancel_cast(ctx, id);
-    Ok(())
 }
 
 /// Sit down, or stand up when sitting. Sitting stops the character and any attack or cast.
 #[spacetimedb::reducer]
 pub fn sit(ctx: &ReducerContext) -> Result<(), String> {
     let (_, id) = my_player(ctx)?;
+    if skills::queue_if_locked(ctx, id, skills::QueuedCommand::Sit) {
+        return Ok(());
+    }
+    sit_as(ctx, id)
+}
+
+pub(crate) fn sit_as(ctx: &ReducerContext, id: u64) -> Result<(), String> {
     if ctx.db.sitting().entity_id().find(id).is_some() {
         stand_up(ctx, id);
         return Ok(());

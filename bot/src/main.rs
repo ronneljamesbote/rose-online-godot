@@ -3,6 +3,11 @@
 //! moving right after a hit is free but keeps the cooldown. Prints a timeline.
 //!
 //! Usage: rose-stdb-bot [ws://127.0.0.1:3000] [melee|ranged]
+//!
+//! `rose-stdb-bot URL cast` checks skill cast cancelling instead: the grace window, a
+//! locked-in cast holding the next command, and going back to the attack after a skill.
+//! The character needs Blessing in active slot 0 and Berserk in slot 1 and plenty of MP
+//! first: it waits for MP 500 while the admin sets it up (give_skill, set_hp_mp).
 
 mod module_bindings;
 
@@ -73,12 +78,141 @@ fn load(uri: String, n: usize, secs: u64) {
     for c in conns { c.disconnect().ok(); }
 }
 
+/// The cast checks (see the top of the file).
+fn cast(uri: String) {
+    let start = Instant::now();
+    let conn = DbConnection::builder().with_uri(uri).with_database_name("rose").build().expect("connect");
+    conn.subscription_builder().subscribe_to_all_tables();
+    conn.run_threaded();
+    let me = loop {
+        if let Some(id) = conn.try_identity().and_then(|i| conn.db.player().identity().find(&i)).and_then(|p| p.entity_id) {
+            if conn.db.motion().entity_id().find(&id).is_some() {
+                break id;
+            }
+        }
+        std::thread::sleep(Duration::from_millis(50));
+    };
+    let name = format!("Bot{}", me);
+    conn.reducers.set_name(name.clone()).ok();
+    println!("my entity {} name {}", me, name);
+    let t = || start.elapsed().as_secs_f32();
+    let combat = || conn.db.combat().entity_id().find(&me).unwrap();
+    let cast_row = || conn.db.skill_cast().entity_id().find(&me);
+    let wait = |f: &dyn Fn() -> bool, secs: u64| -> bool {
+        let until = Instant::now() + Duration::from_secs(secs);
+        while Instant::now() < until {
+            if f() {
+                return true;
+            }
+            std::thread::sleep(Duration::from_millis(5));
+        }
+        false
+    };
+    if !wait(&|| combat().mp >= 500, 60) {
+        println!("FAIL setup: MP never reached 500");
+        return;
+    }
+    let cooldown_until = |key: u32| conn.db.skill_cooldown().iter().filter(|r| r.entity_id == me && r.key == key).map(|r| r.until_us).max().unwrap_or(0);
+    let my_pos = || pos(&conn.db.motion().entity_id().find(&me).unwrap(), now_us());
+    let started = || cast_row().and_then(|c| c.started_at_us);
+    let mut checks: Vec<(&str, bool)> = Vec::new();
+    const BLESSING: u32 = 971;
+
+    // 1. Grace window: move straight after the casting starts. Nothing is spent.
+    let mp0 = combat().mp;
+    conn.reducers.cast_skill(1, 0, None, 0.0, 0.0).unwrap();
+    wait(&|| started().is_some(), 3);
+    let p = my_pos();
+    conn.reducers.move_to(p.0 + 200.0, p.1).unwrap();
+    std::thread::sleep(Duration::from_millis(600));
+    println!("[{:5.1}s] cast Blessing and moved at once: MP {} -> {}", t(), mp0, combat().mp);
+    checks.push(("moving in the grace window cancels the cast", cast_row().is_none()));
+    checks.push(("a cast cancelled in the grace window costs no MP", combat().mp == mp0));
+    checks.push(("a cast cancelled in the grace window starts no cooldown", cooldown_until(BLESSING) <= now_us()));
+
+    // 2. Locked in: move after the grace window. The cast lands, then we walk.
+    std::thread::sleep(Duration::from_millis(500));
+    let mp0 = combat().mp;
+    conn.reducers.cast_skill(1, 0, None, 0.0, 0.0).unwrap();
+    checks.push(("the same skill can be cast again at once", wait(&|| started().is_some(), 3)));
+    let c = cast_row().unwrap();
+    let begun = c.started_at_us.unwrap();
+    println!("[{:5.1}s] cast Blessing again: takes effect {:.0} ms after the casting starts", t(), (c.effect_at_us - begun) as f64 / 1000.0);
+    // Halfway between the end of the grace window and the effect.
+    let at = begun + (300_000 + c.effect_at_us - begun) / 2;
+    while now_us() < at {
+        std::thread::sleep(Duration::from_millis(1));
+    }
+    let p = my_pos();
+    let moved_at = now_us();
+    conn.reducers.move_to(p.0 + 200.0, p.1).unwrap();
+    std::thread::sleep(Duration::from_millis(60));
+    checks.push(("moving while locked in doesn't cancel the cast", cast_row().is_some_and(|c| !c.applied)));
+    checks.push(("moving while locked in waits (no walking yet)", conn.db.motion().entity_id().find(&me).unwrap().started_at_us < moved_at));
+    wait(&|| conn.db.motion().entity_id().find(&me).unwrap().started_at_us >= moved_at, 3);
+    let walk = conn.db.motion().entity_id().find(&me).unwrap().started_at_us;
+    println!("[{:5.1}s] moved {:.0} ms into the cast; the walk started {:.0} ms after the effect; MP {} -> {}",
+        t(), (moved_at - begun) as f64 / 1000.0, (walk - c.effect_at_us) as f64 / 1000.0, mp0, combat().mp);
+    checks.push(("the held move starts when the skill takes effect", walk >= c.effect_at_us - 1000 && walk < c.effect_at_us + 250_000));
+    checks.push(("a locked-in cast costs its MP", combat().mp < mp0));
+    checks.push(("a locked-in cast starts its cooldown", cooldown_until(BLESSING) > now_us()));
+
+    // 3. Go back to the attack after a skill: fight the nearest monster, use Blessing (a
+    //    "stop" skill) and then Berserk (a "restore" skill) mid-fight.
+    let target = conn
+        .db
+        .entity()
+        .iter()
+        .filter(|e| e.kind == EntityKind::Monster && e.npc_id < 316)
+        .filter_map(|e| conn.db.motion().entity_id().find(&e.entity_id).map(|m| (e.entity_id, pos(&m, now_us()))))
+        .min_by(|a, b| {
+            let p = my_pos();
+            let da = (a.1 .0 - p.0).powi(2) + (a.1 .1 - p.1).powi(2);
+            let db = (b.1 .0 - p.0).powi(2) + (b.1 .1 - p.1).powi(2);
+            da.total_cmp(&db)
+        })
+        .map(|(id, _)| id)
+        .expect("no monsters");
+    for (slot, skill) in [(0u16, "Blessing"), (1, "Berserk")] {
+        conn.reducers.attack(target).unwrap();
+        if !wait(&|| combat().swing_hit_at_us.is_some(), 60) {
+            println!("FAIL setup: never got to swing at #{}", target);
+            break;
+        }
+        wait(&|| cooldown_until(BLESSING) <= now_us(), 10);
+        conn.reducers.cast_skill(1, slot, None, 0.0, 0.0).unwrap();
+        if !wait(&|| cast_row().is_some(), 2) {
+            println!("[{:5.1}s] {} was refused", t(), skill);
+            continue;
+        }
+        let gone = wait(&|| cast_row().is_none(), 5);
+        let back = gone && wait(&|| combat().attack_target == Some(target), 1);
+        let alive = conn.db.combat().entity_id().find(&target).is_some_and(|c| c.hp > 0 && c.dead_until_us.is_none());
+        println!("[{:5.1}s] {} mid-fight: attack target afterwards {:?} (target alive: {})", t(), skill, combat().attack_target, alive);
+        if !alive {
+            println!("SKIP {}: the monster died during the skill", skill);
+            break;
+        }
+        checks.push((if slot == 0 { "a stop skill goes back to the attack" } else { "a restore skill goes back to the attack" }, back));
+        if conn.db.entity().entity_id().find(&target).is_none() || combat().attack_target.is_none() {
+            break;
+        }
+    }
+    for (name, ok) in &checks {
+        println!("{} {}", if *ok { "PASS" } else { "FAIL" }, name);
+    }
+    conn.disconnect().ok();
+}
+
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.get(2).map(|a| a.as_str()) == Some("load") {
         let n = args.get(3).and_then(|a| a.parse().ok()).unwrap_or(50);
         let secs = args.get(4).and_then(|a| a.parse().ok()).unwrap_or(60);
         return load(args[1].clone(), n, secs);
+    }
+    if args.get(2).map(|a| a.as_str()) == Some("cast") {
+        return cast(args[1].clone());
     }
     let uri = args.get(1).cloned().unwrap_or_else(|| "ws://127.0.0.1:3000".into());
     let ranged = args.get(2).map_or(true, |a| a == "ranged");
