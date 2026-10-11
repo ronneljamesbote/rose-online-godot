@@ -141,8 +141,13 @@ class Slot:
 				window.select(self)
 			accept_event()
 
+	## True when this slot holds something that can be dragged somewhere (the game cursor
+	## shows the gold hand over it).
+	func is_draggable() -> bool:
+		return item != null and (kind == "page" or kind == "skill" or kind == "hotbar" or kind == "bank")
+
 	func _get_drag_data(_at: Vector2) -> Variant:
-		if item == null or not (kind == "page" or kind == "skill" or kind == "hotbar" or kind == "bank"):
+		if not is_draggable():
 			return null
 		var preview := TextureRect.new()
 		preview.texture = icon.texture

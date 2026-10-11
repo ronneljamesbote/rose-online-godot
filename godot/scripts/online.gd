@@ -62,6 +62,9 @@ var _next_equip_try_ms := 0
 var hud: Label  # connection and server messages
 var ui_root: UiRoot
 var world_overlay: Node  # name tags, item labels, bubbles, damage numbers
+var _under := {}  # under_mouse() for _under_frame and _under_at
+var _under_frame := -1
+var _under_at := Vector2.ZERO
 var player_frame: Control
 var target_frame: Control
 var party_frames: Control
@@ -178,6 +181,7 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	var hover_tip := HoverTooltip.new()
 	hover_tip.online = self
 	ui_root.add_child(hover_tip)
+	UI.cursor.online = self
 	cart_gauge = CartGauge.new()
 	cart_gauge.visible = false
 	_widget(cart_gauge, "cart", Vector2(0.5, 1), Vector2(0, -112))
@@ -560,6 +564,37 @@ func sit() -> void:
 	_pickup = -1
 	_talk = -1
 	net.sit()
+
+
+## What a left click at this screen position would act on, in the order a click checks:
+## {"kind": "item" | "monster" | "enemy" | "npc" | "player", "id": ...}, or {} for the
+## ground. The cursor and the hover tooltip use it too, so they always show what a click
+## does. Remembered for the rest of the frame.
+func under_mouse(camera: Camera3D, screen_position: Vector2) -> Dictionary:
+	var frame := Engine.get_process_frames()
+	if frame == _under_frame and screen_position == _under_at:
+		return _under
+	_under_frame = frame
+	_under_at = screen_position
+	_under = {}
+	var label: int = world_overlay.item_label_at(screen_position) if world_overlay else -1
+	if label >= 0 and ground.has(label):
+		_under = {"kind": "item", "id": label}
+		return _under
+	for kind in ["monster", "enemy", "npc", "friend"]:
+		var id := _pick_entity(camera, screen_position, kind)
+		if id >= 0:
+			_under = {"kind": "player" if kind == "friend" else kind, "id": id}
+			return _under
+	var item := pick_item(camera, screen_position)
+	if item >= 0:
+		_under = {"kind": "item", "id": item}
+	return _under
+
+
+## True while an NPC's repair menu or a hammer waits for an item to repair.
+func is_repairing() -> bool:
+	return inventory_window != null and (inventory_window.repair_npc >= 0 or not inventory_window.repair_tool.is_empty())
 
 
 ## The monster under the mouse, or -1. Entities have no colliders yet, so this picks the

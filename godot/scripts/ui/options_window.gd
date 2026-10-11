@@ -1,5 +1,6 @@
 ## Options (O): the interface theme (Arumic by default; every file in the themes folder is
-## a card), interface size, window look, layout, labels over the world, and sound.
+## a card), interface size, window look, mouse cursor, layout, labels over the world, and
+## sound.
 extends PanelContainer
 
 const Fx := preload("res://scripts/fx.gd")
@@ -93,6 +94,21 @@ func _interface_page() -> Control:
 	portrait.selected = 1 if UI.settings.get("portrait", "live") == "static" else 0
 	portrait.item_selected.connect(func(i): UI.set_setting("portrait", "static" if i == 1 else "live"))
 	portrait_row.add_child(portrait)
+	var cursor_row := HBoxContainer.new()
+	cursor_row.add_theme_constant_override("separation", 16)
+	box.add_child(cursor_row)
+	_check(cursor_row, "ROSE mouse cursor", "game_cursor")
+	var cursor_size := OptionButton.new()
+	cursor_size.focus_mode = Control.FOCUS_NONE
+	cursor_size.tooltip_text = "Cursor size"
+	var sizes := ["normal", "large", "huge"]
+	for name in ["Normal size", "Large", "Huge"]:
+		cursor_size.add_item(name)
+	cursor_size.selected = maxi(0, sizes.find(UI.settings.get("cursor_size", "large")))
+	cursor_size.disabled = not UI.settings.get("game_cursor", true)
+	cursor_size.item_selected.connect(func(i): UI.set_setting("cursor_size", sizes[i]))
+	UI.settings_changed.connect(func(): cursor_size.disabled = not UI.settings.get("game_cursor", true))
+	cursor_row.add_child(cursor_size)
 	box.add_child(HSeparator.new())
 
 	_section(box, "Layout")
