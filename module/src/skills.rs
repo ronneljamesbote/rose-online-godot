@@ -25,6 +25,35 @@ const GROUP_KEY: u32 = 100_000;
 /// Casts that have no motion still take this long, so clients see them.
 const MIN_CAST_US: i64 = 300_000;
 
+/// For this long after the casting motion starts, moving or another action cancels a
+/// player's cast with nothing spent. After it the cast is locked in: its costs are paid and
+/// the next command waits until the skill takes effect.
+pub const CAST_GRACE_US: i64 = 300_000;
+
+/// A player's cast, beyond what clients see: when it locks in, whether its costs are paid,
+/// the command to run once it takes effect, and the attack to go back to when it ends.
+#[spacetimedb::table(accessor = cast_plan)]
+pub struct CastPlan {
+    #[primary_key]
+    pub entity_id: u64,
+    /// When the cast locks in (i64::MAX while walking into range).
+    pub lock_at_us: i64,
+    pub paid: bool,
+    /// A QueuedCommand as JSON, or empty.
+    pub queued: String,
+    pub resume_target: Option<u64>,
+}
+
+/// A command given while a cast was locked in, run when the skill takes effect.
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug)]
+pub enum QueuedCommand {
+    Move { x: f32, y: f32 },
+    Attack { target: u64 },
+    Stop,
+    Sit,
+    Skill { page: u8, index: u16, target: Option<u64>, x: f32, y: f32 },
+}
+
 /// A skill being cast: walking into range (started_at_us empty), then the casting motion
 /// until effect_at_us (when it takes effect), then the action motion until ends_at_us.
 #[spacetimedb::table(accessor = skill_cast, public)]
@@ -272,6 +301,7 @@ pub fn status_tick(ctx: &ReducerContext, game: &GameData, t: i64) {
 pub fn clear_entity(ctx: &ReducerContext, entity_id: u64) {
     ctx.db.skill_cast().entity_id().delete(entity_id);
     ctx.db.npc_cast_motion().entity_id().delete(entity_id);
+    ctx.db.cast_plan().entity_id().delete(entity_id);
     ctx.db.taunt().entity_id().delete(entity_id);
     ctx.db.summon().entity_id().delete(entity_id);
     let rows: Vec<u64> = ctx.db.status_effect().entity_id().filter(entity_id).map(|r| r.id).collect();
@@ -634,7 +664,11 @@ fn advance_cast(ctx: &ReducerContext, game: &GameData, mut cast: SkillCast, t: i
     }
     stop_motion(ctx, id);
     check_can_use(ctx, game, &p, id, skill, t)?;
-    pay_costs(ctx, game, id, skill, t);
+    // The costs are paid once the grace window is over (cast_tick).
+    if let Some(mut plan) = ctx.db.cast_plan().entity_id().find(id) {
+        plan.lock_at_us = t + CAST_GRACE_US;
+        ctx.db.cast_plan().entity_id().update(plan);
+    }
     let casting = motion_us(ctx, game, &p, id, skill.casting_motion_id, skill.casting_motion_speed);
     let action = motion_us(ctx, game, &p, id, skill.action_motion_id, skill.action_motion_speed);
     cast.started_at_us = Some(t);
@@ -669,8 +703,18 @@ pub fn start_cast(
     } else if at.is_none() && !self_skill && !target_allowed(ctx, id, id, skill) {
         return Err(format!("{} needs a target", skill.name));
     }
+    // What to go back to when the skill ends: the attack we were in, or the one an earlier
+    // skill was going back to.
+    let resume_target = ctx
+        .db
+        .combat()
+        .entity_id()
+        .find(id)
+        .and_then(|c| c.attack_target)
+        .or_else(|| ctx.db.cast_plan().entity_id().find(id).and_then(|plan| plan.resume_target));
     crate::cancel_attack(ctx, id, t);
-    ctx.db.skill_cast().entity_id().delete(id);
+    cancel_cast(ctx, id);
+    ctx.db.cast_plan().insert(CastPlan { entity_id: id, lock_at_us: i64::MAX, paid: false, queued: String::new(), resume_target });
     let (x, y) = at.unwrap_or((0.0, 0.0));
     let cast = ctx.db.skill_cast().insert(SkillCast {
         entity_id: id,
@@ -687,9 +731,56 @@ pub fn start_cast(
         use_item: use_item.map_or(String::new(), |(_, item)| serde_json::to_string(item).unwrap_or_default()),
     });
     if let Err(e) = advance_cast(ctx, game, cast, t) {
-        ctx.db.skill_cast().entity_id().delete(id);
+        cancel_cast(ctx, id);
         return Err(e);
     }
+    Ok(())
+}
+
+/// Whether the entity's cast is locked in: past the grace window, not yet taken effect.
+pub fn cast_locked(ctx: &ReducerContext, id: u64, t: i64) -> bool {
+    let Some(plan) = ctx.db.cast_plan().entity_id().find(id) else { return false };
+    ctx.db.skill_cast().entity_id().find(id).is_some_and(|cast| cast.started_at_us.is_some() && !cast.applied && t >= plan.lock_at_us)
+}
+
+/// A command given during a locked-in cast waits until the skill takes effect (the last one
+/// given wins). Returns whether it was queued.
+pub fn queue_if_locked(ctx: &ReducerContext, id: u64, command: QueuedCommand) -> bool {
+    if !cast_locked(ctx, id, now_us(ctx)) {
+        return false;
+    }
+    let Some(mut plan) = ctx.db.cast_plan().entity_id().find(id) else { return false };
+    plan.queued = serde_json::to_string(&command).unwrap_or_default();
+    ctx.db.cast_plan().entity_id().update(plan);
+    true
+}
+
+/// Run a command that waited for a cast to take effect.
+fn run_queued(ctx: &ReducerContext, id: u64, command: QueuedCommand) -> Result<(), String> {
+    let p = ctx.db.player().iter().find(|p| p.entity_id == Some(id)).ok_or("not a player")?;
+    match command {
+        QueuedCommand::Move { x, y } => crate::move_to_as(ctx, p, id, x, y),
+        QueuedCommand::Attack { target } => crate::attack_as(ctx, id, target),
+        QueuedCommand::Stop => {
+            crate::stop_as(ctx, id);
+            Ok(())
+        }
+        QueuedCommand::Sit => crate::sit_as(ctx, id),
+        QueuedCommand::Skill { page, index, target, x, y } => cast_skill_as(ctx, p, id, page, index, target, x, y),
+    }
+}
+
+/// Pay a locked-in cast's costs (they are checked again first). Err cancels the cast.
+fn pay_locked_cast(ctx: &ReducerContext, game: &GameData, cast: &SkillCast, mut plan: CastPlan) -> Result<(), String> {
+    let id = cast.entity_id;
+    let skill = skill(game, cast.skill_id)?;
+    let p = ctx.db.player().iter().find(|p| p.entity_id == Some(id)).ok_or("not a player")?;
+    let started = cast.started_at_us.unwrap_or(plan.lock_at_us);
+    // The cooldowns count from the start of the casting motion, so check against then.
+    check_can_use(ctx, game, &p, id, skill, started)?;
+    pay_costs(ctx, game, id, skill, started);
+    plan.paid = true;
+    ctx.db.cast_plan().entity_id().update(plan);
     Ok(())
 }
 
@@ -697,9 +788,11 @@ pub fn is_casting(ctx: &ReducerContext, id: u64) -> bool {
     ctx.db.skill_cast().entity_id().find(id).is_some()
 }
 
-/// Moving, attacking or stopping drops a cast that hasn't taken effect (its cost is spent).
+/// Moving, attacking or stopping drops a cast that hasn't taken effect. Inside the grace
+/// window nothing is spent; a locked-in cast can't be dropped this way (queue_if_locked).
 pub fn cancel_cast(ctx: &ReducerContext, id: u64) {
     ctx.db.skill_cast().entity_id().delete(id);
+    ctx.db.cast_plan().entity_id().delete(id);
     ctx.db.npc_cast_motion().entity_id().delete(id);
 }
 
@@ -707,6 +800,9 @@ pub fn cancel_cast(ctx: &ReducerContext, id: u64) {
 /// target, nothing taking effect.
 fn self_motion_cast(ctx: &ReducerContext, game: &GameData, p: &Player, id: u64, skill: &SkillData) -> Result<(), String> {
     let t = now_us(ctx);
+    if cast_locked(ctx, id, t) {
+        return Err("finish your skill first".into());
+    }
     check_can_use(ctx, game, p, id, skill, t)?;
     crate::stand_up(ctx, id);
     crate::cancel_attack(ctx, id, t);
@@ -754,6 +850,22 @@ fn pickup_nearest(ctx: &ReducerContext, p: &Player, id: u64) -> Result<(), Strin
 pub fn cast_skill(ctx: &ReducerContext, page: u8, index: u16, target: Option<u64>, x: f32, y: f32) -> Result<(), String> {
     let game = game(ctx)?;
     let (p, id) = my_player(ctx)?;
+    // During a locked-in cast the next skill waits until this one takes effect. Basic
+    // actions (attack, sit) wait in their own reducers.
+    let queues = p
+        .skill_list()
+        .get_skill(SkillSlot(page as usize, index as usize))
+        .and_then(|skill_id| game.skills.get_skill(skill_id))
+        .is_some_and(|skill| !matches!(skill.skill_type, SkillType::Passive | SkillType::BasicAction | SkillType::Emote | SkillType::CreateWindow));
+    if queues && queue_if_locked(ctx, id, QueuedCommand::Skill { page, index, target, x, y }) {
+        return Ok(());
+    }
+    cast_skill_as(ctx, p, id, page, index, target, x, y)
+}
+
+/// Use a skill list slot (the cast_skill reducer, or a skill queued during a cast).
+fn cast_skill_as(ctx: &ReducerContext, p: Player, id: u64, page: u8, index: u16, target: Option<u64>, x: f32, y: f32) -> Result<(), String> {
+    let game = game(ctx)?;
     if !crate::is_alive(ctx, id) {
         return Err("dead".into());
     }
@@ -805,6 +917,9 @@ pub fn use_scroll(ctx: &ReducerContext, game: &GameData, p: &Player, id: u64, sl
         ItemSlot::Inventory(page, index) => page as i32 * 100 + index as i32,
         _ => return Err("not an inventory item".into()),
     };
+    if cast_locked(ctx, id, now_us(ctx)) {
+        return Err("finish your skill first".into());
+    }
     let target = ctx.db.combat().entity_id().find(id).and_then(|c| c.attack_target);
     if skill.skill_type.is_target_skill() && target.is_none() {
         return Err("pick a target first".into());
@@ -833,6 +948,19 @@ pub fn cast_tick(ctx: &ReducerContext, game: &GameData, t: i64) {
             }
             continue;
         }
+        // A player's cast locks in after the grace window (or when it takes effect, if that
+        // comes sooner): now its costs are paid.
+        if !cast.applied {
+            if let Some(plan) = ctx.db.cast_plan().entity_id().find(id) {
+                if !plan.paid && (t >= plan.lock_at_us || t >= cast.effect_at_us) {
+                    if let Err(e) = pay_locked_cast(ctx, game, &cast, plan) {
+                        cancel_cast(ctx, id);
+                        notify(capitalise(&e));
+                        continue;
+                    }
+                }
+            }
+        }
         if !cast.applied && t >= cast.effect_at_us {
             let mut cast = cast.clone();
             cast.applied = true;
@@ -840,22 +968,36 @@ pub fn cast_tick(ctx: &ReducerContext, game: &GameData, t: i64) {
             if let Err(e) = take_effect(ctx, game, &cast, t) {
                 notify(capitalise(&e));
             }
+            // A command given while the cast was locked in runs now.
+            if let Some(mut plan) = ctx.db.cast_plan().entity_id().find(id) {
+                if let Ok(command) = serde_json::from_str::<QueuedCommand>(&plan.queued) {
+                    plan.queued = String::new();
+                    ctx.db.cast_plan().entity_id().update(plan);
+                    if let Err(e) = run_queued(ctx, id, command) {
+                        notify(capitalise(&e));
+                    }
+                }
+            }
             continue;
         }
         if cast.applied && t >= cast.ends_at_us {
+            let resume_target = ctx.db.cast_plan().entity_id().find(id).and_then(|plan| plan.resume_target);
             cancel_cast(ctx, id);
-            // Melee skills go back to attacking their target (SkillActionMode::Attack).
-            if let (Ok(skill), Some(target)) = (skill(game, cast.skill_id), cast.target) {
-                if matches!(skill.action_mode, SkillActionMode::Attack)
-                    && target != id
+            let attackable = |target: u64| {
+                target != id
                     && crate::pvp::can_attack(ctx, game, id, target)
                     && crate::is_alive(ctx, target)
-                {
-                    if let Some(mut c) = ctx.db.combat().entity_id().find(id) {
-                        c.attack_target = Some(target);
-                        ctx.db.combat().entity_id().update(c);
-                    }
-                }
+            };
+            // Melee skills attack their own target (SkillActionMode::Attack); every other
+            // skill goes back to the attack we were in before it.
+            let skill_target = skill(game, cast.skill_id)
+                .ok()
+                .filter(|skill| matches!(skill.action_mode, SkillActionMode::Attack))
+                .and(cast.target);
+            let next = skill_target.filter(|&t| attackable(t)).or(resume_target.filter(|&t| attackable(t)));
+            if let (Some(target), Some(mut c)) = (next, ctx.db.combat().entity_id().find(id)) {
+                c.attack_target = Some(target);
+                ctx.db.combat().entity_id().update(c);
             }
         }
     }
