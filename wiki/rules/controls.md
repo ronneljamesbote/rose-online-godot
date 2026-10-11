@@ -39,7 +39,8 @@ cursors:
   - { over: "a town NPC", cursor: "speech bubble (RES/NPC.CUR)" }
   - { over: "another player", cursor: "sword with a gold ring (RES/USER.CUR)" }
   - { over: "an item on the ground or its label", cursor: "open hand (RES/ITEM_PICK.CUR)" }
-  - { over: "a bag, storage, skill or hotbar slot with something in it, or while dragging", cursor: "pointing gold hand (RES/ITEM_INVEN.CUR)" }
+  - { over: "a bag, storage, skill or hotbar slot with something in it", cursor: "pointing gold hand (RES/ITEM_INVEN.CUR)" }
+  - { over: "anywhere while dragging an item or a skill", cursor: "pointing blue hand (RES/ITEM_INVEM.CUR)" }
   - { over: "anywhere while repairing", cursor: "hammer (RES/REPAIR.CUR)" }
   - { over: "the world while the right button is held", cursor: "four-way arrows (RES/WHEEL.CUR)" }
 cursor_size_times: [1, 2, 3]
@@ -103,14 +104,14 @@ click will do (the `cursors` table above):
 - the **sword with a gold ring** over another player;
 - an **open hand** over an item on the ground or its label;
 - the **pointing gold hand** over a bag, storage, skill or hotbar slot that holds
-  something you can drag, and while dragging it;
+  something you can drag, and the **blue hand** while you drag it;
 - a **hammer** everywhere while repairing (an NPC's repair menu or a hammer in use);
 - **four-way arrows** while the right button is held to turn the camera.
 
-Window title bars and corner grips keep the system's move and resize arrows. Options can
-turn the ROSE cursor off and set its size: Normal (the original 32 pixels), Large (twice
-that, the default) or Huge (three times). Without the client's cursor files the system
-cursor stays.
+Window title bars and corner grips keep the system's move and resize arrows. Options
+(**Cursor Size**) can turn the ROSE cursor off and set its size: Normal (the original 32
+pixels), Large (twice that, the default) or Huge (three times). Without the client's
+cursor files the system cursor stays.
 
 ## Keys
 
@@ -198,11 +199,11 @@ Esc or clicking outside the chat box stops typing.
 - **Options** (O) has three tabs:
   - **Interface**: the theme (four built-in themes, or your own theme files in the
     `themes` folder next to the game), interface size (75% to 150%), window opacity (40%
-    to 100%), blur behind windows, the character portrait (Live or Static), the ROSE
-    mouse cursor and its size, lock windows in place, and reset layout. Window opacity
-    does not change tooltips and menus: on every theme they are 88% opaque, in a deeper
-    shade of the theme's colours with a drop shadow, so they stand apart from windows (a
-    theme file can change this under `[tooltip]`).
+    to 100%), blur behind windows, the character portrait (Live or Static), Cursor Size
+    (the ROSE mouse cursor on or off, and its size), lock windows in place, and reset
+    layout. Window opacity does not change tooltips and menus: on every theme they are 88%
+    opaque, in a deeper shade of the theme's colours with a drop shadow, so they stand
+    apart from windows (a theme file can change this under `[tooltip]`).
   - **World labels**: your own name tag, chat bubbles, damage numbers, and whether item
     labels on the ground show always or only while Alt is held. Labels show for items
     within 30 m.
@@ -219,6 +220,6 @@ sword, O opens the sound volume window.
   are not part of the iROSE client.
 - The cursors are iROSE's, chosen the same way, except: pushing the mouse against the left
   or right screen edge does not turn the camera (so the edge arrows `LEFT.CUR` and
-  `RIGHT.CUR` are not used); the gold hand shows over items you can drag (iROSE never
-  used it); the cursor can be enlarged and turned off; and the hands and the bubble click
+  `RIGHT.CUR` are not used); the gold and blue hands show over items you can drag and
+  while dragging (iROSE never used them); the cursor can be enlarged and turned off; and the hands and the bubble click
   at the fingertip and the bubble's tail instead of the top-left corner.

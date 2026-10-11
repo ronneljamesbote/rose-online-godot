@@ -2,7 +2,8 @@
 ## over like the original client (CGameStateMain::UpdateCheckFrame): crossed blades over a
 ## monster or an enemy player, a speech bubble over a town NPC, a hand over an item on the
 ## ground. Over windows it is the normal sword, with the gold hand over items that can be
-## dragged; title bars and window corners keep their move and resize arrows.
+## dragged and the blue hand while dragging them; title bars and window corners keep their
+## move and resize arrows.
 ## Made by the UI autoload; Online sets `online` while we are in the game.
 extends Node
 
@@ -16,14 +17,15 @@ const CURSORS := {
 	"player": ["USER", Vector2(1, 1)],
 	"pick_up": ["ITEM_PICK", Vector2(1, 12)],
 	"drag": ["ITEM_INVEN", Vector2(2, 4)],
+	"dragging": ["ITEM_INVEM", Vector2(3, 2)],
 	"repair": ["REPAIR", Vector2(0, 0)],
 	"camera": ["WHEEL", Vector2(16, 16)],
 }
 ## Cursor size setting -> how many times the original 32 pixels. Whole steps keep the pixel
 ## art sharp.
 const SIZES := {"normal": 1, "large": 2, "huge": 3}
-## Godot shows these shapes while something is dragged; they get the gold hand.
-const DRAG_SHAPES := [Input.CURSOR_POINTING_HAND, Input.CURSOR_CAN_DROP, Input.CURSOR_FORBIDDEN]
+## Godot shows these shapes while something is dragged; they get the blue hand.
+const DRAG_SHAPES := [Input.CURSOR_CAN_DROP, Input.CURSOR_FORBIDDEN]
 
 var online: Node
 var _images := {}  # state -> Image at normal size
@@ -59,7 +61,7 @@ func state_at(mouse: Vector2) -> String:
 	if online and online.is_repairing():
 		return "repair"
 	if viewport.gui_is_dragging():
-		return "drag"
+		return "dragging"
 	var hovered := viewport.gui_get_hovered_control()
 	if hovered != null:
 		return "drag" if hovered.has_method("is_draggable") and hovered.is_draggable() else "default"
@@ -106,8 +108,9 @@ func _scale() -> void:
 
 func _show(state: String) -> void:
 	if _shown == "":
+		Input.set_custom_mouse_cursor(_cursors["drag"][0], Input.CURSOR_POINTING_HAND, _cursors["drag"][1])
 		for shape in DRAG_SHAPES:
-			Input.set_custom_mouse_cursor(_cursors["drag"][0], shape, _cursors["drag"][1])
+			Input.set_custom_mouse_cursor(_cursors["dragging"][0], shape, _cursors["dragging"][1])
 	Input.set_custom_mouse_cursor(_cursors[state][0], Input.CURSOR_ARROW, _cursors[state][1])
 	_shown = state
 	_refresh()
@@ -115,7 +118,7 @@ func _show(state: String) -> void:
 
 ## Back to the system cursor.
 func _clear() -> void:
-	for shape in DRAG_SHAPES + [Input.CURSOR_ARROW]:
+	for shape in DRAG_SHAPES + [Input.CURSOR_ARROW, Input.CURSOR_POINTING_HAND]:
 		Input.set_custom_mouse_cursor(null, shape)
 	_shown = ""
 	_refresh()
