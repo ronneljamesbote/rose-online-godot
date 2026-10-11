@@ -80,8 +80,9 @@ is in the `keys` table above.
 ## Mouse
 
 - **Left-click the ground** to walk there. A glowing cyan crystal (iROSE's marker,
-  `3DDATA/EFFECT/FLAT_POINT_01.EFT`) drops onto the spot and fades out after about a
-  second and a half; a new click moves it.
+  `3DDATA/EFFECT/FLAT_POINT_01.EFT`) drops onto the spot. It goes the moment you
+  arrive or stop, or when a click sends you somewhere else (another spot, a monster, an NPC
+  or an item); otherwise it fades out by itself after about a second and a half.
 - **Left-click a monster** to attack it. In a PvP zone, clicking a player you may fight
   attacks them too (see [[rules/pvp|PvP]]).
 - **Left-click a town NPC** to walk over (you talk from within 3 m) and open its dialog
