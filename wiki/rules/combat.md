@@ -61,7 +61,9 @@ character and monster that has a target:
 4. The swing's damage lands at its **hit frame**, part way through the attack animation.
 
 You can't swing while stunned or asleep, or while casting a skill. Attacking stands you up
-if you were sitting, and cancels a skill you were casting. You can't start a fight with a
+if you were sitting, and cancels a skill you were casting while it is still in its 0.3 s
+grace window; after that the attack starts once the skill takes effect (see
+[[rules/skills|Skills]]). Most skills go back to your attack when they end. You can't start a fight with a
 character that is hidden.
 
 ### Attack range

@@ -64,6 +64,7 @@ var _idle := "stop1"
 var _walk := "run"
 var target_id := -1  # entity it attacks or casts at
 var cast_skill := 0  # skill of the last cast, for skill sounds and effects
+var cast_locked := false  # our cast is locked in: the server holds our next command
 var cast_target := -1  # what that cast was aimed at (-1: itself or the ground)
 var cast_target_node: Node3D  # that target, kept while it plays its death after the hit
 var last_target_node: Node3D  # what it last attacked, kept while it plays its death
@@ -217,6 +218,7 @@ func _where_now() -> Vector3:
 ## Applies one entry from RoseNet.get_entities(). target_position is where the entity it
 ## attacks stands, or null.
 func update_state(state: Dictionary, target_position) -> void:
+	cast_locked = state.get("cast_locked", false)
 	var name_text: String = state["name"]
 	hp = state.get("hp", 0)
 	max_hp = state.get("max_hp", 0)
