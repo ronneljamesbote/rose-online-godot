@@ -80,6 +80,19 @@ func _interface_page() -> Control:
 	_slider(grid, "Interface size", "scale", 0.75, 1.5, 0.05, true)
 	_slider(grid, "Window opacity", "opacity", 0.4, 1.0, 0.05, true)
 	_check(box, "Blur the world behind windows", "blur")
+	var portrait_row := HBoxContainer.new()
+	portrait_row.add_theme_constant_override("separation", 16)
+	box.add_child(portrait_row)
+	var portrait_label := Label.new()
+	portrait_label.text = "Character portrait"
+	portrait_row.add_child(portrait_label)
+	var portrait := OptionButton.new()
+	portrait.focus_mode = Control.FOCUS_NONE
+	portrait.add_item("Live (moves)")
+	portrait.add_item("Static (still picture)")
+	portrait.selected = 1 if UI.settings.get("portrait", "live") == "static" else 0
+	portrait.item_selected.connect(func(i): UI.set_setting("portrait", "static" if i == 1 else "live"))
+	portrait_row.add_child(portrait)
 	box.add_child(HSeparator.new())
 
 	_section(box, "Layout")
