@@ -24,8 +24,11 @@ What works now:
   with a turning preview in the starting clothes). A loading screen with the zone's name
   (`LOADING.DDS`) covers signing in and every zone change. On a server without accounts the
   client signs in with an identity token kept in Godot's user folder, so the same PC gets
-  the same character back. Every player in
-  the zone shows up with a name tag and runs along the server's motion paths. Your own
+  the same character back. Every player nearby
+  shows up with a name tag and runs along the server's motion paths. The client only
+  subscribes to what is near (its own sector of the zone and the eight around it, as
+  iROSE sends them; see the module's `area.rs`), plus the zone's town NPCs and players for
+  the map. `--perf-log` prints the frame rate and how many entities are drawn. Your own
   character starts running the moment you click and hands over to the server's path when
   it arrives.
 

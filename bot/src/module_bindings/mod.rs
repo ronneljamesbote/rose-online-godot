@@ -46,6 +46,8 @@ pub mod driving_type;
 pub mod drop_item_reducer;
 pub mod drop_money_reducer;
 pub mod entity_kind_type;
+pub mod entity_sector_table;
+pub mod entity_sector_type;
 pub mod entity_table;
 pub mod entity_type;
 pub mod equip_item_reducer;
@@ -238,6 +240,8 @@ pub use driving_type::Driving;
 pub use drop_item_reducer::drop_item;
 pub use drop_money_reducer::drop_money;
 pub use entity_kind_type::EntityKind;
+pub use entity_sector_table::*;
+pub use entity_sector_type::EntitySector;
 pub use entity_table::*;
 pub use entity_type::Entity;
 pub use equip_item_reducer::equip_item;
@@ -1387,6 +1391,7 @@ pub struct DbUpdate {
     damage_event: __sdk::TableUpdate<DamageEvent>,
     driving: __sdk::TableUpdate<Driving>,
     entity: __sdk::TableUpdate<Entity>,
+    entity_sector: __sdk::TableUpdate<EntitySector>,
     fallen: __sdk::TableUpdate<Fallen>,
     game_data_status: __sdk::TableUpdate<GameDataStatus>,
     ground_item: __sdk::TableUpdate<GroundItem>,
@@ -1445,6 +1450,9 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "entity" => db_update
                     .entity
                     .append(entity_table::parse_table_update(table_update)?),
+                "entity_sector" => db_update
+                    .entity_sector
+                    .append(entity_sector_table::parse_table_update(table_update)?),
                 "fallen" => db_update
                     .fallen
                     .append(fallen_table::parse_table_update(table_update)?),
@@ -1589,6 +1597,9 @@ impl __sdk::DbUpdate for DbUpdate {
         diff.entity = cache
             .apply_diff_to_table::<Entity>("entity", &self.entity)
             .with_updates_by_pk(|row| &row.entity_id);
+        diff.entity_sector = cache
+            .apply_diff_to_table::<EntitySector>("entity_sector", &self.entity_sector)
+            .with_updates_by_pk(|row| &row.entity_id);
         diff.fallen = cache
             .apply_diff_to_table::<Fallen>("fallen", &self.fallen)
             .with_updates_by_pk(|row| &row.entity_id);
@@ -1706,6 +1717,9 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "entity" => db_update
                     .entity
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "entity_sector" => db_update
+                    .entity_sector
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "fallen" => db_update
                     .fallen
@@ -1840,6 +1854,9 @@ impl __sdk::DbUpdate for DbUpdate {
                 "entity" => db_update
                     .entity
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "entity_sector" => db_update
+                    .entity_sector
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "fallen" => db_update
                     .fallen
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
@@ -1965,6 +1982,7 @@ pub struct AppliedDiff<'r> {
     damage_event: __sdk::TableAppliedDiff<'r, DamageEvent>,
     driving: __sdk::TableAppliedDiff<'r, Driving>,
     entity: __sdk::TableAppliedDiff<'r, Entity>,
+    entity_sector: __sdk::TableAppliedDiff<'r, EntitySector>,
     fallen: __sdk::TableAppliedDiff<'r, Fallen>,
     game_data_status: __sdk::TableAppliedDiff<'r, GameDataStatus>,
     ground_item: __sdk::TableAppliedDiff<'r, GroundItem>,
@@ -2022,6 +2040,11 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
         );
         callbacks.invoke_table_row_callbacks::<Driving>("driving", &self.driving, event);
         callbacks.invoke_table_row_callbacks::<Entity>("entity", &self.entity, event);
+        callbacks.invoke_table_row_callbacks::<EntitySector>(
+            "entity_sector",
+            &self.entity_sector,
+            event,
+        );
         callbacks.invoke_table_row_callbacks::<Fallen>("fallen", &self.fallen, event);
         callbacks.invoke_table_row_callbacks::<GameDataStatus>(
             "game_data_status",
@@ -2762,6 +2785,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
         damage_event_table::register_table(client_cache);
         driving_table::register_table(client_cache);
         entity_table::register_table(client_cache);
+        entity_sector_table::register_table(client_cache);
         fallen_table::register_table(client_cache);
         game_data_status_table::register_table(client_cache);
         ground_item_table::register_table(client_cache);
@@ -2804,6 +2828,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
         "damage_event",
         "driving",
         "entity",
+        "entity_sector",
         "fallen",
         "game_data_status",
         "ground_item",

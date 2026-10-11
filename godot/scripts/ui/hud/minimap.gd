@@ -148,6 +148,9 @@ class _View extends Control:
 			var e: Node3D = online.entities[id]
 			if e == online.me or e.dead:
 				continue
+			# Beyond what we can see, only town NPCs and party members are marked.
+			if not e.visible and not e.is_npc and not party_ids.has(id):
+				continue
 			var at: Vector2 = centre + (map.to_map(e.global_position) - me_px) / z
 			if not Rect2(Vector2(4, 4), size - Vector2(8, 8)).has_point(at):
 				continue

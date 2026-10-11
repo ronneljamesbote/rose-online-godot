@@ -13,7 +13,7 @@ const CAST_GRACE_US: i64 = 300_000;
 use godot::{classes::INode, prelude::*};
 use spacetimedb_sdk::{
     __codegen::{WithInsert, WithUpdate},
-    DbContext, Identity, Table,
+    DbContext, Identity, SubscriptionHandle as _, Table,
 };
 
 use rose_data::{AmmoIndex, EquipmentIndex, VehiclePartIndex};
@@ -127,6 +127,61 @@ pub struct RoseNet {
     conversation: Option<Conversation>,
     /// Stores and banks a conversation opened, for GDScript to show.
     windows: Vec<(String, u64)>,
+    /// The database name, for the traffic counters.
+    database: String,
+    /// Our own entity's rows, wherever it is (see update_interest).
+    self_sub: Option<(u64, SubscriptionHandle)>,
+    /// What we can see: the sectors around ours and their subscription. A new one replaces
+    /// it once its rows have arrived, so nothing blinks out while we cross a sector line.
+    area_sub: Option<(Area, SubscriptionHandle)>,
+    area_next: Option<(Area, SubscriptionHandle)>,
+}
+
+/// Tables with a row per entity, sent only for the entities near us (the module's area.rs).
+/// Every other table is sent whole.
+const AREA_TABLES: [&str; 7] = ["entity", "motion", "combat", "stats", "skill_cast", "npc_cast_motion", "status_effect"];
+
+/// Our zone and sector: we see the entities in that sector and the eight around it, as in
+/// iROSE.
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+struct Area {
+    zone: u16,
+    x: i32,
+    y: i32,
+}
+
+impl Area {
+    fn sees(&self, s: &EntitySector) -> bool {
+        s.zone_id == self.zone && (s.sector_x - self.x).abs() <= 1 && (s.sector_y - self.y).abs() <= 1
+    }
+
+    fn queries(&self) -> Vec<String> {
+        let near = format!(
+            "s.zone_id = {} AND s.sector_x >= {} AND s.sector_x <= {} AND s.sector_y >= {} AND s.sector_y <= {}",
+            self.zone,
+            self.x - 1,
+            self.x + 1,
+            self.y - 1,
+            self.y + 1
+        );
+        let mut q: Vec<String> = AREA_TABLES
+            .iter()
+            .map(|t| format!("SELECT {t}.* FROM {t} JOIN entity_sector s ON {t}.entity_id = s.entity_id WHERE {near}"))
+            .collect();
+        q.push(format!("SELECT s.* FROM entity_sector s WHERE {near}"));
+        // Town NPCs and the players of the zone wherever they are: the zone map names the
+        // NPCs and shows party members, and quests look at NPCs.
+        for t in ["entity", "motion"] {
+            q.push(format!("SELECT {t}.* FROM {t} JOIN npc ON {t}.entity_id = npc.entity_id WHERE npc.zone_id = {}", self.zone));
+            q.push(format!(
+                "SELECT {t}.* FROM {t} JOIN entity_sector s ON {t}.entity_id = s.entity_id WHERE s.zone_id = {} AND s.is_player = true",
+                self.zone
+            ));
+        }
+        q.push(format!("SELECT * FROM entity_sector WHERE zone_id = {} AND is_player = true", self.zone));
+        q.push(format!("SELECT * FROM ground_item WHERE zone_id = {}", self.zone));
+        q
+    }
 }
 
 impl RoseNet {
@@ -269,6 +324,7 @@ impl RoseNet {
 #[godot_api]
 impl INode for RoseNet {
     fn process(&mut self, _delta: f64) {
+        self.update_interest();
         let Some(c) = self.conn.as_ref() else { return };
         // The SDK can panic on a connection the server closed; treat that as closed too.
         match std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| c.frame_tick())) {
@@ -279,6 +335,56 @@ impl INode for RoseNet {
                 self.fail(reason.unwrap_or_else(|| "the server closed the connection".into()));
             }
         }
+    }
+}
+
+impl RoseNet {
+    /// Keeps the subscriptions on what we can see: our own entity's rows, and the entities
+    /// in our sector and the eight around it. Crossing into another sector (or zone)
+    /// subscribes to the new area and drops the old one once the new rows are in.
+    fn update_interest(&mut self) {
+        let Some(c) = self.conn.as_ref() else { return };
+        if !c.is_active() || !self.shared.lock().unwrap().subscribed {
+            return;
+        }
+        let Some(me) = self.my_id() else { return };
+        if self.self_sub.as_ref().is_none_or(|(id, _)| *id != me) {
+            let mut queries: Vec<String> =
+                AREA_TABLES.iter().map(|t| format!("SELECT * FROM {t} WHERE entity_id = {me}")).collect();
+            queries.push(format!("SELECT * FROM entity_sector WHERE entity_id = {me}"));
+            let handle = c
+                .subscription_builder()
+                .on_error(|_, error| godot_error!("rose net: subscription failed: {error}"))
+                .subscribe(queries);
+            if let Some((_, old)) = self.self_sub.replace((me, handle)) {
+                old.unsubscribe().ok();
+            }
+        }
+        let Some(sector) = c.db.entity_sector().entity_id().find(&me) else { return };
+        let area = Area { zone: sector.zone_id, x: sector.sector_x, y: sector.sector_y };
+        if self.area_next.as_ref().is_some_and(|(_, h)| h.is_active()) {
+            let next = self.area_next.take();
+            if let Some((_, old)) = std::mem::replace(&mut self.area_sub, next) {
+                old.unsubscribe().ok();
+            }
+        }
+        let wanted = self.area_next.as_ref().or(self.area_sub.as_ref()).map(|(a, _)| *a);
+        if wanted != Some(area) {
+            let handle = c
+                .subscription_builder()
+                .on_error(|_, error| godot_error!("rose net: subscription failed: {error}"))
+                .subscribe(area.queries());
+            if let Some((_, old)) = self.area_next.replace((area, handle)) {
+                old.unsubscribe().ok();
+            }
+        }
+    }
+
+    /// The area we see now (the one subscribed, or the one coming in).
+    fn area(&self) -> Option<Area> {
+        let c = self.conn.as_ref()?;
+        let s = c.db.entity_sector().entity_id().find(&self.my_id()?)?;
+        Some(Area { zone: s.zone_id, x: s.sector_x, y: s.sector_y })
     }
 }
 
@@ -305,6 +411,10 @@ impl RoseNet {
 impl RoseNet {
     fn connect(&mut self, uri: String, token: Option<String>, save_token_to: Option<String>) -> bool {
         let (uri, database) = split_database(&uri);
+        self.database = database.clone();
+        self.self_sub = None;
+        self.area_sub = None;
+        self.area_next = None;
         let shared = self.shared.clone();
         *shared.lock().unwrap() = Shared::default();
         let (s0, s1, s2) = (shared.clone(), shared.clone(), shared.clone());
@@ -318,9 +428,20 @@ impl RoseNet {
                 }
                 // Subscribe once the server has let us in; a refused connection has no
                 // sender left to subscribe with.
+                // Tables about places (entities, ground items) follow us around; see
+                // update_interest. Party members' HP is wanted wherever they are.
+                let mut queries: Vec<String> = <RemoteModule as spacetimedb_sdk::__codegen::SpacetimeModule>::ALL_TABLE_NAMES
+                    .iter()
+                    .filter(|t| !AREA_TABLES.contains(t) && !["entity_sector", "ground_item"].contains(t))
+                    .map(|t| format!("SELECT * FROM {t}"))
+                    .collect();
+                queries.push(
+                    "SELECT combat.* FROM combat JOIN entity_sector s ON combat.entity_id = s.entity_id WHERE s.is_player = true".into(),
+                );
                 conn.subscription_builder()
                     .on_applied(move |_| s0.lock().unwrap().subscribed = true)
-                    .subscribe_to_all_tables();
+                    .on_error(|_, error| godot_error!("rose net: subscription failed: {error}"))
+                    .subscribe(queries);
             })
             .on_connect_error(move |_, error| {
                 let text = format!("{error}");
@@ -446,7 +567,9 @@ impl RoseNet {
         self.my_id().map_or(-1, |id| id as i64)
     }
 
-    /// Every entity in our zone: id, kind ("player", "monster" or "npc"), name, npc_id, position
+    /// Every entity we know of in our zone (those in the sectors around ours, plus the zone's
+    /// town NPCs and players): id, far (outside those sectors: not drawn), kind ("player",
+    /// "monster" or "npc"), name, npc_id, position
     /// x/z and destination to_x/to_z (Godot metres), moving, speed (m/s), chasing, level,
     /// range (m), hp, max_hp, mp, max_mp, target (-1 for none), swinging, hit_in (seconds
     /// until the swing's hit frame), dead, for players look (see player_look), for NPCs
@@ -462,6 +585,11 @@ impl RoseNet {
         let zone = self.my_id().and_then(|id| c.db.entity().entity_id().find(&id)).map(|e| e.zone_id);
         let looks: std::collections::HashMap<u64, VarArray> =
             c.db.player().iter().filter_map(|p| p.entity_id.map(|id| (id, player_look(&p)))).collect();
+        let mut effects: std::collections::HashMap<u64, Vec<u8>> = std::collections::HashMap::new();
+        for r in c.db.status_effect().iter() {
+            effects.entry(r.entity_id).or_default().push(r.effect_type);
+        }
+        let area = self.area();
 
         for e in c.db.entity().iter() {
             if zone.is_some_and(|z| z != e.zone_id) {
@@ -475,6 +603,9 @@ impl RoseNet {
 
             let mut d = VarDictionary::new();
             d.set("id", e.entity_id as i64);
+            // Town NPCs and players further away are known (for the zone map) but not drawn.
+            let near = area.is_none_or(|a| c.db.entity_sector().entity_id().find(&e.entity_id).is_some_and(|s| a.sees(&s)));
+            d.set("far", !near);
             d.set(
                 "kind",
                 match e.kind {
@@ -525,12 +656,12 @@ impl RoseNet {
             use rose_data::StatusEffectType as S;
             let index = |t: S| enum_map::Enum::into_usize(t) as u8;
             let mut conditions: Vec<&str> = Vec::new();
-            for r in c.db.status_effect().iter().filter(|r| r.entity_id == e.entity_id) {
-                if r.effect_type == index(S::Disguise) || r.effect_type == index(S::Transparent) {
+            for &effect_type in effects.get(&e.entity_id).map_or(&[][..], |v| v.as_slice()) {
+                if effect_type == index(S::Disguise) || effect_type == index(S::Transparent) {
                     d.set("hidden", true);
                 }
                 let shown = [(S::Fainting, "Stunned"), (S::Sleep, "Asleep"), (S::Dumb, "Silenced"), (S::Taunt, "Taunted")];
-                if let Some((_, name)) = shown.iter().find(|(t, _)| index(*t) == r.effect_type) {
+                if let Some((_, name)) = shown.iter().find(|(t, _)| index(*t) == effect_type) {
                     conditions.push(name);
                 }
             }
