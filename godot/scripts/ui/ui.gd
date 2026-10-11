@@ -33,6 +33,7 @@ var settings := {
 	"item_labels": "always",  # always, or alt (only while Alt is held)
 	"bubbles": true,  # chat bubbles
 	"damage_numbers": true,
+	"portrait": "live",  # live (moves) or static (a still picture) character portrait
 }
 
 ## id -> {"id", "name", "description", "file", "tokens", "errors"}
