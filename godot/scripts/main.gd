@@ -501,7 +501,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		var hit = _pick_ground(event.position)
 		if hit != null:
 			if online:
-				online.move_to(hit)
+				online.click_ground(hit)
 			elif player:
 				player.move_to(hit)
 	elif event is InputEventKey and event.pressed and not event.echo:
