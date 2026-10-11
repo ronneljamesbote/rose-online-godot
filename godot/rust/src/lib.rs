@@ -5,6 +5,7 @@ use godot::prelude::*;
 mod audio;
 mod character;
 mod conversation;
+mod cursor;
 mod data;
 mod effect;
 mod items;
@@ -77,6 +78,14 @@ impl RoseData {
     #[func]
     fn texture(path: GString) -> Option<Gd<godot::classes::Texture2D>> {
         texture::load_texture(&path.to_string())
+    }
+
+    /// A mouse cursor from the client's RES folder as an RGBA image ("ATTACK" reads
+    /// RES/ATTACK.CUR), or null when the file is missing.
+    #[func]
+    fn cursor_image(name: GString) -> Option<Gd<godot::classes::Image>> {
+        let (width, height, rgba) = cursor::decode(&data::read_bytes(&format!("RES/{name}.CUR"))?)?;
+        godot::classes::Image::create_from_data(width, height, false, godot::classes::image::Format::RGBA8, &PackedByteArray::from(rgba.as_slice()))
     }
 
     /// Item numbers a new character wears (INIT_AVATAR.STB), as RoseCharacter.build takes

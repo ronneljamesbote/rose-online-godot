@@ -34,6 +34,8 @@ var settings := {
 	"bubbles": true,  # chat bubbles
 	"damage_numbers": true,
 	"portrait": "live",  # live (moves) or static (a still picture) character portrait
+	"game_cursor": true,  # ROSE's own mouse cursors instead of the system arrow
+	"cursor_size": "large",  # normal, large or huge (1, 2 or 3 times the original 32 pixels)
 }
 
 ## id -> {"id", "name", "description", "file", "tokens", "errors"}
@@ -41,6 +43,8 @@ var themes := {}
 ## The theme in use: its merged values, as nested dictionaries (tokens.colors.text ...).
 var tokens := {}
 var theme: Theme
+## The mouse cursor (scripts/ui/game_cursor.gd).
+var cursor: Node
 var _fonts := {}  # path -> FontFile
 var _layout := ConfigFile.new()
 var _layout_dirty := false
@@ -55,6 +59,8 @@ func _ready() -> void:
 	settings["scale"] = clampf(float(settings["scale"]), 0.75, 1.5)
 	_layout.load(LAYOUT)
 	reload_themes()
+	cursor = preload("res://scripts/ui/game_cursor.gd").new()
+	add_child(cursor)
 
 
 func _process(_delta: float) -> void:
