@@ -46,6 +46,8 @@
 extends Node3D
 
 const START := Vector3(5210.5, 0.0, -5136.7)  # zone start position from LIST_ZONE.STB
+const STEER_EVERY_MS := 200  # while the left button is held, look for a new spot this often
+const STEER_MIN_MOVE := 0.5  # metres the spot under the cursor must move to send a new one
 const SETTINGS := "user://settings.cfg"
 
 var zone: RoseZone
@@ -62,6 +64,9 @@ var _loading_zone := 0
 
 
 var _joined_before := false
+var _steering := false  # the left button went down on the ground and is still held
+var _steer_last := Vector3.ZERO  # where the held button last sent us
+var _steer_next_ms := 0
 
 func _ready() -> void:
 	for arg in OS.get_cmdline_user_args():
@@ -414,6 +419,7 @@ func _apply_lighting(lighting: Dictionary) -> void:
 func _process(delta: float) -> void:
 	if zone == null or options.has("screenshot"):
 		return
+	_steer()
 	if online and options.has("net-log") and Engine.get_process_frames() % 60 == 0:
 		# For click tests: the monster drawn nearest the middle of the screen.
 		var middle := get_viewport().get_visible_rect().size / 2.0
@@ -502,6 +508,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		if hit != null:
 			if online:
 				online.click_ground(hit)
+				_steering = true
+				_steer_last = hit
+				_steer_next_ms = Time.get_ticks_msec() + STEER_EVERY_MS
 			elif player:
 				player.move_to(hit)
 	elif event is InputEventKey and event.pressed and not event.echo:
@@ -1365,6 +1374,27 @@ func _run_fight_demo() -> void:
 			while online.ground.has(item) and waited < 5.0:
 				await get_tree().create_timer(0.25).timeout
 				waited += 0.25
+
+
+## Holding the left button after clicking the ground keeps running toward the ground
+## under the cursor, as in iROSE. Holding only steers: sweeping over a monster, NPC or
+## item does not act on it. Letting go drops the marker where we will stop.
+func _steer() -> void:
+	if not _steering:
+		return
+	if online == null or not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		_steering = false
+		if online:
+			online.end_steer()
+		return
+	if Time.get_ticks_msec() < _steer_next_ms:
+		return
+	_steer_next_ms = Time.get_ticks_msec() + STEER_EVERY_MS
+	var hit = _pick_ground(get_viewport().get_mouse_position())
+	if hit == null or Vector2(hit.x - _steer_last.x, hit.z - _steer_last.z).length() < STEER_MIN_MOVE:
+		return
+	if online.steer_to(hit):
+		_steer_last = hit
 
 
 ## Where the mouse ray meets the ground: zone objects you can walk on (physics ray), or
