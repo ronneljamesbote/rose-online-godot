@@ -484,26 +484,20 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		if online:
-			var monster: int = online.pick_monster(camera, event.position)
-			if monster >= 0:
-				online.attack(monster)
-				return
-			var enemy: int = online.pick_enemy_player(camera, event.position)
-			if enemy >= 0:
-				online.attack(enemy)
-				return
-			var npc: int = online.pick_npc(camera, event.position)
-			if npc >= 0:
-				online.talk_to(npc)
-				return
-			var friend: int = online.pick_friend(camera, event.position)
-			if friend >= 0:
-				online.select(friend)
-				return
-			var item: int = online.pick_item(camera, event.position)
-			if item >= 0:
-				online.pickup(item)
-				return
+			var under: Dictionary = online.under_mouse(camera, event.position)
+			match under.get("kind", ""):
+				"monster", "enemy":
+					online.attack(under["id"])
+					return
+				"npc":
+					online.talk_to(under["id"])
+					return
+				"player":
+					online.select(under["id"])
+					return
+				"item":
+					online.pickup(under["id"])
+					return
 		var hit = _pick_ground(event.position)
 		if hit != null:
 			if online:
