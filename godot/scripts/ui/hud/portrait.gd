@@ -1,9 +1,12 @@
-## Round portrait with an initial and a level badge, for the player and target frames.
+## Round portrait with a level badge, for the player and target frames: a picture of the
+## character when there is one (the player frame), otherwise the first letter of the name.
 extends Control
 
 var letter := ""
 var level := 0
 var tint := Color(0, 0, 0, 0)  # target colour (enemy, friendly), drawn as the ring when set
+var picture: Texture2D  # drawn inside the circle instead of the letter
+var _flash := 0.0  # 1 right after a hit, fading to 0
 
 
 func _init(diameter := 52.0) -> void:
@@ -12,6 +15,7 @@ func _init(diameter := 52.0) -> void:
 
 
 func _ready() -> void:
+	set_process(false)
 	UI.theme_changed.connect(queue_redraw)
 
 
@@ -21,6 +25,25 @@ func set_values(new_letter: String, new_level: int, new_tint := Color(0, 0, 0, 0
 		level = new_level
 		tint = new_tint
 		queue_redraw()
+
+
+func set_picture(texture: Texture2D) -> void:
+	if texture != picture:
+		picture = texture
+		queue_redraw()
+
+
+## A short red flash and shake when we take damage.
+func hit() -> void:
+	_flash = 1.0
+	set_process(true)
+
+
+func _process(delta: float) -> void:
+	_flash = maxf(_flash - delta * 2.5, 0.0)
+	if _flash == 0.0:
+		set_process(false)
+	queue_redraw()
 
 
 func _draw() -> void:
@@ -33,13 +56,27 @@ func _draw() -> void:
 	for i in 12:
 		var t := float(i) / 11.0
 		draw_circle(c - Vector2(0, r * 0.25 * t), r * (1.0 - t * 0.8), edge.lerp(centre, t), true, -1.0, true)
+	if picture:
+		# Shakes sideways for the first part of a hit flash.
+		var shake := Vector2(sin(_flash * 40.0) * 2.5 * maxf(_flash - 0.5, 0.0) * 2.0, 0)
+		var points := PackedVector2Array()
+		var uvs := PackedVector2Array()
+		for i in 48:
+			var direction := Vector2.from_angle(TAU * i / 48.0)
+			points.append(c + direction * (r - 1.0))
+			uvs.append(Vector2(0.5, 0.5) + direction * 0.5 - shake / (2.0 * r))
+		draw_colored_polygon(points, Color.WHITE, uvs, picture)
+		if _flash > 0.0:
+			var red := UI.color("bars.hp")
+			draw_circle(c, r - 1.0, Color(red, 0.45 * _flash), true, -1.0, true)
 	var ring := tint if tint.a > 0.0 else UI.color("portrait.border_color")
 	draw_arc(c, r - 1.0, 0, TAU, 48, ring, maxf(UI.num("portrait.border_width", 2), 1.5), true)
 	var font := get_theme_font("bold_font", "Fonts")
-	var fs := int(r * 0.9)
-	var w := font.get_string_size(letter, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
-	var text_colour := UI.color("colors.title")
-	draw_string(font, Vector2(c.x - w * 0.5, c.y + fs * 0.35), letter, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, text_colour)
+	if not picture:
+		var fs := int(r * 0.9)
+		var w := font.get_string_size(letter, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+		var text_colour := UI.color("colors.title")
+		draw_string(font, Vector2(c.x - w * 0.5, c.y + fs * 0.35), letter, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, text_colour)
 	if level > 0:
 		var badge := str(level)
 		var bfs := 11
