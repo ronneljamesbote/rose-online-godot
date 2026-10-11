@@ -6,6 +6,7 @@
 //! are built from client files the host uploads (see game_data.rs).
 
 mod ability;
+mod area;
 mod account;
 mod bank;
 mod character;
@@ -433,6 +434,7 @@ fn despawn(ctx: &ReducerContext, entity_id: u64) {
     ctx.db.sitting().entity_id().delete(entity_id);
     skills::clear_entity(ctx, entity_id);
     clear_damage_sources(ctx, entity_id);
+    area::forget(ctx, entity_id);
     forget_entity(ctx, entity_id);
 }
 
@@ -977,6 +979,7 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
     let Ok(game) = game_data::game(ctx) else { return Ok(()) };
     let t = now_us(ctx);
     rose_game_irose::rng::reseed(ctx.rng().gen());
+    area::refresh(ctx, &game, t);
 
     // Monster AI first: aggro, leash, chase.
     for ai in ctx.db.monster_ai().iter() {

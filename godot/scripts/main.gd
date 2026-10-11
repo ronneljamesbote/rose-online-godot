@@ -36,6 +36,7 @@
 ##                              (--say=LINE|LINE... one every --say-every=SECONDS, after
 ##                              --chat-wait=SECONDS; --sit-for=SECONDS sits and logs MP)
 ##   --net-log                  online: print every player's position once a second
+##   --perf-log                 online: print frame rate, entities drawn and frame times every 2 seconds
 ##   --open=inventory,character,skills,quests   online: open these windows at the start (for screenshots)
 ##   --mute                     no music or sound (or --music=0..1 --effects=0..1 for this run;
 ##                              the O key opens the sound window, which saves them)
@@ -321,6 +322,7 @@ func _go_online(uri: String, name_text: String, use_bow: bool, token := "") -> v
 	online.create_preset = options.get("create", "")
 	online.create_after = float(options.get("create-after", "-1"))
 	online.log_positions = options.has("net-log")
+	online.log_perf = options.has("perf-log")
 	online.log_damage = options.has("net-log") or options.has("net-demo")
 	online.start(zone, uri, token_path, name_text, use_bow, token)
 
