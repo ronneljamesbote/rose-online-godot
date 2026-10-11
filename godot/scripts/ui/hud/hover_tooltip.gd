@@ -88,18 +88,22 @@ func _monster(e: Node3D) -> Dictionary:
 		out.append("Level %d" % e.level)
 	if e.max_hp > 0:
 		out.append("HP %d / %d" % [e.hp, e.max_hp])
-	return {"title": e.label.text if e.label else "Monster", "lines": "\n".join(out), "colour": UI.color("tags.monster")}
+	return {"title": e.label.text if e.label else "Monster", "lines": "\n".join(out), "colour": UI.color("colors.enemy")}
 
 
 func _npc(e: Node3D) -> Dictionary:
 	var out: Array[String] = ["Town NPC, has a store" if e.has_store else "Town NPC", "Click to talk"]
-	return {"title": e.label.text if e.label else "NPC", "lines": "\n".join(out), "colour": UI.color("tags.npc")}
+	return {"title": e.label.text if e.label else "NPC", "lines": "\n".join(out), "colour": UI.color("colors.friendly")}
 
 
 func _item(node: Node3D) -> Dictionary:
 	var item: Dictionary = node.get_meta("item", {})
 	var grade := WorldOverlay.item_grade(item)
-	var colour: Color = UI.color("colors.unique").lightened(0.15) if grade == "unique" else WorldOverlay.ITEM_COLOURS[grade]
+	# The theme's own colours, so the name reads on light and dark tooltips alike.
+	var colour: Color = {
+		"normal": UI.color("tooltip.text"), "rare": UI.color("colors.rare"), "unique": UI.color("colors.unique"),
+		"zuly": UI.color("colors.zuly"), "quest": UI.color("colors.good"), "gem": UI.color("colors.accent"),
+	}[grade]
 	var name: String = item.get("name", "?")
 	var quantity: int = item.get("quantity", 1)
 	var out: Array[String] = []
