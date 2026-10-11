@@ -354,10 +354,15 @@ static func _panel(ui: Node) -> UiBox:
 	box.colors = _alpha(box.colors, _opacity(ui))
 	box.border_width = ui.num("panel.border_width", 1)
 	box.border_color = ui.color("panel.border_color")
+	# The shadow and the top highlight fade with the panel, or a see-through panel keeps a
+	# bright line along its top.
+	var fade := _opacity(ui)
 	box.shadow_color = ui.color("panel.shadow_color")
+	box.shadow_color.a *= fade
 	box.shadow_size = ui.num("panel.shadow_size", 12)
 	box.shadow_offset = ui.num("panel.shadow_offset", 5)
 	box.highlight = ui.color("panel.highlight")
+	box.highlight.a *= fade
 	return box
 
 

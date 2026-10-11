@@ -21,7 +21,6 @@ extends StyleBox
 ## Glossy sheen over the top half (bars), 0 to 1.
 @export var sheen := 0.0
 
-var _shadow_box: StyleBoxFlat
 var _border_box: StyleBoxFlat
 
 
@@ -48,18 +47,7 @@ func set_margin_all(m: float) -> UiBox:
 func _draw(to_canvas_item: RID, rect: Rect2) -> void:
 	var r := minf(radius, minf(rect.size.x, rect.size.y) * 0.5)
 	if shadow_size > 0.0 and shadow_color.a > 0.0:
-		if _shadow_box == null:
-			_shadow_box = StyleBoxFlat.new()
-			_shadow_box.draw_center = false
-			_shadow_box.bg_color = Color(0, 0, 0, 0)
-			_shadow_box.anti_aliasing = true
-		_shadow_box.shadow_color = shadow_color
-		_shadow_box.shadow_size = int(shadow_size)
-		_shadow_box.set_corner_radius_all(int(r))
-		# Moving the top edge down instead of the whole shadow keeps the shadow under
-		# the bottom edge without a gap, like a CSS shadow with a y offset.
-		var shadow_rect := Rect2(rect.position + Vector2(0, shadow_offset), rect.size - Vector2(0, shadow_offset))
-		_shadow_box.draw(to_canvas_item, shadow_rect)
+		_shadow(to_canvas_item, rect, r)
 	_fill(to_canvas_item, rect, r, colors, stops, 0.0, rect.size.y)
 	if inner_shadow.a > 0.0:
 		var clear := Color(inner_shadow, 0.0)
@@ -86,6 +74,45 @@ func _draw(to_canvas_item: RID, rect: Rect2) -> void:
 		_border_box.border_width_bottom = w if border_sides[3] else 0
 		_border_box.set_corner_radius_all(int(r))
 		_border_box.draw(to_canvas_item, rect)
+
+
+## The drop shadow as a ring around the box that fades out, moved down by shadow_offset.
+## Nothing is drawn under the box itself: on a see-through panel a shadow underneath showed
+## as a darker band along the top edge.
+func _shadow(ci: RID, rect: Rect2, r: float) -> void:
+	var off := minf(shadow_offset, shadow_size * 0.75)
+	var outer := Rect2(rect.position + Vector2(-shadow_size, off - shadow_size), rect.size + Vector2(shadow_size, shadow_size) * 2.0)
+	var steps := clampi(int((r + shadow_size) / 2.0), 4, 12)
+	var inside := _outline(rect, r, steps)
+	var outside := _outline(outer, r + shadow_size, steps)
+	var clear := Color(shadow_color, 0.0)
+	var points := PackedVector2Array()
+	var colours := PackedColorArray()
+	for i in inside.size():
+		points.append(inside[i])
+		points.append(outside[i])
+		colours.append(shadow_color)
+		colours.append(clear)
+	var indices := PackedInt32Array()
+	var n := inside.size()
+	for i in n:
+		var a := i * 2
+		var b := ((i + 1) % n) * 2
+		indices.append_array([a, a + 1, b + 1, a, b + 1, b])
+	RenderingServer.canvas_item_add_triangle_array(ci, indices, points, colours)
+
+
+## Points around a rounded rectangle, clockwise from the top left corner, steps + 1 per
+## corner, so outlines of two sizes pair up point by point.
+static func _outline(rect: Rect2, r: float, steps: int) -> PackedVector2Array:
+	var out := PackedVector2Array()
+	var centres := [rect.position + Vector2(r, r), Vector2(rect.end.x - r, rect.position.y + r),
+		rect.end - Vector2(r, r), Vector2(rect.position.x + r, rect.end.y - r)]
+	for corner in 4:
+		for i in steps + 1:
+			var a := PI + PI * 0.5 * (corner + float(i) / steps)
+			out.append(centres[corner] + Vector2(cos(a), sin(a)) * r)
+	return out
 
 
 ## Fills the rounded rectangle between local heights from_y and to_y with a gradient that
