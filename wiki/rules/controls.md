@@ -4,7 +4,7 @@ id: controls
 name: Controls
 status: changed-from-irose
 keys:
-  - { key: "Left-click ground", does: "walk there" }
+  - { key: "Left-click ground", does: "walk there; a glowing ring marks the spot until you arrive" }
   - { key: "Left-click monster", does: "attack it (also an enemy player in a PvP zone)" }
   - { key: "Left-click NPC", does: "walk over and talk" }
   - { key: "Left-click player", does: "target them; opens their shop if they have one" }
@@ -49,7 +49,7 @@ source:
   code:
     - godot/scripts/main.gd (_unhandled_input)
     - godot/scripts/orbit_camera.gd
-    - godot/scripts/online.gd (talk_to, select, pickup, open_player_menu)
+    - godot/scripts/online.gd (click_ground, talk_to, select, pickup, open_player_menu)
     - godot/scripts/conversation_window.gd
     - godot/scripts/inventory_window.gd (Slot._gui_input, activate, _drop_selected)
     - godot/scripts/hotbar.gd
@@ -79,7 +79,9 @@ is in the `keys` table above.
 
 ## Mouse
 
-- **Left-click the ground** to walk there.
+- **Left-click the ground** to walk there. A glowing ring that sinks into the ground (the iROSE effect
+  `3DDATA/EFFECT/MOVEDOWN_01.EFT`) marks the spot until you get there, stop, are blocked by
+  a wall, or click something else.
 - **Left-click a monster** to attack it. In a PvP zone, clicking a player you may fight
   attacks them too (see [[rules/pvp|PvP]]).
 - **Left-click a town NPC** to walk over (you talk from within 3 m) and open its dialog
