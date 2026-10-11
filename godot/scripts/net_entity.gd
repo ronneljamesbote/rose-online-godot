@@ -52,6 +52,8 @@ var is_me := false
 var blocked := {}  # at, to (Vector3), since (msec): we hit a wall and wait for the server to stop us
 var placed := false
 var is_moving := false
+var _path := {}  # the move we showed last frame (from, to, started), for _where_now
+var last_wall := {}  # at, direction (Vector3): the last wall we ran into, while we still stand there
 var _cast_started := 0  # server start time of the skill cast we last played
 var _cast_next := ""  # action motion to play after the casting motion
 var _probe: SphereShape3D
@@ -189,10 +191,27 @@ func _model_height() -> float:
 func predict_move(target: Vector3) -> void:
 	if dead:
 		return
-	predicted = {"from": Vector3(position.x, 0, position.z), "to": Vector3(target.x, 0, target.z), "started": Time.get_ticks_msec()}
+	predicted = {"from": _where_now(), "to": Vector3(target.x, 0, target.z), "started": Time.get_ticks_msec()}
 	was_swinging = false
 	sitting = false
-	_play(_walk, true)
+	_play(_walk, not is_moving)  # steering while running keeps the stride going
+
+
+## Where we are at this instant, not at the last frame: steering with the held mouse button
+## starts a new move several times a second, and on a slow frame rate the last frame's
+## position is behind the server's, which then refuses our wall stops.
+func _where_now() -> Vector3:
+	var flat := Vector3(position.x, 0, position.z)
+	var path := predicted if not predicted.is_empty() else (_path if is_moving and blocked.is_empty() else {})
+	if path.is_empty():
+		return flat
+	var from: Vector3 = path["from"]
+	var to: Vector3 = path["to"]
+	var length := from.distance_to(to)
+	if length < 0.01:
+		return to
+	var travel := minf((Time.get_ticks_msec() - int(path["started"])) / 1000.0 * predict_speed, length)
+	return from + (to - from) / length * travel
 
 
 ## Applies one entry from RoseNet.get_entities(). target_position is where the entity it
@@ -248,10 +267,14 @@ func update_state(state: Dictionary, target_position) -> void:
 				stop = blocked["at"]  # the server still has us walking on; hold at the wall
 			else:
 				blocked = {}
-		elif moving and placed:
+		# A new destination is checked against walls on the frame it arrives, or steering
+		# with the held mouse button (a new spot several times a second) would slip
+		# through a wall one unchecked step at a time.
+		if blocked.is_empty() and moving and placed:
 			stop = _wall_hit(Vector3(position.x, 0, position.z), flat)
 			if stop != null:
 				blocked = {"at": stop, "to": server_to, "since": Time.get_ticks_msec()}
+				last_wall = {"at": stop, "direction": (flat - Vector3(position.x, 0, position.z)).normalized()}
 				predicted = {}
 				collided.emit(stop)
 		if stop != null:
@@ -259,8 +282,11 @@ func update_state(state: Dictionary, target_position) -> void:
 			moving = false
 			server_to = stop
 
+	if not last_wall.is_empty() and flat.distance_to(last_wall["at"]) > 0.5:
+		last_wall = {}
 	if moving and predicted.is_empty() and state.get("speed", 0.0) > 0.5:
 		predict_speed = state["speed"]
+	_path = {"from": flat, "to": server_to, "started": Time.get_ticks_msec()} if moving else {}
 	var heading := server_to - flat if moving else Vector3.ZERO
 	if not moving and target_position != null:
 		heading = target_position - flat
@@ -330,7 +356,14 @@ func _wall_hit(from: Vector3, to: Vector3):
 	params.collision_mask = WALLS
 	params.transform = Transform3D(Basis(), from + direction * BODY_RADIUS + Vector3(0, position.y + BODY_HEIGHT, 0))
 	params.motion = motion
-	var result := get_world_3d().direct_space_state.cast_motion(params)
+	var space := get_world_3d().direct_space_state
+	# Already touching a wall at the start (turning to a new spot while pressed against
+	# it): the cast below does not see a wall it starts inside, so stay put unless the
+	# move leads away from it.
+	var touching := space.get_rest_info(params)
+	if not touching.is_empty() and direction.dot(touching["normal"]) < 0.0:
+		return from
+	var result := space.cast_motion(params)
 	if result.size() < 2 or result[0] >= 1.0:
 		return null
 	return from + direction * maxf(motion.length() * result[0] - 0.1, 0.0)

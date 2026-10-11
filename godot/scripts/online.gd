@@ -114,6 +114,7 @@ var ground := {}  # drop id -> Node3D
 var _pickup := -1  # drop we are walking to
 var _talk := -1  # NPC we are walking to
 var _click_marker: Node3D  # the marker where we last clicked the ground
+var _steer_target = null  # Vector3: where the held left button last sent us, or null
 var _warps: Array = []  # this zone's warp gates: id, position, size
 var _warps_zone: Node = null
 var _next_warp_ms := 0
@@ -546,6 +547,37 @@ func move_to(target: Vector3) -> bool:
 ## another click sends us somewhere else.
 func click_ground(target: Vector3) -> void:
 	if not move_to(target):
+		return
+	_clear_click_marker()
+	var fx := preload("res://scripts/fx.gd").find(self)
+	if fx:
+		_click_marker = fx.spawn_effect(CLICK_MARKER_EFFECT, target)
+
+
+## Holding the left button: run on toward a new spot. The marker slides along with it
+## instead of dropping in again. Returns false if we can't move now.
+func steer_to(target: Vector3) -> bool:
+	# Pressed against a wall: a spot further into it would only run us into it again
+	# (and each new move restarts the server's path), so wait for one that leads away.
+	if me and not me.last_wall.is_empty():
+		var heading := Vector3(target.x - me.position.x, 0, target.z - me.position.z).normalized()
+		if heading.dot(me.last_wall["direction"]) > 0.3:
+			return false
+	if not move_to(target):
+		return false
+	_steer_target = target
+	if _click_marker and is_instance_valid(_click_marker):
+		_click_marker.global_position = target
+	return true
+
+
+## The held button is let go: drop the marker where we will stop.
+func end_steer() -> void:
+	if _steer_target == null:
+		return
+	var target: Vector3 = _steer_target
+	_steer_target = null
+	if me == null or not me.is_moving or my_target >= 0 or _pickup >= 0 or _talk >= 0:
 		return
 	_clear_click_marker()
 	var fx := preload("res://scripts/fx.gd").find(self)
