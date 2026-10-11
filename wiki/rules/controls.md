@@ -55,6 +55,8 @@ source:
     - godot/scripts/ui/hud/minimap.gd (to_map)
     - godot/scripts/ui/zone_map.gd
     - godot/scripts/ui/hud/quest_tracker.gd
+    - godot/scripts/ui/hud/player_frame.gd
+    - godot/scripts/ui/hud/portrait_camera.gd
   data: ""
 ---
 # Controls
@@ -147,6 +149,11 @@ Esc or clicking outside the chat box stops typing.
   remember where they were and whether they were open.
 - Pointing at a stat or value in the character window (C), or at the stat and skill
   points, shows a tooltip saying what it does and what one more point of a stat adds.
+- The **player frame** (top left) shows your character's head in the round portrait, with
+  your level under it. The camera follows the head, so it stays in the middle of the
+  circle, and the picture shows your real face, hair and gear. When you take damage the
+  portrait flashes red and shakes. Options can make it **Live** (the idle motion plays;
+  the default) or **Static** (a still picture, taken again when your look changes).
 - Clicking a quest in the quest tracker opens the quest window.
 - Pointing at a monster, a town NPC or an item on the ground (or its label) shows a tooltip
   in the bottom right corner of the screen, above the menu: a monster's level and life, an
@@ -159,10 +166,11 @@ Esc or clicking outside the chat box stops typing.
 - **Options** (O) has three tabs:
   - **Interface**: the theme (four built-in themes, or your own theme files in the
     `themes` folder next to the game), interface size (75% to 150%), window opacity (40%
-    to 100%), blur behind windows, lock windows in place, and reset layout. Window
-    opacity does not change tooltips and menus: on every theme they are 88% opaque, in a
-    deeper shade of the theme's colours with a drop shadow, so they stand apart from
-    windows (a theme file can change this under `[tooltip]`).
+    to 100%), blur behind windows, the character portrait (Live or Static), lock windows
+    in place, and reset layout. Window opacity does not change tooltips and menus: on
+    every theme they are 88% opaque, in a deeper shade of the theme's colours with a drop
+    shadow, so they stand apart from windows (a theme file can change this under
+    `[tooltip]`).
   - **World labels**: your own name tag, chat bubbles, damage numbers, and whether item
     labels on the ground show always or only while Alt is held. Labels show for items
     within 30 m.

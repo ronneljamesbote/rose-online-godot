@@ -1,12 +1,16 @@
 ## Our character, top left: portrait with level, name and job, and HP, MP and Stamina bars
-## with their numbers.
+## with their numbers. The portrait shows our character's head, live or as a still picture
+## (Options > Interface > Character portrait).
 extends PanelContainer
 
 const Portrait := preload("res://scripts/ui/hud/portrait.gd")
+const PortraitCamera := preload("res://scripts/ui/hud/portrait_camera.gd")
 const JOBS := {0: "Visitor", 111: "Soldier", 121: "Knight", 122: "Champion", 211: "Muse", 221: "Mage",
 	222: "Cleric", 311: "Hawker", 321: "Raider", 322: "Scout", 411: "Dealer", 421: "Bourgeois", 422: "Artisan"}
 
 var portrait: Control
+var camera: SubViewport
+var _last_hp := -1
 var name_label: Label
 var job_label: Label
 var hp: UiBar
@@ -23,6 +27,13 @@ func _ready() -> void:
 	portrait = Portrait.new(54)
 	portrait.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(portrait)
+	camera = PortraitCamera.new()
+	camera.live = UI.settings.get("portrait", "live") == "live"
+	portrait.add_child(camera)
+	UI.settings_changed.connect(func():
+		var live: bool = UI.settings.get("portrait", "live") == "live"
+		if live != camera.live:
+			camera.set_live(live))
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override("separation", 3)
 	column.custom_minimum_size.x = 190
@@ -51,6 +62,10 @@ func refresh(c: Dictionary, me: Node3D) -> void:
 	job_label.text = JOBS.get(int(c.get("job", 0)), "")
 	portrait.set_values(name_text.substr(0, 1).to_upper(), int(c.get("level", 0)))
 	if me:
+		portrait.set_picture(camera.get_texture() if camera.show_look(me.look) else null)
+		if _last_hp > 0 and me.hp < _last_hp:
+			portrait.hit()
+		_last_hp = me.hp
 		hp.set_values(me.hp, me.max_hp, "HP  %d / %d" % [me.hp, me.max_hp])
 		mp.set_values(me.mp, me.max_mp, "MP  %d / %d" % [me.mp, me.max_mp])
 	stamina.set_values(int(c.get("stamina", 0)), 5000, "Stamina  %d / 5000" % int(c.get("stamina", 0)))
