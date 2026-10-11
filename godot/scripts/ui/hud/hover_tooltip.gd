@@ -71,18 +71,14 @@ func _under_mouse() -> Dictionary:
 	var camera := viewport.get_camera_3d()
 	if camera == null:
 		return {}
-	var mouse := viewport.get_mouse_position()
-	var item_id: int = online.world_overlay.item_label_at(mouse) if online.world_overlay else -1
-	if item_id < 0:
-		item_id = online.pick_item(camera, mouse)
-	if item_id >= 0 and online.ground.has(item_id):
-		return _item(online.ground[item_id])
-	var id: int = online.pick_monster(camera, mouse)
-	if id >= 0:
-		return _monster(online.entities[id])
-	id = online.pick_npc(camera, mouse)
-	if id >= 0:
-		return _npc(online.entities[id])
+	var under: Dictionary = online.under_mouse(camera, viewport.get_mouse_position())
+	match under.get("kind", ""):
+		"item":
+			return _item(online.ground[under["id"]])
+		"monster":
+			return _monster(online.entities[under["id"]])
+		"npc":
+			return _npc(online.entities[under["id"]])
 	return {}
 
 
