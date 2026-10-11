@@ -202,7 +202,7 @@ Esc or clicking outside the chat box stops typing.
     to 100%), blur behind windows, the character portrait (Live or Static), Cursor Size
     (the ROSE mouse cursor on or off, and its size), lock windows in place, and reset
     layout. Window opacity fades tooltips and menus too, along with the windows and HUD
-    panels.
+    panels (their drop shadow and the light line along their top edge fade with them).
   - **World labels**: your own name tag, chat bubbles, damage numbers, and whether item
     labels on the ground show always or only while Alt is held. Labels show for items
     within 30 m.

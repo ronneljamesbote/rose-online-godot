@@ -34,54 +34,43 @@ func _ready() -> void:
 		row.add_child(b)
 
 
-## A flat button with a small line icon drawn in the theme's menu colour.
+## Thin line icons, 24 by 24, drawn white and tinted with the theme's menu colour.
+const ICONS := {
+	"character": '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+	"inventory": '<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>',
+	"skills": '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+	"quests": '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>',
+	"party": '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+	"friends": '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
+	"map": '<polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>',
+	"options": '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+}
+const ICON_SIZE := 18.0
+const ICON_STROKE := 1.6
+
+## A flat button with a small line icon in the theme's menu colour.
 class _MenuButton extends Button:
+	## Rendered icons by name and pixel size, so each is only drawn from its SVG once.
+	static var _textures := {}
+
 	var icon_name := ""
 
 	func _draw() -> void:
-		var c := UI.color("menu.icon")
-		var o := size * 0.5
-		var w := 1.6
-		match icon_name:
-			"character":
-				draw_arc(o + Vector2(0, -4), 4.5, 0, TAU, 20, c, w, true)
-				draw_arc(o + Vector2(0, 11), 9.0, PI * 1.15, PI * 1.85, 16, c, w, true)
-			"inventory":
-				var bag := Rect2(o + Vector2(-7, -4), Vector2(14, 12))
-				draw_rect(bag, c, false, w)
-				draw_arc(o + Vector2(0, -4), 4.0, PI, TAU, 12, c, w, true)
-				draw_line(o + Vector2(-7, 0), o + Vector2(7, 0), c, w, true)
-			"skills":
-				var star := PackedVector2Array()
-				for i in 11:
-					var r := 8.5 if i % 2 == 0 else 3.8
-					star.append(o + Vector2(0, -r).rotated(TAU * i / 10.0))
-				draw_polyline(star, c, w, true)
-			"quests":
-				draw_rect(Rect2(o + Vector2(-6, -8), Vector2(12, 16)), c, false, w)
-				for y in [-3.0, 1.0, 5.0]:
-					draw_line(o + Vector2(-3, y), o + Vector2(3, y), c, w, true)
-				draw_line(o + Vector2(-3, -6), o + Vector2(1, -6), c, w, true)
-			"party":
-				draw_arc(o + Vector2(-4, -3), 3.5, 0, TAU, 16, c, w, true)
-				draw_arc(o + Vector2(5, -2), 3.0, 0, TAU, 16, c, w, true)
-				draw_arc(o + Vector2(-4, 10), 7.0, PI * 1.15, PI * 1.85, 12, c, w, true)
-				draw_arc(o + Vector2(5, 10), 6.0, PI * 1.2, PI * 1.8, 12, c, w, true)
-			"friends":
-				var heart := PackedVector2Array()
-				for i in 33:
-					var t := TAU * i / 32.0
-					heart.append(o + Vector2(16 * pow(sin(t), 3), -(13 * cos(t) - 5 * cos(2 * t) - 2 * cos(3 * t) - cos(4 * t))) * 0.45 + Vector2(0, -1))
-				draw_polyline(heart, c, w, true)
-			"map":
-				var pts := PackedVector2Array([o + Vector2(-8, -6), o + Vector2(-3, -8), o + Vector2(3, -6), o + Vector2(8, -8),
-					o + Vector2(8, 6), o + Vector2(3, 8), o + Vector2(-3, 6), o + Vector2(-8, 8), o + Vector2(-8, -6)])
-				draw_polyline(pts, c, w, true)
-				draw_line(o + Vector2(-3, -8), o + Vector2(-3, 6), c, w * 0.8, true)
-				draw_line(o + Vector2(3, -6), o + Vector2(3, 8), c, w * 0.8, true)
-			"options":
-				draw_arc(o, 3.5, 0, TAU, 16, c, w, true)
-				for i in 8:
-					var d := Vector2(0, -1).rotated(TAU * i / 8.0)
-					draw_line(o + d * 5.5, o + d * 8.5, c, w * 1.4, true)
-				draw_arc(o, 6.0, 0, TAU, 24, c, w, true)
+		# Rendered at the size it shows on screen, so it stays sharp at any interface size.
+		var px := maxi(8, roundi(ICON_SIZE * get_global_transform().get_scale().x))
+		var texture := _icon(icon_name, px)
+		if texture == null:
+			return
+		var at := (size - Vector2(ICON_SIZE, ICON_SIZE)) * 0.5
+		draw_texture_rect(texture, Rect2(at.round(), Vector2(ICON_SIZE, ICON_SIZE)), false, UI.color("menu.icon"))
+
+	static func _icon(which: String, px: int) -> Texture2D:
+		var key := "%s@%d" % [which, px]
+		if not _textures.has(key):
+			var svg := '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="%s" stroke-linecap="round" stroke-linejoin="round">%s</svg>' % [ICON_STROKE, ICONS.get(which, "")]
+			var image := Image.new()
+			if image.load_svg_from_string(svg, px / 24.0) != OK:
+				return null
+			image.generate_mipmaps()
+			_textures[key] = ImageTexture.create_from_image(image)
+		return _textures[key]
