@@ -9,6 +9,7 @@ skill_points_per_level: "floor((new level + 2) / 2)"
 global_cooldown_s: 0.25
 cooldown_unit_s: 0.2 (LIST_SKILL.STB stores cooldowns in steps of 0.2 s)
 minimum_cast_time_s: 0.3
+cast_grace_window_s: 0.3
 range_slack_m: 0.5
 default_cast_range: the caster's attack range (when the skill has no range)
 skill_damage_minimum: 5
@@ -34,10 +35,10 @@ cost_types:
   - { cost: Fuel, rule: "taken from your cart or castle gear" }
 source:
   code:
-    - module/src/skills.rs (learn_skill, level_up_skill, check_requirements, cast_skill, start_cast, advance_cast, check_can_use, pay_costs, use_cost, motion_us, cast_tick, take_effect, targets, target_allowed, damage, weapon_wear, apply_effects, target_value, summon, summon_capacity, summon_tick, resurrect, npc_cast, use_scroll, consume_scroll)
+    - module/src/skills.rs (learn_skill, level_up_skill, check_requirements, cast_skill, start_cast, advance_cast, cast_locked, queue_if_locked, run_queued, pay_locked_cast, check_can_use, pay_costs, use_cost, motion_us, cast_tick, take_effect, targets, target_allowed, damage, weapon_wear, apply_effects, target_value, summon, summon_capacity, summon_tick, resurrect, npc_cast, use_scroll, consume_scroll)
     - module/src/items.rs (use_item, skill books and scrolls)
     - module/src/character.rs (reward_xp, skill points on level up)
-    - module/src/lib.rs (deal_damage, combat_tick)
+    - module/src/lib.rs (deal_damage, combat_tick, move_to, attack, stop, sit)
     - crates/rose-game-irose/src/data/ability_values.rs (calculate_skill_damage, calculate_skill_adjust_value, calculate_npc, calculate_levelup_reward_skill_points)
     - crates/rose-data-irose/src/skill_database.rs (get_cooldown, load_skill)
   data: LIST_SKILL.STB, LIST_STATUS.STB, LIST_CLASS.STB (job classes), LIST_NPC.STB (summons)
@@ -89,15 +90,22 @@ requirements (points, job, skills, stats) as when learning. The cost is that lev
 2. **Walking into range.** If the target is farther than the skill's `range` (plus
    **0.5 m** of slack), your character walks or runs to it first. A skill with no range
    uses your normal attack range.
-3. **Casting.** In range, the checks run again, then the costs are paid and the cooldowns
-   start. Your character plays the skill's casting motion. The skill **takes effect at the
-   end of the casting motion**, then the action motion plays. A cast always lasts at least
-   **0.3 s** in total.
-4. **Interrupting.** Moving, attacking or stopping before the skill takes effect cancels
-   it. If the casting had already started, the costs and cooldown are spent anyway. A stun
-   or sleep landing on you cancels the cast too. Dying cancels it.
-5. **After.** Melee skills (those whose action mode is "attack") go back to normal attacks
-   on the same target when they finish.
+3. **Casting.** In range, the checks run again and your character plays the skill's
+   casting motion. The skill **takes effect at the end of the casting motion**, then the
+   action motion plays. A cast always lasts at least **0.3 s** in total.
+4. **Grace window.** For the first **0.3 s** of the casting motion you can still call the
+   skill off: moving, attacking, stopping, sitting or using another skill cancels it and
+   nothing is spent.
+5. **Locked in.** After the grace window the costs are paid (checked once more first) and
+   the cast can't be cancelled by you any more. The last thing you click while it is locked
+   in (a move, an attack, stop, sit or another skill) waits and happens the moment the
+   skill takes effect. Emotes, jumping and scrolls are refused until then. A stun or sleep
+   landing on you still cancels the cast, and so does dying; the costs are spent by then.
+6. **After the effect.** The action motion can be cut short by anything you do.
+7. **When it ends.** Melee skills (those whose action mode is "attack") go on attacking
+   their own target. Every other skill goes back to the attack you were in before you used
+   it, if that target is still alive and can still be fought. If you clicked something
+   while the skill was locked in, that wins instead.
 
 The checks, every time:
 
@@ -135,8 +143,9 @@ taken as listed; see [[rules/stamina|Stamina]] and [[rules/carts|Carts]].
 
 ### Cooldowns
 
-The `cooldown` column is in seconds (the data stores it in steps of 0.2 s). It starts when
-the casting starts, not when it takes effect. Every skill has its own cooldown; the data can
+The `cooldown` column is in seconds (the data stores it in steps of 0.2 s). It counts from
+when the casting starts, not when it takes effect, but it is only spent once the cast locks
+in (a skill cancelled in its grace window starts no cooldown). Every skill has its own cooldown; the data can
 also put several skills in a **cooldown group** that shares one cooldown, but no skill in the
 current iROSE data uses a group. On top of that, any skill starts the 0.25 s global
 cooldown.
@@ -362,6 +371,13 @@ How to read `changes`:
 
 - **Party skills** reach every party member in the area; **clan skills** reach only the
   caster, because there are no clans yet.
+- **Cancelling a cast.** In iROSE you can't call off your own cast once it starts. Here
+  you have a 0.3 s grace window that costs nothing; after it the cast is locked in and your
+  next click waits for it, as in iROSE.
+- **After a skill.** iROSE skills whose action mode is "stop" (most buffs and heals) leave
+  you standing still, and "restore" skills go back to what you were doing. Here every
+  skill except the "attack" ones goes back to the attack you were in, so buffing or healing
+  mid-fight doesn't stop your attacks.
 - **Summons** stay until their owner dies, logs out or changes zone. Their lifetime
   status effect (summons slowly losing HP) is not applied.
 

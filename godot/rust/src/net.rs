@@ -7,6 +7,9 @@
 
 use std::sync::{Arc, Mutex};
 
+/// How long a cast can be called off for free (the module's skills::CAST_GRACE_US).
+const CAST_GRACE_US: i64 = 300_000;
+
 use godot::{classes::INode, prelude::*};
 use spacetimedb_sdk::{
     __codegen::{WithInsert, WithUpdate},
@@ -449,7 +452,7 @@ impl RoseNet {
     /// until the swing's hit frame), dead, for players look (see player_look), for NPCs
     /// direction (degrees) and store, and while casting a skill cast_skill, cast_started (a
     /// server time, to tell casts apart), cast_motion and action_motion (motion ids, -1 for
-    /// none), cast_effect_in and cast_ends_in (seconds) and cast_target; summon_owner for
+    /// none), cast_effect_in and cast_ends_in (seconds), cast_locked and cast_target; summon_owner for
     /// summons, hidden under Stealth, conditions ("Asleep", "Stunned" and so on).
     #[func]
     fn get_entities(&self) -> VarArray {
@@ -495,6 +498,9 @@ impl RoseNet {
                         d.set("action_motion", skill.and_then(|s| s.action_motion_id).map_or(-1, |m| m.get() as i64));
                     }
                     d.set("cast_effect_in", (cast.effect_at_us - t) as f64 / 1e6);
+                    // Past the grace window the cast is locked in: the server holds our next
+                    // command until the skill takes effect (CAST_GRACE_US in the module).
+                    d.set("cast_locked", !cast.applied && t >= started + CAST_GRACE_US && t < cast.effect_at_us);
                     d.set("cast_ends_in", (cast.ends_at_us - t) as f64 / 1e6);
                     if let Some(target) = cast.target {
                         d.set("cast_target", target as i64);

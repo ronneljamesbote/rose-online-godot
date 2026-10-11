@@ -538,7 +538,9 @@ func move_to(target: Vector3) -> bool:
 	_pickup = -1
 	_talk = -1
 	net.move_to(target.x, target.z)
-	me.predict_move(target)
+	# A locked-in skill: the server walks us there once it takes effect, so don't run ahead.
+	if not me.cast_locked:
+		me.predict_move(target)
 	return true
 
 
