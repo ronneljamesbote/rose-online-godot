@@ -72,13 +72,18 @@ func _under_mouse() -> Dictionary:
 	if camera == null:
 		return {}
 	var under: Dictionary = online.under_mouse(camera, viewport.get_mouse_position())
+	# The item/entity can be picked up or removed between under_mouse() and here, so
+	# look it up safely (a missing key returns null, and null must not reach the helpers).
 	match under.get("kind", ""):
 		"item":
-			return _item(online.ground[under["id"]])
+			var item: Node3D = online.ground.get(under.get("id", -1))
+			return _item(item) if item != null else {}
 		"monster":
-			return _monster(online.entities[under["id"]])
+			var monster: Node3D = online.entities.get(under.get("id", -1))
+			return _monster(monster) if monster != null else {}
 		"npc":
-			return _npc(online.entities[under["id"]])
+			var npc: Node3D = online.entities.get(under.get("id", -1))
+			return _npc(npc) if npc != null else {}
 	return {}
 
 
