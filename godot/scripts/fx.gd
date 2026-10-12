@@ -333,6 +333,8 @@ func _skill(id: int) -> Dictionary:
 
 ## One animation frame event of a character: plays what its flags ask for.
 func frame_event(entity: Node3D, event: int) -> void:
+	if entity == null or not is_instance_valid(entity):
+		return
 	var flags: int = RoseSound.event_flags(event)
 	if flags == 0:
 		return
@@ -405,6 +407,8 @@ func frame_event(entity: Node3D, event: int) -> void:
 ## target they kill is already gone from the zone when the bolt or arrow flies; the node
 ## kept from before still plays its death.
 func _target_of(entity: Node3D, casting := false) -> Node3D:
+	if entity == null or not is_instance_valid(entity):
+		return null
 	if casting and entity.cast_target >= 0:
 		var kept: Node3D = entity.cast_target_node
 		return kept if kept != null and is_instance_valid(kept) else entity_by_id(entity.cast_target)
