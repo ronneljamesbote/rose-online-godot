@@ -65,14 +65,41 @@ fn main() {
     ]);
     let started = Instant::now();
     rose_game_data::load_game_data(&vfs).expect("load game data");
+    let zmo_motions = rose_game_data::load_motions(&vfs).expect("load motions");
     let mut files = std::mem::take(&mut *read.lock().unwrap());
-    if mode == "pack" {
+    if mode == "pack" || mode == "time" {
         let path = std::env::var_os("ROSE_OVERRIDES")
             .map(PathBuf::from)
             .unwrap_or_else(|| PathBuf::from(rose_game_overrides::OVERRIDES_FILE));
         let overrides = rose_game_overrides::Overrides::load(&path).expect("read the overrides file");
         let cells = overrides.patch_files(&mut files).expect("apply the overrides");
         eprintln!("overrides: {} changed cells from {}", cells, path.display());
+
+        // overrides/motions.toml, next to the overrides file unless ROSE_MOTIONS names it.
+        let path = std::env::var_os("ROSE_MOTIONS").map(PathBuf::from).unwrap_or_else(|| {
+            path.parent().unwrap_or(Path::new("")).join(Path::new(rose_game_overrides::MOTIONS_FILE).file_name().unwrap())
+        });
+        match std::fs::read(&path) {
+            Ok(data) => {
+                let text = std::str::from_utf8(&data).expect("motions file is UTF-8");
+                let timings = rose_game_overrides::MotionTimings::parse(text).expect("read the motions file");
+                eprintln!("motions: {} motion timings from {}", timings.motion.len(), path.display());
+                files.insert(PathBuf::from(rose_game_overrides::MOTIONS_GAME_FILE), data);
+                // Fail here rather than on the server when a motion isn't in the game.
+                let mut memory = rose_file_readers::MemoryFilesystemDevice::default();
+                for (path, data) in &files {
+                    memory.insert(&path.to_string_lossy(), data.clone());
+                }
+                if let Err(e) = rose_game_data::load_motions(&VirtualFilesystem::new(vec![Box::new(memory)])) {
+                    eprintln!("motions: {e:#}");
+                    std::process::exit(1);
+                }
+            }
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
+                eprintln!("motions: no {}, the ZMO timings stay", path.display())
+            }
+            Err(e) => panic!("read {}: {e}", path.display()),
+        }
     }
     let total: usize = files.values().map(|d| d.len()).sum();
     eprintln!(
@@ -90,8 +117,9 @@ fn main() {
             }
             let vfs = VirtualFilesystem::new(vec![Box::new(memory)]);
             let started = Instant::now();
-            rose_game_data::load_game_data(&vfs).expect("load from memory");
+            let game_data = rose_game_data::load_game_data(&vfs).expect("load from memory");
             eprintln!("from memory: {} ms", started.elapsed().as_millis());
+            print_motion_changes(&zmo_motions, &game_data.motions);
             let started = Instant::now();
             let strings = rose_data_irose::get_string_database(&vfs, 1).unwrap();
             rose_data_irose::get_zone_database(&vfs, strings).unwrap();
@@ -144,5 +172,40 @@ fn main() {
             eprintln!("unknown mode {mode}");
             std::process::exit(2);
         }
+    }
+}
+
+/// Every player motion whose length or hits differ between the ZMO files and the uploaded
+/// game files (with `overrides/motions.toml`), then the sword swings the server times hits by.
+fn print_motion_changes(zmo: &rose_data::CharacterMotionDatabase, uploaded: &rose_data::CharacterMotionDatabase) {
+    let ms = |d: Option<std::time::Duration>| d.map_or("-".to_string(), |d| format!("{} ms", d.as_millis()));
+    let mut changed = 0;
+    let mut total = 0;
+    for gender in 0..2 {
+        for (a, b) in zmo.motion_files(gender).zip(uploaded.motion_files(gender)) {
+            total += 1;
+            if (a.duration, a.total_attack_frames, a.first_attack_time) != (b.duration, b.total_attack_frames, b.first_attack_time) {
+                changed += 1;
+                println!(
+                    "changed {}: {} ms {} hits first {} -> {} ms {} hits first {}",
+                    a.path.path().display(),
+                    a.duration.as_millis(),
+                    a.total_attack_frames,
+                    ms(a.first_attack_time),
+                    b.duration.as_millis(),
+                    b.total_attack_frames,
+                    ms(b.first_attack_time)
+                );
+            }
+        }
+    }
+    println!("motions: {changed} of {total} differ from the ZMO files");
+    use rose_data::CharacterMotionAction::{Attack, Attack2, Attack3};
+    for (gender, name) in [(0, "male"), (1, "female")] {
+        let times: Vec<String> = [Attack, Attack2, Attack3]
+            .into_iter()
+            .map(|action| ms(uploaded.get_character_action_motion(action, 1, gender).and_then(|m| m.first_attack_time)))
+            .collect();
+        println!("{name} one-handed sword hits: {}", times.join(", "));
     }
 }

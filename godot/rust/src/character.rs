@@ -885,3 +885,41 @@ pub fn import_avatars(redo: bool) -> AvatarImport {
     }
     out
 }
+
+/// `overrides/motions.toml` from the player animations in the asset folders (`ours/` first):
+/// each motion's frame rate, length in frames and the frames of its `hit` markers. The
+/// server times hits from this file, so it has to match the animations; `--export-motions`
+/// writes it and `--export-motions=check` fails when it is out of date.
+pub fn motion_timings() -> Option<rose_game_overrides::MotionTimings> {
+    let game_data = data::get()?;
+    let mut motions: Vec<String> = (0..3)
+        .flat_map(|gender| game_data.motions.motion_files(gender))
+        .map(|motion| motion.path.path().to_string_lossy().to_string())
+        .filter(|path| path.to_ascii_uppercase().starts_with(AVATAR_MOTIONS))
+        .collect();
+    motions.sort();
+    motions.dedup();
+    let mut timings = rose_game_overrides::MotionTimings::default();
+    for path in motions {
+        let Some(animation) = assets::load_stem::<Animation>(&assets::stem(&path), &["anim"]) else { continue };
+        let fps: f64 = animation.get_meta("fps").try_to().unwrap_or(30.0);
+        let mut hit_frames: Vec<u32> = animation
+            .get_marker_names()
+            .as_slice()
+            .iter()
+            .filter(|name| {
+                let name = name.to_string();
+                name.starts_with("hit") && name.rsplit_once(':').and_then(|(_, id)| id.parse::<u16>().ok()).is_some_and(is_hit_event)
+            })
+            .map(|name| (animation.get_marker_time(&StringName::from(name)) * fps).round() as u32)
+            .collect();
+        hit_frames.sort();
+        timings.motion.push(rose_game_overrides::MotionTiming {
+            file: path,
+            fps: fps.round() as u32,
+            frames: (animation.get_length() as f64 * fps).round() as u32,
+            hit_frames,
+        });
+    }
+    Some(timings)
+}

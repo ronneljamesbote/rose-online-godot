@@ -43,8 +43,19 @@ Markers are named `kind` + number + `:` + the ROSE event id, for example `hit1:2
 markers are when a swing or skill lands (event ids 10, 20-28, 56, 57, 66, 67, the same ones
 the server's `attack_hit_ms` uses), `step` markers play footsteps and `effect` markers the
 other sounds and effects. Moving a marker in the Animation panel moves that event in game;
-the id after the colon must stay. The server still reads hit times from the ROSE files
-until the motions export (the next step), so a moved `hit` marker isn't on the server yet.
+the id after the colon must stay.
+
+The server times hits from `overrides/motions.toml`, so after moving a `hit` marker (or
+changing an animation's length) export it and commit it with the animation:
+
+```sh
+godot --headless --path godot -- --export-motions          # writes ../overrides/motions.toml
+godot --headless --path godot -- --export-motions=check    # fails when it is out of date
+```
+
+The Windows build (`tools/build-windows.sh`) runs the check and refuses to build while the
+file is out of date. An edited animation goes in `ours/` under the same path (for example
+`ours/3ddata/motion/avatar/onehand_attack01_m1.anim`), since `rose/` is remade by the import.
 
 The game falls back to the client data for anything not in either folder, so it runs the
 same with or without `rose/`. The Windows build leaves `rose/` out for now.

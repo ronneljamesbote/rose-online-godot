@@ -13,7 +13,20 @@ they are; this file is laid on top of them.
   Docker server keeps the file inside its image and uploads the game data again by itself
   when the file changed (it remembers the last uploaded version in `/data/overrides.sha256`).
 
-So after changing the file: rebuild the server image (`docker compose up -d --build`) and
+`motions.toml` holds the length and hit frames of every player motion, exported from the
+hit markers of the Godot animations (`godot/assets/README.md`). It isn't edited by hand:
+move a `hit` marker in the Godot editor, then run
+
+```sh
+godot --headless --path godot -- --export-motions          # writes overrides/motions.toml
+godot --headless --path godot -- --export-motions=check    # fails when it is out of date
+```
+
+The server times every swing and skill hit from it (the upload sends it with the game
+files, `ROSE_MOTIONS` names another file); the client plays the markers themselves. A
+motion missing from the file keeps the time in its ZMO file.
+
+So after changing either file: rebuild the server image (`docker compose up -d --build`) and
 ship the file with the client. Both sides must have the same file, or the client shows one
 number while the server uses another.
 
