@@ -8,6 +8,10 @@
 //! locked-in cast holding the next command, and going back to the attack after a skill.
 //! The character needs Blessing in active slot 0 and Berserk in slot 1 and plenty of MP
 //! first: it waits for MP 500 while the admin sets it up (give_skill, set_hp_mp).
+//!
+//! `rose-stdb-bot URL flee` checks that a swing finishes once it has started: it hits the
+//! nearest monster until it fights back, then keeps stepping away from it. Every swing the
+//! monster starts should land; none should be restarted while it chases.
 
 mod module_bindings;
 
@@ -204,6 +208,77 @@ fn cast(uri: String) {
     conn.disconnect().ok();
 }
 
+fn flee(uri: String) {
+    let conn = DbConnection::builder().with_uri(uri).with_database_name("rose").build().expect("connect");
+    conn.subscription_builder().subscribe_to_all_tables();
+    conn.run_threaded();
+    let me = loop {
+        if let Some(id) = conn.try_identity().and_then(|i| conn.db.player().identity().find(&i)).and_then(|p| p.entity_id) {
+            if conn.db.motion().entity_id().find(&id).is_some() {
+                break id;
+            }
+        }
+        std::thread::sleep(Duration::from_millis(50));
+    };
+    std::thread::sleep(Duration::from_secs(3));
+    let my_pos = || pos(&conn.db.motion().entity_id().find(&me).unwrap(), now_us());
+    let p = my_pos();
+    let (target, _) = conn.db.entity().iter()
+        .filter(|e| e.kind == EntityKind::Monster && e.npc_id < 316)
+        // Tough enough to live through a few hits.
+        .filter(|e| conn.db.combat().entity_id().find(&e.entity_id).is_some_and(|c| c.hp >= 100))
+        .filter_map(|e| conn.db.motion().entity_id().find(&e.entity_id).map(|m| (e.entity_id, pos(&m, now_us()))))
+        .min_by(|a, b| ((a.1.0 - p.0).powi(2) + (a.1.1 - p.1).powi(2)).total_cmp(&((b.1.0 - p.0).powi(2) + (b.1.1 - p.1).powi(2))))
+        .expect("no monsters spawned");
+    // Count the monster's swing starts and the hits it lands on us.
+    let counts = Arc::new(Mutex::new((0u32, 0u32, false)));
+    {
+        let c1 = counts.clone();
+        spacetimedb_sdk::__codegen::WithUpdate::on_update(&conn.db.combat(), move |_, old, new| {
+            let mut c = c1.lock().unwrap();
+            if new.entity_id == target && c.2 && old.swing_hit_at_us.is_none() && new.swing_hit_at_us.is_some() {
+                c.0 += 1;
+            }
+        });
+        let c2 = counts.clone();
+        spacetimedb_sdk::__codegen::WithInsert::on_insert(&conn.db.damage_event(), move |_, ev| {
+            let mut c = c2.lock().unwrap();
+            if ev.attacker == target && ev.defender == me && c.2 {
+                c.1 += 1;
+            }
+        });
+    }
+    // Hit it until it fights back, then stop hitting it.
+    conn.reducers.attack(target).unwrap();
+    let t0 = Instant::now();
+    while conn.db.combat().entity_id().find(&target).and_then(|c| c.attack_target) != Some(me) {
+        assert!(t0.elapsed() < Duration::from_secs(90), "monster never fought back");
+        assert!(conn.db.combat().entity_id().find(&target).is_some_and(|c| c.hp > 0), "monster died first");
+        std::thread::sleep(Duration::from_millis(20));
+    }
+    let p = my_pos();
+    conn.reducers.move_to(p.0 + 1.0, p.1).ok();
+    println!("monster #{} fights back; stepping away from it for 20 s", target);
+    counts.lock().unwrap().2 = true;
+    let t0 = Instant::now();
+    while t0.elapsed() < Duration::from_secs(20) {
+        let p = my_pos();
+        let Some(m) = conn.db.motion().entity_id().find(&target) else { break };
+        let q = pos(&m, now_us());
+        let (dx, dy) = (p.0 - q.0, p.1 - q.1);
+        let d = (dx * dx + dy * dy).sqrt().max(1.0);
+        // Walk 2 m straight away from the monster, then wait for it to catch up.
+        conn.reducers.move_to(p.0 + dx / d * 200.0, p.1 + dy / d * 200.0).ok();
+        std::thread::sleep(Duration::from_millis(1200));
+    }
+    counts.lock().unwrap().2 = false;
+    let in_progress = conn.db.combat().entity_id().find(&target).is_some_and(|c| c.swing_hit_at_us.is_some()) as u32;
+    let (starts, hits, _) = *counts.lock().unwrap();
+    println!("monster swings started: {}, landed: {}, still winding up: {}", starts, hits, in_progress);
+    println!("{} every started swing lands", if starts > 0 && starts <= hits + in_progress { "PASS" } else { "FAIL" });
+    conn.disconnect().ok();
+}
+
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.get(2).map(|a| a.as_str()) == Some("load") {
@@ -213,6 +288,9 @@ fn main() {
     }
     if args.get(2).map(|a| a.as_str()) == Some("cast") {
         return cast(args[1].clone());
+    }
+    if args.get(2).map(|a| a.as_str()) == Some("flee") {
+        return flee(args[1].clone());
     }
     let uri = args.get(1).cloned().unwrap_or_else(|| "ws://127.0.0.1:3000".into());
     let ranged = args.get(2).map_or(true, |a| a == "ranged");
