@@ -198,7 +198,7 @@ template (only `windows_release_x86_64.exe` from the 4.7.2 export templates is n
 with `ROSE.pck` beside it, and zips them with the DLLs (ours and Terrain3D's) and
 `tools/README-windows.txt`. It needs `ROSE_DATA_IDX` (the client's `data.idx`): it first
 runs `--import-rose`, because the pck carries the converted models, textures, animations
-and the Birth Island scenes (about 400 MB, see `assets/README.md`), then checks that
+and the zone scenes (about 400 MB, see `assets/README.md`), then checks that
 `overrides/motions.toml` and `overrides/zones/` match the animations and zone scenes
 (`--export-motions=check`, `--export-zones=check`); when they don't, it stops without
 building. The DLL only imports Windows system DLLs. Under
