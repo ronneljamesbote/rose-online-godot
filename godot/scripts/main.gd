@@ -160,7 +160,9 @@ func _import_rose(force: bool) -> void:
 	var folders: Dictionary = result.folders
 	for folder in folders:
 		print("rose:   %-24s %8.1f MB" % [folder, folders[folder] / 1048576.0])
-	print("rose: assets/rose is %.1f MB" % (result.bytes / 1048576.0))
+	print("rose: player characters: %d files made, %d already there, %.1f MB" % [
+		result.avatar_files, result.avatar_kept, result.avatar_bytes / 1048576.0])
+	print("rose: assets/rose is %.1f MB" % ((result.bytes + result.avatar_bytes) / 1048576.0))
 	get_tree().quit(1 if result.failed > 0 else 0)
 
 
