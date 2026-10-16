@@ -59,7 +59,7 @@ impl Kind {
 
 /// The path of a ROSE file inside an asset folder, without the extension:
 /// `3DDATA\AVATAR\X.ZMS` -> `3ddata/avatar/x`.
-fn stem(rose_path: &str) -> String {
+pub fn stem(rose_path: &str) -> String {
     let path = rose_path.replace('\\', "/").to_ascii_lowercase();
     let path = path.trim().trim_start_matches("./").trim_start_matches('/');
     match path.rfind('.') {
@@ -68,22 +68,23 @@ fn stem(rose_path: &str) -> String {
     }
 }
 
-/// The resource standing in for a ROSE file: `ours/` first, then the imported copy.
-fn find(rose_path: &str, kind: Kind) -> Option<String> {
-    let stem = stem(rose_path);
+/// The resource at `stem` (a path inside the asset folders, without extension): `ours/`
+/// with any of `extensions` first, then the imported copy with the first extension.
+pub fn find_stem(stem: &str, extensions: &[&str]) -> Option<String> {
     let mut loader = ResourceLoader::singleton();
-    for extension in kind.extensions() {
+    for extension in extensions {
         let path = format!("{OURS}{stem}.{extension}");
         if loader.exists(&path) {
             return Some(path);
         }
     }
-    let path = format!("{ROSE}{stem}.{}", kind.extensions()[0]);
+    let path = format!("{ROSE}{stem}.{}", extensions[0]);
     loader.exists(&path).then_some(path)
 }
 
-fn load<T: GodotClass + Inherits<Resource>>(rose_path: &str, kind: Kind) -> Option<Gd<T>> {
-    let path = find(rose_path, kind)?;
+/// Loads what `find_stem` finds, as a `T`.
+pub fn load_stem<T: GodotClass + Inherits<Resource>>(stem: &str, extensions: &[&str]) -> Option<Gd<T>> {
+    let path = find_stem(stem, extensions)?;
     match ResourceLoader::singleton().load(&path).map(|r| r.try_cast::<T>()) {
         Some(Ok(resource)) => Some(resource),
         _ => {
@@ -91,6 +92,10 @@ fn load<T: GodotClass + Inherits<Resource>>(rose_path: &str, kind: Kind) -> Opti
             None
         }
     }
+}
+
+fn load<T: GodotClass + Inherits<Resource>>(rose_path: &str, kind: Kind) -> Option<Gd<T>> {
+    load_stem(&stem(rose_path), kind.extensions())
 }
 
 pub fn load_mesh(rose_path: &str) -> Option<Gd<ArrayMesh>> {
@@ -131,7 +136,7 @@ impl RoseImport {
 
         let started = Instant::now();
         let mut stamp = ConfigFile::new_gd();
-        let same_version = stamp.load(STAMP) == Error::OK && stamp.get_value("import", "version").to::<i64>() == IMPORT_VERSION;
+        let same_version = stamp.load(STAMP) == Error::OK && stamp.get_value_ex("import", "version").default(&Variant::nil()).done().try_to::<i64>().ok() == Some(IMPORT_VERSION);
         let redo = force || !same_version;
 
         let mut files: Vec<(Kind, String)> = index
@@ -181,6 +186,11 @@ impl RoseImport {
         }
 
         stamp.set_value("import", "version", &IMPORT_VERSION.to_variant());
+
+        // Player characters: skeletons, part scenes, motions and motion libraries.
+        let same_avatars = same_version && stamp.get_value_ex("import", "avatars").default(&Variant::nil()).done().try_to::<i64>().ok() == Some(crate::character::AVATAR_IMPORT_VERSION);
+        let avatars = crate::character::import_avatars(force || !same_avatars);
+        stamp.set_value("import", "avatars", &crate::character::AVATAR_IMPORT_VERSION.to_variant());
         stamp.save(STAMP);
 
         let mut by_folder = VarDictionary::new();
@@ -189,7 +199,10 @@ impl RoseImport {
         }
         result.set("meshes", meshes);
         result.set("textures", textures);
-        result.set("failed", failed);
+        result.set("failed", failed + avatars.failed);
+        result.set("avatar_files", avatars.saved);
+        result.set("avatar_kept", avatars.kept);
+        result.set("avatar_bytes", avatars.bytes as i64);
         result.set("kept", kept);
         result.set("bytes", total_bytes as i64);
         result.set("seconds", started.elapsed().as_secs_f64());
@@ -198,7 +211,7 @@ impl RoseImport {
     }
 }
 
-fn save(resource: Gd<Resource>, path: &str) -> bool {
+pub fn save(resource: Gd<Resource>, path: &str) -> bool {
     let folder = &path[..path.rfind('/').unwrap_or(0)];
     DirAccess::make_dir_recursive_absolute(folder);
     let error = ResourceSaver::singleton().save_ex(&resource).path(path).flags(SaverFlags::COMPRESS).done();

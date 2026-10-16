@@ -235,7 +235,10 @@ Other options (after `--`):
   those are cut to level 0 and their mipmaps are generated after loading.
 - `rust/src/assets.rs` is the import command (`--import-rose`, class `RoseImport`) and the
   lookup that `mesh.rs` and `texture.rs` ask first: `assets/ours/` (committed) wins over
-  `assets/rose/` (generated, git-ignored), and the client data comes last.
+  `assets/rose/` (generated, git-ignored), and the client data comes last. The player
+  characters (skeleton scenes, part scenes, motions with hit/step/effect markers and one
+  motion library per weapon type) are imported by `character.rs` (`import_avatars`), and
+  `RoseCharacter` builds players from them when they are there.
 - `shaders/` holds the ports of the WGSL shaders. Textures are sampled raw and all maths runs
   in gamma space like the original, then converted to linear at the end, so colours match.
 - `rust/src/character.rs` also holds `RoseNpc`, the monster and NPC model builder (port of
