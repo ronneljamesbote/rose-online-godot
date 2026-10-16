@@ -16,6 +16,7 @@ const NET_DEMOS := {
 	"pvp": "pvp.gd",
 	"chat": "chat.gd",
 	"steps": "steps.gd",
+	"hotkey": "hotkey.gd",
 }
 
 
