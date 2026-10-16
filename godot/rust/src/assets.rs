@@ -12,7 +12,7 @@ use std::{collections::BTreeMap, path::Path, time::Instant};
 
 use godot::{
     classes::{
-        resource_saver::SaverFlags, ArrayMesh, ConfigFile, DirAccess, ImageTexture, ProjectSettings, Resource,
+        image::CompressMode, resource_saver::SaverFlags, ArrayMesh, Image, ConfigFile, DirAccess, ImageTexture, ProjectSettings, Resource,
         ResourceLoader, ResourceSaver, Texture2D,
     },
     global::Error,
@@ -23,7 +23,7 @@ use rose_file_readers::{VfsIndex, ZmsFile};
 pub const OURS: &str = "res://assets/ours/";
 pub const ROSE: &str = "res://assets/rose/";
 /// Bumped when the converted output changes, so the next import redoes every file.
-const IMPORT_VERSION: i64 = 1;
+const IMPORT_VERSION: i64 = 2;
 const STAMP: &str = "res://assets/rose/import.cfg";
 
 /// Folders that stay in data.idx for now: effects and the interface.
@@ -160,6 +160,7 @@ impl RoseImport {
                         .and_then(|zms| crate::mesh::build_mesh(&zms, true))
                         .map(|mesh| save(mesh.upcast(), &target)),
                     Kind::Texture => crate::texture::load_rose_image(rose_path)
+                        .map(compress_texture)
                         .and_then(|image| ImageTexture::create_from_image(&image))
                         .map(|texture| save(texture.upcast(), &target)),
                 };
@@ -334,6 +335,16 @@ impl RoseImport {
         result.set("changed", &changed.iter().map(|f| f.to_variant()).collect::<VarArray>());
         result
     }
+}
+
+/// Textures the import decompressed (ROSE DDS files with a partial mip chain) go back to
+/// S3TC (DXT1, or DXT5 with alpha), so the converted copies stay as small as the originals
+/// and fit in the Windows .pck.
+fn compress_texture(mut image: Gd<Image>) -> Gd<Image> {
+    if !image.is_compressed() && image.get_width() % 4 == 0 && image.get_height() % 4 == 0 {
+        image.compress(CompressMode::S3TC);
+    }
+    image
 }
 
 pub fn save(resource: Gd<Resource>, path: &str) -> bool {
