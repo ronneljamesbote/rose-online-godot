@@ -8,7 +8,8 @@ use anyhow::Context;
 use rose_data::{
     AiDatabase, CharacterMotionDatabase, CharacterMotionDatabaseOptions, DataDecoder, ItemClass, ItemDatabase,
     ItemReference, JobClassDatabase, NpcDatabase, NpcDatabaseOptions, QuestDatabase, SkillDatabase,
-    SkillId, SkillIds, StatusEffectDatabase, StringDatabase, WarpGateDatabase, ZoneDatabase,
+    NpcConversationId, NpcId, SkillId, SkillIds, StatusEffectDatabase, StringDatabase, WarpGateDatabase, ZoneData,
+    ZoneDatabase, ZoneId, ZoneMonsterSpawnPoint, ZoneNpcSpawn,
 };
 use rose_data_irose::{
     decode_item_base1000, encode_item_class, get_ai_database, get_character_motion_database, get_data_decoder,
@@ -17,7 +18,8 @@ use rose_data_irose::{
     get_zone_database,
 };
 use rose_file_readers::{stb_column, StbFile, VfsFile, VfsPathBuf, VirtualFilesystem};
-use rose_game_overrides::MotionTimings;
+use rose_game_overrides::{MotionTimings, ZoneLayout};
+use glam::Vec3;
 use rose_game_common::{
     components::BasicStats,
     data::{AbilityValueCalculator, DropTable},
@@ -54,7 +56,9 @@ pub fn load_game_data(vfs: &VirtualFilesystem) -> Result<GameData, anyhow::Error
     apply_motion_timings(vfs, &mut motions, &mut npcs).context("motion timings")?;
     let npcs = Arc::new(npcs);
     let skills = Arc::new(get_skill_database(vfs, string_database.clone()).context("skill database")?);
-    let zones = Arc::new(get_zone_database(vfs, string_database.clone()).context("zone database")?);
+    let mut zones = get_zone_database(vfs, string_database.clone()).context("zone database")?;
+    apply_zone_layouts(vfs, &mut zones).context("zone layouts")?;
+    let zones = Arc::new(zones);
     let drop_table = get_drop_table(vfs, items.clone(), npcs.clone()).context("drop table")?;
 
     Ok(GameData {
@@ -106,6 +110,86 @@ pub fn apply_motion_timings(
             anyhow::bail!("overrides/motions.toml: {} is not a player, monster or NPC motion", timing.file);
         }
     }
+    Ok(())
+}
+
+/// The spawn points, town NPCs and named spots of `overrides/zones/` (exported from the
+/// Godot zone scenes), when the game files carry them, in place of the zone's IFO and ZON
+/// ones. The start and revive positions follow the spots LIST_ZONE.STB names.
+pub fn apply_zone_layouts(vfs: &VirtualFilesystem, zones: &mut ZoneDatabase) -> Result<(), anyhow::Error> {
+    let ids: Vec<ZoneId> = zones.iter().map(|z| z.id).collect();
+    let mut list = None;
+    for id in ids {
+        let path = rose_game_overrides::zone_game_file(id.get());
+        if !vfs.exists(path.as_str()) {
+            continue;
+        }
+        let file = vfs.open_file(path.as_str())?;
+        let bytes: &[u8] = match &file {
+            VfsFile::Buffer(data) => data,
+            VfsFile::View(data) => data,
+        };
+        let layout = ZoneLayout::parse(std::str::from_utf8(bytes)?).with_context(|| format!("zone {}", id.get()))?;
+        if layout.zone != id.get() {
+            anyhow::bail!("{path} says zone = {}", layout.zone);
+        }
+        if list.is_none() {
+            list = Some(vfs.read_file::<StbFile, _>("3DDATA/STB/LIST_ZONE.STB")?);
+        }
+        let list = list.as_ref().unwrap();
+        let start_name = list.try_get(id.get() as usize, 2).unwrap_or("");
+        let revive_name = list.try_get(id.get() as usize, 3).unwrap_or("");
+        let zone = zones.get_zone_mut(id).unwrap();
+        apply_zone_layout(zone, &layout, start_name, revive_name).with_context(|| format!("zone {}", id.get()))?;
+    }
+    Ok(())
+}
+
+/// Puts one exported layout into a zone (positions from metres to the server's centimetres).
+pub fn apply_zone_layout(
+    zone: &mut ZoneData,
+    layout: &ZoneLayout,
+    start_name: &str,
+    revive_name: &str,
+) -> Result<(), anyhow::Error> {
+    let at = |x: f32, y: f32, z: f32| Vec3::new(x, y, z) * 100.0;
+    let npc_id = |n: u32| NpcId::new(n as u16).filter(|_| n <= u16::MAX as u32).with_context(|| format!("NPC {n}"));
+    let list = |pairs: &[[u32; 2]]| -> Result<Vec<(NpcId, usize)>, anyhow::Error> {
+        pairs.iter().map(|[m, count]| Ok((npc_id(*m)?, *count as usize))).collect()
+    };
+    zone.event_positions = layout.event.iter().map(|e| (e.name.clone(), at(e.x, e.y, e.z))).collect();
+    if let Some(start) = zone.event_positions.get(start_name) {
+        zone.start_position = *start;
+    }
+    zone.revive_positions =
+        layout.event.iter().filter(|e| e.name == revive_name).map(|e| at(e.x, e.y, e.z)).collect();
+    zone.monster_spawns = layout
+        .spawn
+        .iter()
+        .map(|s| {
+            Ok(ZoneMonsterSpawnPoint {
+                position: at(s.x, s.y, s.z),
+                basic_spawns: list(&s.basic)?,
+                tactic_spawns: list(&s.tactic)?,
+                interval: s.interval,
+                limit_count: s.limit,
+                range: s.range,
+                tactic_points: s.tactic_points,
+            })
+        })
+        .collect::<Result<_, anyhow::Error>>()?;
+    zone.npcs = layout
+        .npc
+        .iter()
+        .map(|n| {
+            Ok(ZoneNpcSpawn {
+                npc_id: npc_id(n.npc)?,
+                position: at(n.x, n.y, n.z),
+                direction: n.direction,
+                conversation: NpcConversationId::new(n.conversation.clone()),
+            })
+        })
+        .collect::<Result<_, anyhow::Error>>()?;
     Ok(())
 }
 

@@ -8,7 +8,8 @@
 //! `pack` writes upload-NNN.json files, each the JSON argument list of the module's
 //! `upload_game_files` reducer (well under the server's request size limit), plus manifest.json.
 //! It first applies our data changes: the file named by ROSE_OVERRIDES, else
-//! overrides/game-data.toml in the current folder (see overrides/README.md).
+//! overrides/game-data.toml in the current folder, then adds motions.toml (ROSE_MOTIONS) and
+//! the zone files in zones/ (ROSE_ZONES) from beside it (see overrides/README.md).
 
 use std::{
     collections::BTreeMap,
@@ -75,29 +76,54 @@ fn main() {
         eprintln!("overrides: {} changed cells from {}", cells, path.display());
 
         // overrides/motions.toml, next to the overrides file unless ROSE_MOTIONS names it.
-        let path = std::env::var_os("ROSE_MOTIONS").map(PathBuf::from).unwrap_or_else(|| {
-            path.parent().unwrap_or(Path::new("")).join(Path::new(rose_game_overrides::MOTIONS_FILE).file_name().unwrap())
-        });
-        match std::fs::read(&path) {
+        let next_to_overrides = |name: &str| {
+            path.parent().unwrap_or(Path::new("")).join(Path::new(name).file_name().unwrap())
+        };
+        let motions_path = std::env::var_os("ROSE_MOTIONS")
+            .map(PathBuf::from)
+            .unwrap_or_else(|| next_to_overrides(rose_game_overrides::MOTIONS_FILE));
+        match std::fs::read(&motions_path) {
             Ok(data) => {
                 let text = std::str::from_utf8(&data).expect("motions file is UTF-8");
                 let timings = rose_game_overrides::MotionTimings::parse(text).expect("read the motions file");
-                eprintln!("motions: {} motion timings from {}", timings.motion.len(), path.display());
+                eprintln!("motions: {} motion timings from {}", timings.motion.len(), motions_path.display());
                 files.insert(PathBuf::from(rose_game_overrides::MOTIONS_GAME_FILE), data);
-                // Fail here rather than on the server when a motion isn't in the game.
-                let mut memory = rose_file_readers::MemoryFilesystemDevice::default();
-                for (path, data) in &files {
-                    memory.insert(&path.to_string_lossy(), data.clone());
-                }
-                if let Err(e) = rose_game_data::load_game_data(&VirtualFilesystem::new(vec![Box::new(memory)])) {
-                    eprintln!("motions: {e:#}");
-                    std::process::exit(1);
-                }
             }
             Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
-                eprintln!("motions: no {}, the ZMO timings stay", path.display())
+                eprintln!("motions: no {}, the ZMO timings stay", motions_path.display())
             }
-            Err(e) => panic!("read {}: {e}", path.display()),
+            Err(e) => panic!("read {}: {e}", motions_path.display()),
+        }
+
+        // overrides/zones/*.toml (exported from the Godot zone scenes), next to the overrides
+        // file unless ROSE_ZONES names the folder.
+        let zones_dir = std::env::var_os("ROSE_ZONES")
+            .map(PathBuf::from)
+            .unwrap_or_else(|| next_to_overrides(rose_game_overrides::ZONES_DIR));
+        let layouts = rose_game_overrides::ZoneLayout::load_dir(&zones_dir).expect("read the zone files");
+        for (name, layout) in &layouts {
+            eprintln!(
+                "zones: zone {} from {name}: {} spawn points, {} NPCs, {} named spots",
+                layout.zone,
+                layout.spawn.len(),
+                layout.npc.len(),
+                layout.event.len()
+            );
+            let data = std::fs::read(zones_dir.join(name)).unwrap();
+            files.insert(PathBuf::from(rose_game_overrides::zone_game_file(layout.zone)), data);
+        }
+        if layouts.is_empty() {
+            eprintln!("zones: no files in {}, every zone keeps its IFO and ZON data", zones_dir.display());
+        }
+
+        // Fail here rather than on the server when a motion or a zone file doesn't fit the game.
+        let mut memory = rose_file_readers::MemoryFilesystemDevice::default();
+        for (path, data) in &files {
+            memory.insert(&path.to_string_lossy(), data.clone());
+        }
+        if let Err(e) = rose_game_data::load_game_data(&VirtualFilesystem::new(vec![Box::new(memory)])) {
+            eprintln!("overrides: {e:#}");
+            std::process::exit(1);
         }
     }
     let total: usize = files.values().map(|d| d.len()).sum();
@@ -119,6 +145,7 @@ fn main() {
             let game_data = rose_game_data::load_game_data(&vfs).expect("load from memory");
             eprintln!("from memory: {} ms", started.elapsed().as_millis());
             print_motion_changes(&zmo_data, &game_data);
+            print_zone_changes(&zmo_data, &game_data);
             let started = Instant::now();
             let strings = rose_data_irose::get_string_database(&vfs, 1).unwrap();
             rose_data_irose::get_zone_database(&vfs, strings).unwrap();
@@ -171,6 +198,49 @@ fn main() {
             eprintln!("unknown mode {mode}");
             std::process::exit(2);
         }
+    }
+}
+
+/// For each zone the uploaded files change (`overrides/zones/`), how far its spawn points,
+/// NPCs and named spots are from the ones in the IFO and ZON files.
+fn print_zone_changes(files: &rose_game_data::GameData, uploaded: &rose_game_data::GameData) {
+    for (a, b) in files.zones.iter().zip(uploaded.zones.iter()) {
+        let same_spawns = a.monster_spawns.len() == b.monster_spawns.len()
+            && a.monster_spawns.iter().zip(&b.monster_spawns).all(|(a, b)| {
+                (a.interval, a.limit_count, a.range, a.tactic_points) == (b.interval, b.limit_count, b.range, b.tactic_points)
+                    && a.basic_spawns == b.basic_spawns
+                    && a.tactic_spawns == b.tactic_spawns
+            });
+        let same_npcs = a.npcs.len() == b.npcs.len()
+            && a.npcs.iter().zip(&b.npcs).all(|(a, b)| a.npc_id == b.npc_id && a.conversation.get() == b.conversation.get());
+        let moved = |a: glam::Vec3, b: glam::Vec3| a.distance(b);
+        let spawn_moved = a.monster_spawns.iter().zip(&b.monster_spawns).map(|(a, b)| moved(a.position, b.position));
+        let npc_moved = a.npcs.iter().zip(&b.npcs).map(|(a, b)| moved(a.position, b.position));
+        let turned = a.npcs.iter().zip(&b.npcs).map(|(a, b)| (a.direction - b.direction).abs()).fold(0.0, f32::max);
+        let event_moved = a.event_positions.iter().map(|(name, p)| b.event_positions.get(name).map_or(f32::INFINITY, |q| moved(*p, *q)));
+        let most = spawn_moved.chain(npc_moved).chain(event_moved).fold(0.0, f32::max);
+        if same_spawns && same_npcs && most == 0.0 && turned == 0.0 && a.event_positions.len() == b.event_positions.len() {
+            continue;
+        }
+        println!(
+            "zone {} {}: spawns {} -> {}{}, NPCs {} -> {}{}, named spots {} -> {}, moved at most {:.2} cm, turned at most {:.2} degrees, start ({:.0}, {:.0}) -> ({:.0}, {:.0})",
+            a.id.get(),
+            a.name,
+            a.monster_spawns.len(),
+            b.monster_spawns.len(),
+            if same_spawns { " (same monsters and timing)" } else { " (monsters or timing differ)" },
+            a.npcs.len(),
+            b.npcs.len(),
+            if same_npcs { " (same NPCs)" } else { " (NPCs differ)" },
+            a.event_positions.len(),
+            b.event_positions.len(),
+            most,
+            turned,
+            a.start_position.x,
+            a.start_position.y,
+            b.start_position.x,
+            b.start_position.y,
+        );
     }
 }
 

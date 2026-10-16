@@ -14,6 +14,8 @@ use serde::Deserialize;
 
 mod motions;
 pub use motions::{MotionTiming, MotionTimings, MOTIONS_FILE, MOTIONS_GAME_FILE};
+mod zones;
+pub use zones::{zone_game_file, ZoneEvent, ZoneLayout, ZoneNpc, ZoneSpawn, ZONES_DIR};
 
 /// The file both sides look for, relative to the repository (and to the game's folder in
 /// the Windows zip).

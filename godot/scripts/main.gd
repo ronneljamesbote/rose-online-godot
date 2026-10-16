@@ -53,6 +53,9 @@
 ##   --export-motions[=check]   write ../overrides/motions.toml (the server's hit times) from the
 ##                              hit markers of the imported player, monster and NPC animations and quit; check
 ##                              only compares and fails when the file is out of date
+##   --export-zones[=check]     write ../overrides/zones/<id>-<name>.toml (spawns, NPCs and named
+##                              spots for the server) from the zone scenes in res://zones/ and quit;
+##                              check only compares and fails when a file is out of date
 extends Node3D
 
 const START := Vector3(5210.5, 0.0, -5136.7)  # zone start position from LIST_ZONE.STB
@@ -204,6 +207,23 @@ func _export_motions(check: bool) -> void:
 	get_tree().quit(1 if check and not changed.is_empty() else 0)
 
 
+## Writes or checks overrides/zones/*.toml from the zone scenes, prints what differs and quits
+## (1 when a check fails).
+func _export_zones(check: bool) -> void:
+	var result: Dictionary = RoseImport.export_zones(check)
+	if result.is_empty():
+		get_tree().quit(1)
+		return
+	for file in result.files:
+		print("rose: %s: zone %d, %d spawn points, %d NPCs, %d named spots" % [file.path, file.zone, file.spawns, file.npcs, file.events])
+	var changed: Array = result.changed
+	for path in changed:
+		print("rose:   %s %s" % ["differs:" if check else "updated:", path])
+	if check:
+		print("rose: zone files %s" % ("match the scenes" if changed.is_empty() else "out of date; run --export-zones"))
+	get_tree().quit(1 if check and not changed.is_empty() else 0)
+
+
 func _start(data_idx: String) -> void:
 	var started := Time.get_ticks_msec()
 	if not RoseData.open(data_idx):
@@ -215,6 +235,9 @@ func _start(data_idx: String) -> void:
 		return
 	if options.has("export-motions"):
 		_export_motions(options["export-motions"] == "check")
+		return
+	if options.has("export-zones"):
+		_export_zones(options["export-zones"] == "check")
 		return
 	if options.has("import-zone"):
 		var parts: PackedStringArray = str(options["import-zone"]).split(",")
