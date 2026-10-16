@@ -279,6 +279,75 @@ fn flee(uri: String) {
     conn.disconnect().ok();
 }
 
+/// The global cooldown: Blessing (skills slot 1,0), then Berserk (1,1) pressed while
+/// Blessing is locked in, and again right after it took effect. Berserk's casting must
+/// start no sooner than 0.25 s after Blessing took effect.
+fn gcd(uri: String) {
+    let conn = DbConnection::builder().with_uri(uri).with_database_name("rose").build().expect("connect");
+    conn.subscription_builder().subscribe_to_all_tables();
+    conn.run_threaded();
+    let me = loop {
+        if let Some(id) = conn.try_identity().and_then(|i| conn.db.player().identity().find(&i)).and_then(|p| p.entity_id) {
+            if conn.db.motion().entity_id().find(&id).is_some() {
+                break id;
+            }
+        }
+        std::thread::sleep(Duration::from_millis(50));
+    };
+    let name = format!("Bot{}", me);
+    conn.reducers.set_name(name.clone()).ok();
+    println!("my entity {} name {}", me, name);
+    let combat = || conn.db.combat().entity_id().find(&me).unwrap();
+    let cast_row = || conn.db.skill_cast().entity_id().find(&me);
+    let wait = |f: &dyn Fn() -> bool, secs: u64| -> bool {
+        let until = Instant::now() + Duration::from_secs(secs);
+        while Instant::now() < until {
+            if f() {
+                return true;
+            }
+            std::thread::sleep(Duration::from_millis(2));
+        }
+        false
+    };
+    if !wait(&|| combat().mp >= 100, 60) {
+        println!("FAIL setup: MP never reached 100");
+        return;
+    }
+    let global_until = || conn.db.skill_cooldown().iter().filter(|r| r.entity_id == me && r.key == 0).map(|r| r.until_us).max().unwrap_or(0);
+    let mut checks: Vec<(String, bool)> = Vec::new();
+    for round in ["pressed while Blessing is locked in", "pressed just after Blessing took effect"] {
+        wait(&|| cast_row().is_none(), 5);
+        // Every cooldown over (Berserk's own is 6 s).
+        wait(&|| conn.db.skill_cooldown().iter().all(|r| r.entity_id != me || r.until_us < now_us()), 15);
+        std::thread::sleep(Duration::from_millis(500));
+        conn.reducers.cast_skill(1, 0, None, 0.0, 0.0).unwrap();
+        if !wait(&|| cast_row().is_some_and(|c| c.skill_id == 971 && c.started_at_us.is_some()), 3) {
+            println!("FAIL setup: Blessing didn't start");
+            return;
+        }
+        let blessing = cast_row().unwrap();
+        let (begun, effect) = (blessing.started_at_us.unwrap(), blessing.effect_at_us);
+        let press_at = if round.contains("locked") { begun + 350_000 } else { effect + 20_000 };
+        while now_us() < press_at {
+            std::thread::sleep(Duration::from_millis(1));
+        }
+        conn.reducers.cast_skill(1, 1, None, 0.0, 0.0).unwrap();
+        let berserk_started = || cast_row().filter(|c| c.skill_id != 971).and_then(|c| c.started_at_us);
+        if !wait(&|| berserk_started().is_some(), 3) {
+            checks.push((format!("Berserk {round} starts"), false));
+            continue;
+        }
+        let gap = (berserk_started().unwrap() - effect) as f64 / 1000.0;
+        println!("Berserk {round}: Blessing took effect, Berserk's casting started {gap:.0} ms later (global cooldown until +{:.0} ms)",
+            (global_until() - effect) as f64 / 1000.0);
+        checks.push((format!("Berserk {round} waits for the 0.25 s global cooldown"), gap >= 245.0 && gap < 400.0));
+    }
+    for (name, ok) in &checks {
+        println!("{} {}", if *ok { "PASS" } else { "FAIL" }, name);
+    }
+    conn.disconnect().ok();
+}
+
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.get(2).map(|a| a.as_str()) == Some("load") {
@@ -288,6 +357,9 @@ fn main() {
     }
     if args.get(2).map(|a| a.as_str()) == Some("cast") {
         return cast(args[1].clone());
+    }
+    if args.get(2).map(|a| a.as_str()) == Some("gcd") {
+        return gcd(args[1].clone());
     }
     if args.get(2).map(|a| a.as_str()) == Some("flee") {
         return flee(args[1].clone());
