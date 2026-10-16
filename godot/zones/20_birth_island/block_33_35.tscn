@@ -1,0 +1,32 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/16.tscn" id="1_suup7"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jg07/33_35/lightmap/object_32_0.res" id="2_jkebs"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jg07/33_35/lightmap/object_64_0.res" id="3_5xe7v"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/132.tscn" id="4_kya38"]
+
+[node name="Block_33_35" type="Node3D" unique_id=1135374827]
+
+[node name="Water0" type="RoseWater" parent="." unique_id=2019388484]
+start = Vector3(5280, 0, -4800)
+end = Vector3(5440, 0, -4640)
+tile_size = 20.0
+
+[node name="Decorations" type="Node3D" parent="." unique_id=866460438]
+
+[node name="Deco_0" parent="Decorations" unique_id=253149001 instance=ExtResource("1_suup7")]
+lightmaps = [ExtResource("2_jkebs"), ExtResource("3_5xe7v")]
+lightmap_cells = PackedVector3Array(0, 0, 0.5, 1, 0, 0.5)
+transform = Transform3D(0.57338893, 0, -1.4937288, 0, 1.6000001, 0, 1.4937288, 0, 0.57338893, 5285.86, 22.49, -4794.72)
+
+[node name="Deco_1" parent="Decorations" unique_id=2073688918 instance=ExtResource("4_kya38")]
+lightmaps = [ExtResource("3_5xe7v")]
+lightmap_cells = PackedVector3Array(0, 0, 0.5)
+transform = Transform3D(-2.3620439, 0.5020683, 0.64705247, 0.51977956, 2.4453688, -2.28174e-07, -0.6329129, 0.13452967, -2.4148135, 5280.87, 23.76, -4793.22)
+
+[node name="Sounds" type="Node3D" parent="." unique_id=496963277]
+
+[node name="Sound_0" type="RoseSoundSpot" parent="Sounds" unique_id=94852556]
+sound = "SOUND/TERRAIN/WATER_002.WAV"
+range = 5.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5360.86, -4.85, -4767.88)

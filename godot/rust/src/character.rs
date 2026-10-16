@@ -47,7 +47,7 @@ fn vehicle_skeleton_file(is_cart: bool) -> &'static str {
 
 /// Where the imported scene of a monster or NPC model lives: `3ddata/npc/list_npc/12` is
 /// LIST_NPC.CHR entry 12, the model of NPC 12.
-fn npc_scene_stem(npc_id: u16) -> String {
+pub fn npc_scene_stem(npc_id: u16) -> String {
     format!("{}/{npc_id}", assets::stem(NPC_CHR))
 }
 
