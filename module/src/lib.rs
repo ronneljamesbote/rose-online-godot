@@ -1068,7 +1068,10 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
         let (Some(me), Some(them)) = (position(ctx, id, t), position(ctx, target, t)) else { continue };
         let dist = distance(me, them);
 
-        if dist <= stats.attack_range + RANGE_SLACK_CM {
+        // A swing that has started always finishes, even if the target walks out of range
+        // during the wind-up; cancelling it there made a chaser restart its wind-up over and
+        // over against a moving target. Only moving, stopping or a new target cancel it.
+        if dist <= stats.attack_range + RANGE_SLACK_CM || c.swing_hit_at_us.is_some() {
             stop_chase(ctx, id, target);
             match c.swing_hit_at_us {
                 // Hit frame reached: resolve the swing.
@@ -1131,11 +1134,6 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
                 None => {}
             }
         } else {
-            // Target left range mid-swing: the swing misses its moment, no cooldown spent.
-            if c.swing_hit_at_us.take().is_some() {
-                c.next_attack_at_us = t;
-                ctx.db.combat().entity_id().update(c);
-            }
             let motion = ctx.db.motion().entity_id().find(id);
             let needs_repath = match &motion {
                 Some(m) if m.chase_target == Some(target) => distance((m.to_x, m.to_y), them) > CHASE_REPATH_CM,

@@ -59,7 +59,8 @@ character and monster that has a target:
 2. If the target is farther than your **attack range + 0.5 m**, you run after it. The chase
    path is updated when the target has moved more than 1 m from where you were heading.
 3. In range, you stop and start a swing as soon as your last one has finished.
-4. The swing's damage lands at its **hit frame**, part way through the attack animation.
+4. The swing's damage lands at its **hit frame**, part way through the attack animation,
+   even if the target has moved out of range by then.
 
 You can't swing while stunned or asleep, or while casting a skill. Attacking stands you up
 if you were sitting, and cancels a skill you were casting while it is still in its 0.3 s
@@ -108,8 +109,10 @@ half way.
   the swing: no damage, and the time is given back, so you can swing again right away.
 - **After the hit frame**, you can move at once; the rest of the animation is skipped. Your
   next swing still waits until the full swing time has passed.
-- If the target moves out of range before the hit frame, that swing is cancelled the same
-  way and you chase it.
+- A swing that has started always lands, even if the target walks out of range during the
+  wind-up; only you moving, stopping, sitting or switching targets cancels it. Then you
+  chase the target and swing again once you are in range. (Cancelling it when the target
+  stepped away made a chaser restart its wind-up over and over against a moving target.)
 
 ### Ammunition and weapon wear
 
