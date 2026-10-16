@@ -19,6 +19,7 @@ mod net;
 mod skills;
 mod texture;
 mod zone;
+mod zone_scene;
 
 struct RoseExtension;
 
@@ -33,6 +34,7 @@ unsafe impl ExtensionLibrary for RoseExtension {
             material::clear_cache();
             mesh::clear_cache();
             texture::clear_cache();
+            zone_scene::clear_cache();
         }
     }
 }

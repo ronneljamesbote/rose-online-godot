@@ -32,6 +32,8 @@ pub struct ShaderKey {
 
 thread_local! {
     static SHADERS: RefCell<HashMap<ShaderKey, Gd<Shader>>> = RefCell::new(HashMap::new());
+    static LIGHTMAP_SHADERS: RefCell<HashMap<String, Gd<Shader>>> = RefCell::new(HashMap::new());
+    static LIGHTMAPPED: RefCell<HashMap<(InstanceId, InstanceId), Gd<ShaderMaterial>>> = RefCell::new(HashMap::new());
     static SPECULAR: RefCell<Option<Option<Gd<Texture2D>>>> = const { RefCell::new(None) };
 }
 
@@ -128,8 +130,51 @@ pub fn object_material(zsc_material: &ZscMaterial, lightmap: Option<Gd<Texture2D
     material
 }
 
+/// `material` (an `object_material` without a lightmap, as saved in a zone object scene)
+/// drawn with `lightmap`: the same shader with HAS_LIGHTMAP. One copy per material and
+/// lightmap, shared by every object using both.
+pub fn with_lightmap(material: &Gd<ShaderMaterial>, lightmap: &Gd<Texture2D>) -> Gd<ShaderMaterial> {
+    let key = (material.instance_id(), lightmap.instance_id());
+    if let Some(cached) = LIGHTMAPPED.with_borrow(|cache| cache.get(&key).cloned()) {
+        return cached;
+    }
+    let mut copy = material.clone();
+    if let Some(shader) = material.get_shader() {
+        let code = shader.get_code().to_string();
+        let lit_code = if code.contains("#define HAS_LIGHTMAP") {
+            code
+        } else {
+            code.replacen("#include \"res://shaders/rose_object", "#define HAS_LIGHTMAP\n#include \"res://shaders/rose_object", 1)
+        };
+        let lit_shader = LIGHTMAP_SHADERS.with_borrow_mut(|cache| {
+            cache
+                .entry(lit_code.clone())
+                .or_insert_with(|| {
+                    let mut shader = Shader::new_gd();
+                    shader.set_code(&lit_code);
+                    shader
+                })
+                .clone()
+        });
+        copy = ShaderMaterial::new_gd();
+        copy.set_shader(&lit_shader);
+        for name in ["base_texture", "specular_texture", "alpha_cutoff", "alpha_value"] {
+            let value = material.get_shader_parameter(name);
+            if !value.is_nil() {
+                copy.set_shader_parameter(name, &value);
+            }
+        }
+        copy.set_render_priority(material.get_render_priority());
+        copy.set_shader_parameter("lightmap_texture", &lightmap.to_variant());
+    }
+    LIGHTMAPPED.with_borrow_mut(|cache| cache.insert(key, copy.clone()));
+    copy
+}
+
 /// Drops the cached shaders while the engine is still running.
 pub fn clear_cache() {
     SHADERS.with_borrow_mut(|cache| cache.clear());
+    LIGHTMAP_SHADERS.with_borrow_mut(|cache| cache.clear());
+    LIGHTMAPPED.with_borrow_mut(|cache| cache.clear());
     SPECULAR.with_borrow_mut(|cache| *cache = None);
 }

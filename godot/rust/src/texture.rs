@@ -104,7 +104,12 @@ pub fn load_texture(path: &str) -> Option<Gd<Texture2D>> {
 /// Builds one texture array from images of possibly different sizes and formats, so a
 /// shader can index them per vertex. Missing images become a flat grey layer.
 pub fn load_texture_array(paths: &[String]) -> Gd<Texture2DArray> {
-    let mut images: Vec<Gd<Image>> = paths.iter().map(|path| load_image(path)).map(|image| {
+    texture_array(paths.iter().map(|path| load_image(path)).collect())
+}
+
+/// `load_texture_array` from images already loaded (None for a missing one).
+pub fn texture_array(images: Vec<Option<Gd<Image>>>) -> Gd<Texture2DArray> {
+    let mut images: Vec<Gd<Image>> = images.into_iter().map(|image| {
         image.unwrap_or_else(|| {
             let mut image = Image::create_empty(4, 4, false, Format::RGBA8).unwrap();
             image.fill(Color::from_rgba(0.5, 0.5, 0.5, 1.0));
