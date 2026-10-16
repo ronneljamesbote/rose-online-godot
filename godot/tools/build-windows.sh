@@ -24,6 +24,12 @@ if ! "$GODOT" --headless --path godot -- --export-motions=check --data-idx="$DAT
   echo "build-windows: run  godot --headless --path godot -- --export-motions  and commit it." >&2
   exit 1
 fi
+# The server places spawns, NPCs and named spots from overrides/zones/, exported from the zone scenes.
+if ! "$GODOT" --headless --path godot -- --export-zones=check --data-idx="$DATA_IDX"; then
+  echo "build-windows: overrides/zones/ doesn't match the zone scenes in godot/zones/." >&2
+  echo "build-windows: run  godot --headless --path godot -- --export-zones  and commit it." >&2
+  exit 1
+fi
 
 CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER=x86_64-w64-mingw32-gcc CARGO_TARGET_DIR="$TARGET_DIR" \
   cargo build --release -p rose-gd --target x86_64-pc-windows-gnu
