@@ -4,7 +4,8 @@ shader_type spatial;
 // rose_terrain.gdshader: each 10 m tile (4 x 4 vertices) draws texture layer 1 with layer 2
 // on top by layer 2's alpha (times the control blend, so Terrain3D's paint tools work),
 // layer 2 flipped or turned by the control's angle bits (ROSE rotation codes 0-6), all
-// times the block's lightmap.
+// times the block's lightmap. Zones with more than 32 ground textures keep the rest in
+// rose_extra_tiles.
 render_mode unshaded, fog_disabled, cull_back, depth_draw_opaque, skip_vertex_transform;
 
 /* The terrain depends on this shader to function. Don't change most things in vertex() or 
@@ -202,6 +203,16 @@ void vertex() {
 // grid, its layer + 1 (0: none). Set by RoseTerrainLook.
 uniform highp sampler2DArray rose_lightmaps : filter_linear, repeat_disable;
 uniform highp sampler2D rose_lightmap_index : filter_nearest, repeat_disable;
+// Ground textures past Terrain3D's 32: texture 32 + n is layer n here, marked by the base
+// (bit 3) or overlay (bit 4) extra bit of the control value. Set by RoseTerrainLook.
+uniform highp sampler2DArray rose_extra_tiles : filter_linear_mipmap, repeat_enable;
+
+vec4 rose_tile(int id, bool extra, vec2 tile_uv, vec2 dx, vec2 dy) {
+	if (extra) {
+		return textureGrad(rose_extra_tiles, vec3(tile_uv, float(id)), dx, dy);
+	}
+	return textureGrad(_texture_array_albedo, vec3(tile_uv, float(id)), dx, dy);
+}
 
 ////////////////////////
 // Fragment
@@ -244,8 +255,8 @@ void fragment() {
 		layer2_uv = vec2(layer2_uv.y, layer2_uv.x); dx2 = dx2.yx; dy2 = dy2.yx;
 	}
 
-	vec4 color1 = textureGrad(_texture_array_albedo, vec3(tile_uv, float(layer1)), uv_dx, uv_dy);
-	vec4 color2 = textureGrad(_texture_array_albedo, vec3(layer2_uv, float(layer2)), dx2, dy2);
+	vec4 color1 = rose_tile(layer1, (control & 0x8u) != 0u, tile_uv, uv_dx, uv_dy);
+	vec4 color2 = rose_tile(layer2, (control & 0x10u) != 0u, layer2_uv, dx2, dy2);
 
 	vec3 light = vec3(0.5);
 	bool in_grid = block.x >= 0 && block.y >= 0 && block.x < 64 && block.y < 64;

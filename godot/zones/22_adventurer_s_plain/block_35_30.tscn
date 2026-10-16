@@ -1,0 +1,89 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/80.tscn" id="1_0inwp"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jg01/35_30/lightmap/object_32_0.res" id="2_648lp"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/75.tscn" id="3_f84r0"]
+
+[node name="Block_35_30" type="Node3D" unique_id=928354135]
+
+[node name="Water0" type="RoseWater" parent="." unique_id=788733455]
+start = Vector3(5620, 40, -5560)
+end = Vector3(5700, 40, -5500)
+tile_size = 20.0
+
+[node name="Water1" type="RoseWater" parent="." unique_id=525186745]
+start = Vector3(5600, 40, -5600)
+end = Vector3(5620, 40, -5520)
+tile_size = 20.0
+
+[node name="Water2" type="RoseWater" parent="." unique_id=1046748331]
+start = Vector3(5600, 0, -5500)
+end = Vector3(5700, 0, -5440)
+tile_size = 20.0
+
+[node name="Water3" type="RoseWater" parent="." unique_id=1130301632]
+start = Vector3(5700, 0, -5480)
+end = Vector3(5760, 0, -5440)
+tile_size = 20.0
+
+[node name="Water4" type="RoseWater" parent="." unique_id=790898647]
+start = Vector3(5720, 0, -5520)
+end = Vector3(5760, 0, -5480)
+tile_size = 20.0
+
+[node name="Water5" type="RoseWater" parent="." unique_id=73294647]
+start = Vector3(5680, 0, -5600)
+end = Vector3(5760, 0, -5580)
+tile_size = 20.0
+
+[node name="Water6" type="RoseWater" parent="." unique_id=754408593]
+start = Vector3(5700, 0, -5580)
+end = Vector3(5760, 0, -5560)
+tile_size = 20.0
+
+[node name="Water7" type="RoseWater" parent="." unique_id=1594099312]
+start = Vector3(5720, 0, -5560)
+end = Vector3(5760, 0, -5540)
+tile_size = 20.0
+
+[node name="Water8" type="RoseWater" parent="." unique_id=848814028]
+start = Vector3(5720, 0, -5540)
+end = Vector3(5760, 0, -5520)
+tile_size = 20.0
+
+[node name="Decorations" type="Node3D" parent="." unique_id=326683461]
+
+[node name="Deco_0" parent="Decorations" unique_id=1391646556 instance=ExtResource("1_0inwp")]
+lightmaps = [ExtResource("2_648lp")]
+lightmap_cells = PackedVector3Array(0, 0, 0.5)
+transform = Transform3D(1.469467, 0, 2.0225394, 0, 2.4999998, 0, -2.0225394, 0, 1.469467, 5712.3076, -0.44521493, -5478.5015)
+
+[node name="Deco_1" parent="Decorations" unique_id=169547929 instance=ExtResource("3_f84r0")]
+lightmaps = [ExtResource("2_648lp")]
+lightmap_cells = PackedVector3Array(1, 0, 0.5)
+transform = Transform3D(2.8319902, 0, -1.2608831, 0, 3.0999992, 0, 1.2608831, 0, 2.8319902, 5756.2197, 1.54, -5441.22)
+
+[node name="Effects" type="Node3D" parent="." unique_id=1432025612]
+
+[node name="Effect_0" type="RoseEffectSpot" parent="Effects" unique_id=1149292038]
+effect = "3DDATA/EFFECT/POKPOSU01.EFT"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5638.388, -0.8007715, -5472.051)
+
+[node name="Effect_1" type="RoseEffectSpot" parent="Effects" unique_id=1033525324]
+effect = "3DDATA/EFFECT/POKPOSU01.EFT"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5652.221, -0.67514646, -5472.1426)
+
+[node name="Effect_2" type="RoseEffectSpot" parent="Effects" unique_id=1888549152]
+effect = "3DDATA/EFFECT/POKPOSU01_TOP.EFT"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5646.5405, 39.270317, -5490.858)
+
+[node name="Sounds" type="Node3D" parent="." unique_id=934737583]
+
+[node name="Sound_0" type="RoseSoundSpot" parent="Sounds" unique_id=1227882602]
+sound = "SOUND/TERRAIN/WATER_002.WAV"
+transform = Transform3D(-1.3709068e-06, 2.287401, 0.24041012, 2.3, 9.596348e-07, 0, -1.1995435e-07, 0.24041012, -2.2874014, 5736.282, -1.8720604, -5561.494)
+
+[node name="Sound_1" type="RoseSoundSpot" parent="Sounds" unique_id=61953472]
+sound = "SOUND/TERRAIN/WATER_003.WAV"
+range = 5.0
+transform = Transform3D(-1.3709068e-06, 2.287401, 0.24041012, 2.3, 9.596348e-07, 0, -1.1995435e-07, 0.24041012, -2.2874014, 5642.8237, -2.5379295, -5473.5825)
