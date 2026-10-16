@@ -1,0 +1,44 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/26.tscn" id="1_demyv"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jd01/31_30/lightmap/object_64_0.res" id="2_ompaq"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/25.tscn" id="3_41ije"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/22.tscn" id="4_cx0xf"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/75.tscn" id="5_20w63"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jd01/31_30/lightmap/object_32_0.res" id="6_13mwa"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/76.tscn" id="7_cftce"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/82.tscn" id="8_6gm6p"]
+
+[node name="Block_31_30" type="Node3D" unique_id=562900331]
+
+[node name="Decorations" type="Node3D" parent="." unique_id=691250013]
+
+[node name="Deco_0" parent="Decorations" unique_id=505892203 instance=ExtResource("1_demyv")]
+lightmaps = [ExtResource("2_ompaq")]
+lightmap_cells = PackedVector3Array(1, 1, 0.25)
+transform = Transform3D(-1.3980815, 0, 0.07327014, 0, 1.4000001, 0, -0.07327014, 0, -1.3980815, 5116.373, 20, -5478.933)
+
+[node name="Deco_1" parent="Decorations" unique_id=1865306343 instance=ExtResource("3_41ije")]
+lightmaps = [ExtResource("2_ompaq")]
+lightmap_cells = PackedVector3Array(0, 1, 0.25)
+transform = Transform3D(0.1877374, 0, -1.1852236, 0, 1.2, 0, 1.1852236, 0, 0.1877374, 5117.6895, 19.879026, -5487.3457)
+
+[node name="Deco_2" parent="Decorations" unique_id=61084668 instance=ExtResource("4_cx0xf")]
+lightmaps = [ExtResource("2_ompaq"), ExtResource("2_ompaq")]
+lightmap_cells = PackedVector3Array(3, 0, 0.25, 2, 0, 0.25)
+transform = Transform3D(0.58778596, 0, -0.80901647, 0, 1, 0, 0.80901647, 0, 0.58778596, 5041.7954, 41.799995, -5442.6357)
+
+[node name="Deco_3" parent="Decorations" unique_id=1966897712 instance=ExtResource("5_20w63")]
+lightmaps = [ExtResource("6_13mwa")]
+lightmap_cells = PackedVector3Array(0, 0, 0.5)
+transform = Transform3D(1.9116912, 0, 4.2936482, 0, 4.699998, 0, -4.2936482, 0, 1.9116912, 5098.1294, 18.899998, -5440.0044)
+
+[node name="Deco_4" parent="Decorations" unique_id=1736349631 instance=ExtResource("7_cftce")]
+lightmaps = [ExtResource("2_ompaq")]
+lightmap_cells = PackedVector3Array(0, 0, 0.25)
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 5101.373, 18.34533, -5450.792)
+
+[node name="Deco_5" parent="Decorations" unique_id=496942739 instance=ExtResource("8_6gm6p")]
+lightmaps = [ExtResource("2_ompaq")]
+lightmap_cells = PackedVector3Array(1, 0, 0.25)
+transform = Transform3D(0.39111403, 0, 2.469216, 0, 2.4999998, 0, -2.469216, 0, 0.39111403, 5100.646, 17.89371, -5490.7026)
