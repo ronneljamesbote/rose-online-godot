@@ -6,7 +6,7 @@ status: changed-from-irose
 skill_pages: 4 (basic, active, passive, clan)
 skill_slots_per_page: 30
 skill_points_per_level: "floor((new level + 2) / 2)"
-global_cooldown_s: 0.25
+global_cooldown_s: 0.25 (from when a skill takes effect)
 cooldown_unit_s: 0.2 (LIST_SKILL.STB stores cooldowns in steps of 0.2 s)
 minimum_cast_time_s: 0.3
 cast_grace_window_s: 0.3
@@ -114,8 +114,9 @@ The checks, every time:
 
 - you are alive, not stunned or asleep, and not riding as a passenger,
 - you are not silenced ([[rules/status-effects|Status effects]]),
-- the **global cooldown** (**0.25 s** after any skill) and the skill's own cooldown are
-  over,
+- the skill's own cooldown is over. The **global cooldown** (**0.25 s** after any skill
+  takes effect) doesn't refuse a skill: one used during it is accepted, and its casting
+  starts the moment the global cooldown ends,
 - you can pay every cost (see below),
 - you hold a weapon (or shield) of a class the skill needs (`needs_weapon` on the skill
   page), unless it is a cart or castle gear skill, which has its own vehicle rules
@@ -150,8 +151,10 @@ The `cooldown` column is in seconds (the data stores it in steps of 0.2 s). It c
 when the casting starts, not when it takes effect, but it is only spent once the cast locks
 in (a skill cancelled in its grace window starts no cooldown). Every skill has its own cooldown; the data can
 also put several skills in a **cooldown group** that shares one cooldown, but no skill in the
-current iROSE data uses a group. On top of that, any skill starts the 0.25 s global
-cooldown.
+current iROSE data uses a group. On top of that, every skill starts the 0.25 s global
+cooldown when it takes effect, so no skill's casting can start sooner than 0.25 s after
+the last one took effect. A skill used during it (or waiting from a locked-in cast) starts
+when it ends. Emotes and jumping start it when they are used.
 
 While a skill's own cooldown runs, its icon in the hotbar and the skill window is darkened
 by a sweep that shrinks clockwise, with the seconds left in the middle. After any skill,
@@ -381,6 +384,9 @@ How to read `changes`:
   you standing still, and "restore" skills go back to what you were doing. Here every
   skill except the "attack" ones goes back to the attack you were in, so buffing or healing
   mid-fight doesn't stop your attacks.
+- **Global cooldown.** rose-offline counts its 0.25 s from the start of the casting, so
+  with our 0.3 s grace window it would always be over before the skill is paid for. Here
+  it counts from when the skill takes effect.
 - **Summons** stay until their owner dies, logs out or changes zone. Their lifetime
   status effect (summons slowly losing HP) is not applied.
 
