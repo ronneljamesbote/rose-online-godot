@@ -44,6 +44,8 @@
 ##                              (--screenshot-after=SECONDS waits before --screenshot)
 ##   --sound-log                print each sound effect played
 ##   --quit-after=SECONDS       quit after this long
+##   --import-rose[=force]      convert the ROSE models and textures into res://assets/rose/
+##                              and quit (run headless; force redoes files already there)
 extends Node3D
 
 const START := Vector3(5210.5, 0.0, -5136.7)  # zone start position from LIST_ZONE.STB
@@ -147,12 +149,30 @@ func _show_data_error(data_idx: String, error: String) -> void:
 	dialog.popup_centered()
 
 
+## The import command: writes the converted assets, prints what it made and quits.
+func _import_rose(force: bool) -> void:
+	var result: Dictionary = RoseImport.run(force)
+	if result.is_empty():
+		get_tree().quit(1)
+		return
+	print("rose: imported %d meshes and %d textures (%d already there, %d failed) in %.0f s" % [
+		result.meshes, result.textures, result.kept, result.failed, result.seconds])
+	var folders: Dictionary = result.folders
+	for folder in folders:
+		print("rose:   %-24s %8.1f MB" % [folder, folders[folder] / 1048576.0])
+	print("rose: assets/rose is %.1f MB" % (result.bytes / 1048576.0))
+	get_tree().quit(1 if result.failed > 0 else 0)
+
+
 func _start(data_idx: String) -> void:
 	var started := Time.get_ticks_msec()
 	if not RoseData.open(data_idx):
 		_show_data_error(data_idx, RoseData.open_error())
 		return
 	print("rose: data tables loaded in %d ms" % (Time.get_ticks_msec() - started))
+	if options.has("import-rose"):
+		_import_rose(options["import-rose"] == "force")
+		return
 
 	fx = preload("res://scripts/fx.gd").new()
 	fx.name = "Fx"

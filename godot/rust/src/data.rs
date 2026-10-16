@@ -36,6 +36,8 @@ pub struct GameData {
     pub event_flags: Vec<AnimationEventFlags>,
     /// The install folder, for loose files outside the VFS (the Sound folder).
     pub root: PathBuf,
+    /// The data.idx this was opened from (the importer lists its files).
+    pub data_idx: PathBuf,
 }
 
 static GAME_DATA: OnceLock<GameData> = OnceLock::new();
@@ -113,6 +115,7 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
         effects,
         event_flags: rose_data_irose::get_animation_event_flags(),
         root,
+        data_idx: data_idx.to_path_buf(),
     });
     Ok(())
 }

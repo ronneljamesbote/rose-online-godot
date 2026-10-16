@@ -170,6 +170,15 @@ mkdir -p godot/bin && cp target/release/librose_gd.so godot/bin/    # rose_gd.dl
 godot --path godot -- --data-idx=/path/to/iRose_129_129/data.idx
 ```
 
+Optionally convert the client's models and textures into Godot resources first (see
+`assets/README.md`); the game then loads those and only falls back to the client files for
+the rest:
+
+```sh
+godot --headless --path godot --import
+godot --headless --path godot -- --import-rose --data-idx=/path/to/iRose_129_129/data.idx
+```
+
 Godot 4.6 or newer. `ROSE_DATA_IDX` works instead of `--data-idx`. The start screen offers
 Sign in (online) or Play offline. In game: left-click to move, S to stop, right-drag to
 orbit the camera, mouse wheel to zoom. Online, left-click a monster to attack it and Space
@@ -224,6 +233,9 @@ Other options (after `--`):
 - `rust/src/material.rs`, `mesh.rs`, `texture.rs` convert ZSC materials, ZMS meshes and DDS
   textures. ROSE DDS files often declare a full mip chain but store only one or two levels;
   those are cut to level 0 and their mipmaps are generated after loading.
+- `rust/src/assets.rs` is the import command (`--import-rose`, class `RoseImport`) and the
+  lookup that `mesh.rs` and `texture.rs` ask first: `assets/ours/` (committed) wins over
+  `assets/rose/` (generated, git-ignored), and the client data comes last.
 - `shaders/` holds the ports of the WGSL shaders. Textures are sampled raw and all maths runs
   in gamma space like the original, then converted to linear at the end, so colours match.
 - `rust/src/character.rs` also holds `RoseNpc`, the monster and NPC model builder (port of
