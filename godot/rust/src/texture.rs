@@ -65,6 +65,14 @@ fn fix_partial_mip_chain(mut bytes: Vec<u8>) -> (Vec<u8>, bool) {
 }
 
 pub fn load_image(path: &str) -> Option<Gd<Image>> {
+    if let Some(image) = crate::assets::load_texture(path).and_then(|texture| texture.get_image()) {
+        return Some(image);
+    }
+    load_rose_image(path)
+}
+
+/// Decodes the DDS file from the client data, ignoring the imported copies.
+pub fn load_rose_image(path: &str) -> Option<Gd<Image>> {
     let (bytes, needs_mipmaps) = fix_partial_mip_chain(crate::data::read_bytes(path)?);
     let mut image = Image::new_gd();
     if image.load_dds_from_buffer(&PackedByteArray::from(bytes.as_slice())) != Error::OK {
@@ -86,9 +94,9 @@ pub fn load_texture(path: &str) -> Option<Gd<Texture2D>> {
         return cached;
     }
 
-    let texture = load_image(path)
-        .and_then(|image| ImageTexture::create_from_image(&image))
-        .map(|texture| texture.upcast::<Texture2D>());
+    let texture = crate::assets::load_texture(path).or_else(|| {
+        load_image(path).and_then(|image| ImageTexture::create_from_image(&image)).map(|texture| texture.upcast::<Texture2D>())
+    });
     TEXTURES.with_borrow_mut(|cache| cache.insert(key, texture.clone()));
     texture
 }
