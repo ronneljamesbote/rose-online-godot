@@ -5,6 +5,8 @@
 ##   --data-idx=PATH            ROSE data.idx (or set ROSE_DATA_IDX; otherwise the last one
 ##                              picked, a ROSE folder next to the game, or ask)
 ##   --zone=ID                  zone to load (default 1, Canyon City of Zant)
+##   --zone-files               build zones from the ROSE map files even when they have scenes
+##                              in res://zones/ (to compare the two)
 ##   --free-camera=x,y,z,yaw,pitch   fixed camera, degrees, same convention as the Bevy zone viewer
 ##   --screenshot=PATH          save one frame and quit
 ##   --time=morning|day|evening|night|TICKS   fixed time of day (default: day, then the clock runs)
@@ -46,6 +48,8 @@
 ##   --quit-after=SECONDS       quit after this long
 ##   --import-rose[=force]      convert the ROSE models and textures into res://assets/rose/
 ##                              and quit (run headless; force redoes files already there)
+##   --import-zone=ID[,force]   write the scenes of zone ID into res://zones/ from the ROSE map
+##                              files and quit (run headless; force replaces scenes already there)
 ##   --export-motions[=check]   write ../overrides/motions.toml (the server's hit times) from the
 ##                              hit markers of the imported player, monster and NPC animations and quit; check
 ##                              only compares and fails when the file is out of date
@@ -165,8 +169,22 @@ func _import_rose(force: bool) -> void:
 		print("rose:   %-24s %8.1f MB" % [folder, folders[folder] / 1048576.0])
 	print("rose: characters, monsters, NPCs and carts: %d files made, %d already there, %.1f MB" % [
 		result.avatar_files, result.avatar_kept, result.avatar_bytes / 1048576.0])
-	print("rose: assets/rose is %.1f MB" % ((result.bytes + result.avatar_bytes) / 1048576.0))
+	print("rose: zone models and textures: %d files made, %d already there, %.1f MB" % [
+		result.zone_files, result.zone_kept, result.zone_bytes / 1048576.0])
+	print("rose: assets/rose is %.1f MB" % ((result.bytes + result.avatar_bytes + result.zone_bytes) / 1048576.0))
 	get_tree().quit(1 if result.failed > 0 else 0)
+
+
+## Writes a zone's scenes, prints what it made and quits.
+func _import_zone(zone_id: int, force: bool) -> void:
+	await get_tree().process_frame  # the import adds a Terrain3D node to the tree for a moment
+	var result: Dictionary = RoseImport.import_zone(zone_id, force)
+	if result.has("error"):
+		push_error("rose: %s" % result.error)
+		get_tree().quit(1)
+		return
+	print("rose: %s: %d blocks, %d objects, %d markers" % [result.folder, result.blocks, result.objects, result.markers])
+	get_tree().quit(0)
 
 
 ## Writes or checks overrides/motions.toml, prints what differs and quits (1 when a check fails).
@@ -197,6 +215,10 @@ func _start(data_idx: String) -> void:
 		return
 	if options.has("export-motions"):
 		_export_motions(options["export-motions"] == "check")
+		return
+	if options.has("import-zone"):
+		var parts: PackedStringArray = str(options["import-zone"]).split(",")
+		_import_zone(int(parts[0]), parts.size() > 1 and parts[1] == "force")
 		return
 
 	fx = preload("res://scripts/fx.gd").new()
@@ -270,6 +292,7 @@ func _load_zone(zone_id: int) -> bool:
 		remove_child(zone)
 	zone = RoseZone.new()
 	zone.name = "Zone"
+	zone.files_only = options.has("zone-files")
 	add_child(zone)
 	move_child(zone, 0)
 	if not zone.load_zone(zone_id):

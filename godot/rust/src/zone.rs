@@ -26,15 +26,37 @@ const OBJECT_OFFSET: f32 = 5200.0;
 pub const LAYER_WALLS: u32 = 1;
 /// Physics layer of zone object surfaces characters can stand on (bridges, stairs, floors).
 pub const LAYER_FLOORS: u32 = 2;
+/// Model lists every zone shares: event objects (zsc index 2) and warp gates (3).
+pub const EVENT_ZSC: &str = "3DDATA/SPECIAL/EVENT_OBJECT.ZSC";
+pub const SPECIAL_ZSC: &str = "3DDATA/SPECIAL/LIST_DECO_SPECIAL.ZSC";
+pub const TERRAIN_SHADER: &str = "res://shaders/rose_terrain.gdshader";
+pub const WATER_SHADER: &str = "res://shaders/rose_water.gdshader";
+
+/// The zone's terrain tile textures, in ZON order.
+pub fn tile_texture_paths(zon: &ZonFile) -> Vec<String> {
+    zon.tile_textures.iter().take_while(|path| *path != "end").cloned().collect()
+}
+
+/// The 25 frames of the animated water.
+pub fn water_texture_paths() -> Vec<String> {
+    (1..=25).map(|i| format!("3DDATA/JUNON/WATER/OCEAN01_{i:02}.DDS")).collect()
+}
+
+pub fn block_lightmap_path(zone_dir: &str, block_x: usize, block_y: usize) -> String {
+    format!("{zone_dir}/{block_x}_{block_y}/{block_x}_{block_y}_PLANELIGHTINGMAP.DDS")
+}
+
+/// An IFO water plane's corners in zone space.
+pub fn water_corners(start: &rose_file_readers::types::Vec3<f32>, end: &rose_file_readers::types::Vec3<f32>) -> (Vector3, Vector3) {
+    (rose_position(start.x, start.z, start.y), rose_position(end.x, end.z, start.y))
+}
 
 #[derive(GodotClass)]
 #[class(base=Node3D, init)]
 pub struct RoseZone {
     base: Base<Node3D>,
-    heights: Vec<Option<HimFile>>,
-    /// Tile map per block, and each ZON tile's texture number (for footstep sounds).
-    tiles: Vec<Option<TilFile>>,
-    tile_textures: Vec<usize>,
+    /// Heights and footstep tiles per block (64 x 64, most empty).
+    grounds: Vec<Option<Ground>>,
     /// Looping ambient sounds (IFO sound objects): position, file, range in metres.
     ambient_sounds: Vec<(Vector3, String, f32)>,
     /// Effects placed in the zone (IFO effect objects, ZSC object effects): transform in
@@ -44,18 +66,80 @@ pub struct RoseZone {
     stats: VarDictionary,
     /// Warp gates: WARP.STB id and the box their model fills, in zone space.
     warps: Vec<(u16, Aabb)>,
+    /// Build from the ROSE map files even when the zone has scenes (for comparing the two).
+    #[var]
+    files_only: bool,
 }
 
-fn rose_quat(x: f32, y: f32, z: f32, w: f32) -> Quaternion {
+/// One block's ground, for height and footstep lookups.
+pub struct Ground {
+    /// Height samples per side (65 for a ROSE block).
+    pub size: i32,
+    /// Heights in metres, row by row from the block's north-west corner.
+    pub heights: Vec<f32>,
+    /// Each 10 m tile's texture number (16 x 16), which picks the footstep sound.
+    pub tile_textures: Vec<i32>,
+}
+
+impl Ground {
+    pub fn height(&self, x: i32, y: i32) -> f32 {
+        let size = self.size.max(1);
+        self.heights.get((y.clamp(0, size - 1) * size + x.clamp(0, size - 1)) as usize).copied().unwrap_or(0.0)
+    }
+
+    fn from_files(zon: &ZonFile, him: &HimFile, til: Option<&TilFile>) -> Ground {
+        Ground {
+            size: him.width as i32,
+            heights: (0..him.height as i32)
+                .flat_map(|y| (0..him.width as i32).map(move |x| (x, y)))
+                .map(|(x, y)| him.get_clamped(x, y) / 100.0)
+                .collect(),
+            tile_textures: (0..16usize)
+                .flat_map(|y| (0..16usize).map(move |x| (x, y)))
+                .map(|(x, y)| {
+                    let tile = til.map(|til| til.get_clamped(x, y) as usize).unwrap_or(0);
+                    zon.tiles.get(tile).map_or(0, |t| (t.layer2 + t.offset2) as i32)
+                })
+                .collect(),
+        }
+    }
+}
+
+/// A ZON tile's two texture layers and rotation, as the terrain shader takes them.
+pub fn tile_layers(zon: &ZonFile, til: Option<&TilFile>, tile_x: usize, tile_y: usize) -> [u8; 3] {
+    let tile_index = til.map(|til| til.get_clamped(tile_x, tile_y) as usize).unwrap_or(0);
+    let tile = &zon.tiles[tile_index.min(zon.tiles.len() - 1)];
+    let rotation: u8 = match tile.rotation {
+        ZonTileRotation::FlipHorizontal => 2,
+        ZonTileRotation::FlipVertical => 3,
+        ZonTileRotation::Flip => 4,
+        ZonTileRotation::Clockwise90 => 5,
+        ZonTileRotation::CounterClockwise90 => 6,
+        _ => 0,
+    };
+    [(tile.layer1 + tile.offset1).min(255) as u8, (tile.layer2 + tile.offset2).min(255) as u8, rotation]
+}
+
+/// Where a block's ground sits: its north-west corner in zone space.
+pub fn block_origin(block_x: usize, block_y: usize) -> Vector3 {
+    Vector3::new(BLOCK_SIZE * block_x as f32, 0.0, -BLOCK_SIZE * (65.0 - block_y as f32))
+}
+
+/// A ROSE map position (centimetres, z up, relative to the zone's centre) in zone space.
+pub fn rose_position(x: f32, y: f32, z: f32) -> Vector3 {
+    Vector3::new(OBJECT_OFFSET + x / 100.0, z / 100.0, -(OBJECT_OFFSET + y / 100.0))
+}
+
+pub fn rose_quat(x: f32, y: f32, z: f32, w: f32) -> Quaternion {
     let q = Quaternion::new(x, z, -y, w);
     if q.length_squared() > 0.0 { q.normalized() } else { Quaternion::IDENTITY }
 }
 
-fn rose_transform(position: Vector3, rotation: Quaternion, scale: Vector3) -> Transform3D {
+pub fn rose_transform(position: Vector3, rotation: Quaternion, scale: Vector3) -> Transform3D {
     Transform3D::new(Basis::from_quaternion(rotation) * Basis::from_scale(scale), position)
 }
 
-fn ifo_transform(object: &IfoObject) -> Transform3D {
+pub fn ifo_transform(object: &IfoObject) -> Transform3D {
     rose_transform(
         Vector3::new(object.position.x, object.position.z, -object.position.y) / 100.0
             + Vector3::new(OBJECT_OFFSET, 0.0, -OBJECT_OFFSET),
@@ -64,20 +148,23 @@ fn ifo_transform(object: &IfoObject) -> Transform3D {
     )
 }
 
-fn load_shader(path: &str) -> Gd<Shader> {
+pub fn load_shader(path: &str) -> Gd<Shader> {
     godot::tools::load::<Shader>(path)
 }
 
 /// Shared per-zone state while spawning objects.
-struct ObjectSpawner {
+pub struct ObjectSpawner {
     materials: HashMap<(usize, u16, String), Gd<ShaderMaterial>>,
     lightmaps: HashMap<String, Option<Gd<Texture2D>>>,
-    parts: usize,
+    pub parts: usize,
     /// Collision triangles in zone space, three vertices each (zone_loader.rs's collision groups).
-    walls: Vec<Vector3>,
-    floors: Vec<Vector3>,
-    warps: Vec<(u16, Aabb)>,
-    effect_spots: Vec<(Transform3D, String, bool)>,
+    pub walls: Vec<Vector3>,
+    pub floors: Vec<Vector3>,
+    pub warps: Vec<(u16, Aabb)>,
+    pub effect_spots: Vec<(Transform3D, String, bool)>,
+    pub ambient_sounds: Vec<(Vector3, String, f32)>,
+    pub blocks: usize,
+    pub objects: usize,
 }
 
 impl ObjectSpawner {
@@ -127,18 +214,12 @@ impl ObjectSpawner {
             let mut instance = MeshInstance3D::new_alloc();
             instance.set_mesh(&part_mesh);
             instance.set_material_override(&part_material);
-            let part_transform = rose_transform(
-                Vector3::new(part.position.x, part.position.z, -part.position.y) / 100.0,
-                rose_quat(part.rotation.x, part.rotation.y, part.rotation.z, part.rotation.w),
-                Vector3::new(part.scale.x, part.scale.z, part.scale.y),
-            );
+            let part_transform = part_transform(&part.position, &part.rotation, &part.scale);
             instance.set_transform(part_transform);
 
-            // Event objects can be stood on but don't block; warps do neither.
-            if part.collision_shape.is_some() && zsc_index != 3 {
-                let blocks = zsc_index != 2 && !part.collision_flags.contains(ZscCollisionFlags::HEIGHT_ONLY);
-                let walkable = !part.collision_flags.contains(ZscCollisionFlags::NOT_MOVEABLE);
-                if blocks || walkable {
+            let (blocks, walkable) = part_collision(zsc_index, part);
+            if blocks || walkable {
+                {
                     let to_zone = object_transform * part_transform;
                     let faces: Vec<Vector3> =
                         part_mesh.clone().upcast::<Mesh>().get_faces().as_slice().iter().map(|v| to_zone * *v).collect();
@@ -172,17 +253,33 @@ impl ObjectSpawner {
 
         for effect in object.effects.iter() {
             let Some(path) = zsc.effects.get(effect.effect_id as usize) else { continue };
-            let effect_transform = rose_transform(
-                Vector3::new(effect.position.x, effect.position.z, -effect.position.y) / 100.0,
-                rose_quat(effect.rotation.x, effect.rotation.y, effect.rotation.z, effect.rotation.w),
-                Vector3::new(effect.scale.x, effect.scale.z, effect.scale.y),
-            );
+            let effect_transform = part_transform(&effect.position, &effect.rotation, &effect.scale);
             let night_only = matches!(effect.effect_type, ZscEffectType::DayNight);
             self.effect_spots.push((object_transform * effect_transform, path.path().to_string_lossy().to_string(), night_only));
         }
 
         parent.add_child(&object_node);
     }
+}
+
+/// Whether a model part blocks walking (walls) and can be stood on (floors). Event objects
+/// (zsc index 2) can be stood on but don't block; warps (3) do neither.
+pub fn part_collision(zsc_index: usize, part: &rose_file_readers::ZscObjectPart) -> (bool, bool) {
+    if part.collision_shape.is_none() || zsc_index == 3 {
+        return (false, false);
+    }
+    let blocks = zsc_index != 2 && !part.collision_flags.contains(ZscCollisionFlags::HEIGHT_ONLY);
+    let walkable = !part.collision_flags.contains(ZscCollisionFlags::NOT_MOVEABLE);
+    (blocks, walkable)
+}
+
+/// A model part's place in its model, and an effect's.
+pub fn part_transform(position: &rose_file_readers::types::Vec3<f32>, rotation: &rose_file_readers::types::Vec4<f32>, scale: &rose_file_readers::types::Vec3<f32>) -> Transform3D {
+    rose_transform(
+        Vector3::new(position.x, position.z, -position.y) / 100.0,
+        rose_quat(rotation.x, rotation.y, rotation.z, rotation.w),
+        Vector3::new(scale.x, scale.z, scale.y),
+    )
 }
 
 /// One static body holding every triangle of a collision layer.
@@ -201,7 +298,7 @@ fn collision_body(name: &str, layer: u32, faces: &[Vector3]) -> Gd<StaticBody3D>
     body
 }
 
-fn find_lit<'a>(lit: Option<&'a LitFile>, ifo_object_id: usize) -> Option<&'a LitObject> {
+pub fn find_lit<'a>(lit: Option<&'a LitFile>, ifo_object_id: usize) -> Option<&'a LitObject> {
     lit.and_then(|lit| lit.objects.iter().find(|lit_object| lit_object.id as usize == ifo_object_id + 1))
 }
 
@@ -221,28 +318,8 @@ impl RoseZone {
         let started = Instant::now();
 
         let zon_path = zone_entry.zon_file_path.path().to_string_lossy().to_string();
-        let Some(zon) = data::read_file::<ZonFile>(&zon_path) else { return false };
-        let zsc_cnst = data::read_file::<ZscFile>(&zone_entry.zsc_cnst_path.path().to_string_lossy());
-        let zsc_deco = data::read_file::<ZscFile>(&zone_entry.zsc_deco_path.path().to_string_lossy());
-        let zsc_event = data::read_file::<ZscFile>("3DDATA/SPECIAL/EVENT_OBJECT.ZSC");
-        let zsc_special = data::read_file::<ZscFile>("3DDATA/SPECIAL/LIST_DECO_SPECIAL.ZSC");
         let zone_dir = Path::new(&zon_path).parent().map(|p| p.to_string_lossy().replace('\\', "/")).unwrap_or_default();
-
-        // Terrain tile textures: one array for the whole zone, indexed per vertex.
-        let tile_paths: Vec<String> = zon.tile_textures.iter().take_while(|path| *path != "end").cloned().collect();
-        let tile_array = texture::load_texture_array(&tile_paths);
-        let terrain_shader = load_shader("res://shaders/rose_terrain.gdshader");
-        let water_shader = load_shader("res://shaders/rose_water.gdshader");
-        let water_textures = texture::load_texture_array(
-            &(1..=25).map(|i| format!("3DDATA/JUNON/WATER/OCEAN01_{i:02}.DDS")).collect::<Vec<_>>(),
-        );
-        let mut water_material = ShaderMaterial::new_gd();
-        water_material.set_shader(&water_shader);
-        water_material.set_shader_parameter("water_textures", &water_textures.to_variant());
-
-        self.heights = (0..64 * 64).map(|_| None).collect();
-        self.tiles = (0..64 * 64).map(|_| None).collect();
-        self.tile_textures = zon.tiles.iter().map(|t| (t.layer2 + t.offset2) as usize).collect();
+        self.grounds = (0..64 * 64).map(|_| None).collect();
         self.ambient_sounds.clear();
         let mut spawner = ObjectSpawner {
             materials: HashMap::new(),
@@ -252,91 +329,31 @@ impl RoseZone {
             floors: Vec::new(),
             warps: Vec::new(),
             effect_spots: Vec::new(),
+            ambient_sounds: Vec::new(),
+            blocks: 0,
+            objects: 0,
         };
-        let mut blocks = 0;
-        let mut objects = 0;
 
-        for block_y in 0..64usize {
-            for block_x in 0..64usize {
-                let Some(him) = data::read_file::<HimFile>(&format!("{zone_dir}/{block_x}_{block_y}.HIM")) else { continue };
-                let til = data::read_file::<TilFile>(&format!("{zone_dir}/{block_x}_{block_y}.TIL"));
-                let ifo = data::read_file::<IfoFile>(&format!("{zone_dir}/{block_x}_{block_y}.IFO"));
-                let lightmap_dir = format!("{zone_dir}/{block_x}_{block_y}/LIGHTMAP/");
-                let lit_cnst = data::read_file::<LitFile>(&format!("{lightmap_dir}BUILDINGLIGHTMAPDATA.LIT"));
-                let lit_deco = data::read_file::<LitFile>(&format!("{lightmap_dir}OBJECTLIGHTMAPDATA.LIT"));
-
-                let mut block_node = Node3D::new_alloc();
-                block_node.set_name(&format!("Block_{block_x}_{block_y}"));
-
-                let mut terrain_material = ShaderMaterial::new_gd();
-                terrain_material.set_shader(&terrain_shader);
-                terrain_material.set_shader_parameter("tile_textures", &tile_array.to_variant());
-                if let Some(lightmap) = texture::load_texture(&format!(
-                    "{zone_dir}/{block_x}_{block_y}/{block_x}_{block_y}_PLANELIGHTINGMAP.DDS"
-                )) {
-                    terrain_material.set_shader_parameter("lightmap_texture", &lightmap.to_variant());
-                }
-                let mut terrain = MeshInstance3D::new_alloc();
-                terrain.set_name("Terrain");
-                terrain.set_mesh(&build_terrain_mesh(&zon, &him, til.as_ref()));
-                terrain.set_material_override(&terrain_material);
-                terrain.set_position(Vector3::new(
-                    BLOCK_SIZE * block_x as f32,
-                    0.0,
-                    -BLOCK_SIZE * (65.0 - block_y as f32),
-                ));
-                block_node.add_child(&terrain);
-                blocks += 1;
-
-                if let Some(ifo) = ifo.as_ref() {
-                    for (start, end) in ifo.water_planes.iter() {
-                        let mut water = MeshInstance3D::new_alloc();
-                        water.set_name("Water");
-                        water.set_mesh(&build_water_mesh(
-                            ifo.water_size,
-                            Vector3::new(start.x, start.y, start.z),
-                            Vector3::new(end.x, end.y, end.z),
-                        ));
-                        water.set_material_override(&water_material);
-                        block_node.add_child(&water);
-                    }
-
-                    let mut spawn_list = |zsc: Option<&ZscFile>, zsc_index: usize, list: &[(usize, &IfoObject, usize, Option<&LitObject>)], kind: &str| {
-                        let Some(zsc) = zsc else { return };
-                        for &(ifo_id, object, zsc_id, lit) in list {
-                            spawner.spawn(&mut block_node, zsc, zsc_index, &lightmap_dir, lit, object, zsc_id, &format!("{kind}_{ifo_id}"));
-                            objects += 1;
-                        }
-                    };
-
-                    let cnst: Vec<_> = ifo.cnst_objects.iter().enumerate()
-                        .map(|(i, o)| (i, o, o.object_id as usize, find_lit(lit_cnst.as_ref(), i))).collect();
-                    spawn_list(zsc_cnst.as_ref(), 0, &cnst, "Cnst");
-                    let deco: Vec<_> = ifo.deco_objects.iter().enumerate()
-                        .map(|(i, o)| (i, o, o.object_id as usize, find_lit(lit_deco.as_ref(), i))).collect();
-                    spawn_list(zsc_deco.as_ref(), 1, &deco, "Deco");
-                    let events: Vec<_> = ifo.event_objects.iter().enumerate()
-                        .map(|(i, o)| (i, &o.object, o.object.object_id as usize, None)).collect();
-                    spawn_list(zsc_event.as_ref(), 2, &events, "Event");
-                    let warps: Vec<_> = ifo.warps.iter().enumerate().map(|(i, o)| (i, o, 1, None)).collect();
-                    spawn_list(zsc_special.as_ref(), 3, &warps, "Warp");
-
-                    for effect in ifo.effect_objects.iter() {
-                        let path = effect.effect_path.path().to_string_lossy().to_string();
-                        spawner.effect_spots.push((ifo_transform(&effect.object), path, false));
-                    }
-                    for sound in ifo.sound_objects.iter() {
-                        let position = ifo_transform(&sound.object).origin;
-                        let path = sound.sound_path.path().to_string_lossy().to_string();
-                        self.ambient_sounds.push((position, path, sound.range as f32 / 10.0));
-                    }
-                }
-
-                self.heights[block_x + block_y * 64] = Some(him);
-                self.tiles[block_x + block_y * 64] = til;
-                self.base_mut().add_child(&block_node);
+        // A zone with scenes in res://zones/ loads from them; any other from the ROSE files.
+        let scene = if self.files_only { None } else { crate::zone_scene::zone_scene(zone_id as u16, &zone_dir) };
+        let from_scene = match scene {
+            Some(scene) => {
+                let Some(map) = scene.instantiate() else {
+                    godot_error!("rose: could not open the scene of zone {zone_id}");
+                    return false;
+                };
+                self.base_mut().add_child(&map);
+                let to_zone = self.base().get_global_transform().affine_inverse();
+                let materials = crate::zone_scene::gather(&map, to_zone, &mut spawner, &mut self.grounds);
+                spawner.materials.clear();
+                Some(materials)
             }
-        }
+            None => {
+                let Some(zon) = data::read_file::<ZonFile>(&zon_path) else { return false };
+                self.build_from_files(zone_entry, &zon, &zone_dir, &mut spawner);
+                None
+            }
+        };
 
         for (name, layer, faces) in [("Walls", LAYER_WALLS, &spawner.walls), ("Floors", LAYER_FLOORS, &spawner.floors)] {
             self.base_mut().add_child(&collision_body(name, layer, faces));
@@ -366,6 +383,7 @@ impl RoseZone {
         self.zone_id = zone_id as u16;
         self.warps = std::mem::take(&mut spawner.warps);
         self.effect_spots = std::mem::take(&mut spawner.effect_spots);
+        self.ambient_sounds = std::mem::take(&mut spawner.ambient_sounds);
         // Zone effects (torches, fountains, glows). Night-only ones start hidden.
         let mut effects = 0;
         for (name, night) in [("Effects", false), ("NightEffects", true)] {
@@ -388,10 +406,11 @@ impl RoseZone {
             self.base_mut().add_child(&group);
         }
         let mut stats = VarDictionary::new();
-        stats.set("blocks", blocks);
-        stats.set("objects", objects);
+        stats.set("source", if from_scene.is_some() { "scene" } else { "client data" });
+        stats.set("blocks", spawner.blocks as i64);
+        stats.set("objects", spawner.objects as i64);
         stats.set("mesh_parts", spawner.parts as i64);
-        stats.set("materials", spawner.materials.len() as i64);
+        stats.set("materials", from_scene.unwrap_or(spawner.materials.len()) as i64);
         stats.set("wall_triangles", (spawner.walls.len() / 3) as i64);
         stats.set("floor_triangles", (spawner.floors.len() / 3) as i64);
         stats.set("effects", effects as i64);
@@ -428,15 +447,15 @@ impl RoseZone {
         let block_x = x / (BLOCK_SIZE * 100.0);
         let block_y = 65.0 - (y / (BLOCK_SIZE * 100.0));
         let index = block_x.clamp(0.0, 63.0) as usize + block_y.clamp(0.0, 63.0) as usize * 64;
-        let Some(him) = self.heights.get(index).and_then(|h| h.as_ref()) else { return 0.0 };
+        let Some(ground) = self.grounds.get(index).and_then(|g| g.as_ref()) else { return 0.0 };
 
-        let tile_x = (him.width - 1) as f32 * block_x.fract();
-        let tile_y = (him.height - 1) as f32 * block_y.fract();
+        let tile_x = (ground.size - 1) as f32 * block_x.fract();
+        let tile_y = (ground.size - 1) as f32 * block_y.fract();
         let (ix, iy) = (tile_x as i32, tile_y as i32);
         let (wx, wy) = (tile_x.fract(), tile_y.fract());
-        let h0 = him.get_clamped(ix, iy) * (1.0 - wx) + him.get_clamped(ix + 1, iy) * wx;
-        let h1 = him.get_clamped(ix, iy + 1) * (1.0 - wx) + him.get_clamped(ix + 1, iy + 1) * wx;
-        (h0 * (1.0 - wy) + h1 * wy) / 100.0
+        let h0 = ground.height(ix, iy) * (1.0 - wx) + ground.height(ix + 1, iy) * wx;
+        let h1 = ground.height(ix, iy + 1) * (1.0 - wx) + ground.height(ix + 1, iy + 1) * wx;
+        h0 * (1.0 - wy) + h1 * wy
     }
 
     /// The terrain texture number under Godot world position (x, z), which picks the
@@ -447,9 +466,10 @@ impl RoseZone {
         let block_x = x / (BLOCK_SIZE * 100.0);
         let block_y = 65.0 - (y / (BLOCK_SIZE * 100.0));
         let index = block_x.clamp(0.0, 63.0) as usize + block_y.clamp(0.0, 63.0) as usize * 64;
-        let Some(til) = self.tiles.get(index).and_then(|t| t.as_ref()) else { return 0 };
-        let tile = til.get_clamped((til.width as f32 * block_x.fract()) as usize, (til.height as f32 * block_y.fract()) as usize);
-        self.tile_textures.get(tile as usize).copied().unwrap_or(0) as i32
+        let Some(ground) = self.grounds.get(index).and_then(|g| g.as_ref()) else { return 0 };
+        let tile_x = ((16.0 * block_x.fract()) as usize).min(15);
+        let tile_y = ((16.0 * block_y.fract()) as usize).min(15);
+        ground.tile_textures.get(tile_x + tile_y * 16).copied().unwrap_or(0)
     }
 
     /// Shows the zone's night-only effects (evening and night) or hides them.
@@ -568,7 +588,100 @@ impl RoseZone {
     }
 }
 
-fn build_terrain_mesh(zon: &ZonFile, him: &HimFile, til: Option<&TilFile>) -> Gd<ArrayMesh> {
+impl RoseZone {
+    /// Builds the zone's blocks from the ROSE map files (ZON, HIM, TIL, IFO, LIT).
+    fn build_from_files(&mut self, zone_entry: &rose_data::ZoneListEntry, zon: &ZonFile, zone_dir: &str, spawner: &mut ObjectSpawner) {
+        let zsc_cnst = data::read_file::<ZscFile>(&zone_entry.zsc_cnst_path.path().to_string_lossy());
+        let zsc_deco = data::read_file::<ZscFile>(&zone_entry.zsc_deco_path.path().to_string_lossy());
+        let zsc_event = data::read_file::<ZscFile>(EVENT_ZSC);
+        let zsc_special = data::read_file::<ZscFile>(SPECIAL_ZSC);
+
+        // Terrain tile textures: one array for the whole zone, indexed per vertex.
+        let tile_array = texture::load_texture_array(&tile_texture_paths(zon));
+        let terrain_shader = load_shader(TERRAIN_SHADER);
+        let mut water_material = ShaderMaterial::new_gd();
+        water_material.set_shader(&load_shader(WATER_SHADER));
+        water_material.set_shader_parameter("water_textures", &texture::load_texture_array(&water_texture_paths()).to_variant());
+
+        for block_y in 0..64usize {
+            for block_x in 0..64usize {
+                let Some(him) = data::read_file::<HimFile>(&format!("{zone_dir}/{block_x}_{block_y}.HIM")) else { continue };
+                let til = data::read_file::<TilFile>(&format!("{zone_dir}/{block_x}_{block_y}.TIL"));
+                let ifo = data::read_file::<IfoFile>(&format!("{zone_dir}/{block_x}_{block_y}.IFO"));
+                let lightmap_dir = format!("{zone_dir}/{block_x}_{block_y}/LIGHTMAP/");
+                let lit_cnst = data::read_file::<LitFile>(&format!("{lightmap_dir}BUILDINGLIGHTMAPDATA.LIT"));
+                let lit_deco = data::read_file::<LitFile>(&format!("{lightmap_dir}OBJECTLIGHTMAPDATA.LIT"));
+
+                let mut block_node = Node3D::new_alloc();
+                block_node.set_name(&format!("Block_{block_x}_{block_y}"));
+
+                let mut terrain_material = ShaderMaterial::new_gd();
+                terrain_material.set_shader(&terrain_shader);
+                terrain_material.set_shader_parameter("tile_textures", &tile_array.to_variant());
+                if let Some(lightmap) = texture::load_texture(&block_lightmap_path(zone_dir, block_x, block_y)) {
+                    terrain_material.set_shader_parameter("lightmap_texture", &lightmap.to_variant());
+                }
+                let ground = Ground::from_files(zon, &him, til.as_ref());
+                let mut terrain = MeshInstance3D::new_alloc();
+                terrain.set_name("Terrain");
+                terrain.set_mesh(&build_terrain_mesh(&|x, y| ground.height(x, y), &|x, y| tile_layers(zon, til.as_ref(), x, y)));
+                terrain.set_material_override(&terrain_material);
+                terrain.set_position(block_origin(block_x, block_y));
+                block_node.add_child(&terrain);
+                spawner.blocks += 1;
+
+                if let Some(ifo) = ifo.as_ref() {
+                    for (start, end) in ifo.water_planes.iter() {
+                        let mut water = MeshInstance3D::new_alloc();
+                        water.set_name("Water");
+                        let (start, end) = water_corners(start, end);
+                        water.set_mesh(&build_water_mesh(start, end, ifo.water_size / 100.0));
+                        water.set_material_override(&water_material);
+                        block_node.add_child(&water);
+                    }
+
+                    let mut spawn_list = |zsc: Option<&ZscFile>, zsc_index: usize, list: &[(usize, &IfoObject, usize, Option<&LitObject>)], kind: &str| {
+                        let Some(zsc) = zsc else { return };
+                        for &(ifo_id, object, zsc_id, lit) in list {
+                            spawner.spawn(&mut block_node, zsc, zsc_index, &lightmap_dir, lit, object, zsc_id, &format!("{kind}_{ifo_id}"));
+                            spawner.objects += 1;
+                        }
+                    };
+
+                    let cnst: Vec<_> = ifo.cnst_objects.iter().enumerate()
+                        .map(|(i, o)| (i, o, o.object_id as usize, find_lit(lit_cnst.as_ref(), i))).collect();
+                    spawn_list(zsc_cnst.as_ref(), 0, &cnst, "Cnst");
+                    let deco: Vec<_> = ifo.deco_objects.iter().enumerate()
+                        .map(|(i, o)| (i, o, o.object_id as usize, find_lit(lit_deco.as_ref(), i))).collect();
+                    spawn_list(zsc_deco.as_ref(), 1, &deco, "Deco");
+                    let events: Vec<_> = ifo.event_objects.iter().enumerate()
+                        .map(|(i, o)| (i, &o.object, o.object.object_id as usize, None)).collect();
+                    spawn_list(zsc_event.as_ref(), 2, &events, "Event");
+                    let warps: Vec<_> = ifo.warps.iter().enumerate().map(|(i, o)| (i, o, 1, None)).collect();
+                    spawn_list(zsc_special.as_ref(), 3, &warps, "Warp");
+
+                    for effect in ifo.effect_objects.iter() {
+                        let path = effect.effect_path.path().to_string_lossy().to_string();
+                        spawner.effect_spots.push((ifo_transform(&effect.object), path, false));
+                    }
+                    for sound in ifo.sound_objects.iter() {
+                        let position = ifo_transform(&sound.object).origin;
+                        let path = sound.sound_path.path().to_string_lossy().to_string();
+                        spawner.ambient_sounds.push((position, path, sound.range as f32 / 10.0));
+                    }
+                }
+
+                self.grounds[block_x + block_y * 64] = Some(ground);
+                self.base_mut().add_child(&block_node);
+            }
+        }
+    }
+}
+
+/// A block's terrain mesh: 16 x 16 tiles of 4 x 4 quads, 2.5 m apart. `height` gives a
+/// height sample in metres (65 x 65, clamped at the edges) and `tile` a tile's
+/// [layer 1, layer 2, rotation] (see `tile_layers`).
+pub fn build_terrain_mesh(height: &dyn Fn(i32, i32) -> f32, tile: &dyn Fn(usize, usize) -> [u8; 3]) -> Gd<ArrayMesh> {
     let mut positions = Vec::with_capacity(16 * 16 * 25);
     let mut normals = Vec::with_capacity(16 * 16 * 25);
     let mut uv_lightmap = Vec::with_capacity(16 * 16 * 25);
@@ -578,18 +691,7 @@ fn build_terrain_mesh(zon: &ZonFile, him: &HimFile, til: Option<&TilFile>) -> Gd
 
     for tile_x in 0..16usize {
         for tile_y in 0..16usize {
-            let tile_index = til.map(|til| til.get_clamped(tile_x, tile_y) as usize).unwrap_or(0);
-            let tile = &zon.tiles[tile_index.min(zon.tiles.len() - 1)];
-            let layer1 = (tile.layer1 + tile.offset1).min(255) as u8;
-            let layer2 = (tile.layer2 + tile.offset2).min(255) as u8;
-            let rotation: u8 = match tile.rotation {
-                ZonTileRotation::FlipHorizontal => 2,
-                ZonTileRotation::FlipVertical => 3,
-                ZonTileRotation::Flip => 4,
-                ZonTileRotation::Clockwise90 => 5,
-                ZonTileRotation::CounterClockwise90 => 6,
-                _ => 0,
-            };
+            let [layer1, layer2, rotation] = tile(tile_x, tile_y);
             let base = positions.len() as u16;
             let offset_x = tile_x as f32 * 10.0;
             let offset_y = tile_y as f32 * 10.0;
@@ -598,12 +700,12 @@ fn build_terrain_mesh(zon: &ZonFile, him: &HimFile, til: Option<&TilFile>) -> Gd
                 for x in 0..5i32 {
                     let hx = x + tile_x as i32 * 4;
                     let hy = y + tile_y as i32 * 4;
-                    let height = him.get_clamped(hx, hy) / 100.0;
-                    let l = him.get_clamped(hx - 1, hy) / 100.0;
-                    let r = him.get_clamped(hx + 1, hy) / 100.0;
-                    let t = him.get_clamped(hx, hy - 1) / 100.0;
-                    let b = him.get_clamped(hx, hy + 1) / 100.0;
-                    positions.push(Vector3::new(offset_x + x as f32 * 2.5, height, offset_y + y as f32 * 2.5));
+                    let h = height(hx, hy);
+                    let l = height(hx - 1, hy);
+                    let r = height(hx + 1, hy);
+                    let t = height(hx, hy - 1);
+                    let b = height(hx, hy + 1);
+                    positions.push(Vector3::new(offset_x + x as f32 * 2.5, h, offset_y + y as f32 * 2.5));
                     normals.push(Vector3::new((l - r) / 2.0, 1.0, (t - b) / 2.0).normalized());
                     uv_tile.push(Vector2::new(x as f32 / 4.0, y as f32 / 4.0));
                     uv_lightmap.push(Vector2::new(
@@ -643,11 +745,12 @@ fn build_terrain_mesh(zon: &ZonFile, him: &HimFile, til: Option<&TilFile>) -> Gd
     terrain
 }
 
-fn build_water_mesh(water_size: f32, plane_start: Vector3, plane_end: Vector3) -> Gd<ArrayMesh> {
-    let start = Vector3::new(OBJECT_OFFSET + plane_start.x / 100.0, plane_start.y / 100.0, -(OBJECT_OFFSET + plane_start.z / 100.0));
-    let end = Vector3::new(OBJECT_OFFSET + plane_end.x / 100.0, plane_start.y / 100.0, -(OBJECT_OFFSET + plane_end.z / 100.0));
-    let uv_x = (end.x - start.x) / (water_size / 100.0);
-    let uv_y = (end.z - start.z) / (water_size / 100.0);
+/// A water plane between two corners in zone space (at the first corner's height), its
+/// texture repeating every `tile_size` metres.
+pub fn build_water_mesh(start: Vector3, end: Vector3, tile_size: f32) -> Gd<ArrayMesh> {
+    let end = Vector3::new(end.x, start.y, end.z);
+    let uv_x = (end.x - start.x) / tile_size;
+    let uv_y = (end.z - start.z) / tile_size;
 
     let positions = [
         Vector3::new(start.x, start.y, end.z),
