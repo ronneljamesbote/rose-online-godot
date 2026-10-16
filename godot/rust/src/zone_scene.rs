@@ -161,6 +161,10 @@ pub fn gather(map: &Gd<Node>, to_zone: Transform3D, spawner: &mut ObjectSpawner,
 /// blocks), which keeps every ROSE zone inside Terrain3D's 32 x 32 regions around the origin
 /// without moving the world.
 pub const REGION_SIZE: i64 = 512;
+/// Terrain3D's ground mesh rings: 5 reach about 1.9 km around the camera, past its 1 km
+/// far plane. The default 7 (7.7 km) draws triangles hundreds of metres wide that software
+/// Vulkan (lavapipe) crashes on.
+const MESH_LODS: i64 = 5;
 pub const VERTEX_SPACING: f32 = 2.5;
 /// Vertices per ROSE block side (160 m / 2.5 m); block (x, y) starts at vertex (64 x, 64 (y - 65)).
 const BLOCK_VERTICES: i64 = 64;
@@ -820,6 +824,7 @@ impl GroundBuilder {
         terrain.set("vertex_spacing", &VERTEX_SPACING.to_variant());
         // No physics: the game takes ground heights from the data, and layer 1 is our walls.
         terrain.set("collision_mode", &0.to_variant());
+        terrain.set("mesh_lods", &MESH_LODS.to_variant());
 
         // Into the tree, so Terrain3D sets up its data, then add and save the regions.
         let mut root = Engine::singleton()
@@ -1176,4 +1181,113 @@ pub fn write_zone_scenes(zone_id: u16, force: bool) -> Result<(String, usize, us
         return Err(format!("could not save {zone_path}"));
     }
     Ok((folder, block_list.len(), object_count, marker_count))
+}
+
+// ---------------------------------------------------------------------------------------
+// Export for the server
+
+/// What the server needs from a zone's scenes (`overrides/zones/<id>-<name>.toml`): its
+/// spawn points, town NPCs and named spots, with positions in metres in the server's frame
+/// (x east, y north, z up). Blocks come in the order the server reads IFO files (north to
+/// south rows, west to east), the markers of a block in scene order.
+pub fn zone_layout(zone_id: u16) -> Result<rose_game_overrides::ZoneLayout, String> {
+    let folder = zone_folder(zone_id).ok_or(format!("zone {zone_id} has no folder in {ZONES}"))?;
+    let path = format!("{folder}/zone.tscn");
+    let scene = ResourceLoader::singleton()
+        .load(&path)
+        .and_then(|r| r.try_cast::<PackedScene>().ok())
+        .ok_or(format!("could not open {path}"))?;
+    let root = scene.instantiate().ok_or(format!("could not open {path}"))?;
+    let mut layout = rose_game_overrides::ZoneLayout { zone: zone_id, ..Default::default() };
+    let mut blocks: Vec<((i32, i32), Gd<Node>)> = Vec::new();
+    for child in root.get_children().iter_shared() {
+        let name = child.get_name().to_string();
+        let block = name.strip_prefix("Block_").and_then(|xy| xy.split_once('_')).and_then(|(x, y)| Some((y.parse().ok()?, x.parse().ok()?)));
+        match block {
+            Some(key) => blocks.push((key, child)),
+            None => collect_markers(&child, transform_of(&child), &name, &mut layout),
+        }
+    }
+    blocks.sort_by_key(|(key, _)| *key);
+    for (_, block) in &blocks {
+        collect_markers(block, transform_of(block), &block.get_name().to_string(), &mut layout);
+    }
+    root.free();
+    Ok(layout)
+}
+
+fn transform_of(node: &Gd<Node>) -> Transform3D {
+    node.clone().try_cast::<Node3D>().map_or(Transform3D::IDENTITY, |n| n.get_transform())
+}
+
+/// Metres in the server's frame from a Godot position.
+fn server_metres(at: Vector3) -> (f32, f32, f32) {
+    (at.x, -at.z, at.y)
+}
+
+fn pairs(monsters: &PackedInt32Array, counts: &PackedInt32Array) -> Vec<[u32; 2]> {
+    let counts = counts.as_slice();
+    monsters.as_slice().iter().enumerate().map(|(i, m)| [*m as u32, counts.get(i).copied().unwrap_or(0).max(0) as u32]).collect()
+}
+
+fn collect_markers(node: &Gd<Node>, transform: Transform3D, path: &str, layout: &mut rose_game_overrides::ZoneLayout) {
+    if let Ok(spot) = node.clone().try_cast::<RoseSpawnSpot>() {
+        let (x, y, z) = server_metres(transform.origin);
+        let s = spot.bind();
+        layout.spawn.push(rose_game_overrides::ZoneSpawn {
+            node: path.to_string(),
+            x,
+            y,
+            z,
+            interval: s.interval.max(0) as u32,
+            limit: s.limit.max(0) as u32,
+            range: s.range.max(0) as u32,
+            tactic_points: s.tactic_points.max(0) as u32,
+            basic: pairs(&s.basic_monsters, &s.basic_counts),
+            tactic: pairs(&s.tactic_monsters, &s.tactic_counts),
+        });
+    } else if let Ok(spot) = node.clone().try_cast::<RoseNpcSpot>() {
+        let (x, y, z) = server_metres(transform.origin);
+        // Back to the ROSE rotation (see zone::rose_quat), then the angle the server takes.
+        let q = transform.basis.get_quaternion();
+        let direction = glam::Quat::from_xyzw(q.x, -q.z, q.y, q.w).to_euler(glam::EulerRot::XYZ).2.to_degrees();
+        let s = spot.bind();
+        layout.npc.push(rose_game_overrides::ZoneNpc {
+            node: path.to_string(),
+            npc: s.npc.max(0) as u32,
+            x,
+            y,
+            z,
+            direction,
+            conversation: s.quest_file.to_string(),
+        });
+    } else if let Ok(spot) = node.clone().try_cast::<RoseZoneEvent>() {
+        let (x, y, z) = server_metres(transform.origin);
+        layout.event.push(rose_game_overrides::ZoneEvent { name: spot.bind().event_name.to_string(), x, y, z });
+    }
+    for child in node.get_children().iter_shared() {
+        let child_path = format!("{path}/{}", child.get_name());
+        collect_markers(&child, transform * transform_of(&child), &child_path, layout);
+    }
+}
+
+/// The export file of a zone folder: `res://zones/20_birth_island` -> `20-birth-island.toml`.
+pub fn layout_file_name(folder: &str) -> String {
+    format!("{}.toml", folder.rsplit('/').next().unwrap_or(folder).replace('_', "-"))
+}
+
+/// The export of a zone as text, with monster and NPC names in the comments.
+pub fn layout_text(layout: &rose_game_overrides::ZoneLayout) -> String {
+    let game = data::get();
+    let name = |id: u32| {
+        game.as_ref()
+            .and_then(|g| rose_data::NpcId::new(id as u16).and_then(|n| g.npcs.get_npc(n)).map(|n| n.name.to_string()))
+            .filter(|n| !n.is_empty())
+            .unwrap_or_else(|| format!("#{id}"))
+    };
+    let zone_name = game
+        .and_then(|g| rose_data::ZoneId::new(layout.zone).and_then(|id| g.zone_list.get_zone(id)).map(|z| z.name.to_string()))
+        .filter(|n| !n.is_empty())
+        .unwrap_or_else(|| format!("Zone {}", layout.zone));
+    layout.to_toml(&zone_name, name)
 }
