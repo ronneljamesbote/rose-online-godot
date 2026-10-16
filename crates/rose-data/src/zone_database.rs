@@ -98,6 +98,10 @@ impl ZoneDatabase {
         self.zones.iter().filter_map(|zone_data| zone_data.as_ref())
     }
 
+    pub fn get_zone_mut(&mut self, id: ZoneId) -> Option<&mut ZoneData> {
+        self.zones.get_mut(id.get() as usize).and_then(|inner| inner.as_mut())
+    }
+
     pub fn get_zone(&self, id: ZoneId) -> Option<&ZoneData> {
         match self.zones.get(id.get() as usize) {
             Some(inner) => inner.as_ref(),

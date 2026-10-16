@@ -65,6 +65,14 @@ fn fix_partial_mip_chain(mut bytes: Vec<u8>) -> (Vec<u8>, bool) {
 }
 
 pub fn load_image(path: &str) -> Option<Gd<Image>> {
+    if let Some(image) = crate::assets::load_texture(path).and_then(|texture| texture.get_image()) {
+        return Some(image);
+    }
+    load_rose_image(path)
+}
+
+/// Decodes the DDS file from the client data, ignoring the imported copies.
+pub fn load_rose_image(path: &str) -> Option<Gd<Image>> {
     let (bytes, needs_mipmaps) = fix_partial_mip_chain(crate::data::read_bytes(path)?);
     let mut image = Image::new_gd();
     if image.load_dds_from_buffer(&PackedByteArray::from(bytes.as_slice())) != Error::OK {
@@ -86,9 +94,9 @@ pub fn load_texture(path: &str) -> Option<Gd<Texture2D>> {
         return cached;
     }
 
-    let texture = load_image(path)
-        .and_then(|image| ImageTexture::create_from_image(&image))
-        .map(|texture| texture.upcast::<Texture2D>());
+    let texture = crate::assets::load_texture(path).or_else(|| {
+        load_image(path).and_then(|image| ImageTexture::create_from_image(&image)).map(|texture| texture.upcast::<Texture2D>())
+    });
     TEXTURES.with_borrow_mut(|cache| cache.insert(key, texture.clone()));
     texture
 }
@@ -96,7 +104,12 @@ pub fn load_texture(path: &str) -> Option<Gd<Texture2D>> {
 /// Builds one texture array from images of possibly different sizes and formats, so a
 /// shader can index them per vertex. Missing images become a flat grey layer.
 pub fn load_texture_array(paths: &[String]) -> Gd<Texture2DArray> {
-    let mut images: Vec<Gd<Image>> = paths.iter().map(|path| load_image(path)).map(|image| {
+    texture_array(paths.iter().map(|path| load_image(path)).collect())
+}
+
+/// `load_texture_array` from images already loaded (None for a missing one).
+pub fn texture_array(images: Vec<Option<Gd<Image>>>) -> Gd<Texture2DArray> {
+    let mut images: Vec<Gd<Image>> = images.into_iter().map(|image| {
         image.unwrap_or_else(|| {
             let mut image = Image::create_empty(4, 4, false, Format::RGBA8).unwrap();
             image.fill(Color::from_rgba(0.5, 0.5, 0.5, 1.0));

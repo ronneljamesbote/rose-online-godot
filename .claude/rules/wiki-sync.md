@@ -24,6 +24,8 @@ log changes need no wiki change.
 | `module/src/death.rs`, `stamina.rs`, `party.rs`, `pvp.rs`, `trade.rs`, `friends.rs`, `chat.rs`, `bank.rs` | the matching `wiki/rules/<topic>.md` |
 | `godot/` (controls, windows, what the player sees) | `wiki/rules/controls.md` and the page of the system shown |
 | `overrides/game-data.toml` | the page of every item, monster, skill or NPC whose value changed |
+| `godot/zones/` spawn, NPC and event markers, `overrides/zones/` (exported from them) | the `wiki/zones/` page of that zone (spawn points, NPCs) and the pages of monsters and NPCs it places |
+| `overrides/motions.toml` (exported from the hit markers of the Godot player, monster and NPC animations) | `wiki/rules/combat.md` (animation lengths and hit frames), the page of every monster whose attack moved and of every skill whose hit moved |
 
 How to update a page:
 

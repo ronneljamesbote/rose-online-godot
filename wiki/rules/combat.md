@@ -33,9 +33,10 @@ source:
     - module/src/character.rs (player_stats)
     - module/src/world.rs (npc_stats_for)
     - module/src/monster_brain.rs (on_damaged, on_attack)
+    - crates/rose-game-data/src/lib.rs (load_motions)
     - godot/scripts/main.gd (_unhandled_input)
     - godot/scripts/online.gd (_on_damage, _float_number)
-  data: LIST_WEAPON.STB (attack, speed, range, motion type), TYPE_MOTION.STB and FILE_MOTION.STB (attack animations and their hit frames), LIST_NPC.STB (monster attack values)
+  data: LIST_WEAPON.STB (attack, speed, range, motion type), TYPE_MOTION.STB and FILE_MOTION.STB (attack animations), overrides/motions.toml (player, monster and NPC animation lengths and hit frames, exported from the Godot animations), LIST_NPC.STB (monster attack values)
 ---
 # Combat
 
@@ -89,6 +90,11 @@ lengthens both:
 1.233 s long with its hit frame at 0.566 s. A swing takes 1.233 × 100 / 107 = **1.152 s**
 and the damage lands 0.566 × 100 / 107 = **0.529 s** after it starts. With no weapon
 (speed 115): 1.000 × 100 / 115 = 0.870 s per swing, hit after 0.348 s.
+
+The player, monster and NPC animations' lengths and hit frames come from `overrides/motions.toml`, which is
+exported from the hit markers of the Godot animations (`godot/assets/README.md`), so the
+server and the animation you see always agree. The file holds the same frames as the iROSE
+motion files; a motion missing from it uses its iROSE file.
 
 The next swing is timed from when the last one was due, not from when the tick noticed it,
 so the 100 ms tick doesn't make you slower. A hit can land up to 100 ms after its hit frame.
@@ -240,7 +246,9 @@ Monsters use the same rules. Their values come from the monster data (see
 - Max HP is the monster's level × its HP per level (`hp_per_level` on the monster page; the page's `hp` already shows the result).
 - Critical is level × 2.5, rounded down.
 - Range and attack speed are the numbers in the data, with nothing added.
-- Each monster type has its own attack animation and hit frame.
+- Each monster type has its own attack animation and hit frame, from `overrides/motions.toml`
+  like the player's. Several monsters can share one animation (Mini-Jelly Bean and Jelly
+  Bean do), so moving its hit marker moves all of their hits.
 
 **Worked example:** a Jelly Bean (attack 4, level 4) hits the level 1 character (defence 30,
 avoid 25): 4 × 27.2 × 224 / (145 × 45) = 3.7, raised to the minimum of **5**. Its

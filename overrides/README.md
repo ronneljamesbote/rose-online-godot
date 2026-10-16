@@ -13,7 +13,36 @@ they are; this file is laid on top of them.
   Docker server keeps the file inside its image and uploads the game data again by itself
   when the file changed (it remembers the last uploaded version in `/data/overrides.sha256`).
 
-So after changing the file: rebuild the server image (`docker compose up -d --build`) and
+`motions.toml` holds the length and hit frames of every player, monster and NPC motion, exported from the
+hit markers of the Godot animations (`godot/assets/README.md`). It isn't edited by hand:
+move a `hit` marker in the Godot editor, then run
+
+```sh
+godot --headless --path godot -- --export-motions          # writes overrides/motions.toml
+godot --headless --path godot -- --export-motions=check    # fails when it is out of date
+```
+
+The server times every swing, monster attack and skill hit from it (the upload sends it with the game
+files, `ROSE_MOTIONS` names another file); the client plays the markers themselves. A
+motion missing from the file keeps the time in its ZMO file.
+
+`zones/<id>-<name>.toml` holds what the server needs from a zone that is edited as Godot
+scenes (`godot/zones/`, see `godot/assets/README.md`): its monster spawn points, town NPCs
+and named spots (start, revive and warp targets). Only Birth Island (`zones/20-birth-island.toml`)
+has one so far. It isn't edited by hand either: move or change the markers in the Godot
+editor, then run
+
+```sh
+godot --headless --path godot -- --export-zones          # writes overrides/zones/*.toml
+godot --headless --path godot -- --export-zones=check    # fails when one is out of date
+```
+
+The server uses the file in place of the zone's IFO and ZON data (the upload sends it,
+`ROSE_ZONES` names another folder). Positions are metres: `x` east, `y` north, `z` up. A
+zone without a file keeps its client data. The upload stops with an error naming the zone
+when a file names a monster or NPC that doesn't exist.
+
+So after changing any of these files: rebuild the server image (`docker compose up -d --build`) and
 ship the file with the client. Both sides must have the same file, or the client shows one
 number while the server uses another.
 

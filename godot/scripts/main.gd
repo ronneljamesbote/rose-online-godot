@@ -5,6 +5,8 @@
 ##   --data-idx=PATH            ROSE data.idx (or set ROSE_DATA_IDX; otherwise the last one
 ##                              picked, a ROSE folder next to the game, or ask)
 ##   --zone=ID                  zone to load (default 1, Canyon City of Zant)
+##   --zone-files               build zones from the ROSE map files even when they have scenes
+##                              in res://zones/ (to compare the two)
 ##   --free-camera=x,y,z,yaw,pitch   fixed camera, degrees, same convention as the Bevy zone viewer
 ##   --screenshot=PATH          save one frame and quit
 ##   --time=morning|day|evening|night|TICKS   fixed time of day (default: day, then the clock runs)
@@ -44,6 +46,16 @@
 ##                              (--screenshot-after=SECONDS waits before --screenshot)
 ##   --sound-log                print each sound effect played
 ##   --quit-after=SECONDS       quit after this long
+##   --import-rose[=force]      convert the ROSE models and textures into res://assets/rose/
+##                              and quit (run headless; force redoes files already there)
+##   --import-zone=ID[,force]   write the scenes of zone ID into res://zones/ from the ROSE map
+##                              files and quit (run headless; force replaces scenes already there)
+##   --export-motions[=check]   write ../overrides/motions.toml (the server's hit times) from the
+##                              hit markers of the imported player, monster and NPC animations and quit; check
+##                              only compares and fails when the file is out of date
+##   --export-zones[=check]     write ../overrides/zones/<id>-<name>.toml (spawns, NPCs and named
+##                              spots for the server) from the zone scenes in res://zones/ and quit;
+##                              check only compares and fails when a file is out of date
 extends Node3D
 
 const START := Vector3(5210.5, 0.0, -5136.7)  # zone start position from LIST_ZONE.STB
@@ -147,12 +159,90 @@ func _show_data_error(data_idx: String, error: String) -> void:
 	dialog.popup_centered()
 
 
+## The import command: writes the converted assets, prints what it made and quits.
+func _import_rose(force: bool) -> void:
+	var result: Dictionary = RoseImport.run(force)
+	if result.is_empty():
+		get_tree().quit(1)
+		return
+	print("rose: imported %d meshes and %d textures (%d already there, %d failed) in %.0f s" % [
+		result.meshes, result.textures, result.kept, result.failed, result.seconds])
+	var folders: Dictionary = result.folders
+	for folder in folders:
+		print("rose:   %-24s %8.1f MB" % [folder, folders[folder] / 1048576.0])
+	print("rose: characters, monsters, NPCs and carts: %d files made, %d already there, %.1f MB" % [
+		result.avatar_files, result.avatar_kept, result.avatar_bytes / 1048576.0])
+	print("rose: zone models and textures: %d files made, %d already there, %.1f MB" % [
+		result.zone_files, result.zone_kept, result.zone_bytes / 1048576.0])
+	print("rose: assets/rose is %.1f MB" % ((result.bytes + result.avatar_bytes + result.zone_bytes) / 1048576.0))
+	get_tree().quit(1 if result.failed > 0 else 0)
+
+
+## Writes a zone's scenes, prints what it made and quits.
+func _import_zone(zone_id: int, force: bool) -> void:
+	await get_tree().process_frame  # the import adds a Terrain3D node to the tree for a moment
+	var result: Dictionary = RoseImport.import_zone(zone_id, force)
+	if result.has("error"):
+		push_error("rose: %s" % result.error)
+		get_tree().quit(1)
+		return
+	print("rose: %s: %d blocks, %d objects, %d markers" % [result.folder, result.blocks, result.objects, result.markers])
+	get_tree().quit(0)
+
+
+## Writes or checks overrides/motions.toml, prints what differs and quits (1 when a check fails).
+func _export_motions(check: bool) -> void:
+	var result: Dictionary = RoseImport.export_motions(check)
+	if result.is_empty():
+		get_tree().quit(1)
+		return
+	var changed: Array = result.changed
+	for file in changed:
+		print("rose:   %s %s" % ["differs:" if check else "updated:", file])
+	if check:
+		print("rose: %s: %d motions, %d with hits, %s" % [result.path, result.motions, result.hits,
+			"matches the animations" if changed.is_empty() else "%d out of date; run --export-motions" % changed.size()])
+	else:
+		print("rose: %s: %d motions, %d with hits, %d changed" % [result.path, result.motions, result.hits, changed.size()])
+	get_tree().quit(1 if check and not changed.is_empty() else 0)
+
+
+## Writes or checks overrides/zones/*.toml from the zone scenes, prints what differs and quits
+## (1 when a check fails).
+func _export_zones(check: bool) -> void:
+	var result: Dictionary = RoseImport.export_zones(check)
+	if result.is_empty():
+		get_tree().quit(1)
+		return
+	for file in result.files:
+		print("rose: %s: zone %d, %d spawn points, %d NPCs, %d named spots" % [file.path, file.zone, file.spawns, file.npcs, file.events])
+	var changed: Array = result.changed
+	for path in changed:
+		print("rose:   %s %s" % ["differs:" if check else "updated:", path])
+	if check:
+		print("rose: zone files %s" % ("match the scenes" if changed.is_empty() else "out of date; run --export-zones"))
+	get_tree().quit(1 if check and not changed.is_empty() else 0)
+
+
 func _start(data_idx: String) -> void:
 	var started := Time.get_ticks_msec()
 	if not RoseData.open(data_idx):
 		_show_data_error(data_idx, RoseData.open_error())
 		return
 	print("rose: data tables loaded in %d ms" % (Time.get_ticks_msec() - started))
+	if options.has("import-rose"):
+		_import_rose(options["import-rose"] == "force")
+		return
+	if options.has("export-motions"):
+		_export_motions(options["export-motions"] == "check")
+		return
+	if options.has("export-zones"):
+		_export_zones(options["export-zones"] == "check")
+		return
+	if options.has("import-zone"):
+		var parts: PackedStringArray = str(options["import-zone"]).split(",")
+		_import_zone(int(parts[0]), parts.size() > 1 and parts[1] == "force")
+		return
 
 	fx = preload("res://scripts/fx.gd").new()
 	fx.name = "Fx"
@@ -225,6 +315,7 @@ func _load_zone(zone_id: int) -> bool:
 		remove_child(zone)
 	zone = RoseZone.new()
 	zone.name = "Zone"
+	zone.files_only = options.has("zone-files")
 	add_child(zone)
 	move_child(zone, 0)
 	if not zone.load_zone(zone_id):

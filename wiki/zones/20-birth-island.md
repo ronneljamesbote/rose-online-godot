@@ -601,9 +601,10 @@ zone_drops:
 - '[[items/consumable/120-milk|Milk]]'
 - '[[items/consumable/58-vital-jam-5|Vital Jam (+5)]]'
 source:
-  data: LIST_ZONE.STB row 20, the zone's IFO files, ITEM_DROP.STB row 20
+  data: LIST_ZONE.STB row 20, overrides/zones/20-birth-island.toml (exported from the scenes in godot/zones/20_birth_island), ITEM_DROP.STB row 20
   code:
   - module/src/world.rs
+  - crates/rose-game-data/src/lib.rs (apply_zone_layouts)
   - crates/rose-data-irose/src/zone_database.rs
 ---
 # Birth Island
@@ -612,3 +613,8 @@ Positions are in metres. Each spawn point keeps up to "max alive" monsters; the
 reinforcements show up once a point has been refilled many times (see
 [[rules/monster-spawns|Monster spawns]]). Zone drops can come from any monster here (see
 [[rules/drops|Drops]]).
+
+Birth Island is edited in Godot: its spawn points, NPCs and start and revive spots are
+markers in the zone's scenes, and the server reads them from
+`overrides/zones/20-birth-island.toml`, which is exported from those scenes. They are the
+same as in iROSE's map files.

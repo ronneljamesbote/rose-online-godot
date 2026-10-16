@@ -170,6 +170,15 @@ mkdir -p godot/bin && cp target/release/librose_gd.so godot/bin/    # rose_gd.dl
 godot --path godot -- --data-idx=/path/to/iRose_129_129/data.idx
 ```
 
+Optionally convert the client's models and textures into Godot resources first (see
+`assets/README.md`); the game then loads those and only falls back to the client files for
+the rest:
+
+```sh
+godot --headless --path godot --import
+godot --headless --path godot -- --import-rose --data-idx=/path/to/iRose_129_129/data.idx
+```
+
 Godot 4.6 or newer. `ROSE_DATA_IDX` works instead of `--data-idx`. The start screen offers
 Sign in (online) or Play offline. In game: left-click to move, S to stop, right-drag to
 orbit the camera, mouse wheel to zoom. Online, left-click a monster to attack it and Space
@@ -185,8 +194,14 @@ otherwise asks for it once.
 `godot/tools/build-windows.sh` builds `dist/ROSE-windows.zip` from Linux: it
 cross-compiles `rose_gd.dll` with mingw-w64 (`rustup target add x86_64-pc-windows-gnu`,
 `apt install gcc-mingw-w64-x86-64`), exports `ROSE.exe` with Godot's Windows release
-template (only `windows_release_x86_64.exe` from the 4.7.2 export templates is needed) and
-zips both with `tools/README-windows.txt`. The DLL only imports Windows system DLLs. Under
+template (only `windows_release_x86_64.exe` from the 4.7.2 export templates is needed)
+with `ROSE.pck` beside it, and zips them with the DLLs (ours and Terrain3D's) and
+`tools/README-windows.txt`. It needs `ROSE_DATA_IDX` (the client's `data.idx`): it first
+runs `--import-rose`, because the pck carries the converted models, textures, animations
+and the Birth Island scenes (about 400 MB, see `assets/README.md`), then checks that
+`overrides/motions.toml` and `overrides/zones/` match the animations and zone scenes
+(`--export-motions=check`, `--export-zones=check`); when they don't, it stops without
+building. The DLL only imports Windows system DLLs. Under
 Wine 9 the build loads the data, builds Zant and plays online headless (Wine's `dinput8`
 crashes Godot here, so the test ran with `WINEDLLOVERRIDES=dinput8=d`); it has not been
 run on a real Windows PC yet.
@@ -210,6 +225,8 @@ Other options (after `--`):
   `... --name=Bob --profile=bob --weapon=bow --net-demo=line --net-log` in another.
 
 - `--time=morning|day|evening|night|TICKS` fixes the start time (one tick is 10 s).
+- `--zone-files` builds zones from the client's map files even when they have scenes in
+  `zones/`; `--import-zone=ID[,force]` writes a zone's scenes (see `assets/README.md`).
 - `--free-camera=x,y,z,yaw,pitch` uses a fixed camera with the Bevy zone viewer's convention.
 - `--screenshot=PATH` saves one frame and quits.
 - `--demo` plays a scripted run, swing, cancel and combo. With
@@ -218,12 +235,21 @@ Other options (after `--`):
 ## Layout
 
 - `rust/src/zone.rs` builds the zone (port of `zone_loader.rs`), plus terrain height
-  queries and the zone lighting at a given time.
+  queries and the zone lighting at a given time. `rust/src/zone_scene.rs` writes the zone
+  scenes in `zones/` and reads them back (heights, collision, warps, sounds) when a zone
+  loads from its scene; the ground is a Terrain3D node (`addons/terrain_3d`) drawn with
+  `shaders/rose_terrain3d.gdshader`.
 - `rust/src/character.rs` builds the skeleton, parts and animations (port of
   `model_loader.rs` and `zmo_asset_loader.rs`).
 - `rust/src/material.rs`, `mesh.rs`, `texture.rs` convert ZSC materials, ZMS meshes and DDS
   textures. ROSE DDS files often declare a full mip chain but store only one or two levels;
   those are cut to level 0 and their mipmaps are generated after loading.
+- `rust/src/assets.rs` is the import command (`--import-rose`, class `RoseImport`) and the
+  lookup that `mesh.rs` and `texture.rs` ask first: `assets/ours/` (committed) wins over
+  `assets/rose/` (generated, git-ignored), and the client data comes last. The player
+  characters (skeleton scenes, part scenes, motions with hit/step/effect markers and one
+  motion library per weapon type) are imported by `character.rs` (`import_avatars`), and
+  `RoseCharacter` builds players from them when they are there.
 - `shaders/` holds the ports of the WGSL shaders. Textures are sampled raw and all maths runs
   in gamma space like the original, then converted to linear at the end, so colours match.
 - `rust/src/character.rs` also holds `RoseNpc`, the monster and NPC model builder (port of
