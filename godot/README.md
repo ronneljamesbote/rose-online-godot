@@ -194,10 +194,13 @@ otherwise asks for it once.
 `godot/tools/build-windows.sh` builds `dist/ROSE-windows.zip` from Linux: it
 cross-compiles `rose_gd.dll` with mingw-w64 (`rustup target add x86_64-pc-windows-gnu`,
 `apt install gcc-mingw-w64-x86-64`), exports `ROSE.exe` with Godot's Windows release
-template (only `windows_release_x86_64.exe` from the 4.7.2 export templates is needed) and
-zips both with `tools/README-windows.txt`. It needs `ROSE_DATA_IDX` (the client's
-`data.idx`) and first checks that `overrides/motions.toml` matches the player, monster and NPC animations
-(`--export-motions=check`, see `assets/README.md`); when it doesn't, it stops without
+template (only `windows_release_x86_64.exe` from the 4.7.2 export templates is needed)
+with `ROSE.pck` beside it, and zips them with the DLLs (ours and Terrain3D's) and
+`tools/README-windows.txt`. It needs `ROSE_DATA_IDX` (the client's `data.idx`): it first
+runs `--import-rose`, because the pck carries the converted models, textures, animations
+and the Birth Island scenes (about 400 MB, see `assets/README.md`), then checks that
+`overrides/motions.toml` and `overrides/zones/` match the animations and zone scenes
+(`--export-motions=check`, `--export-zones=check`); when they don't, it stops without
 building. The DLL only imports Windows system DLLs. Under
 Wine 9 the build loads the data, builds Zant and plays online headless (Wine's `dinput8`
 crashes Godot here, so the test ran with `WINEDLLOVERRIDES=dinput8=d`); it has not been
