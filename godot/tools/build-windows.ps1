@@ -184,17 +184,29 @@ try {
     Write-Host ""
     Write-Host "==> Exporting Godot Windows release..."
 
-    # Don't redirect Godot's stderr: it always prints harmless ERROR lines
-    # during a headless export, and in Windows PowerShell 5.1 a redirected
-    # stderr line plus $ErrorActionPreference = "Stop" aborts the script.
-    # $LASTEXITCODE below is what decides whether the export failed.
-    & $Godot `
-        --headless `
-        --path godot `
-        --export-release "Windows Desktop" `
-        (Join-Path $StageRose "ROSE.exe")
+    # godot.exe is a GUI-subsystem program, so PowerShell only waits for it
+    # when its output is piped. Godot also prints harmless ERROR lines to
+    # stderr during a headless export, which Windows PowerShell 5.1 turns
+    # into terminating errors under "Stop", so relax that for this call and
+    # print each line as plain text.
+    $ExportedExe = Join-Path $StageRose "ROSE.exe"
+    $PreviousPreference = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    try {
+        & $Godot `
+            --headless `
+            --path godot `
+            --export-release "Windows Desktop" `
+            $ExportedExe 2>&1 | ForEach-Object { Write-Host "$_" }
+        $GodotExit = $LASTEXITCODE
+    }
+    finally {
+        $ErrorActionPreference = $PreviousPreference
+    }
 
-    if ($LASTEXITCODE -ne 0) {
+    # Godot can report a failed export with exit code 0, so also check
+    # that the executable was written.
+    if ($GodotExit -ne 0 -or -not (Test-Path $ExportedExe)) {
         throw "Godot export failed."
     }
 
