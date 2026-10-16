@@ -1,4 +1,4 @@
-//! `overrides/motions.toml`: how long each player motion is and on which frames it hits,
+//! `overrides/motions.toml`: how long each player, monster and NPC motion is and on which frames it hits,
 //! exported from the hit markers of the Godot animations (`--export-motions`). The server's
 //! game data uses these numbers in place of the ones in the ZMO files, so moving a hit
 //! marker in the Godot editor moves the hit on the server too.
@@ -77,7 +77,8 @@ impl MotionTimings {
         let mut motions: Vec<&MotionTiming> = self.motion.iter().collect();
         motions.sort_by(|a, b| a.file.cmp(&b.file));
         let mut out = String::from(
-            "# Player motion timings for the server: length and hit frames of each motion file.\n\
+            "# Motion timings for the server: length and hit frames of each player, monster and NPC\n\
+             # motion file.\n\
              # Exported from the hit markers of the Godot animations; don't edit by hand. Change\n\
              # the markers in the Godot editor and run\n\
              #   godot --headless --path godot -- --export-motions\n\

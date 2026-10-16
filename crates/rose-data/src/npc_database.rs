@@ -169,6 +169,29 @@ impl NpcDatabase {
         self.store_tabs.get(&id)
     }
 
+    /// Replaces the timing of every NPC motion using the file `path` (normalised, as
+    /// `VfsPathBuf` stores it). Returns how many motions matched.
+    pub fn set_motion_timing(
+        &mut self,
+        path: &std::path::Path,
+        duration: std::time::Duration,
+        total_attack_frames: usize,
+        first_attack_time: Option<std::time::Duration>,
+    ) -> usize {
+        let mut matched = 0;
+        for npc in self.npcs.iter_mut().flatten() {
+            for (_, motion) in npc.motion_data.iter_mut() {
+                if motion.path.path() == path {
+                    motion.duration = duration;
+                    motion.total_attack_frames = total_attack_frames;
+                    motion.first_attack_time = first_attack_time;
+                    matched += 1;
+                }
+            }
+        }
+        matched
+    }
+
     pub fn iter(&self) -> impl Iterator<Item = &NpcData> {
         self.npcs.iter().filter_map(|npc_data| npc_data.as_ref())
     }
