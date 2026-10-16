@@ -3,7 +3,8 @@
 # Usage: upload-game-data.sh <path to data.idx> [server URL] [database name]
 # Needs rose-stdb-import (the import tool), spacetimedb-cli logged in as the admin
 # (the identity that published the module) and curl. Applies the data changes in
-# ROSE_OVERRIDES (default: overrides/game-data.toml in the current folder).
+# ROSE_OVERRIDES (default: overrides/game-data.toml in the current folder) and sends the
+# player motion timings in ROSE_MOTIONS (default: motions.toml next to that file).
 set -e
 DATA_IDX=${1:?usage: upload-game-data.sh <data.idx> [server] [database]}
 SERVER=${2:-http://127.0.0.1:3000}

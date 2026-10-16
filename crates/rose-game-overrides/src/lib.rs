@@ -12,6 +12,9 @@ use anyhow::Context;
 use rose_file_readers::{patch_stb, MemoryFilesystemDevice, VfsPath, VirtualFilesystem};
 use serde::Deserialize;
 
+mod motions;
+pub use motions::{MotionTiming, MotionTimings, MOTIONS_FILE, MOTIONS_GAME_FILE};
+
 /// The file both sides look for, relative to the repository (and to the game's folder in
 /// the Windows zip).
 pub const OVERRIDES_FILE: &str = "overrides/game-data.toml";

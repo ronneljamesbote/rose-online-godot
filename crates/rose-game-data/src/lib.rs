@@ -16,7 +16,8 @@ use rose_data_irose::{
     get_skill_database, get_status_effect_database, get_string_database, get_warp_gate_database,
     get_zone_database,
 };
-use rose_file_readers::{stb_column, StbFile, VirtualFilesystem};
+use rose_file_readers::{stb_column, StbFile, VfsFile, VfsPathBuf, VirtualFilesystem};
+use rose_game_overrides::MotionTimings;
 use rose_game_common::{
     components::BasicStats,
     data::{AbilityValueCalculator, DropTable},
@@ -61,10 +62,7 @@ pub fn load_game_data(vfs: &VirtualFilesystem) -> Result<GameData, anyhow::Error
         drop_table,
         ai: Arc::new(get_ai_database(vfs).context("ai database")?),
         job_class: Arc::new(get_job_class_database(vfs, string_database.clone()).context("job class database")?),
-        motions: Arc::new(
-            get_character_motion_database(vfs, &CharacterMotionDatabaseOptions { load_frame_data: true })
-                .context("motion database")?,
-        ),
+        motions: Arc::new(load_motions(vfs).context("motion database")?),
         quests: Arc::new(get_quest_database(vfs, string_database.clone()).context("quest database")?),
         status_effects: Arc::new(
             get_status_effect_database(vfs, string_database.clone()).context("status effect database")?,
@@ -77,6 +75,34 @@ pub fn load_game_data(vfs: &VirtualFilesystem) -> Result<GameData, anyhow::Error
         zones,
         string_database,
     })
+}
+
+/// The player motions from FILE_MOTION.STB and their ZMO files, with the lengths and hit
+/// frames of `overrides/motions.toml` (exported from the Godot animations) in place of the
+/// ZMO ones when the game files carry it.
+pub fn load_motions(vfs: &VirtualFilesystem) -> Result<CharacterMotionDatabase, anyhow::Error> {
+    let mut motions = get_character_motion_database(vfs, &CharacterMotionDatabaseOptions { load_frame_data: true })?;
+    if vfs.exists(rose_game_overrides::MOTIONS_GAME_FILE) {
+        let file = vfs.open_file(rose_game_overrides::MOTIONS_GAME_FILE)?;
+        let bytes: &[u8] = match &file {
+            VfsFile::Buffer(data) => data,
+            VfsFile::View(data) => data,
+        };
+        let timings = MotionTimings::parse(std::str::from_utf8(bytes)?).context("overrides/motions.toml")?;
+        for timing in &timings.motion {
+            let path = VfsPathBuf::new(&timing.file);
+            let matched = motions.set_motion_timing(
+                path.path(),
+                timing.duration(),
+                timing.hit_frames.len(),
+                timing.first_hit_time(),
+            );
+            if matched == 0 {
+                anyhow::bail!("overrides/motions.toml: {} is not a player motion", timing.file);
+            }
+        }
+    }
+    Ok(motions)
 }
 
 /// One crafting step's material: a given item, or for the first step (`item` None) any

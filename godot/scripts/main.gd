@@ -46,6 +46,9 @@
 ##   --quit-after=SECONDS       quit after this long
 ##   --import-rose[=force]      convert the ROSE models and textures into res://assets/rose/
 ##                              and quit (run headless; force redoes files already there)
+##   --export-motions[=check]   write ../overrides/motions.toml (the server's hit times) from the
+##                              hit markers of the imported player animations and quit; check
+##                              only compares and fails when the file is out of date
 extends Node3D
 
 const START := Vector3(5210.5, 0.0, -5136.7)  # zone start position from LIST_ZONE.STB
@@ -166,6 +169,23 @@ func _import_rose(force: bool) -> void:
 	get_tree().quit(1 if result.failed > 0 else 0)
 
 
+## Writes or checks overrides/motions.toml, prints what differs and quits (1 when a check fails).
+func _export_motions(check: bool) -> void:
+	var result: Dictionary = RoseImport.export_motions(check)
+	if result.is_empty():
+		get_tree().quit(1)
+		return
+	var changed: Array = result.changed
+	for file in changed:
+		print("rose:   %s %s" % ["differs:" if check else "updated:", file])
+	if check:
+		print("rose: %s: %d motions, %d with hits, %s" % [result.path, result.motions, result.hits,
+			"matches the animations" if changed.is_empty() else "%d out of date; run --export-motions" % changed.size()])
+	else:
+		print("rose: %s: %d motions, %d with hits, %d changed" % [result.path, result.motions, result.hits, changed.size()])
+	get_tree().quit(1 if check and not changed.is_empty() else 0)
+
+
 func _start(data_idx: String) -> void:
 	var started := Time.get_ticks_msec()
 	if not RoseData.open(data_idx):
@@ -174,6 +194,9 @@ func _start(data_idx: String) -> void:
 	print("rose: data tables loaded in %d ms" % (Time.get_ticks_msec() - started))
 	if options.has("import-rose"):
 		_import_rose(options["import-rose"] == "force")
+		return
+	if options.has("export-motions"):
+		_export_motions(options["export-motions"] == "check")
 		return
 
 	fx = preload("res://scripts/fx.gd").new()
