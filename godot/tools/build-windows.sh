@@ -1,6 +1,8 @@
 #!/bin/bash
-# Builds the Windows release zip from Linux: cross-compiles rose_gd.dll with mingw-w64,
-# exports ROSE.exe with Godot's Windows release template and zips both with the readme.
+# Builds the Windows release zip from Linux: converts the ROSE models, textures and
+# animations into godot/assets/rose/ (--import-rose), cross-compiles rose_gd.dll with
+# mingw-w64, exports ROSE.exe and ROSE.pck (the scripts, the converted assets and the zone
+# scenes) with Godot's Windows release template and zips them with the DLLs and the readme.
 #
 # Needs: rustup target x86_64-pc-windows-gnu, gcc-mingw-w64-x86-64, the Godot editor
 # (GODOT, default godot on PATH) and its 4.7.2 export template windows_release_x86_64.exe
@@ -17,8 +19,9 @@ OUT=$(realpath -m "${1:-dist}")
 TARGET_DIR=${CARGO_TARGET_DIR:-$PWD/target}
 DATA_IDX=${ROSE_DATA_IDX:?"set ROSE_DATA_IDX to the data.idx of the ROSE client"}
 
-# The server times hits from overrides/motions.toml, so the animations shipped must match it.
+# The converted assets go into ROSE.pck, so make sure they are all there and current.
 "$GODOT" --headless --path godot -- --import-rose --data-idx="$DATA_IDX"
+# The server times hits from overrides/motions.toml, so the animations shipped must match it.
 if ! "$GODOT" --headless --path godot -- --export-motions=check --data-idx="$DATA_IDX"; then
   echo "build-windows: overrides/motions.toml doesn't match the player animations." >&2
   echo "build-windows: run  godot --headless --path godot -- --export-motions  and commit it." >&2
