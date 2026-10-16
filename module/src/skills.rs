@@ -850,17 +850,27 @@ fn pickup_nearest(ctx: &ReducerContext, p: &Player, id: u64) -> Result<(), Strin
 pub fn cast_skill(ctx: &ReducerContext, page: u8, index: u16, target: Option<u64>, x: f32, y: f32) -> Result<(), String> {
     let game = game(ctx)?;
     let (p, id) = my_player(ctx)?;
+    let skill = p.skill_list().get_skill(SkillSlot(page as usize, index as usize)).and_then(|skill_id| game.skills.get_skill(skill_id));
+    // Pressing the skill again while it is still on its way (walking into range or
+    // casting) changes nothing: it would only restart the casting motion.
+    if skill.is_some_and(|skill| repeats_cast(ctx, id, skill, target)) {
+        return Ok(());
+    }
     // During a locked-in cast the next skill waits until this one takes effect. Basic
     // actions (attack, sit) wait in their own reducers.
-    let queues = p
-        .skill_list()
-        .get_skill(SkillSlot(page as usize, index as usize))
-        .and_then(|skill_id| game.skills.get_skill(skill_id))
-        .is_some_and(|skill| !matches!(skill.skill_type, SkillType::Passive | SkillType::BasicAction | SkillType::Emote | SkillType::CreateWindow));
+    let queues = skill.is_some_and(|skill| !matches!(skill.skill_type, SkillType::Passive | SkillType::BasicAction | SkillType::Emote | SkillType::CreateWindow));
     if queues && queue_if_locked(ctx, id, QueuedCommand::Skill { page, index, target, x, y }) {
         return Ok(());
     }
     cast_skill_as(ctx, p, id, page, index, target, x, y)
+}
+
+/// Whether this skill is the one the entity is already casting, on the same target (any
+/// target for skills on yourself or on the ground), and it hasn't taken effect yet.
+fn repeats_cast(ctx: &ReducerContext, id: u64, skill: &SkillData, target: Option<u64>) -> bool {
+    ctx.db.skill_cast().entity_id().find(id).is_some_and(|cast| {
+        !cast.applied && cast.use_item_slot < 0 && cast.skill_id == skill.id.get() && (cast.target.is_none() || cast.target == target)
+    })
 }
 
 /// Use a skill list slot (the cast_skill reducer, or a skill queued during a cast).

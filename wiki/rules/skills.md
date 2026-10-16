@@ -95,10 +95,13 @@ requirements (points, job, skills, stats) as when learning. The cost is that lev
    action motion plays. A cast always lasts at least **0.3 s** in total.
 4. **Grace window.** For the first **0.3 s** of the casting motion you can still call the
    skill off: moving, attacking, stopping, sitting or using another skill cancels it and
-   nothing is spent.
+   nothing is spent. Using the **same skill again** on the same target (or again at all,
+   for skills on yourself or on the ground) does nothing until it has taken effect, from
+   the walk into range to the end of the casting motion, so pressing its hotbar key over
+   and over doesn't restart the casting.
 5. **Locked in.** After the grace window the costs are paid (checked once more first) and
    the cast can't be cancelled by you any more. The last thing you click while it is locked
-   in (a move, an attack, stop, sit or another skill) waits and happens the moment the
+   in (a move, an attack, stop, sit or a different skill) waits and happens the moment the
    skill takes effect. Emotes, jumping and scrolls are refused until then. A stun or sleep
    landing on you still cancels the cast, and so does dying; the costs are spent by then.
 6. **After the effect.** The action motion can be cut short by anything you do.
