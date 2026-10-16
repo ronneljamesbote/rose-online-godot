@@ -1,0 +1,426 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/26.tscn" id="1_lcyyx"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jd01/32_32/lightmap/object_64_2.res" id="2_styor"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/25.tscn" id="3_jt2gm"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/24.tscn" id="4_f6psi"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/7.tscn" id="5_emexb"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jd01/32_32/lightmap/object_64_0.res" id="6_je7wn"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jd01/32_32/lightmap/object_64_1.res" id="7_nlwdy"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/8.tscn" id="8_kdsnu"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/9.tscn" id="9_m2y2i"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jd01/32_32/lightmap/object_32_0.res" id="10_kf6b0"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/10.tscn" id="11_kr8jw"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/11.tscn" id="12_tavsc"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/12.tscn" id="13_f572q"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jd01/32_32/lightmap/object_64_3.res" id="14_sm65e"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/75.tscn" id="15_etptn"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/73.tscn" id="16_85r3n"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/74.tscn" id="17_02sun"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/76.tscn" id="18_6pijb"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/82.tscn" id="19_44qvr"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/222.tscn" id="20_mja2q"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/181.tscn" id="21_ku6ps"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jd/183.tscn" id="22_x7y8u"]
+
+[node name="Block_32_32" type="Node3D" unique_id=410947785]
+
+[node name="Water0" type="RoseWater" parent="." unique_id=695117954]
+start = Vector3(5240, 0, -5280)
+end = Vector3(5280, 0, -5220)
+tile_size = 20.0
+
+[node name="Decorations" type="Node3D" parent="." unique_id=1444588605]
+
+[node name="Deco_0" parent="Decorations" unique_id=505892203 instance=ExtResource("1_lcyyx")]
+lightmaps = [ExtResource("2_styor")]
+lightmap_cells = PackedVector3Array(3, 2, 0.25)
+transform = Transform3D(1.7000002, 0, 0, 0, 1.7000002, 0, 0, 0, 1.7000002, 5146.469, 18.873882, -5150.562)
+
+[node name="Deco_1" parent="Decorations" unique_id=1213580143 instance=ExtResource("1_lcyyx")]
+lightmaps = [ExtResource("2_styor")]
+lightmap_cells = PackedVector3Array(0, 3, 0.25)
+transform = Transform3D(-1.7901396, 0, 0.1881526, 0, 1.8000002, 0, -0.1881526, 0, -1.7901396, 5176.7603, 2.7375925, -5218.3384)
+
+[node name="Deco_2" parent="Decorations" unique_id=632867390 instance=ExtResource("1_lcyyx")]
+lightmaps = [ExtResource("2_styor")]
+lightmap_cells = PackedVector3Array(2, 2, 0.25)
+transform = Transform3D(-1.361905, 0.29107818, 0.14314187, 0.28948373, 1.3694063, -0.030424966, -0.14633958, 9.518117e-07, -1.392331, 5166.5986, 13.6660385, -5163.302)
+
+[node name="Deco_3" parent="Decorations" unique_id=1865306343 instance=ExtResource("3_jt2gm")]
+lightmaps = [ExtResource("2_styor")]
+lightmap_cells = PackedVector3Array(3, 1, 0.25)
+transform = Transform3D(0.17209189, 0, -1.0864551, 0, 1.1, 0, 1.0864551, 0, 0.17209189, 5251.512, 9.73867, -5176.536)
+
+[node name="Deco_4" parent="Decorations" unique_id=469092323 instance=ExtResource("4_f6psi")]
+lightmaps = [ExtResource("2_styor")]
+lightmap_cells = PackedVector3Array(2, 1, 0.25)
+transform = Transform3D(0.07294326, 0, -1.3980986, 0, 1.4000001, 0, 1.3980986, 0, 0.07294326, 5270.987, 5.613794, -5240.212)
+
+[node name="Deco_5" parent="Decorations" unique_id=194236996 instance=ExtResource("4_f6psi")]
+lightmaps = [ExtResource("2_styor")]
+lightmap_cells = PackedVector3Array(1, 1, 0.25)
+transform = Transform3D(1.2789644, 0, -0.5694297, 0, 1.4000001, 0, 0.5694297, 0, 1.2789644, 5249.8926, 7.757168, -5201.329)
+
+[node name="Deco_6" parent="Decorations" unique_id=1746146906 instance=ExtResource("4_f6psi")]
+lightmaps = [ExtResource("2_styor")]
+lightmap_cells = PackedVector3Array(0, 1, 0.25)
+transform = Transform3D(2.1250372, 0, -0.5694006, 0, 2.2, 0, 0.5694006, 0, 2.1250372, 5257.111, 13.85561, -5135.8267)
+
+[node name="Deco_7" parent="Decorations" unique_id=1419634071 instance=ExtResource("1_lcyyx")]
+lightmaps = [ExtResource("2_styor")]
+lightmap_cells = PackedVector3Array(0, 2, 0.25)
+transform = Transform3D(0.59019005, 0, 1.1583074, 0, 1.3000001, 0, -1.1583074, 0, 0.59019005, 5255.7935, 6.9058704, -5218.62)
+
+[node name="Deco_8" parent="Decorations" unique_id=1609666962 instance=ExtResource("1_lcyyx")]
+lightmaps = [ExtResource("2_styor")]
+lightmap_cells = PackedVector3Array(1, 2, 0.25)
+transform = Transform3D(1.2557038, 0, -0.33646405, 0, 1.3000001, 0, 0.33646405, 0, 1.2557038, 5260.27, 13.541141, -5142.8403)
+
+[node name="Deco_9" parent="Decorations" unique_id=1747614608 instance=ExtResource("5_emexb")]
+lightmaps = [ExtResource("6_je7wn")]
+lightmap_cells = PackedVector3Array(3, 3, 0.25)
+transform = Transform3D(0.28471467, 0, 1.0625148, 0, 1.1, 0, -1.0625148, 0, 0.28471467, 5145.8296, 23.45526, -5123.2676)
+
+[node name="Deco_10" parent="Decorations" unique_id=1568324957 instance=ExtResource("5_emexb")]
+lightmaps = [ExtResource("7_nlwdy")]
+lightmap_cells = PackedVector3Array(0, 0, 0.25)
+transform = Transform3D(0.3882538, 0, -1.4488821, 0, 1.5000001, 0, 1.4488821, 0, 0.3882538, 5136.6377, 20.49273, -5268.6426)
+
+[node name="Deco_11" parent="Decorations" unique_id=866220917 instance=ExtResource("5_emexb")]
+lightmaps = [ExtResource("6_je7wn")]
+lightmap_cells = PackedVector3Array(1, 3, 0.25)
+transform = Transform3D(-1.1, 0, 4.283558e-07, 0, 1.1, 0, -4.283558e-07, 0, -1.1, 5211.8145, 3.2259665, -5266.3857)
+
+[node name="Deco_12" parent="Decorations" unique_id=198889751 instance=ExtResource("5_emexb")]
+lightmaps = [ExtResource("6_je7wn")]
+lightmap_cells = PackedVector3Array(2, 3, 0.25)
+transform = Transform3D(-1.3000001, 0, 5.062387e-07, 0, 1.3000001, 0, -5.062387e-07, 0, -1.3000001, 5193.743, 9.147128, -5176.948)
+
+[node name="Deco_13" parent="Decorations" unique_id=337445507 instance=ExtResource("8_kdsnu")]
+lightmaps = [ExtResource("7_nlwdy"), ExtResource("7_nlwdy")]
+lightmap_cells = PackedVector3Array(3, 2, 0.25, 3, 0, 0.25)
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 5181.607, 20.485384, -5124.3525)
+
+[node name="Deco_14" parent="Decorations" unique_id=643770839 instance=ExtResource("8_kdsnu")]
+lightmaps = [ExtResource("7_nlwdy"), ExtResource("7_nlwdy")]
+lightmap_cells = PackedVector3Array(0, 3, 0.25, 0, 1, 0.25)
+transform = Transform3D(1.4000001, 0, 0, 0, 1.4000001, 0, 0, 0, 1.4000001, 5191.7446, 3.432104, -5202.3477)
+
+[node name="Deco_15" parent="Decorations" unique_id=1391793127 instance=ExtResource("8_kdsnu")]
+lightmaps = [ExtResource("7_nlwdy"), ExtResource("7_nlwdy")]
+lightmap_cells = PackedVector3Array(1, 2, 0.25, 1, 0, 0.25)
+transform = Transform3D(0.65356755, 0, -1.0064044, 0, 1.2, 0, 1.0064044, 0, 0.65356755, 5222.2627, 4.4279585, -5256.6064)
+
+[node name="Deco_16" parent="Decorations" unique_id=2099465090 instance=ExtResource("8_kdsnu")]
+lightmaps = [ExtResource("7_nlwdy"), ExtResource("7_nlwdy")]
+lightmap_cells = PackedVector3Array(2, 2, 0.25, 2, 0, 0.25)
+transform = Transform3D(1.5000001, 0, 0, 0, 1.5000001, 0, 0, 0, 1.5000001, 5130.3237, 18.348349, -5200.072)
+
+[node name="Deco_17" parent="Decorations" unique_id=883926952 instance=ExtResource("8_kdsnu")]
+lightmaps = [ExtResource("7_nlwdy"), ExtResource("7_nlwdy")]
+lightmap_cells = PackedVector3Array(3, 3, 0.25, 3, 1, 0.25)
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 5136.4785, 19.668497, -5149.4395)
+
+[node name="Deco_18" parent="Decorations" unique_id=42815184 instance=ExtResource("8_kdsnu")]
+lightmaps = [ExtResource("2_styor"), ExtResource("7_nlwdy")]
+lightmap_cells = PackedVector3Array(0, 0, 0.25, 0, 2, 0.25)
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 5170.194, 15.451952, -5154.969)
+
+[node name="Deco_19" parent="Decorations" unique_id=985818071 instance=ExtResource("8_kdsnu")]
+lightmaps = [ExtResource("7_nlwdy"), ExtResource("7_nlwdy")]
+lightmap_cells = PackedVector3Array(1, 3, 0.25, 1, 1, 0.25)
+transform = Transform3D(0.8899188, 0, -0.64656365, 0, 1.1, 0, 0.64656365, 0, 0.8899188, 5264.0107, 9.678625, -5185.4565)
+
+[node name="Deco_20" parent="Decorations" unique_id=1388345855 instance=ExtResource("8_kdsnu")]
+lightmaps = [ExtResource("7_nlwdy"), ExtResource("7_nlwdy")]
+lightmap_cells = PackedVector3Array(2, 3, 0.25, 2, 1, 0.25)
+transform = Transform3D(0.114991106, 0, -1.0939732, 0, 1.1, 0, 1.0939732, 0, 0.114991106, 5275.4033, 14.751224, -5132.5215)
+
+[node name="Deco_21" parent="Decorations" unique_id=1192459940 instance=ExtResource("9_m2y2i")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(4, 2, 0.125)
+transform = Transform3D(0.9708214, 0, -0.7053411, 0, 1.2, 0, 0.7053411, 0, 0.9708214, 5203.0264, 3.449062, -5245.776)
+
+[node name="Deco_22" parent="Decorations" unique_id=154943366 instance=ExtResource("9_m2y2i")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(3, 2, 0.125)
+transform = Transform3D(1.4979444, 0, -0.07850396, 0, 1.5000001, 0, 0.07850396, 0, 1.4979444, 5260.6514, 9.258604, -5207.3164)
+
+[node name="Deco_23" parent="Decorations" unique_id=616837571 instance=ExtResource("9_m2y2i")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(2, 2, 0.125)
+transform = Transform3D(-1.0580165, 0, -1.4562286, 0, 1.8000002, 0, 1.4562286, 0, -1.0580165, 5192.2173, 15.853685, -5149.273)
+
+[node name="Deco_24" parent="Decorations" unique_id=516056211 instance=ExtResource("11_kr8jw")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(6, 2, 0.125)
+transform = Transform3D(1.3376614, 0, 1.2044346, 0, 1.8000002, 0, -1.2044346, 0, 1.3376614, 5177.3, 5.965585, -5182.2295)
+
+[node name="Deco_25" parent="Decorations" unique_id=967182342 instance=ExtResource("11_kr8jw")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(5, 2, 0.125)
+transform = Transform3D(1.1147177, 0, 1.0036955, 0, 1.5000001, 0, -1.0036955, 0, 1.1147177, 5196.6523, 3.4757516, -5230.538)
+
+[node name="Deco_26" parent="Decorations" unique_id=872697307 instance=ExtResource("12_tavsc")]
+lightmaps = [ExtResource("2_styor")]
+lightmap_cells = PackedVector3Array(3, 0, 0.25)
+transform = Transform3D(-1.7357368, 0, -0.77279913, 0, 1.9000002, 0, 0.77279913, 0, -1.7357368, 5133.059, 19.912724, -5247.293)
+
+[node name="Deco_27" parent="Decorations" unique_id=890018110 instance=ExtResource("12_tavsc")]
+lightmaps = [ExtResource("2_styor")]
+lightmap_cells = PackedVector3Array(2, 0, 0.25)
+transform = Transform3D(-0.98995066, 0, 0.9899488, 0, 1.4000001, 0, -0.9899488, 0, -0.98995066, 5186.2476, 19.351072, -5138.501)
+
+[node name="Deco_28" parent="Decorations" unique_id=142347912 instance=ExtResource("12_tavsc")]
+lightmaps = [ExtResource("2_styor")]
+lightmap_cells = PackedVector3Array(1, 0, 0.25)
+transform = Transform3D(-1.3314793, 0, 0.43262324, 0, 1.4000001, 0, -0.43262324, 0, -1.3314793, 5199.9214, 3.2886715, -5259.7583)
+
+[node name="Deco_29" parent="Decorations" unique_id=1649152790 instance=ExtResource("13_f572q")]
+lightmaps = [ExtResource("2_styor"), ExtResource("2_styor")]
+lightmap_cells = PackedVector3Array(3, 3, 0.25, 1, 3, 0.25)
+transform = Transform3D(1.2557038, 0, -0.33646423, 0, 1.3000001, 0, 0.33646423, 0, 1.2557038, 5159.118, 19.562967, -5134.7295)
+
+[node name="Deco_30" parent="Decorations" unique_id=1986494550 instance=ExtResource("13_f572q")]
+lightmaps = [ExtResource("14_sm65e"), ExtResource("2_styor")]
+lightmap_cells = PackedVector3Array(0, 0, 0.5, 2, 3, 0.25)
+transform = Transform3D(1.2557038, 0, -0.33646423, 0, 1.3000001, 0, 0.33646423, 0, 1.2557038, 5241.3643, 2.7899704, -5278.491)
+
+[node name="Deco_31" parent="Decorations" unique_id=1966897712 instance=ExtResource("15_etptn")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(0, 2, 0.125)
+transform = Transform3D(0.37546846, 0, 2.3704479, 0, 2.3999999, 0, -2.3704479, 0, 0.37546846, 5160.5176, 17.338652, -5144.318)
+
+[node name="Deco_32" parent="Decorations" unique_id=507618957 instance=ExtResource("16_85r3n")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(3, 1, 0.125)
+transform = Transform3D(1.0392306, 0, 0.59999996, 0, 1.2, 0, -0.59999996, 0, 1.0392306, 5233.04, 5.6303754, -5263.3857)
+
+[node name="Deco_33" parent="Decorations" unique_id=1020444696 instance=ExtResource("16_85r3n")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(4, 1, 0.125)
+transform = Transform3D(-0.54463995, 0, -0.83867013, 0, 1, 0, 0.83867013, 0, -0.54463995, 5206.4707, 3.2253122, -5275.5635)
+
+[node name="Deco_34" parent="Decorations" unique_id=959227578 instance=ExtResource("16_85r3n")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(1, 1, 0.125)
+transform = Transform3D(-2.296848, 0, 0.12037237, 0, 2.3, 0, -0.12037237, 0, -2.296848, 5192.142, 2.25291, -5256.9507)
+
+[node name="Deco_35" parent="Decorations" unique_id=419279976 instance=ExtResource("16_85r3n")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(2, 1, 0.125)
+transform = Transform3D(1.4000001, 0, -1.9297005e-07, 0, 1.4000001, 0, 1.9297005e-07, 0, 1.4000001, 5196.944, 1.6713523, -5224.1445)
+
+[node name="Deco_36" parent="Decorations" unique_id=1306942433 instance=ExtResource("17_02sun")]
+lightmaps = [ExtResource("6_je7wn")]
+lightmap_cells = PackedVector3Array(3, 0, 0.25)
+transform = Transform3D(1.5000001, 0, 0, 0, 1.5000001, 0, 0, 0, 1.5000001, 5203.802, 2.763669, -5234.617)
+
+[node name="Deco_37" parent="Decorations" unique_id=1978081905 instance=ExtResource("17_02sun")]
+lightmaps = [ExtResource("6_je7wn")]
+lightmap_cells = PackedVector3Array(0, 1, 0.25)
+transform = Transform3D(1.4003705, 0, -0.5375527, 0, 1.5000001, 0, 0.5375527, 0, 1.4003705, 5196.7017, 2.340371, -5261.851)
+
+[node name="Deco_38" parent="Decorations" unique_id=663217510 instance=ExtResource("17_02sun")]
+lightmaps = [ExtResource("6_je7wn")]
+lightmap_cells = PackedVector3Array(2, 0, 0.25)
+transform = Transform3D(1.0759622, 0, 0.22870356, 0, 1.1, 0, -0.22870356, 0, 1.0759622, 5200.8384, 2.4217038, -5265.0127)
+
+[node name="Deco_39" parent="Decorations" unique_id=1950599809 instance=ExtResource("17_02sun")]
+lightmaps = [ExtResource("6_je7wn")]
+lightmap_cells = PackedVector3Array(0, 0, 0.25)
+transform = Transform3D(0.9270613, 0, 2.8531654, 0, 2.9999993, 0, -2.8531654, 0, 0.9270613, 5216.845, 2.8041282, -5252.0435)
+
+[node name="Deco_40" parent="Decorations" unique_id=1291002210 instance=ExtResource("15_etptn")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(1, 2, 0.125)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5177.1235, 3.4687057, -5233.638)
+
+[node name="Deco_41" parent="Decorations" unique_id=1704164933 instance=ExtResource("15_etptn")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(7, 1, 0.125)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5212.6436, 3.2222507, -5248.082)
+
+[node name="Deco_42" parent="Decorations" unique_id=1414319956 instance=ExtResource("15_etptn")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(5, 1, 0.125)
+transform = Transform3D(1.0880046, 0, 0.88104844, 0, 1.4000001, 0, -0.88104844, 0, 1.0880046, 5209.5215, 3.0523727, -5242.157)
+
+[node name="Deco_43" parent="Decorations" unique_id=1832482798 instance=ExtResource("15_etptn")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(6, 1, 0.125)
+transform = Transform3D(1.5542924, 0, 1.2586406, 0, 2.0000002, 0, -1.2586406, 0, 1.5542924, 5204.051, 3.7597408, -5269.536)
+
+[node name="Deco_44" parent="Decorations" unique_id=1760825743 instance=ExtResource("17_02sun")]
+lightmaps = [ExtResource("6_je7wn")]
+lightmap_cells = PackedVector3Array(1, 0, 0.25)
+transform = Transform3D(5.192871, 0, -0.2721436, 0, 5.1999974, 0, 0.2721436, 0, 5.192871, 5146.131, 15.533892, -5163.4526)
+
+[node name="Deco_45" parent="Decorations" unique_id=1736349631 instance=ExtResource("18_6pijb")]
+lightmaps = [ExtResource("6_je7wn")]
+lightmap_cells = PackedVector3Array(0, 2, 0.25)
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 5178.0435, 0.097460635, -5239.9976)
+
+[node name="Deco_46" parent="Decorations" unique_id=72431814 instance=ExtResource("18_6pijb")]
+lightmaps = [ExtResource("6_je7wn")]
+lightmap_cells = PackedVector3Array(1, 2, 0.25)
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 5141.4253, 15.802068, -5170.2114)
+
+[node name="Deco_47" parent="Decorations" unique_id=869539898 instance=ExtResource("18_6pijb")]
+lightmaps = [ExtResource("6_je7wn")]
+lightmap_cells = PackedVector3Array(3, 1, 0.25)
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 5267.4556, 5.99845, -5227.045)
+
+[node name="Deco_48" parent="Decorations" unique_id=496942739 instance=ExtResource("19_44qvr")]
+lightmaps = [ExtResource("6_je7wn")]
+lightmap_cells = PackedVector3Array(0, 3, 0.25)
+transform = Transform3D(0.82219136, 0, 0.36606193, 0, 0.9, 0, -0.36606193, 0, 0.82219136, 5234.2056, 5.155302, -5267.886)
+
+[node name="Deco_49" parent="Decorations" unique_id=618819404 instance=ExtResource("19_44qvr")]
+lightmaps = [ExtResource("6_je7wn")]
+lightmap_cells = PackedVector3Array(3, 2, 0.25)
+transform = Transform3D(1.370319, 0, 0.61010325, 0, 1.5000001, 0, -0.61010325, 0, 1.370319, 5134.535, 17.470173, -5156.6157)
+
+[node name="Deco_50" parent="Decorations" unique_id=1081884393 instance=ExtResource("19_44qvr")]
+lightmaps = [ExtResource("6_je7wn")]
+lightmap_cells = PackedVector3Array(2, 2, 0.25)
+transform = Transform3D(1.370319, 0, 0.61010325, 0, 1.5000001, 0, -0.61010325, 0, 1.370319, 5255.5464, 10.771328, -5166.248)
+
+[node name="Deco_51" parent="Decorations" unique_id=1018822135 instance=ExtResource("18_6pijb")]
+lightmaps = [ExtResource("6_je7wn")]
+lightmap_cells = PackedVector3Array(1, 1, 0.25)
+transform = Transform3D(3.0999992, 0, 0, 0, 3.0999992, 0, 0, 0, 3.0999992, 5240.339, -0.5795923, -5218.337)
+
+[node name="Deco_52" parent="Decorations" unique_id=1927720378 instance=ExtResource("18_6pijb")]
+lightmaps = [ExtResource("6_je7wn")]
+lightmap_cells = PackedVector3Array(2, 1, 0.25)
+transform = Transform3D(0.95796335, 0, -2.9482708, 0, 3.0999992, 0, 2.9482708, 0, 0.95796335, 5136.724, 12.992821, -5181.431)
+
+[node name="Deco_53" parent="Decorations" unique_id=1258560275 instance=ExtResource("20_mja2q")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(4, 0, 0.125)
+transform = Transform3D(1.4672813, -1.2578043, 0.5147957, 1.251746, 1.5457776, 0.20905703, -0.5293562, 0.168824, 1.9212708, 5136.293, 26.35, -5180.95)
+
+[node name="Deco_54" parent="Decorations" unique_id=1906430543 instance=ExtResource("20_mja2q")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(5, 0, 0.125)
+transform = Transform3D(-1.6764066, -0.79624194, 1.9610355, 2.0834136, -1.0615498, 1.3499998, 0.37289238, 2.3514063, 1.2735144, 5140.4185, 28.55, -5159.718)
+
+[node name="Deco_55" parent="Decorations" unique_id=2095746851 instance=ExtResource("20_mja2q")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(6, 0, 0.125)
+transform = Transform3D(-1.0323102, 1.4845748, 2.7605014, 2.5463934, -1.2974496, 1.6500003, 1.8276246, 2.6462536, -0.73967963, 5147.391, 30.05, -5158.9473)
+
+[node name="Deco_56" parent="Decorations" unique_id=398760561 instance=ExtResource("20_mja2q")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(3, 0, 0.125)
+transform = Transform3D(2.1598818, -0.6860785, -2.3987913, 2.4523773, 1.3768669e-06, 2.2081301, -0.45907524, -3.2278924, 0.5098566, 5138.8423, 24.25, -5185.031)
+
+[node name="Deco_57" parent="Decorations" unique_id=325637317 instance=ExtResource("20_mja2q")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(0, 0, 0.125)
+transform = Transform3D(1.1544868, -3.069839, 0.36502296, 2.0791206, 1.0593652, 2.3334515, -2.2878835, -0.5863675, 2.3047247, 5141.8813, 27.75, -5238.1016)
+
+[node name="Deco_58" parent="Decorations" unique_id=1006799874 instance=ExtResource("20_mja2q")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(1, 0, 0.125)
+transform = Transform3D(1.4343622, -3.814042, 0.45351332, 2.58315, 1.3161808, 2.8991365, -2.8425217, -0.7285171, 2.8634455, 5146.13, 31.7, -5250.845)
+
+[node name="Deco_59" parent="Decorations" unique_id=1258589084 instance=ExtResource("20_mja2q")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(2, 0, 0.125)
+transform = Transform3D(1.7182491, -2.0064704, -0.5582966, 1.609739, 0.8202042, 2.0064907, -1.3214991, -1.609764, 1.7182255, 5160.8325, 31.7, -5275.7676)
+
+[node name="Deco_60" parent="Decorations" unique_id=2131914159 instance=ExtResource("21_ku6ps")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(0, 1, 0.125)
+transform = Transform3D(0.5871327, 0, -1.8070076, 0, 1.9000002, 0, 1.8070076, 0, 0.5871327, 5149.1772, 18.720606, -5141.5254)
+
+[node name="Deco_61" parent="Decorations" unique_id=918149250 instance=ExtResource("22_x7y8u")]
+lightmaps = [ExtResource("10_kf6b0")]
+lightmap_cells = PackedVector3Array(7, 0, 0.125)
+transform = Transform3D(1.3376607, 0, 1.2044352, 0, 1.8000002, 0, -1.2044352, 0, 1.3376607, 5126.35, 19.62498, -5146.7944)
+
+[node name="Sounds" type="Node3D" parent="." unique_id=1945009494]
+
+[node name="Sound_0" type="RoseSoundSpot" parent="Sounds" unique_id=2095668398]
+sound = "SOUND/TERRAIN/WIND_001.WAV"
+range = 3.0
+interval = 30.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5164.503, 20.000004, -5126.039)
+
+[node name="Sound_1" type="RoseSoundSpot" parent="Sounds" unique_id=1846093212]
+sound = "SOUND/TERRAIN/BIRD_002.WAV"
+interval = 30.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5237.03, 10.316532, -5176.6255)
+
+[node name="Spawns" type="Node3D" parent="." unique_id=1412483986]
+
+[node name="Spawn_0" type="RoseSpawnSpot" parent="Spawns" unique_id=1001738759]
+basic_monsters = PackedInt32Array(21, 22, 21, 22, 23)
+basic_counts = PackedInt32Array(2, 1, 2, 1, 1)
+tactic_monsters = PackedInt32Array(22, 24)
+tactic_counts = PackedInt32Array(2, 1)
+interval = 6
+limit = 10
+range = 32
+tactic_points = 85
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5133.931, 18.996655, -5125.146)
+
+[node name="Spawn_1" type="RoseSpawnSpot" parent="Spawns" unique_id=1054693593]
+basic_monsters = PackedInt32Array(71, 72, 71, 72, 62)
+basic_counts = PackedInt32Array(1, 1, 1, 1, 2)
+tactic_monsters = PackedInt32Array(73)
+tactic_counts = PackedInt32Array(1)
+interval = 10
+limit = 3
+range = 13
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5222.1855, 4.0959177, -5272.869)
+
+[node name="Spawn_2" type="RoseSpawnSpot" parent="Spawns" unique_id=861798442]
+basic_monsters = PackedInt32Array(21, 21, 22, 21, 61)
+basic_counts = PackedInt32Array(1, 1, 2, 2, 2)
+tactic_monsters = PackedInt32Array(71, 73)
+tactic_counts = PackedInt32Array(1, 1)
+interval = 5
+range = 17
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5183.306, 8.190048, -5173.9487)
+
+[node name="Spawn_3" type="RoseSpawnSpot" parent="Spawns" unique_id=1461331886]
+basic_monsters = PackedInt32Array(71, 72)
+basic_counts = PackedInt32Array(1, 1)
+interval = 12
+limit = 3
+range = 13
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5197.172, 3.0354393, -5242.2646)
+
+[node name="Spawn_4" type="RoseSpawnSpot" parent="Spawns" unique_id=228179794]
+basic_monsters = PackedInt32Array(21, 21, 71, 71, 22)
+basic_counts = PackedInt32Array(1, 1, 1, 1, 2)
+tactic_monsters = PackedInt32Array(23, 72)
+tactic_counts = PackedInt32Array(1, 2)
+interval = 8
+limit = 4
+range = 16
+tactic_points = 86
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5275.61, 9.19, -5208.69)
+
+[node name="Spawn_5" type="RoseSpawnSpot" parent="Spawns" unique_id=1463570283]
+basic_monsters = PackedInt32Array(71, 71, 72, 72)
+basic_counts = PackedInt32Array(1, 1, 1, 1)
+tactic_monsters = PackedInt32Array(63)
+tactic_counts = PackedInt32Array(1)
+interval = 10
+limit = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5176.4, 3.91, -5202.26)
+
+[node name="Spawn_6" type="RoseSpawnSpot" parent="Spawns" unique_id=323705890]
+basic_monsters = PackedInt32Array(23, 23, 62, 62)
+basic_counts = PackedInt32Array(1, 1, 1, 1)
+tactic_monsters = PackedInt32Array(22)
+tactic_counts = PackedInt32Array(1)
+interval = 10
+range = 21
+tactic_points = 96
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5120.56, 18.17, -5274.16)
