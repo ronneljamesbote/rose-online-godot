@@ -109,6 +109,18 @@ fn without_bones(mesh: &Gd<ArrayMesh>) -> Gd<ArrayMesh> {
     copy
 }
 
+/// A mesh for a part drawn without a skeleton: `mesh` itself, or a cached copy without its
+/// bone weights.
+pub fn rigid(mesh: &Gd<ArrayMesh>) -> Gd<ArrayMesh> {
+    let key = format!("{}#rigid", mesh.get_path());
+    if let Some(Some(cached)) = MESHES.with_borrow(|cache| cache.get(&key).cloned()) {
+        return cached;
+    }
+    let copy = without_bones(mesh);
+    MESHES.with_borrow_mut(|cache| cache.insert(key, Some(copy.clone())));
+    copy
+}
+
 /// Drops the cached meshes while the engine is still running.
 pub fn clear_cache() {
     MESHES.with_borrow_mut(|cache| cache.clear());
