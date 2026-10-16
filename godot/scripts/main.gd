@@ -47,7 +47,7 @@
 ##   --import-rose[=force]      convert the ROSE models and textures into res://assets/rose/
 ##                              and quit (run headless; force redoes files already there)
 ##   --export-motions[=check]   write ../overrides/motions.toml (the server's hit times) from the
-##                              hit markers of the imported player animations and quit; check
+##                              hit markers of the imported player, monster and NPC animations and quit; check
 ##                              only compares and fails when the file is out of date
 extends Node3D
 
@@ -163,7 +163,7 @@ func _import_rose(force: bool) -> void:
 	var folders: Dictionary = result.folders
 	for folder in folders:
 		print("rose:   %-24s %8.1f MB" % [folder, folders[folder] / 1048576.0])
-	print("rose: player characters: %d files made, %d already there, %.1f MB" % [
+	print("rose: characters, monsters, NPCs and carts: %d files made, %d already there, %.1f MB" % [
 		result.avatar_files, result.avatar_kept, result.avatar_bytes / 1048576.0])
 	print("rose: assets/rose is %.1f MB" % ((result.bytes + result.avatar_bytes) / 1048576.0))
 	get_tree().quit(1 if result.failed > 0 else 0)

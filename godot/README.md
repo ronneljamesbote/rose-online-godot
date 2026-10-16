@@ -196,7 +196,7 @@ cross-compiles `rose_gd.dll` with mingw-w64 (`rustup target add x86_64-pc-window
 `apt install gcc-mingw-w64-x86-64`), exports `ROSE.exe` with Godot's Windows release
 template (only `windows_release_x86_64.exe` from the 4.7.2 export templates is needed) and
 zips both with `tools/README-windows.txt`. It needs `ROSE_DATA_IDX` (the client's
-`data.idx`) and first checks that `overrides/motions.toml` matches the player animations
+`data.idx`) and first checks that `overrides/motions.toml` matches the player, monster and NPC animations
 (`--export-motions=check`, see `assets/README.md`); when it doesn't, it stops without
 building. The DLL only imports Windows system DLLs. Under
 Wine 9 the build loads the data, builds Zant and plays online headless (Wine's `dinput8`
