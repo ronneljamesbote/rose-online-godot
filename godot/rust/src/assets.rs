@@ -209,6 +209,53 @@ impl RoseImport {
         result.set("folders", &by_folder);
         result
     }
+
+    /// Writes `overrides/motions.toml` (in the repository, next to the project folder) from
+    /// the player animations, or with `check` only compares it. Needs RoseData.open and the
+    /// import. Returns {path, motions, hits, changed: [motion files that differ]}, empty on
+    /// error.
+    #[func]
+    fn export_motions(check: bool) -> VarDictionary {
+        let mut result = VarDictionary::new();
+        let Some(timings) = crate::character::motion_timings() else {
+            godot_error!("rose: open the data first");
+            return result;
+        };
+        if timings.motion.is_empty() {
+            godot_error!("rose: no player animations in {ROSE} or {OURS}; run --import-rose first");
+            return result;
+        }
+        let project = ProjectSettings::singleton().globalize_path("res://").to_string();
+        let path = Path::new(&project).join("..").join(rose_game_overrides::MOTIONS_FILE);
+        let current = match rose_game_overrides::MotionTimings::load(&path) {
+            Ok(current) => current,
+            Err(error) => {
+                godot_error!("rose: {error:#}");
+                return result;
+            }
+        };
+        let mut changed: Vec<String> = timings
+            .motion
+            .iter()
+            .filter(|m| !current.motion.contains(m))
+            .map(|m| m.file.clone())
+            .chain(current.motion.iter().filter(|m| !timings.motion.iter().any(|t| t.file == m.file)).map(|m| m.file.clone()))
+            .collect();
+        changed.sort();
+        changed.dedup();
+        if !check && !changed.is_empty() {
+            if let Err(error) = std::fs::write(&path, timings.to_toml()) {
+                godot_error!("rose: could not write {}: {error}", path.display());
+                return result;
+            }
+        }
+        let path = path.canonicalize().unwrap_or(path);
+        result.set("path", path.to_string_lossy().as_ref());
+        result.set("motions", timings.motion.len() as i64);
+        result.set("hits", timings.motion.iter().filter(|m| !m.hit_frames.is_empty()).count() as i64);
+        result.set("changed", &changed.iter().map(|f| f.to_variant()).collect::<VarArray>());
+        result
+    }
 }
 
 pub fn save(resource: Gd<Resource>, path: &str) -> bool {
