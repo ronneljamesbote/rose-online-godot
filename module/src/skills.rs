@@ -19,6 +19,7 @@ use crate::{
 };
 
 /// No skill can follow another sooner than this (rose-offline's GLOBAL_SKILL_COOLDOWN).
+/// A cast's global cooldown runs from when it takes effect; a skill used during it waits.
 const GLOBAL_COOLDOWN_US: i64 = 250_000;
 /// Cooldown keys: 0 is the global cooldown, a skill id its own, GROUP_KEY + n a group's.
 const GROUP_KEY: u32 = 100_000;
@@ -663,7 +664,12 @@ fn advance_cast(ctx: &ReducerContext, game: &GameData, mut cast: SkillCast, t: i
         return Ok(());
     }
     stop_motion(ctx, id);
-    check_can_use(ctx, game, &p, id, skill, t)?;
+    let ready_at = t.max(cooldown_until(ctx, id, 0));
+    check_can_use(ctx, game, &p, id, skill, ready_at)?;
+    // In range during the global cooldown: start casting the moment it ends.
+    if ready_at > t {
+        return Ok(());
+    }
     // The costs are paid once the grace window is over (cast_tick).
     if let Some(mut plan) = ctx.db.cast_plan().entity_id().find(id) {
         plan.lock_at_us = t + CAST_GRACE_US;
@@ -691,7 +697,8 @@ pub fn start_cast(
     use_item: Option<(i32, &Item)>,
 ) -> Result<(), String> {
     let t = now_us(ctx);
-    check_can_use(ctx, game, p, id, skill, t)?;
+    // A skill used during the global cooldown is accepted and waits for it (advance_cast).
+    check_can_use(ctx, game, p, id, skill, t.max(cooldown_until(ctx, id, 0)))?;
     crate::stand_up(ctx, id);
     break_disguise(ctx, game, id);
     let self_skill = skill.skill_type.is_self_skill();
@@ -977,6 +984,12 @@ pub fn cast_tick(ctx: &ReducerContext, game: &GameData, t: i64) {
             ctx.db.skill_cast().entity_id().update(cast.clone());
             if let Err(e) = take_effect(ctx, game, &cast, t) {
                 notify(capitalise(&e));
+            }
+            // A player's global cooldown runs from now, so the next skill can't start on
+            // top of this one (pay_costs' one, from the start of the casting, is over by the
+            // time a cast locks in).
+            if ctx.db.cast_plan().entity_id().find(id).is_some_and(|plan| plan.paid) {
+                set_cooldown(ctx, id, 0, t + GLOBAL_COOLDOWN_US);
             }
             // A command given while the cast was locked in runs now.
             if let Some(mut plan) = ctx.db.cast_plan().entity_id().find(id) {
