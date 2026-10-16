@@ -217,21 +217,20 @@ Other options (after `--`):
 - `--profile=NAME` picks the identity file (`user://identity-NAME.token`), so two clients on
   one PC are two players.
 - `--offline` skips the start screen.
-- `--net-demo[=square|line|fight|kite|warp|shop|skills|talk|walls]` walks a scripted route, fights the nearest
-  monsters, hits one and keeps stepping away from it (`kite`: after `--demo-wait` seconds, walking
-  through `--walk-to=X,Z;X,Z` first, in steps of `--kite-step` metres; prints the monster's wind-ups), walks through warp gates, buys and sells at the nearest store (`--buy=TEXT` picks
-  what to buy), uses the first two active skills, talks to the nearest NPC matching `--npc=NAME` and picks `--answers=1,2,...` (`q` prints the quest log, `talk` opens the conversation again, `deposit` and `withdraw` move the first item in or out of the bank), crafts (`craft`: the first craft skill makes the item matching `--craft=NAME`, `--times=N` times; in the talk demo `pick=NAME` puts a bag item into the refine or disassemble window, `work` presses its button, `skill=NAME` uses a skill, `use=NAME`, `equip=NAME` and `unequip` use, wear and take off the weapon, `gem=NAME` sets a gem and `wait` waits six seconds), trades (`trade`: with `--trade-with=NAME` it asks that player, without it accepts the first request; `--offer=ITEM` and `--zuly=N` are what it puts up, `--hold=SECONDS` how long it waits before pressing Trade), fights a player (`pvp`: `--fight=NAME` attacks them, `--leave-party` leaves the party first), chats (`chat`: says each line of `--say=LINE|LINE` every `--say-every` seconds after `--chat-wait`; `--sit-for=SECONDS` sits meanwhile and prints HP and MP), forms a party (`party`: with `--invite=NAME` it invites that player, without it accepts the first invitation; `--rules=XP,DROPS` sets the rules) and then fights, or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
-  player's position once a second, `--quit-after=SECONDS` quits. The two-client test:
-  `--headless ... --name=Alice --profile=alice --net-demo` in one process and
-  `... --name=Bob --profile=bob --weapon=bow --net-demo=line --net-log` in another.
-
+- `--net-demo[=NAME]` runs a scripted online test (a route, fights, shops, talks, parties,
+  trades and more), `--demo` a scripted offline run, swing and cancel, and
+  `--effect=PATH,...` plays effects in a loop. They are for tests and recordings, live in
+  `demos/` and are left out of the Windows build; `demos/README.md` lists them and their
+  options.
+- `--net-log` prints every player's position once a second, `--quit-after=SECONDS` quits.
+  The two-client test: `--headless ... --name=Alice --profile=alice --net-demo` in one
+  process and `... --name=Bob --profile=bob --weapon=bow --net-demo=line --net-log` in
+  another.
 - `--time=morning|day|evening|night|TICKS` fixes the start time (one tick is 10 s).
 - `--zone-files` builds zones from the client's map files even when they have scenes in
   `zones/`; `--import-zone=ID[,force]` writes a zone's scenes (see `assets/README.md`).
 - `--free-camera=x,y,z,yaw,pitch` uses a fixed camera with the Bevy zone viewer's convention.
 - `--screenshot=PATH` saves one frame and quits.
-- `--demo` plays a scripted run, swing, cancel and combo. With
-  `--write-movie out.avi --fixed-fps 30` it records the clip.
 
 ## Layout
 
@@ -263,6 +262,9 @@ Other options (after `--`):
 - `scripts/` holds the GDScript scene setup, the offline player (`player.gd`), the online
   world (`online.gd`, `net_entity.gd`), the start screen (`connect_panel.gd`, `account_login.gd`), character creation
   (`character_create.gd`), the loading screen (`loading_screen.gd`) and the camera.
+- `demos/` holds the scripted runs for tests and recordings, one file per demo (see
+  `demos/README.md`). The Windows export leaves the folder out (`exclude_filter` in
+  `export_presets.cfg`), so ROSE.exe can't run them.
 
 Coordinates follow the Bevy client: ROSE (x, y, z) in centimetres becomes Godot
 (x, z, -y) in metres. Godot treats clockwise triangles as front faces, so every index
