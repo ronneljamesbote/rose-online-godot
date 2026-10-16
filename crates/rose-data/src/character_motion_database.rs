@@ -65,6 +65,16 @@ impl CharacterMotionDatabase {
         }
     }
 
+    /// How many weapon motion types (TYPE_MOTION.STB columns) there are.
+    pub fn weapon_type_count(&self) -> usize {
+        self.weapon_type_count
+    }
+
+    /// Every motion file, per gender (0 is shared), by motion index.
+    pub fn motion_files(&self, gender: usize) -> impl Iterator<Item = &MotionFileData> {
+        self.motion_data.get(gender).into_iter().flatten().flatten()
+    }
+
     pub fn get_character_motion(
         &self,
         motion_id: MotionId,
