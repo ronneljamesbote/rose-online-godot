@@ -217,8 +217,9 @@ Other options (after `--`):
 - `--profile=NAME` picks the identity file (`user://identity-NAME.token`), so two clients on
   one PC are two players.
 - `--offline` skips the start screen.
-- `--net-demo[=square|line|fight|warp|shop|skills|talk|walls]` walks a scripted route, fights the nearest
-  monsters, walks through warp gates, buys and sells at the nearest store (`--buy=TEXT` picks
+- `--net-demo[=square|line|fight|kite|warp|shop|skills|talk|walls]` walks a scripted route, fights the nearest
+  monsters, hits one and keeps stepping away from it (`kite`: after `--demo-wait` seconds, walking
+  through `--walk-to=X,Z;X,Z` first, in steps of `--kite-step` metres; prints the monster's wind-ups), walks through warp gates, buys and sells at the nearest store (`--buy=TEXT` picks
   what to buy), uses the first two active skills, talks to the nearest NPC matching `--npc=NAME` and picks `--answers=1,2,...` (`q` prints the quest log, `talk` opens the conversation again, `deposit` and `withdraw` move the first item in or out of the bank), crafts (`craft`: the first craft skill makes the item matching `--craft=NAME`, `--times=N` times; in the talk demo `pick=NAME` puts a bag item into the refine or disassemble window, `work` presses its button, `skill=NAME` uses a skill, `use=NAME`, `equip=NAME` and `unequip` use, wear and take off the weapon, `gem=NAME` sets a gem and `wait` waits six seconds), trades (`trade`: with `--trade-with=NAME` it asks that player, without it accepts the first request; `--offer=ITEM` and `--zuly=N` are what it puts up, `--hold=SECONDS` how long it waits before pressing Trade), fights a player (`pvp`: `--fight=NAME` attacks them, `--leave-party` leaves the party first), chats (`chat`: says each line of `--say=LINE|LINE` every `--say-every` seconds after `--chat-wait`; `--sit-for=SECONDS` sits meanwhile and prints HP and MP), forms a party (`party`: with `--invite=NAME` it invites that player, without it accepts the first invitation; `--rules=XP,DROPS` sets the rules) and then fights, or runs out in `--wall-directions` directions for `--wall-reach` metres, `--net-log` prints every
   player's position once a second, `--quit-after=SECONDS` quits. The two-client test:
   `--headless ... --name=Alice --profile=alice --net-demo` in one process and
