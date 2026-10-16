@@ -73,7 +73,7 @@ Zone objects and ground textures are converted by the same import:
 | `3ddata/junon/list_deco_jg/12.tscn`, `list_cnst_jg/1.tscn` and so on (and the event objects a zone uses) | One scene per building, decoration or event object (`RoseZoneObject`): its mesh parts with their collision and its effects. Placed copies get their lightmap from the block. |
 | `3ddata/maps/junon/jg07/terrain_textures/12.res` and so on | The ground textures of each zone that has scenes, by tile texture number. |
 
-The zones themselves are scenes in `res://zones/`, one folder per zone (`20_birth_island/`, `22_adventurer_s_plain/`),
+The zones themselves are scenes in `res://zones/`, one folder per zone (`20_birth_island/`, `21_valley_of_luxem_tower/`, `22_adventurer_s_plain/`),
 committed to the repository. They are written once from the client's map files:
 
 ```sh
@@ -91,7 +91,7 @@ Open `zone.tscn` in the editor to change the zone: move, add or delete objects a
 in the block scenes, and select `Terrain` to sculpt, paint ground textures or cut holes with
 the Terrain3D tools. Painting uses the overlay texture of each 10 m ROSE tile; the textures
 in the Terrain3D list are the zone's tile textures in order. Terrain3D holds 32 textures; a
-zone that uses more (Adventurer's Plain uses 40) puts the 32 used on most tiles in the
+zone that uses more (Valley of Luxem Tower uses 39, Adventurer's Plain 40) puts the 32 used on most tiles in the
 Terrain3D list and the rest in `RoseTerrainLook`'s `extra_textures`, marked by two control
 bits Terrain3D doesn't use. Those extra textures can't be picked for painting, and painting
 over a tile that shows one turns it into the Terrain3D texture with the same place in the
