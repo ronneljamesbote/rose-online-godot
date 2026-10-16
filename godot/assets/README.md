@@ -28,16 +28,20 @@ applies at run time, so they look exactly as before. Running it again only conve
 missing; `--import-rose=force` redoes everything. It also redoes everything after an update
 that changes the converted output (`IMPORT_VERSION` in `rust/src/assets.rs`).
 
-## Player characters
+## Characters, monsters, NPCs and carts
 
-The import also builds the player characters from the converted meshes:
+The import also builds the characters from the converted meshes:
 
 | File | What it is |
 | --- | --- |
 | `3ddata/avatar/male.tscn`, `female.tscn` | The skeleton (`Skeleton3D`, bones `b0`... and dummy bones `d0`...) and an `AnimationPlayer` with the no-weapon motions. |
-| `3ddata/motion/avatar/*.anim` | Every player motion. Hit frames, footsteps and effect frames are markers on the timeline. |
+| `3ddata/motion/avatar/*.anim` | Every player, cart and castle gear motion. Hit frames, footsteps and effect frames are markers on the timeline. |
+| `3ddata/motion/npc/**/*.anim` | Every monster and NPC motion, with the same markers. |
 | `3ddata/avatar/male_motions/weapon_N.tres` (and `female_motions`) | One animation library per weapon motion type (the column of `TYPE_MOTION.STB`): stop1, run, attack, attack2, attack3, hit, die... |
 | `3ddata/avatar/list_mbody/12.tscn` and so on | One scene per part in each part list (faces, hair, caps, bodies, arms, feet; `3ddata/weapon/list_weapon` and `list_subwpn` for weapons and shields), named by the item's model number. Each mesh instance says whether it is `skinned` or which `bone` it hangs on. |
+| `3ddata/npc/list_npc/12.tscn` and so on | One scene per monster or NPC model (the `LIST_NPC.CHR` entry, the same number as the monster or NPC): its skeleton, its parts and an `AnimationPlayer` with stop, move, attack, hit, die and run. Weapons and the size come from the monster data when it spawns. |
+| `3ddata/pat/cart/cart01.tscn`, `3ddata/pat/castlegear/castlegear02/castlegear02.tscn` | The cart and castle gear skeletons with the driver's `Seat` and, on carts, the passenger's `BackSeat`. |
+| `3ddata/pat/list_pat/1.tscn` and so on | One scene per cart and castle gear part (body, engine, wheels, arms), like the player parts. |
 
 Markers are named `kind` + number + `:` + the ROSE event id, for example `hit1:21`. `hit`
 markers are when a swing or skill lands (event ids 10, 20-28, 56, 57, 66, 67, the same ones
@@ -54,8 +58,10 @@ godot --headless --path godot -- --export-motions=check    # fails when it is ou
 ```
 
 The Windows build (`tools/build-windows.sh`) runs the check and refuses to build while the
-file is out of date. An edited animation goes in `ours/` under the same path (for example
-`ours/3ddata/motion/avatar/onehand_attack01_m1.anim`), since `rose/` is remade by the import.
+file is out of date. An edited animation or scene goes in `ours/` under the same path (for example
+`ours/3ddata/motion/avatar/onehand_attack01_m1.anim` or `ours/3ddata/npc/list_npc/1.tscn`),
+since `rose/` is remade by the import. Monsters often share an animation file, so moving a
+marker in one moves it for all of them, as in iROSE.
 
 The game falls back to the client data for anything not in either folder, so it runs the
 same with or without `rose/`. The Windows build leaves `rose/` out for now.

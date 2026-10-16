@@ -211,7 +211,7 @@ impl RoseImport {
     }
 
     /// Writes `overrides/motions.toml` (in the repository, next to the project folder) from
-    /// the player animations, or with `check` only compares it. Needs RoseData.open and the
+    /// the player, monster and NPC animations, or with `check` only compares it. Needs RoseData.open and the
     /// import. Returns {path, motions, hits, changed: [motion files that differ]}, empty on
     /// error.
     #[func]
@@ -222,7 +222,7 @@ impl RoseImport {
             return result;
         };
         if timings.motion.is_empty() {
-            godot_error!("rose: no player animations in {ROSE} or {OURS}; run --import-rose first");
+            godot_error!("rose: no imported animations in {ROSE} or {OURS}; run --import-rose first");
             return result;
         }
         let project = ProjectSettings::singleton().globalize_path("res://").to_string();
@@ -243,8 +243,9 @@ impl RoseImport {
             .collect();
         changed.sort();
         changed.dedup();
-        if !check && !changed.is_empty() {
-            if let Err(error) = std::fs::write(&path, timings.to_toml()) {
+        let text = timings.to_toml();
+        if !check && std::fs::read_to_string(&path).ok().as_deref() != Some(text.as_str()) {
+            if let Err(error) = std::fs::write(&path, text) {
                 godot_error!("rose: could not write {}: {error}", path.display());
                 return result;
             }
