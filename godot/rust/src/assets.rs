@@ -191,6 +191,14 @@ impl RoseImport {
         let same_avatars = same_version && stamp.get_value_ex("import", "avatars").default(&Variant::nil()).done().try_to::<i64>().ok() == Some(crate::character::AVATAR_IMPORT_VERSION);
         let avatars = crate::character::import_avatars(force || !same_avatars);
         stamp.set_value("import", "avatars", &crate::character::AVATAR_IMPORT_VERSION.to_variant());
+
+        // Zones with scenes in res://zones/: their model scenes and texture arrays.
+        let same_zones = same_version && stamp.get_value_ex("import", "zones").default(&Variant::nil()).done().try_to::<i64>().ok() == Some(crate::zone_scene::ZONE_IMPORT_VERSION);
+        let mut zones = crate::zone_scene::ZoneImport::default();
+        for (zone_id, _) in crate::zone_scene::zone_folders() {
+            crate::zone_scene::import_zone_assets(zone_id, force || !same_zones, &mut zones);
+        }
+        stamp.set_value("import", "zones", &crate::zone_scene::ZONE_IMPORT_VERSION.to_variant());
         stamp.save(STAMP);
 
         let mut by_folder = VarDictionary::new();
@@ -199,7 +207,10 @@ impl RoseImport {
         }
         result.set("meshes", meshes);
         result.set("textures", textures);
-        result.set("failed", failed + avatars.failed);
+        result.set("failed", failed + avatars.failed + zones.failed);
+        result.set("zone_files", zones.saved);
+        result.set("zone_kept", zones.kept);
+        result.set("zone_bytes", zones.bytes as i64);
         result.set("avatar_files", avatars.saved);
         result.set("avatar_kept", avatars.kept);
         result.set("avatar_bytes", avatars.bytes as i64);
@@ -207,6 +218,25 @@ impl RoseImport {
         result.set("bytes", total_bytes as i64);
         result.set("seconds", started.elapsed().as_secs_f64());
         result.set("folders", &by_folder);
+        result
+    }
+
+    /// Writes the scenes of a zone into `res://zones/<id>_<name>/` from the ROSE map files,
+    /// with the model scenes and textures they use. Refuses to replace existing scenes
+    /// unless `force`. Needs RoseData.open and the import. Returns {folder, blocks, objects,
+    /// markers} or {error}.
+    #[func]
+    fn import_zone(zone_id: i32, force: bool) -> VarDictionary {
+        let mut result = VarDictionary::new();
+        match crate::zone_scene::write_zone_scenes(zone_id.clamp(0, u16::MAX as i32) as u16, force) {
+            Ok((folder, blocks, objects, markers)) => {
+                result.set("folder", folder.as_str());
+                result.set("blocks", blocks as i64);
+                result.set("objects", objects as i64);
+                result.set("markers", markers as i64);
+            }
+            Err(error) => result.set("error", error.as_str()),
+        }
         result
     }
 

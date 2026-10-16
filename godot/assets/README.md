@@ -63,5 +63,38 @@ file is out of date. An edited animation or scene goes in `ours/` under the same
 since `rose/` is remade by the import. Monsters often share an animation file, so moving a
 marker in one moves it for all of them, as in iROSE.
 
+## Zones
+
+Zone objects and ground textures are converted by the same import:
+
+| File | What it is |
+| --- | --- |
+| `3ddata/junon/list_deco_jg/12.tscn`, `list_cnst_jg/1.tscn` and so on (and the event objects a zone uses) | One scene per building, decoration or event object (`RoseZoneObject`): its mesh parts with their collision and its effects. Placed copies get their lightmap from the block. |
+| `3ddata/maps/junon/jg07/terrain_textures/12.res` and so on | The ground textures of each zone that has scenes, by tile texture number. |
+
+The zones themselves are scenes in `res://zones/`, one folder per zone (`20_birth_island/`),
+committed to the repository. They are written once from the client's map files:
+
+```sh
+godot --headless --path godot -- --import-zone=20 --data-idx=/path/to/data.idx
+godot --headless --path godot -- --import-zone=20,force --data-idx=...   # replace edited scenes
+```
+
+| File | What it is |
+| --- | --- |
+| `zone.tscn` | The zone: every block, the ground (`Terrain`, a Terrain3D node with a `RoseTerrainLook` child holding the block lightmaps) and the zone's events. |
+| `block_32_34.tscn` and so on | One 160 m block: `Water`, `Buildings`, `Decorations`, `EventObjects`, `Warps`, `Effects`, `Sounds`, `Spawns` and `Npcs`. Spawns and NPCs are marker nodes that show the monster or NPC in the editor. |
+| `terrain/`, `terrain_assets.tres` | The Terrain3D heights, tile textures and holes (1280 m regions, 2.5 m between vertices like ROSE). |
+
+Open `zone.tscn` in the editor to change the zone: move, add or delete objects and markers
+in the block scenes, and select `Terrain` to sculpt, paint ground textures or cut holes with
+the Terrain3D tools. Painting uses the overlay texture of each 10 m ROSE tile; the textures
+in the Terrain3D list are the zone's tile textures in order. The game loads the scenes
+when the zone has a folder here and its converted assets exist, and builds the zone from
+the client's map files otherwise (or with `--zone-files`), so both always work.
+
+The server doesn't read these scenes yet; spawns, NPCs and warps there still come from the
+client data.
+
 The game falls back to the client data for anything not in either folder, so it runs the
 same with or without `rose/`. The Windows build leaves `rose/` out for now.
