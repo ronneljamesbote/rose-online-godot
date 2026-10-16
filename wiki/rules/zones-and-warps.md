@@ -104,9 +104,15 @@ $= 5760 - 512 \times 2.5 = 4480$ m.
 
 ## Zone edges
 
-The server refuses a move to a point outside the zone's rectangle: from the corner of the
-lowest map block to the far edge of the highest, rounded down to whole sectors (the sector
-size is in LIST_ZONE.STB). See "What the server checks" below.
+The server refuses a move to a point outside the zone's rectangle: from the south-west corner
+of its map blocks to the north-east one, rounded down to whole sectors (the sector size is in
+LIST_ZONE.STB). Map block files count their rows from the north, so block row $b$ covers y
+from $(64 - b) \times 160$ m to $(65 - b) \times 160$ m. See "What the server checks" below.
+
+**Worked example.** [[zones/20-birth-island|Birth Island]] has map blocks in columns 30 to
+36 and rows 30 to 36. Its rectangle runs from x = 4800 m and y = $(64 - 36) \times 160 =
+4480$ m, 22 sectors of 50 m (1,100 m) each way, so up to x = 5900 m and y = 5580 m. The
+start point (5121, 4699) is inside.
 
 ## What you see around you
 
