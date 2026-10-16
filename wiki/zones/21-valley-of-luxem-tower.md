@@ -276,9 +276,10 @@ zone_drops:
 - '[[items/material/5-iron|Iron]]'
 - '[[items/material/116-netil|Netil]]'
 source:
-  data: LIST_ZONE.STB row 21, the zone's IFO files, ITEM_DROP.STB row 21
+  data: LIST_ZONE.STB row 21, overrides/zones/21-valley-of-luxem-tower.toml (exported from the scenes in godot/zones/21_valley_of_luxem_tower), ITEM_DROP.STB row 21
   code:
   - module/src/world.rs
+  - crates/rose-game-data/src/lib.rs (apply_zone_layouts)
   - crates/rose-data-irose/src/zone_database.rs
 ---
 # Valley of Luxem Tower
@@ -287,3 +288,8 @@ Positions are in metres. Each spawn point keeps up to "max alive" monsters; the
 reinforcements show up once a point has been refilled many times (see
 [[rules/monster-spawns|Monster spawns]]). Zone drops can come from any monster here (see
 [[rules/drops|Drops]]).
+
+Valley of Luxem Tower is edited in Godot: its spawn points, NPCs and start and revive spots
+are markers in the zone's scenes, and the server reads them from
+`overrides/zones/21-valley-of-luxem-tower.toml`, which is exported from those scenes. They
+are the same as in iROSE's map files.
