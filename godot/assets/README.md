@@ -53,7 +53,8 @@ godot --headless --path godot -- --export-motions          # writes ../overrides
 godot --headless --path godot -- --export-motions=check    # fails when it is out of date
 ```
 
-An edited animation goes in `ours/` under the same path (for example
+The Windows build (`tools/build-windows.sh`) runs the check and refuses to build while the
+file is out of date. An edited animation goes in `ours/` under the same path (for example
 `ours/3ddata/motion/avatar/onehand_attack01_m1.anim`), since `rose/` is remade by the import.
 
 The game falls back to the client data for anything not in either folder, so it runs the
