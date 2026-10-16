@@ -673,8 +673,10 @@ pub(crate) fn move_to_as(ctx: &ReducerContext, player: Player, id: u64, x: f32, 
     if !x.is_finite() || !y.is_finite() {
         return Err("bad position".into());
     }
-    if let Some(z) = ctx.db.zone_info().zone_id().find(player.zone_id) {
-        if x < z.min_x || x > z.max_x || y < z.min_y || y > z.max_y {
+    let game = game_data::game(ctx)?;
+    if let Some(zone) = rose_data::ZoneId::new(player.zone_id).and_then(|id| game.zones.get_zone(id)) {
+        let (min_x, min_y, max_x, max_y) = world::zone_bounds(zone);
+        if x < min_x || x > max_x || y < min_y || y > max_y {
             return Err("outside the zone".into());
         }
     }

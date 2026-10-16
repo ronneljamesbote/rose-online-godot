@@ -231,10 +231,11 @@ fn load_zone(
         return Err(LoadZoneError::NotExists);
     }
 
+    // Block files count rows from the north: row b covers y from (64 - b) to (65 - b) blocks.
     let min_x = min_block_x.unwrap();
-    let min_y = min_block_y.unwrap() + 1;
+    let min_y = 64 - max_block_y.unwrap();
     let max_x = max_block_x.unwrap() + 1;
-    let max_y = max_block_y.unwrap() + 2;
+    let max_y = 65 - min_block_y.unwrap();
 
     let sector_size = data
         .get_zone_sector_size(id)

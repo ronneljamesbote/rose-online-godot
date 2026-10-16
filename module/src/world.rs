@@ -54,6 +54,16 @@ pub struct MonsterSpawn {
     pub next_check_at_us: i64,
 }
 
+/// A zone's rectangle in cm (min x, min y, max x, max y): its map blocks, rounded down to
+/// whole sectors. Moves read it from the game data rather than zone_info, so a fix to it
+/// applies on a module update without uploading the game data again.
+pub fn zone_bounds(zone: &rose_data::ZoneData) -> (f32, f32, f32, f32) {
+    let size_x = zone.num_sectors_x as f32 * zone.sector_size as f32;
+    let size_y = zone.num_sectors_y as f32 * zone.sector_size as f32;
+    let base = zone.sectors_base_position;
+    (base.x, base.y, base.x + size_x, base.y + size_y)
+}
+
 /// Replace zones and spawn points with what the zone database says.
 pub fn setup_zones(ctx: &ReducerContext, game: &GameData) {
     let monsters: Vec<u64> =
@@ -72,8 +82,7 @@ pub fn setup_zones(ctx: &ReducerContext, game: &GameData) {
 
     for zone in game.zones.iter() {
         let zone_id = zone.id.get();
-        let size_x = zone.num_sectors_x as f32 * zone.sector_size as f32;
-        let size_y = zone.num_sectors_y as f32 * zone.sector_size as f32;
+        let (min_x, min_y, max_x, max_y) = zone_bounds(zone);
         let revive = zone.get_closest_revive_position(zone.start_position).unwrap_or(zone.start_position);
         ctx.db.zone_info().insert(ZoneInfo {
             zone_id,
@@ -82,10 +91,10 @@ pub fn setup_zones(ctx: &ReducerContext, game: &GameData) {
             start_y: zone.start_position.y,
             revive_x: revive.x,
             revive_y: revive.y,
-            min_x: zone.sectors_base_position.x,
-            min_y: zone.sectors_base_position.y,
-            max_x: zone.sectors_base_position.x + size_x,
-            max_y: zone.sectors_base_position.y + size_y,
+            min_x,
+            min_y,
+            max_x,
+            max_y,
         });
         let entries = |list: &Vec<(NpcId, usize)>| -> Vec<SpawnEntry> {
             list.iter().map(|(id, count)| SpawnEntry { npc_id: id.get(), count: *count as u32 }).collect()
