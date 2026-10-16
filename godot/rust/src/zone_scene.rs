@@ -172,10 +172,24 @@ const TERRAIN_SHADER3D: &str = "res://shaders/rose_terrain3d.gdshader";
 
 /// A Terrain3D control map value: texture layer 1 as the base, layer 2 as the overlay drawn
 /// by its alpha times `blend`, and the ROSE rotation code of layer 2 in the angle bits.
+/// Terrain3D holds 32 textures; a zone with more keeps the rest in `RoseTerrainLook`'s
+/// `extra_textures`, and texture 32 + n is n with the base or overlay extra bit set (two of
+/// the control bits Terrain3D leaves unused).
 fn control_bits(base: u32, overlay: u32, rotation: u32, blend: u32) -> u32 {
-    (base & 0x1F) << 27 | (overlay & 0x1F) << 22 | (blend & 0xFF) << 14 | (rotation & 0xF) << 10
+    let extra = |id: u32, bit: u32| if id >= TERRAIN3D_TEXTURES as u32 { bit } else { 0 };
+    (base & 0x1F) << 27 | (overlay & 0x1F) << 22 | (blend & 0xFF) << 14 | (rotation & 0xF) << 10 | extra(base, BASE_EXTRA_BIT) | extra(overlay, OVERLAY_EXTRA_BIT)
 }
 const HOLE_BIT: u32 = 1 << 2;
+const BASE_EXTRA_BIT: u32 = 1 << 3;
+const OVERLAY_EXTRA_BIT: u32 = 1 << 4;
+/// How many ground textures Terrain3D takes; `MAX_GROUND_TEXTURES` with the extra bit.
+const TERRAIN3D_TEXTURES: usize = 32;
+const MAX_GROUND_TEXTURES: usize = 64;
+
+/// The texture number (0-63) of a control value's overlay.
+fn overlay_id(control: u32) -> usize {
+    (control >> 22 & 0x1F) as usize + if control & OVERLAY_EXTRA_BIT != 0 { TERRAIN3D_TEXTURES } else { 0 }
+}
 
 /// Goes with the zone's Terrain3D node (its child): gives the ROSE terrain shader the block
 /// lightmaps, points Terrain3D at the camera, and says which ROSE texture each Terrain3D
@@ -190,10 +204,14 @@ pub struct RoseTerrainLook {
     /// Each block's lightmap, in the order of `blocks`.
     #[export]
     pub lightmaps: VarArray,
-    /// The ROSE (ZON) texture number of each Terrain3D texture.
+    /// The ROSE (ZON) texture number of each Terrain3D texture, then of each extra texture.
     #[export]
     pub texture_numbers: PackedInt32Array,
+    /// Ground textures past Terrain3D's 32 (texture 32 onwards), for zones that use more.
+    #[export]
+    pub extra_textures: VarArray,
     lightmap_array: Option<Gd<Texture2DArray>>,
+    extra_array: Option<Gd<Texture2DArray>>,
     lightmap_index: Option<Gd<Texture2D>>,
     applied_to: Option<Rid>,
 }
@@ -226,6 +244,12 @@ impl INode for RoseTerrainLook {
         // The server takes textures by their RIDs.
         server.material_set_param(rid, "rose_lightmaps", &array.get_rid().to_variant());
         server.material_set_param(rid, "rose_lightmap_index", &index.get_rid().to_variant());
+        if !self.extra_textures.is_empty() {
+            let extra = self.extra_array.get_or_insert_with(|| {
+                texture::texture_array(self.extra_textures.iter_shared().map(|t| t.try_to::<Gd<Texture2D>>().ok().and_then(|t| t.get_image())).collect())
+            });
+            server.material_set_param(rid, "rose_extra_tiles", &extra.get_rid().to_variant());
+        }
         self.applied_to = Some(rid);
     }
 }
@@ -294,7 +318,7 @@ fn terrain_grounds(terrain: &Gd<Node>, look: &Gd<RoseTerrainLook>, grounds: &mut
             .flat_map(|ty| (0..16i64).map(move |tx| (tx, ty)))
             .map(|(tx, ty)| {
                 let control = sample(gx0 + tx * 4 + 1, gz0 + ty * 4 + 1).map_or(0, |(_, c)| c);
-                numbers.get((control >> 22 & 0x1F) as usize).copied().unwrap_or(0)
+                numbers.get(overlay_id(control)).copied().unwrap_or(0)
             })
             .collect();
         if (0..64).contains(block_x) && (0..64).contains(block_y) {
@@ -734,21 +758,33 @@ fn used_objects(files: &ZoneFiles, zsc_index: usize) -> Vec<usize> {
     ids.into_iter().collect()
 }
 
-/// Every ROSE (ZON) ground texture the zone's tiles use, in order: Terrain3D texture N is
-/// the Nth of these.
+/// Every ROSE (ZON) ground texture the zone's tiles use: texture N of the zone's ground is
+/// the Nth of these. In number order; past 32 textures, the 32 used on most tiles come
+/// first so that Terrain3D's paint tools hold them, and the rest become extra textures.
 fn used_tile_numbers(files: &ZoneFiles) -> Vec<usize> {
-    let mut used = BTreeSet::new();
+    let mut tiles: BTreeMap<usize, usize> = BTreeMap::new();
     for (block_x, block_y) in blocks(files) {
         let til = data::read_file::<TilFile>(&format!("{}/{block_x}_{block_y}.TIL", files.zone_dir));
         for y in 0..16 {
             for x in 0..16 {
                 let [layer1, layer2, _] = zone::tile_layers(&files.zon, til.as_ref(), x, y);
-                used.insert(layer1 as usize);
-                used.insert(layer2 as usize);
+                *tiles.entry(layer1 as usize).or_default() += 1;
+                if layer2 != layer1 {
+                    *tiles.entry(layer2 as usize).or_default() += 1;
+                }
             }
         }
     }
-    used.into_iter().collect()
+    let mut used: Vec<usize> = tiles.keys().copied().collect();
+    if used.len() > TERRAIN3D_TEXTURES {
+        let mut by_use = used.clone();
+        by_use.sort_by_key(|n| std::cmp::Reverse(tiles[n]));
+        let (mut first, mut rest) = (by_use[..TERRAIN3D_TEXTURES].to_vec(), by_use[TERRAIN3D_TEXTURES..].to_vec());
+        first.sort();
+        rest.sort();
+        used = first.into_iter().chain(rest).collect();
+    }
+    used
 }
 
 fn terrain_texture_stem(files: &ZoneFiles, number: usize) -> String {
@@ -865,7 +901,7 @@ impl GroundBuilder {
         material.set("shader_override_enabled", &true.to_variant());
         terrain.set("material", &material.to_variant());
         let mut assets = make("Terrain3DAssets")?;
-        for (id, number) in numbers.iter().enumerate() {
+        for (id, number) in numbers.iter().take(TERRAIN3D_TEXTURES).enumerate() {
             let Some(path) = zone::tile_texture_paths(&files.zon).get(*number).cloned() else { continue };
             let Some(texture) = assets::find_stem(&terrain_texture_stem(files, *number), &["res"]).and_then(|p| godot::tools::try_load::<Texture2D>(&p).ok()) else {
                 return Err(format!("{path} is not converted for Terrain3D; run --import-rose"));
@@ -970,17 +1006,25 @@ pub fn write_zone_scenes(zone_id: u16, force: bool) -> Result<(String, usize, us
     let mut assets_made = ZoneImport::default();
     import_zone_assets(zone_id, false, &mut assets_made);
     let numbers = used_tile_numbers(&files);
-    if numbers.len() > 32 {
-        return Err(format!("the zone uses {} ground textures; Terrain3D takes 32", numbers.len()));
+    if numbers.len() > MAX_GROUND_TEXTURES {
+        return Err(format!("the zone uses {} ground textures; zone scenes take {MAX_GROUND_TEXTURES}", numbers.len()));
     }
     let mut ground = GroundBuilder::default();
     let mut look = RoseTerrainLook::new_alloc();
     look.set_name("RoseTerrainLook");
     look.bind_mut().texture_numbers = numbers.iter().map(|n| *n as i32).collect();
+    for number in numbers.iter().skip(TERRAIN3D_TEXTURES) {
+        let texture = assets::find_stem(&terrain_texture_stem(&files, *number), &["res"]).and_then(|p| godot::tools::try_load::<Texture2D>(&p).ok());
+        let Some(texture) = texture else {
+            return Err(format!("ground texture {number} is not converted for Terrain3D; run --import-rose"));
+        };
+        look.bind_mut().extra_textures.push(&texture.to_variant());
+    }
 
     let (mut object_count, mut marker_count) = (0, 0);
     let mut zone_root = Node3D::new_alloc();
-    zone_root.set_name(&slug(&files.name).split('_').map(|w| w[..1].to_uppercase() + &w[1..]).collect::<String>());
+    // "Adventurer's Plain" -> AdventurersPlain
+    zone_root.set_name(&slug(&files.name.replace('\'', "")).split('_').map(|w| w[..1].to_uppercase() + &w[1..]).collect::<String>());
     zone_root.set_meta("zone_id", &(zone_id as i64).to_variant());
     let block_list = blocks(&files);
     for &(block_x, block_y) in &block_list {
