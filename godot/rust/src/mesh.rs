@@ -7,7 +7,7 @@
 use std::{cell::RefCell, collections::HashMap};
 
 use godot::{
-    classes::{mesh::{ArrayType, PrimitiveType}, ArrayMesh},
+    classes::{mesh::{ArrayFormat, ArrayType, PrimitiveType}, ArrayMesh},
     prelude::*,
 };
 use rose_file_readers::ZmsFile;
@@ -38,7 +38,11 @@ pub fn load_mesh(path: &str, skinned: bool) -> Option<Gd<ArrayMesh>> {
     if let Some(cached) = MESHES.with_borrow(|cache| cache.get(&key).cloned()) {
         return cached;
     }
-    let mesh = crate::data::read_file::<ZmsFile>(path).and_then(|zms| build_mesh(&zms, skinned));
+    let mesh = match crate::assets::load_mesh(path) {
+        Some(mesh) if skinned => Some(mesh),
+        Some(mesh) => Some(without_bones(&mesh)),
+        None => crate::data::read_file::<ZmsFile>(path).and_then(|zms| build_mesh(&zms, skinned)),
+    };
     if mesh.is_none() {
         godot_warn!("rose: could not load mesh {path}");
     }
@@ -89,6 +93,20 @@ pub fn build_mesh(zms: &ZmsFile, skinned: bool) -> Option<Gd<ArrayMesh>> {
     let mut mesh = ArrayMesh::new_gd();
     mesh.add_surface_from_arrays(PrimitiveType::TRIANGLES, &arrays);
     Some(mesh)
+}
+
+/// The imported meshes keep their bone weights; parts drawn without a skeleton get a copy
+/// without them, as `build_mesh` makes when not `skinned`.
+fn without_bones(mesh: &Gd<ArrayMesh>) -> Gd<ArrayMesh> {
+    if mesh.get_surface_count() == 0 || mesh.surface_get_format(0).ord() & ArrayFormat::BONES.ord() == 0 {
+        return mesh.clone();
+    }
+    let mut arrays = mesh.surface_get_arrays(0);
+    arrays.set(ArrayType::BONES.ord() as usize, &Variant::nil());
+    arrays.set(ArrayType::WEIGHTS.ord() as usize, &Variant::nil());
+    let mut copy = ArrayMesh::new_gd();
+    copy.add_surface_from_arrays(PrimitiveType::TRIANGLES, &arrays);
+    copy
 }
 
 /// Drops the cached meshes while the engine is still running.

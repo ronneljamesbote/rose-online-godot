@@ -2,6 +2,7 @@
 
 use godot::prelude::*;
 
+mod assets;
 mod audio;
 mod character;
 mod conversation;
