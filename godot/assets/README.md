@@ -93,8 +93,10 @@ in the Terrain3D list are the zone's tile textures in order. The game loads the 
 when the zone has a folder here and its converted assets exist, and builds the zone from
 the client's map files otherwise (or with `--zone-files`), so both always work.
 
-The server doesn't read these scenes yet; spawns, NPCs and warps there still come from the
-client data.
+The server doesn't read the scenes: after moving or changing spawn, NPC or event markers,
+export them to `overrides/zones/20-birth-island.toml` with `--export-zones` (see
+`../../overrides/README.md`) and commit it with the scenes. Warp gates stay client-side, as
+before: the server sends a player through a gate by its warp number.
 
 The game falls back to the client data for anything not in either folder, so it runs the
 same with or without `rose/`. The Windows build leaves `rose/` out for now.

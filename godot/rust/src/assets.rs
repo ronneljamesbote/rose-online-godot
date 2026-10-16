@@ -240,6 +240,53 @@ impl RoseImport {
         result
     }
 
+    /// Writes `overrides/zones/<id>-<name>.toml` (in the repository) for every zone that has
+    /// scenes in `res://zones/`, or with `check` only compares them. Needs RoseData.open.
+    /// Returns {files: [{path, zone, spawns, npcs, events}], changed: [paths that differ]},
+    /// empty on error.
+    #[func]
+    fn export_zones(check: bool) -> VarDictionary {
+        let mut result = VarDictionary::new();
+        if crate::data::get().is_none() {
+            godot_error!("rose: open the data first");
+            return result;
+        }
+        let project = ProjectSettings::singleton().globalize_path("res://").to_string();
+        let dir = Path::new(&project).join("..").join(rose_game_overrides::ZONES_DIR);
+        let (mut files, mut changed) = (VarArray::new(), VarArray::new());
+        for (zone_id, folder) in crate::zone_scene::zone_folders() {
+            let layout = match crate::zone_scene::zone_layout(zone_id) {
+                Ok(layout) => layout,
+                Err(error) => {
+                    godot_error!("rose: {error}");
+                    return VarDictionary::new();
+                }
+            };
+            let path = dir.join(crate::zone_scene::layout_file_name(&folder));
+            let text = crate::zone_scene::layout_text(&layout);
+            if std::fs::read_to_string(&path).ok().as_deref() != Some(text.as_str()) {
+                changed.push(&path.to_string_lossy().to_string().to_variant());
+                if !check {
+                    let written = std::fs::create_dir_all(&dir).and_then(|_| std::fs::write(&path, &text));
+                    if let Err(error) = written {
+                        godot_error!("rose: could not write {}: {error}", path.display());
+                        return VarDictionary::new();
+                    }
+                }
+            }
+            let mut file = VarDictionary::new();
+            file.set("path", path.canonicalize().unwrap_or(path).to_string_lossy().as_ref());
+            file.set("zone", zone_id as i64);
+            file.set("spawns", layout.spawn.len() as i64);
+            file.set("npcs", layout.npc.len() as i64);
+            file.set("events", layout.event.len() as i64);
+            files.push(&file.to_variant());
+        }
+        result.set("files", &files);
+        result.set("changed", &changed);
+        result
+    }
+
     /// Writes `overrides/motions.toml` (in the repository, next to the project folder) from
     /// the player, monster and NPC animations, or with `check` only compares it. Needs RoseData.open and the
     /// import. Returns {path, motions, hits, changed: [motion files that differ]}, empty on
