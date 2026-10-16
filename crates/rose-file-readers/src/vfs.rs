@@ -98,6 +98,13 @@ impl VfsIndex {
             storages,
         })
     }
+
+    /// Every file in the index, as normalised paths (upper case, forward slashes).
+    pub fn file_paths(&self) -> impl Iterator<Item = &Path> {
+        self.storages
+            .iter()
+            .flat_map(|storage| storage.files.keys().map(|path| path.as_path()))
+    }
 }
 
 impl VirtualFilesystemDevice for VfsIndex {

@@ -2,7 +2,8 @@
 # Starts SpacetimeDB and installs (or updates) the rose module on every start.
 # First start: makes the identity key pair.
 # The game data (items, monsters, zones, ...) is uploaded from the ROSE client mounted at
-# /game whenever the server has none or overrides/game-data.toml changed;
+# /game whenever the server has none or overrides/game-data.toml, motions.toml or a file in
+# overrides/zones/ changed;
 # ROSE_UPLOAD_GAME_DATA=1 uploads it again.
 # ROSE_CLEAR_WORLD=1 wipes the world while publishing (needed after a breaking schema change).
 # ROSE_AUTH_ISSUER is the account website the server trusts (empty: no accounts needed).
@@ -52,9 +53,11 @@ else
   echo "rose: setting the account website failed (see above)"
 fi
 READY=$(spacetimedb-cli sql --server http://127.0.0.1:3000 rose "SELECT ready FROM game_data_status" 2>/dev/null | grep -c true || true)
-# A changed overrides file (built into the image) needs a new upload too.
+# A changed overrides, motions or zone file (built into the image) needs a new upload too.
 export ROSE_OVERRIDES=/opt/rose/overrides/game-data.toml
-OVERRIDES_SUM=$(sha256sum "$ROSE_OVERRIDES" | cut -d" " -f1)
+export ROSE_MOTIONS=/opt/rose/overrides/motions.toml
+export ROSE_ZONES=/opt/rose/overrides/zones
+OVERRIDES_SUM=$(cat "$ROSE_OVERRIDES" "$ROSE_MOTIONS" "$ROSE_ZONES"/*.toml 2>/dev/null | sha256sum | cut -d" " -f1)
 if [ "$READY" != "0" ] && [ "$OVERRIDES_SUM" != "$(cat /data/overrides.sha256 2>/dev/null)" ]; then
   echo "rose: the game data overrides changed, uploading the game data again"
   ROSE_UPLOAD_GAME_DATA=1
