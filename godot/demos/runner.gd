@@ -18,6 +18,7 @@ const NET_DEMOS := {
 	"chat": "chat.gd",
 	"steps": "steps.gd",
 	"hotkey": "hotkey.gd",
+	"sticky": "sticky.gd",
 	"hotbar-items": "hotbar_items.gd",
 	"hotbar-clear": "hotbar_clear.gd",
 }
