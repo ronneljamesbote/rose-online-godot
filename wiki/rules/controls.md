@@ -54,6 +54,8 @@ source:
     - godot/scripts/conversation_window.gd
     - godot/scripts/inventory_window.gd (Slot._gui_input, activate, _drop_selected)
     - godot/scripts/hotbar.gd
+    - module/src/items.rs (move_item)
+    - module/src/character.rs (Player::set_inventory)
     - godot/scripts/store_window.gd
     - godot/scripts/bank_window.gd
     - godot/scripts/chat_window.gd
@@ -152,6 +154,8 @@ While a dialog is open, 1 to 9 pick its answers and Esc ends it.
 - Drag items to move them between bag slots.
 - Drag a skill or a bag item onto the **hotbar** to put it there. Drag between hotbar slots
   to swap them. Right-click a hotbar slot to use it, and Shift + right-click to empty it.
+  A bag item's shortcut follows the item when you move it to another bag slot, and empties
+  once the item leaves the bag (dropped, used up, sold, stored, traded or worn).
   Each filled slot shows its key (1 to 8) in the top-left corner, stacked items show their
   count, and a skill that is cooling down shows a dark sweep and the seconds left.
 - While another window is open, right-clicking a bag item acts on it:
