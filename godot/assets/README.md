@@ -73,7 +73,7 @@ Zone objects and ground textures are converted by the same import:
 | `3ddata/junon/list_deco_jg/12.tscn`, `list_cnst_jg/1.tscn` and so on (and the event objects a zone uses) | One scene per building, decoration or event object (`RoseZoneObject`): its mesh parts with their collision and its effects. Placed copies get their lightmap from the block. |
 | `3ddata/maps/junon/jg07/terrain_textures/12.res` and so on | The ground textures of each zone that has scenes, by tile texture number. |
 
-The zones themselves are scenes in `res://zones/`, one folder per zone (`20_birth_island/`, `21_valley_of_luxem_tower/`, `22_adventurer_s_plain/`),
+The zones themselves are scenes in `res://zones/`, one folder per zone (`20_birth_island/`, `21_valley_of_luxem_tower/`, `22_adventurer_s_plain/`, `23_breezy_hills/`),
 committed to the repository. They are written once from the client's map files:
 
 ```sh

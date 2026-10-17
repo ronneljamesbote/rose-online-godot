@@ -26,7 +26,7 @@ Page format, folders and how to edit: `wiki/README.md`.
 - **`overrides/game-data.toml`**: our changes to that data, one STB cell per entry. Server
   and client both apply it on top of the iROSE files.
 - **Godot scenes and animations**: zones edited in Godot (`godot/zones/`, Birth Island, Valley
-  of Luxem Tower and Adventurer's Plain so far) and the animations' hit markers. The server reads them from
+  of Luxem Tower, Adventurer's Plain and Breezy Hills so far) and the animations' hit markers. The server reads them from
   files exported next to the overrides (`overrides/zones/`, `overrides/motions.toml`), so a spawn or NPC change on
   such a zone is made in its scene and exported, not in `game-data.toml`.
 - **Code**: rules and formulas (`crates/rose-game-irose`, `module/src`) and features iROSE

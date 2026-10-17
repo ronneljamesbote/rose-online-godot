@@ -29,8 +29,9 @@ motion missing from the file keeps the time in its ZMO file.
 `zones/<id>-<name>.toml` holds what the server needs from a zone that is edited as Godot
 scenes (`godot/zones/`, see `godot/assets/README.md`): its monster spawn points, town NPCs
 and named spots (start, revive and warp targets). Birth Island (`zones/20-birth-island.toml`),
-Valley of Luxem Tower (`zones/21-valley-of-luxem-tower.toml`) and Adventurer's Plain
-(`zones/22-adventurer-s-plain.toml`) have one so far. It isn't edited
+Valley of Luxem Tower (`zones/21-valley-of-luxem-tower.toml`), Adventurer's Plain
+(`zones/22-adventurer-s-plain.toml`) and Breezy Hills (`zones/23-breezy-hills.toml`) have one
+so far. It isn't edited
 by hand either: move or change the markers in the Godot editor, then run
 
 ```sh
