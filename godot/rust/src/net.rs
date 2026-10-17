@@ -532,6 +532,19 @@ impl RoseNet {
         }
     }
 
+    /// The server's mode ("dev" or "production") and version (its git commit), from the
+    /// module's server_info view. Empty until the subscription has arrived.
+    #[func]
+    fn server_info(&self) -> VarDictionary {
+        let mut d = VarDictionary::new();
+        let Some(c) = self.conn.as_ref() else { return d };
+        if let Some(info) = c.db.server_info().iter().next() {
+            d.set("mode", &info.mode.to_variant());
+            d.set("version", &info.version.to_variant());
+        }
+        d
+    }
+
     /// "" while waiting, then "ok" or the reason the name or look was refused.
     #[func]
     fn poll_create_result(&self) -> GString {

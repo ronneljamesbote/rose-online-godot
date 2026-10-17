@@ -54,6 +54,9 @@ source:
     - compose.yaml (rose-server-dev, profile dev)
     - godot/gm/gm_chat.gd, godot/gm/gm_commands.gd
     - godot/rust/src/net.rs (gm_command, feature dev)
+    - godot/export_presets.cfg (Windows Desktop Dev)
+    - godot/tools/build-windows.sh, godot/tools/build-windows.ps1 (--dev, -Dev)
+    - godot/scripts/connect_panel.gd (_on_connect_without_account)
 ---
 # GM commands (dev servers only)
 
@@ -73,6 +76,17 @@ instead, for example `/level 50 @Lowbie`. `/info` and `/kill` use what you have 
 The commands only work in a client that has them: the dev client, or the game run from the
 Godot editor with the dev extension. The production client sends lines starting with `/` as
 chat. A dev client on a production server gets "this server has no GM commands".
+
+## The dev client
+
+The dev client is a separate build of the game for testing (`build-windows.sh --dev`, or
+`build-windows.ps1 -Dev`): it has the GM chat, opens a console window next to the game
+with its log, and unzips to its own `ROSE-dev` folder. Its start screen suggests the dev
+server, `ws://127.0.0.1:3100` (remembered apart from the production client's server), and
+has a **Connect without account** button, since dev servers let anyone in. The game run
+from the Godot editor counts as the dev client too. The production build has none of this:
+the build stops if any GM code got into it. The [[rules/controls|version line]] at the top
+left says which client and server you are on.
 
 ## Commands
 

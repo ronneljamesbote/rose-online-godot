@@ -18,8 +18,11 @@ Controls
   Right-drag                turn the camera
   Mouse wheel               zoom
 
-Your character is tied to this PC (the key is kept in
-%APPDATA%\Godot\app_userdata\ROSE (Godot)\). Copy identity-default.token from there
-to keep the same character on another PC.
+Your character belongs to your account, so sign in with it on any PC.
+
+The dev client (ROSE-dev, for testing) suggests the dev server ws://127.0.0.1:3100, has
+the GM commands (type / in chat) and a "Connect without account" button. Without an
+account the character is tied to this PC and server (the key is kept in
+%APPDATA%\Godot\app_userdata\ROSE (Godot)\identity-default-HOST-PORT.token).
 
 Needs a graphics card with Vulkan or Direct3D 12 (most PCs from 2016 on).

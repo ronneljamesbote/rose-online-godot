@@ -17,7 +17,7 @@
 ##   --create=NAME,female,FACE,HAIR   fill in the character creation screen (1-based),
 ##                              --create-after=SECONDS then presses Create
 ##   --weapon=bow               equip the bow and arrows from the bag after signing in
-##   --profile=NAME             identity file to use (user://identity-NAME.token), so two
+##   --profile=NAME             identity file to use (user://identity-NAME-HOST-PORT.token), so two
 ##                              clients on one PC are two players
 ##   --offline                  skip the start screen and play offline
 ##   --net-demo[=NAME], --demo, --effect=PATH,...   scripted runs for tests and recordings,
@@ -388,7 +388,9 @@ func _go_offline() -> void:
 
 func _go_online(uri: String, name_text: String, use_bow: bool, token := "") -> void:
 	var profile: String = options.get("profile", "default")
-	var token_path := ProjectSettings.globalize_path("user://identity-%s.token" % profile)
+	# Each server signs its own tokens, so a token is kept per server address.
+	var server_key := uri.get_slice("://", 1).trim_suffix("/").replace(":", "-").replace("/", "-")
+	var token_path := ProjectSettings.globalize_path("user://identity-%s-%s.token" % [profile, server_key])
 	online = preload("res://scripts/online.gd").new()
 	online.name = "Online"
 	add_child(online)
@@ -402,6 +404,7 @@ func _go_online(uri: String, name_text: String, use_bow: bool, token := "") -> v
 	online.log_perf = options.has("perf-log")
 	online.log_damage = options.has("net-log") or options.has("net-demo")
 	online.start(zone, uri, token_path, name_text, use_bow, token)
+	VersionLine.net = online.net
 
 
 func _on_joined(me: Node3D) -> void:
