@@ -27,8 +27,8 @@ keys:
   - { key: "P", does: "party" }
   - { key: "F", does: "friends" }
   - { key: "M", does: "zone map" }
-  - { key: "O", does: "options (interface, world labels, sound)" }
-  - { key: "Esc", does: "close the top window, the dialog, or leave repair mode" }
+  - { key: "O", does: "options (interface, world labels, gameplay, sound)" }
+  - { key: "Esc", does: "close the top window, the dialog, or leave repair mode; with nothing open, drop the target" }
   - { key: "Delete", does: "drop the selected bag item" }
   - { key: "Alt", does: "hide ground item labels while held (or show them, as set in Options)" }
 camera_zoom_m: { min: 2, max: 45, start: 12 }
@@ -45,12 +45,13 @@ cursors:
   - { over: "anywhere while repairing", cursor: "hammer (RES/REPAIR.CUR)" }
   - { over: "the world while the right button is held", cursor: "four-way arrows (RES/WHEEL.CUR)" }
 cursor_size_times: [1, 2, 3]
+sticky_target_default: false
 item_label_range_m: 30
 source:
   code:
     - godot/scripts/main.gd (_unhandled_input, _steer)
     - godot/scripts/orbit_camera.gd
-    - godot/scripts/online.gd (click_ground, steer_to, talk_to, select, pickup, open_player_menu)
+    - godot/scripts/online.gd (move_to, click_ground, steer_to, talk_to, select, clear_target, pickup, open_player_menu)
     - godot/scripts/conversation_window.gd
     - godot/scripts/inventory_window.gd (Slot._gui_input, Slot._notification, activate, _drop_selected)
     - godot/scripts/hotbar.gd (dropped, dragged_off)
@@ -89,6 +90,11 @@ is in the `keys` table above.
 - **Hold the left button** after clicking the ground to keep running toward the cursor;
   move the mouse to steer. Holding only steers: passing over a monster, NPC or item does
   not attack, talk or pick up. When you let go, the crystal drops where you will stop.
+- **Walking drops your target** (a click or holding the button on the ground), as in
+  iROSE: skills then need a new target. With **Sticky target** on (Options, Gameplay tab;
+  off by default) walking keeps it: the attack stops, but the target stays selected, its
+  frame stays up and skills still go to it. Clicking another monster or player changes it,
+  and Esc with no window open drops it.
 - **Left-click a monster** to attack it. In a PvP zone, clicking a player you may fight
   attacks them too (see [[rules/pvp|PvP]]).
 - **Left-click a town NPC** to walk over (you talk from within 3 m) and open its dialog
@@ -142,7 +148,7 @@ cursor files the system cursor stays.
 | F | friends (see [[rules/friends\|Friends]]) |
 | M | zone map |
 | O | options |
-| Esc | close the top window |
+| Esc | close the top window; with none open, drop the target |
 | Delete | drop the selected bag item on the ground |
 | Alt | item labels on the ground: held, it hides them (or shows them, if Options says "Only while Alt is held") |
 
@@ -211,7 +217,7 @@ Esc or clicking outside the chat box stops typing.
   on the minimap, monsters in red. The map image is the zone's own picture, the same one
   each zone page shows, with 2.5 m per pixel; its top left corner is the zone page's map
   `left` and `top`.
-- **Options** (O) has three tabs:
+- **Options** (O) has four tabs:
   - **Interface**: the theme (four built-in themes, or your own theme files in the
     `themes` folder next to the game), interface size (75% to 150%), window opacity (40%
     to 100%), blur behind windows, the character portrait (Live or Static), Cursor Size
@@ -221,6 +227,7 @@ Esc or clicking outside the chat box stops typing.
   - **World labels**: your own name tag, chat bubbles, damage numbers, and whether item
     labels on the ground show always or only while Alt is held. Labels show for items
     within 30 m.
+  - **Gameplay**: Sticky target (walking keeps your target; off by default).
   - **Sound**: music and sound effect volume.
 
 ## Playing offline
@@ -232,6 +239,8 @@ sword, O opens the sound volume window.
 
 - The interface is new: the themes, movable and resizable windows and the options above
   are not part of the iROSE client.
+- Sticky target is new; with it off, walking drops the target as in iROSE. Esc dropping
+  the target is new too.
 - The cursors are iROSE's, chosen the same way, except: pushing the mouse against the left
   or right screen edge does not turn the camera (so the edge arrows `LEFT.CUR` and
   `RIGHT.CUR` are not used); the gold and blue hands show over items you can drag and

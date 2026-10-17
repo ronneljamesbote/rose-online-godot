@@ -114,6 +114,7 @@ var ground := {}  # drop id -> Node3D
 var _pickup := -1  # drop we are walking to
 var _talk := -1  # NPC we are walking to
 var _click_marker: Node3D  # the marker where we last clicked the ground
+var _chasing := false  # heading for my_target (attacking it, casting at it, or selecting it)
 var _steer_target = null  # Vector3: where the held left button last sent us, or null
 var _warps: Array = []  # this zone's warp gates: id, position, size
 var _warps_zone: Node = null
@@ -503,6 +504,8 @@ func use_skill(page: int, index: int, skill: Dictionary) -> void:
 		at = entities[my_target].position
 	_pickup = -1
 	_talk = -1
+	if target >= 0:
+		_chasing = true
 	net.cast_skill(page, index, target, at.x, at.z)
 	if log_damage:
 		print("rose net: use skill ", skill.get("name", "?"), " on ", target)
@@ -538,7 +541,11 @@ func _out_of_fuel() -> bool:
 func move_to(target: Vector3) -> bool:
 	if me == null or _in_shop() or _out_of_fuel() or _riding(true):
 		return false
-	my_target = -1
+	# Sticky target (Options > Gameplay): walking keeps the target selected, it only stops
+	# the attack. Otherwise walking drops it, as in iROSE.
+	if not UI.settings.get("sticky_target", false):
+		my_target = -1
+	_chasing = false
 	_pickup = -1
 	_talk = -1
 	net.move_to(target.x, target.z)
@@ -583,7 +590,7 @@ func end_steer() -> void:
 		return
 	var target: Vector3 = _steer_target
 	_steer_target = null
-	if me == null or not me.is_moving or my_target >= 0 or _pickup >= 0 or _talk >= 0:
+	if me == null or not me.is_moving or _going_for_target() or _pickup >= 0 or _talk >= 0:
 		return
 	_clear_click_marker()
 	var fx := preload("res://scripts/fx.gd").find(self)
@@ -596,8 +603,22 @@ func _update_click_marker() -> void:
 		return
 	if not is_instance_valid(_click_marker):
 		_click_marker = null
-	elif me == null or me.dead or not me.is_moving or my_target >= 0 or _pickup >= 0 or _talk >= 0:
+	elif me == null or me.dead or not me.is_moving or _going_for_target() or _pickup >= 0 or _talk >= 0:
 		_clear_click_marker()
+
+
+## True while a click on a target, not on the ground, decides where we go: the click
+## marker isn't ours then. With a sticky target, a target we only keep doesn't count.
+func _going_for_target() -> bool:
+	if UI.settings.get("sticky_target", false):
+		return _chasing and my_target >= 0
+	return my_target >= 0
+
+
+## Drop the target (Esc with no window open).
+func clear_target() -> void:
+	my_target = -1
+	_chasing = false
 
 
 func _clear_click_marker() -> void:
@@ -610,6 +631,7 @@ func attack(id: int) -> void:
 	if me == null or not entities.has(id) or _in_shop():
 		return
 	my_target = id
+	_chasing = true
 	_pickup = -1
 	_talk = -1
 	net.attack(id)
@@ -619,6 +641,7 @@ func attack(id: int) -> void:
 
 func stop() -> void:
 	my_target = -1
+	_chasing = false
 	net.stop()
 
 
@@ -630,6 +653,7 @@ func sit() -> void:
 		net.ride_leave()
 		return
 	my_target = -1
+	_chasing = false
 	_pickup = -1
 	_talk = -1
 	net.sit()
@@ -692,6 +716,7 @@ func select(id: int) -> void:
 	if me == null or not entities.has(id):
 		return
 	my_target = id
+	_chasing = true
 	_pickup = -1
 	_talk = -1
 	# Clicking a player with a shop sign shows what they sell.
@@ -934,8 +959,10 @@ func _process(_delta: float) -> void:
 		var server_target: int = by_id[my_id].get("target", -1)
 		if server_target >= 0:
 			my_target = server_target
+			_chasing = true
 	if not entities.has(my_target):
 		my_target = -1
+		_chasing = false
 
 	_update_ground()
 	_update_click_marker()
