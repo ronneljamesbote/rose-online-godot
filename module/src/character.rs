@@ -71,8 +71,20 @@ impl Player {
         from_json(&self.inventory)
     }
 
+    /// Also empties the hotbar shortcuts to items that are no longer in the bag.
     pub fn set_inventory(&mut self, inventory: &Inventory) {
         self.inventory = to_json(inventory);
+        let mut hotbar = self.hotbar();
+        hotbar.clear_missing_items(|slot| inventory.get_item(slot).is_some());
+        self.set_hotbar(&hotbar);
+    }
+
+    pub fn hotbar(&self) -> Hotbar {
+        from_json(&self.hotbar)
+    }
+
+    pub fn set_hotbar(&mut self, hotbar: &Hotbar) {
+        self.hotbar = to_json(hotbar);
     }
 
     pub fn skill_list(&self) -> SkillList {
