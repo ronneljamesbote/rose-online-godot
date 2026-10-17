@@ -88,6 +88,11 @@ trap 'rm -rf "$STAGE" godot/build_version.txt' EXIT
 mkdir -p "$STAGE/$DIR"
 # The version line shows the commit the client was built from (scripts/build_info.gd).
 git rev-parse --short=7 HEAD > godot/build_version.txt 2>/dev/null || echo unknown > godot/build_version.txt
+# Godot keeps the binary copies of the text scenes it exported in .godot/exported/ and reuses
+# one while its own file is unchanged, even when a scene it uses is new or changed. A zone
+# scene exported before --import-rose made its model scenes would keep empty decorations and
+# a grey ground, so convert everything again.
+rm -rf godot/.godot/exported
 "$GODOT" --headless --path godot "$EXPORT" "$PRESET" "$STAGE/$DIR/ROSE.exe"
 cp godot/tools/README-windows.txt "$STAGE/$DIR/README.txt"
 

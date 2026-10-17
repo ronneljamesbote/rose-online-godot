@@ -395,6 +395,16 @@ try {
     }
     [System.IO.File]::WriteAllText($VersionFile, "$Commit`n")
 
+    # Godot keeps the binary copies of the text scenes it exported in
+    # .godot\exported\ and reuses one while its own file is unchanged, even
+    # when a scene it uses is new or changed. A zone scene exported before
+    # --import-rose made its model scenes would keep empty decorations and a
+    # grey ground, so convert everything again.
+    $ExportCache = Join-Path (Get-Location) "godot\.godot\exported"
+    if (Test-Path $ExportCache) {
+        Remove-Item -Recurse -Force $ExportCache
+    }
+
     # godot.exe is a GUI-subsystem program, so PowerShell only waits for it
     # when its output is piped. Godot also prints harmless ERROR lines to
     # stderr during a headless export, which Windows PowerShell 5.1 turns
