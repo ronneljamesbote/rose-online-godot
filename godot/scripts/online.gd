@@ -168,14 +168,14 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 
 	# HUD widgets; each can be dragged by the grip that shows on hover.
 	player_frame = PlayerFrame.new()
-	_widget(player_frame, "player", Vector2(0, 0), Vector2(12, 12))
+	_widget(player_frame, "player", Vector2(0, 0), Vector2(12, 30))
 	party_frames = PartyFrames.new()
-	_widget(party_frames, "party_frames", Vector2(0, 0), Vector2(12, 112))
+	_widget(party_frames, "party_frames", Vector2(0, 0), Vector2(12, 130))
 	target_frame = TargetFrame.new()
 	target_frame.visible = false
 	_widget(target_frame, "target", Vector2(0.5, 0), Vector2(0, 12))
 	effects_rows = EffectRows.new()
-	_widget(effects_rows, "effects", Vector2(0, 0), Vector2(310, 14))
+	_widget(effects_rows, "effects", Vector2(0, 0), Vector2(310, 32))
 	minimap = Minimap.new()
 	minimap.online = self
 	_widget(minimap, "minimap", Vector2(1, 0), Vector2(-12, 12))

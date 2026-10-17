@@ -1,14 +1,24 @@
-# Builds the Windows release zip from Windows:
+# Builds the Windows client from Windows:
 # - Compiles rose_gd.dll with Rust + MinGW-w64
-# - Exports ROSE.exe using Godot's Windows release template
-# - Packages both together with README.txt
+# - Exports ROSE.exe using Godot's Windows export template
+# - Packages both together with README.txt (in a folder ROSE, or ROSE-dev for -Dev)
+#
+# Switches:
+#   -Dev     the dev client: GM commands in (chat and rose_gd.dll built with the dev
+#            feature), Godot's debug template with a console window, the "Windows Desktop
+#            Dev" preset. Output ROSE-windows-dev instead of ROSE-windows.
+#   -Folder  a folder instead of a zip (<output>\ROSE-windows[-dev]\), for testing. A
+#            rebuild replaces only the game's own files, so the themes folder, the ROSE
+#            client data and anything else put next to ROSE.exe stay.
+#
+# The production build checks that no GM code got in and stops if it did.
 #
 # Prerequisites:
 #   - Rustup
 #   - Rust target: x86_64-pc-windows-gnu
 #   - MinGW-w64 / MSYS2
 #   - Godot 4.7.2
-#   - Godot 4.7.2 Windows Desktop export template
+#   - Godot 4.7.2 Windows Desktop export template (fetched when missing)
 #   - zip functionality (PowerShell Compress-Archive is used)
 #
 # Usage:
@@ -16,9 +26,18 @@
 #
 #   .\godot\tools\build-windows.ps1 .\dist
 #
+#   .\godot\tools\build-windows.ps1 -Dev -Folder
+#
 # Environment variables:
 #   GODOT            Path to godot.exe
 #   CARGO_TARGET_DIR Custom Cargo target directory
+
+param(
+    [switch]$Dev,
+    [switch]$Folder,
+    [Parameter(Position = 0)]
+    [string]$OutDir
+)
 
 $ErrorActionPreference = "Stop"
 
@@ -33,8 +52,8 @@ $Godot = if ($env:GODOT) {
     "godot"
 }
 
-$Out = if ($args.Count -ge 1) {
-    [System.IO.Path]::GetFullPath($args[0])
+$Out = if ($OutDir) {
+    [System.IO.Path]::GetFullPath($OutDir)
 } else {
     Join-Path (Get-Location) "dist"
 }
@@ -47,9 +66,24 @@ $TargetDir = if ($env:CARGO_TARGET_DIR) {
 
 $RustTarget = "x86_64-pc-windows-gnu"
 
+if ($Dev) {
+    $Name = "ROSE-windows-dev"
+    $DirName = "ROSE-dev"
+    $Preset = "Windows Desktop Dev"
+    $ExportFlag = "--export-debug"
+    # The console window comes from its own small template.
+    $Templates = @("windows_debug_x86_64.exe", "windows_debug_x86_64_console.exe")
+} else {
+    $Name = "ROSE-windows"
+    $DirName = "ROSE"
+    $Preset = "Windows Desktop"
+    $ExportFlag = "--export-release"
+    $Templates = @("windows_release_x86_64.exe")
+}
+
 Write-Host "==> Repository root: $(Get-Location)"
 Write-Host "==> Godot: $Godot"
-Write-Host "==> Output: $Out"
+Write-Host "==> Output: $Out ($Name, $(if ($Folder) { 'folder' } else { 'zip' }))"
 Write-Host "==> Cargo target: $TargetDir"
 
 # ------------------------------------------------------------
@@ -112,6 +146,58 @@ if (-not $HasGnu) {
 }
 
 # ------------------------------------------------------------
+# Export template (must match the editor's version)
+# ------------------------------------------------------------
+
+# godot.exe only hands back its output when piped (see the export below).
+$GodotVersion = (& $Godot --version | Out-String).Trim()
+if ($GodotVersion -notmatch '^(\d+\.\d+(\.\d+)?)\.([a-z0-9]+)') {
+    throw "Could not read the Godot version from: $GodotVersion"
+}
+$TemplateVersion = "$($Matches[1]).$($Matches[3])"
+$TemplateDir = Join-Path $env:APPDATA "Godot\export_templates\$TemplateVersion"
+$Missing = @($Templates | Where-Object { -not (Test-Path (Join-Path $TemplateDir $_)) })
+
+if ($Missing.Count -gt 0) {
+    $Release = "$($Matches[1])-$($Matches[3])"
+    $Url = "https://github.com/godotengine/godot/releases/download/$Release/Godot_v${Release}_export_templates.tpz"
+    Write-Host ""
+    Write-Host "==> Fetching $($Missing -join ', ') from $Url ..."
+
+    $Tpz = Join-Path ([System.IO.Path]::GetTempPath()) "godot-templates-$([Guid]::NewGuid().ToString()).tpz"
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+    $PreviousProgress = $ProgressPreference
+    $ProgressPreference = "SilentlyContinue"
+    try {
+        Invoke-WebRequest -Uri $Url -OutFile $Tpz -UseBasicParsing
+        Add-Type -AssemblyName System.IO.Compression.FileSystem
+        New-Item -ItemType Directory -Force -Path $TemplateDir | Out-Null
+        $Zip = [System.IO.Compression.ZipFile]::OpenRead($Tpz)
+        try {
+            foreach ($Template in $Missing) {
+                $Entry = $Zip.GetEntry("templates/$Template")
+                if (-not $Entry) {
+                    throw "$Template is not in $Url"
+                }
+                [System.IO.Compression.ZipFileExtensions]::ExtractToFile(
+                    $Entry, (Join-Path $TemplateDir $Template), $true)
+            }
+        }
+        finally {
+            $Zip.Dispose()
+        }
+    }
+    finally {
+        $ProgressPreference = $PreviousProgress
+        if (Test-Path $Tpz) {
+            Remove-Item -Force $Tpz
+        }
+    }
+}
+
+Write-Host "==> Templates: $TemplateDir ($($Templates -join ', '))"
+
+# ------------------------------------------------------------
 # Build Rust DLL
 # ------------------------------------------------------------
 
@@ -121,10 +207,16 @@ Write-Host "==> Building rose-gd..."
 $env:CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER = "gcc"
 $env:CARGO_TARGET_DIR = $TargetDir
 
+$Features = @()
+if ($Dev) {
+    $Features = @("--features", "dev")
+}
+
 cargo "+$GnuToolchain" build `
     --release `
     -p rose-gd `
-    --target $RustTarget
+    --target $RustTarget `
+    @Features
 
 if ($LASTEXITCODE -ne 0) {
     throw "Cargo build failed."
@@ -171,7 +263,8 @@ Write-Host "==> Creating staging directory..."
 $Stage = Join-Path ([System.IO.Path]::GetTempPath()) `
     "rose-windows-$([Guid]::NewGuid().ToString())"
 
-$StageRose = Join-Path $Stage "ROSE"
+$StageRose = Join-Path $Stage $DirName
+$VersionFile = Join-Path (Get-Location) "godot\build_version.txt"
 
 New-Item -ItemType Directory -Force -Path $StageRose | Out-Null
 
@@ -182,7 +275,26 @@ try {
     # --------------------------------------------------------
 
     Write-Host ""
-    Write-Host "==> Exporting Godot Windows release..."
+    Write-Host "==> Exporting Godot Windows ($Preset)..."
+
+    # The version line shows the commit the client was built from
+    # (scripts/build_info.gd).
+    # git's stderr would stop Windows PowerShell 5.1 under "Stop", see below.
+    $Commit = "unknown"
+    if (Get-Command git -ErrorAction SilentlyContinue) {
+        $PreviousPreference = $ErrorActionPreference
+        $ErrorActionPreference = "Continue"
+        try {
+            $GitOut = git rev-parse --short=7 HEAD 2>$null
+            if ($LASTEXITCODE -eq 0 -and $GitOut) {
+                $Commit = "$GitOut".Trim()
+            }
+        }
+        finally {
+            $ErrorActionPreference = $PreviousPreference
+        }
+    }
+    [System.IO.File]::WriteAllText($VersionFile, "$Commit`n")
 
     # godot.exe is a GUI-subsystem program, so PowerShell only waits for it
     # when its output is piped. Godot also prints harmless ERROR lines to
@@ -196,7 +308,7 @@ try {
         & $Godot `
             --headless `
             --path godot `
-            --export-release "Windows Desktop" `
+            $ExportFlag $Preset `
             $ExportedExe 2>&1 | ForEach-Object { Write-Host "$_" }
         $GodotExit = $LASTEXITCODE
     }
@@ -208,6 +320,26 @@ try {
     # that the executable was written.
     if ($GodotExit -ne 0 -or -not (Test-Path $ExportedExe)) {
         throw "Godot export failed."
+    }
+
+    # --------------------------------------------------------
+    # GM commands are for dev builds only: the production client
+    # must have neither the GM chat scripts (godot/gm/) nor the
+    # extension's gm_command. A file in the pck is listed as
+    # "gm/gm_chat.gdc" and so on; the "res://gm/..." the pck also
+    # lists are only the project's uid cache naming every file.
+    # --------------------------------------------------------
+
+    if (-not $Dev) {
+        $Pck = [System.Text.Encoding]::ASCII.GetString(
+            [System.IO.File]::ReadAllBytes((Join-Path $StageRose "ROSE.pck")))
+        $GmFiles = @([regex]::Matches($Pck, '(?s)(.{6})gm/gm_[a-z_]+\.gd') |
+            Where-Object { $_.Groups[1].Value -ne "res://" })
+        $Dll = [System.Text.Encoding]::ASCII.GetString(
+            [System.IO.File]::ReadAllBytes((Join-Path $StageRose "rose_gd.dll")))
+        if ($GmFiles.Count -gt 0 -or $Dll.Contains("gm_command")) {
+            throw "GM code got into the production build (godot/gm/ or gm_command); not packaging it."
+        }
     }
 
     # --------------------------------------------------------
@@ -235,28 +367,49 @@ try {
         -Force `
         -Path $Out | Out-Null
 
-    $ZipPath = Join-Path $Out "ROSE-windows.zip"
+    if ($Folder) {
 
-    if (Test-Path $ZipPath) {
-        Remove-Item -Force $ZipPath
+        # ----------------------------------------------------
+        # Copy into the folder, keeping what isn't ours
+        # ----------------------------------------------------
+
+        $Dest = Join-Path $Out $Name
+        New-Item -ItemType Directory -Force -Path $Dest | Out-Null
+        Get-ChildItem -Path $Dest -File |
+            Where-Object { $_.Extension -in ".exe", ".pck", ".dll" -or $_.Name -eq "README.txt" } |
+            Remove-Item -Force
+        Copy-Item -Path (Join-Path $StageRose "*") -Destination $Dest -Recurse -Force
+
+        Write-Host ""
+        Write-Host "==> Build complete!"
+        Write-Host ""
+        Get-ChildItem $Dest | Format-Table Name, Length, LastWriteTime
+
+    } else {
+
+        $ZipPath = Join-Path $Out "$Name.zip"
+
+        if (Test-Path $ZipPath) {
+            Remove-Item -Force $ZipPath
+        }
+
+        # ----------------------------------------------------
+        # Create ZIP
+        # ----------------------------------------------------
+
+        Write-Host ""
+        Write-Host "==> Creating ZIP..."
+
+        Compress-Archive `
+            -Path $StageRose `
+            -DestinationPath $ZipPath `
+            -CompressionLevel Optimal
+
+        Write-Host ""
+        Write-Host "==> Build complete!"
+        Write-Host ""
+        Get-Item $ZipPath | Format-List FullName, Length, LastWriteTime
     }
-
-    # --------------------------------------------------------
-    # Create ZIP
-    # --------------------------------------------------------
-
-    Write-Host ""
-    Write-Host "==> Creating ZIP..."
-
-    Compress-Archive `
-        -Path $StageRose `
-        -DestinationPath $ZipPath `
-        -CompressionLevel Optimal
-
-    Write-Host ""
-    Write-Host "==> Build complete!"
-    Write-Host ""
-    Get-Item $ZipPath | Format-List FullName, Length, LastWriteTime
 
 }
 finally {
@@ -264,6 +417,10 @@ finally {
     # --------------------------------------------------------
     # Cleanup
     # --------------------------------------------------------
+
+    if (Test-Path $VersionFile) {
+        Remove-Item -Force $VersionFile
+    }
 
     if (Test-Path $Stage) {
         Remove-Item `
