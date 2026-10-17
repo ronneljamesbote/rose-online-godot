@@ -33,6 +33,22 @@ skin and blocky skies. Running it again only converts what is
 missing; `--import-rose=force` redoes everything. It also redoes everything after an update
 that changes the converted output (`IMPORT_VERSION` in `rust/src/assets.rs`).
 
+### Troubleshooting the import
+
+- **It ran the old import.** The import is code in the extension (`bin/rose_gd.dll`, or
+  `librose_gd.so`), so pulling a change to `rust/src/` does nothing until the extension is
+  rebuilt. Rebuild it first (`cargo build --release -p rose-gd` and copy it into `bin/`, or
+  run `tools/build-windows.ps1`, which builds it and then runs the import). The size on the
+  last line tells which import ran: `assets/rose is` about 840 MB after about 5 minutes is
+  the current one; about 400 MB after under a minute is the old S3TC one.
+- **It looks stuck on Windows.** When `godot` is the editor exe rather than the
+  `_console.exe`, PowerShell doesn't wait for it: the prompt comes back first and Godot's
+  output prints after it. The import is done once `assets/rose is ... MB` appears; press
+  Enter to get the prompt back. Run the console exe, or `build-windows.ps1`, to have
+  PowerShell wait.
+- **`DDS width '2' is not divisible by 4` warnings** come from a few tiny ROSE textures.
+  Godot loads them anyway; they are harmless.
+
 ## Characters, monsters, NPCs and carts
 
 The import also builds the characters from the converted meshes:
