@@ -6,6 +6,10 @@ edition = "2021"
 [lib]
 crate-type = ["cdylib"]
 
+[features]
+# The dev client: GM commands (RoseNet.gm_command). The production build leaves it off.
+dev = []
+
 [dependencies]
 godot = { version = "0.5.5", features = ["api-4-6"] }
 rose-data = { path = "../../crates/rose-data" }

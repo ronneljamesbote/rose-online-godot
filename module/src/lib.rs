@@ -15,6 +15,8 @@ mod craft;
 mod death;
 mod durability;
 mod friends;
+#[cfg(feature = "dev")]
+mod gm;
 mod shop;
 mod vehicle;
 mod game_data;
@@ -309,6 +311,21 @@ pub struct WorldRates {
     pub world_price_rate: i32,
     pub item_price_rate: i32,
     pub town_price_rate: i32,
+}
+
+/// What this server is: "dev" (built with the dev feature, GM commands on) or "production",
+/// and the git commit it was built from (build.rs). Clients show it in the version line.
+#[derive(SpacetimeType)]
+pub struct ServerInfo {
+    pub mode: String,
+    pub version: String,
+}
+
+pub const SERVER_MODE: &str = if cfg!(feature = "dev") { "dev" } else { "production" };
+
+#[spacetimedb::view(accessor = server_info, public)]
+pub fn server_info(_ctx: &spacetimedb::AnonymousViewContext) -> Option<ServerInfo> {
+    Some(ServerInfo { mode: SERVER_MODE.into(), version: env!("ROSE_GIT_COMMIT").into() })
 }
 
 /// Per-tick timing, so the go/no-go "combat tick duration" can be read with SQL.
@@ -977,6 +994,12 @@ pub fn give_xp(ctx: &ReducerContext, name: String, xp: u64) -> Result<(), String
 #[spacetimedb::reducer]
 pub fn reset_monsters(ctx: &ReducerContext) -> Result<(), String> {
     require_admin(ctx)?;
+    clear_monsters(ctx);
+    Ok(())
+}
+
+/// Remove all monsters so the spawn points refill (reset_monsters, the GM command /respawn).
+pub(crate) fn clear_monsters(ctx: &ReducerContext) {
     let ids: Vec<u64> = ctx.db.entity().iter().filter(|e| e.kind == EntityKind::Monster).map(|e| e.entity_id).collect();
     for id in ids {
         despawn(ctx, id);
@@ -986,7 +1009,6 @@ pub fn reset_monsters(ctx: &ReducerContext) -> Result<(), String> {
         s.current_tactics_value = 0;
         ctx.db.monster_spawn().spawn_id().update(s);
     }
-    Ok(())
 }
 
 // ---------------------------------------------------------------- timers
@@ -1285,8 +1307,13 @@ fn deal_damage(ctx: &ReducerContext, game: &GameData, attacker: u64, defender: u
     if dc.hp <= 0 || dc.dead_until_us.is_some() || death::is_shielded(ctx, defender, t) {
         return false;
     }
-    // A monster walking home after giving up can't be hurt: every hit misses.
-    if ctx.db.monster_ai().entity_id().find(defender).is_some_and(|ai| ai.returning) {
+    // A monster walking home after giving up can't be hurt: every hit misses. So does a
+    // character in GM god mode (dev servers only).
+    #[cfg(feature = "dev")]
+    let god = gm::is_god(ctx, defender);
+    #[cfg(not(feature = "dev"))]
+    let god = false;
+    if god || ctx.db.monster_ai().entity_id().find(defender).is_some_and(|ai| ai.returning) {
         ctx.db.damage_event().insert(DamageEvent { attacker, defender, amount: 0, is_critical: false, killed: false, at_us: t });
         return false;
     }

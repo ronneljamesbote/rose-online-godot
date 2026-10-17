@@ -22,6 +22,7 @@ log changes need no wiki change.
 | `module/src/quests.rs`, `crates/rose-quest/` | `wiki/quests/` |
 | `module/src/items.rs`, `module/src/durability.rs`, `module/src/craft.rs`, `module/src/vehicle.rs` | `wiki/items/`, `wiki/rules/durability.md`, `wiki/rules/crafting.md`, `wiki/rules/carts.md` |
 | `module/src/death.rs`, `stamina.rs`, `party.rs`, `pvp.rs`, `trade.rs`, `friends.rs`, `chat.rs`, `bank.rs` | the matching `wiki/rules/<topic>.md` |
+| `module/src/gm.rs`, `godot/gm/` (GM commands, dev servers only) | `wiki/rules/gm-commands.md` |
 | `godot/` (controls, windows, what the player sees) | `wiki/rules/controls.md` and the page of the system shown |
 | `overrides/game-data.toml` | the page of every item, monster, skill or NPC whose value changed |
 | `godot/zones/` spawn, NPC and event markers, `overrides/zones/` (exported from them) | the `wiki/zones/` page of that zone (spawn points, NPCs) and the pages of monsters and NPCs it places |
