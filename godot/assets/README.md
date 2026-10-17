@@ -8,7 +8,7 @@ Models and textures as Godot resources, in two folders with the same layout:
 
 A ROSE file's place in either folder is its client path in lower case with a Godot
 extension: `3DDATA/AVATAR/MALE/BODY/BODY1_00.ZMS` is `3ddata/avatar/male/body/body1_00.mesh`
-and `3DDATA/AVATAR/MALE/BODY/BODY1_00.DDS` is `3ddata/avatar/male/body/body1_00.res`. In
+and `3DDATA/AVATAR/MALE/BODY/BODY1_00.DDS` is `3ddata/avatar/male/body/body1_00.rtex`. In
 `ours/` a mesh may also be a `.res`, and a texture a `.png` or `.dds` (Godot imports those
 when the project is opened in the editor).
 
@@ -23,15 +23,19 @@ godot --headless --path godot -- --import-rose --data-idx=/path/to/iRose_129_129
 
 It converts every ZMS mesh and DDS texture in `data.idx` except effects (`3DDATA/EFFECT`)
 and the interface (`3DDATA/CONTROL`), which still load from the client data. Meshes keep
-their bone weights; textures get the same mipmap fixes the game applies at run time. A
-texture whose DDS file stores its full mip chain is kept as it is (S3TC); the others (most
-ROSE textures, which declare mipmaps they don't store) are saved lossless, each mip level as
-WebP inside the `.res`, so they look exactly like the client data. `rose/` is about 840 MB and
-the import takes about 5 minutes the first time (WebP encoding). Re-compressing those
-textures to S3TC made `rose/` 400 MB but left blue and grey marks along the UV seams of
-skin and blocky skies. Running it again only converts what is
-missing; `--import-rose=force` redoes everything. It also redoes everything after an update
-that changes the converted output (`IMPORT_VERSION` in `rust/src/assets.rs`).
+their bone weights. A texture becomes a `.rtex`: the client's DDS file as it is, in a
+compressed file, which `scripts/rose_texture_loader.gd` opens as an `ImageTexture` in the
+game and in the editor (the inspector and the FileSystem thumbnails show it like any
+texture). Most ROSE textures declare mipmaps they don't store; for those the DDS is cut to
+the level it has and the loader makes the mipmaps from the decompressed image, the same
+way the game treats the client files, so they look exactly like the client data. An
+uncompressed DDS is kept as lossless WebP instead when that is smaller and decodes to the
+same pixels. `rose/` is about 320 MB and the import takes about 35 seconds. (Earlier
+imports saved every mip level as WebP, 840 MB in 5 minutes, or re-compressed to S3TC,
+400 MB but with blue and grey marks along the UV seams of skin and blocky skies.) Running
+it again only converts what is missing; `--import-rose=force` redoes everything. It also
+starts `rose/` afresh after an update that changes the converted output (`IMPORT_VERSION`
+in `rust/src/assets.rs`).
 
 ### Troubleshooting the import
 
@@ -39,8 +43,9 @@ that changes the converted output (`IMPORT_VERSION` in `rust/src/assets.rs`).
   `librose_gd.so`), so pulling a change to `rust/src/` does nothing until the extension is
   rebuilt. Rebuild it first (`cargo build --release -p rose-gd` and copy it into `bin/`, or
   run `tools/build-windows.ps1`, which builds it and then runs the import). The size on the
-  last line tells which import ran: `assets/rose is` about 840 MB after about 5 minutes is
-  the current one; about 400 MB after under a minute is the old S3TC one.
+  last line tells which import ran: `assets/rose is` about 320 MB is the current one; about
+  840 MB (after about 5 minutes) or about 400 MB are older ones, and the zone scenes then
+  show grey ground and untextured objects.
 - **It looks stuck on Windows.** When `godot` is the editor exe rather than the
   `_console.exe`, PowerShell doesn't wait for it: the prompt comes back first and Godot's
   output prints after it. The import is done once `assets/rose is ... MB` appears; press
@@ -91,7 +96,7 @@ Zone objects and ground textures are converted by the same import:
 | File | What it is |
 | --- | --- |
 | `3ddata/junon/list_deco_jg/12.tscn`, `list_cnst_jg/1.tscn` and so on (and the event objects a zone uses) | One scene per building, decoration or event object (`RoseZoneObject`): its mesh parts with their collision and its effects. Placed copies get their lightmap from the block. |
-| `3ddata/maps/junon/jg07/terrain_textures/12.res` and so on | The ground textures of each zone that has scenes, by tile texture number. |
+| `terrain_textures/3ddata/terrain/tiles/junon/jg/t001_01.res` and so on | The ground textures of the zones that have scenes, as Terrain3D takes them (256 x 256 RGBA with mipmaps), named after the ROSE tile file, so zones using the same tile share one. |
 
 The zones themselves are scenes in `res://zones/`, one folder per zone (`20_birth_island/`, `21_valley_of_luxem_tower/`, `22_adventurer_s_plain/`, `23_breezy_hills/`),
 committed to the repository. They are written once from the client's map files:
@@ -129,7 +134,11 @@ same with or without `rose/`.
 
 ## In the Windows build
 
-`tools/build-windows.sh` runs the import, so the export puts all of `rose/`, `ours/` and the
-zone scenes into `ROSE.pck`, next to `ROSE.exe` in the zip (about 860 MB; the zip was 44 MB
-before). Players still need the client data (`data.idx`) for the game tables, effects, the
-interface and the zones without scenes.
+`tools/build-windows.sh` runs the import and exports two packs next to `ROSE.exe`:
+`ROSE.pck` with the scripts, the interface, `ours/` and the zone scenes (about 5 MB), and
+`assets.pck` with all of `rose/` (about 320 MB, the "ROSE assets" export preset). Godot
+opens `ROSE.pck` by itself, as it is named after the exe; the extension opens
+`assets.pck` at start (`load_assets_pack` in `rust/src/assets.rs`), and without it the game
+loads models, textures and zones from the client data. `--game-only` builds an update
+without `assets.pck`. Players still need the client data (`data.idx`) for the game tables,
+effects, the interface and the zones without scenes.

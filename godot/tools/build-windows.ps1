@@ -1,6 +1,8 @@
 # Builds the Windows client from Windows:
 # - Compiles rose_gd.dll with Rust + MinGW-w64
-# - Exports ROSE.exe using Godot's Windows export template
+# - Exports ROSE.exe using Godot's Windows export template, with ROSE.pck (scripts,
+#   interface and zone scenes, about 5 MB) and assets.pck (the converted ROSE assets,
+#   about 320 MB), which the game opens next to ROSE.exe
 # - Packages both together with README.txt (in a folder ROSE, or ROSE-dev for -Dev)
 #
 # Switches:
@@ -10,9 +12,13 @@
 #   -Folder  a folder instead of a zip (<output>\ROSE-windows[-dev]\), for testing. A
 #            rebuild replaces only the game's own files, so the themes folder, the ROSE
 #            client data and anything else put next to ROSE.exe stay.
+#   -GameOnly an update without assets.pck (ROSE-windows[-dev]-update.zip, or with
+#            -Folder the folder's assets.pck is kept): for players who already have the
+#            assets of this version. A change to the import (IMPORT_VERSION in
+#            godot\rust\src\assets.rs) or to anything in assets\rose needs the full build.
 #   -DataIdx the ROSE client's data.idx (or set ROSE_DATA_IDX). The build first converts
 #            the ROSE models, textures and animations into godot\assets\rose\
-#            (--import-rose), because ROSE.pck carries them and the zone scenes need them.
+#            (--import-rose), because assets.pck carries them and the zone scenes need them.
 #
 # It refuses to build when overrides\motions.toml (the server's hit times) or
 # overrides\zones\ (spawns and NPCs) don't match the animations and the zone scenes;
@@ -36,6 +42,8 @@
 #
 #   .\godot\tools\build-windows.ps1 -Dev -Folder
 #
+#   .\godot\tools\build-windows.ps1 -GameOnly
+#
 # Environment variables:
 #   GODOT            Path to godot.exe
 #   ROSE_DATA_IDX    Path to the ROSE client's data.idx (instead of -DataIdx)
@@ -44,6 +52,7 @@
 param(
     [switch]$Dev,
     [switch]$Folder,
+    [switch]$GameOnly,
     [string]$DataIdx,
     [Parameter(Position = 0)]
     [string]$OutDir
@@ -93,6 +102,9 @@ if ($Dev) {
     $Preset = "Windows Desktop"
     $ExportFlag = "--export-release"
     $Templates = @("windows_release_x86_64.exe")
+}
+if ($GameOnly) {
+    $Name = "$Name-update"
 }
 
 Write-Host "==> Repository root: $(Get-Location)"
@@ -309,7 +321,7 @@ function Invoke-Godot {
     }
 }
 
-# The converted assets go into ROSE.pck, so make sure they are all there
+# The converted assets go into assets.pck, so make sure they are all there
 # and current. The project's own files are imported first, as on a fresh
 # clone nothing is.
 Write-Host ""
@@ -431,6 +443,19 @@ try {
         throw "Godot export failed."
     }
 
+    # The converted assets go in their own pack (the "ROSE assets"
+    # preset), which the game opens next to ROSE.exe, so a game update
+    # can leave them out.
+    if (-not $GameOnly) {
+        Write-Host ""
+        Write-Host "==> Exporting assets.pck..."
+        $AssetsPck = Join-Path $StageRose "assets.pck"
+        $GodotExit = Invoke-Godot @("--headless", "--path", "godot", "--export-pack", "ROSE assets", $AssetsPck)
+        if ($GodotExit -ne 0 -or -not (Test-Path $AssetsPck)) {
+            throw "Exporting assets.pck failed."
+        }
+    }
+
     # --------------------------------------------------------
     # GM commands are for dev builds only: the production client
     # must have neither the GM chat scripts (godot/gm/) nor the
@@ -485,7 +510,7 @@ try {
         $Dest = Join-Path $Out $Name
         New-Item -ItemType Directory -Force -Path $Dest | Out-Null
         Get-ChildItem -Path $Dest -File |
-            Where-Object { $_.Extension -in ".exe", ".pck", ".dll" -or $_.Name -eq "README.txt" } |
+            Where-Object { $_.Extension -in ".exe", ".dll" -or $_.Name -in "README.txt", "ROSE.pck" -or ($_.Name -eq "assets.pck" -and -not $GameOnly) } |
             Remove-Item -Force
         Copy-Item -Path (Join-Path $StageRose "*") -Destination $Dest -Recurse -Force
 

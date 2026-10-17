@@ -7,13 +7,17 @@
 //! swapping the extension: `3DDATA/AVATAR/MALE/BODY/BODY1_00.ZMS` becomes
 //! `res://assets/rose/3ddata/avatar/male/body/body1_00.mesh`. The loaders in `mesh.rs` and
 //! `texture.rs` ask here first and fall back to reading the ROSE file.
+//!
+//! A texture becomes a `.rtex`: the client's DDS file as it is (cut to the levels it really
+//! stores), compressed, which `scripts/rose_texture_loader.gd` opens as an `ImageTexture`
+//! and gives its mipmaps the way `texture::load_rose_image` does, so it looks the same.
 
 use std::{collections::BTreeMap, path::Path, time::Instant};
 
 use godot::{
     classes::{
-        portable_compressed_texture_2d::CompressionMode, resource_saver::SaverFlags, ArrayMesh, Image, ConfigFile, DirAccess, ImageTexture, PortableCompressedTexture2D, ProjectSettings, Resource,
-        ResourceLoader, ResourceSaver, Texture2D,
+        file_access::{CompressionMode, ModeFlags}, image::Format, resource_saver::SaverFlags, ArrayMesh, ConfigFile, DirAccess, FileAccess, Image, ProjectSettings,
+        Resource, ResourceLoader, ResourceSaver, Texture2D,
     },
     global::Error,
     prelude::*,
@@ -23,7 +27,7 @@ use rose_file_readers::{VfsIndex, ZmsFile};
 pub const OURS: &str = "res://assets/ours/";
 pub const ROSE: &str = "res://assets/rose/";
 /// Bumped when the converted output changes, so the next import redoes every file.
-const IMPORT_VERSION: i64 = 3;
+const IMPORT_VERSION: i64 = 4;
 const STAMP: &str = "res://assets/rose/import.cfg";
 
 /// Folders that stay in data.idx for now: effects and the interface.
@@ -52,7 +56,7 @@ impl Kind {
     fn extensions(self) -> &'static [&'static str] {
         match self {
             Kind::Mesh => &["mesh", "res"],
-            Kind::Texture => &["res", "png", "dds"],
+            Kind::Texture => &["rtex", "res", "png", "dds"],
         }
     }
 }
@@ -106,6 +110,25 @@ pub fn load_texture(rose_path: &str) -> Option<Gd<Texture2D>> {
     load(rose_path, Kind::Texture)
 }
 
+/// The pack with the converted assets that the Windows build writes next to the game.
+pub const ASSETS_PACK: &str = "assets.pck";
+
+/// Opens `ASSETS_PACK` from beside the executable, in an exported game only.
+pub fn load_assets_pack() {
+    let os = godot::classes::Os::singleton();
+    if !os.has_feature("template") || godot::classes::Engine::singleton().is_editor_hint() {
+        return;
+    }
+    let path = os.get_executable_path().get_base_dir().path_join(ASSETS_PACK);
+    if !FileAccess::file_exists(&path) {
+        godot_warn!("rose: {path} is missing; models, textures and zone scenes load from the client data");
+        return;
+    }
+    if !ProjectSettings::singleton().load_resource_pack_ex(&path).replace_files(false).done() {
+        godot_error!("rose: could not open {path}");
+    }
+}
+
 /// The import command: converts every ZMS mesh and DDS texture in data.idx (outside the
 /// skipped folders) into `res://assets/rose/`.
 #[derive(GodotClass)]
@@ -148,6 +171,11 @@ impl RoseImport {
         files.sort();
 
         let root = ProjectSettings::singleton().globalize_path(ROSE).to_string();
+        if !same_version {
+            // Files an older import made under other names (the textures were .res before)
+            // would be left over and shipped, so start from an empty folder.
+            let _ = std::fs::remove_dir_all(&root);
+        }
         let (mut meshes, mut textures, mut failed, mut kept) = (0, 0, 0, 0);
         let mut folders: BTreeMap<String, u64> = BTreeMap::new();
         let mut total_bytes = 0u64;
@@ -159,9 +187,7 @@ impl RoseImport {
                     Kind::Mesh => crate::data::read_file::<ZmsFile>(rose_path)
                         .and_then(|zms| crate::mesh::build_mesh(&zms, true))
                         .map(|mesh| save(mesh.upcast(), &target)),
-                    Kind::Texture => crate::texture::load_rose_image(rose_path)
-                        .and_then(texture_resource)
-                        .map(|texture| save(texture, &target)),
+                    Kind::Texture => Some(save_texture(rose_path, &target)),
                 };
                 match saved {
                     Some(true) => match kind {
@@ -336,20 +362,48 @@ impl RoseImport {
     }
 }
 
-/// The converted copy of a ROSE texture. A DDS file with its full mip chain stays as it
-/// was (S3TC, ready for the GPU). The others (most ROSE files, which declare mipmaps they
-/// don't store) were decompressed to make the mipmaps; those are saved lossless (each level
-/// as WebP inside the resource), so they look exactly like the client files. Re-compressing
-/// them to S3TC was smaller but smeared the colour next to UV seams (blue and grey marks on
-/// skin) and made gradients blocky (the sky).
-fn texture_resource(image: Gd<Image>) -> Option<Gd<Resource>> {
-    if image.is_compressed() {
-        return ImageTexture::create_from_image(&image).map(|texture| texture.upcast());
+/// The first bytes of a `.rtex`, then the kind of payload, whether the loader makes the
+/// mipmaps, and a spare byte. The rest is the payload: a DDS or a lossless WebP file.
+const RTEX_MAGIC: &[u8; 4] = b"RTEX";
+const RTEX_DDS: u8 = 0;
+const RTEX_WEBP: u8 = 1;
+
+/// Writes the converted copy of a ROSE texture: its DDS file as it is, in a compressed file.
+/// Most ROSE files declare mipmaps they don't store; those are cut to level 0 and the
+/// loader makes the mipmaps, as the game does with the client files (decompressed to RGBA,
+/// never re-compressed: re-compressing to S3TC smeared the colour next to UV seams and
+/// made the sky blocky). An uncompressed file is kept as lossless WebP instead when that is
+/// smaller and decodes to the same pixels.
+fn save_texture(rose_path: &str, target: &str) -> bool {
+    let Some(bytes) = crate::data::read_bytes(rose_path) else { return false };
+    let (bytes, needs_mipmaps) = crate::texture::fix_partial_mip_chain(bytes);
+    let dds = PackedByteArray::from(bytes.as_slice());
+    let mut image = Image::new_gd();
+    if image.load_dds_from_buffer(&dds) != Error::OK {
+        godot_warn!("rose: could not decode texture {rose_path}");
+        return false;
     }
-    let mut texture = PortableCompressedTexture2D::new_gd();
-    texture.set_keep_compressed_buffer(true); // otherwise only the GPU copy is kept and nothing is saved
-    texture.create_from_image(&image, CompressionMode::LOSSLESS);
-    Some(texture.upcast())
+    let mut payload = (RTEX_DDS, dds);
+    if needs_mipmaps && !image.is_compressed() && !image.has_mipmaps() && matches!(image.get_format(), Format::RGB8 | Format::RGBA8) {
+        let webp = image.save_webp_to_buffer_ex().lossy(false).done();
+        let mut decoded = Image::new_gd();
+        let same = decoded.load_webp_from_buffer(&webp) == Error::OK && decoded.get_format() == image.get_format() && decoded.get_data() == image.get_data();
+        if same && webp.len() < payload.1.compress(CompressionMode::ZSTD).map_or(usize::MAX, |c| c.len()) {
+            payload = (RTEX_WEBP, webp);
+        }
+    }
+    let folder = &target[..target.rfind('/').unwrap_or(0)];
+    DirAccess::make_dir_recursive_absolute(folder);
+    let Some(mut file) = FileAccess::open_compressed_ex(target, ModeFlags::WRITE).compression_mode(CompressionMode::ZSTD).done() else {
+        godot_warn!("rose: could not save {target}");
+        return false;
+    };
+    let mut header = RTEX_MAGIC.to_vec();
+    header.extend([payload.0, needs_mipmaps as u8, 0]);
+    file.store_buffer(&PackedByteArray::from(header.as_slice()));
+    file.store_buffer(&payload.1);
+    file.close();
+    true
 }
 
 pub fn save(resource: Gd<Resource>, path: &str) -> bool {

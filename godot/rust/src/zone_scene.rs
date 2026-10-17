@@ -602,11 +602,16 @@ pub struct ZoneImport {
     pub kept: i64,
     pub failed: i64,
     pub bytes: u64,
+    /// The files written or kept so far, as zones share some (the ground textures).
+    done: HashSet<String>,
 }
 
 impl ZoneImport {
     fn save(&mut self, redo: bool, stem: &str, extension: &str, make: impl FnOnce() -> Option<Gd<godot::classes::Resource>>) {
         let target = format!("{}{stem}.{extension}", assets::ROSE);
+        if !self.done.insert(target.clone()) {
+            return;
+        }
         let disk = godot::classes::ProjectSettings::singleton().globalize_path(&target).to_string();
         if !redo && std::path::Path::new(&disk).is_file() {
             self.kept += 1;
@@ -788,8 +793,12 @@ fn used_tile_numbers(files: &ZoneFiles) -> Vec<usize> {
     used
 }
 
+/// Where the Terrain3D copy of the zone's ground texture `number` goes. It is named after the
+/// ROSE tile file (`terrain_textures/3ddata/terrain/tiles/.../t001_01`), so zones that use
+/// the same tile share one copy.
 fn terrain_texture_stem(files: &ZoneFiles, number: usize) -> String {
-    format!("{}/terrain_textures/{number}", assets::stem(&files.zone_dir))
+    let tile = zone::tile_texture_paths(&files.zon).get(number).cloned().unwrap_or_default();
+    format!("terrain_textures/{}", assets::stem(&tile))
 }
 
 /// A ground texture as Terrain3D takes it: RGBA8, 256 x 256 (every ROSE tile's size), with mipmaps.

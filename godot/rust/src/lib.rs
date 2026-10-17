@@ -25,6 +25,16 @@ struct RoseExtension;
 
 #[gdextension]
 unsafe impl ExtensionLibrary for RoseExtension {
+    /// The exported game ships the converted ROSE assets (`res://assets/rose/`) in their own
+    /// pack, `assets.pck` next to `ROSE.exe`, so a game update can leave it out. Godot
+    /// only opens `ROSE.pck` by itself; this adds the other one before anything loads. Files
+    /// in both stay as `ROSE.pck` has them, so a newer `ROSE.pck` wins over an older assets pack.
+    fn on_stage_init(stage: InitStage) {
+        if stage == InitStage::Scene {
+            assets::load_assets_pack();
+        }
+    }
+
     /// The caches hold Godot objects, so they must be emptied before the engine shuts down.
     fn on_stage_deinit(stage: InitStage) {
         if stage == InitStage::MainLoop {

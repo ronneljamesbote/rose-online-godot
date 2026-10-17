@@ -50,11 +50,13 @@ otherwise asks for it once.
 cross-compiles `rose_gd.dll` with mingw-w64 (`rustup target add x86_64-pc-windows-gnu`,
 `apt install gcc-mingw-w64-x86-64`), exports `ROSE.exe` with Godot's Windows release
 template (only `windows_release_x86_64.exe` from the editor's export templates is needed;
-the script fetches it when it's missing) with `ROSE.pck` beside it, and zips them with the DLLs (ours and Terrain3D's) and
+the script fetches it when it's missing) with two packs beside it, `ROSE.pck` (scripts,
+interface and zone scenes, about 5 MB) and `assets.pck` (the converted ROSE assets, about
+320 MB, from the "ROSE assets" export preset; the game opens it at start), and zips them with the DLLs (ours and Terrain3D's) and
 `tools/README-windows.txt`. It needs `ROSE_DATA_IDX` (the client's `data.idx`; the PowerShell
 script also takes `-DataIdx`): it first
-runs `--import-rose`, because the pck carries the converted models, textures, animations
-and the zone scenes (about 860 MB, see `assets/README.md`), then checks that
+runs `--import-rose`, because `assets.pck` carries the converted models, textures and
+animations (see `assets/README.md`), then checks that
 `overrides/motions.toml` and `overrides/zones/` match the animations and zone scenes
 (`--export-motions=check`, `--export-zones=check`); when they don't, it stops without
 building. The DLL only imports Windows system DLLs. Under
@@ -62,7 +64,7 @@ Wine 9 the build loads the data, builds Zant and plays online headless (Wine's `
 crashes Godot here, so the test ran with `WINEDLLOVERRIDES=dinput8=d`); it has not been
 run on a real Windows PC yet.
 
-Two switches (`-Dev` and `-Folder` in the PowerShell script):
+Three switches (`-Dev`, `-Folder` and `-GameOnly` in the PowerShell script):
 
 - `--dev` builds the **dev client**, `ROSE-windows-dev` (folder `ROSE-dev`): the
   "Windows Desktop Dev" export preset (feature tag `dev`, the `gm/` chat included), the
@@ -71,8 +73,13 @@ Two switches (`-Dev` and `-Folder` in the PowerShell script):
   `gm_commands` (the `gm/` scripts) is in the pck nor `gm_command` in the DLL, and stops if
   one is.
 - `--folder` writes a folder, `dist/ROSE-windows[-dev]/`, instead of a zip, for testing. A
-  rebuild replaces only the exe, pck, DLLs and readme, so the `themes` folder, the ROSE
+  rebuild replaces only the exe, packs, DLLs and readme, so the `themes` folder, the ROSE
   client data and anything else next to `ROSE.exe` stay.
+- `--game-only` leaves `assets.pck` out: `ROSE-windows[-dev]-update.zip` (about 40 MB, the
+  exe, `ROSE.pck` and the DLLs) to unzip over a full install, or with `--folder` the
+  folder's `assets.pck` stays. Use the full build when the converted assets changed (an
+  import change, `IMPORT_VERSION`, or anything else in `assets/rose/`): a newer `ROSE.pck`
+  wins over an older `assets.pck` for files in both, but can't add missing assets.
 
 Both write the commit into the export (`build_version.txt`, git-ignored) for the version
 line.
