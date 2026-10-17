@@ -48,5 +48,10 @@ another.
 
 - `--demo` (`offline.gd`): run, a full swing, a swing cancelled by moving, a combo, then
   quit. With `--write-movie out.avi --fixed-fps 30` Godot records the clip.
+- `--demo=camera` (`camera.gd`): stands at `--at=X,Z`, or else below the steepest slope near
+  the zone's start, zooms all the way out at the lowest camera angle and turns round once,
+  printing how high the camera is above the terrain and where a click on the screen lands,
+  then clicks the ground three times and walks there; `--shots=DIR` saves a picture every
+  eighth of the turn. Then quits.
 - `--effect=PATH,PATH...` (`effect.gd`): plays these EFT effects in a row in front of the
   camera, each again once it ends. `--screenshot-after=SECONDS` waits before `--screenshot`.
