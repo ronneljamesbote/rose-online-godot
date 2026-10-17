@@ -145,5 +145,19 @@ yet (or `ROSE_UPLOAD_GAME_DATA=1`), it runs `upload-game-data.sh` on the `data.i
 in `/game`: the import tool packs the files the databases read (about 2,500 files, 33 MB for
 129_129en) and the script sends them to the module's admin reducers in batches.
 
+The import tool is `import/` (`rose-stdb-import`, built into the image):
+
+- `rose-stdb-import pack <data.idx> <dir>` writes the upload batches (`upload-NNN.json`, each
+  the arguments of one `upload_game_files` call, plus `manifest.json`). It applies
+  `overrides/game-data.toml` first and adds `overrides/motions.toml` and the zone files in
+  `overrides/zones/` (`ROSE_OVERRIDES`, `ROSE_MOTIONS` and `ROSE_ZONES` point elsewhere).
+- `rose-stdb-import list <data.idx>` shows which files the databases read, per folder;
+  `time <data.idx>` how long building them takes.
+
+By hand, outside Docker: `cargo build --release -p rose-stdb-import`, then
+`ROSE_IMPORT=target/release/rose-stdb-import sh server/upload-game-data.sh /path/to/data.idx`
+with `spacetimedb-cli` (or the CLI named by `SPACETIME_CLI`) logged in as the identity that
+published the module.
+
 Tested 2026-10-07 on Linux (Docker 29): fresh start, a Godot client signed in and moved,
 and after `docker restart` the same player came back with its name and position.

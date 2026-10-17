@@ -40,4 +40,5 @@ file. A rule change goes into code.
 - The repository is public. Never commit secrets, keys, tokens, SpacetimeDB identity files,
   personal emails or local paths. Original client data files are not committed; the wiki
   pages and their maps and icons are the one exception.
-- Every finished change comes with screenshots or a short video showing it working.
+- Every finished change comes with screenshots or a short video showing it working. They go
+  with the report or the pull request, not into the repository.
