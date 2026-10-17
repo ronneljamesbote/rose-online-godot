@@ -5,6 +5,7 @@ extends RefCounted
 const NET_DEMOS := {
 	"fight": "fight.gd",
 	"kite": "kite.gd",
+	"leash": "leash.gd",
 	"walls": "walls.gd",
 	"warp": "warp.gd",
 	"shop": "shop.gd",
