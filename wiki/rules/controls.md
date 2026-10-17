@@ -210,8 +210,13 @@ Esc or clicking outside the chat box stops typing.
   example "DEV · client 3cad34b · server 3cad34b". It shows on the start screen ("server
   not connected"), the loading screen and in game, and can't be clicked. When the server's
   commit differs from the client's, the server part is amber; when the modes differ, both
-  are named ("DEV client 3cad34b · PRODUCTION server 9ac7031"). The dev client is the one
-  for testing, with the [[rules/gm-commands|GM commands]].
+  are named ("DEV client 3cad34b · PRODUCTION server 9ac7031"). Once a zone is loaded the
+  line ends with the zone and how the client built it: "Zone 23 Breezy Hills · Godot scene"
+  for a zone made from its Godot scene, "Zone 2 City of Junon Polis · old loader" for one
+  read from the iROSE map files. A zone that has a scene but was read from the map files
+  anyway says why in amber: "old loader (assets missing)" when the converted assets were
+  not imported into the client. The dev client is the one for testing, with the
+  [[rules/gm-commands|GM commands]].
 - The **player frame** (top left, under the version line) shows your character's head in the round portrait, with
   your level under it. The camera follows the head, so it stays in the middle of the
   circle, and the picture shows your real face, hair and gear. When you take damage the

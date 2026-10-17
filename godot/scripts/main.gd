@@ -308,6 +308,7 @@ func _load_zone(zone_id: int) -> bool:
 	if camera and "zone" in camera:
 		camera.zone = zone
 	zone.set_meta("zone_id", zone_id)
+	VersionLine.zone = VersionLine.zone_line(zone_id, RoseData.zone_name(zone_id), zone.get_stats())
 	print("rose: zone ", zone_id, " loaded ", zone.get_stats(), " day cycle ", zone.get_day_cycle(), " morning/day/evening/night start ", [zone.get_state_start("morning"), zone.get_state_start("day"), zone.get_state_start("evening"), zone.get_state_start("night")])
 	if world_ticks == 0.0:
 		var time: String = options.get("time", "day")

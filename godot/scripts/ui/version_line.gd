@@ -1,12 +1,16 @@
 ## The line at the top left that names the client and server: their mode (dev or
 ## production) and version (git commit). It shows on the start screen, the loading screen and
-## in game, above everything else, and never takes clicks. main.gd hands it the connection.
+## in game, above everything else, and never takes clicks. main.gd hands it the connection,
+## and after each zone load the line also says how that zone was built (zone_line()). One
+## line, so it never runs into the player frame under it.
 extends CanvasLayer
 
 const AMBER := "#f0b030"
 
 ## RoseNet of the current connection, or null.
 var net: Node
+## The zone part at the end of the line, or "" before any zone is loaded.
+var zone := ""
 var _label: RichTextLabel
 var _shown := ""
 var _next_check := 0.0
@@ -41,6 +45,8 @@ func _refresh() -> void:
 	if is_instance_valid(net) and net.has_method("server_info"):
 		info = net.server_info()
 	var text := line(BuildInfo.mode(), BuildInfo.version(), info.get("mode", ""), info.get("version", ""))
+	if zone != "":
+		text += " · " + zone
 	if text != _shown:
 		_shown = text
 		_label.text = text
@@ -58,3 +64,16 @@ static func line(client_mode: String, client_version: String, server_mode: Strin
 	if server_mode == client_mode:
 		return "%s · client %s · %s" % [client_mode.to_upper(), client_version, server]
 	return "%s client %s · %s %s" % [client_mode.to_upper(), client_version, server_mode.to_upper(), server]
+
+
+## "Zone 23 Breezy Hills · Godot scene", or "· old loader" for a zone built from the ROSE
+## map files. When the zone has a scene but it was not used, the reason follows in amber:
+## "old loader (assets missing)" means the converted assets were not imported.
+static func zone_line(zone_id: int, zone_name: String, stats: Dictionary) -> String:
+	var zone_text := ("Zone %d %s" % [zone_id, zone_name]).strip_edges()
+	if stats.get("source", "") == "scene":
+		return "%s · Godot scene" % zone_text
+	var fallback: String = stats.get("fallback", "")
+	if fallback == "":
+		return "%s · old loader" % zone_text
+	return "%s · [color=%s]old loader (%s)[/color]" % [zone_text, AMBER, fallback]

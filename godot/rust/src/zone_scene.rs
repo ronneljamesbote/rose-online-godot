@@ -71,19 +71,20 @@ pub fn zone_folders() -> Vec<(u16, String)> {
 
 
 /// The zone's scene, when it has one and the converted assets it uses are there (they are
-/// not committed; `--import-rose` makes them). Without them the zone loads from the ROSE files.
-pub fn zone_scene(zone_id: u16, zone_dir: &str) -> Option<Gd<PackedScene>> {
-    let path = format!("{}/zone.tscn", zone_folder(zone_id)?);
+/// not committed; `--import-rose` makes them). Without them the zone loads from the ROSE
+/// files: the error is `None` for a zone with no scene, or why its scene was not used.
+pub fn zone_scene(zone_id: u16, zone_dir: &str) -> Result<Gd<PackedScene>, Option<&'static str>> {
+    let path = format!("{}/zone.tscn", zone_folder(zone_id).ok_or(None)?);
     if !ResourceLoader::singleton().exists(&path) {
-        return None;
+        return Err(None);
     }
     let first_tile = data::read_file::<ZonFile>(&format!("{zone_dir}/{}.ZON", zone_dir.rsplit('/').next().unwrap_or("")))
         .and_then(|zon| zone::tile_texture_paths(&zon).into_iter().next());
     if first_tile.is_some_and(|path| assets::load_texture(&path).is_none()) {
         godot_warn!("rose: {path} needs the converted assets; run --import-rose. Loading the zone from the client data.");
-        return None;
+        return Err(Some("assets missing"));
     }
-    godot::tools::try_load::<PackedScene>(&path).ok()
+    godot::tools::try_load::<PackedScene>(&path).map_err(|_| Some("scene did not load"))
 }
 
 fn walk(node: &Gd<Node>, visit: &mut impl FnMut(&Gd<Node>)) {
