@@ -1,6 +1,6 @@
 ## Options (O): the interface theme (Arumic by default; every file in the themes folder is
-## a card), interface size, window look, mouse cursor, layout, labels over the world, and
-## sound.
+## a card), interface size, window look, mouse cursor, layout, labels over the world,
+## gameplay (sticky target) and sound.
 extends PanelContainer
 
 const Fx := preload("res://scripts/fx.gd")
@@ -20,12 +20,13 @@ func _ready() -> void:
 	add_child(column)
 	tabs = TabBar.new()
 	tabs.focus_mode = Control.FOCUS_NONE
-	for name in ["Interface", "World labels", "Sound"]:
+	for name in ["Interface", "World labels", "Gameplay", "Sound"]:
 		tabs.add_tab(name)
 	tabs.tab_changed.connect(_show_page)
 	column.add_child(tabs)
 	pages.append(_interface_page())
 	pages.append(_labels_page())
+	pages.append(_gameplay_page())
 	pages.append(_sound_page())
 	for page in pages:
 		column.add_child(page)
@@ -149,6 +150,19 @@ func _labels_page() -> Control:
 	var tip := Label.new()
 	tip.text = "Click a label to pick the item up. Faded labels are someone else's drop."
 	tip.theme_type_variation = "MutedLabel"
+	box.add_child(tip)
+	return box
+
+
+func _gameplay_page() -> Control:
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 8)
+	_section(box, "Targeting")
+	_check(box, "Sticky target", "sticky_target")
+	var tip := Label.new()
+	tip.text = "Walking (a click or holding the button on the ground) keeps your target selected, so skills still go to it. Esc drops it."
+	tip.theme_type_variation = "MutedLabel"
+	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	box.add_child(tip)
 	return box
 
