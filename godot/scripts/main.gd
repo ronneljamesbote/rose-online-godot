@@ -251,6 +251,7 @@ func _start(data_idx: String) -> void:
 	else:
 		camera = preload("res://scripts/orbit_camera.gd").new()
 		camera.target = camera_anchor
+		camera.zone = zone
 	camera.fov = float(options.get("fov", "45"))
 	camera.near = 0.1
 	camera.far = 1000.0
@@ -304,6 +305,8 @@ func _load_zone(zone_id: int) -> bool:
 	if not zone.load_zone(zone_id):
 		return false
 	loaded_zone = zone_id
+	if camera and "zone" in camera:
+		camera.zone = zone
 	zone.set_meta("zone_id", zone_id)
 	print("rose: zone ", zone_id, " loaded ", zone.get_stats(), " day cycle ", zone.get_day_cycle(), " morning/day/evening/night start ", [zone.get_state_start("morning"), zone.get_state_start("day"), zone.get_state_start("evening"), zone.get_state_start("night")])
 	if world_ticks == 0.0:
@@ -598,16 +601,29 @@ func _steer() -> void:
 
 
 ## Where the mouse ray meets the ground: zone objects you can walk on (physics ray), or
-## the terrain height field, whichever is nearer.
+## the terrain height field, whichever is nearer. The terrain counts only where the ray
+## comes down onto it from above, never from underneath.
 func _pick_ground(screen_position: Vector2):
 	var origin := camera.project_ray_origin(screen_position)
 	var direction := camera.project_ray_normal(screen_position)
 	var terrain_hit = null
 	var t := 0.0
+	var was_above := false
 	while t < 500.0:
 		var p := origin + direction * t
-		if p.y <= zone.get_terrain_height(p.x, p.z):
-			terrain_hit = p
+		if p.y > zone.get_terrain_height(p.x, p.z):
+			was_above = true
+		elif was_above:
+			# Narrow down between the last step above and this one.
+			var above := t - 0.25
+			for i in 8:
+				var mid := (above + t) * 0.5
+				var m := origin + direction * mid
+				if m.y > zone.get_terrain_height(m.x, m.z):
+					above = mid
+				else:
+					t = mid
+			terrain_hit = origin + direction * t
 			break
 		t += 0.25
 	var query := PhysicsRayQueryParameters3D.create(origin, origin + direction * 500.0, 2)
