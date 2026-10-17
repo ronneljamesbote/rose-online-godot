@@ -294,7 +294,8 @@ pub fn drop_money(ctx: &ReducerContext, amount: i64) -> Result<(), String> {
     Ok(())
 }
 
-/// Swap two slots of one inventory page (or move an item into an empty one).
+/// Swap two slots of one inventory page (or move an item into an empty one). Hotbar
+/// shortcuts to either slot follow their item.
 #[spacetimedb::reducer]
 pub fn move_item(ctx: &ReducerContext, page: u8, from: u16, to: u16) -> Result<(), String> {
     let (mut p, _) = my_player(ctx)?;
@@ -306,6 +307,9 @@ pub fn move_item(ctx: &ReducerContext, page: u8, from: u16, to: u16) -> Result<(
     let first = inventory.get_item_slot_mut(a).ok_or("no such slot")?.take();
     let second = std::mem::replace(inventory.get_item_slot_mut(b).ok_or("no such slot")?, first);
     *inventory.get_item_slot_mut(a).unwrap() = second;
+    let mut hotbar = p.hotbar();
+    hotbar.swap_inventory_slots(a, b);
+    p.set_hotbar(&hotbar);
     p.set_inventory(&inventory);
     ctx.db.player().identity().update(p);
     Ok(())
