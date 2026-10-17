@@ -189,7 +189,10 @@ orbit the camera, mouse wheel to zoom. Online, left-click a monster to attack it
 attacks the nearest one, C opens the character window, I the inventory, K the skills, Q the quests, 1-8 use the hotbar, Z picks up the nearest item, X sits or stands, Enter chats; offline, Space swings the sword.
 
 For the GM commands (on a dev server, see `../server/README.md`), build the extension with
-`cargo build --release -p rose-gd --features dev`.
+`cargo build --release -p rose-gd --features dev`. A run from the editor or a source
+checkout counts as the dev client: the start screen suggests the dev server
+(`ws://127.0.0.1:3100`) and offers Connect without account, and the version line at the top
+left reads the commit from git (`scripts/build_info.gd`).
 
 The start screen's server address may end in a database name, `ws://HOST:3000/NAME`
 (default `rose`). Without `--data-idx` the game looks for the last `data.idx` picked, then
@@ -198,11 +201,12 @@ otherwise asks for it once.
 
 ### Windows build
 
-`godot/tools/build-windows.sh` builds `dist/ROSE-windows.zip` from Linux: it
+`godot/tools/build-windows.sh` builds `dist/ROSE-windows.zip` from Linux
+(`godot/tools/build-windows.ps1` does the same on Windows): it
 cross-compiles `rose_gd.dll` with mingw-w64 (`rustup target add x86_64-pc-windows-gnu`,
 `apt install gcc-mingw-w64-x86-64`), exports `ROSE.exe` with Godot's Windows release
-template (only `windows_release_x86_64.exe` from the 4.7.2 export templates is needed)
-with `ROSE.pck` beside it, and zips them with the DLLs (ours and Terrain3D's) and
+template (only `windows_release_x86_64.exe` from the editor's export templates is needed;
+the script fetches it when it's missing) with `ROSE.pck` beside it, and zips them with the DLLs (ours and Terrain3D's) and
 `tools/README-windows.txt`. It needs `ROSE_DATA_IDX` (the client's `data.idx`): it first
 runs `--import-rose`, because the pck carries the converted models, textures, animations
 and the zone scenes (about 400 MB, see `assets/README.md`), then checks that
@@ -213,6 +217,21 @@ Wine 9 the build loads the data, builds Zant and plays online headless (Wine's `
 crashes Godot here, so the test ran with `WINEDLLOVERRIDES=dinput8=d`); it has not been
 run on a real Windows PC yet.
 
+Two switches (`-Dev` and `-Folder` in the PowerShell script):
+
+- `--dev` builds the **dev client**, `ROSE-windows-dev` (folder `ROSE-dev`): the
+  "Windows Desktop Dev" export preset (feature tag `dev`, the `gm/` chat included), the
+  debug template `windows_debug_x86_64.exe` with a console window (`ROSE.console.exe`) and
+  `rose_gd.dll` built with `--features dev`. The production build checks that neither
+  `gm_commands` (the `gm/` scripts) is in the pck nor `gm_command` in the DLL, and stops if
+  one is.
+- `--folder` writes a folder, `dist/ROSE-windows[-dev]/`, instead of a zip, for testing. A
+  rebuild replaces only the exe, pck, DLLs and readme, so the `themes` folder, the ROSE
+  client data and anything else next to `ROSE.exe` stay.
+
+Both write the commit into the export (`build_version.txt`, git-ignored) for the version
+line.
+
 Other options (after `--`):
 
 - `--server=ws://HOST:3000` connects straight away, with `--name=NAME` on a server without
@@ -221,8 +240,8 @@ Other options (after `--`):
   character creation screen and `--create-after=SECONDS` presses Create. `--weapon=bow`
   equips the bow and arrows from the bag once the character meets the bow's requirements.
 - `--open=inventory,character,skills,quests` opens those windows at the start (for screenshots).
-- `--profile=NAME` picks the identity file (`user://identity-NAME.token`), so two clients on
-  one PC are two players.
+- `--profile=NAME` picks the identity file (`user://identity-NAME-HOST-PORT.token`, one per
+  server because each server signs its own), so two clients on one PC are two players.
 - `--offline` skips the start screen.
 - `--net-demo[=NAME]` runs a scripted online test (a route, fights, shops, talks, parties,
   trades and more), `--demo` a scripted offline run, swing and cancel, and

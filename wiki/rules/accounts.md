@@ -58,6 +58,8 @@ source:
     - module/src/lib.rs (START_ZONE, START_POSITION, client_connected, spawn_player_entity, set_name)
     - crates/rose-game-data/src/lib.rs (CharacterCreator)
     - godot/scripts/character_create.gd
+    - godot/scripts/connect_panel.gd
+    - godot/scripts/main.gd (_go_online)
     - web/src/lib/validate.ts (normalizeEmail, passwordProblem)
     - web/src/lib/config.ts
     - web/src/app/api/signup/route.ts
@@ -86,6 +88,9 @@ the game. Each account has **one character**, which you make the first time you 
 
 The game never stores your password. When you sign in from the game, the website gives the
 game a pass that is good for **15 minutes** to connect.
+
+A [[rules/gm-commands|dev server]] needs no account: the dev client's **Connect without
+account** button signs in with a key the game keeps on the PC, one per server.
 
 Too many attempts are slowed down: 10 sign-in attempts per email (and 100 per address) in
 15 minutes, 20 sign-ups per address per hour, and 3 reset requests per email per hour.

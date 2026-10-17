@@ -74,6 +74,8 @@ source:
     - godot/scripts/ui/hud/portrait_camera.gd
     - godot/scripts/ui/game_cursor.gd
     - godot/rust/src/cursor.rs
+    - godot/scripts/ui/version_line.gd
+    - godot/scripts/build_info.gd
   data: ""
 ---
 # Controls
@@ -203,7 +205,14 @@ Esc or clicking outside the chat box stops typing.
   remember where they were and whether they were open.
 - Pointing at a stat or value in the character window (C), or at the stat and skill
   points, shows a tooltip saying what it does and what one more point of a stat adds.
-- The **player frame** (top left) shows your character's head in the round portrait, with
+- The **version line** at the very top left names the client and the server you are on:
+  their mode (DEV or PRODUCTION) and version (the git commit they were built from), for
+  example "DEV · client 3cad34b · server 3cad34b". It shows on the start screen ("server
+  not connected"), the loading screen and in game, and can't be clicked. When the server's
+  commit differs from the client's, the server part is amber; when the modes differ, both
+  are named ("DEV client 3cad34b · PRODUCTION server 9ac7031"). The dev client is the one
+  for testing, with the [[rules/gm-commands|GM commands]].
+- The **player frame** (top left, under the version line) shows your character's head in the round portrait, with
   your level under it. The camera follows the head, so it stays in the middle of the
   circle, and the picture shows your real face, hair and gear. When you take damage the
   portrait flashes red and shakes. Options can make it **Live** (the idle motion plays;
@@ -238,7 +247,7 @@ sword, O opens the sound volume window.
 ## Changed from iROSE
 
 - The interface is new: the themes, movable and resizable windows and the options above
-  are not part of the iROSE client.
+  are not part of the iROSE client. So is the version line.
 - Sticky target is new; with it off, walking drops the target as in iROSE. Esc dropping
   the target is new too.
 - The cursors are iROSE's, chosen the same way, except: pushing the mouse against the left
