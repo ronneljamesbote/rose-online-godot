@@ -645,6 +645,13 @@ pub fn give_item(ctx: &ReducerContext, name: String, item_type: u8, item_number:
     crate::require_admin(ctx)?;
     let game = game(ctx)?;
     let mut p = ctx.db.player().iter().find(|p| p.name == name).ok_or("no such player")?;
+    give_item_to(&game, &mut p, item_type, item_number, quantity)?;
+    ctx.db.player().identity().update(p);
+    Ok(())
+}
+
+/// Put an item in a player's bag (the caller saves the player). Returns its name.
+pub(crate) fn give_item_to(game: &GameData, p: &mut Player, item_type: u8, item_number: u16, quantity: u32) -> Result<String, String> {
     let reference = rose_data_irose::decode_item_type(item_type as usize)
         .map(|t| rose_data::ItemReference::new(t, item_number as usize))
         .ok_or("no such item type")?;
@@ -653,10 +660,9 @@ pub fn give_item(ctx: &ReducerContext, name: String, item_type: u8, item_number:
     if let Item::Equipment(e) = &mut item {
         e.has_socket = data.rare_type == crate::craft::RARE_TYPE_SOCKETED;
     }
+    let name = item_name(game, &item);
     let mut inventory = p.inventory();
     inventory.try_add_item(item).map_err(|_| "their inventory is full")?;
     p.set_inventory(&inventory);
-    ctx.db.player().identity().update(p);
-    Ok(())
+    Ok(name)
 }
-

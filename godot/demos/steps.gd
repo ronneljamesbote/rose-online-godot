@@ -9,7 +9,10 @@ extends "res://demos/demo.gd"
 ## "friends [open]" (prints our friends list, opens the window),
 ## "shop TITLE|PAGE,INDEX,QTY,PRICE|...", "shopsetup", "wantsearch TEXT|QTY|PRICE", "shopopen TITLE", "closeshop", "browse NAME",
 ## "buy NAME N QTY", "money", "equip PAGE INDEX", "use PAGE INDEX", "unequippart N", "drive",
-## "inventory [close] [TAB]", "vehicle" (prints our vehicle parts, fuel and stats), "savepoint" and "me" (prints our zone, level, experience and whether we lie fallen).
+## "inventory [close] [TAB]", "vehicle" (prints our vehicle parts, fuel and stats), "savepoint" and "me" (prints our zone, level, experience and whether we lie fallen),
+## "say TEXT" (a chat line, or a GM command on a dev client), "type TEXT" (leaves it typed
+## in the chat box, for screenshots of the GM suggestions), "sheet" (prints job, level,
+## points, stats, skill count, hotbar slots and worn weapon) and "hotbarskill SLOT ID".
 func run() -> void:
 	var steps := String(options.get("steps", ""))
 	await get_tree().create_timer(3.0).timeout
@@ -192,6 +195,36 @@ func run() -> void:
 				print("rose net demo: me zone %d level %d xp %d/%d debt %d fallen %s hp %d" % [c.get("zone", 0), c.get("level", 0),
 					c.get("xp", 0), c.get("xp_needed", 0), c.get("xp_debt", 0), c.get("fallen", false), online.me.hp])
 				print("rose net demo: me at %.1f, %.1f driving %s passenger %s stamina %d" % [online.me.position.x, online.me.position.z, c.get("driving", false), c.get("passenger", false), c.get("stamina", 0)])
+			"say":
+				online.chat_window.input.clear()
+				online.chat_window.input.text_changed.emit("")
+				online.chat_window.input.release_focus()
+				online.chat_window.say(step.strip_edges().substr(4))
+			"type":
+				var input: LineEdit = online.chat_window.input
+				input.grab_focus()
+				input.text = step.strip_edges().substr(5)
+				input.caret_column = input.text.length()
+				input.text_changed.emit(input.text)
+			"sheet":
+				var c: Dictionary = online.net.get_character()
+				var skills := 0
+				for page in online.net.get_skills():
+					for skill in page:
+						if skill != null:
+							skills += 1
+				var hotbar: Array = online.net.get_hotbar().filter(func(h): return h != null).map(func(h): return "%s %d,%d" % [h["kind"], h["page"], h["index"]])
+				var weapon = online.net.get_inventory()["equipped"][6]
+				print("rose net demo: sheet job %d level %d stat points %d skill points %d STR %d DEX %d INT %d CON %d CHA %d SEN %d skills %d hotbar %s weapon %s" % [
+					c.get("job", 0), c.get("level", 0), c.get("stat_points", 0), c.get("skill_points", 0), c.get("str", 0), c.get("dex", 0),
+					c.get("int", 0), c.get("con", 0), c.get("cha", 0), c.get("sen", 0), skills, hotbar, weapon["name"] if weapon != null else "-"])
+			"hotbarskill":
+				var pages: Array = online.net.get_skills()
+				for page in pages.size():
+					for index in pages[page].size():
+						var skill = pages[page][index]
+						if skill != null and int(skill["id"]) == int(words[2]):
+							online.net.set_hotbar(int(arg), "skill", page, index)
 			"status":
 				var mine: Array = online.net.get_status_effects(online.my_id)
 				var theirs: Array = online.net.get_status_effects(online.my_target) if online.my_target >= 0 else []

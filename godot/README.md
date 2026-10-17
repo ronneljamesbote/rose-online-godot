@@ -118,6 +118,10 @@ What works now:
   shouts to the whole zone, `#text` talks to the party, `@name text` whispers (`/r text`
   answers the last whisper), and anything else is heard by players within 50 m, with a
   speech bubble over the speaker.
+- GM commands (dev servers only, `../wiki/rules/gm-commands.md`): lines starting with `/`
+  go to the server's `gm` reducer, with the matching commands shown while typing. The
+  code is in `gm/`, which the production export leaves out, and the extension's
+  `gm_command` only exists when it is built with `--features dev`.
 - Sitting: X (or the Sit skill) sits down and stands up again. HP comes back faster while
   sitting, and MP only comes back while sitting. Moving, attacking or using a skill stands
   you up.
@@ -183,6 +187,9 @@ Godot 4.6 or newer. `ROSE_DATA_IDX` works instead of `--data-idx`. The start scr
 Sign in (online) or Play offline. In game: left-click to move, S to stop, right-drag to
 orbit the camera, mouse wheel to zoom. Online, left-click a monster to attack it and Space
 attacks the nearest one, C opens the character window, I the inventory, K the skills, Q the quests, 1-8 use the hotbar, Z picks up the nearest item, X sits or stands, Enter chats; offline, Space swings the sword.
+
+For the GM commands (on a dev server, see `../server/README.md`), build the extension with
+`cargo build --release -p rose-gd --features dev`.
 
 The start screen's server address may end in a database name, `ws://HOST:3000/NAME`
 (default `rose`). Without `--data-idx` the game looks for the last `data.idx` picked, then

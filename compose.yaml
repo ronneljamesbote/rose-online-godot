@@ -5,6 +5,9 @@ services:
     build:
       context: .
       dockerfile: server/Dockerfile
+      args:
+        # The version the server reports. Found from .git when unset.
+        ROSE_GIT_COMMIT: ${ROSE_GIT_COMMIT:-}
     image: rose-server
     ports:
       # With HTTPS (below) set ROSE_BIND=127.0.0.1, so players can only come in through it.
@@ -60,6 +63,29 @@ services:
       TRUST_PROXY: ${TRUST_PROXY:-0}
     restart: unless-stopped
 
+  # A dev server for testing, with GM commands (wiki/rules/gm-commands.md): its own world on
+  # port 3100, no accounts needed. Not started otherwise; start it with
+  #   docker compose --profile dev up -d
+  rose-server-dev:
+    profiles: ["dev"]
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+      args:
+        ROSE_FEATURES: dev
+        ROSE_GIT_COMMIT: ${ROSE_GIT_COMMIT:-}
+    image: rose-server-dev
+    ports:
+      - "${ROSE_BIND:-0.0.0.0}:3100:3000"
+    volumes:
+      - rose-dev-data:/data
+      - ${ROSE_CLIENT:-./rose-client}:/game:ro
+    environment:
+      ROSE_CLEAR_WORLD: ${ROSE_CLEAR_WORLD:-0}
+      ROSE_UPLOAD_GAME_DATA: ${ROSE_UPLOAD_GAME_DATA:-0}
+      ROSE_AUTH_ISSUER: ""
+    restart: unless-stopped
+
   # HTTPS for both, for a server on the internet: set ROSE_DOMAIN and COMPOSE_PROFILES=https
   # in .env (see server/README.md). Not started otherwise.
   caddy:
@@ -80,5 +106,6 @@ services:
 
 volumes:
   rose-data:
+  rose-dev-data:
   rose-web-data:
   caddy-data:

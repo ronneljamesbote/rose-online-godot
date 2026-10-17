@@ -732,13 +732,18 @@ pub fn admin_give_quest(ctx: &ReducerContext, player_name: String, quest_id: u32
     crate::require_admin(ctx)?;
     let game = game(ctx)?;
     let p = ctx.db.player().iter().find(|p| p.name == player_name).ok_or("no such player")?;
+    give_quest_to(ctx, &game, p, quest_id, item_number, quantity)
+}
+
+/// Give a player a quest (admin_give_quest), with `quantity` of quest item `item_number`.
+pub(crate) fn give_quest_to(ctx: &ReducerContext, game: &GameData, p: Player, quest_id: u32, item_number: u32, quantity: u32) -> Result<(), String> {
     let mut rewards = vec![QsdReward::AddQuest { id: quest_id as usize }];
     if quantity > 0 {
         let item = QsdItem { item_number: item_number as usize, item_type: 13 };
         rewards.push(QsdReward::AddItem { item, quantity: quantity as usize });
     }
     let trigger = rose_data::QuestTrigger { name: String::new(), conditions: Vec::new(), rewards, next_trigger_name: None };
-    let mut run = Run::new(ctx, &game, p);
+    let mut run = Run::new(ctx, game, p);
     let ok = run.apply_rewards(&mut QuestContext::default(), &trigger);
     run.finish();
     if ok { Ok(()) } else { Err("could not add the quest".into()) }
