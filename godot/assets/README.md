@@ -23,9 +23,13 @@ godot --headless --path godot -- --import-rose --data-idx=/path/to/iRose_129_129
 
 It converts every ZMS mesh and DDS texture in `data.idx` except effects (`3DDATA/EFFECT`)
 and the interface (`3DDATA/CONTROL`), which still load from the client data. Meshes keep
-their bone weights; textures get the same mipmap fixes the game applies at run time and are
-saved S3TC-compressed (DXT1, or DXT5 with alpha, as most ROSE textures already are), so
-`rose/` is about 400 MB and looks the same as the client data. Running it again only converts what is
+their bone weights; textures get the same mipmap fixes the game applies at run time. A
+texture whose DDS file stores its full mip chain is kept as it is (S3TC); the others (most
+ROSE textures, which declare mipmaps they don't store) are saved lossless, each mip level as
+WebP inside the `.res`, so they look exactly like the client data. `rose/` is about 840 MB and
+the import takes about 5 minutes the first time (WebP encoding). Re-compressing those
+textures to S3TC made `rose/` 400 MB but left blue and grey marks along the UV seams of
+skin and blocky skies. Running it again only converts what is
 missing; `--import-rose=force` redoes everything. It also redoes everything after an update
 that changes the converted output (`IMPORT_VERSION` in `rust/src/assets.rs`).
 
@@ -110,6 +114,6 @@ same with or without `rose/`.
 ## In the Windows build
 
 `tools/build-windows.sh` runs the import, so the export puts all of `rose/`, `ours/` and the
-zone scenes into `ROSE.pck`, next to `ROSE.exe` in the zip (about 400 MB; the zip was 44 MB
+zone scenes into `ROSE.pck`, next to `ROSE.exe` in the zip (about 860 MB; the zip was 44 MB
 before). Players still need the client data (`data.idx`) for the game tables, effects, the
 interface and the zones without scenes.
