@@ -10,6 +10,13 @@
 #   -Folder  a folder instead of a zip (<output>\ROSE-windows[-dev]\), for testing. A
 #            rebuild replaces only the game's own files, so the themes folder, the ROSE
 #            client data and anything else put next to ROSE.exe stay.
+#   -DataIdx the ROSE client's data.idx (or set ROSE_DATA_IDX). The build first converts
+#            the ROSE models, textures and animations into godot\assets\rose\
+#            (--import-rose), because ROSE.pck carries them and the zone scenes need them.
+#
+# It refuses to build when overrides\motions.toml (the server's hit times) or
+# overrides\zones\ (spawns and NPCs) don't match the animations and the zone scenes;
+# run --export-motions or --export-zones and commit the files first.
 #
 # The production build checks that no GM code got in and stops if it did.
 #
@@ -20,9 +27,10 @@
 #   - Godot 4.7.2
 #   - Godot 4.7.2 Windows Desktop export template (fetched when missing)
 #   - zip functionality (PowerShell Compress-Archive is used)
+#   - The ROSE client data (data.idx and its VFS files)
 #
 # Usage:
-#   .\godot\tools\build-windows.ps1
+#   .\godot\tools\build-windows.ps1 -DataIdx C:\Path\To\ROSE-client\data.idx
 #
 #   .\godot\tools\build-windows.ps1 .\dist
 #
@@ -30,11 +38,13 @@
 #
 # Environment variables:
 #   GODOT            Path to godot.exe
+#   ROSE_DATA_IDX    Path to the ROSE client's data.idx (instead of -DataIdx)
 #   CARGO_TARGET_DIR Custom Cargo target directory
 
 param(
     [switch]$Dev,
     [switch]$Folder,
+    [string]$DataIdx,
     [Parameter(Position = 0)]
     [string]$OutDir
 )
@@ -66,6 +76,10 @@ $TargetDir = if ($env:CARGO_TARGET_DIR) {
 
 $RustTarget = "x86_64-pc-windows-gnu"
 
+if (-not $DataIdx) {
+    $DataIdx = $env:ROSE_DATA_IDX
+}
+
 if ($Dev) {
     $Name = "ROSE-windows-dev"
     $DirName = "ROSE-dev"
@@ -85,6 +99,7 @@ Write-Host "==> Repository root: $(Get-Location)"
 Write-Host "==> Godot: $Godot"
 Write-Host "==> Output: $Out ($Name, $(if ($Folder) { 'folder' } else { 'zip' }))"
 Write-Host "==> Cargo target: $TargetDir"
+Write-Host "==> ROSE data: $DataIdx"
 
 # ------------------------------------------------------------
 # Check prerequisites
@@ -122,6 +137,25 @@ Install MinGW-w64 through MSYS2:
   pacman -S --needed mingw-w64-ucrt-x86_64-binutils
 "@
 }
+
+if (-not $DataIdx) {
+    throw @"
+The ROSE client data was not given.
+
+Pass the client's data.idx:
+
+  .\godot\tools\build-windows.ps1 -DataIdx C:\Path\To\ROSE-client\data.idx
+
+or set:
+
+  `$env:ROSE_DATA_IDX = "C:\Path\To\ROSE-client\data.idx"
+"@
+}
+
+if (-not (Test-Path -PathType Leaf $DataIdx)) {
+    throw "data.idx was not found: $DataIdx"
+}
+$DataIdx = (Resolve-Path $DataIdx).Path
 
 if (-not (Get-Command $Godot -ErrorAction SilentlyContinue)) {
     throw @"
@@ -252,6 +286,71 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Host "==> DLL: $OutputDll"
+
+# ------------------------------------------------------------
+# Convert the ROSE assets and check the server's files
+# ------------------------------------------------------------
+
+# godot.exe is a GUI-subsystem program, so PowerShell only waits for it
+# when its output is piped. Godot also prints harmless ERROR lines to
+# stderr, which Windows PowerShell 5.1 turns into terminating errors under
+# "Stop", so relax that for the call and print each line as plain text.
+# Returns Godot's exit code.
+function Invoke-Godot {
+    param([string[]]$Arguments)
+    $PreviousPreference = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    try {
+        & $Godot @Arguments 2>&1 | ForEach-Object { Write-Host "$_" }
+        return $LASTEXITCODE
+    }
+    finally {
+        $ErrorActionPreference = $PreviousPreference
+    }
+}
+
+# The converted assets go into ROSE.pck, so make sure they are all there
+# and current. The project's own files are imported first, as on a fresh
+# clone nothing is.
+Write-Host ""
+Write-Host "==> Importing the project..."
+if ((Invoke-Godot @("--headless", "--path", "godot", "--import")) -ne 0) {
+    throw "Godot import failed."
+}
+
+Write-Host ""
+Write-Host "==> Converting the ROSE assets (--import-rose)..."
+if ((Invoke-Godot @("--headless", "--path", "godot", "--", "--import-rose", "--data-idx=$DataIdx")) -ne 0) {
+    throw "Converting the ROSE assets failed."
+}
+
+# The server times hits from overrides/motions.toml, so the animations
+# shipped must match it.
+Write-Host ""
+Write-Host "==> Checking overrides\motions.toml..."
+if ((Invoke-Godot @("--headless", "--path", "godot", "--", "--export-motions=check", "--data-idx=$DataIdx")) -ne 0) {
+    throw @"
+overrides\motions.toml doesn't match the player animations.
+
+Run this and commit the file:
+
+  godot --headless --path godot -- --export-motions --data-idx=$DataIdx
+"@
+}
+
+# The server places spawns, NPCs and named spots from overrides/zones/,
+# exported from the zone scenes.
+Write-Host ""
+Write-Host "==> Checking overrides\zones\..."
+if ((Invoke-Godot @("--headless", "--path", "godot", "--", "--export-zones=check", "--data-idx=$DataIdx")) -ne 0) {
+    throw @"
+overrides\zones\ doesn't match the zone scenes in godot\zones\.
+
+Run this and commit the files:
+
+  godot --headless --path godot -- --export-zones --data-idx=$DataIdx
+"@
+}
 
 # ------------------------------------------------------------
 # Create temporary staging directory
