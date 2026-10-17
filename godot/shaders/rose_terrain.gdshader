@@ -5,7 +5,7 @@ render_mode unshaded, fog_disabled, cull_back;
 
 #include "res://shaders/rose_common.gdshaderinc"
 
-uniform sampler2DArray tile_textures : filter_linear_mipmap, repeat_enable;
+uniform sampler2DArray tile_textures : filter_linear_mipmap_anisotropic, repeat_enable;
 uniform sampler2D lightmap_texture : filter_linear, repeat_disable;
 
 varying flat vec3 tile_info;

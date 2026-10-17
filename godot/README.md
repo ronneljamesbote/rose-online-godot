@@ -54,7 +54,7 @@ the script fetches it when it's missing) with `ROSE.pck` beside it, and zips the
 `tools/README-windows.txt`. It needs `ROSE_DATA_IDX` (the client's `data.idx`; the PowerShell
 script also takes `-DataIdx`): it first
 runs `--import-rose`, because the pck carries the converted models, textures, animations
-and the zone scenes (about 400 MB, see `assets/README.md`), then checks that
+and the zone scenes (about 860 MB, see `assets/README.md`), then checks that
 `overrides/motions.toml` and `overrides/zones/` match the animations and zone scenes
 (`--export-motions=check`, `--export-zones=check`); when they don't, it stops without
 building. The DLL only imports Windows system DLLs. Under
