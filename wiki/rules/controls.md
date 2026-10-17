@@ -12,7 +12,7 @@ keys:
   - { key: "Left-click item on the ground or its label", does: "walk over and pick it up" }
   - { key: "Right-click player", does: "menu: party, trade, friend, shop, offer a ride" }
   - { key: "Right-drag", does: "turn the camera" }
-  - { key: "Mouse wheel", does: "zoom the camera (2 to 60 m), or the minimap when over it" }
+  - { key: "Mouse wheel", does: "zoom the camera (2 to 45 m), or the minimap when over it" }
   - { key: "Space", does: "attack the nearest monster" }
   - { key: "S", does: "stop" }
   - { key: "Z", does: "pick up the nearest item" }
@@ -31,7 +31,7 @@ keys:
   - { key: "Esc", does: "close the top window, the dialog, or leave repair mode" }
   - { key: "Delete", does: "drop the selected bag item" }
   - { key: "Alt", does: "hide ground item labels while held (or show them, as set in Options)" }
-camera_zoom_m: { min: 2, max: 60, start: 12 }
+camera_zoom_m: { min: 2, max: 45, start: 12 }
 window_size_percent: { min: 75, max: 150 }
 window_opacity_percent: { min: 40, max: 100 }
 cursors:
@@ -99,8 +99,10 @@ is in the `keys` table above.
 - **Right-click another player** for a menu: invite to party, trade, add as friend, look
   at their shop, or offer a ride on your cart.
 - **Hold the right button and drag** to turn the camera. **Mouse wheel** zooms in and out
-  between 2 m and 60 m from your character (12 m at the start). Over the minimap the wheel
-  zooms the minimap.
+  between 2 m and 45 m from your character (12 m at the start). Over the minimap the wheel
+  zooms the minimap. Buildings, rocks and the ground itself pull the camera in closer
+  instead of letting it pass through them, so it never looks at the world from below, and
+  a click always lands on the top of the ground you see.
 
 ### The mouse cursor
 
