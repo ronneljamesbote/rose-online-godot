@@ -34,7 +34,7 @@ together. Read `AGENTS.md` and `wiki/README.md` first if you haven't.
    them pass.
 5. **Test it in the game.** Build the module and the client, run the server, and show the
    change working: a screenshot or short video of the new value or behaviour (damage
-   numbers, tooltip, drop, dialog). Put media in `media/` and attach it when you report.
+   numbers, tooltip, drop, dialog). Attach it when you report; media is not committed.
 6. **Update the page's details** that the edit implies but didn't write: `source:` if the
    code moved, "Changed from iROSE" if we now differ from iROSE, other pages that repeat
    the same value (search `wiki/` for it). Run `node web/scripts/check-wiki.mjs`.
