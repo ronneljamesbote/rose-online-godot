@@ -68,11 +68,14 @@ pub mod give_item_reducer;
 pub mod give_money_reducer;
 pub mod give_skill_reducer;
 pub mod give_xp_reducer;
+pub mod gm_reducer;
+pub mod gm_state_type;
 pub mod ground_item_table;
 pub mod ground_item_type;
 pub mod insert_gem_reducer;
 pub mod level_up_skill_reducer;
 pub mod monster_ai_type;
+pub mod monster_chase_type;
 pub mod monster_idle_type;
 pub mod monster_spawn_type;
 pub mod motion_table;
@@ -128,6 +131,8 @@ pub mod ride_offer_type;
 pub mod save_point_table;
 pub mod save_point_type;
 pub mod send_chat_reducer;
+pub mod server_info_table;
+pub mod server_info_type;
 pub mod set_aggro_range_reducer;
 pub mod set_auth_issuer_reducer;
 pub mod set_basic_stat_reducer;
@@ -262,11 +267,14 @@ pub use give_item_reducer::give_item;
 pub use give_money_reducer::give_money;
 pub use give_skill_reducer::give_skill;
 pub use give_xp_reducer::give_xp;
+pub use gm_reducer::gm;
+pub use gm_state_type::GmState;
 pub use ground_item_table::*;
 pub use ground_item_type::GroundItem;
 pub use insert_gem_reducer::insert_gem;
 pub use level_up_skill_reducer::level_up_skill;
 pub use monster_ai_type::MonsterAi;
+pub use monster_chase_type::MonsterChase;
 pub use monster_idle_type::MonsterIdle;
 pub use monster_spawn_type::MonsterSpawn;
 pub use motion_table::*;
@@ -322,6 +330,8 @@ pub use ride_offer_type::RideOffer;
 pub use save_point_table::*;
 pub use save_point_type::SavePoint;
 pub use send_chat_reducer::send_chat;
+pub use server_info_table::*;
+pub use server_info_type::ServerInfo;
 pub use set_aggro_range_reducer::set_aggro_range;
 pub use set_auth_issuer_reducer::set_auth_issuer;
 pub use set_basic_stat_reducer::set_basic_stat;
@@ -527,6 +537,10 @@ pub enum Reducer {
     GiveXp {
         name: String,
         xp: u64,
+    },
+    Gm {
+        line: String,
+        target: u64,
     },
     InsertGem {
         equipment_slot: u8,
@@ -771,6 +785,7 @@ impl __sdk::Reducer for Reducer {
             Reducer::GiveMoney { .. } => "give_money",
             Reducer::GiveSkill { .. } => "give_skill",
             Reducer::GiveXp { .. } => "give_xp",
+            Reducer::Gm { .. } => "gm",
             Reducer::InsertGem { .. } => "insert_gem",
             Reducer::LevelUpSkill { .. } => "level_up_skill",
             Reducer::MoveCollision { .. } => "move_collision",
@@ -1043,6 +1058,10 @@ impl __sdk::Reducer for Reducer {
             Reducer::GiveXp { name, xp } => __sats::bsatn::to_vec(&give_xp_reducer::GiveXpArgs {
                 name: name.clone(),
                 xp: xp.clone(),
+            }),
+            Reducer::Gm { line, target } => __sats::bsatn::to_vec(&gm_reducer::GmArgs {
+                line: line.clone(),
+                target: target.clone(),
             }),
             Reducer::InsertGem {
                 equipment_slot,
@@ -1411,6 +1430,7 @@ pub struct DbUpdate {
     revive_shield: __sdk::TableUpdate<ReviveShield>,
     ride_offer: __sdk::TableUpdate<RideOffer>,
     save_point: __sdk::TableUpdate<SavePoint>,
+    server_info: __sdk::TableUpdate<ServerInfo>,
     sitting: __sdk::TableUpdate<Sitting>,
     skill_cast: __sdk::TableUpdate<SkillCast>,
     skill_cooldown: __sdk::TableUpdate<SkillCooldownRow>,
@@ -1510,6 +1530,9 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "save_point" => db_update
                     .save_point
                     .append(save_point_table::parse_table_update(table_update)?),
+                "server_info" => db_update
+                    .server_info
+                    .append(server_info_table::parse_table_update(table_update)?),
                 "sitting" => db_update
                     .sitting
                     .append(sitting_table::parse_table_update(table_update)?),
@@ -1696,6 +1719,8 @@ impl __sdk::DbUpdate for DbUpdate {
         diff.my_friend_requests = cache
             .apply_diff_to_table::<FriendRequest>("my_friend_requests", &self.my_friend_requests);
         diff.my_friends = cache.apply_diff_to_table::<FriendEntry>("my_friends", &self.my_friends);
+        diff.server_info =
+            cache.apply_diff_to_table::<ServerInfo>("server_info", &self.server_info);
 
         diff
     }
@@ -1777,6 +1802,9 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "save_point" => db_update
                     .save_point
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "server_info" => db_update
+                    .server_info
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "sitting" => db_update
                     .sitting
@@ -1914,6 +1942,9 @@ impl __sdk::DbUpdate for DbUpdate {
                 "save_point" => db_update
                     .save_point
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "server_info" => db_update
+                    .server_info
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "sitting" => db_update
                     .sitting
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
@@ -2002,6 +2033,7 @@ pub struct AppliedDiff<'r> {
     revive_shield: __sdk::TableAppliedDiff<'r, ReviveShield>,
     ride_offer: __sdk::TableAppliedDiff<'r, RideOffer>,
     save_point: __sdk::TableAppliedDiff<'r, SavePoint>,
+    server_info: __sdk::TableAppliedDiff<'r, ServerInfo>,
     sitting: __sdk::TableAppliedDiff<'r, Sitting>,
     skill_cast: __sdk::TableAppliedDiff<'r, SkillCast>,
     skill_cooldown: __sdk::TableAppliedDiff<'r, SkillCooldownRow>,
@@ -2092,6 +2124,7 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
         );
         callbacks.invoke_table_row_callbacks::<RideOffer>("ride_offer", &self.ride_offer, event);
         callbacks.invoke_table_row_callbacks::<SavePoint>("save_point", &self.save_point, event);
+        callbacks.invoke_table_row_callbacks::<ServerInfo>("server_info", &self.server_info, event);
         callbacks.invoke_table_row_callbacks::<Sitting>("sitting", &self.sitting, event);
         callbacks.invoke_table_row_callbacks::<SkillCast>("skill_cast", &self.skill_cast, event);
         callbacks.invoke_table_row_callbacks::<SkillCooldownRow>(
@@ -2805,6 +2838,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
         revive_shield_table::register_table(client_cache);
         ride_offer_table::register_table(client_cache);
         save_point_table::register_table(client_cache);
+        server_info_table::register_table(client_cache);
         sitting_table::register_table(client_cache);
         skill_cast_table::register_table(client_cache);
         skill_cooldown_table::register_table(client_cache);
@@ -2848,6 +2882,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
         "revive_shield",
         "ride_offer",
         "save_point",
+        "server_info",
         "sitting",
         "skill_cast",
         "skill_cooldown",

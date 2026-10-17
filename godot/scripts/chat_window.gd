@@ -1,7 +1,11 @@
 ## The chat box, bottom left. Enter starts typing and Enter sends; Escape stops typing.
 ## Like iROSE, a line starting with ! shouts to the zone, # talks to the party and
 ## @name whispers to one player; anything else is heard by players nearby.
+## On a dev client, lines starting with / are GM commands (godot/gm/gm_chat.gd).
 extends PanelContainer
+
+## The GM commands, left out of the production export.
+const GM_CHAT := "res://gm/gm_chat.gd"
 
 const MAX_LINES := 100
 const COLOURS := {  # rose-offline-client's chat colours
@@ -18,6 +22,9 @@ var input: LineEdit
 var _lines := 0
 var _last_whisper_from := ""
 var _history: Array = []  # [text, channel], to colour the log again when the theme changes
+var gm: Node  # gm_chat.gd on a dev client, else null
+## Returns the entity we have targeted (-1 for none); online.gd sets it.
+var current_target: Callable
 
 
 func _ready() -> void:
@@ -42,6 +49,9 @@ func _ready() -> void:
 	input.text_submitted.connect(_submit)
 	input.text_changed.connect(_colour_input)
 	box.add_child(input)
+	if ResourceLoader.exists(GM_CHAT):
+		gm = load(GM_CHAT).new(self)
+		add_child(gm)
 
 
 ## Start typing (Enter outside the box).
@@ -63,9 +73,16 @@ func _submit(text: String) -> void:
 
 ## Send a line ("/r text" answers the last whisper).
 func say(text: String) -> void:
+	if gm != null and gm.handles(text):
+		return
 	if text.begins_with("/r ") and _last_whisper_from != "":
 		text = "@%s %s" % [_last_whisper_from, text.substr(3)]
 	net.send_chat(text)
+
+
+## A notice from the server that belongs in the chat log (GM answers). True if taken.
+func take_notice(text: String) -> bool:
+	return gm != null and gm.take_notice(text)
 
 
 ## A message from RoseNet.poll_chat().

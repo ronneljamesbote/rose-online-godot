@@ -2,9 +2,20 @@
 # Build and run from the repository root:  docker compose up -d
 # See server/README.md.
 
+# The git commit the server reports as its version: module/build.rs reads .git/HEAD and
+# the refs (.dockerignore lets only those in). A copy without .git (a zip) reports
+# ROSE_GIT_COMMIT if set, else "unknown".
+FROM rust:1-slim-bookworm AS git
+COPY . /ctx
+RUN mkdir -p /ctx/.git
+
 FROM rust:1-slim-bookworm AS module
 RUN rustup target add wasm32-unknown-unknown
+# "dev" builds a dev server, with the GM commands (compose.yaml's rose-server-dev).
+ARG ROSE_FEATURES=
+ARG ROSE_GIT_COMMIT=
 WORKDIR /src
+COPY --from=git /ctx/.git .git
 COPY Cargo.toml Cargo.lock ./
 COPY crates crates
 COPY module module
@@ -12,7 +23,7 @@ COPY import import
 # Workspace member manifests must exist for cargo to read the workspace.
 COPY godot/rust godot/rust
 COPY tools tools
-RUN cd module && cargo build --release --target wasm32-unknown-unknown
+RUN cd module && cargo build --release --target wasm32-unknown-unknown ${ROSE_FEATURES:+--features $ROSE_FEATURES}
 # The import tool packs the game data from a ROSE client folder for upload.
 RUN cargo build --release -p rose-stdb-import
 

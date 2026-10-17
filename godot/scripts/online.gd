@@ -210,6 +210,7 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	# The chat box bottom left, with messages (pickups, refused actions) above it.
 	chat_window = ChatWindow.new()
 	chat_window.net = net
+	chat_window.current_target = func() -> int: return my_target
 	_widget(chat_window, "chat", Vector2(0, 1), Vector2(12, -12))
 	notice_box = Notices.new()
 	_widget(notice_box, "notices", Vector2(0, 1), Vector2(12, -250))
@@ -971,7 +972,10 @@ func _process(_delta: float) -> void:
 		_next_effects_ms = Time.get_ticks_msec() + 500
 		_update_effects()
 	for text in net.poll_notices():
-		_notice(text)
+		if not chat_window.take_notice(text):
+			_notice(text)
+		elif log_damage:
+			print("rose net: notice: ", text)
 	for m in net.poll_chat():
 		chat_window.add_message(m)
 		if log_damage:

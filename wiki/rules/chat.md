@@ -20,7 +20,7 @@ source:
   code:
     - module/src/chat.rs (send_chat, check_rate, expire_messages, my_chat)
     - godot/rust/src/net.rs (send_chat, poll_chat)
-    - godot/scripts/chat_window.gd (say, add_message)
+    - godot/scripts/chat_window.gd (say, add_message, take_notice)
     - godot/scripts/online.gd
     - godot/scripts/ui/world_overlay.gd (bubble)
 ---
@@ -45,6 +45,9 @@ like in iROSE.
   in.
 
 The [[rules/friends|friends]] window's **Whisper** button fills in `@name ` for you.
+
+On a dev server, lines starting with `/` (other than `/r`) are
+[[rules/gm-commands|GM commands]] instead of chat.
 
 Each channel has its own colour in the chat log. The log keeps the last **100** lines.
 
