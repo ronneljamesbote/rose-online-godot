@@ -548,7 +548,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif event.keycode == KEY_M and online:
 			online.toggle_map_window()
 		elif event.keycode == KEY_ESCAPE and online:
-			online.close_top_window()
+			if not online.close_top_window():
+				online.clear_target()
 		elif event.keycode >= KEY_1 and event.keycode <= KEY_8 and online:
 			online.hotbar.use_slot(event.keycode - KEY_1)
 		elif event.keycode == KEY_Z and online:
