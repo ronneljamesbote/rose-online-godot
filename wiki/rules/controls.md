@@ -52,8 +52,8 @@ source:
     - godot/scripts/orbit_camera.gd
     - godot/scripts/online.gd (click_ground, steer_to, talk_to, select, pickup, open_player_menu)
     - godot/scripts/conversation_window.gd
-    - godot/scripts/inventory_window.gd (Slot._gui_input, activate, _drop_selected)
-    - godot/scripts/hotbar.gd
+    - godot/scripts/inventory_window.gd (Slot._gui_input, Slot._notification, activate, _drop_selected)
+    - godot/scripts/hotbar.gd (dropped, dragged_off)
     - module/src/items.rs (move_item)
     - module/src/character.rs (Player::set_inventory)
     - godot/scripts/store_window.gd
@@ -153,7 +153,9 @@ While a dialog is open, 1 to 9 pick its answers and Esc ends it.
   sets it in the first worn item with a free socket.
 - Drag items to move them between bag slots.
 - Drag a skill or a bag item onto the **hotbar** to put it there. Drag between hotbar slots
-  to swap them. Right-click a hotbar slot to use it, and Shift + right-click to empty it.
+  to swap them. Right-click a hotbar slot to use it. To empty a slot, drag it off the
+  hotbar and let go anywhere else (the world, a window, an empty spot), or Shift +
+  right-click it; only the shortcut goes, the skill or item itself stays where it was.
   A bag item's shortcut follows the item when you move it to another bag slot, and empties
   once the item leaves the bag (dropped, used up, sold, stored, traded or worn).
   Each filled slot shows its key (1 to 8) in the top-left corner, stacked items show their
