@@ -258,8 +258,8 @@ avoid 25): 4 × 27.2 × 224 / (145 × 45) = 3.7, raised to the minimum of **5**.
 critical hits do 10.
 
 A monster that is hit fights back, or runs its own reaction (calling friends, using a
-skill). A monster dragged more than 30 m from its home gives up, heals fully and walks
-back. More on [[rules/monster-behaviour|Monster behaviour]].
+skill). A monster dragged more than 30 m from where its fight began (and no longer
+trading blows), or 60 m from its home, gives up, heals fully and walks back. More on [[rules/monster-behaviour|Monster behaviour]].
 
 ## Damage numbers
 

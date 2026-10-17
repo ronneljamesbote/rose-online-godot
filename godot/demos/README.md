@@ -25,6 +25,7 @@ to, it prints "demos aren't in this build".
 | `square` (default), `line` | `route.gd` | Walks round the start point 4 m out, or back and forth 5 m east, forever. |
 | `fight` | `fight.gd` | Fights the nearest monster until it dies, then the next; every third fight starts with a swing cancelled by a step aside. Picks up drops unless `--no-pickup`. |
 | `kite` | `kite.gd` | Hits the nearest monster that fights back, then keeps stepping away (`--kite-step` metres) and prints the monster's wind-ups. Waits `--demo-wait` seconds and walks `--walk-to=X,Z;X,Z` first. |
+| `leash` | `leash.gd` | Pulls the nearest monster that fights back (`--monster=TEXT` filters by name, `--target-file=PATH` names its entity id), walking to `--pull-from` metres first if given. `--leash=stand` keeps shooting, `once` shoots once and stands, `run` runs `--run-to` metres away; prints once a second the monster's distance and HP and whether it gave up. `--overhead=METRES` films it from a fixed camera that high above the two of them. |
 | `walls` | `walls.gd` | Runs out `--wall-reach` metres in `--wall-directions` directions and back, printing where it stopped, then quits. |
 | `warp` | `warp.gd` | Walks into the nearest warp gate, three times. |
 | `shop` | `shop.gd` | Walks to the nearest store, buys the first item of each tab (`--buy=TEXT` picks what), reads skill books and scrolls, sells one item back. |
