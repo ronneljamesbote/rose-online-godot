@@ -1,6 +1,7 @@
 ## Start screen: sign in with the email and password of an account made on the website,
 ## or play offline. The server, website and email are kept in user://settings.cfg; the
-## password is never saved.
+## password is never saved. The dev client suggests the dev server (its own setting) and can
+## also connect without an account, which dev servers allow.
 extends CanvasLayer
 
 ## token is the website's game token for the account.
@@ -51,7 +52,7 @@ func _ready() -> void:
 	email_edit.placeholder_text = "you@example.com"
 	password_edit = _field(box, "Password", "")
 	password_edit.secret = true
-	server_edit = _field(box, "Server", settings.get_value("net", "server", "ws://127.0.0.1:3000"))
+	server_edit = _field(box, "Server", settings.get_value("net", _server_key(), BuildInfo.default_server()))
 	website_edit = _field(box, "Website", settings.get_value("net", "website", "http://127.0.0.1:3001"))
 
 	error_label = Label.new()
@@ -75,6 +76,12 @@ func _ready() -> void:
 	offline_button.text = "Play offline"
 	offline_button.pressed.connect(func(): offline_requested.emit(); queue_free())
 	buttons.add_child(offline_button)
+	if BuildInfo.is_dev():
+		var dev_button := Button.new()
+		dev_button.text = "Connect without account"
+		dev_button.tooltip_text = "Dev servers let anyone in; your character is kept on this PC."
+		dev_button.pressed.connect(_on_connect_without_account)
+		buttons.add_child(dev_button)
 
 	# The website handles new accounts and forgotten passwords.
 	var links := HBoxContainer.new()
@@ -120,7 +127,7 @@ func _on_sign_in() -> void:
 	var website := website_edit.text.strip_edges()
 	var settings := ConfigFile.new()
 	settings.load(SETTINGS)
-	settings.set_value("net", "server", server)
+	settings.set_value("net", _server_key(), server)
 	settings.set_value("net", "website", website)
 	settings.set_value("net", "email", email)
 	settings.save(SETTINGS)
@@ -136,4 +143,19 @@ func _on_sign_in() -> void:
 		return
 	password_edit.text = ""
 	connect_requested.emit(server, "", false, answer["token"])
+	queue_free()
+
+
+## The dev client remembers its server apart from the production one, so each starts on its own.
+func _server_key() -> String:
+	return "server_dev" if BuildInfo.is_dev() else "server"
+
+
+func _on_connect_without_account() -> void:
+	var server := server_edit.text.strip_edges()
+	var settings := ConfigFile.new()
+	settings.load(SETTINGS)
+	settings.set_value("net", _server_key(), server)
+	settings.save(SETTINGS)
+	connect_requested.emit(server, "", false, "")
 	queue_free()

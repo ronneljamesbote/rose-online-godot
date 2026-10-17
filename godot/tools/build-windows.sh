@@ -1,23 +1,67 @@
 #!/bin/bash
-# Builds the Windows release zip from Linux: converts the ROSE models, textures and
-# animations into godot/assets/rose/ (--import-rose), cross-compiles rose_gd.dll with
-# mingw-w64, exports ROSE.exe and ROSE.pck (the scripts, the converted assets and the zone
-# scenes) with Godot's Windows release template and zips them with the DLLs and the readme.
+# Builds the Windows client from Linux: converts the ROSE models, textures and animations
+# into godot/assets/rose/ (--import-rose), cross-compiles rose_gd.dll with mingw-w64,
+# exports ROSE.exe and ROSE.pck (the scripts, the converted assets and the zone scenes)
+# and zips them with the DLLs and the readme (in a folder ROSE, or ROSE-dev for --dev).
+#
+#   --dev     the dev client: GM commands in (chat and rose_gd.dll built with the dev
+#             feature), Godot's debug template with a console window, the "Windows Desktop
+#             Dev" preset. Output ROSE-windows-dev instead of ROSE-windows.
+#   --folder  a folder instead of a zip (OUT_DIR/ROSE-windows[-dev]/), for testing. A rebuild
+#             replaces only the game's own files, so the themes folder, the ROSE client
+#             data and anything else put next to ROSE.exe stay.
+#
+# The production build checks that no GM code got in and stops if it did.
 #
 # Needs: rustup target x86_64-pc-windows-gnu, gcc-mingw-w64-x86-64, the Godot editor
-# (GODOT, default godot on PATH) and its 4.7.2 export template windows_release_x86_64.exe
-# in ~/.local/share/godot/export_templates/4.7.2.stable/, the Linux extension in
-# godot/bin/librose_gd.so and the ROSE client data (ROSE_DATA_IDX, the path to data.idx).
+# (GODOT, default godot on PATH), the Linux extension in godot/bin/librose_gd.so and the ROSE
+# client data (ROSE_DATA_IDX, the path to data.idx). The editor's Windows export template
+# (release, or debug and its console wrapper for --dev) is fetched into ~/.local/share/godot/export_templates/ when
+# it's missing.
 # It refuses to build when overrides/motions.toml (the server's hit times) doesn't match
 # the player animations; run --export-motions and commit the file first.
-# Usage: ROSE_DATA_IDX=/path/to/data.idx godot/tools/build-windows.sh [OUT_DIR]
+# Usage: ROSE_DATA_IDX=/path/to/data.idx godot/tools/build-windows.sh [--dev] [--folder] [OUT_DIR]
 #        (OUT_DIR default: dist/ at the repository root)
 set -euo pipefail
 cd "$(dirname "$0")/../.."
+DEV=""
+FOLDER=""
+OUT_ARG=""
+for arg in "$@"; do
+  case "$arg" in
+    --dev) DEV=1 ;;
+    --folder) FOLDER=1 ;;
+    -*) echo "build-windows: unknown option $arg" >&2; exit 2 ;;
+    *) OUT_ARG=$arg ;;
+  esac
+done
 GODOT=${GODOT:-godot}
-OUT=$(realpath -m "${1:-dist}")
+OUT=$(realpath -m "${OUT_ARG:-dist}")
 TARGET_DIR=${CARGO_TARGET_DIR:-$PWD/target}
 DATA_IDX=${ROSE_DATA_IDX:?"set ROSE_DATA_IDX to the data.idx of the ROSE client"}
+if [ -n "$DEV" ]; then
+  NAME=ROSE-windows-dev DIR=ROSE-dev PRESET="Windows Desktop Dev" EXPORT=--export-debug
+  # The console window comes from its own small template.
+  TEMPLATE_FILES="windows_debug_x86_64.exe windows_debug_x86_64_console.exe"
+else
+  NAME=ROSE-windows DIR=ROSE PRESET="Windows Desktop" EXPORT=--export-release TEMPLATE_FILES=windows_release_x86_64.exe
+fi
+
+# The export template must match the editor's version; fetch it from the Godot release once.
+GODOT_VERSION=$("$GODOT" --version | head -n1 | grep -oE '^[0-9]+\.[0-9]+(\.[0-9]+)?\.[a-z0-9]+')
+TEMPLATES="${XDG_DATA_HOME:-$HOME/.local/share}/godot/export_templates/$GODOT_VERSION"
+MISSING=""
+for f in $TEMPLATE_FILES; do [ -f "$TEMPLATES/$f" ] || MISSING="$MISSING templates/$f"; done
+if [ -n "$MISSING" ]; then
+  RELEASE=${GODOT_VERSION%.*}-${GODOT_VERSION##*.}  # 4.7.2.stable -> 4.7.2-stable
+  URL="https://github.com/godotengine/godot/releases/download/$RELEASE/Godot_v${RELEASE}_export_templates.tpz"
+  echo "build-windows: fetching$MISSING from $URL"
+  TPZ=$(mktemp --suffix=.tpz)
+  curl -fL --retry 3 -o "$TPZ" "$URL"
+  mkdir -p "$TEMPLATES"
+  unzip -o -j "$TPZ" $MISSING -d "$TEMPLATES"
+  rm -f "$TPZ"
+fi
 
 # The converted assets go into ROSE.pck, so make sure they are all there and current.
 "$GODOT" --headless --path godot -- --import-rose --data-idx="$DATA_IDX"
@@ -35,16 +79,39 @@ if ! "$GODOT" --headless --path godot -- --export-zones=check --data-idx="$DATA_
 fi
 
 CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER=x86_64-w64-mingw32-gcc CARGO_TARGET_DIR="$TARGET_DIR" \
-  cargo build --release -p rose-gd --target x86_64-pc-windows-gnu
+  cargo build --release -p rose-gd --target x86_64-pc-windows-gnu ${DEV:+--features dev}
 mkdir -p godot/bin
 x86_64-w64-mingw32-strip -o godot/bin/rose_gd.dll "$TARGET_DIR/x86_64-pc-windows-gnu/release/rose_gd.dll"
 
 STAGE=$(mktemp -d)
-mkdir -p "$STAGE/ROSE"
-"$GODOT" --headless --path godot --export-release "Windows Desktop" "$STAGE/ROSE/ROSE.exe"
-cp godot/tools/README-windows.txt "$STAGE/ROSE/README.txt"
+trap 'rm -rf "$STAGE" godot/build_version.txt' EXIT
+mkdir -p "$STAGE/$DIR"
+# The version line shows the commit the client was built from (scripts/build_info.gd).
+git rev-parse --short=7 HEAD > godot/build_version.txt 2>/dev/null || echo unknown > godot/build_version.txt
+"$GODOT" --headless --path godot "$EXPORT" "$PRESET" "$STAGE/$DIR/ROSE.exe"
+cp godot/tools/README-windows.txt "$STAGE/$DIR/README.txt"
+
+# GM commands are for dev builds only: the production client must have neither the GM chat
+# scripts (godot/gm/) nor the extension's gm_command. A file in the pck is listed as
+# "gm/gm_chat.gdc" and so on; the "res://gm/..." the pck also lists are only the project's
+# uid cache naming every file, shipped or not.
+if [ -z "$DEV" ]; then
+  if LC_ALL=C grep -aoE '.{6}gm/gm_[a-z_]+\.gd' "$STAGE/$DIR/ROSE.pck" | LC_ALL=C grep -vq '^res://' \
+    || grep -aq "gm_command" "$STAGE/$DIR/rose_gd.dll"; then
+    echo "build-windows: GM code got into the production build (godot/gm/ or gm_command); not packaging it." >&2
+    exit 1
+  fi
+fi
+
 mkdir -p "$OUT"
-rm -f "$OUT/ROSE-windows.zip"
-(cd "$STAGE" && zip -qr "$OUT/ROSE-windows.zip" ROSE)
-rm -rf "$STAGE"
-ls -la "$OUT/ROSE-windows.zip"
+if [ -n "$FOLDER" ]; then
+  DEST="$OUT/$NAME"
+  mkdir -p "$DEST"
+  rm -f "$DEST"/*.exe "$DEST"/*.pck "$DEST"/*.dll "$DEST/README.txt"
+  cp -r "$STAGE/$DIR/." "$DEST/"
+  ls -la "$DEST"
+else
+  rm -f "$OUT/$NAME.zip"
+  (cd "$STAGE" && zip -qr "$OUT/$NAME.zip" "$DIR")
+  ls -la "$OUT/$NAME.zip"
+fi

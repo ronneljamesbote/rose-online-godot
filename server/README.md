@@ -62,7 +62,9 @@ sign in. It reads the same ROSE client folder. Start it next to the others with
 docker compose --profile dev up -d
 ```
 
-(or put `COMPOSE_PROFILES=dev` in `.env`). The game connects to `ws://127.0.0.1:3100`.
+(or put `COMPOSE_PROFILES=dev` in `.env`). The game connects to `ws://127.0.0.1:3100`; the
+dev client (`godot/tools/build-windows.ps1 -Dev`) suggests that address and has a Connect
+without account button.
 Every player on it may use the GM commands. The production server (`rose-server`) is
 built without them, so they can't be switched on there. Both servers report their mode
 and the git commit they were built from (the `server_info` view); a copy without `.git`
