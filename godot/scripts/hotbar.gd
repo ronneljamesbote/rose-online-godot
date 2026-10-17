@@ -1,6 +1,6 @@
 ## Hotbar along the bottom: eight slots for items and skills, used with keys 1-8 or a
 ## right-click. Drag an item from the inventory or a skill from the skill window onto a
-## slot; Shift+right-click clears it.
+## slot; drag it off the hotbar (or Shift+right-click it) to clear it.
 extends PanelContainer
 
 const InventoryWindow := preload("res://scripts/inventory_window.gd")
@@ -61,6 +61,15 @@ func activate(slot) -> void:
 
 func select(_slot) -> void:
 	pass
+
+
+## A slot's shortcut was dragged and let go anywhere but a hotbar slot: off the hotbar
+## it is cleared (the item or skill itself stays where it is); a release over the hotbar
+## itself, between slots, leaves it be.
+func dragged_off(slot) -> void:
+	if slot.item == null or get_global_rect().has_point(get_global_mouse_position()):
+		return
+	net.set_hotbar(slot.index, "", 0, 0)
 
 
 func dropped(from, to) -> void:

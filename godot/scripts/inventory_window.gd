@@ -26,6 +26,7 @@ class Slot:
 	var cooldown_end_ms := 0.0  # server clock (RoseNet.server_time_ms)
 	var cooldown_total := 0.0  # seconds
 	var selected := false
+	var _dragged := false  # this slot's item is being dragged
 
 	func _init(owner_window: Control, slot_kind: String, slot_index: int, caption := "") -> void:
 		window = owner_window
@@ -154,7 +155,16 @@ class Slot:
 		preview.custom_minimum_size = Vector2(SLOT_SIZE, SLOT_SIZE)
 		preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		set_drag_preview(preview)
+		_dragged = true
 		return self
+
+	func _notification(what: int) -> void:
+		# A drag that no slot took (let go over the world, another window or an empty
+		# spot) tells the window, so the hotbar can empty the slot it came from.
+		if what == NOTIFICATION_DRAG_END and _dragged:
+			_dragged = false
+			if not get_viewport().gui_is_drag_successful() and window.has_method("dragged_off"):
+				window.dragged_off(self)
 
 	func _can_drop_data(_at: Vector2, data: Variant) -> bool:
 		if not (data is Slot):

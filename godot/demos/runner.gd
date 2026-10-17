@@ -18,6 +18,7 @@ const NET_DEMOS := {
 	"steps": "steps.gd",
 	"hotkey": "hotkey.gd",
 	"hotbar-items": "hotbar_items.gd",
+	"hotbar-clear": "hotbar_clear.gd",
 }
 
 
