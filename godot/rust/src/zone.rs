@@ -335,9 +335,14 @@ impl RoseZone {
         };
 
         // A zone with scenes in res://zones/ loads from them; any other from the ROSE files.
-        let scene = if self.files_only { None } else { crate::zone_scene::zone_scene(zone_id as u16, &zone_dir) };
+        let scene = if self.files_only {
+            crate::zone_scene::zone_folder(zone_id as u16).map_or(Err(None), |_| Err(Some("--zone-files")))
+        } else {
+            crate::zone_scene::zone_scene(zone_id as u16, &zone_dir)
+        };
+        let fallback = scene.as_ref().err().copied().flatten().unwrap_or("");
         let from_scene = match scene {
-            Some(scene) => {
+            Ok(scene) => {
                 let Some(map) = scene.instantiate() else {
                     godot_error!("rose: could not open the scene of zone {zone_id}");
                     return false;
@@ -348,7 +353,7 @@ impl RoseZone {
                 spawner.materials.clear();
                 Some(materials)
             }
-            None => {
+            Err(_) => {
                 let Some(zon) = data::read_file::<ZonFile>(&zon_path) else { return false };
                 self.build_from_files(zone_entry, &zon, &zone_dir, &mut spawner);
                 None
@@ -407,6 +412,8 @@ impl RoseZone {
         }
         let mut stats = VarDictionary::new();
         stats.set("source", if from_scene.is_some() { "scene" } else { "client data" });
+        // Why a zone that has a scene loaded from the client data instead ("" when it didn't).
+        stats.set("fallback", fallback);
         stats.set("blocks", spawner.blocks as i64);
         stats.set("objects", spawner.objects as i64);
         stats.set("mesh_parts", spawner.parts as i64);
