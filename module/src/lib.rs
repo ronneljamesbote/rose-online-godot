@@ -41,7 +41,13 @@ pub use world::{monster_spawn, zone_info};
 
 const COMBAT_TICK_MS: u64 = 100;
 const SPAWN_TICK_MS: u64 = 1000;
+/// A chasing monster gives up this far from where its fight started, unless it is still
+/// trading blows.
 pub(crate) const MONSTER_LEASH_CM: f32 = 3000.0;
+/// A monster always gives up this far from its home, so it can't be lured away for good.
+const MONSTER_MAX_LEASH_CM: f32 = 6000.0;
+/// Hitting or being hit this recently counts as still fighting, which holds off the leash.
+const MONSTER_FIGHTING_US: i64 = 5_000_000;
 /// Re-path a chase only when the target has moved this far from the current destination.
 const CHASE_REPATH_CM: f32 = 100.0;
 /// Extra reach so an entity that stopped exactly at range still swings.
@@ -247,6 +253,17 @@ pub struct MonsterAi {
     pub returning: bool,
 }
 
+/// A monster's current fight: where it began (the leash anchor) and when the monster last
+/// hit or was hit. Made when the monster picks up a target, removed when it drops it.
+#[spacetimedb::table(accessor = monster_chase)]
+pub struct MonsterChase {
+    #[primary_key]
+    pub entity_id: u64,
+    pub anchor_x: f32,
+    pub anchor_y: f32,
+    pub last_fight_us: i64,
+}
+
 /// Who hurt a monster and how much, for the experience share when it dies.
 #[spacetimedb::table(accessor = damage_source)]
 pub struct DamageSource {
@@ -429,6 +446,7 @@ fn despawn(ctx: &ReducerContext, entity_id: u64) {
     ctx.db.combat().entity_id().delete(entity_id);
     ctx.db.stats().entity_id().delete(entity_id);
     ctx.db.monster_ai().entity_id().delete(entity_id);
+    ctx.db.monster_chase().entity_id().delete(entity_id);
     monster_brain::forget(ctx, entity_id);
     ctx.db.npc().entity_id().delete(entity_id);
     ctx.db.sitting().entity_id().delete(entity_id);
@@ -993,6 +1011,13 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
         let Some(pos) = position(ctx, id, t) else { continue };
         let home = (ai.home_x, ai.home_y);
         if ai.returning {
+            // Walking home it fights no one (hits on it miss, see deal_damage).
+            if c.attack_target.is_some() {
+                let mut c = c.clone();
+                c.attack_target = None;
+                ctx.db.combat().entity_id().update(c);
+                set_motion(ctx, id, home, run_speed(ctx, id), None);
+            }
             if distance(pos, home) < 10.0 {
                 let mut ai = ai.clone();
                 ai.returning = false;
@@ -1000,15 +1025,43 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
             }
             continue;
         }
-        if distance(pos, home) > MONSTER_LEASH_CM {
+        // The leash is anchored where the fight began, not at home: a monster pulled from
+        // range runs to its attacker and fights instead of turning back halfway.
+        let chase = ctx.db.monster_chase().entity_id().find(id);
+        let chase = match (c.attack_target, chase) {
+            (Some(_), Some(chase)) => Some(chase),
+            (Some(_), None) => Some(ctx.db.monster_chase().insert(MonsterChase {
+                entity_id: id,
+                anchor_x: pos.0,
+                anchor_y: pos.1,
+                last_fight_us: t,
+            })),
+            (None, chase) => {
+                if chase.is_some() {
+                    ctx.db.monster_chase().entity_id().delete(id);
+                }
+                None
+            }
+        };
+        let gives_up = match chase {
+            Some(chase) => {
+                let fighting = t - chase.last_fight_us < MONSTER_FIGHTING_US;
+                (distance(pos, (chase.anchor_x, chase.anchor_y)) > MONSTER_LEASH_CM && !fighting)
+                    || distance(pos, home) > MONSTER_MAX_LEASH_CM
+            }
+            // Left far from home with no one to fight (its target died or left).
+            None => distance(pos, home) > MONSTER_LEASH_CM,
+        };
+        if gives_up {
             // Give up: walk home at run speed and heal.
             let mut c = c.clone();
             c.attack_target = None;
             c.hp = c.max_hp;
+            c.swing_hit_at_us = None;
             ctx.db.combat().entity_id().update(c);
+            ctx.db.monster_chase().entity_id().delete(id);
             clear_damage_sources(ctx, id);
-            let speed = ctx.db.stats().entity_id().find(id).map_or(300.0, |s| s.run_speed);
-            set_motion(ctx, id, home, speed, None);
+            set_motion(ctx, id, home, run_speed(ctx, id), None);
             let mut ai = ai.clone();
             ai.returning = true;
             ctx.db.monster_ai().entity_id().update(ai);
@@ -1187,6 +1240,10 @@ fn add_damage_source(ctx: &ReducerContext, defender: u64, attacker: u64, amount:
     }
 }
 
+fn run_speed(ctx: &ReducerContext, id: u64) -> f32 {
+    ctx.db.stats().entity_id().find(id).map_or(300.0, |s| s.run_speed)
+}
+
 fn stop_chase(ctx: &ReducerContext, id: u64, target: u64) {
     if let Some(m) = ctx.db.motion().entity_id().find(id) {
         if m.chase_target == Some(target) {
@@ -1227,6 +1284,18 @@ fn deal_damage(ctx: &ReducerContext, game: &GameData, attacker: u64, defender: u
     let Some(mut dc) = ctx.db.combat().entity_id().find(defender) else { return false };
     if dc.hp <= 0 || dc.dead_until_us.is_some() || death::is_shielded(ctx, defender, t) {
         return false;
+    }
+    // A monster walking home after giving up can't be hurt: every hit misses.
+    if ctx.db.monster_ai().entity_id().find(defender).is_some_and(|ai| ai.returning) {
+        ctx.db.damage_event().insert(DamageEvent { attacker, defender, amount: 0, is_critical: false, killed: false, at_us: t });
+        return false;
+    }
+    // Trading blows holds off a monster's leash.
+    for id in [attacker, defender] {
+        if let Some(mut chase) = ctx.db.monster_chase().entity_id().find(id) {
+            chase.last_fight_us = t;
+            ctx.db.monster_chase().entity_id().update(chase);
+        }
     }
     let dealt = amount.min(dc.hp);
     dc.hp = (dc.hp - amount).max(0);

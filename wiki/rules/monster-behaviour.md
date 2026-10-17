@@ -7,6 +7,8 @@ combat_tick_ms: 100
 idle_check_s: 1
 minimum_idle_interval_s: 1
 leash_m: 30
+max_leash_m: 60
+still_fighting_s: 5
 wander_limit_m: 24
 home_reached_m: 0.1
 attack_range_slack_m: 0.5
@@ -112,19 +114,32 @@ it was already fighting. A taunted monster attacks only its taunter (see
 - Its attacks follow the normal combat rules ([[rules/combat|Combat]]).
 - It stops when its target dies, leaves the zone or logs out. A fight between a monster
   and a player doesn't end any other way, except by giving up.
+- The spot where the monster picks up a target is where its **fight began**. It stays the
+  same for the whole fight, even when the monster switches targets, and is forgotten once
+  the monster has no target.
 
 ## Giving up and walking home
 
 Every monster has a **home**: the spot where it appeared at its spawn point
 ([[rules/monster-spawns|Monster spawns]]).
 
-When a monster is more than **30 m** from home, it gives up:
+A monster gives up when:
+
+- it is more than **30 m** from where its fight began and it has neither hit nor been hit
+  for **5 seconds**, so a monster pulled from range runs all the way to its attacker, and
+  one that is still trading blows keeps fighting; or
+- it is more than **60 m** from home, however the fight is going, so it can't be lured
+  away for good; or
+- it has no target and is more than **30 m** from home (its target died or left far from
+  home).
+
+When it gives up:
 
 1. it drops its target and is **healed to full HP** at once,
 2. the record of who damaged it is wiped, so players who hurt it before get no experience
    for that damage if it is killed later ([[rules/experience|Experience]]),
-3. it runs home at its run speed. On the way it doesn't look for players or wander, until it
-   is within **0.1 m** of home.
+3. it runs home at its run speed. On the way it doesn't look for players, wander or fight
+   back, and every hit on it misses, until it is within **0.1 m** of home.
 
 ## Summoned monsters
 
@@ -139,5 +154,6 @@ against players, and "players nearby" checks find summons too.
 - **Created, kill and dead triggers** are not run, and the script actions that summon
   monsters, transform or drop items are not in the game yet.
 - The server has no map geometry for monsters, so they walk through walls and objects.
-
-> Open question: a monster that is hit while walking home turns to fight its attacker, and the 30 m give-up check is not made again until it reaches home. It can then chase a player any distance.
+- **Leash.** The 30 m give-up distance is counted from where the fight began, not from
+  home, and is held off while the monster is still hitting or being hit; 60 m from home
+  always ends the chase. A monster walking home can't be hurt.
