@@ -12,7 +12,7 @@ use std::{collections::BTreeMap, path::Path, time::Instant};
 
 use godot::{
     classes::{
-        image::CompressMode, resource_saver::SaverFlags, ArrayMesh, Image, ConfigFile, DirAccess, ImageTexture, ProjectSettings, Resource,
+        portable_compressed_texture_2d::CompressionMode, resource_saver::SaverFlags, ArrayMesh, Image, ConfigFile, DirAccess, ImageTexture, PortableCompressedTexture2D, ProjectSettings, Resource,
         ResourceLoader, ResourceSaver, Texture2D,
     },
     global::Error,
@@ -23,7 +23,7 @@ use rose_file_readers::{VfsIndex, ZmsFile};
 pub const OURS: &str = "res://assets/ours/";
 pub const ROSE: &str = "res://assets/rose/";
 /// Bumped when the converted output changes, so the next import redoes every file.
-const IMPORT_VERSION: i64 = 2;
+const IMPORT_VERSION: i64 = 3;
 const STAMP: &str = "res://assets/rose/import.cfg";
 
 /// Folders that stay in data.idx for now: effects and the interface.
@@ -160,9 +160,8 @@ impl RoseImport {
                         .and_then(|zms| crate::mesh::build_mesh(&zms, true))
                         .map(|mesh| save(mesh.upcast(), &target)),
                     Kind::Texture => crate::texture::load_rose_image(rose_path)
-                        .map(compress_texture)
-                        .and_then(|image| ImageTexture::create_from_image(&image))
-                        .map(|texture| save(texture.upcast(), &target)),
+                        .and_then(texture_resource)
+                        .map(|texture| save(texture, &target)),
                 };
                 match saved {
                     Some(true) => match kind {
@@ -337,14 +336,20 @@ impl RoseImport {
     }
 }
 
-/// Textures the import decompressed (ROSE DDS files with a partial mip chain) go back to
-/// S3TC (DXT1, or DXT5 with alpha), so the converted copies stay as small as the originals
-/// and fit in the Windows .pck.
-fn compress_texture(mut image: Gd<Image>) -> Gd<Image> {
-    if !image.is_compressed() && image.get_width() % 4 == 0 && image.get_height() % 4 == 0 {
-        image.compress(CompressMode::S3TC);
+/// The converted copy of a ROSE texture. A DDS file with its full mip chain stays as it
+/// was (S3TC, ready for the GPU). The others (most ROSE files, which declare mipmaps they
+/// don't store) were decompressed to make the mipmaps; those are saved lossless (each level
+/// as WebP inside the resource), so they look exactly like the client files. Re-compressing
+/// them to S3TC was smaller but smeared the colour next to UV seams (blue and grey marks on
+/// skin) and made gradients blocky (the sky).
+fn texture_resource(image: Gd<Image>) -> Option<Gd<Resource>> {
+    if image.is_compressed() {
+        return ImageTexture::create_from_image(&image).map(|texture| texture.upcast());
     }
-    image
+    let mut texture = PortableCompressedTexture2D::new_gd();
+    texture.set_keep_compressed_buffer(true); // otherwise only the GPU copy is kept and nothing is saved
+    texture.create_from_image(&image, CompressionMode::LOSSLESS);
+    Some(texture.upcast())
 }
 
 pub fn save(resource: Gd<Resource>, path: &str) -> bool {

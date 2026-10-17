@@ -4,7 +4,7 @@
 
 #include "res://shaders/rose_common.gdshaderinc"
 
-uniform sampler2D base_texture : filter_linear_mipmap, repeat_enable;
+uniform sampler2D base_texture : filter_linear_mipmap_anisotropic, repeat_enable;
 uniform float alpha_cutoff = 0.5;
 uniform float alpha_value = 1.0;
 #ifdef HAS_LIGHTMAP

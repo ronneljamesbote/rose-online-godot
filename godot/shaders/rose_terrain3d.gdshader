@@ -69,7 +69,7 @@ uniform highp sampler2DArray _control_maps : repeat_disable;
 #define FILTER_LINEAR
 uniform highp sampler2DArray _color_maps : source_color, filter_linear_mipmap_anisotropic, repeat_disable;
 // Sampled raw like every ROSE texture (see rose_common.gdshaderinc), so no source_color.
-uniform highp sampler2DArray _texture_array_albedo : filter_linear_mipmap, repeat_enable;
+uniform highp sampler2DArray _texture_array_albedo : filter_linear_mipmap_anisotropic, repeat_enable;
 uniform highp sampler2DArray _texture_array_normal : hint_normal, filter_linear_mipmap_anisotropic, repeat_enable;
 
 
@@ -205,7 +205,7 @@ uniform highp sampler2DArray rose_lightmaps : filter_linear, repeat_disable;
 uniform highp sampler2D rose_lightmap_index : filter_nearest, repeat_disable;
 // Ground textures past Terrain3D's 32: texture 32 + n is layer n here, marked by the base
 // (bit 3) or overlay (bit 4) extra bit of the control value. Set by RoseTerrainLook.
-uniform highp sampler2DArray rose_extra_tiles : filter_linear_mipmap, repeat_enable;
+uniform highp sampler2DArray rose_extra_tiles : filter_linear_mipmap_anisotropic, repeat_enable;
 
 vec4 rose_tile(int id, bool extra, vec2 tile_uv, vec2 dx, vec2 dy) {
 	if (extra) {
