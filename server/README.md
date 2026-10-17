@@ -52,6 +52,28 @@ The website's "Who's online" page (`/online`) lists the players in the game with
 character's name, job and level; signed-in players see their account and character on
 `/account`.
 
+## Dev server
+
+A second server for testing, with the GM commands (`wiki/rules/gm-commands.md`): its own
+world on port 3100, so tests never touch the real characters, and no account needed to
+sign in. It reads the same ROSE client folder. Start it next to the others with
+
+```sh
+docker compose --profile dev up -d
+```
+
+(or put `COMPOSE_PROFILES=dev` in `.env`). The game connects to `ws://127.0.0.1:3100`.
+Every player on it may use the GM commands. The production server (`rose-server`) is
+built without them, so they can't be switched on there. Both servers report their mode
+and the git commit they were built from (the `server_info` view); a copy without `.git`
+reports `ROSE_GIT_COMMIT` from `.env`, or "unknown".
+
+| Task | Command |
+|---|---|
+| Install a new version of the dev server | `docker compose --profile dev up -d --build rose-server-dev` |
+| Wipe the dev world | `ROSE_CLEAR_WORLD=1 docker compose --profile dev up -d --build rose-server-dev`, then the same without `ROSE_CLEAR_WORLD` |
+| Stop the dev server | `docker compose stop rose-server-dev` |
+
 ## HTTPS
 
 For a server on the internet, put both behind HTTPS so passwords and game traffic are

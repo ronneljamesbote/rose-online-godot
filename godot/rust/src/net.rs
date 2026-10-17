@@ -901,6 +901,28 @@ impl RoseNet {
         }
     }
 
+    /// Run a GM command line ("/item 10 1 5") on a dev server. `target` is the entity we
+    /// have targeted (-1 for none), for /info and /kill. Results come back as notices
+    /// starting with "GM: ". Only in dev builds of the extension (feature `dev`), so the
+    /// production client can't send GM commands at all.
+    #[cfg(feature = "dev")]
+    #[func]
+    fn gm_command(&self, line: GString, target: i64) {
+        let s = self.shared.clone();
+        let Some(c) = self.conn.as_ref() else { return };
+        c.reducers
+            .gm_then(line.to_string(), target.max(0) as u64, move |_, result| {
+                let message = match result {
+                    Ok(Ok(())) => return,
+                    Ok(Err(message)) => message,
+                    // A production server has no gm reducer.
+                    Err(error) => format!("this server has no GM commands, only dev servers do ({error})"),
+                };
+                s.lock().unwrap().notices.push(format!("GM: {message}"));
+            })
+            .ok();
+    }
+
     /// Chat messages since the last call: channel (nearby, shout, party, whisper), from,
     /// to (whispers), text, entity (the speaker) and mine (we sent it).
     #[func]

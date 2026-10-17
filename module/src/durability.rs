@@ -237,13 +237,17 @@ pub fn repair_with_item(ctx: &ReducerContext, tool_page: u8, tool_index: u16, ki
 pub fn admin_set_item_life(ctx: &ReducerContext, player_name: String, kind: u8, slot: u8, index: u16, life: u16) -> Result<(), String> {
     crate::require_admin(ctx)?;
     let game = crate::game_data::game(ctx)?;
-    let target = target_of(kind, slot, index)?;
     let mut p = ctx.db.player().iter().find(|p| p.name == player_name).ok_or("no such player")?;
-    with_target(&mut p, target, |item| {
-        item.life = life.min(MAX_LIFE);
-        Ok(())
-    })?;
+    set_item_life(&mut p, kind, slot, index, life)?;
     ctx.db.player().identity().update(p.clone());
     character::refresh_player(ctx, &game, &p, false);
     Ok(())
+}
+
+/// Set the life of a player's item (admin_set_item_life; the caller saves the player).
+pub(crate) fn set_item_life(p: &mut Player, kind: u8, slot: u8, index: u16, life: u16) -> Result<(), String> {
+    with_target(p, target_of(kind, slot, index)?, |item| {
+        item.life = life.min(MAX_LIFE);
+        Ok(())
+    })
 }

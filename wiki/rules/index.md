@@ -13,3 +13,5 @@ exactly where to change the game.
 
 New here? Start with [[rules/how-this-wiki-works|How this wiki works]], then
 [[rules/combat|Combat]], [[rules/stats|Stats]] and [[rules/experience|Experience]].
+
+For testing: [[rules/gm-commands|GM commands]], which only dev servers have.

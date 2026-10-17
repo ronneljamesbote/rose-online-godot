@@ -9,5 +9,9 @@
 !server/
 !tools/wiki-gen/
 !overrides/
+# Just enough of .git for the server to know its commit (module/build.rs).
+!.git/HEAD
+!.git/packed-refs
+!.git/refs/
 module/target/
 godot/rust/target/

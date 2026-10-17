@@ -289,7 +289,16 @@ pub fn player_stats(ctx: &ReducerContext, game: &GameData, entity_id: u64, playe
         .map_or(attack_motion_ms / 2, |d| d.as_millis() as i32)
         .min(attack_motion_ms);
     let hit_count = attack.map_or(1, |m| m.total_attack_frames.max(1) as i32);
-    Stats::from_ability_values(entity_id, &av, true, attack_motion_ms, attack_hit_ms, hit_count)
+    #[allow(unused_mut)]
+    let mut stats = Stats::from_ability_values(entity_id, &av, true, attack_motion_ms, attack_hit_ms, hit_count);
+    // The GM command /speed (dev servers only).
+    #[cfg(feature = "dev")]
+    {
+        let factor = crate::gm::speed_factor(ctx, player.identity);
+        stats.move_speed *= factor;
+        stats.run_speed *= factor;
+    }
+    stats
 }
 
 /// Recalculate a player's stats after a level, stat or equipment change.
