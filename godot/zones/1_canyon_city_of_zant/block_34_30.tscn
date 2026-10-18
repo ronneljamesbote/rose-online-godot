@@ -1,0 +1,39 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jdt/6.tscn" id="1_7a21t"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/34_30/lightmap/object_64_0.rtex" id="2_1s0oe"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jdt/26.tscn" id="3_wfmkt"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jdt/117.tscn" id="4_6wjnx"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/34_30/lightmap/object_32_0.rtex" id="5_1jjqd"]
+
+[node name="Block_34_30" type="Node3D" unique_id=172037383]
+
+[node name="Decorations" type="Node3D" parent="." unique_id=473425796]
+
+[node name="Deco_0" parent="Decorations" unique_id=1646030326 instance=ExtResource("1_7a21t")]
+lightmaps = [ExtResource("2_1s0oe"), ExtResource("2_1s0oe")]
+lightmap_cells = PackedVector3Array(1, 0, 0.5, 0, 0, 0.5)
+transform = Transform3D(0.49442753, 0, -1.5216905, 0, 1.6000001, 0, 1.5216905, 0, 0.49442753, 5453.7227, 9.054394, -5440.6772)
+
+[node name="Deco_1" parent="Decorations" unique_id=889349502 instance=ExtResource("3_wfmkt")]
+lightmaps = [ExtResource("2_1s0oe")]
+lightmap_cells = PackedVector3Array(0, 1, 0.5)
+transform = Transform3D(2.7999995, 0, 0, 0, 2.7999995, 0, 0, 0, 2.7999995, 5467.109, 9.435302, -5491.289)
+
+[node name="Deco_2" parent="Decorations" unique_id=1990504026 instance=ExtResource("4_6wjnx")]
+lightmaps = [ExtResource("5_1jjqd")]
+lightmap_cells = PackedVector3Array(0, 0, 0.5)
+transform = Transform3D(1.5934743, 0, 1.0348144, 0, 1.9000002, 0, -1.0348144, 0, 1.5934743, 5447.7773, 11.16414, -5459.9556)
+
+[node name="Spawns" type="Node3D" parent="." unique_id=1771074275]
+
+[node name="Spawn_0" type="RoseSpawnSpot" parent="Spawns" unique_id=506128275]
+basic_monsters = PackedInt32Array(62, 64, 102, 102, 101)
+basic_counts = PackedInt32Array(3, 2, 1, 2, 3)
+tactic_monsters = PackedInt32Array(103, 205)
+tactic_counts = PackedInt32Array(2, 1)
+interval = 8
+limit = 9
+range = 26
+tactic_points = 90
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5441.334, 11.26784, -5448.8955)

@@ -1,0 +1,112 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://zones/1_canyon_city_of_zant/block_31_30.tscn" id="1_cvmmv"]
+[ext_resource type="PackedScene" path="res://zones/1_canyon_city_of_zant/block_32_30.tscn" id="2_njkc7"]
+[ext_resource type="PackedScene" path="res://zones/1_canyon_city_of_zant/block_33_30.tscn" id="3_3a8hu"]
+[ext_resource type="PackedScene" path="res://zones/1_canyon_city_of_zant/block_34_30.tscn" id="4_2ygpw"]
+[ext_resource type="PackedScene" path="res://zones/1_canyon_city_of_zant/block_31_31.tscn" id="5_gxncc"]
+[ext_resource type="PackedScene" path="res://zones/1_canyon_city_of_zant/block_32_31.tscn" id="6_6ypy6"]
+[ext_resource type="PackedScene" path="res://zones/1_canyon_city_of_zant/block_33_31.tscn" id="7_n56iq"]
+[ext_resource type="PackedScene" path="res://zones/1_canyon_city_of_zant/block_34_31.tscn" id="8_xiwry"]
+[ext_resource type="PackedScene" path="res://zones/1_canyon_city_of_zant/block_31_32.tscn" id="9_b5q0q"]
+[ext_resource type="PackedScene" path="res://zones/1_canyon_city_of_zant/block_32_32.tscn" id="10_jt0oe"]
+[ext_resource type="PackedScene" path="res://zones/1_canyon_city_of_zant/block_33_32.tscn" id="11_digwx"]
+[ext_resource type="PackedScene" path="res://zones/1_canyon_city_of_zant/block_34_32.tscn" id="12_j5nh7"]
+[ext_resource type="PackedScene" path="res://zones/1_canyon_city_of_zant/block_31_33.tscn" id="13_qmcn0"]
+[ext_resource type="PackedScene" path="res://zones/1_canyon_city_of_zant/block_32_33.tscn" id="14_m5wfr"]
+[ext_resource type="PackedScene" path="res://zones/1_canyon_city_of_zant/block_33_33.tscn" id="15_m8ypr"]
+[ext_resource type="PackedScene" path="res://zones/1_canyon_city_of_zant/block_34_33.tscn" id="16_33gk6"]
+[ext_resource type="Shader" path="res://shaders/rose_terrain3d.gdshader" id="17_wut1f"]
+[ext_resource type="Terrain3DAssets" path="res://zones/1_canyon_city_of_zant/terrain_assets.tres" id="18_2jro3"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/31_30/31_30_planelightingmap.rtex" id="19_6l4p1"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/32_30/32_30_planelightingmap.rtex" id="20_qq0ns"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/33_30/33_30_planelightingmap.rtex" id="21_svhvn"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/34_30/34_30_planelightingmap.rtex" id="22_5gewy"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/31_31/31_31_planelightingmap.rtex" id="23_3wcbo"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/32_31/32_31_planelightingmap.rtex" id="24_dg202"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/33_31/33_31_planelightingmap.rtex" id="25_ypv62"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/34_31/34_31_planelightingmap.rtex" id="26_msxxb"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/31_32/31_32_planelightingmap.rtex" id="27_ck66g"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/32_32/32_32_planelightingmap.rtex" id="28_15iub"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/33_32/33_32_planelightingmap.rtex" id="29_c8mb5"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/34_32/34_32_planelightingmap.rtex" id="30_jtkkb"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/31_33/31_33_planelightingmap.rtex" id="31_vf5yc"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/32_33/32_33_planelightingmap.rtex" id="32_h3vsc"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/33_33/33_33_planelightingmap.rtex" id="33_w4803"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/34_33/34_33_planelightingmap.rtex" id="34_qx010"]
+
+[sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_kcxia"]
+world_background = 0
+shader_override_enabled = true
+shader_override = ExtResource("17_wut1f")
+
+[node name="CanyonCityOfZant" type="Node3D" unique_id=1751262035]
+metadata/zone_id = 1
+
+[node name="Block_31_30" parent="." unique_id=2027550106 instance=ExtResource("1_cvmmv")]
+
+[node name="Block_32_30" parent="." unique_id=805182473 instance=ExtResource("2_njkc7")]
+
+[node name="Block_33_30" parent="." unique_id=590321296 instance=ExtResource("3_3a8hu")]
+
+[node name="Block_34_30" parent="." unique_id=172037383 instance=ExtResource("4_2ygpw")]
+
+[node name="Block_31_31" parent="." unique_id=28777431 instance=ExtResource("5_gxncc")]
+
+[node name="Block_32_31" parent="." unique_id=1479481556 instance=ExtResource("6_6ypy6")]
+
+[node name="Block_33_31" parent="." unique_id=2047499914 instance=ExtResource("7_n56iq")]
+
+[node name="Block_34_31" parent="." unique_id=368339629 instance=ExtResource("8_xiwry")]
+
+[node name="Block_31_32" parent="." unique_id=905314312 instance=ExtResource("9_b5q0q")]
+
+[node name="Block_32_32" parent="." unique_id=1951756561 instance=ExtResource("10_jt0oe")]
+
+[node name="Block_33_32" parent="." unique_id=225366434 instance=ExtResource("11_digwx")]
+
+[node name="Block_34_32" parent="." unique_id=311456930 instance=ExtResource("12_j5nh7")]
+
+[node name="Block_31_33" parent="." unique_id=1941279894 instance=ExtResource("13_qmcn0")]
+
+[node name="Block_32_33" parent="." unique_id=573041501 instance=ExtResource("14_m5wfr")]
+
+[node name="Block_33_33" parent="." unique_id=1871377491 instance=ExtResource("15_m8ypr")]
+
+[node name="Block_34_33" parent="." unique_id=1314191687 instance=ExtResource("16_33gk6")]
+
+[node name="Terrain" type="Terrain3D" parent="." unique_id=1669131253]
+data_directory = "res://zones/1_canyon_city_of_zant/terrain"
+material = SubResource("Terrain3DMaterial_kcxia")
+assets = ExtResource("18_2jro3")
+mesh_lods = 5
+vertex_spacing = 2.5
+top_level = true
+metadata/_edit_lock_ = true
+
+[node name="RoseTerrainLook" type="RoseTerrainLook" parent="Terrain" unique_id=577704069]
+blocks = PackedInt32Array(31, 30, 32, 30, 33, 30, 34, 30, 31, 31, 32, 31, 33, 31, 34, 31, 31, 32, 32, 32, 33, 32, 34, 32, 31, 33, 32, 33, 33, 33, 34, 33)
+lightmaps = [ExtResource("19_6l4p1"), ExtResource("20_qq0ns"), ExtResource("21_svhvn"), ExtResource("22_5gewy"), ExtResource("23_3wcbo"), ExtResource("24_dg202"), ExtResource("25_ypv62"), ExtResource("26_msxxb"), ExtResource("27_ck66g"), ExtResource("28_15iub"), ExtResource("29_c8mb5"), ExtResource("30_jtkkb"), ExtResource("31_vf5yc"), ExtResource("32_h3vsc"), ExtResource("33_w4803"), ExtResource("34_qx010")]
+texture_numbers = PackedInt32Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19)
+
+[node name="Events" type="Node3D" parent="." unique_id=1866259378]
+
+[node name="Event_0_WARPJD01JDT01" type="RoseZoneEvent" parent="Events" unique_id=517671408]
+event_name = "WARP-JD01-JDT01"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5247.9937, -0.007949218, -5024.259)
+
+[node name="Event_1_restore" type="RoseZoneEvent" parent="Events" unique_id=1435509357]
+event_name = "restore"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5240.7246, 4.000005, -5189.8496)
+
+[node name="Event_2_WARPJD02JDT01" type="RoseZoneEvent" parent="Events" unique_id=1808044110]
+event_name = "WARP-JD02-JDT01"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5279.8813, 10.095107, -5493.085)
+
+[node name="Event_3_start" type="RoseZoneEvent" parent="Events" unique_id=628306196]
+event_name = "start"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5210.472, 3.3524606, -5136.6694)
+
+[node name="Event_4_WARPJG02JDT01" type="RoseZoneEvent" parent="Events" unique_id=1227478915]
+event_name = "WARP-JG02-JDT01"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5512.29, -2.32, -5177.15)

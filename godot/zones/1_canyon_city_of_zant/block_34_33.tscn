@@ -1,0 +1,44 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jdt/24.tscn" id="1_pfpdy"]
+[ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/34_33/lightmap/object_64_0.rtex" id="2_q4qfa"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jdt/25.tscn" id="3_ov0fb"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jdt/7.tscn" id="4_j16mi"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jdt/11.tscn" id="5_pu42c"]
+
+[node name="Block_34_33" type="Node3D" unique_id=1314191687]
+
+[node name="Decorations" type="Node3D" parent="." unique_id=1614904058]
+
+[node name="Deco_0" parent="Decorations" unique_id=1759610595 instance=ExtResource("1_pfpdy")]
+lightmaps = [ExtResource("2_q4qfa")]
+lightmap_cells = PackedVector3Array(2, 0, 0.25)
+transform = Transform3D(1.5530275, 0, -0.69145226, 0, 1.7000002, 0, 0.69145226, 0, 1.5530275, 5440.943, -0.19999023, -5078.239)
+
+[node name="Deco_1" parent="Decorations" unique_id=1026487360 instance=ExtResource("3_ov0fb")]
+lightmaps = [ExtResource("2_q4qfa")]
+lightmap_cells = PackedVector3Array(0, 1, 0.25)
+transform = Transform3D(1.7000002, 0, 0, 0, 1.7000002, 0, 0, 0, 1.7000002, 5456.4004, -0.95, -5077.6016)
+
+[node name="Deco_2" parent="Decorations" unique_id=574293636 instance=ExtResource("3_ov0fb")]
+lightmaps = [ExtResource("2_q4qfa")]
+lightmap_cells = PackedVector3Array(3, 0, 0.25)
+transform = Transform3D(1.7000002, 0, 0, 0, 1.7000002, 0, 0, 0, 1.7000002, 5496.7373, -1.8014063, -5092.5303)
+
+[node name="Deco_3" parent="Decorations" unique_id=1416003105 instance=ExtResource("4_j16mi")]
+lightmaps = [ExtResource("2_q4qfa")]
+lightmap_cells = PackedVector3Array(0, 0, 0.25)
+transform = Transform3D(1.3435029, 0, -1.3435031, 0, 1.9000002, 0, 1.3435031, 0, 1.3435029, 5443.1206, -1.0575879, -5090.6606)
+
+[node name="Deco_4" parent="Decorations" unique_id=819182288 instance=ExtResource("5_pu42c")]
+lightmaps = [ExtResource("2_q4qfa")]
+lightmap_cells = PackedVector3Array(1, 0, 0.25)
+transform = Transform3D(2.4999998, 0, 0, 0, 2.4999998, 0, 0, 0, 2.4999998, 5484.83, -1.2729297, -5076.4956)
+
+[node name="Sounds" type="Node3D" parent="." unique_id=1883669161]
+
+[node name="Sound_0" type="RoseSoundSpot" parent="Sounds" unique_id=1321398397]
+sound = "SOUND/TERRAIN/BIRD_003.WAV"
+range = 5.0
+interval = 100.0
+transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5446.188, 38.823826, -5050.9033)
