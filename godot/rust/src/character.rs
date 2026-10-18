@@ -27,9 +27,13 @@ enum Part {
     Feet,
     Weapon,
     SubWeapon,
+    FaceItem,
+    Back,
 }
 
-const PARTS: [Part; 8] = [Part::Face, Part::Hair, Part::Head, Part::Body, Part::Hands, Part::Feet, Part::Weapon, Part::SubWeapon];
+const PARTS: [Part; 10] = [
+    Part::Face, Part::Hair, Part::Head, Part::Body, Part::Hands, Part::Feet, Part::Weapon, Part::SubWeapon, Part::FaceItem, Part::Back,
+];
 
 fn skeleton_file(male: bool) -> &'static str {
     if male { "3DDATA/AVATAR/MALE.ZMD" } else { "3DDATA/AVATAR/FEMALE.ZMD" }
@@ -62,6 +66,10 @@ impl Part {
             Part::Feet => ("3DDATA/AVATAR/LIST_MFOOT.ZSC", "3DDATA/AVATAR/LIST_WFOOT.ZSC"),
             Part::Weapon => ("3DDATA/WEAPON/LIST_WEAPON.ZSC", "3DDATA/WEAPON/LIST_WEAPON.ZSC"),
             Part::SubWeapon => ("3DDATA/WEAPON/LIST_SUBWPN.ZSC", "3DDATA/WEAPON/LIST_SUBWPN.ZSC"),
+            // Masks, glasses, capes and backpacks are one list for both (the iROSE file name
+            // is spelt FACEIEM).
+            Part::FaceItem => ("3DDATA/AVATAR/LIST_FACEIEM.ZSC", "3DDATA/AVATAR/LIST_FACEIEM.ZSC"),
+            Part::Back => ("3DDATA/AVATAR/LIST_BACK.ZSC", "3DDATA/AVATAR/LIST_BACK.ZSC"),
         };
         if male { m } else { w }
     }
@@ -71,6 +79,8 @@ impl Part {
         match self {
             Part::Face | Part::Hair => Some(4),
             Part::Head => Some(dummy_offset + 6),
+            Part::FaceItem => Some(dummy_offset + 4),
+            Part::Back => Some(dummy_offset + 3),
             _ => None,
         }
     }
@@ -432,7 +442,10 @@ impl RoseCharacter {
     /// Bevy client's get_model_part_index. Body, hands and feet fall back to 1.
     #[func]
     #[allow(clippy::too_many_arguments)]
-    fn build(&mut self, male: bool, face: i32, hair: i32, head: i32, body: i32, hands: i32, feet: i32, weapon: i32, sub_weapon: i32) -> bool {
+    fn build(
+        &mut self, male: bool, face: i32, hair: i32, head: i32, body: i32, hands: i32, feet: i32, weapon: i32, sub_weapon: i32,
+        face_item: i32, back: i32,
+    ) -> bool {
         let Some(game_data) = data::get() else {
             godot_error!("rose: call RoseData.open() first");
             return false;
@@ -468,6 +481,8 @@ impl RoseCharacter {
             (Part::Feet, feet.max(1)),
             (Part::Weapon, weapon),
             (Part::SubWeapon, sub_weapon),
+            (Part::FaceItem, face_item),
+            (Part::Back, back),
         ];
         for (part, id) in parts {
             if id <= 0 && !matches!(part, Part::Face | Part::Hair) {
@@ -834,7 +849,7 @@ fn npc_action_motions(npc_id: NpcId) -> Vec<(String, String)> {
 }
 
 /// Bumped when the imported characters, monsters, NPCs or vehicles change, so the next import redoes them.
-pub const AVATAR_IMPORT_VERSION: i64 = 3;
+pub const AVATAR_IMPORT_VERSION: i64 = 4;
 
 #[derive(Default)]
 pub struct AvatarImport {
@@ -881,7 +896,8 @@ fn own<T: Inherits<Node>>(root: &Gd<Node3D>, node: Gd<T>) {
 ///   (`3ddata/avatar/male_motions/weapon_N.tres`);
 /// - per gender, a skeleton scene at the ZMD's path (`3ddata/avatar/male.tscn`): Skeleton3D
 ///   and an AnimationPlayer with the no-weapon library;
-/// - every object of the part lists (faces, hair, caps, bodies, arms, feet, weapons, shields)
+/// - every object of the part lists (faces, hair, caps, bodies, arms, feet, weapons, shields,
+///   face and back items)
 ///   as a scene of mesh instances (`3ddata/avatar/list_mbody/12.tscn`).
 /// Needs the meshes and textures imported first.
 pub fn import_avatars(redo: bool) -> AvatarImport {
@@ -1009,8 +1025,8 @@ pub fn import_avatars(redo: bool) -> AvatarImport {
         });
 
         for part in PARTS {
-            // Weapons and shields are the same list for both.
-            if !male && matches!(part, Part::Weapon | Part::SubWeapon) {
+            // Weapons, shields, face and back items are the same list for both.
+            if !male && matches!(part, Part::Weapon | Part::SubWeapon | Part::FaceItem | Part::Back) {
                 continue;
             }
             let list = part.list(male);

@@ -30,7 +30,7 @@ var is_monster := false
 var is_npc := false  # a town NPC: stands still, facing its direction
 var has_store := false
 var npc_id := 0
-var look := []  # male, face, hair, head, body, hands, feet, weapon, sub weapon (players)
+var look := []  # male, face, hair, head, body, hands, feet, weapon, sub weapon, face item, back (players)
 var vehicle := []  # body, engine, legs, arms item numbers while driving a cart or castle gear
 var driver: Node3D  # while driving: the character on the vehicle's seat
 var driver_anim: AnimationPlayer
@@ -123,8 +123,8 @@ func _build() -> void:
 		_walk = "move"
 	else:
 		var character := RoseCharacter.new()
-		var l: Array = look if look.size() == 9 else [true, 1, 0, 0, 1, 1, 1, 0, 0]
-		character.build(l[0], l[1], l[2], l[3], l[4], l[5], l[6], l[7], l[8])
+		var l: Array = look if look.size() == 11 else [true, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0]
+		character.build(l[0], l[1], l[2], l[3], l[4], l[5], l[6], l[7], l[8], l[9], l[10])
 		model = character
 		driver = null
 		driver_anim = null

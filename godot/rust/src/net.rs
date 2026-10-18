@@ -63,7 +63,7 @@ fn to_godot(x: f32, y: f32) -> (f32, f32) {
 }
 
 /// Item numbers the character model is built from: male, face, hair, head, body, hands,
-/// feet, weapon, sub weapon (RoseCharacter.build's arguments).
+/// feet, weapon, sub weapon, face item, back (RoseCharacter.build's arguments).
 fn player_look(p: &Player) -> VarArray {
     let equipment: Equipment = serde_json::from_str(&p.equipment).unwrap_or_default();
     let item = |index: EquipmentIndex| {
@@ -80,6 +80,8 @@ fn player_look(p: &Player) -> VarArray {
         item(EquipmentIndex::Feet),
         item(EquipmentIndex::Weapon),
         item(EquipmentIndex::SubWeapon),
+        item(EquipmentIndex::Face),
+        item(EquipmentIndex::Back),
     ] {
         look.push(&value.to_variant());
     }
