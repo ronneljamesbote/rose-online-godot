@@ -169,7 +169,7 @@ func _rebuild() -> void:
 	_model = RoseCharacter.new()
 	# In the clothes and with the sword a new character starts with.
 	var look: PackedInt32Array = RoseData.starting_look(not male)
-	_model.build(male, FACES[face_index], HAIRS[hair_index], look[0], look[1], look[2], look[3], look[4], 0)
+	_model.build(male, FACES[face_index], HAIRS[hair_index], look[0], look[1], look[2], look[3], look[4], 0, 0, 0)
 	_preview_root.add_child(_model)
 	var anim: AnimationPlayer = _model.get_node_or_null("AnimationPlayer")
 	if anim and anim.has_animation("stop1"):

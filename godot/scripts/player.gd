@@ -21,7 +21,8 @@ func setup(zone_node: Node, male: bool, equipment: Dictionary) -> void:
 	add_child(character)
 	character.build(male, equipment.get("face", 1), equipment.get("hair", 1), equipment.get("head", 0),
 		equipment.get("body", 1), equipment.get("hands", 1), equipment.get("feet", 1),
-		equipment.get("weapon", 0), equipment.get("sub_weapon", 0))
+		equipment.get("weapon", 0), equipment.get("sub_weapon", 0), equipment.get("face_item", 0),
+		equipment.get("back", 0))
 	anim = character.get_node("AnimationPlayer")
 	anim.animation_finished.connect(_on_animation_finished)
 	_play("stop1")
