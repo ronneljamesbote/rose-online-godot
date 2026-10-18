@@ -11,7 +11,8 @@ crate-type = ["cdylib"]
 dev = []
 
 [dependencies]
-godot = { version = "0.5.5", features = ["api-4-6"] }
+# register-docs: the /// comments of our classes show in the editor (Inspector tooltips, class help).
+godot = { version = "0.5.5", features = ["api-4-6", "register-docs"] }
 rose-data = { path = "../../crates/rose-data" }
 rose-data-irose = { path = "../../crates/rose-data-irose" }
 rose-file-readers = { path = "../../crates/rose-file-readers" }
