@@ -38,8 +38,7 @@ commands:
   - { command: "/jobvar index value", does: "Sets job variable 0, 1 or 2 (job change quests)" }
   - { command: "/stamina value", does: "Sets stamina" }
   - { command: "/durability slot life", does: "Sets the life of a worn item (slot 0 face, 1 head, 2 body, 3 back, 4 hands, 5 feet, 6 weapon, 7 off-hand, 8 necklace, 9 ring, 10 earring)" }
-  - { command: "/refine [slot]", does: "Refines a worn item one grade (up to +9), always working, with no cost or materials (slots as /durability; without one, the weapon)" }
-  - { command: "/grade slot grade [gem]", does: "Sets the grade (0 to 9) of a worn item (slots as /durability); with a gem number (301 and up) the item gets a socket with that gem, 0 takes the gem out" }
+  - { command: "/grade slot grade [gem]", does: "Sets the grade (+0 to +9) of a worn item, of all worn armour or of everything worn; +N or -N raises or lowers it; a gem number sets that gem in the item. See Grades and gems below" }
 jobs:
   - { id: 0, job: "Visitor", sets: "job variables cleared" }
   - { id: "111, 211, 311, 411", job: "Soldier, Muse, Hawker, Dealer", sets: "job variable 0 = 1, job variable 1 = 0" }
@@ -142,6 +141,57 @@ also its first job, and learns its highest level for free, in prerequisite order
 level requirements are skipped. Skills of other lines, clan skills and skills tied to no
 job aren't given, and skills already known are raised instead of added twice. A Visitor has
 no job line, so it refuses.
+
+## Grades and gems
+
+`/grade slot grade [gem]` changes the [[rules/refining|refine grade]] of what you wear,
+without refining: no NPC, materials, Zuly or MP, and it always works. Items in the bag
+can't be changed; wear them first.
+
+**slot** is one of:
+
+| Slot | Number | What |
+| --- | --- | --- |
+| `face` | 0 | face item (mask, glasses) |
+| `head` | 1 | helmet or hat |
+| `body` | 2 | armour or clothes |
+| `back` | 3 | back item (cape, backpack, wings) |
+| `hands` | 4 | gloves or gauntlets |
+| `feet` | 5 | boots or shoes |
+| `weapon` | 6 | weapon |
+| `offhand` (or `shield`) | 7 | shield or other off-hand item |
+| `necklace`, `ring`, `earring` | 8, 9, 10 | jewellery |
+| `armor` (or `armour`) | | head, body, back, hands, feet and off-hand together |
+| `all` | | every slot |
+
+The numbers are the same as for `/durability`. With `armor` or `all`, empty slots are
+skipped.
+
+**grade** is either:
+
+- a number from **0 to 9**: the item becomes exactly that grade (0 removes the grade);
+- **+N** or **-N**: the grade goes up or down by N, kept between 0 and 9. `/grade weapon +1`
+  is one successful refine, `/grade armor -2` takes two grades off every armour piece.
+
+**gem** (optional, one slot only): a gem number from 301 up (see [[items/gem|Gems]]). The
+item gets a socket if it had none, and the gem is set in it, replacing any gem it had. 0
+takes the gem out (the socket stays). Unlike setting a gem in the game, no gem item is used
+up.
+
+The change counts at once: the grade's attack, hit, defence, resistance and avoid bonuses
+(see [[rules/refining|Refining]]), the item's glow in its grade's colour, and a gem's
+bonus and its effect on the weapon or shield, seen by every player around. The chat answers
+with each item changed, for example "GM: Ann: head +9, body +9, hands +9, feet +9".
+
+Examples:
+
+- `/grade weapon 9`: a +9 weapon.
+- `/grade armor 5`: every worn armour piece and the shield at +5.
+- `/grade all 0`: every worn item back to +0.
+- `/grade body +1`: the armour one grade up.
+- `/grade 6 7 307`: the weapon at +7 with a Garnet [7] in it.
+- `/grade weapon 0 0`: the weapon at +0 with its gem taken out.
+- `/grade armor 9 @Lowbie`: Lowbie's armour at +9.
 
 ## Changed from iROSE
 

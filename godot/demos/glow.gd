@@ -3,11 +3,9 @@ extends "res://demos/demo.gd"
 ## --net-demo=glow: refine glows and gem effects. Needs a dev server (GM commands). Says
 ## each GM line of --say=LINE|LINE (for example /job, /level, /item), wears every bag item
 ## whose name has a text of --wear=TEXT,TEXT, then for each grade of --grades=0,3,6,9 sets it
-## on every worn item with /grade (the weapon also gets the gem --gem=NUMBER, when given)
+## on every worn item with /grade all (the weapon also gets the gem --gem=NUMBER, when given)
 ## and turns the camera round the character. --shots=DIR saves a picture at each grade and
 ## turn (grade-G-T.png).
-
-const SLOTS := [1, 2, 3, 4, 5, 6, 7]  # head, body, back, hands, feet, weapon, off-hand (as /grade numbers them)
 
 
 func run() -> void:
@@ -31,11 +29,9 @@ func run() -> void:
 	var turns := int(options.get("turns", "3"))
 	for grade_text in String(options.get("grades", "0,3,6,9")).split(",", false):
 		var grade := int(grade_text)
-		for slot in SLOTS:
-			var line := "/grade %d %d" % [slot, grade]
-			if slot == 6 and options.has("gem"):
-				line += " " + str(options["gem"]) if grade > 0 else " 0"
-			await _gm(line, 0.4)
+		await _gm("/grade all %d" % grade, 0.5)
+		if options.has("gem"):
+			await _gm("/grade weapon %d %s" % [grade, str(options["gem"]) if grade > 0 else "0"], 0.5)
 		await tree.create_timer(2.0).timeout
 		for turn in turns:
 			camera.yaw = deg_to_rad(-45.0) + TAU * turn / turns
