@@ -19,7 +19,7 @@ fn cache_key(path: &str) -> String {
 /// Many ROSE DDS files declare a full mip chain but only store the first level or two.
 /// Godot rejects those, so such files are cut down to level 0 here and their mipmaps
 /// are generated after loading. Returns the patched bytes and whether mipmaps are needed.
-fn fix_partial_mip_chain(mut bytes: Vec<u8>) -> (Vec<u8>, bool) {
+pub fn fix_partial_mip_chain(mut bytes: Vec<u8>) -> (Vec<u8>, bool) {
     if bytes.len() < 128 || &bytes[0..4] != b"DDS " {
         return (bytes, false);
     }

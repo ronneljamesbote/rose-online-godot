@@ -1,8 +1,9 @@
 #!/bin/bash
 # Builds the Windows client from Linux: converts the ROSE models, textures and animations
 # into godot/assets/rose/ (--import-rose), cross-compiles rose_gd.dll with mingw-w64,
-# exports ROSE.exe and ROSE.pck (the scripts, the converted assets and the zone scenes)
-# and zips them with the DLLs and the readme (in a folder ROSE, or ROSE-dev for --dev).
+# exports ROSE.exe, ROSE.pck (scripts, interface and zone scenes, about 5 MB) and
+# assets.pck (the converted ROSE assets, about 320 MB) and zips them with the DLLs and the
+# readme (in a folder ROSE, or ROSE-dev for --dev).
 #
 #   --dev     the dev client: GM commands in (chat and rose_gd.dll built with the dev
 #             feature), Godot's debug template with a console window, the "Windows Desktop
@@ -10,6 +11,10 @@
 #   --folder  a folder instead of a zip (OUT_DIR/ROSE-windows[-dev]/), for testing. A rebuild
 #             replaces only the game's own files, so the themes folder, the ROSE client
 #             data and anything else put next to ROSE.exe stay.
+#   --game-only  an update without assets.pck (ROSE-windows[-dev]-update.zip, or with
+#             --folder the folder's assets.pck is kept): for players who already have the
+#             assets of this version. A change to the import (IMPORT_VERSION in
+#             godot/rust/src/assets.rs) or to anything in assets/rose needs the full build.
 #
 # The production build checks that no GM code got in and stops if it did.
 #
@@ -20,17 +25,19 @@
 # it's missing.
 # It refuses to build when overrides/motions.toml (the server's hit times) doesn't match
 # the player animations; run --export-motions and commit the file first.
-# Usage: ROSE_DATA_IDX=/path/to/data.idx godot/tools/build-windows.sh [--dev] [--folder] [OUT_DIR]
+# Usage: ROSE_DATA_IDX=/path/to/data.idx godot/tools/build-windows.sh [--dev] [--folder] [--game-only] [OUT_DIR]
 #        (OUT_DIR default: dist/ at the repository root)
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 DEV=""
 FOLDER=""
+GAME_ONLY=""
 OUT_ARG=""
 for arg in "$@"; do
   case "$arg" in
     --dev) DEV=1 ;;
     --folder) FOLDER=1 ;;
+    --game-only) GAME_ONLY=1 ;;
     -*) echo "build-windows: unknown option $arg" >&2; exit 2 ;;
     *) OUT_ARG=$arg ;;
   esac
@@ -94,6 +101,12 @@ git rev-parse --short=7 HEAD > godot/build_version.txt 2>/dev/null || echo unkno
 # a grey ground, so convert everything again.
 rm -rf godot/.godot/exported
 "$GODOT" --headless --path godot "$EXPORT" "$PRESET" "$STAGE/$DIR/ROSE.exe"
+# The converted assets go in their own pack (the "ROSE assets" preset), which the game opens
+# next to ROSE.exe, so a game update can leave them out.
+if [ -z "$GAME_ONLY" ]; then
+  "$GODOT" --headless --path godot --export-pack "ROSE assets" "$STAGE/$DIR/assets.pck"
+  [ -f "$STAGE/$DIR/assets.pck" ] || { echo "build-windows: exporting assets.pck failed." >&2; exit 1; }
+fi
 cp godot/tools/README-windows.txt "$STAGE/$DIR/README.txt"
 
 # GM commands are for dev builds only: the production client must have neither the GM chat
@@ -109,10 +122,12 @@ if [ -z "$DEV" ]; then
 fi
 
 mkdir -p "$OUT"
+[ -n "$GAME_ONLY" ] && NAME=$NAME-update
 if [ -n "$FOLDER" ]; then
   DEST="$OUT/$NAME"
   mkdir -p "$DEST"
-  rm -f "$DEST"/*.exe "$DEST"/*.pck "$DEST"/*.dll "$DEST/README.txt"
+  rm -f "$DEST"/*.exe "$DEST"/ROSE.pck "$DEST"/*.dll "$DEST/README.txt"
+  [ -n "$GAME_ONLY" ] || rm -f "$DEST/assets.pck"
   cp -r "$STAGE/$DIR/." "$DEST/"
   ls -la "$DEST"
 else

@@ -1,8 +1,10 @@
 ROSE (Godot client) for Windows
 ===============================
 
-1. Unzip this folder anywhere, for example C:\Games\ROSE. Keep ROSE.pck (the game's
-   models, animations and Birth Island) and the .dll files next to ROSE.exe.
+1. Unzip this folder anywhere, for example C:\Games\ROSE. Keep ROSE.pck (the game),
+   assets.pck (its models, textures and animations) and the .dll files next to ROSE.exe.
+   An update zip (ROSE-windows-update.zip) has no assets.pck: unzip it over this folder
+   and keep the assets.pck you have.
 2. Put the iROSE 129_129 client next to ROSE.exe, so that this file exists:
        ROSE\iRose_129_129\data.idx
    (Somewhere else is fine too: the game then asks for data.idx once and remembers it.)
