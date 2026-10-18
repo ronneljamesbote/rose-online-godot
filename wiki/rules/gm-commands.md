@@ -58,8 +58,26 @@ source:
     - godot/export_presets.cfg (Windows Desktop Dev)
     - godot/tools/build-windows.sh, godot/tools/build-windows.ps1 (--dev, -Dev)
     - godot/scripts/connect_panel.gd (_on_connect_without_account)
+    - web/src/lib/gm-command.ts, web/src/app/wiki/GmCommand.tsx (the GM command card on wiki pages)
 ---
 # GM commands (dev servers only)
+
+## Only in the dev client
+
+> **GM commands only work in the dev client, connected to a dev server.** The normal
+> (production) client sends them as plain chat, and a production server is built without
+> them, so a dev client connected to one only gets "this server has no GM commands". Nothing
+> on the normal game can switch them on.
+
+Item, monster and zone pages of this wiki show the matching command as the last card of
+their details, **GM command (dev client only)**, filled in from the page's ids: an item
+page has `/item type number` (for example
+`/item 8 43` for [[items/weapon/43-scorpion-club|Scorpion Club]]), a monster page
+`/spawn monster-id` (`/spawn 101` for [[monsters/101-woopie|Woopie]]) and a zone page
+`/tp zone` (`/tp 20` for [[zones/20-birth-island|Birth Island]]). The copy icon puts the line on the
+clipboard; paste it in the dev client's chat box and press Enter. The card gives the plain
+command: add an amount (`/item 10 21 50`), a count (`/spawn 101 10`), a spot (`/tp 20 5300 5300`)
+or `@Name` by hand.
 
 GM commands are for testing and development. They only exist on a **dev server**, a server
 built with the `dev` option: a production server is built without them, so nothing on it

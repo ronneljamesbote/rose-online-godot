@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "katex/dist/katex.min.css";
+import { Toaster } from "sonner";
 import WikiSearch from "./WikiSearch";
 
 export const metadata: Metadata = { title: "Wiki · ROSE Online" };
@@ -33,6 +34,12 @@ export default function WikiLayout({ children }: { children: React.ReactNode }) 
         </nav>
       </aside>
       <div className="wiki-main">{children}</div>
+      <Toaster
+        theme="dark"
+        position="bottom-right"
+        duration={1800}
+        toastOptions={{ style: { background: "var(--card)", border: "1px solid var(--line)", color: "var(--text)" } }}
+      />
     </div>
   );
 }
