@@ -266,6 +266,36 @@ impl RoseImport {
         result
     }
 
+    /// Moves the blocks of zone `zone_id` (0: every zone in `res://zones/`) from their own
+    /// `block_X_Y.tscn` files into `zone.tscn` and deletes the block files. Needs the import
+    /// (the blocks' models must load). Returns {zones: [{folder, blocks}]} or {error}.
+    #[func]
+    fn merge_zone_blocks(zone_id: i32) -> VarDictionary {
+        let mut result = VarDictionary::new();
+        let ids: Vec<u16> = if zone_id <= 0 {
+            crate::zone_scene::zone_folders().into_iter().map(|(id, _)| id).collect()
+        } else {
+            vec![zone_id.clamp(0, u16::MAX as i32) as u16]
+        };
+        let mut zones = VarArray::new();
+        for id in ids {
+            match crate::zone_scene::merge_zone_blocks(id) {
+                Ok((folder, blocks)) => {
+                    let mut zone = VarDictionary::new();
+                    zone.set("folder", folder.as_str());
+                    zone.set("blocks", blocks as i64);
+                    zones.push(&zone.to_variant());
+                }
+                Err(error) => {
+                    result.set("error", error.as_str());
+                    return result;
+                }
+            }
+        }
+        result.set("zones", &zones);
+        result
+    }
+
     /// Writes `overrides/zones/<id>-<name>.toml` (in the repository) for every zone that has
     /// scenes in `res://zones/`, or with `check` only compares them. Needs RoseData.open.
     /// Returns {files: [{path, zone, spawns, npcs, events}], changed: [paths that differ]},

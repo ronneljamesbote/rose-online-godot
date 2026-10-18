@@ -108,13 +108,37 @@ godot --headless --path godot -- --import-zone=20,force --data-idx=...   # repla
 
 | File | What it is |
 | --- | --- |
-| `zone.tscn` | The zone: every block, the ground (`Terrain`, a Terrain3D node with a `RoseTerrainLook` child holding the block lightmaps) and the zone's events. |
-| `block_32_34.tscn` and so on | One 160 m block: `Water`, `Buildings`, `Decorations`, `EventObjects`, `Warps`, `Effects`, `Sounds`, `Spawns` and `Npcs`. Spawns and NPCs are marker nodes that show the monster or NPC in the editor. |
+| `zone.tscn` | The whole zone. Its root is a `RoseZoneScene` (the zone number in the Inspector) with one `RoseBlock` per 160 m block (`Block_32_34`: its `block_x` and `block_y`, then `Water`, `Buildings`, `Decorations`, `EventObjects`, `Warps`, `Effects`, `Sounds`, `Spawns` and `Npcs`), the ground (`Terrain`, a Terrain3D node with a `RoseTerrainLook` child holding the block lightmaps) and the zone's events. Spawns and NPCs are marker nodes that show the monster or NPC in the editor. |
 | `terrain/`, `terrain_assets.tres` | The Terrain3D heights, tile textures and holes (1280 m regions, 2.5 m between vertices like ROSE). |
 
+Zones converted before 2026-10-18 kept each block in its own `block_X_Y.tscn`. On a branch
+that still has those, merge them into `zone.tscn` once (after `--import-rose`; it changes no
+node, name or position, so `--export-zones=check` still passes):
+
+```sh
+godot --headless --path godot -- --merge-zone-blocks=24      # or =all
+```
+
 Open `zone.tscn` in the editor to change the zone: move, add or delete objects and markers
-in the block scenes, and select `Terrain` to sculpt, paint ground textures or cut holes with
-the Terrain3D tools. Painting uses the overlay texture of each 10 m ROSE tile; the textures
+in its blocks, and select `Terrain` to sculpt, paint ground textures or cut holes with
+the Terrain3D tools. Objects and markers sit at their ROSE world positions (blocks start
+about 5 km from Godot's origin) and belong in the block they stand in; a block shows a
+warning in the Scene panel when something stands outside it. The ROSE Zone Tools plugin
+(`addons/rose_zone_tools/`) helps there:
+
+- **Go to** (3D toolbar): the start spot, revive spots, any block, NPC (by name), spawn or
+  warp gate, a search over all of them, or a ROSE x, y (`/tp 20 5300 5300` works too).
+  Opening a zone with the camera far away puts it over the start spot, and selecting a
+  block in the Scene panel (or **F** with a block selected) frames the block.
+- The bottom left of the 3D view shows the point under the mouse in ROSE coordinates, the
+  metres `/tp` and the server use (x east, y north), its block and the `/tp` line.
+- **Zone view**: block outlines and names on the ground (on by default), the 10 m ground
+  tiles that painting follows, and Redraw after sculpting.
+- **Drop to ground** puts the selected models and markers on the ground under them (undo
+  with Ctrl+Z).
+- Terrain3D's toolbar hides the tools our ground shader ignores (Autoshader, Paint color,
+  Wetness, Navigation, Instancer); the eye button at its bottom, or Zone view > Show all
+  terrain tools, brings them back. Painting uses the overlay texture of each 10 m ROSE tile; the textures
 in the Terrain3D list are the zone's tile textures in order. Terrain3D holds 32 textures; a
 zone that uses more (Valley of Luxem Tower uses 39, Adventurer's Plain 40) puts the 32 used on most tiles in the
 Terrain3D list and the rest in `RoseTerrainLook`'s `extra_textures`, marked by two control

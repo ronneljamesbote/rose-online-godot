@@ -106,7 +106,9 @@ Other options (after `--`):
   another.
 - `--time=morning|day|evening|night|TICKS` fixes the start time (one tick is 10 s).
 - `--zone-files` builds zones from the client's map files even when they have scenes in
-  `zones/`; `--import-zone=ID[,force]` writes a zone's scenes (see `assets/README.md`).
+  `zones/`; `--import-zone=ID[,force]` writes a zone's scene and `--merge-zone-blocks=ID|all`
+  moves the `block_X_Y.tscn` files of zones converted before 2026-10-18 into it (see
+  `assets/README.md`, which also covers the zone tools in the editor).
 - `--free-camera=x,y,z,yaw,pitch` uses a fixed camera with the Bevy zone viewer's convention.
 - `--screenshot=PATH` saves one frame and quits.
 
@@ -116,7 +118,9 @@ Other options (after `--`):
   queries and the zone lighting at a given time. `rust/src/zone_scene.rs` writes the zone
   scenes in `zones/` and reads them back (heights, collision, warps, sounds) when a zone
   loads from its scene; the ground is a Terrain3D node (`addons/terrain_3d`) drawn with
-  `shaders/rose_terrain3d.gdshader`.
+  `shaders/rose_terrain3d.gdshader`. `addons/rose_zone_tools/` is the editor plugin for
+  zone scenes (Go to, ROSE coordinates, block outlines, Drop to ground); it is not in the
+  Windows build.
 - `rust/src/character.rs` builds the skeleton, parts and animations (port of
   `model_loader.rs` and `zmo_asset_loader.rs`).
 - `rust/src/material.rs`, `mesh.rs`, `texture.rs` convert ZSC materials, ZMS meshes and DDS

@@ -1,10 +1,12 @@
 //! Zones as Godot scenes (step 5 of the Godot-native assets plan).
 //!
 //! A zone with a folder in `res://zones/` (`20_birth_island/`) loads from its scenes instead
-//! of the ROSE map files. `zone.tscn` holds one `block_X_Y.tscn` per 160 m block and the
-//! zone's event points (start and revive spots). The ground is the zone's Terrain3D node
-//! (its regions in `terrain/`), drawn by `shaders/rose_terrain3d.gdshader` so it looks as
-//! before; `RoseTerrainLook` beside it gives that shader the block lightmaps. A block scene holds:
+//! of the ROSE map files. `zone.tscn` is the whole zone: its root is a `RoseZoneScene`, with
+//! one `RoseBlock` node per 160 m block and the zone's event points (start and revive spots).
+//! The ground is the zone's Terrain3D node (its regions in `terrain/`), drawn by
+//! `shaders/rose_terrain3d.gdshader` so it looks as before; `RoseTerrainLook` beside it gives
+//! that shader the block lightmaps. Zones converted before 2026-10-18 kept each block in its
+//! own `block_X_Y.tscn`; `--merge-zone-blocks` moves them into `zone.tscn`. A block holds:
 //! - its water planes (`RoseWater`);
 //! - its buildings, decorations, event objects and warp gates, each an instance of a model
 //!   scene in `assets/rose/` (`RoseZoneObject`) with the lightmap of that placement;
@@ -153,6 +155,244 @@ pub fn gather(map: &Gd<Node>, to_zone: Transform3D, spawner: &mut ObjectSpawner,
         }
     });
     materials.len()
+}
+
+// ---------------------------------------------------------------------------------------
+// Zone and block nodes
+
+/// Metres per side of a ROSE block.
+pub const BLOCK_SIZE: f32 = 160.0;
+
+/// The north-west corner of block (x, y) on Godot's x and z axes.
+fn block_origin(block_x: i32, block_y: i32) -> (f32, f32) {
+    (block_x as f32 * BLOCK_SIZE, (block_y - 65) as f32 * BLOCK_SIZE)
+}
+
+/// The root of a zone scene (`zone.tscn`).
+#[derive(GodotClass)]
+#[class(tool, base=Node3D, init)]
+pub struct RoseZoneScene {
+    base: Base<Node3D>,
+    /// The zone's number in LIST_ZONE.STB.
+    #[export]
+    pub zone_id: i32,
+}
+
+/// One 160 m ROSE block of a zone scene: its water, placed models and markers, at their
+/// world positions (the node itself stays at the origin). In the editor it draws its outline
+/// and name on the ground, and can draw the 10 m ground tiles too.
+#[derive(GodotClass)]
+#[class(tool, base=Node3D, init)]
+pub struct RoseBlock {
+    base: Base<Node3D>,
+    /// Which block this is: x counts east, y counts south, as in the ROSE map file names.
+    #[export]
+    pub block_x: i32,
+    #[export]
+    pub block_y: i32,
+    #[init(val = true)]
+    show_outline: bool,
+    show_tiles: bool,
+}
+
+#[godot_api]
+impl INode3D for RoseBlock {
+    fn ready(&mut self) {
+        if is_editor() {
+            // After the Terrain node (which comes after the blocks) has loaded its heights.
+            self.base_mut().call_deferred("redraw_overlay", &[]);
+        }
+    }
+
+    fn get_configuration_warnings(&self) -> PackedStringArray {
+        self.warnings()
+    }
+}
+
+#[godot_api]
+impl RoseBlock {
+    /// What the editor shows as this block's warnings (a ⚠ in the Scene panel).
+    #[func]
+    pub fn warnings(&self) -> PackedStringArray {
+        let mut warnings = PackedStringArray::new();
+        let name = self.base().get_name().to_string();
+        if name != format!("Block_{}_{}", self.block_x, self.block_y) {
+            warnings.push(&format!("Named {name} but set to block {}_{}. The game and the server export go by block_x and block_y.", self.block_x, self.block_y));
+        }
+        let outside = self.things_outside();
+        if !outside.is_empty() {
+            let shown = outside.iter().take(5).cloned().collect::<Vec<_>>().join(", ");
+            let more = if outside.len() > 5 { format!(" and {} more", outside.len() - 5) } else { String::new() };
+            warnings.push(&format!(
+                "{} {} outside this block's 160 m square: {shown}{more}. They work in game, but belong in the block they stand in (drag them there in the Scene panel).",
+                outside.len(),
+                if outside.len() == 1 { "model or marker stands" } else { "models or markers stand" }
+            ));
+        }
+        if let Some(look) = self.terrain_look() {
+            let listed = look.bind().blocks.as_slice().chunks(2).any(|pair| pair == [self.block_x, self.block_y]);
+            if !listed {
+                warnings.push("This block has no ground: it is not in Terrain/RoseTerrainLook's blocks, so the game reads no heights here.");
+            }
+        }
+        warnings
+    }
+
+    /// The block's centre on the ground, in the zone scene's space.
+    #[func]
+    pub fn center(&self) -> Vector3 {
+        let (x0, z0) = block_origin(self.block_x, self.block_y);
+        let (x, z) = (x0 + BLOCK_SIZE / 2.0, z0 + BLOCK_SIZE / 2.0);
+        let y = self.terrain_data().and_then(|data| ground_height(&data, x, z)).unwrap_or(0.0);
+        Vector3::new(x, y, z)
+    }
+
+    /// What the editor draws on the ground: the outline and name, the 10 m tiles.
+    #[func]
+    fn set_overlay(&mut self, outline: bool, tiles: bool) {
+        if (outline, tiles) != (self.show_outline, self.show_tiles) {
+            self.show_outline = outline;
+            self.show_tiles = tiles;
+            self.redraw_overlay();
+        }
+    }
+
+    /// Draws the outline again, following the ground as it is now.
+    #[func]
+    fn redraw_overlay(&mut self) {
+        if let Some(old) = self.base().get_node_or_null("EditorOverlay") {
+            old.free();
+        }
+        if !is_editor() || !(self.show_outline || self.show_tiles) {
+            return;
+        }
+        let data = self.terrain_data();
+        let height = |x: f32, z: f32| data.as_ref().and_then(|d| ground_height(d, x, z)).unwrap_or(0.0) + 0.3;
+        let (x0, z0) = block_origin(self.block_x, self.block_y);
+        let step = VERTEX_SPACING;
+        let samples = (BLOCK_SIZE / step) as i32;
+        // A line from one edge of the block to the other, along x (or z), at `at` metres in.
+        let line = |lines: &mut ImmediateMesh, along_x: bool, at: f32| {
+            for i in 0..samples {
+                for j in [i, i + 1] {
+                    let (x, z) = if along_x { (x0 + j as f32 * step, z0 + at) } else { (x0 + at, z0 + j as f32 * step) };
+                    lines.surface_add_vertex(Vector3::new(x, height(x, z), z));
+                }
+            }
+        };
+
+        let mut holder = Node3D::new_alloc();
+        holder.set_name("EditorOverlay");
+        // The lines are in zone space; undo this node's own placement.
+        holder.set_transform(self.base().get_transform().affine_inverse());
+        let mut lines = ImmediateMesh::new_gd();
+        if self.show_tiles {
+            lines.surface_begin_ex(PrimitiveType::LINES).material(&overlay_material(Color::from_rgba(1.0, 1.0, 1.0, 0.35))).done();
+            for tile in 1..16 {
+                let at = tile as f32 * 10.0;
+                line(&mut lines, true, at);
+                line(&mut lines, false, at);
+            }
+            lines.surface_end();
+        }
+        if self.show_outline {
+            lines.surface_begin_ex(PrimitiveType::LINES).material(&overlay_material(Color::from_rgb(1.0, 0.8, 0.2))).done();
+            for at in [0.0, BLOCK_SIZE] {
+                line(&mut lines, true, at);
+                line(&mut lines, false, at);
+            }
+            lines.surface_end();
+        }
+        let mut mesh = MeshInstance3D::new_alloc();
+        mesh.set_mesh(&lines.upcast::<Mesh>());
+        mesh.set_cast_shadows_setting(godot::classes::geometry_instance_3d::ShadowCastingSetting::OFF);
+        holder.add_child(&mesh);
+
+        if self.show_outline {
+            let mut text = Label3D::new_alloc();
+            text.set_text(&format!("Block {}_{}", self.block_x, self.block_y));
+            text.set_billboard_mode(godot::classes::base_material_3d::BillboardMode::ENABLED);
+            text.set_draw_flag(godot::classes::label_3d::DrawFlags::FIXED_SIZE, true);
+            text.set_pixel_size(0.0015);
+            text.set_font_size(28);
+            text.set_outline_size(8);
+            text.set_modulate(Color::from_rgb(1.0, 0.85, 0.3));
+            let (x, z) = (x0 + BLOCK_SIZE / 2.0, z0 + BLOCK_SIZE / 2.0);
+            text.set_position(Vector3::new(x, height(x, z) + 8.0, z));
+            holder.add_child(&text);
+        }
+        self.base_mut().add_child_ex(&holder).internal(InternalMode::BACK).done();
+    }
+}
+
+impl RoseBlock {
+    /// The zone's Terrain3D node, a sibling of the blocks.
+    fn terrain(&self) -> Option<Gd<Node>> {
+        let parent = self.base().get_parent()?;
+        parent.get_node_or_null("Terrain").filter(|t| t.is_class("Terrain3D"))
+    }
+
+    fn terrain_data(&self) -> Option<Gd<godot::classes::Object>> {
+        self.terrain()?.get("data").try_to::<Gd<godot::classes::Object>>().ok()
+    }
+
+    fn terrain_look(&self) -> Option<Gd<RoseTerrainLook>> {
+        let terrain = self.terrain()?;
+        terrain.get_children().iter_shared().find_map(|c| c.try_cast::<RoseTerrainLook>().ok())
+    }
+
+    /// The names of the models and markers that stand outside the block (half a metre of slack).
+    fn things_outside(&self) -> Vec<String> {
+        let (x0, z0) = block_origin(self.block_x, self.block_y);
+        let inside = |p: Vector3| (x0 - 0.5..=x0 + BLOCK_SIZE + 0.5).contains(&p.x) && (z0 - 0.5..=z0 + BLOCK_SIZE + 0.5).contains(&p.z);
+        let block_transform = self.base().get_transform();
+        let mut outside = Vec::new();
+        let mut visit = |node: &Gd<Node>, transform: Transform3D| {
+            let thing = node.clone().try_cast::<RoseZoneObject>().is_ok()
+                || node.clone().try_cast::<RoseSpawnSpot>().is_ok()
+                || node.clone().try_cast::<RoseNpcSpot>().is_ok()
+                || node.clone().try_cast::<RoseSoundSpot>().is_ok()
+                || node.clone().try_cast::<RoseEffectSpot>().is_ok();
+            if thing && !inside(transform.origin) {
+                outside.push(node.get_name().to_string());
+            }
+        };
+        // The groups (Buildings, Npcs, ...) and what is in them.
+        for group in self.base().get_children().iter_shared() {
+            let group_transform = block_transform * transform_of(&group);
+            visit(&group, group_transform);
+            for child in group.get_children().iter_shared() {
+                visit(&child, group_transform * transform_of(&child));
+            }
+        }
+        outside
+    }
+}
+
+/// The ground height at (x, z) from Terrain3D's data, if there is ground there.
+fn ground_height(data: &Gd<godot::classes::Object>, x: f32, z: f32) -> Option<f32> {
+    let height = data.clone().call("get_height", &[Vector3::new(x, 0.0, z).to_variant()]).try_to::<f32>().ok()?;
+    height.is_finite().then_some(height)
+}
+
+fn overlay_material(color: Color) -> Gd<StandardMaterial3D> {
+    let mut material = StandardMaterial3D::new_gd();
+    material.set_shading_mode(ShadingMode::UNSHADED);
+    material.set_albedo(color);
+    material.set_transparency(Transparency::ALPHA);
+    material
+}
+
+/// The block (x, y) a zone-scene child is, from its `RoseBlock` properties, or for scenes
+/// from before `RoseBlock`, its name (`Block_31_32`).
+fn block_of(node: &Gd<Node>) -> Option<(i32, i32)> {
+    if let Ok(block) = node.clone().try_cast::<RoseBlock>() {
+        let b = block.bind();
+        return Some((b.block_x, b.block_y));
+    }
+    let name = node.get_name().to_string();
+    let (x, y) = name.strip_prefix("Block_")?.split_once('_')?;
+    Some((x.parse().ok()?, y.parse().ok()?))
 }
 
 // ---------------------------------------------------------------------------------------
@@ -993,6 +1233,131 @@ fn add_owned(parent: &mut Gd<Node3D>, owner: &Gd<Node3D>, node: Gd<Node>) {
     node.clone().set_owner(owner);
 }
 
+/// Every node under `owner` that it owns (what a scene saved from it would hold).
+fn owned_by(owner: &Gd<Node>) -> Vec<Gd<Node>> {
+    let mut owned = Vec::new();
+    for child in owner.get_children().iter_shared() {
+        walk(&child, &mut |node| {
+            if node.get_owner().as_ref() == Some(owner) {
+                owned.push(node.clone());
+            }
+        });
+    }
+    owned
+}
+
+/// The `block_X_Y.tscn` files in a zone folder: zones converted before 2026-10-18 had one per block.
+fn block_files(folder: &str) -> Vec<String> {
+    let Some(dir) = DirAccess::open(folder) else { return Vec::new() };
+    let mut files: Vec<String> = dir
+        .get_files()
+        .as_slice()
+        .iter()
+        .map(|f| f.to_string())
+        .filter(|f| f.starts_with("block_") && f.ends_with(".tscn"))
+        .map(|f| format!("{folder}/{f}"))
+        .collect();
+    files.sort();
+    files
+}
+
+/// Moves the blocks of a zone scene from their own `block_X_Y.tscn` files into `zone.tscn` as
+/// `RoseBlock` nodes, makes the root a `RoseZoneScene`, and deletes the block files. Nothing
+/// in the blocks changes: same nodes, names, positions and edits made in `zone.tscn`.
+/// Returns (folder, blocks merged); 0 when the zone is already one scene.
+pub fn merge_zone_blocks(zone_id: u16) -> Result<(String, usize), String> {
+    let folder = zone_folder(zone_id).ok_or(format!("zone {zone_id} has no folder in {ZONES}"))?;
+    let path = format!("{folder}/zone.tscn");
+    let files = block_files(&folder);
+    // Every scene and texture the blocks use must load, or the nodes made from it would be lost.
+    let mut missing = BTreeSet::new();
+    for file in std::iter::once(&path).chain(files.iter()) {
+        let text = FileAccess::get_file_as_string(file.as_str()).to_string();
+        for line in text.lines().filter(|l| l.starts_with("[ext_resource")) {
+            let Some(start) = line.find(" path=\"") else { continue };
+            let rest = &line[start + 7..];
+            let used = &rest[..rest.find('"').unwrap_or(rest.len())];
+            if !ResourceLoader::singleton().exists(used) {
+                missing.insert(used.to_string());
+            }
+        }
+    }
+    if let Some(first) = missing.iter().next() {
+        return Err(format!("{path} uses {} files that are not there, such as {first}; run --import-rose first", missing.len()));
+    }
+    let scene = godot::tools::try_load::<PackedScene>(&path).map_err(|_| format!("could not open {path}"))?;
+    let old_root = scene.instantiate_ex().edit_state(GenEditState::MAIN).done().ok_or(format!("could not open {path}"))?;
+
+    let mut root = RoseZoneScene::new_alloc();
+    root.set_name(&old_root.get_name());
+    let meta_id = old_root.get_meta_ex("zone_id").default(&Variant::nil()).done().try_to::<i64>().ok();
+    root.bind_mut().zone_id = meta_id.map_or(zone_id as i32, |id| id as i32);
+    if let Ok(old) = old_root.clone().try_cast::<Node3D>() {
+        root.set_transform(old.get_transform());
+    }
+    let mut root = root.upcast::<Node>();
+
+    let mut merged = 0;
+    for child in old_root.get_children().iter_shared() {
+        let owned = owned_by(&old_root).into_iter().filter(|n| n == &child || child.is_ancestor_of(n)).collect::<Vec<_>>();
+        let mut child = child;
+        let instanced_block = !child.get_scene_file_path().is_empty() && block_of(&child).is_some();
+        if instanced_block {
+            // The block's own nodes, as the zone scene shows them (with any edits made there).
+            let (block_x, block_y) = block_of(&child).unwrap_or_default();
+            let mut block = RoseBlock::new_alloc();
+            block.set_name(&child.get_name());
+            {
+                let mut b = block.bind_mut();
+                b.block_x = block_x;
+                b.block_y = block_y;
+            }
+            if let Ok(old) = child.clone().try_cast::<Node3D>() {
+                block.set_transform(old.get_transform());
+                block.set_visible(old.is_visible());
+            }
+            let inner = owned_by(&child);
+            for mut node in inner.iter().cloned() {
+                node.set_owner(Gd::null_arg());
+            }
+            for grandchild in child.get_children().iter_shared() {
+                child.remove_child(&grandchild);
+                block.add_child(&grandchild);
+            }
+            old_root.clone().remove_child(&child);
+            child.free();
+            let block = block.upcast::<Node>();
+            root.add_child(&block);
+            block.clone().set_owner(&root);
+            for mut node in inner {
+                node.set_owner(&root);
+            }
+            merged += 1;
+        } else {
+            for mut node in owned.iter().cloned() {
+                node.set_owner(Gd::null_arg());
+            }
+            old_root.clone().remove_child(&child);
+            root.add_child(&child);
+            for mut node in owned {
+                node.set_owner(&root);
+            }
+        }
+    }
+    old_root.free();
+    if merged == 0 && files.is_empty() && meta_id.is_none() {
+        root.free();
+        return Ok((folder, 0));
+    }
+    if !save_scene(root, &path) {
+        return Err(format!("could not save {path}"));
+    }
+    for file in &files {
+        DirAccess::remove_absolute(file.as_str());
+    }
+    Ok((folder, merged))
+}
+
 /// A model placed in a block: its number in the list, the IFO entry and its lightmaps.
 type Placement<'a> = (usize, &'a rose_file_readers::IfoObject, Option<&'a rose_file_readers::LitObject>);
 
@@ -1000,8 +1365,8 @@ fn spawn_lists(spawns: &[IfoMonsterSpawn]) -> (PackedInt32Array, PackedInt32Arra
     (spawns.iter().map(|s| s.id as i32).collect(), spawns.iter().map(|s| s.count as i32).collect())
 }
 
-/// Writes a zone's scenes (`res://zones/<id>_<name>/zone.tscn` and a `block_X_Y.tscn` per
-/// block) from the ROSE files. Refuses to replace scenes already there unless `force`.
+/// Writes a zone's scene (`res://zones/<id>_<name>/zone.tscn`, a `RoseBlock` per block) and
+/// its ground (`terrain/`) from the ROSE files. Refuses to replace scenes already there unless `force`.
 /// Returns (folder, blocks, objects, markers).
 pub fn write_zone_scenes(zone_id: u16, force: bool) -> Result<(String, usize, usize, usize), String> {
     let files = zone_files(zone_id).ok_or(format!("zone {zone_id} is not in the zone list or its ZON file is missing"))?;
@@ -1012,6 +1377,10 @@ pub fn write_zone_scenes(zone_id: u16, force: bool) -> Result<(String, usize, us
     }
     let folder = zone_folder(zone_id).unwrap_or_else(|| format!("{ZONES}{zone_id}_{}", slug(&files.name)));
     DirAccess::make_dir_recursive_absolute(&folder);
+    // Block files of an older import would be left behind unused.
+    for file in block_files(&folder) {
+        DirAccess::remove_absolute(file.as_str());
+    }
 
     let mut assets_made = ZoneImport::default();
     import_zone_assets(zone_id, false, &mut assets_made);
@@ -1032,10 +1401,11 @@ pub fn write_zone_scenes(zone_id: u16, force: bool) -> Result<(String, usize, us
     }
 
     let (mut object_count, mut marker_count) = (0, 0);
-    let mut zone_root = Node3D::new_alloc();
+    let mut zone_root = RoseZoneScene::new_alloc();
     // "Adventurer's Plain" -> AdventurersPlain
     zone_root.set_name(&slug(&files.name.replace('\'', "")).split('_').map(|w| w[..1].to_uppercase() + &w[1..]).collect::<String>());
-    zone_root.set_meta("zone_id", &(zone_id as i64).to_variant());
+    zone_root.bind_mut().zone_id = zone_id as i32;
+    let mut zone_root = zone_root.upcast::<Node3D>();
     let block_list = blocks(&files);
     for &(block_x, block_y) in &block_list {
         let dir = &files.zone_dir;
@@ -1046,8 +1416,14 @@ pub fn write_zone_scenes(zone_id: u16, force: bool) -> Result<(String, usize, us
         let lit_cnst = data::read_file::<LitFile>(&format!("{lightmap_dir}BUILDINGLIGHTMAPDATA.LIT"));
         let lit_deco = data::read_file::<LitFile>(&format!("{lightmap_dir}OBJECTLIGHTMAPDATA.LIT"));
 
-        let mut root = Node3D::new_alloc();
-        root.set_name(&format!("Block_{block_x}_{block_y}"));
+        let mut block = RoseBlock::new_alloc();
+        block.set_name(&format!("Block_{block_x}_{block_y}"));
+        {
+            let mut b = block.bind_mut();
+            b.block_x = block_x as i32;
+            b.block_y = block_y as i32;
+        }
+        let mut root = block.upcast::<Node3D>();
 
         ground.add_block(block_x, block_y, &him, |x, y| {
             let [layer1, layer2, rotation] = zone::tile_layers(&files.zon, til.as_ref(), x, y);
@@ -1203,13 +1579,14 @@ pub fn write_zone_scenes(zone_id: u16, force: bool) -> Result<(String, usize, us
             }
         }
 
-        let block_path = format!("{folder}/block_{block_x}_{block_y}.tscn");
-        if !save_scene(root.upcast(), &block_path) {
-            return Err(format!("could not save {block_path}"));
-        }
-        let Some(block) = instance(&block_path) else { return Err(format!("could not open {block_path}")) };
+        // Into the zone scene: what the block owned, the zone root now owns.
+        let block = root.upcast::<Node>();
+        let owned = owned_by(&block);
         let zone_root_clone = zone_root.clone();
         add_owned(&mut zone_root, &zone_root_clone, block);
+        for mut node in owned {
+            node.set_owner(&zone_root_clone);
+        }
     }
 
     // The ground: a Terrain3D node with its regions saved in terrain/.
@@ -1255,11 +1632,9 @@ pub fn zone_layout(zone_id: u16) -> Result<rose_game_overrides::ZoneLayout, Stri
     let mut layout = rose_game_overrides::ZoneLayout { zone: zone_id, ..Default::default() };
     let mut blocks: Vec<((i32, i32), Gd<Node>)> = Vec::new();
     for child in root.get_children().iter_shared() {
-        let name = child.get_name().to_string();
-        let block = name.strip_prefix("Block_").and_then(|xy| xy.split_once('_')).and_then(|(x, y)| Some((y.parse().ok()?, x.parse().ok()?)));
-        match block {
-            Some(key) => blocks.push((key, child)),
-            None => collect_markers(&child, transform_of(&child), &name, &mut layout),
+        match block_of(&child) {
+            Some((x, y)) => blocks.push(((y, x), child)),
+            None => collect_markers(&child, transform_of(&child), &child.get_name().to_string(), &mut layout),
         }
     }
     blocks.sort_by_key(|(key, _)| *key);
