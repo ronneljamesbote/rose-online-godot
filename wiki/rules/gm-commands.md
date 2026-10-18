@@ -74,7 +74,7 @@ their details, **GM command (dev client only)**, filled in from the page's ids: 
 page has `/item type number` (for example
 `/item 8 43` for [[items/weapon/43-scorpion-club|Scorpion Club]]), a monster page
 `/spawn monster-id` (`/spawn 101` for [[monsters/101-woopie|Woopie]]) and a zone page
-`/tp zone` (`/tp 20` for [[zones/20-birth-island|Birth Island]]). **Copy** puts the line on the
+`/tp zone` (`/tp 20` for [[zones/20-birth-island|Birth Island]]). The copy icon puts the line on the
 clipboard; paste it in the dev client's chat box and press Enter. The card gives the plain
 command: add an amount (`/item 10 21 50`), a count (`/spawn 101 10`), a spot (`/tp 20 5300 5300`)
 or `@Name` by hand.

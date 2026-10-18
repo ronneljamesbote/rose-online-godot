@@ -1,13 +1,12 @@
 "use client";
 
-// The dev-client GM command for this page as the last fact, with a button that copies it
+// The dev-client GM command for this page as the last fact, with an icon that copies it
 // for the chat box.
 
 import Link from "next/link";
-import { useState } from "react";
+import { toast } from "sonner";
 
 export default function GmCommand({ command }: { command: string }) {
-  const [copied, setCopied] = useState(false);
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(command);
@@ -20,8 +19,7 @@ export default function GmCommand({ command }: { command: string }) {
       document.execCommand("copy");
       area.remove();
     }
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
+    toast(`Copied ${command}`);
   };
   return (
     <div className="fact gm-copy">
@@ -30,8 +28,11 @@ export default function GmCommand({ command }: { command: string }) {
       </dt>
       <dd>
         <code>{command}</code>
-        <button type="button" className="secondary" onClick={copy} aria-live="polite">
-          {copied ? "Copied" : "Copy"}
+        <button type="button" onClick={copy} title="Copy" aria-label={`Copy ${command}`}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect x="9" y="9" width="12" height="12" rx="2" />
+            <path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" />
+          </svg>
         </button>
       </dd>
     </div>
