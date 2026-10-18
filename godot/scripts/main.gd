@@ -39,6 +39,8 @@
 ##   --export-zones[=check]     write ../overrides/zones/<id>-<name>.toml (spawns, NPCs and named
 ##                              spots for the server) from the zone scenes in res://zones/ and quit;
 ##                              check only compares and fails when a file is out of date
+##   --merge-zone-blocks=ID|all  move a zone's block_X_Y.tscn files into its zone.tscn (zones
+##                              converted before 2026-10-18) and quit (run headless, after --import-rose)
 extends Node3D
 
 const START := Vector3(5210.5, 0.0, -5136.7)  # zone start position from LIST_ZONE.STB
@@ -76,6 +78,9 @@ func _ready() -> void:
 	if options.has("ui-opacity"):
 		UI.set_setting("opacity", float(options["ui-opacity"]))
 
+	if options.has("merge-zone-blocks"):
+		_merge_zone_blocks(options["merge-zone-blocks"])
+		return
 	var data_idx := _find_data_idx()
 	if data_idx == "":
 		_ask_for_data_idx()
@@ -170,6 +175,21 @@ func _import_zone(zone_id: int, force: bool) -> void:
 		get_tree().quit(1)
 		return
 	print("rose: %s: %d blocks, %d objects, %d markers" % [result.folder, result.blocks, result.objects, result.markers])
+	get_tree().quit(0)
+
+
+## Moves the block scenes of one zone ("all": every zone) into its zone.tscn and quits.
+func _merge_zone_blocks(which: String) -> void:
+	var result: Dictionary = RoseImport.merge_zone_blocks(0 if which == "all" else int(which))
+	if result.has("error"):
+		push_error("rose: %s" % result.error)
+		get_tree().quit(1)
+		return
+	for zone in result.zones:
+		if zone.blocks > 0:
+			print("rose: %s: %d blocks moved into zone.tscn" % [zone.folder, zone.blocks])
+		else:
+			print("rose: %s: already one scene" % zone.folder)
 	get_tree().quit(0)
 
 
