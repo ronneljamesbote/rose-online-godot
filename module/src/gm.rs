@@ -65,6 +65,7 @@ pub const COMMANDS: &[(&str, &str, &str)] = &[
     ("jobvar", "index value", "sets a job variable (job change quests)"),
     ("stamina", "value", "sets stamina"),
     ("durability", "slot life", "sets an equipped item's life (slot 0 face ... 6 weapon ... 10 earring)"),
+    ("grade", "slot grade [gem]", "sets the grade of worn items: slot is a number as /durability or head, body, back, hands, feet, weapon, offhand, face, armor (head to feet, back, off-hand) or all; grade 0 to 9, or +N / -N to raise or lower it; a gem number sets that gem in a single item (0 takes it out)"),
 ];
 
 /// Run a GM command. `target` is the entity the caller has targeted (0 for none), for
@@ -368,6 +369,49 @@ impl Gm<'_> {
                 crate::durability::set_item_life(&mut p, 0, slot, 0, life)?;
                 self.save_refresh(&p, false);
                 self.say(format!("set the life of {name}'s item in slot {slot} to {life}"));
+                Ok(())
+            }
+            "grade" => {
+                let slots = grade_slots(self.args.first().copied().unwrap_or_default())
+                    .ok_or_else(|| format!("missing or unknown slot ({})", self.usage()))?;
+                let change = self.args.get(1).copied().ok_or_else(|| format!("missing grade ({})", self.usage()))?;
+                let relative = change.starts_with('+') || change.starts_with('-');
+                let amount: i32 = change.parse().map_err(|_| format!("the grade must be a number like 5, +1 or -2, not {change}"))?;
+                if !relative && !(0..=9).contains(&amount) {
+                    return Err("the grade is 0 to 9 (or +N / -N to change it)".into());
+                }
+                let gem: Option<u16> = self.args.get(2).map(|_| self.arg(2, "gem")).transpose()?;
+                if let Some(gem) = gem {
+                    if slots.len() > 1 {
+                        return Err("a gem goes in one item: name one slot".into());
+                    }
+                    if gem != 0 && game.items.get_gem_item(gem as usize).is_none() {
+                        return Err(format!("{gem} is not a gem (gems are 301 and up)"));
+                    }
+                }
+                let mut done = Vec::new();
+                for &(slot, slot_name) in &slots {
+                    let result = crate::durability::with_equipped_item(&mut p, slot, |item| {
+                        let grade = if relative { (item.grade as i32 + amount).clamp(0, 9) } else { amount };
+                        item.grade = grade as u8;
+                        if let Some(gem) = gem {
+                            item.has_socket |= gem != 0;
+                            item.gem = gem;
+                        }
+                        Ok(grade)
+                    });
+                    match result {
+                        Ok(grade) => done.push(format!("{slot_name} +{grade}")),
+                        Err(e) if slots.len() == 1 => return Err(format!("{slot_name}: {e}")),
+                        Err(_) => {} // an empty slot in a group
+                    }
+                }
+                if done.is_empty() {
+                    return Err("nothing worn in those slots".into());
+                }
+                self.save_refresh(&p, false);
+                let gem_text = gem.map_or(String::new(), |gem| if gem == 0 { ", gem taken out".into() } else { format!(", gem {gem}") });
+                self.say(format!("{name}: {}{gem_text}", done.join(", ")));
                 Ok(())
             }
             other => Err(format!("no command /{other} (type /help)")),
@@ -803,4 +847,21 @@ fn unequip_unwearable(ctx: &ReducerContext, game: &GameData, p: &mut Player) -> 
         problems.insert(0, "gear that can't be worn any more went to the bag".into());
     }
     problems
+}
+
+/// The worn slots /grade acts on (numbered as /durability), with their names: one slot by
+/// number or name, or the groups "armor" and "all".
+fn grade_slots(word: &str) -> Option<Vec<(u8, &'static str)>> {
+    const NAMES: [&str; 11] = ["face", "head", "body", "back", "hands", "feet", "weapon", "offhand", "necklace", "ring", "earring"];
+    let word = word.to_ascii_lowercase();
+    let pick = |slots: &[u8]| slots.iter().map(|&s| (s, NAMES[s as usize])).collect();
+    match word.as_str() {
+        "armor" | "armour" => Some(pick(&[1, 2, 3, 4, 5, 7])),
+        "all" => Some(pick(&[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])),
+        "shield" | "off-hand" => Some(pick(&[7])),
+        _ => {
+            let slot = word.parse::<u8>().ok().or_else(|| NAMES.iter().position(|n| *n == word).map(|i| i as u8))?;
+            ((slot as usize) < NAMES.len()).then(|| pick(&[slot]))
+        }
+    }
 }

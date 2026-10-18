@@ -35,6 +35,8 @@ thread_local! {
     static LIGHTMAP_SHADERS: RefCell<HashMap<String, Gd<Shader>>> = RefCell::new(HashMap::new());
     static LIGHTMAPPED: RefCell<HashMap<(InstanceId, InstanceId), Gd<ShaderMaterial>>> = RefCell::new(HashMap::new());
     static SPECULAR: RefCell<Option<Option<Gd<Texture2D>>>> = const { RefCell::new(None) };
+    static GLOW_SHADERS: RefCell<Option<[Gd<Shader>; 2]>> = const { RefCell::new(None) };
+    static GLOWS: RefCell<HashMap<(Option<InstanceId>, bool, [u32; 3]), Gd<ShaderMaterial>>> = RefCell::new(HashMap::new());
 }
 
 fn shader_code(key: &ShaderKey) -> String {
@@ -171,10 +173,64 @@ pub fn with_lightmap(material: &Gd<ShaderMaterial>, lightmap: &Gd<Texture2D>) ->
     copy
 }
 
+fn glow_shaders() -> [Gd<Shader>; 2] {
+    GLOW_SHADERS.with_borrow_mut(|cached| {
+        cached
+            .get_or_insert_with(|| {
+                [false, true].map(|shell| {
+                    let mut shader = Shader::new_gd();
+                    shader.set_code(&format!(
+                        "shader_type spatial;\nrender_mode unshaded, fog_disabled, blend_add, depth_draw_never, {}, shadows_disabled;\n{}#include \"res://shaders/rose_item_glow.gdshaderinc\"\n",
+                        if shell { "cull_back" } else { "cull_disabled" },
+                        if shell { "#define GLOW_SHELL\n" } else { "" },
+                    ));
+                    shader
+                })
+            })
+            .clone()
+    })
+}
+
+/// The refine glow of an equipment part drawn with `material` (an `object_material`), in
+/// `colour` (LIST_GRADE's glow colour): an overlay material that brightens the part, with
+/// the halo around it as its next pass. One per texture and colour.
+pub fn grade_glow(material: Option<&Gd<ShaderMaterial>>, colour: (f32, f32, f32)) -> Gd<ShaderMaterial> {
+    let texture = material.map(|m| m.get_shader_parameter("base_texture")).filter(|t| !t.is_nil());
+    let alpha_tested = material.and_then(|m| m.get_shader()).is_some_and(|shader| {
+        let code = shader.get_code().to_string();
+        code.contains("#define ALPHA_MASK") || code.contains("#define ALPHA_BLEND")
+    });
+    let texture_id = texture.as_ref().and_then(|t| t.try_to::<Gd<Texture2D>>().ok()).map(|t| t.instance_id());
+    let key = (texture_id, alpha_tested, [colour.0.to_bits(), colour.1.to_bits(), colour.2.to_bits()]);
+    if let Some(cached) = GLOWS.with_borrow(|cache| cache.get(&key).cloned()) {
+        return cached;
+    }
+    let [overlay_shader, shell_shader] = glow_shaders();
+    let make = |shader: &Gd<Shader>| {
+        let mut glow = ShaderMaterial::new_gd();
+        glow.set_shader(shader);
+        if let Some(texture) = &texture {
+            glow.set_shader_parameter("base_texture", texture);
+        }
+        glow.set_shader_parameter("glow_colour", &Vector3::new(colour.0, colour.1, colour.2).to_variant());
+        glow.set_shader_parameter("use_texture_alpha", &alpha_tested.to_variant());
+        if let Some(material) = material {
+            glow.set_shader_parameter("alpha_cutoff", &material.get_shader_parameter("alpha_cutoff"));
+        }
+        glow
+    };
+    let mut overlay = make(&overlay_shader);
+    overlay.set_next_pass(&make(&shell_shader));
+    GLOWS.with_borrow_mut(|cache| cache.insert(key, overlay.clone()));
+    overlay
+}
+
 /// Drops the cached shaders while the engine is still running.
 pub fn clear_cache() {
     SHADERS.with_borrow_mut(|cache| cache.clear());
     LIGHTMAP_SHADERS.with_borrow_mut(|cache| cache.clear());
     LIGHTMAPPED.with_borrow_mut(|cache| cache.clear());
     SPECULAR.with_borrow_mut(|cache| *cache = None);
+    GLOW_SHADERS.with_borrow_mut(|cache| *cache = None);
+    GLOWS.with_borrow_mut(|cache| cache.clear());
 }

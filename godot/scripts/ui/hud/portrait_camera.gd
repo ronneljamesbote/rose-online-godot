@@ -42,11 +42,11 @@ func _ready() -> void:
 	add_child(_camera)
 
 
-## look: male, face, hair, head, body, hands, feet, weapon, sub weapon, face item, back (as on
-## the server).
+## look: male, face, hair, head, body, hands, feet, weapon, sub weapon, face item, back, then
+## the grades and gems (as on the server).
 ## Returns true when there is a picture to show.
 func show_look(look: Array) -> bool:
-	if look.size() != 11:
+	if look.size() < 11:
 		return _model != null
 	if look == _look:
 		return true
@@ -55,6 +55,8 @@ func show_look(look: Array) -> bool:
 		_model.queue_free()
 	var character := RoseCharacter.new()
 	character.build(look[0], look[1], look[2], look[3], look[4], look[5], look[6], look[7], look[8], look[9], look[10])
+	if look.size() >= 13:
+		character.show_item_effects(look[11], look[12])
 	add_child(character)
 	_model = character
 	_anim = character.get_node_or_null("AnimationPlayer")

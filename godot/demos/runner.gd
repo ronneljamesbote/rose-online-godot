@@ -16,6 +16,7 @@ const NET_DEMOS := {
 	"trade": "trade.gd",
 	"pvp": "pvp.gd",
 	"chat": "chat.gd",
+	"glow": "glow.gd",
 	"steps": "steps.gd",
 	"hotkey": "hotkey.gd",
 	"sticky": "sticky.gd",

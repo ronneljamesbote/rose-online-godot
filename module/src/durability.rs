@@ -245,6 +245,12 @@ pub fn admin_set_item_life(ctx: &ReducerContext, player_name: String, kind: u8, 
 }
 
 /// Set the life of a player's item (admin_set_item_life; the caller saves the player).
+/// Runs `f` on the worn item in `slot` (0 face ... 6 weapon ... 10 earring), as /durability
+/// numbers them.
+pub(crate) fn with_equipped_item<R>(p: &mut Player, slot: u8, f: impl FnOnce(&mut EquipmentItem) -> Result<R, String>) -> Result<R, String> {
+    with_target(p, RepairTarget::Equipped(slot), f)
+}
+
 pub(crate) fn set_item_life(p: &mut Player, kind: u8, slot: u8, index: u16, life: u16) -> Result<(), String> {
     with_target(p, target_of(kind, slot, index)?, |item| {
         item.life = life.min(MAX_LIFE);

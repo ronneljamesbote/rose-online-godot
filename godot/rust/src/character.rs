@@ -17,7 +17,7 @@ use rose_file_readers::{ZmdFile, ZmoChannel, ZmoFile, ZscFile};
 
 use crate::{assets, data, material, mesh};
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum Part {
     Face,
     Hair,
@@ -93,6 +93,10 @@ pub struct RoseCharacter {
     gender: usize,
     weapon_motion_type: usize,
     dummy_offset: usize,
+    /// The mesh instances of each equipped part, in ZSC part order, with its item number.
+    parts: Vec<(Part, usize, Vec<Gd<MeshInstance3D>>)>,
+    /// Gem effects shown on the weapons.
+    gem_effects: Vec<Gd<Node3D>>,
 }
 
 fn bone_name(index: usize, dummy_offset: usize) -> String {
@@ -327,7 +331,7 @@ fn part_meshes(
 
 /// Puts a part on the skeleton: skinned parts under it with its skin, rigid parts on their
 /// bone or dummy bone, or on the model's own transform when they have none.
-fn place_part(skeleton: &mut Gd<Skeleton3D>, skin: Option<&Gd<Skin>>, mut instance: Gd<MeshInstance3D>, skinned: bool, bone: Option<String>) {
+fn place_part(skeleton: &mut Gd<Skeleton3D>, skin: Option<&Gd<Skin>>, mut instance: Gd<MeshInstance3D>, skinned: bool, bone: Option<String>) -> Gd<MeshInstance3D> {
     if skinned {
         if let Some(skin) = skin {
             instance.set_skin(skin);
@@ -343,6 +347,7 @@ fn place_part(skeleton: &mut Gd<Skeleton3D>, skin: Option<&Gd<Skin>>, mut instan
     } else {
         skeleton.add_child(&instance);
     }
+    instance
 }
 
 /// Adds one ZSC object's parts to the skeleton, built from the ROSE files.
@@ -353,19 +358,19 @@ fn attach_object(
     object_id: usize,
     dummy_offset: usize,
     default_bone: Option<usize>,
-) {
-    for (instance, skinned, bone) in part_meshes(zsc, object_id, dummy_offset, default_bone, false) {
-        place_part(skeleton, skin, instance, skinned, bone.map(|b| bone_name(b, dummy_offset)));
-    }
+) -> Vec<Gd<MeshInstance3D>> {
+    part_meshes(zsc, object_id, dummy_offset, default_bone, false)
+        .into_iter()
+        .map(|(instance, skinned, bone)| place_part(skeleton, skin, instance, skinned, bone.map(|b| bone_name(b, dummy_offset))))
+        .collect()
 }
 
 /// The imported scene of one part (`3ddata/avatar/list_mbody/12.tscn`): its mesh instances
-/// carry `skinned` and `bone` metadata. Returns false when there is no such scene.
-fn attach_part_scene(skeleton: &mut Gd<Skeleton3D>, skin: Option<&Gd<Skin>>, list: &str, object_id: usize) -> bool {
-    let Some(scene) = assets::load_stem::<PackedScene>(&format!("{}/{object_id}", assets::stem(list)), &["tscn", "scn"]) else {
-        return false;
-    };
-    let Some(mut root) = scene.instantiate() else { return false };
+/// carry `skinned` and `bone` metadata. Returns None when there is no such scene.
+fn attach_part_scene(skeleton: &mut Gd<Skeleton3D>, skin: Option<&Gd<Skin>>, list: &str, object_id: usize) -> Option<Vec<Gd<MeshInstance3D>>> {
+    let scene = assets::load_stem::<PackedScene>(&format!("{}/{object_id}", assets::stem(list)), &["tscn", "scn"])?;
+    let mut root = scene.instantiate()?;
+    let mut placed = Vec::new();
     for child in root.get_children().iter_shared() {
         let Ok(mut instance) = child.try_cast::<MeshInstance3D>() else { continue };
         instance.set_owner(Gd::null_arg());
@@ -377,10 +382,10 @@ fn attach_part_scene(skeleton: &mut Gd<Skeleton3D>, skin: Option<&Gd<Skin>>, lis
                 instance.set_mesh(&rigid);
             }
         }
-        place_part(skeleton, skin, instance, skinned, (!bone.is_empty()).then_some(bone));
+        placed.push(place_part(skeleton, skin, instance, skinned, (!bone.is_empty()).then_some(bone)));
     }
     root.free();
-    true
+    Some(placed)
 }
 
 fn add_player(node: &mut Gd<Node3D>, library: Gd<AnimationLibrary>) {
@@ -484,15 +489,22 @@ impl RoseCharacter {
             (Part::FaceItem, face_item),
             (Part::Back, back),
         ];
+        self.parts.clear();
+        self.gem_effects.clear();
         for (part, id) in parts {
             if id <= 0 && !matches!(part, Part::Face | Part::Hair) {
                 continue;
             }
-            if id >= 0 && attach_part_scene(&mut skeleton, skin.as_ref(), part.list(male), id as usize) {
-                continue;
+            let placed = match (id >= 0).then(|| attach_part_scene(&mut skeleton, skin.as_ref(), part.list(male), id as usize)).flatten() {
+                Some(placed) => placed,
+                None => {
+                    let Some(zsc) = data::read_file::<ZscFile>(part.list(male)) else { continue };
+                    attach_object(&mut skeleton, skin.as_ref(), &zsc, id as usize, dummy_offset, part.default_bone(dummy_offset))
+                }
+            };
+            if id > 0 {
+                self.parts.push((part, id as usize, placed));
             }
-            let Some(zsc) = data::read_file::<ZscFile>(part.list(male)) else { continue };
-            attach_object(&mut skeleton, skin.as_ref(), &zsc, id as usize, dummy_offset, part.default_bone(dummy_offset));
         }
 
         // Motions for the equipped weapon type, with the same fallbacks as load_character_action_motions.
@@ -531,6 +543,73 @@ impl RoseCharacter {
             None => add_player(&mut self.to_gd().upcast(), library),
         }
         true
+    }
+
+    /// Refine glows and gem effects (CObjAVT::CreateGradeEffect and CreateGemmingEffect).
+    /// `grades`: the grade of the head, body, hands, feet, weapon, sub weapon, face item and
+    /// back item, as passed to `build`; every graded part glows in its grade's LIST_GRADE
+    /// colour. `gems`: the gem set in the weapon and sub weapon (0 for none); its attack
+    /// effect plays on the item's gem point. Call after `build`; calling again replaces them.
+    #[func]
+    fn show_item_effects(&mut self, grades: PackedInt32Array, gems: PackedInt32Array) {
+        let Some(game_data) = data::get() else { return };
+        for mut effect in std::mem::take(&mut self.gem_effects) {
+            if effect.is_instance_valid() {
+                effect.queue_free();
+            }
+        }
+        const GRADED: [Part; 8] =
+            [Part::Head, Part::Body, Part::Hands, Part::Feet, Part::Weapon, Part::SubWeapon, Part::FaceItem, Part::Back];
+        let male = self.gender == 0;
+        let mut effects = Vec::new();
+        for (part, id, instances) in self.parts.iter_mut() {
+            let grade = GRADED.iter().position(|p| p == part).and_then(|i| grades.get(i)).unwrap_or(0);
+            let colour = (grade > 0)
+                .then(|| game_data.items.get_item_grade(grade as u8))
+                .flatten()
+                .map(|g| g.glow_colour)
+                .filter(|c| *c != (0.0, 0.0, 0.0));
+            for instance in instances.iter_mut() {
+                let glow = colour.map(|colour| {
+                    let base = instance.get_material_override().and_then(|m| m.try_cast::<godot::classes::ShaderMaterial>().ok());
+                    material::grade_glow(base.as_ref(), colour)
+                });
+                instance.set_material_overlay(glow.as_ref());
+            }
+
+            let (gem, gem_position) = match part {
+                Part::Weapon => (gems.get(0), game_data.items.get_weapon_item(*id).map(|w| w.gem_position)),
+                Part::SubWeapon => (gems.get(1), game_data.items.get_sub_weapon_item(*id).map(|w| w.gem_position)),
+                _ => continue,
+            };
+            let (Some(gem), Some(gem_position)) = (gem, gem_position) else { continue };
+            if gem <= 300 {
+                continue;
+            }
+            let Some(path) = game_data
+                .items
+                .get_gem_item(gem as usize)
+                .and_then(|g| g.gem_effect_id)
+                .and_then(|id| game_data.effects.get_effect(id))
+                .and_then(|e| e.point_effects.first().copied())
+                .and_then(|file| game_data.effects.get_effect_file(file))
+            else {
+                continue;
+            };
+            let Some(zsc) = data::read_file::<ZscFile>(part.list(male)) else { continue };
+            let Some(point) = zsc.objects.get(*id).and_then(|o| o.effects.get(gem_position as usize)) else { continue };
+            let Some(parent) = instances.get(point.parent.unwrap_or(0) as usize) else { continue };
+            let mut effect = crate::effect::RoseEffect::new_alloc();
+            if !effect.bind_mut().load_path(&path.path().to_string_lossy()) {
+                effect.free();
+                continue;
+            }
+            effect.set_position(Vector3::new(point.position.x, point.position.z, -point.position.y) / 100.0);
+            effect.set_quaternion(Quaternion::new(point.rotation.x, point.rotation.z, -point.rotation.y, point.rotation.w));
+            parent.clone().add_child(&effect);
+            effects.push(effect.upcast::<Node3D>());
+        }
+        self.gem_effects = effects;
     }
 
     /// Adds a skill motion (a MotionId from LIST_SKILL.STB, looked up in TYPE_MOTION.STB for
@@ -661,7 +740,7 @@ impl RoseVehicle {
         let skin = skeleton.create_skin_from_rest_transforms();
         let zsc = data::read_file::<ZscFile>(VEHICLE_ZSC);
         for part in [body, engine, leg, arms] {
-            if part > 0 && !attach_part_scene(&mut skeleton, skin.as_ref(), VEHICLE_ZSC, part as usize) {
+            if part > 0 && attach_part_scene(&mut skeleton, skin.as_ref(), VEHICLE_ZSC, part as usize).is_none() {
                 if let Some(zsc) = &zsc {
                     attach_object(&mut skeleton, skin.as_ref(), zsc, part as usize, dummy_offset, None);
                 }
@@ -776,7 +855,7 @@ impl RoseNpc {
                 ("3DDATA/WEAPON/LIST_WEAPON.ZSC", npc.right_hand_part_index),
                 ("3DDATA/WEAPON/LIST_SUBWPN.ZSC", npc.left_hand_part_index),
             ] {
-                if part != 0 && !attach_part_scene(&mut skeleton, skin.as_ref(), list, part as usize) {
+                if part != 0 && attach_part_scene(&mut skeleton, skin.as_ref(), list, part as usize).is_none() {
                     if let Some(weapon_zsc) = data::read_file::<ZscFile>(list) {
                         attach_object(&mut skeleton, skin.as_ref(), &weapon_zsc, part as usize, dummy_offset, None);
                     }

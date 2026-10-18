@@ -63,7 +63,8 @@ fn to_godot(x: f32, y: f32) -> (f32, f32) {
 }
 
 /// Item numbers the character model is built from: male, face, hair, head, body, hands,
-/// feet, weapon, sub weapon, face item, back (RoseCharacter.build's arguments).
+/// feet, weapon, sub weapon, face item, back (RoseCharacter.build's arguments), then the
+/// grades and gems for RoseCharacter.show_item_effects.
 fn player_look(p: &Player) -> VarArray {
     let equipment: Equipment = serde_json::from_str(&p.equipment).unwrap_or_default();
     let item = |index: EquipmentIndex| {
@@ -85,6 +86,26 @@ fn player_look(p: &Player) -> VarArray {
     ] {
         look.push(&value.to_variant());
     }
+    // Then the grades (refine glows) and weapon gems, for RoseCharacter.show_item_effects.
+    let grades: PackedInt32Array = [
+        EquipmentIndex::Head,
+        EquipmentIndex::Body,
+        EquipmentIndex::Hands,
+        EquipmentIndex::Feet,
+        EquipmentIndex::Weapon,
+        EquipmentIndex::SubWeapon,
+        EquipmentIndex::Face,
+        EquipmentIndex::Back,
+    ]
+    .into_iter()
+    .map(|index| equipment.get_equipment_item(index).map_or(0, |item| item.grade as i32))
+    .collect();
+    let gems: PackedInt32Array = [EquipmentIndex::Weapon, EquipmentIndex::SubWeapon]
+        .into_iter()
+        .map(|index| equipment.get_equipment_item(index).filter(|item| item.has_socket).map_or(0, |item| item.gem as i32))
+        .collect();
+    look.push(&grades.to_variant());
+    look.push(&gems.to_variant());
     look
 }
 
