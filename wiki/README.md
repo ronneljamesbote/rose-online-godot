@@ -70,6 +70,10 @@ A small, slow monster ...
 - **source**: the data file and row the values came from, and the code that uses them, so
   a change knows where to go. Data values changed through the wiki are recorded in
   `overrides/game-data.toml`.
+- **GM command**: item, monster and zone pages show the [[rules/gm-commands|GM command]]
+  for that page (`/item type number`, `/spawn monster-id`, `/tp zone`) with a **Copy**
+  button. The website makes it from the page's `kind` and `id`, so pages don't write it;
+  a `not-in-game-yet` page gets none. It only works in the dev client.
 
 ## Status values
 

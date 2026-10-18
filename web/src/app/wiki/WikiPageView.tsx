@@ -1,11 +1,13 @@
-// One wiki page: title and badges, map, data block, text, the folder's page list, where its
+// One wiki page: title and badges, GM command, map, data block, text, the folder's page list, where its
 // values come from, and the pages linking here.
 
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { GITHUB_EDIT_BASE, comparePaths, linkHref, loadWiki, type Wiki, type WikiPage } from "@/lib/wiki";
 import { renderInline, renderMarkdown } from "@/lib/wiki-markdown";
+import { gmCommand } from "@/lib/gm-command";
 import DataView, { label } from "./DataView";
+import GmCommand from "./GmCommand";
 import Icon, { lookup } from "./Icon";
 import PageList, { type ListRow } from "./PageList";
 import ZoneMap from "./ZoneMap";
@@ -116,6 +118,7 @@ export default function WikiPageView({ path }: { path: string }) {
   const columns = Array.isArray(data.columns) ? data.columns.map(String) : [];
   const listing = isFolder ? folderRows(wiki, path, columns) : null;
   const backlinks = [...(wiki.backlinks.get(path) ?? [])].sort(comparePaths);
+  const command = page ? gmCommand(data) : null;
   const crumbs = path ? path.split("/").slice(0, -1) : [];
 
   return (
@@ -156,6 +159,7 @@ export default function WikiPageView({ path }: { path: string }) {
       </header>
 
       {page?.error && <p className="message error">This page&apos;s data block has an error: {page.error}</p>}
+      {command && <GmCommand command={command} kind={String(data.kind)} />}
       <ZoneMap data={data} wiki={wiki} />
       <DataView data={data} wiki={wiki} />
       {page && page.body.trim() && (

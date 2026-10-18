@@ -163,6 +163,13 @@ button.secondary { background: transparent; color: var(--text); border: 1px soli
 .badge.bad { color: var(--error); border-color: rgba(255, 138, 128, 0.45); }
 .wiki-title .edit { font-size: 13px; border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; text-decoration: none; color: var(--text); white-space: nowrap; }
 .wiki-title .edit:hover { border-color: var(--accent); }
+.gm-copy { margin: 0 0 18px; padding: 10px 14px 12px; background: rgba(22, 18, 31, 0.6); border: 1px solid rgba(244, 207, 122, 0.35); border-radius: 10px; }
+.gm-copy h2 { font-size: 14px; margin: 0; color: var(--accent-2); }
+.gm-copy p { margin: 2px 0 8px; font-size: 13px; }
+.gm-copy p.hint { margin: 8px 0 0; }
+.gm-copy-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.gm-copy-row code { flex: 1; min-width: 0; font-size: 15px; padding: 6px 10px; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; user-select: all; overflow-wrap: anywhere; }
+.gm-copy-row button { min-width: 84px; padding: 6px 12px; border-radius: 8px; cursor: pointer; font: inherit; font-size: 13px; }
 .wiki-icon { display: inline-block; vertical-align: middle; background-repeat: no-repeat; border-radius: 6px; flex: none; }
 .wiki-icon.small { transform: scale(0.8); margin: -4px 4px -4px -4px; }
 .wiki-facts { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px 14px; margin: 0 0 18px; display: grid; }
