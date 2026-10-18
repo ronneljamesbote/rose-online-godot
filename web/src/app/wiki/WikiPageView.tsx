@@ -1,4 +1,4 @@
-// One wiki page: title and badges, GM command, map, data block, text, the folder's page list, where its
+// One wiki page: title and badges, map, data block, text, the folder's page list, where its
 // values come from, and the pages linking here.
 
 import Link from "next/link";
@@ -159,9 +159,8 @@ export default function WikiPageView({ path }: { path: string }) {
       </header>
 
       {page?.error && <p className="message error">This page&apos;s data block has an error: {page.error}</p>}
-      {command && <GmCommand command={command} kind={String(data.kind)} />}
       <ZoneMap data={data} wiki={wiki} />
-      <DataView data={data} wiki={wiki} />
+      <DataView data={data} wiki={wiki} last={command && <GmCommand command={command} />} />
       {page && page.body.trim() && (
         <div className="wiki-body" dangerouslySetInnerHTML={{ __html: renderMarkdown(page.body.replace(/^#\s+.+\n/, ""), wiki) }} />
       )}

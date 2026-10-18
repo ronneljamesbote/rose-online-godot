@@ -1,17 +1,12 @@
 "use client";
 
-// The dev-client GM command for this page, with a button that copies it for the chat box.
+// The dev-client GM command for this page as the last fact, with a button that copies it
+// for the chat box.
 
 import Link from "next/link";
 import { useState } from "react";
 
-const WHAT: Record<string, string> = {
-  item: "Put this item in your bag",
-  monster: "Spawn this monster next to you",
-  zone: "Warp to this zone's start",
-};
-
-export default function GmCommand({ command, kind }: { command: string; kind: string }) {
+export default function GmCommand({ command }: { command: string }) {
   const [copied, setCopied] = useState(false);
   const copy = async () => {
     try {
@@ -29,19 +24,16 @@ export default function GmCommand({ command, kind }: { command: string; kind: st
     setTimeout(() => setCopied(false), 1500);
   };
   return (
-    <section className="gm-copy">
-      <h2>GM command</h2>
-      <p className="muted">{WHAT[kind]}: paste in the chat box.</p>
-      <div className="gm-copy-row">
+    <div className="fact gm-copy">
+      <dt>
+        GM command (<Link href="/wiki/rules/gm-commands">dev client only</Link>)
+      </dt>
+      <dd>
         <code>{command}</code>
         <button type="button" className="secondary" onClick={copy} aria-live="polite">
           {copied ? "Copied" : "Copy"}
         </button>
-      </div>
-      <p className="hint">
-        Only works in the dev client on a dev server, not in the normal game. See{" "}
-        <Link href="/wiki/rules/gm-commands">GM commands</Link>.
-      </p>
-    </section>
+      </dd>
+    </div>
   );
 }

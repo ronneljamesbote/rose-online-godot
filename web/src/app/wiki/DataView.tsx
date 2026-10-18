@@ -1,6 +1,7 @@
 // Shows a page's data block: single values as a fact list, lists of rows as tables,
 // nested groups as their own fact lists. [[links]] inside values become links.
 
+import type { ReactNode } from "react";
 import { renderInline, escapeHtml } from "@/lib/wiki-markdown";
 import type { Wiki, WikiData } from "@/lib/wiki";
 import Icon from "./Icon";
@@ -75,9 +76,9 @@ export function RowsTable({ rows, wiki }: { rows: Record<string, unknown>[]; wik
   );
 }
 
-export function Facts({ data, wiki }: { data: Record<string, unknown>; wiki: Wiki }) {
+export function Facts({ data, wiki, last }: { data: Record<string, unknown>; wiki: Wiki; last?: ReactNode }) {
   const entries = Object.entries(data).filter(([, v]) => !(Array.isArray(v) && v.length > 0 && v.every(isRow)));
-  if (entries.length === 0) return null;
+  if (entries.length === 0 && !last) return null;
   return (
     <dl className="facts wiki-facts">
       {entries.map(([k, v]) => (
@@ -88,17 +89,18 @@ export function Facts({ data, wiki }: { data: Record<string, unknown>; wiki: Wik
           </dd>
         </div>
       ))}
+      {last}
     </dl>
   );
 }
 
-/** The whole data block: facts first, then one titled table per list of rows. */
-export default function DataView({ data, wiki }: { data: WikiData; wiki: Wiki }) {
+/** The whole data block: facts first (`last` as the final fact), then one titled table per list of rows. */
+export default function DataView({ data, wiki, last }: { data: WikiData; wiki: Wiki; last?: ReactNode }) {
   const shown = Object.fromEntries(Object.entries(data).filter(([k]) => !HIDDEN.has(k)));
   const tables = Object.entries(shown).filter(([, v]) => Array.isArray(v) && v.length > 0 && v.every(isRow));
   return (
     <>
-      <Facts data={shown} wiki={wiki} />
+      <Facts data={shown} wiki={wiki} last={last} />
       {tables.map(([k, v]) => (
         <section key={k} className="data-table">
           <h2>{label(k)}</h2>
