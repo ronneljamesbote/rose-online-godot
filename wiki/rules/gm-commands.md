@@ -38,6 +38,7 @@ commands:
   - { command: "/jobvar index value", does: "Sets job variable 0, 1 or 2 (job change quests)" }
   - { command: "/stamina value", does: "Sets stamina" }
   - { command: "/durability slot life", does: "Sets the life of a worn item (slot 0 face, 1 head, 2 body, 3 back, 4 hands, 5 feet, 6 weapon, 7 off-hand, 8 necklace, 9 ring, 10 earring)" }
+  - { command: "/refine [slot]", does: "Refines a worn item one grade (up to +9), always working, with no cost or materials (slots as /durability; without one, the weapon)" }
   - { command: "/grade slot grade [gem]", does: "Sets the grade (0 to 9) of a worn item (slots as /durability); with a gem number (301 and up) the item gets a socket with that gem, 0 takes the gem out" }
 jobs:
   - { id: 0, job: "Visitor", sets: "job variables cleared" }

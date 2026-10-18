@@ -65,6 +65,7 @@ pub const COMMANDS: &[(&str, &str, &str)] = &[
     ("jobvar", "index value", "sets a job variable (job change quests)"),
     ("stamina", "value", "sets stamina"),
     ("durability", "slot life", "sets an equipped item's life (slot 0 face ... 6 weapon ... 10 earring)"),
+    ("refine", "[slot]", "refines an equipped item one grade, always working and free (slot as /durability, default 6 weapon)"),
     ("grade", "slot grade [gem]", "sets an equipped item's grade (0 to 9) and, with a gem number, sets that gem in it (0 takes it out)"),
 ];
 
@@ -369,6 +370,19 @@ impl Gm<'_> {
                 crate::durability::set_item_life(&mut p, 0, slot, 0, life)?;
                 self.save_refresh(&p, false);
                 self.say(format!("set the life of {name}'s item in slot {slot} to {life}"));
+                Ok(())
+            }
+            "refine" => {
+                let slot: u8 = self.opt_arg(0, "slot", 6u8)?;
+                let grade = crate::durability::with_equipped_item(&mut p, slot, |item| {
+                    if item.grade >= 9 {
+                        return Err("that item is already +9".into());
+                    }
+                    item.grade += 1;
+                    Ok(item.grade)
+                })?;
+                self.save_refresh(&p, false);
+                self.say(format!("refined {name}'s item in slot {slot} to +{grade}"));
                 Ok(())
             }
             "grade" => {
