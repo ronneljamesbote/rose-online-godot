@@ -288,9 +288,10 @@ zone_drops:
 - '[[items/consumable/102-banana|Banana]]'
 - '[[items/material/112-silver-thread|Silver Thread]]'
 source:
-  data: LIST_ZONE.STB row 1, the zone's IFO files, ITEM_DROP.STB row 1
+  data: LIST_ZONE.STB row 1, overrides/zones/1-canyon-city-of-zant.toml (exported from the scenes in godot/zones/1_canyon_city_of_zant), ITEM_DROP.STB row 1
   code:
   - module/src/world.rs
+  - crates/rose-game-data/src/lib.rs (apply_zone_layouts)
   - crates/rose-data-irose/src/zone_database.rs
 ---
 # Canyon City of Zant
@@ -299,3 +300,8 @@ Positions are in metres. Each spawn point keeps up to "max alive" monsters; the
 reinforcements show up once a point has been refilled many times (see
 [[rules/monster-spawns|Monster spawns]]). Zone drops can come from any monster here (see
 [[rules/drops|Drops]]).
+
+Canyon City of Zant is edited in Godot: its spawn points, NPCs and start and revive spots
+are markers in the zone's scenes, and the server reads them from
+`overrides/zones/1-canyon-city-of-zant.toml`, which is exported from those scenes. They are
+the same as in iROSE's map files.
