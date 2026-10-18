@@ -30,6 +30,7 @@ const LIST := [
 	["jobvar", "index value", "sets a job variable"],
 	["stamina", "value", "sets stamina"],
 	["durability", "slot life", "sets an equipped item's life"],
+	["grade", "slot grade [gem]", "sets an equipped item's grade and gem"],
 ]
 
 

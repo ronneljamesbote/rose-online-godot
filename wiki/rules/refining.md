@@ -53,6 +53,16 @@ gem_removal_risk:
   - { gem_grade: "[5] (quality 70)", bad_roll: "19%", result: "one grade lower" }
   - { gem_grade: "[6] (quality 80)", bad_roll: "17%", result: "one grade lower" }
   - { gem_grade: "[7] (quality 90)", bad_roll: "15%", result: "one grade lower" }
+grade_bonus:
+  - { grade: 1, attack: 3, hit: 4, defence: 2, resistance: 2, avoid: 1, glow: "dark green (30, 50, 30)" }
+  - { grade: 2, attack: 7, hit: 7, defence: 4, resistance: 4, avoid: 2, glow: "green (60, 100, 60)" }
+  - { grade: 3, attack: 12, hit: 10, defence: 6, resistance: 6, avoid: 3, glow: "light green (90, 140, 90)" }
+  - { grade: 4, attack: 18, hit: 14, defence: 8, resistance: 8, avoid: 4, glow: "grey blue (100, 140, 160)" }
+  - { grade: 5, attack: 25, hit: 20, defence: 10, resistance: 10, avoid: 5, glow: "blue (120, 120, 240)" }
+  - { grade: 6, attack: 33, hit: 26, defence: 12, resistance: 12, avoid: 6, glow: "purple (180, 110, 180)" }
+  - { grade: 7, attack: 42, hit: 33, defence: 15, resistance: 15, avoid: 7, glow: "red (250, 120, 120)" }
+  - { grade: 8, attack: 52, hit: 40, defence: 18, resistance: 18, avoid: 8, glow: "orange (250, 180, 120)" }
+  - { grade: 9, attack: 70, hit: 50, defence: 25, resistance: 25, avoid: 9, glow: "yellow (255, 255, 140)" }
 refining_npcs:
   - { npc: "[[npcs/1064-weapon-craftsman-mairath|Mairath]]", zone: "[[zones/23-breezy-hills|Breezy Hills]]" }
   - { npc: "[[npcs/1008-weapon-seller-raffle|Raffle]]", zone: "[[zones/1-canyon-city-of-zant|Zant]]" }
@@ -70,7 +80,10 @@ source:
   code:
     - module/src/craft.rs (refine_item, refine_recipe_index, disassemble_item, insert_gem, pay_for_work)
     - godot/scripts/item_work_window.gd
-  data: LIST_PRODUCT.STB rows 1-10 (weapon refining) and 11-20 (other equipment), and each item's recipe row; LIST_JEMITEM.STB (gems from row 301, quality column 8)
+    - godot/rust/src/character.rs (RoseCharacter.show_item_effects)
+    - godot/rust/src/material.rs (grade_glow), godot/shaders/rose_item_glow.gdshaderinc
+    - godot/rust/src/net.rs (player_look)
+  data: LIST_PRODUCT.STB rows 1-10 (weapon refining) and 11-20 (other equipment), and each item's recipe row; LIST_JEMITEM.STB (gems from row 301, quality column 8, and its attack effect); LIST_GRADE.STB (grade bonuses and glow colours); the gem point of each weapon and shield (LIST_WEAPON.STB, LIST_SUBWPN.STB)
 ---
 # Refining, Disassembly and Gems
 
@@ -147,6 +160,31 @@ Powder can't take it past grade 2; a Lisent (U) gets it to grade 9 about half th
 With [[items/material/80-rainbow-powder|Rainbow Powder]] (quality 35) the durability change
 from grade 0 is (200 + 400 + 3 r2 - 480) / 40: 3 to 10, so a successful refine adds that
 much durability. From grade 3 the same powder gives -2 to 4.
+
+### What a grade gives
+
+Each grade adds a fixed bonus from LIST_GRADE (table above, the totals at that grade, not
+per step) while the item is worn and not broken:
+
+- **weapons**: the attack bonus is added to the weapon's attack and the hit bonus to hit
+  (see [[rules/stats|Stats]]);
+- **items with defence** (armour, shields): the defence and resistance bonuses are added,
+  and every grade counts once towards avoid.
+
+A graded item is shown as "Name +grade" and sells for a little more
+((40 + grade) in the price formula).
+
+### How refined items look
+
+Every worn item with a grade **glows** in the colour of its grade: the helmet, armour,
+gloves, shoes, weapon, shield, face item and back item each on their own, so a +9 sword
+with +3 armour shows a yellow sword on green armour. The glow brightens the item in that
+colour and puts a soft halo round it. Grade 1 is a faint dark green, the colours go
+through blue (5), purple (6), red (7) and orange (8) to a bright yellow at 9. Other players
+see it too, and so does your portrait.
+
+A weapon or shield with a **gem** set in it also plays that gem's effect (LIST_JEMITEM's
+attack effect) on the item's gem point, for as long as it is worn.
 
 ## Disassembly
 

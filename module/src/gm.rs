@@ -65,6 +65,7 @@ pub const COMMANDS: &[(&str, &str, &str)] = &[
     ("jobvar", "index value", "sets a job variable (job change quests)"),
     ("stamina", "value", "sets stamina"),
     ("durability", "slot life", "sets an equipped item's life (slot 0 face ... 6 weapon ... 10 earring)"),
+    ("grade", "slot grade [gem]", "sets an equipped item's grade (0 to 9) and, with a gem number, sets that gem in it (0 takes it out)"),
 ];
 
 /// Run a GM command. `target` is the entity the caller has targeted (0 for none), for
@@ -368,6 +369,30 @@ impl Gm<'_> {
                 crate::durability::set_item_life(&mut p, 0, slot, 0, life)?;
                 self.save_refresh(&p, false);
                 self.say(format!("set the life of {name}'s item in slot {slot} to {life}"));
+                Ok(())
+            }
+            "grade" => {
+                let (slot, grade): (u8, u8) = (self.arg(0, "slot")?, self.arg(1, "grade")?);
+                if grade > 9 {
+                    return Err("the grade is 0 to 9".into());
+                }
+                let gem: Option<u16> = self.args.get(2).map(|_| self.arg(2, "gem")).transpose()?;
+                if let Some(gem) = gem {
+                    if gem != 0 && game.items.get_gem_item(gem as usize).is_none() {
+                        return Err(format!("{gem} is not a gem (gems are 301 and up)"));
+                    }
+                }
+                crate::durability::with_equipped_item(&mut p, slot, |item| {
+                    item.grade = grade;
+                    if let Some(gem) = gem {
+                        item.has_socket |= gem != 0;
+                        item.gem = gem;
+                    }
+                    Ok(())
+                })?;
+                self.save_refresh(&p, false);
+                let gem_text = gem.map_or(String::new(), |gem| if gem == 0 { ", no gem".into() } else { format!(", gem {gem}") });
+                self.say(format!("{name}'s item in slot {slot} is now grade {grade}{gem_text}"));
                 Ok(())
             }
             other => Err(format!("no command /{other} (type /help)")),
