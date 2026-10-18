@@ -168,26 +168,43 @@ fn block_origin(block_x: i32, block_y: i32) -> (f32, f32) {
     (block_x as f32 * BLOCK_SIZE, (block_y - 65) as f32 * BLOCK_SIZE)
 }
 
-/// The root of a zone scene (`zone.tscn`).
+/// The root of a ROSE zone scene (`zone.tscn`): one whole zone.
+///
+/// Its children are one `RoseBlock` per 160 m block, the `Terrain` node (the ground, with
+/// `RoseTerrainLook` under it) and `Events` (the zone's named spots, `RoseZoneEvent`). The
+/// game loads this scene instead of the ROSE map files. Spawns, NPCs and named spots go to
+/// the server through `--export-zones`, which writes `overrides/zones/<id>-<name>.toml`.
 #[derive(GodotClass)]
 #[class(tool, base=Node3D, init)]
 pub struct RoseZoneScene {
     base: Base<Node3D>,
-    /// The zone's number in LIST_ZONE.STB.
+    /// The zone's number: its row in LIST_ZONE.STB, the same number the folder name starts
+    /// with (`20` for `20_birth_island`). The ROSE Zone Tools plugin uses it for the `/tp`
+    /// command it shows under the mouse. Don't change it.
     #[export]
     pub zone_id: i32,
 }
 
-/// One 160 m ROSE block of a zone scene: its water, placed models and markers, at their
-/// world positions (the node itself stays at the origin). In the editor it draws its outline
-/// and name on the ground, and can draw the 10 m ground tiles too.
+/// One 160 m x 160 m block of a zone (one IFO/HIM file pair in iROSE).
+///
+/// Holds the block's water (`Water`), placed models (`Buildings`, `Decorations`, `Events`,
+/// `Warps`) and markers (`Spawns`, `Npcs`, `Sounds`, `Effects`). They sit at their world
+/// positions; the block node itself stays at the origin. In the editor it draws its outline
+/// and name on the ground, and the 10 m ground tiles when the ROSE Zone Tools toggle is on.
+/// A warning sign in the Scene panel means something stands outside its square, or its name
+/// and numbers don't match.
 #[derive(GodotClass)]
 #[class(tool, base=Node3D, init)]
 pub struct RoseBlock {
     base: Base<Node3D>,
-    /// Which block this is: x counts east, y counts south, as in the ROSE map file names.
+    /// Which block this is, counting east (the first number of the ROSE map file names,
+    /// `33` in `33_31.IFO`). Block x covers Godot x from `160 * block_x` to 160 m further.
+    /// The game and the server export go by this number, not by the node name.
     #[export]
     pub block_x: i32,
+    /// Which block this is, counting south (the second number of the ROSE map file names,
+    /// `31` in `33_31.IFO`). Block 65 is at Godot z 0; each block lower is 160 m further
+    /// north (negative z).
     #[export]
     pub block_y: i32,
     #[init(val = true)]
@@ -432,23 +449,33 @@ fn overlay_id(control: u32) -> usize {
     (control >> 22 & 0x1F) as usize + if control & OVERLAY_EXTRA_BIT != 0 { TERRAIN3D_TEXTURES } else { 0 }
 }
 
-/// Goes with the zone's Terrain3D node (its child): gives the ROSE terrain shader the block
-/// lightmaps, points Terrain3D at the camera, and says which ROSE texture each Terrain3D
-/// texture is (for footstep sounds).
+/// The ROSE look of the zone's ground. Sits under the zone's Terrain3D node.
+///
+/// Gives the ROSE terrain shader each block's lightmap (the baked shadows on the ground),
+/// points Terrain3D at the game camera, and says which ROSE texture each Terrain3D texture
+/// is, so the game knows the footstep sound of each tile. The game also reads the ground
+/// heights of the blocks listed here. Made by `--import-zone`; normally left alone.
 #[derive(GodotClass)]
 #[class(tool, base=Node, init)]
 pub struct RoseTerrainLook {
     base: Base<Node>,
-    /// The blocks with ground, as x, y pairs.
+    /// The blocks that have ground, as pairs of numbers: block x, block y, block x, block y,
+    /// ... (so `33, 31, 34, 31` is blocks 33_31 and 34_31). The game reads ground heights and
+    /// footstep tiles only for these blocks. A new block needs its pair added here, and a
+    /// lightmap at the same place in `lightmaps`.
     #[export]
     pub blocks: PackedInt32Array,
-    /// Each block's lightmap, in the order of `blocks`.
+    /// One lightmap texture per block, in the same order as the pairs in `blocks`. An empty
+    /// entry draws that block without baked shadows.
     #[export]
     pub lightmaps: VarArray,
-    /// The ROSE (ZON) texture number of each Terrain3D texture, then of each extra texture.
+    /// For each Terrain3D ground texture (0, 1, 2, ...), then each texture in
+    /// `extra_textures`: its texture number in the zone's ROSE ZON file. Picks the footstep
+    /// sound of each tile.
     #[export]
     pub texture_numbers: PackedInt32Array,
-    /// Ground textures past Terrain3D's 32 (texture 32 onwards), for zones that use more.
+    /// Ground textures past Terrain3D's 32, for zones that use more (up to 64). The first
+    /// one here is ground texture 32.
     #[export]
     pub extra_textures: VarArray,
     lightmap_array: Option<Gd<Texture2DArray>>,
@@ -579,17 +606,24 @@ fn water_textures() -> Gd<Texture2DArray> {
     WATER_TEXTURES.with_borrow_mut(|cached| cached.get_or_insert_with(|| texture::load_texture_array(&zone::water_texture_paths())).clone())
 }
 
-/// A water plane: its two corners in zone space (it lies at the first one's height) and
-/// how often its animated texture repeats.
+/// A flat, animated water surface (an IFO water plane). Drawn by the game only; the server
+/// doesn't know about water.
+///
+/// The rectangle runs from `start` to `end`, at the height of `start`. Moving or rotating
+/// the node doesn't move the water: change the corners.
 #[derive(GodotClass)]
 #[class(tool, base=Node3D, init)]
 pub struct RoseWater {
     base: Base<Node3D>,
+    /// One corner of the water, in the zone scene's space (Godot x, height, z, in metres).
+    /// The whole surface lies at this corner's height.
     #[export]
     pub start: Vector3,
+    /// The opposite corner, in the zone scene's space. Its height is not used.
     #[export]
     pub end: Vector3,
-    /// Metres per repeat of the texture.
+    /// Metres of water per repeat of the animated water texture (20 in every zone converted so
+    /// far). Smaller makes the ripples smaller.
     #[export]
     #[init(val = 10.0)]
     pub tile_size: f32,
@@ -638,30 +672,45 @@ pub fn clear_cache() {
 // ---------------------------------------------------------------------------------------
 // Placed models
 
-/// A building, decoration, event object or warp gate: the root of a model scene in
-/// `assets/rose/` (one per model in a ROSE model list), placed in a block scene. Its parts
-/// are the `PartN` mesh children; `EffectN` children are the model's own effects.
+/// A placed model: a building, decoration, event object or warp gate.
+///
+/// Each one is an instance of a model scene in `assets/rose/` (one per model of a ROSE ZSC
+/// model list), so move, turn, scale, copy or delete it like any scene. Its parts are the
+/// `PartN` mesh children; `EffectN` children are the model's own effects (smoke, fire). Parts
+/// marked in the model block the player (walls) or can be stood on (floors). Drawn and
+/// collided by the game only; the server doesn't read models.
 #[derive(GodotClass)]
 #[class(tool, base=Node3D, init)]
 pub struct RoseZoneObject {
     base: Base<Node3D>,
-    /// The model list: "cnst" (buildings), "deco" (decorations), "event" or "warp".
+    /// Which ROSE model list the model comes from: `cnst` (buildings), `deco` (decorations),
+    /// `event` (event objects) or `warp` (warp gates). Set by the model scene; don't change it.
     #[export]
     pub list: GString,
-    /// The lightmap of each part at this spot (by part number; empty for none).
+    /// The baked shadow texture of each part at this spot, by part number (`Part0` first;
+    /// empty for none). Made by the import from the ROSE lightmaps; a moved model keeps the
+    /// shadows it had where it stood before.
     #[export]
     pub lightmaps: VarArray,
-    /// Where each part's lightmap sits in its texture: (column, row, 1 / parts per row).
+    /// Where each part's lightmap sits inside its lightmap texture, by part number:
+    /// (column, row, 1 / parts per row). Made by the import; don't change it.
     #[export]
     pub lightmap_cells: PackedVector3Array,
-    /// The WARP.STB row of a warp gate.
+    /// Warp gates only: the WARP.STB row this gate takes you through. Walking into the gate
+    /// asks the server to warp you along that row (it names the zone and named spot you land
+    /// on). Unused for other models.
     #[export]
     pub warp_id: i32,
-    /// An event object's event number, quest trigger and script function.
+    /// Event objects only: the event number from the IFO file. Kept from iROSE; the game
+    /// doesn't use it yet.
     #[export]
     pub event_id: i32,
+    /// Event objects only: the quest trigger name from the IFO file. Kept from iROSE; the
+    /// game doesn't use it yet.
     #[export]
     pub quest_trigger: GString,
+    /// Event objects only: the script function name from the IFO file. Kept from iROSE; the
+    /// game doesn't use it yet.
     #[export]
     pub script_function: GString,
 }
@@ -743,17 +792,17 @@ fn is_editor() -> bool {
     Engine::singleton().is_editor_hint()
 }
 
-/// Redraws a marker's editor look when what it shows changed (checked each editor frame).
+/// A marker node: the class docs and fields given (each field with its own `#[export]`), and
+/// an editor look redrawn when what it shows changed (checked each editor frame).
 macro_rules! marker_class {
-    ($name:ident, $doc:literal, { $($(#[$fattr:meta])* $field:ident : $ty:ty $(= $init:expr)?),* $(,)? }, |$this:ident| $look:expr) => {
-        #[doc = $doc]
+    ($(#[$($cattr:tt)*])* $name:ident { $($(#[$($fattr:tt)*])* $field:ident : $ty:ty $(= $init:expr)?),* $(,)? }, |$this:ident| $look:expr) => {
+        $(#[$($cattr)*])*
         #[derive(GodotClass)]
         #[class(tool, base=Node3D, init)]
         pub struct $name {
             base: Base<Node3D>,
             $(
-                $(#[$fattr])*
-                #[export]
+                $(#[$($fattr)*])*
                 $(#[init(val = $init)])?
                 pub $field: $ty,
             )*
@@ -789,49 +838,135 @@ fn spawn_label(monsters: &PackedInt32Array, counts: &PackedInt32Array) -> String
     monsters.as_slice().iter().enumerate().map(|(i, id)| format!("{}x {id}", counts.get(i).copied().unwrap_or(0))).collect::<Vec<_>>().join(", ")
 }
 
-marker_class!(RoseSpawnSpot, "A monster spawn point (an IFO spawn): which monsters, how many, how often and how far around it.", {
-    /// Monster numbers (LIST_NPC rows) and how many of each, for the basic spawns and the tactic spawns.
-    basic_monsters: PackedInt32Array,
-    basic_counts: PackedInt32Array,
-    tactic_monsters: PackedInt32Array,
-    tactic_counts: PackedInt32Array,
-    /// Seconds between spawn checks.
-    interval: i32 = 60,
-    /// Monsters alive at most.
-    limit: i32 = 5,
-    /// Metres around the point that monsters appear in.
-    range: i32 = 10,
-    tactic_points: i32 = 100,
-}, |this| (
-    format!("Spawn: {}\nevery {} s, max {}", spawn_label(&this.basic_monsters, &this.basic_counts), this.interval, this.limit),
-    Color::from_rgb(1.0, 0.35, 0.3),
-    this.range as f32,
-    this.basic_monsters.as_slice().first().and_then(|id| npc_model(*id)),
-));
+marker_class!(
+    /// A monster spawn point (an IFO spawn point). The server keeps monsters alive around it.
+    ///
+    /// Every `interval` seconds the server checks the point. If fewer than `limit` of its
+    /// monsters are alive, it adds some from its lists, within `range` metres. Which entries
+    /// spawn depends on the point's "tactics value", which grows each check while players keep
+    /// killing its monsters: at first it brings basic monsters, and when it is fought hard
+    /// also the tactic monsters (reinforcements, often stronger ones). Only the node's
+    /// position matters; its rotation is not used. The full rules and the table of what
+    /// spawns when are on the wiki page "Monster spawns" (`wiki/rules/monster-spawns.md`).
+    /// After a change, `--export-zones` gives it to the server.
+    RoseSpawnSpot {
+        /// The basic monsters, as monster numbers (rows of LIST_NPC.STB, for example 1 is a
+        /// Mini Jelly Bean). Up to 5 entries are used, and the order matters: each spawn check
+        /// brings entry 1, 2, 3, 4 or 5 depending on how hard the point is fought, so entry 1
+        /// comes most often and entries 4 and 5 later. The same monster can be listed more
+        /// than once. Goes with `basic_counts`.
+        #[export_group(name = "Basic monsters")]
+        #[export]
+        basic_monsters: PackedInt32Array,
+        /// How many of each basic monster come at once when its entry spawns, one number per
+        /// entry of `basic_monsters`, in the same order (so `2, 1` with monsters `1, 8` is two
+        /// of monster 1 and one of monster 8). Some checks bring 1 or 2 fewer; 0 means that
+        /// entry brings none.
+        #[export]
+        basic_counts: PackedInt32Array,
+        /// The tactic monsters ("reinforcements"), as monster numbers (LIST_NPC.STB rows).
+        /// They only come when the point has been fought hard for a while (a high tactics
+        /// value). Up to 2 entries are used: entry 1 comes first, entry 2 joins it at the
+        /// highest tactics. Goes with `tactic_counts`.
+        #[export_group(name = "Tactic monsters")]
+        #[export]
+        tactic_monsters: PackedInt32Array,
+        /// How many of each tactic monster come at once, one number per entry of
+        /// `tactic_monsters`, in the same order. Some checks bring one fewer or one more.
+        #[export]
+        tactic_counts: PackedInt32Array,
+        /// Seconds between spawn checks. Smaller makes monsters come back faster after they
+        /// die. At least 1 (the export refuses 0); 5 to 12 is usual.
+        #[export_group(name = "Spawning")]
+        #[export(range = (1.0, 600.0, 1.0, or_greater, suffix = "s"))]
+        interval: i32 = 60,
+        /// How many of this point's monsters may be alive at once. A check with this many or
+        /// more alive spawns nothing (one check can add a few at once, so the count can go a
+        /// little over). At least 1 (the export refuses 0).
+        #[export(range = (1.0, 50.0, 1.0, or_greater))]
+        limit: i32 = 5,
+        /// Monsters appear at a random spot within this many metres of the point (the red
+        /// circle in the editor). That spot becomes the monster's home, which it wanders
+        /// around and walks back to after a chase.
+        #[export(range = (0.0, 100.0, 1.0, or_greater, suffix = "m"))]
+        range: i32 = 10,
+        /// How slowly the point turns to its tactic monsters: the tactics value is divided by
+        /// this number, so a smaller number brings tactic monsters sooner and more often, and
+        /// a bigger one later. 100 for most points; 60 to 90 on some. At least 1.
+        #[export(range = (1.0, 200.0, 1.0, or_greater))]
+        tactic_points: i32 = 100,
+    }, |this| (
+        format!("Spawn: {}\nevery {} s, max {}", spawn_label(&this.basic_monsters, &this.basic_counts), this.interval, this.limit),
+        Color::from_rgb(1.0, 0.35, 0.3),
+        this.range as f32,
+        this.basic_monsters.as_slice().first().and_then(|id| npc_model(*id)),
+    )
+);
 
-marker_class!(RoseNpcSpot, "An NPC standing here, facing the node's forward direction.", {
-    /// The NPC number (LIST_NPC row).
-    npc: i32,
-    /// Its AI script number.
-    ai: i32,
-    /// Its conversation file.
-    quest_file: GString,
-}, |this| (format!("NPC {}\n{}", this.npc, this.quest_file), Color::from_rgb(0.4, 0.8, 1.0), 0.0, npc_model(this.npc)));
+marker_class!(
+    /// A town NPC standing here (an IFO NPC), facing the node's forward direction (turn the
+    /// node to turn the NPC). The server places the NPC from this marker; `--export-zones`
+    /// gives it a change.
+    RoseNpcSpot {
+        /// Which NPC: its number, a row of LIST_NPC.STB (for example 1030). Sets the NPC's
+        /// name, model, shop and AI. The editor shows its model on the marker.
+        #[export]
+        npc: i32,
+        /// The AI script number from the IFO file. Kept from iROSE but not used: the NPC's
+        /// AI comes from its LIST_NPC.STB row.
+        #[export]
+        ai: i32,
+        /// The NPC's conversation file (a CON file name such as `EM20-001.con`, looked up in
+        /// the quest data): what it says and offers when clicked.
+        #[export]
+        quest_file: GString,
+    }, |this| (format!("NPC {}\n{}", this.npc, this.quest_file), Color::from_rgb(0.4, 0.8, 1.0), 0.0, npc_model(this.npc))
+);
 
-marker_class!(RoseSoundSpot, "A looping ambient sound and the metres it carries.", {
-    sound: GString,
-    range: f32 = 10.0,
-    /// Seconds between plays.
-    interval: f32,
-}, |this| (format!("Sound\n{}", this.sound.to_string().rsplit(['/', '\\']).next().unwrap_or("")), Color::from_rgb(0.6, 1.0, 0.5), this.range, None));
+marker_class!(
+    /// A looping ambient sound played here (an IFO sound), such as running water or birds.
+    /// Played by the game only; the server doesn't know about sounds.
+    RoseSoundSpot {
+        /// The sound file, as a path in the ROSE data (for example
+        /// `SOUND/TERRAIN/WATER_002.WAV`).
+        #[export]
+        sound: GString,
+        /// Metres around the spot where the sound plays at full volume (the green circle in
+        /// the editor). It fades out further away and is silent past 4 times this (at least
+        /// 20 m).
+        #[export(range = (0.0, 50.0, 0.1, or_greater, suffix = "m"))]
+        range: f32 = 10.0,
+        /// Seconds between plays, from the IFO file. Kept from iROSE but not used: the game
+        /// loops the sound without a pause.
+        #[export(range = (0.0, 600.0, 0.1, or_greater, suffix = "s"))]
+        interval: f32,
+    }, |this| (format!("Sound\n{}", this.sound.to_string().rsplit(['/', '\\']).next().unwrap_or("")), Color::from_rgb(0.6, 1.0, 0.5), this.range, None)
+);
 
-marker_class!(RoseEffectSpot, "An effect (EFT file) playing here.", {
-    effect: GString,
-}, |this| (format!("Effect\n{}", this.effect.to_string().rsplit(['/', '\\']).next().unwrap_or("")), Color::from_rgb(1.0, 0.85, 0.3), 0.0, None));
+marker_class!(
+    /// An effect playing here all the time (an IFO effect), such as fire, smoke or sparkles.
+    /// Turn and scale the node to turn and scale the effect. Played by the game only.
+    RoseEffectSpot {
+        /// The effect file, as a path in the ROSE data (an EFT file, for example
+        /// `3DDATA/EFFECT/BANDY_01.EFT`).
+        #[export]
+        effect: GString,
+    }, |this| (format!("Effect\n{}", this.effect.to_string().rsplit(['/', '\\']).next().unwrap_or("")), Color::from_rgb(1.0, 0.85, 0.3), 0.0, None)
+);
 
-marker_class!(RoseZoneEvent, "A named spot of the zone (ZON event position), such as the start or revive point.", {
-    event_name: GString,
-}, |this| (format!("Event: {}", this.event_name), Color::from_rgb(0.9, 0.5, 1.0), 1.0, None));
+marker_class!(
+    /// A named spot of the zone (a ZON event position). LIST_ZONE.STB names the zone's start
+    /// spot (the default place to arrive in the zone) and its revive spots (fallen players
+    /// get up at the nearest one), and WARP.STB rows name the spot a warp gate lands you on.
+    /// Several spots can share a name. The server reads them through `--export-zones`.
+    RoseZoneEvent {
+        /// The spot's name, as LIST_ZONE.STB and WARP.STB refer to it: usually `start` for the
+        /// start spot and `restore` for revive spots; warp targets have names such as
+        /// `WARP-JD01-JG01`. Renaming a spot breaks whatever pointed at the old name.
+        #[export]
+        event_name: GString,
+    }, |this| (format!("Event: {}", this.event_name), Color::from_rgb(0.9, 0.5, 1.0), 1.0, None)
+);
 
 // ---------------------------------------------------------------------------------------
 // Import
