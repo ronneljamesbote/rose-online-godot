@@ -27,7 +27,7 @@ godot --headless --path godot --import
 godot --headless --path godot -- --import-rose --data-idx=/path/to/iRose_129_129/data.idx
 ```
 
-Godot 4.6 or newer. `ROSE_DATA_IDX` works instead of `--data-idx`. The start screen offers
+Godot 4.7 or newer. `ROSE_DATA_IDX` works instead of `--data-idx`. The start screen offers
 Sign in (online) or Play offline. In game: left-click to move, S to stop, right-drag to
 orbit the camera, mouse wheel to zoom. Online, left-click a monster to attack it and Space
 attacks the nearest one, C opens the character window, I the inventory, K the skills, Q the quests, 1-8 use the hotbar, Z picks up the nearest item, X sits or stands, Enter chats; offline, Space swings the sword.
