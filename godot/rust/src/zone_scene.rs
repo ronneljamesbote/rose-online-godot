@@ -1251,7 +1251,7 @@ impl GroundBuilder {
         let mut root = Engine::singleton()
             .get_main_loop()
             .and_then(|l| l.try_cast::<godot::classes::SceneTree>().ok())
-            .and_then(|t| t.get_root())
+            .map(|t| t.get_root())
             .ok_or("no scene tree")?;
         root.add_child(&terrain);
         terrain.call("change_region_size", &[REGION_SIZE.to_variant()]);

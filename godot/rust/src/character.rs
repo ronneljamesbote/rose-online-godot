@@ -132,7 +132,7 @@ fn build_skeleton(zmd: &ZmdFile) -> Gd<Skeleton3D> {
 fn build_animation(zmo: &ZmoFile, dummy_offset: usize, looping: bool) -> Gd<Animation> {
     let mut animation = Animation::new_gd();
     let fps = zmo.fps.max(1) as f64;
-    animation.set_length((zmo.num_frames as f64 / fps) as f32);
+    animation.set_length(zmo.num_frames as f64 / fps);
     animation.set_loop_mode(if looping { LoopMode::LINEAR } else { LoopMode::NONE });
 
     for (bone_id, channel) in zmo.channels.iter() {
