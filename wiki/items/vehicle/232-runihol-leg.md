@@ -25,7 +25,7 @@ recipe:
   quantity: 1
 craft_difficulty: 56
 source:
-  data: LIST_PAT.STB row 232
+  data: godot/data/items/vehicle/232-runihol-leg.tres
   code: module/src/items.rs
 ---
 # Runihol Leg

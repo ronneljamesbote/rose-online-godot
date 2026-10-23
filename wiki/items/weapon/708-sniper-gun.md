@@ -18,7 +18,7 @@ sockets: true
 price: 98400
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 708
+  data: godot/data/items/weapon/708-sniper-gun.tres
   code: module/src/items.rs
 ---
 # Sniper Gun

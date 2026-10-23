@@ -22,7 +22,7 @@ dropped_by:
   level: 70
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 504
+  data: godot/data/items/weapon/504-squid-sword.tres
   code: module/src/items.rs
 ---
 # Squid Sword

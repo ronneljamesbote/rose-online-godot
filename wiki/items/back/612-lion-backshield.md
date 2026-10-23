@@ -14,7 +14,7 @@ job: Soldier and Hawker Job
 price: 36300
 weight: 30
 source:
-  data: LIST_BACK.STB row 612
+  data: godot/data/items/back/612-lion-backshield.tres
   code: module/src/items.rs
 ---
 # Lion Backshield

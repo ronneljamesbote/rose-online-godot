@@ -9,7 +9,7 @@ durability: 22
 quality: 30
 price: 350
 source:
-  data: LIST_FACEITEM.STB row 121
+  data: godot/data/items/face/121-ego-mask.tres
   code: module/src/items.rs
 ---
 # Ego Mask

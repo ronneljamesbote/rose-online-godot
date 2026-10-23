@@ -16,7 +16,7 @@ weight: 2
 sold_by:
 - '[[npcs/1110-ferrell-guild-staff-charrs|Ferrell Guild Staff Charrs]]'
 source:
-  data: LIST_FOOT.STB row 228
+  data: godot/data/items/feet/228-senior-shoes.tres
   code: module/src/items.rs
 ---
 # Senior Shoes

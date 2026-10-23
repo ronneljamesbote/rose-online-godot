@@ -40,7 +40,7 @@ sold_by:
 quest_reward:
 - '[[quests/107-healing-hands|Healing Hands]]'
 source:
-  data: LIST_CAP.STB row 5
+  data: godot/data/items/head/5-islamic-bandana.tres
   code: module/src/items.rs
 ---
 # Islamic Bandana

@@ -14,7 +14,7 @@ job: Soldier 2nd Advanced Jobs
 price: 69650
 weight: 20
 source:
-  data: LIST_BODY.STB row 331
+  data: godot/data/items/body/331-mighty-armor.tres
   code: module/src/items.rs
 ---
 # Mighty Armor

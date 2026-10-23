@@ -31,7 +31,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1034-smith-ronk|Smith Ronk]]'
 source:
-  data: LIST_BODY.STB row 4
+  data: godot/data/items/body/4-blue-wild-jeans.tres
   code: module/src/items.rs
 ---
 # Blue Wild Jeans

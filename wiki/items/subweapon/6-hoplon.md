@@ -45,7 +45,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 source:
-  data: LIST_SUBWPN.STB row 6
+  data: godot/data/items/subweapon/6-hoplon.tres
   code: module/src/items.rs
 ---
 # Hoplon

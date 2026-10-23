@@ -24,7 +24,7 @@ recipe:
   quantity: 10
 craft_difficulty: 45
 source:
-  data: LIST_SUBWPN.STB row 13
+  data: godot/data/items/subweapon/13-righteous-shield.tres
   code: module/src/items.rs
 ---
 # Righteous Shield

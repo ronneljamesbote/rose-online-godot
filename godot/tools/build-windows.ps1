@@ -20,9 +20,11 @@
 #            the ROSE models, textures and animations into godot\assets\rose\
 #            (--import-rose), because assets.pck carries them and the zone scenes need them.
 #
-# It refuses to build when overrides\motions.toml (the server's hit times) or
-# overrides\zones\ (spawns and NPCs) don't match the animations and the zone scenes;
-# run --export-motions or --export-zones and commit the files first.
+# It refuses to build when overrides\motions.toml (the server's hit times),
+# overrides\zones\ (spawns and NPCs) or overrides\data\ (the items) don't match the
+# animations, the zone scenes and the game data resources in godot\data\; run
+# --export-motions, --export-zones or --export-data and commit the files first. The game
+# reads its items from overrides\data\ next to ROSE.exe, as the server does.
 #
 # The production build checks that no GM code got in and stops if it did.
 #
@@ -364,6 +366,20 @@ Run this and commit the files:
 "@
 }
 
+# The server and the game read the items from overrides/data/, exported
+# from the game data resources in godot/data/.
+Write-Host ""
+Write-Host "==> Checking overrides\data\..."
+if ((Invoke-Godot @("--headless", "--path", "godot", "--", "--export-data=check")) -ne 0) {
+    throw @"
+overrides\data\ doesn't match the game data resources in godot\data\.
+
+Run this and commit the files:
+
+  godot --headless --path godot -- --export-data
+"@
+}
+
 # ------------------------------------------------------------
 # Create temporary staging directory
 # ------------------------------------------------------------
@@ -492,6 +508,14 @@ try {
         $Readme `
         (Join-Path $StageRose "README.txt")
 
+    # The items the game reads, the same export the server loads.
+    $StageOverrides = Join-Path $StageRose "overrides"
+    New-Item -ItemType Directory -Force -Path $StageOverrides | Out-Null
+    Copy-Item `
+        -Path (Join-Path (Get-Location) "overrides\data") `
+        -Destination $StageOverrides `
+        -Recurse
+
     # --------------------------------------------------------
     # Create output directory
     # --------------------------------------------------------
@@ -512,6 +536,10 @@ try {
         Get-ChildItem -Path $Dest -File |
             Where-Object { $_.Extension -in ".exe", ".dll" -or $_.Name -in "README.txt", "ROSE.pck" -or ($_.Name -eq "assets.pck" -and -not $GameOnly) } |
             Remove-Item -Force
+        $DestData = Join-Path $Dest "overrides\data"
+        if (Test-Path $DestData) {
+            Remove-Item -Recurse -Force $DestData
+        }
         Copy-Item -Path (Join-Path $StageRose "*") -Destination $Dest -Recurse -Force
 
         Write-Host ""

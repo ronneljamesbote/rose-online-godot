@@ -28,7 +28,7 @@ used_to_craft:
 - '[[items/weapon/335-silence-wand|Silence Wand]]'
 - '[[items/weapon/336-windphon-wand|Windphon Wand]]'
 source:
-  data: LIST_NATURAL.STB row 2
+  data: godot/data/items/material/2-tin.tres
   code: module/src/items.rs
 ---
 # Tin

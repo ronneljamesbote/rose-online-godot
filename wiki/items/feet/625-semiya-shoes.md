@@ -19,7 +19,7 @@ dropped_by:
   level: 84
   slots_of_30: 0.2
 source:
-  data: LIST_FOOT.STB row 625
+  data: godot/data/items/feet/625-semiya-shoes.tres
   code: module/src/items.rs
 ---
 # Semiya Shoes

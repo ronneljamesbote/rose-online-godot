@@ -279,7 +279,7 @@ dropped_by:
   level: 76
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 171
+  data: godot/data/items/consumable/171-stamina-50.tres
   code: module/src/items.rs
 ---
 # Stamina (+50)

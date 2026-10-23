@@ -15,7 +15,7 @@ bonus: Max MP +90
 price: 42650
 weight: 10
 source:
-  data: LIST_BODY.STB row 422
+  data: godot/data/items/body/422-violet-dress.tres
   code: module/src/items.rs
 ---
 # Violet Dress

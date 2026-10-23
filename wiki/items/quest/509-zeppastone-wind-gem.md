@@ -15,7 +15,7 @@ needed_for_quest:
 - '[[quests/1981-zeppastone-wind-gem|Zeppastone Wind Gem]]'
 - '[[quests/1982-the-prince-of-akram|The Prince of Akram]]'
 source:
-  data: LIST_QUESTITEM.STB row 509
+  data: godot/data/items/quest/509-zeppastone-wind-gem.tres
   code: module/src/items.rs
 ---
 # Zeppastone Wind Gem

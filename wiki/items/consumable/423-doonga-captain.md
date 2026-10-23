@@ -17,7 +17,7 @@ dropped_by:
   level: 70
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 423
+  data: godot/data/items/consumable/423-doonga-captain.tres
   code: module/src/items.rs
 ---
 # Doonga Captain

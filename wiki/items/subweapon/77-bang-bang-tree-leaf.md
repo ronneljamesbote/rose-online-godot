@@ -22,7 +22,7 @@ recipe:
   quantity: 25
 craft_difficulty: 42
 source:
-  data: LIST_SUBWPN.STB row 77
+  data: godot/data/items/subweapon/77-bang-bang-tree-leaf.tres
   code: module/src/items.rs
 ---
 # Bang Bang Tree Leaf

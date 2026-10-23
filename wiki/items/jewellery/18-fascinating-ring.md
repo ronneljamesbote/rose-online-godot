@@ -16,7 +16,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1180-ferrell-guild-banker-andre|Ferrell Guild Banker Andre]]'
 source:
-  data: LIST_JEWEL.STB row 18
+  data: godot/data/items/jewellery/18-fascinating-ring.tres
   code: module/src/items.rs
 ---
 # Fascinating Ring

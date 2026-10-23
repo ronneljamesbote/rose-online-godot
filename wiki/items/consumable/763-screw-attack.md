@@ -13,7 +13,7 @@ sold_by:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 - '[[npcs/1086-akram-minister-rodath|Akram Minister Rodath]]'
 source:
-  data: LIST_USEITEM.STB row 763
+  data: godot/data/items/consumable/763-screw-attack.tres
   code: module/src/items.rs
 ---
 # Screw Attack

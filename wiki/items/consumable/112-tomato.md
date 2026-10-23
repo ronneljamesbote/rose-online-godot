@@ -9,7 +9,7 @@ effect: HP +200, HP Restoration (200), teaches skill 200, uses skill 200, fuel +
 price: 60
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 112
+  data: godot/data/items/consumable/112-tomato.tres
   code: module/src/items.rs
 ---
 # Tomato

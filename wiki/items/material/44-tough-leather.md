@@ -47,7 +47,7 @@ used_to_craft:
 - '[[items/subweapon/66-elven-anthology|Elven Anthology]]'
 - '[[items/vehicle/4-colmanju-frame|Colmanju Frame]]'
 source:
-  data: LIST_NATURAL.STB row 44
+  data: godot/data/items/material/44-tough-leather.tres
   code: module/src/items.rs
 ---
 # Tough Leather

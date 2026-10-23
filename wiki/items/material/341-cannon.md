@@ -13,7 +13,7 @@ sold_by:
 - '[[npcs/1184-ferrell-trader-sergei|Ferrell Trader Sergei]]'
 - '[[npcs/1213-ferrell-guild-staff-gilbert|Ferrell Guild Staff Gilbert]]'
 source:
-  data: LIST_NATURAL.STB row 341
+  data: godot/data/items/material/341-cannon.tres
   code: module/src/items.rs
 ---
 # Cannon

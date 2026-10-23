@@ -16,7 +16,7 @@ used_to_craft:
 - '[[items/weapon/445-glorious-dual-wield|Glorious Dual Wield]]'
 - '[[items/vehicle/312-battle-launcher|Battle Launcher]]'
 source:
-  data: LIST_NATURAL.STB row 16
+  data: godot/data/items/material/16-orihalcon.tres
   code: module/src/items.rs
 ---
 # Orihalcon

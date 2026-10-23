@@ -51,7 +51,7 @@ used_to_craft:
 - '[[items/weapon/440-ice-flare-swords|Ice & Flare Swords]]'
 - '[[items/weapon/441-dual-flare-swords|Dual Flare Swords]]'
 source:
-  data: LIST_WEAPON.STB row 15
+  data: godot/data/items/weapon/15-flare-sword.tres
   code: module/src/items.rs
 ---
 # Flare Sword

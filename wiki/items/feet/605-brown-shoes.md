@@ -15,7 +15,7 @@ job: Dealer Job
 price: 1300
 weight: 3
 source:
-  data: LIST_FOOT.STB row 605
+  data: godot/data/items/feet/605-brown-shoes.tres
   code: module/src/items.rs
 ---
 # Brown Shoes

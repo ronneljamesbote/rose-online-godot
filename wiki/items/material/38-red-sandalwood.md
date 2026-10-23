@@ -18,7 +18,7 @@ used_to_craft:
 - '[[items/subweapon/74-meteoric-symbol|Meteoric Symbol]]'
 - '[[items/vehicle/335-spear-arms|Spear Arms]]'
 source:
-  data: LIST_NATURAL.STB row 38
+  data: godot/data/items/material/38-red-sandalwood.tres
   code: module/src/items.rs
 ---
 # Red Sandalwood

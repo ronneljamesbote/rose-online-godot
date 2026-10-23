@@ -22,7 +22,7 @@ used_to_craft:
 - '[[items/weapon/163-round-spear|Round Spear]]'
 - '[[items/weapon/164-scimitar|Scimitar]]'
 source:
-  data: LIST_NATURAL.STB row 31
+  data: godot/data/items/material/31-twig.tres
   code: module/src/items.rs
 ---
 # Twig

@@ -16,7 +16,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1007-gypsy-jewel-seller-mina|Gypsy Jewel Seller Mina]]'
 source:
-  data: LIST_JEWEL.STB row 158
+  data: godot/data/items/jewellery/158-pointed-earring.tres
   code: module/src/items.rs
 ---
 # Pointed Earring

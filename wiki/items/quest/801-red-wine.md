@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/5001-wine-delivery-part-time-job|Wine Delivery (Part Time Job)]]'
 source:
-  data: LIST_QUESTITEM.STB row 801
+  data: godot/data/items/quest/801-red-wine.tres
   code: module/src/items.rs
 ---
 # Red Wine

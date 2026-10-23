@@ -24,7 +24,7 @@ dropped_by:
   level: 43
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 671
+  data: godot/data/items/weapon/671-orc-bow.tres
   code: module/src/items.rs
 ---
 # Orc Bow

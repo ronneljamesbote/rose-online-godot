@@ -9,7 +9,7 @@ effect: MP +100, MP Restoration (100), teaches skill 100, uses skill 100, fuel +
 price: 50
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 130
+  data: godot/data/items/consumable/130-peach-juice.tres
   code: module/src/items.rs
 ---
 # Peach Juice

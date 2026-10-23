@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/5013-stockpiling-oak-branches|Stockpiling Oak Branches]]'
 source:
-  data: LIST_QUESTITEM.STB row 28
+  data: godot/data/items/quest/28-oak-branch.tres
   code: module/src/items.rs
 ---
 # Oak Branch

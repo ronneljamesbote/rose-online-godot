@@ -32,7 +32,7 @@ dropped_by:
   level: 128
   slots_of_30: 0.4
 source:
-  data: LIST_ARMS.STB row 126
+  data: godot/data/items/hands/126-rich-merchant-gloves.tres
   code: module/src/items.rs
 ---
 # Rich Merchant Gloves

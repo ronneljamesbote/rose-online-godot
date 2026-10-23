@@ -20,7 +20,7 @@ sold_by:
 - '[[npcs/1063-little-street-vendor-mile|Little Street Vendor Mile]]'
 - '[[npcs/1097-tavern-owner-harin|Tavern Owner Harin]]'
 source:
-  data: LIST_USEITEM.STB row 122
+  data: godot/data/items/consumable/122-strawberry-flavored-milk.tres
   code: module/src/items.rs
 ---
 # Strawberry Flavored Milk

@@ -34,7 +34,7 @@ dropped_by:
   level: 108
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 537
+  data: godot/data/items/weapon/537-morning-star.tres
   code: module/src/items.rs
 ---
 # Morning Star

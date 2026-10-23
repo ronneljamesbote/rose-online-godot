@@ -27,7 +27,7 @@ quest_reward:
 used_to_craft:
 - '[[items/gem/303-garnet-3|Garnet 3]]'
 source:
-  data: LIST_JEMITEM.STB row 302
+  data: godot/data/items/gem/302-garnet-2.tres
   code: module/src/items.rs
 ---
 # Garnet [2]

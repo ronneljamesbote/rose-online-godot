@@ -20,7 +20,7 @@ craft_difficulty: 45
 used_to_craft:
 - '[[items/gem/367-diamond-7|Diamond 7]]'
 source:
-  data: LIST_JEMITEM.STB row 366
+  data: godot/data/items/gem/366-diamond-6.tres
   code: module/src/items.rs
 ---
 # Diamond [6]

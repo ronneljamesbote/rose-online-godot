@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/3607-weak-mana-waves-from-lunar|Weak Mana Waves from Lunar]]'
 source:
-  data: LIST_QUESTITEM.STB row 316
+  data: godot/data/items/quest/316-krawfy-long-antenna.tres
   code: module/src/items.rs
 ---
 # Krawfy Long Antenna

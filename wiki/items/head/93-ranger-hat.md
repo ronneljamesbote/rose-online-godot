@@ -56,7 +56,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1094-armor-merchant-saki|Armor Merchant Saki]]'
 source:
-  data: LIST_CAP.STB row 93
+  data: godot/data/items/head/93-ranger-hat.tres
   code: module/src/items.rs
 ---
 # Ranger Hat

@@ -50,7 +50,7 @@ quest_reward:
 used_to_craft:
 - '[[items/gem/364-diamond-4|Diamond 4]]'
 source:
-  data: LIST_NATURAL.STB row 151
+  data: godot/data/items/material/151-black-hearts.tres
   code: module/src/items.rs
 ---
 # Black Hearts

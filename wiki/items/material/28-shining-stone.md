@@ -8,7 +8,7 @@ class: Stone Material
 price: 395
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 28
+  data: godot/data/items/material/28-shining-stone.tres
   code: module/src/items.rs
 ---
 # Shining Stone

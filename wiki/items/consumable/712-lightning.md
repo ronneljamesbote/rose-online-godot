@@ -13,7 +13,7 @@ sold_by:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 - '[[npcs/1085-akram-minister-nel|Akram Minister Nel]]'
 source:
-  data: LIST_USEITEM.STB row 712
+  data: godot/data/items/consumable/712-lightning.tres
   code: module/src/items.rs
 ---
 # Lightning

@@ -32,7 +32,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1010-designer-keenu|Designer Keenu]]'
 source:
-  data: LIST_ARMS.STB row 8
+  data: godot/data/items/hands/8-gray-gloves.tres
   code: module/src/items.rs
 ---
 # Gray Gloves

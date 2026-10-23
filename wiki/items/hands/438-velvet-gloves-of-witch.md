@@ -14,7 +14,7 @@ job: Muse 2nd Advanced Jobs
 price: 25300
 weight: 2
 source:
-  data: LIST_ARMS.STB row 438
+  data: godot/data/items/hands/438-velvet-gloves-of-witch.tres
   code: module/src/items.rs
 ---
 # Velvet Gloves of Witch

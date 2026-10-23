@@ -45,7 +45,7 @@ dropped_by:
   level: 128
   slots_of_30: 0.2
 source:
-  data: LIST_BODY.STB row 95
+  data: godot/data/items/body/95-mariner-s-look.tres
   code: module/src/items.rs
 ---
 # Mariner’s Look

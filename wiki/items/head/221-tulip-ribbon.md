@@ -13,7 +13,7 @@ price: 0
 weight: 1
 trade: can't be traded or dropped
 source:
-  data: LIST_CAP.STB row 221
+  data: godot/data/items/head/221-tulip-ribbon.tres
   code: module/src/items.rs
 ---
 # Tulip Ribbon

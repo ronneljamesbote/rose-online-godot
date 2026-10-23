@@ -12,7 +12,7 @@ weight: 1
 quest_reward:
 - '[[quests/957-the-essence-of-speed|The Essence of Speed]]'
 source:
-  data: LIST_JEWEL.STB row 85
+  data: godot/data/items/jewellery/85-pierced-necklace.tres
   code: module/src/items.rs
 ---
 # Pierced Necklace

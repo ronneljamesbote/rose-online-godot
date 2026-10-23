@@ -26,7 +26,7 @@ craft_difficulty: 35
 sold_by:
 - '[[npcs/1096-ferrell-guild-merchant-mildun|Ferrell Guild Merchant Mildun]]'
 source:
-  data: LIST_PAT.STB row 2
+  data: godot/data/items/vehicle/2-wooden-carbon-frame.tres
   code: module/src/items.rs
 ---
 # Wooden Carbon Frame

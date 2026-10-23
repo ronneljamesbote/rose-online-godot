@@ -48,7 +48,7 @@ dropped_by:
   level: 108
   slots_of_30: 0.2
 source:
-  data: LIST_CAP.STB row 16
+  data: godot/data/items/head/16-redfield-green-hat.tres
   code: module/src/items.rs
 ---
 # Redfield Green Hat

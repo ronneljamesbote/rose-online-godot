@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/858-hovert-s-mementos|Hovert''s Mementos]]'
 - '[[quests/859-hovert-s-mementos|Hovert''s Mementos]]'
 source:
-  data: LIST_QUESTITEM.STB row 122
+  data: godot/data/items/quest/122-old-horse-saddle.tres
   code: module/src/items.rs
 ---
 # Old Horse Saddle

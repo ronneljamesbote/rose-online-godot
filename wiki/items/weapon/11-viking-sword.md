@@ -56,7 +56,7 @@ dropped_by:
 used_to_craft:
 - '[[items/weapon/437-viking-sword-axe|Viking Sword & Axe]]'
 source:
-  data: LIST_WEAPON.STB row 11
+  data: godot/data/items/weapon/11-viking-sword.tres
   code: module/src/items.rs
 ---
 # Viking Sword

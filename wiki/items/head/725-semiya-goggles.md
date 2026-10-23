@@ -18,7 +18,7 @@ dropped_by:
   level: 84
   slots_of_30: 0.2
 source:
-  data: LIST_CAP.STB row 725
+  data: godot/data/items/head/725-semiya-goggles.tres
   code: module/src/items.rs
 ---
 # Semiya Goggles

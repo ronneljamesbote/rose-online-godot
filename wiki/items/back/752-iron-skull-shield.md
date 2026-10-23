@@ -13,7 +13,7 @@ bonus: Dodge Rate +5
 price: 1000
 weight: 30
 source:
-  data: LIST_BACK.STB row 752
+  data: godot/data/items/back/752-iron-skull-shield.tres
   code: module/src/items.rs
 ---
 # Iron Skull Shield

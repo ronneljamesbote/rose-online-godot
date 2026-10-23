@@ -10,7 +10,7 @@ bonus: MP Recovery Rate +25
 price: 842400
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 189
+  data: godot/data/items/jewellery/189-saint-s-earring.tres
   code: module/src/items.rs
 ---
 # Saint's Earring

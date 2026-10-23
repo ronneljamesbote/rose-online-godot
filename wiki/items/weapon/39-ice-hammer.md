@@ -39,7 +39,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 source:
-  data: LIST_WEAPON.STB row 39
+  data: godot/data/items/weapon/39-ice-hammer.tres
   code: module/src/items.rs
 ---
 # Ice Hammer

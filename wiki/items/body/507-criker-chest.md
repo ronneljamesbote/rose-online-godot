@@ -14,7 +14,7 @@ job: Hawker Job
 price: 8600
 weight: 15
 source:
-  data: LIST_BODY.STB row 507
+  data: godot/data/items/body/507-criker-chest.tres
   code: module/src/items.rs
 ---
 # Criker Chest

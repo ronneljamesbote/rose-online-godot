@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/107-healing-hands|Healing Hands]]'
 source:
-  data: LIST_QUESTITEM.STB row 604
+  data: godot/data/items/quest/604-karitte-s-antidote.tres
   code: module/src/items.rs
 ---
 # Karitte's Antidote

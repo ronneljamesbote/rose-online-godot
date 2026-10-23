@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/3603-grunter-s-mysterious-strength|Grunter''s Mysterious Strength]]'
 source:
-  data: LIST_QUESTITEM.STB row 307
+  data: godot/data/items/quest/307-grunter-foot.tres
   code: module/src/items.rs
 ---
 # Grunter Foot

@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/1074-lillith-woman-of-the-cosmos-second-job-change|Lillith, Woman of the Cosmos (Second Job Change)]]'
 - '[[quests/1075-lillith-woman-of-the-cosmos-second-job-change|Lillith, Woman of the Cosmos (Second Job Change)]]'
 source:
-  data: LIST_QUESTITEM.STB row 223
+  data: godot/data/items/quest/223-family-emblem.tres
   code: module/src/items.rs
 ---
 # Family Emblem

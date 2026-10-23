@@ -14,7 +14,7 @@ job: Muse Job
 price: 950
 weight: 2
 source:
-  data: LIST_CAP.STB row 504
+  data: godot/data/items/head/504-spiritual-beret.tres
   code: module/src/items.rs
 ---
 # Spiritual Beret

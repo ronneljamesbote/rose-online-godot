@@ -14,7 +14,7 @@ bonus: Attack Speed +4
 price: 3200
 weight: 1
 source:
-  data: LIST_ARMS.STB row 213
+  data: godot/data/items/hands/213-gloves-of-iguje.tres
   code: module/src/items.rs
 ---
 # Gloves of Iguje

@@ -18,7 +18,7 @@ sockets: true
 price: 15240
 weight: 10
 source:
-  data: LIST_WEAPON.STB row 561
+  data: godot/data/items/weapon/561-cutter-bow-gun.tres
   code: module/src/items.rs
 ---
 # Cutter Bow Gun

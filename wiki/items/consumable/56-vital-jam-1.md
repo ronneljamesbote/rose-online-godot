@@ -31,7 +31,7 @@ quest_reward:
 - '[[quests/5032-piety-and-a-bribe|Piety and a Bribe?]]'
 - '[[quests/5041-the-lost-engagement-ring|The Lost Engagement Ring]]'
 source:
-  data: LIST_USEITEM.STB row 56
+  data: godot/data/items/consumable/56-vital-jam-1.tres
   code: module/src/items.rs
 ---
 # Vital Jam (+1)

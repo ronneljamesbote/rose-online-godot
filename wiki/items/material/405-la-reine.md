@@ -8,7 +8,7 @@ class: Gathered Goods
 price: 200
 trade: can't be traded
 source:
-  data: LIST_NATURAL.STB row 405
+  data: godot/data/items/material/405-la-reine.tres
   code: module/src/items.rs
 ---
 # La Reine

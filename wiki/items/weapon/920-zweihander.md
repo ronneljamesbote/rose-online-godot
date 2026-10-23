@@ -17,7 +17,7 @@ bonus: Critical +35
 price: 33790
 weight: 87
 source:
-  data: LIST_WEAPON.STB row 920
+  data: godot/data/items/weapon/920-zweihander.tres
   code: module/src/items.rs
 ---
 # Zweihander

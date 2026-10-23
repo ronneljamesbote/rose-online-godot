@@ -15,7 +15,7 @@ used_to_craft:
 - '[[items/head/97-wild-hawker-hat|Wild Hawker Hat]]'
 - '[[items/head/127-redfield-chairman-hat|Redfield Chairman Hat]]'
 source:
-  data: LIST_NATURAL.STB row 122
+  data: godot/data/items/material/122-wind-stone.tres
   code: module/src/items.rs
 ---
 # Wind Stone

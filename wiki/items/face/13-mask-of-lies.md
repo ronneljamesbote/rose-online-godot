@@ -14,7 +14,7 @@ weight: 2
 sold_by:
 - '[[npcs/1109-elder-of-junon-order-gorthein|Elder of Junon Order Gorthein]]'
 source:
-  data: LIST_FACEITEM.STB row 13
+  data: godot/data/items/face/13-mask-of-lies.tres
   code: module/src/items.rs
 ---
 # Mask of Lies

@@ -47,7 +47,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_CAP.STB row 123
+  data: godot/data/items/head/123-tamiya-goggles.tres
   code: module/src/items.rs
 ---
 # Tamiya Goggles

@@ -18,7 +18,7 @@ sockets: true
 price: 17280
 weight: 20
 source:
-  data: LIST_WEAPON.STB row 703
+  data: godot/data/items/weapon/703-iron-shotgun.tres
   code: module/src/items.rs
 ---
 # Iron Shotgun

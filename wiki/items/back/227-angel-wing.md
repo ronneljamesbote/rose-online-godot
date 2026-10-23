@@ -24,7 +24,7 @@ recipe:
   quantity: 45
 craft_difficulty: 30
 source:
-  data: LIST_BACK.STB row 227
+  data: godot/data/items/back/227-angel-wing.tres
   code: module/src/items.rs
 ---
 # Angel Wing

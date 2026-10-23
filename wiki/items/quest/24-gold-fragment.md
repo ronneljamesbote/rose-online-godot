@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/127-the-owl-eye|The Owl Eye]]'
 source:
-  data: LIST_QUESTITEM.STB row 24
+  data: godot/data/items/quest/24-gold-fragment.tres
   code: module/src/items.rs
 ---
 # Gold Fragment

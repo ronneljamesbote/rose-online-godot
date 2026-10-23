@@ -28,7 +28,7 @@ dropped_by:
   level: 158
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 179
+  data: godot/data/items/weapon/179-fury-spantun.tres
   code: module/src/items.rs
 ---
 # Fury Spantun

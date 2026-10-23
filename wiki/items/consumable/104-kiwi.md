@@ -23,7 +23,7 @@ sold_by:
 quest_reward:
 - '[[quests/5052-hunting-practice-2|Hunting Practice (2)]]'
 source:
-  data: LIST_USEITEM.STB row 104
+  data: godot/data/items/consumable/104-kiwi.tres
   code: module/src/items.rs
 ---
 # Kiwi

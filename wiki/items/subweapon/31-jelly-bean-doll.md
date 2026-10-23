@@ -25,7 +25,7 @@ sold_by:
 - '[[npcs/1010-designer-keenu|Designer Keenu]]'
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_SUBWPN.STB row 31
+  data: godot/data/items/subweapon/31-jelly-bean-doll.tres
   code: module/src/items.rs
 ---
 # Jelly Bean Doll

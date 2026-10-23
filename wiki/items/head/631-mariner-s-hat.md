@@ -14,7 +14,7 @@ job: Hawker 2nd Advanced Jobs
 price: 22150
 weight: 2
 source:
-  data: LIST_CAP.STB row 631
+  data: godot/data/items/head/631-mariner-s-hat.tres
   code: module/src/items.rs
 ---
 # Mariner's Hat

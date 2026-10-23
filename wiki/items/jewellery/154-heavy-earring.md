@@ -12,7 +12,7 @@ weight: 1
 sold_by:
 - '[[npcs/1007-gypsy-jewel-seller-mina|Gypsy Jewel Seller Mina]]'
 source:
-  data: LIST_JEWEL.STB row 154
+  data: godot/data/items/jewellery/154-heavy-earring.tres
   code: module/src/items.rs
 ---
 # Heavy Earring

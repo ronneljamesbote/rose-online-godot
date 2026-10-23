@@ -14,7 +14,7 @@ bonus: Movement Speed +50
 price: 48850
 weight: 10
 source:
-  data: LIST_BACK.STB row 454
+  data: godot/data/items/back/454-nymph-wing.tres
   code: module/src/items.rs
 ---
 # Nymph Wing

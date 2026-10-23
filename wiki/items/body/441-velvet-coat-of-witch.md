@@ -15,7 +15,7 @@ bonus: Max MP +124
 price: 116900
 weight: 20
 source:
-  data: LIST_BODY.STB row 441
+  data: godot/data/items/body/441-velvet-coat-of-witch.tres
   code: module/src/items.rs
 ---
 # Velvet Coat of Witch

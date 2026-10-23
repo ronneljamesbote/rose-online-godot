@@ -14,7 +14,7 @@ bonus: Max HP +66
 price: 7200
 weight: 10
 source:
-  data: LIST_BODY.STB row 211
+  data: godot/data/items/body/211-brown-denim-look.tres
   code: module/src/items.rs
 ---
 # Brown Denim Look

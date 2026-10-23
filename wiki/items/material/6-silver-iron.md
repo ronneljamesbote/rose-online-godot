@@ -33,7 +33,7 @@ used_to_craft:
 - '[[items/weapon/414-stiletto|Stiletto]]'
 - '[[items/subweapon/15-zephyr-defender|Zephyr Defender]]'
 source:
-  data: LIST_NATURAL.STB row 6
+  data: godot/data/items/material/6-silver-iron.tres
   code: module/src/items.rs
 ---
 # Silver Iron

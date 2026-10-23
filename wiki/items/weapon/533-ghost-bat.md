@@ -18,7 +18,7 @@ sockets: true
 price: 13905
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 533
+  data: godot/data/items/weapon/533-ghost-bat.tres
   code: module/src/items.rs
 ---
 # Ghost Bat

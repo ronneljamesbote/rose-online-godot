@@ -9,7 +9,7 @@ effect: MP +160, MP Restoration (160), teaches skill 160, uses skill 160, fuel +
 price: 80
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 127
+  data: godot/data/items/consumable/127-kiwi-juice.tres
   code: module/src/items.rs
 ---
 # Kiwi Juice

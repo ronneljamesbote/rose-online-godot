@@ -11,7 +11,7 @@ npcs:
   - "[[npcs/1222-storage-keeper-dustin-leta|Storage Keeper Dustin Leta]]"
   - "[[npcs/1161-clan-base-camp-manager-kushard|Clan Base Camp Manager Kushard]]"
 source:
-  data: item tables column 5 (base price) and column 6 (price change rate); LIST_STRING.STL strings 29, 330-334; LIST_USEITEM.STB row 952 (ability 94, No Storage Charge); Crow's dialog
+  data: the item resources' base_price and price_rate (godot/data/items/); LIST_STRING.STL strings 29, 330-334; godot/data/items/consumable/952-free-storage-coupon.tres (use_add_stat BankFree, ability 94, No Storage Charge); Crow's dialog
   reference: iROSE 129_129en client data; module/src/bank.rs; AbilityType::BankFree in crates/rose-game-irose/src/data/ability_values.rs
 ---
 # Storage fees

@@ -16,7 +16,7 @@ weight: 10
 sold_by:
 - '[[npcs/1109-elder-of-junon-order-gorthein|Elder of Junon Order Gorthein]]'
 source:
-  data: LIST_BODY.STB row 231
+  data: godot/data/items/body/231-senior-look.tres
   code: module/src/items.rs
 ---
 # Senior Look

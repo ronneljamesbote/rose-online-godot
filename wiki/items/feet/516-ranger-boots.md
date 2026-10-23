@@ -19,7 +19,7 @@ dropped_by:
   level: 65
   slots_of_30: 0.2
 source:
-  data: LIST_FOOT.STB row 516
+  data: godot/data/items/feet/516-ranger-boots.tres
   code: module/src/items.rs
 ---
 # Ranger Boots

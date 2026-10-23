@@ -19,7 +19,7 @@ sold_by:
 - '[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]'
 - '[[npcs/1112-arumic-researcher-carasia|Arumic Researcher Carasia]]'
 source:
-  data: LIST_BODY.STB row 224
+  data: godot/data/items/body/224-fancy-blue.tres
   code: module/src/items.rs
 ---
 # Fancy Blue

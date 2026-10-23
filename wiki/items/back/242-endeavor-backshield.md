@@ -26,7 +26,7 @@ sold_by:
 - '[[npcs/1009-armor-seller-carrion|Armor Seller Carrion]]'
 - '[[npcs/1094-armor-merchant-saki|Armor Merchant Saki]]'
 source:
-  data: LIST_BACK.STB row 242
+  data: godot/data/items/back/242-endeavor-backshield.tres
   code: module/src/items.rs
 ---
 # Endeavor Backshield

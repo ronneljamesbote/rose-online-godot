@@ -39,7 +39,7 @@ dropped_by:
   level: 120
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 114
+  data: godot/data/items/weapon/114-heroic-sword.tres
   code: module/src/items.rs
 ---
 # Heroic Sword

@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/1068-kirnale-s-journals-second-job-change|Kirnale''s Journals (Second Job Change)]]'
 - '[[quests/1069-kirnale-s-journals-second-job-change|Kirnale''s Journals (Second Job Change)]]'
 source:
-  data: LIST_QUESTITEM.STB row 221
+  data: godot/data/items/quest/221-portable-sundial.tres
   code: module/src/items.rs
 ---
 # Portable Sundial

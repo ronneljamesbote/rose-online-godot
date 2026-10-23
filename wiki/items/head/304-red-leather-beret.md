@@ -14,7 +14,7 @@ bonus: Attack Accuracy +3
 price: 2100
 weight: 3
 source:
-  data: LIST_CAP.STB row 304
+  data: godot/data/items/head/304-red-leather-beret.tres
   code: module/src/items.rs
 ---
 # Red Leather Beret

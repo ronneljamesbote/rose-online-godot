@@ -28,7 +28,7 @@ dropped_by:
   level: 157
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 446
+  data: godot/data/items/weapon/446-demise-dual-weapon.tres
   code: module/src/items.rs
 ---
 # Demise Dual Weapon

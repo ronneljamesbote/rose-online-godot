@@ -46,7 +46,7 @@ sold_by:
 quest_reward:
 - '[[quests/107-healing-hands|Healing Hands]]'
 source:
-  data: LIST_ARMS.STB row 5
+  data: godot/data/items/hands/5-safe-gloves.tres
   code: module/src/items.rs
 ---
 # Safe Gloves

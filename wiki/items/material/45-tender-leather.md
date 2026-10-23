@@ -48,7 +48,7 @@ used_to_craft:
 - '[[items/subweapon/67-basic-encyclopedia|Basic Encyclopedia]]'
 - '[[items/vehicle/5-sporty-frame|Sporty Frame]]'
 source:
-  data: LIST_NATURAL.STB row 45
+  data: godot/data/items/material/45-tender-leather.tres
   code: module/src/items.rs
 ---
 # Tender Leather

@@ -54,7 +54,7 @@ dropped_by:
   level: 108
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 43
+  data: godot/data/items/weapon/43-scorpion-club.tres
   code: module/src/items.rs
 ---
 # Scorpion Club

@@ -42,7 +42,7 @@ dropped_by:
   level: 147
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 19
+  data: godot/data/items/weapon/19-black-shamshir.tres
   code: module/src/items.rs
 ---
 # Black Shamshir

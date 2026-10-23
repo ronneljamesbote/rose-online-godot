@@ -67,7 +67,7 @@ sold_by:
 used_to_craft:
 - '[[items/weapon/431-khukuri-long-sword|Khukuri & Long Sword]]'
 source:
-  data: LIST_WEAPON.STB row 4
+  data: godot/data/items/weapon/4-khukuri.tres
   code: module/src/items.rs
 ---
 # Khukuri

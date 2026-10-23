@@ -14,7 +14,7 @@ bonus: Max HP +30
 price: 1450
 weight: 10
 source:
-  data: LIST_BODY.STB row 201
+  data: godot/data/items/body/201-yellow-wild-jeans.tres
   code: module/src/items.rs
 ---
 # Yellow Wild Jeans

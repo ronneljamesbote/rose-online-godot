@@ -27,7 +27,7 @@ recipe:
   quantity: 1
 craft_difficulty: 68
 source:
-  data: LIST_PAT.STB row 32
+  data: godot/data/items/vehicle/32-reinforced-stock-core.tres
   code: module/src/items.rs
 ---
 # Reinforced Stock Core

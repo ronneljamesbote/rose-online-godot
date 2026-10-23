@@ -15,7 +15,7 @@ job: Muse 2nd Advanced Jobs
 price: 29550
 weight: 3
 source:
-  data: LIST_FOOT.STB row 435
+  data: godot/data/items/feet/435-velvet-boots-of-witch.tres
   code: module/src/items.rs
 ---
 # Velvet Boots of Witch

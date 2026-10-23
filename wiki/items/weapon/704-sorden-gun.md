@@ -37,7 +37,7 @@ dropped_by:
   level: 88
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 704
+  data: godot/data/items/weapon/704-sorden-gun.tres
   code: module/src/items.rs
 ---
 # Sorden Gun

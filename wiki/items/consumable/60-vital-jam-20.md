@@ -9,7 +9,7 @@ effect: Stamina +2000, teaches skill 2000, uses skill 2000, fuel +2000
 price: 2800
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 60
+  data: godot/data/items/consumable/60-vital-jam-20.tres
   code: module/src/items.rs
 ---
 # Vital Jam (+20)

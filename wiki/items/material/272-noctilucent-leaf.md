@@ -10,7 +10,7 @@ weight: 1
 dropped_in_zones:
 - '[[zones/62-shady-jungle|Shady Jungle]]'
 source:
-  data: LIST_NATURAL.STB row 272
+  data: godot/data/items/material/272-noctilucent-leaf.tres
   code: module/src/items.rs
 ---
 # Noctilucent Leaf

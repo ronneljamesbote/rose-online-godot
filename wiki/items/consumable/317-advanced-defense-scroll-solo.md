@@ -28,7 +28,7 @@ quest_reward:
 - '[[quests/155-suspicious-researchers|Suspicious Researchers]]'
 - '[[quests/156-monsters-in-the-desert|Monsters in the Desert]]'
 source:
-  data: LIST_USEITEM.STB row 317
+  data: godot/data/items/consumable/317-advanced-defense-scroll-solo.tres
   code: module/src/items.rs
 ---
 # Advanced Defense Scroll (Solo)

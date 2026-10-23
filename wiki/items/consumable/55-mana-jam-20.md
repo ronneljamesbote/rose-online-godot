@@ -9,7 +9,7 @@ effect: SP +20, teaches [[skills/20-trade|Trade]], uses [[skills/20-trade|Trade]
 price: 40000
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 55
+  data: godot/data/items/consumable/55-mana-jam-20.tres
   code: module/src/items.rs
 ---
 # Mana Jam (+20)

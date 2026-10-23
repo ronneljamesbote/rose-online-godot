@@ -38,7 +38,7 @@ used_to_craft:
 - '[[items/vehicle/201-wooden-wheels|Wooden Wheels]]'
 - '[[items/vehicle/331-punch-arms|Punch Arms]]'
 source:
-  data: LIST_NATURAL.STB row 201
+  data: godot/data/items/material/201-steam-oil.tres
   code: module/src/items.rs
 ---
 # Steam Oil

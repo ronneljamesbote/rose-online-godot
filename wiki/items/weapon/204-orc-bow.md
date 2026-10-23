@@ -49,7 +49,7 @@ sold_by:
 quest_reward:
 - '[[quests/956-why-did-toddy-steal-the-jewels|Why Did Toddy Steal the Jewels?]]'
 source:
-  data: LIST_WEAPON.STB row 204
+  data: godot/data/items/weapon/204-orc-bow.tres
   code: module/src/items.rs
 ---
 # Orc Bow

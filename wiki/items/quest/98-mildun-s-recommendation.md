@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/805-secretly-learning-to-drive|Secretly Learning to Drive]]'
 source:
-  data: LIST_QUESTITEM.STB row 98
+  data: godot/data/items/quest/98-mildun-s-recommendation.tres
   code: module/src/items.rs
 ---
 # Mildun's Recommendation

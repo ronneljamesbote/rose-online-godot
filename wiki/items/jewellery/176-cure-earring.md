@@ -10,7 +10,7 @@ bonus: HP Recovery Rate +12
 price: 183050
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 176
+  data: godot/data/items/jewellery/176-cure-earring.tres
   code: module/src/items.rs
 ---
 # Cure Earring

@@ -22,7 +22,7 @@ dropped_by:
   level: 84
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 733
+  data: godot/data/items/weapon/733-orc-launcher.tres
   code: module/src/items.rs
 ---
 # Orc Launcher

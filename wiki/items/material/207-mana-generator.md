@@ -12,7 +12,7 @@ dropped_by:
   level: 90
   slots_of_30: 1
 source:
-  data: LIST_NATURAL.STB row 207
+  data: godot/data/items/material/207-mana-generator.tres
   code: module/src/items.rs
 ---
 # Mana Generator

@@ -18,7 +18,7 @@ sockets: true
 price: 275950
 weight: 45
 source:
-  data: LIST_WEAPON.STB row 624
+  data: godot/data/items/weapon/624-bloody-axe.tres
   code: module/src/items.rs
 ---
 # Bloody Axe

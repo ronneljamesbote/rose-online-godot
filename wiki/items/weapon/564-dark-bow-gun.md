@@ -43,7 +43,7 @@ quest_reward:
 - '[[quests/153-kay-s-request|Kay''s Request]]'
 - '[[quests/154-kay-s-request|Kay''s Request]]'
 source:
-  data: LIST_WEAPON.STB row 564
+  data: godot/data/items/weapon/564-dark-bow-gun.tres
   code: module/src/items.rs
 ---
 # Dark Bow Gun

@@ -8,7 +8,7 @@ class: Magic Item
 effect: teaches [[skills/49-tantrum|Tantrum]], uses [[skills/49-tantrum|Tantrum]], fuel +49
 price: 20
 source:
-  data: LIST_USEITEM.STB row 977
+  data: godot/data/items/consumable/977-tantrum.tres
   code: module/src/items.rs
 ---
 # Tantrum

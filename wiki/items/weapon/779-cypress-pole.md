@@ -19,7 +19,7 @@ sockets: true
 price: 346700
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 779
+  data: godot/data/items/weapon/779-cypress-pole.tres
   code: module/src/items.rs
 ---
 # Cypress Pole

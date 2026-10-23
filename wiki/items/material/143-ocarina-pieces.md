@@ -60,7 +60,7 @@ dropped_by:
   level: 112
   slots_of_30: 3
 source:
-  data: LIST_NATURAL.STB row 143
+  data: godot/data/items/material/143-ocarina-pieces.tres
   code: module/src/items.rs
 ---
 # Ocarina Pieces

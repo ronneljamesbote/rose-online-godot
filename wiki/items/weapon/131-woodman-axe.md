@@ -53,7 +53,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]]'
 source:
-  data: LIST_WEAPON.STB row 131
+  data: godot/data/items/weapon/131-woodman-axe.tres
   code: module/src/items.rs
 ---
 # Woodman Axe

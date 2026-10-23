@@ -24,7 +24,7 @@ recipe:
   quantity: 15
 craft_difficulty: 51
 source:
-  data: LIST_SUBWPN.STB row 15
+  data: godot/data/items/subweapon/15-zephyr-defender.tres
   code: module/src/items.rs
 ---
 # Zephyr Defender

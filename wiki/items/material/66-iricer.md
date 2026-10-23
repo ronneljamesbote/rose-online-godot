@@ -81,7 +81,7 @@ dropped_in_zones:
 used_to_craft:
 - '[[items/vehicle/133-luxem-engine|Luxem Engine]]'
 source:
-  data: LIST_NATURAL.STB row 66
+  data: godot/data/items/material/66-iricer.tres
   code: module/src/items.rs
 ---
 # Iricer

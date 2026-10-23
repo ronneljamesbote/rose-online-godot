@@ -33,7 +33,7 @@ dropped_by:
   level: 160
   slots_of_30: 14
 source:
-  data: LIST_NATURAL.STB row 282
+  data: godot/data/items/material/282-sikuku-costume.tres
   code: module/src/items.rs
 ---
 # Sikuku Costume

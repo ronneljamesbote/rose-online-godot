@@ -12,7 +12,7 @@ weight: 1
 sold_by:
 - '[[npcs/1092-gypsy-jewel-seller-bellia|Gypsy Jewel Seller Bellia]]'
 source:
-  data: LIST_JEWEL.STB row 105
+  data: godot/data/items/jewellery/105-dark-necklace.tres
   code: module/src/items.rs
 ---
 # Dark Necklace

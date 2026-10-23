@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/902-muse-job-change-quest|Muse Job Change Quest]]'
 - '[[quests/903-muse-job-change-quest|Muse Job Change Quest]]'
 source:
-  data: LIST_QUESTITEM.STB row 106
+  data: godot/data/items/quest/106-flanae-seed.tres
   code: module/src/items.rs
 ---
 # Flanae Seed

@@ -9,7 +9,7 @@ effect: teaches [[skills/44-recovery-kiss|Recovery Kiss]], uses [[skills/44-reco
 price: 100
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 634
+  data: godot/data/items/consumable/634-recovery-kiss.tres
   code: module/src/items.rs
 ---
 # Recovery Kiss

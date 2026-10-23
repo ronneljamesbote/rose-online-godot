@@ -18,7 +18,7 @@ used_to_craft:
 - '[[items/hands/9-hill-gray-gloves|Hill Gray Gloves]]'
 - '[[items/feet/9-wild-walkers|Wild Walkers]]'
 source:
-  data: LIST_NATURAL.STB row 95
+  data: godot/data/items/material/95-glue.tres
   code: module/src/items.rs
 ---
 # Glue

@@ -13,7 +13,7 @@ used_to_craft:
 - '[[items/vehicle/203-rapid-wheels|Rapid Wheels]]'
 - '[[items/vehicle/312-battle-launcher|Battle Launcher]]'
 source:
-  data: LIST_NATURAL.STB row 212
+  data: godot/data/items/material/212-sporty-cart-schematic.tres
   code: module/src/items.rs
 ---
 # Sporty Cart Schematic

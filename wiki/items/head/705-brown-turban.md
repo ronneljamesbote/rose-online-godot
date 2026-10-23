@@ -14,7 +14,7 @@ job: Dealer Job
 price: 1100
 weight: 2
 source:
-  data: LIST_CAP.STB row 705
+  data: godot/data/items/head/705-brown-turban.tres
   code: module/src/items.rs
 ---
 # Brown Turban

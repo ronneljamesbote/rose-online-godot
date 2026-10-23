@@ -9,7 +9,7 @@ effect: teaches [[skills/361-berserk|Berserk]] level 11, uses [[skills/361-berse
 price: 6600
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 663
+  data: godot/data/items/consumable/663-shield-protect.tres
   code: module/src/items.rs
 ---
 # Shield Protect

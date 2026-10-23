@@ -19,7 +19,7 @@ sockets: true
 price: 5180
 weight: 5
 source:
-  data: LIST_WEAPON.STB row 791
+  data: godot/data/items/weapon/791-sorcerer-s-wand.tres
   code: module/src/items.rs
 ---
 # Sorcerer's Wand

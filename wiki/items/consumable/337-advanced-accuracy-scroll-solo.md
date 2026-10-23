@@ -8,7 +8,7 @@ class: Magic Item
 effect: teaches skill 3137, uses skill 3137, fuel +3137
 price: 100
 source:
-  data: LIST_USEITEM.STB row 337
+  data: godot/data/items/consumable/337-advanced-accuracy-scroll-solo.tres
   code: module/src/items.rs
 ---
 # Advanced Accuracy Scroll (Solo)

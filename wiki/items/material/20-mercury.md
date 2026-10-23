@@ -8,7 +8,7 @@ class: Otherworldly Metal
 price: 4040
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 20
+  data: godot/data/items/material/20-mercury.tres
   code: module/src/items.rs
 ---
 # Mercury

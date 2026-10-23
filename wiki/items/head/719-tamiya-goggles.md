@@ -14,7 +14,7 @@ job: Dealer Job
 price: 5300
 weight: 2
 source:
-  data: LIST_CAP.STB row 719
+  data: godot/data/items/head/719-tamiya-goggles.tres
   code: module/src/items.rs
 ---
 # Tamiya Goggles

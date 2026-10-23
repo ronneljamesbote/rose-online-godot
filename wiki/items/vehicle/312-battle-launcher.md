@@ -17,7 +17,7 @@ quality: 60
 price: 105800
 weight: 5
 source:
-  data: LIST_PAT.STB row 312
+  data: godot/data/items/vehicle/312-battle-launcher.tres
   code: module/src/items.rs
 ---
 # Battle Launcher

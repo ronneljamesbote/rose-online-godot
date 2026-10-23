@@ -37,7 +37,7 @@ used_to_craft:
 - '[[items/vehicle/132-sheft-engine|Sheft Engine]]'
 - '[[items/vehicle/334-cannon-arms|Cannon Arms]]'
 source:
-  data: LIST_NATURAL.STB row 204
+  data: godot/data/items/material/204-mana-metal.tres
   code: module/src/items.rs
 ---
 # Mana Metal

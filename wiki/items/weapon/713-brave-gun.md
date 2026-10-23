@@ -18,7 +18,7 @@ sockets: true
 price: 319250
 weight: 35
 source:
-  data: LIST_WEAPON.STB row 713
+  data: godot/data/items/weapon/713-brave-gun.tres
   code: module/src/items.rs
 ---
 # Brave Gun

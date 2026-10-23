@@ -16,7 +16,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1092-gypsy-jewel-seller-bellia|Gypsy Jewel Seller Bellia]]'
 source:
-  data: LIST_JEWEL.STB row 17
+  data: godot/data/items/jewellery/17-alluring-ring.tres
   code: module/src/items.rs
 ---
 # Alluring Ring

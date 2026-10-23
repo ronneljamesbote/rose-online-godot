@@ -28,7 +28,7 @@ dropped_by:
   level: 155
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 248
+  data: godot/data/items/weapon/248-shok-impact-gun.tres
   code: module/src/items.rs
 ---
 # Shok Impact Gun

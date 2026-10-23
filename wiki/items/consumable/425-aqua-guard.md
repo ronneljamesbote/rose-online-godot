@@ -17,7 +17,7 @@ dropped_by:
   level: 34
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 425
+  data: godot/data/items/consumable/425-aqua-guard.tres
   code: module/src/items.rs
 ---
 # Aqua Guard

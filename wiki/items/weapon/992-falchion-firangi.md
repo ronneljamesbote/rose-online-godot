@@ -17,7 +17,7 @@ bonus: Attack Speed +20
 price: 148085
 weight: 155
 source:
-  data: LIST_WEAPON.STB row 992
+  data: godot/data/items/weapon/992-falchion-firangi.tres
   code: module/src/items.rs
 ---
 # Falchion-Firangi

@@ -31,7 +31,7 @@ dropped_by:
   level: 115
   slots_of_30: 0.2
 source:
-  data: LIST_BACK.STB row 226
+  data: godot/data/items/back/226-crow-wing.tres
   code: module/src/items.rs
 ---
 # Crow Wing

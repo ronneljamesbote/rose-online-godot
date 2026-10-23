@@ -16,7 +16,7 @@ weight: 10
 sold_by:
 - '[[npcs/1112-arumic-researcher-carasia|Arumic Researcher Carasia]]'
 source:
-  data: LIST_BODY.STB row 230
+  data: godot/data/items/body/230-senior-look.tres
   code: module/src/items.rs
 ---
 # Senior Look

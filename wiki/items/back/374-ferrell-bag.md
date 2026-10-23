@@ -14,7 +14,7 @@ bonus: Inventory Capacity +1000
 price: 298550
 weight: 5
 source:
-  data: LIST_BACK.STB row 374
+  data: godot/data/items/back/374-ferrell-bag.tres
   code: module/src/items.rs
 ---
 # Ferrell Bag

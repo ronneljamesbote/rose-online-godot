@@ -17,7 +17,7 @@ needs: Strength 73
 price: 5840
 weight: 20
 source:
-  data: LIST_WEAPON.STB row 611
+  data: godot/data/items/weapon/611-small-axe.tres
   code: module/src/items.rs
 ---
 # Small Axe

@@ -41,7 +41,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_ARMS.STB row 124
+  data: godot/data/items/hands/124-semiya-gloves.tres
   code: module/src/items.rs
 ---
 # Semiya Gloves

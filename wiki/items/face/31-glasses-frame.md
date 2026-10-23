@@ -20,7 +20,7 @@ recipe:
   quantity: 2
 craft_difficulty: 20
 source:
-  data: LIST_FACEITEM.STB row 31
+  data: godot/data/items/face/31-glasses-frame.tres
   code: module/src/items.rs
 ---
 # Glasses Frame

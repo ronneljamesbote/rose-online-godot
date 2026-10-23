@@ -18,7 +18,7 @@ dropped_by:
   level: 70
   slots_of_30: 0.6
 source:
-  data: LIST_BODY.STB row 624
+  data: godot/data/items/body/624-semiya-vest.tres
   code: module/src/items.rs
 ---
 # Semiya Vest

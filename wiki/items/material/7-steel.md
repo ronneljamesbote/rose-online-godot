@@ -24,7 +24,7 @@ used_to_craft:
 - '[[items/subweapon/16-silver-hearts-shield|Silver Hearts Shield]]'
 - '[[items/vehicle/311-battle-machine-gun|Battle Machine Gun]]'
 source:
-  data: LIST_NATURAL.STB row 7
+  data: godot/data/items/material/7-steel.tres
   code: module/src/items.rs
 ---
 # Steel

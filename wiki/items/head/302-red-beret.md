@@ -14,7 +14,7 @@ bonus: Attack Accuracy +2
 price: 1450
 weight: 3
 source:
-  data: LIST_CAP.STB row 302
+  data: godot/data/items/head/302-red-beret.tres
   code: module/src/items.rs
 ---
 # Red Beret

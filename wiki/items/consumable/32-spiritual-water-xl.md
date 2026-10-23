@@ -13,7 +13,7 @@ dropped_by:
   level: 80
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 32
+  data: godot/data/items/consumable/32-spiritual-water-xl.tres
   code: module/src/items.rs
 ---
 # Spiritual Water (XL)

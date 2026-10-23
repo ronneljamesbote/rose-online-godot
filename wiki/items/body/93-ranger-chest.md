@@ -41,7 +41,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1094-armor-merchant-saki|Armor Merchant Saki]]'
 source:
-  data: LIST_BODY.STB row 93
+  data: godot/data/items/body/93-ranger-chest.tres
   code: module/src/items.rs
 ---
 # Ranger Chest

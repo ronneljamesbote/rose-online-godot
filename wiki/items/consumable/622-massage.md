@@ -9,7 +9,7 @@ effect: teaches [[skills/32-massage|Massage]], uses [[skills/32-massage|Massage]
 price: 50
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 622
+  data: godot/data/items/consumable/622-massage.tres
   code: module/src/items.rs
 ---
 # Massage

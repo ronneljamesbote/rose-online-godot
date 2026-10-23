@@ -25,7 +25,7 @@ craft_difficulty: 24
 sold_by:
 - '[[npcs/1094-armor-merchant-saki|Armor Merchant Saki]]'
 source:
-  data: LIST_BACK.STB row 244
+  data: godot/data/items/back/244-guard-backshield.tres
   code: module/src/items.rs
 ---
 # Guard Backshield

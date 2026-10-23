@@ -14,7 +14,7 @@ dropped_by:
   level: 53
   slots_of_30: 1
 source:
-  data: LIST_JEWEL.STB row 151
+  data: godot/data/items/jewellery/151-shining-earring.tres
   code: module/src/items.rs
 ---
 # Shining Earring

@@ -18,7 +18,7 @@ sockets: true
 price: 222950
 weight: 20
 source:
-  data: LIST_WEAPON.STB row 736
+  data: godot/data/items/weapon/736-burning-launcher.tres
   code: module/src/items.rs
 ---
 # Burning Launcher

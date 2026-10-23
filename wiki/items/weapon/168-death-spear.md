@@ -57,7 +57,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 source:
-  data: LIST_WEAPON.STB row 168
+  data: godot/data/items/weapon/168-death-spear.tres
   code: module/src/items.rs
 ---
 # Death Spear

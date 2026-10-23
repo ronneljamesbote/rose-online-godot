@@ -18,7 +18,7 @@ sockets: true
 price: 79650
 weight: 50
 source:
-  data: LIST_WEAPON.STB row 539
+  data: godot/data/items/weapon/539-pony-hammer.tres
   code: module/src/items.rs
 ---
 # Pony Hammer

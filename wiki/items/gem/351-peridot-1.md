@@ -60,7 +60,7 @@ quest_reward:
 used_to_craft:
 - '[[items/gem/352-peridot-2|Peridot 2]]'
 source:
-  data: LIST_JEMITEM.STB row 351
+  data: godot/data/items/gem/351-peridot-1.tres
   code: module/src/items.rs
 ---
 # Peridot [1]

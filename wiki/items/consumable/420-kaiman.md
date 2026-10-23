@@ -17,7 +17,7 @@ dropped_by:
   level: 64
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 420
+  data: godot/data/items/consumable/420-kaiman.tres
   code: module/src/items.rs
 ---
 # Kaiman

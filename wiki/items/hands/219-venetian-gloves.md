@@ -14,7 +14,7 @@ bonus: Attack Speed +3
 price: 3700
 weight: 1
 source:
-  data: LIST_ARMS.STB row 219
+  data: godot/data/items/hands/219-venetian-gloves.tres
   code: module/src/items.rs
 ---
 # Venetian Gloves

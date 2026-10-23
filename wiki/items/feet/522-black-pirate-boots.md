@@ -15,7 +15,7 @@ job: Hawker 2nd Advanced Jobs
 price: 13050
 weight: 3
 source:
-  data: LIST_FOOT.STB row 522
+  data: godot/data/items/feet/522-black-pirate-boots.tres
   code: module/src/items.rs
 ---
 # Black Pirate Boots

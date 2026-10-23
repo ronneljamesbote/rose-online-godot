@@ -22,7 +22,7 @@ dropped_by:
   level: 57
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 642
+  data: godot/data/items/weapon/642-iron-spear.tres
   code: module/src/items.rs
 ---
 # Iron Spear

@@ -17,7 +17,7 @@ bonus: Max MP +200
 price: 120655
 weight: 99
 source:
-  data: LIST_WEAPON.STB row 960
+  data: godot/data/items/weapon/960-gatling-multi-launcher.tres
   code: module/src/items.rs
 ---
 # Gatling Multi Launcher

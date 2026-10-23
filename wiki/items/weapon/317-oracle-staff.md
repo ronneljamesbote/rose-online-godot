@@ -43,7 +43,7 @@ dropped_by:
   level: 150
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 317
+  data: godot/data/items/weapon/317-oracle-staff.tres
   code: module/src/items.rs
 ---
 # Oracle Staff

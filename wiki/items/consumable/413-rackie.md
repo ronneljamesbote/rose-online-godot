@@ -20,7 +20,7 @@ dropped_by:
   level: 28
   slots_of_30: 2
 source:
-  data: LIST_USEITEM.STB row 413
+  data: godot/data/items/consumable/413-rackie.tres
   code: module/src/items.rs
 ---
 # Rackie

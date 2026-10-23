@@ -14,7 +14,7 @@ job: Hawker Job
 price: 4050
 weight: 2
 source:
-  data: LIST_ARMS.STB row 514
+  data: godot/data/items/hands/514-ranger-gloves.tres
   code: module/src/items.rs
 ---
 # Ranger Gloves

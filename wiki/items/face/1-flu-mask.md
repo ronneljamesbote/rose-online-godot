@@ -20,7 +20,7 @@ recipe:
   quantity: 1
 craft_difficulty: 18
 source:
-  data: LIST_FACEITEM.STB row 1
+  data: godot/data/items/face/1-flu-mask.tres
   code: module/src/items.rs
 ---
 # Flu Mask

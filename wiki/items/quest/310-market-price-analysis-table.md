@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/3804-charrs-elaborate-market-price-analysis-table|Charrs'' Elaborate Market Price Analysis Table]]'
 source:
-  data: LIST_QUESTITEM.STB row 310
+  data: godot/data/items/quest/310-market-price-analysis-table.tres
   code: module/src/items.rs
 ---
 # Market Price Analysis Table

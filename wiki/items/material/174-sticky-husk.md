@@ -27,7 +27,7 @@ used_to_craft:
 - '[[items/weapon/333-sorcerer-s-wand|Sorcerer''s Wand]]'
 - '[[items/weapon/403-katar|Katar]]'
 source:
-  data: LIST_NATURAL.STB row 174
+  data: godot/data/items/material/174-sticky-husk.tres
   code: module/src/items.rs
 ---
 # Sticky Husk

@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/3807-new-recovery-potion|New Recovery Potion]]'
 source:
-  data: LIST_QUESTITEM.STB row 317
+  data: godot/data/items/quest/317-sticky-fluid.tres
   code: module/src/items.rs
 ---
 # Sticky Fluid

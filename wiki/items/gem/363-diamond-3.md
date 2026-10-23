@@ -20,7 +20,7 @@ quest_reward:
 used_to_craft:
 - '[[items/gem/364-diamond-4|Diamond 4]]'
 source:
-  data: LIST_JEMITEM.STB row 363
+  data: godot/data/items/gem/363-diamond-3.tres
   code: module/src/items.rs
 ---
 # Diamond [3]

@@ -10,7 +10,7 @@ weight: 1
 dropped_in_zones:
 - '[[zones/27-kenji-beach|Kenji Beach]]'
 source:
-  data: LIST_NATURAL.STB row 50
+  data: godot/data/items/material/50-patterned-leather.tres
   code: module/src/items.rs
 ---
 # Patterned Leather

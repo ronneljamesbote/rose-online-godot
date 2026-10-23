@@ -7,7 +7,7 @@ icon: item/1798
 class: Quest Items
 price: 0
 source:
-  data: LIST_QUESTITEM.STB row 30
+  data: godot/data/items/quest/30-otherworldly-branch.tres
   code: module/src/items.rs
 ---
 # Otherworldly Branch

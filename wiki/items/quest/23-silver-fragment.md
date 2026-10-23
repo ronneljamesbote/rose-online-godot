@@ -13,7 +13,7 @@ needed_for_quest:
 - '[[quests/3006-in-readiness-for-war|In Readiness for War]]'
 - '[[quests/5008-stockpiling-silver-fragments|Stockpiling Silver Fragments]]'
 source:
-  data: LIST_QUESTITEM.STB row 23
+  data: godot/data/items/quest/23-silver-fragment.tres
   code: module/src/items.rs
 ---
 # Silver Fragment

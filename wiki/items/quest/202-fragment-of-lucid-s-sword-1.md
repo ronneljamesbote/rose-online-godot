@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/1057-lucid-king-of-legend-second-job-change|Lucid: King of Legend (Second Job Change)]]'
 - '[[quests/1058-lucid-king-of-legend-second-job-change|Lucid: King of Legend (Second Job Change)]]'
 source:
-  data: LIST_QUESTITEM.STB row 202
+  data: godot/data/items/quest/202-fragment-of-lucid-s-sword-1.tres
   code: module/src/items.rs
 ---
 # Fragment of Lucid's Sword (1)

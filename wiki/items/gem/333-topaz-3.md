@@ -24,7 +24,7 @@ quest_reward:
 used_to_craft:
 - '[[items/gem/334-topaz-4|Topaz 4]]'
 source:
-  data: LIST_JEMITEM.STB row 333
+  data: godot/data/items/gem/333-topaz-3.tres
   code: module/src/items.rs
 ---
 # Topaz [3]

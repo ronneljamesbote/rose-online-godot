@@ -38,7 +38,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1010-designer-keenu|Designer Keenu]]'
 source:
-  data: LIST_ARMS.STB row 7
+  data: godot/data/items/hands/7-full-action-gloves.tres
   code: module/src/items.rs
 ---
 # Full Action Gloves

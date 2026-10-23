@@ -8,7 +8,7 @@ class: Magic Item
 effect: teaches [[skills/40-breakdown|Breakdown]], uses [[skills/40-breakdown|Breakdown]], fuel +48
 price: 20
 source:
-  data: LIST_USEITEM.STB row 976
+  data: godot/data/items/consumable/976-breakdown.tres
   code: module/src/items.rs
 ---
 # Breakdown

@@ -38,7 +38,7 @@ dropped_by:
   level: 88
   slots_of_30: 0.2
 source:
-  data: LIST_FOOT.STB row 16
+  data: godot/data/items/feet/16-redfield-green-shoes.tres
   code: module/src/items.rs
 ---
 # Redfield Green Shoes

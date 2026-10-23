@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/1078-lillith-woman-of-the-cosmos-second-job-change|Lillith, Woman of the Cosmos (Second Job Change)]]'
 - '[[quests/1079-lillith-woman-of-the-cosmos-second-job-change|Lillith, Woman of the Cosmos (Second Job Change)]]'
 source:
-  data: LIST_QUESTITEM.STB row 225
+  data: godot/data/items/quest/225-lillith-s-scales.tres
   code: module/src/items.rs
 ---
 # Lillith's Scales

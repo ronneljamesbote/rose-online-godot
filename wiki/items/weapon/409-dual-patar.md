@@ -31,7 +31,7 @@ dropped_by:
   level: 89
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 409
+  data: godot/data/items/weapon/409-dual-patar.tres
   code: module/src/items.rs
 ---
 # Dual Patar

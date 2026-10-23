@@ -8,7 +8,7 @@ class: Gathered Goods
 price: 4780
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 137
+  data: godot/data/items/material/137-ancient-tablet4.tres
   code: module/src/items.rs
 ---
 # Ancient Tablet4

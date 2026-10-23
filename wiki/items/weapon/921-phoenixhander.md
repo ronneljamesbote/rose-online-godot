@@ -17,7 +17,7 @@ bonus: MP Consumption +20
 price: 105195
 weight: 142
 source:
-  data: LIST_WEAPON.STB row 921
+  data: godot/data/items/weapon/921-phoenixhander.tres
   code: module/src/items.rs
 ---
 # Phoenixhander

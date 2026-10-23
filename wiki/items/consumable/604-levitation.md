@@ -9,7 +9,7 @@ effect: teaches [[skills/14-levitation|Levitation]], uses [[skills/14-levitation
 price: 50
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 604
+  data: godot/data/items/consumable/604-levitation.tres
   code: module/src/items.rs
 ---
 # Levitation

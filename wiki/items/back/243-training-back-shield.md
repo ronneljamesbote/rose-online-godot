@@ -25,7 +25,7 @@ craft_difficulty: 21
 sold_by:
 - '[[npcs/1094-armor-merchant-saki|Armor Merchant Saki]]'
 source:
-  data: LIST_BACK.STB row 243
+  data: godot/data/items/back/243-training-back-shield.tres
   code: module/src/items.rs
 ---
 # Training Back shield

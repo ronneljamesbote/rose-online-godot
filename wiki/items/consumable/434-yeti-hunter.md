@@ -14,7 +14,7 @@ dropped_by:
   level: 95
   slots_of_30: 2
 source:
-  data: LIST_USEITEM.STB row 434
+  data: godot/data/items/consumable/434-yeti-hunter.tres
   code: module/src/items.rs
 ---
 # Yeti Hunter

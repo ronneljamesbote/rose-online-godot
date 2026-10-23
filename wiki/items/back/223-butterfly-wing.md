@@ -31,7 +31,7 @@ dropped_by:
   level: 60
   slots_of_30: 0.4
 source:
-  data: LIST_BACK.STB row 223
+  data: godot/data/items/back/223-butterfly-wing.tres
   code: module/src/items.rs
 ---
 # Butterfly Wing

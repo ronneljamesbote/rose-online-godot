@@ -14,7 +14,7 @@ job: Soldier and Hawker Job
 price: 45500
 weight: 30
 source:
-  data: LIST_BACK.STB row 629
+  data: godot/data/items/back/629-buffalo-backshield.tres
   code: module/src/items.rs
 ---
 # Buffalo Backshield

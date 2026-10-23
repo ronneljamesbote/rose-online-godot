@@ -16,7 +16,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1092-gypsy-jewel-seller-bellia|Gypsy Jewel Seller Bellia]]'
 source:
-  data: LIST_JEWEL.STB row 11
+  data: godot/data/items/jewellery/11-glamour-ring.tres
   code: module/src/items.rs
 ---
 # Glamour Ring

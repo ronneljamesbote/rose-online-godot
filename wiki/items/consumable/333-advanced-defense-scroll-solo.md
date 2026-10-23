@@ -8,7 +8,7 @@ class: Magic Item
 effect: teaches skill 3133, uses skill 3133, fuel +3133
 price: 100
 source:
-  data: LIST_USEITEM.STB row 333
+  data: godot/data/items/consumable/333-advanced-defense-scroll-solo.tres
   code: module/src/items.rs
 ---
 # Advanced Defense Scroll (Solo)

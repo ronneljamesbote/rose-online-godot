@@ -40,7 +40,7 @@ used_to_craft:
 - '[[items/vehicle/232-runihol-leg|Runihol Leg]]'
 - '[[items/vehicle/333-sword-wheel-arms|Sword Wheel Arms]]'
 source:
-  data: LIST_NATURAL.STB row 203
+  data: godot/data/items/material/203-steam-viper.tres
   code: module/src/items.rs
 ---
 # Steam Viper

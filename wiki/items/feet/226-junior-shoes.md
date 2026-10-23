@@ -17,7 +17,7 @@ sold_by:
 - '[[npcs/1109-elder-of-junon-order-gorthein|Elder of Junon Order Gorthein]]'
 - '[[npcs/1112-arumic-researcher-carasia|Arumic Researcher Carasia]]'
 source:
-  data: LIST_FOOT.STB row 226
+  data: godot/data/items/feet/226-junior-shoes.tres
   code: module/src/items.rs
 ---
 # Junior Shoes

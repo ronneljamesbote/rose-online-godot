@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/118-forbidden-potion|Forbidden Potion]]'
 - '[[quests/119-forbidden-potion|Forbidden Potion]]'
 source:
-  data: LIST_QUESTITEM.STB row 608
+  data: godot/data/items/quest/608-sharp-stinger.tres
   code: module/src/items.rs
 ---
 # Sharp Stinger

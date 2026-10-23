@@ -30,7 +30,7 @@ recipe:
   quantity: 30
 craft_difficulty: 48
 source:
-  data: LIST_WEAPON.STB row 345
+  data: godot/data/items/weapon/345-conjurer-s-wand.tres
   code: module/src/items.rs
 ---
 # Conjurer's Wand

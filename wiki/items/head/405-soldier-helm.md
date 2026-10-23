@@ -14,7 +14,7 @@ job: Soldier Job
 price: 1100
 weight: 10
 source:
-  data: LIST_CAP.STB row 405
+  data: godot/data/items/head/405-soldier-helm.tres
   code: module/src/items.rs
 ---
 # Soldier Helm

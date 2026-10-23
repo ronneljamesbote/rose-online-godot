@@ -17,7 +17,7 @@ bonus: Attack Speed +20
 price: 76590
 weight: 40
 source:
-  data: LIST_WEAPON.STB row 941
+  data: godot/data/items/weapon/941-bow-of-artemis.tres
   code: module/src/items.rs
 ---
 # Bow of Artemis

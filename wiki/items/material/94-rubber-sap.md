@@ -19,7 +19,7 @@ used_to_craft:
 - '[[items/feet/8-field-walkers|Field Walkers]]'
 - '[[items/feet/63-purple-sandals-of-witch|Purple Sandals of Witch]]'
 source:
-  data: LIST_NATURAL.STB row 94
+  data: godot/data/items/material/94-rubber-sap.tres
   code: module/src/items.rs
 ---
 # Rubber Sap

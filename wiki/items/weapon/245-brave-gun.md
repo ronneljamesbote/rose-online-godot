@@ -29,7 +29,7 @@ recipe:
   quantity: 4
 craft_difficulty: 63
 source:
-  data: LIST_WEAPON.STB row 245
+  data: godot/data/items/weapon/245-brave-gun.tres
   code: module/src/items.rs
 ---
 # Brave Gun

@@ -21,7 +21,7 @@ used_to_craft:
 - '[[items/weapon/141-ice-axe|Ice Axe]]'
 - '[[items/weapon/440-ice-flare-swords|Ice & Flare Swords]]'
 source:
-  data: LIST_NATURAL.STB row 12
+  data: godot/data/items/material/12-demon-metal.tres
   code: module/src/items.rs
 ---
 # Demon Metal

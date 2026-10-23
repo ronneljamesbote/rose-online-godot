@@ -29,7 +29,7 @@ recipe:
   quantity: 30
 craft_difficulty: 46
 source:
-  data: LIST_WEAPON.STB row 273
+  data: godot/data/items/weapon/273-mana-cannon.tres
   code: module/src/items.rs
 ---
 # Mana Cannon

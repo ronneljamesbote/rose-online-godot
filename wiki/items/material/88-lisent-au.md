@@ -12,7 +12,7 @@ dropped_by:
   level: 158
   slots_of_30: 1
 source:
-  data: LIST_NATURAL.STB row 88
+  data: godot/data/items/material/88-lisent-au.tres
   code: module/src/items.rs
 ---
 # Lisent (Au)

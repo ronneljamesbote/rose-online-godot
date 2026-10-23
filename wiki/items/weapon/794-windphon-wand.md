@@ -23,7 +23,7 @@ dropped_by:
   level: 80
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 794
+  data: godot/data/items/weapon/794-windphon-wand.tres
   code: module/src/items.rs
 ---
 # Windphon Wand

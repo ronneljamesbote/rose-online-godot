@@ -37,7 +37,7 @@ used_to_craft:
 - '[[items/weapon/417-bloody-hook-knuckle|Bloody Hook Knuckle]]'
 - '[[items/weapon/433-dual-bushido|Dual Bushido]]'
 source:
-  data: LIST_NATURAL.STB row 102
+  data: godot/data/items/material/102-sharp-iron-piece.tres
   code: module/src/items.rs
 ---
 # Sharp Iron Piece

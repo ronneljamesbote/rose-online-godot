@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/1072-kirnale-s-journals-second-job-change|Kirnale''s Journals (Second Job Change)]]'
 - '[[quests/1073-kirnale-s-journals-second-job-change|Kirnale''s Journals (Second Job Change)]]'
 source:
-  data: LIST_QUESTITEM.STB row 219
+  data: godot/data/items/quest/219-phoenix-writing-quill.tres
   code: module/src/items.rs
 ---
 # Phoenix Writing Quill

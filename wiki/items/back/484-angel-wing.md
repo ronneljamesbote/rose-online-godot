@@ -15,7 +15,7 @@ bonus: Movement Speed +60
 price: 101350
 weight: 15
 source:
-  data: LIST_BACK.STB row 484
+  data: godot/data/items/back/484-angel-wing.tres
   code: module/src/items.rs
 ---
 # Angel Wing

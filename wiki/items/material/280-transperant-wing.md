@@ -30,7 +30,7 @@ dropped_by:
   level: 158
   slots_of_30: 14
 source:
-  data: LIST_NATURAL.STB row 280
+  data: godot/data/items/material/280-transperant-wing.tres
   code: module/src/items.rs
 ---
 # Transperant Wing

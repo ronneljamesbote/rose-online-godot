@@ -9,7 +9,7 @@ effect: Personal Shop Remodeling +1440, teaches [[skills/1421-knuckle-mastery|Kn
 price: 200
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 956
+  data: godot/data/items/consumable/956-special-shop-c-coupon.tres
   code: module/src/items.rs
 ---
 # Special Shop C Coupon

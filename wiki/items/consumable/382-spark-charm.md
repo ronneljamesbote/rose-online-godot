@@ -19,7 +19,7 @@ quest_reward:
 - '[[quests/156-monsters-in-the-desert|Monsters in the Desert]]'
 - '[[quests/157-skin-of-steel|Skin of Steel]]'
 source:
-  data: LIST_USEITEM.STB row 382
+  data: godot/data/items/consumable/382-spark-charm.tres
   code: module/src/items.rs
 ---
 # Spark Charm

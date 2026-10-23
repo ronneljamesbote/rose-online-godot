@@ -55,7 +55,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1091-arumic-merchant-chester|Arumic Merchant Chester]]'
 source:
-  data: LIST_WEAPON.STB row 306
+  data: godot/data/items/weapon/306-wisp-staff.tres
   code: module/src/items.rs
 ---
 # Wisp Staff

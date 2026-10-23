@@ -18,7 +18,7 @@ sockets: true
 price: 69050
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 829
+  data: godot/data/items/weapon/829-shaft-claw.tres
   code: module/src/items.rs
 ---
 # Shaft Claw

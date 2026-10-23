@@ -18,7 +18,7 @@ quest_reward:
 needed_for_quest:
 - quest 5063
 source:
-  data: LIST_BODY.STB row 153
+  data: godot/data/items/body/153-hanbok.tres
   code: module/src/items.rs
 ---
 # HanBok

@@ -26,7 +26,7 @@ sold_by:
 - '[[npcs/1010-designer-keenu|Designer Keenu]]'
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_BACK.STB row 203
+  data: godot/data/items/back/203-wooden-chest.tres
   code: module/src/items.rs
 ---
 # Wooden Chest

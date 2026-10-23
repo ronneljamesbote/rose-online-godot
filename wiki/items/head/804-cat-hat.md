@@ -13,7 +13,7 @@ bonus: Attack Power +7
 price: 1000
 weight: 3
 source:
-  data: LIST_CAP.STB row 804
+  data: godot/data/items/head/804-cat-hat.tres
   code: module/src/items.rs
 ---
 # Cat Hat

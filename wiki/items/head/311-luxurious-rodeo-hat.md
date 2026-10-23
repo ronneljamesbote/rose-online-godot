@@ -14,7 +14,7 @@ bonus: Attack Accuracy +5
 price: 3750
 weight: 3
 source:
-  data: LIST_CAP.STB row 311
+  data: godot/data/items/head/311-luxurious-rodeo-hat.tres
   code: module/src/items.rs
 ---
 # Luxurious Rodeo Hat

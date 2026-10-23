@@ -19,7 +19,7 @@ sockets: true
 price: 19035
 weight: 10
 source:
-  data: LIST_WEAPON.STB row 763
+  data: godot/data/items/weapon/763-white-staff.tres
   code: module/src/items.rs
 ---
 # White Staff

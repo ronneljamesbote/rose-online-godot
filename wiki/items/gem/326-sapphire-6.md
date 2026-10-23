@@ -20,7 +20,7 @@ craft_difficulty: 32
 used_to_craft:
 - '[[items/gem/327-sapphire-7|Sapphire 7]]'
 source:
-  data: LIST_JEMITEM.STB row 326
+  data: godot/data/items/gem/326-sapphire-6.tres
   code: module/src/items.rs
 ---
 # Sapphire [6]

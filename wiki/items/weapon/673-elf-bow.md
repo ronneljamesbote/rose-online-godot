@@ -22,7 +22,7 @@ dropped_by:
   level: 60
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 673
+  data: godot/data/items/weapon/673-elf-bow.tres
   code: module/src/items.rs
 ---
 # Elf Bow

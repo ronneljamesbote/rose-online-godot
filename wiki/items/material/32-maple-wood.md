@@ -25,7 +25,7 @@ used_to_craft:
 - '[[items/weapon/402-sword-knuckle|Sword Knuckle]]'
 - '[[items/subweapon/68-magic-mirror|Magic Mirror]]'
 source:
-  data: LIST_NATURAL.STB row 32
+  data: godot/data/items/material/32-maple-wood.tres
   code: module/src/items.rs
 ---
 # Maple Wood

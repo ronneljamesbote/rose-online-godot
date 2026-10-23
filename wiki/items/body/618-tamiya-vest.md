@@ -14,7 +14,7 @@ job: Dealer Job
 price: 21250
 weight: 15
 source:
-  data: LIST_BODY.STB row 618
+  data: godot/data/items/body/618-tamiya-vest.tres
   code: module/src/items.rs
 ---
 # Tamiya Vest

@@ -29,7 +29,7 @@ quest_reward:
 - '[[quests/153-kay-s-request|Kay''s Request]]'
 - '[[quests/154-kay-s-request|Kay''s Request]]'
 source:
-  data: LIST_WEAPON.STB row 796
+  data: godot/data/items/weapon/796-blizzard-wand.tres
   code: module/src/items.rs
 ---
 # Blizzard Wand

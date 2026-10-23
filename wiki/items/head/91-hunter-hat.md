@@ -33,7 +33,7 @@ sold_by:
 - '[[npcs/1009-armor-seller-carrion|Armor Seller Carrion]]'
 - '[[npcs/1094-armor-merchant-saki|Armor Merchant Saki]]'
 source:
-  data: LIST_CAP.STB row 91
+  data: godot/data/items/head/91-hunter-hat.tres
   code: module/src/items.rs
 ---
 # Hunter Hat

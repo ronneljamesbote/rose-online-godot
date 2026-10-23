@@ -18,7 +18,7 @@ sockets: true
 price: 312900
 weight: 50
 source:
-  data: LIST_WEAPON.STB row 625
+  data: godot/data/items/weapon/625-collapse-axe.tres
   code: module/src/items.rs
 ---
 # Collapse Axe

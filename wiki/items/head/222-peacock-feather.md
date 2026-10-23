@@ -13,7 +13,7 @@ price: 0
 weight: 1
 trade: can't be traded or dropped
 source:
-  data: LIST_CAP.STB row 222
+  data: godot/data/items/head/222-peacock-feather.tres
   code: module/src/items.rs
 ---
 # Peacock Feather

@@ -12,7 +12,7 @@ sold_by:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 - '[[npcs/1085-akram-minister-nel|Akram Minister Nel]]'
 source:
-  data: LIST_USEITEM.STB row 742
+  data: godot/data/items/consumable/742-evasion-aura.tres
   code: module/src/items.rs
 ---
 # Evasion Aura

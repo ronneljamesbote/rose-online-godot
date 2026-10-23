@@ -12,7 +12,7 @@ weight: 1
 sold_by:
 - '[[npcs/1092-gypsy-jewel-seller-bellia|Gypsy Jewel Seller Bellia]]'
 source:
-  data: LIST_JEWEL.STB row 99
+  data: godot/data/items/jewellery/99-necklace-of-magic.tres
   code: module/src/items.rs
 ---
 # Necklace of Magic

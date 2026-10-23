@@ -18,7 +18,7 @@ sockets: true
 price: 246700
 weight: 50
 source:
-  data: LIST_WEAPON.STB row 519
+  data: godot/data/items/weapon/519-flamboyant.tres
   code: module/src/items.rs
 ---
 # Flamboyant

@@ -29,7 +29,7 @@ dropped_by:
   level: 133
   slots_of_30: 0.8
 source:
-  data: LIST_BODY.STB row 127
+  data: godot/data/items/body/127-redfield-chairman-suit.tres
   code: module/src/items.rs
 ---
 # Redfield Chairman Suit

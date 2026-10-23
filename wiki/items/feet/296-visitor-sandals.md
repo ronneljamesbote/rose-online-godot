@@ -13,7 +13,7 @@ quality: 22
 price: 0
 weight: 2
 source:
-  data: LIST_FOOT.STB row 296
+  data: godot/data/items/feet/296-visitor-sandals.tres
   code: module/src/items.rs
 ---
 # Visitor Sandals

@@ -40,7 +40,7 @@ sold_by:
 quest_reward:
 - '[[quests/107-healing-hands|Healing Hands]]'
 source:
-  data: LIST_FOOT.STB row 5
+  data: godot/data/items/feet/5-dash-shoes.tres
   code: module/src/items.rs
 ---
 # Dash Shoes

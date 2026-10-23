@@ -15,7 +15,7 @@ job: Soldier 2nd Advanced Jobs
 price: 13550
 weight: 5
 source:
-  data: LIST_FOOT.STB row 327
+  data: godot/data/items/feet/327-chrome-boots.tres
   code: module/src/items.rs
 ---
 # Chrome Boots

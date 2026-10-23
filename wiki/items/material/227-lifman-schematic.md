@@ -8,7 +8,7 @@ class: Gathered Goods
 price: 3030
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 227
+  data: godot/data/items/material/227-lifman-schematic.tres
   code: module/src/items.rs
 ---
 # Lifman Schematic

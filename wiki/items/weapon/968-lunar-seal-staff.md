@@ -17,7 +17,7 @@ bonus: MP Consumption +25
 price: 109190
 weight: 104
 source:
-  data: LIST_WEAPON.STB row 968
+  data: godot/data/items/weapon/968-lunar-seal-staff.tres
   code: module/src/items.rs
 ---
 # Lunar Seal Staff

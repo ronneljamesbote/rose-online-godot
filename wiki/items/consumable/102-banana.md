@@ -29,7 +29,7 @@ sold_by:
 quest_reward:
 - '[[quests/5053-hunting-practice-3|Hunting Practice (3)]]'
 source:
-  data: LIST_USEITEM.STB row 102
+  data: godot/data/items/consumable/102-banana.tres
   code: module/src/items.rs
 ---
 # Banana

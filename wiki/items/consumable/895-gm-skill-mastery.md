@@ -8,7 +8,7 @@ class: Skill Book
 effect: teaches skill 3220, uses skill 3220, fuel +3220
 price: 150
 source:
-  data: LIST_USEITEM.STB row 895
+  data: godot/data/items/consumable/895-gm-skill-mastery.tres
   code: module/src/items.rs
 ---
 # GM Skill Mastery

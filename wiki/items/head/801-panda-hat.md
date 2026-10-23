@@ -13,7 +13,7 @@ bonus: Max HP +80
 price: 1000
 weight: 3
 source:
-  data: LIST_CAP.STB row 801
+  data: godot/data/items/head/801-panda-hat.tres
   code: module/src/items.rs
 ---
 # Panda Hat

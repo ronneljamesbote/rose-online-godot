@@ -14,7 +14,7 @@ job: Dealer 2nd Advanced Jobs
 price: 43550
 weight: 15
 source:
-  data: LIST_BODY.STB row 625
+  data: godot/data/items/body/625-semiya-vest.tres
   code: module/src/items.rs
 ---
 # Semiya Vest

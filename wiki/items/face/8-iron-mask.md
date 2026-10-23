@@ -25,7 +25,7 @@ dropped_by:
   level: 56
   slots_of_30: 0.2
 source:
-  data: LIST_FACEITEM.STB row 8
+  data: godot/data/items/face/8-iron-mask.tres
   code: module/src/items.rs
 ---
 # Iron Mask

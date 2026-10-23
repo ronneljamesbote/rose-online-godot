@@ -18,7 +18,7 @@ sockets: true
 price: 376350
 weight: 70
 source:
-  data: LIST_WEAPON.STB row 552
+  data: godot/data/items/weapon/552-nirvana-hammer.tres
   code: module/src/items.rs
 ---
 # Nirvana Hammer

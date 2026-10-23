@@ -19,7 +19,7 @@ sold_by:
 - '[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]'
 - '[[npcs/1112-arumic-researcher-carasia|Arumic Researcher Carasia]]'
 source:
-  data: LIST_ARMS.STB row 227
+  data: godot/data/items/hands/227-junior-gloves.tres
   code: module/src/items.rs
 ---
 # Junior Gloves

@@ -80,7 +80,7 @@ dropped_by:
 quest_reward:
 - '[[quests/2051-forgotten-temple-investigation-1|Forgotten Temple Investigation (1)]]'
 source:
-  data: LIST_NATURAL.STB row 82
+  data: godot/data/items/material/82-lisent-cu.tres
   code: module/src/items.rs
 ---
 # Lisent (Cu)

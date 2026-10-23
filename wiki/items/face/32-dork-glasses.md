@@ -20,7 +20,7 @@ recipe:
   quantity: 2
 craft_difficulty: 25
 source:
-  data: LIST_FACEITEM.STB row 32
+  data: godot/data/items/face/32-dork-glasses.tres
   code: module/src/items.rs
 ---
 # Dork Glasses

@@ -7,7 +7,7 @@ icon: item/253
 class: Quest Items
 price: 0
 source:
-  data: LIST_QUESTITEM.STB row 126
+  data: godot/data/items/quest/126-hovert-s-belt.tres
   code: module/src/items.rs
 ---
 # Hovert's Belt

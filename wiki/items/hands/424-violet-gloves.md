@@ -18,7 +18,7 @@ dropped_by:
   level: 75
   slots_of_30: 0.6
 source:
-  data: LIST_ARMS.STB row 424
+  data: godot/data/items/hands/424-violet-gloves.tres
   code: module/src/items.rs
 ---
 # Violet Gloves

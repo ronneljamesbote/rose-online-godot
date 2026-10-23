@@ -14,7 +14,7 @@ dropped_by:
   level: 58
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 421
+  data: godot/data/items/consumable/421-doonga.tres
   code: module/src/items.rs
 ---
 # Doonga

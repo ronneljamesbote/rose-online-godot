@@ -18,7 +18,7 @@ dropped_by:
   level: 73
   slots_of_30: 0.2
 source:
-  data: LIST_CAP.STB row 620
+  data: godot/data/items/head/620-ranger-hat.tres
   code: module/src/items.rs
 ---
 # Ranger Hat

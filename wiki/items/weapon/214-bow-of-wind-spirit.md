@@ -51,7 +51,7 @@ dropped_by:
   level: 120
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 214
+  data: godot/data/items/weapon/214-bow-of-wind-spirit.tres
   code: module/src/items.rs
 ---
 # Bow of Wind Spirit

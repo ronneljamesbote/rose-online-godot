@@ -14,7 +14,7 @@ dropped_in_zones:
 used_to_craft:
 - '[[items/weapon/346-twister-wand|Twister Wand]]'
 source:
-  data: LIST_NATURAL.STB row 9
+  data: godot/data/items/material/9-tiar.tres
   code: module/src/items.rs
 ---
 # Tiar

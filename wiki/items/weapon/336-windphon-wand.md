@@ -43,7 +43,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1091-arumic-merchant-chester|Arumic Merchant Chester]]'
 source:
-  data: LIST_WEAPON.STB row 336
+  data: godot/data/items/weapon/336-windphon-wand.tres
   code: module/src/items.rs
 ---
 # Windphon Wand

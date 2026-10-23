@@ -46,7 +46,7 @@ sold_by:
 - '[[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]]'
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 source:
-  data: LIST_SUBWPN.STB row 4
+  data: godot/data/items/subweapon/4-buckler.tres
   code: module/src/items.rs
 ---
 # Buckler

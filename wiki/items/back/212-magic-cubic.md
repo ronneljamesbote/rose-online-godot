@@ -22,7 +22,7 @@ recipe:
   quantity: 15
 craft_difficulty: 42
 source:
-  data: LIST_BACK.STB row 212
+  data: godot/data/items/back/212-magic-cubic.tres
   code: module/src/items.rs
 ---
 # Magic Cubic

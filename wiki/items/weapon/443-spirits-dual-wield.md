@@ -27,7 +27,7 @@ recipe:
   quantity: 20
 craft_difficulty: 29
 source:
-  data: LIST_WEAPON.STB row 443
+  data: godot/data/items/weapon/443-spirits-dual-wield.tres
   code: module/src/items.rs
 ---
 # Spirits Dual Wield

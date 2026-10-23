@@ -21,7 +21,7 @@ dropped_by:
   level: 33
   slots_of_30: 4
 source:
-  data: LIST_NATURAL.STB row 181
+  data: godot/data/items/material/181-pollen.tres
   code: module/src/items.rs
 ---
 # Pollen

@@ -9,7 +9,7 @@ effect: teaches [[skills/47-fight-cheer|Fight Cheer]], uses [[skills/47-fight-ch
 price: 100
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 637
+  data: godot/data/items/consumable/637-fight-cheer.tres
   code: module/src/items.rs
 ---
 # Fight Cheer

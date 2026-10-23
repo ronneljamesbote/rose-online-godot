@@ -20,7 +20,7 @@ used_to_craft:
 - '[[items/hands/7-full-action-gloves|Full Action Gloves]]'
 - '[[items/feet/7-islamic-shoes|Islamic Shoes]]'
 source:
-  data: LIST_NATURAL.STB row 91
+  data: godot/data/items/material/91-ink.tres
   code: module/src/items.rs
 ---
 # Ink

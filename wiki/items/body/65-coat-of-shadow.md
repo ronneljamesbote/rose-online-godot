@@ -48,7 +48,7 @@ dropped_by:
   level: 115
   slots_of_30: 0.2
 source:
-  data: LIST_BODY.STB row 65
+  data: godot/data/items/body/65-coat-of-shadow.tres
   code: module/src/items.rs
 ---
 # Coat of Shadow

@@ -9,7 +9,7 @@ effect: teaches skill 3119, uses skill 3119, fuel +3119
 price: 920
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 319
+  data: godot/data/items/consumable/319-advanced-damage-scroll-solo.tres
   code: module/src/items.rs
 ---
 # Advanced Damage Scroll (Solo)

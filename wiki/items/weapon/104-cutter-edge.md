@@ -49,7 +49,7 @@ sold_by:
 - '[[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]]'
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 source:
-  data: LIST_WEAPON.STB row 104
+  data: godot/data/items/weapon/104-cutter-edge.tres
   code: module/src/items.rs
 ---
 # Cutter Edge

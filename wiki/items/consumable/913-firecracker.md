@@ -9,7 +9,7 @@ effect: teaches skill 3270, uses skill 3270, fuel +3270
 price: 20
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 913
+  data: godot/data/items/consumable/913-firecracker.tres
   code: module/src/items.rs
 ---
 # Firecracker

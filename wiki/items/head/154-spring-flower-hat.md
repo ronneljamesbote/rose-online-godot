@@ -16,7 +16,7 @@ quest_reward:
 - '[[quests/5064-darling-judy-1|Darling Judy (1)]]'
 - '[[quests/5065-darling-judy-2|Darling Judy (2)]]'
 source:
-  data: LIST_CAP.STB row 154
+  data: godot/data/items/head/154-spring-flower-hat.tres
   code: module/src/items.rs
 ---
 # Spring Flower Hat

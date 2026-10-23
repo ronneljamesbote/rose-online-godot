@@ -40,7 +40,7 @@ dropped_by:
   level: 147
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 445
+  data: godot/data/items/weapon/445-glorious-dual-wield.tres
   code: module/src/items.rs
 ---
 # Glorious Dual Wield

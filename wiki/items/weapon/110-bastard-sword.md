@@ -39,7 +39,7 @@ dropped_by:
   level: 88
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 110
+  data: godot/data/items/weapon/110-bastard-sword.tres
   code: module/src/items.rs
 ---
 # Bastard Sword

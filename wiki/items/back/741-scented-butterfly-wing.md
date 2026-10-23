@@ -13,7 +13,7 @@ bonus: Movement Speed +75
 price: 1200
 weight: 20
 source:
-  data: LIST_BACK.STB row 741
+  data: godot/data/items/back/741-scented-butterfly-wing.tres
   code: module/src/items.rs
 ---
 # Scented Butterfly Wing

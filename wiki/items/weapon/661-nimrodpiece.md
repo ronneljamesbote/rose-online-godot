@@ -18,7 +18,7 @@ sockets: true
 price: 373250
 weight: 50
 source:
-  data: LIST_WEAPON.STB row 661
+  data: godot/data/items/weapon/661-nimrodpiece.tres
   code: module/src/items.rs
 ---
 # Nimrodpiece

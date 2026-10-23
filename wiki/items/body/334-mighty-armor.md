@@ -21,7 +21,7 @@ dropped_by:
   level: 142
   slots_of_30: 1
 source:
-  data: LIST_BODY.STB row 334
+  data: godot/data/items/body/334-mighty-armor.tres
   code: module/src/items.rs
 ---
 # Mighty Armor

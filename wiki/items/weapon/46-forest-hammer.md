@@ -29,7 +29,7 @@ recipe:
   quantity: 30
 craft_difficulty: 40
 source:
-  data: LIST_WEAPON.STB row 46
+  data: godot/data/items/weapon/46-forest-hammer.tres
   code: module/src/items.rs
 ---
 # Forest Hammer

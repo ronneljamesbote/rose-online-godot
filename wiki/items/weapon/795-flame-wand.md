@@ -23,7 +23,7 @@ dropped_by:
   level: 70
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 795
+  data: godot/data/items/weapon/795-flame-wand.tres
   code: module/src/items.rs
 ---
 # Flame Wand

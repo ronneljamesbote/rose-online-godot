@@ -25,7 +25,7 @@ recipe:
   quantity: 1
 craft_difficulty: 51
 source:
-  data: LIST_PAT.STB row 231
+  data: godot/data/items/vehicle/231-stand-leg.tres
   code: module/src/items.rs
 ---
 # Stand Leg

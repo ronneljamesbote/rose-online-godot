@@ -22,7 +22,7 @@ dropped_by:
   level: 142
   slots_of_30: 2
 source:
-  data: LIST_WEAPON.STB row 548
+  data: godot/data/items/weapon/548-forest-hammer.tres
   code: module/src/items.rs
 ---
 # Forest Hammer

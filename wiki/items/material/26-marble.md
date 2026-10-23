@@ -8,7 +8,7 @@ class: Stone Material
 price: 230
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 26
+  data: godot/data/items/material/26-marble.tres
   code: module/src/items.rs
 ---
 # Marble

@@ -12,7 +12,7 @@ sold_by:
 - '[[npcs/1181-smith-pavrick|Smith Pavrick]]'
 - '[[npcs/1213-ferrell-guild-staff-gilbert|Ferrell Guild Staff Gilbert]]'
 source:
-  data: LIST_NATURAL.STB row 304
+  data: godot/data/items/material/304-claw-arrow.tres
   code: module/src/items.rs
 ---
 # Claw Arrow

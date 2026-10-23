@@ -31,7 +31,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1091-arumic-merchant-chester|Arumic Merchant Chester]]'
 source:
-  data: LIST_SUBWPN.STB row 67
+  data: godot/data/items/subweapon/67-basic-encyclopedia.tres
   code: module/src/items.rs
 ---
 # Basic Encyclopedia

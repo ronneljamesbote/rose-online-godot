@@ -13,7 +13,7 @@ durability: 50
 quality: 46
 price: 13500
 source:
-  data: LIST_FOOT.STB row 234
+  data: godot/data/items/feet/234-redfield-green-shoes.tres
   code: module/src/items.rs
 ---
 # Redfield Green Shoes

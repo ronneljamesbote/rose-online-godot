@@ -56,7 +56,7 @@ quest_reward:
 - '[[quests/958-the-essence-of-speed|The Essence of Speed]]'
 - '[[quests/959-the-essence-of-speed|The Essence of Speed]]'
 source:
-  data: LIST_WEAPON.STB row 205
+  data: godot/data/items/weapon/205-white-wing-bow.tres
   code: module/src/items.rs
 ---
 # White Wing Bow

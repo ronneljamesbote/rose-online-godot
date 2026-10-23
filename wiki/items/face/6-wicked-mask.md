@@ -20,7 +20,7 @@ recipe:
   quantity: 1
 craft_difficulty: 20
 source:
-  data: LIST_FACEITEM.STB row 6
+  data: godot/data/items/face/6-wicked-mask.tres
   code: module/src/items.rs
 ---
 # Wicked Mask

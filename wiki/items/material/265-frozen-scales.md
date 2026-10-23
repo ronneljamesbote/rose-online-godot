@@ -34,7 +34,7 @@ used_to_craft:
 - '[[items/subweapon/17-vivor-shield|Vivor Shield]]'
 - '[[items/subweapon/80-orb-of-abyss|Orb of Abyss]]'
 source:
-  data: LIST_NATURAL.STB row 265
+  data: godot/data/items/material/265-frozen-scales.tres
   code: module/src/items.rs
 ---
 # Frozen Scales

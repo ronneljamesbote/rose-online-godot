@@ -39,7 +39,7 @@ used_to_craft:
 - '[[items/feet/36-kurash-boots|Kurash Boots]]'
 - '[[items/feet/96-jaguar-boots|Jaguar Boots]]'
 source:
-  data: LIST_NATURAL.STB row 123
+  data: godot/data/items/material/123-earth-stone.tres
   code: module/src/items.rs
 ---
 # Earth Stone

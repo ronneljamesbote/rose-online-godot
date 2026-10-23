@@ -15,7 +15,7 @@ job: Dealer Job
 price: 2750
 weight: 3
 source:
-  data: LIST_FOOT.STB row 613
+  data: godot/data/items/feet/613-vibe-shoes.tres
   code: module/src/items.rs
 ---
 # Vibe Shoes

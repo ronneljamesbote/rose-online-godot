@@ -14,7 +14,7 @@ job: Hawker 2nd Advanced Jobs
 price: 24950
 weight: 3
 source:
-  data: LIST_ARMS.STB row 539
+  data: godot/data/items/hands/539-jaguar-gloves.tres
   code: module/src/items.rs
 ---
 # Jaguar Gloves

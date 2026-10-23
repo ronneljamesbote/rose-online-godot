@@ -83,7 +83,7 @@ source:
     - godot/rust/src/character.rs (RoseCharacter.show_item_effects)
     - godot/rust/src/material.rs (grade_glow), godot/shaders/rose_item_glow.gdshaderinc
     - godot/rust/src/net.rs (player_look)
-  data: LIST_PRODUCT.STB rows 1-10 (weapon refining) and 11-20 (other equipment), and each item's recipe row; LIST_JEMITEM.STB (gems from row 301, quality column 8, and its attack effect); LIST_GRADE.STB (grade bonuses and glow colours); the gem point of each weapon and shield (LIST_WEAPON.STB, LIST_SUBWPN.STB)
+  data: LIST_PRODUCT.STB rows 1-10 (weapon refining) and 11-20 (other equipment), and each item's recipe row; the gem resources in godot/data/items/gem/ (gems from 301, quality, gem_effect_id); the grade resources in godot/data/items/grades/ (grade bonuses and glow colours); the gem_position of each weapon and shield
 ---
 # Refining, Disassembly and Gems
 
@@ -163,7 +163,7 @@ much durability. From grade 3 the same powder gives -2 to 4.
 
 ### What a grade gives
 
-Each grade adds a fixed bonus from LIST_GRADE (table above, the totals at that grade, not
+Each grade adds a fixed bonus from its grade resource (`godot/data/items/grades/`, table above, the totals at that grade, not
 per step) while the item is worn and not broken:
 
 - **weapons**: the attack bonus is added to the weapon's attack and the hit bonus to hit

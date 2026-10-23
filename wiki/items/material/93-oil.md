@@ -16,7 +16,7 @@ sold_by:
 used_to_craft:
 - '[[items/feet/64-violet-boots|Violet Boots]]'
 source:
-  data: LIST_NATURAL.STB row 93
+  data: godot/data/items/material/93-oil.tres
   code: module/src/items.rs
 ---
 # Oil

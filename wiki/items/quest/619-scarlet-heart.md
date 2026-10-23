@@ -14,7 +14,7 @@ needed_for_quest:
 - '[[quests/136-the-scheme|The Scheme]]'
 - '[[quests/158-leaders-in-the-abyss|Leaders in the Abyss]]'
 source:
-  data: LIST_QUESTITEM.STB row 619
+  data: godot/data/items/quest/619-scarlet-heart.tres
   code: module/src/items.rs
 ---
 # Scarlet Heart

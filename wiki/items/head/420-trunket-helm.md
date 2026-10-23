@@ -14,7 +14,7 @@ job: Soldier Job
 price: 5400
 weight: 10
 source:
-  data: LIST_CAP.STB row 420
+  data: godot/data/items/head/420-trunket-helm.tres
   code: module/src/items.rs
 ---
 # Trunket Helm

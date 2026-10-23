@@ -18,7 +18,7 @@ dropped_by:
   level: 17
   slots_of_30: 0.2
 source:
-  data: LIST_BODY.STB row 203
+  data: godot/data/items/body/203-natalie-look.tres
   code: module/src/items.rs
 ---
 # Natalie Look

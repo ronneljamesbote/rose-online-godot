@@ -18,7 +18,7 @@ dropped_by:
   level: 88
   slots_of_30: 0.4
 source:
-  data: LIST_ARMS.STB row 327
+  data: godot/data/items/hands/327-chrome-gauntlets.tres
   code: module/src/items.rs
 ---
 # Chrome Gauntlets

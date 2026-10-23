@@ -9,7 +9,7 @@ effect: teaches skill 1801, uses skill 1801, fuel +1801
 price: 29200
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 786
+  data: godot/data/items/consumable/786-shuriken-mastery.tres
   code: module/src/items.rs
 ---
 # Shuriken Mastery

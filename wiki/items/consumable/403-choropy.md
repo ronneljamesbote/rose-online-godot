@@ -23,7 +23,7 @@ dropped_by:
   level: 11
   slots_of_30: 2
 source:
-  data: LIST_USEITEM.STB row 403
+  data: godot/data/items/consumable/403-choropy.tres
   code: module/src/items.rs
 ---
 # Choropy

@@ -16,7 +16,7 @@ weight: 2
 sold_by:
 - '[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]'
 source:
-  data: LIST_FOOT.STB row 231
+  data: godot/data/items/feet/231-senior-shoes.tres
   code: module/src/items.rs
 ---
 # Senior Shoes

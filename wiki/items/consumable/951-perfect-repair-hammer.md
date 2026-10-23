@@ -9,7 +9,7 @@ effect: teaches skill 1, uses skill 1, fuel +1
 price: 200
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 951
+  data: godot/data/items/consumable/951-perfect-repair-hammer.tres
   code: module/src/items.rs
 ---
 # Perfect Repair Hammer

@@ -23,7 +23,7 @@ recipe:
   quantity: 4
 craft_difficulty: 44
 source:
-  data: LIST_BODY.STB row 96
+  data: godot/data/items/body/96-jaguar-chest.tres
   code: module/src/items.rs
 ---
 # Jaguar Chest

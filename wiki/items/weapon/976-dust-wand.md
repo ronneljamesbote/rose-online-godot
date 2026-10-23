@@ -17,7 +17,7 @@ bonus: MP Consumption +17
 price: 165465
 weight: 48
 source:
-  data: LIST_WEAPON.STB row 976
+  data: godot/data/items/weapon/976-dust-wand.tres
   code: module/src/items.rs
 ---
 # Dust Wand

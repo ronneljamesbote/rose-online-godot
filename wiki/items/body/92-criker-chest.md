@@ -48,7 +48,7 @@ sold_by:
 - '[[npcs/1009-armor-seller-carrion|Armor Seller Carrion]]'
 - '[[npcs/1094-armor-merchant-saki|Armor Merchant Saki]]'
 source:
-  data: LIST_BODY.STB row 92
+  data: godot/data/items/body/92-criker-chest.tres
   code: module/src/items.rs
 ---
 # Criker Chest

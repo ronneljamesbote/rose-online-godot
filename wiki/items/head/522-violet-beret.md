@@ -15,7 +15,7 @@ bonus: MP Recovery Rate +2
 price: 12250
 weight: 2
 source:
-  data: LIST_CAP.STB row 522
+  data: godot/data/items/head/522-violet-beret.tres
   code: module/src/items.rs
 ---
 # Violet Beret

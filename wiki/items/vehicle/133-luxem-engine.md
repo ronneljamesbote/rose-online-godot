@@ -27,7 +27,7 @@ recipe:
   quantity: 1
 craft_difficulty: 73
 source:
-  data: LIST_PAT.STB row 133
+  data: godot/data/items/vehicle/133-luxem-engine.tres
   code: module/src/items.rs
 ---
 # Luxem Engine

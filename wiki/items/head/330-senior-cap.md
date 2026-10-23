@@ -16,7 +16,7 @@ weight: 3
 sold_by:
 - '[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]'
 source:
-  data: LIST_CAP.STB row 330
+  data: godot/data/items/head/330-senior-cap.tres
   code: module/src/items.rs
 ---
 # Senior Cap

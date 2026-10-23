@@ -51,7 +51,7 @@ dropped_by:
   level: 108
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 112
+  data: godot/data/items/weapon/112-flamberge.tres
   code: module/src/items.rs
 ---
 # Flamberge

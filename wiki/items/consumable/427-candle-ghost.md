@@ -10,7 +10,7 @@ needs: Level 48
 price: 930
 weight: 41
 source:
-  data: LIST_USEITEM.STB row 427
+  data: godot/data/items/consumable/427-candle-ghost.tres
   code: module/src/items.rs
 ---
 # Candle Ghost

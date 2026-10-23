@@ -28,7 +28,7 @@ quest_reward:
 used_to_craft:
 - '[[items/gem/367-diamond-7|Diamond 7]]'
 source:
-  data: LIST_NATURAL.STB row 157
+  data: godot/data/items/material/157-white-hearts.tres
   code: module/src/items.rs
 ---
 # White Hearts

@@ -7,7 +7,7 @@ icon: item/1974
 class: Quest Items
 price: 0
 source:
-  data: LIST_QUESTITEM.STB row 117
+  data: godot/data/items/quest/117-crack-feeler.tres
   code: module/src/items.rs
 ---
 # Crack Feeler

@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/5002-pomic-hunt-fetch-quest|Pomic Hunt (Fetch Quest)]]'
 source:
-  data: LIST_QUESTITEM.STB row 110
+  data: godot/data/items/quest/110-pomic-skin.tres
   code: module/src/items.rs
 ---
 # Pomic Skin

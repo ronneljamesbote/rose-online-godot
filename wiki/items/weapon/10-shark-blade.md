@@ -62,7 +62,7 @@ sold_by:
 used_to_craft:
 - '[[items/weapon/436-dual-ocean-swords|Dual Ocean Swords]]'
 source:
-  data: LIST_WEAPON.STB row 10
+  data: godot/data/items/weapon/10-shark-blade.tres
   code: module/src/items.rs
 ---
 # Shark Blade

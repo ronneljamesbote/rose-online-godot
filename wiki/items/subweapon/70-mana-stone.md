@@ -26,7 +26,7 @@ dropped_by:
   level: 102
   slots_of_30: 0.4
 source:
-  data: LIST_SUBWPN.STB row 70
+  data: godot/data/items/subweapon/70-mana-stone.tres
   code: module/src/items.rs
 ---
 # Mana Stone

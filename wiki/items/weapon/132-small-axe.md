@@ -46,7 +46,7 @@ sold_by:
 quest_reward:
 - '[[quests/857-living-as-a-true-soldier|Living as a True Soldier]]'
 source:
-  data: LIST_WEAPON.STB row 132
+  data: godot/data/items/weapon/132-small-axe.tres
   code: module/src/items.rs
 ---
 # Small Axe

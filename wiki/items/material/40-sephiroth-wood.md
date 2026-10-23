@@ -11,7 +11,7 @@ dropped_in_zones:
 - '[[zones/26-forest-of-wisdom|Forest of Wisdom]]'
 - '[[zones/62-shady-jungle|Shady Jungle]]'
 source:
-  data: LIST_NATURAL.STB row 40
+  data: godot/data/items/material/40-sephiroth-wood.tres
   code: module/src/items.rs
 ---
 # Sephiroth Wood

@@ -18,7 +18,7 @@ sockets: true
 price: 328100
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 863
+  data: godot/data/items/weapon/863-desperado-dual-wield.tres
   code: module/src/items.rs
 ---
 # Desperado Dual Wield

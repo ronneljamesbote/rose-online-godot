@@ -15,7 +15,7 @@ job: Soldier 2nd Advanced Jobs
 price: 22950
 weight: 6
 source:
-  data: LIST_FOOT.STB row 334
+  data: godot/data/items/feet/334-mighty-boots.tres
   code: module/src/items.rs
 ---
 # Mighty Boots

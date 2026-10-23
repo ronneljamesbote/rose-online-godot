@@ -14,7 +14,7 @@ job: Soldier Job
 price: 7200
 weight: 20
 source:
-  data: LIST_BODY.STB row 307
+  data: godot/data/items/body/307-iron-armor.tres
   code: module/src/items.rs
 ---
 # Iron Armor

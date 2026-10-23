@@ -14,7 +14,7 @@ quality: 27
 price: 750
 weight: 3
 source:
-  data: LIST_FOOT.STB row 201
+  data: godot/data/items/feet/201-dash-shoes.tres
   code: module/src/items.rs
 ---
 # Dash Shoes

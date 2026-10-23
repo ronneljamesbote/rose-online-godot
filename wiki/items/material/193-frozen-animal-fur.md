@@ -63,7 +63,7 @@ dropped_by:
   level: 117
   slots_of_30: 9
 source:
-  data: LIST_NATURAL.STB row 193
+  data: godot/data/items/material/193-frozen-animal-fur.tres
   code: module/src/items.rs
 ---
 # Frozen Animal Fur

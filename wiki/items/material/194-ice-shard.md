@@ -57,7 +57,7 @@ used_to_craft:
 - '[[items/weapon/313-rune-staff|Rune Staff]]'
 - '[[items/weapon/413-sudden-raid-dagger|Sudden Raid Dagger]]'
 source:
-  data: LIST_NATURAL.STB row 194
+  data: godot/data/items/material/194-ice-shard.tres
   code: module/src/items.rs
 ---
 # Ice Shard

@@ -20,7 +20,7 @@ recipe:
   quantity: 1
 craft_difficulty: 19
 source:
-  data: LIST_FACEITEM.STB row 2
+  data: godot/data/items/face/2-black-mask.tres
   code: module/src/items.rs
 ---
 # Black Mask

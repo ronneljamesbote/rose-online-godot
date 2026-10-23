@@ -64,7 +64,7 @@ quest_reward:
 - '[[quests/1988-pavrick-the-craftsman-on-lunar|Pavrick, the Craftsman on Lunar]]'
 - '[[quests/1989-the-royal-golden-dagger|The Royal Golden Dagger]]'
 source:
-  data: LIST_USEITEM.STB row 2
+  data: godot/data/items/consumable/2-health-vial-m.tres
   code: module/src/items.rs
 ---
 # Health Vial (M)

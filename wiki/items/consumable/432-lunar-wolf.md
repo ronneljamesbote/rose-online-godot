@@ -20,7 +20,7 @@ dropped_by:
   level: 112
   slots_of_30: 2
 source:
-  data: LIST_USEITEM.STB row 432
+  data: godot/data/items/consumable/432-lunar-wolf.tres
   code: module/src/items.rs
 ---
 # Lunar Wolf

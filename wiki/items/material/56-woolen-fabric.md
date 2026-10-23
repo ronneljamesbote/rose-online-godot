@@ -25,7 +25,7 @@ used_to_craft:
 - '[[items/weapon/114-heroic-sword|Heroic Sword]]'
 - '[[items/weapon/213-cupid-bow|Cupid Bow]]'
 source:
-  data: LIST_NATURAL.STB row 56
+  data: godot/data/items/material/56-woolen-fabric.tres
   code: module/src/items.rs
 ---
 # Woolen Fabric

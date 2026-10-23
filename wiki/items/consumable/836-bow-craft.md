@@ -13,7 +13,7 @@ sold_by:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 - '[[npcs/1087-akram-minister-mel|Akram Minister Mel]]'
 source:
-  data: LIST_USEITEM.STB row 836
+  data: godot/data/items/consumable/836-bow-craft.tres
   code: module/src/items.rs
 ---
 # Bow Craft

@@ -37,7 +37,7 @@ quest_reward:
 - '[[quests/143-the-ominous-kenji-stone|The Ominous Kenji Stone]]'
 - '[[quests/144-the-truth-of-the-golden-dagger|The Truth of the Golden Dagger]]'
 source:
-  data: LIST_USEITEM.STB row 308
+  data: godot/data/items/consumable/308-dexterity-scroll-solo.tres
   code: module/src/items.rs
 ---
 # Dexterity Scroll (Solo)

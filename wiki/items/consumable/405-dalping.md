@@ -17,7 +17,7 @@ dropped_by:
   level: 26
   slots_of_30: 2
 source:
-  data: LIST_USEITEM.STB row 405
+  data: godot/data/items/consumable/405-dalping.tres
   code: module/src/items.rs
 ---
 # Dalping

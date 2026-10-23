@@ -21,7 +21,7 @@ dropped_by:
   level: 142
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 910
+  data: godot/data/items/weapon/910-spike-club.tres
   code: module/src/items.rs
 ---
 # Spike Club

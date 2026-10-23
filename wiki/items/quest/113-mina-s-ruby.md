@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/955-why-did-toddy-steal-the-jewels|Why Did Toddy Steal the Jewels?]]'
 - '[[quests/956-why-did-toddy-steal-the-jewels|Why Did Toddy Steal the Jewels?]]'
 source:
-  data: LIST_QUESTITEM.STB row 113
+  data: godot/data/items/quest/113-mina-s-ruby.tres
   code: module/src/items.rs
 ---
 # Mina's Ruby

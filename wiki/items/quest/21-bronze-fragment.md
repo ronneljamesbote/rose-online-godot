@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/5006-stockpiling-bronze-fragments|Stockpiling Bronze Fragments]]'
 source:
-  data: LIST_QUESTITEM.STB row 21
+  data: godot/data/items/quest/21-bronze-fragment.tres
   code: module/src/items.rs
 ---
 # Bronze Fragment

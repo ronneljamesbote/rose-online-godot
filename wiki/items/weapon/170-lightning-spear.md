@@ -51,7 +51,7 @@ dropped_by:
   level: 88
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 170
+  data: godot/data/items/weapon/170-lightning-spear.tres
   code: module/src/items.rs
 ---
 # Lightning Spear

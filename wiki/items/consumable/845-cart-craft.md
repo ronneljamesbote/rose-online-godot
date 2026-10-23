@@ -12,7 +12,7 @@ sold_by:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 - '[[npcs/1087-akram-minister-mel|Akram Minister Mel]]'
 source:
-  data: LIST_USEITEM.STB row 845
+  data: godot/data/items/consumable/845-cart-craft.tres
   code: module/src/items.rs
 ---
 # Cart Craft

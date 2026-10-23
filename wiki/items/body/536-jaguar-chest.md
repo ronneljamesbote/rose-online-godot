@@ -14,7 +14,7 @@ job: Hawker 2nd Advanced Jobs
 price: 130050
 weight: 20
 source:
-  data: LIST_BODY.STB row 536
+  data: godot/data/items/body/536-jaguar-chest.tres
   code: module/src/items.rs
 ---
 # Jaguar Chest

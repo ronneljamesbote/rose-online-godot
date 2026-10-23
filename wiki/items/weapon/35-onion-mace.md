@@ -57,7 +57,7 @@ sold_by:
 quest_reward:
 - '[[quests/860-hovert-s-mementos|Hovert''s Mementos]]'
 source:
-  data: LIST_WEAPON.STB row 35
+  data: godot/data/items/weapon/35-onion-mace.tres
   code: module/src/items.rs
 ---
 # Onion Mace

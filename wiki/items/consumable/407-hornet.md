@@ -17,7 +17,7 @@ dropped_by:
   level: 18
   slots_of_30: 2
 source:
-  data: LIST_USEITEM.STB row 407
+  data: godot/data/items/consumable/407-hornet.tres
   code: module/src/items.rs
 ---
 # Hornet

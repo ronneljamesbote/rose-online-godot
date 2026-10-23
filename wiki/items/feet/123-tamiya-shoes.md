@@ -45,7 +45,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_FOOT.STB row 123
+  data: godot/data/items/feet/123-tamiya-shoes.tres
   code: module/src/items.rs
 ---
 # Tamiya Shoes

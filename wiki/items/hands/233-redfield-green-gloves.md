@@ -14,7 +14,7 @@ bonus: Attack Speed +4
 price: 11400
 weight: 1
 source:
-  data: LIST_ARMS.STB row 233
+  data: godot/data/items/hands/233-redfield-green-gloves.tres
   code: module/src/items.rs
 ---
 # Redfield Green Gloves

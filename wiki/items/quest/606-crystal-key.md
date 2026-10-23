@@ -13,7 +13,7 @@ needed_for_quest:
 - '[[quests/113-hourglass-of-purification|Hourglass of Purification]]'
 - '[[quests/114-hourglass-of-purification|Hourglass of Purification]]'
 source:
-  data: LIST_QUESTITEM.STB row 606
+  data: godot/data/items/quest/606-crystal-key.tres
   code: module/src/items.rs
 ---
 # Crystal Key

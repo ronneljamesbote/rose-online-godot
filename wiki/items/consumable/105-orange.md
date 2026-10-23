@@ -19,7 +19,7 @@ quest_reward:
 - '[[quests/113-hourglass-of-purification|Hourglass of Purification]]'
 - '[[quests/114-hourglass-of-purification|Hourglass of Purification]]'
 source:
-  data: LIST_USEITEM.STB row 105
+  data: godot/data/items/consumable/105-orange.tres
   code: module/src/items.rs
 ---
 # Orange

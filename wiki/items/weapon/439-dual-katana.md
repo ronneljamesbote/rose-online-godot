@@ -34,7 +34,7 @@ dropped_by:
   level: 100
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 439
+  data: godot/data/items/weapon/439-dual-katana.tres
   code: module/src/items.rs
 ---
 # Dual Katana

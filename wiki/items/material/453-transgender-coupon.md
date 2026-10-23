@@ -7,7 +7,7 @@ icon: item/2095
 class: Gathered Goods
 price: 500
 source:
-  data: LIST_NATURAL.STB row 453
+  data: godot/data/items/material/453-transgender-coupon.tres
   code: module/src/items.rs
 ---
 # Transgender Coupon

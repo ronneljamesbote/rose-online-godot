@@ -26,7 +26,7 @@ recipe:
   quantity: 1
 craft_difficulty: 45
 source:
-  data: LIST_PAT.STB row 103
+  data: godot/data/items/vehicle/103-dural-engine.tres
   code: module/src/items.rs
 ---
 # Dural Engine

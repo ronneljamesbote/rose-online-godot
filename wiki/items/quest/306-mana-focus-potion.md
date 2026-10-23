@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/3604-lutis-guard-of-luxem-tower|Lutis, Guard of Luxem Tower]]'
 source:
-  data: LIST_QUESTITEM.STB row 306
+  data: godot/data/items/quest/306-mana-focus-potion.tres
   code: module/src/items.rs
 ---
 # Mana Focus Potion

@@ -10,7 +10,7 @@ bonus: Charm +40
 price: 903250
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 185
+  data: godot/data/items/jewellery/185-twinkling.tres
   code: module/src/items.rs
 ---
 # Twinkling

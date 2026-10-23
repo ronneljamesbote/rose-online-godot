@@ -9,7 +9,7 @@ effect: teaches [[skills/17-drive-cart|Drive Cart]], uses [[skills/17-drive-cart
 price: 50
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 607
+  data: godot/data/items/consumable/607-drive-cart.tres
   code: module/src/items.rs
 ---
 # Drive Cart

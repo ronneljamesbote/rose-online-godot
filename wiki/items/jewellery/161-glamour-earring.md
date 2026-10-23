@@ -19,7 +19,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1092-gypsy-jewel-seller-bellia|Gypsy Jewel Seller Bellia]]'
 source:
-  data: LIST_JEWEL.STB row 161
+  data: godot/data/items/jewellery/161-glamour-earring.tres
   code: module/src/items.rs
 ---
 # Glamour Earring

@@ -18,7 +18,7 @@ sockets: true
 price: 301850
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 842
+  data: godot/data/items/weapon/842-bloody-hook-knuckle.tres
   code: module/src/items.rs
 ---
 # Bloody Hook Knuckle

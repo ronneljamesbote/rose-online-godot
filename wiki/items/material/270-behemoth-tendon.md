@@ -12,7 +12,7 @@ dropped_by:
   level: 142
   slots_of_30: 1
 source:
-  data: LIST_NATURAL.STB row 270
+  data: godot/data/items/material/270-behemoth-tendon.tres
   code: module/src/items.rs
 ---
 # Behemoth Tendon

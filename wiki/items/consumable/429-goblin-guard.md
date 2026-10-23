@@ -17,7 +17,7 @@ dropped_by:
   level: 85
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 429
+  data: godot/data/items/consumable/429-goblin-guard.tres
   code: module/src/items.rs
 ---
 # Goblin Guard

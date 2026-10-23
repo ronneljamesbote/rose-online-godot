@@ -22,7 +22,7 @@ dropped_by:
   level: 80
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 823
+  data: godot/data/items/weapon/823-bear-s-paw.tres
   code: module/src/items.rs
 ---
 # Bear's Paw

@@ -8,7 +8,7 @@ class: Skill Book
 effect: teaches skill 3209, uses skill 3209, fuel +3209
 price: 0
 source:
-  data: LIST_USEITEM.STB row 886
+  data: godot/data/items/consumable/886-dex-up-all.tres
   code: module/src/items.rs
 ---
 # Dex Up (All)

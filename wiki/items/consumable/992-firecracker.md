@@ -8,7 +8,7 @@ class: Magic Item
 effect: teaches skill 3262, uses skill 3262, fuel +3262
 price: 50
 source:
-  data: LIST_USEITEM.STB row 992
+  data: godot/data/items/consumable/992-firecracker.tres
   code: module/src/items.rs
 ---
 # Firecracker

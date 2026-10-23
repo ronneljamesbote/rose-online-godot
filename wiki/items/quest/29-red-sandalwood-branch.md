@@ -7,7 +7,7 @@ icon: item/1798
 class: Quest Items
 price: 0
 source:
-  data: LIST_QUESTITEM.STB row 29
+  data: godot/data/items/quest/29-red-sandalwood-branch.tres
   code: module/src/items.rs
 ---
 # Red Sandalwood Branch

@@ -18,7 +18,7 @@ sockets: true
 price: 48550
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 645
+  data: godot/data/items/weapon/645-halberd.tres
   code: module/src/items.rs
 ---
 # Halberd

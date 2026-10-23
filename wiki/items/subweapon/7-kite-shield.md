@@ -54,7 +54,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 source:
-  data: LIST_SUBWPN.STB row 7
+  data: godot/data/items/subweapon/7-kite-shield.tres
   code: module/src/items.rs
 ---
 # Kite Shield

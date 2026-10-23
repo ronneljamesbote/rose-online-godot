@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/5041-the-lost-engagement-ring|The Lost Engagement Ring]]'
 source:
-  data: LIST_QUESTITEM.STB row 508
+  data: godot/data/items/quest/508-methio-s-engagement-ring.tres
   code: module/src/items.rs
 ---
 # Methio's Engagement Ring

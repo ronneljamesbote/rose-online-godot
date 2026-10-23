@@ -47,7 +47,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_ARMS.STB row 63
+  data: godot/data/items/hands/63-purple-gloves-of-witch.tres
   code: module/src/items.rs
 ---
 # Purple Gloves of Witch

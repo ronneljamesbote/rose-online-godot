@@ -36,7 +36,7 @@ dropped_by:
   level: 133
   slots_of_30: 0.4
 source:
-  data: LIST_CAP.STB row 67
+  data: godot/data/items/head/67-heaven-s-bonnet.tres
   code: module/src/items.rs
 ---
 # Heaven's Bonnet

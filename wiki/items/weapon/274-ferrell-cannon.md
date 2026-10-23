@@ -36,7 +36,7 @@ dropped_by:
   level: 140
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 274
+  data: godot/data/items/weapon/274-ferrell-cannon.tres
   code: module/src/items.rs
 ---
 # Ferrell Cannon

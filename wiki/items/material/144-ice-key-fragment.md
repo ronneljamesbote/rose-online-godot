@@ -65,7 +65,7 @@ needed_for_quest:
 - '[[quests/2052-forgotten-temple-investigation-2|Forgotten Temple Investigation (2)]]'
 - '[[quests/2053-forgotten-temple-investigation-3|Forgotten Temple Investigation (3)]]'
 source:
-  data: LIST_NATURAL.STB row 144
+  data: godot/data/items/material/144-ice-key-fragment.tres
   code: module/src/items.rs
 ---
 # Ice Key Fragment

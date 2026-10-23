@@ -13,7 +13,7 @@ sold_by:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 - '[[npcs/1087-akram-minister-mel|Akram Minister Mel]]'
 source:
-  data: LIST_USEITEM.STB row 804
+  data: godot/data/items/consumable/804-discount.tres
   code: module/src/items.rs
 ---
 # Discount

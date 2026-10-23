@@ -13,7 +13,7 @@ sold_by:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 - '[[npcs/1087-akram-minister-mel|Akram Minister Mel]]'
 source:
-  data: LIST_USEITEM.STB row 810
+  data: godot/data/items/consumable/810-arms-mastery.tres
   code: module/src/items.rs
 ---
 # Arms Mastery

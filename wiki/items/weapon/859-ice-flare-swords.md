@@ -18,7 +18,7 @@ sockets: true
 price: 149700
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 859
+  data: godot/data/items/weapon/859-ice-flare-swords.tres
   code: module/src/items.rs
 ---
 # Ice & Flare Swords

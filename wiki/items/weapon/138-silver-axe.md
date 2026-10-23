@@ -59,7 +59,7 @@ dropped_by:
 used_to_craft:
 - '[[items/weapon/438-blood-sword-axe|Blood Sword & Axe]]'
 source:
-  data: LIST_WEAPON.STB row 138
+  data: godot/data/items/weapon/138-silver-axe.tres
   code: module/src/items.rs
 ---
 # Silver Axe

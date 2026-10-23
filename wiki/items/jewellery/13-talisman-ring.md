@@ -19,7 +19,7 @@ quest_reward:
 - '[[quests/115-hourglass-of-purification|Hourglass of Purification]]'
 - '[[quests/116-a-favor-for-karitte|A Favor for Karitte]]'
 source:
-  data: LIST_JEWEL.STB row 13
+  data: godot/data/items/jewellery/13-talisman-ring.tres
   code: module/src/items.rs
 ---
 # Talisman Ring

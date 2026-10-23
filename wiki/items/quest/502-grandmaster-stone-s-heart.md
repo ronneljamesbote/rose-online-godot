@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - quest 1953
 source:
-  data: LIST_QUESTITEM.STB row 502
+  data: godot/data/items/quest/502-grandmaster-stone-s-heart.tres
   code: module/src/items.rs
 ---
 # Grandmaster Stone's Heart

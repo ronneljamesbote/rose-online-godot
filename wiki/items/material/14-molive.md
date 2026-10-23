@@ -24,7 +24,7 @@ used_to_craft:
 - '[[items/weapon/345-conjurer-s-wand|Conjurer''s Wand]]'
 - '[[items/weapon/442-brilliant-dual-wield|Brilliant Dual Wield]]'
 source:
-  data: LIST_NATURAL.STB row 14
+  data: godot/data/items/material/14-molive.tres
   code: module/src/items.rs
 ---
 # Molive

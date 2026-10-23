@@ -36,7 +36,7 @@ used_to_craft:
 - '[[items/weapon/443-spirits-dual-wield|Spirits Dual Wield]]'
 - '[[items/weapon/445-glorious-dual-wield|Glorious Dual Wield]]'
 source:
-  data: LIST_WEAPON.STB row 18
+  data: godot/data/items/weapon/18-righteous-sword.tres
   code: module/src/items.rs
 ---
 # Righteous Sword

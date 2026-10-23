@@ -23,7 +23,7 @@ dropped_by:
   level: 57
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 793
+  data: godot/data/items/weapon/793-silence-wand.tres
   code: module/src/items.rs
 ---
 # Silence Wand

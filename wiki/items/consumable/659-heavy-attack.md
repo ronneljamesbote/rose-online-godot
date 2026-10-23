@@ -13,7 +13,7 @@ sold_by:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 - '[[npcs/1084-akram-minister-gamp|Akram Minister Gamp]]'
 source:
-  data: LIST_USEITEM.STB row 659
+  data: godot/data/items/consumable/659-heavy-attack.tres
   code: module/src/items.rs
 ---
 # Heavy Attack

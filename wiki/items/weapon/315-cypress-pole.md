@@ -30,7 +30,7 @@ recipe:
   quantity: 25
 craft_difficulty: 48
 source:
-  data: LIST_WEAPON.STB row 315
+  data: godot/data/items/weapon/315-cypress-pole.tres
   code: module/src/items.rs
 ---
 # Cypress Pole

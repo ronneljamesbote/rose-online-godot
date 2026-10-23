@@ -27,7 +27,7 @@ dropped_by:
   level: 45
   slots_of_30: 0.2
 source:
-  data: LIST_FACEITEM.STB row 11
+  data: godot/data/items/face/11-ashura-mask.tres
   code: module/src/items.rs
 ---
 # Ashura Mask

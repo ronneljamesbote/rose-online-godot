@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/3602-coal-mine-moldies-under-arumic-watch|Coal Mine Moldies under Arumic Watch]]'
 source:
-  data: LIST_QUESTITEM.STB row 308
+  data: godot/data/items/quest/308-moldie-eyelash.tres
   code: module/src/items.rs
 ---
 # Moldie Eyelash

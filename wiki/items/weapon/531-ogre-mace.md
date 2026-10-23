@@ -22,7 +22,7 @@ dropped_by:
   level: 43
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 531
+  data: godot/data/items/weapon/531-ogre-mace.tres
   code: module/src/items.rs
 ---
 # Ogre Mace

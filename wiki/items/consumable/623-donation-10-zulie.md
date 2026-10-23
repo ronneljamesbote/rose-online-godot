@@ -9,7 +9,7 @@ effect: teaches [[skills/33-donation-10-zulie|Donation (10 Zulie)]], uses [[skil
 price: 50
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 623
+  data: godot/data/items/consumable/623-donation-10-zulie.tres
   code: module/src/items.rs
 ---
 # Donation (10 Zulie)

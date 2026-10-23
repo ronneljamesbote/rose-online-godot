@@ -19,7 +19,7 @@ dropped_by:
   level: 57
   slots_of_30: 0.4
 source:
-  data: LIST_CAP.STB row 518
+  data: godot/data/items/head/518-purple-hat-of-witch.tres
   code: module/src/items.rs
 ---
 # Purple Hat of Witch

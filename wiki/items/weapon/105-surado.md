@@ -51,7 +51,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 source:
-  data: LIST_WEAPON.STB row 105
+  data: godot/data/items/weapon/105-surado.tres
   code: module/src/items.rs
 ---
 # Surado

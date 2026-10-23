@@ -13,7 +13,7 @@ bonus: Inventory Capacity +1000
 price: 1000
 weight: 5
 source:
-  data: LIST_BACK.STB row 731
+  data: godot/data/items/back/731-fairy-pod.tres
   code: module/src/items.rs
 ---
 # Fairy Pod

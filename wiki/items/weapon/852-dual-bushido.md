@@ -18,7 +18,7 @@ sockets: true
 price: 17190
 weight: 25
 source:
-  data: LIST_WEAPON.STB row 852
+  data: godot/data/items/weapon/852-dual-bushido.tres
   code: module/src/items.rs
 ---
 # Dual Bushido

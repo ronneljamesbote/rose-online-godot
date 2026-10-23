@@ -36,7 +36,7 @@ source:
     - crates/rose-game-irose/src/data/ability_values.rs (calculate_passive_recover_hp, calculate_passive_recover_mp, calculate additional_health_recovery and additional_mana_recovery)
     - module/src/items.rs (use_item, apply_consumable, regen_tick, clear_regen, Regen)
     - module/src/ability.rs (add_value)
-  data: LIST_USEITEM.STB (amount in column 20, recovery effect in column 24), LIST_STATUS.STB rows 1-6 (amount per second)
+  data: the consumable resources in godot/data/items/consumable/ (amount status_effect_value, recovery effect status_effect_id; iROSE's LIST_USEITEM.STB columns 20 and 24), LIST_STATUS.STB rows 1-6 (amount per second)
 ---
 # Recovery
 
@@ -124,4 +124,4 @@ There is no waiting time between uses.
 The vial has given 152 HP; the Apple replaces it, so you get 100 more over 4 seconds and the
 other 648 HP of the vial are lost. A Mana Vial taken at the same time keeps running.
 
-> Open question: there is no wait between using potions or food; a new one simply replaces the one running. The LIST_USEITEM.STB cooldown columns may be read from the wrong columns. Not checked against iROSE.
+> Open question: there is no wait between using potions or food; a new one simply replaces the one running. The cooldown fields (`cooldown_type_id`, `cooldown_seconds`) were converted from LIST_USEITEM.STB columns 25 and 26, which may be the wrong columns. Not checked against iROSE.

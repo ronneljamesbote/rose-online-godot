@@ -33,7 +33,7 @@ used_to_craft:
 - '[[items/subweapon/76-lunatic-candy-bar|Lunatic Candy Bar]]'
 - '[[items/subweapon/77-bang-bang-tree-leaf|Bang Bang Tree Leaf]]'
 source:
-  data: LIST_NATURAL.STB row 126
+  data: godot/data/items/material/126-lesian.tres
   code: module/src/items.rs
 ---
 # Lesian

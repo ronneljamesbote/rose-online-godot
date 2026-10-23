@@ -17,7 +17,7 @@ sold_by:
 - '[[npcs/1109-elder-of-junon-order-gorthein|Elder of Junon Order Gorthein]]'
 - '[[npcs/1112-arumic-researcher-carasia|Arumic Researcher Carasia]]'
 source:
-  data: LIST_CAP.STB row 321
+  data: godot/data/items/head/321-venetian-hat.tres
   code: module/src/items.rs
 ---
 # Venetian Hat

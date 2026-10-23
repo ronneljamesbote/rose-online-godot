@@ -18,7 +18,7 @@ dropped_by:
   level: 25
   slots_of_30: 0.4
 source:
-  data: LIST_BODY.STB row 503
+  data: godot/data/items/body/503-hunter-chest.tres
   code: module/src/items.rs
 ---
 # Hunter Chest

@@ -13,7 +13,7 @@ bonus: Movement Speed +130
 price: 4000
 weight: 5
 source:
-  data: LIST_PAT.STB row 403
+  data: godot/data/items/vehicle/403-wind-booster.tres
   code: module/src/items.rs
 ---
 # Wind Booster

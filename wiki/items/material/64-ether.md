@@ -17,7 +17,7 @@ used_to_craft:
 - '[[items/weapon/343-shadow-wand|Shadow Wand]]'
 - '[[items/vehicle/131-fornef-engine|Fornef Engine]]'
 source:
-  data: LIST_NATURAL.STB row 64
+  data: godot/data/items/material/64-ether.tres
   code: module/src/items.rs
 ---
 # Ether

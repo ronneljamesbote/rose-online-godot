@@ -18,7 +18,7 @@ sockets: true
 price: 196900
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 70
+  data: godot/data/items/weapon/70-steel-bow-gun.tres
   code: module/src/items.rs
 ---
 # Steel Bow Gun

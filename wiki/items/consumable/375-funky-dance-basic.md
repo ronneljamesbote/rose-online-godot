@@ -11,7 +11,7 @@ weight: 1
 sold_by:
 - '[[npcs/1092-gypsy-jewel-seller-bellia|Gypsy Jewel Seller Bellia]]'
 source:
-  data: LIST_USEITEM.STB row 375
+  data: godot/data/items/consumable/375-funky-dance-basic.tres
   code: module/src/items.rs
 ---
 # Funky Dance [Basic]

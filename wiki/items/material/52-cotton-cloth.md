@@ -22,7 +22,7 @@ used_to_craft:
 - '[[items/weapon/107-two-handed-sword|Two-Handed Sword]]'
 - '[[items/weapon/262-basic-launcher|Basic Launcher]]'
 source:
-  data: LIST_NATURAL.STB row 52
+  data: godot/data/items/material/52-cotton-cloth.tres
   code: module/src/items.rs
 ---
 # Cotton Cloth

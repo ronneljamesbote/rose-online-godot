@@ -10,7 +10,7 @@ quest_reward:
 - '[[quests/858-hovert-s-mementos|Hovert''s Mementos]]'
 - '[[quests/859-hovert-s-mementos|Hovert''s Mementos]]'
 source:
-  data: LIST_QUESTITEM.STB row 128
+  data: godot/data/items/quest/128-hovert-s-letter.tres
   code: module/src/items.rs
 ---
 # Hovert's Letter

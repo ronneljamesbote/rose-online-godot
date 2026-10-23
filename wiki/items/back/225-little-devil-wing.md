@@ -24,7 +24,7 @@ recipe:
   quantity: 30
 craft_difficulty: 25
 source:
-  data: LIST_BACK.STB row 225
+  data: godot/data/items/back/225-little-devil-wing.tres
   code: module/src/items.rs
 ---
 # Little Devil Wing

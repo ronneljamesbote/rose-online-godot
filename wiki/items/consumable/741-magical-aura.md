@@ -12,7 +12,7 @@ sold_by:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 - '[[npcs/1085-akram-minister-nel|Akram Minister Nel]]'
 source:
-  data: LIST_USEITEM.STB row 741
+  data: godot/data/items/consumable/741-magical-aura.tres
   code: module/src/items.rs
 ---
 # Magical Aura

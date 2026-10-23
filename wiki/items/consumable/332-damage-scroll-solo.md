@@ -8,7 +8,7 @@ class: Magic Item
 effect: teaches skill 3132, uses skill 3132, fuel +3132
 price: 100
 source:
-  data: LIST_USEITEM.STB row 332
+  data: godot/data/items/consumable/332-damage-scroll-solo.tres
   code: module/src/items.rs
 ---
 # Damage Scroll (Solo)

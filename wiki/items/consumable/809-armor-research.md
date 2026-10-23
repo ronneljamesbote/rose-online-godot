@@ -13,7 +13,7 @@ sold_by:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 - '[[npcs/1087-akram-minister-mel|Akram Minister Mel]]'
 source:
-  data: LIST_USEITEM.STB row 809
+  data: godot/data/items/consumable/809-armor-research.tres
   code: module/src/items.rs
 ---
 # Armor Research

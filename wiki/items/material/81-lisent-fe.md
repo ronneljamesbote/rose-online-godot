@@ -80,7 +80,7 @@ dropped_by:
 dropped_in_zones:
 - '[[zones/54-crystal-snowfields|Crystal Snowfields]]'
 source:
-  data: LIST_NATURAL.STB row 81
+  data: godot/data/items/material/81-lisent-fe.tres
   code: module/src/items.rs
 ---
 # Lisent (Fe)

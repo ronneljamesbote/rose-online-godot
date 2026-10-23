@@ -42,7 +42,7 @@ dropped_by:
   level: 88
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 239
+  data: godot/data/items/weapon/239-beretta.tres
   code: module/src/items.rs
 ---
 # Beretta

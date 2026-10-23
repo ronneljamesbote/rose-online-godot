@@ -67,7 +67,7 @@ sold_by:
 - '[[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]]'
 - '[[npcs/1034-smith-ronk|Smith Ronk]]'
 source:
-  data: LIST_WEAPON.STB row 2
+  data: godot/data/items/weapon/2-short-sword.tres
   code: module/src/items.rs
 ---
 # Short Sword

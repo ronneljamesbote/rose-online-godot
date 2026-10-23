@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/5014-goblin-cave-expedition-1st-level|Goblin Cave Expedition (1st Level)]]'
 source:
-  data: LIST_QUESTITEM.STB row 810
+  data: godot/data/items/quest/810-small-ruby.tres
   code: module/src/items.rs
 ---
 # Small Ruby

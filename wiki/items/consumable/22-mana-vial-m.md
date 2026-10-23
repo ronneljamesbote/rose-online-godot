@@ -54,7 +54,7 @@ quest_reward:
 - '[[quests/3806-reassuring-support|Reassuring Support]]'
 - '[[quests/3807-new-recovery-potion|New Recovery Potion]]'
 source:
-  data: LIST_USEITEM.STB row 22
+  data: godot/data/items/consumable/22-mana-vial-m.tres
   code: module/src/items.rs
 ---
 # Mana Vial (M)

@@ -29,7 +29,7 @@ used_to_craft:
 - '[[items/feet/122-vibe-shoes|Vibe Shoes]]'
 - '[[items/weapon/338-thunder-wand|Thunder Wand]]'
 source:
-  data: LIST_NATURAL.STB row 183
+  data: godot/data/items/material/183-thick-leaf.tres
   code: module/src/items.rs
 ---
 # Thick Leaf

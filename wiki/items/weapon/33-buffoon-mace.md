@@ -58,7 +58,7 @@ sold_by:
 used_to_craft:
 - '[[items/weapon/432-long-sword-mace|Long Sword & Mace]]'
 source:
-  data: LIST_WEAPON.STB row 33
+  data: godot/data/items/weapon/33-buffoon-mace.tres
   code: module/src/items.rs
 ---
 # Buffoon Mace

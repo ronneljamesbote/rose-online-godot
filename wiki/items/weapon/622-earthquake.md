@@ -18,7 +18,7 @@ sockets: true
 price: 224350
 weight: 40
 source:
-  data: LIST_WEAPON.STB row 622
+  data: godot/data/items/weapon/622-earthquake.tres
   code: module/src/items.rs
 ---
 # Earthquake

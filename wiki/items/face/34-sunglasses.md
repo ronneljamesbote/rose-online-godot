@@ -20,7 +20,7 @@ recipe:
   quantity: 4
 craft_difficulty: 25
 source:
-  data: LIST_FACEITEM.STB row 34
+  data: godot/data/items/face/34-sunglasses.tres
   code: module/src/items.rs
 ---
 # Sunglasses

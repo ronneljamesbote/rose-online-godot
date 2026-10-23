@@ -14,7 +14,7 @@ dropped_by:
   level: 5
   slots_of_30: 2
 source:
-  data: LIST_USEITEM.STB row 402
+  data: godot/data/items/consumable/402-jelly-nut.tres
   code: module/src/items.rs
 ---
 # Jelly Nut

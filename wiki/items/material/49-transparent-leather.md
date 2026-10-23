@@ -15,7 +15,7 @@ used_to_craft:
 - '[[items/weapon/275-spero-shooter|Spero Shooter]]'
 - '[[items/subweapon/14-mighty-shield|Mighty Shield]]'
 source:
-  data: LIST_NATURAL.STB row 49
+  data: godot/data/items/material/49-transparent-leather.tres
   code: module/src/items.rs
 ---
 # Transparent Leather

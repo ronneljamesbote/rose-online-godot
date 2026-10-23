@@ -13,7 +13,7 @@ sold_by:
 - '[[npcs/1184-ferrell-trader-sergei|Ferrell Trader Sergei]]'
 - '[[npcs/1213-ferrell-guild-staff-gilbert|Ferrell Guild Staff Gilbert]]'
 source:
-  data: LIST_NATURAL.STB row 332
+  data: godot/data/items/material/332-cold-bullet.tres
   code: module/src/items.rs
 ---
 # Cold Bullet

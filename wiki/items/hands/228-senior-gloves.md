@@ -16,7 +16,7 @@ weight: 1
 sold_by:
 - '[[npcs/1109-elder-of-junon-order-gorthein|Elder of Junon Order Gorthein]]'
 source:
-  data: LIST_ARMS.STB row 228
+  data: godot/data/items/hands/228-senior-gloves.tres
   code: module/src/items.rs
 ---
 # Senior Gloves

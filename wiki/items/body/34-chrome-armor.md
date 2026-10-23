@@ -47,7 +47,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1094-armor-merchant-saki|Armor Merchant Saki]]'
 source:
-  data: LIST_BODY.STB row 34
+  data: godot/data/items/body/34-chrome-armor.tres
   code: module/src/items.rs
 ---
 # Chrome Armor

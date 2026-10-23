@@ -9,7 +9,7 @@ effect: teaches skill 3103, uses skill 3103, fuel +3103
 price: 230
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 303
+  data: godot/data/items/consumable/303-stealth-scroll-solo.tres
   code: module/src/items.rs
 ---
 # Stealth Scroll (Solo)

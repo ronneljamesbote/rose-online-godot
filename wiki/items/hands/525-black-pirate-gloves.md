@@ -18,7 +18,7 @@ dropped_by:
   level: 84
   slots_of_30: 0.2
 source:
-  data: LIST_ARMS.STB row 525
+  data: godot/data/items/hands/525-black-pirate-gloves.tres
   code: module/src/items.rs
 ---
 # Black Pirate Gloves

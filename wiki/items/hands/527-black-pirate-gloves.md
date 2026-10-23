@@ -14,7 +14,7 @@ job: Hawker 2nd Advanced Jobs
 price: 9100
 weight: 2
 source:
-  data: LIST_ARMS.STB row 527
+  data: godot/data/items/hands/527-black-pirate-gloves.tres
   code: module/src/items.rs
 ---
 # Black Pirate Gloves

@@ -40,7 +40,7 @@ dropped_by:
   level: 105
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 437
+  data: godot/data/items/weapon/437-viking-sword-axe.tres
   code: module/src/items.rs
 ---
 # Viking Sword & Axe

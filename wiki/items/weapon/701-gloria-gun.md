@@ -21,7 +21,7 @@ dropped_by:
   level: 43
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 701
+  data: godot/data/items/weapon/701-gloria-gun.tres
   code: module/src/items.rs
 ---
 # Gloria Gun

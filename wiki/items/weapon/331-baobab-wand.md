@@ -84,7 +84,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1006-arumic-merchant-tryteh|Arumic Merchant Tryteh]]'
 source:
-  data: LIST_WEAPON.STB row 331
+  data: godot/data/items/weapon/331-baobab-wand.tres
   code: module/src/items.rs
 ---
 # Baobab Wand

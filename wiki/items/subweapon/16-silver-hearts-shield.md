@@ -24,7 +24,7 @@ recipe:
   quantity: 16
 craft_difficulty: 54
 source:
-  data: LIST_SUBWPN.STB row 16
+  data: godot/data/items/subweapon/16-silver-hearts-shield.tres
   code: module/src/items.rs
 ---
 # Silver Hearts Shield

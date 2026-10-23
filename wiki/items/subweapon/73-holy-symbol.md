@@ -22,7 +22,7 @@ recipe:
   quantity: 32
 craft_difficulty: 35
 source:
-  data: LIST_SUBWPN.STB row 73
+  data: godot/data/items/subweapon/73-holy-symbol.tres
   code: module/src/items.rs
 ---
 # Holy Symbol

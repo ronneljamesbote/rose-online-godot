@@ -12,7 +12,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/122-resurrection|Resurrection]]'
 source:
-  data: LIST_QUESTITEM.STB row 611
+  data: godot/data/items/quest/611-resurrection-medicine.tres
   code: module/src/items.rs
 ---
 # Resurrection Medicine

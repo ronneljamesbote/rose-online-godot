@@ -18,7 +18,7 @@ dropped_by:
   level: 17
   slots_of_30: 0.2
 source:
-  data: LIST_ARMS.STB row 203
+  data: godot/data/items/hands/203-action-gloves.tres
   code: module/src/items.rs
 ---
 # Action Gloves

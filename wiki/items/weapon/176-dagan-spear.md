@@ -29,7 +29,7 @@ recipe:
   quantity: 20
 craft_difficulty: 44
 source:
-  data: LIST_WEAPON.STB row 176
+  data: godot/data/items/weapon/176-dagan-spear.tres
   code: module/src/items.rs
 ---
 # Dagan Spear

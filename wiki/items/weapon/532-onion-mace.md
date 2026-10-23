@@ -18,7 +18,7 @@ sockets: true
 price: 7920
 weight: 25
 source:
-  data: LIST_WEAPON.STB row 532
+  data: godot/data/items/weapon/532-onion-mace.tres
   code: module/src/items.rs
 ---
 # Onion Mace

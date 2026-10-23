@@ -9,7 +9,7 @@ effect: teaches skill 2892, uses skill 2892, fuel +2892
 price: 100
 weight: 50
 source:
-  data: LIST_USEITEM.STB row 496
+  data: godot/data/items/consumable/496-christmas-tree.tres
   code: module/src/items.rs
 ---
 # Christmas Tree

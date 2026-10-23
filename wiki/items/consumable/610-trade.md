@@ -12,7 +12,7 @@ sold_by:
 - '[[npcs/1005-righteous-crusader-leonard|Righteous Crusader Leonard]]'
 - '[[npcs/1035-little-street-vendor-pony|Little Street Vendor Pony]]'
 source:
-  data: LIST_USEITEM.STB row 610
+  data: godot/data/items/consumable/610-trade.tres
   code: module/src/items.rs
 ---
 # Trade

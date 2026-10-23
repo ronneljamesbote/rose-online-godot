@@ -22,7 +22,7 @@ dropped_by:
   level: 70
   slots_of_30: 0.8
 source:
-  data: LIST_WEAPON.STB row 854
+  data: godot/data/items/weapon/854-saber-elven-sword.tres
   code: module/src/items.rs
 ---
 # Saber & Elven Sword

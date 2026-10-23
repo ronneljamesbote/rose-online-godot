@@ -15,7 +15,7 @@ job: Muse Job
 price: 2500
 weight: 3
 source:
-  data: LIST_FOOT.STB row 407
+  data: godot/data/items/feet/407-green-sandals-of-witch.tres
   code: module/src/items.rs
 ---
 # Green Sandals of Witch

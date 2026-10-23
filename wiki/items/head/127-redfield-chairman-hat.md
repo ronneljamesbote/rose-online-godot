@@ -32,7 +32,7 @@ dropped_by:
   level: 122
   slots_of_30: 0.4
 source:
-  data: LIST_CAP.STB row 127
+  data: godot/data/items/head/127-redfield-chairman-hat.tres
   code: module/src/items.rs
 ---
 # Redfield Chairman Hat

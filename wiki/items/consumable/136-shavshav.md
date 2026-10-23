@@ -11,7 +11,7 @@ weight: 1
 sold_by:
 - '[[npcs/1224-shef-peppie|Shef Peppie]]'
 source:
-  data: LIST_USEITEM.STB row 136
+  data: godot/data/items/consumable/136-shavshav.tres
   code: module/src/items.rs
 ---
 # ShavShav

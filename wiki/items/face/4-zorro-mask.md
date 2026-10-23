@@ -18,7 +18,7 @@ recipe:
   quantity: 1
 craft_difficulty: 20
 source:
-  data: LIST_FACEITEM.STB row 4
+  data: godot/data/items/face/4-zorro-mask.tres
   code: module/src/items.rs
 ---
 # Zorro Mask

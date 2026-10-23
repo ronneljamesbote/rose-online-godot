@@ -29,7 +29,7 @@ recipe:
   quantity: 1
 craft_difficulty: 50
 source:
-  data: LIST_PAT.STB row 331
+  data: godot/data/items/vehicle/331-punch-arms.tres
   code: module/src/items.rs
 ---
 # Punch Arms

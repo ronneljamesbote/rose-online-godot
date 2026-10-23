@@ -14,7 +14,7 @@ job: Soldier Job
 price: 2400
 weight: 10
 source:
-  data: LIST_CAP.STB row 407
+  data: godot/data/items/head/407-iron-helm.tres
   code: module/src/items.rs
 ---
 # Iron Helm

@@ -39,7 +39,7 @@ dropped_by:
   level: 100
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 42
+  data: godot/data/items/weapon/42-blood-mace.tres
   code: module/src/items.rs
 ---
 # Blood Mace

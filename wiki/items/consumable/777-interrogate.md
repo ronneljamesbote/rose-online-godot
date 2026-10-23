@@ -9,7 +9,7 @@ effect: teaches [[skills/1721-interrogate|Interrogate]], uses [[skills/1721-inte
 price: 15900
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 777
+  data: godot/data/items/consumable/777-interrogate.tres
   code: module/src/items.rs
 ---
 # Interrogate

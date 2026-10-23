@@ -56,7 +56,7 @@ dropped_by:
 quest_reward:
 - '[[quests/2052-forgotten-temple-investigation-2|Forgotten Temple Investigation (2)]]'
 source:
-  data: LIST_NATURAL.STB row 83
+  data: godot/data/items/material/83-lisent-pb.tres
   code: module/src/items.rs
 ---
 # Lisent (Pb)

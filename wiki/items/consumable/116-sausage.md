@@ -9,7 +9,7 @@ effect: HP +360, HP Restoration (360), teaches skill 360, uses skill 360, fuel +
 price: 108
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 116
+  data: godot/data/items/consumable/116-sausage.tres
   code: module/src/items.rs
 ---
 # Sausage

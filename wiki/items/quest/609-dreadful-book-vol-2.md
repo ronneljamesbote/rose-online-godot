@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/120-dangerous-book|Dangerous Book]]'
 - '[[quests/121-banned-recipe|Banned Recipe]]'
 source:
-  data: LIST_QUESTITEM.STB row 609
+  data: godot/data/items/quest/609-dreadful-book-vol-2.tres
   code: module/src/items.rs
 ---
 # Dreadful Book Vol 2

@@ -14,7 +14,7 @@ bonus: Attack Accuracy +6
 price: 4750
 weight: 3
 source:
-  data: LIST_CAP.STB row 313
+  data: godot/data/items/head/313-joker-jester.tres
   code: module/src/items.rs
 ---
 # Joker Jester

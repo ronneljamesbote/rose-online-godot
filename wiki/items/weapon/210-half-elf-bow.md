@@ -72,7 +72,7 @@ dropped_by:
   level: 88
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 210
+  data: godot/data/items/weapon/210-half-elf-bow.tres
   code: module/src/items.rs
 ---
 # Half-Elf Bow

@@ -62,7 +62,7 @@ used_to_craft:
 - '[[items/gem/356-peridot-6|Peridot 6]]'
 - '[[items/gem/357-peridot-7|Peridot 7]]'
 source:
-  data: LIST_NATURAL.STB row 152
+  data: godot/data/items/material/152-green-hearts.tres
   code: module/src/items.rs
 ---
 # Green Hearts

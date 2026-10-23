@@ -11,7 +11,7 @@ weight: 1
 needed_for_quest:
 - quest 1953
 source:
-  data: LIST_USEITEM.STB row 141
+  data: godot/data/items/consumable/141-mysterious-fruit.tres
   code: module/src/items.rs
 ---
 # Mysterious Fruit

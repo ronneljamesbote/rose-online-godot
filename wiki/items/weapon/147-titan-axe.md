@@ -31,7 +31,7 @@ dropped_by:
   level: 158
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 147
+  data: godot/data/items/weapon/147-titan-axe.tres
   code: module/src/items.rs
 ---
 # Titan Axe

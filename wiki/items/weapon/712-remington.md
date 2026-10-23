@@ -18,7 +18,7 @@ sockets: true
 price: 256200
 weight: 35
 source:
-  data: LIST_WEAPON.STB row 712
+  data: godot/data/items/weapon/712-remington.tres
   code: module/src/items.rs
 ---
 # Remington

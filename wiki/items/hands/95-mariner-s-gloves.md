@@ -69,7 +69,7 @@ dropped_by:
   level: 128
   slots_of_30: 0.2
 source:
-  data: LIST_ARMS.STB row 95
+  data: godot/data/items/hands/95-mariner-s-gloves.tres
   code: module/src/items.rs
 ---
 # Mariner's Gloves

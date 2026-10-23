@@ -18,7 +18,7 @@ dropped_by:
   level: 73
   slots_of_30: 0.2
 source:
-  data: LIST_BODY.STB row 620
+  data: godot/data/items/body/620-tamiya-vest.tres
   code: module/src/items.rs
 ---
 # Tamiya Vest

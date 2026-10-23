@@ -14,7 +14,7 @@ job: Soldier 3rd Advanced Jobs
 price: 182600
 weight: 20
 source:
-  data: LIST_BODY.STB row 345
+  data: godot/data/items/body/345-plate-armor.tres
   code: module/src/items.rs
 ---
 # Plate Armor

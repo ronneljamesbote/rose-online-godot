@@ -13,7 +13,7 @@ bonus: Defense +45, Magic Resistance +20
 price: 10000
 weight: 10
 source:
-  data: LIST_PAT.STB row 422
+  data: godot/data/items/vehicle/422-meister-r-frame.tres
   code: module/src/items.rs
 ---
 # Meister R Frame

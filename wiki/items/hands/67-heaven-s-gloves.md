@@ -35,7 +35,7 @@ dropped_by:
   level: 133
   slots_of_30: 0.4
 source:
-  data: LIST_ARMS.STB row 67
+  data: godot/data/items/hands/67-heaven-s-gloves.tres
   code: module/src/items.rs
 ---
 # Heaven's Gloves

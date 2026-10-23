@@ -12,7 +12,7 @@ sold_by:
 - '[[npcs/1098-ferrell-guild-staff-kiroth|Ferrell Guild Staff Kiroth]]'
 - '[[npcs/1184-ferrell-trader-sergei|Ferrell Trader Sergei]]'
 source:
-  data: LIST_NATURAL.STB row 96
+  data: godot/data/items/material/96-alcohol.tres
   code: module/src/items.rs
 ---
 # Alcohol

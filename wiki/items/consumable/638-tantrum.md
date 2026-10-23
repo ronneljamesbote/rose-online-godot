@@ -9,7 +9,7 @@ effect: teaches [[skills/40-breakdown|Breakdown]], uses [[skills/40-breakdown|Br
 price: 100
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 638
+  data: godot/data/items/consumable/638-tantrum.tres
   code: module/src/items.rs
 ---
 # Tantrum

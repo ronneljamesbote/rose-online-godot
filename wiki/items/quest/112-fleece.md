@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/1002-dealer-job-change-quest|Dealer Job Change Quest]]'
 - '[[quests/1003-dealer-job-change-quest|Dealer Job Change Quest]]'
 source:
-  data: LIST_QUESTITEM.STB row 112
+  data: godot/data/items/quest/112-fleece.tres
   code: module/src/items.rs
 ---
 # Fleece

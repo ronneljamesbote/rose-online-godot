@@ -17,7 +17,7 @@ quality: 55
 price: 94400
 weight: 5
 source:
-  data: LIST_PAT.STB row 311
+  data: godot/data/items/vehicle/311-battle-machine-gun.tres
   code: module/src/items.rs
 ---
 # Battle Machine Gun

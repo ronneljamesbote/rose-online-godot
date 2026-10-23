@@ -55,7 +55,7 @@ sold_by:
 quest_reward:
 - '[[quests/912-an-appropriate-compromise|An Appropriate Compromise]]'
 source:
-  data: LIST_WEAPON.STB row 304
+  data: godot/data/items/weapon/304-mage-s-rod.tres
   code: module/src/items.rs
 ---
 # Mage's Rod

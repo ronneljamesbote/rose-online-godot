@@ -15,7 +15,7 @@ job: Soldier Job
 price: 6350
 weight: 5
 source:
-  data: LIST_FOOT.STB row 319
+  data: godot/data/items/feet/319-trunket-boots.tres
   code: module/src/items.rs
 ---
 # Trunket Boots

@@ -37,7 +37,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1091-arumic-merchant-chester|Arumic Merchant Chester]]'
 source:
-  data: LIST_SUBWPN.STB row 65
+  data: godot/data/items/subweapon/65-mythical-flute.tres
   code: module/src/items.rs
 ---
 # Mythical Flute

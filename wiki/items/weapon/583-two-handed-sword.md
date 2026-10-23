@@ -25,7 +25,7 @@ dropped_by:
   level: 75
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 583
+  data: godot/data/items/weapon/583-two-handed-sword.tres
   code: module/src/items.rs
 ---
 # Two-Handed Sword

@@ -19,7 +19,7 @@ sockets: true
 price: 492050
 weight: 35
 source:
-  data: LIST_WEAPON.STB row 782
+  data: godot/data/items/weapon/782-oracle-staff.tres
   code: module/src/items.rs
 ---
 # Oracle Staff

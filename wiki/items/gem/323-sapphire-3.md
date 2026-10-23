@@ -24,7 +24,7 @@ quest_reward:
 used_to_craft:
 - '[[items/gem/324-sapphire-4|Sapphire 4]]'
 source:
-  data: LIST_JEMITEM.STB row 323
+  data: godot/data/items/gem/323-sapphire-3.tres
   code: module/src/items.rs
 ---
 # Sapphire [3]

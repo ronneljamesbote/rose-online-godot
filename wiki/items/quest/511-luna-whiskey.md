@@ -10,7 +10,7 @@ quest_reward:
 - '[[quests/147-pavrick-the-craftsman-on-lunar|Pavrick, the Craftsman on Lunar]]'
 - '[[quests/1988-pavrick-the-craftsman-on-lunar|Pavrick, the Craftsman on Lunar]]'
 source:
-  data: LIST_QUESTITEM.STB row 511
+  data: godot/data/items/quest/511-luna-whiskey.tres
   code: module/src/items.rs
 ---
 # Luna Whiskey

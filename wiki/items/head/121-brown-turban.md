@@ -44,7 +44,7 @@ sold_by:
 quest_reward:
 - '[[quests/1004-dealer-job-change-quest|Dealer Job Change Quest]]'
 source:
-  data: LIST_CAP.STB row 121
+  data: godot/data/items/head/121-brown-turban.tres
   code: module/src/items.rs
 ---
 # Brown Turban

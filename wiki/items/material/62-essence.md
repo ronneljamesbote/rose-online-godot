@@ -17,7 +17,7 @@ used_to_craft:
 - '[[items/vehicle/102-second-engine|Second Engine]]'
 - '[[items/vehicle/203-rapid-wheels|Rapid Wheels]]'
 source:
-  data: LIST_NATURAL.STB row 62
+  data: godot/data/items/material/62-essence.tres
   code: module/src/items.rs
 ---
 # Essence

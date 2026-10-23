@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/1008-the-humble-smith|The Humble Smith]]'
 source:
-  data: LIST_QUESTITEM.STB row 118
+  data: godot/data/items/quest/118-aqua-molar.tres
   code: module/src/items.rs
 ---
 # Aqua Molar

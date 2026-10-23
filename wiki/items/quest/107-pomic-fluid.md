@@ -7,7 +7,7 @@ icon: item/1600
 class: Quest Items
 price: 0
 source:
-  data: LIST_QUESTITEM.STB row 107
+  data: godot/data/items/quest/107-pomic-fluid.tres
   code: module/src/items.rs
 ---
 # Pomic Fluid

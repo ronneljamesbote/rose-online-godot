@@ -33,7 +33,7 @@ dropped_by:
   level: 140
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 145
+  data: godot/data/items/weapon/145-collapse-axe.tres
   code: module/src/items.rs
 ---
 # Collapse Axe

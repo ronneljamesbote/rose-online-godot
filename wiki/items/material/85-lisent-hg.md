@@ -33,7 +33,7 @@ dropped_by:
   level: 143
   slots_of_30: 1
 source:
-  data: LIST_NATURAL.STB row 85
+  data: godot/data/items/material/85-lisent-hg.tres
   code: module/src/items.rs
 ---
 # Lisent (Hg)

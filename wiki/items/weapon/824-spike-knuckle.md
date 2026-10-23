@@ -22,7 +22,7 @@ dropped_by:
   level: 70
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 824
+  data: godot/data/items/weapon/824-spike-knuckle.tres
   code: module/src/items.rs
 ---
 # Spike Knuckle

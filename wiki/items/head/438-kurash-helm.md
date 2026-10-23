@@ -14,7 +14,7 @@ job: Soldier 2nd Advanced Jobs
 price: 29250
 weight: 10
 source:
-  data: LIST_CAP.STB row 438
+  data: godot/data/items/head/438-kurash-helm.tres
   code: module/src/items.rs
 ---
 # Kurash Helm

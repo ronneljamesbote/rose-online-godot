@@ -24,7 +24,7 @@ recipe:
   quantity: 20
 craft_difficulty: 57
 source:
-  data: LIST_SUBWPN.STB row 17
+  data: godot/data/items/subweapon/17-vivor-shield.tres
   code: module/src/items.rs
 ---
 # Vivor Shield

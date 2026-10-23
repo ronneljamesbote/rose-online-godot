@@ -18,7 +18,7 @@ dropped_by:
   level: 65
   slots_of_30: 0.2
 source:
-  data: LIST_CAP.STB row 716
+  data: godot/data/items/head/716-tamiya-goggles.tres
   code: module/src/items.rs
 ---
 # Tamiya Goggles

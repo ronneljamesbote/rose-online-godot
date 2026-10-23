@@ -19,7 +19,7 @@ sockets: true
 price: 277700
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 777
+  data: godot/data/items/weapon/777-prayer-staff.tres
   code: module/src/items.rs
 ---
 # Prayer Staff

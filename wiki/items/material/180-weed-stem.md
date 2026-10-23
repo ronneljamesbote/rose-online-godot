@@ -30,7 +30,7 @@ used_to_craft:
 - '[[items/weapon/133-battle-axe|Battle Axe]]'
 - '[[items/weapon/203-long-bow|Long Bow]]'
 source:
-  data: LIST_NATURAL.STB row 180
+  data: godot/data/items/material/180-weed-stem.tres
   code: module/src/items.rs
 ---
 # Weed Stem

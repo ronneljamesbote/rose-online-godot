@@ -25,7 +25,7 @@ quest_reward:
 used_to_craft:
 - '[[items/gem/366-diamond-6|Diamond 6]]'
 source:
-  data: LIST_NATURAL.STB row 156
+  data: godot/data/items/material/156-golden-hearts.tres
   code: module/src/items.rs
 ---
 # Golden Hearts

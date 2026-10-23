@@ -48,7 +48,7 @@ dropped_by:
   level: 120
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 243
+  data: godot/data/items/weapon/243-piercing-gun.tres
   code: module/src/items.rs
 ---
 # Piercing Gun

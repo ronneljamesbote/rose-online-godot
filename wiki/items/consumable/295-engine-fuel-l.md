@@ -9,7 +9,7 @@ effect: teaches skill 100, uses skill 100, fuel +100
 price: 10000
 weight: 90
 source:
-  data: LIST_USEITEM.STB row 295
+  data: godot/data/items/consumable/295-engine-fuel-l.tres
   code: module/src/items.rs
 ---
 # Engine Fuel (L)

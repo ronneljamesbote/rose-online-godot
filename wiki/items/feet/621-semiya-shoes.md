@@ -15,7 +15,7 @@ job: Dealer 2nd Advanced Jobs
 price: 13050
 weight: 3
 source:
-  data: LIST_FOOT.STB row 621
+  data: godot/data/items/feet/621-semiya-shoes.tres
   code: module/src/items.rs
 ---
 # Semiya Shoes

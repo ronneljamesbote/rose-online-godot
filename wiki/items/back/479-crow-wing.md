@@ -15,7 +15,7 @@ bonus: Movement Speed +70
 price: 112800
 weight: 15
 source:
-  data: LIST_BACK.STB row 479
+  data: godot/data/items/back/479-crow-wing.tres
   code: module/src/items.rs
 ---
 # Crow Wing

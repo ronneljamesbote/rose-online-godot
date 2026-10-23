@@ -56,7 +56,7 @@ used_to_craft:
 - '[[items/back/225-little-devil-wing|Little Devil Wing]]'
 - '[[items/back/228-devil-wing|Devil Wing]]'
 source:
-  data: LIST_NATURAL.STB row 114
+  data: godot/data/items/material/114-platinum-thread.tres
   code: module/src/items.rs
 ---
 # Platinum Thread

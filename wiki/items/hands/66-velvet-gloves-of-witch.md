@@ -32,7 +32,7 @@ dropped_by:
   level: 115
   slots_of_30: 0.4
 source:
-  data: LIST_ARMS.STB row 66
+  data: godot/data/items/hands/66-velvet-gloves-of-witch.tres
   code: module/src/items.rs
 ---
 # Velvet Gloves of Witch

@@ -27,7 +27,7 @@ sold_by:
 - '[[npcs/1035-little-street-vendor-pony|Little Street Vendor Pony]]'
 - '[[npcs/1063-little-street-vendor-mile|Little Street Vendor Mile]]'
 source:
-  data: LIST_USEITEM.STB row 101
+  data: godot/data/items/consumable/101-apple.tres
   code: module/src/items.rs
 ---
 # Apple

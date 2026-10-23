@@ -48,7 +48,7 @@ dropped_in_zones:
 - '[[zones/55-freezing-plateau|Freezing Plateau]]'
 - '[[zones/59-luna-clan-field|Luna Clan Field]]'
 source:
-  data: LIST_NATURAL.STB row 79
+  data: godot/data/items/material/79-transparent-powder.tres
   code: module/src/items.rs
 ---
 # Transparent Powder

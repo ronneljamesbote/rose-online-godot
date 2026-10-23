@@ -17,7 +17,7 @@ dropped_by:
   level: 29
   slots_of_30: 2
 source:
-  data: LIST_USEITEM.STB row 411
+  data: godot/data/items/consumable/411-turtle.tres
   code: module/src/items.rs
 ---
 # Turtle

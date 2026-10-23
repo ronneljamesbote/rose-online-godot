@@ -11,7 +11,7 @@ bonus: Attack Power +10
 price: 1000
 weight: 3
 source:
-  data: LIST_FACEITEM.STB row 161
+  data: godot/data/items/face/161-star-glasses.tres
   code: module/src/items.rs
 ---
 # Star Glasses

@@ -19,7 +19,7 @@ price: 5000
 weight: 5
 trade: can't be traded
 source:
-  data: LIST_PAT.STB row 321
+  data: godot/data/items/vehicle/321-jet-booster.tres
   code: module/src/items.rs
 ---
 # Jet Booster

@@ -22,7 +22,7 @@ dropped_by:
   level: 142
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 682
+  data: godot/data/items/weapon/682-mediator-bow.tres
   code: module/src/items.rs
 ---
 # Mediator Bow

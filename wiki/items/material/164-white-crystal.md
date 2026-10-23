@@ -123,7 +123,7 @@ used_to_craft:
 - '[[items/subweapon/73-holy-symbol|Holy Symbol]]'
 - '[[items/gem/361-diamond-1|Diamond 1]]'
 source:
-  data: LIST_NATURAL.STB row 164
+  data: godot/data/items/material/164-white-crystal.tres
   code: module/src/items.rs
 ---
 # White Crystal

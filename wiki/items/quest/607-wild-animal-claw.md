@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/118-forbidden-potion|Forbidden Potion]]'
 - '[[quests/119-forbidden-potion|Forbidden Potion]]'
 source:
-  data: LIST_QUESTITEM.STB row 607
+  data: godot/data/items/quest/607-wild-animal-claw.tres
   code: module/src/items.rs
 ---
 # Wild Animal Claw

@@ -8,7 +8,7 @@ class: Stone Material
 price: 500
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 29
+  data: godot/data/items/material/29-otherworldly-stone.tres
   code: module/src/items.rs
 ---
 # Otherworldly Stone

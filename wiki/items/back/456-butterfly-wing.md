@@ -15,7 +15,7 @@ bonus: Movement Speed +55
 price: 33800
 weight: 5
 source:
-  data: LIST_BACK.STB row 456
+  data: godot/data/items/back/456-butterfly-wing.tres
   code: module/src/items.rs
 ---
 # Butterfly Wing

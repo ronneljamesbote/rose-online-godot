@@ -24,7 +24,7 @@ sold_by:
 - '[[npcs/1010-designer-keenu|Designer Keenu]]'
 - '[[npcs/1034-smith-ronk|Smith Ronk]]'
 source:
-  data: LIST_BODY.STB row 6
+  data: godot/data/items/body/6-natalie-look.tres
   code: module/src/items.rs
 ---
 # Natalie Look

@@ -14,7 +14,7 @@ dropped_by:
   level: 32
   slots_of_30: 1
 source:
-  data: LIST_JEWEL.STB row 3
+  data: godot/data/items/jewellery/3-faint-ring.tres
   code: module/src/items.rs
 ---
 # Faint Ring

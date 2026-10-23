@@ -18,7 +18,7 @@ sockets: true
 price: 17450
 weight: 25
 source:
-  data: LIST_WEAPON.STB row 613
+  data: godot/data/items/weapon/613-tomahawk.tres
   code: module/src/items.rs
 ---
 # Tomahawk

@@ -22,7 +22,7 @@ dropped_by:
   level: 75
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 563
+  data: godot/data/items/weapon/563-crossbow-gun.tres
   code: module/src/items.rs
 ---
 # Crossbow Gun

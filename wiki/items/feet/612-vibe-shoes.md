@@ -19,7 +19,7 @@ dropped_by:
   level: 40
   slots_of_30: 0.4
 source:
-  data: LIST_FOOT.STB row 612
+  data: godot/data/items/feet/612-vibe-shoes.tres
   code: module/src/items.rs
 ---
 # Vibe Shoes

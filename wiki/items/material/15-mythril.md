@@ -20,7 +20,7 @@ used_to_craft:
 - '[[items/weapon/444-desperado-dual-wield|Desperado Dual Wield]]'
 - '[[items/vehicle/311-battle-machine-gun|Battle Machine Gun]]'
 source:
-  data: LIST_NATURAL.STB row 15
+  data: godot/data/items/material/15-mythril.tres
   code: module/src/items.rs
 ---
 # Mythril

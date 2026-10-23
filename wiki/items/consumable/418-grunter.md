@@ -17,7 +17,7 @@ dropped_by:
   level: 44
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 418
+  data: godot/data/items/consumable/418-grunter.tres
   code: module/src/items.rs
 ---
 # Grunter

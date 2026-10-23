@@ -12,7 +12,7 @@ quest_reward:
 - '[[quests/1078-lillith-woman-of-the-cosmos-second-job-change|Lillith, Woman of the Cosmos (Second Job Change)]]'
 - '[[quests/1079-lillith-woman-of-the-cosmos-second-job-change|Lillith, Woman of the Cosmos (Second Job Change)]]'
 source:
-  data: LIST_QUESTITEM.STB row 209
+  data: godot/data/items/quest/209-jones-recommendation.tres
   code: module/src/items.rs
 ---
 # Jones' Recommendation

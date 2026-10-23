@@ -17,7 +17,7 @@ bonus: Dodge Rate +25
 price: 57425
 weight: 106
 source:
-  data: LIST_WEAPON.STB row 991
+  data: godot/data/items/weapon/991-falchion-gladius.tres
   code: module/src/items.rs
 ---
 # Falchion-Gladius

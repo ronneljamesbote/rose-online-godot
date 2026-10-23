@@ -42,7 +42,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1096-ferrell-guild-merchant-mildun|Ferrell Guild Merchant Mildun]]'
 source:
-  data: LIST_WEAPON.STB row 266
+  data: godot/data/items/weapon/266-orc-launcher.tres
   code: module/src/items.rs
 ---
 # Orc Launcher

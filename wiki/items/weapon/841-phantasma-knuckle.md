@@ -18,7 +18,7 @@ sockets: true
 price: 251650
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 841
+  data: godot/data/items/weapon/841-phantasma-knuckle.tres
   code: module/src/items.rs
 ---
 # Phantasma Knuckle

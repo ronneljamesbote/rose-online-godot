@@ -49,7 +49,7 @@ dropped_by:
   level: 112
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 66
+  data: godot/data/items/weapon/66-dark-bow-gun.tres
   code: module/src/items.rs
 ---
 # Dark Bow Gun

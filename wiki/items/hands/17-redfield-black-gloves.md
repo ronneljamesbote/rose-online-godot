@@ -14,7 +14,7 @@ bonus: Attack Speed +5
 price: 14050
 weight: 1
 source:
-  data: LIST_ARMS.STB row 17
+  data: godot/data/items/hands/17-redfield-black-gloves.tres
   code: module/src/items.rs
 ---
 # Redfield Black Gloves

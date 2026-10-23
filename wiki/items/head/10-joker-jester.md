@@ -28,7 +28,7 @@ sold_by:
 - '[[npcs/1010-designer-keenu|Designer Keenu]]'
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_CAP.STB row 10
+  data: godot/data/items/head/10-joker-jester.tres
   code: module/src/items.rs
 ---
 # Joker Jester

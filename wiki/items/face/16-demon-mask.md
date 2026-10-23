@@ -10,7 +10,7 @@ quality: 45
 bonus: Charm +14
 price: 2250
 source:
-  data: LIST_FACEITEM.STB row 16
+  data: godot/data/items/face/16-demon-mask.tres
   code: module/src/items.rs
 ---
 # Demon Mask

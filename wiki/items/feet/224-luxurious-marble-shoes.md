@@ -19,7 +19,7 @@ sold_by:
 - '[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]'
 - '[[npcs/1112-arumic-researcher-carasia|Arumic Researcher Carasia]]'
 source:
-  data: LIST_FOOT.STB row 224
+  data: godot/data/items/feet/224-luxurious-marble-shoes.tres
   code: module/src/items.rs
 ---
 # Luxurious Marble Shoes

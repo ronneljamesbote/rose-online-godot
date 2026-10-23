@@ -15,7 +15,7 @@ bonus: MP Recovery Rate +2
 price: 6500
 weight: 2
 source:
-  data: LIST_CAP.STB row 516
+  data: godot/data/items/head/516-purple-hat-of-witch.tres
   code: module/src/items.rs
 ---
 # Purple Hat of Witch

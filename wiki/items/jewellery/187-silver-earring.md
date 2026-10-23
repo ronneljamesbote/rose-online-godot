@@ -10,7 +10,7 @@ bonus: Magic Resistance +62
 price: 1489500
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 187
+  data: godot/data/items/jewellery/187-silver-earring.tres
   code: module/src/items.rs
 ---
 # Silver Earring

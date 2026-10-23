@@ -44,7 +44,7 @@ sold_by:
 quest_reward:
 - '[[quests/907-solitary-orias|Solitary Orias]]'
 source:
-  data: LIST_WEAPON.STB row 303
+  data: godot/data/items/weapon/303-animal-rod.tres
   code: module/src/items.rs
 ---
 # Animal Rod

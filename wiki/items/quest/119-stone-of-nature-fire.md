@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/906-solitary-orias|Solitary Orias]]'
 - '[[quests/907-solitary-orias|Solitary Orias]]'
 source:
-  data: LIST_QUESTITEM.STB row 119
+  data: godot/data/items/quest/119-stone-of-nature-fire.tres
   code: module/src/items.rs
 ---
 # Stone of Nature (Fire)

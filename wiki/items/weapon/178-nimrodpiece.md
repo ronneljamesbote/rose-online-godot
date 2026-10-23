@@ -39,7 +39,7 @@ dropped_by:
   level: 150
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 178
+  data: godot/data/items/weapon/178-nimrodpiece.tres
   code: module/src/items.rs
 ---
 # Nimrodpiece

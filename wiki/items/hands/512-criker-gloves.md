@@ -18,7 +18,7 @@ dropped_by:
   level: 47
   slots_of_30: 0.2
 source:
-  data: LIST_ARMS.STB row 512
+  data: godot/data/items/hands/512-criker-gloves.tres
   code: module/src/items.rs
 ---
 # Criker Gloves

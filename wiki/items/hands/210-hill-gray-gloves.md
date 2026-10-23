@@ -18,7 +18,7 @@ dropped_by:
   level: 25
   slots_of_30: 0.4
 source:
-  data: LIST_ARMS.STB row 210
+  data: godot/data/items/hands/210-hill-gray-gloves.tres
   code: module/src/items.rs
 ---
 # Hill Gray Gloves

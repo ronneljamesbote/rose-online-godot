@@ -50,7 +50,7 @@ dropped_by:
   level: 108
   slots_of_30: 0.2
 source:
-  data: LIST_ARMS.STB row 16
+  data: godot/data/items/hands/16-redfield-green-gloves.tres
   code: module/src/items.rs
 ---
 # Redfield Green Gloves

@@ -22,7 +22,7 @@ dropped_by:
   level: 142
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 836
+  data: godot/data/items/weapon/836-stiletto.tres
   code: module/src/items.rs
 ---
 # Stiletto

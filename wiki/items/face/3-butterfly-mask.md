@@ -18,7 +18,7 @@ recipe:
   quantity: 2
 craft_difficulty: 20
 source:
-  data: LIST_FACEITEM.STB row 3
+  data: godot/data/items/face/3-butterfly-mask.tres
   code: module/src/items.rs
 ---
 # ButterFly Mask

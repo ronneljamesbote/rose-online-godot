@@ -22,7 +22,7 @@ dropped_by:
   level: 75
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 644
+  data: godot/data/items/weapon/644-death-spear.tres
   code: module/src/items.rs
 ---
 # Death Spear

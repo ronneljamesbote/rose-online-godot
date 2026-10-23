@@ -18,7 +18,7 @@ recipe:
   quantity: 1
 craft_difficulty: 20
 source:
-  data: LIST_FACEITEM.STB row 64
+  data: godot/data/items/face/64-pinocchio-nose.tres
   code: module/src/items.rs
 ---
 # Pinocchio Nose

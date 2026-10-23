@@ -19,7 +19,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1007-gypsy-jewel-seller-mina|Gypsy Jewel Seller Mina]]'
 source:
-  data: LIST_JEWEL.STB row 82
+  data: godot/data/items/jewellery/82-light-necklace.tres
   code: module/src/items.rs
 ---
 # Light Necklace

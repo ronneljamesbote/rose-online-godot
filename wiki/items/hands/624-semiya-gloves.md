@@ -21,7 +21,7 @@ dropped_by:
   level: 92
   slots_of_30: 0.2
 source:
-  data: LIST_ARMS.STB row 624
+  data: godot/data/items/hands/624-semiya-gloves.tres
   code: module/src/items.rs
 ---
 # Semiya Gloves

@@ -18,7 +18,7 @@ sockets: true
 price: 10240
 weight: 15
 source:
-  data: LIST_WEAPON.STB row 851
+  data: godot/data/items/weapon/851-long-sword-mace.tres
   code: module/src/items.rs
 ---
 # Long Sword & Mace

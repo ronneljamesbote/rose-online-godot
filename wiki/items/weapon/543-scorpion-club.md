@@ -18,7 +18,7 @@ sockets: true
 price: 126250
 weight: 60
 source:
-  data: LIST_WEAPON.STB row 543
+  data: godot/data/items/weapon/543-scorpion-club.tres
   code: module/src/items.rs
 ---
 # Scorpion Club

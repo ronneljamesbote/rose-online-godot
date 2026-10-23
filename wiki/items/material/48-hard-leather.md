@@ -28,7 +28,7 @@ used_to_craft:
 - '[[items/weapon/317-oracle-staff|Oracle Staff]]'
 - '[[items/subweapon/13-righteous-shield|Righteous Shield]]'
 source:
-  data: LIST_NATURAL.STB row 48
+  data: godot/data/items/material/48-hard-leather.tres
   code: module/src/items.rs
 ---
 # Hard Leather

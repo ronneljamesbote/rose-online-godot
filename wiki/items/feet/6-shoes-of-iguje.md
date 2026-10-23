@@ -30,7 +30,7 @@ sold_by:
 - '[[npcs/1010-designer-keenu|Designer Keenu]]'
 - '[[npcs/1034-smith-ronk|Smith Ronk]]'
 source:
-  data: LIST_FOOT.STB row 6
+  data: godot/data/items/feet/6-shoes-of-iguje.tres
   code: module/src/items.rs
 ---
 # Shoes of Iguje

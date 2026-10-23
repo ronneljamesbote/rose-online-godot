@@ -19,7 +19,7 @@ used_to_craft:
 - '[[items/weapon/265-marble-launcher|Marble Launcher]]'
 - '[[items/weapon/266-orc-launcher|Orc Launcher]]'
 source:
-  data: LIST_NATURAL.STB row 100
+  data: godot/data/items/material/100-gunpowder.tres
   code: module/src/items.rs
 ---
 # Gunpowder

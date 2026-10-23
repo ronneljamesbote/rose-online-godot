@@ -42,7 +42,7 @@ dropped_by:
   level: 82
   slots_of_30: 0.2
 source:
-  data: LIST_BACK.STB row 247
+  data: godot/data/items/back/247-buffalo-backshield.tres
   code: module/src/items.rs
 ---
 # Buffalo Backshield

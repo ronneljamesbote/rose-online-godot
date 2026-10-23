@@ -18,7 +18,7 @@ dropped_by:
   level: 16
   slots_of_30: 0.2
 source:
-  data: LIST_FOOT.STB row 202
+  data: godot/data/items/feet/202-shoes-of-iguje.tres
   code: module/src/items.rs
 ---
 # Shoes of Iguje

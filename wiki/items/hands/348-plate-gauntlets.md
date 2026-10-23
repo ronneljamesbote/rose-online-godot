@@ -14,7 +14,7 @@ job: Soldier 3rd Advanced Jobs
 price: 40800
 weight: 5
 source:
-  data: LIST_ARMS.STB row 348
+  data: godot/data/items/hands/348-plate-gauntlets.tres
   code: module/src/items.rs
 ---
 # Plate Gauntlets

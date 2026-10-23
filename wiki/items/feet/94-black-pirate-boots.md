@@ -45,7 +45,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1094-armor-merchant-saki|Armor Merchant Saki]]'
 source:
-  data: LIST_FOOT.STB row 94
+  data: godot/data/items/feet/94-black-pirate-boots.tres
   code: module/src/items.rs
 ---
 # Black Pirate Boots

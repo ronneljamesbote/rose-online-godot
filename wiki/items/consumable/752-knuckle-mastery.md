@@ -13,7 +13,7 @@ sold_by:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 - '[[npcs/1086-akram-minister-rodath|Akram Minister Rodath]]'
 source:
-  data: LIST_USEITEM.STB row 752
+  data: godot/data/items/consumable/752-knuckle-mastery.tres
   code: module/src/items.rs
 ---
 # Knuckle Mastery

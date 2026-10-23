@@ -18,7 +18,7 @@ recipe:
   quantity: 1
 craft_difficulty: 20
 source:
-  data: LIST_FACEITEM.STB row 5
+  data: godot/data/items/face/5-persian-mask.tres
   code: module/src/items.rs
 ---
 # Persian Mask

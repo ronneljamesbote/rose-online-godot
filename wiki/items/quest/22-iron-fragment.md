@@ -15,7 +15,7 @@ needed_for_quest:
 - '[[quests/3805-arms-distribution-effort|Arms Distribution Effort]]'
 - '[[quests/5007-stockpiling-iron-fragments|Stockpiling Iron Fragments]]'
 source:
-  data: LIST_QUESTITEM.STB row 22
+  data: godot/data/items/quest/22-iron-fragment.tres
   code: module/src/items.rs
 ---
 # Iron Fragment

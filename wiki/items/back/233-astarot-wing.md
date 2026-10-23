@@ -17,7 +17,7 @@ dropped_by:
   level: 155
   slots_of_30: 1
 source:
-  data: LIST_BACK.STB row 233
+  data: godot/data/items/back/233-astarot-wing.tres
   code: module/src/items.rs
 ---
 # Astarot Wing

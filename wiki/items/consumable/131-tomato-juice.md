@@ -9,7 +9,7 @@ effect: MP +120, MP Restoration (120), teaches skill 120, uses skill 120, fuel +
 price: 60
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 131
+  data: godot/data/items/consumable/131-tomato-juice.tres
   code: module/src/items.rs
 ---
 # Tomato Juice

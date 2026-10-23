@@ -27,7 +27,7 @@ recipe:
   quantity: 1
 craft_difficulty: 68
 source:
-  data: LIST_PAT.STB row 132
+  data: godot/data/items/vehicle/132-sheft-engine.tres
   code: module/src/items.rs
 ---
 # Sheft Engine

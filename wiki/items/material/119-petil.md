@@ -31,7 +31,7 @@ dropped_in_zones:
 - '[[zones/53-arumic-valley|Arumic Valley]]'
 - '[[zones/54-crystal-snowfields|Crystal Snowfields]]'
 source:
-  data: LIST_NATURAL.STB row 119
+  data: godot/data/items/material/119-petil.tres
   code: module/src/items.rs
 ---
 # Petil

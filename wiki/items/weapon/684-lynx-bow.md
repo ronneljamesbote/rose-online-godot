@@ -18,7 +18,7 @@ sockets: true
 price: 281850
 weight: 25
 source:
-  data: LIST_WEAPON.STB row 684
+  data: godot/data/items/weapon/684-lynx-bow.tres
   code: module/src/items.rs
 ---
 # Lynx Bow

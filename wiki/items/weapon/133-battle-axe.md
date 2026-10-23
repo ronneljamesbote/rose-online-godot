@@ -60,7 +60,7 @@ sold_by:
 quest_reward:
 - '[[quests/860-hovert-s-mementos|Hovert''s Mementos]]'
 source:
-  data: LIST_WEAPON.STB row 133
+  data: godot/data/items/weapon/133-battle-axe.tres
   code: module/src/items.rs
 ---
 # Battle Axe

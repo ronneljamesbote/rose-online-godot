@@ -19,7 +19,7 @@ sockets: true
 price: 479600
 weight: 20
 source:
-  data: LIST_WEAPON.STB row 805
+  data: godot/data/items/weapon/805-twister-wand.tres
   code: module/src/items.rs
 ---
 # Twister Wand

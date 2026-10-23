@@ -18,7 +18,7 @@ recipe:
   quantity: 4
 craft_difficulty: 37
 source:
-  data: LIST_JEMITEM.STB row 357
+  data: godot/data/items/gem/357-peridot-7.tres
   code: module/src/items.rs
 ---
 # Peridot [7]

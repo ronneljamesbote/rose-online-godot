@@ -18,7 +18,7 @@ sockets: true
 price: 109100
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 834
+  data: godot/data/items/weapon/834-dragon-knuckle.tres
   code: module/src/items.rs
 ---
 # Dragon Knuckle

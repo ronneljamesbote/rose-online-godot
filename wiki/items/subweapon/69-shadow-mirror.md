@@ -22,7 +22,7 @@ recipe:
   quantity: 18
 craft_difficulty: 29
 source:
-  data: LIST_SUBWPN.STB row 69
+  data: godot/data/items/subweapon/69-shadow-mirror.tres
   code: module/src/items.rs
 ---
 # Shadow Mirror

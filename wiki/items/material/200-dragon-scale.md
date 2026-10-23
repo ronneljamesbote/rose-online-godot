@@ -14,7 +14,7 @@ dropped_by:
 used_to_craft:
 - '[[items/back/231-worm-dragon-wing|Worm Dragon Wing]]'
 source:
-  data: LIST_NATURAL.STB row 200
+  data: godot/data/items/material/200-dragon-scale.tres
   code: module/src/items.rs
 ---
 # Dragon Scale

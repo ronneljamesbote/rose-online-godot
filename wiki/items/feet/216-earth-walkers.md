@@ -14,7 +14,7 @@ quality: 34
 price: 3000
 weight: 2
 source:
-  data: LIST_FOOT.STB row 216
+  data: godot/data/items/feet/216-earth-walkers.tres
   code: module/src/items.rs
 ---
 # Earth Walkers

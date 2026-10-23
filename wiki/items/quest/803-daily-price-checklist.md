@@ -13,7 +13,7 @@ needed_for_quest:
 - '[[quests/5004-ulysses-price-chart-delivery|Ulysses'' Price Chart Delivery]]'
 - '[[quests/5031-seyon-s-price-checklist-delivery|Seyon''s Price Checklist Delivery]]'
 source:
-  data: LIST_QUESTITEM.STB row 803
+  data: godot/data/items/quest/803-daily-price-checklist.tres
   code: module/src/items.rs
 ---
 # Daily Price Checklist

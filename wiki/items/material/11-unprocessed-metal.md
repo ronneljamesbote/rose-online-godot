@@ -17,7 +17,7 @@ used_to_craft:
 - '[[items/weapon/112-flamberge|Flamberge]]'
 - '[[items/weapon/140-great-axe|Great Axe]]'
 source:
-  data: LIST_NATURAL.STB row 11
+  data: godot/data/items/material/11-unprocessed-metal.tres
   code: module/src/items.rs
 ---
 # Unprocessed Metal

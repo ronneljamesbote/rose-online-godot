@@ -23,7 +23,7 @@ recipe:
   quantity: 5
 craft_difficulty: 20
 source:
-  data: LIST_CAP.STB row 241
+  data: godot/data/items/head/241-royal-crown.tres
   code: module/src/items.rs
 ---
 # Royal Crown

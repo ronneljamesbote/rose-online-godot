@@ -39,7 +39,7 @@ dropped_by:
   level: 106
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 171
+  data: godot/data/items/weapon/171-shining-spear.tres
   code: module/src/items.rs
 ---
 # Shining Spear

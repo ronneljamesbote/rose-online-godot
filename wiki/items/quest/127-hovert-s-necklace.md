@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/858-hovert-s-mementos|Hovert''s Mementos]]'
 - '[[quests/859-hovert-s-mementos|Hovert''s Mementos]]'
 source:
-  data: LIST_QUESTITEM.STB row 127
+  data: godot/data/items/quest/127-hovert-s-necklace.tres
   code: module/src/items.rs
 ---
 # Hovert's Necklace

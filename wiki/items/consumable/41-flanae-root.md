@@ -9,7 +9,7 @@ effect: HP +100, HP Restoration (100), teaches skill 100, uses skill 100, fuel +
 price: 50
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 41
+  data: godot/data/items/consumable/41-flanae-root.tres
   code: module/src/items.rs
 ---
 # Flanae Root

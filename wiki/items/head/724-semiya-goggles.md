@@ -14,7 +14,7 @@ job: Dealer 2nd Advanced Jobs
 price: 11200
 weight: 2
 source:
-  data: LIST_CAP.STB row 724
+  data: godot/data/items/head/724-semiya-goggles.tres
   code: module/src/items.rs
 ---
 # Semiya Goggles

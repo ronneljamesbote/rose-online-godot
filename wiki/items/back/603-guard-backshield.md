@@ -14,7 +14,7 @@ job: Soldier and Hawker Job
 price: 14600
 weight: 20
 source:
-  data: LIST_BACK.STB row 603
+  data: godot/data/items/back/603-guard-backshield.tres
   code: module/src/items.rs
 ---
 # Guard Backshield

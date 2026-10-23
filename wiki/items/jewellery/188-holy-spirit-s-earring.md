@@ -10,7 +10,7 @@ bonus: HP Recovery Rate +24
 price: 768900
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 188
+  data: godot/data/items/jewellery/188-holy-spirit-s-earring.tres
   code: module/src/items.rs
 ---
 # Holy Spirit's Earring

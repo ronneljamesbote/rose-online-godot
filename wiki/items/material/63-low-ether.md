@@ -17,7 +17,7 @@ used_to_craft:
 - '[[items/weapon/342-holy-wand|Holy Wand]]'
 - '[[items/vehicle/103-dural-engine|Dural Engine]]'
 source:
-  data: LIST_NATURAL.STB row 63
+  data: godot/data/items/material/63-low-ether.tres
   code: module/src/items.rs
 ---
 # Low Ether

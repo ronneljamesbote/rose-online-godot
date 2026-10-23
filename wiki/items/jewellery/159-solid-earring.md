@@ -14,7 +14,7 @@ dropped_by:
   level: 89
   slots_of_30: 1
 source:
-  data: LIST_JEWEL.STB row 159
+  data: godot/data/items/jewellery/159-solid-earring.tres
   code: module/src/items.rs
 ---
 # Solid Earring

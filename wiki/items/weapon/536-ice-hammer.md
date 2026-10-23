@@ -25,7 +25,7 @@ dropped_by:
   level: 88
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 536
+  data: godot/data/items/weapon/536-ice-hammer.tres
   code: module/src/items.rs
 ---
 # Ice Hammer

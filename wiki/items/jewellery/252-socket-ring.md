@@ -10,7 +10,7 @@ bonus: Attack Power +2
 price: 3450
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 252
+  data: godot/data/items/jewellery/252-socket-ring.tres
   code: module/src/items.rs
 ---
 # Socket Ring

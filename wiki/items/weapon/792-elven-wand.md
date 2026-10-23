@@ -23,7 +23,7 @@ dropped_by:
   level: 52
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 792
+  data: godot/data/items/weapon/792-elven-wand.tres
   code: module/src/items.rs
 ---
 # Elven Wand

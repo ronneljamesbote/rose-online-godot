@@ -25,7 +25,7 @@ dropped_by:
   level: 47
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 672
+  data: godot/data/items/weapon/672-white-wing-bow.tres
   code: module/src/items.rs
 ---
 # White Wing Bow

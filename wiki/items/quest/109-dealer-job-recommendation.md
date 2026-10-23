@@ -12,7 +12,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/1004-dealer-job-change-quest|Dealer Job Change Quest]]'
 source:
-  data: LIST_QUESTITEM.STB row 109
+  data: godot/data/items/quest/109-dealer-job-recommendation.tres
   code: module/src/items.rs
 ---
 # Dealer Job Recommendation

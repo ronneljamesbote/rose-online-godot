@@ -12,7 +12,7 @@ quality: 24
 price: 0
 weight: 10
 source:
-  data: LIST_BODY.STB row 297
+  data: godot/data/items/body/297-visitor-look.tres
   code: module/src/items.rs
 ---
 # Visitor Look

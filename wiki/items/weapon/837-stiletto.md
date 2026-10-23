@@ -18,7 +18,7 @@ sockets: true
 price: 172150
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 837
+  data: godot/data/items/weapon/837-stiletto.tres
   code: module/src/items.rs
 ---
 # Stiletto

@@ -17,7 +17,7 @@ sold_by:
 - '[[npcs/1110-ferrell-guild-staff-charrs|Ferrell Guild Staff Charrs]]'
 - '[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]'
 source:
-  data: LIST_CAP.STB row 326
+  data: godot/data/items/head/326-junior-cap.tres
   code: module/src/items.rs
 ---
 # Junior Cap

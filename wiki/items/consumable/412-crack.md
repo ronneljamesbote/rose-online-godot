@@ -10,7 +10,7 @@ needs: Level 19
 price: 240
 weight: 20
 source:
-  data: LIST_USEITEM.STB row 412
+  data: godot/data/items/consumable/412-crack.tres
   code: module/src/items.rs
 ---
 # Crack

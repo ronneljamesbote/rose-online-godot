@@ -32,7 +32,7 @@ dropped_by:
   level: 122
   slots_of_30: 0.4
 source:
-  data: LIST_CAP.STB row 97
+  data: godot/data/items/head/97-wild-hawker-hat.tres
   code: module/src/items.rs
 ---
 # Wild Hawker Hat

@@ -12,7 +12,7 @@ weight: 30
 quest_reward:
 - '[[quests/158-leaders-in-the-abyss|Leaders in the Abyss]]'
 source:
-  data: LIST_USEITEM.STB row 437
+  data: godot/data/items/consumable/437-goblin-king.tres
   code: module/src/items.rs
 ---
 # Goblin King

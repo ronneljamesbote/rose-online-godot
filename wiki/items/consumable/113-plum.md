@@ -9,7 +9,7 @@ effect: HP +280, HP Restoration (280), teaches [[skills/271-crossbow-mastery|Cro
 price: 84
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 113
+  data: godot/data/items/consumable/113-plum.tres
   code: module/src/items.rs
 ---
 # Plum

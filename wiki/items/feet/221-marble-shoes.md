@@ -17,7 +17,7 @@ sold_by:
 - '[[npcs/1110-ferrell-guild-staff-charrs|Ferrell Guild Staff Charrs]]'
 - '[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]'
 source:
-  data: LIST_FOOT.STB row 221
+  data: godot/data/items/feet/221-marble-shoes.tres
   code: module/src/items.rs
 ---
 # Marble Shoes

@@ -55,7 +55,7 @@ dropped_by:
   level: 128
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 344
+  data: godot/data/items/weapon/344-bleak-wind.tres
   code: module/src/items.rs
 ---
 # Bleak Wind

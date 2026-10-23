@@ -14,7 +14,7 @@ bonus: Max HP +46
 price: 3400
 weight: 10
 source:
-  data: LIST_BODY.STB row 206
+  data: godot/data/items/body/206-yellow-denim-look.tres
   code: module/src/items.rs
 ---
 # Yellow Denim Look

@@ -8,7 +8,7 @@ class: Gathered Goods
 price: 2275
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 133
+  data: godot/data/items/material/133-ancient-gold-coin.tres
   code: module/src/items.rs
 ---
 # Ancient Gold Coin

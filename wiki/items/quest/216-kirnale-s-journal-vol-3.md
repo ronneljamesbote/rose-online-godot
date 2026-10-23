@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/1070-kirnale-s-journals-second-job-change|Kirnale''s Journals (Second Job Change)]]'
 - '[[quests/1071-kirnale-s-journals-second-job-change|Kirnale''s Journals (Second Job Change)]]'
 source:
-  data: LIST_QUESTITEM.STB row 216
+  data: godot/data/items/quest/216-kirnale-s-journal-vol-3.tres
   code: module/src/items.rs
 ---
 # Kirnale's Journal (Vol. 3)

@@ -49,7 +49,7 @@ dropped_by:
   level: 128
   slots_of_30: 0.2
 source:
-  data: LIST_CAP.STB row 65
+  data: godot/data/items/head/65-hat-of-shadow.tres
   code: module/src/items.rs
 ---
 # Hat of Shadow

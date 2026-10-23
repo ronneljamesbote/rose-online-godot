@@ -22,7 +22,7 @@ dropped_by:
   level: 120
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 833
+  data: godot/data/items/weapon/833-dragon-knuckle.tres
   code: module/src/items.rs
 ---
 # Dragon Knuckle

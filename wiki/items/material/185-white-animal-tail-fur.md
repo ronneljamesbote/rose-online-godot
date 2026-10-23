@@ -48,7 +48,7 @@ used_to_craft:
 - '[[items/weapon/65-poison-bow-gun|Poison Bow Gun]]'
 - '[[items/weapon/204-orc-bow|Orc Bow]]'
 source:
-  data: LIST_NATURAL.STB row 185
+  data: godot/data/items/material/185-white-animal-tail-fur.tres
   code: module/src/items.rs
 ---
 # White Animal Tail Fur

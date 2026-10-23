@@ -18,7 +18,7 @@ sockets: true
 price: 433300
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 220
+  data: godot/data/items/weapon/220-six-stick-bow.tres
   code: module/src/items.rs
 ---
 # Six Stick Bow

@@ -23,7 +23,7 @@ dropped_by:
   level: 70
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 765
+  data: godot/data/items/weapon/765-shadow-staff.tres
   code: module/src/items.rs
 ---
 # Shadow Staff

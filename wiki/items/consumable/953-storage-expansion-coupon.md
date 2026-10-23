@@ -9,7 +9,7 @@ effect: Storage Expansion +1008, teaches skill 1008, uses skill 1008, fuel +1008
 price: 200
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 953
+  data: godot/data/items/consumable/953-storage-expansion-coupon.tres
   code: module/src/items.rs
 ---
 # Storage Expansion Coupon

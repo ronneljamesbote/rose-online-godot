@@ -9,7 +9,7 @@ effect: SP +1, teaches skill 1, uses skill 1, fuel +1
 price: 2000
 trade: can't be traded
 source:
-  data: LIST_USEITEM.STB row 911
+  data: godot/data/items/consumable/911-rose.tres
   code: module/src/items.rs
 ---
 # Rose

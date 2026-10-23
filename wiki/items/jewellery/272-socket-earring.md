@@ -10,7 +10,7 @@ bonus: MP Consumption +1
 price: 4100
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 272
+  data: godot/data/items/jewellery/272-socket-earring.tres
   code: module/src/items.rs
 ---
 # Socket Earring

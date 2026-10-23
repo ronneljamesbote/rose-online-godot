@@ -19,7 +19,7 @@ sold_by:
 - '[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]'
 - '[[npcs/1112-arumic-researcher-carasia|Arumic Researcher Carasia]]'
 source:
-  data: LIST_FOOT.STB row 227
+  data: godot/data/items/feet/227-junior-shoes.tres
   code: module/src/items.rs
 ---
 # Junior Shoes

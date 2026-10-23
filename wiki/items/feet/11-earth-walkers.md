@@ -26,7 +26,7 @@ sold_by:
 - '[[npcs/1010-designer-keenu|Designer Keenu]]'
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_FOOT.STB row 11
+  data: godot/data/items/feet/11-earth-walkers.tres
   code: module/src/items.rs
 ---
 # Earth Walkers

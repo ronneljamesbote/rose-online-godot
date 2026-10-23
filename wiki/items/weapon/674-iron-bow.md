@@ -18,7 +18,7 @@ sockets: true
 price: 22400
 weight: 15
 source:
-  data: LIST_WEAPON.STB row 674
+  data: godot/data/items/weapon/674-iron-bow.tres
   code: module/src/items.rs
 ---
 # Iron Bow

@@ -13,7 +13,7 @@ bonus: Intelligence +7, Charm -5
 price: 2850
 weight: 3
 source:
-  data: LIST_CAP.STB row 201
+  data: godot/data/items/head/201-false-scalp.tres
   code: module/src/items.rs
 ---
 # False Scalp

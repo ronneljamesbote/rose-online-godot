@@ -157,7 +157,7 @@ used_to_craft:
 - '[[items/gem/341-emerald-1|Emerald 1]]'
 - '[[items/gem/351-peridot-1|Peridot 1]]'
 source:
-  data: LIST_NATURAL.STB row 161
+  data: godot/data/items/material/161-green-crystal.tres
   code: module/src/items.rs
 ---
 # Green Crystal

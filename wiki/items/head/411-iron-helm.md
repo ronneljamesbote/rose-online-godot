@@ -18,7 +18,7 @@ dropped_by:
   level: 40
   slots_of_30: 0.4
 source:
-  data: LIST_CAP.STB row 411
+  data: godot/data/items/head/411-iron-helm.tres
   code: module/src/items.rs
 ---
 # Iron Helm

@@ -13,7 +13,7 @@ used_to_craft:
 - '[[items/vehicle/231-stand-leg|Stand Leg]]'
 - '[[items/vehicle/232-runihol-leg|Runihol Leg]]'
 source:
-  data: LIST_NATURAL.STB row 226
+  data: godot/data/items/material/226-woodstock-schematic.tres
   code: module/src/items.rs
 ---
 # Woodstock Schematic

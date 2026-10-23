@@ -14,7 +14,7 @@ bonus: Max HP +56
 price: 5050
 weight: 10
 source:
-  data: LIST_BODY.STB row 208
+  data: godot/data/items/body/208-blue-denim-look.tres
   code: module/src/items.rs
 ---
 # Blue Denim Look

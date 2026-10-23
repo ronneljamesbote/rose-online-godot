@@ -11,7 +11,7 @@ weight: 1
 sold_by:
 - '[[npcs/1092-gypsy-jewel-seller-bellia|Gypsy Jewel Seller Bellia]]'
 source:
-  data: LIST_USEITEM.STB row 374
+  data: godot/data/items/consumable/374-para-dance-refined.tres
   code: module/src/items.rs
 ---
 # Para Dance [Refined]

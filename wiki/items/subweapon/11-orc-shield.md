@@ -24,7 +24,7 @@ recipe:
   quantity: 10
 craft_difficulty: 39
 source:
-  data: LIST_SUBWPN.STB row 11
+  data: godot/data/items/subweapon/11-orc-shield.tres
   code: module/src/items.rs
 ---
 # Orc Shield

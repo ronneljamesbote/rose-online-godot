@@ -13,7 +13,7 @@ bonus: Dodge Rate +5
 price: 1000
 weight: 3
 source:
-  data: LIST_CAP.STB row 802
+  data: godot/data/items/head/802-bug-hat.tres
   code: module/src/items.rs
 ---
 # Bug Hat

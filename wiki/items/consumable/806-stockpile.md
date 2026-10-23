@@ -11,7 +11,7 @@ weight: 1
 sold_by:
 - '[[npcs/1012-ferrell-guild-staff-ulysses|Ferrell Guild Staff Ulysses]]'
 source:
-  data: LIST_USEITEM.STB row 806
+  data: godot/data/items/consumable/806-stockpile.tres
   code: module/src/items.rs
 ---
 # Stockpile

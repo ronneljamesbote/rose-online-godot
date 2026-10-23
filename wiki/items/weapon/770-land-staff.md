@@ -19,7 +19,7 @@ sockets: true
 price: 107400
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 770
+  data: godot/data/items/weapon/770-land-staff.tres
   code: module/src/items.rs
 ---
 # Land Staff

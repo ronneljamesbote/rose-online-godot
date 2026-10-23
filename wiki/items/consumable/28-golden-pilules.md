@@ -9,7 +9,7 @@ effect: MP +100, teaches skill 100, uses skill 100, fuel +100
 price: 220
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 28
+  data: godot/data/items/consumable/28-golden-pilules.tres
   code: module/src/items.rs
 ---
 # Golden Pilules

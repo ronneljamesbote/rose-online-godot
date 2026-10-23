@@ -18,7 +18,7 @@ dropped_by:
   level: 55
   slots_of_30: 0.2
 source:
-  data: LIST_ARMS.STB row 517
+  data: godot/data/items/hands/517-ranger-gloves.tres
   code: module/src/items.rs
 ---
 # Ranger Gloves

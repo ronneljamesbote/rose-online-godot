@@ -18,7 +18,7 @@ sockets: true
 price: 457500
 weight: 50
 source:
-  data: LIST_WEAPON.STB row 21
+  data: godot/data/items/weapon/21-death-expeler.tres
   code: module/src/items.rs
 ---
 # Death Expeler

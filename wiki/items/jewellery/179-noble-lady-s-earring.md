@@ -10,7 +10,7 @@ bonus: Charm +28
 price: 414000
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 179
+  data: godot/data/items/jewellery/179-noble-lady-s-earring.tres
   code: module/src/items.rs
 ---
 # Noble Lady's Earring

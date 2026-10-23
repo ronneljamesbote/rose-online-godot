@@ -12,7 +12,7 @@ weight: 1
 sold_by:
 - '[[npcs/1007-gypsy-jewel-seller-mina|Gypsy Jewel Seller Mina]]'
 source:
-  data: LIST_JEWEL.STB row 166
+  data: godot/data/items/jewellery/166-critical-earring.tres
   code: module/src/items.rs
 ---
 # Critical Earring

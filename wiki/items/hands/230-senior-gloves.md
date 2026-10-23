@@ -16,7 +16,7 @@ weight: 1
 sold_by:
 - '[[npcs/1110-ferrell-guild-staff-charrs|Ferrell Guild Staff Charrs]]'
 source:
-  data: LIST_ARMS.STB row 230
+  data: godot/data/items/hands/230-senior-gloves.tres
   code: module/src/items.rs
 ---
 # Senior Gloves

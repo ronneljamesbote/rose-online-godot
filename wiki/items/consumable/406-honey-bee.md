@@ -17,7 +17,7 @@ dropped_by:
   level: 12
   slots_of_30: 2
 source:
-  data: LIST_USEITEM.STB row 406
+  data: godot/data/items/consumable/406-honey-bee.tres
   code: module/src/items.rs
 ---
 # Honey Bee

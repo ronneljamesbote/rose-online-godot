@@ -13,7 +13,7 @@ bonus: Attack Accuracy +7
 price: 1000
 weight: 3
 source:
-  data: LIST_CAP.STB row 803
+  data: godot/data/items/head/803-lion-hat.tres
   code: module/src/items.rs
 ---
 # Lion Hat

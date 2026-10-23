@@ -18,7 +18,7 @@ sockets: true
 price: 315950
 weight: 60
 source:
-  data: LIST_WEAPON.STB row 551
+  data: godot/data/items/weapon/551-labor-hammer.tres
   code: module/src/items.rs
 ---
 # Labor Hammer

@@ -13,7 +13,7 @@ bonus: Attack Speed +3
 price: 1000
 weight: 1
 source:
-  data: LIST_CAP.STB row 813
+  data: godot/data/items/head/813-lizard-hat.tres
   code: module/src/items.rs
 ---
 # Lizard Hat

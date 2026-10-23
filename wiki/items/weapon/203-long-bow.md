@@ -56,7 +56,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]]'
 source:
-  data: LIST_WEAPON.STB row 203
+  data: godot/data/items/weapon/203-long-bow.tres
   code: module/src/items.rs
 ---
 # Long Bow

@@ -20,7 +20,7 @@ dropped_by:
   level: 14
   slots_of_30: 2
 source:
-  data: LIST_USEITEM.STB row 404
+  data: godot/data/items/consumable/404-pumpkin.tres
   code: module/src/items.rs
 ---
 # Pumpkin

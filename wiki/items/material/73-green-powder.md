@@ -12,7 +12,7 @@ dropped_in_zones:
 - '[[zones/32-goblin-cave-b2|Goblin Cave (B2)]]'
 - '[[zones/33-goblin-cave-b3|Goblin Cave (B3)]]'
 source:
-  data: LIST_NATURAL.STB row 73
+  data: godot/data/items/material/73-green-powder.tres
   code: module/src/items.rs
 ---
 # Green Powder

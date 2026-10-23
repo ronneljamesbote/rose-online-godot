@@ -13,7 +13,7 @@ dropped_in_zones:
 sold_by:
 - '[[npcs/1097-tavern-owner-harin|Tavern Owner Harin]]'
 source:
-  data: LIST_USEITEM.STB row 109
+  data: godot/data/items/consumable/109-cooked-meat.tres
   code: module/src/items.rs
 ---
 # Cooked Meat

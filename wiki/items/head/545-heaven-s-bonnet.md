@@ -15,7 +15,7 @@ bonus: MP Recovery Rate +4
 price: 49500
 weight: 2
 source:
-  data: LIST_CAP.STB row 545
+  data: godot/data/items/head/545-heaven-s-bonnet.tres
   code: module/src/items.rs
 ---
 # Heaven's Bonnet

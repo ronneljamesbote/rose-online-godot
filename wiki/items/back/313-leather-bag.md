@@ -14,7 +14,7 @@ bonus: Inventory Capacity +300
 price: 19950
 weight: 5
 source:
-  data: LIST_BACK.STB row 313
+  data: godot/data/items/back/313-leather-bag.tres
   code: module/src/items.rs
 ---
 # Leather Bag

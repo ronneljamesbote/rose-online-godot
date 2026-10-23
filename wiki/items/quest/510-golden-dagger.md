@@ -18,7 +18,7 @@ quest_reward:
 - '[[quests/1988-pavrick-the-craftsman-on-lunar|Pavrick, the Craftsman on Lunar]]'
 - '[[quests/1989-the-royal-golden-dagger|The Royal Golden Dagger]]'
 source:
-  data: LIST_QUESTITEM.STB row 510
+  data: godot/data/items/quest/510-golden-dagger.tres
   code: module/src/items.rs
 ---
 # Golden Dagger

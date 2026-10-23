@@ -27,7 +27,7 @@ recipe:
   quantity: 1
 craft_difficulty: 63
 source:
-  data: LIST_PAT.STB row 31
+  data: godot/data/items/vehicle/31-wooden-stock-core.tres
   code: module/src/items.rs
 ---
 # Wooden Stock Core

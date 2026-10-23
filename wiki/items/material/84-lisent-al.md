@@ -56,7 +56,7 @@ dropped_by:
 quest_reward:
 - '[[quests/2053-forgotten-temple-investigation-3|Forgotten Temple Investigation (3)]]'
 source:
-  data: LIST_NATURAL.STB row 84
+  data: godot/data/items/material/84-lisent-al.tres
   code: module/src/items.rs
 ---
 # Lisent (Al)

@@ -16,7 +16,7 @@ weight: 1
 sold_by:
 - '[[npcs/1112-arumic-researcher-carasia|Arumic Researcher Carasia]]'
 source:
-  data: LIST_ARMS.STB row 231
+  data: godot/data/items/hands/231-senior-gloves.tres
   code: module/src/items.rs
 ---
 # Senior Gloves

@@ -14,7 +14,7 @@ job: Muse Job
 price: 4650
 weight: 2
 source:
-  data: LIST_ARMS.STB row 417
+  data: godot/data/items/hands/417-purple-gloves-of-witch.tres
   code: module/src/items.rs
 ---
 # Purple Gloves of Witch

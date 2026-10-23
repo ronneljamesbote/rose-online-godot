@@ -36,7 +36,7 @@ dropped_by:
   level: 121
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 44
+  data: godot/data/items/weapon/44-battle-mace.tres
   code: module/src/items.rs
 ---
 # Battle Mace

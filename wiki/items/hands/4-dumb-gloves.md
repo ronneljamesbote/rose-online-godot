@@ -34,7 +34,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1034-smith-ronk|Smith Ronk]]'
 source:
-  data: LIST_ARMS.STB row 4
+  data: godot/data/items/hands/4-dumb-gloves.tres
   code: module/src/items.rs
 ---
 # Dumb Gloves

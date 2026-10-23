@@ -54,7 +54,7 @@ quest_reward:
 used_to_craft:
 - '[[items/gem/342-emerald-2|Emerald 2]]'
 source:
-  data: LIST_JEMITEM.STB row 341
+  data: godot/data/items/gem/341-emerald-1.tres
   code: module/src/items.rs
 ---
 # Emerald [1]

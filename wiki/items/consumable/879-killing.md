@@ -8,7 +8,7 @@ class: Skill Book
 effect: teaches skill 3216, uses skill 3216, fuel +3216
 price: 0
 source:
-  data: LIST_USEITEM.STB row 879
+  data: godot/data/items/consumable/879-killing.tres
   code: module/src/items.rs
 ---
 # Killing

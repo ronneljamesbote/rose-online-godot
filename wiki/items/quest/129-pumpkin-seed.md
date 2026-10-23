@@ -17,7 +17,7 @@ needed_for_quest:
 - '[[quests/903-muse-job-change-quest|Muse Job Change Quest]]'
 - '[[quests/904-muse-job-change-quest|Muse Job Change Quest]]'
 source:
-  data: LIST_QUESTITEM.STB row 129
+  data: godot/data/items/quest/129-pumpkin-seed.tres
   code: module/src/items.rs
 ---
 # Pumpkin Seed

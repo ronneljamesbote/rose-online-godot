@@ -66,7 +66,7 @@ sold_by:
 quest_reward:
 - '[[quests/1008-the-humble-smith|The Humble Smith]]'
 source:
-  data: LIST_WEAPON.STB row 234
+  data: godot/data/items/weapon/234-iron-rifle.tres
   code: module/src/items.rs
 ---
 # Iron Rifle

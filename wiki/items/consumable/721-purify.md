@@ -12,7 +12,7 @@ sold_by:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 - '[[npcs/1085-akram-minister-nel|Akram Minister Nel]]'
 source:
-  data: LIST_USEITEM.STB row 721
+  data: godot/data/items/consumable/721-purify.tres
   code: module/src/items.rs
 ---
 # Purify

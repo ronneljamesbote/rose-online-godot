@@ -46,7 +46,7 @@ dropped_by:
   level: 88
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 438
+  data: godot/data/items/weapon/438-blood-sword-axe.tres
   code: module/src/items.rs
 ---
 # Blood Sword & Axe

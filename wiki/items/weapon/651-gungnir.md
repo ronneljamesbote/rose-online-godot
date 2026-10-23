@@ -18,7 +18,7 @@ sockets: true
 price: 137750
 weight: 40
 source:
-  data: LIST_WEAPON.STB row 651
+  data: godot/data/items/weapon/651-gungnir.tres
   code: module/src/items.rs
 ---
 # Gungnir

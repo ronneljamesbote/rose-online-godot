@@ -11,7 +11,7 @@ bonus: Movement Speed +40
 price: 1000
 weight: 1
 source:
-  data: LIST_FACEITEM.STB row 171
+  data: godot/data/items/face/171-rat-tail-mustache.tres
   code: module/src/items.rs
 ---
 # Rat Tail Mustache

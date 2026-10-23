@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/3806-reassuring-support|Reassuring Support]]'
 source:
-  data: LIST_QUESTITEM.STB row 314
+  data: godot/data/items/quest/314-doonga-s-sausage.tres
   code: module/src/items.rs
 ---
 # Doonga's Sausage

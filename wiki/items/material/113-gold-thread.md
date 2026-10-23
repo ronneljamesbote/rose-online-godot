@@ -31,7 +31,7 @@ used_to_craft:
 - '[[items/back/227-angel-wing|Angel Wing]]'
 - '[[items/subweapon/75-elven-harp|Elven Harp]]'
 source:
-  data: LIST_NATURAL.STB row 113
+  data: godot/data/items/material/113-gold-thread.tres
   code: module/src/items.rs
 ---
 # Gold Thread

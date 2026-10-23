@@ -22,7 +22,7 @@ dropped_by:
   level: 80
   slots_of_30: 2
 source:
-  data: LIST_WEAPON.STB row 643
+  data: godot/data/items/weapon/643-trident.tres
   code: module/src/items.rs
 ---
 # Trident

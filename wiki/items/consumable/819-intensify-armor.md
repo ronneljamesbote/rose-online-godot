@@ -9,7 +9,7 @@ effect: teaches skill 2251, uses skill 2251, fuel +2251
 price: 8550
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 819
+  data: godot/data/items/consumable/819-intensify-armor.tres
   code: module/src/items.rs
 ---
 # Intensify Armor

@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/5015-goblin-cave-expedition-2nd-level|Goblin Cave Expedition (2nd Level)]]'
 source:
-  data: LIST_QUESTITEM.STB row 811
+  data: godot/data/items/quest/811-small-topaz.tres
   code: module/src/items.rs
 ---
 # Small Topaz

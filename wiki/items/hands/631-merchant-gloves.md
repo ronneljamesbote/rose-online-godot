@@ -14,7 +14,7 @@ job: Dealer 2nd Advanced Jobs
 price: 16350
 weight: 2
 source:
-  data: LIST_ARMS.STB row 631
+  data: godot/data/items/hands/631-merchant-gloves.tres
   code: module/src/items.rs
 ---
 # Merchant Gloves

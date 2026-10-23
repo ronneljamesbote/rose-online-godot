@@ -17,7 +17,7 @@ sold_by:
 - '[[npcs/1110-ferrell-guild-staff-charrs|Ferrell Guild Staff Charrs]]'
 - '[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]'
 source:
-  data: LIST_ARMS.STB row 226
+  data: godot/data/items/hands/226-junior-gloves.tres
   code: module/src/items.rs
 ---
 # Junior Gloves

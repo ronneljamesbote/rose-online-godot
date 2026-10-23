@@ -19,7 +19,7 @@ dropped_by:
   level: 100
   slots_of_30: 0.6
 source:
-  data: LIST_FOOT.STB row 632
+  data: godot/data/items/feet/632-merchant-boots.tres
   code: module/src/items.rs
 ---
 # Merchant Boots

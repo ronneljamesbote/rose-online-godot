@@ -51,7 +51,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_BODY.STB row 63
+  data: godot/data/items/body/63-purple-vest-of-witch.tres
   code: module/src/items.rs
 ---
 # Purple Vest of Witch

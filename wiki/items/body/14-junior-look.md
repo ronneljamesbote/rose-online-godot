@@ -14,7 +14,7 @@ bonus: Max HP +126
 price: 33300
 weight: 10
 source:
-  data: LIST_BODY.STB row 14
+  data: godot/data/items/body/14-junior-look.tres
   code: module/src/items.rs
 ---
 # Junior Look

@@ -63,7 +63,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 source:
-  data: LIST_WEAPON.STB row 207
+  data: godot/data/items/weapon/207-iron-bow.tres
   code: module/src/items.rs
 ---
 # Iron Bow

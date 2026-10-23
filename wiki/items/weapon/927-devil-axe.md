@@ -17,7 +17,7 @@ bonus: Max HP +400
 price: 71580
 weight: 103
 source:
-  data: LIST_WEAPON.STB row 927
+  data: godot/data/items/weapon/927-devil-axe.tres
   code: module/src/items.rs
 ---
 # Devil Axe

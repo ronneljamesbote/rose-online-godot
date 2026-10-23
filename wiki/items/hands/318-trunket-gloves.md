@@ -18,7 +18,7 @@ dropped_by:
   level: 57
   slots_of_30: 0.4
 source:
-  data: LIST_ARMS.STB row 318
+  data: godot/data/items/hands/318-trunket-gloves.tres
   code: module/src/items.rs
 ---
 # Trunket Gloves

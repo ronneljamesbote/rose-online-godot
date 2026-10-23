@@ -14,7 +14,7 @@ job: Soldier Job
 price: 17700
 weight: 20
 source:
-  data: LIST_BODY.STB row 317
+  data: godot/data/items/body/317-trunket-armor.tres
   code: module/src/items.rs
 ---
 # Trunket Armor

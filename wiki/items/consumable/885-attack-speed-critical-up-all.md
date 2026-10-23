@@ -8,7 +8,7 @@ class: Skill Book
 effect: teaches skill 3208, uses skill 3208, fuel +3208
 price: 0
 source:
-  data: LIST_USEITEM.STB row 885
+  data: godot/data/items/consumable/885-attack-speed-critical-up-all.tres
   code: module/src/items.rs
 ---
 # Attack Speed, Critical Up (All)

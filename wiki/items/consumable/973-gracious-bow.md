@@ -8,7 +8,7 @@ class: Magic Item
 effect: teaches [[skills/43-salutation|Salutation]], uses [[skills/43-salutation|Salutation]], fuel +43
 price: 20
 source:
-  data: LIST_USEITEM.STB row 973
+  data: godot/data/items/consumable/973-gracious-bow.tres
   code: module/src/items.rs
 ---
 # Gracious Bow

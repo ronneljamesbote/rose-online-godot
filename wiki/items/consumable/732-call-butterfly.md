@@ -9,7 +9,7 @@ effect: teaches [[skills/1151-call-butterfly|Call Butterfly]], uses [[skills/115
 price: 4900
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 732
+  data: godot/data/items/consumable/732-call-butterfly.tres
   code: module/src/items.rs
 ---
 # Call Butterfly

@@ -15,7 +15,7 @@ job: Dealer Job
 price: 6450
 weight: 3
 source:
-  data: LIST_FOOT.STB row 615
+  data: godot/data/items/feet/615-tamiya-shoes.tres
   code: module/src/items.rs
 ---
 # Tamiya Shoes

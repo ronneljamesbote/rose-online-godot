@@ -18,7 +18,7 @@ dropped_by:
   level: 40
   slots_of_30: 0.4
 source:
-  data: LIST_ARMS.STB row 312
+  data: godot/data/items/hands/312-iron-gauntlets.tres
   code: module/src/items.rs
 ---
 # Iron Gauntlets

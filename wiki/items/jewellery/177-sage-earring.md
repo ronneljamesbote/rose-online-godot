@@ -10,7 +10,7 @@ bonus: MP Recovery Rate +12
 price: 187900
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 177
+  data: godot/data/items/jewellery/177-sage-earring.tres
   code: module/src/items.rs
 ---
 # Sage Earring

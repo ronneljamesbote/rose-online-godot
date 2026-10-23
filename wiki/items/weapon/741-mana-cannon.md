@@ -18,7 +18,7 @@ sockets: true
 price: 547750
 weight: 20
 source:
-  data: LIST_WEAPON.STB row 741
+  data: godot/data/items/weapon/741-mana-cannon.tres
   code: module/src/items.rs
 ---
 # Mana Cannon

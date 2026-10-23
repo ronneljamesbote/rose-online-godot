@@ -8,7 +8,7 @@ class: Magic Item
 effect: teaches [[skills/50-applause|Applause]], uses [[skills/50-applause|Applause]], fuel +50
 price: 20
 source:
-  data: LIST_USEITEM.STB row 978
+  data: godot/data/items/consumable/978-applause.tres
   code: module/src/items.rs
 ---
 # Applause

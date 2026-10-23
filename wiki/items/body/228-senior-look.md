@@ -16,7 +16,7 @@ weight: 10
 sold_by:
 - '[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]'
 source:
-  data: LIST_BODY.STB row 228
+  data: godot/data/items/body/228-senior-look.tres
   code: module/src/items.rs
 ---
 # Senior Look

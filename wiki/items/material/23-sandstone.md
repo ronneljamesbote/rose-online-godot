@@ -8,7 +8,7 @@ class: Stone Material
 price: 120
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 23
+  data: godot/data/items/material/23-sandstone.tres
   code: module/src/items.rs
 ---
 # Sandstone

@@ -37,7 +37,7 @@ used_to_craft:
 - '[[items/hands/67-heaven-s-gloves|Heaven''s Gloves]]'
 - '[[items/feet/67-heaven-s-shoes|Heaven''s Shoes]]'
 source:
-  data: LIST_NATURAL.STB row 118
+  data: godot/data/items/material/118-etil.tres
   code: module/src/items.rs
 ---
 # Etil

@@ -10,7 +10,7 @@ bonus: Strength +30, Magic Resistance +30
 price: 537750
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 30
+  data: godot/data/items/jewellery/30-full-moon-ring.tres
   code: module/src/items.rs
 ---
 # Full Moon Ring

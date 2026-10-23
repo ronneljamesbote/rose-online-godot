@@ -15,7 +15,7 @@ weight: 2
 quest_reward:
 - '[[quests/5061-the-santa-suit-heist|The Santa Suit Heist]]'
 source:
-  data: LIST_ARMS.STB row 152
+  data: godot/data/items/hands/152-santa-gloves.tres
   code: module/src/items.rs
 ---
 # Santa Gloves

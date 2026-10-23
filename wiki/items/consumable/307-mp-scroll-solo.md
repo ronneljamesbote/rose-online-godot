@@ -25,7 +25,7 @@ dropped_by:
   level: 43
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 307
+  data: godot/data/items/consumable/307-mp-scroll-solo.tres
   code: module/src/items.rs
 ---
 # MP Scroll (Solo)

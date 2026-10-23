@@ -37,7 +37,7 @@ sold_by:
 - '[[npcs/1006-arumic-merchant-tryteh|Arumic Merchant Tryteh]]'
 - '[[npcs/1091-arumic-merchant-chester|Arumic Merchant Chester]]'
 source:
-  data: LIST_SUBWPN.STB row 61
+  data: godot/data/items/subweapon/61-book-of-standards.tres
   code: module/src/items.rs
 ---
 # Book of Standards

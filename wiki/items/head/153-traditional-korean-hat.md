@@ -17,7 +17,7 @@ quest_reward:
 needed_for_quest:
 - quest 5063
 source:
-  data: LIST_CAP.STB row 153
+  data: godot/data/items/head/153-traditional-korean-hat.tres
   code: module/src/items.rs
 ---
 # Traditional Korean Hat

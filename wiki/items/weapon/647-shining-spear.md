@@ -18,7 +18,7 @@ sockets: true
 price: 90250
 weight: 40
 source:
-  data: LIST_WEAPON.STB row 647
+  data: godot/data/items/weapon/647-shining-spear.tres
   code: module/src/items.rs
 ---
 # Shining Spear

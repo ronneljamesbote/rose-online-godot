@@ -18,7 +18,7 @@ sockets: true
 price: 10560
 weight: 20
 source:
-  data: LIST_WEAPON.STB row 702
+  data: godot/data/items/weapon/702-iron-rifle.tres
   code: module/src/items.rs
 ---
 # Iron Rifle

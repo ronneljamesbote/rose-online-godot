@@ -21,7 +21,7 @@ dropped_by:
   level: 126
   slots_of_30: 7
 source:
-  data: LIST_NATURAL.STB row 267
+  data: godot/data/items/material/267-huge-horn.tres
   code: module/src/items.rs
 ---
 # Huge Horn

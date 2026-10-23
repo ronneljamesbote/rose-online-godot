@@ -22,7 +22,7 @@ recipe:
   quantity: 30
 craft_difficulty: 44
 source:
-  data: LIST_SUBWPN.STB row 78
+  data: godot/data/items/subweapon/78-eye-of-storm.tres
   code: module/src/items.rs
 ---
 # Eye of Storm

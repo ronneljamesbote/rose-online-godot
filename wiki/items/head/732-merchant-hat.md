@@ -14,7 +14,7 @@ job: Dealer 2nd Advanced Jobs
 price: 19150
 weight: 2
 source:
-  data: LIST_CAP.STB row 732
+  data: godot/data/items/head/732-merchant-hat.tres
   code: module/src/items.rs
 ---
 # Merchant Hat

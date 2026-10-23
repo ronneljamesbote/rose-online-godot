@@ -33,7 +33,7 @@ dropped_by:
   level: 140
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 246
+  data: godot/data/items/weapon/246-bastard-gun.tres
   code: module/src/items.rs
 ---
 # Bastard Gun

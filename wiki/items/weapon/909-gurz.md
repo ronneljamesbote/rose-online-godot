@@ -17,7 +17,7 @@ bonus: Max HP +400
 price: 39900
 weight: 76
 source:
-  data: LIST_WEAPON.STB row 909
+  data: godot/data/items/weapon/909-gurz.tres
   code: module/src/items.rs
 ---
 # Gurz

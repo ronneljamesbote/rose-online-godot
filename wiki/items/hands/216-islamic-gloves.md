@@ -14,7 +14,7 @@ bonus: Attack Speed +3
 price: 3650
 weight: 1
 source:
-  data: LIST_ARMS.STB row 216
+  data: godot/data/items/hands/216-islamic-gloves.tres
   code: module/src/items.rs
 ---
 # Islamic Gloves

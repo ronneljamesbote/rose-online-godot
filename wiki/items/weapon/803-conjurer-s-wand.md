@@ -19,7 +19,7 @@ sockets: true
 price: 392900
 weight: 20
 source:
-  data: LIST_WEAPON.STB row 803
+  data: godot/data/items/weapon/803-conjurer-s-wand.tres
   code: module/src/items.rs
 ---
 # Conjurer's Wand

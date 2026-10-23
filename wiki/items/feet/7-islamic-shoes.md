@@ -38,7 +38,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1010-designer-keenu|Designer Keenu]]'
 source:
-  data: LIST_FOOT.STB row 7
+  data: godot/data/items/feet/7-islamic-shoes.tres
   code: module/src/items.rs
 ---
 # Islamic Shoes

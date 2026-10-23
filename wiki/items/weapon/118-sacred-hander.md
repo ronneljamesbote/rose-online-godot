@@ -28,7 +28,7 @@ dropped_by:
   level: 158
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 118
+  data: godot/data/items/weapon/118-sacred-hander.tres
   code: module/src/items.rs
 ---
 # Sacred Hander

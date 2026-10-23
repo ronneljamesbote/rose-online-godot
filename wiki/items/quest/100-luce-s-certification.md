@@ -12,7 +12,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/805-secretly-learning-to-drive|Secretly Learning to Drive]]'
 source:
-  data: LIST_QUESTITEM.STB row 100
+  data: godot/data/items/quest/100-luce-s-certification.tres
   code: module/src/items.rs
 ---
 # Luce's certification

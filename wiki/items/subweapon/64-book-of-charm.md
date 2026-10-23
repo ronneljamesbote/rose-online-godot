@@ -47,7 +47,7 @@ sold_by:
 - '[[npcs/1006-arumic-merchant-tryteh|Arumic Merchant Tryteh]]'
 - '[[npcs/1091-arumic-merchant-chester|Arumic Merchant Chester]]'
 source:
-  data: LIST_SUBWPN.STB row 64
+  data: godot/data/items/subweapon/64-book-of-charm.tres
   code: module/src/items.rs
 ---
 # Book of Charm

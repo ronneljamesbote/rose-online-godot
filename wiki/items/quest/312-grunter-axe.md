@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/3403-supplying-training-weapons|Supplying Training Weapons]]'
 source:
-  data: LIST_QUESTITEM.STB row 312
+  data: godot/data/items/quest/312-grunter-axe.tres
   code: module/src/items.rs
 ---
 # Grunter Axe

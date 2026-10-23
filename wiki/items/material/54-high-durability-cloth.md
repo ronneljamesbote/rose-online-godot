@@ -26,7 +26,7 @@ used_to_craft:
 - '[[items/weapon/211-mythril-bow|Mythril Bow]]'
 - '[[items/weapon/264-bronze-launcher|Bronze Launcher]]'
 source:
-  data: LIST_NATURAL.STB row 54
+  data: godot/data/items/material/54-high-durability-cloth.tres
   code: module/src/items.rs
 ---
 # High Durability Cloth

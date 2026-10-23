@@ -39,7 +39,7 @@ dropped_by:
   level: 151
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 146
+  data: godot/data/items/weapon/146-adamantium-axe.tres
   code: module/src/items.rs
 ---
 # Adamantium Axe

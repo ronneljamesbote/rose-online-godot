@@ -1700,6 +1700,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "rose-data-export"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "arrayvec",
+ "enum-map",
+ "rose-data",
+ "rose-data-irose",
+ "rose-file-readers",
+ "serde",
+ "serde_json",
+ "toml",
+]
+
+[[package]]
 name = "rose-data-irose"
 version = "0.1.0"
 dependencies = [
@@ -1756,6 +1771,7 @@ dependencies = [
  "anyhow",
  "glam 0.24.2",
  "rose-data",
+ "rose-data-export",
  "rose-data-irose",
  "rose-file-readers",
  "rose-game-common",
@@ -1796,6 +1812,7 @@ dependencies = [
  "log",
  "num-traits",
  "rose-data",
+ "rose-data-export",
  "rose-data-irose",
  "rose-file-readers",
  "rose-game-common",
@@ -1803,6 +1820,7 @@ dependencies = [
  "rose-game-irose",
  "rose-game-overrides",
  "rose-quest",
+ "serde",
  "serde_json",
  "spacetimedb-sdk",
  "thiserror 1.0.69",
@@ -1827,6 +1845,7 @@ dependencies = [
  "base64 0.22.1",
  "glam 0.24.2",
  "rose-data",
+ "rose-data-export",
  "rose-data-irose",
  "rose-file-readers",
  "rose-game-data",

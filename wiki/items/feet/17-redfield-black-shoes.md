@@ -14,7 +14,7 @@ quality: 49
 price: 17300
 weight: 2
 source:
-  data: LIST_FOOT.STB row 17
+  data: godot/data/items/feet/17-redfield-black-shoes.tres
   code: module/src/items.rs
 ---
 # Redfield Black Shoes

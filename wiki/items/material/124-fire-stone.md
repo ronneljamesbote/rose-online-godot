@@ -44,7 +44,7 @@ used_to_craft:
 - '[[items/feet/37-plate-boots|Plate Boots]]'
 - '[[items/feet/97-wild-hawker-boots|Wild Hawker Boots]]'
 source:
-  data: LIST_NATURAL.STB row 124
+  data: godot/data/items/material/124-fire-stone.tres
   code: module/src/items.rs
 ---
 # Fire Stone

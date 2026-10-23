@@ -57,7 +57,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1006-arumic-merchant-tryteh|Arumic Merchant Tryteh]]'
 source:
-  data: LIST_WEAPON.STB row 302
+  data: godot/data/items/weapon/302-lemmings-rod.tres
   code: module/src/items.rs
 ---
 # Lemmings Rod

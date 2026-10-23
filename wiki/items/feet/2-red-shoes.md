@@ -34,7 +34,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1034-smith-ronk|Smith Ronk]]'
 source:
-  data: LIST_FOOT.STB row 2
+  data: godot/data/items/feet/2-red-shoes.tres
   code: module/src/items.rs
 ---
 # Red Shoes

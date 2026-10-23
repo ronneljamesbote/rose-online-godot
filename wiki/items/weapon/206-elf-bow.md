@@ -60,7 +60,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 source:
-  data: LIST_WEAPON.STB row 206
+  data: godot/data/items/weapon/206-elf-bow.tres
   code: module/src/items.rs
 ---
 # Elf Bow

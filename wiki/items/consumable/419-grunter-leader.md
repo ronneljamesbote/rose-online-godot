@@ -17,7 +17,7 @@ dropped_by:
   level: 55
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 419
+  data: godot/data/items/consumable/419-grunter-leader.tres
   code: module/src/items.rs
 ---
 # Grunter Leader

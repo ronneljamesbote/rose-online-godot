@@ -18,7 +18,7 @@ used_to_craft:
 - '[[items/vehicle/201-wooden-wheels|Wooden Wheels]]'
 - '[[items/vehicle/202-carbon-wheels|Carbon Wheels]]'
 source:
-  data: LIST_NATURAL.STB row 61
+  data: godot/data/items/material/61-low-essence.tres
   code: module/src/items.rs
 ---
 # Low Essence

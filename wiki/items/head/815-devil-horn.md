@@ -12,7 +12,7 @@ quality: 25
 price: 1000
 weight: 1
 source:
-  data: LIST_CAP.STB row 815
+  data: godot/data/items/head/815-devil-horn.tres
   code: module/src/items.rs
 ---
 # Devil Horn

@@ -22,7 +22,7 @@ dropped_by:
   level: 155
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 276
+  data: godot/data/items/weapon/276-breakdown-canon.tres
   code: module/src/items.rs
 ---
 # Breakdown Canon

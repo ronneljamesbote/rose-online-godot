@@ -15,7 +15,7 @@ bonus: Max MP +30
 price: 3300
 weight: 10
 source:
-  data: LIST_BODY.STB row 401
+  data: godot/data/items/body/401-spiritual-vest.tres
   code: module/src/items.rs
 ---
 # Spiritual Vest

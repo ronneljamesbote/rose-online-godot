@@ -38,7 +38,7 @@ sold_by:
 - '[[npcs/1006-arumic-merchant-tryteh|Arumic Merchant Tryteh]]'
 - '[[npcs/1091-arumic-merchant-chester|Arumic Merchant Chester]]'
 source:
-  data: LIST_SUBWPN.STB row 62
+  data: godot/data/items/subweapon/62-oriental-drum.tres
   code: module/src/items.rs
 ---
 # Oriental Drum

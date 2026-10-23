@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/952-hawker-job-change-quest|Hawker Job Change Quest]]'
 - '[[quests/953-hawker-job-change-quest|Hawker Job Change Quest]]'
 source:
-  data: LIST_QUESTITEM.STB row 130
+  data: godot/data/items/quest/130-crystal-dew.tres
   code: module/src/items.rs
 ---
 # Crystal Dew

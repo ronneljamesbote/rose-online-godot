@@ -26,7 +26,7 @@ used_to_craft:
 - '[[items/subweapon/62-oriental-drum|Oriental Drum]]'
 - '[[items/subweapon/69-shadow-mirror|Shadow Mirror]]'
 source:
-  data: LIST_NATURAL.STB row 33
+  data: godot/data/items/material/33-aromatic-wood.tres
   code: module/src/items.rs
 ---
 # Aromatic Wood

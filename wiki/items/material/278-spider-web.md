@@ -12,7 +12,7 @@ dropped_by:
   level: 156
   slots_of_30: 14
 source:
-  data: LIST_NATURAL.STB row 278
+  data: godot/data/items/material/278-spider-web.tres
   code: module/src/items.rs
 ---
 # Spider Web

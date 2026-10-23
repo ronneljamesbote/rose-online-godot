@@ -18,7 +18,7 @@ sockets: true
 price: 23130
 weight: 15
 source:
-  data: LIST_WEAPON.STB row 562
+  data: godot/data/items/weapon/562-quick-bow-gun.tres
   code: module/src/items.rs
 ---
 # Quick Bow Gun

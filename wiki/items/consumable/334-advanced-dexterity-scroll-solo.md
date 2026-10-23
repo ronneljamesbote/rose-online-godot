@@ -8,7 +8,7 @@ class: Magic Item
 effect: teaches skill 3134, uses skill 3134, fuel +3134
 price: 100
 source:
-  data: LIST_USEITEM.STB row 334
+  data: godot/data/items/consumable/334-advanced-dexterity-scroll-solo.tres
   code: module/src/items.rs
 ---
 # Advanced Dexterity Scroll (Solo)

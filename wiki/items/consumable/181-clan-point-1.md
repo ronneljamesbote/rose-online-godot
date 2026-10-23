@@ -10,7 +10,7 @@ price: 0
 dropped_in_zones:
 - '[[zones/11-junon-clan-field|Junon Clan Field]]'
 source:
-  data: LIST_USEITEM.STB row 181
+  data: godot/data/items/consumable/181-clan-point-1.tres
   code: module/src/items.rs
 ---
 # Clan Point (+1)

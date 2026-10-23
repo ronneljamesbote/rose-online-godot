@@ -56,7 +56,7 @@ quest_reward:
 - '[[quests/5018-candle-ghost-s-identity-fetch-quest|Candle Ghost''s Identity (Fetch Quest)]]'
 - '[[quests/5019-goblin-hunting-competition-fetch-quest|Goblin Hunting Competition (Fetch Quest)]]'
 source:
-  data: LIST_USEITEM.STB row 58
+  data: godot/data/items/consumable/58-vital-jam-5.tres
   code: module/src/items.rs
 ---
 # Vital Jam (+5)

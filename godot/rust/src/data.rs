@@ -8,7 +8,7 @@ use std::{
 use rose_data::{
     AnimationEventFlags, CharacterMotionDatabase, CharacterMotionDatabaseOptions, DataDecoder, EffectDatabase, ItemDatabase,
     JobClassDatabase, NpcDatabase, NpcDatabaseOptions, QuestDatabase, SkillDatabase, SkyboxDatabase, SoundDatabase,
-    StatusEffectDatabase, ZoneList,
+    StatusEffectDatabase, StringDatabase, ZoneList,
 };
 use rose_file_readers::{ChrFile, HostFilesystemDevice, LtbFile, RoseFile, VfsFile, VfsIndex, VirtualFilesystem};
 
@@ -65,6 +65,42 @@ fn apply_overrides(vfs: &mut VirtualFilesystem) -> Result<(), anyhow::Error> {
     Ok(())
 }
 
+/// The game data exported from the Godot resources (`overrides/data/`, see
+/// `data_resources.rs`), the same files the server's upload sends: ROSE_DATA, else the
+/// overrides folder next to the game, else the repository's (when running from the Godot
+/// editor).
+fn find_export() -> Option<PathBuf> {
+    let candidates = std::env::var_os("ROSE_DATA").map(PathBuf::from).into_iter().chain(
+        [
+            std::env::current_exe().ok().and_then(|exe| exe.parent().map(|d| d.join(rose_data_export::DATA_DIR))),
+            std::env::current_dir().ok().map(|d| d.join("..").join(rose_data_export::DATA_DIR)),
+        ]
+        .into_iter()
+        .flatten(),
+    );
+    candidates.into_iter().find(|dir| dir.join(rose_data_export::ITEMS_DIR).is_dir())
+}
+
+/// The items from the export, or without one (an old client folder) from the iROSE tables.
+fn load_items(vfs: &VirtualFilesystem, strings: Arc<StringDatabase>) -> Result<ItemDatabase, anyhow::Error> {
+    if let Some(dir) = find_export() {
+        let export = rose_data_export::ItemsExport::from_files(|name| {
+            let path = dir.join(rose_data_export::items_file(name));
+            match std::fs::read_to_string(&path) {
+                Ok(text) => Ok(Some(text)),
+                Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(None),
+                Err(e) => Err(anyhow::Error::new(e).context(path.display().to_string())),
+            }
+        })?;
+        if let Some(export) = export {
+            godot::global::godot_print!("rose: {} items from {}", export.count(), dir.display());
+            return export.to_database(strings);
+        }
+    }
+    godot::global::godot_warn!("rose: no item export (overrides/data/items/), the items come from the iROSE tables");
+    rose_data_irose::get_item_database(vfs, strings)
+}
+
 pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
     if GAME_DATA.get().is_some() {
         return Ok(());
@@ -79,7 +115,7 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
     let strings = rose_data_irose::get_string_database(&vfs, 1)?;
     let zone_list = rose_data_irose::get_zone_list(&vfs, strings.clone())?;
     let skybox = rose_data_irose::get_skybox_database(&vfs)?;
-    let items = rose_data_irose::get_item_database(&vfs, strings.clone())?;
+    let items = load_items(&vfs, strings.clone())?;
     let job_classes = rose_data_irose::get_job_class_database(&vfs, strings.clone())?;
     let skills = rose_data_irose::get_skill_database(&vfs, strings.clone())?;
     let status_effects = rose_data_irose::get_status_effect_database(&vfs, strings.clone())?;

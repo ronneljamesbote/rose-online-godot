@@ -14,7 +14,7 @@ quality: 39
 price: 6600
 weight: 2
 source:
-  data: LIST_FOOT.STB row 14
+  data: godot/data/items/feet/14-junior-shoes.tres
   code: module/src/items.rs
 ---
 # Junior Shoes

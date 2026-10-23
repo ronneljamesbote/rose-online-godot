@@ -9,7 +9,7 @@ price: 0
 quest_reward:
 - quest 1953
 source:
-  data: LIST_QUESTITEM.STB row 503
+  data: godot/data/items/quest/503-kingkong-s-red-sword.tres
   code: module/src/items.rs
 ---
 # KingKong's Red Sword

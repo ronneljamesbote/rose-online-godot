@@ -39,7 +39,7 @@ used_to_craft:
 - '[[items/vehicle/231-stand-leg|Stand Leg]]'
 - '[[items/vehicle/332-drill-arms|Drill Arms]]'
 source:
-  data: LIST_NATURAL.STB row 202
+  data: godot/data/items/material/202-steam-heat.tres
   code: module/src/items.rs
 ---
 # Steam Heat

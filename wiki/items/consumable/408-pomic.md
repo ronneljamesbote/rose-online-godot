@@ -20,7 +20,7 @@ dropped_by:
   level: 15
   slots_of_30: 2
 source:
-  data: LIST_USEITEM.STB row 408
+  data: godot/data/items/consumable/408-pomic.tres
   code: module/src/items.rs
 ---
 # Pomic

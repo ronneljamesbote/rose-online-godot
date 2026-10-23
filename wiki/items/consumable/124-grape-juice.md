@@ -12,7 +12,7 @@ sold_by:
 - '[[npcs/1013-tavern-owner-sharlin|Tavern Owner Sharlin]]'
 - '[[npcs/1097-tavern-owner-harin|Tavern Owner Harin]]'
 source:
-  data: LIST_USEITEM.STB row 124
+  data: godot/data/items/consumable/124-grape-juice.tres
   code: module/src/items.rs
 ---
 # Grape Juice

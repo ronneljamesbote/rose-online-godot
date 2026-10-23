@@ -40,7 +40,7 @@ used_to_craft:
 - '[[items/body/64-violet-dress|Violet Dress]]'
 - '[[items/hands/64-violet-gloves|Violet Gloves]]'
 source:
-  data: LIST_NATURAL.STB row 184
+  data: godot/data/items/material/184-plant-seed.tres
   code: module/src/items.rs
 ---
 # Plant Seed

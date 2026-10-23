@@ -40,7 +40,7 @@ quest_reward:
 - '[[quests/153-kay-s-request|Kay''s Request]]'
 - '[[quests/154-kay-s-request|Kay''s Request]]'
 source:
-  data: LIST_WEAPON.STB row 507
+  data: godot/data/items/weapon/507-viking-sword.tres
   code: module/src/items.rs
 ---
 # Viking Sword

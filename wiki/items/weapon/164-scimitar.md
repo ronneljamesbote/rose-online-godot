@@ -62,7 +62,7 @@ sold_by:
 quest_reward:
 - '[[quests/857-living-as-a-true-soldier|Living as a True Soldier]]'
 source:
-  data: LIST_WEAPON.STB row 164
+  data: godot/data/items/weapon/164-scimitar.tres
   code: module/src/items.rs
 ---
 # Scimitar

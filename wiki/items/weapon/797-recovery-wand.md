@@ -19,7 +19,7 @@ sockets: true
 price: 115900
 weight: 10
 source:
-  data: LIST_WEAPON.STB row 797
+  data: godot/data/items/weapon/797-recovery-wand.tres
   code: module/src/items.rs
 ---
 # Recovery Wand

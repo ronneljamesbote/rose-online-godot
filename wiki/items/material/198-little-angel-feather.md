@@ -18,7 +18,7 @@ used_to_craft:
 - '[[items/back/224-little-angel-wing|Little Angel Wing]]'
 - '[[items/back/227-angel-wing|Angel Wing]]'
 source:
-  data: LIST_NATURAL.STB row 198
+  data: godot/data/items/material/198-little-angel-feather.tres
   code: module/src/items.rs
 ---
 # Little Angel Feather

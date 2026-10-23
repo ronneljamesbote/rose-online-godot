@@ -35,7 +35,7 @@ quest_reward:
 - '[[quests/107-healing-hands|Healing Hands]]'
 - '[[quests/5051-hunting-practice-1|Hunting Practice (1)]]'
 source:
-  data: LIST_USEITEM.STB row 103
+  data: godot/data/items/consumable/103-grapes.tres
   code: module/src/items.rs
 ---
 # Grapes

@@ -18,7 +18,7 @@ recipe:
   quantity: 1
 craft_difficulty: 20
 source:
-  data: LIST_FACEITEM.STB row 62
+  data: godot/data/items/face/62-pierrot-nose.tres
   code: module/src/items.rs
 ---
 # Pierrot Nose

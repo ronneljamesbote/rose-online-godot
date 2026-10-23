@@ -14,7 +14,7 @@ bonus: Attack Speed +5
 price: 7300
 weight: 1
 source:
-  data: LIST_ARMS.STB row 14
+  data: godot/data/items/hands/14-junior-gloves.tres
   code: module/src/items.rs
 ---
 # Junior Gloves

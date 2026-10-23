@@ -23,7 +23,7 @@ used_to_craft:
 - '[[items/vehicle/202-carbon-wheels|Carbon Wheels]]'
 - '[[items/vehicle/311-battle-machine-gun|Battle Machine Gun]]'
 source:
-  data: LIST_NATURAL.STB row 211
+  data: godot/data/items/material/211-wooden-cart-schematic.tres
   code: module/src/items.rs
 ---
 # Wooden Cart Schematic

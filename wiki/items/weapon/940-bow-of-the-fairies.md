@@ -17,7 +17,7 @@ bonus: Dodge Rate +25
 price: 34395
 weight: 28
 source:
-  data: LIST_WEAPON.STB row 940
+  data: godot/data/items/weapon/940-bow-of-the-fairies.tres
   code: module/src/items.rs
 ---
 # Bow of the Fairies

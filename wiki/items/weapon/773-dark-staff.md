@@ -23,7 +23,7 @@ dropped_by:
   level: 108
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 773
+  data: godot/data/items/weapon/773-dark-staff.tres
   code: module/src/items.rs
 ---
 # Dark Staff

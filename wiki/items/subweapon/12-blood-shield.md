@@ -24,7 +24,7 @@ recipe:
   quantity: 12
 craft_difficulty: 42
 source:
-  data: LIST_SUBWPN.STB row 12
+  data: godot/data/items/subweapon/12-blood-shield.tres
   code: module/src/items.rs
 ---
 # Blood Shield

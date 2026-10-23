@@ -65,7 +65,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]]'
 source:
-  data: LIST_WEAPON.STB row 163
+  data: godot/data/items/weapon/163-round-spear.tres
   code: module/src/items.rs
 ---
 # Round Spear

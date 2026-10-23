@@ -14,7 +14,7 @@ bonus: Attack Speed +3
 price: 2450
 weight: 1
 source:
-  data: LIST_ARMS.STB row 211
+  data: godot/data/items/hands/211-hill-gray-gloves.tres
   code: module/src/items.rs
 ---
 # Hill Gray Gloves

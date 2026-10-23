@@ -28,7 +28,7 @@ used_to_craft:
 - '[[items/weapon/339-blizzard-wand|Blizzard Wand]]'
 - '[[items/weapon/340-recovery-wand|Recovery Wand]]'
 source:
-  data: LIST_NATURAL.STB row 4
+  data: godot/data/items/material/4-bronze.tres
   code: module/src/items.rs
 ---
 # Bronze

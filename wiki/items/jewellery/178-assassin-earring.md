@@ -12,7 +12,7 @@ weight: 1
 sold_by:
 - '[[npcs/1180-ferrell-guild-banker-andre|Ferrell Guild Banker Andre]]'
 source:
-  data: LIST_JEWEL.STB row 178
+  data: godot/data/items/jewellery/178-assassin-earring.tres
   code: module/src/items.rs
 ---
 # Assassin Earring

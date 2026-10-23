@@ -49,7 +49,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1091-arumic-merchant-chester|Arumic Merchant Chester]]'
 source:
-  data: LIST_WEAPON.STB row 335
+  data: godot/data/items/weapon/335-silence-wand.tres
   code: module/src/items.rs
 ---
 # Silence Wand

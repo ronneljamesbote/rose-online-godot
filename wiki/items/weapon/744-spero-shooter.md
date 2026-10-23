@@ -18,7 +18,7 @@ sockets: true
 price: 793150
 weight: 20
 source:
-  data: LIST_WEAPON.STB row 744
+  data: godot/data/items/weapon/744-spero-shooter.tres
   code: module/src/items.rs
 ---
 # Spero Shooter

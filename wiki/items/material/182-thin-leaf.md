@@ -25,7 +25,7 @@ used_to_craft:
 - '[[items/body/62-green-vest-of-witch|Green Vest of Witch]]'
 - '[[items/hands/62-green-gloves-of-witch|Green Gloves of Witch]]'
 source:
-  data: LIST_NATURAL.STB row 182
+  data: godot/data/items/material/182-thin-leaf.tres
   code: module/src/items.rs
 ---
 # Thin Leaf

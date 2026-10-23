@@ -69,7 +69,7 @@ sold_by:
 - '[[npcs/1011-eccentric-inventor-spero|Eccentric Inventor Spero]]'
 - '[[npcs/1034-smith-ronk|Smith Ronk]]'
 source:
-  data: LIST_WEAPON.STB row 231
+  data: godot/data/items/weapon/231-bubble-gun.tres
   code: module/src/items.rs
 ---
 # Bubble Gun

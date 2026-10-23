@@ -28,7 +28,7 @@ craft_difficulty: 30
 sold_by:
 - '[[npcs/1096-ferrell-guild-merchant-mildun|Ferrell Guild Merchant Mildun]]'
 source:
-  data: LIST_PAT.STB row 101
+  data: godot/data/items/vehicle/101-first-engine.tres
   code: module/src/items.rs
 ---
 # First Engine

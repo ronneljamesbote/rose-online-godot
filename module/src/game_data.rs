@@ -65,6 +65,8 @@ pub fn game(ctx: &ReducerContext) -> Result<Rc<GameData>, String> {
 }
 
 fn load(ctx: &ReducerContext) -> Result<GameData, String> {
+    // The server log shows how long building the databases takes.
+    let _timer = spacetimedb::log_stopwatch::LogStopwatch::new("building the game databases");
     let mut device = MemoryFilesystemDevice::default();
     for file in ctx.db.game_file().iter() {
         device.insert(&file.path, file.data);

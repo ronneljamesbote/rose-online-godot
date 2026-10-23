@@ -14,7 +14,7 @@ job: Hawker Job
 price: 1800
 weight: 2
 source:
-  data: LIST_ARMS.STB row 513
+  data: godot/data/items/hands/513-criker-gloves.tres
   code: module/src/items.rs
 ---
 # Criker Gloves

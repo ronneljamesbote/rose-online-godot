@@ -24,7 +24,7 @@ used_to_craft:
 - '[[items/vehicle/6-sporty-r-frame|Sporty R Frame]]'
 - '[[items/vehicle/32-reinforced-stock-core|Reinforced Stock Core]]'
 source:
-  data: LIST_NATURAL.STB row 206
+  data: godot/data/items/material/206-mana-heat.tres
   code: module/src/items.rs
 ---
 # Mana Heat

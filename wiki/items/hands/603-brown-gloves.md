@@ -18,7 +18,7 @@ dropped_by:
   level: 25
   slots_of_30: 0.4
 source:
-  data: LIST_ARMS.STB row 603
+  data: godot/data/items/hands/603-brown-gloves.tres
   code: module/src/items.rs
 ---
 # Brown Gloves

@@ -14,7 +14,7 @@ dropped_by:
   level: 30
   slots_of_30: 1
 source:
-  data: LIST_JEWEL.STB row 1
+  data: godot/data/items/jewellery/1-shining-ring.tres
   code: module/src/items.rs
 ---
 # Shining Ring

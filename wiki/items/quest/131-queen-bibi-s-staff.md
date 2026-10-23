@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/857-living-as-a-true-soldier|Living as a True Soldier]]'
 source:
-  data: LIST_QUESTITEM.STB row 131
+  data: godot/data/items/quest/131-queen-bibi-s-staff.tres
   code: module/src/items.rs
 ---
 # Queen Bibi's Staff

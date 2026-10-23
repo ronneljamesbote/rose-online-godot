@@ -36,7 +36,7 @@ dropped_by:
   level: 133
   slots_of_30: 0.4
 source:
-  data: LIST_FOOT.STB row 127
+  data: godot/data/items/feet/127-redfield-chairman-shoes.tres
   code: module/src/items.rs
 ---
 # Redfield Chairman Shoes

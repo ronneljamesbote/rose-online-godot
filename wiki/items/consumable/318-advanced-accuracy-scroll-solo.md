@@ -25,7 +25,7 @@ dropped_by:
   level: 128
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 318
+  data: godot/data/items/consumable/318-advanced-accuracy-scroll-solo.tres
   code: module/src/items.rs
 ---
 # Advanced Accuracy Scroll (Solo)

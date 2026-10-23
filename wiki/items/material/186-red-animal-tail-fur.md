@@ -58,7 +58,7 @@ used_to_craft:
 - '[[items/weapon/66-dark-bow-gun|Dark Bow Gun]]'
 - '[[items/weapon/206-elf-bow|Elf Bow]]'
 source:
-  data: LIST_NATURAL.STB row 186
+  data: godot/data/items/material/186-red-animal-tail-fur.tres
   code: module/src/items.rs
 ---
 # Red Animal Tail Fur

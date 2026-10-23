@@ -13,7 +13,7 @@ weight: 1
 sold_by:
 - '[[npcs/1112-arumic-researcher-carasia|Arumic Researcher Carasia]]'
 source:
-  data: LIST_JEWEL.STB row 31
+  data: godot/data/items/jewellery/31-warrior-ring.tres
   code: module/src/items.rs
 ---
 # Warrior Ring

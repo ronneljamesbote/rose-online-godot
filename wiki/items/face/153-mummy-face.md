@@ -11,7 +11,7 @@ bonus: Intelligence +7
 price: 1000
 weight: 2
 source:
-  data: LIST_FACEITEM.STB row 153
+  data: godot/data/items/face/153-mummy-face.tres
   code: module/src/items.rs
 ---
 # Mummy Face

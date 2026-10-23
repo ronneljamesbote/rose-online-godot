@@ -67,7 +67,7 @@ sold_by:
 quest_reward:
 - '[[quests/912-an-appropriate-compromise|An Appropriate Compromise]]'
 source:
-  data: LIST_WEAPON.STB row 334
+  data: godot/data/items/weapon/334-elven-wand.tres
   code: module/src/items.rs
 ---
 # Elven Wand

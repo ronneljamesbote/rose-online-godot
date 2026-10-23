@@ -22,7 +22,7 @@ dropped_by:
   level: 88
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 584
+  data: godot/data/items/weapon/584-after-blade.tres
   code: module/src/items.rs
 ---
 # After Blade

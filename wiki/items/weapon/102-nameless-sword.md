@@ -44,7 +44,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]]'
 source:
-  data: LIST_WEAPON.STB row 102
+  data: godot/data/items/weapon/102-nameless-sword.tres
   code: module/src/items.rs
 ---
 # Nameless Sword

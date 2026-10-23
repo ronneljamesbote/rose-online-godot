@@ -13,7 +13,7 @@ bonus: Movement Speed +100
 price: 2500
 weight: 5
 source:
-  data: LIST_PAT.STB row 401
+  data: godot/data/items/vehicle/401-spike-wheel.tres
   code: module/src/items.rs
 ---
 # Spike Wheel

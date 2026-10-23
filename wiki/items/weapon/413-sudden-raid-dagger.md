@@ -33,7 +33,7 @@ dropped_by:
   level: 115
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 413
+  data: godot/data/items/weapon/413-sudden-raid-dagger.tres
   code: module/src/items.rs
 ---
 # Sudden Raid Dagger
