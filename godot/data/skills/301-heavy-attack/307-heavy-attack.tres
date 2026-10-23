@@ -1,0 +1,43 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://mgwjtd4i0gu3"]
+
+[ext_resource type="RoseSkill" uid="uid://bq3y5qgvgutyj" path="res://data/skills/201-melee-weapon-mastery/201-melee-weapon-mastery.tres" id="1_80a3t"]
+
+[resource]
+id = 307
+name = "Heavy Attack"
+description = "Bash a target with crushing force while using a Melee Weapon. "
+base_skill_id = 301
+level = 7
+skill_type = "Immediate"
+page = 1
+icon_number = 28
+learn_point_cost = 20
+required_skill_1 = ExtResource("1_80a3t")
+required_skill_1_level = 7
+required_item_class_1 = "OneHandedSword"
+required_item_class_2 = "OneHandedBlunt"
+required_item_class_3 = "TwoHandedSword"
+required_item_class_4 = "Spear"
+required_item_class_5 = "TwoHandedAxe"
+use_stat_1 = "Mana"
+use_stat_1_value = 22
+cooldown_ms = 6400
+target_filter = "Enemy"
+action_mode = "Attack"
+damage_type = "WeaponAttack"
+power = 72
+harm = 1
+item_make_number = 72
+casting_motion_id = 129
+casting_repeat_motion_id = 149
+casting_effect_1 = 1041
+casting_effect_1_point = 3
+casting_effect_2 = 1042
+casting_effect_2_point = 3
+casting_effect_3 = 1043
+casting_effect_3_point = 0
+casting_effect_4 = 1043
+casting_effect_4_point = 1
+action_motion_id = 94
+hit_effect_file_id = 1040
+hit_sound_id = 1551

@@ -60,7 +60,7 @@ levels:
   learn_points: 54
   changes: Max MP +200
 source:
-  data: LIST_SKILL.STB rows 291, 292, 293, 294, 295, 296, 297, 298, 299, 300
+  data: godot/data/skills/291-spiritual-training/ (levels 291, 292, 293, 294, 295, 296, 297, 298, 299, 300)
   code: module/src/skills.rs
 ---
 # Spiritual Training

@@ -94,7 +94,7 @@ levels:
   area: 14
   cooldown: 17.6
 source:
-  data: LIST_SKILL.STB rows 1081, 1082, 1083, 1084, 1085, 1086, 1087, 1088, 1089, 1090
+  data: godot/data/skills/1081-wind-storm/ (levels 1081, 1082, 1083, 1084, 1085, 1086, 1087, 1088, 1089, 1090)
   code: module/src/skills.rs
 ---
 # Wind Storm

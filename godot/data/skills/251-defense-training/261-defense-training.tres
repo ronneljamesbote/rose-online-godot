@@ -1,0 +1,22 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://byy7csg6yud4"]
+
+[ext_resource type="RoseJobClass" uid="uid://5yxauvydlw51" path="res://data/job_classes/61-knight-job.tres" id="1_xs8es"]
+[ext_resource type="RoseSkill" uid="uid://bwfq6mpohocge" path="res://data/skills/231-physical-training/231-physical-training.tres" id="2_7r138"]
+
+[resource]
+id = 261
+name = "Defense Training"
+description = "Increase Defense."
+base_skill_id = 251
+level = 11
+skill_type = "Passive"
+page = 2
+icon_number = 30
+learn_point_cost = 22
+required_job_class = ExtResource("1_xs8es")
+required_skill_1 = ExtResource("2_7r138")
+required_skill_1_level = 7
+add_stat_1 = "PassiveDefence"
+add_stat_1_value = 48
+warp_zone = 53
+warp_x = 48000

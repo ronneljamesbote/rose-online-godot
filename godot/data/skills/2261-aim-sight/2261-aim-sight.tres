@@ -1,0 +1,42 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://cxfwb6xqqaitb"]
+
+[ext_resource type="RoseJobClass" uid="uid://coim5bc7gydpp" path="res://data/job_classes/44-dealer-job.tres" id="1_bojle"]
+[ext_resource type="RoseSkill" uid="uid://pusmnipniy8s" path="res://data/skills/2141-arms-mastery/2141-arms-mastery.tres" id="2_1528c"]
+[ext_resource type="RoseSkill" uid="uid://dk3d5sxbpn26h" path="res://data/skills/2241-intensify-weapon/2241-intensify-weapon.tres" id="3_lfagu"]
+
+[resource]
+id = 2261
+name = "Aim Sight"
+description = "Shoot a target from a considerably long distance."
+skill_type = "Immediate"
+page = 1
+icon_number = 222
+learn_point_cost = 35
+required_job_class = ExtResource("1_bojle")
+required_planet = 3700
+required_skill_1 = ExtResource("2_1528c")
+required_skill_1_level = 10
+required_skill_2 = ExtResource("3_lfagu")
+required_skill_2_level = 5
+required_stat_1 = "Level"
+required_stat_1_value = 70
+required_item_class_1 = "Gun"
+required_item_class_2 = "Launcher"
+use_stat_1 = "Mana"
+use_stat_1_value = 40
+cooldown_ms = 13000
+target_filter = "Enemy"
+cast_range = 3700
+action_mode = "Restore"
+damage_type = "WeaponAttack"
+power = 100
+harm = 1
+item_make_number = 100
+casting_motion_id = 95
+casting_repeat_motion_id = 96
+action_motion_id = 97
+bullet_effect_id = 262
+bullet_point = 1
+bullet_fire_sound_id = 148
+hit_effect_file_id = 110
+hit_sound_id = 67

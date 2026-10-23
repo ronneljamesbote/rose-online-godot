@@ -1,0 +1,41 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://cdc6iuohow871"]
+
+[ext_resource type="RoseJobClass" uid="uid://dfvt5fdun3qji" path="res://data/job_classes/41-soldier-job.tres" id="1_mbahu"]
+[ext_resource type="RoseSkill" uid="uid://ccdg6jfv38yca" path="res://data/skills/271-crossbow-mastery/271-crossbow-mastery.tres" id="2_yysrd"]
+[ext_resource type="RoseStatusEffect" uid="uid://kpb7sbcin378" path="res://data/status_effects/56-taunt.tres" id="3_qfbro"]
+
+[resource]
+id = 471
+name = "Taunting Shot"
+description = "Inflict damage and provoke a target at the same time when using a Bow."
+skill_type = "Immediate"
+page = 1
+icon_number = 200
+learn_point_cost = 12
+required_job_class = ExtResource("1_mbahu")
+required_skill_1 = ExtResource("2_yysrd")
+required_skill_1_level = 3
+required_item_class_1 = "Crossbow"
+use_stat_1 = "Mana"
+use_stat_1_value = 16
+cooldown_ms = 7000
+target_filter = "Enemy"
+action_mode = "Attack"
+damage_type = "WeaponAttack"
+power = 30
+harm = 1
+item_make_number = 30
+success_ratio = 70
+status_effect_1 = ExtResource("3_qfbro")
+status_effect_seconds = 16
+casting_motion_id = 95
+casting_repeat_motion_id = 96
+casting_effect_1 = 1068
+casting_effect_1_point = 1
+action_motion_id = 97
+action_motion_speed = 110
+bullet_effect_id = 271
+bullet_point = 1
+bullet_fire_sound_id = 148
+hit_effect_file_id = 1067
+hit_sound_id = 67

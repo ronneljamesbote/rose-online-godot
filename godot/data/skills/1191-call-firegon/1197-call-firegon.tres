@@ -1,0 +1,28 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://cf3sioyvikr35"]
+
+[ext_resource type="RoseSkill" uid="uid://ciir7d7qlpm07" path="res://data/skills/861-summon-mastery/861-summon-mastery.tres" id="1_7jpgv"]
+[ext_resource type="RoseMonster" uid="uid://pm2705sg2vgb" path="res://data/monsters/837-firegon.tres" id="2_vmx4p"]
+
+[resource]
+id = 1197
+name = "Call Firegon"
+description = "Summon a fire dragon."
+base_skill_id = 1191
+level = 7
+skill_type = "SummonPet"
+page = 1
+icon_number = 203
+learn_point_cost = 68
+required_skill_1 = ExtResource("1_7jpgv")
+required_skill_1_level = 4
+use_stat_1 = "Mana"
+use_stat_1_value = 310
+cooldown_ms = 12600
+action_mode = "Restore"
+summon_monster = ExtResource("2_vmx4p")
+casting_motion_id = 118
+casting_repeat_motion_id = 138
+action_motion_id = 155
+bullet_effect_id = 221
+bullet_point = 3
+bullet_fire_sound_id = 90

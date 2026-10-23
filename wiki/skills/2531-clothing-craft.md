@@ -73,7 +73,7 @@ levels:
   cost: MP 105
   power: 19
 source:
-  data: LIST_SKILL.STB rows 2531, 2532, 2533, 2534, 2535, 2536, 2537, 2538, 2539, 2540
+  data: godot/data/skills/2531-clothing-craft/ (levels 2531, 2532, 2533, 2534, 2535, 2536, 2537, 2538, 2539, 2540)
   code: module/src/skills.rs
 ---
 # Clothing Craft

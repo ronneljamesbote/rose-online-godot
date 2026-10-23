@@ -16,7 +16,7 @@ log changes need no wiki change.
 | Code | Wiki pages |
 | --- | --- |
 | `module/src/lib.rs` (combat tick, attacks, hit frames, animation cancelling), `crates/rose-game-irose/src/` (damage, hit, crit, speeds, ability values, XP, level-up, stat costs) | `wiki/rules/combat.md`, `wiki/rules/stats.md`, `wiki/rules/experience.md` |
-| `module/src/skills.rs`, skill rows in `overrides/` | `wiki/skills/`, `wiki/rules/skills.md` |
+| `module/src/skills.rs` | `wiki/skills/`, `wiki/rules/skills.md` |
 | `module/src/monster_brain.rs`, `module/src/world.rs` (spawns), drop tables | `wiki/monsters/`, `wiki/zones/`, `wiki/rules/drops.md` |
 | `module/src/npcs.rs`, `module/src/npc_ai.rs`, `module/src/shop.rs` | `wiki/npcs/`, `wiki/rules/shops.md` |
 | `module/src/quests.rs`, `crates/rose-quest/` | `wiki/quests/` |
@@ -28,6 +28,7 @@ log changes need no wiki change.
 | `godot/data/items/` (item resources), `overrides/data/items/` (exported from them) | the `wiki/items/` page of every item whose value changed; for refine grades `wiki/rules/refining.md` |
 | `godot/data/monsters/`, `godot/data/drop_tables/`, `overrides/data/monsters.toml`, `overrides/data/drop-tables.toml` | the `wiki/monsters/` page of every monster whose value changed (a drop table: every monster using it, and `wiki/zones/` for a zone's own table); `wiki/rules/drops.md` for drop rules |
 | `godot/data/npcs/`, `godot/data/shop_tabs/`, `overrides/data/npcs.toml`, `overrides/data/shop-tabs.toml` | the `wiki/npcs/` page of every NPC whose value or shop changed; `wiki/rules/shops.md` |
+| `godot/data/skills/`, `godot/data/status_effects/`, `godot/data/job_classes/`, `overrides/data/skills.toml`, `overrides/data/status-effects.toml`, `overrides/data/job-classes.toml` | the `wiki/skills/` page of every skill whose value changed (a status effect or job class: every skill using it); `wiki/rules/skills.md`, `wiki/rules/status-effects.md` for rules |
 | `godot/zones/` spawn, NPC and event markers, `overrides/zones/` (exported from them) | the `wiki/zones/` page of that zone (spawn points, NPCs) and the pages of monsters and NPCs it places |
 | `overrides/motions.toml` (exported from the hit markers of the Godot player, monster and NPC animations) | `wiki/rules/combat.md` (animation lengths and hit frames), the page of every monster whose attack moved and of every skill whose hit moved |
 

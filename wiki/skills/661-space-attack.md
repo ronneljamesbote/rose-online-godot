@@ -85,7 +85,7 @@ levels:
   range: 20
   cooldown: 8.8
 source:
-  data: LIST_SKILL.STB rows 661, 662, 663, 664, 665, 666, 667, 668, 669, 670
+  data: godot/data/skills/661-space-attack/ (levels 661, 662, 663, 664, 665, 666, 667, 668, 669, 670)
   code: module/src/skills.rs
 ---
 # Space Attack

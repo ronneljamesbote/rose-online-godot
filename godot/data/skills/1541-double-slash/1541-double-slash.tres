@@ -1,0 +1,34 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://b6wntlu0nt40g"]
+
+[ext_resource type="RoseJobClass" uid="uid://n6tm3jlgaskg" path="res://data/job_classes/43-hawker-job.tres" id="1_qsjfa"]
+[ext_resource type="RoseSkill" uid="uid://bwlrvv7xm4hds" path="res://data/skills/1421-knuckle-mastery/1421-knuckle-mastery.tres" id="2_8rtow"]
+
+[resource]
+id = 1541
+name = "Double Slash"
+description = "Deliver 2 blows at a target at once. "
+skill_type = "Immediate"
+page = 1
+icon_number = 110
+learn_point_cost = 8
+required_job_class = ExtResource("1_qsjfa")
+required_skill_1 = ExtResource("2_8rtow")
+required_skill_1_level = 1
+required_item_class_1 = "Katar"
+required_item_class_2 = "DualSwords"
+use_stat_1 = "Mana"
+use_stat_1_value = 16
+cooldown_ms = 5400
+target_filter = "Enemy"
+action_mode = "Attack"
+power = 40
+harm = 1
+item_make_number = 40
+casting_motion_id = 111
+casting_repeat_motion_id = 131
+casting_effect_1 = 1031
+action_motion_id = 91
+hit_effect_file_id = 371
+hit_sound_id = 67
+hit_dummy_effect_1 = 373
+hit_dummy_sound_1 = 67

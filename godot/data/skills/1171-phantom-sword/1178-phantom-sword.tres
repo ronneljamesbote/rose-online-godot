@@ -1,0 +1,28 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://7g3ap6q21pki"]
+
+[ext_resource type="RoseSkill" uid="uid://cctctgoq3grrx" path="res://data/skills/801-staff-mastery/801-staff-mastery.tres" id="1_yjghk"]
+[ext_resource type="RoseMonster" uid="uid://bqamke4thxx2q" path="res://data/monsters/828-phantomsword.tres" id="2_s7mi7"]
+
+[resource]
+id = 1178
+name = "Phantom Sword"
+description = "Summon a magic sword to attack a target from a distance."
+base_skill_id = 1171
+level = 8
+skill_type = "SummonPet"
+page = 1
+icon_number = 88
+learn_point_cost = 54
+required_skill_1 = ExtResource("1_yjghk")
+required_skill_1_level = 13
+use_stat_1 = "Mana"
+use_stat_1_value = 270
+cooldown_ms = 10200
+action_mode = "Restore"
+summon_monster = ExtResource("2_s7mi7")
+casting_motion_id = 118
+casting_repeat_motion_id = 138
+action_motion_id = 155
+bullet_effect_id = 221
+bullet_point = 3
+bullet_fire_sound_id = 90

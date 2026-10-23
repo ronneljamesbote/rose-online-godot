@@ -1,0 +1,40 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://c0aclh40n80fd"]
+
+[ext_resource type="RoseJobClass" uid="uid://coim5bc7gydpp" path="res://data/job_classes/44-dealer-job.tres" id="1_agusx"]
+[ext_resource type="RoseSkill" uid="uid://pusmnipniy8s" path="res://data/skills/2141-arms-mastery/2141-arms-mastery.tres" id="2_qlgvh"]
+
+[resource]
+id = 2311
+name = "Zulie Bolt"
+description = "Throw a coin at a target to cause damage from a distance."
+skill_type = "FireBullet"
+page = 1
+icon_number = 198
+learn_point_cost = 20
+required_job_class = ExtResource("1_agusx")
+required_planet = 2500
+required_skill_1 = ExtResource("2_qlgvh")
+required_skill_1_level = 8
+use_stat_1 = "Money"
+use_stat_1_value = 40
+use_stat_2 = "Mana"
+use_stat_2_value = 10
+cooldown_ms = 7000
+target_filter = "Enemy"
+cast_range = 2500
+action_mode = "Restore"
+damage_type = "MagicAttack"
+power = 110
+harm = 1
+item_make_number = 110
+casting_motion_id = 116
+casting_motion_speed = 150
+casting_repeat_motion_id = 136
+casting_effect_1 = 1801
+casting_effect_2 = 1811
+casting_effect_2_point = 1
+action_motion_id = 211
+bullet_effect_id = 281
+bullet_point = 1
+hit_effect_file_id = 1693
+hit_sound_id = 199

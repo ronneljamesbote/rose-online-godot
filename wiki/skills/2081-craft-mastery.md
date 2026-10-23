@@ -52,7 +52,7 @@ levels:
   learn_points: 57
   changes: Max MP +300
 source:
-  data: LIST_SKILL.STB rows 2081, 2082, 2083, 2084, 2085, 2086, 2087, 2088, 2089, 2090
+  data: godot/data/skills/2081-craft-mastery/ (levels 2081, 2082, 2083, 2084, 2085, 2086, 2087, 2088, 2089, 2090)
   code: module/src/skills.rs
 ---
 # Craft Mastery

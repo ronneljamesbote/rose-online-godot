@@ -1,0 +1,42 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://de1mhcysp3sr7"]
+
+[ext_resource type="RoseSkill" uid="uid://bwlrvv7xm4hds" path="res://data/skills/1421-knuckle-mastery/1421-knuckle-mastery.tres" id="1_7g87q"]
+[ext_resource type="RoseStatusEffect" uid="uid://bq4n0ny64hflq" path="res://data/status_effects/32-fainted.tres" id="2_poe12"]
+
+[resource]
+id = 1560
+name = "Triple Slash"
+description = "Deliver 3 blows at a target at once."
+base_skill_id = 1541
+level = 20
+skill_type = "Immediate"
+page = 1
+icon_number = 110
+learn_point_cost = 80
+required_skill_1 = ExtResource("1_7g87q")
+required_skill_1_level = 20
+required_item_class_1 = "Katar"
+required_item_class_2 = "DualSwords"
+use_stat_1 = "Mana"
+use_stat_1_value = 55
+cooldown_ms = 4800
+target_filter = "Enemy"
+action_mode = "Attack"
+power = 100
+harm = 1
+item_make_number = 100
+success_ratio = 20
+status_effect_1 = ExtResource("2_poe12")
+status_effect_seconds = 6
+casting_motion_id = 111
+casting_motion_speed = 156
+casting_repeat_motion_id = 131
+casting_effect_1 = 1031
+action_motion_id = 92
+action_motion_speed = 154
+hit_effect_file_id = 370
+hit_sound_id = 67
+hit_dummy_effect_1 = 373
+hit_dummy_sound_1 = 67
+hit_dummy_effect_2 = 371
+hit_dummy_sound_2 = 67

@@ -22,6 +22,9 @@ pub struct JobClassData {
 
 pub struct JobClassDatabase {
     _string_database: Arc<StringDatabase>,
+    /// The names the classes point into when they don't come from the string database
+    /// (the data export, see `with_text`).
+    _text: Vec<String>,
     job_classes: Vec<Option<JobClassData>>,
 }
 
@@ -32,8 +35,16 @@ impl JobClassDatabase {
     ) -> Self {
         Self {
             _string_database: string_database,
+            _text: Vec::new(),
             job_classes,
         }
+    }
+
+    /// Keeps `text` alive as long as the database: the classes' `&'static str` names may
+    /// point into it.
+    pub fn with_text(mut self, text: Vec<String>) -> Self {
+        self._text = text;
+        self
     }
 
     pub fn iter(&self) -> impl Iterator<Item = &JobClassData> {

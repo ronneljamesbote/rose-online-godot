@@ -89,7 +89,7 @@ levels:
   area: 10
   cooldown: 19.6
 source:
-  data: LIST_SKILL.STB rows 401, 402, 403, 404, 405, 406, 407, 408, 409, 410
+  data: godot/data/skills/401-spin-attack/ (levels 401, 402, 403, 404, 405, 406, 407, 408, 409, 410)
   code: module/src/skills.rs
 ---
 # Spin Attack

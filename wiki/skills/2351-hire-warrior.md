@@ -69,7 +69,7 @@ levels:
   cost: Money 250
   cooldown: 5
 source:
-  data: LIST_SKILL.STB rows 2351, 2352, 2353, 2354, 2355, 2356, 2357, 2358, 2359, 2360
+  data: godot/data/skills/2351-hire-warrior/ (levels 2351, 2352, 2353, 2354, 2355, 2356, 2357, 2358, 2359, 2360)
   code: module/src/skills.rs
 ---
 # Hire Warrior

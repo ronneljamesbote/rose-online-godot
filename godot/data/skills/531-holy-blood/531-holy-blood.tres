@@ -1,0 +1,37 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://cnt1ofb3b1ts2"]
+
+[ext_resource type="RoseJobClass" uid="uid://5yxauvydlw51" path="res://data/job_classes/61-knight-job.tres" id="1_315hn"]
+[ext_resource type="RoseSkill" uid="uid://crp0ff87ngyef" path="res://data/skills/651-blood-attack/651-blood-attack.tres" id="2_jl530"]
+[ext_resource type="RoseSkill" uid="uid://sckha04qy41b" path="res://data/skills/291-spiritual-training/291-spiritual-training.tres" id="3_t4f3v"]
+
+[resource]
+id = 531
+name = "Holy Blood"
+description = "Sacrifice one's HP to inflict more damage onto nearby enemies."
+skill_type = "SelfDamage"
+page = 1
+icon_number = 57
+learn_point_cost = 30
+required_job_class = ExtResource("1_315hn")
+required_skill_1 = ExtResource("2_jl530")
+required_skill_1_level = 5
+required_skill_2 = ExtResource("3_t4f3v")
+required_skill_2_level = 10
+use_stat_1 = "Health"
+use_stat_1_value = 150
+cooldown_ms = 14000
+target_filter = "Enemy"
+scope = 1000
+action_mode = "Restore"
+damage_type = "MagicAttack"
+power = 140
+harm = 1
+item_make_number = 140
+casting_motion_id = 113
+casting_repeat_motion_id = 133
+casting_effect_1 = 1753
+casting_effect_1_point = 1
+casting_effect_3 = 1607
+action_motion_id = 176
+hit_effect_file_id = 1035
+hit_sound_id = 86

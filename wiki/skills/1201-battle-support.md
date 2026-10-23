@@ -112,7 +112,7 @@ levels:
   effects: Haste Attack
   changes: Attack Speed +36
 source:
-  data: LIST_SKILL.STB rows 1201, 1202, 1203, 1204, 1205, 1206, 1207, 1208, 1209, 1210
+  data: godot/data/skills/1201-battle-support/ (levels 1201, 1202, 1203, 1204, 1205, 1206, 1207, 1208, 1209, 1210)
   code: module/src/skills.rs
 ---
 # Battle Support

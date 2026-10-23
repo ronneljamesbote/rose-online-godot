@@ -95,7 +95,7 @@ levels:
   range: 42
   cooldown: 9.4
 source:
-  data: LIST_SKILL.STB rows 2261, 2262, 2263, 2264, 2265, 2266, 2267, 2268, 2269, 2270
+  data: godot/data/skills/2261-aim-sight/ (levels 2261, 2262, 2263, 2264, 2265, 2266, 2267, 2268, 2269, 2270)
   code: module/src/skills.rs
 ---
 # Aim Sight

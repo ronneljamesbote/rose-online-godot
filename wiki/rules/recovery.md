@@ -36,7 +36,7 @@ source:
     - crates/rose-game-irose/src/data/ability_values.rs (calculate_passive_recover_hp, calculate_passive_recover_mp, calculate additional_health_recovery and additional_mana_recovery)
     - module/src/items.rs (use_item, apply_consumable, regen_tick, clear_regen, Regen)
     - module/src/ability.rs (add_value)
-  data: the consumable resources in godot/data/items/consumable/ (amount status_effect_value, recovery effect status_effect_id; iROSE's LIST_USEITEM.STB columns 20 and 24), LIST_STATUS.STB rows 1-6 (amount per second)
+  data: the consumable resources in godot/data/items/consumable/ (amount status_effect_value, recovery effect status_effect_id; iROSE's LIST_USEITEM.STB columns 20 and 24), the status effect resources 1 to 6 in godot/data/status_effects/ (amount per second, apply_status_effect_1_value; iROSE's LIST_STATUS.STB rows 1-6)
 ---
 # Recovery
 

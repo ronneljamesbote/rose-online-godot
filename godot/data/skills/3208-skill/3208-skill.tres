@@ -1,0 +1,43 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://dxhaeeu5vtr0j"]
+
+[ext_resource type="RoseSkill" uid="uid://c1jo3kmtc4sp8" path="res://data/skills/3221-skill/3221-skill.tres" id="1_tgdsp"]
+[ext_resource type="RoseStatusEffect" uid="uid://culcqkn47b52" path="res://data/status_effects/16-haste-attack.tres" id="2_n2b12"]
+[ext_resource type="RoseStatusEffect" uid="uid://bqfdmgkvl3mlj" path="res://data/status_effects/26-cri-up.tres" id="3_aield"]
+
+[resource]
+id = 3208
+skill_type = "SelfBoundDuration"
+icon_number = 68
+required_skill_1 = ExtResource("1_tgdsp")
+required_skill_1_level = 1
+use_stat_1 = "Stamina"
+use_stat_1_value = 1
+cooldown_ms = 2800
+target_filter = "Allied"
+scope = 5000
+success_ratio = 200
+status_effect_1 = ExtResource("2_n2b12")
+status_effect_2 = ExtResource("3_aield")
+status_effect_seconds = 120
+add_stat_1 = "AttackSpeed"
+add_stat_1_value = 35
+add_stat_2 = "Critical"
+add_stat_2_value = 70
+add_stat_2_rate = 30
+warp_zone = 24
+warp_x = 35000
+casting_motion_id = 112
+casting_repeat_motion_id = 132
+casting_effect_1 = 1752
+casting_effect_1_point = 1
+casting_effect_2 = 1761
+casting_effect_2_point = 1
+casting_effect_3 = 1769
+casting_effect_3_point = 0
+casting_effect_4 = 1
+action_motion_id = 151
+bullet_effect_id = 221
+bullet_point = 3
+bullet_fire_sound_id = 90
+hit_effect_file_id = 1501
+hit_sound_id = 141

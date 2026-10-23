@@ -1,0 +1,44 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://vffvkv08d6s"]
+
+[ext_resource type="RoseJobClass" uid="uid://bkc1lyjomstgg" path="res://data/job_classes/42-muse-job.tres" id="1_ba4h2"]
+[ext_resource type="RoseSkill" uid="uid://c0jsu0md0eg0s" path="res://data/skills/821-meditation/821-meditation.tres" id="2_sngsr"]
+[ext_resource type="RoseSkill" uid="uid://dfr7xr03lc6he" path="res://data/skills/931-cure/931-cure.tres" id="3_vuyid"]
+[ext_resource type="RoseStatusEffect" uid="uid://li5357w0ovgx" path="res://data/status_effects/10-poisoned-4.tres" id="4_vboul"]
+
+[resource]
+id = 1141
+name = "Curse"
+description = "Decreases the HP of a target."
+skill_type = "FireBullet"
+page = 1
+icon_number = 117
+learn_point_cost = 10
+required_job_class = ExtResource("1_ba4h2")
+required_planet = 2500
+required_skill_1 = ExtResource("2_sngsr")
+required_skill_1_level = 8
+required_skill_2 = ExtResource("3_vuyid")
+required_skill_2_level = 4
+use_stat_1 = "Mana"
+use_stat_1_value = 15
+cooldown_ms = 4000
+target_filter = "Enemy"
+cast_range = 2500
+damage_type = "MagicAttack"
+power = 30
+item_make_number = 30
+success_ratio = 20
+status_effect_1 = ExtResource("4_vboul")
+status_effect_seconds = 3
+casting_motion_id = 112
+casting_repeat_motion_id = 132
+casting_effect_1 = 1752
+casting_effect_1_point = 1
+casting_effect_2 = 1761
+casting_effect_2_point = 1
+action_motion_id = 151
+bullet_effect_id = 268
+bullet_point = 3
+bullet_fire_sound_id = 90
+hit_effect_file_id = 1501
+hit_sound_id = 141

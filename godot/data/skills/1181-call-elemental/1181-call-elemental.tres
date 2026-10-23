@@ -1,0 +1,34 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://dbfm2ypc40ij1"]
+
+[ext_resource type="RoseJobClass" uid="uid://bwwbbesti8koi" path="res://data/job_classes/52-muse-2nd-advanced-jobs.tres" id="1_3bro5"]
+[ext_resource type="RoseSkill" uid="uid://cctctgoq3grrx" path="res://data/skills/801-staff-mastery/801-staff-mastery.tres" id="2_gnqif"]
+[ext_resource type="RoseSkill" uid="uid://ciir7d7qlpm07" path="res://data/skills/861-summon-mastery/861-summon-mastery.tres" id="3_ews78"]
+[ext_resource type="RoseSkill" uid="uid://bbvt75ulcwc10" path="res://data/skills/1171-phantom-sword/1171-phantom-sword.tres" id="4_equsi"]
+[ext_resource type="RoseMonster" uid="uid://c78ynt56irfc7" path="res://data/monsters/841-elemental.tres" id="5_o6mut"]
+
+[resource]
+id = 1181
+name = "Call Elemental"
+description = "Summon an Elemental."
+skill_type = "SummonPet"
+page = 1
+icon_number = 204
+learn_point_cost = 35
+required_job_class = ExtResource("1_3bro5")
+required_skill_1 = ExtResource("2_gnqif")
+required_skill_1_level = 15
+required_skill_2 = ExtResource("3_ews78")
+required_skill_2_level = 3
+required_skill_3 = ExtResource("4_equsi")
+required_skill_3_level = 5
+use_stat_1 = "Mana"
+use_stat_1_value = 400
+cooldown_ms = 10000
+action_mode = "Restore"
+summon_monster = ExtResource("5_o6mut")
+casting_motion_id = 118
+casting_repeat_motion_id = 138
+action_motion_id = 155
+bullet_effect_id = 221
+bullet_point = 3
+bullet_fire_sound_id = 90

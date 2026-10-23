@@ -73,7 +73,7 @@ levels:
   cost: MP 105
   power: 17
 source:
-  data: LIST_SKILL.STB rows 2551, 2552, 2553, 2554, 2555, 2556, 2557, 2558, 2559, 2560
+  data: godot/data/skills/2551-armor-craft/ (levels 2551, 2552, 2553, 2554, 2555, 2556, 2557, 2558, 2559, 2560)
   code: module/src/skills.rs
 ---
 # Armor Craft

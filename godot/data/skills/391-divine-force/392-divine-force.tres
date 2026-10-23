@@ -1,0 +1,47 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://cet1vexxbeq6v"]
+
+[ext_resource type="RoseSkill" uid="uid://sckha04qy41b" path="res://data/skills/291-spiritual-training/291-spiritual-training.tres" id="1_a7tym"]
+[ext_resource type="RoseStatusEffect" uid="uid://dbi4ro2cc5h50" path="res://data/status_effects/23-magic-resistance-down.tres" id="2_iw2y2"]
+
+[resource]
+id = 392
+name = "Divine Force"
+description = "Shoot a holy sphere at a target from a distance. "
+base_skill_id = 391
+level = 2
+skill_type = "FireBullet"
+page = 1
+icon_number = 39
+learn_point_cost = 19
+required_planet = 2050
+required_skill_1 = ExtResource("1_a7tym")
+required_skill_1_level = 7
+use_stat_1 = "Mana"
+use_stat_1_value = 42
+cooldown_ms = 10200
+target_filter = "Enemy"
+cast_range = 2050
+action_mode = "Restore"
+damage_type = "MagicAttack"
+power = 100
+harm = 1
+item_make_number = 100
+success_ratio = 62
+status_effect_1 = ExtResource("2_iw2y2")
+status_effect_seconds = 15
+add_stat_1 = "Resistance"
+add_stat_1_rate = 26
+warp_zone = 21
+warp_y = 26000
+casting_motion_id = 101
+casting_repeat_motion_id = 102
+casting_effect_1 = 1603
+casting_effect_1_point = 4
+casting_effect_2 = 1604
+casting_effect_2_point = 1
+action_motion_id = 103
+bullet_effect_id = 251
+bullet_point = 1
+bullet_fire_sound_id = 90
+hit_effect_file_id = 1121
+hit_sound_id = 67

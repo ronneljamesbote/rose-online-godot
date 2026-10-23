@@ -122,7 +122,7 @@ levels:
   effects: Atk Power Down, Slow Attack
   changes: Attack Power -38%, Attack Speed -40%
 source:
-  data: LIST_SKILL.STB rows 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039, 1040
+  data: godot/data/skills/1031-weaken/ (levels 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039, 1040)
   code: module/src/skills.rs
 ---
 # Weaken

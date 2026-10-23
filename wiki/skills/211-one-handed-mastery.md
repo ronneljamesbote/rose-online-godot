@@ -55,7 +55,7 @@ levels:
   learn_points: 71
   changes: One-Handed Weapon Attack Power +73
 source:
-  data: LIST_SKILL.STB rows 211, 212, 213, 214, 215, 216, 217, 218, 219, 220
+  data: godot/data/skills/211-one-handed-mastery/ (levels 211, 212, 213, 214, 215, 216, 217, 218, 219, 220)
   code: module/src/skills.rs
 ---
 # One-Handed Mastery

@@ -66,7 +66,7 @@ levels:
   cost: Money 400, MP 145
   cooldown: 9.8
 source:
-  data: LIST_SKILL.STB rows 2371, 2372, 2373, 2374, 2375, 2376, 2377, 2378, 2379, 2380
+  data: godot/data/skills/2371-terror-knight/ (levels 2371, 2372, 2373, 2374, 2375, 2376, 2377, 2378, 2379, 2380)
   code: module/src/skills.rs
 ---
 # Terror Knight

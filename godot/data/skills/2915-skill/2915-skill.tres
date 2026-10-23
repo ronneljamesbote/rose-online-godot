@@ -1,0 +1,26 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://d1qe4sdrpjsq3"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://urqs1ot2ioov" path="res://data/status_effects/20-def-up.tres" id="1_447yo"]
+[ext_resource type="RoseStatusEffect" uid="uid://yailie1lhx3" path="res://data/status_effects/22-magic-resistance-up.tres" id="2_xoran"]
+
+[resource]
+id = 2915
+skill_type = "SelfBoundDuration"
+icon_number = 84
+action_mode = "Restore"
+success_ratio = 200
+status_effect_1 = ExtResource("1_447yo")
+status_effect_2 = ExtResource("2_xoran")
+status_effect_seconds = 28
+add_stat_1 = "Defence"
+add_stat_1_value = 10
+add_stat_1_rate = 12
+add_stat_2 = "Resistance"
+add_stat_2_value = 20
+add_stat_2_rate = 25
+warp_zone = 19
+warp_x = 10000
+warp_y = 12000
+casting_effect_3 = 213
+hit_effect_file_id = 5
+hit_effect_point = 3

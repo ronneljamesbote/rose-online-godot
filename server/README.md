@@ -151,10 +151,12 @@ The import tool is `import/` (`rose-stdb-import`, built into the image):
   the arguments of one `upload_game_files` call, plus `manifest.json`). It applies
   `overrides/game-data.toml` first and adds `overrides/motions.toml`, the zone files in
   `overrides/zones/` and the game data exported from Godot in `overrides/data/` (as JSON; its
-  items replace the iROSE item tables, which are then not sent) (`ROSE_OVERRIDES`,
+  items, monsters, NPCs, drop tables, shop tabs, skills, status effects and job classes
+  replace the iROSE tables they come from, which are then not sent) (`ROSE_OVERRIDES`,
   `ROSE_MOTIONS`, `ROSE_ZONES` and `ROSE_DATA` point elsewhere).
-- `rose-stdb-import compare <data.idx>` lists every item value in `overrides/data/` that
-  differs from the iROSE tables (none right after the conversion).
+- `rose-stdb-import compare <data.idx>` lists every value in `overrides/data/` that
+  differs from the iROSE tables (right after the conversion only one shop place, which named
+  an item that doesn't exist).
 - `rose-stdb-import list <data.idx>` shows which files the databases read, per folder;
   `time <data.idx>` how long building them takes.
 

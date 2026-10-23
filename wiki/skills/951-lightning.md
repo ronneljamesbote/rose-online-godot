@@ -125,7 +125,7 @@ levels:
   success: 65
   effects: Fainted
 source:
-  data: LIST_SKILL.STB rows 951, 952, 953, 954, 955, 956, 957, 958, 959, 960
+  data: godot/data/skills/951-lightning/ (levels 951, 952, 953, 954, 955, 956, 957, 958, 959, 960)
   code: module/src/skills.rs
 ---
 # Lightning

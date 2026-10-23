@@ -114,7 +114,7 @@ levels:
   effects: Slow
   changes: Movement Speed -60%
 source:
-  data: LIST_SKILL.STB rows 981, 982, 983, 984, 985, 986, 987, 988, 989, 990
+  data: godot/data/skills/981-ice-bolt/ (levels 981, 982, 983, 984, 985, 986, 987, 988, 989, 990)
   code: module/src/skills.rs
 ---
 # Ice Bolt

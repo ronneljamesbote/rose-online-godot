@@ -1,0 +1,37 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://brgvixpaltl2i"]
+
+[ext_resource type="RoseSkill" uid="uid://c81ycqbxkjt72" path="res://data/skills/1401-bow-mastery/1401-bow-mastery.tres" id="1_nfm20"]
+[ext_resource type="RoseStatusEffect" uid="uid://culcqkn47b52" path="res://data/status_effects/16-haste-attack.tres" id="2_o40q7"]
+
+[resource]
+id = 1686
+name = "Speed Shot"
+description = "Increase Attack Speed of Bow and Crossbow weapons for skill's duration."
+base_skill_id = 1681
+level = 6
+skill_type = "SelfBoundDuration"
+page = 1
+icon_number = 119
+learn_point_cost = 39
+required_skill_1 = ExtResource("1_nfm20")
+required_skill_1_level = 13
+required_item_class_1 = "Bow"
+required_item_class_2 = "Crossbow"
+use_stat_1 = "Mana"
+use_stat_1_value = 40
+cooldown_ms = 119000
+action_mode = "Restore"
+status_effect_1 = ExtResource("2_o40q7")
+status_effect_seconds = 90
+add_stat_1 = "AttackSpeed"
+add_stat_1_value = 50
+warp_zone = 24
+warp_x = 50000
+casting_motion_id = 114
+casting_repeat_motion_id = 134
+casting_effect_1 = 1754
+casting_effect_2 = 1763
+casting_effect_2_point = 3
+casting_effect_3 = 1771
+casting_effect_3_point = 3
+action_motion_id = 153

@@ -84,7 +84,7 @@ levels:
   power: 100
   cooldown: 7.8
 source:
-  data: LIST_SKILL.STB rows 2201, 2202, 2203, 2204, 2205, 2206, 2207, 2208, 2209, 2210
+  data: godot/data/skills/2201-mighty-shot/ (levels 2201, 2202, 2203, 2204, 2205, 2206, 2207, 2208, 2209, 2210)
   code: module/src/skills.rs
 ---
 # Mighty Shot

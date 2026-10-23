@@ -54,7 +54,7 @@ levels:
   learn_points: 53
   changes: Crossbow Attack Power +70
 source:
-  data: LIST_SKILL.STB rows 271, 272, 273, 274, 275, 276, 277, 278, 279, 280
+  data: godot/data/skills/271-crossbow-mastery/ (levels 271, 272, 273, 274, 275, 276, 277, 278, 279, 280)
   code: module/src/skills.rs
 ---
 # Crossbow Mastery

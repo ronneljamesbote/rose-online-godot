@@ -62,7 +62,7 @@ levels:
   learn_points: 72
   changes: Item Drop Rate Increase +18
 source:
-  data: LIST_SKILL.STB rows 2091, 2092, 2093, 2094, 2095, 2096, 2097, 2098, 2099, 2100
+  data: godot/data/skills/2091-stockpile/ (levels 2091, 2092, 2093, 2094, 2095, 2096, 2097, 2098, 2099, 2100)
   code: module/src/skills.rs
 ---
 # Stockpile

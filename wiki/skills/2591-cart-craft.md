@@ -66,7 +66,7 @@ levels:
   cost: MP 280
   power: 21
 source:
-  data: LIST_SKILL.STB rows 2591, 2592, 2593, 2594, 2595, 2596, 2597, 2598, 2599, 2600
+  data: godot/data/skills/2591-cart-craft/ (levels 2591, 2592, 2593, 2594, 2595, 2596, 2597, 2598, 2599, 2600)
   code: module/src/skills.rs
 ---
 # Cart Craft

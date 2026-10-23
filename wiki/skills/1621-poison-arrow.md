@@ -114,7 +114,7 @@ levels:
   success: 90
   effects: Poisoned  4
 source:
-  data: LIST_SKILL.STB rows 1621, 1622, 1623, 1624, 1625, 1626, 1627, 1628, 1629, 1630
+  data: godot/data/skills/1621-poison-arrow/ (levels 1621, 1622, 1623, 1624, 1625, 1626, 1627, 1628, 1629, 1630)
   code: module/src/skills.rs
 ---
 # Poison Arrow

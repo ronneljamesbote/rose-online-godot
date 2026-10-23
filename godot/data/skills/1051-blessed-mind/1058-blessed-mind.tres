@@ -1,0 +1,36 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://di7f7faxr2wo6"]
+
+[ext_resource type="RoseSkill" uid="uid://c0jsu0md0eg0s" path="res://data/skills/821-meditation/821-meditation.tres" id="1_c6e6u"]
+[ext_resource type="RoseStatusEffect" uid="uid://cs0wac0ri6hux" path="res://data/status_effects/13-maxmp-up.tres" id="2_gt4og"]
+
+[resource]
+id = 1058
+name = "Blessed Mind"
+description = "Increase nearby party members' Maximum MP for skill's duration."
+base_skill_id = 1051
+level = 8
+skill_type = "SelfBoundDuration"
+page = 1
+icon_number = 95
+learn_point_cost = 48
+required_skill_1 = ExtResource("1_c6e6u")
+required_skill_1_level = 16
+use_stat_1 = "Mana"
+use_stat_1_value = 75
+cooldown_ms = 4000
+target_filter = "Group"
+scope = 1650
+status_effect_1 = ExtResource("2_gt4og")
+status_effect_seconds = 360
+add_stat_1 = "MaxMana"
+add_stat_1_value = 330
+warp_zone = 39
+warp_x = 330000
+casting_motion_id = 114
+casting_repeat_motion_id = 134
+casting_effect_1 = 1754
+casting_effect_2 = 1763
+casting_effect_2_point = 3
+casting_effect_3 = 1771
+casting_effect_3_point = 3
+action_motion_id = 153

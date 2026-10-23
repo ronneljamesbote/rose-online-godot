@@ -62,7 +62,7 @@ impl CellValue {
 
 /// Tables the game no longer reads: their things are Godot resources now (`godot/data/`),
 /// edited in the Godot editor and exported to `overrides/data/`.
-pub const MADE_IN_GODOT: [(&str, &str); 18] = [
+pub const MADE_IN_GODOT: [(&str, &str); 21] = [
     ("3DDATA/STB/LIST_FACEITEM.STB", "godot/data/items/face/"),
     ("3DDATA/STB/LIST_CAP.STB", "godot/data/items/head/"),
     ("3DDATA/STB/LIST_BODY.STB", "godot/data/items/body/"),
@@ -81,6 +81,9 @@ pub const MADE_IN_GODOT: [(&str, &str); 18] = [
     ("3DDATA/STB/LIST_NPC.STB", "godot/data/monsters/ (town NPCs: godot/data/npcs/)"),
     ("3DDATA/STB/ITEM_DROP.STB", "godot/data/drop_tables/"),
     ("3DDATA/STB/LIST_SELL.STB", "godot/data/shop_tabs/"),
+    ("3DDATA/STB/LIST_SKILL.STB", "godot/data/skills/"),
+    ("3DDATA/STB/LIST_STATUS.STB", "godot/data/status_effects/"),
+    ("3DDATA/STB/LIST_CLASS.STB", "godot/data/job_classes/"),
 ];
 
 impl Overrides {
@@ -243,6 +246,14 @@ mod tests {
             .unwrap_err()
             .to_string();
         assert!(error.contains("godot/data/monsters/"), "{error}");
+    }
+
+    #[test]
+    fn skill_tables_are_made_in_godot() {
+        let error = Overrides::parse("[[stb]]\nfile = \"3DDATA/STB/LIST_SKILL.STB\"\nrow = 21\ncolumn = 17\nvalue = 10\n")
+            .unwrap_err()
+            .to_string();
+        assert!(error.contains("godot/data/skills/"), "{error}");
     }
 
     #[test]

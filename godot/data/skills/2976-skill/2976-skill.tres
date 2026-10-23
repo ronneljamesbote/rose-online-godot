@@ -1,0 +1,19 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://clg2shi0ao5fw"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://d3dno04hk6nkl" path="res://data/status_effects/25-atk-accuracy-down.tres" id="1_bo0gf"]
+
+[resource]
+id = 2976
+skill_type = "TargetBoundDuration"
+icon_number = 87
+required_planet = 2000
+target_filter = "Monster"
+cast_range = 2000
+harm = 1
+success_ratio = 100
+status_effect_1 = ExtResource("1_bo0gf")
+status_effect_seconds = 3
+add_stat_1 = "Hit"
+add_stat_1_rate = 30
+warp_zone = 20
+warp_y = 30000

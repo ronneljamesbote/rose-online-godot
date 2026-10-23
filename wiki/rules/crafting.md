@@ -35,7 +35,7 @@ source:
     - module/src/skills.rs (check_can_use, pay_costs, use_cost)
     - crates/rose-game-data/src/lib.rs (CraftRecipe, load_craft_recipes)
     - module/src/character.rs (reward_xp)
-  data: LIST_PRODUCT.STB (recipes); item STBs columns 8 (quality), 12 (craft skill), 13 (craft skill level), 14 (recipe row), 15 (difficulty), 29 (durability), 30 (rare type); LIST_SKILL.STB column 9 (make number)
+  data: LIST_PRODUCT.STB (recipes); item STBs columns 8 (quality), 12 (craft skill), 13 (craft skill level), 14 (recipe row), 15 (difficulty), 29 (durability), 30 (rare type); the crafting skills' item_make_number in godot/data/skills/ (iROSE's LIST_SKILL.STB column 9)
 ---
 # Crafting
 

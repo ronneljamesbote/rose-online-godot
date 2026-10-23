@@ -1,0 +1,27 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://ckog63086k2xr"]
+
+[ext_resource type="RoseMonster" uid="uid://bb2l5fqf7tgh8" path="res://data/monsters/877-terror-knight.tres" id="1_jyj1e"]
+
+[resource]
+id = 2377
+name = "Terror Knight"
+description = "Summon a Terror Knight."
+base_skill_id = 2371
+level = 7
+skill_type = "SummonPet"
+page = 1
+icon_number = 189
+learn_point_cost = 82
+use_stat_1 = "Money"
+use_stat_1_value = 340
+use_stat_2 = "Mana"
+use_stat_2_value = 130
+cooldown_ms = 9200
+action_mode = "Restore"
+summon_monster = ExtResource("1_jyj1e")
+casting_motion_id = 118
+casting_repeat_motion_id = 138
+action_motion_id = 155
+bullet_effect_id = 221
+bullet_point = 3
+bullet_fire_sound_id = 90

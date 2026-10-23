@@ -85,7 +85,7 @@ levels:
   range: 5.8
   cooldown: 17.6
 source:
-  data: LIST_SKILL.STB rows 1611, 1612, 1613, 1614, 1615, 1616, 1617, 1618, 1619, 1620
+  data: godot/data/skills/1611-prime-hit/ (levels 1611, 1612, 1613, 1614, 1615, 1616, 1617, 1618, 1619, 1620)
   code: module/src/skills.rs
 ---
 # Prime Hit

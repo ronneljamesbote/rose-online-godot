@@ -53,7 +53,7 @@ levels:
   learn_points: 24
   changes: One-Handed Weapon Attack Power +33, Two-Handed Weapon Attack Power +45
 source:
-  data: LIST_SKILL.STB rows 201, 202, 203, 204, 205, 206, 207, 208, 209, 210
+  data: godot/data/skills/201-melee-weapon-mastery/ (levels 201, 202, 203, 204, 205, 206, 207, 208, 209, 210)
   code: module/src/skills.rs
 ---
 # Melee Weapon Mastery

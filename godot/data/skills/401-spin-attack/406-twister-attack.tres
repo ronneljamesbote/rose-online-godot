@@ -1,0 +1,37 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://dwslyfkuwnfov"]
+
+[ext_resource type="RoseJobClass" uid="uid://dwxgadb8sumfe" path="res://data/job_classes/62-champion-job.tres" id="1_x7nby"]
+
+[resource]
+id = 406
+name = "Twister Attack"
+description = "Enables its user to spin and attack at the same time when equipping a Two-Handed Weapon. Also does splashed damage to nearby enemies."
+base_skill_id = 401
+level = 6
+skill_type = "SelfDamage"
+page = 1
+icon_number = 40
+learn_point_cost = 51
+required_job_class = ExtResource("1_x7nby")
+required_item_class_1 = "OneHandedSword"
+required_item_class_2 = "OneHandedBlunt"
+required_item_class_3 = "TwoHandedSword"
+required_item_class_4 = "Spear"
+required_item_class_5 = "TwoHandedAxe"
+use_stat_1 = "Mana"
+use_stat_1_value = 72
+cooldown_ms = 18000
+target_filter = "Enemy"
+scope = 900
+action_mode = "Restore"
+damage_type = "MagicAttack"
+power = 135
+harm = 1
+item_make_number = 135
+casting_motion_id = 115
+casting_repeat_motion_id = 135
+casting_effect_2 = 1764
+casting_effect_3 = 1608
+action_motion_id = 172
+hit_effect_file_id = 1121
+hit_sound_id = 139

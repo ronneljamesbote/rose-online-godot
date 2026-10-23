@@ -17,7 +17,7 @@ levels:
   cost: MP 0
   range: 0
 source:
-  data: LIST_SKILL.STB rows 13
+  data: godot/data/skills/13-jump/ (levels 13)
   code: module/src/skills.rs
 ---
 # Jump

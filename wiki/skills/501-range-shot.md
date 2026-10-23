@@ -89,7 +89,7 @@ levels:
   range: 35
   cooldown: 15.6
 source:
-  data: LIST_SKILL.STB rows 501, 502, 503, 504, 505, 506, 507, 508, 509, 510
+  data: godot/data/skills/501-range-shot/ (levels 501, 502, 503, 504, 505, 506, 507, 508, 509, 510)
   code: module/src/skills.rs
 ---
 # Range Shot

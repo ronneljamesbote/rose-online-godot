@@ -1,0 +1,41 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://dx1smikry50cl"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://dd08udjftntul" path="res://data/status_effects/17-slow-attack.tres" id="1_53k1t"]
+
+[resource]
+id = 1605
+name = "Heart Hit"
+description = "Shoot a heart shaped spirit sphere at a target from a distance. Inflict damage and decrease target's Attack Speed at the same time."
+base_skill_id = 1601
+level = 5
+skill_type = "FireBullet"
+page = 1
+icon_number = 132
+learn_point_cost = 46
+required_planet = 2320
+use_stat_1 = "Mana"
+use_stat_1_value = 52
+cooldown_ms = 11600
+target_filter = "Enemy"
+cast_range = 2320
+action_mode = "Restore"
+damage_type = "MagicAttack"
+power = 140
+harm = 1
+item_make_number = 140
+success_ratio = 42
+status_effect_1 = ExtResource("1_53k1t")
+status_effect_seconds = 17
+add_stat_1 = "AttackSpeed"
+add_stat_1_rate = 42
+warp_zone = 24
+warp_y = 42000
+casting_motion_id = 111
+casting_repeat_motion_id = 131
+casting_effect_1 = 1031
+casting_effect_3 = 1662
+action_motion_id = 216
+bullet_effect_id = 277
+bullet_point = 3
+hit_effect_file_id = 1067
+hit_sound_id = 67

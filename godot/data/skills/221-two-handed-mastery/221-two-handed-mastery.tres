@@ -1,0 +1,23 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://bp4ymmsyw3k6e"]
+
+[ext_resource type="RoseJobClass" uid="uid://dwxgadb8sumfe" path="res://data/job_classes/62-champion-job.tres" id="1_sbruf"]
+[ext_resource type="RoseSkill" uid="uid://bq3y5qgvgutyj" path="res://data/skills/201-melee-weapon-mastery/201-melee-weapon-mastery.tres" id="2_r3jks"]
+
+[resource]
+id = 221
+name = "Two-Handed Mastery"
+description = "Increase Two-Handed Weapon damage."
+skill_type = "Passive"
+page = 2
+icon_number = 27
+learn_point_cost = 28
+required_job_class = ExtResource("1_sbruf")
+required_skill_1 = ExtResource("2_r3jks")
+required_skill_1_level = 10
+required_item_class_1 = "TwoHandedSword"
+required_item_class_2 = "Spear"
+required_item_class_3 = "TwoHandedAxe"
+add_stat_1 = "PassiveAttackPowerTwoHanded"
+add_stat_1_value = 52
+warp_zone = 43
+warp_x = 52000

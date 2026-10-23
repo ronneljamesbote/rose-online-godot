@@ -75,7 +75,7 @@ levels:
   power: 330
   cooldown: 15.6
 source:
-  data: LIST_SKILL.STB rows 671, 672, 673, 674, 675, 676, 677, 678, 679, 680
+  data: godot/data/skills/671-champion-hit/ (levels 671, 672, 673, 674, 675, 676, 677, 678, 679, 680)
   code: module/src/skills.rs
 ---
 # Champion Hit

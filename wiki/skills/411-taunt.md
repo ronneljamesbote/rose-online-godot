@@ -42,7 +42,7 @@ levels:
   success: 90
   effects: Taunt
 source:
-  data: LIST_SKILL.STB rows 411, 412, 413
+  data: godot/data/skills/411-taunt/ (levels 411, 412, 413)
   code: module/src/skills.rs
 ---
 # Taunt

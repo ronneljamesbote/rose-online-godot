@@ -1,0 +1,41 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://dcuo02hscbgio"]
+
+[ext_resource type="RoseSkill" uid="uid://kvqch3j56u15" path="res://data/skills/2021-marksmanship/2021-marksmanship.tres" id="1_cedfe"]
+
+[resource]
+id = 2232
+name = "Triple Bullets"
+description = "Shoot 3 bullets at a target in one incredibly quick attack."
+base_skill_id = 2221
+level = 12
+skill_type = "Immediate"
+page = 1
+icon_number = 172
+learn_point_cost = 41
+required_skill_1 = ExtResource("1_cedfe")
+required_skill_1_level = 12
+required_item_class_1 = "Gun"
+required_item_class_2 = "Launcher"
+use_stat_1 = "Mana"
+use_stat_1_value = 42
+cooldown_ms = 7000
+target_filter = "Enemy"
+action_mode = "Restore"
+power = 50
+harm = 1
+item_make_number = 50
+casting_motion_id = 111
+casting_motion_speed = 124
+casting_repeat_motion_id = 131
+casting_effect_1 = 1041
+casting_effect_1_point = 3
+action_motion_id = 92
+action_motion_speed = 106
+bullet_effect_id = 171
+bullet_point = 1
+bullet_fire_sound_id = 148
+hit_effect_file_id = 110
+hit_effect_point = 3
+hit_sound_id = 67
+hit_dummy_effect_1 = 171
+hit_dummy_sound_1 = 67

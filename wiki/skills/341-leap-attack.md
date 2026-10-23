@@ -110,7 +110,7 @@ levels:
   success: 40
   effects: Fainted
 source:
-  data: LIST_SKILL.STB rows 341, 342, 343, 344, 345, 346, 347, 348, 349, 350
+  data: godot/data/skills/341-leap-attack/ (levels 341, 342, 343, 344, 345, 346, 347, 348, 349, 350)
   code: module/src/skills.rs
 ---
 # Leap Attack

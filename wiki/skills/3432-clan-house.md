@@ -13,7 +13,7 @@ levels:
   id: 3432
   learn_points: 4320
 source:
-  data: LIST_SKILL.STB rows 3432
+  data: godot/data/skills/3432-clan-house/ (levels 3432)
   code: module/src/skills.rs
 ---
 # Clan House

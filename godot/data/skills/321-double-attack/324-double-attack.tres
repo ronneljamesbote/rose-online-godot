@@ -1,0 +1,39 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://cb1lvv4x4t4iy"]
+
+[ext_resource type="RoseSkill" uid="uid://bq3y5qgvgutyj" path="res://data/skills/201-melee-weapon-mastery/201-melee-weapon-mastery.tres" id="1_he334"]
+
+[resource]
+id = 324
+name = "Double Attack"
+description = "Rapidly deliver double blows onto a target while using a Melee Weapon."
+base_skill_id = 321
+level = 4
+skill_type = "Immediate"
+page = 1
+icon_number = 32
+learn_point_cost = 14
+required_skill_1 = ExtResource("1_he334")
+required_skill_1_level = 4
+required_item_class_1 = "OneHandedSword"
+required_item_class_2 = "OneHandedBlunt"
+required_item_class_3 = "TwoHandedSword"
+required_item_class_4 = "Spear"
+required_item_class_5 = "TwoHandedAxe"
+use_stat_1 = "Mana"
+use_stat_1_value = 26
+cooldown_ms = 4800
+target_filter = "Enemy"
+action_mode = "Attack"
+power = 55
+harm = 1
+item_make_number = 55
+casting_motion_id = 111
+casting_motion_speed = 118
+casting_repeat_motion_id = 131
+casting_effect_1 = 1031
+action_motion_id = 91
+action_motion_speed = 127
+hit_effect_file_id = 371
+hit_sound_id = 67
+hit_dummy_effect_1 = 373
+hit_dummy_sound_1 = 67

@@ -17,7 +17,7 @@ levels:
   learn_points: 0
   range: 0.1
 source:
-  data: LIST_SKILL.STB rows 15
+  data: godot/data/skills/15-auto-targetting/ (levels 15)
   code: module/src/skills.rs
 ---
 # Auto Targetting

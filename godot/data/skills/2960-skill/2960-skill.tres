@@ -1,0 +1,33 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://citfwnaa2l3c4"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://o87dkptvypm8" path="res://data/status_effects/18-atk-power-increased.tres" id="1_i7b0p"]
+[ext_resource type="RoseStatusEffect" uid="uid://dd08udjftntul" path="res://data/status_effects/17-slow-attack.tres" id="2_i331d"]
+
+[resource]
+id = 2960
+skill_type = "TargetBoundDuration"
+icon_number = 84
+required_planet = 3200
+target_filter = "Enemy"
+cast_range = 3200
+action_mode = "Restore"
+success_ratio = 160
+status_effect_1 = ExtResource("1_i7b0p")
+status_effect_2 = ExtResource("2_i331d")
+status_effect_seconds = 40
+add_stat_1 = "Attack"
+add_stat_1_value = 20
+add_stat_1_rate = 10
+add_stat_2 = "AttackSpeed"
+add_stat_2_value = 50
+warp_zone = 18
+warp_x = 20000
+warp_y = 10000
+casting_motion_id = 6
+casting_effect_2 = 210
+casting_effect_2_point = 3
+casting_effect_3 = 212
+casting_effect_3_point = 1
+action_motion_id = 7
+bullet_effect_id = 252
+bullet_fire_sound_id = 133

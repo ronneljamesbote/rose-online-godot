@@ -1,0 +1,38 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://cvcivo7ysg5ga"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://bq4n0ny64hflq" path="res://data/status_effects/32-fainted.tres" id="1_oij4v"]
+
+[resource]
+id = 344
+name = "Leap Attack"
+description = "Enables its user to jump and attack at the same time when using a Melee Weapon. Inflicts Stun effect on the target. "
+base_skill_id = 341
+level = 4
+skill_type = "Immediate"
+page = 1
+icon_number = 35
+learn_point_cost = 16
+required_item_class_1 = "OneHandedSword"
+required_item_class_2 = "OneHandedBlunt"
+required_item_class_3 = "TwoHandedSword"
+required_item_class_4 = "Spear"
+required_item_class_5 = "TwoHandedAxe"
+use_stat_1 = "Health"
+use_stat_1_value = 45
+cooldown_ms = 9200
+target_filter = "Enemy"
+action_mode = "Attack"
+damage_type = "WeaponAttack"
+power = 80
+harm = 1
+item_make_number = 80
+success_ratio = 33
+status_effect_1 = ExtResource("1_oij4v")
+status_effect_seconds = 5
+casting_motion_id = 128
+casting_repeat_motion_id = 148
+casting_effect_1 = 1036
+casting_effect_2 = 1037
+action_motion_id = 93
+hit_effect_file_id = 1035
+hit_sound_id = 67

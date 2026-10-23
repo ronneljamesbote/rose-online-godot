@@ -1,0 +1,33 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://bt3tfyycs2us0"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://cvu0lmlilcoek" path="res://data/status_effects/48-atk-power-up.tres" id="1_ldh46"]
+[ext_resource type="RoseStatusEffect" uid="uid://d352y6dyusy7e" path="res://data/status_effects/47-atk-speed-up.tres" id="2_qa7xe"]
+
+[resource]
+id = 3109
+skill_type = "SelfBoundDuration"
+page = 1
+icon_number = 127
+learn_point_cost = 16
+use_stat_1 = "Stamina"
+use_stat_1_value = 500
+action_mode = "Restore"
+status_effect_1 = ExtResource("1_ldh46")
+status_effect_2 = ExtResource("2_qa7xe")
+status_effect_seconds = 420
+add_stat_1 = "Attack"
+add_stat_1_value = 50
+add_stat_1_rate = 10
+add_stat_2 = "AttackSpeed"
+add_stat_2_value = 40
+warp_zone = 18
+warp_x = 50000
+warp_y = 10000
+casting_motion_id = 114
+casting_repeat_motion_id = 134
+casting_effect_1 = 1754
+casting_effect_2 = 1763
+casting_effect_2_point = 3
+casting_effect_3 = 1771
+casting_effect_3_point = 3
+action_motion_id = 153

@@ -1,0 +1,36 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://bcub0uaxdaoxt"]
+
+[ext_resource type="RoseJobClass" uid="uid://n6tm3jlgaskg" path="res://data/job_classes/43-hawker-job.tres" id="1_fffm0"]
+[ext_resource type="RoseSkill" uid="uid://bjn20q7e2j8oo" path="res://data/skills/1461-combat-mastery/1461-combat-mastery.tres" id="2_qlofe"]
+[ext_resource type="RoseSkill" uid="uid://cwineq0ocor5d" path="res://data/skills/1561-sprint/1561-sprint.tres" id="3_rknfy"]
+
+[resource]
+id = 1571
+name = "Spiral Kick"
+description = "Enables its caster to spin and kick on a spot to do splash damage to nearby enemies."
+skill_type = "SelfDamage"
+page = 1
+icon_number = 113
+learn_point_cost = 15
+required_job_class = ExtResource("1_fffm0")
+required_skill_1 = ExtResource("2_qlofe")
+required_skill_1_level = 8
+required_skill_2 = ExtResource("3_rknfy")
+required_skill_2_level = 5
+use_stat_1 = "Mana"
+use_stat_1_value = 40
+cooldown_ms = 14000
+target_filter = "Enemy"
+scope = 600
+action_mode = "Restore"
+damage_type = "MagicAttack"
+power = 50
+harm = 1
+item_make_number = 50
+casting_motion_id = 115
+casting_repeat_motion_id = 135
+casting_effect_2 = 1764
+casting_effect_3 = 1609
+action_motion_id = 212
+hit_effect_file_id = 1121
+hit_sound_id = 1555

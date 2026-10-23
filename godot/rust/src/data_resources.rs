@@ -1,8 +1,9 @@
 //! The game data as Godot resources: one `.tres` per thing under `res://data/`, edited in the
 //! Inspector. So far items (`res://data/items/<type>/<id>-<name>.tres`, one class per item
 //! type, `RoseItemWeapon` and so on, plus `RoseItemGrade` for the refine grades), monsters
-//! (`RoseMonster`), town NPCs (`RoseNpc`), drop tables (`RoseDropTable`) and shop tabs
-//! (`RoseShopTab`).
+//! (`RoseMonster`), town NPCs (`RoseNpc`), drop tables (`RoseDropTable`), shop tabs
+//! (`RoseShopTab`), skills (`RoseSkill`, one per skill level, in a folder per skill),
+//! status effects (`RoseStatusEffect`) and job classes (`RoseJobClass`).
 //!
 //! The game itself never reads these files. `--export-data` writes them to
 //! `overrides/data/` as TOML (the layout is in `crates/rose-data-export`), and the server and
@@ -26,14 +27,18 @@ use godot::{
     prelude::*,
     register::info::{PropertyHint, PropertyInfo, PropertyUsageFlags},
 };
-use rose_data::{AbilityType, ItemClass};
+use rose_data::{
+    AbilityType, ItemClass, SkillActionMode, SkillBasicCommand, SkillDamageType, SkillTargetFilter,
+    SkillType, StatusEffectClearedByType, StatusEffectType,
+};
 use rose_data_export::items::{
     BackExport, BodyExport, ConsumableExport, FaceExport, FeetExport, GemExport, GradeExport,
     HandsExport, HeadExport, JewelleryExport, MaterialExport, QuestExport, SubWeaponExport,
     VehicleExport, WeaponExport, GRADES_FILE,
 };
 use rose_data_export::npcs::{DropTableExport, MonsterExport, NpcExport, ShopTabExport};
-use rose_data_export::{ItemsExport, NpcsExport};
+use rose_data_export::skills::{JobClassExport, SkillExport, StatusEffectExport};
+use rose_data_export::{ItemsExport, NpcsExport, SkillsExport};
 use serde::{de::DeserializeOwned, Serialize};
 use serde_json::{Map, Value};
 
@@ -44,6 +49,10 @@ pub const MONSTERS_DIR: &str = "res://data/monsters/";
 pub const NPCS_DIR: &str = "res://data/npcs/";
 pub const DROP_TABLES_DIR: &str = "res://data/drop_tables/";
 pub const SHOP_TABS_DIR: &str = "res://data/shop_tabs/";
+/// Where the skill, status effect and job class resources live.
+pub const SKILLS_DIR: &str = "res://data/skills/";
+pub const STATUS_EFFECTS_DIR: &str = "res://data/status_effects/";
+pub const JOB_CLASSES_DIR: &str = "res://data/job_classes/";
 
 /// Where to find a linked resource by what the export holds: `items/weapon/3`,
 /// `drop_table/147`, `shop_tab/12` -> its `res://` path.
@@ -52,6 +61,15 @@ type Links = std::collections::HashMap<String, String>;
 /// What an empty stat field holds (no stat).
 const NO_STAT: &str = "None";
 
+/// The names of an enum's values, in order (with `NO_STAT` first for an optional one).
+fn variants<E: Enum + std::fmt::Debug>(optional: bool) -> Vec<String> {
+    optional
+        .then(|| NO_STAT.to_string())
+        .into_iter()
+        .chain((0..E::LENGTH).map(|i| format!("{:?}", E::from_usize(i))))
+        .collect()
+}
+
 /// The Inspector's dropdowns for the text fields that name a game enum.
 fn enum_hint(property: &mut PropertyInfo) {
     if property.variant_type != VariantType::STRING {
@@ -59,9 +77,23 @@ fn enum_hint(property: &mut PropertyInfo) {
     }
     let name = property.property_name.to_string();
     let options: Vec<String> = if name == "item_class" {
-        (0..ItemClass::LENGTH)
-            .map(|i| format!("{:?}", ItemClass::from_usize(i)))
-            .collect()
+        variants::<ItemClass>(false)
+    } else if name.starts_with("required_item_class") {
+        variants::<ItemClass>(true)
+    } else if name == "skill_type" {
+        variants::<SkillType>(false)
+    } else if name == "target_filter" {
+        variants::<SkillTargetFilter>(false)
+    } else if name == "action_mode" {
+        variants::<SkillActionMode>(false)
+    } else if name == "basic_command" {
+        variants::<SkillBasicCommand>(true)
+    } else if name == "damage_type" {
+        variants::<SkillDamageType>(false)
+    } else if name == "status_effect_type" {
+        variants::<StatusEffectType>(false)
+    } else if name == "cleared_by" {
+        variants::<StatusEffectClearedByType>(false)
     } else if name.contains("stat") {
         std::iter::once(NO_STAT.to_string())
             .chain((0..AbilityType::LENGTH).map(|i| format!("{:?}", AbilityType::from_usize(i))))
@@ -706,6 +738,399 @@ pub struct RoseShopTab {
     base: Base<Resource>,
 }
 
+/// One level of a skill. Each level is its own resource with its own id (characters store
+/// the id of the level they learnt); the levels of one skill share `base_skill_id` and sit
+/// in one folder. Edit it here, then run `--export-data` (see `godot/data/README.md`). How
+/// skills work is on the wiki page "Skills".
+#[derive(GodotClass)]
+#[class(tool, base=Resource, init)]
+pub struct RoseSkill {
+    /// The number (iROSE's LIST_SKILL.STB row). Characters, hotbars, skill books and quests
+    /// name the skill level by it, so don't change it once it is in use. A new skill level
+    /// takes any free number.
+    #[export_group(name = "Skill")]
+    #[export]
+    id: i64,
+    /// The name players see.
+    #[export]
+    name: GString,
+    /// The tooltip text.
+    #[export(multiline)]
+    description: GString,
+    /// The id of the skill's first level (0 = this is the first level). The levels of a
+    /// skill share it: learning the next level replaces this one, and other skills that
+    /// need this skill name the first level. A plain number because the first level would
+    /// have to link to itself.
+    #[export]
+    base_skill_id: i64,
+    /// Which level of the skill this is (1, 2, 3 ...).
+    #[export]
+    #[init(val = 1)]
+    level: i64,
+    /// What kind of skill: an attack, a buff on self or a target, an area spell, a passive,
+    /// a basic action (sit, pick up ...), an emote, a summon ...
+    #[export]
+    #[init(val = GString::from("BasicAction"))]
+    skill_type: GString,
+    /// The tab of the skill window it shows on (0 basic, 1 active, 2 passive, 3 clan ...).
+    #[export]
+    page: i64,
+    /// The icon: its number in the skill icon sheet.
+    #[export]
+    icon_number: i64,
+
+    /// Skill points it costs to learn this level.
+    #[export_group(name = "Learning")]
+    #[export]
+    learn_point_cost: i64,
+    /// Zuly it costs to learn this level.
+    #[export]
+    learn_money_cost: i64,
+    /// The job class that may learn it (empty = any job). Drag a job class resource in.
+    #[export]
+    required_job_class: Option<Gd<RoseJobClass>>,
+    /// iROSE's planet requirement. iROSE keeps it in the cast range's column, so most skills
+    /// show their cast range here; the game doesn't read it.
+    #[export]
+    required_planet: i64,
+    /// A union whose members may learn it (0 = none).
+    #[export]
+    required_union_1: i64,
+    /// A second union (0 = none).
+    #[export]
+    required_union_2: i64,
+    /// A third union (0 = none).
+    #[export]
+    required_union_3: i64,
+    /// A skill needed first (its first level), at `required_skill_1_level`.
+    #[export]
+    required_skill_1: Option<Gd<RoseSkill>>,
+    /// The level of that skill needed.
+    #[export]
+    required_skill_1_level: i64,
+    /// A second skill needed first.
+    #[export]
+    required_skill_2: Option<Gd<RoseSkill>>,
+    /// The level of the second skill needed.
+    #[export]
+    required_skill_2_level: i64,
+    /// A third skill needed first.
+    #[export]
+    required_skill_3: Option<Gd<RoseSkill>>,
+    /// The level of the third skill needed.
+    #[export]
+    required_skill_3_level: i64,
+    /// A stat needed to learn it (Level for the character level).
+    #[export]
+    #[init(val = GString::from(NO_STAT))]
+    required_stat_1: GString,
+    /// How much of that stat is needed.
+    #[export]
+    required_stat_1_value: i64,
+    /// A second stat needed to learn it.
+    #[export]
+    #[init(val = GString::from(NO_STAT))]
+    required_stat_2: GString,
+    /// How much of the second stat is needed.
+    #[export]
+    required_stat_2_value: i64,
+    /// A weapon or item class needed in hand to use it (None = any). Any one of the five
+    /// will do.
+    #[export]
+    #[init(val = GString::from(NO_STAT))]
+    required_item_class_1: GString,
+    /// Another class that will do.
+    #[export]
+    #[init(val = GString::from(NO_STAT))]
+    required_item_class_2: GString,
+    /// Another class that will do.
+    #[export]
+    #[init(val = GString::from(NO_STAT))]
+    required_item_class_3: GString,
+    /// Another class that will do.
+    #[export]
+    #[init(val = GString::from(NO_STAT))]
+    required_item_class_4: GString,
+    /// Another class that will do.
+    #[export]
+    #[init(val = GString::from(NO_STAT))]
+    required_item_class_5: GString,
+
+    /// What one use costs (Mana, Health, Stamina ...).
+    #[export_group(name = "Use")]
+    #[export]
+    #[init(val = GString::from(NO_STAT))]
+    use_stat_1: GString,
+    /// How much it costs (Mana before Save Mana ...).
+    #[export]
+    use_stat_1_value: i64,
+    /// A second cost.
+    #[export]
+    #[init(val = GString::from(NO_STAT))]
+    use_stat_2: GString,
+    /// How much the second cost is.
+    #[export]
+    use_stat_2_value: i64,
+    /// Milliseconds before it can be used again (iROSE stores steps of 200 ms).
+    #[export(range = (0.0, 600000.0, 200.0, or_greater, suffix = "ms"))]
+    cooldown_ms: i64,
+    /// Skills of the same cooldown group share one cooldown (0 = its own).
+    #[export]
+    cooldown_group: i64,
+    /// Who it can be used on (self, party, allies, monsters, enemies, the dead ...).
+    #[export]
+    #[init(val = GString::from("OnlySelf"))]
+    target_filter: GString,
+    /// How far away the target may be, in centimetres (0 = the attack range).
+    #[export(range = (0.0, 10000.0, 1.0, or_greater, suffix = "cm"))]
+    cast_range: i64,
+    /// The radius of the area it reaches, in centimetres (0 = one target).
+    #[export(range = (0.0, 10000.0, 1.0, or_greater, suffix = "cm"))]
+    scope: i64,
+    /// What the caster does afterwards (Stop, Attack, Restore; see the wiki's "Changed from
+    /// iROSE" on the Skills page).
+    #[export]
+    #[init(val = GString::from("Stop"))]
+    action_mode: GString,
+    /// For a basic action: what it does (sit, pick up, attack, trade, party invite ...).
+    #[export]
+    #[init(val = GString::from(NO_STAT))]
+    basic_command: GString,
+
+    /// How its damage is worked out (weapon, magic, natural magic ...).
+    #[export_group(name = "Effect")]
+    #[export]
+    #[init(val = GString::from("ContinuousAttack"))]
+    damage_type: GString,
+    /// The skill's power: damage power, the XP given back by a resurrection, or the
+    /// percentage of an additional damage or damage shield buff.
+    #[export]
+    power: i64,
+    /// iROSE's harm value (not read by the game).
+    #[export]
+    harm: i64,
+    /// For a crafting skill: which crafting it opens (items with this craft skill type).
+    #[export]
+    item_make_number: i64,
+    /// The base chance in percent of its status effects landing (0 = they always land).
+    #[export]
+    success_ratio: i64,
+    /// A status effect it gives. Drag a status effect resource in.
+    #[export]
+    status_effect_1: Option<Gd<RoseStatusEffect>>,
+    /// A second status effect it gives.
+    #[export]
+    status_effect_2: Option<Gd<RoseStatusEffect>>,
+    /// How long its status effects last, in seconds.
+    #[export(range = (0.0, 3600.0, 1.0, or_greater, suffix = "s"))]
+    status_effect_seconds: i64,
+    /// The stat the first status effect changes (or the HP/MP it restores).
+    #[export]
+    #[init(val = GString::from(NO_STAT))]
+    add_stat_1: GString,
+    /// The flat amount (grows with the caster's INT).
+    #[export]
+    add_stat_1_value: i64,
+    /// The percentage of the target's current value.
+    #[export]
+    add_stat_1_rate: i64,
+    /// The stat the second status effect changes.
+    #[export]
+    #[init(val = GString::from(NO_STAT))]
+    add_stat_2: GString,
+    /// The flat amount of the second change.
+    #[export]
+    add_stat_2_value: i64,
+    /// The percentage of the second change.
+    #[export]
+    add_stat_2_rate: i64,
+    /// The monster it summons. Drag a monster resource in.
+    #[export]
+    summon_monster: Option<Gd<RoseMonster>>,
+    /// The zone it warps to (0 = none).
+    #[export]
+    warp_zone: i64,
+    /// Where in that zone, in centimetres (east).
+    #[export]
+    warp_x: i64,
+    /// Where in that zone, in centimetres (north).
+    #[export]
+    warp_y: i64,
+
+    /// The casting motion (a motion number, 0 = none).
+    #[export_group(name = "Motions and effects")]
+    #[export]
+    casting_motion_id: i64,
+    /// Its speed in percent (100 = as made).
+    #[export(range = (1.0, 1000.0, 1.0, or_greater, suffix = "%"))]
+    #[init(val = 100)]
+    casting_motion_speed: i64,
+    /// A motion repeated while casting (0 = none).
+    #[export]
+    casting_repeat_motion_id: i64,
+    /// How many times it repeats.
+    #[export]
+    #[init(val = 1)]
+    casting_repeat_motion_count: i64,
+    /// An effect while casting (an effect file number, 0 = none).
+    #[export]
+    casting_effect_1: i64,
+    /// The model point it sits on (-1 = the character's position).
+    #[export]
+    #[init(val = -1)]
+    casting_effect_1_point: i64,
+    /// A second casting effect.
+    #[export]
+    casting_effect_2: i64,
+    /// Its model point (-1 = none).
+    #[export]
+    #[init(val = -1)]
+    casting_effect_2_point: i64,
+    /// A third casting effect.
+    #[export]
+    casting_effect_3: i64,
+    /// Its model point (-1 = none).
+    #[export]
+    #[init(val = -1)]
+    casting_effect_3_point: i64,
+    /// A fourth casting effect.
+    #[export]
+    casting_effect_4: i64,
+    /// Its model point (-1 = none).
+    #[export]
+    #[init(val = -1)]
+    casting_effect_4_point: i64,
+    /// The motion when it goes off (0 = none). Its hit markers time the hits.
+    #[export]
+    action_motion_id: i64,
+    /// Its speed in percent (100 = as made).
+    #[export(range = (1.0, 1000.0, 1.0, or_greater, suffix = "%"))]
+    #[init(val = 100)]
+    action_motion_speed: i64,
+    /// The projectile it fires (an effect number, 0 = none).
+    #[export]
+    bullet_effect_id: i64,
+    /// The model point the projectile leaves from.
+    #[export]
+    bullet_point: i64,
+    /// The sound when it fires (0 = none).
+    #[export]
+    bullet_fire_sound_id: i64,
+    /// The effect on the target when it hits (an effect file number, 0 = none).
+    #[export]
+    hit_effect_file_id: i64,
+    /// The target's model point the hit effect sits on (-1 = none).
+    #[export]
+    #[init(val = -1)]
+    hit_effect_point: i64,
+    /// The sound when it hits (0 = none).
+    #[export]
+    hit_sound_id: i64,
+    /// A second effect on the target when it hits (0 = none).
+    #[export]
+    hit_dummy_effect_1: i64,
+    /// Its sound (0 = none).
+    #[export]
+    hit_dummy_sound_1: i64,
+    /// A third effect on the target when it hits (0 = none).
+    #[export]
+    hit_dummy_effect_2: i64,
+    /// Its sound (0 = none).
+    #[export]
+    hit_dummy_sound_2: i64,
+    base: Base<Resource>,
+}
+
+#[godot_api]
+impl IResource for RoseSkill {
+    fn on_validate_property(&self, property: &mut PropertyInfo) {
+        enum_hint(property);
+    }
+}
+
+/// A status effect: a buff, a debuff, healing or poison over time, a stun ... Skills and
+/// items give it. Edit it here, then run `--export-data`. How they work is on the wiki page
+/// "Status effects".
+#[derive(GodotClass)]
+#[class(tool, base=Resource, init)]
+pub struct RoseStatusEffect {
+    /// The number (iROSE's LIST_STATUS.STB row). Skills, items and saved characters name it
+    /// by this.
+    #[export]
+    id: i64,
+    /// The name players see.
+    #[export]
+    name: GString,
+    /// The tooltip text.
+    #[export(multiline)]
+    description: GString,
+    /// The chat line when it starts.
+    #[export]
+    start_message: GString,
+    /// The chat line when it ends.
+    #[export]
+    end_message: GString,
+    /// What it does (raise HP, poison, raise attack, sleep, stun, clear bad effects ...).
+    #[export]
+    #[init(val = GString::from("IncreaseHp"))]
+    status_effect_type: GString,
+    /// A new one may replace one still running.
+    #[export]
+    can_be_reapplied: bool,
+    /// Which clearing removes it (ClearGood: removed by "clear good effects", ClearBad: by
+    /// "clear bad effects", ClearNone: can't be cleared).
+    #[export]
+    #[init(val = GString::from("ClearGood"))]
+    cleared_by: GString,
+    /// The status effect it runs each second (its number; often this effect's own). Recovery
+    /// potions name an HP or MP recovery effect here.
+    #[export]
+    apply_status_effect_1: i64,
+    /// The amount per second (HP healed, HP a poison takes ...).
+    #[export]
+    apply_status_effect_1_value: i64,
+    /// A second effect it runs each second (0 = none).
+    #[export]
+    apply_status_effect_2: i64,
+    /// Its amount per second.
+    #[export]
+    apply_status_effect_2_value: i64,
+    /// The effect drawn on the character while it lasts (an effect file number, 0 = none).
+    #[export]
+    effect_file_id: i64,
+    /// The icon over the character frame: its number in the status icon sheet.
+    #[export]
+    icon_id: i64,
+    base: Base<Resource>,
+}
+
+#[godot_api]
+impl IResource for RoseStatusEffect {
+    fn on_validate_property(&self, property: &mut PropertyInfo) {
+        enum_hint(property);
+    }
+}
+
+/// A job class: a set of jobs that a skill or an item can require ("Soldier Job" = soldier,
+/// knight, champion ...). Edit it here, then run `--export-data`.
+#[derive(GodotClass)]
+#[class(tool, base=Resource, init)]
+pub struct RoseJobClass {
+    /// The number (iROSE's LIST_CLASS.STB row). Skills and items link it; items, quests and
+    /// saved data name it by this. A number with no job class takes every job.
+    #[export]
+    id: i64,
+    /// The name players see ("only Soldier Job can use this").
+    #[export]
+    name: GString,
+    /// The jobs in the class, by number: 0 visitor; 111 soldier, 121 knight, 122 champion;
+    /// 211 muse, 221 mage, 222 cleric; 311 hawker, 321 raider, 322 scout; 411 dealer,
+    /// 421 bourgeois, 422 artisan (131, 132, 231 ... are the unreleased third jobs). Up to 8.
+    #[export]
+    jobs: PackedInt32Array,
+    base: Base<Resource>,
+}
+
 /// `find`'s index of one folder: each number's file (and name), and when it was made.
 type FoundIndex = (std::time::Instant, std::collections::HashMap<i64, (String, String)>);
 
@@ -791,11 +1216,19 @@ fn own_properties(class: &str) -> Vec<(String, VariantType)> {
         .collect()
 }
 
-/// The kind of thing an id in a link property names (`drop_table`, `shop_tab_2` ...), as
-/// `Links` keys it.
+/// The kind of thing an id in a link property names (`drop_table`, `shop_tab_2`,
+/// `required_skill_1` ...), as `Links` keys it.
 fn link_kind(property: &str) -> &str {
     if property.starts_with("shop_tab") {
         "shop_tab"
+    } else if property.starts_with("required_skill") {
+        "skill"
+    } else if property.starts_with("status_effect") {
+        "status_effect"
+    } else if property == "required_job_class" {
+        "job_class"
+    } else if property == "summon_monster" {
+        "monster"
     } else {
         property
     }
@@ -1094,6 +1527,13 @@ fn write_resource<T: Serialize>(class: &str, path: &str, export: &T, links: &Lin
         Error::OK => {}
         error => return Err(format!("could not give {path} a uid: {error:?}")),
     }
+    // Tell the uid cache too, so files written later in this run link this one by its uid.
+    let mut uids = ResourceUid::singleton();
+    if uids.has_id(uid) {
+        uids.set_id(uid, path);
+    } else {
+        uids.add_id(uid, path);
+    }
     add_link_uids(path)
 }
 
@@ -1219,6 +1659,10 @@ fn index_links(dir: &str, links: &mut Links) -> Result<(), String> {
         let key = match class.as_str() {
             "RoseDropTable" => format!("drop_table/{id}"),
             "RoseShopTab" => format!("shop_tab/{id}"),
+            "RoseMonster" => format!("monster/{id}"),
+            "RoseSkill" => format!("skill/{id}"),
+            "RoseStatusEffect" => format!("status_effect/{id}"),
+            "RoseJobClass" => format!("job_class/{id}"),
             _ => match item_kind(&class) {
                 Some(kind) => format!("items/{kind}/{id}"),
                 None => continue,
@@ -1360,6 +1804,164 @@ pub fn read_npcs() -> Result<(NpcsExport, usize), String> {
     Ok((export, count))
 }
 
+/// The skill, status effect and job class folders, with their classes.
+const SKILL_DIRS: [(&str, &str); 3] = [
+    (SKILLS_DIR, "RoseSkill"),
+    (STATUS_EFFECTS_DIR, "RoseStatusEffect"),
+    (JOB_CLASSES_DIR, "RoseJobClass"),
+];
+
+/// The skills in an order where each comes after the skills it needs (a resource can only
+/// link a file that is already written). A loop of skills needing each other is an error.
+fn skills_in_link_order(skills: &[SkillExport]) -> Result<Vec<&SkillExport>, String> {
+    let by_id: std::collections::HashMap<u16, &SkillExport> = skills.iter().map(|s| (s.id, s)).collect();
+    // 0 = not visited, 1 = on the current path, 2 = done.
+    let mut state: std::collections::HashMap<u16, u8> = std::collections::HashMap::new();
+    let mut out = Vec::with_capacity(skills.len());
+    fn visit<'a>(
+        skill: &'a SkillExport,
+        by_id: &std::collections::HashMap<u16, &'a SkillExport>,
+        state: &mut std::collections::HashMap<u16, u8>,
+        out: &mut Vec<&'a SkillExport>,
+    ) -> Result<(), String> {
+        match state.get(&skill.id) {
+            Some(2) => return Ok(()),
+            Some(1) => return Err(format!("skill {} needs itself through the skills it needs", skill.id)),
+            _ => {}
+        }
+        state.insert(skill.id, 1);
+        for other in skill.skill_links() {
+            let other = by_id.get(&other).ok_or(format!("skill {} needs skill {other}, which isn't there", skill.id))?;
+            visit(other, by_id, state, out)?;
+        }
+        state.insert(skill.id, 2);
+        out.push(skill);
+        Ok(())
+    }
+    for skill in skills {
+        visit(skill, &by_id, &mut state, &mut out)?;
+    }
+    Ok(out)
+}
+
+/// `--convert-data` for skills, status effects and job classes: one resource each from the
+/// iROSE tables (LIST_SKILL.STB, LIST_STATUS.STB, LIST_CLASS.STB), linking each other and the
+/// monsters skills summon (which must be there). A skill's levels go in one folder,
+/// `skills/<first level's id>-<name>/`.
+pub fn convert_skills(force: bool) -> Result<usize, String> {
+    let data = crate::data::get().ok_or("open the data first")?;
+    let mut existing = Vec::new();
+    for (dir, _) in SKILL_DIRS {
+        tres_files(dir, &mut existing);
+    }
+    if !existing.is_empty() && !force {
+        return Err(format!(
+            "res://data/ already has {} skill, status effect or job class resources; they are the source now (use --convert-data=force to write them again from iROSE)",
+            existing.len()
+        ));
+    }
+    let mut links = Links::new();
+    index_links(MONSTERS_DIR, &mut links)?;
+    if links.is_empty() {
+        return Err(format!("no monster resources in {MONSTERS_DIR}; the summoning skills link them"));
+    }
+    let strings = rose_data_irose::get_string_database(&data.vfs, 1).map_err(|e| format!("{e:#}"))?;
+    let skills = rose_data_irose::get_skill_database(&data.vfs, strings.clone()).map_err(|e| format!("{e:#}"))?;
+    let effects =
+        rose_data_irose::get_status_effect_database(&data.vfs, strings.clone()).map_err(|e| format!("{e:#}"))?;
+    let classes = rose_data_irose::get_job_class_database(&data.vfs, strings).map_err(|e| format!("{e:#}"))?;
+    let export = SkillsExport::from_databases(&skills, &effects, &classes);
+    export.check().map_err(|e| format!("{e:#}"))?;
+    let mut count = 0;
+    for effect in &export.status_effects {
+        let name = if effect.name.trim().is_empty() { "status-effect" } else { &effect.name };
+        let path = format!("{STATUS_EFFECTS_DIR}{}.tres", file_stem(effect.id as u32, name));
+        write_resource("RoseStatusEffect", &path, effect, &links)?;
+        links.insert(format!("status_effect/{}", effect.id), path);
+        count += 1;
+    }
+    for class in &export.job_classes {
+        let name = if class.name.trim().is_empty() { "job-class" } else { &class.name };
+        let path = format!("{JOB_CLASSES_DIR}{}.tres", file_stem(class.id as u32, name));
+        write_resource("RoseJobClass", &path, class, &links)?;
+        links.insert(format!("job_class/{}", class.id), path);
+        count += 1;
+    }
+    // A skill's folder is named after its first level, or the first of its levels with a name.
+    let mut names: std::collections::BTreeMap<u16, &str> = std::collections::BTreeMap::new();
+    for skill in &export.skills {
+        let base = if skill.base_skill_id == 0 { skill.id } else { skill.base_skill_id };
+        let name = skill.name.trim();
+        let entry = names.entry(base).or_insert(name);
+        if entry.is_empty() || (skill.id == base && !name.is_empty()) {
+            *entry = name;
+        }
+    }
+    for skill in skills_in_link_order(&export.skills)? {
+        if let Some(monster) = (skill.summon_monster != 0).then_some(skill.summon_monster) {
+            if !links.contains_key(&format!("monster/{monster}")) {
+                return Err(format!("skill {} summons monster {monster}, which has no resource", skill.id));
+            }
+        }
+        let base = if skill.base_skill_id == 0 { skill.id } else { skill.base_skill_id };
+        let named = |name: &str| if name.is_empty() { "skill".to_string() } else { name.to_string() };
+        let folder = file_stem(base as u32, &named(names.get(&base).copied().unwrap_or_default()));
+        let path = format!("{SKILLS_DIR}{folder}/{}.tres", file_stem(skill.id as u32, &named(skill.name.trim())));
+        write_resource("RoseSkill", &path, skill, &links)?;
+        links.insert(format!("skill/{}", skill.id), path);
+        count += 1;
+    }
+    Ok(count)
+}
+
+/// Reads every skill, status effect and job class resource into the export. Two of one kind
+/// with the same number are an error naming both files.
+pub fn read_skills() -> Result<(SkillsExport, usize), String> {
+    let mut export = SkillsExport::default();
+    let mut seen: std::collections::HashMap<(&str, u16), String> = std::collections::HashMap::new();
+    let mut loader = ResourceLoader::singleton();
+    let mut count = 0;
+    for (dir, _) in SKILL_DIRS {
+        register_uids(dir);
+    }
+    for (dir, _) in SKILL_DIRS {
+        let mut files = Vec::new();
+        tres_files(dir, &mut files);
+        for path in files {
+            count += 1;
+            let resource = loader.load(&path).ok_or(format!("could not load {path}"))?;
+            let class = resource.get_class().to_string();
+            let mut check = |kind: &'static str, id: u16| -> Result<(), String> {
+                match seen.insert((kind, id), path.clone()) {
+                    Some(other) => Err(format!("{path} and {other} are both {kind} {id}")),
+                    None => Ok(()),
+                }
+            };
+            let read = |e: String| format!("{path}: {e}");
+            match class.as_str() {
+                "RoseSkill" => {
+                    let skill: SkillExport = from_resource(&resource).map_err(read)?;
+                    check("skill", skill.id)?;
+                    export.skills.push(skill);
+                }
+                "RoseStatusEffect" => {
+                    let effect: StatusEffectExport = from_resource(&resource).map_err(read)?;
+                    check("status effect", effect.id)?;
+                    export.status_effects.push(effect);
+                }
+                "RoseJobClass" => {
+                    let class: JobClassExport = from_resource(&resource).map_err(read)?;
+                    check("job class", class.id)?;
+                    export.job_classes.push(class);
+                }
+                _ => return Err(format!("{path} is a {class}, not a skill, status effect or job class")),
+            }
+        }
+    }
+    export.check().map_err(|e| format!("{e:#}"))?;
+    Ok((export, count))
+}
+
 /// `--export-data`: writes `overrides/data/` (in the repository) from the resources, or
 /// with `check` only compares. Returns the files written or compared and those that differ.
 pub fn export(check: bool) -> Result<ExportResult, String> {
@@ -1375,6 +1977,17 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
         return Err(format!(
             "no monster resources in {MONSTERS_DIR}; run --convert-data first"
         ));
+    }
+    let (skills, skill_resources) = read_skills()?;
+    if skill_resources == 0 {
+        return Err(format!(
+            "no skill resources in {SKILLS_DIR}; run --convert-data first"
+        ));
+    }
+    // A summon must name a monster that is there.
+    let monsters: std::collections::HashSet<u16> = npcs.monsters.iter().map(|m| m.id).collect();
+    if let Some(skill) = skills.skills.iter().find(|s| s.summon_monster != 0 && !monsters.contains(&s.summon_monster)) {
+        return Err(format!("skill {} summons monster {}, which isn't there", skill.id, skill.summon_monster));
     }
     let read_ms = started.elapsed().as_millis();
     let project = ProjectSettings::singleton()
@@ -1396,6 +2009,13 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
             .into_iter()
             .map(|(name, text)| (rose_data_export::data_file_as(name, toml), text)),
     );
+    files.extend(
+        skills
+            .to_files_as(toml)
+            .map_err(|e| format!("{e:#}"))?
+            .into_iter()
+            .map(|(name, text)| (rose_data_export::data_file_as(name, toml), text)),
+    );
     // The written files must read back (the server and the game load them the same way).
     let find = |path: String| Ok(files.iter().find(|(n, _)| *n == path).map(|(_, t)| t.clone()));
     ItemsExport::from_files(|name| find(rose_data_export::items_file(name))).map_err(|e| format!("{e:#}"))?;
@@ -1404,11 +2024,17 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
         .ok_or("the monster export doesn't read back")?
         .drop_rows(rose_game_data::encode_item_base1000)
         .map_err(|e| format!("{e:#}"))?;
+    SkillsExport::from_files_as(toml, |name| find(rose_data_export::data_file_as(name, toml)))
+        .map_err(|e| format!("{e:#}"))?
+        .ok_or("the skill export doesn't read back")?
+        .check()
+        .map_err(|e| format!("{e:#}"))?;
     let mut result = ExportResult {
-        resources: item_resources + npc_resources,
+        resources: item_resources + npc_resources + skill_resources,
         items: items.count(),
         monsters: npcs.monsters.len(),
         npcs: npcs.npcs.len(),
+        skills: skills.skills.len(),
         read_ms,
         ..Default::default()
     };
@@ -1445,6 +2071,7 @@ pub struct ExportResult {
     pub items: usize,
     pub monsters: usize,
     pub npcs: usize,
+    pub skills: usize,
     pub read_ms: u128,
 }
 
@@ -1459,7 +2086,7 @@ struct RoseDataExport {
 impl RoseDataExport {
     /// Writes the resources of every kind that has none yet (all of them with `force`) from
     /// the iROSE tables: items first, then monsters, NPCs, drop tables and shop tabs, which
-    /// link the items. Needs RoseData.open. Returns {resources, folder, skipped (kinds already
+    /// link the items, then skills, status effects and job classes, which link the monsters. Needs RoseData.open. Returns {resources, folder, skipped (kinds already
     /// there), lost (values that couldn't be kept)}, or {error}.
     #[func]
     fn convert(force: bool) -> VarDictionary {
@@ -1500,6 +2127,21 @@ impl RoseDataExport {
         } else {
             kept.push(&"monsters and NPCs".to_variant());
         }
+        let mut others = Vec::new();
+        for (dir, _) in SKILL_DIRS {
+            tres_files(dir, &mut others);
+        }
+        if force || others.is_empty() {
+            match convert_skills(force) {
+                Ok(n) => count += n,
+                Err(error) => {
+                    result.set("error", error.as_str());
+                    return result;
+                }
+            }
+        } else {
+            kept.push(&"skills, status effects and job classes".to_variant());
+        }
         let folder = ProjectSettings::singleton().globalize_path("res://data/").to_string();
         result.set("resources", count as i64);
         result.set("folder", folder.as_str());
@@ -1509,7 +2151,7 @@ impl RoseDataExport {
     }
 
     /// Writes (or with `check` compares) `overrides/data/` from the resources. Returns
-    /// {files, changed, resources, items, monsters, npcs, read_ms}, or {error}.
+    /// {files, changed, resources, items, monsters, npcs, skills, read_ms}, or {error}.
     #[func]
     fn export(check: bool) -> VarDictionary {
         let mut result = VarDictionary::new();
@@ -1522,6 +2164,7 @@ impl RoseDataExport {
                 result.set("items", out.items as i64);
                 result.set("monsters", out.monsters as i64);
                 result.set("npcs", out.npcs as i64);
+                result.set("skills", out.skills as i64);
                 result.set("read_ms", out.read_ms as i64);
             }
             Err(error) => result.set("error", error.as_str()),

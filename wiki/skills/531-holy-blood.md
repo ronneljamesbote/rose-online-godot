@@ -84,7 +84,7 @@ levels:
   area: 12
   cooldown: 23
 source:
-  data: LIST_SKILL.STB rows 531, 532, 533, 534, 535, 536, 537, 538, 539, 540
+  data: godot/data/skills/531-holy-blood/ (levels 531, 532, 533, 534, 535, 536, 537, 538, 539, 540)
   code: module/src/skills.rs
 ---
 # Holy Blood

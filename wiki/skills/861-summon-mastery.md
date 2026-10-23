@@ -53,7 +53,7 @@ levels:
   learn_points: 49
   changes: Summon Gauge Increase +120
 source:
-  data: LIST_SKILL.STB rows 861, 862, 863, 864, 865, 866, 867, 868, 869, 870
+  data: godot/data/skills/861-summon-mastery/ (levels 861, 862, 863, 864, 865, 866, 867, 868, 869, 870)
   code: module/src/skills.rs
 ---
 # Summon Mastery

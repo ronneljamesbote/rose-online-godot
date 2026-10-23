@@ -17,7 +17,7 @@ levels:
   learn_points: 0
   cooldown: 3
 source:
-  data: LIST_SKILL.STB rows 46
+  data: godot/data/skills/46-laugh/ (levels 46)
   code: module/src/skills.rs
 ---
 # Laugh

@@ -25,7 +25,7 @@ Page format, folders and how to edit: `wiki/README.md`.
 - **iROSE data files** (the client's `data.idx` and VFS files): the base data. Never edited.
 - **Godot resources** (`godot/data/`, see its README): the game data made in the Godot
   editor, one `.tres` per thing, replacing the iROSE tables one kind at a time (items,
-  monsters, town NPCs, drop tables and shop tabs so far). `--export-data` writes them to `overrides/data/`, which server and client both load
+  monsters, town NPCs, drop tables, shop tabs, skills, status effects and job classes so far). `--export-data` writes them to `overrides/data/`, which server and client both load
   instead of those iROSE tables.
 - **`overrides/game-data.toml`**: our changes to the iROSE data not made in Godot yet, one
   STB cell per entry. Server and client both apply it on top of the iROSE files.
@@ -38,8 +38,9 @@ Page format, folders and how to edit: `wiki/README.md`.
 
 A data change from the wiki goes into the thing's resource when it is made in Godot (an item
 stat or price: `godot/data/items/`; a monster stat or drop rate: `godot/data/monsters/`; what
-drops: `godot/data/drop_tables/`; what a shop sells: `godot/data/shop_tabs/`; then
-`--export-data`), otherwise into the override file (a skill number). A rule change goes into
+drops: `godot/data/drop_tables/`; what a shop sells: `godot/data/shop_tabs/`; a skill level's
+number: `godot/data/skills/`; a status effect: `godot/data/status_effects/`; then
+`--export-data`), otherwise into the override file (a zone setting). A rule change goes into
 code.
 
 ## Repository rules

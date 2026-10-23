@@ -42,8 +42,9 @@
 ##   --convert-data[=force]     write the data resources in res://data/ from the iROSE tables
 ##                              and quit (run once, headless; they are the source after that, so it
 ##                              skips each kind already there; force writes them all again)
-##   --export-data[=check]      write ../overrides/data/ (items, monsters, NPCs, drop tables and
-##                              shop tabs for the server and the game)
+##   --export-data[=check]      write ../overrides/data/ (items, monsters, NPCs, drop tables,
+##                              shop tabs, skills, status effects and job classes for the server
+##                              and the game)
 ##                              from the resources in res://data/ and quit; check only compares and
 ##                              fails when a file is out of date. Needs no data.idx
 ##   --merge-zone-blocks=ID|all  move a zone's block_X_Y.tscn files into its zone.tscn (zones
@@ -261,7 +262,7 @@ func _export_data(check: bool) -> void:
 		push_error("rose: %s" % result.error)
 		get_tree().quit(1)
 		return
-	print("rose: %d items, %d monsters and %d NPCs from %d resources (read in %d ms)" % [result.items, result.monsters, result.npcs, result.resources, result.read_ms])
+	print("rose: %d items, %d monsters, %d NPCs and %d skills from %d resources (read in %d ms)" % [result.items, result.monsters, result.npcs, result.skills, result.resources, result.read_ms])
 	var changed: Array = result.changed
 	for path in changed:
 		print("rose:   %s %s" % ["differs:" if check else "updated:", path])

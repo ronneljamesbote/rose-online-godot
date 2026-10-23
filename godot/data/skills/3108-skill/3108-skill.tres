@@ -1,0 +1,32 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://82sfndnlblr0"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://bbp1icd6ydrpy" path="res://data/status_effects/46-movement-speed-increased.tres" id="1_1mwsr"]
+[ext_resource type="RoseStatusEffect" uid="uid://covtuiwpksfxb" path="res://data/status_effects/53-dodge-rate-up.tres" id="2_3op3v"]
+
+[resource]
+id = 3108
+skill_type = "SelfBoundDuration"
+page = 1
+icon_number = 127
+learn_point_cost = 15
+use_stat_1 = "Stamina"
+use_stat_1_value = 500
+action_mode = "Restore"
+status_effect_1 = ExtResource("1_1mwsr")
+status_effect_2 = ExtResource("2_3op3v")
+status_effect_seconds = 420
+add_stat_1 = "Speed"
+add_stat_1_value = 400
+add_stat_2 = "Avoid"
+add_stat_2_value = 30
+add_stat_2_rate = 20
+warp_zone = 23
+warp_x = 400000
+casting_motion_id = 114
+casting_repeat_motion_id = 134
+casting_effect_1 = 1754
+casting_effect_2 = 1763
+casting_effect_2_point = 3
+casting_effect_3 = 1771
+casting_effect_3_point = 3
+action_motion_id = 153

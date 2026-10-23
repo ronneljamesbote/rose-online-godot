@@ -73,7 +73,7 @@ levels:
   cost: MP 95
   power: 41
 source:
-  data: LIST_SKILL.STB rows 2401, 2402, 2403, 2404, 2405, 2406, 2407, 2408, 2409, 2410
+  data: godot/data/skills/2401-item-craft/ (levels 2401, 2402, 2403, 2404, 2405, 2406, 2407, 2408, 2409, 2410)
   code: module/src/skills.rs
 ---
 # Item Craft

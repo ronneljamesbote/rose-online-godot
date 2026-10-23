@@ -95,7 +95,7 @@ levels:
   learn_points: 64
   changes: Max HP +800
 source:
-  data: LIST_SKILL.STB rows 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250
+  data: godot/data/skills/231-physical-training/ (levels 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250)
   code: module/src/skills.rs
 ---
 # Physical Training

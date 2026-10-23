@@ -62,7 +62,7 @@ levels:
   learn_points: 60
   changes: Summon Gauge Increase +120
 source:
-  data: LIST_SKILL.STB rows 2101, 2102, 2103, 2104, 2105, 2106, 2107, 2108, 2109, 2110
+  data: godot/data/skills/2101-hire-mercenary/ (levels 2101, 2102, 2103, 2104, 2105, 2106, 2107, 2108, 2109, 2110)
   code: module/src/skills.rs
 ---
 # Hire Mercenary

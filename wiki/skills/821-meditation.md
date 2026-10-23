@@ -92,7 +92,7 @@ levels:
   learn_points: 78
   changes: Max MP +470, MP Recovery Rate +50
 source:
-  data: LIST_SKILL.STB rows 821, 822, 823, 824, 825, 826, 827, 828, 829, 830, 831, 832, 833, 834, 835, 836, 837, 838, 839, 840
+  data: godot/data/skills/821-meditation/ (levels 821, 822, 823, 824, 825, 826, 827, 828, 829, 830, 831, 832, 833, 834, 835, 836, 837, 838, 839, 840)
   code: module/src/skills.rs
 ---
 # Meditation

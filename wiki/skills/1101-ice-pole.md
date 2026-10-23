@@ -135,7 +135,7 @@ levels:
   effects: Slow
   changes: Movement Speed -50%
 source:
-  data: LIST_SKILL.STB rows 1101, 1102, 1103, 1104, 1105, 1106, 1107, 1108, 1109, 1110
+  data: godot/data/skills/1101-ice-pole/ (levels 1101, 1102, 1103, 1104, 1105, 1106, 1107, 1108, 1109, 1110)
   code: module/src/skills.rs
 ---
 # Ice Pole

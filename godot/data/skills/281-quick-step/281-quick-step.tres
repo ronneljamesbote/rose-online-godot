@@ -1,0 +1,20 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://do4ho2pv8s5vv"]
+
+[ext_resource type="RoseJobClass" uid="uid://dfvt5fdun3qji" path="res://data/job_classes/41-soldier-job.tres" id="1_up5d0"]
+[ext_resource type="RoseSkill" uid="uid://bwfq6mpohocge" path="res://data/skills/231-physical-training/231-physical-training.tres" id="2_ogfyh"]
+
+[resource]
+id = 281
+name = "Quick Step"
+description = "Increase Movement Speed. Only Champions can upgrade this skill above Level 5."
+skill_type = "Passive"
+page = 2
+icon_number = 171
+learn_point_cost = 4
+required_job_class = ExtResource("1_up5d0")
+required_skill_1 = ExtResource("2_ogfyh")
+required_skill_1_level = 5
+add_stat_1 = "PassiveMoveSpeed"
+add_stat_1_value = 30
+warp_zone = 52
+warp_x = 30000

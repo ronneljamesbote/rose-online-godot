@@ -62,7 +62,7 @@ levels:
   learn_points: 121
   changes: Sales Discount +20
 source:
-  data: LIST_SKILL.STB rows 2051, 2052, 2053, 2054, 2055, 2056, 2057, 2058, 2059, 2060
+  data: godot/data/skills/2051-discount/ (levels 2051, 2052, 2053, 2054, 2055, 2056, 2057, 2058, 2059, 2060)
   code: module/src/skills.rs
 ---
 # Discount

@@ -84,7 +84,7 @@ levels:
   power: 310
   cooldown: 11.6
 source:
-  data: LIST_SKILL.STB rows 1511, 1512, 1513, 1514, 1515, 1516, 1517, 1518, 1519, 1520
+  data: godot/data/skills/1511-power-burst/ (levels 1511, 1512, 1513, 1514, 1515, 1516, 1517, 1518, 1519, 1520)
   code: module/src/skills.rs
 ---
 # Power Burst

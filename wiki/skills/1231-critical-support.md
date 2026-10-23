@@ -103,7 +103,7 @@ levels:
   effects: Cri Up
   changes: Critical +90
 source:
-  data: LIST_SKILL.STB rows 1231, 1232, 1233, 1234, 1235, 1236, 1237, 1238, 1239, 1240
+  data: godot/data/skills/1231-critical-support/ (levels 1231, 1232, 1233, 1234, 1235, 1236, 1237, 1238, 1239, 1240)
   code: module/src/skills.rs
 ---
 # Critical Support

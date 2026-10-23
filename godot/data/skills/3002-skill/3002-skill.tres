@@ -1,0 +1,21 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://nwq4rnt71cvn"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://dd08udjftntul" path="res://data/status_effects/17-slow-attack.tres" id="1_2kn3f"]
+
+[resource]
+id = 3002
+skill_type = "SelfBoundDuration"
+icon_number = 84
+target_filter = "Enemy"
+scope = 2500
+action_mode = "Restore"
+success_ratio = 60
+status_effect_1 = ExtResource("1_2kn3f")
+status_effect_seconds = 30
+add_stat_1 = "AttackSpeed"
+add_stat_1_value = 50
+warp_zone = 24
+warp_x = 50000
+casting_effect_3 = 213
+hit_effect_file_id = 5
+hit_effect_point = 3

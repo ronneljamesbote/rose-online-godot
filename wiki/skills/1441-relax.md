@@ -62,7 +62,7 @@ levels:
   learn_points: 55
   changes: HP Recovery Amount +60, MP Recovery Rate +25
 source:
-  data: LIST_SKILL.STB rows 1441, 1442, 1443, 1444, 1445, 1446, 1447, 1448, 1449, 1450
+  data: godot/data/skills/1441-relax/ (levels 1441, 1442, 1443, 1444, 1445, 1446, 1447, 1448, 1449, 1450)
   code: module/src/skills.rs
 ---
 # Relax

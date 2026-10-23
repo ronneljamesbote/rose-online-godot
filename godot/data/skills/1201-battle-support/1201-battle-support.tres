@@ -1,0 +1,46 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://ds6qklfvc41y4"]
+
+[ext_resource type="RoseJobClass" uid="uid://beco32icdj1l0" path="res://data/job_classes/64-cleric-job.tres" id="1_46rdn"]
+[ext_resource type="RoseSkill" uid="uid://c0jsu0md0eg0s" path="res://data/skills/821-meditation/821-meditation.tres" id="2_86c64"]
+[ext_resource type="RoseSkill" uid="uid://bfsnjfmekimum" path="res://data/skills/1021-power-support/1021-power-support.tres" id="3_r3jjv"]
+[ext_resource type="RoseStatusEffect" uid="uid://culcqkn47b52" path="res://data/status_effects/16-haste-attack.tres" id="4_73ar7"]
+
+[resource]
+id = 1201
+name = "Battle Support"
+description = "Increase the Attack Speed of a target for skill's duration."
+skill_type = "TargetBoundDuration"
+page = 1
+icon_number = 212
+learn_point_cost = 30
+required_job_class = ExtResource("1_46rdn")
+required_planet = 2000
+required_skill_1 = ExtResource("2_86c64")
+required_skill_1_level = 10
+required_skill_2 = ExtResource("3_r3jjv")
+required_skill_2_level = 5
+use_stat_1 = "Mana"
+use_stat_1_value = 40
+cooldown_ms = 2400
+target_filter = "Allied"
+cast_range = 2000
+status_effect_1 = ExtResource("4_73ar7")
+status_effect_seconds = 300
+add_stat_1 = "AttackSpeed"
+add_stat_1_value = 18
+warp_zone = 24
+warp_x = 18000
+casting_motion_id = 112
+casting_repeat_motion_id = 132
+casting_effect_1 = 1752
+casting_effect_1_point = 1
+casting_effect_2 = 1761
+casting_effect_2_point = 1
+casting_effect_3 = 1769
+casting_effect_3_point = 0
+casting_effect_4 = 1
+action_motion_id = 151
+bullet_effect_id = 221
+bullet_point = 3
+bullet_fire_sound_id = 90
+hit_effect_file_id = 1501

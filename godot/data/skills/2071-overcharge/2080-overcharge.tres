@@ -1,0 +1,20 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://ccm02ekgps6xm"]
+
+[ext_resource type="RoseSkill" uid="uid://cagy6s3a74urs" path="res://data/skills/2001-market-research/2001-market-research.tres" id="1_tw5pr"]
+
+[resource]
+id = 2080
+name = "Overcharge"
+description = "Enables its user to sell items to NPC shops for more Zulie than the original price.  "
+base_skill_id = 2071
+level = 10
+skill_type = "Passive"
+page = 2
+icon_number = 178
+learn_point_cost = 114
+required_skill_1 = ExtResource("1_tw5pr")
+required_skill_1_level = 20
+add_stat_1 = "PassiveSellSkill"
+add_stat_1_value = 16
+warp_zone = 60
+warp_x = 16000

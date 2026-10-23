@@ -84,7 +84,7 @@ levels:
   power: 100
   cooldown: 6.6
 source:
-  data: LIST_SKILL.STB rows 301, 302, 303, 304, 305, 306, 307, 308, 309, 310
+  data: godot/data/skills/301-heavy-attack/ (levels 301, 302, 303, 304, 305, 306, 307, 308, 309, 310)
   code: module/src/skills.rs
 ---
 # Heavy Attack

@@ -102,7 +102,7 @@ levels:
   effects: Dash
   changes: Movement Speed +240
 source:
-  data: LIST_SKILL.STB rows 1561, 1562, 1563, 1564, 1565, 1566, 1567, 1568, 1569, 1570
+  data: godot/data/skills/1561-sprint/ (levels 1561, 1562, 1563, 1564, 1565, 1566, 1567, 1568, 1569, 1570)
   code: module/src/skills.rs
 ---
 # Sprint

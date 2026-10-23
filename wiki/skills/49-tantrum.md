@@ -16,7 +16,7 @@ levels:
   learn_points: 0
   cooldown: 3
 source:
-  data: LIST_SKILL.STB rows 49
+  data: godot/data/skills/49-tantrum/ (levels 49)
   code: module/src/skills.rs
 ---
 # Tantrum

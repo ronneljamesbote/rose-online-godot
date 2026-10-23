@@ -1,0 +1,41 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://blfjqofwtpfe4"]
+
+[ext_resource type="RoseJobClass" uid="uid://n6tm3jlgaskg" path="res://data/job_classes/43-hawker-job.tres" id="1_ox51i"]
+[ext_resource type="RoseSkill" uid="uid://bjn20q7e2j8oo" path="res://data/skills/1461-combat-mastery/1461-combat-mastery.tres" id="2_wi6sk"]
+[ext_resource type="RoseSkill" uid="uid://cqbo3sjht5yte" path="res://data/skills/1601-heart-hit/1601-heart-hit.tres" id="3_v4l75"]
+
+[resource]
+id = 1641
+name = "Flame Hawk"
+description = "Summon a fire hawk to inflict damage to enemies from a distance."
+skill_type = "FireBullet"
+page = 1
+icon_number = 134
+learn_point_cost = 30
+required_job_class = ExtResource("1_ox51i")
+required_planet = 2600
+required_skill_1 = ExtResource("2_wi6sk")
+required_skill_1_level = 10
+required_skill_2 = ExtResource("3_v4l75")
+required_skill_2_level = 5
+required_stat_1 = "Level"
+required_stat_1_value = 70
+use_stat_1 = "Mana"
+use_stat_1_value = 55
+cooldown_ms = 18000
+target_filter = "Enemy"
+cast_range = 2600
+action_mode = "Restore"
+damage_type = "MagicAttack"
+power = 200
+harm = 1
+item_make_number = 200
+casting_motion_id = 111
+casting_repeat_motion_id = 131
+casting_effect_1 = 1031
+action_motion_id = 216
+bullet_effect_id = 278
+bullet_point = 1
+bullet_fire_sound_id = 148
+hit_effect_file_id = 1067
+hit_sound_id = 67

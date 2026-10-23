@@ -1,0 +1,37 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://bqx0ywj43j3jh"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://c43fk10odrqq2" path="res://data/status_effects/15-slow.tres" id="1_lxj3i"]
+[ext_resource type="RoseStatusEffect" uid="uid://dd08udjftntul" path="res://data/status_effects/17-slow-attack.tres" id="2_4wxok"]
+
+[resource]
+id = 2998
+skill_type = "FireBullet"
+icon_number = 93
+required_planet = 3000
+target_filter = "Enemy"
+cast_range = 3000
+action_mode = "Restore"
+damage_type = "MagicAttack"
+power = 35
+harm = 1
+item_make_number = 35
+success_ratio = 20
+status_effect_1 = ExtResource("1_lxj3i")
+status_effect_2 = ExtResource("2_4wxok")
+status_effect_seconds = 20
+add_stat_1 = "Speed"
+add_stat_1_rate = 50
+add_stat_2 = "AttackSpeed"
+add_stat_2_rate = 40
+warp_zone = 23
+warp_y = 50000
+casting_motion_id = 8
+casting_repeat_motion_id = 136
+casting_effect_2 = 1765
+casting_effect_2_point = 3
+action_motion_id = 9
+bullet_effect_id = 262
+bullet_point = 3
+bullet_fire_sound_id = 90
+hit_effect_file_id = 1501
+hit_sound_id = 1573

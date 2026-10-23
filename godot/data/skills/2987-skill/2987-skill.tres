@@ -1,0 +1,34 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://qxfcgrdnmg65"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://cxo27d6njq18d" path="res://data/status_effects/29-dodge-rate-down.tres" id="1_1wenu"]
+[ext_resource type="RoseStatusEffect" uid="uid://0p3o4l6jqxs5" path="res://data/status_effects/21-def-down.tres" id="2_xsld0"]
+
+[resource]
+id = 2987
+skill_type = "Immediate"
+icon_number = 25
+target_filter = "Enemy"
+action_mode = "Attack"
+damage_type = "WeaponAttack"
+power = 40
+harm = 1
+item_make_number = 40
+success_ratio = 5
+status_effect_1 = ExtResource("1_1wenu")
+status_effect_2 = ExtResource("2_xsld0")
+status_effect_seconds = 25
+add_stat_1 = "Avoid"
+add_stat_1_value = 15
+add_stat_1_rate = 14
+add_stat_2 = "Defence"
+add_stat_2_value = 20
+add_stat_2_rate = 12
+warp_zone = 22
+warp_x = 15000
+warp_y = 14000
+casting_motion_id = 8
+casting_effect_1 = 1036
+casting_effect_3 = 192
+action_motion_id = 9
+hit_effect_file_id = 1035
+hit_sound_id = 67

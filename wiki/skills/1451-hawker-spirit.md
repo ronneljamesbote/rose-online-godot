@@ -102,7 +102,7 @@ levels:
   effects: Atk Accuracy Up
   changes: Attack Accuracy +80
 source:
-  data: LIST_SKILL.STB rows 1451, 1452, 1453, 1454, 1455, 1456, 1457, 1458, 1459, 1460
+  data: godot/data/skills/1451-hawker-spirit/ (levels 1451, 1452, 1453, 1454, 1455, 1456, 1457, 1458, 1459, 1460)
   code: module/src/skills.rs
 ---
 # Hawker Spirit

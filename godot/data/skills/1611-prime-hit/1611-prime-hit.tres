@@ -1,0 +1,38 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://cx8u6xp8141vh"]
+
+[ext_resource type="RoseJobClass" uid="uid://b13utty2fjhr8" path="res://data/job_classes/65-raider-job.tres" id="1_lutds"]
+[ext_resource type="RoseSkill" uid="uid://xuw58meqjxcv" path="res://data/skills/1591-screw-attack/1591-screw-attack.tres" id="2_uvna7"]
+
+[resource]
+id = 1611
+name = "Prime Hit"
+description = "Inflict a great amount of damage to a nearby enemy."
+skill_type = "Immediate"
+page = 1
+icon_number = 216
+learn_point_cost = 40
+required_job_class = ExtResource("1_lutds")
+required_planet = 400
+required_skill_1 = ExtResource("2_uvna7")
+required_skill_1_level = 10
+required_item_class_1 = "Katar"
+required_item_class_2 = "DualSwords"
+use_stat_1 = "Mana"
+use_stat_1_value = 70
+cooldown_ms = 14000
+target_filter = "Enemy"
+cast_range = 400
+action_mode = "Restore"
+damage_type = "WeaponAttack"
+power = 220
+harm = 1
+item_make_number = 220
+casting_motion_id = 111
+casting_motion_speed = 90
+casting_repeat_motion_id = 131
+casting_effect_1 = 1031
+action_motion_id = 93
+hit_effect_file_id = 1666
+hit_sound_id = 137
+hit_dummy_effect_1 = 1665
+hit_dummy_sound_1 = 137

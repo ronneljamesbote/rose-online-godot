@@ -1,0 +1,41 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://c7ek317f40h3c"]
+
+[ext_resource type="RoseJobClass" uid="uid://wxui6m5s8xot" path="res://data/job_classes/63-mage-job.tres" id="1_r7fly"]
+[ext_resource type="RoseSkill" uid="uid://cctctgoq3grrx" path="res://data/skills/801-staff-mastery/801-staff-mastery.tres" id="2_vj8hg"]
+[ext_resource type="RoseStatusEffect" uid="uid://bq4n0ny64hflq" path="res://data/status_effects/32-fainted.tres" id="3_0glj3"]
+
+[resource]
+id = 946
+name = "Staff Stun"
+description = "Use a Staff to strike an enemy with great force and inflict the Stun status."
+base_skill_id = 941
+level = 6
+skill_type = "Immediate"
+page = 1
+icon_number = 70
+learn_point_cost = 29
+required_job_class = ExtResource("1_r7fly")
+required_skill_1 = ExtResource("2_vj8hg")
+required_skill_1_level = 10
+required_item_class_1 = "MagicStaff"
+use_stat_1 = "Mana"
+use_stat_1_value = 40
+cooldown_ms = 8000
+target_filter = "Enemy"
+action_mode = "Attack"
+power = 50
+harm = 1
+item_make_number = 50
+success_ratio = 55
+status_effect_1 = ExtResource("3_0glj3")
+status_effect_seconds = 6
+casting_motion_id = 111
+casting_motion_speed = 120
+casting_repeat_motion_id = 131
+casting_effect_1 = 1031
+action_motion_id = 91
+action_motion_speed = 110
+hit_effect_file_id = 371
+hit_sound_id = 67
+hit_dummy_effect_1 = 373
+hit_dummy_sound_1 = 67

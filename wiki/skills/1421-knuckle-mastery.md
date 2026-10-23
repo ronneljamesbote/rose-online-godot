@@ -96,7 +96,7 @@ levels:
   learn_points: 71
   changes: Combat Weapon Attack Power +80
 source:
-  data: LIST_SKILL.STB rows 1421, 1422, 1423, 1424, 1425, 1426, 1427, 1428, 1429, 1430, 1431, 1432, 1433, 1434, 1435, 1436, 1437, 1438, 1439, 1440
+  data: godot/data/skills/1421-knuckle-mastery/ (levels 1421, 1422, 1423, 1424, 1425, 1426, 1427, 1428, 1429, 1430, 1431, 1432, 1433, 1434, 1435, 1436, 1437, 1438, 1439, 1440)
   code: module/src/skills.rs
 ---
 # Knuckle Mastery

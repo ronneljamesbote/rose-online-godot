@@ -1,0 +1,43 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://bq366ibrltv24"]
+
+[ext_resource type="RoseJobClass" uid="uid://dwxgadb8sumfe" path="res://data/job_classes/62-champion-job.tres" id="1_hlb1y"]
+[ext_resource type="RoseSkill" uid="uid://bwfq6mpohocge" path="res://data/skills/231-physical-training/231-physical-training.tres" id="2_gqaae"]
+[ext_resource type="RoseStatusEffect" uid="uid://o87dkptvypm8" path="res://data/status_effects/18-atk-power-increased.tres" id="3_h7a28"]
+[ext_resource type="RoseStatusEffect" uid="uid://bxutm1ecujcr4" path="res://data/status_effects/59-def-down.tres" id="4_36xj0"]
+
+[resource]
+id = 371
+name = "Berserk"
+description = "Increase Attack Power of caster while decreasing caster's Defense for skill's duration."
+base_skill_id = 361
+level = 11
+skill_type = "SelfBoundDuration"
+page = 1
+icon_number = 29
+learn_point_cost = 30
+required_job_class = ExtResource("1_hlb1y")
+required_skill_1 = ExtResource("2_gqaae")
+required_skill_1_level = 13
+use_stat_1 = "Mana"
+use_stat_1_value = 62
+cooldown_ms = 6000
+action_mode = "Restore"
+status_effect_1 = ExtResource("3_h7a28")
+status_effect_2 = ExtResource("4_36xj0")
+status_effect_seconds = 172
+add_stat_1 = "Attack"
+add_stat_1_value = 61
+add_stat_2 = "Defence"
+add_stat_2_value = 26
+warp_zone = 18
+warp_x = 61000
+casting_motion_id = 114
+casting_repeat_motion_id = 134
+casting_effect_1 = 1754
+casting_effect_2 = 1763
+casting_effect_2_point = 3
+casting_effect_3 = 1771
+casting_effect_3_point = 3
+action_motion_id = 153
+bullet_effect_id = 221
+bullet_point = 3

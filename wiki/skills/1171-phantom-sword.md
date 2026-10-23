@@ -73,7 +73,7 @@ levels:
   cost: MP 300
   cooldown: 11.4
 source:
-  data: LIST_SKILL.STB rows 1171, 1172, 1173, 1174, 1175, 1176, 1177, 1178, 1179, 1180
+  data: godot/data/skills/1171-phantom-sword/ (levels 1171, 1172, 1173, 1174, 1175, 1176, 1177, 1178, 1179, 1180)
   code: module/src/skills.rs
 ---
 # Phantom Sword

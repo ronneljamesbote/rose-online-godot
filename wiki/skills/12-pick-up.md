@@ -16,7 +16,7 @@ levels:
   learn_points: 0
   range: 0
 source:
-  data: LIST_SKILL.STB rows 12
+  data: godot/data/skills/12-pick-up/ (levels 12)
   code: module/src/skills.rs
 ---
 # Pick Up

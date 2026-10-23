@@ -134,7 +134,7 @@ levels:
   effects: Def Down
   changes: Defense -30 -20%
 source:
-  data: LIST_SKILL.STB rows 1591, 1592, 1593, 1594, 1595, 1596, 1597, 1598, 1599, 1600
+  data: godot/data/skills/1591-screw-attack/ (levels 1591, 1592, 1593, 1594, 1595, 1596, 1597, 1598, 1599, 1600)
   code: module/src/skills.rs
 ---
 # Screw Attack

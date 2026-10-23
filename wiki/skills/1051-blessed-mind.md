@@ -112,7 +112,7 @@ levels:
   effects: MaxMP Up
   changes: Max MP +400
 source:
-  data: LIST_SKILL.STB rows 1051, 1052, 1053, 1054, 1055, 1056, 1057, 1058, 1059, 1060
+  data: godot/data/skills/1051-blessed-mind/ (levels 1051, 1052, 1053, 1054, 1055, 1056, 1057, 1058, 1059, 1060)
   code: module/src/skills.rs
 ---
 # Blessed Mind

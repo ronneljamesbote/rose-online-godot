@@ -112,7 +112,7 @@ levels:
   effects: Dodge Rate Up
   changes: Dodge Rate +70
 source:
-  data: LIST_SKILL.STB rows 1251, 1252, 1253, 1254, 1255, 1256, 1257, 1258, 1259, 1260
+  data: godot/data/skills/1251-evasion-aura/ (levels 1251, 1252, 1253, 1254, 1255, 1256, 1257, 1258, 1259, 1260)
   code: module/src/skills.rs
 ---
 # Evasion Aura

@@ -27,7 +27,7 @@
 # the player animations, overrides/zones/ the zone scenes or overrides/data/ the game data
 # resources in godot/data/; run --export-motions, --export-zones or --export-data and commit
 # the files first. The zip carries overrides/data/ next to ROSE.exe: the game reads its items,
-# monsters and NPCs from there, as the server does.
+# monsters, NPCs and skills from there, as the server does.
 # Usage: ROSE_DATA_IDX=/path/to/data.idx godot/tools/build-windows.sh [--dev] [--folder] [--game-only] [OUT_DIR]
 #        (OUT_DIR default: dist/ at the repository root)
 set -euo pipefail
@@ -87,7 +87,7 @@ if ! "$GODOT" --headless --path godot -- --export-zones=check --data-idx="$DATA_
   echo "build-windows: run  godot --headless --path godot -- --export-zones  and commit it." >&2
   exit 1
 fi
-# The server and the game read the items, monsters and NPCs from overrides/data/, exported
+# The server and the game read the items, monsters, NPCs and skills from overrides/data/, exported
 # from godot/data/.
 if ! "$GODOT" --headless --path godot -- --export-data=check; then
   echo "build-windows: overrides/data/ doesn't match the game data resources in godot/data/." >&2

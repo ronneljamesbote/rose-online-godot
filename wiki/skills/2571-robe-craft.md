@@ -73,7 +73,7 @@ levels:
   cost: MP 105
   power: 18
 source:
-  data: LIST_SKILL.STB rows 2571, 2572, 2573, 2574, 2575, 2576, 2577, 2578, 2579, 2580
+  data: godot/data/skills/2571-robe-craft/ (levels 2571, 2572, 2573, 2574, 2575, 2576, 2577, 2578, 2579, 2580)
   code: module/src/skills.rs
 ---
 # Robe Craft

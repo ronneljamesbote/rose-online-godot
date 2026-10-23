@@ -52,7 +52,7 @@ levels:
   duration: 90
   effects: Camouflage
 source:
-  data: LIST_SKILL.STB rows 1841, 1842, 1843, 1844, 1845
+  data: godot/data/skills/1841-stealth/ (levels 1841, 1842, 1843, 1844, 1845)
   code: module/src/skills.rs
 ---
 # Stealth

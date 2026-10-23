@@ -19,7 +19,7 @@ levels:
   area: 12
   cooldown: 16
 source:
-  data: LIST_SKILL.STB rows 3501
+  data: godot/data/skills/3501-castle-gear-skill/ (levels 3501)
   code: module/src/skills.rs
 ---
 # Castle Gear Skill

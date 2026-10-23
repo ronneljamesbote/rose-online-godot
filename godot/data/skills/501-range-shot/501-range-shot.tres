@@ -1,0 +1,38 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://b1jl787fqx5j6"]
+
+[ext_resource type="RoseJobClass" uid="uid://5yxauvydlw51" path="res://data/job_classes/61-knight-job.tres" id="1_exk1l"]
+[ext_resource type="RoseSkill" uid="uid://ccdg6jfv38yca" path="res://data/skills/271-crossbow-mastery/271-crossbow-mastery.tres" id="2_l21wo"]
+
+[resource]
+id = 501
+name = "Range Shot"
+description = "Fire a powerful arrow shot at a target from a distance. Requires a Crossbow."
+skill_type = "FireBullet"
+page = 1
+icon_number = 109
+learn_point_cost = 15
+required_job_class = ExtResource("1_exk1l")
+required_planet = 3200
+required_skill_1 = ExtResource("2_l21wo")
+required_skill_1_level = 6
+required_item_class_1 = "Crossbow"
+use_stat_1 = "Mana"
+use_stat_1_value = 50
+cooldown_ms = 12000
+target_filter = "Enemy"
+cast_range = 3200
+action_mode = "Restore"
+damage_type = "WeaponAttack"
+power = 100
+harm = 1
+item_make_number = 100
+casting_motion_id = 95
+casting_repeat_motion_id = 96
+casting_effect_1 = 1068
+casting_effect_1_point = 1
+action_motion_id = 97
+bullet_effect_id = 271
+bullet_point = 1
+bullet_fire_sound_id = 148
+hit_effect_file_id = 1067
+hit_sound_id = 67

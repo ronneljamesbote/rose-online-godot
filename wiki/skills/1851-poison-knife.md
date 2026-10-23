@@ -121,7 +121,7 @@ levels:
   success: 90
   effects: Poisoned  4
 source:
-  data: LIST_SKILL.STB rows 1851, 1852, 1853, 1854, 1855, 1856, 1857, 1858, 1859, 1860
+  data: godot/data/skills/1851-poison-knife/ (levels 1851, 1852, 1853, 1854, 1855, 1856, 1857, 1858, 1859, 1860)
   code: module/src/skills.rs
 ---
 # Poison Knife

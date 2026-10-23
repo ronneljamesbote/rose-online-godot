@@ -1,0 +1,32 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://bctvd31mvvxil"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://dnta07o68wlqa" path="res://data/status_effects/44-max-hp-increased.tres" id="1_lql28"]
+[ext_resource type="RoseStatusEffect" uid="uid://cp0fag1korrhc" path="res://data/status_effects/45-max-mp-increased.tres" id="2_hgp73"]
+
+[resource]
+id = 3284
+skill_type = "SelfBoundDuration"
+page = 1
+icon_number = 127
+learn_point_cost = 50
+action_mode = "Restore"
+status_effect_1 = ExtResource("1_lql28")
+status_effect_2 = ExtResource("2_hgp73")
+status_effect_seconds = 600
+add_stat_1 = "MaxHealth"
+add_stat_1_value = 100
+add_stat_1_rate = 50
+add_stat_2 = "MaxMana"
+add_stat_2_value = 50
+add_stat_2_rate = 50
+warp_zone = 38
+warp_x = 100000
+warp_y = 50000
+casting_motion_id = 114
+casting_repeat_motion_id = 134
+casting_effect_1 = 1754
+casting_effect_2 = 1763
+casting_effect_2_point = 3
+casting_effect_3 = 1771
+casting_effect_3_point = 3
+action_motion_id = 153

@@ -160,7 +160,7 @@ levels:
   success: 20
   effects: Fainted
 source:
-  data: LIST_SKILL.STB rows 1541, 1542, 1543, 1544, 1545, 1546, 1547, 1548, 1549, 1550, 1551, 1552, 1553, 1554, 1555, 1556, 1557, 1558, 1559, 1560
+  data: godot/data/skills/1541-double-slash/ (levels 1541, 1542, 1543, 1544, 1545, 1546, 1547, 1548, 1549, 1550, 1551, 1552, 1553, 1554, 1555, 1556, 1557, 1558, 1559, 1560)
   code: module/src/skills.rs
 ---
 # Double Slash

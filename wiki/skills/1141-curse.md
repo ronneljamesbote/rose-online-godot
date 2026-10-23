@@ -123,7 +123,7 @@ levels:
   success: 20
   effects: Poisoned  4
 source:
-  data: LIST_SKILL.STB rows 1141, 1142, 1143, 1144, 1145, 1146, 1147, 1148, 1149, 1150
+  data: godot/data/skills/1141-curse/ (levels 1141, 1142, 1143, 1144, 1145, 1146, 1147, 1148, 1149, 1150)
   code: module/src/skills.rs
 ---
 # Curse

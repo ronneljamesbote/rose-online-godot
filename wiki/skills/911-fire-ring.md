@@ -67,7 +67,7 @@ levels:
   effects: Def Down
   changes: Defense -40%
 source:
-  data: LIST_SKILL.STB rows 911, 912, 913, 914, 915
+  data: godot/data/skills/911-fire-ring/ (levels 911, 912, 913, 914, 915)
   code: module/src/skills.rs
 ---
 # Fire Ring

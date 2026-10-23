@@ -103,7 +103,7 @@ levels:
   cost: MP 120
   power: 15
 source:
-  data: LIST_SKILL.STB rows 2491, 2492, 2493, 2494, 2495, 2496, 2497, 2498, 2499, 2500, 2501, 2502, 2503, 2504, 2505
+  data: godot/data/skills/2491-magic-weapon-craft/ (levels 2491, 2492, 2493, 2494, 2495, 2496, 2497, 2498, 2499, 2500, 2501, 2502, 2503, 2504, 2505)
   code: module/src/skills.rs
 ---
 # Magic Weapon Craft

@@ -16,7 +16,7 @@ levels:
   learn_points: 0
   range: 0.1
 source:
-  data: LIST_SKILL.STB rows 19
+  data: godot/data/skills/19-party/ (levels 19)
   code: module/src/skills.rs
 ---
 # Party

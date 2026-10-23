@@ -103,7 +103,7 @@ levels:
   cost: MP 120
   power: 12
 source:
-  data: LIST_SKILL.STB rows 2451, 2452, 2453, 2454, 2455, 2456, 2457, 2458, 2459, 2460, 2461, 2462, 2463, 2464, 2465
+  data: godot/data/skills/2451-mace-craft/ (levels 2451, 2452, 2453, 2454, 2455, 2456, 2457, 2458, 2459, 2460, 2461, 2462, 2463, 2464, 2465)
   code: module/src/skills.rs
 ---
 # Mace Craft

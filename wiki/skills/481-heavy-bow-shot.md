@@ -84,7 +84,7 @@ levels:
   power: 160
   cooldown: 9.8
 source:
-  data: LIST_SKILL.STB rows 481, 482, 483, 484, 485, 486, 487, 488, 489, 490
+  data: godot/data/skills/481-heavy-bow-shot/ (levels 481, 482, 483, 484, 485, 486, 487, 488, 489, 490)
   code: module/src/skills.rs
 ---
 # Heavy Bow Shot

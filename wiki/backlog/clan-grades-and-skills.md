@@ -7,7 +7,7 @@ summary: Clans grow from grade 1 to 3 with clan points and material quests, and 
 npcs:
   - "[[npcs/1115-clan-owner-burtland|Clan Owner Burtland]]"
 source:
-  data: QC001.QSD triggers Clan-011 to Clan-023, Clan-031, Clan-032 and 2751-01 to 2753-03; LIST_QUEST.STB rows 2751-2753; LIST_SKILL.STB rows 3401-3405, 3411-3412, 3416-3417, 3421-3422, 3431-3432 (skill type 15, tab 3); LIST_STRING.STL strings 45, 46, 48, 385
+  data: QC001.QSD triggers Clan-011 to Clan-023, Clan-031, Clan-032 and 2751-01 to 2753-03; LIST_QUEST.STB rows 2751-2753; the skill resources 3401-3405, 3411-3412, 3416-3417, 3421-3422, 3431-3432 in godot/data/skills/ (skill_type Passive, page 3); LIST_STRING.STL strings 45, 46, 48, 385
   reference: iROSE 129_129en client data; Burtland's dialog EM02-035.con; QSD reward types in crates/rose-file-readers/src/qsd.rs
 ---
 # Clan grades, points and skills
@@ -58,7 +58,7 @@ Field".
 
 ### Clan skills
 
-Clan skills are LIST_SKILL.STB rows with skill type 15 on skill tab 3. They belong to the
+Clan skills are skills (godot/data/skills/) with skill type 15 (Passive) on skill tab 3. They belong to the
 clan, not to a character, and every member has them. Quest rewards add and remove them
 (`AddClanSkill`, `RemoveClanSkill`) and quest checks test them (`HasClanSkill`).
 

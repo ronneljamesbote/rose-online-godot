@@ -19,7 +19,7 @@ levels:
   cost: MP 50
   power: 41
 source:
-  data: LIST_SKILL.STB rows 2621
+  data: godot/data/skills/2621-item-disassembly/ (levels 2621)
   code: module/src/skills.rs
 ---
 # Item Disassembly

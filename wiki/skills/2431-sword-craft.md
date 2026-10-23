@@ -103,7 +103,7 @@ levels:
   cost: MP 120
   power: 11
 source:
-  data: LIST_SKILL.STB rows 2431, 2432, 2433, 2434, 2435, 2436, 2437, 2438, 2439, 2440, 2441, 2442, 2443, 2444, 2445
+  data: godot/data/skills/2431-sword-craft/ (levels 2431, 2432, 2433, 2434, 2435, 2436, 2437, 2438, 2439, 2440, 2441, 2442, 2443, 2444, 2445)
   code: module/src/skills.rs
 ---
 # Sword Craft

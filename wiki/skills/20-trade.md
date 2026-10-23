@@ -18,7 +18,7 @@ levels:
   learn_points: 0
   range: 0.1
 source:
-  data: LIST_SKILL.STB rows 20
+  data: godot/data/skills/20-trade/ (levels 20)
   code: module/src/skills.rs
 ---
 # Trade

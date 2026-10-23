@@ -115,7 +115,7 @@ levels:
   effects: Def Down, Magic Resistance Down
   changes: Defense -30%, Magic Resistance -30%
 source:
-  data: LIST_SKILL.STB rows 901, 902, 903, 904, 905, 906, 907, 908, 909, 910
+  data: godot/data/skills/901-mana-bolt/ (levels 901, 902, 903, 904, 905, 906, 907, 908, 909, 910)
   code: module/src/skills.rs
 ---
 # Mana Bolt

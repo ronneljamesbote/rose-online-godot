@@ -112,7 +112,7 @@ levels:
   success: 95
   effects: Taunt
 source:
-  data: LIST_SKILL.STB rows 471, 472, 473, 474, 475, 476, 477, 478, 479, 480
+  data: godot/data/skills/471-taunting-shot/ (levels 471, 472, 473, 474, 475, 476, 477, 478, 479, 480)
   code: module/src/skills.rs
 ---
 # Taunting Shot

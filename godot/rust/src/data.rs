@@ -134,6 +134,41 @@ fn load_npcs(vfs: &VirtualFilesystem, strings: Arc<StringDatabase>) -> Result<Np
     rose_data_irose::get_npc_database(vfs, strings, &options)
 }
 
+/// The skills, status effects and job classes from the export, or without one from the
+/// iROSE tables.
+fn load_skills(
+    vfs: &VirtualFilesystem,
+    strings: Arc<StringDatabase>,
+) -> Result<(SkillDatabase, StatusEffectDatabase, JobClassDatabase), anyhow::Error> {
+    if let Some(dir) = find_export() {
+        let toml = rose_data_export::Format::Toml;
+        let export = rose_data_export::SkillsExport::from_files_as(toml, |name| {
+            let path = dir.join(rose_data_export::data_file_as(name, toml));
+            match std::fs::read_to_string(&path) {
+                Ok(text) => Ok(Some(text)),
+                Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(None),
+                Err(e) => Err(anyhow::Error::new(e).context(path.display().to_string())),
+            }
+        })?;
+        if let Some(export) = export {
+            godot::global::godot_print!(
+                "rose: {} skills, {} status effects and {} job classes from {}",
+                export.skills.len(),
+                export.status_effects.len(),
+                export.job_classes.len(),
+                dir.display()
+            );
+            return export.to_databases(strings);
+        }
+    }
+    godot::global::godot_warn!("rose: no skill export (overrides/data/skills.toml), the skills come from the iROSE tables");
+    Ok((
+        rose_data_irose::get_skill_database(vfs, strings.clone())?,
+        rose_data_irose::get_status_effect_database(vfs, strings.clone())?,
+        rose_data_irose::get_job_class_database(vfs, strings)?,
+    ))
+}
+
 pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
     if GAME_DATA.get().is_some() {
         return Ok(());
@@ -149,9 +184,7 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
     let zone_list = rose_data_irose::get_zone_list(&vfs, strings.clone())?;
     let skybox = rose_data_irose::get_skybox_database(&vfs)?;
     let items = load_items(&vfs, strings.clone())?;
-    let job_classes = rose_data_irose::get_job_class_database(&vfs, strings.clone())?;
-    let skills = rose_data_irose::get_skill_database(&vfs, strings.clone())?;
-    let status_effects = rose_data_irose::get_status_effect_database(&vfs, strings.clone())?;
+    let (skills, status_effects, job_classes) = load_skills(&vfs, strings.clone())?;
     let quests = rose_data_irose::get_quest_database(&vfs, strings.clone())?;
     let npcs = load_npcs(&vfs, strings)?;
     let ltb_event = vfs.read_file::<LtbFile, _>("3DDATA/EVENT/ULNGTB_CON.LTB")?;

@@ -1,0 +1,48 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://fd3kygjkdcyb"]
+
+[ext_resource type="RoseSkill" uid="uid://codmreajjlkwc" path="res://data/skills/841-spell-mastery/841-spell-mastery.tres" id="1_plasu"]
+[ext_resource type="RoseStatusEffect" uid="uid://0p3o4l6jqxs5" path="res://data/status_effects/21-def-down.tres" id="2_4vhn0"]
+
+[resource]
+id = 1066
+name = "Magma Burn"
+description = "Shoot a bolt of flame at an enemy to inflict damage and decrease the Defense of enemies in the vicinity."
+base_skill_id = 1061
+level = 6
+skill_type = "FireBullet"
+page = 1
+icon_number = 96
+learn_point_cost = 73
+required_planet = 2450
+required_skill_1 = ExtResource("1_plasu")
+required_skill_1_level = 15
+required_item_class_1 = "MagicStaff"
+required_item_class_2 = "MagicWand"
+use_stat_1 = "Mana"
+use_stat_1_value = 130
+cooldown_ms = 12800
+target_filter = "Enemy"
+cast_range = 2450
+scope = 500
+action_mode = "Restore"
+damage_type = "MagicAttack"
+power = 280
+item_make_number = 280
+success_ratio = 26
+status_effect_1 = ExtResource("2_4vhn0")
+status_effect_seconds = 20
+add_stat_1 = "Defence"
+add_stat_1_rate = 15
+warp_zone = 19
+warp_y = 15000
+casting_motion_id = 101
+casting_repeat_motion_id = 102
+casting_effect_1 = 1802
+casting_effect_2 = 1812
+casting_effect_2_point = 1
+action_motion_id = 103
+bullet_effect_id = 263
+bullet_point = 1
+bullet_fire_sound_id = 90
+hit_effect_file_id = 1124
+hit_sound_id = 67

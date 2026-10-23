@@ -123,7 +123,7 @@ levels:
   effects: Magic Resistance Up
   changes: Magic Resistance +130
 source:
-  data: LIST_SKILL.STB rows 381, 382, 383, 384, 385, 386, 387, 388, 389, 390
+  data: godot/data/skills/381-shield-barrier/ (levels 381, 382, 383, 384, 385, 386, 387, 388, 389, 390)
   code: module/src/skills.rs
 ---
 # Shield Barrier

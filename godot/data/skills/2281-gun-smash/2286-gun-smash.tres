@@ -1,0 +1,38 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://bdisvcyqku2wv"]
+
+[ext_resource type="RoseSkill" uid="uid://pusmnipniy8s" path="res://data/skills/2141-arms-mastery/2141-arms-mastery.tres" id="1_kvrkw"]
+
+[resource]
+id = 2286
+name = "Gun Smash"
+description = "Hit a nearby target with the barrel of your gun."
+base_skill_id = 2281
+level = 6
+skill_type = "Immediate"
+page = 1
+icon_number = 192
+learn_point_cost = 36
+required_planet = 300
+required_skill_1 = ExtResource("1_kvrkw")
+required_skill_1_level = 10
+required_item_class_1 = "Gun"
+required_item_class_2 = "Launcher"
+use_stat_1 = "Mana"
+use_stat_1_value = 30
+cooldown_ms = 9000
+target_filter = "Enemy"
+cast_range = 300
+action_mode = "Attack"
+damage_type = "WeaponAttack"
+power = 100
+harm = 1
+item_make_number = 100
+casting_motion_id = 129
+casting_repeat_motion_id = 149
+casting_effect_1 = 1041
+casting_effect_1_point = 3
+casting_effect_2 = 1042
+casting_effect_2_point = 3
+action_motion_id = 231
+hit_effect_file_id = 1040
+hit_sound_id = 1551

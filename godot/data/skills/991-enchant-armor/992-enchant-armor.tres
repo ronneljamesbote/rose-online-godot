@@ -1,0 +1,43 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://dtx57vubbsuhw"]
+
+[ext_resource type="RoseSkill" uid="uid://c0jsu0md0eg0s" path="res://data/skills/821-meditation/821-meditation.tres" id="1_avutb"]
+[ext_resource type="RoseStatusEffect" uid="uid://urqs1ot2ioov" path="res://data/status_effects/20-def-up.tres" id="2_e7b44"]
+
+[resource]
+id = 992
+name = "Enchant Armor"
+description = "Increase one's Defense for skill's duration."
+base_skill_id = 991
+level = 2
+skill_type = "SelfBoundDuration"
+page = 1
+icon_number = 102
+learn_point_cost = 18
+required_skill_1 = ExtResource("1_avutb")
+required_skill_1_level = 8
+use_stat_1 = "Mana"
+use_stat_1_value = 43
+cooldown_ms = 52000
+status_effect_1 = ExtResource("2_e7b44")
+status_effect_seconds = 31
+add_stat_1 = "Defence"
+add_stat_1_value = 85
+warp_zone = 19
+warp_x = 85000
+casting_motion_id = 112
+casting_motion_speed = 200
+casting_repeat_motion_id = 132
+casting_effect_1 = 1752
+casting_effect_1_point = 1
+casting_effect_2 = 1761
+casting_effect_2_point = 1
+casting_effect_3 = 1769
+casting_effect_3_point = 0
+casting_effect_4 = 1
+action_motion_id = 151
+action_motion_speed = 200
+bullet_effect_id = 221
+bullet_point = 3
+bullet_fire_sound_id = 90
+hit_effect_file_id = 1501
+hit_sound_id = 141

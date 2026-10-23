@@ -1,0 +1,20 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://fcbllqxoeyxa"]
+
+[ext_resource type="RoseSkill" uid="uid://bjn20q7e2j8oo" path="res://data/skills/1461-combat-mastery/1461-combat-mastery.tres" id="1_ir8sg"]
+
+[resource]
+id = 1445
+name = "Relax"
+description = "Increase HP Recovery Rate while resting."
+base_skill_id = 1441
+level = 5
+skill_type = "Passive"
+page = 2
+icon_number = 114
+learn_point_cost = 19
+required_skill_1 = ExtResource("1_ir8sg")
+required_skill_1_level = 6
+add_stat_1 = "PassiveRecoverHealth"
+add_stat_1_value = 30
+warp_zone = 56
+warp_x = 30000

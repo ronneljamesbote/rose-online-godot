@@ -7,7 +7,7 @@ source:
   code:
     - AGENTS.md (the rules developers follow)
     - wiki/README.md (page format)
-    - godot/data/ (the game data made in the Godot editor: items, monsters, NPCs, drop tables, shops)
+    - godot/data/ (the game data made in the Godot editor: items, monsters, NPCs, drop tables, shops, skills, status effects, job classes)
     - overrides/game-data.toml (our changes to the iROSE game data)
     - tools/wiki-gen (wrote the first draft of the table pages)
 ---
@@ -23,9 +23,9 @@ Every number in the game comes from one of four places:
 
 | Place | What it holds | Example |
 | --- | --- | --- |
-| Our game data (`godot/data/`) | Things made in the Godot editor, one file each, converted once from iROSE: items, monsters, town NPCs, drop tables and shop tabs so far | Short Sword attack 10, in `godot/data/items/weapon/2-short-sword.tres`; Woopie level 16, in `godot/data/monsters/101-woopie.tres` |
-| The iROSE 129 game data | The original tables not converted yet: skill levels, status effects, jobs, zones, quests, dialogs, monster AI | A skill's MP cost |
-| The override file (`overrides/game-data.toml`) | Our changes to those iROSE tables, one cell per entry | That MP cost lowered by 2 |
+| Our game data (`godot/data/`) | Things made in the Godot editor, one file each, converted once from iROSE: items, monsters, town NPCs, drop tables, shop tabs, skill levels, status effects and job classes so far | Short Sword attack 10, in `godot/data/items/weapon/2-short-sword.tres`; Woopie level 16, in `godot/data/monsters/101-woopie.tres`; a skill's MP cost, in its level's file in `godot/data/skills/` |
+| The iROSE 129 game data | The original tables not converted yet: zones, quests, dialogs, monster AI | A zone's PvP state |
+| The override file (`overrides/game-data.toml`) | Our changes to those iROSE tables, one cell per entry | That zone made PvP-free |
 | The game code | Rules and formulas, and features iROSE didn't have | How attack turns into damage |
 
 The original data is never edited. Our own data is changed in the Godot editor and
@@ -50,6 +50,8 @@ Some examples:
   change to the sword's file in `godot/data/items/`.
 - *"Jelly Bean should drop Jelly Bean Gel more often"*: edit the drops on the monster
   page. That becomes a change to its drop table in `godot/data/drop_tables/`.
+- *"Heal should cost less MP"*: edit the cost on the skill page. That becomes a change to
+  each level's file in the skill's folder in `godot/data/skills/`.
 - *"Critical hits should do double damage"*: edit the formula on [[rules/combat|Combat]].
   That is a code change.
 - *"We want clans"*: change the status of the clan page under
