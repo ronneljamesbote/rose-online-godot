@@ -17,7 +17,7 @@ dropped_by:
   level: 104
   slots_of_30: 2
 source:
-  data: LIST_USEITEM.STB row 436
+  data: godot/data/items/consumable/436-yeti-rider.tres
   code: module/src/items.rs
 ---
 # Yeti Rider

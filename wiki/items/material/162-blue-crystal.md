@@ -150,7 +150,7 @@ used_to_craft:
 - '[[items/gem/321-sapphire-1|Sapphire 1]]'
 - '[[items/gem/331-topaz-1|Topaz 1]]'
 source:
-  data: LIST_NATURAL.STB row 162
+  data: godot/data/items/material/162-blue-crystal.tres
   code: module/src/items.rs
 ---
 # Blue Crystal

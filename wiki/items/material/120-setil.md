@@ -39,7 +39,7 @@ dropped_in_zones:
 - '[[zones/28-gorge-of-silence|Gorge of Silence]]'
 - '[[zones/55-freezing-plateau|Freezing Plateau]]'
 source:
-  data: LIST_NATURAL.STB row 120
+  data: godot/data/items/material/120-setil.tres
   code: module/src/items.rs
 ---
 # Setil

@@ -22,7 +22,7 @@ used_to_craft:
 - '[[items/weapon/344-bleak-wind|Bleak Wind]]'
 - '[[items/weapon/441-dual-flare-swords|Dual Flare Swords]]'
 source:
-  data: LIST_NATURAL.STB row 13
+  data: godot/data/items/material/13-wolf-steel.tres
   code: module/src/items.rs
 ---
 # Wolf Steel

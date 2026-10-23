@@ -17,7 +17,7 @@ sold_by:
 - '[[npcs/1109-elder-of-junon-order-gorthein|Elder of Junon Order Gorthein]]'
 - '[[npcs/1112-arumic-researcher-carasia|Arumic Researcher Carasia]]'
 source:
-  data: LIST_ARMS.STB row 225
+  data: godot/data/items/hands/225-junior-gloves.tres
   code: module/src/items.rs
 ---
 # Junior Gloves

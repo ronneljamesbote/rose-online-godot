@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/3405-supplying-training-gloves|Supplying Training Gloves]]'
 source:
-  data: LIST_QUESTITEM.STB row 305
+  data: godot/data/items/quest/305-training-gloves.tres
   code: module/src/items.rs
 ---
 # Training Gloves

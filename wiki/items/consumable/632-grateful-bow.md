@@ -9,7 +9,7 @@ effect: teaches [[skills/42-grateful-bow|Grateful Bow]], uses [[skills/42-gratef
 price: 100
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 632
+  data: godot/data/items/consumable/632-grateful-bow.tres
   code: module/src/items.rs
 ---
 # Grateful Bow

@@ -14,7 +14,7 @@ job: Dealer 2nd Advanced Jobs
 price: 120800
 weight: 20
 source:
-  data: LIST_BODY.STB row 641
+  data: godot/data/items/body/641-rich-merchant-vest.tres
   code: module/src/items.rs
 ---
 # Rich Merchant Vest

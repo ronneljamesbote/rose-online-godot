@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/3605-plant-extract-magic-fundamental|Plant Extract: Magic Fundamental]]'
 source:
-  data: LIST_QUESTITEM.STB row 309
+  data: godot/data/items/quest/309-smouly-leaf.tres
   code: module/src/items.rs
 ---
 # Smouly Leaf

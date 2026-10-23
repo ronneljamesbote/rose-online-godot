@@ -8,7 +8,7 @@ class: Stone Material
 price: 150
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 24
+  data: godot/data/items/material/24-gravel-stone.tres
   code: module/src/items.rs
 ---
 # Gravel Stone

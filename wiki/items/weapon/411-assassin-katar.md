@@ -36,7 +36,7 @@ dropped_by:
   level: 100
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 411
+  data: godot/data/items/weapon/411-assassin-katar.tres
   code: module/src/items.rs
 ---
 # Assassin Katar

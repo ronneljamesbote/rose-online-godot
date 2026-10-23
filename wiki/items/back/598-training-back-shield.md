@@ -14,7 +14,7 @@ job: Soldier and Hawker Job
 price: 20850
 weight: 20
 source:
-  data: LIST_BACK.STB row 598
+  data: godot/data/items/back/598-training-back-shield.tres
   code: module/src/items.rs
 ---
 # Training Back shield

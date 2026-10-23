@@ -8,7 +8,7 @@ class: Magic Item
 effect: teaches [[skills/47-fight-cheer|Fight Cheer]], uses [[skills/47-fight-cheer|Fight Cheer]], fuel +47
 price: 20
 source:
-  data: LIST_USEITEM.STB row 975
+  data: godot/data/items/consumable/975-fight-cheer.tres
   code: module/src/items.rs
 ---
 # Fight Cheer

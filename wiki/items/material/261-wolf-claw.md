@@ -33,7 +33,7 @@ used_to_craft:
 - '[[items/weapon/414-stiletto|Stiletto]]'
 - '[[items/subweapon/76-lunatic-candy-bar|Lunatic Candy Bar]]'
 source:
-  data: LIST_NATURAL.STB row 261
+  data: godot/data/items/material/261-wolf-claw.tres
   code: module/src/items.rs
 ---
 # Wolf Claw

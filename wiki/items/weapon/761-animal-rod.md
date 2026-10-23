@@ -22,7 +22,7 @@ dropped_by:
   level: 43
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 761
+  data: godot/data/items/weapon/761-animal-rod.tres
   code: module/src/items.rs
 ---
 # Animal Rod

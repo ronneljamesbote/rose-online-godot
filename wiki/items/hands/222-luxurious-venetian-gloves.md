@@ -17,7 +17,7 @@ sold_by:
 - '[[npcs/1110-ferrell-guild-staff-charrs|Ferrell Guild Staff Charrs]]'
 - '[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]'
 source:
-  data: LIST_ARMS.STB row 222
+  data: godot/data/items/hands/222-luxurious-venetian-gloves.tres
   code: module/src/items.rs
 ---
 # Luxurious Venetian Gloves

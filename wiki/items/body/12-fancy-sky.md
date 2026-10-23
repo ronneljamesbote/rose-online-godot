@@ -29,7 +29,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_BODY.STB row 12
+  data: godot/data/items/body/12-fancy-sky.tres
   code: module/src/items.rs
 ---
 # Fancy Sky

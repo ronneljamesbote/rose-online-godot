@@ -32,7 +32,7 @@ sold_by:
 quest_reward:
 - '[[quests/854-solider-job-change-quest|Solider Job Change Quest]]'
 source:
-  data: LIST_ARMS.STB row 31
+  data: godot/data/items/hands/31-soldier-gloves.tres
   code: module/src/items.rs
 ---
 # Soldier Gloves

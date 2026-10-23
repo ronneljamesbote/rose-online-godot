@@ -18,7 +18,7 @@ sockets: true
 price: 375000
 weight: 100
 source:
-  data: LIST_WEAPON.STB row 593
+  data: godot/data/items/weapon/593-shion-s-guardian.tres
   code: module/src/items.rs
 ---
 # Shion's Guardian

@@ -12,7 +12,7 @@ dropped_by:
   level: 147
   slots_of_30: 14
 source:
-  data: LIST_NATURAL.STB row 279
+  data: godot/data/items/material/279-killer-leaf.tres
   code: module/src/items.rs
 ---
 # Killer Leaf

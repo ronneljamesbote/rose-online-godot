@@ -14,7 +14,7 @@ job: Hawker 2nd Advanced Jobs
 price: 80900
 weight: 20
 source:
-  data: LIST_BODY.STB row 533
+  data: godot/data/items/body/533-mariner-s-look.tres
   code: module/src/items.rs
 ---
 # Mariner’s Look

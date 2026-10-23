@@ -8,7 +8,7 @@ class: Automatic Consumption
 effect: Stamina +300, teaches [[skills/291-spiritual-training|Spiritual Training]] level 10, uses [[skills/291-spiritual-training|Spiritual Training]] level 10, fuel +300
 price: 0
 source:
-  data: LIST_USEITEM.STB row 176
+  data: godot/data/items/consumable/176-stamina-300.tres
   code: module/src/items.rs
 ---
 # Stamina (+300)

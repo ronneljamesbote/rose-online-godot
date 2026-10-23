@@ -40,7 +40,7 @@ dropped_by:
   level: 120
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 313
+  data: godot/data/items/weapon/313-rune-staff.tres
   code: module/src/items.rs
 ---
 # Rune Staff

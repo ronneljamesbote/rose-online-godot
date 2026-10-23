@@ -16,7 +16,7 @@ weight: 10
 sold_by:
 - '[[npcs/1110-ferrell-guild-staff-charrs|Ferrell Guild Staff Charrs]]'
 source:
-  data: LIST_BODY.STB row 229
+  data: godot/data/items/body/229-senior-look.tres
   code: module/src/items.rs
 ---
 # Senior Look

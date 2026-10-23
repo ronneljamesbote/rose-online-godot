@@ -18,7 +18,7 @@ sockets: true
 price: 273200
 weight: 60
 source:
-  data: LIST_WEAPON.STB row 657
+  data: godot/data/items/weapon/657-dagan-spear.tres
   code: module/src/items.rs
 ---
 # Dagan Spear

@@ -29,7 +29,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_ARMS.STB row 12
+  data: godot/data/items/hands/12-venetian-gloves.tres
   code: module/src/items.rs
 ---
 # Venetian Gloves

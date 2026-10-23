@@ -14,7 +14,7 @@ bonus: Attack Accuracy +1
 price: 1100
 weight: 3
 source:
-  data: LIST_CAP.STB row 301
+  data: godot/data/items/head/301-islamic-bandana.tres
   code: module/src/items.rs
 ---
 # Islamic Bandana

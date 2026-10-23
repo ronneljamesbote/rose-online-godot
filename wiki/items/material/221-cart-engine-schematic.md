@@ -16,7 +16,7 @@ used_to_craft:
 - '[[items/vehicle/102-second-engine|Second Engine]]'
 - '[[items/vehicle/103-dural-engine|Dural Engine]]'
 source:
-  data: LIST_NATURAL.STB row 221
+  data: godot/data/items/material/221-cart-engine-schematic.tres
   code: module/src/items.rs
 ---
 # Cart Engine Schematic

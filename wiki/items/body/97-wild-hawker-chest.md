@@ -33,7 +33,7 @@ dropped_by:
   level: 133
   slots_of_30: 0.4
 source:
-  data: LIST_BODY.STB row 97
+  data: godot/data/items/body/97-wild-hawker-chest.tres
   code: module/src/items.rs
 ---
 # Wild Hawker Chest

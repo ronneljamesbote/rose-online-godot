@@ -9,7 +9,7 @@ effect: teaches skill 3111, uses skill 3111, fuel +3111
 price: 460
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 311
+  data: godot/data/items/consumable/311-accuracy-scroll-solo.tres
   code: module/src/items.rs
 ---
 # Accuracy Scroll (Solo)

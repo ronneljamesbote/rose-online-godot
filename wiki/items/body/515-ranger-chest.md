@@ -14,7 +14,7 @@ job: Hawker Job
 price: 20300
 weight: 15
 source:
-  data: LIST_BODY.STB row 515
+  data: godot/data/items/body/515-ranger-chest.tres
   code: module/src/items.rs
 ---
 # Ranger Chest

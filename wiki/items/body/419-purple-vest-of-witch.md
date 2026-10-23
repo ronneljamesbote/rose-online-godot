@@ -19,7 +19,7 @@ dropped_by:
   level: 68
   slots_of_30: 0.2
 source:
-  data: LIST_BODY.STB row 419
+  data: godot/data/items/body/419-purple-vest-of-witch.tres
   code: module/src/items.rs
 ---
 # Purple Vest of Witch

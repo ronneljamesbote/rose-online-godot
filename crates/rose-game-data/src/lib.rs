@@ -17,6 +17,7 @@ use rose_data_irose::{
     get_skill_database, get_status_effect_database, get_string_database, get_warp_gate_database,
     get_zone_database,
 };
+use rose_data_export::{Format, ItemsExport};
 use rose_file_readers::{stb_column, StbFile, VfsFile, VfsPathBuf, VirtualFilesystem};
 use rose_game_overrides::{MotionTimings, ZoneLayout};
 use glam::Vec3;
@@ -48,7 +49,7 @@ pub struct GameData {
 
 pub fn load_game_data(vfs: &VirtualFilesystem) -> Result<GameData, anyhow::Error> {
     let string_database = get_string_database(vfs, 1).context("string database")?;
-    let items = Arc::new(get_item_database(vfs, string_database.clone()).context("item database")?);
+    let items = Arc::new(load_items(vfs, string_database.clone()).context("item database")?);
     let mut npcs = get_npc_database(vfs, string_database.clone(), &NpcDatabaseOptions { load_frame_data: true })
         .context("npc database")?;
     let mut motions = get_character_motion_database(vfs, &CharacterMotionDatabaseOptions { load_frame_data: true })
@@ -81,6 +82,32 @@ pub fn load_game_data(vfs: &VirtualFilesystem) -> Result<GameData, anyhow::Error
         zones,
         string_database,
     })
+}
+
+/// The items exported from the Godot resources (`overrides/data/items/`, in the game files at
+/// `OVERRIDES/DATA/ITEMS/`, as JSON from the upload or as the TOML files themselves), or
+/// without an export the iROSE item tables.
+pub fn load_items(vfs: &VirtualFilesystem, strings: Arc<StringDatabase>) -> Result<ItemDatabase, anyhow::Error> {
+    // The upload sends JSON; TOML is the export as the repository has it (`compare`).
+    for format in [Format::Json, Format::Toml] {
+        let export = ItemsExport::from_files_as(format, |name| {
+            let path = format!("{}/{}", rose_data_export::DATA_GAME_DIR, rose_data_export::items_file_as(name, format))
+                .to_uppercase();
+            if !vfs.exists(path.as_str()) {
+                return Ok(None);
+            }
+            let file = vfs.open_file(path.as_str())?;
+            let bytes: &[u8] = match &file {
+                VfsFile::Buffer(data) => data,
+                VfsFile::View(data) => data,
+            };
+            Ok(Some(std::str::from_utf8(bytes).with_context(|| path.clone())?.to_string()))
+        })?;
+        if let Some(export) = export {
+            return export.to_database(strings);
+        }
+    }
+    get_item_database(vfs, strings)
 }
 
 /// The lengths and hit frames of `overrides/motions.toml` (exported from the Godot

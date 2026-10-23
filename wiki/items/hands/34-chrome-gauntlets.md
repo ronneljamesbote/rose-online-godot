@@ -41,7 +41,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1094-armor-merchant-saki|Armor Merchant Saki]]'
 source:
-  data: LIST_ARMS.STB row 34
+  data: godot/data/items/hands/34-chrome-gauntlets.tres
   code: module/src/items.rs
 ---
 # Chrome Gauntlets

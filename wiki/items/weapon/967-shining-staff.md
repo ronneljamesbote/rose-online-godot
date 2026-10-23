@@ -17,7 +17,7 @@ bonus: MP Consumption +21
 price: 36840
 weight: 66
 source:
-  data: LIST_WEAPON.STB row 967
+  data: godot/data/items/weapon/967-shining-staff.tres
   code: module/src/items.rs
 ---
 # Shining Staff

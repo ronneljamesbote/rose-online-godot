@@ -16,7 +16,7 @@ weight: 3
 sold_by:
 - '[[npcs/1112-arumic-researcher-carasia|Arumic Researcher Carasia]]'
 source:
-  data: LIST_CAP.STB row 328
+  data: godot/data/items/head/328-senior-cap.tres
   code: module/src/items.rs
 ---
 # Senior Cap

@@ -13,7 +13,7 @@ sold_by:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 - '[[npcs/1087-akram-minister-mel|Akram Minister Mel]]'
 source:
-  data: LIST_USEITEM.STB row 822
+  data: godot/data/items/consumable/822-gun-smash.tres
   code: module/src/items.rs
 ---
 # Gun Smash

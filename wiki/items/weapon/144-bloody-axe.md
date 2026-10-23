@@ -29,7 +29,7 @@ recipe:
   quantity: 10
 craft_difficulty: 40
 source:
-  data: LIST_WEAPON.STB row 144
+  data: godot/data/items/weapon/144-bloody-axe.tres
   code: module/src/items.rs
 ---
 # Bloody Axe

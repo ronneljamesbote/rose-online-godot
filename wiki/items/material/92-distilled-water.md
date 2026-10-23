@@ -16,7 +16,7 @@ sold_by:
 used_to_craft:
 - '[[items/feet/62-green-sandals-of-witch|Green Sandals of Witch]]'
 source:
-  data: LIST_NATURAL.STB row 92
+  data: godot/data/items/material/92-distilled-water.tres
   code: module/src/items.rs
 ---
 # Distilled Water

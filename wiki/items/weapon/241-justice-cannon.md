@@ -36,7 +36,7 @@ dropped_by:
   level: 100
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 241
+  data: godot/data/items/weapon/241-justice-cannon.tres
   code: module/src/items.rs
 ---
 # Justice Cannon

@@ -17,7 +17,7 @@ quest_reward:
 - '[[quests/123-resurrection|Resurrection]]'
 - '[[quests/124-magic-of-anima-lake|Magic of Anima Lake]]'
 source:
-  data: LIST_USEITEM.STB row 352
+  data: godot/data/items/consumable/352-junon-polis-return-scroll.tres
   code: module/src/items.rs
 ---
 # Junon Polis Return Scroll

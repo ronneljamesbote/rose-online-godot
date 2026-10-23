@@ -18,7 +18,7 @@ sockets: true
 price: 207800
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 710
+  data: godot/data/items/weapon/710-piercing-gun.tres
   code: module/src/items.rs
 ---
 # Piercing Gun

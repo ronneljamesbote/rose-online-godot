@@ -14,7 +14,7 @@ job: Hawker 2nd Advanced Jobs
 price: 16450
 weight: 5
 source:
-  data: LIST_ARMS.STB row 528
+  data: godot/data/items/hands/528-mariner-s-gloves.tres
   code: module/src/items.rs
 ---
 # Mariner's Gloves

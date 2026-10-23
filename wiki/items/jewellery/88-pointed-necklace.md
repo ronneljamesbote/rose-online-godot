@@ -24,7 +24,7 @@ sold_by:
 quest_reward:
 - '[[quests/860-hovert-s-mementos|Hovert''s Mementos]]'
 source:
-  data: LIST_JEWEL.STB row 88
+  data: godot/data/items/jewellery/88-pointed-necklace.tres
   code: module/src/items.rs
 ---
 # Pointed Necklace

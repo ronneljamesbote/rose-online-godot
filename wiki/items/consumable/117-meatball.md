@@ -9,7 +9,7 @@ effect: HP +300, HP Restoration (300), teaches [[skills/291-spiritual-training|S
 price: 90
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 117
+  data: godot/data/items/consumable/117-meatball.tres
   code: module/src/items.rs
 ---
 # Meatball

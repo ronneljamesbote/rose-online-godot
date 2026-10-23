@@ -10,7 +10,7 @@ weight: 1
 dropped_in_zones:
 - '[[zones/27-kenji-beach|Kenji Beach]]'
 source:
-  data: LIST_NATURAL.STB row 60
+  data: godot/data/items/material/60-lace.tres
   code: module/src/items.rs
 ---
 # Lace

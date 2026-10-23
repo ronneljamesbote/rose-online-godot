@@ -34,7 +34,7 @@ dropped_by:
   level: 128
   slots_of_30: 0.8
 source:
-  data: LIST_FOOT.STB row 36
+  data: godot/data/items/feet/36-kurash-boots.tres
   code: module/src/items.rs
 ---
 # Kurash Boots

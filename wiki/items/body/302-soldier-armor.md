@@ -14,7 +14,7 @@ job: Soldier Job
 price: 2450
 weight: 10
 source:
-  data: LIST_BODY.STB row 302
+  data: godot/data/items/body/302-soldier-armor.tres
   code: module/src/items.rs
 ---
 # Soldier Armor

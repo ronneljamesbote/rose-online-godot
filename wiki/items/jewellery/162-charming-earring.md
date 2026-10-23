@@ -19,7 +19,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1007-gypsy-jewel-seller-mina|Gypsy Jewel Seller Mina]]'
 source:
-  data: LIST_JEWEL.STB row 162
+  data: godot/data/items/jewellery/162-charming-earring.tres
   code: module/src/items.rs
 ---
 # Charming Earring

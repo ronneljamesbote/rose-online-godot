@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/956-why-did-toddy-steal-the-jewels|Why Did Toddy Steal the Jewels?]]'
 source:
-  data: LIST_QUESTITEM.STB row 114
+  data: godot/data/items/quest/114-crystal-necklace.tres
   code: module/src/items.rs
 ---
 # Crystal Necklace

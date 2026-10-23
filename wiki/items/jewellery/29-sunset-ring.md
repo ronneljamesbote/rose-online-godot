@@ -10,7 +10,7 @@ bonus: Charm +28, Magic Resistance +28
 price: 465410
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 29
+  data: godot/data/items/jewellery/29-sunset-ring.tres
   code: module/src/items.rs
 ---
 # Sunset Ring

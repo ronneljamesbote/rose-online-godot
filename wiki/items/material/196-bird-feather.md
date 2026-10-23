@@ -26,7 +26,7 @@ dropped_by:
 used_to_craft:
 - '[[items/back/221-fairy-wing|Fairy Wing]]'
 source:
-  data: LIST_NATURAL.STB row 196
+  data: godot/data/items/material/196-bird-feather.tres
   code: module/src/items.rs
 ---
 # Bird Feather

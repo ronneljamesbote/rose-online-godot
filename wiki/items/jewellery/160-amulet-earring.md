@@ -19,7 +19,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1007-gypsy-jewel-seller-mina|Gypsy Jewel Seller Mina]]'
 source:
-  data: LIST_JEWEL.STB row 160
+  data: godot/data/items/jewellery/160-amulet-earring.tres
   code: module/src/items.rs
 ---
 # Amulet Earring

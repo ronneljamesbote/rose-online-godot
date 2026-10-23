@@ -12,7 +12,7 @@ sold_by:
 - '[[npcs/1181-smith-pavrick|Smith Pavrick]]'
 - '[[npcs/1213-ferrell-guild-staff-gilbert|Ferrell Guild Staff Gilbert]]'
 source:
-  data: LIST_NATURAL.STB row 312
+  data: godot/data/items/material/312-white-night-arrow.tres
   code: module/src/items.rs
 ---
 # White Night Arrow

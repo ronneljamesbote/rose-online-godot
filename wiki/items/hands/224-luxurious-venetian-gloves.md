@@ -19,7 +19,7 @@ sold_by:
 - '[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]'
 - '[[npcs/1112-arumic-researcher-carasia|Arumic Researcher Carasia]]'
 source:
-  data: LIST_ARMS.STB row 224
+  data: godot/data/items/hands/224-luxurious-venetian-gloves.tres
   code: module/src/items.rs
 ---
 # Luxurious Venetian Gloves

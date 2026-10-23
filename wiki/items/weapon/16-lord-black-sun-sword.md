@@ -53,7 +53,7 @@ dropped_by:
 used_to_craft:
 - '[[items/weapon/444-desperado-dual-wield|Desperado Dual Wield]]'
 source:
-  data: LIST_WEAPON.STB row 16
+  data: godot/data/items/weapon/16-lord-black-sun-sword.tres
   code: module/src/items.rs
 ---
 # Lord Black Sun Sword

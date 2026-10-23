@@ -8,7 +8,7 @@ class: Skill Book
 effect: teaches skill 3213, uses skill 3213, fuel +3213
 price: 0
 source:
-  data: LIST_USEITEM.STB row 877
+  data: godot/data/items/consumable/877-fast-mode.tres
   code: module/src/items.rs
 ---
 # Fast Mode

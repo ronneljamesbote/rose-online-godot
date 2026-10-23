@@ -27,7 +27,7 @@ used_to_craft:
 - '[[items/subweapon/12-blood-shield|Blood Shield]]'
 - '[[items/vehicle/32-reinforced-stock-core|Reinforced Stock Core]]'
 source:
-  data: LIST_NATURAL.STB row 47
+  data: godot/data/items/material/47-thick-leather.tres
   code: module/src/items.rs
 ---
 # Thick Leather

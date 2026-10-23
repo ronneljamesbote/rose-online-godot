@@ -15,7 +15,7 @@ bonus: Movement Speed +60
 price: 67700
 weight: 6
 source:
-  data: LIST_BACK.STB row 462
+  data: godot/data/items/back/462-little-angel-wing.tres
   code: module/src/items.rs
 ---
 # Little Angel Wing

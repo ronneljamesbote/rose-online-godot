@@ -22,7 +22,7 @@ dropped_by:
   level: 84
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 855
+  data: godot/data/items/weapon/855-dual-ocean-swords.tres
   code: module/src/items.rs
 ---
 # Dual Ocean Swords

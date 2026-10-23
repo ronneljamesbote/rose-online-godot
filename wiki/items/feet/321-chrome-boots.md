@@ -19,7 +19,7 @@ dropped_by:
   level: 92
   slots_of_30: 0.2
 source:
-  data: LIST_FOOT.STB row 321
+  data: godot/data/items/feet/321-chrome-boots.tres
   code: module/src/items.rs
 ---
 # Chrome Boots

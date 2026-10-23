@@ -48,7 +48,7 @@ dropped_by:
   level: 108
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 68
+  data: godot/data/items/weapon/68-anima-bow-gun.tres
   code: module/src/items.rs
 ---
 # Anima Bow Gun

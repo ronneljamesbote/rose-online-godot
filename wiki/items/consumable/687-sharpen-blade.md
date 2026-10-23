@@ -9,7 +9,7 @@ effect: teaches skill 621, uses skill 621, fuel +621
 price: 29200
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 687
+  data: godot/data/items/consumable/687-sharpen-blade.tres
   code: module/src/items.rs
 ---
 # Sharpen Blade

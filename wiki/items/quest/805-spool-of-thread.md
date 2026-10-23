@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/5034-stockpiling-spools-of-thread|Stockpiling Spools of Thread]]'
 source:
-  data: LIST_QUESTITEM.STB row 805
+  data: godot/data/items/quest/805-spool-of-thread.tres
   code: module/src/items.rs
 ---
 # Spool of Thread

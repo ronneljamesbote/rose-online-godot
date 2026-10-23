@@ -29,7 +29,7 @@ dropped_by:
   level: 64
   slots_of_30: 0.4
 source:
-  data: LIST_BACK.STB row 208
+  data: godot/data/items/back/208-street-bag.tres
   code: module/src/items.rs
 ---
 # Street Bag

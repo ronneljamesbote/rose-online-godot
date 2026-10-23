@@ -14,7 +14,7 @@ bonus: Attack Speed +3
 price: 2100
 weight: 1
 source:
-  data: LIST_ARMS.STB row 209
+  data: godot/data/items/hands/209-gray-gloves.tres
   code: module/src/items.rs
 ---
 # Gray Gloves

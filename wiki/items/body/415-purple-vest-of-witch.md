@@ -15,7 +15,7 @@ bonus: Max MP +70
 price: 21500
 weight: 10
 source:
-  data: LIST_BODY.STB row 415
+  data: godot/data/items/body/415-purple-vest-of-witch.tres
   code: module/src/items.rs
 ---
 # Purple Vest of Witch

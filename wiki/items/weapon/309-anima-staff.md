@@ -55,7 +55,7 @@ dropped_by:
   level: 80
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 309
+  data: godot/data/items/weapon/309-anima-staff.tres
   code: module/src/items.rs
 ---
 # Anima Staff

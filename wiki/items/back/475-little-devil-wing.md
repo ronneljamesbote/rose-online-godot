@@ -15,7 +15,7 @@ bonus: Movement Speed +50
 price: 94150
 weight: 8
 source:
-  data: LIST_BACK.STB row 475
+  data: godot/data/items/back/475-little-devil-wing.tres
   code: module/src/items.rs
 ---
 # Little Devil Wing

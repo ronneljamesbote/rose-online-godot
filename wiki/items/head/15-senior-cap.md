@@ -14,7 +14,7 @@ bonus: Attack Accuracy +13
 price: 19050
 weight: 3
 source:
-  data: LIST_CAP.STB row 15
+  data: godot/data/items/head/15-senior-cap.tres
   code: module/src/items.rs
 ---
 # Senior Cap

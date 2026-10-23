@@ -16,7 +16,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1180-ferrell-guild-banker-andre|Ferrell Guild Banker Andre]]'
 source:
-  data: LIST_JEWEL.STB row 104
+  data: godot/data/items/jewellery/104-dazzling-necklace.tres
   code: module/src/items.rs
 ---
 # Dazzling Necklace

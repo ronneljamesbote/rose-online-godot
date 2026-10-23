@@ -53,7 +53,7 @@ sold_by:
 used_to_craft:
 - '[[items/weapon/435-saber-elven-sword|Saber & Elven Sword]]'
 source:
-  data: LIST_WEAPON.STB row 8
+  data: godot/data/items/weapon/8-elven-sword.tres
   code: module/src/items.rs
 ---
 # Elven Sword

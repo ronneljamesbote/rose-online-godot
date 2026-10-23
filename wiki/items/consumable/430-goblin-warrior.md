@@ -17,7 +17,7 @@ dropped_by:
   level: 89
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 430
+  data: godot/data/items/consumable/430-goblin-warrior.tres
   code: module/src/items.rs
 ---
 # Goblin Warrior

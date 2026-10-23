@@ -8,7 +8,7 @@ class: Refining Material
 price: 1505
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 70
+  data: godot/data/items/material/70-hermes.tres
   code: module/src/items.rs
 ---
 # Hermes

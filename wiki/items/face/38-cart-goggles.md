@@ -27,7 +27,7 @@ dropped_by:
   level: 39
   slots_of_30: 0.2
 source:
-  data: LIST_FACEITEM.STB row 38
+  data: godot/data/items/face/38-cart-goggles.tres
   code: module/src/items.rs
 ---
 # Cart Goggles

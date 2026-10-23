@@ -42,3 +42,7 @@ rose-offline-server's quest system), shared by the module, which runs triggers a
 rewards, and the client, which checks a trigger's conditions before asking the server to
 run it. The Lua 4 VM in `godot/rust/src/lua4` is copied from rose-offline-client's
 `scripting/lua4`, with only its module paths changed.
+
+rose-data-export is ours: it reads the game data exported from the Godot resources
+(`overrides/data/`, made in `godot/data/`) into the same rose-data databases rose-data-irose
+fills from the iROSE tables.

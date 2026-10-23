@@ -26,7 +26,7 @@ sold_by:
 quest_reward:
 - '[[quests/151-lunarian-coffee|Lunarian Coffee]]'
 source:
-  data: LIST_USEITEM.STB row 6
+  data: godot/data/items/consumable/6-health-bottle-l.tres
   code: module/src/items.rs
 ---
 # Health Bottle (L)

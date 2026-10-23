@@ -18,7 +18,7 @@ sockets: true
 price: 396550
 weight: 60
 source:
-  data: LIST_WEAPON.STB row 627
+  data: godot/data/items/weapon/627-adamantium-axe.tres
   code: module/src/items.rs
 ---
 # Adamantium Axe

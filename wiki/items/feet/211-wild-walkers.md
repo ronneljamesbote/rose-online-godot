@@ -14,7 +14,7 @@ quality: 33
 price: 1900
 weight: 2
 source:
-  data: LIST_FOOT.STB row 211
+  data: godot/data/items/feet/211-wild-walkers.tres
   code: module/src/items.rs
 ---
 # Wild Walkers

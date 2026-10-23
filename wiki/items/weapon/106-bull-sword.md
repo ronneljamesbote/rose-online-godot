@@ -45,7 +45,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 source:
-  data: LIST_WEAPON.STB row 106
+  data: godot/data/items/weapon/106-bull-sword.tres
   code: module/src/items.rs
 ---
 # Bull Sword

@@ -18,7 +18,7 @@ sockets: true
 price: 338300
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 685
+  data: godot/data/items/weapon/685-bifenith-bow.tres
   code: module/src/items.rs
 ---
 # Bifenith Bow

@@ -7,7 +7,7 @@ icon: item/2074
 class: Gathered Goods
 price: 1000
 source:
-  data: LIST_NATURAL.STB row 403
+  data: godot/data/items/material/403-santa-lottery.tres
   code: module/src/items.rs
 ---
 # Santa Lottery

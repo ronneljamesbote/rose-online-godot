@@ -14,7 +14,7 @@ bonus: Attack Accuracy +11
 price: 14100
 weight: 3
 source:
-  data: LIST_CAP.STB row 14
+  data: godot/data/items/head/14-junior-cap.tres
   code: module/src/items.rs
 ---
 # Junior Cap

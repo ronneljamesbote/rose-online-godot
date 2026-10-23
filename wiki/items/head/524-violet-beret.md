@@ -19,7 +19,7 @@ dropped_by:
   level: 92
   slots_of_30: 0.2
 source:
-  data: LIST_CAP.STB row 524
+  data: godot/data/items/head/524-violet-beret.tres
   code: module/src/items.rs
 ---
 # Violet Beret

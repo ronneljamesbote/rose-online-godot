@@ -21,7 +21,7 @@ dropped_by:
   level: 75
   slots_of_30: 0.6
 source:
-  data: LIST_CAP.STB row 424
+  data: godot/data/items/head/424-chrome-helm.tres
   code: module/src/items.rs
 ---
 # Chrome Helm

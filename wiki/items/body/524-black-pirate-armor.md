@@ -18,7 +18,7 @@ dropped_by:
   level: 92
   slots_of_30: 0.2
 source:
-  data: LIST_BODY.STB row 524
+  data: godot/data/items/body/524-black-pirate-armor.tres
   code: module/src/items.rs
 ---
 # Black Pirate Armor

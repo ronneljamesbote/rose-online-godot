@@ -15,7 +15,7 @@ job: Soldier Job
 price: 2950
 weight: 5
 source:
-  data: LIST_FOOT.STB row 309
+  data: godot/data/items/feet/309-iron-boots.tres
   code: module/src/items.rs
 ---
 # Iron Boots

@@ -33,7 +33,7 @@ dropped_by:
   level: 140
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 217
+  data: godot/data/items/weapon/217-lynx-bow.tres
   code: module/src/items.rs
 ---
 # Lynx Bow

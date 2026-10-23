@@ -13,7 +13,7 @@ needed_for_quest:
 - '[[quests/123-resurrection|Resurrection]]'
 - '[[quests/124-magic-of-anima-lake|Magic of Anima Lake]]'
 source:
-  data: LIST_QUESTITEM.STB row 612
+  data: godot/data/items/quest/612-small-necklace.tres
   code: module/src/items.rs
 ---
 # Small Necklace

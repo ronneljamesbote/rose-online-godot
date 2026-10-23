@@ -16,7 +16,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1180-ferrell-guild-banker-andre|Ferrell Guild Banker Andre]]'
 source:
-  data: LIST_JEWEL.STB row 170
+  data: godot/data/items/jewellery/170-lizard-earring.tres
   code: module/src/items.rs
 ---
 # Lizard Earring

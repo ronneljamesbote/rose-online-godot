@@ -13,7 +13,7 @@ needed_for_quest:
 - '[[quests/151-lunarian-coffee|Lunarian Coffee]]'
 - '[[quests/3606-magic-weapon-production|Magic Weapon Production]]'
 source:
-  data: LIST_QUESTITEM.STB row 313
+  data: godot/data/items/quest/313-doonga-claw.tres
   code: module/src/items.rs
 ---
 # Doonga Claw

@@ -18,7 +18,7 @@ sockets: true
 price: 70850
 weight: 35
 source:
-  data: LIST_WEAPON.STB row 510
+  data: godot/data/items/weapon/510-blood-sword.tres
   code: module/src/items.rs
 ---
 # Blood Sword

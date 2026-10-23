@@ -48,7 +48,7 @@ dropped_by:
   level: 117
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 139
+  data: godot/data/items/weapon/139-golden-axe.tres
   code: module/src/items.rs
 ---
 # Golden Axe

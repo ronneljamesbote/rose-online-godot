@@ -18,7 +18,7 @@ dropped_by:
   level: 60
   slots_of_30: 0.4
 source:
-  data: LIST_BODY.STB row 519
+  data: godot/data/items/body/519-ranger-chest.tres
   code: module/src/items.rs
 ---
 # Ranger Chest

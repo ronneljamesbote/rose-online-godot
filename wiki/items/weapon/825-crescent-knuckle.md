@@ -25,7 +25,7 @@ dropped_by:
   level: 77
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 825
+  data: godot/data/items/weapon/825-crescent-knuckle.tres
   code: module/src/items.rs
 ---
 # Crescent Knuckle

@@ -13,7 +13,7 @@ used_to_craft:
 - '[[items/weapon/217-lynx-bow|Lynx Bow]]'
 - '[[items/weapon/218-bifenith-bow|Bifenith Bow]]'
 source:
-  data: LIST_NATURAL.STB row 59
+  data: godot/data/items/material/59-twill.tres
   code: module/src/items.rs
 ---
 # Twill

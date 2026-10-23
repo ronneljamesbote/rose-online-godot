@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/1005-an-eye-for-the-marketplace|An Eye for the Marketplace]]'
 - '[[quests/1006-an-eye-for-the-marketplace|An Eye for the Marketplace]]'
 source:
-  data: LIST_QUESTITEM.STB row 132
+  data: godot/data/items/quest/132-beetle-shell.tres
   code: module/src/items.rs
 ---
 # Beetle Shell

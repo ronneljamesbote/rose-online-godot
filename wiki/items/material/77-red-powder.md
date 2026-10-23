@@ -25,7 +25,7 @@ dropped_in_zones:
 - '[[zones/33-goblin-cave-b3|Goblin Cave (B3)]]'
 - '[[zones/59-luna-clan-field|Luna Clan Field]]'
 source:
-  data: LIST_NATURAL.STB row 77
+  data: godot/data/items/material/77-red-powder.tres
   code: module/src/items.rs
 ---
 # Red Powder

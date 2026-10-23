@@ -13,7 +13,7 @@ dropped_by:
   level: 70
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 313
+  data: godot/data/items/consumable/313-advanced-hp-scroll-solo.tres
   code: module/src/items.rs
 ---
 # Advanced HP Scroll (Solo)

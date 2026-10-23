@@ -9,7 +9,7 @@ effect: teaches [[skills/2641-accessory-craft|Accessory Craft]], uses [[skills/2
 price: 29200
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 850
+  data: godot/data/items/consumable/850-accessory-craft.tres
   code: module/src/items.rs
 ---
 # Accessory Craft

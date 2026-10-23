@@ -15,7 +15,7 @@ job: Hawker 2nd Advanced Jobs
 price: 32250
 weight: 3
 source:
-  data: LIST_FOOT.STB row 535
+  data: godot/data/items/feet/535-jaguar-boots.tres
   code: module/src/items.rs
 ---
 # Jaguar Boots

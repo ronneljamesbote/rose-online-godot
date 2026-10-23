@@ -46,7 +46,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1034-smith-ronk|Smith Ronk]]'
 source:
-  data: LIST_CAP.STB row 3
+  data: godot/data/items/head/3-luxurious-green-hat.tres
   code: module/src/items.rs
 ---
 # Luxurious Green Hat

@@ -73,7 +73,7 @@ used_to_craft:
 - '[[items/weapon/335-silence-wand|Silence Wand]]'
 - '[[items/weapon/405-wolf-s-paw|Wolf''s Paw]]'
 source:
-  data: LIST_NATURAL.STB row 178
+  data: godot/data/items/material/178-sticky-liquid.tres
   code: module/src/items.rs
 ---
 # Sticky Liquid

@@ -17,7 +17,7 @@ quest_reward:
 - '[[quests/123-resurrection|Resurrection]]'
 - '[[quests/124-magic-of-anima-lake|Magic of Anima Lake]]'
 source:
-  data: LIST_ARMS.STB row 214
+  data: godot/data/items/hands/214-gloves-of-iguje.tres
   code: module/src/items.rs
 ---
 # Gloves of Iguje

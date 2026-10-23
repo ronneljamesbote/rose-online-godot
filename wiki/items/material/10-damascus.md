@@ -11,7 +11,7 @@ dropped_in_zones:
 - '[[zones/28-gorge-of-silence|Gorge of Silence]]'
 - '[[zones/33-goblin-cave-b3|Goblin Cave (B3)]]'
 source:
-  data: LIST_NATURAL.STB row 10
+  data: godot/data/items/material/10-damascus.tres
   code: module/src/items.rs
 ---
 # Damascus

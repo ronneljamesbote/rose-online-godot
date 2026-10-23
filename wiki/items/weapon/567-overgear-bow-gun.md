@@ -22,7 +22,7 @@ dropped_by:
   level: 128
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 567
+  data: godot/data/items/weapon/567-overgear-bow-gun.tres
   code: module/src/items.rs
 ---
 # OverGear Bow Gun

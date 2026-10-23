@@ -13,7 +13,7 @@ needed_for_quest:
 - '[[quests/3007-the-arumics-request|The Arumics'' Request]]'
 - '[[quests/3407-righteous-crusaders-in-preparation|Righteous Crusaders in Preparation]]'
 source:
-  data: LIST_QUESTITEM.STB row 315
+  data: godot/data/items/quest/315-krawfy-hard-shell.tres
   code: module/src/items.rs
 ---
 # Krawfy Hard Shell

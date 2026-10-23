@@ -22,7 +22,7 @@ dropped_by:
   level: 142
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 514
+  data: godot/data/items/weapon/514-ice-sword.tres
   code: module/src/items.rs
 ---
 # Ice Sword

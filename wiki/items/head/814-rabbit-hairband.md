@@ -12,7 +12,7 @@ quality: 25
 price: 1000
 weight: 1
 source:
-  data: LIST_CAP.STB row 814
+  data: godot/data/items/head/814-rabbit-hairband.tres
   code: module/src/items.rs
 ---
 # Rabbit Hairband

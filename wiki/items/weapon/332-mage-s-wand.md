@@ -69,7 +69,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1006-arumic-merchant-tryteh|Arumic Merchant Tryteh]]'
 source:
-  data: LIST_WEAPON.STB row 332
+  data: godot/data/items/weapon/332-mage-s-wand.tres
   code: module/src/items.rs
 ---
 # Mage's Wand

@@ -18,7 +18,7 @@ sockets: true
 price: 83100
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 617
+  data: godot/data/items/weapon/617-golden-axe.tres
   code: module/src/items.rs
 ---
 # Golden Axe

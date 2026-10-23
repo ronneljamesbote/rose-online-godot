@@ -22,7 +22,7 @@ dropped_by:
   level: 60
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 731
+  data: godot/data/items/weapon/731-hard-launcher.tres
   code: module/src/items.rs
 ---
 # Hard Launcher

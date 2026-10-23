@@ -14,7 +14,7 @@ dropped_by:
   level: 94
   slots_of_30: 2
 source:
-  data: LIST_USEITEM.STB row 433
+  data: godot/data/items/consumable/433-yeti.tres
   code: module/src/items.rs
 ---
 # Yeti

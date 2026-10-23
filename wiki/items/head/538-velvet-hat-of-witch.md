@@ -15,7 +15,7 @@ bonus: MP Recovery Rate +3
 price: 32150
 weight: 2
 source:
-  data: LIST_CAP.STB row 538
+  data: godot/data/items/head/538-velvet-hat-of-witch.tres
   code: module/src/items.rs
 ---
 # Velvet Hat of Witch

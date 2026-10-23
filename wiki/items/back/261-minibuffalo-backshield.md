@@ -12,7 +12,7 @@ quality: 35
 price: 3900
 weight: 10
 source:
-  data: LIST_BACK.STB row 261
+  data: godot/data/items/back/261-minibuffalo-backshield.tres
   code: module/src/items.rs
 ---
 # MiniBuffalo Backshield

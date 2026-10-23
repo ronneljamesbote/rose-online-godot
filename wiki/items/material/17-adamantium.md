@@ -12,7 +12,7 @@ dropped_in_zones:
 - '[[zones/55-freezing-plateau|Freezing Plateau]]'
 - '[[zones/56-forgotten-temple-b1|Forgotten Temple (B1)]]'
 source:
-  data: LIST_NATURAL.STB row 17
+  data: godot/data/items/material/17-adamantium.tres
   code: module/src/items.rs
 ---
 # Adamantium

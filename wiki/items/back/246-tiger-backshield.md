@@ -13,7 +13,7 @@ quality: 39
 job: Soldier and Hawker Job
 price: 23600
 source:
-  data: LIST_BACK.STB row 246
+  data: godot/data/items/back/246-tiger-backshield.tres
   code: module/src/items.rs
 ---
 # Tiger Backshield

@@ -54,7 +54,7 @@ dropped_by:
   level: 108
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 172
+  data: godot/data/items/weapon/172-chaos-spear.tres
   code: module/src/items.rs
 ---
 # Chaos Spear

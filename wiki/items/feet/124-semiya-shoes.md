@@ -42,7 +42,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_FOOT.STB row 124
+  data: godot/data/items/feet/124-semiya-shoes.tres
   code: module/src/items.rs
 ---
 # Semiya Shoes

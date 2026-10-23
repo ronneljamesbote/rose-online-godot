@@ -22,7 +22,7 @@ dropped_by:
   level: 60
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 614
+  data: godot/data/items/weapon/614-orc-axe.tres
   code: module/src/items.rs
 ---
 # Orc Axe

@@ -16,7 +16,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1092-gypsy-jewel-seller-bellia|Gypsy Jewel Seller Bellia]]'
 source:
-  data: LIST_JEWEL.STB row 103
+  data: godot/data/items/jewellery/103-gorgeous-necklace.tres
   code: module/src/items.rs
 ---
 # Gorgeous Necklace

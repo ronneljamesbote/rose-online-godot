@@ -28,7 +28,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1091-arumic-merchant-chester|Arumic Merchant Chester]]'
 source:
-  data: LIST_SUBWPN.STB row 68
+  data: godot/data/items/subweapon/68-magic-mirror.tres
   code: module/src/items.rs
 ---
 # Magic Mirror

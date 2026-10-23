@@ -14,7 +14,7 @@ job: Soldier Job
 price: 4350
 weight: 3
 source:
-  data: LIST_ARMS.STB row 319
+  data: godot/data/items/hands/319-trunket-gloves.tres
   code: module/src/items.rs
 ---
 # Trunket Gloves

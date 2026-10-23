@@ -50,7 +50,7 @@ sold_by:
 quest_reward:
 - '[[quests/953-hawker-job-change-quest|Hawker Job Change Quest]]'
 source:
-  data: LIST_ARMS.STB row 91
+  data: godot/data/items/hands/91-hunter-gloves.tres
   code: module/src/items.rs
 ---
 # Hunter Gloves

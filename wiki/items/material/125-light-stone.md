@@ -24,7 +24,7 @@ dropped_by:
   level: 128
   slots_of_30: 1
 source:
-  data: LIST_NATURAL.STB row 125
+  data: godot/data/items/material/125-light-stone.tres
   code: module/src/items.rs
 ---
 # Light Stone

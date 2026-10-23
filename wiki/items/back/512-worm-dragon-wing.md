@@ -14,7 +14,7 @@ bonus: Movement Speed +75
 price: 187350
 weight: 20
 source:
-  data: LIST_BACK.STB row 512
+  data: godot/data/items/back/512-worm-dragon-wing.tres
   code: module/src/items.rs
 ---
 # Worm Dragon Wing

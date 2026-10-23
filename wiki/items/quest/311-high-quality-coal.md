@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/3802-stockpiling-high-quality-coal|Stockpiling High Quality Coal]]'
 source:
-  data: LIST_QUESTITEM.STB row 311
+  data: godot/data/items/quest/311-high-quality-coal.tres
   code: module/src/items.rs
 ---
 # High Quality Coal

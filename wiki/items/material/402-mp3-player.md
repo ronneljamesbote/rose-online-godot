@@ -7,7 +7,7 @@ icon: item/2060
 class: Gathered Goods
 price: 0
 source:
-  data: LIST_NATURAL.STB row 402
+  data: godot/data/items/material/402-mp3-player.tres
   code: module/src/items.rs
 ---
 # MP3 Player

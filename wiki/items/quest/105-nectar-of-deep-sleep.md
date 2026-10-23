@@ -12,7 +12,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/904-muse-job-change-quest|Muse Job Change Quest]]'
 source:
-  data: LIST_QUESTITEM.STB row 105
+  data: godot/data/items/quest/105-nectar-of-deep-sleep.tres
   code: module/src/items.rs
 ---
 # Nectar of Deep Sleep

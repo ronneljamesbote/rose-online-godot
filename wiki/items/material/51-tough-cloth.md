@@ -21,7 +21,7 @@ used_to_craft:
 - '[[items/weapon/105-surado|Surado]]'
 - '[[items/weapon/261-wooden-launcher|Wooden Launcher]]'
 source:
-  data: LIST_NATURAL.STB row 51
+  data: godot/data/items/material/51-tough-cloth.tres
   code: module/src/items.rs
 ---
 # Tough Cloth

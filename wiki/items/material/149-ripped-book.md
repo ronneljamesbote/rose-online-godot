@@ -8,7 +8,7 @@ class: Gathered Goods
 price: 265
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 149
+  data: godot/data/items/material/149-ripped-book.tres
   code: module/src/items.rs
 ---
 # Ripped Book

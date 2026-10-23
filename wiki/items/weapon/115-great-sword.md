@@ -29,7 +29,7 @@ recipe:
   quantity: 22
 craft_difficulty: 64
 source:
-  data: LIST_WEAPON.STB row 115
+  data: godot/data/items/weapon/115-great-sword.tres
   code: module/src/items.rs
 ---
 # Great Sword

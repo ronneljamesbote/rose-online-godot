@@ -25,7 +25,7 @@ dropped_by:
   level: 155
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 219
+  data: godot/data/items/weapon/219-zephyr-long-bow.tres
   code: module/src/items.rs
 ---
 # Zephyr Long Bow

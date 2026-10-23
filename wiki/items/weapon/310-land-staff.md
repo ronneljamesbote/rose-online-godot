@@ -34,7 +34,7 @@ dropped_by:
   level: 88
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 310
+  data: godot/data/items/weapon/310-land-staff.tres
   code: module/src/items.rs
 ---
 # Land Staff

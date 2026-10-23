@@ -15,7 +15,7 @@ sold_by:
 - '[[npcs/1162-clan-base-camp-soldier-jason|Clan Base Camp Soldier Jason]]'
 - '[[npcs/1212-arumic-researcher-catherine-clara|Arumic Researcher Catherine Clara]]'
 source:
-  data: LIST_USEITEM.STB row 8
+  data: godot/data/items/consumable/8-herbal-medicine-m.tres
   code: module/src/items.rs
 ---
 # Herbal Medicine (M)

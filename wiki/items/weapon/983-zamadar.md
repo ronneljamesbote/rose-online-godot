@@ -17,7 +17,7 @@ bonus: Critical +35
 price: 30355
 weight: 27
 source:
-  data: LIST_WEAPON.STB row 983
+  data: godot/data/items/weapon/983-zamadar.tres
   code: module/src/items.rs
 ---
 # Zamadar

@@ -10,7 +10,7 @@ needs: Level 47
 price: 900
 weight: 41
 source:
-  data: LIST_USEITEM.STB row 424
+  data: godot/data/items/consumable/424-jewel-golem.tres
   code: module/src/items.rs
 ---
 # Jewel Golem

@@ -24,7 +24,10 @@
 # (release, or debug and its console wrapper for --dev) is fetched into ~/.local/share/godot/export_templates/ when
 # it's missing.
 # It refuses to build when overrides/motions.toml (the server's hit times) doesn't match
-# the player animations; run --export-motions and commit the file first.
+# the player animations, overrides/zones/ the zone scenes or overrides/data/ the game data
+# resources in godot/data/; run --export-motions, --export-zones or --export-data and commit
+# the files first. The zip carries overrides/data/ next to ROSE.exe: the game reads its items
+# from there, as the server does.
 # Usage: ROSE_DATA_IDX=/path/to/data.idx godot/tools/build-windows.sh [--dev] [--folder] [--game-only] [OUT_DIR]
 #        (OUT_DIR default: dist/ at the repository root)
 set -euo pipefail
@@ -84,6 +87,12 @@ if ! "$GODOT" --headless --path godot -- --export-zones=check --data-idx="$DATA_
   echo "build-windows: run  godot --headless --path godot -- --export-zones  and commit it." >&2
   exit 1
 fi
+# The server and the game read the items from overrides/data/, exported from godot/data/.
+if ! "$GODOT" --headless --path godot -- --export-data=check; then
+  echo "build-windows: overrides/data/ doesn't match the game data resources in godot/data/." >&2
+  echo "build-windows: run  godot --headless --path godot -- --export-data  and commit it." >&2
+  exit 1
+fi
 
 CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER=x86_64-w64-mingw32-gcc CARGO_TARGET_DIR="$TARGET_DIR" \
   cargo build --release -p rose-gd --target x86_64-pc-windows-gnu ${DEV:+--features dev}
@@ -108,6 +117,8 @@ if [ -z "$GAME_ONLY" ]; then
   [ -f "$STAGE/$DIR/assets.pck" ] || { echo "build-windows: exporting assets.pck failed." >&2; exit 1; }
 fi
 cp godot/tools/README-windows.txt "$STAGE/$DIR/README.txt"
+mkdir -p "$STAGE/$DIR/overrides"
+cp -r overrides/data "$STAGE/$DIR/overrides/data"
 
 # GM commands are for dev builds only: the production client must have neither the GM chat
 # scripts (godot/gm/) nor the extension's gm_command. A file in the pck is listed as
@@ -127,6 +138,7 @@ if [ -n "$FOLDER" ]; then
   DEST="$OUT/$NAME"
   mkdir -p "$DEST"
   rm -f "$DEST"/*.exe "$DEST"/ROSE.pck "$DEST"/*.dll "$DEST/README.txt"
+  rm -rf "$DEST/overrides/data"
   [ -n "$GAME_ONLY" ] || rm -f "$DEST/assets.pck"
   cp -r "$STAGE/$DIR/." "$DEST/"
   ls -la "$DEST"

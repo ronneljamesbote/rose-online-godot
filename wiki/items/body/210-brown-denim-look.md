@@ -18,7 +18,7 @@ dropped_by:
   level: 25
   slots_of_30: 0.4
 source:
-  data: LIST_BODY.STB row 210
+  data: godot/data/items/body/210-brown-denim-look.tres
   code: module/src/items.rs
 ---
 # Brown Denim Look

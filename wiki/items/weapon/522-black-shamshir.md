@@ -18,7 +18,7 @@ sockets: true
 price: 362500
 weight: 50
 source:
-  data: LIST_WEAPON.STB row 522
+  data: godot/data/items/weapon/522-black-shamshir.tres
   code: module/src/items.rs
 ---
 # Black Shamshir

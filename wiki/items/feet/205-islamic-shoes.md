@@ -14,7 +14,7 @@ quality: 29
 price: 1100
 weight: 2
 source:
-  data: LIST_FOOT.STB row 205
+  data: godot/data/items/feet/205-islamic-shoes.tres
   code: module/src/items.rs
 ---
 # Islamic Shoes

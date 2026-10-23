@@ -22,7 +22,7 @@ recipe:
   quantity: 20
 craft_difficulty: 40
 source:
-  data: LIST_SUBWPN.STB row 76
+  data: godot/data/items/subweapon/76-lunatic-candy-bar.tres
   code: module/src/items.rs
 ---
 # Lunatic Candy Bar

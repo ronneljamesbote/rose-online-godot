@@ -22,7 +22,7 @@ dropped_by:
   level: 128
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 654
+  data: godot/data/items/weapon/654-oriental-spear.tres
   code: module/src/items.rs
 ---
 # Oriental Spear

@@ -14,7 +14,7 @@ job: Soldier 2nd Advanced Jobs
 price: 115550
 weight: 20
 source:
-  data: LIST_BODY.STB row 337
+  data: godot/data/items/body/337-kurash-armor.tres
   code: module/src/items.rs
 ---
 # Kurash Armor

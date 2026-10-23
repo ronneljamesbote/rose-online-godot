@@ -50,7 +50,7 @@ dropped_by:
 used_to_craft:
 - '[[items/weapon/439-dual-katana|Dual Katana]]'
 source:
-  data: LIST_WEAPON.STB row 13
+  data: godot/data/items/weapon/13-katana.tres
   code: module/src/items.rs
 ---
 # Katana

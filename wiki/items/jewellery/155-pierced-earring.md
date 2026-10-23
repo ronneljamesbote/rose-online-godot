@@ -10,7 +10,7 @@ bonus: Attack Accuracy +3
 price: 4750
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 155
+  data: godot/data/items/jewellery/155-pierced-earring.tres
   code: module/src/items.rs
 ---
 # Pierced Earring

@@ -19,7 +19,7 @@ dropped_by:
   level: 80
   slots_of_30: 0.2
 source:
-  data: LIST_BODY.STB row 424
+  data: godot/data/items/body/424-violet-dress.tres
   code: module/src/items.rs
 ---
 # Violet Dress

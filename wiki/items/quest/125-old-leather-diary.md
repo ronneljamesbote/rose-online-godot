@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/858-hovert-s-mementos|Hovert''s Mementos]]'
 - '[[quests/859-hovert-s-mementos|Hovert''s Mementos]]'
 source:
-  data: LIST_QUESTITEM.STB row 125
+  data: godot/data/items/quest/125-old-leather-diary.tres
   code: module/src/items.rs
 ---
 # Old Leather Diary

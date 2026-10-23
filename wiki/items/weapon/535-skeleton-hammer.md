@@ -22,7 +22,7 @@ dropped_by:
   level: 70
   slots_of_30: 0.6
 source:
-  data: LIST_WEAPON.STB row 535
+  data: godot/data/items/weapon/535-skeleton-hammer.tres
   code: module/src/items.rs
 ---
 # Skeleton Hammer

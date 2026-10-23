@@ -44,7 +44,7 @@ sold_by:
 - '[[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]]'
 - '[[npcs/1034-smith-ronk|Smith Ronk]]'
 source:
-  data: LIST_SUBWPN.STB row 1
+  data: godot/data/items/subweapon/1-wooden-shield.tres
   code: module/src/items.rs
 ---
 # Wooden Shield

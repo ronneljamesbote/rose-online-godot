@@ -14,7 +14,7 @@ price: 40000
 sold_by:
 - '[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]'
 source:
-  data: LIST_BACK.STB row 248
+  data: godot/data/items/back/248-lizard-backshield.tres
   code: module/src/items.rs
 ---
 # Lizard Backshield

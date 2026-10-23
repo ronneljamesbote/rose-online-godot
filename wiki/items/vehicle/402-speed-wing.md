@@ -13,7 +13,7 @@ bonus: Movement Speed +120
 price: 3000
 weight: 5
 source:
-  data: LIST_PAT.STB row 402
+  data: godot/data/items/vehicle/402-speed-wing.tres
   code: module/src/items.rs
 ---
 # Speed Wing

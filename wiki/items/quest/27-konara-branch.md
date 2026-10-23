@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/5012-stockpiling-konara-branches|Stockpiling Konara Branches]]'
 source:
-  data: LIST_QUESTITEM.STB row 27
+  data: godot/data/items/quest/27-konara-branch.tres
   code: module/src/items.rs
 ---
 # Konara Branch

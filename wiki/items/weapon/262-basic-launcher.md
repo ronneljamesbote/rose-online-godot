@@ -57,7 +57,7 @@ sold_by:
 quest_reward:
 - '[[quests/1008-the-humble-smith|The Humble Smith]]'
 source:
-  data: LIST_WEAPON.STB row 262
+  data: godot/data/items/weapon/262-basic-launcher.tres
   code: module/src/items.rs
 ---
 # Basic Launcher

@@ -21,7 +21,7 @@ used_to_craft:
 - '[[items/back/223-butterfly-wing|Butterfly Wing]]'
 - '[[items/subweapon/75-elven-harp|Elven Harp]]'
 source:
-  data: LIST_NATURAL.STB row 197
+  data: godot/data/items/material/197-nymph-powder.tres
   code: module/src/items.rs
 ---
 # Nymph Powder

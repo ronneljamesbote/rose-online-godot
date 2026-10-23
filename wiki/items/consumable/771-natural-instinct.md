@@ -9,7 +9,7 @@ effect: teaches skill 1651, uses skill 1651, fuel +1651
 price: 29200
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 771
+  data: godot/data/items/consumable/771-natural-instinct.tres
   code: module/src/items.rs
 ---
 # Natural Instinct

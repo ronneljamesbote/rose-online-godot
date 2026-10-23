@@ -44,7 +44,7 @@ quest_reward:
 - '[[quests/5017-moldie-s-strange-mineral-fetch-quest|Moldie''s Strange Mineral (Fetch Quest)]]'
 - '[[quests/5018-candle-ghost-s-identity-fetch-quest|Candle Ghost''s Identity (Fetch Quest)]]'
 source:
-  data: LIST_USEITEM.STB row 57
+  data: godot/data/items/consumable/57-vital-jam-2.tres
   code: module/src/items.rs
 ---
 # Vital Jam (+2)

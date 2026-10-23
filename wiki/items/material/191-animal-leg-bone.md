@@ -167,7 +167,7 @@ used_to_craft:
 - '[[items/back/247-buffalo-backshield|Buffalo Backshield]]'
 - '[[items/weapon/411-assassin-katar|Assassin Katar]]'
 source:
-  data: LIST_NATURAL.STB row 191
+  data: godot/data/items/material/191-animal-leg-bone.tres
   code: module/src/items.rs
 ---
 # Animal Leg Bone

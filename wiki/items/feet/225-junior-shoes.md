@@ -17,7 +17,7 @@ sold_by:
 - '[[npcs/1110-ferrell-guild-staff-charrs|Ferrell Guild Staff Charrs]]'
 - '[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]'
 source:
-  data: LIST_FOOT.STB row 225
+  data: godot/data/items/feet/225-junior-shoes.tres
   code: module/src/items.rs
 ---
 # Junior Shoes

@@ -20,7 +20,7 @@ craft_difficulty: 27
 used_to_craft:
 - '[[items/gem/306-garnet-6|Garnet 6]]'
 source:
-  data: LIST_JEMITEM.STB row 305
+  data: godot/data/items/gem/305-garnet-5.tres
   code: module/src/items.rs
 ---
 # Garnet [5]

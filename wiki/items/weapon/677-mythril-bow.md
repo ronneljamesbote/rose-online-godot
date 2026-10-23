@@ -18,7 +18,7 @@ sockets: true
 price: 76600
 weight: 20
 source:
-  data: LIST_WEAPON.STB row 677
+  data: godot/data/items/weapon/677-mythril-bow.tres
   code: module/src/items.rs
 ---
 # Mythril Bow

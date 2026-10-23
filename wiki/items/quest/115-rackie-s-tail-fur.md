@@ -7,7 +7,7 @@ icon: item/2007
 class: Quest Items
 price: 0
 source:
-  data: LIST_QUESTITEM.STB row 115
+  data: godot/data/items/quest/115-rackie-s-tail-fur.tres
   code: module/src/items.rs
 ---
 # Rackie's Tail Fur

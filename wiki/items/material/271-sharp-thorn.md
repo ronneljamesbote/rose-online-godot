@@ -10,7 +10,7 @@ weight: 1
 dropped_in_zones:
 - '[[zones/61-refuge-xita|Refuge Xita]]'
 source:
-  data: LIST_NATURAL.STB row 271
+  data: godot/data/items/material/271-sharp-thorn.tres
   code: module/src/items.rs
 ---
 # Sharp Thorn

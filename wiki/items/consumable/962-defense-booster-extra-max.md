@@ -9,7 +9,7 @@ effect: teaches skill 3282, uses skill 3282, fuel +3282
 price: 100
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 962
+  data: godot/data/items/consumable/962-defense-booster-extra-max.tres
   code: module/src/items.rs
 ---
 # Defense Booster (Extra Max)

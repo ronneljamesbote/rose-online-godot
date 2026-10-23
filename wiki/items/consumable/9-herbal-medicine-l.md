@@ -9,7 +9,7 @@ effect: HP +1000, HP Restoration (1000), teaches [[skills/991-enchant-armor|Ench
 price: 400
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 9
+  data: godot/data/items/consumable/9-herbal-medicine-l.tres
   code: module/src/items.rs
 ---
 # Herbal Medicine (L)

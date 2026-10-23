@@ -14,7 +14,7 @@ job: Soldier 2nd Advanced Jobs
 price: 11150
 weight: 10
 source:
-  data: LIST_CAP.STB row 426
+  data: godot/data/items/head/426-chrome-helm.tres
   code: module/src/items.rs
 ---
 # Chrome Helm

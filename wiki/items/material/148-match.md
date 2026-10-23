@@ -8,7 +8,7 @@ class: Gathered Goods
 price: 15
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 148
+  data: godot/data/items/material/148-match.tres
   code: module/src/items.rs
 ---
 # Match

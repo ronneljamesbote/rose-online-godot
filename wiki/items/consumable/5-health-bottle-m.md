@@ -30,7 +30,7 @@ quest_reward:
 - '[[quests/3607-weak-mana-waves-from-lunar|Weak Mana Waves from Lunar]]'
 - '[[quests/5001-wine-delivery-part-time-job|Wine Delivery (Part Time Job)]]'
 source:
-  data: LIST_USEITEM.STB row 5
+  data: godot/data/items/consumable/5-health-bottle-m.tres
   code: module/src/items.rs
 ---
 # Health Bottle (M)

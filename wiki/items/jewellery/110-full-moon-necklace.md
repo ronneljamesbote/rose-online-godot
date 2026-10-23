@@ -10,7 +10,7 @@ bonus: Charm +30, Magic Resistance +30
 price: 949550
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 110
+  data: godot/data/items/jewellery/110-full-moon-necklace.tres
   code: module/src/items.rs
 ---
 # Full Moon Necklace

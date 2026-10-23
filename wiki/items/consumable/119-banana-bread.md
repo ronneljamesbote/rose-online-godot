@@ -9,7 +9,7 @@ effect: HP +200, HP Restoration (200), teaches skill 200, uses skill 200, fuel +
 price: 100
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 119
+  data: godot/data/items/consumable/119-banana-bread.tres
   code: module/src/items.rs
 ---
 # Banana Bread

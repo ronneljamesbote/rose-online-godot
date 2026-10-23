@@ -44,7 +44,7 @@ sold_by:
 used_to_craft:
 - '[[items/weapon/434-twin-ghost-bat|Twin Ghost Bat]]'
 source:
-  data: LIST_WEAPON.STB row 36
+  data: godot/data/items/weapon/36-ghost-bat.tres
   code: module/src/items.rs
 ---
 # Ghost Bat

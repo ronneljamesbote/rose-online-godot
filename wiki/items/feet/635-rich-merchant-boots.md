@@ -15,7 +15,7 @@ job: Dealer 2nd Advanced Jobs
 price: 33900
 weight: 3
 source:
-  data: LIST_FOOT.STB row 635
+  data: godot/data/items/feet/635-rich-merchant-boots.tres
   code: module/src/items.rs
 ---
 # Rich Merchant Boots

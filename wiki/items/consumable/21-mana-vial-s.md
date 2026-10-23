@@ -37,7 +37,7 @@ sold_by:
 quest_reward:
 - '[[quests/958-the-essence-of-speed|The Essence of Speed]]'
 source:
-  data: LIST_USEITEM.STB row 21
+  data: godot/data/items/consumable/21-mana-vial-s.tres
   code: module/src/items.rs
 ---
 # Mana Vial (S)

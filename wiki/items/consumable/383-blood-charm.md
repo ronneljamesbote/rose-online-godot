@@ -20,7 +20,7 @@ quest_reward:
 - '[[quests/157-skin-of-steel|Skin of Steel]]'
 - '[[quests/158-leaders-in-the-abyss|Leaders in the Abyss]]'
 source:
-  data: LIST_USEITEM.STB row 383
+  data: godot/data/items/consumable/383-blood-charm.tres
   code: module/src/items.rs
 ---
 # Blood Charm

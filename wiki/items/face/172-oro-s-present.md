@@ -11,7 +11,7 @@ bonus: Attack Speed +5
 price: 1000
 weight: 1
 source:
-  data: LIST_FACEITEM.STB row 172
+  data: godot/data/items/face/172-oro-s-present.tres
   code: module/src/items.rs
 ---
 # Oro's Present

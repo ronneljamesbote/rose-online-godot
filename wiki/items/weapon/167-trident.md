@@ -54,7 +54,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 source:
-  data: LIST_WEAPON.STB row 167
+  data: godot/data/items/weapon/167-trident.tres
   code: module/src/items.rs
 ---
 # Trident

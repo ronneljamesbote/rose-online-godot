@@ -61,8 +61,9 @@ impl TryFrom<ItemType> for EquipmentIndex {
     }
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Enum, Serialize, Deserialize)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Hash, Enum, Serialize, Deserialize)]
 pub enum VehiclePartIndex {
+    #[default]
     Body,
     Engine,
     Leg,

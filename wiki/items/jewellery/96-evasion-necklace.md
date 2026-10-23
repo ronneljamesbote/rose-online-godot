@@ -12,7 +12,7 @@ weight: 1
 sold_by:
 - '[[npcs/1007-gypsy-jewel-seller-mina|Gypsy Jewel Seller Mina]]'
 source:
-  data: LIST_JEWEL.STB row 96
+  data: godot/data/items/jewellery/96-evasion-necklace.tres
   code: module/src/items.rs
 ---
 # Evasion Necklace

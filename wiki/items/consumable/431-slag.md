@@ -10,7 +10,7 @@ needs: Planet Requirements 2
 price: 1780
 weight: 28
 source:
-  data: LIST_USEITEM.STB row 431
+  data: godot/data/items/consumable/431-slag.tres
   code: module/src/items.rs
 ---
 # Slag

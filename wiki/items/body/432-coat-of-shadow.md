@@ -15,7 +15,7 @@ bonus: Max MP +108
 price: 74550
 weight: 20
 source:
-  data: LIST_BODY.STB row 432
+  data: godot/data/items/body/432-coat-of-shadow.tres
   code: module/src/items.rs
 ---
 # Coat of Shadow

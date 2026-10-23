@@ -7,7 +7,7 @@ icon: item/1642
 class: Quest Items
 price: 0
 source:
-  data: LIST_QUESTITEM.STB row 501
+  data: godot/data/items/quest/501-pilfered-meat.tres
   code: module/src/items.rs
 ---
 # Pilfered Meat

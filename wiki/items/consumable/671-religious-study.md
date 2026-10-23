@@ -9,7 +9,7 @@ effect: teaches skill 451, uses skill 451, fuel +451
 price: 29200
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 671
+  data: godot/data/items/consumable/671-religious-study.tres
   code: module/src/items.rs
 ---
 # Religious Study

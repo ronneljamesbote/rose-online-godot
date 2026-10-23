@@ -18,7 +18,7 @@ sockets: true
 price: 262700
 weight: 70
 source:
-  data: LIST_WEAPON.STB row 549
+  data: godot/data/items/weapon/549-forest-hammer.tres
   code: module/src/items.rs
 ---
 # Forest Hammer

@@ -22,7 +22,7 @@ recipe:
   quantity: 35
 craft_difficulty: 46
 source:
-  data: LIST_SUBWPN.STB row 79
+  data: godot/data/items/subweapon/79-orb-of-rage.tres
   code: module/src/items.rs
 ---
 # Orb of Rage

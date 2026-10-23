@@ -17,7 +17,7 @@ dropped_by:
   level: 22
   slots_of_30: 2
 source:
-  data: LIST_USEITEM.STB row 410
+  data: godot/data/items/consumable/410-beetle.tres
   code: module/src/items.rs
 ---
 # Beetle

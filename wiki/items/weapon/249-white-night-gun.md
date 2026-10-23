@@ -18,7 +18,7 @@ sockets: true
 price: 556100
 weight: 45
 source:
-  data: LIST_WEAPON.STB row 249
+  data: godot/data/items/weapon/249-white-night-gun.tres
   code: module/src/items.rs
 ---
 # White Night Gun

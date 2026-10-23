@@ -19,7 +19,7 @@ dropped_by:
   level: 105
   slots_of_30: 0.8
 source:
-  data: LIST_FOOT.STB row 434
+  data: godot/data/items/feet/434-boots-of-shadow.tres
   code: module/src/items.rs
 ---
 # Boots of Shadow

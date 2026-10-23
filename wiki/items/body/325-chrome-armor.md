@@ -18,7 +18,7 @@ dropped_by:
   level: 84
   slots_of_30: 0.2
 source:
-  data: LIST_BODY.STB row 325
+  data: godot/data/items/body/325-chrome-armor.tres
   code: module/src/items.rs
 ---
 # Chrome Armor

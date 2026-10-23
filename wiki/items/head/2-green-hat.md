@@ -21,7 +21,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1034-smith-ronk|Smith Ronk]]'
 source:
-  data: LIST_CAP.STB row 2
+  data: godot/data/items/head/2-green-hat.tres
   code: module/src/items.rs
 ---
 # Green Hat

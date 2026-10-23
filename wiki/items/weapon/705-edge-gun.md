@@ -22,7 +22,7 @@ dropped_by:
   level: 72
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 705
+  data: godot/data/items/weapon/705-edge-gun.tres
   code: module/src/items.rs
 ---
 # Edge Gun

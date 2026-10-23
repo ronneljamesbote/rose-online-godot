@@ -40,7 +40,7 @@ sold_by:
 quest_reward:
 - '[[quests/1007-an-eye-for-the-marketplace|An Eye for the Marketplace]]'
 source:
-  data: LIST_WEAPON.STB row 233
+  data: godot/data/items/weapon/233-gloria-gun.tres
   code: module/src/items.rs
 ---
 # Gloria Gun

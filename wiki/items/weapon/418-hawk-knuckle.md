@@ -28,7 +28,7 @@ dropped_by:
   level: 157
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 418
+  data: godot/data/items/weapon/418-hawk-knuckle.tres
   code: module/src/items.rs
 ---
 # Hawk Knuckle

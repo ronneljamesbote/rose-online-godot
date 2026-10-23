@@ -71,7 +71,7 @@ source:
     - crates/rose-game-common/src/components/ability_values.rs (AbilityValues getters, AbilityValuesAdjust)
     - module/src/character.rs (new_player, starter_kit, ability_values, player_stats, refresh_player, add_basic_stat)
     - crates/rose-game-data/src/lib.rs (CharacterCreator)
-  data: INIT_AVATAR.STB rows 0-1 (starting stats and clothes), LIST_WEAPON.STB (attack, attack speed, range, quality), LIST_FOOT.STB row 0 (barefoot speed 65), LIST_BODY.STB and the other equipment tables (defence, resistance, durability)
+  data: INIT_AVATAR.STB rows 0-1 (starting stats and clothes), the item resources in godot/data/items/ (attack_power, attack_speed, attack_range and quality of weapons, move_speed 65 of feet item 0 for barefoot, defence, resistance and durability of armour)
 ---
 # Stats
 

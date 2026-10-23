@@ -27,7 +27,7 @@ used_to_craft:
 - '[[items/weapon/416-phantasma-knuckle|Phantasma Knuckle]]'
 - '[[items/subweapon/78-eye-of-storm|Eye of Storm]]'
 source:
-  data: LIST_NATURAL.STB row 263
+  data: godot/data/items/material/263-ruper-crest.tres
   code: module/src/items.rs
 ---
 # Ruper Crest

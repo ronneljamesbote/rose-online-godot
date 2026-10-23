@@ -25,7 +25,7 @@ used_to_craft:
 - '[[items/back/226-crow-wing|Crow Wing]]'
 - '[[items/back/228-devil-wing|Devil Wing]]'
 source:
-  data: LIST_NATURAL.STB row 199
+  data: godot/data/items/material/199-little-devil-feather.tres
   code: module/src/items.rs
 ---
 # Little Devil Feather

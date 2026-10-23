@@ -23,7 +23,7 @@ dropped_by:
   level: 160
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 348
+  data: godot/data/items/weapon/348-ouroboros-wand.tres
   code: module/src/items.rs
 ---
 # Ouroboros Wand

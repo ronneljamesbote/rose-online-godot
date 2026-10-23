@@ -107,7 +107,7 @@ used_to_craft:
 - '[[items/weapon/35-onion-mace|Onion Mace]]'
 - '[[items/weapon/412-dragon-knuckle|Dragon Knuckle]]'
 source:
-  data: LIST_NATURAL.STB row 192
+  data: godot/data/items/material/192-animal-backbone.tres
   code: module/src/items.rs
 ---
 # Animal Backbone

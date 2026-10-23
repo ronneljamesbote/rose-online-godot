@@ -19,7 +19,7 @@ sockets: true
 price: 319550
 weight: 10
 source:
-  data: LIST_WEAPON.STB row 801
+  data: godot/data/items/weapon/801-bleak-wind.tres
   code: module/src/items.rs
 ---
 # Bleak Wind

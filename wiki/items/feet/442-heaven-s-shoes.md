@@ -15,7 +15,7 @@ job: Muse 3rd Advanced Jobs
 price: 45350
 weight: 3
 source:
-  data: LIST_FOOT.STB row 442
+  data: godot/data/items/feet/442-heaven-s-shoes.tres
   code: module/src/items.rs
 ---
 # Heaven's Shoes

@@ -36,7 +36,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1010-designer-keenu|Designer Keenu]]'
 source:
-  data: LIST_CAP.STB row 9
+  data: godot/data/items/head/9-luxurious-rodeo-hat.tres
   code: module/src/items.rs
 ---
 # Luxurious Rodeo Hat

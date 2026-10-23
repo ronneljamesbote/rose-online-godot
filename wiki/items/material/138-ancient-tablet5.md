@@ -8,7 +8,7 @@ class: Gathered Goods
 price: 6530
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 138
+  data: godot/data/items/material/138-ancient-tablet5.tres
   code: module/src/items.rs
 ---
 # Ancient Tablet5

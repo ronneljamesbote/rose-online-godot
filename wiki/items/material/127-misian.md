@@ -32,7 +32,7 @@ used_to_craft:
 - '[[items/subweapon/78-eye-of-storm|Eye of Storm]]'
 - '[[items/subweapon/79-orb-of-rage|Orb of Rage]]'
 source:
-  data: LIST_NATURAL.STB row 127
+  data: godot/data/items/material/127-misian.tres
   code: module/src/items.rs
 ---
 # Misian

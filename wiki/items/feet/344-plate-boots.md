@@ -15,7 +15,7 @@ job: Soldier 3rd Advanced Jobs
 price: 60000
 weight: 6
 source:
-  data: LIST_FOOT.STB row 344
+  data: godot/data/items/feet/344-plate-boots.tres
   code: module/src/items.rs
 ---
 # Plate Boots

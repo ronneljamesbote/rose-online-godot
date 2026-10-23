@@ -9,7 +9,7 @@ effect: teaches [[skills/13-jump|Jump]], uses [[skills/13-jump|Jump]], fuel +13
 price: 50
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 603
+  data: godot/data/items/consumable/603-jump.tres
   code: module/src/items.rs
 ---
 # Jump

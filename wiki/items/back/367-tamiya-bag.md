@@ -14,7 +14,7 @@ bonus: Inventory Capacity +750
 price: 154550
 weight: 5
 source:
-  data: LIST_BACK.STB row 367
+  data: godot/data/items/back/367-tamiya-bag.tres
   code: module/src/items.rs
 ---
 # Tamiya Bag

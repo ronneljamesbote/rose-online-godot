@@ -13,7 +13,7 @@ quality: 42
 bonus: Inventory Capacity +550
 price: 74750
 source:
-  data: LIST_BACK.STB row 341
+  data: godot/data/items/back/341-cutie-bag.tres
   code: module/src/items.rs
 ---
 # Cutie Bag

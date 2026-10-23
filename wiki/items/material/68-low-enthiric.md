@@ -56,7 +56,7 @@ dropped_by:
 dropped_in_zones:
 - '[[zones/55-freezing-plateau|Freezing Plateau]]'
 source:
-  data: LIST_NATURAL.STB row 68
+  data: godot/data/items/material/68-low-enthiric.tres
   code: module/src/items.rs
 ---
 # Low Enthiric

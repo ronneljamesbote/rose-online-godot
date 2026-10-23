@@ -112,7 +112,7 @@ used_to_craft:
 - '[[items/weapon/67-elf-bow-gun|Elf Bow Gun]]'
 - '[[items/weapon/205-white-wing-bow|White Wing Bow]]'
 source:
-  data: LIST_NATURAL.STB row 187
+  data: godot/data/items/material/187-black-animal-tail-fur.tres
   code: module/src/items.rs
 ---
 # Black Animal Tail Fur

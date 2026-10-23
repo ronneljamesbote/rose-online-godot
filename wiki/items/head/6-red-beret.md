@@ -27,7 +27,7 @@ sold_by:
 - '[[npcs/1010-designer-keenu|Designer Keenu]]'
 - '[[npcs/1034-smith-ronk|Smith Ronk]]'
 source:
-  data: LIST_CAP.STB row 6
+  data: godot/data/items/head/6-red-beret.tres
   code: module/src/items.rs
 ---
 # Red Beret

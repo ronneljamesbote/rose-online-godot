@@ -64,7 +64,7 @@ used_to_craft:
 - '[[items/weapon/68-anima-bow-gun|Anima Bow Gun]]'
 - '[[items/weapon/207-iron-bow|Iron Bow]]'
 source:
-  data: LIST_NATURAL.STB row 188
+  data: godot/data/items/material/188-animal-tail-fur.tres
   code: module/src/items.rs
 ---
 # Animal Tail Fur

@@ -49,7 +49,7 @@ used_to_craft:
 - '[[items/weapon/415-fenrir-s-tooth|Fenrir''s Tooth]]'
 - '[[items/weapon/437-viking-sword-axe|Viking Sword & Axe]]'
 source:
-  data: LIST_NATURAL.STB row 129
+  data: godot/data/items/material/129-jilsian.tres
   code: module/src/items.rs
 ---
 # Jilsian

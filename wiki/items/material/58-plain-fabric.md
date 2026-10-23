@@ -16,7 +16,7 @@ used_to_craft:
 - '[[items/weapon/215-dual-stick-bow|Dual Stick Bow]]'
 - '[[items/weapon/216-mediator-bow|Mediator Bow]]'
 source:
-  data: LIST_NATURAL.STB row 58
+  data: godot/data/items/material/58-plain-fabric.tres
   code: module/src/items.rs
 ---
 # Plain Fabric

@@ -23,7 +23,7 @@ dropped_by:
   level: 42
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 415
+  data: godot/data/items/consumable/415-moldie.tres
   code: module/src/items.rs
 ---
 # Moldie

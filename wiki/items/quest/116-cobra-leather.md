@@ -13,7 +13,7 @@ needed_for_quest:
 - '[[quests/1006-an-eye-for-the-marketplace|An Eye for the Marketplace]]'
 - '[[quests/1007-an-eye-for-the-marketplace|An Eye for the Marketplace]]'
 source:
-  data: LIST_QUESTITEM.STB row 116
+  data: godot/data/items/quest/116-cobra-leather.tres
   code: module/src/items.rs
 ---
 # Cobra Leather

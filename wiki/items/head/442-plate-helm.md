@@ -14,7 +14,7 @@ job: Soldier 3rd Advanced Jobs
 price: 44500
 weight: 10
 source:
-  data: LIST_CAP.STB row 442
+  data: godot/data/items/head/442-plate-helm.tres
   code: module/src/items.rs
 ---
 # Plate Helm

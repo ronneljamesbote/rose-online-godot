@@ -14,7 +14,7 @@ job: Soldier 2nd Advanced Jobs
 price: 38400
 weight: 20
 source:
-  data: LIST_BODY.STB row 323
+  data: godot/data/items/body/323-chrome-armor.tres
   code: module/src/items.rs
 ---
 # Chrome Armor

@@ -32,7 +32,7 @@ used_to_craft:
 - '[[items/weapon/235-iron-shotgun|Iron Shotgun]]'
 - '[[items/weapon/262-basic-launcher|Basic Launcher]]'
 source:
-  data: LIST_NATURAL.STB row 179
+  data: godot/data/items/material/179-weed-root.tres
   code: module/src/items.rs
 ---
 # Weed Root

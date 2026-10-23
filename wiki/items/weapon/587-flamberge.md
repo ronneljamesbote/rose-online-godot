@@ -18,7 +18,7 @@ sockets: true
 price: 137650
 weight: 50
 source:
-  data: LIST_WEAPON.STB row 587
+  data: godot/data/items/weapon/587-flamberge.tres
   code: module/src/items.rs
 ---
 # Flamberge

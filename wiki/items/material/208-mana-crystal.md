@@ -12,7 +12,7 @@ dropped_by:
   level: 90
   slots_of_30: 2
 source:
-  data: LIST_NATURAL.STB row 208
+  data: godot/data/items/material/208-mana-crystal.tres
   code: module/src/items.rs
 ---
 # Mana Crystal

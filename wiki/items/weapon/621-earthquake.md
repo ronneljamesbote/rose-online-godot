@@ -28,7 +28,7 @@ dropped_by:
   level: 128
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 621
+  data: godot/data/items/weapon/621-earthquake.tres
   code: module/src/items.rs
 ---
 # Earthquake

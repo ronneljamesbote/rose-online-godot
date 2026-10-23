@@ -53,7 +53,7 @@ used_to_craft:
 - '[[items/gem/316-ruby-6|Ruby 6]]'
 - '[[items/gem/317-ruby-7|Ruby 7]]'
 source:
-  data: LIST_NATURAL.STB row 155
+  data: godot/data/items/material/155-red-hearts.tres
   code: module/src/items.rs
 ---
 # Red Hearts

@@ -136,7 +136,7 @@ used_to_craft:
 - '[[items/gem/301-garnet-1|Garnet 1]]'
 - '[[items/gem/311-ruby-1|Ruby 1]]'
 source:
-  data: LIST_NATURAL.STB row 163
+  data: godot/data/items/material/163-red-crystal.tres
   code: module/src/items.rs
 ---
 # Red Crystal

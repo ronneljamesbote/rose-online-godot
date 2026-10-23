@@ -36,7 +36,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 source:
-  data: LIST_WEAPON.STB row 407
+  data: godot/data/items/weapon/407-spike-knuckle.tres
   code: module/src/items.rs
 ---
 # Spike Knuckle

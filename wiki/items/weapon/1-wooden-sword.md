@@ -32,7 +32,7 @@ dropped_by:
   level: 6
   slots_of_30: 0.6
 source:
-  data: LIST_WEAPON.STB row 1
+  data: godot/data/items/weapon/1-wooden-sword.tres
   code: module/src/items.rs
 ---
 # Wooden Sword

@@ -9,7 +9,7 @@ effect: HP +2000, teaches skill 2000, uses skill 2000, fuel +2000
 price: 4500
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 19
+  data: godot/data/items/consumable/19-red-pill.tres
   code: module/src/items.rs
 ---
 # Red Pill

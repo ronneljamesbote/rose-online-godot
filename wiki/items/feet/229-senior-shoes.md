@@ -16,7 +16,7 @@ weight: 2
 sold_by:
 - '[[npcs/1112-arumic-researcher-carasia|Arumic Researcher Carasia]]'
 source:
-  data: LIST_FOOT.STB row 229
+  data: godot/data/items/feet/229-senior-shoes.tres
   code: module/src/items.rs
 ---
 # Senior Shoes

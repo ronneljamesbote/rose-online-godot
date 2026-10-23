@@ -14,7 +14,7 @@ bonus: Attack Accuracy +8
 price: 7950
 weight: 3
 source:
-  data: LIST_CAP.STB row 319
+  data: godot/data/items/head/319-venetian-hat.tres
   code: module/src/items.rs
 ---
 # Venetian Hat

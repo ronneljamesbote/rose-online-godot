@@ -14,7 +14,7 @@ bonus: Movement Speed +60
 price: 137750
 weight: 20
 source:
-  data: LIST_BACK.STB row 495
+  data: godot/data/items/back/495-devil-wing.tres
   code: module/src/items.rs
 ---
 # Devil Wing

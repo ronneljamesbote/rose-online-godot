@@ -57,7 +57,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]]'
 source:
-  data: LIST_SUBWPN.STB row 3
+  data: godot/data/items/subweapon/3-round-shield.tres
   code: module/src/items.rs
 ---
 # Round Shield

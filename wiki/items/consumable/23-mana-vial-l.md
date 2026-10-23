@@ -30,7 +30,7 @@ quest_reward:
 - '[[quests/131-eva-the-sorcerer|Eva the Sorcerer]]'
 - '[[quests/132-forbidden-spell|Forbidden Spell]]'
 source:
-  data: LIST_USEITEM.STB row 23
+  data: godot/data/items/consumable/23-mana-vial-l.tres
   code: module/src/items.rs
 ---
 # Mana Vial (L)

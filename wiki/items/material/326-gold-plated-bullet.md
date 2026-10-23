@@ -12,7 +12,7 @@ sold_by:
 - '[[npcs/1184-ferrell-trader-sergei|Ferrell Trader Sergei]]'
 - '[[npcs/1213-ferrell-guild-staff-gilbert|Ferrell Guild Staff Gilbert]]'
 source:
-  data: LIST_NATURAL.STB row 326
+  data: godot/data/items/material/326-gold-plated-bullet.tres
   code: module/src/items.rs
 ---
 # Gold-Plated Bullet

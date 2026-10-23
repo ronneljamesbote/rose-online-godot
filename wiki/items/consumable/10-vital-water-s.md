@@ -79,7 +79,7 @@ sold_by:
 quest_reward:
 - '[[quests/5009-candle-ghost-extermination-fetch-quest|Candle Ghost Extermination (Fetch Quest)]]'
 source:
-  data: LIST_USEITEM.STB row 10
+  data: godot/data/items/consumable/10-vital-water-s.tres
   code: module/src/items.rs
 ---
 # Vital Water (S)

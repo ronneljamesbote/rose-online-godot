@@ -9,7 +9,7 @@ effect: HP +340, HP Restoration (340), teaches [[skills/321-double-attack|Double
 price: 102
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 114
+  data: godot/data/items/consumable/114-sandwich.tres
   code: module/src/items.rs
 ---
 # Sandwich

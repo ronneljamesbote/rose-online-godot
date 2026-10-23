@@ -73,7 +73,7 @@ used_to_craft:
 - '[[items/weapon/332-mage-s-wand|Mage''s Wand]]'
 - '[[items/weapon/402-sword-knuckle|Sword Knuckle]]'
 source:
-  data: LIST_NATURAL.STB row 176
+  data: godot/data/items/material/176-insect-leg.tres
   code: module/src/items.rs
 ---
 # Insect Leg

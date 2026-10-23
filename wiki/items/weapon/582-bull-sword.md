@@ -18,7 +18,7 @@ sockets: true
 price: 24950
 weight: 25
 source:
-  data: LIST_WEAPON.STB row 582
+  data: godot/data/items/weapon/582-bull-sword.tres
   code: module/src/items.rs
 ---
 # Bull Sword

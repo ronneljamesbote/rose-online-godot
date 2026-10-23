@@ -54,7 +54,7 @@ sold_by:
 - '[[npcs/1010-designer-keenu|Designer Keenu]]'
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_BODY.STB row 122
+  data: godot/data/items/body/122-vibe-vest.tres
   code: module/src/items.rs
 ---
 # Vibe Vest

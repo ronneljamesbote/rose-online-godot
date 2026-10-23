@@ -7,7 +7,7 @@ icon: item/2073
 class: Quest Scroll
 price: 0
 source:
-  data: LIST_USEITEM.STB row 551
+  data: godot/data/items/consumable/551-coupon.tres
   code: module/src/items.rs
 ---
 # Coupon

@@ -30,7 +30,7 @@ sold_by:
 - '[[npcs/1185-magic-goods-seller-pabel|Magic Goods Seller Pabel]]'
 - '[[npcs/1212-arumic-researcher-catherine-clara|Arumic Researcher Catherine Clara]]'
 source:
-  data: LIST_USEITEM.STB row 4
+  data: godot/data/items/consumable/4-health-bottle-s.tres
   code: module/src/items.rs
 ---
 # Health Bottle (S)

@@ -18,7 +18,7 @@ recipe:
   quantity: 2
 craft_difficulty: 20
 source:
-  data: LIST_FACEITEM.STB row 73
+  data: godot/data/items/face/73-santa-beard.tres
   code: module/src/items.rs
 ---
 # Santa Beard

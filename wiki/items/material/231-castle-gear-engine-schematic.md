@@ -16,7 +16,7 @@ used_to_craft:
 - '[[items/vehicle/132-sheft-engine|Sheft Engine]]'
 - '[[items/vehicle/133-luxem-engine|Luxem Engine]]'
 source:
-  data: LIST_NATURAL.STB row 231
+  data: godot/data/items/material/231-castle-gear-engine-schematic.tres
   code: module/src/items.rs
 ---
 # Castle Gear Engine Schematic

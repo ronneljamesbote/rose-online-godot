@@ -21,7 +21,7 @@ used_to_craft:
 - '[[items/weapon/271-corsair-cannon|Corsair Cannon]]'
 - '[[items/weapon/272-particle-cannon|Particle Cannon]]'
 source:
-  data: LIST_NATURAL.STB row 195
+  data: godot/data/items/material/195-broken-horn.tres
   code: module/src/items.rs
 ---
 # Broken Horn

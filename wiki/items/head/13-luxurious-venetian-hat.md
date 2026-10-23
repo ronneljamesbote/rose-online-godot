@@ -54,7 +54,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_CAP.STB row 13
+  data: godot/data/items/head/13-luxurious-venetian-hat.tres
   code: module/src/items.rs
 ---
 # Luxurious Venetian Hat

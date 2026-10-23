@@ -9,7 +9,7 @@ effect: teaches [[skills/2401-item-craft|Item Craft]], uses [[skills/2401-item-c
 price: 3450
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 832
+  data: godot/data/items/consumable/832-item-craft.tres
   code: module/src/items.rs
 ---
 # Item Craft

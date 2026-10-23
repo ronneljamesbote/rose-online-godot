@@ -20,7 +20,7 @@ quest_reward:
 - '[[quests/155-suspicious-researchers|Suspicious Researchers]]'
 - '[[quests/156-monsters-in-the-desert|Monsters in the Desert]]'
 source:
-  data: LIST_USEITEM.STB row 381
+  data: godot/data/items/consumable/381-ice-charm.tres
   code: module/src/items.rs
 ---
 # Ice Charm

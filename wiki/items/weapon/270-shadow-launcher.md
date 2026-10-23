@@ -45,7 +45,7 @@ dropped_by:
   level: 108
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 270
+  data: godot/data/items/weapon/270-shadow-launcher.tres
   code: module/src/items.rs
 ---
 # Shadow Launcher

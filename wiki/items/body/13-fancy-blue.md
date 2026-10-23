@@ -56,7 +56,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_BODY.STB row 13
+  data: godot/data/items/body/13-fancy-blue.tres
   code: module/src/items.rs
 ---
 # Fancy Blue

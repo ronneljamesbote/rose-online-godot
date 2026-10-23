@@ -12,7 +12,7 @@ sold_by:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 - '[[npcs/1086-akram-minister-rodath|Akram Minister Rodath]]'
 source:
-  data: LIST_USEITEM.STB row 776
+  data: godot/data/items/consumable/776-call-hawk.tres
   code: module/src/items.rs
 ---
 # Call Hawk

@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/5032-piety-and-a-bribe|Piety and a Bribe?]]'
 source:
-  data: LIST_QUESTITEM.STB row 507
+  data: godot/data/items/quest/507-elder-appointment-letter.tres
   code: module/src/items.rs
 ---
 # Elder Appointment Letter

@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/153-kay-s-request|Kay''s Request]]'
 - '[[quests/154-kay-s-request|Kay''s Request]]'
 source:
-  data: LIST_QUESTITEM.STB row 621
+  data: godot/data/items/quest/621-old-box.tres
   code: module/src/items.rs
 ---
 # Old Box

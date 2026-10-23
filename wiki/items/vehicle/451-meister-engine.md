@@ -13,7 +13,7 @@ quality: 30
 price: 8000
 weight: 5
 source:
-  data: LIST_PAT.STB row 451
+  data: godot/data/items/vehicle/451-meister-engine.tres
   code: module/src/items.rs
 ---
 # Meister Engine

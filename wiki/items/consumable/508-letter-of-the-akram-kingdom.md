@@ -8,7 +8,7 @@ class: Quest Scroll
 price: 0
 trade: can't be traded
 source:
-  data: LIST_USEITEM.STB row 508
+  data: godot/data/items/consumable/508-letter-of-the-akram-kingdom.tres
   code: module/src/items.rs
 ---
 # Letter of the Akram Kingdom

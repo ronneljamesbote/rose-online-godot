@@ -45,7 +45,7 @@ dropped_in_zones:
 - '[[zones/54-crystal-snowfields|Crystal Snowfields]]'
 - '[[zones/59-luna-clan-field|Luna Clan Field]]'
 source:
-  data: LIST_NATURAL.STB row 78
+  data: godot/data/items/material/78-golden-powder.tres
   code: module/src/items.rs
 ---
 # Golden Powder

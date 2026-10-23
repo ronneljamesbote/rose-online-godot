@@ -58,7 +58,7 @@ dropped_by:
   level: 128
   slots_of_30: 0.2
 source:
-  data: LIST_FOOT.STB row 35
+  data: godot/data/items/feet/35-mighty-boots.tres
   code: module/src/items.rs
 ---
 # Mighty Boots

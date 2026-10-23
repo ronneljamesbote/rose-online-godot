@@ -36,7 +36,7 @@ dropped_by:
   level: 61
   slots_of_30: 0.2
 source:
-  data: LIST_FACEITEM.STB row 7
+  data: godot/data/items/face/7-jolly-front-mask.tres
   code: module/src/items.rs
 ---
 # Jolly Front Mask

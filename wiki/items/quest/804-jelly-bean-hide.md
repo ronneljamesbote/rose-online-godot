@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/5033-stockpiling-jelly-bean-hides|Stockpiling Jelly Bean Hides]]'
 source:
-  data: LIST_QUESTITEM.STB row 804
+  data: godot/data/items/quest/804-jelly-bean-hide.tres
   code: module/src/items.rs
 ---
 # Jelly Bean Hide

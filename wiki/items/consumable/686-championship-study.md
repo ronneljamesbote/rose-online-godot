@@ -9,7 +9,7 @@ effect: teaches skill 601, uses skill 601, fuel +601
 price: 29200
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 686
+  data: godot/data/items/consumable/686-championship-study.tres
   code: module/src/items.rs
 ---
 # Championship Study

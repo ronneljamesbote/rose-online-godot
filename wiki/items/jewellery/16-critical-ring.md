@@ -16,7 +16,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1007-gypsy-jewel-seller-mina|Gypsy Jewel Seller Mina]]'
 source:
-  data: LIST_JEWEL.STB row 16
+  data: godot/data/items/jewellery/16-critical-ring.tres
   code: module/src/items.rs
 ---
 # Critical Ring

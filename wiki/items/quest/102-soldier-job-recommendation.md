@@ -12,7 +12,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/854-solider-job-change-quest|Solider Job Change Quest]]'
 source:
-  data: LIST_QUESTITEM.STB row 102
+  data: godot/data/items/quest/102-soldier-job-recommendation.tres
   code: module/src/items.rs
 ---
 # Soldier Job Recommendation

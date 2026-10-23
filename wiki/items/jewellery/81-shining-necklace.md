@@ -14,7 +14,7 @@ dropped_by:
   level: 46
   slots_of_30: 1
 source:
-  data: LIST_JEWEL.STB row 81
+  data: godot/data/items/jewellery/81-shining-necklace.tres
   code: module/src/items.rs
 ---
 # Shining Necklace

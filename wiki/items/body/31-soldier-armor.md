@@ -39,7 +39,7 @@ sold_by:
 - '[[npcs/1009-armor-seller-carrion|Armor Seller Carrion]]'
 - '[[npcs/1094-armor-merchant-saki|Armor Merchant Saki]]'
 source:
-  data: LIST_BODY.STB row 31
+  data: godot/data/items/body/31-soldier-armor.tres
   code: module/src/items.rs
 ---
 # Soldier Armor

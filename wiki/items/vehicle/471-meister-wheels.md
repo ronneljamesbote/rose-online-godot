@@ -14,7 +14,7 @@ bonus: Defense +25, Magic Resistance +15
 price: 5000
 weight: 5
 source:
-  data: LIST_PAT.STB row 471
+  data: godot/data/items/vehicle/471-meister-wheels.tres
   code: module/src/items.rs
 ---
 # Meister Wheels

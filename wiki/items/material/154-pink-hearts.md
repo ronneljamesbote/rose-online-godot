@@ -56,7 +56,7 @@ quest_reward:
 used_to_craft:
 - '[[items/gem/365-diamond-5|Diamond 5]]'
 source:
-  data: LIST_NATURAL.STB row 154
+  data: godot/data/items/material/154-pink-hearts.tres
   code: module/src/items.rs
 ---
 # Pink Hearts

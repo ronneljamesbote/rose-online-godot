@@ -44,7 +44,7 @@ dropped_by:
   level: 112
   slots_of_30: 0.6
 source:
-  data: LIST_ARMS.STB row 65
+  data: godot/data/items/hands/65-gloves-of-shadow.tres
   code: module/src/items.rs
 ---
 # Gloves of Shadow

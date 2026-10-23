@@ -685,6 +685,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "rose-data-export"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "arrayvec",
+ "enum-map",
+ "rose-data",
+ "serde",
+ "serde_json",
+ "toml",
+]
+
+[[package]]
 name = "rose-data-irose"
 version = "0.1.0"
 dependencies = [
@@ -741,6 +754,7 @@ dependencies = [
  "anyhow",
  "glam",
  "rose-data",
+ "rose-data-export",
  "rose-data-irose",
  "rose-file-readers",
  "rose-game-common",

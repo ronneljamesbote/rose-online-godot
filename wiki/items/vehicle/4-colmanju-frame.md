@@ -26,7 +26,7 @@ craft_difficulty: 45
 sold_by:
 - '[[npcs/1096-ferrell-guild-merchant-mildun|Ferrell Guild Merchant Mildun]]'
 source:
-  data: LIST_PAT.STB row 4
+  data: godot/data/items/vehicle/4-colmanju-frame.tres
   code: module/src/items.rs
 ---
 # Colmanju Frame

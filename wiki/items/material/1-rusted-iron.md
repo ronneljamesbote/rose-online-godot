@@ -29,7 +29,7 @@ used_to_craft:
 - '[[items/weapon/333-sorcerer-s-wand|Sorcerer''s Wand]]'
 - '[[items/weapon/334-elven-wand|Elven Wand]]'
 source:
-  data: LIST_NATURAL.STB row 1
+  data: godot/data/items/material/1-rusted-iron.tres
   code: module/src/items.rs
 ---
 # Rusted Iron

@@ -16,7 +16,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1180-ferrell-guild-banker-andre|Ferrell Guild Banker Andre]]'
 source:
-  data: LIST_JEWEL.STB row 102
+  data: godot/data/items/jewellery/102-lucky-necklace.tres
   code: module/src/items.rs
 ---
 # Lucky Necklace

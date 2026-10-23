@@ -32,7 +32,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1034-smith-ronk|Smith Ronk]]'
 source:
-  data: LIST_FOOT.STB row 4
+  data: godot/data/items/feet/4-leather-shoes.tres
   code: module/src/items.rs
 ---
 # Leather Shoes

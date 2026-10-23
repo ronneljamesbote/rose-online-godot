@@ -66,7 +66,7 @@ sold_by:
 - '[[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]]'
 - '[[npcs/1034-smith-ronk|Smith Ronk]]'
 source:
-  data: LIST_WEAPON.STB row 3
+  data: godot/data/items/weapon/3-rapier.tres
   code: module/src/items.rs
 ---
 # Rapier

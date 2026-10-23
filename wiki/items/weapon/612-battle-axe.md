@@ -18,7 +18,7 @@ sockets: true
 price: 10485
 weight: 20
 source:
-  data: LIST_WEAPON.STB row 612
+  data: godot/data/items/weapon/612-battle-axe.tres
   code: module/src/items.rs
 ---
 # Battle Axe

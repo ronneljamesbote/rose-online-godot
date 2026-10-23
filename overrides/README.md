@@ -1,8 +1,24 @@
 # Game data overrides
 
-`game-data.toml` holds every change we make to the iROSE game data (item stats, monster
-stats, skill numbers, drop tables, shop lists, ...). The original client files stay as
-they are; this file is laid on top of them.
+`data/` is the game data made in the Godot editor, exported from the resources in
+`godot/data/` (see `godot/data/README.md`): the items so far (`data/items/<class>.toml`, all
+item tables and the refine grades). It isn't edited by hand: change the resource, then run
+
+```sh
+godot --headless --path godot -- --export-data          # writes overrides/data/
+godot --headless --path godot -- --export-data=check    # fails when it is out of date
+```
+
+The server's upload sends it in place of the iROSE item tables (as JSON, which the module
+reads faster; `ROSE_DATA` names another folder), and the game reads it from here (from
+`overrides/data/` next to `ROSE.exe` in the Windows build, or where `ROSE_DATA` points).
+Without it both fall back to the iROSE tables.
+
+`game-data.toml` holds every change we make to the iROSE game data that isn't made in Godot
+yet (monster stats, skill numbers, drop tables, shop lists, ...). The original client files
+stay as they are; this file is laid on top of them. Items are not in it any more: an entry
+for an item table (`LIST_WEAPON.STB`, `LIST_GRADE.STB`, ...) stops the client and the upload
+with an error naming the resources to edit instead.
 
 - **The game client** reads it when it loads its data. In the Windows zip it sits at
   `overrides/game-data.toml` next to `ROSE.exe`. During development the client finds it
@@ -62,37 +78,20 @@ number while the server uses another.
 
 ```toml
 [[stb]]
-file = "3DDATA/STB/LIST_WEAPON.STB"   # path inside the client data, any case
-row = 2                               # Short Sword
-column = 35                           # attack power
-value = 12                            # a number or "text"
-note = "Short Sword hits a bit harder, wiki/items/weapon/2-short-sword.md"
+file = "3DDATA/STB/LIST_NPC.STB"      # path inside the client data, any case
+row = 1                               # Mini-Jelly Bean
+column = 8                            # HP
+value = 100                           # a number or "text"
+note = "Mini-Jelly Beans last a bit longer, wiki/monsters/1-mini-jelly-bean.md"
 ```
 
-`row` is the number the wiki shows as the thing's id (item, skill, monster number).
+`row` is the number the wiki shows as the thing's id (skill or monster number).
 `column` counts from 0 at the first column after the row name, the same way the data
-loaders in `crates/rose-data-irose/src/` number them (`stb_column! { 35, get_weapon_attack_power, ... }`).
+loaders in `crates/rose-data-irose/src/` number them (`stb_column! { 8, get_health_points, ... }`).
 
 ## Useful columns
 
-Items (`LIST_WEAPON`, `LIST_SUBWPN`, `LIST_CAP`, `LIST_BODY`, `LIST_ARMS`, `LIST_FOOT`,
-`LIST_BACK`, `LIST_FACEITEM`, `LIST_JEWEL`, `LIST_USEITEM`, `LIST_JEMITEM`, `LIST_NATURAL`,
-`LIST_QUESTITEM`, `LIST_PAT`, all in `3DDATA/STB/`):
-
-| Column | Meaning |
-| --- | --- |
-| 5 | base price |
-| 7 | weight |
-| 8 | quality |
-| 16 | job class needed |
-| 19 / 20, 21 / 22 | needed stat type / value (two pairs) |
-| 24 / 25, 27 / 28 | added stat type / value (two pairs) |
-| 29 | durability |
-| 31 | defence (armour) |
-| 32 | magic resistance (armour) |
-| 33 | weapons: attack range (cm); feet and back: move speed |
-| 35 | weapons: attack power |
-| 36 | weapons: attack speed |
+Items are Godot resources now (`godot/data/items/`), edited in the Inspector by field name.
 
 Monsters and NPCs (`3DDATA/STB/LIST_NPC.STB`):
 

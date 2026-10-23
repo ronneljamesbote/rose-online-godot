@@ -15,7 +15,7 @@ weight: 2
 quest_reward:
 - '[[quests/5061-the-santa-suit-heist|The Santa Suit Heist]]'
 source:
-  data: LIST_CAP.STB row 152
+  data: godot/data/items/head/152-santa-hat.tres
   code: module/src/items.rs
 ---
 # Santa Hat

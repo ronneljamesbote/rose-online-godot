@@ -200,8 +200,9 @@ impl ItemType {
     }
 }
 
-#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[derive(Copy, Clone, Debug, Default, PartialEq, Eq, Enum, Deserialize, Serialize)]
 pub enum ItemClass {
+    #[default]
     Unknown,
 
     FaceMask,
@@ -452,8 +453,9 @@ pub struct QuestItemData {
     pub item_data: BaseItemData,
 }
 
-#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[derive(Copy, Clone, Debug, Default, PartialEq, Eq, Enum, Deserialize, Serialize)]
 pub enum VehicleType {
+    #[default]
     Cart,
     CastleGear,
 }
@@ -522,6 +524,9 @@ pub enum ItemData<'a> {
 
 pub struct ItemDatabase {
     _string_database: Arc<StringDatabase>,
+    /// The names and descriptions the items point into when they don't come from the
+    /// string database (the data export, see `with_text`).
+    _text: Vec<String>,
     face: Vec<Option<FaceItemData>>,
     head: Vec<Option<HeadItemData>>,
     body: Vec<Option<BodyItemData>>,
@@ -562,6 +567,7 @@ impl ItemDatabase {
     ) -> Self {
         Self {
             _string_database: string_database,
+            _text: Vec::new(),
             face,
             head,
             body,
@@ -578,6 +584,18 @@ impl ItemDatabase {
             vehicle,
             item_grades,
         }
+    }
+
+    /// Keeps `text` alive as long as the database: the items' `&'static str` names and
+    /// descriptions may point into it.
+    pub fn with_text(mut self, text: Vec<String>) -> Self {
+        self._text = text;
+        self
+    }
+
+    /// Every refine grade, from grade 0.
+    pub fn item_grades(&self) -> &[ItemGradeData] {
+        &self.item_grades
     }
 
     pub fn get_item_grade(&self, grade: u8) -> Option<&ItemGradeData> {

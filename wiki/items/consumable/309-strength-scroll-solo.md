@@ -33,7 +33,7 @@ quest_reward:
 - '[[quests/121-banned-recipe|Banned Recipe]]'
 - '[[quests/122-resurrection|Resurrection]]'
 source:
-  data: LIST_USEITEM.STB row 309
+  data: godot/data/items/consumable/309-strength-scroll-solo.tres
   code: module/src/items.rs
 ---
 # Strength Scroll (Solo)

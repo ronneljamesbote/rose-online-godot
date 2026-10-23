@@ -13,7 +13,7 @@ needed_for_quest:
 - '[[quests/1007-an-eye-for-the-marketplace|An Eye for the Marketplace]]'
 - '[[quests/5003-dalping-hunt-fetch-quest|Dalping Hunt (Fetch Quest)]]'
 source:
-  data: LIST_QUESTITEM.STB row 802
+  data: godot/data/items/quest/802-dalping-egg.tres
   code: module/src/items.rs
 ---
 # Dalping Egg

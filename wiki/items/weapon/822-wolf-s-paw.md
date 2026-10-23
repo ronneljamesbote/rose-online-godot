@@ -18,7 +18,7 @@ sockets: true
 price: 12870
 weight: 25
 source:
-  data: LIST_WEAPON.STB row 822
+  data: godot/data/items/weapon/822-wolf-s-paw.tres
   code: module/src/items.rs
 ---
 # Wolf's Paw

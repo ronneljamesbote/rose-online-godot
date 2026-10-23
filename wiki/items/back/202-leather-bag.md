@@ -26,7 +26,7 @@ sold_by:
 - '[[npcs/1010-designer-keenu|Designer Keenu]]'
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_BACK.STB row 202
+  data: godot/data/items/back/202-leather-bag.tres
   code: module/src/items.rs
 ---
 # Leather Bag

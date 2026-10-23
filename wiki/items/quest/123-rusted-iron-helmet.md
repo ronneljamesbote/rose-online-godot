@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/858-hovert-s-mementos|Hovert''s Mementos]]'
 - '[[quests/859-hovert-s-mementos|Hovert''s Mementos]]'
 source:
-  data: LIST_QUESTITEM.STB row 123
+  data: godot/data/items/quest/123-rusted-iron-helmet.tres
   code: module/src/items.rs
 ---
 # Rusted Iron Helmet

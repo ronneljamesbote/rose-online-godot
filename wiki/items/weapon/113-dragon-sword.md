@@ -36,7 +36,7 @@ dropped_by:
   level: 112
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 113
+  data: godot/data/items/weapon/113-dragon-sword.tres
   code: module/src/items.rs
 ---
 # Dragon Sword

@@ -14,7 +14,7 @@ dropped_by:
   level: 101
   slots_of_30: 2
 source:
-  data: LIST_USEITEM.STB row 435
+  data: godot/data/items/consumable/435-yeti-guard.tres
   code: module/src/items.rs
 ---
 # Yeti Guard

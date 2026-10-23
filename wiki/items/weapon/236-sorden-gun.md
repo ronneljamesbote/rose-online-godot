@@ -51,7 +51,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1096-ferrell-guild-merchant-mildun|Ferrell Guild Merchant Mildun]]'
 source:
-  data: LIST_WEAPON.STB row 236
+  data: godot/data/items/weapon/236-sorden-gun.tres
   code: module/src/items.rs
 ---
 # Sorden Gun

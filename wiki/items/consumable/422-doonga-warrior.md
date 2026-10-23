@@ -17,7 +17,7 @@ dropped_by:
   level: 64
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 422
+  data: godot/data/items/consumable/422-doonga-warrior.tres
   code: module/src/items.rs
 ---
 # Doonga Warrior

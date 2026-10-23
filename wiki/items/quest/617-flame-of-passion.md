@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/131-eva-the-sorcerer|Eva the Sorcerer]]'
 - '[[quests/132-forbidden-spell|Forbidden Spell]]'
 source:
-  data: LIST_QUESTITEM.STB row 617
+  data: godot/data/items/quest/617-flame-of-passion.tres
   code: module/src/items.rs
 ---
 # Flame of Passion

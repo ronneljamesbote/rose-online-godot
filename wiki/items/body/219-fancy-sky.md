@@ -14,7 +14,7 @@ bonus: Max HP +96
 price: 17000
 weight: 10
 source:
-  data: LIST_BODY.STB row 219
+  data: godot/data/items/body/219-fancy-sky.tres
   code: module/src/items.rs
 ---
 # Fancy Sky

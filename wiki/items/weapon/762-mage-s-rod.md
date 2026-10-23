@@ -26,7 +26,7 @@ dropped_by:
   level: 47
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 762
+  data: godot/data/items/weapon/762-mage-s-rod.tres
   code: module/src/items.rs
 ---
 # Mage's Rod

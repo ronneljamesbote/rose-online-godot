@@ -159,7 +159,7 @@ dropped_by:
   level: 133
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 151
+  data: godot/data/items/consumable/151-hp-point-50.tres
   code: module/src/items.rs
 ---
 # HP Point (+50)

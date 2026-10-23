@@ -33,7 +33,7 @@ dropped_by:
   level: 100
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 41
+  data: godot/data/items/weapon/41-pony-hammer.tres
   code: module/src/items.rs
 ---
 # Pony Hammer

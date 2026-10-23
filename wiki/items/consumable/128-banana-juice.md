@@ -9,7 +9,7 @@ effect: MP +100, MP Restoration (100), teaches skill 100, uses skill 100, fuel +
 price: 50
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 128
+  data: godot/data/items/consumable/128-banana-juice.tres
   code: module/src/items.rs
 ---
 # Banana Juice

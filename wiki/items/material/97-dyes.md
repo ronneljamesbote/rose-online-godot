@@ -25,7 +25,7 @@ used_to_craft:
 - '[[items/subweapon/33-pumpkin-doll|Pumpkin Doll]]'
 - '[[items/subweapon/34-honeybee-doll|HoneyBee Doll]]'
 source:
-  data: LIST_NATURAL.STB row 97
+  data: godot/data/items/material/97-dyes.tres
   code: module/src/items.rs
 ---
 # Dyes

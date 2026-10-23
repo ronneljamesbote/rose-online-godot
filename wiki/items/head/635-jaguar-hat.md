@@ -14,7 +14,7 @@ job: Hawker 2nd Advanced Jobs
 price: 34250
 weight: 2
 source:
-  data: LIST_CAP.STB row 635
+  data: godot/data/items/head/635-jaguar-hat.tres
   code: module/src/items.rs
 ---
 # Jaguar Hat

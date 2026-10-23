@@ -18,7 +18,7 @@ sockets: true
 price: 287950
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 862
+  data: godot/data/items/weapon/862-spirits-dual-wield.tres
   code: module/src/items.rs
 ---
 # Spirits Dual Wield

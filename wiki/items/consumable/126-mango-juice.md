@@ -9,7 +9,7 @@ effect: MP +140, MP Restoration (140), teaches skill 140, uses skill 140, fuel +
 price: 70
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 126
+  data: godot/data/items/consumable/126-mango-juice.tres
   code: module/src/items.rs
 ---
 # Mango Juice

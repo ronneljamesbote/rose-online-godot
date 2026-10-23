@@ -9,7 +9,7 @@ effect: teaches skill 3281, uses skill 3281, fuel +3281
 price: 100
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 961
+  data: godot/data/items/consumable/961-damage-booster-extra-max.tres
   code: module/src/items.rs
 ---
 # Damage Booster (Extra Max)

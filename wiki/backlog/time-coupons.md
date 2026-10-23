@@ -5,7 +5,7 @@ name: Time coupons
 status: not-in-game-yet
 summary: Mall coupons that switch on a timed account perk, free storage, 30 extra storage slots or a personal shop look, for 7 days
 source:
-  data: LIST_USEITEM.STB rows 952-956 (item class Time Coupon; column 21 ability, column 22 value, column 8 shop look); abilities 94 No Storage Charge, 95 Storage Expansion, 96 Personal Shop Remodeling; LIST_USEITEM_S.STL; LIST_STRING.STL strings 608, 614, 618
+  data: consumables 952-956 in godot/data/items/consumable/ (item_class TimeCoupon; use_add_stat and use_add_stat_value the ability and its value, store_skin the shop look); abilities 94 No Storage Charge, 95 Storage Expansion, 96 Personal Shop Remodeling; LIST_USEITEM_S.STL; LIST_STRING.STL strings 608, 614, 618
   reference: iROSE 129_129en client data; AbilityType::BankFree, BankAddon and StoreSkin in crates/rose-data-irose/src/data_decoder.rs; module/src/items.rs
 ---
 # Time coupons

@@ -13,7 +13,7 @@ price: 0
 weight: 2
 trade: can't be traded or dropped
 source:
-  data: LIST_FOOT.STB row 30
+  data: godot/data/items/feet/30-visitor-sandals.tres
   code: module/src/items.rs
 ---
 # Visitor Sandals

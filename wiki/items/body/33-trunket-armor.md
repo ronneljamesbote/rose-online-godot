@@ -47,7 +47,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1094-armor-merchant-saki|Armor Merchant Saki]]'
 source:
-  data: LIST_BODY.STB row 33
+  data: godot/data/items/body/33-trunket-armor.tres
   code: module/src/items.rs
 ---
 # Trunket Armor

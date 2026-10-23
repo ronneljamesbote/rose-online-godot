@@ -46,7 +46,7 @@ dropped_by:
   level: 115
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 340
+  data: godot/data/items/weapon/340-recovery-wand.tres
   code: module/src/items.rs
 ---
 # Recovery Wand

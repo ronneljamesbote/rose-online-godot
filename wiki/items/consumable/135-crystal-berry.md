@@ -11,7 +11,7 @@ weight: 1
 sold_by:
 - '[[npcs/1186-tavern-owner-anzhelika|Tavern Owner Anzhelika]]'
 source:
-  data: LIST_USEITEM.STB row 135
+  data: godot/data/items/consumable/135-crystal-berry.tres
   code: module/src/items.rs
 ---
 # Crystal Berry

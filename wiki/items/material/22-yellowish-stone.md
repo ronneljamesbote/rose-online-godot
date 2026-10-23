@@ -8,7 +8,7 @@ class: Stone Material
 price: 95
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 22
+  data: godot/data/items/material/22-yellowish-stone.tres
   code: module/src/items.rs
 ---
 # Yellowish Stone

@@ -11,7 +11,7 @@ bonus: Defense +10
 price: 1000
 weight: 3
 source:
-  data: LIST_FACEITEM.STB row 162
+  data: godot/data/items/face/162-matrix-eye.tres
   code: module/src/items.rs
 ---
 # Matrix Eye

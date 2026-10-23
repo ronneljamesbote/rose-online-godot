@@ -33,7 +33,7 @@ used_to_craft:
 - '[[items/subweapon/11-orc-shield|Orc Shield]]'
 - '[[items/subweapon/12-blood-shield|Blood Shield]]'
 source:
-  data: LIST_NATURAL.STB row 172
+  data: godot/data/items/material/172-thick-insect-shell.tres
   code: module/src/items.rs
 ---
 # Thick Insect Shell

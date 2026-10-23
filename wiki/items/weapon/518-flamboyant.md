@@ -22,7 +22,7 @@ dropped_by:
   level: 142
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 518
+  data: godot/data/items/weapon/518-flamboyant.tres
   code: module/src/items.rs
 ---
 # Flamboyant

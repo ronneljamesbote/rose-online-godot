@@ -15,7 +15,7 @@ needed_for_quest:
 - '[[quests/3601-unexpectedly-useful-porkie-spines|Unexpectedly Useful Porkie Spines]]'
 - '[[quests/3801-it-might-be-worth-more-later|It Might be Worth More Later]]'
 source:
-  data: LIST_QUESTITEM.STB row 301
+  data: godot/data/items/quest/301-porkie-spine.tres
   code: module/src/items.rs
 ---
 # Porkie Spine

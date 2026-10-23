@@ -22,7 +22,7 @@ recipe:
   quantity: 40
 craft_difficulty: 48
 source:
-  data: LIST_SUBWPN.STB row 80
+  data: godot/data/items/subweapon/80-orb-of-abyss.tres
   code: module/src/items.rs
 ---
 # Orb of Abyss

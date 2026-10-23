@@ -38,7 +38,7 @@ sold_by:
 used_to_craft:
 - '[[items/weapon/437-viking-sword-axe|Viking Sword & Axe]]'
 source:
-  data: LIST_WEAPON.STB row 137
+  data: godot/data/items/weapon/137-cross-axe.tres
   code: module/src/items.rs
 ---
 # Cross Axe

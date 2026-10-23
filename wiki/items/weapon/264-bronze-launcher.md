@@ -60,7 +60,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1096-ferrell-guild-merchant-mildun|Ferrell Guild Merchant Mildun]]'
 source:
-  data: LIST_WEAPON.STB row 264
+  data: godot/data/items/weapon/264-bronze-launcher.tres
   code: module/src/items.rs
 ---
 # Bronze Launcher

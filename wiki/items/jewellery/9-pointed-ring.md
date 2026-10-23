@@ -14,7 +14,7 @@ dropped_by:
   level: 48
   slots_of_30: 1
 source:
-  data: LIST_JEWEL.STB row 9
+  data: godot/data/items/jewellery/9-pointed-ring.tres
   code: module/src/items.rs
 ---
 # Pointed Ring

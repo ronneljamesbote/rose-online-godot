@@ -8,7 +8,7 @@ class: Skill Book
 effect: teaches skill 3203, uses skill 3203, fuel +3203
 price: 0
 source:
-  data: LIST_USEITEM.STB row 873
+  data: godot/data/items/consumable/873-defense-up-all.tres
   code: module/src/items.rs
 ---
 # Defense Up (All)

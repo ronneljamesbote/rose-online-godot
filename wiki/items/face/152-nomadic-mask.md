@@ -11,7 +11,7 @@ bonus: Dexterity +7
 price: 1000
 weight: 2
 source:
-  data: LIST_FACEITEM.STB row 152
+  data: godot/data/items/face/152-nomadic-mask.tres
   code: module/src/items.rs
 ---
 # Nomadic Mask

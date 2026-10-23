@@ -14,7 +14,7 @@ bonus: Max HP +136
 price: 41850
 weight: 10
 source:
-  data: LIST_BODY.STB row 232
+  data: godot/data/items/body/232-redfield-green-suit.tres
   code: module/src/items.rs
 ---
 # Redfield Green Suit

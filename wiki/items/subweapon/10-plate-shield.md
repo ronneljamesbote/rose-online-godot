@@ -24,7 +24,7 @@ recipe:
   quantity: 9
 craft_difficulty: 36
 source:
-  data: LIST_SUBWPN.STB row 10
+  data: godot/data/items/subweapon/10-plate-shield.tres
   code: module/src/items.rs
 ---
 # Plate Shield

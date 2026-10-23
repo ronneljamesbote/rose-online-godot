@@ -45,7 +45,7 @@ dropped_by:
   level: 147
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 247
+  data: godot/data/items/weapon/247-steam-shocker.tres
   code: module/src/items.rs
 ---
 # Steam Shocker

@@ -19,7 +19,7 @@ needed_for_quest:
 - '[[quests/123-resurrection|Resurrection]]'
 - '[[quests/124-magic-of-anima-lake|Magic of Anima Lake]]'
 source:
-  data: LIST_QUESTITEM.STB row 601
+  data: godot/data/items/quest/601-enigmatic-emblem.tres
   code: module/src/items.rs
 ---
 # Enigmatic Emblem

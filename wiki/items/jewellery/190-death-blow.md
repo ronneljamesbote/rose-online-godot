@@ -10,7 +10,7 @@ bonus: Critical +52
 price: 1623350
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 190
+  data: godot/data/items/jewellery/190-death-blow.tres
   code: module/src/items.rs
 ---
 # Death Blow

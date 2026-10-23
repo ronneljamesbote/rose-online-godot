@@ -17,7 +17,7 @@ bonus: Critical +40
 price: 115400
 weight: 42
 source:
-  data: LIST_WEAPON.STB row 916
+  data: godot/data/items/weapon/916-composite-bow-gun.tres
   code: module/src/items.rs
 ---
 # Composite Bow Gun

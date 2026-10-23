@@ -52,7 +52,7 @@ dropped_by:
   level: 128
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 442
+  data: godot/data/items/weapon/442-brilliant-dual-wield.tres
   code: module/src/items.rs
 ---
 # Brilliant Dual Wield

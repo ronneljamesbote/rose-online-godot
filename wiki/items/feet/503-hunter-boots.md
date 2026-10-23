@@ -15,7 +15,7 @@ job: Hawker Job
 price: 1050
 weight: 3
 source:
-  data: LIST_FOOT.STB row 503
+  data: godot/data/items/feet/503-hunter-boots.tres
   code: module/src/items.rs
 ---
 # Hunter Boots

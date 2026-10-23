@@ -29,7 +29,7 @@ recipe:
   quantity: 6
 craft_difficulty: 44
 source:
-  data: LIST_WEAPON.STB row 216
+  data: godot/data/items/weapon/216-mediator-bow.tres
   code: module/src/items.rs
 ---
 # Mediator Bow

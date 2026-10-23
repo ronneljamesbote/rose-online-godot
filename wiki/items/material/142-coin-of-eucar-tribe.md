@@ -63,7 +63,7 @@ dropped_by:
   level: 126
   slots_of_30: 2
 source:
-  data: LIST_NATURAL.STB row 142
+  data: godot/data/items/material/142-coin-of-eucar-tribe.tres
   code: module/src/items.rs
 ---
 # Coin of Eucar Tribe

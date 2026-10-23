@@ -25,7 +25,7 @@ dropped_by:
   level: 47
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 821
+  data: godot/data/items/weapon/821-rake-hand.tres
   code: module/src/items.rs
 ---
 # Rake Hand

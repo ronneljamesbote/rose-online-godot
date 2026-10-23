@@ -35,7 +35,7 @@ sold_by:
 - '[[npcs/1006-arumic-merchant-tryteh|Arumic Merchant Tryteh]]'
 - '[[npcs/1091-arumic-merchant-chester|Arumic Merchant Chester]]'
 source:
-  data: LIST_SUBWPN.STB row 63
+  data: godot/data/items/subweapon/63-book-of-concentration.tres
   code: module/src/items.rs
 ---
 # Book of Concentration

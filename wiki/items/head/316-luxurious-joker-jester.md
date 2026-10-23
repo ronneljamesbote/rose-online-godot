@@ -14,7 +14,7 @@ bonus: Attack Accuracy +7
 price: 6200
 weight: 3
 source:
-  data: LIST_CAP.STB row 316
+  data: godot/data/items/head/316-luxurious-joker-jester.tres
   code: module/src/items.rs
 ---
 # Luxurious Joker Jester

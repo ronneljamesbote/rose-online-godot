@@ -34,7 +34,7 @@ dropped_by:
   level: 140
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 316
+  data: godot/data/items/weapon/316-ikaness-staff.tres
   code: module/src/items.rs
 ---
 # Ikaness Staff

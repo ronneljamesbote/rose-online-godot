@@ -14,7 +14,7 @@ bonus: Attack Accuracy +13
 price: 33600
 weight: 3
 source:
-  data: LIST_CAP.STB row 336
+  data: godot/data/items/head/336-redfield-black-hat.tres
   code: module/src/items.rs
 ---
 # Redfield Black Hat

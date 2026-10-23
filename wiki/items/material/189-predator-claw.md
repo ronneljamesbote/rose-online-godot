@@ -66,7 +66,7 @@ used_to_craft:
 - '[[items/weapon/409-dual-patar|Dual Patar]]'
 - '[[items/weapon/410-shaft-claw|Shaft Claw]]'
 source:
-  data: LIST_NATURAL.STB row 189
+  data: godot/data/items/material/189-predator-claw.tres
   code: module/src/items.rs
 ---
 # Predator Claw

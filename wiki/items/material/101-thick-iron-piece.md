@@ -30,7 +30,7 @@ used_to_craft:
 - '[[items/weapon/432-long-sword-mace|Long Sword & Mace]]'
 - '[[items/subweapon/65-mythical-flute|Mythical Flute]]'
 source:
-  data: LIST_NATURAL.STB row 101
+  data: godot/data/items/material/101-thick-iron-piece.tres
   code: module/src/items.rs
 ---
 # Thick Iron Piece

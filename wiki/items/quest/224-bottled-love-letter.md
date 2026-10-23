@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/1076-lillith-woman-of-the-cosmos-second-job-change|Lillith, Woman of the Cosmos (Second Job Change)]]'
 - '[[quests/1077-lillith-woman-of-the-cosmos-second-job-change|Lillith, Woman of the Cosmos (Second Job Change)]]'
 source:
-  data: LIST_QUESTITEM.STB row 224
+  data: godot/data/items/quest/224-bottled-love-letter.tres
   code: module/src/items.rs
 ---
 # Bottled Love Letter

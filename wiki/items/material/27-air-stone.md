@@ -8,7 +8,7 @@ class: Stone Material
 price: 305
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 27
+  data: godot/data/items/material/27-air-stone.tres
   code: module/src/items.rs
 ---
 # Air Stone

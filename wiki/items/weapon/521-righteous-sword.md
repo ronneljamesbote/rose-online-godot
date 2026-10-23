@@ -18,7 +18,7 @@ sockets: true
 price: 284850
 weight: 50
 source:
-  data: LIST_WEAPON.STB row 521
+  data: godot/data/items/weapon/521-righteous-sword.tres
   code: module/src/items.rs
 ---
 # Righteous Sword

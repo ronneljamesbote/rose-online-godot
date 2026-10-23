@@ -13,7 +13,7 @@ bonus: Max MP +50
 price: 1000
 weight: 1
 source:
-  data: LIST_CAP.STB row 812
+  data: godot/data/items/head/812-red-chicken-hat.tres
   code: module/src/items.rs
 ---
 # Red Chicken Hat

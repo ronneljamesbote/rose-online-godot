@@ -8,7 +8,7 @@ class: Gathered Goods
 price: 175
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 146
+  data: godot/data/items/material/146-rusty-bell.tres
   code: module/src/items.rs
 ---
 # Rusty Bell

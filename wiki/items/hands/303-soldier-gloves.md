@@ -14,7 +14,7 @@ job: Soldier Job
 price: 650
 weight: 2
 source:
-  data: LIST_ARMS.STB row 303
+  data: godot/data/items/hands/303-soldier-gloves.tres
   code: module/src/items.rs
 ---
 # Soldier Gloves

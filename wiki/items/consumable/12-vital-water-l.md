@@ -19,7 +19,7 @@ quest_reward:
 - '[[quests/148-the-royal-golden-dagger|The Royal Golden Dagger]]'
 - '[[quests/5009-candle-ghost-extermination-fetch-quest|Candle Ghost Extermination (Fetch Quest)]]'
 source:
-  data: LIST_USEITEM.STB row 12
+  data: godot/data/items/consumable/12-vital-water-l.tres
   code: module/src/items.rs
 ---
 # Vital Water (L)

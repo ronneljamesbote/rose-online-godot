@@ -48,7 +48,7 @@ dropped_by:
   level: 88
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 410
+  data: godot/data/items/weapon/410-shaft-claw.tres
   code: module/src/items.rs
 ---
 # Shaft Claw

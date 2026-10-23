@@ -79,7 +79,7 @@ dropped_in_zones:
 - '[[zones/54-crystal-snowfields|Crystal Snowfields]]'
 - '[[zones/55-freezing-plateau|Freezing Plateau]]'
 source:
-  data: LIST_NATURAL.STB row 67
+  data: godot/data/items/material/67-hime.tres
   code: module/src/items.rs
 ---
 # Hime

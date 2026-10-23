@@ -17,7 +17,7 @@ used_to_craft:
 - '[[items/hands/66-velvet-gloves-of-witch|Velvet Gloves of Witch]]'
 - '[[items/feet/66-velvet-boots-of-witch|Velvet Boots of Witch]]'
 source:
-  data: LIST_NATURAL.STB row 117
+  data: godot/data/items/material/117-metil.tres
   code: module/src/items.rs
 ---
 # Metil

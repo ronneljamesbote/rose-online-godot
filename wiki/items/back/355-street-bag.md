@@ -13,7 +13,7 @@ quality: 49
 bonus: Inventory Capacity +650
 price: 114100
 source:
-  data: LIST_BACK.STB row 355
+  data: godot/data/items/back/355-street-bag.tres
   code: module/src/items.rs
 ---
 # Street Bag

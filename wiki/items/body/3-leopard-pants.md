@@ -45,7 +45,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1034-smith-ronk|Smith Ronk]]'
 source:
-  data: LIST_BODY.STB row 3
+  data: godot/data/items/body/3-leopard-pants.tres
   code: module/src/items.rs
 ---
 # Leopard Pants

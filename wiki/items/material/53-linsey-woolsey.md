@@ -23,7 +23,7 @@ used_to_craft:
 - '[[items/weapon/210-half-elf-bow|Half-Elf Bow]]'
 - '[[items/weapon/263-hard-launcher|Hard Launcher]]'
 source:
-  data: LIST_NATURAL.STB row 53
+  data: godot/data/items/material/53-linsey-woolsey.tres
   code: module/src/items.rs
 ---
 # Linsey-woolsey

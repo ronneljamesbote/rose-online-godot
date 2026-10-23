@@ -29,7 +29,7 @@ recipe:
   quantity: 1
 craft_difficulty: 54
 source:
-  data: LIST_PAT.STB row 332
+  data: godot/data/items/vehicle/332-drill-arms.tres
   code: module/src/items.rs
 ---
 # Drill Arms

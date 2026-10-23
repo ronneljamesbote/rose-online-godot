@@ -14,7 +14,7 @@ job: Hawker Job
 price: 1350
 weight: 2
 source:
-  data: LIST_CAP.STB row 605
+  data: godot/data/items/head/605-hunter-hat.tres
   code: module/src/items.rs
 ---
 # Hunter Hat

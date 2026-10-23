@@ -11,7 +11,7 @@ weight: 1
 sold_by:
 - '[[npcs/1006-arumic-merchant-tryteh|Arumic Merchant Tryteh]]'
 source:
-  data: LIST_USEITEM.STB row 351
+  data: godot/data/items/consumable/351-zant-return-scroll.tres
   code: module/src/items.rs
 ---
 # Zant Return Scroll

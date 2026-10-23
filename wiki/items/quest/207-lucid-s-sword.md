@@ -10,7 +10,7 @@ quest_reward:
 - '[[quests/1059-lucid-king-of-legend-second-job-change|Lucid: King of Legend (Second Job Change)]]'
 - '[[quests/1060-lucid-king-of-legend-second-job-change|Lucid: King of Legend (Second Job Change)]]'
 source:
-  data: LIST_QUESTITEM.STB row 207
+  data: godot/data/items/quest/207-lucid-s-sword.tres
   code: module/src/items.rs
 ---
 # Lucid's Sword

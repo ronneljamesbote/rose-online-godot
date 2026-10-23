@@ -17,7 +17,7 @@ sold_by:
 - '[[npcs/1109-elder-of-junon-order-gorthein|Elder of Junon Order Gorthein]]'
 - '[[npcs/1112-arumic-researcher-carasia|Arumic Researcher Carasia]]'
 source:
-  data: LIST_ARMS.STB row 223
+  data: godot/data/items/hands/223-luxurious-venetian-gloves.tres
   code: module/src/items.rs
 ---
 # Luxurious Venetian Gloves

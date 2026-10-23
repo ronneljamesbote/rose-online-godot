@@ -10,7 +10,7 @@ quality: 43
 bonus: Charm +13
 price: 2050
 source:
-  data: LIST_FACEITEM.STB row 14
+  data: godot/data/items/face/14-mask-of-truth.tres
   code: module/src/items.rs
 ---
 # Mask of Truth

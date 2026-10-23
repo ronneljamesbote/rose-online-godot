@@ -14,7 +14,7 @@ job: Soldier 2nd Advanced Jobs
 price: 26600
 weight: 5
 source:
-  data: LIST_ARMS.STB row 338
+  data: godot/data/items/hands/338-kurash-gauntlets.tres
   code: module/src/items.rs
 ---
 # Kurash Gauntlets

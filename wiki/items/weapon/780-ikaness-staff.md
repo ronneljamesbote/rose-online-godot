@@ -19,7 +19,7 @@ sockets: true
 price: 413800
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 780
+  data: godot/data/items/weapon/780-ikaness-staff.tres
   code: module/src/items.rs
 ---
 # Ikaness Staff

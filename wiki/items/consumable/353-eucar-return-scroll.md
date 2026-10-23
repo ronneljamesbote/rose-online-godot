@@ -11,7 +11,7 @@ weight: 1
 sold_by:
 - '[[npcs/1185-magic-goods-seller-pabel|Magic Goods Seller Pabel]]'
 source:
-  data: LIST_USEITEM.STB row 353
+  data: godot/data/items/consumable/353-eucar-return-scroll.tres
   code: module/src/items.rs
 ---
 # Eucar Return Scroll

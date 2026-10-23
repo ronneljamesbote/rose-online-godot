@@ -46,7 +46,7 @@ dropped_by:
   level: 108
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 342
+  data: godot/data/items/weapon/342-holy-wand.tres
   code: module/src/items.rs
 ---
 # Holy Wand

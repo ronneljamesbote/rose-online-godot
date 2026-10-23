@@ -15,7 +15,7 @@ job: Muse 2nd Advanced Jobs
 price: 10700
 weight: 3
 source:
-  data: LIST_FOOT.STB row 424
+  data: godot/data/items/feet/424-violet-boots.tres
   code: module/src/items.rs
 ---
 # Violet Boots

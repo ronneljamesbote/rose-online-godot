@@ -25,7 +25,7 @@ dropped_by:
   level: 48
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 301
+  data: godot/data/items/consumable/301-purify-scroll-solo.tres
   code: module/src/items.rs
 ---
 # Purify Scroll (Solo)

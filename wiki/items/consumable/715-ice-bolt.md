@@ -13,7 +13,7 @@ sold_by:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 - '[[npcs/1085-akram-minister-nel|Akram Minister Nel]]'
 source:
-  data: LIST_USEITEM.STB row 715
+  data: godot/data/items/consumable/715-ice-bolt.tres
   code: module/src/items.rs
 ---
 # Ice Bolt

@@ -15,7 +15,7 @@ bonus: Max MP +50
 price: 9450
 weight: 10
 source:
-  data: LIST_BODY.STB row 407
+  data: godot/data/items/body/407-green-vest-of-witch.tres
   code: module/src/items.rs
 ---
 # Green Vest of Witch

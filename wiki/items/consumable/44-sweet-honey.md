@@ -9,7 +9,7 @@ effect: MP +100, MP Restoration (100), teaches skill 100, uses skill 100, fuel +
 price: 140
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 44
+  data: godot/data/items/consumable/44-sweet-honey.tres
   code: module/src/items.rs
 ---
 # Sweet Honey

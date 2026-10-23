@@ -17,7 +17,7 @@ bonus: Max MP +200
 price: 120000
 weight: 40
 source:
-  data: LIST_WEAPON.STB row 953
+  data: godot/data/items/weapon/953-spero-s-revolver.tres
   code: module/src/items.rs
 ---
 # Spero's Revolver

@@ -33,7 +33,7 @@ used_to_craft:
 - '[[items/weapon/443-spirits-dual-wield|Spirits Dual Wield]]'
 - '[[items/weapon/444-desperado-dual-wield|Desperado Dual Wield]]'
 source:
-  data: LIST_WEAPON.STB row 17
+  data: godot/data/items/weapon/17-flamboyant.tres
   code: module/src/items.rs
 ---
 # Flamboyant

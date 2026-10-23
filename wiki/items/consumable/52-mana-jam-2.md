@@ -9,7 +9,7 @@ effect: SP +2, teaches skill 2, uses skill 2, fuel +2
 price: 4000
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 52
+  data: godot/data/items/consumable/52-mana-jam-2.tres
   code: module/src/items.rs
 ---
 # Mana Jam (+2)

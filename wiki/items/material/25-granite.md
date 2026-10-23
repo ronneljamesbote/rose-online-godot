@@ -8,7 +8,7 @@ class: Stone Material
 price: 190
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 25
+  data: godot/data/items/material/25-granite.tres
   code: module/src/items.rs
 ---
 # Granite

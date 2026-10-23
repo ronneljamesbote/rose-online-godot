@@ -18,7 +18,7 @@ dropped_by:
   level: 60
   slots_of_30: 0.4
 source:
-  data: LIST_ARMS.STB row 419
+  data: godot/data/items/hands/419-purple-gloves-of-witch.tres
   code: module/src/items.rs
 ---
 # Purple Gloves of Witch

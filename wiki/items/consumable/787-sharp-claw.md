@@ -9,7 +9,7 @@ effect: teaches skill 1821, uses skill 1821, fuel +1821
 price: 29200
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 787
+  data: godot/data/items/consumable/787-sharp-claw.tres
   code: module/src/items.rs
 ---
 # Sharp Claw

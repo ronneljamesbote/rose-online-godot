@@ -13,7 +13,7 @@ bonus: Movement Speed +60
 price: 1200
 weight: 20
 source:
-  data: LIST_BACK.STB row 742
+  data: godot/data/items/back/742-seraph-wing.tres
   code: module/src/items.rs
 ---
 # Seraph Wing

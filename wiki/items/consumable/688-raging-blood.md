@@ -9,7 +9,7 @@ effect: teaches skill 631, uses skill 631, fuel +631
 price: 33150
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 688
+  data: godot/data/items/consumable/688-raging-blood.tres
   code: module/src/items.rs
 ---
 # Raging Blood

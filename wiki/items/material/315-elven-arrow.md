@@ -11,7 +11,7 @@ sold_by:
 - '[[npcs/1181-smith-pavrick|Smith Pavrick]]'
 - '[[npcs/1213-ferrell-guild-staff-gilbert|Ferrell Guild Staff Gilbert]]'
 source:
-  data: LIST_NATURAL.STB row 315
+  data: godot/data/items/material/315-elven-arrow.tres
   code: module/src/items.rs
 ---
 # Elven Arrow

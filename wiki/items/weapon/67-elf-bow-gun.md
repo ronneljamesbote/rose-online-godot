@@ -39,7 +39,7 @@ dropped_by:
   level: 100
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 67
+  data: godot/data/items/weapon/67-elf-bow-gun.tres
   code: module/src/items.rs
 ---
 # Elf Bow Gun

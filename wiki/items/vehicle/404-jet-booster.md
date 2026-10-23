@@ -13,7 +13,7 @@ bonus: Movement Speed +150
 price: 5000
 weight: 5
 source:
-  data: LIST_PAT.STB row 404
+  data: godot/data/items/vehicle/404-jet-booster.tres
   code: module/src/items.rs
 ---
 # Jet Booster

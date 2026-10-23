@@ -15,7 +15,7 @@ sold_by:
 - '[[npcs/1013-tavern-owner-sharlin|Tavern Owner Sharlin]]'
 - '[[npcs/1097-tavern-owner-harin|Tavern Owner Harin]]'
 source:
-  data: LIST_USEITEM.STB row 106
+  data: godot/data/items/consumable/106-mango.tres
   code: module/src/items.rs
 ---
 # Mango

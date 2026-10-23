@@ -14,7 +14,7 @@ quality: 42
 price: 9200
 weight: 2
 source:
-  data: LIST_FOOT.STB row 15
+  data: godot/data/items/feet/15-senior-shoes.tres
   code: module/src/items.rs
 ---
 # Senior Shoes

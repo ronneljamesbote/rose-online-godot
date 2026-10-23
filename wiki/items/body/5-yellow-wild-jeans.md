@@ -40,7 +40,7 @@ sold_by:
 quest_reward:
 - '[[quests/107-healing-hands|Healing Hands]]'
 source:
-  data: LIST_BODY.STB row 5
+  data: godot/data/items/body/5-yellow-wild-jeans.tres
   code: module/src/items.rs
 ---
 # Yellow Wild Jeans

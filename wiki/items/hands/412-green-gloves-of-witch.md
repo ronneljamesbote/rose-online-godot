@@ -14,7 +14,7 @@ job: Muse Job
 price: 1900
 weight: 2
 source:
-  data: LIST_ARMS.STB row 412
+  data: godot/data/items/hands/412-green-gloves-of-witch.tres
   code: module/src/items.rs
 ---
 # Green Gloves of Witch

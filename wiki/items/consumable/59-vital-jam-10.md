@@ -11,7 +11,7 @@ weight: 1
 quest_reward:
 - '[[quests/5019-goblin-hunting-competition-fetch-quest|Goblin Hunting Competition (Fetch Quest)]]'
 source:
-  data: LIST_USEITEM.STB row 59
+  data: godot/data/items/consumable/59-vital-jam-10.tres
   code: module/src/items.rs
 ---
 # Vital Jam (+10)

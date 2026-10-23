@@ -14,7 +14,7 @@ job: Soldier 2nd Advanced Jobs
 price: 16650
 weight: 3
 source:
-  data: LIST_ARMS.STB row 328
+  data: godot/data/items/hands/328-mighty-gauntlets.tres
   code: module/src/items.rs
 ---
 # Mighty Gauntlets

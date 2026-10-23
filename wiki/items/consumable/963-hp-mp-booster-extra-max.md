@@ -9,7 +9,7 @@ effect: teaches skill 3283, uses skill 3283, fuel +3283
 price: 100
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 963
+  data: godot/data/items/consumable/963-hp-mp-booster-extra-max.tres
   code: module/src/items.rs
 ---
 # HP&MP Booster (Extra Max)

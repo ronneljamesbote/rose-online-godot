@@ -48,7 +48,7 @@ used_to_craft:
 - '[[items/subweapon/63-book-of-concentration|Book of Concentration]]'
 - '[[items/vehicle/2-wooden-carbon-frame|Wooden Carbon Frame]]'
 source:
-  data: LIST_NATURAL.STB row 42
+  data: godot/data/items/material/42-thin-leather.tres
   code: module/src/items.rs
 ---
 # Thin Leather

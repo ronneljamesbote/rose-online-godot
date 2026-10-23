@@ -46,7 +46,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1091-arumic-merchant-chester|Arumic Merchant Chester]]'
 source:
-  data: LIST_WEAPON.STB row 337
+  data: godot/data/items/weapon/337-flame-wand.tres
   code: module/src/items.rs
 ---
 # Flame Wand

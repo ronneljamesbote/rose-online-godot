@@ -20,7 +20,7 @@ recipe:
   quantity: 3
 craft_difficulty: 25
 source:
-  data: LIST_FACEITEM.STB row 9
+  data: godot/data/items/face/9-totem-mask.tres
   code: module/src/items.rs
 ---
 # Totem Mask

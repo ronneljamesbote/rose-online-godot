@@ -18,7 +18,7 @@ sockets: true
 price: 470000
 weight: 130
 source:
-  data: LIST_WEAPON.STB row 119
+  data: godot/data/items/weapon/119-explosion-hander.tres
   code: module/src/items.rs
 ---
 # Explosion Hander

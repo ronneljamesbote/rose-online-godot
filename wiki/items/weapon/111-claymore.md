@@ -54,7 +54,7 @@ dropped_by:
   level: 108
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 111
+  data: godot/data/items/weapon/111-claymore.tres
   code: module/src/items.rs
 ---
 # Claymore

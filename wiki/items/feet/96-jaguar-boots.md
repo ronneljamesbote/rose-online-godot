@@ -34,7 +34,7 @@ dropped_by:
   level: 126
   slots_of_30: 0.2
 source:
-  data: LIST_FOOT.STB row 96
+  data: godot/data/items/feet/96-jaguar-boots.tres
   code: module/src/items.rs
 ---
 # Jaguar Boots

@@ -9,7 +9,7 @@ effect: MP +200, MP Restoration (200), teaches skill 200, uses skill 200, fuel +
 price: 210
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 43
+  data: godot/data/items/consumable/43-royal-jelly.tres
   code: module/src/items.rs
 ---
 # Royal Jelly

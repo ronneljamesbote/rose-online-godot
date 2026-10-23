@@ -14,7 +14,7 @@ job: Hawker Job
 price: 3100
 weight: 2
 source:
-  data: LIST_CAP.STB row 608
+  data: godot/data/items/head/608-criker-hat.tres
   code: module/src/items.rs
 ---
 # Criker Hat

@@ -27,7 +27,7 @@ used_to_craft:
 - '[[items/subweapon/63-book-of-concentration|Book of Concentration]]'
 - '[[items/subweapon/64-book-of-charm|Book of Charm]]'
 source:
-  data: LIST_NATURAL.STB row 111
+  data: godot/data/items/material/111-iron-thread.tres
   code: module/src/items.rs
 ---
 # Iron Thread

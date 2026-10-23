@@ -22,7 +22,7 @@ recipe:
   quantity: 34
 craft_difficulty: 36
 source:
-  data: LIST_SUBWPN.STB row 74
+  data: godot/data/items/subweapon/74-meteoric-symbol.tres
   code: module/src/items.rs
 ---
 # Meteoric Symbol

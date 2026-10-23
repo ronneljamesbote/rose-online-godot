@@ -22,7 +22,7 @@ used_to_craft:
 - '[[items/feet/35-mighty-boots|Mighty Boots]]'
 - '[[items/feet/95-mariner-s-boots|Mariner''s Boots]]'
 source:
-  data: LIST_NATURAL.STB row 121
+  data: godot/data/items/material/121-crystal-stone.tres
   code: module/src/items.rs
 ---
 # Crystal Stone

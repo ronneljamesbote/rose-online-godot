@@ -14,7 +14,7 @@ dropped_in_zones:
 - '[[zones/52-mana-snowfields|Mana Snowfields]]'
 - '[[zones/54-crystal-snowfields|Crystal Snowfields]]'
 source:
-  data: LIST_USEITEM.STB row 321
+  data: godot/data/items/consumable/321-blue-icicle.tres
   code: module/src/items.rs
 ---
 # Blue Icicle

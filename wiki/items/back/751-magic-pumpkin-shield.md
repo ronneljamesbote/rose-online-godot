@@ -13,7 +13,7 @@ bonus: Max MP +50
 price: 1000
 weight: 30
 source:
-  data: LIST_BACK.STB row 751
+  data: godot/data/items/back/751-magic-pumpkin-shield.tres
   code: module/src/items.rs
 ---
 # Magic Pumpkin Shield

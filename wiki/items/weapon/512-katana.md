@@ -25,7 +25,7 @@ dropped_by:
   level: 108
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 512
+  data: godot/data/items/weapon/512-katana.tres
   code: module/src/items.rs
 ---
 # Katana

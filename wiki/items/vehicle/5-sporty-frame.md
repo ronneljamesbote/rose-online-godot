@@ -24,7 +24,7 @@ recipe:
   quantity: 1
 craft_difficulty: 57
 source:
-  data: LIST_PAT.STB row 5
+  data: godot/data/items/vehicle/5-sporty-frame.tres
   code: module/src/items.rs
 ---
 # Sporty Frame

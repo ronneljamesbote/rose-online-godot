@@ -18,7 +18,7 @@ recipe:
   quantity: 4
 craft_difficulty: 37
 source:
-  data: LIST_JEMITEM.STB row 337
+  data: godot/data/items/gem/337-topaz-7.tres
   code: module/src/items.rs
 ---
 # Topaz [7]

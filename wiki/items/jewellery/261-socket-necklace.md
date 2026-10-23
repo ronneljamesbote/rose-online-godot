@@ -94,7 +94,7 @@ dropped_by:
   level: 160
   slots_of_30: 1
 source:
-  data: LIST_JEWEL.STB row 261
+  data: godot/data/items/jewellery/261-socket-necklace.tres
   code: module/src/items.rs
 ---
 # Socket Necklace

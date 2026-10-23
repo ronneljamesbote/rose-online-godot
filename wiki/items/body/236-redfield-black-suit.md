@@ -14,7 +14,7 @@ bonus: Max HP +146
 price: 50750
 weight: 10
 source:
-  data: LIST_BODY.STB row 236
+  data: godot/data/items/body/236-redfield-black-suit.tres
   code: module/src/items.rs
 ---
 # Redfield Black Suit

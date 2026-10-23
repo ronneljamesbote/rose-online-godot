@@ -29,7 +29,7 @@ recipe:
   quantity: 1
 craft_difficulty: 68
 source:
-  data: LIST_PAT.STB row 335
+  data: godot/data/items/vehicle/335-spear-arms.tres
   code: module/src/items.rs
 ---
 # Spear Arms

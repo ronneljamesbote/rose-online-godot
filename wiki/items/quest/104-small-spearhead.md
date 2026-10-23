@@ -7,7 +7,7 @@ icon: item/1084
 class: Quest Items
 price: 0
 source:
-  data: LIST_QUESTITEM.STB row 104
+  data: godot/data/items/quest/104-small-spearhead.tres
   code: module/src/items.rs
 ---
 # Small Spearhead

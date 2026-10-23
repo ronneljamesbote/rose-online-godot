@@ -15,7 +15,7 @@ needed_for_quest:
 - '[[quests/2052-forgotten-temple-investigation-2|Forgotten Temple Investigation (2)]]'
 - '[[quests/2053-forgotten-temple-investigation-3|Forgotten Temple Investigation (3)]]'
 source:
-  data: LIST_QUESTITEM.STB row 512
+  data: godot/data/items/quest/512-shamanic-artifact.tres
   code: module/src/items.rs
 ---
 # Shamanic Artifact

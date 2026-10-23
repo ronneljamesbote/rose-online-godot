@@ -25,7 +25,7 @@ used_to_craft:
 - '[[items/weapon/417-bloody-hook-knuckle|Bloody Hook Knuckle]]'
 - '[[items/subweapon/79-orb-of-rage|Orb of Rage]]'
 source:
-  data: LIST_NATURAL.STB row 264
+  data: godot/data/items/material/264-giant-s-heart.tres
   code: module/src/items.rs
 ---
 # Giant's Heart

@@ -48,7 +48,7 @@ used_to_craft:
 - '[[items/subweapon/64-book-of-charm|Book of Charm]]'
 - '[[items/vehicle/3-colmandy-frame|Colmandy Frame]]'
 source:
-  data: LIST_NATURAL.STB row 43
+  data: godot/data/items/material/43-sleek-leather.tres
   code: module/src/items.rs
 ---
 # Sleek Leather

@@ -15,7 +15,7 @@ job: Muse Job
 price: 900
 weight: 3
 source:
-  data: LIST_FOOT.STB row 404
+  data: godot/data/items/feet/404-spiritual-shoes.tres
   code: module/src/items.rs
 ---
 # Spiritual Shoes

@@ -52,7 +52,7 @@ used_to_craft:
 - '[[items/feet/7-islamic-shoes|Islamic Shoes]]'
 - '[[items/weapon/163-round-spear|Round Spear]]'
 source:
-  data: LIST_NATURAL.STB row 171
+  data: godot/data/items/material/171-thin-insect-shell.tres
   code: module/src/items.rs
 ---
 # Thin Insect Shell

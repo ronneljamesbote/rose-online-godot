@@ -33,7 +33,7 @@ dropped_by:
   level: 126
   slots_of_30: 0.2
 source:
-  data: LIST_CAP.STB row 66
+  data: godot/data/items/head/66-velvet-hat-of-witch.tres
   code: module/src/items.rs
 ---
 # Velvet Hat of Witch

@@ -30,7 +30,7 @@ dropped_by:
   level: 126
   slots_of_30: 0.2
 source:
-  data: LIST_ARMS.STB row 36
+  data: godot/data/items/hands/36-kurash-gauntlets.tres
   code: module/src/items.rs
 ---
 # Kurash Gauntlets

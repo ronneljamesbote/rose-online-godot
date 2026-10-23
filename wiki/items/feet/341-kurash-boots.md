@@ -15,7 +15,7 @@ job: Soldier 2nd Advanced Jobs
 price: 35400
 weight: 6
 source:
-  data: LIST_FOOT.STB row 341
+  data: godot/data/items/feet/341-kurash-boots.tres
   code: module/src/items.rs
 ---
 # Kurash Boots

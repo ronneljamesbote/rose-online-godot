@@ -56,7 +56,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_FOOT.STB row 13
+  data: godot/data/items/feet/13-luxurious-marble-shoes.tres
   code: module/src/items.rs
 ---
 # Luxurious Marble Shoes

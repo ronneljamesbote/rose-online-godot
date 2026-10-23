@@ -17,7 +17,7 @@ dropped_by:
   level: 19
   slots_of_30: 2
 source:
-  data: LIST_USEITEM.STB row 409
+  data: godot/data/items/consumable/409-pomic-soldier.tres
   code: module/src/items.rs
 ---
 # Pomic Soldier

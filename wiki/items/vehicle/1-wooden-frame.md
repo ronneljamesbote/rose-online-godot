@@ -26,7 +26,7 @@ craft_difficulty: 30
 sold_by:
 - '[[npcs/1096-ferrell-guild-merchant-mildun|Ferrell Guild Merchant Mildun]]'
 source:
-  data: LIST_PAT.STB row 1
+  data: godot/data/items/vehicle/1-wooden-frame.tres
   code: module/src/items.rs
 ---
 # Wooden Frame

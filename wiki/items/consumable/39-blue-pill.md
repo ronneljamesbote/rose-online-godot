@@ -9,7 +9,7 @@ effect: MP +1500, teaches skill 1500, uses skill 1500, fuel +1500
 price: 4125
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 39
+  data: godot/data/items/consumable/39-blue-pill.tres
   code: module/src/items.rs
 ---
 # Blue Pill

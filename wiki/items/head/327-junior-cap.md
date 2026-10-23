@@ -19,7 +19,7 @@ sold_by:
 - '[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]'
 - '[[npcs/1112-arumic-researcher-carasia|Arumic Researcher Carasia]]'
 source:
-  data: LIST_CAP.STB row 327
+  data: godot/data/items/head/327-junior-cap.tres
   code: module/src/items.rs
 ---
 # Junior Cap

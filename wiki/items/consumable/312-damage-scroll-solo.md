@@ -19,7 +19,7 @@ dropped_by:
   level: 85
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 312
+  data: godot/data/items/consumable/312-damage-scroll-solo.tres
   code: module/src/items.rs
 ---
 # Damage Scroll (Solo)

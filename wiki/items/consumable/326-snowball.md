@@ -9,7 +9,7 @@ effect: teaches skill 3126, uses skill 3126, fuel +3126
 price: 2
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 326
+  data: godot/data/items/consumable/326-snowball.tres
   code: module/src/items.rs
 ---
 # Snowball

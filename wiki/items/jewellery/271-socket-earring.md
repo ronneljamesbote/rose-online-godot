@@ -76,7 +76,7 @@ dropped_by:
   level: 143
   slots_of_30: 1
 source:
-  data: LIST_JEWEL.STB row 271
+  data: godot/data/items/jewellery/271-socket-earring.tres
   code: module/src/items.rs
 ---
 # Socket Earring

@@ -22,7 +22,7 @@ dropped_by:
   level: 142
   slots_of_30: 2
 source:
-  data: LIST_WEAPON.STB row 590
+  data: godot/data/items/weapon/590-great-sword.tres
   code: module/src/items.rs
 ---
 # Great Sword

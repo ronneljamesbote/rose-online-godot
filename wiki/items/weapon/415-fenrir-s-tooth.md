@@ -29,7 +29,7 @@ recipe:
   quantity: 15
 craft_difficulty: 49
 source:
-  data: LIST_WEAPON.STB row 415
+  data: godot/data/items/weapon/415-fenrir-s-tooth.tres
   code: module/src/items.rs
 ---
 # Fenrir's Tooth

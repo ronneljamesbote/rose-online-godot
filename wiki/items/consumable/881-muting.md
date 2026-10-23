@@ -8,7 +8,7 @@ class: Skill Book
 effect: teaches skill 3218, uses skill 3218, fuel +3218
 price: 0
 source:
-  data: LIST_USEITEM.STB row 881
+  data: godot/data/items/consumable/881-muting.tres
   code: module/src/items.rs
 ---
 # Muting

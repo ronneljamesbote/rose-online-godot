@@ -11,7 +11,7 @@ sold_by:
 - '[[npcs/1009-armor-seller-carrion|Armor Seller Carrion]]'
 - '[[npcs/1094-armor-merchant-saki|Armor Merchant Saki]]'
 source:
-  data: LIST_USEITEM.STB row 291
+  data: godot/data/items/consumable/291-repair-hammer.tres
   code: module/src/items.rs
 ---
 # Repair Hammer

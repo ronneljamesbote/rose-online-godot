@@ -25,7 +25,7 @@ dropped_by:
   level: 77
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 505
+  data: godot/data/items/weapon/505-shark-blade.tres
   code: module/src/items.rs
 ---
 # Shark Blade

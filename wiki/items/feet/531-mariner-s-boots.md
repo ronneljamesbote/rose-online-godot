@@ -15,7 +15,7 @@ job: Hawker 2nd Advanced Jobs
 price: 21900
 weight: 3
 source:
-  data: LIST_FOOT.STB row 531
+  data: godot/data/items/feet/531-mariner-s-boots.tres
   code: module/src/items.rs
 ---
 # Mariner's Boots

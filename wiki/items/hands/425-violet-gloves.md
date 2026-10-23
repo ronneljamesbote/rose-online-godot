@@ -14,7 +14,7 @@ job: Muse 2nd Advanced Jobs
 price: 8700
 weight: 2
 source:
-  data: LIST_ARMS.STB row 425
+  data: godot/data/items/hands/425-violet-gloves.tres
   code: module/src/items.rs
 ---
 # Violet Gloves

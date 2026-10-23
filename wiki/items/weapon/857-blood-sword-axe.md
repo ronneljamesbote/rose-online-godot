@@ -18,7 +18,7 @@ sockets: true
 price: 94050
 weight: 35
 source:
-  data: LIST_WEAPON.STB row 857
+  data: godot/data/items/weapon/857-blood-sword-axe.tres
   code: module/src/items.rs
 ---
 # Blood Sword & Axe

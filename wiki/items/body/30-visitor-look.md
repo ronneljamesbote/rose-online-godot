@@ -13,7 +13,7 @@ price: 0
 weight: 10
 trade: can't be traded or dropped
 source:
-  data: LIST_BODY.STB row 30
+  data: godot/data/items/body/30-visitor-look.tres
   code: module/src/items.rs
 ---
 # Visitor Look

@@ -12,7 +12,7 @@ durability: 48
 quality: 46
 price: 85200
 source:
-  data: LIST_BACK.STB row 636
+  data: godot/data/items/back/636-lizard-backshield.tres
   code: module/src/items.rs
 ---
 # Lizard Backshield

@@ -22,7 +22,7 @@ dropped_by:
   level: 120
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 652
+  data: godot/data/items/weapon/652-gungnir.tres
   code: module/src/items.rs
 ---
 # Gungnir

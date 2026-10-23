@@ -9,7 +9,7 @@ effect: teaches [[skills/46-laugh|Laugh]], uses [[skills/46-laugh|Laugh]], fuel 
 price: 100
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 636
+  data: godot/data/items/consumable/636-laugh.tres
   code: module/src/items.rs
 ---
 # Laugh

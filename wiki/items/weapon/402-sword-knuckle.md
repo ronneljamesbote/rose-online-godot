@@ -59,7 +59,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]]'
 source:
-  data: LIST_WEAPON.STB row 402
+  data: godot/data/items/weapon/402-sword-knuckle.tres
   code: module/src/items.rs
 ---
 # Sword Knuckle

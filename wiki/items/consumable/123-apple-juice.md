@@ -16,7 +16,7 @@ quest_reward:
 - '[[quests/118-forbidden-potion|Forbidden Potion]]'
 - '[[quests/119-forbidden-potion|Forbidden Potion]]'
 source:
-  data: LIST_USEITEM.STB row 123
+  data: godot/data/items/consumable/123-apple-juice.tres
   code: module/src/items.rs
 ---
 # Apple Juice

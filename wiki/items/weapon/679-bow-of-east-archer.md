@@ -25,7 +25,7 @@ dropped_by:
   level: 120
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 679
+  data: godot/data/items/weapon/679-bow-of-east-archer.tres
   code: module/src/items.rs
 ---
 # Bow of East Archer

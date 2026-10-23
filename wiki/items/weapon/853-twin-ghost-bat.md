@@ -22,7 +22,7 @@ dropped_by:
   level: 80
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 853
+  data: godot/data/items/weapon/853-twin-ghost-bat.tres
   code: module/src/items.rs
 ---
 # Twin Ghost Bat

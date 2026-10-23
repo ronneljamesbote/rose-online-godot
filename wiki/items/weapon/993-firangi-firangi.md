@@ -21,7 +21,7 @@ dropped_by:
   level: 142
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 993
+  data: godot/data/items/weapon/993-firangi-firangi.tres
   code: module/src/items.rs
 ---
 # Firangi-Firangi

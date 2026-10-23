@@ -38,7 +38,7 @@ dropped_by:
   level: 88
   slots_of_30: 0.4
 source:
-  data: LIST_BODY.STB row 16
+  data: godot/data/items/body/16-redfield-green-suit.tres
   code: module/src/items.rs
 ---
 # Redfield Green Suit

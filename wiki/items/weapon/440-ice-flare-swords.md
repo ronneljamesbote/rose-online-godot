@@ -49,7 +49,7 @@ dropped_by:
   level: 108
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 440
+  data: godot/data/items/weapon/440-ice-flare-swords.tres
   code: module/src/items.rs
 ---
 # Ice & Flare Swords

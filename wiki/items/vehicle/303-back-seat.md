@@ -14,7 +14,7 @@ bonus: Defense +6
 price: 0
 weight: 5
 source:
-  data: LIST_PAT.STB row 303
+  data: godot/data/items/vehicle/303-back-seat.tres
   code: module/src/items.rs
 ---
 # Back Seat

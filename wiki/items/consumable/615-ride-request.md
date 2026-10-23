@@ -9,7 +9,7 @@ effect: teaches [[skills/25-ride-request|Ride Request]], uses [[skills/25-ride-r
 price: 50
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 615
+  data: godot/data/items/consumable/615-ride-request.tres
   code: module/src/items.rs
 ---
 # Ride Request

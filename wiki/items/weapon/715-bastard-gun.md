@@ -18,7 +18,7 @@ sockets: true
 price: 387800
 weight: 40
 source:
-  data: LIST_WEAPON.STB row 715
+  data: godot/data/items/weapon/715-bastard-gun.tres
   code: module/src/items.rs
 ---
 # Bastard Gun

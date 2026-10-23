@@ -54,7 +54,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1096-ferrell-guild-merchant-mildun|Ferrell Guild Merchant Mildun]]'
 source:
-  data: LIST_WEAPON.STB row 263
+  data: godot/data/items/weapon/263-hard-launcher.tres
   code: module/src/items.rs
 ---
 # Hard Launcher

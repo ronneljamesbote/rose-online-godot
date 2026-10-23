@@ -14,7 +14,7 @@ bonus: Attack Speed +6
 price: 9150
 weight: 1
 source:
-  data: LIST_ARMS.STB row 15
+  data: godot/data/items/hands/15-senior-gloves.tres
   code: module/src/items.rs
 ---
 # Senior Gloves

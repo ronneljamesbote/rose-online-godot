@@ -27,7 +27,7 @@ dropped_by:
   level: 88
   slots_of_30: 0.4
 source:
-  data: LIST_BACK.STB row 228
+  data: godot/data/items/back/228-devil-wing.tres
   code: module/src/items.rs
 ---
 # Devil Wing

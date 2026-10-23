@@ -60,9 +60,44 @@ impl CellValue {
     }
 }
 
+/// Tables the game no longer reads: their things are Godot resources now (`godot/data/`),
+/// edited in the Godot editor and exported to `overrides/data/`.
+pub const MADE_IN_GODOT: [(&str, &str); 15] = [
+    ("3DDATA/STB/LIST_FACEITEM.STB", "godot/data/items/face/"),
+    ("3DDATA/STB/LIST_CAP.STB", "godot/data/items/head/"),
+    ("3DDATA/STB/LIST_BODY.STB", "godot/data/items/body/"),
+    ("3DDATA/STB/LIST_ARMS.STB", "godot/data/items/hands/"),
+    ("3DDATA/STB/LIST_FOOT.STB", "godot/data/items/feet/"),
+    ("3DDATA/STB/LIST_BACK.STB", "godot/data/items/back/"),
+    ("3DDATA/STB/LIST_JEWEL.STB", "godot/data/items/jewellery/"),
+    ("3DDATA/STB/LIST_WEAPON.STB", "godot/data/items/weapon/"),
+    ("3DDATA/STB/LIST_SUBWPN.STB", "godot/data/items/subweapon/"),
+    ("3DDATA/STB/LIST_USEITEM.STB", "godot/data/items/consumable/"),
+    ("3DDATA/STB/LIST_JEMITEM.STB", "godot/data/items/gem/"),
+    ("3DDATA/STB/LIST_NATURAL.STB", "godot/data/items/material/"),
+    ("3DDATA/STB/LIST_QUESTITEM.STB", "godot/data/items/quest/"),
+    ("3DDATA/STB/LIST_PAT.STB", "godot/data/items/vehicle/"),
+    ("3DDATA/STB/LIST_GRADE.STB", "godot/data/items/grades/"),
+];
+
 impl Overrides {
+    /// Reads the file. An entry for a table that is made in Godot now is an error naming
+    /// the resources to edit instead.
     pub fn parse(text: &str) -> Result<Self, anyhow::Error> {
-        Ok(toml::from_str(text)?)
+        let overrides: Self = toml::from_str(text)?;
+        for cell in &overrides.stb {
+            let path = VfsPath::normalise_path(&cell.file);
+            if let Some((file, folder)) =
+                MADE_IN_GODOT.iter().find(|(file, _)| VfsPath::normalise_path(file) == path)
+            {
+                anyhow::bail!(
+                    "{file} row {} column {}: this table is made in Godot now; edit the resource in {folder} and run --export-data",
+                    cell.row,
+                    cell.column
+                );
+            }
+        }
+        Ok(overrides)
     }
 
     /// Read the file; a missing file means no changes.
@@ -197,6 +232,14 @@ mod tests {
         let mut files = BTreeMap::new();
         files.insert(VfsPath::normalise_path("T.STB"), stb(["1", "2", "3", "4"]));
         assert!(overrides.patch_files(&mut files).is_err());
+    }
+
+    #[test]
+    fn item_tables_are_made_in_godot() {
+        let error = Overrides::parse("[[stb]]\nfile = \"3ddata/stb/list_weapon.stb\"\nrow = 2\ncolumn = 35\nvalue = 12\n")
+            .unwrap_err()
+            .to_string();
+        assert!(error.contains("godot/data/items/weapon/"), "{error}");
     }
 
     #[test]

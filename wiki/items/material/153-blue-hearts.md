@@ -69,7 +69,7 @@ used_to_craft:
 - '[[items/gem/336-topaz-6|Topaz 6]]'
 - '[[items/gem/337-topaz-7|Topaz 7]]'
 source:
-  data: LIST_NATURAL.STB row 153
+  data: godot/data/items/material/153-blue-hearts.tres
   code: module/src/items.rs
 ---
 # Blue Hearts

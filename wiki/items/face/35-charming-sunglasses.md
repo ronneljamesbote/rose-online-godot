@@ -20,7 +20,7 @@ recipe:
   quantity: 4
 craft_difficulty: 29
 source:
-  data: LIST_FACEITEM.STB row 35
+  data: godot/data/items/face/35-charming-sunglasses.tres
   code: module/src/items.rs
 ---
 # Charming Sunglasses

@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/5017-moldie-s-strange-mineral-fetch-quest|Moldie''s Strange Mineral (Fetch Quest)]]'
 source:
-  data: LIST_QUESTITEM.STB row 808
+  data: godot/data/items/quest/808-green-mineral.tres
   code: module/src/items.rs
 ---
 # Green Mineral

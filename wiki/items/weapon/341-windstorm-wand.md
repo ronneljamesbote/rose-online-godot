@@ -55,7 +55,7 @@ dropped_by:
   level: 108
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 341
+  data: godot/data/items/weapon/341-windstorm-wand.tres
   code: module/src/items.rs
 ---
 # Windstorm Wand

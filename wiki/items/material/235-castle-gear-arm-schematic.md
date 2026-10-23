@@ -14,7 +14,7 @@ used_to_craft:
 - '[[items/vehicle/334-cannon-arms|Cannon Arms]]'
 - '[[items/vehicle/335-spear-arms|Spear Arms]]'
 source:
-  data: LIST_NATURAL.STB row 235
+  data: godot/data/items/material/235-castle-gear-arm-schematic.tres
   code: module/src/items.rs
 ---
 # Castle Gear Arm Schematic

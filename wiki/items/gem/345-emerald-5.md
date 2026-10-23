@@ -20,7 +20,7 @@ craft_difficulty: 27
 used_to_craft:
 - '[[items/gem/346-emerald-6|Emerald 6]]'
 source:
-  data: LIST_JEMITEM.STB row 345
+  data: godot/data/items/gem/345-emerald-5.tres
   code: module/src/items.rs
 ---
 # Emerald [5]

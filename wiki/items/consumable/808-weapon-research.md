@@ -13,7 +13,7 @@ sold_by:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 - '[[npcs/1087-akram-minister-mel|Akram Minister Mel]]'
 source:
-  data: LIST_USEITEM.STB row 808
+  data: godot/data/items/consumable/808-weapon-research.tres
   code: module/src/items.rs
 ---
 # Weapon Research

@@ -52,7 +52,7 @@ sold_by:
 - '[[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]]'
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 source:
-  data: LIST_WEAPON.STB row 61
+  data: godot/data/items/weapon/61-simple-bow-gun.tres
   code: module/src/items.rs
 ---
 # Simple Bow Gun

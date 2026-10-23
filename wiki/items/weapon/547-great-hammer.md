@@ -18,7 +18,7 @@ sockets: true
 price: 216900
 weight: 70
 source:
-  data: LIST_WEAPON.STB row 547
+  data: godot/data/items/weapon/547-great-hammer.tres
   code: module/src/items.rs
 ---
 # Great Hammer

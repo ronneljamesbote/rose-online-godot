@@ -22,7 +22,7 @@ dropped_by:
   level: 128
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 860
+  data: godot/data/items/weapon/860-dual-flare-swords.tres
   code: module/src/items.rs
 ---
 # Dual Flare Swords

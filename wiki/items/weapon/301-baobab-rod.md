@@ -75,7 +75,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1006-arumic-merchant-tryteh|Arumic Merchant Tryteh]]'
 source:
-  data: LIST_WEAPON.STB row 301
+  data: godot/data/items/weapon/301-baobab-rod.tres
   code: module/src/items.rs
 ---
 # Baobab Rod

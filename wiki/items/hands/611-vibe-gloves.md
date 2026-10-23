@@ -14,7 +14,7 @@ job: Dealer Job
 price: 2050
 weight: 2
 source:
-  data: LIST_ARMS.STB row 611
+  data: godot/data/items/hands/611-vibe-gloves.tres
   code: module/src/items.rs
 ---
 # Vibe Gloves

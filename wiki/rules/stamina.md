@@ -34,7 +34,7 @@ source:
     - module/src/ability.rs (get_value, add_value)
     - module/src/quests.rs
     - crates/rose-quest/src/lib.rs
-  data: LIST_USEITEM.STB columns 19-20 (ability 76 = Stamina and amount); LIST_SKILL.STB columns 16-19 (Stamina cost)
+  data: the consumable resources in godot/data/items/consumable/ (use_add_stat = Stamina and use_add_stat_value); LIST_SKILL.STB columns 16-19 (Stamina cost)
 ---
 # Stamina
 

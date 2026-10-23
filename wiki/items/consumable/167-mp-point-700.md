@@ -8,7 +8,7 @@ class: Automatic Consumption
 effect: MP +700, teaches skill 700, uses skill 700, fuel +700
 price: 0
 source:
-  data: LIST_USEITEM.STB row 167
+  data: godot/data/items/consumable/167-mp-point-700.tres
   code: module/src/items.rs
 ---
 # MP Point (+700)

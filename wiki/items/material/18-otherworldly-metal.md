@@ -11,7 +11,7 @@ dropped_in_zones:
 - '[[zones/55-freezing-plateau|Freezing Plateau]]'
 - '[[zones/56-forgotten-temple-b1|Forgotten Temple (B1)]]'
 source:
-  data: LIST_NATURAL.STB row 18
+  data: godot/data/items/material/18-otherworldly-metal.tres
   code: module/src/items.rs
 ---
 # Otherworldly Metal

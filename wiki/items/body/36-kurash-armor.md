@@ -30,7 +30,7 @@ dropped_by:
   level: 114
   slots_of_30: 0.2
 source:
-  data: LIST_BODY.STB row 36
+  data: godot/data/items/body/36-kurash-armor.tres
   code: module/src/items.rs
 ---
 # Kurash Armor

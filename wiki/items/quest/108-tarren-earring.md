@@ -12,7 +12,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/953-hawker-job-change-quest|Hawker Job Change Quest]]'
 source:
-  data: LIST_QUESTITEM.STB row 108
+  data: godot/data/items/quest/108-tarren-earring.tres
   code: module/src/items.rs
 ---
 # Tarren Earring

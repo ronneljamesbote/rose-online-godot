@@ -15,7 +15,7 @@ weight: 5
 quest_reward:
 - '[[quests/5065-darling-judy-2|Darling Judy (2)]]'
 source:
-  data: LIST_PAT.STB row 405
+  data: godot/data/items/vehicle/405-sun-roof.tres
   code: module/src/items.rs
 ---
 # Sun Roof

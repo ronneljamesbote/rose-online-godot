@@ -19,7 +19,7 @@ dropped_by:
   level: 47
   slots_of_30: 0.2
 source:
-  data: LIST_FOOT.STB row 412
+  data: godot/data/items/feet/412-green-sandals-of-witch.tres
   code: module/src/items.rs
 ---
 # Green Sandals of Witch

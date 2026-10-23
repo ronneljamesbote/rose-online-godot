@@ -32,7 +32,7 @@ dropped_by:
   level: 114
   slots_of_30: 0.4
 source:
-  data: LIST_CAP.STB row 126
+  data: godot/data/items/head/126-rich-merchant-turban.tres
   code: module/src/items.rs
 ---
 # Rich Merchant Turban

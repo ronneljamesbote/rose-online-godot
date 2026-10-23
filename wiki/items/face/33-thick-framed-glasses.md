@@ -20,7 +20,7 @@ recipe:
   quantity: 2
 craft_difficulty: 24
 source:
-  data: LIST_FACEITEM.STB row 33
+  data: godot/data/items/face/33-thick-framed-glasses.tres
   code: module/src/items.rs
 ---
 # Thick Framed Glasses

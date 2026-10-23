@@ -10,7 +10,7 @@ bonus: Dodge Rate +3
 price: 4750
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 157
+  data: godot/data/items/jewellery/157-smooth-earring.tres
   code: module/src/items.rs
 ---
 # Smooth Earring

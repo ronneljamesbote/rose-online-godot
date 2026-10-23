@@ -51,7 +51,7 @@ used_to_craft:
 - '[[items/subweapon/74-meteoric-symbol|Meteoric Symbol]]'
 - '[[items/subweapon/80-orb-of-abyss|Orb of Abyss]]'
 source:
-  data: LIST_NATURAL.STB row 128
+  data: godot/data/items/material/128-hersian.tres
   code: module/src/items.rs
 ---
 # Hersian

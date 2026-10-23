@@ -12,7 +12,7 @@ weight: 1
 quest_reward:
 - '[[quests/912-an-appropriate-compromise|An Appropriate Compromise]]'
 source:
-  data: LIST_JEWEL.STB row 153
+  data: godot/data/items/jewellery/153-textual-earring.tres
   code: module/src/items.rs
 ---
 # Textual Earring

@@ -14,7 +14,7 @@ bonus: Inventory Capacity +370
 price: 27600
 weight: 10
 source:
-  data: LIST_BACK.STB row 316
+  data: godot/data/items/back/316-wooden-chest.tres
   code: module/src/items.rs
 ---
 # Wooden Chest

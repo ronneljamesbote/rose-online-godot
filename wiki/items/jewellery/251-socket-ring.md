@@ -94,7 +94,7 @@ dropped_by:
   level: 150
   slots_of_30: 1
 source:
-  data: LIST_JEWEL.STB row 251
+  data: godot/data/items/jewellery/251-socket-ring.tres
   code: module/src/items.rs
 ---
 # Socket Ring

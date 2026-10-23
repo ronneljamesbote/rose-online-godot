@@ -54,7 +54,7 @@ source:
     - module/src/lib.rs (deal_damage)
     - module/src/items.rs (equip_item)
     - module/src/shop.rs (store_sell)
-  data: LIST_WEAPON.STB and the other equipment STBs column 29 (durability), column 5 (price); LIST_USEITEM.STB column 20 (perfect hammer)
+  data: the item resources in godot/data/items/ (durability, base_price; a repair hammer's add_data_value)
 ---
 # Durability and Repair
 
@@ -157,6 +157,6 @@ It never takes more durability than the item has.
 1400 x 61 = 85400, / 75 = 1138, / 400 = 2. The sword keeps 33 durability. The loss for
 this sword ranges from 0 (roll 0) to 5 (roll 99).
 
-How a hammer counts as "perfect": its LIST_USEITEM column 20 is not 0.
+How a hammer counts as "perfect": its `add_data_value` (iROSE's LIST_USEITEM column 20) is not 0.
 
 > Open question: the server repairs at any NPC within 15 metres; only the client limits repair to NPCs whose dialog offers it.

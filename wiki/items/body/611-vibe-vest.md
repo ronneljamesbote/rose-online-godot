@@ -18,7 +18,7 @@ dropped_by:
   level: 40
   slots_of_30: 0.4
 source:
-  data: LIST_BODY.STB row 611
+  data: godot/data/items/body/611-vibe-vest.tres
   code: module/src/items.rs
 ---
 # Vibe Vest

@@ -14,7 +14,7 @@ job: Soldier and Hawker Job
 price: 15500
 weight: 20
 source:
-  data: LIST_BACK.STB row 592
+  data: godot/data/items/back/592-endeavor-backshield.tres
   code: module/src/items.rs
 ---
 # Endeavor Backshield

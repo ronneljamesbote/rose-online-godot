@@ -9,7 +9,7 @@ effect: No Storage Charge +1008, teaches skill 1008, uses skill 1008, fuel +1008
 price: 200
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 952
+  data: godot/data/items/consumable/952-free-storage-coupon.tres
   code: module/src/items.rs
 ---
 # Free Storage Coupon

@@ -14,7 +14,7 @@ job: Soldier Job
 price: 1950
 weight: 3
 source:
-  data: LIST_ARMS.STB row 307
+  data: godot/data/items/hands/307-iron-gauntlets.tres
   code: module/src/items.rs
 ---
 # Iron Gauntlets

@@ -19,7 +19,7 @@ dropped_by:
   level: 142
   slots_of_30: 1
 source:
-  data: LIST_FOOT.STB row 534
+  data: godot/data/items/feet/534-mariner-s-boots.tres
   code: module/src/items.rs
 ---
 # Mariner's Boots

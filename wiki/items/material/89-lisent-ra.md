@@ -8,7 +8,7 @@ class: Chemicals
 price: 2905
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 89
+  data: godot/data/items/material/89-lisent-ra.tres
   code: module/src/items.rs
 ---
 # Lisent (Ra)

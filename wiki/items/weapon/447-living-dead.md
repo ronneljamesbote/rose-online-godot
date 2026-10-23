@@ -18,7 +18,7 @@ sockets: true
 price: 479300
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 447
+  data: godot/data/items/weapon/447-living-dead.tres
   code: module/src/items.rs
 ---
 # Living Dead

@@ -16,7 +16,7 @@ dropped_in_zones:
 - '[[zones/54-crystal-snowfields|Crystal Snowfields]]'
 - '[[zones/55-freezing-plateau|Freezing Plateau]]'
 source:
-  data: LIST_USEITEM.STB row 323
+  data: godot/data/items/consumable/323-white-icicle.tres
   code: module/src/items.rs
 ---
 # White Icicle

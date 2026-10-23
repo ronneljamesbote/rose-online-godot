@@ -12,7 +12,7 @@ trade: can't be traded
 quest_reward:
 - quest 5063
 source:
-  data: LIST_USEITEM.STB row 914
+  data: godot/data/items/consumable/914-grab-bag.tres
   code: module/src/items.rs
 ---
 # Grab Bag

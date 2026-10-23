@@ -47,7 +47,7 @@ sold_by:
 quest_reward:
 - '[[quests/907-solitary-orias|Solitary Orias]]'
 source:
-  data: LIST_WEAPON.STB row 333
+  data: godot/data/items/weapon/333-sorcerer-s-wand.tres
   code: module/src/items.rs
 ---
 # Sorcerer's Wand

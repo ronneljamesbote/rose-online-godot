@@ -8,7 +8,7 @@ class: Skill Book
 effect: teaches skill 3215, uses skill 3215, fuel +3215
 price: 0
 source:
-  data: LIST_USEITEM.STB row 878
+  data: godot/data/items/consumable/878-self-healing.tres
   code: module/src/items.rs
 ---
 # Self Healing

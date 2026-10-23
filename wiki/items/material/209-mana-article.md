@@ -12,7 +12,7 @@ dropped_by:
   level: 90
   slots_of_30: 1
 source:
-  data: LIST_NATURAL.STB row 209
+  data: godot/data/items/material/209-mana-article.tres
   code: module/src/items.rs
 ---
 # Mana Article

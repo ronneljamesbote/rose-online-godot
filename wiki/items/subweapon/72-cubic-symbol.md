@@ -26,7 +26,7 @@ dropped_by:
   level: 102
   slots_of_30: 0.4
 source:
-  data: LIST_SUBWPN.STB row 72
+  data: godot/data/items/subweapon/72-cubic-symbol.tres
   code: module/src/items.rs
 ---
 # Cubic Symbol

@@ -10,7 +10,7 @@ quality: 44
 bonus: Charm +13
 price: 2100
 source:
-  data: LIST_FACEITEM.STB row 15
+  data: godot/data/items/face/15-mask-of-venus.tres
   code: module/src/items.rs
 ---
 # Mask of Venus

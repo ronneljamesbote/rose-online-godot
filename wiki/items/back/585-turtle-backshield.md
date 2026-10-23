@@ -13,7 +13,7 @@ quality: 28
 price: 10900
 weight: 20
 source:
-  data: LIST_BACK.STB row 585
+  data: godot/data/items/back/585-turtle-backshield.tres
   code: module/src/items.rs
 ---
 # Turtle Backshield

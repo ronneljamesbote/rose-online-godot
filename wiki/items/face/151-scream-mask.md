@@ -11,7 +11,7 @@ bonus: Strength +7
 price: 1000
 weight: 2
 source:
-  data: LIST_FACEITEM.STB row 151
+  data: godot/data/items/face/151-scream-mask.tres
   code: module/src/items.rs
 ---
 # Scream Mask

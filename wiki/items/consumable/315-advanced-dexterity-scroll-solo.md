@@ -13,7 +13,7 @@ dropped_by:
   level: 80
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 315
+  data: godot/data/items/consumable/315-advanced-dexterity-scroll-solo.tres
   code: module/src/items.rs
 ---
 # Advanced Dexterity Scroll (Solo)

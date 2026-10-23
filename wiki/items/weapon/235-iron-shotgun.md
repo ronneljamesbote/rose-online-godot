@@ -48,7 +48,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1096-ferrell-guild-merchant-mildun|Ferrell Guild Merchant Mildun]]'
 source:
-  data: LIST_WEAPON.STB row 235
+  data: godot/data/items/weapon/235-iron-shotgun.tres
   code: module/src/items.rs
 ---
 # Iron Shotgun

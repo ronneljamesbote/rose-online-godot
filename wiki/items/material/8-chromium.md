@@ -21,7 +21,7 @@ used_to_craft:
 - '[[items/weapon/417-bloody-hook-knuckle|Bloody Hook Knuckle]]'
 - '[[items/subweapon/17-vivor-shield|Vivor Shield]]'
 source:
-  data: LIST_NATURAL.STB row 8
+  data: godot/data/items/material/8-chromium.tres
   code: module/src/items.rs
 ---
 # Chromium

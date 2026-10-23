@@ -37,7 +37,7 @@ dropped_by:
   level: 88
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 615
+  data: godot/data/items/weapon/615-tower-axe.tres
   code: module/src/items.rs
 ---
 # Tower Axe

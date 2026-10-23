@@ -43,7 +43,7 @@ used_to_craft:
 - '[[items/weapon/415-fenrir-s-tooth|Fenrir''s Tooth]]'
 - '[[items/subweapon/77-bang-bang-tree-leaf|Bang Bang Tree Leaf]]'
 source:
-  data: LIST_NATURAL.STB row 262
+  data: godot/data/items/material/262-yeti-charm.tres
   code: module/src/items.rs
 ---
 # Yeti Charm

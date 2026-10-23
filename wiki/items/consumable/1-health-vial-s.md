@@ -45,7 +45,7 @@ quest_reward:
 - '[[quests/1002-dealer-job-change-quest|Dealer Job Change Quest]]'
 - '[[quests/1003-dealer-job-change-quest|Dealer Job Change Quest]]'
 source:
-  data: LIST_USEITEM.STB row 1
+  data: godot/data/items/consumable/1-health-vial-s.tres
   code: module/src/items.rs
 ---
 # Health Vial (S)

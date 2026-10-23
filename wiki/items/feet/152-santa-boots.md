@@ -16,7 +16,7 @@ weight: 3
 quest_reward:
 - '[[quests/5061-the-santa-suit-heist|The Santa Suit Heist]]'
 source:
-  data: LIST_FOOT.STB row 152
+  data: godot/data/items/feet/152-santa-boots.tres
   code: module/src/items.rs
 ---
 # Santa Boots

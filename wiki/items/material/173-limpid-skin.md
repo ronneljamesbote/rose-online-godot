@@ -49,7 +49,7 @@ used_to_craft:
 - '[[items/subweapon/68-magic-mirror|Magic Mirror]]'
 - '[[items/subweapon/69-shadow-mirror|Shadow Mirror]]'
 source:
-  data: LIST_NATURAL.STB row 173
+  data: godot/data/items/material/173-limpid-skin.tres
   code: module/src/items.rs
 ---
 # Limpid Skin

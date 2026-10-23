@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/5061-the-santa-suit-heist|The Santa Suit Heist]]'
 source:
-  data: LIST_QUESTITEM.STB row 901
+  data: godot/data/items/quest/901-stolen-santa-suit.tres
   code: module/src/items.rs
 ---
 # Stolen Santa Suit

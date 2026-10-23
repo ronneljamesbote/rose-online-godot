@@ -23,7 +23,7 @@ used_to_craft:
 - '[[items/subweapon/66-elven-anthology|Elven Anthology]]'
 - '[[items/subweapon/67-basic-encyclopedia|Basic Encyclopedia]]'
 source:
-  data: LIST_NATURAL.STB row 112
+  data: godot/data/items/material/112-silver-thread.tres
   code: module/src/items.rs
 ---
 # Silver Thread

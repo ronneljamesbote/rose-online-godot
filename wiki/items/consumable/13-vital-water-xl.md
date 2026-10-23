@@ -9,7 +9,7 @@ effect: HP +1000, teaches [[skills/991-enchant-armor|Enchant Armor]] level 10, u
 price: 2100
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 13
+  data: godot/data/items/consumable/13-vital-water-xl.tres
   code: module/src/items.rs
 ---
 # Vital Water (XL)

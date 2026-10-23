@@ -19,7 +19,7 @@ sold_by:
 - '[[npcs/1063-little-street-vendor-mile|Little Street Vendor Mile]]'
 - '[[npcs/1097-tavern-owner-harin|Tavern Owner Harin]]'
 source:
-  data: LIST_USEITEM.STB row 121
+  data: godot/data/items/consumable/121-banana-milk.tres
   code: module/src/items.rs
 ---
 # Banana Milk

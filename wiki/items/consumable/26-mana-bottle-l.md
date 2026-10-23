@@ -29,7 +29,7 @@ sold_by:
 quest_reward:
 - '[[quests/151-lunarian-coffee|Lunarian Coffee]]'
 source:
-  data: LIST_USEITEM.STB row 26
+  data: godot/data/items/consumable/26-mana-bottle-l.tres
   code: module/src/items.rs
 ---
 # Mana Bottle (L)

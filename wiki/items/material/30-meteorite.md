@@ -8,7 +8,7 @@ class: Stone Material
 price: 645
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 30
+  data: godot/data/items/material/30-meteorite.tres
   code: module/src/items.rs
 ---
 # Meteorite

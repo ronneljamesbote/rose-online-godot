@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/121-banned-recipe|Banned Recipe]]'
 - '[[quests/122-resurrection|Resurrection]]'
 source:
-  data: LIST_QUESTITEM.STB row 610
+  data: godot/data/items/quest/610-five-color-scale.tres
   code: module/src/items.rs
 ---
 # Five-Color Scale

@@ -65,7 +65,7 @@ dropped_by:
 dropped_in_zones:
 - '[[zones/56-forgotten-temple-b1|Forgotten Temple (B1)]]'
 source:
-  data: LIST_USEITEM.STB row 155
+  data: godot/data/items/consumable/155-hp-point-500.tres
   code: module/src/items.rs
 ---
 # HP Point (+500)

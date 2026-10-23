@@ -23,7 +23,7 @@ dropped_by:
   level: 100
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 771
+  data: godot/data/items/weapon/771-holy-staff.tres
   code: module/src/items.rs
 ---
 # Holy Staff

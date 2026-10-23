@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/1062-namielle-mother-of-all-second-job-change|Namielle: Mother of All (Second Job Change)]]'
 - '[[quests/1063-namielle-mother-of-all-second-job-change|Namielle: Mother of All (Second Job Change)]]'
 source:
-  data: LIST_QUESTITEM.STB row 211
+  data: godot/data/items/quest/211-old-priest-chain.tres
   code: module/src/items.rs
 ---
 # Old Priest Chain

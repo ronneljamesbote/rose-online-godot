@@ -50,7 +50,7 @@ used_to_craft:
 - '[[items/subweapon/3-round-shield|Round Shield]]'
 - '[[items/vehicle/1-wooden-frame|Wooden Frame]]'
 source:
-  data: LIST_NATURAL.STB row 41
+  data: godot/data/items/material/41-worn-out-leather.tres
   code: module/src/items.rs
 ---
 # Worn-out Leather

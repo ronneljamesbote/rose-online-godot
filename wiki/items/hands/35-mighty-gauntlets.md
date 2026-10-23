@@ -54,7 +54,7 @@ dropped_by:
   level: 104
   slots_of_30: 0.4
 source:
-  data: LIST_ARMS.STB row 35
+  data: godot/data/items/hands/35-mighty-gauntlets.tres
   code: module/src/items.rs
 ---
 # Mighty Gauntlets

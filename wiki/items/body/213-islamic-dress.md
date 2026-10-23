@@ -14,7 +14,7 @@ bonus: Max HP +76
 price: 10050
 weight: 10
 source:
-  data: LIST_BODY.STB row 213
+  data: godot/data/items/body/213-islamic-dress.tres
   code: module/src/items.rs
 ---
 # Islamic Dress

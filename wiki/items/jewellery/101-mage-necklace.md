@@ -16,7 +16,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1092-gypsy-jewel-seller-bellia|Gypsy Jewel Seller Bellia]]'
 source:
-  data: LIST_JEWEL.STB row 101
+  data: godot/data/items/jewellery/101-mage-necklace.tres
   code: module/src/items.rs
 ---
 # Mage Necklace

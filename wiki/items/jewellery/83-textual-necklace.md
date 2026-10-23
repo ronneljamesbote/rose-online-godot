@@ -16,7 +16,7 @@ dropped_by:
 quest_reward:
 - '[[quests/912-an-appropriate-compromise|An Appropriate Compromise]]'
 source:
-  data: LIST_JEWEL.STB row 83
+  data: godot/data/items/jewellery/83-textual-necklace.tres
   code: module/src/items.rs
 ---
 # Textual Necklace

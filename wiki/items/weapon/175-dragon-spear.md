@@ -48,7 +48,7 @@ dropped_by:
   level: 128
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 175
+  data: godot/data/items/weapon/175-dragon-spear.tres
   code: module/src/items.rs
 ---
 # Dragon Spear

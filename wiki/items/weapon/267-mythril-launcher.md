@@ -63,7 +63,7 @@ dropped_by:
   level: 88
   slots_of_30: 2
 source:
-  data: LIST_WEAPON.STB row 267
+  data: godot/data/items/weapon/267-mythril-launcher.tres
   code: module/src/items.rs
 ---
 # Mythril Launcher

@@ -27,7 +27,7 @@ used_to_craft:
 - '[[items/weapon/337-flame-wand|Flame Wand]]'
 - '[[items/weapon/338-thunder-wand|Thunder Wand]]'
 source:
-  data: LIST_NATURAL.STB row 3
+  data: godot/data/items/material/3-copper.tres
   code: module/src/items.rs
 ---
 # Copper

@@ -83,7 +83,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]]'
 source:
-  data: LIST_WEAPON.STB row 162
+  data: godot/data/items/weapon/162-javelin.tres
   code: module/src/items.rs
 ---
 # Javelin

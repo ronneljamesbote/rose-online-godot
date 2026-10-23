@@ -14,7 +14,7 @@ job: Hawker 2nd Advanced Jobs
 price: 12100
 weight: 2
 source:
-  data: LIST_CAP.STB row 623
+  data: godot/data/items/head/623-black-pirate-hat.tres
   code: module/src/items.rs
 ---
 # Black Pirate Hat

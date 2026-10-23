@@ -36,7 +36,7 @@ dropped_by:
   level: 108
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 213
+  data: godot/data/items/weapon/213-cupid-bow.tres
   code: module/src/items.rs
 ---
 # Cupid Bow

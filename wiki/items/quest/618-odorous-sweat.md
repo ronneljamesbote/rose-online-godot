@@ -14,7 +14,7 @@ needed_for_quest:
 - '[[quests/135-the-scheme|The Scheme]]'
 - '[[quests/136-the-scheme|The Scheme]]'
 source:
-  data: LIST_QUESTITEM.STB row 618
+  data: godot/data/items/quest/618-odorous-sweat.tres
   code: module/src/items.rs
 ---
 # Odorous Sweat

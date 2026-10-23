@@ -22,7 +22,7 @@ dropped_by:
   level: 160
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 50
+  data: godot/data/items/weapon/50-final-hammer.tres
   code: module/src/items.rs
 ---
 # Final Hammer

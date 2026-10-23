@@ -10,7 +10,7 @@ bonus: Critical +38
 price: 804900
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 184
+  data: godot/data/items/jewellery/184-one-shot-earring.tres
   code: module/src/items.rs
 ---
 # One-Shot Earring

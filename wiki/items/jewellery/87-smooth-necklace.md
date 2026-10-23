@@ -10,7 +10,7 @@ bonus: Dodge Rate +3
 price: 4750
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 87
+  data: godot/data/items/jewellery/87-smooth-necklace.tres
   code: module/src/items.rs
 ---
 # Smooth Necklace

@@ -13,7 +13,7 @@ needed_for_quest:
 - '[[quests/129-the-owl-eye|The Owl Eye]]'
 - '[[quests/130-eva-the-sorcerer|Eva the Sorcerer]]'
 source:
-  data: LIST_QUESTITEM.STB row 614
+  data: godot/data/items/quest/614-owl-eye.tres
   code: module/src/items.rs
 ---
 # Owl Eye

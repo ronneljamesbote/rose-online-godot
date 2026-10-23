@@ -13,7 +13,7 @@ needed_for_quest:
 - '[[quests/5009-candle-ghost-extermination-fetch-quest|Candle Ghost Extermination (Fetch Quest)]]'
 - '[[quests/5018-candle-ghost-s-identity-fetch-quest|Candle Ghost''s Identity (Fetch Quest)]]'
 source:
-  data: LIST_QUESTITEM.STB row 809
+  data: godot/data/items/quest/809-candle-ghost-mask.tres
   code: module/src/items.rs
 ---
 # Candle Ghost Mask

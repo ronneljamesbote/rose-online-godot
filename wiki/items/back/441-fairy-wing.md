@@ -14,7 +14,7 @@ bonus: Movement Speed +50
 price: 26950
 weight: 2
 source:
-  data: LIST_BACK.STB row 441
+  data: godot/data/items/back/441-fairy-wing.tres
   code: module/src/items.rs
 ---
 # Fairy Wing

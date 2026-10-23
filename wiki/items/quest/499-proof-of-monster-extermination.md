@@ -16,7 +16,7 @@ needed_for_quest:
 - '[[quests/912-an-appropriate-compromise|An Appropriate Compromise]]'
 - '[[quests/5052-hunting-practice-2|Hunting Practice (2)]]'
 source:
-  data: LIST_QUESTITEM.STB row 499
+  data: godot/data/items/quest/499-proof-of-monster-extermination.tres
   code: module/src/items.rs
 ---
 # Proof of Monster Extermination

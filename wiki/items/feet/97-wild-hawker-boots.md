@@ -34,7 +34,7 @@ dropped_by:
   level: 133
   slots_of_30: 0.4
 source:
-  data: LIST_FOOT.STB row 97
+  data: godot/data/items/feet/97-wild-hawker-boots.tres
   code: module/src/items.rs
 ---
 # Wild Hawker Boots

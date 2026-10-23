@@ -48,7 +48,7 @@ sold_by:
 quest_reward:
 - '[[quests/5032-piety-and-a-bribe|Piety and a Bribe?]]'
 source:
-  data: LIST_FOOT.STB row 3
+  data: godot/data/items/feet/3-waterproof-shoes.tres
   code: module/src/items.rs
 ---
 # Waterproof Shoes

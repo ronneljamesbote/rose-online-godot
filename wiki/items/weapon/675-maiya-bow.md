@@ -22,7 +22,7 @@ dropped_by:
   level: 72
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 675
+  data: godot/data/items/weapon/675-maiya-bow.tres
   code: module/src/items.rs
 ---
 # Maiya Bow

@@ -29,7 +29,7 @@ used_to_craft:
 - '[[items/subweapon/71-rune-stone|Rune Stone]]'
 - '[[items/vehicle/332-drill-arms|Drill Arms]]'
 source:
-  data: LIST_NATURAL.STB row 35
+  data: godot/data/items/material/35-paulownia-wood.tres
   code: module/src/items.rs
 ---
 # Paulownia Wood

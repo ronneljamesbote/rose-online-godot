@@ -37,7 +37,7 @@ dropped_by:
   level: 101
   slots_of_30: 0.4
 source:
-  data: LIST_SUBWPN.STB row 8
+  data: godot/data/items/subweapon/8-tower-shield.tres
   code: module/src/items.rs
 ---
 # Tower Shield

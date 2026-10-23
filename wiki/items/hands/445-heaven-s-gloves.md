@@ -14,7 +14,7 @@ job: Muse 3rd Advanced Jobs
 price: 36700
 weight: 2
 source:
-  data: LIST_ARMS.STB row 445
+  data: godot/data/items/hands/445-heaven-s-gloves.tres
   code: module/src/items.rs
 ---
 # Heaven's Gloves

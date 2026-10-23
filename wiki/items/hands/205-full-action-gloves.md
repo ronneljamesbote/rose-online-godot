@@ -14,7 +14,7 @@ bonus: Attack Speed +2
 price: 1400
 weight: 1
 source:
-  data: LIST_ARMS.STB row 205
+  data: godot/data/items/hands/205-full-action-gloves.tres
   code: module/src/items.rs
 ---
 # Full Action Gloves

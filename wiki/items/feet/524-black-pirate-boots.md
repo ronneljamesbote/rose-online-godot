@@ -22,7 +22,7 @@ dropped_by:
   level: 75
   slots_of_30: 0.6
 source:
-  data: LIST_FOOT.STB row 524
+  data: godot/data/items/feet/524-black-pirate-boots.tres
   code: module/src/items.rs
 ---
 # Black Pirate Boots

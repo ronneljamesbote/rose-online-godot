@@ -14,7 +14,7 @@ job: Dealer Job
 price: 2650
 weight: 2
 source:
-  data: LIST_CAP.STB row 708
+  data: godot/data/items/head/708-vibe-turban.tres
   code: module/src/items.rs
 ---
 # Vibe Turban

@@ -4,12 +4,15 @@
 //!   rose-stdb-import list <data.idx>       files per folder
 //!   rose-stdb-import time <data.idx>       how long the databases take to build from memory
 //!   rose-stdb-import pack <data.idx> <dir> upload batches for server/upload-game-data.sh
+//!   rose-stdb-import compare <data.idx>    every value the data export changes from iROSE
 //!
 //! `pack` writes upload-NNN.json files, each the JSON argument list of the module's
 //! `upload_game_files` reducer (well under the server's request size limit), plus manifest.json.
 //! It first applies our data changes: the file named by ROSE_OVERRIDES, else
 //! overrides/game-data.toml in the current folder, then adds motions.toml (ROSE_MOTIONS) and
-//! the zone files in zones/ (ROSE_ZONES) from beside it (see overrides/README.md).
+//! the zone files in zones/ (ROSE_ZONES) from beside it (see overrides/README.md). The game
+//! data exported from the Godot resources (data/ beside it, or ROSE_DATA) is read in place of
+//! the iROSE tables it replaces, which are then neither read nor sent.
 
 use std::{
     collections::BTreeMap,
@@ -54,23 +57,44 @@ fn main() {
     let (mode, data_idx) = match &args[..] {
         [_, mode, data_idx, ..] => (mode.as_str(), Path::new(data_idx)),
         _ => {
-            eprintln!("usage: rose-stdb-import list|time|pack <data.idx> [out dir]");
+            eprintln!("usage: rose-stdb-import list|time|pack|compare <data.idx> [out dir]");
             std::process::exit(2);
         }
     };
+    let path = std::env::var_os("ROSE_OVERRIDES")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| PathBuf::from(rose_game_overrides::OVERRIDES_FILE));
+    // overrides/data/ (exported from the Godot resources), next to the overrides file unless
+    // ROSE_DATA names it.
+    let data_dir = std::env::var_os("ROSE_DATA").map(PathBuf::from).unwrap_or_else(|| {
+        path.parent().unwrap_or(Path::new("")).join(Path::new(rose_data_export::DATA_DIR).file_name().unwrap())
+    });
+    let export = read_export(&data_dir);
     let read: &'static Mutex<BTreeMap<PathBuf, Vec<u8>>> = Box::leak(Box::default());
     let root = data_idx.parent().map(|p| p.to_path_buf()).unwrap_or_default();
+    let mut export_device = rose_file_readers::MemoryFilesystemDevice::default();
+    for (game_path, data) in &export {
+        export_device.insert(&game_path.to_string_lossy(), data.clone());
+    }
     let vfs = VirtualFilesystem::new(vec![
+        Box::new(export_device),
         Box::new(RecordingDevice { inner: VfsIndex::load(data_idx).expect("load data.idx"), read }),
         Box::new(RecordingDevice { inner: HostFilesystemDevice::new(root), read }),
     ]);
+    if mode == "compare" {
+        compare(&vfs, &data_dir, export.is_empty());
+        return;
+    }
     let started = Instant::now();
     let zmo_data = rose_game_data::load_game_data(&vfs).expect("load game data");
     let mut files = std::mem::take(&mut *read.lock().unwrap());
+    if export.is_empty() {
+        eprintln!("data: no export in {}, the items come from the iROSE tables", data_dir.display());
+    } else {
+        eprintln!("data: {} files from {}", export.len(), data_dir.display());
+    }
+    files.extend(export);
     if mode == "pack" || mode == "time" {
-        let path = std::env::var_os("ROSE_OVERRIDES")
-            .map(PathBuf::from)
-            .unwrap_or_else(|| PathBuf::from(rose_game_overrides::OVERRIDES_FILE));
         let overrides = rose_game_overrides::Overrides::load(&path).expect("read the overrides file");
         let cells = overrides.patch_files(&mut files).expect("apply the overrides");
         eprintln!("overrides: {} changed cells from {}", cells, path.display());
@@ -199,6 +223,58 @@ fn main() {
             std::process::exit(2);
         }
     }
+}
+
+/// The export (`items/*.toml` under `dir`), checked and turned into the JSON files the
+/// server reads (by their path among the game files). Empty when there is no export.
+fn read_export(dir: &Path) -> BTreeMap<PathBuf, Vec<u8>> {
+    let items = rose_data_export::ItemsExport::from_files(|name| {
+        let path = dir.join(rose_data_export::items_file(name));
+        match std::fs::read_to_string(&path) {
+            Ok(text) => Ok(Some(text)),
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(None),
+            Err(e) => Err(anyhow::Error::new(e).context(path.display().to_string())),
+        }
+    })
+    .unwrap_or_else(|e| {
+        eprintln!("data: {e:#}");
+        std::process::exit(1);
+    });
+    let mut files = BTreeMap::new();
+    if let Some(items) = items {
+        let format = rose_data_export::Format::Json;
+        for (name, text) in items.to_files_as(format).expect("write the items as JSON") {
+            let game_path = format!("{}/{}", rose_data_export::DATA_GAME_DIR, rose_data_export::items_file_as(name, format));
+            files.insert(PathBuf::from(game_path.to_uppercase()), text.into_bytes());
+        }
+    }
+    files
+}
+
+/// The same-data check: loads the items from the iROSE tables and from the export and
+/// prints every value that differs.
+fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool) {
+    if no_export {
+        eprintln!("compare: no export in {}", data_dir.display());
+        std::process::exit(1);
+    }
+    let strings = rose_data_irose::get_string_database(vfs, 1).expect("string database");
+    let started = Instant::now();
+    let irose = rose_data_irose::get_item_database(vfs, strings.clone()).expect("iROSE items");
+    let irose_ms = started.elapsed().as_millis();
+    let started = Instant::now();
+    let export = rose_game_data::load_items(vfs, strings).expect("exported items");
+    let export_ms = started.elapsed().as_millis();
+    let count = rose_data_export::ItemsExport::from_database(&export).count();
+    let differences = rose_data_export::compare_item_databases(&irose, &export);
+    for line in &differences {
+        println!("{line}");
+    }
+    println!(
+        "items: {count} items and {} grades; iROSE tables {irose_ms} ms, export {export_ms} ms; {} values differ",
+        export.item_grades().len(),
+        differences.len()
+    );
 }
 
 /// For each zone the uploaded files change (`overrides/zones/`), how far its spawn points,

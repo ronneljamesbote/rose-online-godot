@@ -13,7 +13,7 @@ needed_for_quest:
 - '[[quests/5064-darling-judy-1|Darling Judy (1)]]'
 - '[[quests/5065-darling-judy-2|Darling Judy (2)]]'
 source:
-  data: LIST_QUESTITEM.STB row 904
+  data: godot/data/items/quest/904-cherry-blossom.tres
   code: module/src/items.rs
 ---
 # Cherry Blossom

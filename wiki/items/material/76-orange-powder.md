@@ -28,7 +28,7 @@ dropped_in_zones:
 - '[[zones/52-mana-snowfields|Mana Snowfields]]'
 - '[[zones/59-luna-clan-field|Luna Clan Field]]'
 source:
-  data: LIST_NATURAL.STB row 76
+  data: godot/data/items/material/76-orange-powder.tres
   code: module/src/items.rs
 ---
 # Orange Powder

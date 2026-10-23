@@ -69,7 +69,7 @@ sold_by:
 used_to_craft:
 - '[[items/weapon/433-dual-bushido|Dual Bushido]]'
 source:
-  data: LIST_WEAPON.STB row 6
+  data: godot/data/items/weapon/6-bushido.tres
   code: module/src/items.rs
 ---
 # Bushido

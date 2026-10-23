@@ -14,7 +14,7 @@ quality: 33
 price: 1400
 weight: 2
 source:
-  data: LIST_FOOT.STB row 209
+  data: godot/data/items/feet/209-field-walkers.tres
   code: module/src/items.rs
 ---
 # Field Walkers

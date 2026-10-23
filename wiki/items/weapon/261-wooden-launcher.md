@@ -56,7 +56,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1011-eccentric-inventor-spero|Eccentric Inventor Spero]]'
 source:
-  data: LIST_WEAPON.STB row 261
+  data: godot/data/items/weapon/261-wooden-launcher.tres
   code: module/src/items.rs
 ---
 # Wooden Launcher

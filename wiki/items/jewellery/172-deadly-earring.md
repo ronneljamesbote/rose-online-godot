@@ -16,7 +16,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1180-ferrell-guild-banker-andre|Ferrell Guild Banker Andre]]'
 source:
-  data: LIST_JEWEL.STB row 172
+  data: godot/data/items/jewellery/172-deadly-earring.tres
   code: module/src/items.rs
 ---
 # Deadly Earring

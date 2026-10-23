@@ -18,7 +18,7 @@ sockets: true
 price: 169500
 weight: 40
 source:
-  data: LIST_WEAPON.STB row 620
+  data: godot/data/items/weapon/620-flame-axe.tres
   code: module/src/items.rs
 ---
 # Flame Axe

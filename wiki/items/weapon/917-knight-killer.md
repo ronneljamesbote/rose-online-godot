@@ -17,7 +17,7 @@ bonus: Attack Speed +20
 price: 242060
 weight: 59
 source:
-  data: LIST_WEAPON.STB row 917
+  data: godot/data/items/weapon/917-knight-killer.tres
   code: module/src/items.rs
 ---
 # Knight Killer

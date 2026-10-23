@@ -40,7 +40,7 @@ dropped_in_zones:
 used_to_craft:
 - '[[items/vehicle/132-sheft-engine|Sheft Engine]]'
 source:
-  data: LIST_NATURAL.STB row 65
+  data: godot/data/items/material/65-high-ether.tres
   code: module/src/items.rs
 ---
 # High Ether

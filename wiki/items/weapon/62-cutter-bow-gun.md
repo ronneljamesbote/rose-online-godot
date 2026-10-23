@@ -48,7 +48,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 source:
-  data: LIST_WEAPON.STB row 62
+  data: godot/data/items/weapon/62-cutter-bow-gun.tres
   code: module/src/items.rs
 ---
 # Cutter Bow Gun

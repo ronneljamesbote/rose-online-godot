@@ -38,7 +38,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1010-designer-keenu|Designer Keenu]]'
 source:
-  data: LIST_BODY.STB row 9
+  data: godot/data/items/body/9-brown-denim-look.tres
   code: module/src/items.rs
 ---
 # Brown Denim Look

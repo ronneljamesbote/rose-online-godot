@@ -41,7 +41,7 @@ used_to_craft:
 - '[[items/weapon/438-blood-sword-axe|Blood Sword & Axe]]'
 - '[[items/weapon/439-dual-katana|Dual Katana]]'
 source:
-  data: LIST_NATURAL.STB row 130
+  data: godot/data/items/material/130-lusian.tres
   code: module/src/items.rs
 ---
 # Lusian

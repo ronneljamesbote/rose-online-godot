@@ -27,7 +27,7 @@ dropped_in_zones:
 - '[[zones/11-junon-clan-field|Junon Clan Field]]'
 - '[[zones/59-luna-clan-field|Luna Clan Field]]'
 source:
-  data: LIST_USEITEM.STB row 182
+  data: godot/data/items/consumable/182-clan-point-2.tres
   code: module/src/items.rs
 ---
 # Clan Point (+2)

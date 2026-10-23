@@ -14,7 +14,7 @@ job: Soldier 2nd Advanced Jobs
 price: 8950
 weight: 3
 source:
-  data: LIST_ARMS.STB row 321
+  data: godot/data/items/hands/321-chrome-gauntlets.tres
   code: module/src/items.rs
 ---
 # Chrome Gauntlets

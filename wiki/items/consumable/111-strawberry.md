@@ -9,7 +9,7 @@ effect: HP +140, HP Restoration (140), teaches skill 140, uses skill 140, fuel +
 price: 42
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 111
+  data: godot/data/items/consumable/111-strawberry.tres
   code: module/src/items.rs
 ---
 # Strawberry

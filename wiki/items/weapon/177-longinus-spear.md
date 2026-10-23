@@ -39,7 +39,7 @@ dropped_by:
   level: 147
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 177
+  data: godot/data/items/weapon/177-longinus-spear.tres
   code: module/src/items.rs
 ---
 # Longinus Spear

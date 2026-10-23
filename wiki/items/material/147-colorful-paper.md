@@ -8,7 +8,7 @@ class: Gathered Goods
 price: 505
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 147
+  data: godot/data/items/material/147-colorful-paper.tres
   code: module/src/items.rs
 ---
 # Colorful Paper

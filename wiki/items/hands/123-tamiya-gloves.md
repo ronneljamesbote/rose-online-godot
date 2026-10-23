@@ -41,7 +41,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_ARMS.STB row 123
+  data: godot/data/items/hands/123-tamiya-gloves.tres
   code: module/src/items.rs
 ---
 # Tamiya Gloves

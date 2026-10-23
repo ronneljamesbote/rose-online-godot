@@ -28,7 +28,7 @@ used_to_craft:
 - '[[items/subweapon/70-mana-stone|Mana Stone]]'
 - '[[items/vehicle/331-punch-arms|Punch Arms]]'
 source:
-  data: LIST_NATURAL.STB row 34
+  data: godot/data/items/material/34-oak-wood.tres
   code: module/src/items.rs
 ---
 # Oak Wood

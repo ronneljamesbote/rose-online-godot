@@ -51,7 +51,7 @@ dropped_by:
   level: 115
   slots_of_30: 0.2
 source:
-  data: LIST_CAP.STB row 35
+  data: godot/data/items/head/35-mighty-helm.tres
   code: module/src/items.rs
 ---
 # Mighty Helm

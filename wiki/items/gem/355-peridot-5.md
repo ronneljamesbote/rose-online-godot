@@ -20,7 +20,7 @@ craft_difficulty: 27
 used_to_craft:
 - '[[items/gem/356-peridot-6|Peridot 6]]'
 source:
-  data: LIST_JEMITEM.STB row 355
+  data: godot/data/items/gem/355-peridot-5.tres
   code: module/src/items.rs
 ---
 # Peridot [5]

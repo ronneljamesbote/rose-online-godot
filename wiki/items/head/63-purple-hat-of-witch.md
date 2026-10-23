@@ -36,7 +36,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_CAP.STB row 63
+  data: godot/data/items/head/63-purple-hat-of-witch.tres
   code: module/src/items.rs
 ---
 # Purple Hat of Witch

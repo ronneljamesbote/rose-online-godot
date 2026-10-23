@@ -32,7 +32,7 @@ dropped_by:
   level: 122
   slots_of_30: 0.4
 source:
-  data: LIST_ARMS.STB row 127
+  data: godot/data/items/hands/127-redfield-chairman-gloves.tres
   code: module/src/items.rs
 ---
 # Redfield Chairman Gloves

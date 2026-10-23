@@ -12,7 +12,7 @@ quality: 16
 price: 1000
 weight: 30
 source:
-  data: LIST_BACK.STB row 753
+  data: godot/data/items/back/753-cross-shield.tres
   code: module/src/items.rs
 ---
 # Cross Shield

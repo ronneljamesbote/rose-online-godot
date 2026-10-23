@@ -8,7 +8,7 @@ class: Skill Book
 effect: teaches skill 3219, uses skill 3219, fuel +3219
 price: 0
 source:
-  data: LIST_USEITEM.STB row 882
+  data: godot/data/items/consumable/882-target-cancelled.tres
   code: module/src/items.rs
 ---
 # Target Cancelled

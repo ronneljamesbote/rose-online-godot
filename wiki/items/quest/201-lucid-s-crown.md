@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/1055-lucid-king-of-legend-second-job-change|Lucid: King of Legend (Second Job Change)]]'
 - '[[quests/1056-lucid-king-of-legend-second-job-change|Lucid: King of Legend (Second Job Change)]]'
 source:
-  data: LIST_QUESTITEM.STB row 201
+  data: godot/data/items/quest/201-lucid-s-crown.tres
   code: module/src/items.rs
 ---
 # Lucid's Crown

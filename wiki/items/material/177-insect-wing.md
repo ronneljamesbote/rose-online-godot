@@ -43,7 +43,7 @@ used_to_craft:
 - '[[items/weapon/334-elven-wand|Elven Wand]]'
 - '[[items/weapon/404-rake-hand|Rake Hand]]'
 source:
-  data: LIST_NATURAL.STB row 177
+  data: godot/data/items/material/177-insect-wing.tres
   code: module/src/items.rs
 ---
 # Insect Wing

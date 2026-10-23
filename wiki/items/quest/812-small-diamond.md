@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/5016-goblin-cave-expedition-3rd-level|Goblin Cave Expedition (3rd Level)]]'
 source:
-  data: LIST_QUESTITEM.STB row 812
+  data: godot/data/items/quest/812-small-diamond.tres
   code: module/src/items.rs
 ---
 # Small Diamond

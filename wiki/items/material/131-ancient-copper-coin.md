@@ -8,7 +8,7 @@ class: Gathered Goods
 price: 190
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 131
+  data: godot/data/items/material/131-ancient-copper-coin.tres
   code: module/src/items.rs
 ---
 # Ancient Copper Coin

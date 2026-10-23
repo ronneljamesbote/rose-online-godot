@@ -15,7 +15,7 @@ used_to_craft:
 - '[[items/weapon/115-great-sword|Great Sword]]'
 - '[[items/weapon/214-bow-of-wind-spirit|Bow of Wind Spirit]]'
 source:
-  data: LIST_NATURAL.STB row 57
+  data: godot/data/items/material/57-blue-fabric.tres
   code: module/src/items.rs
 ---
 # Blue Fabric

@@ -9,7 +9,7 @@ effect: teaches [[skills/15-auto-targetting|Auto Targetting]], uses [[skills/15-
 price: 50
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 605
+  data: godot/data/items/consumable/605-auto-target.tres
   code: module/src/items.rs
 ---
 # Auto Target

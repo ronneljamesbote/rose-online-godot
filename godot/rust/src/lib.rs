@@ -8,6 +8,7 @@ mod character;
 mod conversation;
 mod cursor;
 mod data;
+mod data_resources;
 mod effect;
 mod items;
 mod lua4;

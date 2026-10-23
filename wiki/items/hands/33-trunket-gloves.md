@@ -47,7 +47,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1094-armor-merchant-saki|Armor Merchant Saki]]'
 source:
-  data: LIST_ARMS.STB row 33
+  data: godot/data/items/hands/33-trunket-gloves.tres
   code: module/src/items.rs
 ---
 # Trunket Gloves

@@ -18,7 +18,7 @@ dropped_by:
   level: 70
   slots_of_30: 0.6
 source:
-  data: LIST_CAP.STB row 624
+  data: godot/data/items/head/624-black-pirate-hat.tres
   code: module/src/items.rs
 ---
 # Black Pirate Hat

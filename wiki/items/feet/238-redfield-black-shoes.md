@@ -13,7 +13,7 @@ durability: 50
 quality: 48
 price: 17300
 source:
-  data: LIST_FOOT.STB row 238
+  data: godot/data/items/feet/238-redfield-black-shoes.tres
   code: module/src/items.rs
 ---
 # Redfield Black Shoes

@@ -15,7 +15,7 @@ job: Muse 2nd Advanced Jobs
 price: 19600
 weight: 3
 source:
-  data: LIST_FOOT.STB row 429
+  data: godot/data/items/feet/429-boots-of-shadow.tres
   code: module/src/items.rs
 ---
 # Boots of Shadow

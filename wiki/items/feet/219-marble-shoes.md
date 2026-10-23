@@ -14,7 +14,7 @@ quality: 35
 price: 3700
 weight: 2
 source:
-  data: LIST_FOOT.STB row 219
+  data: godot/data/items/feet/219-marble-shoes.tres
   code: module/src/items.rs
 ---
 # Marble Shoes

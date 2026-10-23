@@ -18,7 +18,7 @@ sockets: true
 price: 330200
 weight: 50
 source:
-  data: LIST_WEAPON.STB row 659
+  data: godot/data/items/weapon/659-longinus-spear.tres
   code: module/src/items.rs
 ---
 # Longinus Spear

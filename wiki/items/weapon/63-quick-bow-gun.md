@@ -51,7 +51,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 source:
-  data: LIST_WEAPON.STB row 63
+  data: godot/data/items/weapon/63-quick-bow-gun.tres
   code: module/src/items.rs
 ---
 # Quick Bow Gun

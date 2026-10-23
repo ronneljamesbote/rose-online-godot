@@ -13,7 +13,7 @@ sold_by:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 - '[[npcs/1085-akram-minister-nel|Akram Minister Nel]]'
 source:
-  data: LIST_USEITEM.STB row 701
+  data: godot/data/items/consumable/701-staff-mastery.tres
   code: module/src/items.rs
 ---
 # Staff Mastery

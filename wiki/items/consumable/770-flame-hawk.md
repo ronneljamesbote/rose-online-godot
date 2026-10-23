@@ -12,7 +12,7 @@ sold_by:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 - '[[npcs/1086-akram-minister-rodath|Akram Minister Rodath]]'
 source:
-  data: LIST_USEITEM.STB row 770
+  data: godot/data/items/consumable/770-flame-hawk.tres
   code: module/src/items.rs
 ---
 # Flame Hawk

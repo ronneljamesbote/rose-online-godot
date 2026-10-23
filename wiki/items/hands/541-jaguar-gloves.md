@@ -18,7 +18,7 @@ dropped_by:
   level: 133
   slots_of_30: 0.4
 source:
-  data: LIST_ARMS.STB row 541
+  data: godot/data/items/hands/541-jaguar-gloves.tres
   code: module/src/items.rs
 ---
 # Jaguar Gloves

@@ -22,7 +22,7 @@ dropped_by:
   level: 60
   slots_of_30: 0.4
 source:
-  data: LIST_FOOT.STB row 619
+  data: godot/data/items/feet/619-tamiya-shoes.tres
   code: module/src/items.rs
 ---
 # Tamiya Shoes

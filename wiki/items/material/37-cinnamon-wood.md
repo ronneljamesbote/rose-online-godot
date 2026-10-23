@@ -23,7 +23,7 @@ used_to_craft:
 - '[[items/vehicle/312-battle-launcher|Battle Launcher]]'
 - '[[items/vehicle/334-cannon-arms|Cannon Arms]]'
 source:
-  data: LIST_NATURAL.STB row 37
+  data: godot/data/items/material/37-cinnamon-wood.tres
   code: module/src/items.rs
 ---
 # Cinnamon Wood

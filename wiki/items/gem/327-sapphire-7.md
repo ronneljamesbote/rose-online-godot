@@ -18,7 +18,7 @@ recipe:
   quantity: 4
 craft_difficulty: 37
 source:
-  data: LIST_JEMITEM.STB row 327
+  data: godot/data/items/gem/327-sapphire-7.tres
   code: module/src/items.rs
 ---
 # Sapphire [7]

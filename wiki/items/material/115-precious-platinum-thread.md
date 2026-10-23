@@ -53,7 +53,7 @@ used_to_craft:
 - '[[items/back/226-crow-wing|Crow Wing]]'
 - '[[items/back/231-worm-dragon-wing|Worm Dragon Wing]]'
 source:
-  data: LIST_NATURAL.STB row 115
+  data: godot/data/items/material/115-precious-platinum-thread.tres
   code: module/src/items.rs
 ---
 # Precious Platinum Thread

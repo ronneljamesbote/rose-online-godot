@@ -7,7 +7,7 @@ icon: item/1612
 class: Gathered Goods
 price: 0
 source:
-  data: LIST_NATURAL.STB row 401
+  data: godot/data/items/material/401-rose.tres
   code: module/src/items.rs
 ---
 # Rose

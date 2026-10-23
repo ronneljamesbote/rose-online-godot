@@ -50,7 +50,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]]'
 source:
-  data: LIST_SUBWPN.STB row 2
+  data: godot/data/items/subweapon/2-tarz.tres
   code: module/src/items.rs
 ---
 # Tarz

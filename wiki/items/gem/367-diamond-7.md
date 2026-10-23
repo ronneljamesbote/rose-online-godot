@@ -18,7 +18,7 @@ recipe:
   quantity: 4
 craft_difficulty: 50
 source:
-  data: LIST_JEMITEM.STB row 367
+  data: godot/data/items/gem/367-diamond-7.tres
   code: module/src/items.rs
 ---
 # Diamond [7]

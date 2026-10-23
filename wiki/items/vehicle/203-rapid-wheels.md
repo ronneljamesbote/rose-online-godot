@@ -25,7 +25,7 @@ recipe:
   quantity: 1
 craft_difficulty: 40
 source:
-  data: LIST_PAT.STB row 203
+  data: godot/data/items/vehicle/203-rapid-wheels.tres
   code: module/src/items.rs
 ---
 # Rapid Wheels

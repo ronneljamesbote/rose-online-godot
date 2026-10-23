@@ -48,7 +48,7 @@ dropped_by:
   level: 117
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 240
+  data: godot/data/items/weapon/240-sniper-gun.tres
   code: module/src/items.rs
 ---
 # Sniper Gun

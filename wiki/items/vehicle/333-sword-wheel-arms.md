@@ -29,7 +29,7 @@ recipe:
   quantity: 1
 craft_difficulty: 59
 source:
-  data: LIST_PAT.STB row 333
+  data: godot/data/items/vehicle/333-sword-wheel-arms.tres
   code: module/src/items.rs
 ---
 # Sword Wheel Arms

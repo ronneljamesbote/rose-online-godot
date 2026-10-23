@@ -10,7 +10,7 @@ bonus: MP Recovery Rate +18
 price: 422000
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 183
+  data: godot/data/items/jewellery/183-silence-earring.tres
   code: module/src/items.rs
 ---
 # Silence Earring

@@ -24,7 +24,7 @@ quest_reward:
 - '[[quests/142-the-search-for-the-prince|The Search for the Prince]]'
 - '[[quests/5009-candle-ghost-extermination-fetch-quest|Candle Ghost Extermination (Fetch Quest)]]'
 source:
-  data: LIST_USEITEM.STB row 30
+  data: godot/data/items/consumable/30-spiritual-water-m.tres
   code: module/src/items.rs
 ---
 # Spiritual Water (M)

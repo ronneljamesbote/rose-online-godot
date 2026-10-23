@@ -14,7 +14,7 @@ bonus: Defense +40, Magic Resistance +26
 price: 312900
 weight: 10
 source:
-  data: LIST_PAT.STB row 233
+  data: godot/data/items/vehicle/233-prime-leg.tres
   code: module/src/items.rs
 ---
 # Prime Leg

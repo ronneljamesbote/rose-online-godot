@@ -15,7 +15,7 @@ price: 50000
 sold_by:
 - '[[npcs/1110-ferrell-guild-staff-charrs|Ferrell Guild Staff Charrs]]'
 source:
-  data: LIST_BACK.STB row 211
+  data: godot/data/items/back/211-ferrell-bag.tres
   code: module/src/items.rs
 ---
 # Ferrell Bag

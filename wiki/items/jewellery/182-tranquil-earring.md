@@ -10,7 +10,7 @@ bonus: HP Recovery Rate +17
 price: 374750
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 182
+  data: godot/data/items/jewellery/182-tranquil-earring.tres
   code: module/src/items.rs
 ---
 # Tranquil Earring

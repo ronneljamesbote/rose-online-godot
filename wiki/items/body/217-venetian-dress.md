@@ -14,7 +14,7 @@ bonus: Max HP +86
 price: 13150
 weight: 10
 source:
-  data: LIST_BODY.STB row 217
+  data: godot/data/items/body/217-venetian-dress.tres
   code: module/src/items.rs
 ---
 # Venetian Dress

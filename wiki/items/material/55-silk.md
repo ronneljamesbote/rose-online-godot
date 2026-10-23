@@ -27,7 +27,7 @@ used_to_craft:
 - '[[items/weapon/265-marble-launcher|Marble Launcher]]'
 - '[[items/subweapon/65-mythical-flute|Mythical Flute]]'
 source:
-  data: LIST_NATURAL.STB row 55
+  data: godot/data/items/material/55-silk.tres
   code: module/src/items.rs
 ---
 # Silk

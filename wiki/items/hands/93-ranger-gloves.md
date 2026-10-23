@@ -44,7 +44,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1094-armor-merchant-saki|Armor Merchant Saki]]'
 source:
-  data: LIST_ARMS.STB row 93
+  data: godot/data/items/hands/93-ranger-gloves.tres
   code: module/src/items.rs
 ---
 # Ranger Gloves

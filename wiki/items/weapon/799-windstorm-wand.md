@@ -19,7 +19,7 @@ sockets: true
 price: 147450
 weight: 10
 source:
-  data: LIST_WEAPON.STB row 799
+  data: godot/data/items/weapon/799-windstorm-wand.tres
   code: module/src/items.rs
 ---
 # Windstorm Wand

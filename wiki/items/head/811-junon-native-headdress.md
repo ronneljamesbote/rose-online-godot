@@ -13,7 +13,7 @@ bonus: Movement Speed +30
 price: 1000
 weight: 1
 source:
-  data: LIST_CAP.STB row 811
+  data: godot/data/items/head/811-junon-native-headdress.tres
   code: module/src/items.rs
 ---
 # Junon Native Headdress

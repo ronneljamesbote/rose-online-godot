@@ -18,7 +18,7 @@ sockets: true
 price: 468250
 weight: 55
 source:
-  data: LIST_WEAPON.STB row 180
+  data: godot/data/items/weapon/180-punisher-drill.tres
   code: module/src/items.rs
 ---
 # Punisher Drill

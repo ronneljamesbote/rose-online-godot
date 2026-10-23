@@ -42,7 +42,7 @@ dropped_by:
   level: 126
   slots_of_30: 0.2
 source:
-  data: LIST_BODY.STB row 66
+  data: godot/data/items/body/66-velvet-coat-of-witch.tres
   code: module/src/items.rs
 ---
 # Velvet Coat of Witch

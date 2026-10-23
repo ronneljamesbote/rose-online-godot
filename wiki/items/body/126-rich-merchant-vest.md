@@ -38,7 +38,7 @@ dropped_by:
   level: 126
   slots_of_30: 0.2
 source:
-  data: LIST_BODY.STB row 126
+  data: godot/data/items/body/126-rich-merchant-vest.tres
   code: module/src/items.rs
 ---
 # Rich Merchant Vest

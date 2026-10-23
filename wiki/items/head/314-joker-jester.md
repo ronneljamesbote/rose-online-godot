@@ -17,7 +17,7 @@ quest_reward:
 - '[[quests/123-resurrection|Resurrection]]'
 - '[[quests/124-magic-of-anima-lake|Magic of Anima Lake]]'
 source:
-  data: LIST_CAP.STB row 314
+  data: godot/data/items/head/314-joker-jester.tres
   code: module/src/items.rs
 ---
 # Joker Jester

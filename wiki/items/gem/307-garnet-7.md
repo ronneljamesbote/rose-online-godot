@@ -18,7 +18,7 @@ recipe:
   quantity: 4
 craft_difficulty: 37
 source:
-  data: LIST_JEMITEM.STB row 307
+  data: godot/data/items/gem/307-garnet-7.tres
   code: module/src/items.rs
 ---
 # Garnet [7]

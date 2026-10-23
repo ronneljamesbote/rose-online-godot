@@ -47,7 +47,7 @@ quest_reward:
 - '[[quests/958-the-essence-of-speed|The Essence of Speed]]'
 - '[[quests/959-the-essence-of-speed|The Essence of Speed]]'
 source:
-  data: LIST_WEAPON.STB row 404
+  data: godot/data/items/weapon/404-rake-hand.tres
   code: module/src/items.rs
 ---
 # Rake Hand

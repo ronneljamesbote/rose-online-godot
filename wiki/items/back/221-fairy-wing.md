@@ -23,7 +23,7 @@ recipe:
   quantity: 10
 craft_difficulty: 22
 source:
-  data: LIST_BACK.STB row 221
+  data: godot/data/items/back/221-fairy-wing.tres
   code: module/src/items.rs
 ---
 # Fairy Wing

@@ -14,7 +14,7 @@ bonus: Max HP +142
 price: 45650
 weight: 10
 source:
-  data: LIST_BODY.STB row 15
+  data: godot/data/items/body/15-senior-look.tres
   code: module/src/items.rs
 ---
 # Senior Look

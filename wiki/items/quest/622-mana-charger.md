@@ -16,7 +16,7 @@ needed_for_quest:
 - '[[quests/157-skin-of-steel|Skin of Steel]]'
 - '[[quests/158-leaders-in-the-abyss|Leaders in the Abyss]]'
 source:
-  data: LIST_QUESTITEM.STB row 622
+  data: godot/data/items/quest/622-mana-charger.tres
   code: module/src/items.rs
 ---
 # Mana Charger

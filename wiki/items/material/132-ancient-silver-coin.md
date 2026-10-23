@@ -8,7 +8,7 @@ class: Gathered Goods
 price: 845
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 132
+  data: godot/data/items/material/132-ancient-silver-coin.tres
   code: module/src/items.rs
 ---
 # Ancient Silver Coin

@@ -33,7 +33,7 @@ dropped_by:
   level: 112
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 142
+  data: godot/data/items/weapon/142-flame-axe.tres
   code: module/src/items.rs
 ---
 # Flame Axe

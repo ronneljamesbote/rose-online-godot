@@ -39,7 +39,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1010-designer-keenu|Designer Keenu]]'
 source:
-  data: LIST_CAP.STB row 7
+  data: godot/data/items/head/7-red-leather-beret.tres
   code: module/src/items.rs
 ---
 # Red Leather Beret

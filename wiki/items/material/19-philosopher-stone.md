@@ -10,7 +10,7 @@ weight: 1
 dropped_in_zones:
 - '[[zones/56-forgotten-temple-b1|Forgotten Temple (B1)]]'
 source:
-  data: LIST_NATURAL.STB row 19
+  data: godot/data/items/material/19-philosopher-stone.tres
   code: module/src/items.rs
 ---
 # Philosopher Stone

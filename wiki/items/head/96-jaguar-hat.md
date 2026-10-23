@@ -32,7 +32,7 @@ dropped_by:
   level: 115
   slots_of_30: 0.4
 source:
-  data: LIST_CAP.STB row 96
+  data: godot/data/items/head/96-jaguar-hat.tres
   code: module/src/items.rs
 ---
 # Jaguar Hat

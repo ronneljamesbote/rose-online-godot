@@ -17,7 +17,7 @@ dropped_by:
   level: 61
   slots_of_30: 1
 source:
-  data: LIST_JEWEL.STB row 89
+  data: godot/data/items/jewellery/89-solid-necklace.tres
   code: module/src/items.rs
 ---
 # Solid Necklace

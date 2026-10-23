@@ -47,7 +47,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_ARMS.STB row 64
+  data: godot/data/items/hands/64-violet-gloves.tres
   code: module/src/items.rs
 ---
 # Violet Gloves

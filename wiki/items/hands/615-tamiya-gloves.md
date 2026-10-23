@@ -14,7 +14,7 @@ job: Dealer Job
 price: 4550
 weight: 2
 source:
-  data: LIST_ARMS.STB row 615
+  data: godot/data/items/hands/615-tamiya-gloves.tres
   code: module/src/items.rs
 ---
 # Tamiya Gloves

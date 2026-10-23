@@ -23,7 +23,7 @@ recipe:
   quantity: 50
 craft_difficulty: 40
 source:
-  data: LIST_BACK.STB row 231
+  data: godot/data/items/back/231-worm-dragon-wing.tres
   code: module/src/items.rs
 ---
 # Worm Dragon Wing

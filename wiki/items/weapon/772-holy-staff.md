@@ -19,7 +19,7 @@ sockets: true
 price: 139600
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 772
+  data: godot/data/items/weapon/772-holy-staff.tres
   code: module/src/items.rs
 ---
 # Holy Staff

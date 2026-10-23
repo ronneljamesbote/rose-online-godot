@@ -14,7 +14,7 @@ job: Dealer Job
 price: 900
 weight: 2
 source:
-  data: LIST_ARMS.STB row 602
+  data: godot/data/items/hands/602-brown-gloves.tres
   code: module/src/items.rs
 ---
 # Brown Gloves

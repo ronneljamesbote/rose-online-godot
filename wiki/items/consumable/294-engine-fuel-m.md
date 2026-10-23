@@ -12,7 +12,7 @@ sold_by:
 - '[[npcs/1096-ferrell-guild-merchant-mildun|Ferrell Guild Merchant Mildun]]'
 - '[[npcs/1184-ferrell-trader-sergei|Ferrell Trader Sergei]]'
 source:
-  data: LIST_USEITEM.STB row 294
+  data: godot/data/items/consumable/294-engine-fuel-m.tres
   code: module/src/items.rs
 ---
 # Engine Fuel (M)

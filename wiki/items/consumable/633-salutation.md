@@ -9,7 +9,7 @@ effect: teaches [[skills/43-salutation|Salutation]], uses [[skills/43-salutation
 price: 100
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 633
+  data: godot/data/items/consumable/633-salutation.tres
   code: module/src/items.rs
 ---
 # Salutation

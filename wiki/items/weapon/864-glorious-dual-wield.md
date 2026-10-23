@@ -18,7 +18,7 @@ sockets: true
 price: 384300
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 864
+  data: godot/data/items/weapon/864-glorious-dual-wield.tres
   code: module/src/items.rs
 ---
 # Glorious Dual Wield

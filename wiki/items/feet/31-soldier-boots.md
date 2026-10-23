@@ -37,7 +37,7 @@ sold_by:
 - '[[npcs/1009-armor-seller-carrion|Armor Seller Carrion]]'
 - '[[npcs/1094-armor-merchant-saki|Armor Merchant Saki]]'
 source:
-  data: LIST_FOOT.STB row 31
+  data: godot/data/items/feet/31-soldier-boots.tres
   code: module/src/items.rs
 ---
 # Soldier Boots

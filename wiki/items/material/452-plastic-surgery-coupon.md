@@ -7,7 +7,7 @@ icon: item/2094
 class: Gathered Goods
 price: 500
 source:
-  data: LIST_NATURAL.STB row 452
+  data: godot/data/items/material/452-plastic-surgery-coupon.tres
   code: module/src/items.rs
 ---
 # Plastic Surgery Coupon

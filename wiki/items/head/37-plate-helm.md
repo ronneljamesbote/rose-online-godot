@@ -32,7 +32,7 @@ dropped_by:
   level: 122
   slots_of_30: 0.4
 source:
-  data: LIST_CAP.STB row 37
+  data: godot/data/items/head/37-plate-helm.tres
   code: module/src/items.rs
 ---
 # Plate Helm

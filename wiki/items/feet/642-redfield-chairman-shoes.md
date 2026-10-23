@@ -15,7 +15,7 @@ job: Dealer 3rd Advanced Jobs
 price: 52150
 weight: 3
 source:
-  data: LIST_FOOT.STB row 642
+  data: godot/data/items/feet/642-redfield-chairman-shoes.tres
   code: module/src/items.rs
 ---
 # Redfield Chairman Shoes

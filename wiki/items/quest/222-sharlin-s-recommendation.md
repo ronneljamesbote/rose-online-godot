@@ -10,7 +10,7 @@ quest_reward:
 - '[[quests/1072-kirnale-s-journals-second-job-change|Kirnale''s Journals (Second Job Change)]]'
 - '[[quests/1073-kirnale-s-journals-second-job-change|Kirnale''s Journals (Second Job Change)]]'
 source:
-  data: LIST_QUESTITEM.STB row 222
+  data: godot/data/items/quest/222-sharlin-s-recommendation.tres
   code: module/src/items.rs
 ---
 # Sharlin's Recommendation

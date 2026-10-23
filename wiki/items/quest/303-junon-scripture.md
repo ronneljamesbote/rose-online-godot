@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/3004-propagation-risking-danger|Propagation Risking Danger]]'
 source:
-  data: LIST_QUESTITEM.STB row 303
+  data: godot/data/items/quest/303-junon-scripture.tres
   code: module/src/items.rs
 ---
 # Junon Scripture

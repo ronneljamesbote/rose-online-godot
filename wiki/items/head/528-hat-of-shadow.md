@@ -15,7 +15,7 @@ bonus: MP Recovery Rate +3
 price: 21200
 weight: 2
 source:
-  data: LIST_CAP.STB row 528
+  data: godot/data/items/head/528-hat-of-shadow.tres
   code: module/src/items.rs
 ---
 # Hat of Shadow

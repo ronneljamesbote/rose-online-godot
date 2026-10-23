@@ -45,7 +45,7 @@ used_to_craft:
 - '[[items/vehicle/6-sporty-r-frame|Sporty R Frame]]'
 - '[[items/vehicle/31-wooden-stock-core|Wooden Stock Core]]'
 source:
-  data: LIST_NATURAL.STB row 46
+  data: godot/data/items/material/46-gorgeous-leather.tres
   code: module/src/items.rs
 ---
 # Gorgeous Leather

@@ -14,7 +14,7 @@ bonus: Attack Accuracy +12
 price: 26350
 weight: 3
 source:
-  data: LIST_CAP.STB row 334
+  data: godot/data/items/head/334-redfield-green-hat.tres
   code: module/src/items.rs
 ---
 # Redfield Green Hat

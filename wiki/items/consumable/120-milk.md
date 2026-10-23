@@ -20,7 +20,7 @@ sold_by:
 - '[[npcs/1063-little-street-vendor-mile|Little Street Vendor Mile]]'
 - '[[npcs/1097-tavern-owner-harin|Tavern Owner Harin]]'
 source:
-  data: LIST_USEITEM.STB row 120
+  data: godot/data/items/consumable/120-milk.tres
   code: module/src/items.rs
 ---
 # Milk

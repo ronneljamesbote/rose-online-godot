@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/1059-lucid-king-of-legend-second-job-change|Lucid: King of Legend (Second Job Change)]]'
 source:
-  data: LIST_QUESTITEM.STB row 208
+  data: godot/data/items/quest/208-token-of-friendship.tres
   code: module/src/items.rs
 ---
 # Token of Friendship

@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/5005-spero-s-top-secret-cart-schematic|Spero''s Top Secret Cart Schematic]]'
 source:
-  data: LIST_QUESTITEM.STB row 505
+  data: godot/data/items/quest/505-top-secret-cart-schematic.tres
   code: module/src/items.rs
 ---
 # Top Secret Cart Schematic

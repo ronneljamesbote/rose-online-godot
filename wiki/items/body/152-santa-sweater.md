@@ -16,7 +16,7 @@ weight: 10
 quest_reward:
 - '[[quests/5061-the-santa-suit-heist|The Santa Suit Heist]]'
 source:
-  data: LIST_BODY.STB row 152
+  data: godot/data/items/body/152-santa-sweater.tres
   code: module/src/items.rs
 ---
 # Santa Sweater

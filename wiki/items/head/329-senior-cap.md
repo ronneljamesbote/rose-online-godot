@@ -16,7 +16,7 @@ weight: 3
 sold_by:
 - '[[npcs/1109-elder-of-junon-order-gorthein|Elder of Junon Order Gorthein]]'
 source:
-  data: LIST_CAP.STB row 329
+  data: godot/data/items/head/329-senior-cap.tres
   code: module/src/items.rs
 ---
 # Senior Cap

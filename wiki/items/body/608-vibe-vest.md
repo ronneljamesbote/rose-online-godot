@@ -14,7 +14,7 @@ job: Dealer Job
 price: 9500
 weight: 15
 source:
-  data: LIST_BODY.STB row 608
+  data: godot/data/items/body/608-vibe-vest.tres
   code: module/src/items.rs
 ---
 # Vibe Vest

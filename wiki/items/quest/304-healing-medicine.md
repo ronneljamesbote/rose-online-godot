@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/3001-shannon-s-medical-treatment|Shannon''s Medical Treatment]]'
 source:
-  data: LIST_QUESTITEM.STB row 304
+  data: godot/data/items/quest/304-healing-medicine.tres
   code: module/src/items.rs
 ---
 # Healing Medicine

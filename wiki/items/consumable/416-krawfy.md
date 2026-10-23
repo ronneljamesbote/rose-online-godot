@@ -17,7 +17,7 @@ dropped_by:
   level: 68
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 416
+  data: godot/data/items/consumable/416-krawfy.tres
   code: module/src/items.rs
 ---
 # Krawfy

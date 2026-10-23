@@ -35,7 +35,7 @@ sold_by:
 quest_reward:
 - '[[quests/904-muse-job-change-quest|Muse Job Change Quest]]'
 source:
-  data: LIST_CAP.STB row 61
+  data: godot/data/items/head/61-spiritual-beret.tres
   code: module/src/items.rs
 ---
 # Spiritual Beret

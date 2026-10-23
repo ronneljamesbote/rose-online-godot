@@ -1,6 +1,7 @@
+use enum_map::Enum;
 use serde::{Deserialize, Serialize};
 
-#[derive(Copy, Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(Copy, Clone, Debug, Deserialize, Serialize, PartialEq, Eq, Enum)]
 pub enum AbilityType {
     Gender,
     Birthstone,

@@ -18,7 +18,7 @@ sockets: true
 price: 491550
 weight: 60
 source:
-  data: LIST_WEAPON.STB row 148
+  data: godot/data/items/weapon/148-behead-axe.tres
   code: module/src/items.rs
 ---
 # Behead Axe

@@ -12,7 +12,7 @@ dropped_by:
   level: 155
   slots_of_30: 3
 source:
-  data: LIST_USEITEM.STB row 187
+  data: godot/data/items/consumable/187-clan-point-15.tres
   code: module/src/items.rs
 ---
 # Clan Point (+15)

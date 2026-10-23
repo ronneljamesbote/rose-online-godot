@@ -43,7 +43,7 @@ sold_by:
 - '[[npcs/1010-designer-keenu|Designer Keenu]]'
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_FOOT.STB row 122
+  data: godot/data/items/feet/122-vibe-shoes.tres
   code: module/src/items.rs
 ---
 # Vibe Shoes

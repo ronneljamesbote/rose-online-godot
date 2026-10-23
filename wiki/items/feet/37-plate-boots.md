@@ -34,7 +34,7 @@ dropped_by:
   level: 133
   slots_of_30: 0.4
 source:
-  data: LIST_FOOT.STB row 37
+  data: godot/data/items/feet/37-plate-boots.tres
   code: module/src/items.rs
 ---
 # Plate Boots

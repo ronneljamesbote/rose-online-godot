@@ -47,7 +47,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1011-eccentric-inventor-spero|Eccentric Inventor Spero]]'
 source:
-  data: LIST_WEAPON.STB row 232
+  data: godot/data/items/weapon/232-air-gun.tres
   code: module/src/items.rs
 ---
 # Air Gun

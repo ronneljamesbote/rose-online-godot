@@ -18,7 +18,7 @@ dropped_by:
   level: 142
   slots_of_30: 1
 source:
-  data: LIST_CAP.STB row 733
+  data: godot/data/items/head/733-merchant-hat.tres
   code: module/src/items.rs
 ---
 # Merchant Hat

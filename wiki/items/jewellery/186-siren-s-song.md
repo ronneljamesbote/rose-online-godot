@@ -10,7 +10,7 @@ bonus: Charm +42
 price: 1008850
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 186
+  data: godot/data/items/jewellery/186-siren-s-song.tres
   code: module/src/items.rs
 ---
 # Siren's Song

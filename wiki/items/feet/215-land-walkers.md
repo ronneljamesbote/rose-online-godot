@@ -14,7 +14,7 @@ quality: 36
 price: 2200
 weight: 2
 source:
-  data: LIST_FOOT.STB row 215
+  data: godot/data/items/feet/215-land-walkers.tres
   code: module/src/items.rs
 ---
 # Land Walkers

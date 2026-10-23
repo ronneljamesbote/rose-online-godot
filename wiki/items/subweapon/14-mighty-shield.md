@@ -24,7 +24,7 @@ recipe:
   quantity: 12
 craft_difficulty: 48
 source:
-  data: LIST_SUBWPN.STB row 14
+  data: godot/data/items/subweapon/14-mighty-shield.tres
   code: module/src/items.rs
 ---
 # Mighty Shield

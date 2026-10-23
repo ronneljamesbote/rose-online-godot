@@ -15,7 +15,7 @@ used_to_craft:
 - '[[items/weapon/177-longinus-spear|Longinus Spear]]'
 - '[[items/weapon/178-nimrodpiece|Nimrodpiece]]'
 source:
-  data: LIST_NATURAL.STB row 39
+  data: godot/data/items/material/39-otherworldly-wood.tres
   code: module/src/items.rs
 ---
 # Otherworldly Wood

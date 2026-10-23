@@ -39,10 +39,12 @@ RUN case "${TARGETARCH:-amd64}" in arm64) arch=aarch64 ;; *) arch=x86_64 ;; esac
 COPY --from=module /src/module/target/wasm32-unknown-unknown/release/rose_stdb_module.wasm /opt/rose/rose_stdb_module.wasm
 COPY --from=module /src/target/release/rose-stdb-import /usr/local/bin/rose-stdb-import
 COPY server/entrypoint.sh server/upload-game-data.sh server/assign-character.sh /opt/rose/
-# Our changes to the game data, the motion timings and the zones edited as Godot scenes,
-# applied when the game data is uploaded (overrides/README.md).
+# Our changes to the game data, the motion timings, the zones edited as Godot scenes and the
+# game data exported from the Godot resources (the items), applied when the game data is
+# uploaded (overrides/README.md).
 COPY overrides/game-data.toml overrides/motions.toml /opt/rose/overrides/
 COPY overrides/zones/ /opt/rose/overrides/zones/
+COPY overrides/data/ /opt/rose/overrides/data/
 # Strip Windows line endings in case Git converted them on checkout.
 RUN sed -i "s/\r$//" /opt/rose/*.sh && chmod +x /opt/rose/*.sh
 

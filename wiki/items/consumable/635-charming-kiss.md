@@ -9,7 +9,7 @@ effect: teaches [[skills/45-charming-kiss|Charming Kiss]], uses [[skills/45-char
 price: 100
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 635
+  data: godot/data/items/consumable/635-charming-kiss.tres
   code: module/src/items.rs
 ---
 # Charming Kiss

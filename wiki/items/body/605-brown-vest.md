@@ -14,7 +14,7 @@ job: Dealer Job
 price: 3650
 weight: 15
 source:
-  data: LIST_BODY.STB row 605
+  data: godot/data/items/body/605-brown-vest.tres
   code: module/src/items.rs
 ---
 # Brown Vest

@@ -34,7 +34,7 @@ dropped_by:
   level: 143
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 71
+  data: godot/data/items/weapon/71-mythril-bow-gun.tres
   code: module/src/items.rs
 ---
 # Mythril Bow Gun

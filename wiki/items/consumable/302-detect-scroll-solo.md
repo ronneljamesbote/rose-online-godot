@@ -9,7 +9,7 @@ effect: teaches skill 3102, uses skill 3102, fuel +3102
 price: 180
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 302
+  data: godot/data/items/consumable/302-detect-scroll-solo.tres
   code: module/src/items.rs
 ---
 # Detect Scroll (Solo)

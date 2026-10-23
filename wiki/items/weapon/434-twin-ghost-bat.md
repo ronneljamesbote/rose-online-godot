@@ -60,7 +60,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 source:
-  data: LIST_WEAPON.STB row 434
+  data: godot/data/items/weapon/434-twin-ghost-bat.tres
   code: module/src/items.rs
 ---
 # Twin Ghost Bat

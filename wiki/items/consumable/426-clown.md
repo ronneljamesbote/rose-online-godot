@@ -17,7 +17,7 @@ dropped_by:
   level: 49
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 426
+  data: godot/data/items/consumable/426-clown.tres
   code: module/src/items.rs
 ---
 # Clown

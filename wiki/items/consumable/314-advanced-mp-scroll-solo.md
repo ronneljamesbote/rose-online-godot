@@ -19,7 +19,7 @@ dropped_by:
   level: 90
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 314
+  data: godot/data/items/consumable/314-advanced-mp-scroll-solo.tres
   code: module/src/items.rs
 ---
 # Advanced MP Scroll (Solo)

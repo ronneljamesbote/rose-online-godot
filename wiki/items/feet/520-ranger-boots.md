@@ -15,7 +15,7 @@ job: Hawker Job
 price: 6450
 weight: 3
 source:
-  data: LIST_FOOT.STB row 520
+  data: godot/data/items/feet/520-ranger-boots.tres
   code: module/src/items.rs
 ---
 # Ranger Boots

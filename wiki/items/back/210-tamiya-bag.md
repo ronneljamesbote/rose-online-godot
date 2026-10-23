@@ -25,7 +25,7 @@ craft_difficulty: 38
 sold_by:
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_BACK.STB row 210
+  data: godot/data/items/back/210-tamiya-bag.tres
   code: module/src/items.rs
 ---
 # Tamiya Bag

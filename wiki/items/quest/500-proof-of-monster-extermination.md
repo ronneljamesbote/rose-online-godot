@@ -43,7 +43,7 @@ needed_for_quest:
 - '[[quests/5051-hunting-practice-1|Hunting Practice (1)]]'
 - '[[quests/5053-hunting-practice-3|Hunting Practice (3)]]'
 source:
-  data: LIST_QUESTITEM.STB row 500
+  data: godot/data/items/quest/500-proof-of-monster-extermination.tres
   code: module/src/items.rs
 ---
 # Proof of Monster Extermination

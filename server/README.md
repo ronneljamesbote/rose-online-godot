@@ -149,8 +149,12 @@ The import tool is `import/` (`rose-stdb-import`, built into the image):
 
 - `rose-stdb-import pack <data.idx> <dir>` writes the upload batches (`upload-NNN.json`, each
   the arguments of one `upload_game_files` call, plus `manifest.json`). It applies
-  `overrides/game-data.toml` first and adds `overrides/motions.toml` and the zone files in
-  `overrides/zones/` (`ROSE_OVERRIDES`, `ROSE_MOTIONS` and `ROSE_ZONES` point elsewhere).
+  `overrides/game-data.toml` first and adds `overrides/motions.toml`, the zone files in
+  `overrides/zones/` and the game data exported from Godot in `overrides/data/` (as JSON; its
+  items replace the iROSE item tables, which are then not sent) (`ROSE_OVERRIDES`,
+  `ROSE_MOTIONS`, `ROSE_ZONES` and `ROSE_DATA` point elsewhere).
+- `rose-stdb-import compare <data.idx>` lists every item value in `overrides/data/` that
+  differs from the iROSE tables (none right after the conversion).
 - `rose-stdb-import list <data.idx>` shows which files the databases read, per folder;
   `time <data.idx>` how long building them takes.
 

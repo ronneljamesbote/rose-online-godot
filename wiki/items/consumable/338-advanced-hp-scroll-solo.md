@@ -8,7 +8,7 @@ class: Magic Item
 effect: teaches skill 3138, uses skill 3138, fuel +3138
 price: 100
 source:
-  data: LIST_USEITEM.STB row 338
+  data: godot/data/items/consumable/338-advanced-hp-scroll-solo.tres
   code: module/src/items.rs
 ---
 # Advanced HP Scroll (Solo)

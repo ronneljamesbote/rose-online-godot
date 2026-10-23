@@ -48,7 +48,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 source:
-  data: LIST_WEAPON.STB row 38
+  data: godot/data/items/weapon/38-skeleton-hammer.tres
   code: module/src/items.rs
 ---
 # Skeleton Hammer

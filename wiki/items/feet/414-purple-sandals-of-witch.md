@@ -15,7 +15,7 @@ job: Muse Job
 price: 5700
 weight: 3
 source:
-  data: LIST_FOOT.STB row 414
+  data: godot/data/items/feet/414-purple-sandals-of-witch.tres
   code: module/src/items.rs
 ---
 # Purple Sandals of Witch

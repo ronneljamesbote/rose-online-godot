@@ -15,7 +15,7 @@ bonus: MP Recovery Rate +1
 price: 2950
 weight: 2
 source:
-  data: LIST_CAP.STB row 513
+  data: godot/data/items/head/513-green-hat-of-witch.tres
   code: module/src/items.rs
 ---
 # Green Hat of Witch

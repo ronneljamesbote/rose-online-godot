@@ -7,7 +7,7 @@ icon: item/2093
 class: Gathered Goods
 price: 300
 source:
-  data: LIST_NATURAL.STB row 451
+  data: godot/data/items/material/451-salon-coupon.tres
   code: module/src/items.rs
 ---
 # Salon Coupon

@@ -22,7 +22,7 @@ recipe:
   quantity: 36
 craft_difficulty: 38
 source:
-  data: LIST_SUBWPN.STB row 75
+  data: godot/data/items/subweapon/75-elven-harp.tres
   code: module/src/items.rs
 ---
 # Elven Harp

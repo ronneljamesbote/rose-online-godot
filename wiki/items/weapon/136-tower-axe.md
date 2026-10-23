@@ -57,7 +57,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 source:
-  data: LIST_WEAPON.STB row 136
+  data: godot/data/items/weapon/136-tower-axe.tres
   code: module/src/items.rs
 ---
 # Tower Axe

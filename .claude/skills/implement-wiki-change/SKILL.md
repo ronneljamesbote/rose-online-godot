@@ -21,9 +21,13 @@ together. Read `AGENTS.md` and `wiki/README.md` first if you haven't.
    it, and say so.
 3. **Decide where each change belongs.** The page's `source:` names the data row and the
    code. `.claude/rules/wiki-sync.md` maps code to pages.
-   - A **data value** (an item stat, a drop rate, a price, a monster stat, a skill number
-     per level) → an entry in `overrides/game-data.toml` (file, row, column, value, and a
-     `note` naming the page). See `overrides/README.md` for the format and column lists.
+   - An **item value** (a stat, a price, a requirement, a refine grade) → the item's
+     resource in `godot/data/items/` (the page's `source:` names the file), then
+     `godot --headless --path godot -- --export-data` and commit both. See
+     `godot/data/README.md`.
+   - Another **data value** (a drop rate, a monster stat, a skill number per level) → an
+     entry in `overrides/game-data.toml` (file, row, column, value, and a `note` naming the
+     page). See `overrides/README.md` for the format and column lists.
    - A **rule or formula** (damage, hit chance, XP, death penalty, how a skill behaves) →
      code in `crates/rose-game-irose/` or `module/src/`, and the client in `godot/` when
      players see it (tooltips, windows).
@@ -38,9 +42,10 @@ together. Read `AGENTS.md` and `wiki/README.md` first if you haven't.
 6. **Update the page's details** that the edit implies but didn't write: `source:` if the
    code moved, "Changed from iROSE" if we now differ from iROSE, other pages that repeat
    the same value (search `wiki/` for it). Run `node web/scripts/check-wiki.mjs`.
-7. **Rebuild what players download** when the client or the override file changed: the
-   Windows client zip includes `overrides/game-data.toml`, and the server uploads it with
-   the game data.
+7. **Rebuild what players download** when the client, the data export or the override
+   file changed: the Windows client zip includes `overrides/data/`, and the server uploads
+   it and `overrides/game-data.toml` with the game data. Only when the person asks for a
+   build.
 8. **Push to the pull request** and reply with what changed in the game, the media, and
    anything you could not do. Never merge it yourself.
 

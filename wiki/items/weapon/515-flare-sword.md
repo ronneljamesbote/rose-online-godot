@@ -18,7 +18,7 @@ sockets: true
 price: 152800
 weight: 45
 source:
-  data: LIST_WEAPON.STB row 515
+  data: godot/data/items/weapon/515-flare-sword.tres
   code: module/src/items.rs
 ---
 # Flare Sword

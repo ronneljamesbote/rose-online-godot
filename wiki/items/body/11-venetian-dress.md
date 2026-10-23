@@ -26,7 +26,7 @@ sold_by:
 - '[[npcs/1010-designer-keenu|Designer Keenu]]'
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_BODY.STB row 11
+  data: godot/data/items/body/11-venetian-dress.tres
   code: module/src/items.rs
 ---
 # Venetian Dress

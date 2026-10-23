@@ -17,7 +17,7 @@ sold_by:
 - '[[npcs/1110-ferrell-guild-staff-charrs|Ferrell Guild Staff Charrs]]'
 - '[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]'
 source:
-  data: LIST_CAP.STB row 320
+  data: godot/data/items/head/320-venetian-hat.tres
   code: module/src/items.rs
 ---
 # Venetian Hat

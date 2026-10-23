@@ -18,7 +18,7 @@ dropped_by:
   level: 33
   slots_of_30: 0.4
 source:
-  data: LIST_BACK.STB row 222
+  data: godot/data/items/back/222-nymph-wing.tres
   code: module/src/items.rs
 ---
 # Nymph Wing

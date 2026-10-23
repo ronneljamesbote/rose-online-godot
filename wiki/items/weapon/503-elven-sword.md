@@ -31,7 +31,7 @@ dropped_by:
   level: 88
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 503
+  data: godot/data/items/weapon/503-elven-sword.tres
   code: module/src/items.rs
 ---
 # Elven Sword

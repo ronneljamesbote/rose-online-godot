@@ -9,7 +9,7 @@ effect: HP +380, HP Restoration (380), teaches [[skills/361-berserk|Berserk]] le
 price: 114
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 115
+  data: godot/data/items/consumable/115-hamburger.tres
   code: module/src/items.rs
 ---
 # Hamburger

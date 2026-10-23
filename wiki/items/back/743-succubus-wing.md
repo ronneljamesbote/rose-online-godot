@@ -13,7 +13,7 @@ bonus: Movement Speed +70
 price: 1200
 weight: 20
 source:
-  data: LIST_BACK.STB row 743
+  data: godot/data/items/back/743-succubus-wing.tres
   code: module/src/items.rs
 ---
 # Succubus Wing

@@ -29,7 +29,7 @@ used_to_craft:
 - '[[items/weapon/407-spike-knuckle|Spike Knuckle]]'
 - '[[items/subweapon/62-oriental-drum|Oriental Drum]]'
 source:
-  data: LIST_NATURAL.STB row 190
+  data: godot/data/items/material/190-bark.tres
   code: module/src/items.rs
 ---
 # Bark

@@ -61,7 +61,7 @@ dropped_by:
   level: 88
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 109
+  data: godot/data/items/weapon/109-executioner.tres
   code: module/src/items.rs
 ---
 # Executioner

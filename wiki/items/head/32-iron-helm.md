@@ -42,7 +42,7 @@ sold_by:
 - '[[npcs/1009-armor-seller-carrion|Armor Seller Carrion]]'
 - '[[npcs/1094-armor-merchant-saki|Armor Merchant Saki]]'
 source:
-  data: LIST_CAP.STB row 32
+  data: godot/data/items/head/32-iron-helm.tres
   code: module/src/items.rs
 ---
 # Iron Helm

@@ -49,7 +49,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1091-arumic-merchant-chester|Arumic Merchant Chester]]'
 source:
-  data: LIST_WEAPON.STB row 338
+  data: godot/data/items/weapon/338-thunder-wand.tres
   code: module/src/items.rs
 ---
 # Thunder Wand

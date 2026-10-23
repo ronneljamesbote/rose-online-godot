@@ -16,7 +16,7 @@ weight: 3
 sold_by:
 - '[[npcs/1110-ferrell-guild-staff-charrs|Ferrell Guild Staff Charrs]]'
 source:
-  data: LIST_CAP.STB row 331
+  data: godot/data/items/head/331-senior-cap.tres
   code: module/src/items.rs
 ---
 # Senior Cap

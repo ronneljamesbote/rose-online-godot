@@ -18,7 +18,7 @@ used_to_craft:
 - '[[items/hands/65-gloves-of-shadow|Gloves of Shadow]]'
 - '[[items/feet/65-boots-of-shadow|Boots of Shadow]]'
 source:
-  data: LIST_NATURAL.STB row 116
+  data: godot/data/items/material/116-netil.tres
   code: module/src/items.rs
 ---
 # Netil

@@ -10,7 +10,7 @@ bonus: Dodge Rate +2
 price: 3950
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 262
+  data: godot/data/items/jewellery/262-socket-necklace.tres
   code: module/src/items.rs
 ---
 # Socket Necklace

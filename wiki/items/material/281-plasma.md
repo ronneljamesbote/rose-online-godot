@@ -15,7 +15,7 @@ dropped_by:
   level: 157
   slots_of_30: 14
 source:
-  data: LIST_NATURAL.STB row 281
+  data: godot/data/items/material/281-plasma.tres
   code: module/src/items.rs
 ---
 # Plasma

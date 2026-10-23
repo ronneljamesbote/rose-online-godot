@@ -9,7 +9,7 @@ effect: HP +160, HP Restoration (160), teaches skill 160, uses skill 160, fuel +
 price: 48
 weight: 1
 source:
-  data: LIST_USEITEM.STB row 110
+  data: godot/data/items/consumable/110-peach.tres
   code: module/src/items.rs
 ---
 # Peach

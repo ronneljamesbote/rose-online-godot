@@ -18,7 +18,7 @@ quest_reward:
 needed_for_quest:
 - quest 5063
 source:
-  data: LIST_FOOT.STB row 153
+  data: godot/data/items/feet/153-plastic-shoes.tres
   code: module/src/items.rs
 ---
 # Plastic Shoes

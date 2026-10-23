@@ -65,7 +65,7 @@ sold_by:
 used_to_craft:
 - '[[items/weapon/436-dual-ocean-swords|Dual Ocean Swords]]'
 source:
-  data: LIST_WEAPON.STB row 9
+  data: godot/data/items/weapon/9-squid-sword.tres
   code: module/src/items.rs
 ---
 # Squid Sword

@@ -47,7 +47,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]]'
 source:
-  data: LIST_WEAPON.STB row 103
+  data: godot/data/items/weapon/103-sword-of-hardship.tres
   code: module/src/items.rs
 ---
 # Sword of Hardship

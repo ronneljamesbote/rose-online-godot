@@ -18,7 +18,7 @@ sockets: true
 price: 663300
 weight: 20
 source:
-  data: LIST_WEAPON.STB row 742
+  data: godot/data/items/weapon/742-ferrell-cannon.tres
   code: module/src/items.rs
 ---
 # Ferrell Cannon

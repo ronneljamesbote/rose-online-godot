@@ -48,7 +48,7 @@ dropped_by:
   level: 128
   slots_of_30: 0.6
 source:
-  data: LIST_WEAPON.STB row 215
+  data: godot/data/items/weapon/215-dual-stick-bow.tres
   code: module/src/items.rs
 ---
 # Dual Stick Bow

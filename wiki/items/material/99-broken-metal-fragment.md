@@ -33,7 +33,7 @@ used_to_craft:
 - '[[items/weapon/136-tower-axe|Tower Axe]]'
 - '[[items/weapon/431-khukuri-long-sword|Khukuri & Long Sword]]'
 source:
-  data: LIST_NATURAL.STB row 99
+  data: godot/data/items/material/99-broken-metal-fragment.tres
   code: module/src/items.rs
 ---
 # Broken Metal Fragment

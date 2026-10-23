@@ -15,7 +15,7 @@ bonus: Max MP +140
 price: 178650
 weight: 20
 source:
-  data: LIST_BODY.STB row 442
+  data: godot/data/items/body/442-heaven-s-coat.tres
   code: module/src/items.rs
 ---
 # Heaven's Coat

@@ -17,7 +17,7 @@ bonus: MP Consumption +13
 price: 52595
 weight: 32
 source:
-  data: LIST_WEAPON.STB row 975
+  data: godot/data/items/weapon/975-coyote-wand.tres
   code: module/src/items.rs
 ---
 # Coyote Wand

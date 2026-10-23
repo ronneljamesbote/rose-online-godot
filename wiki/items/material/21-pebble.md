@@ -8,7 +8,7 @@ class: Stone Material
 price: 70
 weight: 1
 source:
-  data: LIST_NATURAL.STB row 21
+  data: godot/data/items/material/21-pebble.tres
   code: module/src/items.rs
 ---
 # Pebble

@@ -14,7 +14,7 @@ job: Muse 2nd Advanced Jobs
 price: 14850
 weight: 2
 source:
-  data: LIST_ARMS.STB row 433
+  data: godot/data/items/hands/433-gloves-of-shadow.tres
   code: module/src/items.rs
 ---
 # Gloves of Shadow

@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/152-lunarian-coffee|Lunarian Coffee]]'
 source:
-  data: LIST_QUESTITEM.STB row 620
+  data: godot/data/items/quest/620-lunarian-coffee.tres
   code: module/src/items.rs
 ---
 # Lunarian Coffee

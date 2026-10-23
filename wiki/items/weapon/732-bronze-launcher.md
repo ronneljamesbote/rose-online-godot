@@ -22,7 +22,7 @@ dropped_by:
   level: 80
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 732
+  data: godot/data/items/weapon/732-bronze-launcher.tres
   code: module/src/items.rs
 ---
 # Bronze Launcher

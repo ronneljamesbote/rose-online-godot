@@ -24,7 +24,7 @@ sold_by:
 - '[[npcs/1010-designer-keenu|Designer Keenu]]'
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_CAP.STB row 11
+  data: godot/data/items/head/11-luxurious-joker-jester.tres
   code: module/src/items.rs
 ---
 # Luxurious Joker Jester

@@ -17,7 +17,7 @@ bonus: Critical +40
 price: 69175
 weight: 118
 source:
-  data: LIST_WEAPON.STB row 933
+  data: godot/data/items/weapon/933-glaive.tres
   code: module/src/items.rs
 ---
 # Glaive

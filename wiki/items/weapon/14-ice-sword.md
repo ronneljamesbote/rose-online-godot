@@ -41,7 +41,7 @@ dropped_by:
 used_to_craft:
 - '[[items/weapon/440-ice-flare-swords|Ice & Flare Swords]]'
 source:
-  data: LIST_WEAPON.STB row 14
+  data: godot/data/items/weapon/14-ice-sword.tres
   code: module/src/items.rs
 ---
 # Ice Sword

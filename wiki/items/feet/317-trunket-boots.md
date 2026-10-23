@@ -19,7 +19,7 @@ dropped_by:
   level: 57
   slots_of_30: 0.4
 source:
-  data: LIST_FOOT.STB row 317
+  data: godot/data/items/feet/317-trunket-boots.tres
   code: module/src/items.rs
 ---
 # Trunket Boots

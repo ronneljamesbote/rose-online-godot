@@ -10,7 +10,7 @@ quest_reward:
 - '[[quests/107-healing-hands|Healing Hands]]'
 - '[[quests/108-healing-hands|Healing Hands]]'
 source:
-  data: LIST_QUESTITEM.STB row 605
+  data: godot/data/items/quest/605-antidote-recipe.tres
   code: module/src/items.rs
 ---
 # Antidote Recipe

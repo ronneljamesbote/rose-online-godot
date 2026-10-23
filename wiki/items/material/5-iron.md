@@ -27,7 +27,7 @@ used_to_craft:
 - '[[items/weapon/341-windstorm-wand|Windstorm Wand]]'
 - '[[items/weapon/342-holy-wand|Holy Wand]]'
 source:
-  data: LIST_NATURAL.STB row 5
+  data: godot/data/items/material/5-iron.tres
   code: module/src/items.rs
 ---
 # Iron

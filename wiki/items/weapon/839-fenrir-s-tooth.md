@@ -18,7 +18,7 @@ sockets: true
 price: 203950
 weight: 30
 source:
-  data: LIST_WEAPON.STB row 839
+  data: godot/data/items/weapon/839-fenrir-s-tooth.tres
   code: module/src/items.rs
 ---
 # Fenrir's Tooth

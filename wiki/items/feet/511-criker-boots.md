@@ -15,7 +15,7 @@ job: Hawker Job
 price: 2750
 weight: 3
 source:
-  data: LIST_FOOT.STB row 511
+  data: godot/data/items/feet/511-criker-boots.tres
   code: module/src/items.rs
 ---
 # Criker Boots

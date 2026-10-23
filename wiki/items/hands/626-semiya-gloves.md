@@ -14,7 +14,7 @@ job: Dealer 2nd Advanced Jobs
 price: 9700
 weight: 2
 source:
-  data: LIST_ARMS.STB row 626
+  data: godot/data/items/hands/626-semiya-gloves.tres
   code: module/src/items.rs
 ---
 # Semiya Gloves

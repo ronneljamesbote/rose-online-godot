@@ -28,7 +28,7 @@ recipe:
   quantity: 1
 craft_difficulty: 64
 source:
-  data: LIST_PAT.STB row 334
+  data: godot/data/items/vehicle/334-cannon-arms.tres
   code: module/src/items.rs
 ---
 # Cannon Arms

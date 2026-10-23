@@ -17,7 +17,7 @@ bonus: MP Consumption +15
 price: 43750
 weight: 27
 source:
-  data: LIST_WEAPON.STB row 952
+  data: godot/data/items/weapon/952-potbelly-gun.tres
   code: module/src/items.rs
 ---
 # Potbelly Gun

@@ -21,7 +21,7 @@ dropped_by:
   level: 155
   slots_of_30: 1
 source:
-  data: LIST_WEAPON.STB row 901
+  data: godot/data/items/weapon/901-falchion.tres
   code: module/src/items.rs
 ---
 # Falchion

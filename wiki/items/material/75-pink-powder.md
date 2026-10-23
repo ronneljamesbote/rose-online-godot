@@ -20,7 +20,7 @@ dropped_in_zones:
 - '[[zones/33-goblin-cave-b3|Goblin Cave (B3)]]'
 - '[[zones/51-magic-city-of-the-eucar|Magic City of the Eucar]]'
 source:
-  data: LIST_NATURAL.STB row 75
+  data: godot/data/items/material/75-pink-powder.tres
   code: module/src/items.rs
 ---
 # Pink Powder

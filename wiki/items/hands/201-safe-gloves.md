@@ -14,7 +14,7 @@ bonus: Attack Speed +1
 price: 750
 weight: 1
 source:
-  data: LIST_ARMS.STB row 201
+  data: godot/data/items/hands/201-safe-gloves.tres
   code: module/src/items.rs
 ---
 # Safe Gloves

@@ -14,7 +14,7 @@ job: Dealer 2nd Advanced Jobs
 price: 30250
 weight: 2
 source:
-  data: LIST_CAP.STB row 736
+  data: godot/data/items/head/736-rich-merchant-turban.tres
   code: module/src/items.rs
 ---
 # Rich Merchant Turban

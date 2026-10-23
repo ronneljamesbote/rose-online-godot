@@ -14,7 +14,7 @@ job: Hawker 2nd Advanced Jobs
 price: 43550
 weight: 15
 source:
-  data: LIST_BODY.STB row 521
+  data: godot/data/items/body/521-black-pirate-armor.tres
   code: module/src/items.rs
 ---
 # Black Pirate Armor

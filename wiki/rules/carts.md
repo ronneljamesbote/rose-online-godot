@@ -37,7 +37,7 @@ source:
     - module/src/lib.rs (move_to, attack loop, recovery tick, kill)
     - module/src/world.rs (teleport)
     - crates/rose-game-irose/src/data/ability_values.rs (calculate_vehicle_move_speed, calculate_vehicle_attack_power, calculate_vehicle_attack_speed, calculate_vehicle_attack_range, calculate_vehicle_hit, calculate_vehicle_critical, calculate_vehicle_avoid, calculate_defence)
-  data: LIST_PAT.STB (columns 2 part, 16 type, 32 fuel rate, 33 speed, 35 range, 36 attack, 37 attack speed, 39 seat); LIST_USEITEM.STB column 20 (fuel added); LIST_ZONE.STB column 30 (vehicle ban)
+  data: the vehicle part resources in godot/data/items/vehicle/ (vehicle_part, vehicle_type, fuel_use_rate, move_speed, attack_range, attack_power, attack_speed, has_seat); the fuel items' add_fuel (godot/data/items/consumable/); LIST_ZONE.STB column 30 (vehicle ban)
 ---
 # Carts and Castle Gear
 
@@ -146,6 +146,6 @@ The passenger gets off when the driver gets off, dies or leaves. When the driver
 the passenger comes along and arrives 1 metre to the side, on foot.
 
 > Open question: the parts' Defence and other stat bonuses (for example a frame's Defence +26) are read into the vehicle's bonuses, but defence while driving only uses your normal gear plus the parts' grade bonus, so those bonuses are not applied.
-> Open question: engines list a maximum fuel (LIST_PAT column 31, e.g. 1600 for the First Engine), but every engine's tank holds 1000.
+> Open question: engines list a maximum fuel (`max_fuel`, iROSE's LIST_PAT column 31, e.g. 1600 for the First Engine), but every engine's tank holds 1000.
 
-> Open question: LIST_PAT.STB gives arms and body parts their own fuel rates, but only the engine's rate is used.
+> Open question: Arms and body parts have their own fuel rates (`fuel_use_rate`), but only the engine's rate is used.

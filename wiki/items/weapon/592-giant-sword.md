@@ -18,7 +18,7 @@ sockets: true
 price: 332200
 weight: 65
 source:
-  data: LIST_WEAPON.STB row 592
+  data: godot/data/items/weapon/592-giant-sword.tres
   code: module/src/items.rs
 ---
 # Giant Sword

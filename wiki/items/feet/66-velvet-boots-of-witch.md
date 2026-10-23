@@ -30,7 +30,7 @@ dropped_by:
   level: 115
   slots_of_30: 0.4
 source:
-  data: LIST_FOOT.STB row 66
+  data: godot/data/items/feet/66-velvet-boots-of-witch.tres
   code: module/src/items.rs
 ---
 # Velvet Boots of Witch

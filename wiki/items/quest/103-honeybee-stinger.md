@@ -15,7 +15,7 @@ needed_for_quest:
 - '[[quests/1003-dealer-job-change-quest|Dealer Job Change Quest]]'
 - '[[quests/1004-dealer-job-change-quest|Dealer Job Change Quest]]'
 source:
-  data: LIST_QUESTITEM.STB row 103
+  data: godot/data/items/quest/103-honeybee-stinger.tres
   code: module/src/items.rs
 ---
 # HoneyBee Stinger

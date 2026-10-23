@@ -8,7 +8,7 @@ class: Skill Book
 effect: teaches skill 3212, uses skill 3212, fuel +3212
 price: 0
 source:
-  data: LIST_USEITEM.STB row 888
+  data: godot/data/items/consumable/888-power-up-mode.tres
   code: module/src/items.rs
 ---
 # Power-Up Mode

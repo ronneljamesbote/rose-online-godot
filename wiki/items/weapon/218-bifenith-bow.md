@@ -42,7 +42,7 @@ dropped_by:
   level: 143
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 218
+  data: godot/data/items/weapon/218-bifenith-bow.tres
   code: module/src/items.rs
 ---
 # Bifenith Bow

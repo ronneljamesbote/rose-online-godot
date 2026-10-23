@@ -20,7 +20,7 @@ dropped_by:
   level: 35
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 417
+  data: godot/data/items/consumable/417-porkie.tres
   code: module/src/items.rs
 ---
 # Porkie

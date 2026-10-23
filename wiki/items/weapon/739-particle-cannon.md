@@ -18,7 +18,7 @@ sockets: true
 price: 442350
 weight: 20
 source:
-  data: LIST_WEAPON.STB row 739
+  data: godot/data/items/weapon/739-particle-cannon.tres
   code: module/src/items.rs
 ---
 # Particle Cannon

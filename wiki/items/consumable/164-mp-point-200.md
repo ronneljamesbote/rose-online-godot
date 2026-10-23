@@ -48,7 +48,7 @@ dropped_by:
   level: 60
   slots_of_30: 1
 source:
-  data: LIST_USEITEM.STB row 164
+  data: godot/data/items/consumable/164-mp-point-200.tres
   code: module/src/items.rs
 ---
 # MP Point (+200)

@@ -25,7 +25,7 @@ quest_reward:
 - quest 1953
 - '[[quests/5009-candle-ghost-extermination-fetch-quest|Candle Ghost Extermination (Fetch Quest)]]'
 source:
-  data: LIST_USEITEM.STB row 11
+  data: godot/data/items/consumable/11-vital-water-m.tres
   code: module/src/items.rs
 ---
 # Vital Water (M)

@@ -1,0 +1,22 @@
+[package]
+name = "rose-data-export"
+version = { workspace = true }
+edition = { workspace = true }
+publish = false
+
+# The game data exported from the Godot resources in godot/data/ (`--export-data`): the
+# TOML files' layout and the loader that fills the game's databases from them, in place of
+# the iROSE tables. See overrides/README.md.
+
+[dependencies]
+rose-data = { path = "../rose-data" }
+anyhow = { workspace = true }
+arrayvec = { workspace = true }
+enum-map = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+toml = "0.8"
+
+[dev-dependencies]
+rose-data-irose = { path = "../rose-data-irose" }
+rose-file-readers = { path = "../rose-file-readers" }

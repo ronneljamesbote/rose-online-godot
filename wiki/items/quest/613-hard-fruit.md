@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/128-the-owl-eye|The Owl Eye]]'
 - '[[quests/129-the-owl-eye|The Owl Eye]]'
 source:
-  data: LIST_QUESTITEM.STB row 613
+  data: godot/data/items/quest/613-hard-fruit.tres
   code: module/src/items.rs
 ---
 # Hard Fruit

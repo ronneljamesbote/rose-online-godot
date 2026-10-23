@@ -25,7 +25,7 @@ dropped_by:
   level: 157
   slots_of_30: 0.2
 source:
-  data: LIST_WEAPON.STB row 419
+  data: godot/data/items/weapon/419-raven-knuckle.tres
   code: module/src/items.rs
 ---
 # Raven Knuckle

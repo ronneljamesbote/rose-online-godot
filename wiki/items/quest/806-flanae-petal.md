@@ -11,7 +11,7 @@ quest_reward:
 needed_for_quest:
 - '[[quests/5035-stockpiling-on-flanae-petals|Stockpiling on Flanae Petals]]'
 source:
-  data: LIST_QUESTITEM.STB row 806
+  data: godot/data/items/quest/806-flanae-petal.tres
   code: module/src/items.rs
 ---
 # Flanae Petal

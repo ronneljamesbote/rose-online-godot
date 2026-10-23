@@ -35,7 +35,7 @@ used_to_craft:
 - '[[items/vehicle/133-luxem-engine|Luxem Engine]]'
 - '[[items/vehicle/335-spear-arms|Spear Arms]]'
 source:
-  data: LIST_NATURAL.STB row 205
+  data: godot/data/items/material/205-mana-oil.tres
   code: module/src/items.rs
 ---
 # Mana Oil

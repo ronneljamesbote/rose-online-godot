@@ -48,7 +48,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_FOOT.STB row 63
+  data: godot/data/items/feet/63-purple-sandals-of-witch.tres
   code: module/src/items.rs
 ---
 # Purple Sandals of Witch

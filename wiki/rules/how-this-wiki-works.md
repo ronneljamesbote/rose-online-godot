@@ -7,7 +7,8 @@ source:
   code:
     - AGENTS.md (the rules developers follow)
     - wiki/README.md (page format)
-    - overrides/game-data.toml (our changes to the game data)
+    - godot/data/ (the game data made in the Godot editor, items so far)
+    - overrides/game-data.toml (our changes to the iROSE game data)
     - tools/wiki-gen (wrote the first draft of the table pages)
 ---
 # How this wiki works
@@ -18,19 +19,22 @@ changes first, and the game is then made to match it.
 
 ## Where the numbers come from
 
-Every number in the game comes from one of three places:
+Every number in the game comes from one of four places:
 
 | Place | What it holds | Example |
 | --- | --- | --- |
-| The iROSE 129 game data | The original tables: item stats, monster stats, skill levels, drop tables, shops, spawns, quests, dialogs | Short Sword attack 10 |
-| The override file (`overrides/game-data.toml`) | Our changes to those tables, one cell per entry | Short Sword attack 12 instead of 10 |
+| Our game data (`godot/data/`) | Things made in the Godot editor, one file each, converted once from iROSE: the items so far | Short Sword attack 10, in `godot/data/items/weapon/2-short-sword.tres` |
+| The iROSE 129 game data | The original tables not converted yet: monster stats, skill levels, drop tables, shops, spawns, quests, dialogs | Jelly Bean HP 120 |
+| The override file (`overrides/game-data.toml`) | Our changes to those iROSE tables, one cell per entry | Jelly Bean HP 150 instead of 120 |
 | The game code | Rules and formulas, and features iROSE didn't have | How attack turns into damage |
 
-The original data is never edited. Every change we make to it is one line in the override
-file, which both the server and the game client read, so they always agree. A rule or
-formula change goes into the code instead.
+The original data is never edited. Our own data is changed in the Godot editor and
+exported (`overrides/data/`); a change to iROSE data not converted yet is one line in the
+override file. Both the server and the game client read the same files, so they always
+agree. A rule or formula change goes into the code instead.
 
-A page's `source` row names the data (file and row) and the code behind it.
+A page's `source` row names the data (our file, or the iROSE table and row) and the code
+behind it.
 
 ## Changing the game
 
@@ -42,6 +46,8 @@ A page's `source` row names the data (file and row) and the code behind it.
 
 Some examples:
 
+- *"Short Sword should hit harder"*: edit the attack on the item page. That becomes a
+  change to the sword's file in `godot/data/items/`.
 - *"Jelly Bean should drop Jelly Bean Gel more often"*: edit the drop row on the monster
   page. That becomes an override entry for the drop table.
 - *"Critical hits should do double damage"*: edit the formula on [[rules/combat|Combat]].

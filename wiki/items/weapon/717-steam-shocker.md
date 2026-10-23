@@ -18,7 +18,7 @@ sockets: true
 price: 461100
 weight: 40
 source:
-  data: LIST_WEAPON.STB row 717
+  data: godot/data/items/weapon/717-steam-shocker.tres
   code: module/src/items.rs
 ---
 # Steam Shocker

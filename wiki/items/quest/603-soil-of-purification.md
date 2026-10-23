@@ -12,7 +12,7 @@ needed_for_quest:
 - '[[quests/106-healing-hands|Healing Hands]]'
 - '[[quests/107-healing-hands|Healing Hands]]'
 source:
-  data: LIST_QUESTITEM.STB row 603
+  data: godot/data/items/quest/603-soil-of-purification.tres
   code: module/src/items.rs
 ---
 # Soil of Purification

@@ -11,7 +11,7 @@ bonus: Charm +10
 price: 1550
 weight: 7
 source:
-  data: LIST_FACEITEM.STB row 10
+  data: godot/data/items/face/10-goblin-mask.tres
   code: module/src/items.rs
 ---
 # Goblin Mask

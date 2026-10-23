@@ -18,7 +18,7 @@ dropped_by:
   level: 55
   slots_of_30: 0.2
 source:
-  data: LIST_CAP.STB row 417
+  data: godot/data/items/head/417-trunket-helm.tres
   code: module/src/items.rs
 ---
 # Trunket Helm

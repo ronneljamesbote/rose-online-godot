@@ -45,7 +45,7 @@ dropped_by:
 sold_by:
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 source:
-  data: LIST_CAP.STB row 64
+  data: godot/data/items/head/64-violet-beret.tres
   code: module/src/items.rs
 ---
 # Violet Beret

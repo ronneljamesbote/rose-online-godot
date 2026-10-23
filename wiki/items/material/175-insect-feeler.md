@@ -49,7 +49,7 @@ used_to_craft:
 - '[[items/weapon/64-crossbow-gun|Crossbow Gun]]'
 - '[[items/weapon/167-trident|Trident]]'
 source:
-  data: LIST_NATURAL.STB row 175
+  data: godot/data/items/material/175-insect-feeler.tres
   code: module/src/items.rs
 ---
 # Insect Feeler

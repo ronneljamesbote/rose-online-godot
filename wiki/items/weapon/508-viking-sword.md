@@ -22,7 +22,7 @@ dropped_by:
   level: 90
   slots_of_30: 0.4
 source:
-  data: LIST_WEAPON.STB row 508
+  data: godot/data/items/weapon/508-viking-sword.tres
   code: module/src/items.rs
 ---
 # Viking Sword

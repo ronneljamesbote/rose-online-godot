@@ -10,7 +10,7 @@ bonus: Charm +30
 price: 479550
 weight: 1
 source:
-  data: LIST_JEWEL.STB row 180
+  data: godot/data/items/jewellery/180-angel-earring.tres
   code: module/src/items.rs
 ---
 # Angel Earring

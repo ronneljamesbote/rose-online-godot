@@ -14,7 +14,7 @@ dropped_by:
   level: 52
   slots_of_30: 1
 source:
-  data: LIST_JEWEL.STB row 7
+  data: godot/data/items/jewellery/7-amulet-ring.tres
   code: module/src/items.rs
 ---
 # Amulet Ring

@@ -19,7 +19,7 @@ dropped_by:
   level: 88
   slots_of_30: 0.4
 source:
-  data: LIST_FOOT.STB row 427
+  data: godot/data/items/feet/427-violet-boots.tres
   code: module/src/items.rs
 ---
 # Violet Boots

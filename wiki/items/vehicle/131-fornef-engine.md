@@ -26,7 +26,7 @@ recipe:
   quantity: 1
 craft_difficulty: 63
 source:
-  data: LIST_PAT.STB row 131
+  data: godot/data/items/vehicle/131-fornef-engine.tres
   code: module/src/items.rs
 ---
 # Fornef Engine

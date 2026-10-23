@@ -20,7 +20,7 @@ craft_difficulty: 27
 used_to_craft:
 - '[[items/gem/336-topaz-6|Topaz 6]]'
 source:
-  data: LIST_JEMITEM.STB row 335
+  data: godot/data/items/gem/335-topaz-5.tres
   code: module/src/items.rs
 ---
 # Topaz [5]

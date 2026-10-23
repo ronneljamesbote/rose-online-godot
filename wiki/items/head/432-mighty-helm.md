@@ -14,7 +14,7 @@ job: Soldier 2nd Advanced Jobs
 price: 19600
 weight: 10
 source:
-  data: LIST_CAP.STB row 432
+  data: godot/data/items/head/432-mighty-helm.tres
   code: module/src/items.rs
 ---
 # Mighty Helm

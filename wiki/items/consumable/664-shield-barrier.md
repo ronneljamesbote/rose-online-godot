@@ -13,7 +13,7 @@ sold_by:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 - '[[npcs/1084-akram-minister-gamp|Akram Minister Gamp]]'
 source:
-  data: LIST_USEITEM.STB row 664
+  data: godot/data/items/consumable/664-shield-barrier.tres
   code: module/src/items.rs
 ---
 # Shield Barrier
