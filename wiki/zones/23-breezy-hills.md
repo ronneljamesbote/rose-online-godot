@@ -419,7 +419,7 @@ zone_drops:
 - '[[items/consumable/104-kiwi|Kiwi]]'
 - '[[items/material/122-wind-stone|Wind Stone]]'
 source:
-  data: LIST_ZONE.STB row 23, overrides/zones/23-breezy-hills.toml (exported from the scenes in godot/zones/23_breezy_hills), ITEM_DROP.STB row 23
+  data: LIST_ZONE.STB row 23, overrides/zones/23-breezy-hills.toml (exported from the scenes in godot/zones/23_breezy_hills), drop table godot/data/drop_tables/23-zone-breezy-hills.tres
   code:
   - module/src/world.rs
   - crates/rose-game-data/src/lib.rs (apply_zone_layouts)

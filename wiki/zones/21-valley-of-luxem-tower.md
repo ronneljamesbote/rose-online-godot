@@ -276,7 +276,7 @@ zone_drops:
 - '[[items/material/5-iron|Iron]]'
 - '[[items/material/116-netil|Netil]]'
 source:
-  data: LIST_ZONE.STB row 21, overrides/zones/21-valley-of-luxem-tower.toml (exported from the scenes in godot/zones/21_valley_of_luxem_tower), ITEM_DROP.STB row 21
+  data: LIST_ZONE.STB row 21, overrides/zones/21-valley-of-luxem-tower.toml (exported from the scenes in godot/zones/21_valley_of_luxem_tower), drop table godot/data/drop_tables/21-zone-valley-of-luxem-tower.tres
   code:
   - module/src/world.rs
   - crates/rose-game-data/src/lib.rs (apply_zone_layouts)

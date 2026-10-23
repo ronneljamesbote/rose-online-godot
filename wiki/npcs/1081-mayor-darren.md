@@ -422,7 +422,7 @@ shop:
   item: '[[items/consumable/846-castlegear-craft|CastleGear Craft]]'
   base_price: 37350
 source:
-  data: LIST_NPC.STB row 1081; dialog 3Ddata\Event\EM02-001.con
+  data: godot/data/npcs/1081-mayor-darren.tres; dialog 3Ddata\Event\EM02-001.con
   code:
   - module/src/npcs.rs
   - godot/rust/src/conversation.rs

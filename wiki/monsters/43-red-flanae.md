@@ -205,7 +205,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 43, ITEM_DROP.STB row 118
+  data: godot/data/monsters/43-red-flanae.tres, drop table godot/data/drop_tables/118-red-flanae.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

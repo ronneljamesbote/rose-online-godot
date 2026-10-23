@@ -153,7 +153,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 68, ITEM_DROP.STB row 129
+  data: godot/data/monsters/68-queen-bibi.tres, drop table godot/data/drop_tables/129-queen-bibi.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

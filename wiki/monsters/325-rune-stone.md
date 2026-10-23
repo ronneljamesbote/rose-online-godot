@@ -82,7 +82,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 325, ITEM_DROP.STB row 0
+  data: godot/data/monsters/325-rune-stone.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

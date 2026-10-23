@@ -829,14 +829,14 @@ impl Format {
         }
     }
 
-    fn parse<T: DeserializeOwned>(self, name: &str, text: &str) -> Result<T, anyhow::Error> {
+    pub(crate) fn parse<T: DeserializeOwned>(self, name: &str, text: &str) -> Result<T, anyhow::Error> {
         match self {
             Format::Toml => toml::from_str(text).with_context(|| format!("{name}.toml")),
             Format::Json => serde_json::from_str(text).with_context(|| format!("{name}.json")),
         }
     }
 
-    fn write<T: Serialize>(self, name: &str, value: &T) -> Result<String, anyhow::Error> {
+    pub(crate) fn write<T: Serialize>(self, name: &str, value: &T) -> Result<String, anyhow::Error> {
         match self {
             Format::Toml => toml::to_string(value).with_context(|| format!("writing {name}.toml")),
             Format::Json => {

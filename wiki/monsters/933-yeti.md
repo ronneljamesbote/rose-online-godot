@@ -22,7 +22,7 @@ drop_money_rate: 0
 summoned_by:
 - skill 2833
 source:
-  data: LIST_NPC.STB row 933, ITEM_DROP.STB row 3
+  data: godot/data/monsters/933-yeti.tres, drop table godot/data/drop_tables/3-bonfire-butterfly-phantomsword-and-others.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

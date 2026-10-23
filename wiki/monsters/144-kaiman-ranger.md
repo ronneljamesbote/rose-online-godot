@@ -128,7 +128,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 144, ITEM_DROP.STB row 168
+  data: godot/data/monsters/144-kaiman-ranger.tres, drop table godot/data/drop_tables/168-kaiman-ranger.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

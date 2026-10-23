@@ -126,7 +126,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 258, ITEM_DROP.STB row 223
+  data: godot/data/monsters/258-elder-bloodbat.tres, drop table godot/data/drop_tables/223-elder-bloodbat.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

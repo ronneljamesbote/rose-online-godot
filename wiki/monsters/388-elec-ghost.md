@@ -67,7 +67,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 388, ITEM_DROP.STB row 279
+  data: godot/data/monsters/388-elec-ghost.tres, drop table godot/data/drop_tables/279-elec-ghost.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

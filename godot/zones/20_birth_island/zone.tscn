@@ -518,9 +518,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5323.57, -9.8, -5435.59)
 [node name="Spawns" type="Node3D" parent="Block_33_31" unique_id=1018367991]
 
 [node name="Spawn_0" type="RoseSpawnSpot" parent="Block_33_31/Spawns" unique_id=773458264]
-basic_monsters = PackedInt32Array(1, 8, 11, 9, 2)
+basic_monster_ids = PackedInt32Array(1, 8, 11, 9, 2)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 2)
-tactic_monsters = PackedInt32Array(2, 1)
+tactic_monster_ids = PackedInt32Array(2, 1)
 tactic_counts = PackedInt32Array(2, 4)
 interval = 5
 limit = 17
@@ -528,9 +528,9 @@ range = 40
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5348.01, 14.69, -5294.02)
 
 [node name="Spawn_1" type="RoseSpawnSpot" parent="Block_33_31/Spawns" unique_id=700138635]
-basic_monsters = PackedInt32Array(1, 1, 11, 1, 11)
+basic_monster_ids = PackedInt32Array(1, 1, 11, 1, 11)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 2)
-tactic_monsters = PackedInt32Array(11, 1)
+tactic_monster_ids = PackedInt32Array(11, 1)
 tactic_counts = PackedInt32Array(1, 3)
 interval = 5
 limit = 10
@@ -538,9 +538,9 @@ range = 20
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5335.06, 11.48, -5337.67)
 
 [node name="Spawn_2" type="RoseSpawnSpot" parent="Block_33_31/Spawns" unique_id=1708719284]
-basic_monsters = PackedInt32Array(1, 1, 11, 1, 11)
+basic_monster_ids = PackedInt32Array(1, 1, 11, 1, 11)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 2)
-tactic_monsters = PackedInt32Array(11, 1)
+tactic_monster_ids = PackedInt32Array(11, 1)
 tactic_counts = PackedInt32Array(1, 3)
 interval = 5
 limit = 12
@@ -548,7 +548,7 @@ range = 23
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5374.09, 8.31, -5337.66)
 
 [node name="Spawn_3" type="RoseSpawnSpot" parent="Block_33_31/Spawns" unique_id=277528603]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 13
@@ -556,7 +556,7 @@ range = 40
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5338.63, 14.22, -5299.36)
 
 [node name="Spawn_4" type="RoseSpawnSpot" parent="Block_33_31/Spawns" unique_id=595983293]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 13
@@ -566,12 +566,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5363.6, 6.55, -5342.13)
 [node name="Npcs" type="Node3D" parent="Block_33_31" unique_id=1186915809]
 
 [node name="Npc_0" type="RoseNpcSpot" parent="Block_33_31/Npcs" unique_id=2029165157]
-npc = 1030
+npc_id = 1030
 quest_file = "EM20-001.con"
 transform = Transform3D(0.74314475, 0, 0.6691306, 0, 1, 0, -0.6691306, 0, 0.74314475, 5339.82, 6.64, -5394.33)
 
 [node name="Npc_1" type="RoseNpcSpot" parent="Block_33_31/Npcs" unique_id=553067433]
-npc = 1030
+npc_id = 1030
 quest_file = "EM20-001.con"
 transform = Transform3D(-0.35836756, 0, 0.9335806, 0, 1, 0, -0.9335806, 0, -0.35836756, 5329.79, 8.07, -5373.89)
 
@@ -814,9 +814,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4966.42, -2.53, -5179.47)
 [node name="Spawns" type="Node3D" parent="Block_31_32" unique_id=1717964698]
 
 [node name="Spawn_0" type="RoseSpawnSpot" parent="Block_31_32/Spawns" unique_id=465454081]
-basic_monsters = PackedInt32Array(1, 1, 1, 11, 2)
+basic_monster_ids = PackedInt32Array(1, 1, 1, 11, 2)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 1)
-tactic_monsters = PackedInt32Array(11, 1)
+tactic_monster_ids = PackedInt32Array(11, 1)
 tactic_counts = PackedInt32Array(2, 3)
 interval = 7
 limit = 6
@@ -826,12 +826,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5069.05, 10.06, -5125.86)
 [node name="Npcs" type="Node3D" parent="Block_31_32" unique_id=1600326486]
 
 [node name="Npc_0" type="RoseNpcSpot" parent="Block_31_32/Npcs" unique_id=705606353]
-npc = 1030
+npc_id = 1030
 quest_file = "EM20-001.con"
 transform = Transform3D(-0.1564337, 0, 0.9876885, 0, 1, 0, -0.9876885, 0, -0.1564337, 5020.67, 6.95, -5127.01)
 
 [node name="Npc_1" type="RoseNpcSpot" parent="Block_31_32/Npcs" unique_id=434446326]
-npc = 1030
+npc_id = 1030
 quest_file = "EM20-001.con"
 transform = Transform3D(0.9876883, 0, 0.15643467, 0, 1, 0, -0.15643467, 0, 0.9876883, 5035.26, 7.05, -5149.28)
 
@@ -1041,9 +1041,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5274.57, 50.76, -5123.36)
 [node name="Spawns" type="Node3D" parent="Block_32_32" unique_id=725753832]
 
 [node name="Spawn_0" type="RoseSpawnSpot" parent="Block_32_32/Spawns" unique_id=531754980]
-basic_monsters = PackedInt32Array(2, 12, 11, 1, 2)
+basic_monster_ids = PackedInt32Array(2, 12, 11, 1, 2)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 2)
-tactic_monsters = PackedInt32Array(2, 12)
+tactic_monster_ids = PackedInt32Array(2, 12)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 7
@@ -1051,9 +1051,9 @@ range = 16
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5268.65, 19.75, -5230.82)
 
 [node name="Spawn_1" type="RoseSpawnSpot" parent="Block_32_32/Spawns" unique_id=1422139541]
-basic_monsters = PackedInt32Array(2, 2, 3, 12, 2)
+basic_monster_ids = PackedInt32Array(2, 2, 3, 12, 2)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 2)
-tactic_monsters = PackedInt32Array(3, 12)
+tactic_monster_ids = PackedInt32Array(3, 12)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 4
@@ -1721,9 +1721,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5428.91, 46.2, -5128.62)
 [node name="Spawns" type="Node3D" parent="Block_33_32" unique_id=781815384]
 
 [node name="Spawn_0" type="RoseSpawnSpot" parent="Block_33_32/Spawns" unique_id=886881207]
-basic_monsters = PackedInt32Array(1, 9, 11, 1, 2)
+basic_monster_ids = PackedInt32Array(1, 9, 11, 1, 2)
 basic_counts = PackedInt32Array(2, 3, 2, 2, 2)
-tactic_monsters = PackedInt32Array(2, 1)
+tactic_monster_ids = PackedInt32Array(2, 1)
 tactic_counts = PackedInt32Array(2, 4)
 interval = 5
 limit = 13
@@ -1731,9 +1731,9 @@ range = 37
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5382.79, 12.72, -5278.75)
 
 [node name="Spawn_1" type="RoseSpawnSpot" parent="Block_33_32/Spawns" unique_id=1045730918]
-basic_monsters = PackedInt32Array(1, 2, 11, 1, 2)
+basic_monster_ids = PackedInt32Array(1, 2, 11, 1, 2)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 2)
-tactic_monsters = PackedInt32Array(2, 12)
+tactic_monster_ids = PackedInt32Array(2, 12)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 10
@@ -1741,9 +1741,9 @@ range = 20
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5298.14, 20.64, -5271.78)
 
 [node name="Spawn_2" type="RoseSpawnSpot" parent="Block_33_32/Spawns" unique_id=1925005329]
-basic_monsters = PackedInt32Array(1, 2, 11, 1, 2)
+basic_monster_ids = PackedInt32Array(1, 2, 11, 1, 2)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 2)
-tactic_monsters = PackedInt32Array(2, 12)
+tactic_monster_ids = PackedInt32Array(2, 12)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 8
 limit = 7
@@ -1751,9 +1751,9 @@ range = 15
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5432.87, 16.54, -5239.42)
 
 [node name="Spawn_3" type="RoseSpawnSpot" parent="Block_33_32/Spawns" unique_id=1887184935]
-basic_monsters = PackedInt32Array(2, 2, 3, 12, 2)
+basic_monster_ids = PackedInt32Array(2, 2, 3, 12, 2)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 2)
-tactic_monsters = PackedInt32Array(3, 12)
+tactic_monster_ids = PackedInt32Array(3, 12)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 7
@@ -1761,9 +1761,9 @@ range = 16
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5321.72, 24.29, -5155.17)
 
 [node name="Spawn_4" type="RoseSpawnSpot" parent="Block_33_32/Spawns" unique_id=1299741676]
-basic_monsters = PackedInt32Array(2, 2, 3, 12, 2)
+basic_monster_ids = PackedInt32Array(2, 2, 3, 12, 2)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 2)
-tactic_monsters = PackedInt32Array(3, 12)
+tactic_monster_ids = PackedInt32Array(3, 12)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 7
@@ -1771,9 +1771,9 @@ range = 20
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5357.87, 26.86, -5142.41)
 
 [node name="Spawn_5" type="RoseSpawnSpot" parent="Block_33_32/Spawns" unique_id=565859910]
-basic_monsters = PackedInt32Array(11, 12, 3, 12, 2)
+basic_monster_ids = PackedInt32Array(11, 12, 3, 12, 2)
 basic_counts = PackedInt32Array(1, 1, 2, 2, 2)
-tactic_monsters = PackedInt32Array(3, 12)
+tactic_monster_ids = PackedInt32Array(3, 12)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 8
@@ -1781,9 +1781,9 @@ range = 20
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5383.88, 24.68, -5176.08)
 
 [node name="Spawn_6" type="RoseSpawnSpot" parent="Block_33_32/Spawns" unique_id=1468385289]
-basic_monsters = PackedInt32Array(2, 2, 3, 12, 2)
+basic_monster_ids = PackedInt32Array(2, 2, 3, 12, 2)
 basic_counts = PackedInt32Array(2, 1, 1, 2, 2)
-tactic_monsters = PackedInt32Array(3, 12)
+tactic_monster_ids = PackedInt32Array(3, 12)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 7
@@ -1791,9 +1791,9 @@ range = 17
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5373.25, 16.52, -5238.37)
 
 [node name="Spawn_7" type="RoseSpawnSpot" parent="Block_33_32/Spawns" unique_id=1344821327]
-basic_monsters = PackedInt32Array(2, 2, 3, 12, 2)
+basic_monster_ids = PackedInt32Array(2, 2, 3, 12, 2)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 2)
-tactic_monsters = PackedInt32Array(3, 12)
+tactic_monster_ids = PackedInt32Array(3, 12)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 4
@@ -1801,9 +1801,9 @@ range = 11
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5300.05, 22.67, -5168.14)
 
 [node name="Spawn_8" type="RoseSpawnSpot" parent="Block_33_32/Spawns" unique_id=7802748]
-basic_monsters = PackedInt32Array(2, 2, 3, 12, 2)
+basic_monster_ids = PackedInt32Array(2, 2, 3, 12, 2)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 2)
-tactic_monsters = PackedInt32Array(3, 12)
+tactic_monster_ids = PackedInt32Array(3, 12)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 4
@@ -1811,7 +1811,7 @@ range = 11
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5378.97, 21.37, -5202.27)
 
 [node name="Spawn_9" type="RoseSpawnSpot" parent="Block_33_32/Spawns" unique_id=1743817599]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 13
@@ -1819,7 +1819,7 @@ range = 35
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5390.58, 16.37, -5276.41)
 
 [node name="Spawn_10" type="RoseSpawnSpot" parent="Block_33_32/Spawns" unique_id=1543086463]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 13
@@ -1827,7 +1827,7 @@ range = 29
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5354.79, 23.3, -5151.31)
 
 [node name="Spawn_11" type="RoseSpawnSpot" parent="Block_33_32/Spawns" unique_id=141553009]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 10
@@ -2045,9 +2045,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5496.78, -4.59, -5230.35)
 [node name="Spawns" type="Node3D" parent="Block_34_32" unique_id=1072919531]
 
 [node name="Spawn_0" type="RoseSpawnSpot" parent="Block_34_32/Spawns" unique_id=876870361]
-basic_monsters = PackedInt32Array(1, 1, 2, 11, 1)
+basic_monster_ids = PackedInt32Array(1, 1, 2, 11, 1)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 3)
-tactic_monsters = PackedInt32Array(11, 2)
+tactic_monster_ids = PackedInt32Array(11, 2)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 7
 limit = 8
@@ -2055,7 +2055,7 @@ range = 17
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5590.94, 16.58, -5161.18)
 
 [node name="Spawn_1" type="RoseSpawnSpot" parent="Block_34_32/Spawns" unique_id=526110854]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 12
@@ -2298,9 +2298,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5689.87, -1.3, -5256.02)
 [node name="Spawns" type="Node3D" parent="Block_35_32" unique_id=2144149380]
 
 [node name="Spawn_0" type="RoseSpawnSpot" parent="Block_35_32/Spawns" unique_id=1574009150]
-basic_monsters = PackedInt32Array(1, 11, 1, 11, 1)
+basic_monster_ids = PackedInt32Array(1, 11, 1, 11, 1)
 basic_counts = PackedInt32Array(2, 2, 1, 2, 2)
-tactic_monsters = PackedInt32Array(11, 1)
+tactic_monster_ids = PackedInt32Array(11, 1)
 tactic_counts = PackedInt32Array(2, 3)
 interval = 6
 limit = 12
@@ -2308,9 +2308,9 @@ range = 24
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5650.67, 10.01, -5140.14)
 
 [node name="Spawn_1" type="RoseSpawnSpot" parent="Block_35_32/Spawns" unique_id=2070370842]
-basic_monsters = PackedInt32Array(1, 1, 1, 11, 1)
+basic_monster_ids = PackedInt32Array(1, 1, 1, 11, 1)
 basic_counts = PackedInt32Array(2, 2, 1, 2, 2)
-tactic_monsters = PackedInt32Array(11, 1)
+tactic_monster_ids = PackedInt32Array(11, 1)
 tactic_counts = PackedInt32Array(2, 3)
 interval = 6
 limit = 10
@@ -2318,9 +2318,9 @@ range = 17
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5629.88, 14, -5164.71)
 
 [node name="Spawn_2" type="RoseSpawnSpot" parent="Block_35_32/Spawns" unique_id=64449111]
-basic_monsters = PackedInt32Array(1, 1, 2, 11, 1)
+basic_monster_ids = PackedInt32Array(1, 1, 2, 11, 1)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 3)
-tactic_monsters = PackedInt32Array(11, 2)
+tactic_monster_ids = PackedInt32Array(11, 2)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 5
 limit = 15
@@ -2328,7 +2328,7 @@ range = 39
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5613.05, 16.65, -5134.44)
 
 [node name="Spawn_3" type="RoseSpawnSpot" parent="Block_35_32/Spawns" unique_id=1100853259]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 9
@@ -2338,12 +2338,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5644.76, 12.04, -5149.1)
 [node name="Npcs" type="Node3D" parent="Block_35_32" unique_id=1965010177]
 
 [node name="Npc_0" type="RoseNpcSpot" parent="Block_35_32/Npcs" unique_id=883045498]
-npc = 1030
+npc_id = 1030
 quest_file = "EM20-001.con"
 transform = Transform3D(0.7071067, 0, 0.7071068, 0, 1, 0, -0.7071068, 0, 0.7071067, 5677.53, 6.39, -5174.89)
 
 [node name="Npc_1" type="RoseNpcSpot" parent="Block_35_32/Npcs" unique_id=1879470857]
-npc = 1030
+npc_id = 1030
 quest_file = "EM20-001.con"
 transform = Transform3D(0.7071067, 0, -0.7071068, 0, 1, 0, 0.7071068, 0, 0.7071067, 5709.51, 4.98, -5178.21)
 
@@ -2538,9 +2538,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5050.25, -9.72, -5044.18)
 [node name="Spawns" type="Node3D" parent="Block_31_33" unique_id=2073832097]
 
 [node name="Spawn_0" type="RoseSpawnSpot" parent="Block_31_33/Spawns" unique_id=807344303]
-basic_monsters = PackedInt32Array(1, 11, 1, 11, 2)
+basic_monster_ids = PackedInt32Array(1, 11, 1, 11, 2)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 1)
-tactic_monsters = PackedInt32Array(11, 1)
+tactic_monster_ids = PackedInt32Array(11, 1)
 tactic_counts = PackedInt32Array(2, 3)
 interval = 6
 limit = 12
@@ -2548,9 +2548,9 @@ range = 25
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5056.61, 9.96, -5112.74)
 
 [node name="Spawn_1" type="RoseSpawnSpot" parent="Block_31_33/Spawns" unique_id=788138858]
-basic_monsters = PackedInt32Array(1, 1, 1, 11, 2)
+basic_monster_ids = PackedInt32Array(1, 1, 1, 11, 2)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 1)
-tactic_monsters = PackedInt32Array(11, 1)
+tactic_monster_ids = PackedInt32Array(11, 1)
 tactic_counts = PackedInt32Array(2, 3)
 interval = 6
 limit = 8
@@ -2558,9 +2558,9 @@ range = 17
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5030.12, 5.93, -5095.42)
 
 [node name="Spawn_2" type="RoseSpawnSpot" parent="Block_31_33/Spawns" unique_id=545346506]
-basic_monsters = PackedInt32Array(1, 11, 2, 11, 2)
+basic_monster_ids = PackedInt32Array(1, 11, 2, 11, 2)
 basic_counts = PackedInt32Array(2, 2, 1, 2, 1)
-tactic_monsters = PackedInt32Array(11, 2)
+tactic_monster_ids = PackedInt32Array(11, 2)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 10
@@ -2568,7 +2568,7 @@ range = 18
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5080.32, 11.57, -5089.46)
 
 [node name="Spawn_3" type="RoseSpawnSpot" parent="Block_31_33/Spawns" unique_id=367495208]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 9
@@ -3201,9 +3201,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5274.9, 50.01, -4972.46)
 [node name="Spawns" type="Node3D" parent="Block_32_33" unique_id=1336222938]
 
 [node name="Spawn_0" type="RoseSpawnSpot" parent="Block_32_33/Spawns" unique_id=1368343012]
-basic_monsters = PackedInt32Array(2, 1, 3, 12, 2)
+basic_monster_ids = PackedInt32Array(2, 1, 3, 12, 2)
 basic_counts = PackedInt32Array(2, 1, 1, 2, 2)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 10
@@ -3211,9 +3211,9 @@ range = 26
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5126.94, 17.55, -5069.72)
 
 [node name="Spawn_1" type="RoseSpawnSpot" parent="Block_32_33/Spawns" unique_id=1562126861]
-basic_monsters = PackedInt32Array(2, 11, 12, 12, 2)
+basic_monster_ids = PackedInt32Array(2, 11, 12, 12, 2)
 basic_counts = PackedInt32Array(2, 1, 1, 2, 2)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 9
@@ -3221,9 +3221,9 @@ range = 22
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5156.92, 22.02, -5092.79)
 
 [node name="Spawn_2" type="RoseSpawnSpot" parent="Block_32_33/Spawns" unique_id=1341390939]
-basic_monsters = PackedInt32Array(2, 12, 2, 12, 3)
+basic_monster_ids = PackedInt32Array(2, 12, 2, 12, 3)
 basic_counts = PackedInt32Array(2, 1, 1, 2, 2)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 11
@@ -3231,9 +3231,9 @@ range = 30
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5175.19, 24.62, -5038.46)
 
 [node name="Spawn_3" type="RoseSpawnSpot" parent="Block_32_33/Spawns" unique_id=2077116153]
-basic_monsters = PackedInt32Array(2, 3, 2, 12, 3)
+basic_monster_ids = PackedInt32Array(2, 3, 2, 12, 3)
 basic_counts = PackedInt32Array(2, 1, 1, 2, 2)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 11
@@ -3241,9 +3241,9 @@ range = 32
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5235.82, 28.2, -5040.36)
 
 [node name="Spawn_4" type="RoseSpawnSpot" parent="Block_32_33/Spawns" unique_id=162268463]
-basic_monsters = PackedInt32Array(2, 3, 2, 12, 3)
+basic_monster_ids = PackedInt32Array(2, 3, 2, 12, 3)
 basic_counts = PackedInt32Array(2, 1, 1, 2, 2)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 8
@@ -3251,9 +3251,9 @@ range = 20
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5235.2, 30.62, -5081.25)
 
 [node name="Spawn_5" type="RoseSpawnSpot" parent="Block_32_33/Spawns" unique_id=6152949]
-basic_monsters = PackedInt32Array(2, 3, 2, 12, 3)
+basic_monster_ids = PackedInt32Array(2, 3, 2, 12, 3)
 basic_counts = PackedInt32Array(2, 1, 1, 2, 2)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 7
 limit = 6
@@ -3261,7 +3261,7 @@ range = 16
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5208.04, 23.98, -5018.94)
 
 [node name="Spawn_6" type="RoseSpawnSpot" parent="Block_32_33/Spawns" unique_id=867802791]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 12
@@ -3269,7 +3269,7 @@ range = 35
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5155.67, 19.98, -5060.22)
 
 [node name="Spawn_7" type="RoseSpawnSpot" parent="Block_32_33/Spawns" unique_id=1230516832]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 12
@@ -4004,9 +4004,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5473.02, 50.87, -5007.16)
 [node name="Spawns" type="Node3D" parent="Block_34_33" unique_id=161158057]
 
 [node name="Spawn_0" type="RoseSpawnSpot" parent="Block_34_33/Spawns" unique_id=177229477]
-basic_monsters = PackedInt32Array(1, 2, 2, 11, 3)
+basic_monster_ids = PackedInt32Array(1, 2, 2, 11, 3)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 3)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 7
@@ -4014,9 +4014,9 @@ range = 18
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5553.27, 17.63, -5105.46)
 
 [node name="Spawn_1" type="RoseSpawnSpot" parent="Block_34_33/Spawns" unique_id=1651908187]
-basic_monsters = PackedInt32Array(1, 2, 2, 11, 3)
+basic_monster_ids = PackedInt32Array(1, 2, 2, 11, 3)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 3)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 7
@@ -4024,9 +4024,9 @@ range = 18
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5533.15, 19.15, -5079.82)
 
 [node name="Spawn_2" type="RoseSpawnSpot" parent="Block_34_33/Spawns" unique_id=1718900309]
-basic_monsters = PackedInt32Array(2, 11, 12, 11, 3)
+basic_monster_ids = PackedInt32Array(2, 11, 12, 11, 3)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 3)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 8
@@ -4034,9 +4034,9 @@ range = 20
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5512.75, 24.47, -5054.98)
 
 [node name="Spawn_3" type="RoseSpawnSpot" parent="Block_34_33/Spawns" unique_id=1146180085]
-basic_monsters = PackedInt32Array(2, 2, 12, 11, 3)
+basic_monster_ids = PackedInt32Array(2, 2, 12, 11, 3)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 3)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 7
@@ -4044,9 +4044,9 @@ range = 20
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5475.24, 24.52, -5064.69)
 
 [node name="Spawn_4" type="RoseSpawnSpot" parent="Block_34_33/Spawns" unique_id=911572203]
-basic_monsters = PackedInt32Array(2, 12, 12, 11, 3)
+basic_monster_ids = PackedInt32Array(2, 12, 12, 11, 3)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 3)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 7
@@ -4054,9 +4054,9 @@ range = 17
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5468.28, 19.79, -5096.15)
 
 [node name="Spawn_5" type="RoseSpawnSpot" parent="Block_34_33/Spawns" unique_id=311412121]
-basic_monsters = PackedInt32Array(2, 2, 12, 11, 3)
+basic_monster_ids = PackedInt32Array(2, 2, 12, 11, 3)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 3)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 7
@@ -4064,9 +4064,9 @@ range = 16
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5451.78, 24.83, -5068.13)
 
 [node name="Spawn_6" type="RoseSpawnSpot" parent="Block_34_33/Spawns" unique_id=1186354540]
-basic_monsters = PackedInt32Array(1, 2, 2, 11, 12)
+basic_monster_ids = PackedInt32Array(1, 2, 2, 11, 12)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 1)
-tactic_monsters = PackedInt32Array(12, 2)
+tactic_monster_ids = PackedInt32Array(12, 2)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 5
 limit = 11
@@ -4074,7 +4074,7 @@ range = 25
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5593.15, 18.32, -5118.37)
 
 [node name="Spawn_7" type="RoseSpawnSpot" parent="Block_34_33/Spawns" unique_id=524382657]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 11
@@ -4082,7 +4082,7 @@ range = 25
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5504.88, 24.95, -5056.99)
 
 [node name="Spawn_8" type="RoseSpawnSpot" parent="Block_34_33/Spawns" unique_id=1740423353]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 11
@@ -4090,7 +4090,7 @@ range = 25
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5460.51, 22.47, -5081.63)
 
 [node name="Spawn_9" type="RoseSpawnSpot" parent="Block_34_33/Spawns" unique_id=1884608420]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 11
@@ -4263,9 +4263,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5682.85, -1.98, -5089.32)
 [node name="Spawns" type="Node3D" parent="Block_35_33" unique_id=43900795]
 
 [node name="Spawn_0" type="RoseSpawnSpot" parent="Block_35_33/Spawns" unique_id=353181618]
-basic_monsters = PackedInt32Array(1, 1, 2, 11, 1)
+basic_monster_ids = PackedInt32Array(1, 1, 2, 11, 1)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 3)
-tactic_monsters = PackedInt32Array(11, 2)
+tactic_monster_ids = PackedInt32Array(11, 2)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 11
@@ -4273,7 +4273,7 @@ range = 25
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5625.86, 12.72, -5083.35)
 
 [node name="Spawn_1" type="RoseSpawnSpot" parent="Block_35_33/Spawns" unique_id=652065906]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 12
@@ -4800,9 +4800,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5219.53, 54.17, -4957.05)
 [node name="Spawns" type="Node3D" parent="Block_32_34" unique_id=432652847]
 
 [node name="Spawn_0" type="RoseSpawnSpot" parent="Block_32_34/Spawns" unique_id=321586119]
-basic_monsters = PackedInt32Array(1, 2, 12, 11, 1)
+basic_monster_ids = PackedInt32Array(1, 2, 12, 11, 1)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 3)
-tactic_monsters = PackedInt32Array(12, 2)
+tactic_monster_ids = PackedInt32Array(12, 2)
 tactic_counts = PackedInt32Array(1, 2)
 interval = 5
 limit = 7
@@ -4810,9 +4810,9 @@ range = 18
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5182.74, 17.17, -4824.86)
 
 [node name="Spawn_1" type="RoseSpawnSpot" parent="Block_32_34/Spawns" unique_id=601669021]
-basic_monsters = PackedInt32Array(2, 2, 2, 11, 3)
+basic_monster_ids = PackedInt32Array(2, 2, 2, 11, 3)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 2)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 9
@@ -4820,9 +4820,9 @@ range = 23
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5190.75, 22.09, -4865.8)
 
 [node name="Spawn_2" type="RoseSpawnSpot" parent="Block_32_34/Spawns" unique_id=1046568117]
-basic_monsters = PackedInt32Array(2, 12, 2, 11, 3)
+basic_monster_ids = PackedInt32Array(2, 12, 2, 11, 3)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 2)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 9
@@ -4830,7 +4830,7 @@ range = 23
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5230.18, 26.51, -4869.09)
 
 [node name="Spawn_3" type="RoseSpawnSpot" parent="Block_32_34/Spawns" unique_id=82460091]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 15
@@ -4838,7 +4838,7 @@ range = 35
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5203.48, 23.13, -4864.15)
 
 [node name="Spawn_4" type="RoseSpawnSpot" parent="Block_32_34/Spawns" unique_id=137804042]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 15
@@ -5189,9 +5189,9 @@ transform = Transform3D(1.3988628, 0, 1.132777, 0, 1.8000002, 0, -1.132777, 0, 1
 [node name="Spawns" type="Node3D" parent="Block_33_34" unique_id=926518898]
 
 [node name="Spawn_0" type="RoseSpawnSpot" parent="Block_33_34/Spawns" unique_id=1875839594]
-basic_monsters = PackedInt32Array(2, 12, 3, 12, 3)
+basic_monster_ids = PackedInt32Array(2, 12, 3, 12, 3)
 basic_counts = PackedInt32Array(2, 1, 1, 2, 2)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 13
@@ -5199,9 +5199,9 @@ range = 32
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5284.43, 27.79, -4865.45)
 
 [node name="Spawn_1" type="RoseSpawnSpot" parent="Block_33_34/Spawns" unique_id=1170113521]
-basic_monsters = PackedInt32Array(2, 2, 3, 12, 3)
+basic_monster_ids = PackedInt32Array(2, 2, 3, 12, 3)
 basic_counts = PackedInt32Array(2, 1, 1, 2, 2)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 11
@@ -5209,9 +5209,9 @@ range = 26
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5296.12, 29.61, -4909.57)
 
 [node name="Spawn_2" type="RoseSpawnSpot" parent="Block_33_34/Spawns" unique_id=339868863]
-basic_monsters = PackedInt32Array(2, 2, 3, 12, 3)
+basic_monster_ids = PackedInt32Array(2, 2, 3, 12, 3)
 basic_counts = PackedInt32Array(2, 1, 1, 2, 2)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 8
@@ -5219,7 +5219,7 @@ range = 24
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5287.14, 30.81, -4834.3)
 
 [node name="Spawn_3" type="RoseSpawnSpot" parent="Block_33_34/Spawns" unique_id=1089503436]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 11
@@ -5825,9 +5825,9 @@ transform = Transform3D(1.7901397, 0, 0.18815126, 0, 1.8000002, 0, -0.18815126, 
 [node name="Spawns" type="Node3D" parent="Block_34_34" unique_id=782736678]
 
 [node name="Spawn_0" type="RoseSpawnSpot" parent="Block_34_34/Spawns" unique_id=1497872839]
-basic_monsters = PackedInt32Array(1, 2, 2, 11, 1)
+basic_monster_ids = PackedInt32Array(1, 2, 2, 11, 1)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 3)
-tactic_monsters = PackedInt32Array(12, 2)
+tactic_monster_ids = PackedInt32Array(12, 2)
 tactic_counts = PackedInt32Array(1, 2)
 interval = 5
 limit = 9
@@ -5835,9 +5835,9 @@ range = 27
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5563.35, 13.35, -4842.8)
 
 [node name="Spawn_1" type="RoseSpawnSpot" parent="Block_34_34/Spawns" unique_id=1060664708]
-basic_monsters = PackedInt32Array(1, 2, 2, 11, 1)
+basic_monster_ids = PackedInt32Array(1, 2, 2, 11, 1)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 3)
-tactic_monsters = PackedInt32Array(12, 2)
+tactic_monster_ids = PackedInt32Array(12, 2)
 tactic_counts = PackedInt32Array(1, 2)
 interval = 5
 limit = 11
@@ -5845,9 +5845,9 @@ range = 25
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5585.47, 15.3, -4876.17)
 
 [node name="Spawn_2" type="RoseSpawnSpot" parent="Block_34_34/Spawns" unique_id=254607787]
-basic_monsters = PackedInt32Array(2, 2, 12, 11, 3)
+basic_monster_ids = PackedInt32Array(2, 2, 12, 11, 3)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 2)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 5
 limit = 11
@@ -5855,9 +5855,9 @@ range = 27
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5478.49, 18.98, -4886.78)
 
 [node name="Spawn_3" type="RoseSpawnSpot" parent="Block_34_34/Spawns" unique_id=1173905324]
-basic_monsters = PackedInt32Array(2, 2, 3, 12, 3)
+basic_monster_ids = PackedInt32Array(2, 2, 3, 12, 3)
 basic_counts = PackedInt32Array(2, 1, 1, 2, 2)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 8
@@ -5865,9 +5865,9 @@ range = 27
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5452.89, 20.29, -4918.85)
 
 [node name="Spawn_4" type="RoseSpawnSpot" parent="Block_34_34/Spawns" unique_id=1714936431]
-basic_monsters = PackedInt32Array(2, 2, 3, 12, 3)
+basic_monster_ids = PackedInt32Array(2, 2, 3, 12, 3)
 basic_counts = PackedInt32Array(2, 1, 1, 2, 2)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 6
@@ -5875,9 +5875,9 @@ range = 23
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5450.44, 21.34, -4876.04)
 
 [node name="Spawn_5" type="RoseSpawnSpot" parent="Block_34_34/Spawns" unique_id=987424590]
-basic_monsters = PackedInt32Array(2, 12, 3, 12, 3)
+basic_monster_ids = PackedInt32Array(2, 12, 3, 12, 3)
 basic_counts = PackedInt32Array(2, 1, 1, 2, 2)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 7
@@ -5885,9 +5885,9 @@ range = 23
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5452.9, 23.73, -4953.79)
 
 [node name="Spawn_6" type="RoseSpawnSpot" parent="Block_34_34/Spawns" unique_id=1757100228]
-basic_monsters = PackedInt32Array(2, 12, 3, 12, 3)
+basic_monster_ids = PackedInt32Array(2, 12, 3, 12, 3)
 basic_counts = PackedInt32Array(2, 1, 1, 2, 2)
-tactic_monsters = PackedInt32Array(12, 3)
+tactic_monster_ids = PackedInt32Array(12, 3)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 7
 limit = 6
@@ -5895,16 +5895,16 @@ range = 18
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5489.34, 21.19, -4917.84)
 
 [node name="Spawn_7" type="RoseSpawnSpot" parent="Block_34_34/Spawns" unique_id=1017038900]
-basic_monsters = PackedInt32Array(1, 2, 2, 11, 1)
+basic_monster_ids = PackedInt32Array(1, 2, 2, 11, 1)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 3)
-tactic_monsters = PackedInt32Array(12, 2)
+tactic_monster_ids = PackedInt32Array(12, 2)
 tactic_counts = PackedInt32Array(1, 2)
 interval = 5
 range = 16
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5534.69, 13.19, -4859.41)
 
 [node name="Spawn_8" type="RoseSpawnSpot" parent="Block_34_34/Spawns" unique_id=1794905966]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 13
@@ -5912,7 +5912,7 @@ range = 33
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5561.27, 15.52, -4818.74)
 
 [node name="Spawn_9" type="RoseSpawnSpot" parent="Block_34_34/Spawns" unique_id=465714139]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 13
@@ -6075,9 +6075,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5682.51, -3.07, -4901.43)
 [node name="Spawns" type="Node3D" parent="Block_35_34" unique_id=1812589727]
 
 [node name="Spawn_0" type="RoseSpawnSpot" parent="Block_35_34/Spawns" unique_id=1115251081]
-basic_monsters = PackedInt32Array(1, 11, 1, 11, 1)
+basic_monster_ids = PackedInt32Array(1, 11, 1, 11, 1)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 3)
-tactic_monsters = PackedInt32Array(11, 2)
+tactic_monster_ids = PackedInt32Array(11, 2)
 tactic_counts = PackedInt32Array(1, 2)
 interval = 5
 limit = 15
@@ -6085,9 +6085,9 @@ range = 45
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5612.83, 14.78, -4818.91)
 
 [node name="Spawn_1" type="RoseSpawnSpot" parent="Block_35_34/Spawns" unique_id=1058467029]
-basic_monsters = PackedInt32Array(1, 11, 1, 11, 2)
+basic_monster_ids = PackedInt32Array(1, 11, 1, 11, 2)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 3)
-tactic_monsters = PackedInt32Array(11, 2)
+tactic_monster_ids = PackedInt32Array(11, 2)
 tactic_counts = PackedInt32Array(1, 2)
 interval = 5
 limit = 11
@@ -6095,9 +6095,9 @@ range = 26
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5623.57, 15.91, -4878.55)
 
 [node name="Spawn_2" type="RoseSpawnSpot" parent="Block_35_34/Spawns" unique_id=1128515840]
-basic_monsters = PackedInt32Array(1, 2, 2, 11, 1)
+basic_monster_ids = PackedInt32Array(1, 2, 2, 11, 1)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 3)
-tactic_monsters = PackedInt32Array(12, 2)
+tactic_monster_ids = PackedInt32Array(12, 2)
 tactic_counts = PackedInt32Array(1, 2)
 interval = 5
 limit = 4
@@ -6105,7 +6105,7 @@ range = 18
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5600.56, 18.06, -4913.94)
 
 [node name="Spawn_3" type="RoseSpawnSpot" parent="Block_35_34/Spawns" unique_id=767184706]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 13
@@ -6113,7 +6113,7 @@ range = 33
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5618.09, 12.99, -4805.82)
 
 [node name="Spawn_4" type="RoseSpawnSpot" parent="Block_35_34/Spawns" unique_id=2134590852]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 13
@@ -6597,9 +6597,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5269.25, -3.88, -4685.69)
 [node name="Spawns" type="Node3D" parent="Block_32_35" unique_id=209830278]
 
 [node name="Spawn_0" type="RoseSpawnSpot" parent="Block_32_35/Spawns" unique_id=1067839991]
-basic_monsters = PackedInt32Array(1, 2, 2, 11, 1)
+basic_monster_ids = PackedInt32Array(1, 2, 2, 11, 1)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 3)
-tactic_monsters = PackedInt32Array(12, 2)
+tactic_monster_ids = PackedInt32Array(12, 2)
 tactic_counts = PackedInt32Array(1, 2)
 interval = 6
 limit = 11
@@ -6607,9 +6607,9 @@ range = 23
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5201.24, 12.4, -4782.38)
 
 [node name="Spawn_1" type="RoseSpawnSpot" parent="Block_32_35/Spawns" unique_id=1221805637]
-basic_monsters = PackedInt32Array(1, 11, 1, 11, 1)
+basic_monster_ids = PackedInt32Array(1, 11, 1, 11, 1)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
-tactic_monsters = PackedInt32Array(1, 11)
+tactic_monster_ids = PackedInt32Array(1, 11)
 tactic_counts = PackedInt32Array(3, 2)
 interval = 6
 limit = 12
@@ -6617,9 +6617,9 @@ range = 26
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5177.99, 8.67, -4753.73)
 
 [node name="Spawn_2" type="RoseSpawnSpot" parent="Block_32_35/Spawns" unique_id=2053590191]
-basic_monsters = PackedInt32Array(1, 1, 1, 11, 1)
+basic_monster_ids = PackedInt32Array(1, 1, 1, 11, 1)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 2)
-tactic_monsters = PackedInt32Array(1, 11)
+tactic_monster_ids = PackedInt32Array(1, 11)
 tactic_counts = PackedInt32Array(3, 2)
 interval = 6
 limit = 9
@@ -6627,9 +6627,9 @@ range = 18
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5197.38, 8.99, -4729.94)
 
 [node name="Spawn_3" type="RoseSpawnSpot" parent="Block_32_35/Spawns" unique_id=2096273474]
-basic_monsters = PackedInt32Array(1, 11, 2, 11, 1)
+basic_monster_ids = PackedInt32Array(1, 11, 2, 11, 1)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 2)
-tactic_monsters = PackedInt32Array(2, 11)
+tactic_monster_ids = PackedInt32Array(2, 11)
 tactic_counts = PackedInt32Array(2, 2)
 interval = 6
 limit = 11
@@ -6637,7 +6637,7 @@ range = 22
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5224.05, 14.78, -4749.93)
 
 [node name="Spawn_4" type="RoseSpawnSpot" parent="Block_32_35/Spawns" unique_id=720341146]
-basic_monsters = PackedInt32Array(8, 8, 9, 9, 10)
+basic_monster_ids = PackedInt32Array(8, 8, 9, 9, 10)
 basic_counts = PackedInt32Array(2, 2, 2, 2, 2)
 interval = 12
 limit = 15
@@ -6647,12 +6647,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5193.11, 11.23, -4751.64)
 [node name="Npcs" type="Node3D" parent="Block_32_35" unique_id=572544520]
 
 [node name="Npc_0" type="RoseNpcSpot" parent="Block_32_35/Npcs" unique_id=408347630]
-npc = 1030
+npc_id = 1030
 quest_file = "EM20-001.con"
 transform = Transform3D(-0.96592546, 0, -0.258821, 0, 1, 0, 0.258821, 0, -0.96592546, 5151.31, 4.4, -4715.79)
 
 [node name="Npc_1" type="RoseNpcSpot" parent="Block_32_35/Npcs" unique_id=2093045203]
-npc = 1030
+npc_id = 1030
 quest_file = "EM20-001.con"
 transform = Transform3D(-0.30901897, 0, 0.95105606, 0, 1, 0, -0.95105606, 0, -0.30901897, 5124.59, 4.18, -4733.18)
 
@@ -6755,9 +6755,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5488.02, -2.42, -4739.71)
 [node name="Spawns" type="Node3D" parent="Block_34_35" unique_id=1618274156]
 
 [node name="Spawn_0" type="RoseSpawnSpot" parent="Block_34_35/Spawns" unique_id=1699984671]
-basic_monsters = PackedInt32Array(1, 11, 1, 11, 2)
+basic_monster_ids = PackedInt32Array(1, 11, 1, 11, 2)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 3)
-tactic_monsters = PackedInt32Array(11, 2)
+tactic_monster_ids = PackedInt32Array(11, 2)
 tactic_counts = PackedInt32Array(1, 2)
 interval = 5
 limit = 11
@@ -6765,9 +6765,9 @@ range = 25
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5565.79, 14.86, -4799.35)
 
 [node name="Spawn_1" type="RoseSpawnSpot" parent="Block_34_35/Spawns" unique_id=841258044]
-basic_monsters = PackedInt32Array(1, 2, 2, 11, 1)
+basic_monster_ids = PackedInt32Array(1, 2, 2, 11, 1)
 basic_counts = PackedInt32Array(2, 1, 2, 2, 3)
-tactic_monsters = PackedInt32Array(12, 2)
+tactic_monster_ids = PackedInt32Array(12, 2)
 tactic_counts = PackedInt32Array(1, 2)
 interval = 5
 limit = 7
@@ -6975,12 +6975,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5689.18, -1.82, -4793.83)
 [node name="Npcs" type="Node3D" parent="Block_35_35" unique_id=1884163066]
 
 [node name="Npc_0" type="RoseNpcSpot" parent="Block_35_35/Npcs" unique_id=1636217317]
-npc = 1030
+npc_id = 1030
 quest_file = "EM20-001.con"
 transform = Transform3D(0.20791203, 0, -0.9781475, 0, 1, 0, 0.9781475, 0, 0.20791203, 5667.78, 2.03, -4766.3)
 
 [node name="Npc_1" type="RoseNpcSpot" parent="Block_35_35/Npcs" unique_id=935467553]
-npc = 1030
+npc_id = 1030
 quest_file = "EM20-001.con"
 transform = Transform3D(-0.96592546, 0, -0.258821, 0, 1, 0, 0.258821, 0, -0.96592546, 5649.96, 2.37, -4743.16)
 

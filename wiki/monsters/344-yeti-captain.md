@@ -147,7 +147,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 344, ITEM_DROP.STB row 363
+  data: godot/data/monsters/344-yeti-captain.tres, drop table godot/data/drop_tables/363-yeti-captain.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

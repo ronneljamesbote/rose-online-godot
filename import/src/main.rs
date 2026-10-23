@@ -5,6 +5,7 @@
 //!   rose-stdb-import time <data.idx>       how long the databases take to build from memory
 //!   rose-stdb-import pack <data.idx> <dir> upload batches for server/upload-game-data.sh
 //!   rose-stdb-import compare <data.idx>    every value the data export changes from iROSE
+//!                                          (items, monsters, NPCs, shop tabs, drop tables)
 //!
 //! `pack` writes upload-NNN.json files, each the JSON argument list of the module's
 //! `upload_game_files` reducer (well under the server's request size limit), plus manifest.json.
@@ -225,34 +226,49 @@ fn main() {
     }
 }
 
-/// The export (`items/*.toml` under `dir`), checked and turned into the JSON files the
-/// server reads (by their path among the game files). Empty when there is no export.
+/// The export (`items/*.toml`, `monsters.toml` ... under `dir`), checked and turned into the
+/// JSON files the server reads (by their path among the game files). Empty when there is no
+/// export.
 fn read_export(dir: &Path) -> BTreeMap<PathBuf, Vec<u8>> {
-    let items = rose_data_export::ItemsExport::from_files(|name| {
-        let path = dir.join(rose_data_export::items_file(name));
+    let read = |file: String| {
+        let path = dir.join(file);
         match std::fs::read_to_string(&path) {
             Ok(text) => Ok(Some(text)),
             Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(None),
             Err(e) => Err(anyhow::Error::new(e).context(path.display().to_string())),
         }
-    })
-    .unwrap_or_else(|e| {
+    };
+    let fail = |e: anyhow::Error| -> ! {
         eprintln!("data: {e:#}");
         std::process::exit(1);
-    });
+    };
+    let items = rose_data_export::ItemsExport::from_files(|name| read(rose_data_export::items_file(name)))
+        .unwrap_or_else(|e| fail(e));
+    let toml = rose_data_export::Format::Toml;
+    let npcs = rose_data_export::NpcsExport::from_files_as(toml, |name| read(rose_data_export::data_file_as(name, toml)))
+        .unwrap_or_else(|e| fail(e));
     let mut files = BTreeMap::new();
+    let format = rose_data_export::Format::Json;
+    let mut add = |path: String, text: String| {
+        let game_path = format!("{}/{}", rose_data_export::DATA_GAME_DIR, path);
+        files.insert(PathBuf::from(game_path.to_uppercase()), text.into_bytes());
+    };
     if let Some(items) = items {
-        let format = rose_data_export::Format::Json;
         for (name, text) in items.to_files_as(format).expect("write the items as JSON") {
-            let game_path = format!("{}/{}", rose_data_export::DATA_GAME_DIR, rose_data_export::items_file_as(name, format));
-            files.insert(PathBuf::from(game_path.to_uppercase()), text.into_bytes());
+            add(rose_data_export::items_file_as(name, format), text);
+        }
+    }
+    if let Some(npcs) = npcs {
+        npcs.check().unwrap_or_else(|e| fail(e));
+        for (name, text) in npcs.to_files_as(format).expect("write the monsters and NPCs as JSON") {
+            add(rose_data_export::data_file_as(name, format), text);
         }
     }
     files
 }
 
-/// The same-data check: loads the items from the iROSE tables and from the export and
-/// prints every value that differs.
+/// The same-data check: loads the items, monsters, NPCs, shop tabs and drop tables from the
+/// iROSE tables and from the export and prints every value that differs.
 fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool) {
     if no_export {
         eprintln!("compare: no export in {}", data_dir.display());
@@ -263,18 +279,43 @@ fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool) {
     let irose = rose_data_irose::get_item_database(vfs, strings.clone()).expect("iROSE items");
     let irose_ms = started.elapsed().as_millis();
     let started = Instant::now();
-    let export = rose_game_data::load_items(vfs, strings).expect("exported items");
+    let export = rose_game_data::load_items(vfs, strings.clone()).expect("exported items");
     let export_ms = started.elapsed().as_millis();
     let count = rose_data_export::ItemsExport::from_database(&export).count();
-    let differences = rose_data_export::compare_item_databases(&irose, &export);
+    let mut differences = rose_data_export::compare_item_databases(&irose, &export);
+    println!(
+        "items: {count} items and {} grades; iROSE tables {irose_ms} ms, export {export_ms} ms",
+        export.item_grades().len(),
+    );
+
+    let options = rose_data::NpcDatabaseOptions { load_frame_data: false };
+    let started = Instant::now();
+    let irose_npcs = rose_data_irose::get_npc_database(vfs, strings.clone(), &options).expect("iROSE NPCs");
+    let irose_rows = rose_game_irose::data::read_drop_rows(vfs, rose_data_export::npcs::DROP_ROW_COLUMNS)
+        .expect("ITEM_DROP.STB");
+    let irose_ms = started.elapsed().as_millis();
+    let started = Instant::now();
+    let (npcs, rows) = rose_game_data::load_npcs(vfs, strings, &options).expect("exported monsters and NPCs");
+    let export_ms = started.elapsed().as_millis();
+    match rows {
+        None => println!("monsters and NPCs: no export (monsters.toml ...), skipped"),
+        Some(rows) => {
+            let export = rose_game_data::read_npcs_export(vfs).unwrap().unwrap();
+            differences.extend(rose_data_export::compare_npc_databases(&irose_npcs, &npcs));
+            differences.extend(rose_data_export::compare_drop_rows(&irose_rows, &rows));
+            println!(
+                "monsters and NPCs: {} monsters, {} NPCs, {} shop tabs, {} drop tables; iROSE tables {irose_ms} ms, export {export_ms} ms",
+                export.monsters.len(),
+                export.npcs.len(),
+                export.shop_tabs.len(),
+                export.drop_tables.len(),
+            );
+        }
+    }
     for line in &differences {
         println!("{line}");
     }
-    println!(
-        "items: {count} items and {} grades; iROSE tables {irose_ms} ms, export {export_ms} ms; {} values differ",
-        export.item_grades().len(),
-        differences.len()
-    );
+    println!("{} values differ", differences.len());
 }
 
 /// For each zone the uploaded files change (`overrides/zones/`), how far its spawn points,

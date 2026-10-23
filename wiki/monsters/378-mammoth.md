@@ -132,7 +132,7 @@ spawns:
   count: 1
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 378, ITEM_DROP.STB row 378
+  data: godot/data/monsters/378-mammoth.tres, drop table godot/data/drop_tables/378-mammoth.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

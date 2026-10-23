@@ -243,7 +243,7 @@ func _collect_entries() -> void:
 		add.call("Blocks", "Block %d_%d" % [xy.x, xy.y], center, block, 230.0)
 	for npc in zone_root.find_children("*", "RoseNpcSpot", true, false):
 		var path := str(zone_root.get_path_to(npc))
-		add.call("NPCs", "%s  (%s)" % [names.get(path, "NPC %d" % npc.get("npc")), _block_of(npc)], npc.global_position, npc, 30.0)
+		add.call("NPCs", "%s  (%s)" % [names.get(path, "NPC %d" % npc.get("npc_id")), _block_of(npc)], npc.global_position, npc, 30.0)
 	for spawn in zone_root.find_children("*", "RoseSpawnSpot", true, false):
 		var path := str(zone_root.get_path_to(spawn))
 		var text: String = names.get(path, "Spawn %s" % spawn.name)

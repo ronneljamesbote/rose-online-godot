@@ -475,7 +475,7 @@ spawns:
   count: 2
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 336, ITEM_DROP.STB row 358
+  data: godot/data/monsters/336-wolf.tres, drop table godot/data/drop_tables/358-wolf-lunar-wolf-wolf-keeper.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

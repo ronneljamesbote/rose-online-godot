@@ -38,7 +38,7 @@ use rose_file_readers::{
 };
 
 use crate::{
-    assets, data, material, texture,
+    assets, data, data_resources::{self, RoseMonster, RoseNpc}, material, texture,
     zone::{self, Ground, ObjectSpawner},
 };
 
@@ -815,6 +815,10 @@ macro_rules! marker_class {
                 self.base_mut().set_process(is_editor());
             }
 
+            fn on_set(&mut self, property: StringName, value: Variant) -> bool {
+                self.set_old_property(&property.to_string(), &value)
+            }
+
             fn process(&mut self, _delta: f64) {
                 let $this = &*self;
                 let (label, color, radius, model): (String, Color, f32, Option<String>) = $look;
@@ -829,13 +833,59 @@ macro_rules! marker_class {
     };
 }
 
+/// Properties a marker had before (in scenes saved then), read into today's fields.
+trait OldProperties {
+    fn set_old_property(&mut self, _name: &str, _value: &Variant) -> bool {
+        false
+    }
+}
+
 fn npc_model(npc_id: i32) -> Option<String> {
     (npc_id > 0).then(|| assets::find_stem(&crate::character::npc_scene_stem(npc_id as u16), &["tscn"])).flatten()
 }
 
+/// A monster's or NPC's name for the editor labels, from its resource (the number when
+/// there is none).
+fn character_name(dir: &str, id: i32) -> String {
+    match data_resources::find(dir, id as i64) {
+        Some((_, name)) if !name.trim().is_empty() => format!("{} {id}", name.trim()),
+        _ => id.to_string(),
+    }
+}
+
 fn spawn_label(monsters: &PackedInt32Array, counts: &PackedInt32Array) -> String {
     let counts = counts.as_slice();
-    monsters.as_slice().iter().enumerate().map(|(i, id)| format!("{}x {id}", counts.get(i).copied().unwrap_or(0))).collect::<Vec<_>>().join(", ")
+    monsters
+        .as_slice()
+        .iter()
+        .enumerate()
+        .map(|(i, id)| format!("{}x {}", counts.get(i).copied().unwrap_or(0), character_name(data_resources::MONSTERS_DIR, *id)))
+        .collect::<Vec<_>>()
+        .join(", ")
+}
+
+/// The resources of the numbers in `ids` (the Inspector's view of a marker's monsters).
+fn monsters_of(ids: &PackedInt32Array) -> Array<Option<Gd<RoseMonster>>> {
+    ids.as_slice()
+        .iter()
+        .map(|id| data_resources::find(data_resources::MONSTERS_DIR, *id as i64).and_then(|(r, _)| r.try_cast::<RoseMonster>().ok()))
+        .collect()
+}
+
+/// The numbers of `monsters` (set in the Inspector). An empty place keeps the number it had
+/// when that number has no resource (so a monster not made in Godot isn't lost), else 0.
+fn monster_ids(monsters: &Array<Option<Gd<RoseMonster>>>, old: &PackedInt32Array) -> PackedInt32Array {
+    monsters
+        .iter_shared()
+        .enumerate()
+        .map(|(i, monster)| match monster {
+            Some(monster) => monster.upcast::<godot::classes::Resource>().get("id").try_to::<i64>().unwrap_or(0) as i32,
+            None => old
+                .get(i)
+                .filter(|id| data_resources::find(data_resources::MONSTERS_DIR, *id as i64).is_none())
+                .unwrap_or(0),
+        })
+        .collect()
 }
 
 marker_class!(
@@ -850,33 +900,38 @@ marker_class!(
     /// spawns when are on the wiki page "Monster spawns" (`wiki/rules/monster-spawns.md`).
     /// After a change, `--export-zones` gives it to the server.
     RoseSpawnSpot {
-        /// The basic monsters, as monster numbers (rows of LIST_NPC.STB, for example 1 is a
-        /// Mini Jelly Bean). Up to 5 entries are used, and the order matters: each spawn check
-        /// brings entry 1, 2, 3, 4 or 5 depending on how hard the point is fought, so entry 1
-        /// comes most often and entries 4 and 5 later. The same monster can be listed more
-        /// than once. Goes with `basic_counts`.
+        /// The basic monsters: drag `RoseMonster` resources in from `res://data/monsters/`.
+        /// Up to 5 entries are used, and the order matters: each spawn check brings entry 1,
+        /// 2, 3, 4 or 5 depending on how hard the point is fought, so entry 1 comes most often
+        /// and entries 4 and 5 later. The same monster can be listed more than once. Goes with
+        /// `basic_counts`.
         #[export_group(name = "Basic monsters")]
-        #[export]
-        basic_monsters: PackedInt32Array,
+        #[var(get = get_basic_monsters, set = set_basic_monsters, usage_flags = [EDITOR])]
+        basic_monsters: PhantomVar<Array<Option<Gd<RoseMonster>>>>,
         /// How many of each basic monster come at once when its entry spawns, one number per
         /// entry of `basic_monsters`, in the same order (so `2, 1` with monsters `1, 8` is two
         /// of monster 1 and one of monster 8). Some checks bring 1 or 2 fewer; 0 means that
         /// entry brings none.
         #[export]
         basic_counts: PackedInt32Array,
-        /// The tactic monsters ("reinforcements"), as monster numbers (LIST_NPC.STB rows).
-        /// They only come when the point has been fought hard for a while (a high tactics
-        /// value). Up to 2 entries are used: entry 1 comes first, entry 2 joins it at the
-        /// highest tactics. Goes with `tactic_counts`.
+        /// The tactic monsters ("reinforcements"): drag `RoseMonster` resources in. They only
+        /// come when the point has been fought hard for a while (a high tactics value). Up to
+        /// 2 entries are used: entry 1 comes first, entry 2 joins it at the highest tactics.
+        /// Goes with `tactic_counts`.
         #[export_group(name = "Tactic monsters")]
-        #[export]
-        tactic_monsters: PackedInt32Array,
+        #[var(get = get_tactic_monsters, set = set_tactic_monsters, usage_flags = [EDITOR])]
+        tactic_monsters: PhantomVar<Array<Option<Gd<RoseMonster>>>>,
         /// How many of each tactic monster come at once, one number per entry of
         /// `tactic_monsters`, in the same order. Some checks bring one fewer or one more.
         #[export]
         tactic_counts: PackedInt32Array,
-        /// Seconds between spawn checks. Smaller makes monsters come back faster after they
-        /// die. At least 1 (the export refuses 0); 5 to 12 is usual.
+        /// The basic monsters' numbers, as the scene stores them (`basic_monsters` shows them
+        /// as resources).
+        #[export(storage)]
+        basic_monster_ids: PackedInt32Array,
+        /// The tactic monsters' numbers, as the scene stores them.
+        #[export(storage)]
+        tactic_monster_ids: PackedInt32Array,
         #[export_group(name = "Spawning")]
         #[export(range = (1.0, 600.0, 1.0, or_greater, suffix = "s"))]
         interval: i32 = 60,
@@ -896,22 +951,62 @@ marker_class!(
         #[export(range = (1.0, 200.0, 1.0, or_greater))]
         tactic_points: i32 = 100,
     }, |this| (
-        format!("Spawn: {}\nevery {} s, max {}", spawn_label(&this.basic_monsters, &this.basic_counts), this.interval, this.limit),
+        format!("Spawn: {}\nevery {} s, max {}", spawn_label(&this.basic_monster_ids, &this.basic_counts), this.interval, this.limit),
         Color::from_rgb(1.0, 0.35, 0.3),
         this.range as f32,
-        this.basic_monsters.as_slice().first().and_then(|id| npc_model(*id)),
+        this.basic_monster_ids.as_slice().first().and_then(|id| npc_model(*id)),
     )
 );
+
+#[godot_api]
+impl RoseSpawnSpot {
+    #[func]
+    fn get_basic_monsters(&self) -> Array<Option<Gd<RoseMonster>>> {
+        monsters_of(&self.basic_monster_ids)
+    }
+
+    #[func]
+    fn set_basic_monsters(&mut self, monsters: Array<Option<Gd<RoseMonster>>>) {
+        self.basic_monster_ids = monster_ids(&monsters, &self.basic_monster_ids);
+    }
+
+    #[func]
+    fn get_tactic_monsters(&self) -> Array<Option<Gd<RoseMonster>>> {
+        monsters_of(&self.tactic_monster_ids)
+    }
+
+    #[func]
+    fn set_tactic_monsters(&mut self, monsters: Array<Option<Gd<RoseMonster>>>) {
+        self.tactic_monster_ids = monster_ids(&monsters, &self.tactic_monster_ids);
+    }
+}
+
+impl OldProperties for RoseSpawnSpot {
+    /// Scenes saved before the markers took resources stored the numbers under the names
+    /// the resource lists have now.
+    fn set_old_property(&mut self, name: &str, value: &Variant) -> bool {
+        let Ok(ids) = value.try_to::<PackedInt32Array>() else { return false };
+        match name {
+            "basic_monsters" => self.basic_monster_ids = ids,
+            "tactic_monsters" => self.tactic_monster_ids = ids,
+            _ => return false,
+        }
+        true
+    }
+}
 
 marker_class!(
     /// A town NPC standing here (an IFO NPC), facing the node's forward direction (turn the
     /// node to turn the NPC). The server places the NPC from this marker; `--export-zones`
     /// gives it a change.
     RoseNpcSpot {
-        /// Which NPC: its number, a row of LIST_NPC.STB (for example 1030). Sets the NPC's
+        /// Which NPC: drag a `RoseNpc` resource in from `res://data/npcs/`. Sets the NPC's
         /// name, model, shop and AI. The editor shows its model on the marker.
-        #[export]
-        npc: i32,
+        #[var(get = get_npc, set = set_npc, usage_flags = [EDITOR])]
+        npc: PhantomVar<Option<Gd<RoseNpc>>>,
+        /// The NPC's number, as the scene stores it (`npc` shows it as the resource).
+        #[export(storage)]
+        npc_id: i32,
         /// The AI script number from the IFO file. Kept from iROSE but not used: the NPC's
         /// AI comes from its LIST_NPC.STB row.
         #[export]
@@ -920,8 +1015,44 @@ marker_class!(
         /// the quest data): what it says and offers when clicked.
         #[export]
         quest_file: GString,
-    }, |this| (format!("NPC {}\n{}", this.npc, this.quest_file), Color::from_rgb(0.4, 0.8, 1.0), 0.0, npc_model(this.npc))
+    }, |this| (
+        format!("NPC {}\n{}", character_name(data_resources::NPCS_DIR, this.npc_id), this.quest_file),
+        Color::from_rgb(0.4, 0.8, 1.0),
+        0.0,
+        npc_model(this.npc_id),
+    )
 );
+
+#[godot_api]
+impl RoseNpcSpot {
+    #[func]
+    fn get_npc(&self) -> Option<Gd<RoseNpc>> {
+        data_resources::find(data_resources::NPCS_DIR, self.npc_id as i64).and_then(|(r, _)| r.try_cast::<RoseNpc>().ok())
+    }
+
+    #[func]
+    fn set_npc(&mut self, npc: Option<Gd<RoseNpc>>) {
+        match npc {
+            Some(npc) => self.npc_id = npc.upcast::<godot::classes::Resource>().get("id").try_to::<i64>().unwrap_or(0) as i32,
+            // Cleared in the Inspector: keep a number that has no resource (not made in Godot).
+            None if self.get_npc().is_none() => {}
+            None => self.npc_id = 0,
+        }
+    }
+}
+
+impl OldProperties for RoseNpcSpot {
+    /// Scenes saved before the markers took resources stored the number as `npc`.
+    fn set_old_property(&mut self, name: &str, value: &Variant) -> bool {
+        match (name, value.try_to::<i64>()) {
+            ("npc", Ok(id)) => {
+                self.npc_id = id as i32;
+                true
+            }
+            _ => false,
+        }
+    }
+}
 
 marker_class!(
     /// A looping ambient sound played here (an IFO sound), such as running water or birds.
@@ -967,6 +1098,10 @@ marker_class!(
         event_name: GString,
     }, |this| (format!("Event: {}", this.event_name), Color::from_rgb(0.9, 0.5, 1.0), 1.0, None)
 );
+
+impl OldProperties for RoseSoundSpot {}
+impl OldProperties for RoseEffectSpot {}
+impl OldProperties for RoseZoneEvent {}
 
 // ---------------------------------------------------------------------------------------
 // Import
@@ -1685,8 +1820,8 @@ pub fn write_zone_scenes(zone_id: u16, force: bool) -> Result<(String, usize, us
                     spot.set_transform(zone::ifo_transform(&point.object));
                     {
                         let mut s = spot.bind_mut();
-                        (s.basic_monsters, s.basic_counts) = spawn_lists(&point.basic_spawns);
-                        (s.tactic_monsters, s.tactic_counts) = spawn_lists(&point.tactic_spawns);
+                        (s.basic_monster_ids, s.basic_counts) = spawn_lists(&point.basic_spawns);
+                        (s.tactic_monster_ids, s.tactic_counts) = spawn_lists(&point.tactic_spawns);
                         s.interval = point.interval as i32;
                         s.limit = point.limit_count as i32;
                         s.range = point.range as i32;
@@ -1704,7 +1839,7 @@ pub fn write_zone_scenes(zone_id: u16, force: bool) -> Result<(String, usize, us
                     spot.set_transform(zone::ifo_transform(&npc.object));
                     {
                         let mut s = spot.bind_mut();
-                        s.npc = npc.object.object_id as i32;
+                        s.npc_id = npc.object.object_id as i32;
                         s.ai = npc.ai_id as i32;
                         s.quest_file = npc.quest_file_name.as_str().into();
                     }
@@ -1807,8 +1942,8 @@ fn collect_markers(node: &Gd<Node>, transform: Transform3D, path: &str, layout: 
             limit: s.limit.max(0) as u32,
             range: s.range.max(0) as u32,
             tactic_points: s.tactic_points.max(0) as u32,
-            basic: pairs(&s.basic_monsters, &s.basic_counts),
-            tactic: pairs(&s.tactic_monsters, &s.tactic_counts),
+            basic: pairs(&s.basic_monster_ids, &s.basic_counts),
+            tactic: pairs(&s.tactic_monster_ids, &s.tactic_counts),
         });
     } else if let Ok(spot) = node.clone().try_cast::<RoseNpcSpot>() {
         let (x, y, z) = server_metres(transform.origin);
@@ -1818,7 +1953,7 @@ fn collect_markers(node: &Gd<Node>, transform: Transform3D, path: &str, layout: 
         let s = spot.bind();
         layout.npc.push(rose_game_overrides::ZoneNpc {
             node: path.to_string(),
-            npc: s.npc.max(0) as u32,
+            npc: s.npc_id.max(0) as u32,
             x,
             y,
             z,

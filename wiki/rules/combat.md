@@ -36,7 +36,7 @@ source:
     - crates/rose-game-data/src/lib.rs (load_motions)
     - godot/scripts/main.gd (_unhandled_input)
     - godot/scripts/online.gd (_on_damage, _float_number)
-  data: the weapon resources in godot/data/items/weapon/ (attack_power, attack_speed, attack_range, motion_type), TYPE_MOTION.STB and FILE_MOTION.STB (attack animations), overrides/motions.toml (player, monster and NPC animation lengths and hit frames, exported from the Godot animations), LIST_NPC.STB (monster attack values)
+  data: the weapon resources in godot/data/items/weapon/ (attack_power, attack_speed, attack_range, motion_type), TYPE_MOTION.STB and FILE_MOTION.STB (attack animations), overrides/motions.toml (player, monster and NPC animation lengths and hit frames, exported from the Godot animations), the monster resources in godot/data/monsters/ (monster attack values)
 ---
 # Combat
 

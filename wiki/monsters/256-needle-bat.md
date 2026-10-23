@@ -90,7 +90,7 @@ spawns:
   count: 2
   group: basic
 source:
-  data: LIST_NPC.STB row 256, ITEM_DROP.STB row 221
+  data: godot/data/monsters/256-needle-bat.tres, drop table godot/data/drop_tables/221-needle-bat.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

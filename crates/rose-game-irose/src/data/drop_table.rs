@@ -1,6 +1,6 @@
 use rand::Rng;
 use rose_file_readers::{StbFile, VirtualFilesystem};
-use std::sync::Arc;
+use std::{collections::BTreeMap, sync::Arc};
 
 use rose_data::{EquipmentItem, ItemDatabase, ItemType, NpcDatabase, NpcId, StackableItem, ZoneId};
 use rose_data_irose::decode_item_base1000;
@@ -184,6 +184,22 @@ impl DropTable for DropTableData {
     }
 }
 
+/// Every row of ITEM_DROP.STB that has a number in it, by row: the cells as numbers
+/// (`columns` of them, the rest of a short row 0).
+pub fn read_drop_rows(vfs: &VirtualFilesystem, columns: usize) -> Option<BTreeMap<u32, Vec<i32>>> {
+    let stb = vfs
+        .read_file::<StbFile, _>("3DDATA/STB/ITEM_DROP.STB")
+        .ok()?;
+    let mut rows = BTreeMap::new();
+    for y in 0..stb.rows() {
+        let row: Vec<i32> = (0..columns).map(|x| stb.get_int(y, x)).collect();
+        if row.iter().any(|v| *v != 0) {
+            rows.insert(y as u32, row);
+        }
+    }
+    Some(rows)
+}
+
 pub fn get_drop_table(
     vfs: &VirtualFilesystem,
     item_database: Arc<ItemDatabase>,
@@ -208,4 +224,28 @@ pub fn get_drop_table(
         columns,
         drop_table,
     }))
+}
+
+/// The drop table from rows (by row number, each `columns` cells long, as ITEM_DROP.STB
+/// numbers them): the drop tables exported from the Godot resources. A missing row drops
+/// nothing.
+pub fn get_drop_table_from_rows(
+    rows: &BTreeMap<u32, Vec<i32>>,
+    columns: usize,
+    item_database: Arc<ItemDatabase>,
+    npc_database: Arc<NpcDatabase>,
+) -> Box<impl DropTable + Send + Sync> {
+    let count = rows.keys().next_back().map_or(0, |r| *r as usize + 1);
+    let mut drop_table = vec![0; count * columns];
+    for (row, cells) in rows {
+        for (x, cell) in cells.iter().take(columns).enumerate() {
+            drop_table[*row as usize * columns + x] = *cell;
+        }
+    }
+    Box::new(DropTableData {
+        item_database,
+        npc_database,
+        columns,
+        drop_table,
+    })
 }

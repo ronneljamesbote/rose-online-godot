@@ -289,7 +289,7 @@ spawns:
   count: 2
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 375, ITEM_DROP.STB row 376
+  data: godot/data/monsters/375-dreadnaught.tres, drop table godot/data/drop_tables/376-dreadnaught.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

@@ -130,7 +130,7 @@ spawns:
   count: 1
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 166, ITEM_DROP.STB row 184
+  data: godot/data/monsters/166-master-stone-golem.tres, drop table godot/data/drop_tables/184-master-stone-golem.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

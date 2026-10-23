@@ -22,7 +22,7 @@ drop_money_rate: 0
 quests:
 - '[[quests/135-the-scheme|The Scheme]]'
 source:
-  data: LIST_NPC.STB row 254, ITEM_DROP.STB row 0
+  data: godot/data/monsters/254-stone-golem.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

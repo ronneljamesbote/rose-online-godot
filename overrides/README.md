@@ -1,24 +1,28 @@
 # Game data overrides
 
 `data/` is the game data made in the Godot editor, exported from the resources in
-`godot/data/` (see `godot/data/README.md`): the items so far (`data/items/<class>.toml`, all
-item tables and the refine grades). It isn't edited by hand: change the resource, then run
+`godot/data/` (see `godot/data/README.md`): the items (`data/items/<class>.toml`, all item
+tables and the refine grades), the monsters (`data/monsters.toml`), the town NPCs
+(`data/npcs.toml`), the drop tables (`data/drop-tables.toml`) and the shop tabs
+(`data/shop-tabs.toml`). It isn't edited by hand: change the resource, then run
 
 ```sh
 godot --headless --path godot -- --export-data          # writes overrides/data/
 godot --headless --path godot -- --export-data=check    # fails when it is out of date
 ```
 
-The server's upload sends it in place of the iROSE item tables (as JSON, which the module
+The server's upload sends it in place of the iROSE tables it replaces (the item tables,
+LIST_NPC.STB, ITEM_DROP.STB and LIST_SELL.STB; as JSON, which the module
 reads faster; `ROSE_DATA` names another folder), and the game reads it from here (from
 `overrides/data/` next to `ROSE.exe` in the Windows build, or where `ROSE_DATA` points).
 Without it both fall back to the iROSE tables.
 
 `game-data.toml` holds every change we make to the iROSE game data that isn't made in Godot
-yet (monster stats, skill numbers, drop tables, shop lists, ...). The original client files
-stay as they are; this file is laid on top of them. Items are not in it any more: an entry
-for an item table (`LIST_WEAPON.STB`, `LIST_GRADE.STB`, ...) stops the client and the upload
-with an error naming the resources to edit instead.
+yet (skill numbers, status effects, zone settings, ...). The original client files stay as
+they are; this file is laid on top of them. Items, monsters, NPCs, drop tables and shops are
+not in it any more: an entry for their tables (`LIST_WEAPON.STB`, `LIST_GRADE.STB`,
+`LIST_NPC.STB`, `ITEM_DROP.STB`, `LIST_SELL.STB` ...) stops the client and the upload with an
+error naming the resources to edit instead.
 
 - **The game client** reads it when it loads its data. In the Windows zip it sits at
   `overrides/game-data.toml` next to `ROSE.exe`. During development the client finds it
@@ -78,38 +82,21 @@ number while the server uses another.
 
 ```toml
 [[stb]]
-file = "3DDATA/STB/LIST_NPC.STB"      # path inside the client data, any case
-row = 1                               # Mini-Jelly Bean
-column = 8                            # HP
-value = 100                           # a number or "text"
-note = "Mini-Jelly Beans last a bit longer, wiki/monsters/1-mini-jelly-bean.md"
+file = "3DDATA/STB/LIST_SKILL.STB"    # path inside the client data, any case
+row = 21                              # the skill level's row
+column = 17                           # its first cost amount (MP)
+value = 10                            # a number or "text"
+note = "Cheaper to cast, wiki/skills/<the skill's page>.md"
 ```
 
-`row` is the number the wiki shows as the thing's id (skill or monster number).
+`row` is the number the wiki shows as the thing's id (for skills, the row of each level).
 `column` counts from 0 at the first column after the row name, the same way the data
 loaders in `crates/rose-data-irose/src/` number them (`stb_column! { 8, get_health_points, ... }`).
 
 ## Useful columns
 
-Items are Godot resources now (`godot/data/items/`), edited in the Inspector by field name.
-
-Monsters and NPCs (`3DDATA/STB/LIST_NPC.STB`):
-
-| Column | Meaning |
-| --- | --- |
-| 2 / 3 | walk / run speed |
-| 7 | level |
-| 8 | HP |
-| 9 | attack |
-| 10 | hit |
-| 11 | defence |
-| 12 | magic resistance |
-| 13 | avoid |
-| 14 | attack speed |
-| 17 | XP |
-| 18 | drop table row (`ITEM_DROP.STB`) |
-| 19 / 20 | money drop rate / item drop rate |
-| 26 | attack range (cm) |
+Items, monsters, NPCs, drop tables and shop tabs are Godot resources now (`godot/data/`),
+edited in the Inspector by field name.
 
 Skills (`3DDATA/STB/LIST_SKILL.STB`, one row per skill level):
 

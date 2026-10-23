@@ -286,7 +286,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 8, ITEM_DROP.STB row 100
+  data: godot/data/monsters/8-butterfly.tres, drop table godot/data/drop_tables/100-mini-jelly-bean-butterfly.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

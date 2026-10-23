@@ -473,7 +473,7 @@ zone_drops:
 - '[[items/material/17-adamantium|Adamantium]]'
 - '[[items/consumable/383-blood-charm|Blood Charm]]'
 source:
-  data: LIST_ZONE.STB row 54, the zone's IFO files, ITEM_DROP.STB row 54
+  data: LIST_ZONE.STB row 54, the zone's IFO files, drop table godot/data/drop_tables/54-akram-king-loderic.tres
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

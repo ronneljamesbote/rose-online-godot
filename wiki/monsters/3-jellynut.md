@@ -774,7 +774,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 3, ITEM_DROP.STB row 102
+  data: godot/data/monsters/3-jellynut.tres, drop table godot/data/drop_tables/102-jellynut.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

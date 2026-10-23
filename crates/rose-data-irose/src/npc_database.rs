@@ -1,4 +1,4 @@
-use enum_map::enum_map;
+use enum_map::{enum_map, EnumMap};
 use std::{
     collections::HashMap,
     num::{NonZeroU16, NonZeroUsize},
@@ -129,45 +129,100 @@ fn load_motion_file_data(
     }
 }
 
+/// Each NPC's motions from LIST_NPC.CHR, by NPC id: the parts of an NPC the data export
+/// doesn't hold yet (its model and animations).
+pub fn get_npc_motions(
+    vfs: &VirtualFilesystem,
+    options: &NpcDatabaseOptions,
+) -> Result<HashMap<u16, Vec<(MotionId, MotionFileData)>>, anyhow::Error> {
+    let model_data = vfs.read_file::<ChrFile, _>("3DDATA/NPC/LIST_NPC.CHR")?;
+    let mut motions = Vec::with_capacity(model_data.motion_files.len());
+    for path in model_data.motion_files.iter() {
+        motions.push(load_motion_file_data(vfs, path, options));
+    }
+    let mut out = HashMap::new();
+    for (&id, npc_model_data) in model_data.npcs.iter() {
+        let mut motion_data = Vec::new();
+        for &(motion_id, motion_file_index) in npc_model_data.motion_ids.iter() {
+            if let Some(motion_file_data) = motions
+                .get(motion_file_index as usize)
+                .and_then(|x| x.as_ref())
+            {
+                motion_data.push((MotionId::new(motion_id), motion_file_data.clone()));
+            }
+        }
+        out.insert(id, motion_data);
+    }
+    Ok(out)
+}
+
+/// The NPC conversation files (LIST_EVENT.STB), by their key.
+pub fn get_npc_conversations(
+    vfs: &VirtualFilesystem,
+) -> Result<HashMap<String, NpcConversationData>, anyhow::Error> {
+    let data = StbEvent(vfs.read_file::<StbFile, _>("3DDATA/STB/LIST_EVENT.STB")?);
+    let mut conversation_files = HashMap::new();
+    for id in 0..data.rows() {
+        let key = data.get_row_key(id);
+        let filename = data.get_filename(id);
+        if key.is_none() || filename.is_none() {
+            continue;
+        }
+        conversation_files.insert(
+            key.unwrap().to_string(),
+            NpcConversationData {
+                index: id,
+                name: data.get_name(id).unwrap_or("").to_string(),
+                _type: data.get_type(id).unwrap_or("").to_string(),
+                description: data.get_description(id).unwrap_or("").to_string(),
+                filename: filename.unwrap().to_string(),
+            },
+        );
+    }
+    Ok(conversation_files)
+}
+
+/// Which motion (its LIST_NPC.CHR number) each NPC action plays.
+pub fn get_npc_action_map() -> EnumMap<NpcMotionAction, MotionId> {
+    enum_map! {
+        NpcMotionAction::Stop => MotionId::new(0),
+        NpcMotionAction::Move => MotionId::new(1),
+        NpcMotionAction::Attack => MotionId::new(2),
+        NpcMotionAction::Hit => MotionId::new(3),
+        NpcMotionAction::Die => MotionId::new(4),
+        NpcMotionAction::Run => MotionId::new(5),
+        NpcMotionAction::Cast1 => MotionId::new(6),
+        NpcMotionAction::SkillAction1 => MotionId::new(7),
+        NpcMotionAction::Cast2 => MotionId::new(8),
+        NpcMotionAction::SkillAction2 => MotionId::new(9),
+        NpcMotionAction::Etc => MotionId::new(10),
+    }
+}
+
 pub fn get_npc_database(
     vfs: &VirtualFilesystem,
     string_database: Arc<StringDatabase>,
     options: &NpcDatabaseOptions,
 ) -> Result<NpcDatabase, anyhow::Error> {
-    let model_data = vfs.read_file::<ChrFile, _>("3DDATA/NPC/LIST_NPC.CHR")?;
+    let model_motions = get_npc_motions(vfs, options)?;
 
     let data = StbNpc(vfs.read_file::<StbFile, _>("3DDATA/STB/LIST_NPC.STB")?);
-
-    let mut motions = Vec::with_capacity(model_data.motion_files.len());
-    for path in model_data.motion_files.iter() {
-        motions.push(load_motion_file_data(vfs, path, options));
-    }
 
     let mut npcs = Vec::with_capacity(data.rows());
     let mut npc_count = 0;
     npcs.push(None); // NPC id 0
     for id in 1..data.rows() {
-        let npc_model_data = model_data.npcs.get(&(id as u16));
+        let npc_motions = model_motions.get(&(id as u16));
         let npc_string_id = data.get_string_id(id);
         let ai_file_index = data.get_ai_file_index(id).unwrap_or(0);
 
-        if npc_string_id.is_none() && npc_model_data.is_none() && ai_file_index == 0 {
+        if npc_string_id.is_none() && npc_motions.is_none() && ai_file_index == 0 {
             // NPC must have either a name, a model, or an AI file
             npcs.push(None);
             continue;
         }
 
-        let mut motion_data = Vec::new();
-        if let Some(npc_model_data) = npc_model_data {
-            for &(motion_id, motion_file_index) in npc_model_data.motion_ids.iter() {
-                if let Some(motion_file_data) = motions
-                    .get(motion_file_index as usize)
-                    .and_then(|x| x.as_ref())
-                {
-                    motion_data.push((MotionId::new(motion_id), motion_file_data.clone()));
-                }
-            }
-        }
+        let motion_data = npc_motions.cloned().unwrap_or_default();
 
         let name = if let Some(entry) = npc_string_id.and_then(|key| string_database.get_npc(key)) {
             unsafe { std::mem::transmute(entry.text) }
@@ -227,25 +282,7 @@ pub fn get_npc_database(
         }));
     }
 
-    let data = StbEvent(vfs.read_file::<StbFile, _>("3DDATA/STB/LIST_EVENT.STB")?);
-    let mut conversation_files = HashMap::new();
-    for id in 0..data.rows() {
-        let key = data.get_row_key(id);
-        let filename = data.get_filename(id);
-        if key.is_none() || filename.is_none() {
-            continue;
-        }
-        conversation_files.insert(
-            key.unwrap().to_string(),
-            NpcConversationData {
-                index: id,
-                name: data.get_name(id).unwrap_or("").to_string(),
-                _type: data.get_type(id).unwrap_or("").to_string(),
-                description: data.get_description(id).unwrap_or("").to_string(),
-                filename: filename.unwrap().to_string(),
-            },
-        );
-    }
+    let conversation_files = get_npc_conversations(vfs)?;
 
     let data = vfs.read_file::<StbFile, _>("3DDATA/STB/LIST_SELL.STB")?;
     let mut store_tabs = HashMap::new();
@@ -271,24 +308,12 @@ pub fn get_npc_database(
         }
     }
 
-    let action_map = enum_map! {
-        NpcMotionAction::Stop => MotionId::new(0),
-        NpcMotionAction::Move => MotionId::new(1),
-        NpcMotionAction::Attack => MotionId::new(2),
-        NpcMotionAction::Hit => MotionId::new(3),
-        NpcMotionAction::Die => MotionId::new(4),
-        NpcMotionAction::Run => MotionId::new(5),
-        NpcMotionAction::Cast1 => MotionId::new(6),
-        NpcMotionAction::SkillAction1 => MotionId::new(7),
-        NpcMotionAction::Cast2 => MotionId::new(8),
-        NpcMotionAction::SkillAction2 => MotionId::new(9),
-        NpcMotionAction::Etc => MotionId::new(10),
-    };
+    let action_map = get_npc_action_map();
 
     log::debug!(
-        "Loaded {} NPCs, {} motions, {} conversations, {} stores",
+        "Loaded {} NPCs, {} models, {} conversations, {} stores",
         npc_count,
-        motions.len(),
+        model_motions.len(),
         conversation_files.len(),
         store_tabs.len()
     );

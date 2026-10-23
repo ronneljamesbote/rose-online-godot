@@ -62,7 +62,7 @@ impl CellValue {
 
 /// Tables the game no longer reads: their things are Godot resources now (`godot/data/`),
 /// edited in the Godot editor and exported to `overrides/data/`.
-pub const MADE_IN_GODOT: [(&str, &str); 15] = [
+pub const MADE_IN_GODOT: [(&str, &str); 18] = [
     ("3DDATA/STB/LIST_FACEITEM.STB", "godot/data/items/face/"),
     ("3DDATA/STB/LIST_CAP.STB", "godot/data/items/head/"),
     ("3DDATA/STB/LIST_BODY.STB", "godot/data/items/body/"),
@@ -78,6 +78,9 @@ pub const MADE_IN_GODOT: [(&str, &str); 15] = [
     ("3DDATA/STB/LIST_QUESTITEM.STB", "godot/data/items/quest/"),
     ("3DDATA/STB/LIST_PAT.STB", "godot/data/items/vehicle/"),
     ("3DDATA/STB/LIST_GRADE.STB", "godot/data/items/grades/"),
+    ("3DDATA/STB/LIST_NPC.STB", "godot/data/monsters/ (town NPCs: godot/data/npcs/)"),
+    ("3DDATA/STB/ITEM_DROP.STB", "godot/data/drop_tables/"),
+    ("3DDATA/STB/LIST_SELL.STB", "godot/data/shop_tabs/"),
 ];
 
 impl Overrides {
@@ -232,6 +235,14 @@ mod tests {
         let mut files = BTreeMap::new();
         files.insert(VfsPath::normalise_path("T.STB"), stb(["1", "2", "3", "4"]));
         assert!(overrides.patch_files(&mut files).is_err());
+    }
+
+    #[test]
+    fn monster_tables_are_made_in_godot() {
+        let error = Overrides::parse("[[stb]]\nfile = \"3DDATA/STB/LIST_NPC.STB\"\nrow = 1\ncolumn = 8\nvalue = 40\n")
+            .unwrap_err()
+            .to_string();
+        assert!(error.contains("godot/data/monsters/"), "{error}");
     }
 
     #[test]

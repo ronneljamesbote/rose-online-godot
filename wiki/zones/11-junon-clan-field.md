@@ -120,7 +120,7 @@ zone_drops:
 - '[[items/material/161-green-crystal|Green Crystal]]'
 - '[[items/material/163-red-crystal|Red Crystal]]'
 source:
-  data: LIST_ZONE.STB row 11, the zone's IFO files, ITEM_DROP.STB row 11
+  data: LIST_ZONE.STB row 11, the zone's IFO files, drop table godot/data/drop_tables/11-zone-junon-clan-field.tres
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

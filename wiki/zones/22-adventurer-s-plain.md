@@ -385,7 +385,7 @@ zone_drops:
 - '[[items/consumable/58-vital-jam-5|Vital Jam (+5)]]'
 - '[[items/consumable/102-banana|Banana]]'
 source:
-  data: LIST_ZONE.STB row 22, overrides/zones/22-adventurer-s-plain.toml (exported from the scenes in godot/zones/22_adventurer_s_plain), ITEM_DROP.STB row 22
+  data: LIST_ZONE.STB row 22, overrides/zones/22-adventurer-s-plain.toml (exported from the scenes in godot/zones/22_adventurer_s_plain), drop table godot/data/drop_tables/22-zone-adventurer-s-plain.tres
   code:
   - module/src/world.rs
   - crates/rose-game-data/src/lib.rs (apply_zone_layouts)

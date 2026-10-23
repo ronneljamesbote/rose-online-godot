@@ -297,7 +297,7 @@ spawns:
   count: 2
   group: basic
 source:
-  data: LIST_NPC.STB row 92, ITEM_DROP.STB row 143
+  data: godot/data/monsters/92-rackie-hooligan.tres, drop table godot/data/drop_tables/143-rackie-hooligan.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

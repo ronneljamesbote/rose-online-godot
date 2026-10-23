@@ -77,7 +77,7 @@ spawns:
   count: 2
   group: basic
 source:
-  data: LIST_NPC.STB row 320, ITEM_DROP.STB row 8
+  data: godot/data/monsters/320-tropical-fish.tres, drop table godot/data/drop_tables/8-mini-bee-firefly-butterfly-and-others.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

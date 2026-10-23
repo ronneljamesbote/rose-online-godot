@@ -191,7 +191,7 @@ spawns:
   count: 3
   group: basic
 source:
-  data: LIST_NPC.STB row 102, ITEM_DROP.STB row 148
+  data: godot/data/monsters/102-woopie-chef.tres, drop table godot/data/drop_tables/148-woopie-chef.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

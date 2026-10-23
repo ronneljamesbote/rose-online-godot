@@ -338,7 +338,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 331, ITEM_DROP.STB row 355
+  data: godot/data/monsters/331-slag.tres, drop table godot/data/drop_tables/355-slag-elder-slag.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

@@ -239,7 +239,7 @@ zone_drops:
 - '[[items/consumable/381-ice-charm|Ice Charm]]'
 - '[[items/consumable/383-blood-charm|Blood Charm]]'
 source:
-  data: LIST_ZONE.STB row 2, the zone's IFO files, ITEM_DROP.STB row 2
+  data: LIST_ZONE.STB row 2, the zone's IFO files, drop table godot/data/drop_tables/2-zone-city-of-junon-polis.tres
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

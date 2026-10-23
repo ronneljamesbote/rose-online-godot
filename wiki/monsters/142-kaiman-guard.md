@@ -106,7 +106,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 142, ITEM_DROP.STB row 166
+  data: godot/data/monsters/142-kaiman-guard.tres, drop table godot/data/drop_tables/166-kaiman-guard.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

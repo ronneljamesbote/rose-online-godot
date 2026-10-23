@@ -125,7 +125,7 @@ spawns:
   count: 2
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 353, ITEM_DROP.STB row 369
+  data: godot/data/monsters/353-rider-captain.tres, drop table godot/data/drop_tables/369-rider-captain.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

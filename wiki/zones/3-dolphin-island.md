@@ -18,7 +18,7 @@ npcs:
   x: 5104.5
   y: 5019.7
 source:
-  data: LIST_ZONE.STB row 3, the zone's IFO files, ITEM_DROP.STB row 3
+  data: LIST_ZONE.STB row 3, the zone's IFO files, drop table godot/data/drop_tables/3-bonfire-butterfly-phantomsword-and-others.tres
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

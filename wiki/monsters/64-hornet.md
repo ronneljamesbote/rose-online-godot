@@ -395,7 +395,7 @@ spawns:
   count: 2
   group: basic
 source:
-  data: LIST_NPC.STB row 64, ITEM_DROP.STB row 127
+  data: godot/data/monsters/64-hornet.tres, drop table godot/data/drop_tables/127-hornet.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

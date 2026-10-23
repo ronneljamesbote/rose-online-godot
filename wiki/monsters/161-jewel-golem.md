@@ -111,7 +111,7 @@ spawns:
   count: 1
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 161, ITEM_DROP.STB row 179
+  data: godot/data/monsters/161-jewel-golem.tres, drop table godot/data/drop_tables/179-jewel-golem.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

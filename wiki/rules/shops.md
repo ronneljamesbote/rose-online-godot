@@ -23,7 +23,7 @@ source:
     - godot/scripts/store_window.gd
     - godot/scripts/inventory_window.gd (selling with right-click)
     - godot/rust/src/net.rs (get_store, price_rates)
-  data: "LIST_NPC.STB (each NPC's store tabs and union), LIST_SELL.STB (the items on each tab), item STBs (base price column 5, price rate column 6, quality column 8, class column 4)"
+  data: "the NPC resources in godot/data/npcs/ (shop_tab_1 to shop_tab_4, store_union), the shop tab resources in godot/data/shop_tabs/ (the items on each tab, in their places), the item resources in godot/data/items/ (base_price, price_rate, quality, item_class)"
 ---
 # Shops
 

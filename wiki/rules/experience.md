@@ -57,7 +57,7 @@ source:
     - module/src/lib.rs (reward_kill, deal_damage, add_damage_source, DAMAGE_REWARD_EXPIRE_US, world_rates_row, give_xp)
     - module/src/party.rs (reward_kill_xp, nearby, SHARE_RANGE_CM, XP_BONUS_PERCENT_PER_MEMBER)
     - module/src/death.rs (debt)
-  data: LIST_NPC.STB (monster level, HP and experience columns)
+  data: the monster resources in godot/data/monsters/ (level, health_points, reward_xp)
 ---
 # Experience
 

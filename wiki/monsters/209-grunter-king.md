@@ -121,7 +121,7 @@ spawns:
   count: 1
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 209, ITEM_DROP.STB row 204
+  data: godot/data/monsters/209-grunter-king.tres, drop table godot/data/drop_tables/204-grunter-king.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

@@ -60,7 +60,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 529, ITEM_DROP.STB row 451
+  data: godot/data/monsters/529-predator.tres, drop table godot/data/drop_tables/451-predator.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

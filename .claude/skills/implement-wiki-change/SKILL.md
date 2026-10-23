@@ -21,11 +21,12 @@ together. Read `AGENTS.md` and `wiki/README.md` first if you haven't.
    it, and say so.
 3. **Decide where each change belongs.** The page's `source:` names the data row and the
    code. `.claude/rules/wiki-sync.md` maps code to pages.
-   - An **item value** (a stat, a price, a requirement, a refine grade) → the item's
-     resource in `godot/data/items/` (the page's `source:` names the file), then
-     `godot --headless --path godot -- --export-data` and commit both. See
-     `godot/data/README.md`.
-   - Another **data value** (a drop rate, a monster stat, a skill number per level) → an
+   - An **item, monster, NPC, drop or shop value** (an item's stat or price, a monster's
+     level, HP or drop rate, what it drops, what a shop sells) → the resource in
+     `godot/data/` (`items/`, `monsters/`, `npcs/`, `drop_tables/`, `shop_tabs/`; the
+     page's `source:` names the file), then `godot --headless --path godot -- --export-data`
+     and commit both. See `godot/data/README.md`.
+   - Another **data value** (a skill number per level, a status effect) → an
      entry in `overrides/game-data.toml` (file, row, column, value, and a `note` naming the
      page). See `overrides/README.md` for the format and column lists.
    - A **rule or formula** (damage, hit chance, XP, death penalty, how a skill behaves) →

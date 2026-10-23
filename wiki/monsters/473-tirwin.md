@@ -136,7 +136,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 473, ITEM_DROP.STB row 412
+  data: godot/data/monsters/473-tirwin.tres, drop table godot/data/drop_tables/412-tirwin.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

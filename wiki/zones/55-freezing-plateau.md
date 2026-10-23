@@ -236,7 +236,7 @@ zone_drops:
 - '[[items/material/18-otherworldly-metal|Otherworldly Metal]]'
 - '[[items/consumable/383-blood-charm|Blood Charm]]'
 source:
-  data: LIST_ZONE.STB row 55, the zone's IFO files, ITEM_DROP.STB row 55
+  data: LIST_ZONE.STB row 55, the zone's IFO files, drop table godot/data/drop_tables/55-righteous-crusader-port.tres
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

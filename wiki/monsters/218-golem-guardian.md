@@ -57,7 +57,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 218, ITEM_DROP.STB row 274
+  data: godot/data/monsters/218-golem-guardian.tres, drop table godot/data/drop_tables/274-golem-guardian.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

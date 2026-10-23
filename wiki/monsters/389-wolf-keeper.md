@@ -205,7 +205,7 @@ spawns:
   count: 0
   group: basic
 source:
-  data: LIST_NPC.STB row 389, ITEM_DROP.STB row 358
+  data: godot/data/monsters/389-wolf-keeper.tres, drop table godot/data/drop_tables/358-wolf-lunar-wolf-wolf-keeper.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

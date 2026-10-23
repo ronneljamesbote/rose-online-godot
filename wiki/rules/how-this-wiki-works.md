@@ -7,7 +7,7 @@ source:
   code:
     - AGENTS.md (the rules developers follow)
     - wiki/README.md (page format)
-    - godot/data/ (the game data made in the Godot editor, items so far)
+    - godot/data/ (the game data made in the Godot editor: items, monsters, NPCs, drop tables, shops)
     - overrides/game-data.toml (our changes to the iROSE game data)
     - tools/wiki-gen (wrote the first draft of the table pages)
 ---
@@ -23,9 +23,9 @@ Every number in the game comes from one of four places:
 
 | Place | What it holds | Example |
 | --- | --- | --- |
-| Our game data (`godot/data/`) | Things made in the Godot editor, one file each, converted once from iROSE: the items so far | Short Sword attack 10, in `godot/data/items/weapon/2-short-sword.tres` |
-| The iROSE 129 game data | The original tables not converted yet: monster stats, skill levels, drop tables, shops, spawns, quests, dialogs | Jelly Bean HP 120 |
-| The override file (`overrides/game-data.toml`) | Our changes to those iROSE tables, one cell per entry | Jelly Bean HP 150 instead of 120 |
+| Our game data (`godot/data/`) | Things made in the Godot editor, one file each, converted once from iROSE: items, monsters, town NPCs, drop tables and shop tabs so far | Short Sword attack 10, in `godot/data/items/weapon/2-short-sword.tres`; Woopie level 16, in `godot/data/monsters/101-woopie.tres` |
+| The iROSE 129 game data | The original tables not converted yet: skill levels, status effects, jobs, zones, quests, dialogs, monster AI | A skill's MP cost |
+| The override file (`overrides/game-data.toml`) | Our changes to those iROSE tables, one cell per entry | That MP cost lowered by 2 |
 | The game code | Rules and formulas, and features iROSE didn't have | How attack turns into damage |
 
 The original data is never edited. Our own data is changed in the Godot editor and
@@ -48,8 +48,8 @@ Some examples:
 
 - *"Short Sword should hit harder"*: edit the attack on the item page. That becomes a
   change to the sword's file in `godot/data/items/`.
-- *"Jelly Bean should drop Jelly Bean Gel more often"*: edit the drop row on the monster
-  page. That becomes an override entry for the drop table.
+- *"Jelly Bean should drop Jelly Bean Gel more often"*: edit the drops on the monster
+  page. That becomes a change to its drop table in `godot/data/drop_tables/`.
 - *"Critical hits should do double damage"*: edit the formula on [[rules/combat|Combat]].
   That is a code change.
 - *"We want clans"*: change the status of the clan page under

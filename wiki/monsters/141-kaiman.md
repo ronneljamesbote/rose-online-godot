@@ -109,7 +109,7 @@ spawns:
   count: 2
   group: basic
 source:
-  data: LIST_NPC.STB row 141, ITEM_DROP.STB row 165
+  data: godot/data/monsters/141-kaiman.tres, drop table godot/data/drop_tables/165-kaiman.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

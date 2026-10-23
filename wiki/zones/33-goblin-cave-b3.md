@@ -289,7 +289,7 @@ zone_drops:
 - '[[items/material/129-jilsian|Jilsian]]'
 - '[[items/material/130-lusian|Lusian]]'
 source:
-  data: LIST_ZONE.STB row 33, the zone's IFO files, ITEM_DROP.STB row 33
+  data: LIST_ZONE.STB row 33, the zone's IFO files, drop table godot/data/drop_tables/33-zone-goblin-cave-b3.tres
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

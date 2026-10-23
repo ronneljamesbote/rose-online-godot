@@ -87,7 +87,7 @@ spawns:
   count: 0
   group: basic
 source:
-  data: LIST_NPC.STB row 383, ITEM_DROP.STB row 386
+  data: godot/data/monsters/383-behemoth-king.tres, drop table godot/data/drop_tables/386-tyrant-behemoth-king.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

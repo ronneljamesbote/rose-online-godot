@@ -126,7 +126,7 @@ spawns:
   count: 4
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 261, ITEM_DROP.STB row 224
+  data: godot/data/monsters/261-goblin-jar.tres, drop table godot/data/drop_tables/224-goblin-jar.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

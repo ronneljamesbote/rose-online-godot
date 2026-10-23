@@ -12,7 +12,7 @@ locations:
   x: 5822.9
   y: 4683.3
 source:
-  data: 'LIST_NPC.STB row 1262; dialog '
+  data: 'godot/data/npcs/1262-sikuku-warrior-wounded-soldier.tres; dialog '
   code:
   - module/src/npcs.rs
   - godot/rust/src/conversation.rs

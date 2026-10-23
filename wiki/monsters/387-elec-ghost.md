@@ -87,7 +87,7 @@ spawns:
   count: 2
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 387, ITEM_DROP.STB row 279
+  data: godot/data/monsters/387-elec-ghost.tres, drop table godot/data/drop_tables/279-elec-ghost.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

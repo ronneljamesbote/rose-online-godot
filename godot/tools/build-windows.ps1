@@ -21,10 +21,10 @@
 #            (--import-rose), because assets.pck carries them and the zone scenes need them.
 #
 # It refuses to build when overrides\motions.toml (the server's hit times),
-# overrides\zones\ (spawns and NPCs) or overrides\data\ (the items) don't match the
+# overrides\zones\ (spawns and NPCs) or overrides\data\ (items, monsters, NPCs) don't match the
 # animations, the zone scenes and the game data resources in godot\data\; run
 # --export-motions, --export-zones or --export-data and commit the files first. The game
-# reads its items from overrides\data\ next to ROSE.exe, as the server does.
+# reads its items, monsters and NPCs from overrides\data\ next to ROSE.exe, as the server does.
 #
 # The production build checks that no GM code got in and stops if it did.
 #
@@ -366,7 +366,7 @@ Run this and commit the files:
 "@
 }
 
-# The server and the game read the items from overrides/data/, exported
+# The server and the game read the items, monsters and NPCs from overrides/data/, exported
 # from the game data resources in godot/data/.
 Write-Host ""
 Write-Host "==> Checking overrides\data\..."

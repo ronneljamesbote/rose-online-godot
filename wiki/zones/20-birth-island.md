@@ -601,7 +601,7 @@ zone_drops:
 - '[[items/consumable/120-milk|Milk]]'
 - '[[items/consumable/58-vital-jam-5|Vital Jam (+5)]]'
 source:
-  data: LIST_ZONE.STB row 20, overrides/zones/20-birth-island.toml (exported from the scenes in godot/zones/20_birth_island), ITEM_DROP.STB row 20
+  data: LIST_ZONE.STB row 20, overrides/zones/20-birth-island.toml (exported from the scenes in godot/zones/20_birth_island), drop table godot/data/drop_tables/20-zone-birth-island.tres
   code:
   - module/src/world.rs
   - crates/rose-game-data/src/lib.rs (apply_zone_layouts)

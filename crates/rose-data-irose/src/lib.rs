@@ -24,7 +24,7 @@ pub use data_decoder::get_data_decoder;
 pub use effect_database::get_effect_database;
 pub use item_database::get_item_database;
 pub use job_class_database::get_job_class_database;
-pub use npc_database::get_npc_database;
+pub use npc_database::{get_npc_action_map, get_npc_conversations, get_npc_database, get_npc_motions};
 pub use quest_database::get_quest_database;
 pub use skill_database::{get_skill_database, SKILL_PAGE_SIZE};
 pub use skybox_database::get_skybox_database;

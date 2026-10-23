@@ -413,7 +413,7 @@ zone_drops:
 - '[[items/material/126-lesian|Lesian]]'
 - '[[items/consumable/382-spark-charm|Spark Charm]]'
 source:
-  data: LIST_ZONE.STB row 24, the zone's IFO files, ITEM_DROP.STB row 24
+  data: LIST_ZONE.STB row 24, the zone's IFO files, drop table godot/data/drop_tables/24-zone-el-verloon-desert.tres
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

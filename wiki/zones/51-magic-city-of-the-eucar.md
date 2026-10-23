@@ -363,7 +363,7 @@ zone_drops:
 - '[[items/material/14-molive|Molive]]'
 - '[[items/consumable/381-ice-charm|Ice Charm]]'
 source:
-  data: LIST_ZONE.STB row 51, the zone's IFO files, ITEM_DROP.STB row 51
+  data: LIST_ZONE.STB row 51, the zone's IFO files, drop table godot/data/drop_tables/51-zone-magic-city-of-the-eucar.tres
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

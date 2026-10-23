@@ -330,7 +330,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 132, ITEM_DROP.STB row 158
+  data: godot/data/monsters/132-porkie.tres, drop table godot/data/drop_tables/158-porkie.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

@@ -267,7 +267,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 44, ITEM_DROP.STB row 119
+  data: godot/data/monsters/44-old-flanae.tres, drop table godot/data/drop_tables/119-old-flanae.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

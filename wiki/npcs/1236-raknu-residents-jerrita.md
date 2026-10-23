@@ -9,7 +9,7 @@ locations:
   x: 5657.2
   y: 4456
 source:
-  data: 'LIST_NPC.STB row 1236; dialog '
+  data: 'godot/data/npcs/1236-raknu-residents-jerrita.tres; dialog '
   code:
   - module/src/npcs.rs
   - godot/rust/src/conversation.rs

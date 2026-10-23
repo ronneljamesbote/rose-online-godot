@@ -100,7 +100,7 @@ spawns:
   count: 2
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 348, ITEM_DROP.STB row 366
+  data: godot/data/monsters/348-ruper-captain.tres, drop table godot/data/drop_tables/366-ruper-captain.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

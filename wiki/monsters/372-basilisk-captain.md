@@ -236,7 +236,7 @@ spawns:
   count: 2
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 372, ITEM_DROP.STB row 388
+  data: godot/data/monsters/372-basilisk-captain.tres, drop table godot/data/drop_tables/388-basilisk-captain.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

@@ -53,7 +53,7 @@ drops:
 - item: '[[items/gem/311-ruby-1|Ruby 1]]'
   slots_of_30: 1
 source:
-  data: LIST_NPC.STB row 407, ITEM_DROP.STB row 307
+  data: godot/data/monsters/407-junon-s-doonga.tres, drop table godot/data/drop_tables/307-junon-s-doonga.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

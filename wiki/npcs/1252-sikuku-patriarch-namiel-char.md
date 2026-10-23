@@ -9,7 +9,7 @@ locations:
   x: 5807.9
   y: 4714.4
 source:
-  data: 'LIST_NPC.STB row 1252; dialog '
+  data: 'godot/data/npcs/1252-sikuku-patriarch-namiel-char.tres; dialog '
   code:
   - module/src/npcs.rs
   - godot/rust/src/conversation.rs

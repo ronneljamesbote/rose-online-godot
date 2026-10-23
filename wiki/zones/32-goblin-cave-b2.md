@@ -175,7 +175,7 @@ zone_drops:
 - '[[items/consumable/383-blood-charm|Blood Charm]]'
 - '[[items/material/65-high-ether|High Ether]]'
 source:
-  data: LIST_ZONE.STB row 32, the zone's IFO files, ITEM_DROP.STB row 32
+  data: LIST_ZONE.STB row 32, the zone's IFO files, drop table godot/data/drop_tables/32-zone-goblin-cave-b2.tres
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

@@ -797,14 +797,14 @@ impl RoseVehicle {
 /// Monsters and NPCs from LIST_NPC.CHR and PART_NPC.ZSC (spawn_npc_model in model_loader.rs).
 #[derive(GodotClass)]
 #[class(base=Node3D, init)]
-pub struct RoseNpc {
+pub struct RoseNpcModel {
     base: Base<Node3D>,
     npc_id: u16,
     dummy_offset: usize,
 }
 
 #[godot_api]
-impl RoseNpc {
+impl RoseNpcModel {
     /// Builds the model for an NPC id, scaled as in LIST_NPC.STB. Animations are named after
     /// NpcMotionAction in lower case: stop, move, attack, hit, die, run.
     #[func]

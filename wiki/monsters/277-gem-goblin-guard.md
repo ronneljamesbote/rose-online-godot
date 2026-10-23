@@ -351,7 +351,7 @@ spawns:
   count: 2
   group: basic
 source:
-  data: LIST_NPC.STB row 277, ITEM_DROP.STB row 232
+  data: godot/data/monsters/277-gem-goblin-guard.tres, drop table godot/data/drop_tables/232-goblin-guard-gem-goblin-guard.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

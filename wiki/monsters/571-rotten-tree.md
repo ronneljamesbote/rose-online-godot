@@ -139,7 +139,7 @@ spawns:
   count: 2
   group: basic
 source:
-  data: LIST_NPC.STB row 571, ITEM_DROP.STB row 485
+  data: godot/data/monsters/571-rotten-tree.tres, drop table godot/data/drop_tables/485-rotten-tree.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

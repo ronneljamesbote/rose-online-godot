@@ -131,7 +131,7 @@ spawns:
   count: 2
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 272, ITEM_DROP.STB row 227
+  data: godot/data/monsters/272-coal-mine-goblin-worker.tres, drop table godot/data/drop_tables/227-coal-mine-goblin-worker.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

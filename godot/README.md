@@ -60,7 +60,7 @@ animations (see `assets/README.md`), then checks that
 `overrides/motions.toml`, `overrides/zones/` and `overrides/data/` match the animations,
 zone scenes and game data resources (`--export-motions=check`, `--export-zones=check`,
 `--export-data=check`); when they don't, it stops without building. The zip carries
-`overrides/data/` next to `ROSE.exe`: the game reads its items from there (see
+`overrides/data/` next to `ROSE.exe`: the game reads its items, monsters and NPCs from there (see
 `data/README.md`). The DLL only imports Windows system DLLs. Under
 Wine 9 the build loads the data, builds Zant and plays online headless (Wine's `dinput8`
 crashes Godot here, so the test ran with `WINEDLLOVERRIDES=dinput8=d`); it has not been
@@ -134,7 +134,7 @@ Other options (after `--`):
   characters (skeleton scenes, part scenes, motions with hit/step/effect markers and one
   motion library per weapon type) are imported by `character.rs` (`import_avatars`), and
   `RoseCharacter` builds players from them when they are there.
-- `rust/src/character.rs` also holds `RoseNpc`, the monster and NPC model builder (port of
+- `rust/src/character.rs` also holds `RoseNpcModel`, the monster and NPC model builder (port of
   `spawn_npc_model`).
 - `rust/src/net.rs` is the `RoseNet` node: the SpacetimeDB connection (SDK 2.10.2, bindings
   in `module_bindings/` generated from `../module`). It handles messages in `_process`, and

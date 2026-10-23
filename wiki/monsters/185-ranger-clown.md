@@ -172,7 +172,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 185, ITEM_DROP.STB row 194
+  data: godot/data/monsters/185-ranger-clown.tres, drop table godot/data/drop_tables/194-ranger-clown.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

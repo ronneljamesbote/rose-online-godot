@@ -240,7 +240,7 @@ spawns:
   count: 1
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 13, ITEM_DROP.STB row 106
+  data: godot/data/monsters/13-mother-choropy.tres, drop table godot/data/drop_tables/106-mother-choropy.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

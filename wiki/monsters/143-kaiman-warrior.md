@@ -159,7 +159,7 @@ spawns:
   count: 3
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 143, ITEM_DROP.STB row 167
+  data: godot/data/monsters/143-kaiman-warrior.tres, drop table godot/data/drop_tables/167-kaiman-warrior.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

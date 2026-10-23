@@ -109,7 +109,7 @@ spawns:
   count: 1
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 163, ITEM_DROP.STB row 181
+  data: godot/data/monsters/163-master-golem.tres, drop table godot/data/drop_tables/181-master-golem.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs
