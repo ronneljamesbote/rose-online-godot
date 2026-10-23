@@ -1,0 +1,42 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://dxhmo32nytm2j"]
+
+[ext_resource type="RoseSkill" uid="uid://c3l6085ewhjbw" path="res://data/skills/251-defense-training/251-defense-training.tres" id="1_ruj7i"]
+[ext_resource type="RoseStatusEffect" uid="uid://kpb7sbcin378" path="res://data/status_effects/56-taunt.tres" id="2_h1s67"]
+
+[resource]
+id = 413
+name = "Taunt"
+description = "Directs target's hate towards caster, causing target to attack caster for a while."
+base_skill_id = 411
+level = 3
+skill_type = "TargetBoundDuration"
+page = 1
+icon_number = 62
+learn_point_cost = 25
+required_planet = 2500
+required_skill_1 = ExtResource("1_ruj7i")
+required_skill_1_level = 10
+use_stat_1 = "Mana"
+use_stat_1_value = 28
+cooldown_ms = 4600
+target_filter = "EnemyMonster"
+cast_range = 2500
+action_mode = "Restore"
+damage_type = "MagicAttack"
+harm = 1
+success_ratio = 90
+status_effect_1 = ExtResource("2_h1s67")
+status_effect_seconds = 25
+casting_motion_id = 113
+casting_motion_speed = 160
+casting_repeat_motion_id = 133
+casting_effect_1 = 1603
+casting_effect_1_point = 4
+casting_effect_2 = 1604
+casting_effect_2_point = 1
+action_motion_id = 103
+bullet_effect_id = 251
+bullet_point = 1
+bullet_fire_sound_id = 90
+hit_effect_file_id = 1121
+hit_sound_id = 67

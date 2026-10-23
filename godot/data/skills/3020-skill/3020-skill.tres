@@ -1,0 +1,29 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://bfby02hdfmdck"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://dbi4ro2cc5h50" path="res://data/status_effects/23-magic-resistance-down.tres" id="1_hln68"]
+
+[resource]
+id = 3020
+skill_type = "SelfDamage"
+icon_number = 84
+target_filter = "Enemy"
+scope = 2000
+action_mode = "Restore"
+damage_type = "WeaponAttack"
+power = 100
+item_make_number = 100
+success_ratio = 30
+status_effect_1 = ExtResource("1_hln68")
+status_effect_seconds = 28
+add_stat_1 = "Resistance"
+add_stat_1_value = 30
+add_stat_1_rate = 30
+warp_zone = 21
+warp_x = 30000
+warp_y = 30000
+casting_motion_id = 8
+casting_effect_1 = 389
+casting_effect_3 = 1320
+action_motion_id = 9
+hit_effect_file_id = 1637
+hit_sound_id = 1574

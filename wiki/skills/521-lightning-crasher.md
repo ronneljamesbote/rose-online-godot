@@ -105,7 +105,7 @@ levels:
   success: 70
   effects: Fainted
 source:
-  data: LIST_SKILL.STB rows 521, 522, 523, 524, 525, 526, 527, 528, 529, 530
+  data: godot/data/skills/521-lightning-crasher/ (levels 521, 522, 523, 524, 525, 526, 527, 528, 529, 530)
   code: module/src/skills.rs
 ---
 # Lightning Crasher

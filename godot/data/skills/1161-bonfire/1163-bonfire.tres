@@ -1,0 +1,28 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://chobee3oaohm1"]
+
+[ext_resource type="RoseSkill" uid="uid://c0jsu0md0eg0s" path="res://data/skills/821-meditation/821-meditation.tres" id="1_itlsh"]
+[ext_resource type="RoseMonster" uid="uid://b27ps5surq5tl" path="res://data/monsters/803-bonfire.tres" id="2_s3i1o"]
+
+[resource]
+id = 1163
+name = "Bonfire"
+description = "Cast a magic campfire to aid party members in restoring HP and MP faster."
+base_skill_id = 1161
+level = 3
+skill_type = "SummonPet"
+page = 1
+icon_number = 75
+learn_point_cost = 18
+required_skill_1 = ExtResource("1_itlsh")
+required_skill_1_level = 8
+use_stat_1 = "Mana"
+use_stat_1_value = 76
+cooldown_ms = 9200
+action_mode = "Restore"
+summon_monster = ExtResource("2_s3i1o")
+casting_motion_id = 118
+casting_repeat_motion_id = 138
+action_motion_id = 155
+bullet_effect_id = 221
+bullet_point = 3
+bullet_fire_sound_id = 90

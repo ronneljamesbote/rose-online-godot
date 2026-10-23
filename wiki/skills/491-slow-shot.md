@@ -128,7 +128,7 @@ levels:
   effects: Slow
   changes: Movement Speed -53%
 source:
-  data: LIST_SKILL.STB rows 491, 492, 493, 494, 495, 496, 497, 498, 499, 500
+  data: godot/data/skills/491-slow-shot/ (levels 491, 492, 493, 494, 495, 496, 497, 498, 499, 500)
   code: module/src/skills.rs
 ---
 # Slow Shot

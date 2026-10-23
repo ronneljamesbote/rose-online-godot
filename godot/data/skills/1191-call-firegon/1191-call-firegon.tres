@@ -1,0 +1,34 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://bfx3iekqksatx"]
+
+[ext_resource type="RoseJobClass" uid="uid://wxui6m5s8xot" path="res://data/job_classes/63-mage-job.tres" id="1_mclgp"]
+[ext_resource type="RoseSkill" uid="uid://codmreajjlkwc" path="res://data/skills/841-spell-mastery/841-spell-mastery.tres" id="2_fav7w"]
+[ext_resource type="RoseSkill" uid="uid://ciir7d7qlpm07" path="res://data/skills/861-summon-mastery/861-summon-mastery.tres" id="3_mnaij"]
+[ext_resource type="RoseSkill" uid="uid://qu4fp4psv8bh" path="res://data/skills/1061-fire-burn/1061-fire-burn.tres" id="4_xynci"]
+[ext_resource type="RoseMonster" uid="uid://cxyh861o1kgyn" path="res://data/monsters/831-firegon.tres" id="5_exxeq"]
+
+[resource]
+id = 1191
+name = "Call Firegon"
+description = "Summon a fire dragon."
+skill_type = "SummonPet"
+page = 1
+icon_number = 203
+learn_point_cost = 30
+required_job_class = ExtResource("1_mclgp")
+required_skill_1 = ExtResource("2_fav7w")
+required_skill_1_level = 15
+required_skill_2 = ExtResource("3_mnaij")
+required_skill_2_level = 1
+required_skill_3 = ExtResource("4_xynci")
+required_skill_3_level = 5
+use_stat_1 = "Mana"
+use_stat_1_value = 250
+cooldown_ms = 9000
+action_mode = "Restore"
+summon_monster = ExtResource("5_exxeq")
+casting_motion_id = 118
+casting_repeat_motion_id = 138
+action_motion_id = 155
+bullet_effect_id = 221
+bullet_point = 3
+bullet_fire_sound_id = 90

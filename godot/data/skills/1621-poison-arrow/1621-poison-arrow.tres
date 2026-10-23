@@ -1,0 +1,44 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://bcuumxedvailh"]
+
+[ext_resource type="RoseJobClass" uid="uid://b3lx48q5npvch" path="res://data/job_classes/66-scout-job.tres" id="1_is46w"]
+[ext_resource type="RoseSkill" uid="uid://c81ycqbxkjt72" path="res://data/skills/1401-bow-mastery/1401-bow-mastery.tres" id="2_nhnkt"]
+[ext_resource type="RoseSkill" uid="uid://85j4v45g5irf" path="res://data/skills/1581-trap-shot/1581-trap-shot.tres" id="3_ua7da"]
+[ext_resource type="RoseStatusEffect" uid="uid://li5357w0ovgx" path="res://data/status_effects/10-poisoned-4.tres" id="4_2wi2m"]
+
+[resource]
+id = 1621
+name = "Poison Arrow"
+description = "Shoot an arrow that will inflict the Poisoned status on an enemy."
+skill_type = "FireBullet"
+page = 1
+icon_number = 123
+learn_point_cost = 30
+required_job_class = ExtResource("1_is46w")
+required_skill_1 = ExtResource("2_nhnkt")
+required_skill_1_level = 10
+required_skill_2 = ExtResource("3_ua7da")
+required_skill_2_level = 5
+required_item_class_1 = "Bow"
+required_item_class_2 = "Crossbow"
+use_stat_1 = "Mana"
+use_stat_1_value = 30
+cooldown_ms = 6000
+target_filter = "Enemy"
+action_mode = "Attack"
+damage_type = "WeaponAttack"
+power = 60
+harm = 1
+item_make_number = 60
+success_ratio = 70
+status_effect_1 = ExtResource("4_2wi2m")
+status_effect_seconds = 12
+casting_motion_id = 95
+casting_repeat_motion_id = 96
+casting_effect_1 = 1068
+casting_effect_1_point = 1
+action_motion_id = 97
+bullet_effect_id = 271
+bullet_point = 1
+bullet_fire_sound_id = 148
+hit_effect_file_id = 1067
+hit_sound_id = 67

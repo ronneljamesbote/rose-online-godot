@@ -68,7 +68,7 @@ levels:
   cost: MP 200
   cooldown: 9.6
 source:
-  data: LIST_SKILL.STB rows 1711, 1712, 1713, 1714, 1715, 1716, 1717, 1718, 1719, 1720
+  data: godot/data/skills/1711-call-hawk/ (levels 1711, 1712, 1713, 1714, 1715, 1716, 1717, 1718, 1719, 1720)
   code: module/src/skills.rs
 ---
 # Call Hawk

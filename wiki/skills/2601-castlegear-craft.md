@@ -64,7 +64,7 @@ levels:
   cost: MP 280
   power: 22
 source:
-  data: LIST_SKILL.STB rows 2601, 2602, 2603, 2604, 2605, 2606, 2607, 2608, 2609, 2610
+  data: godot/data/skills/2601-castlegear-craft/ (levels 2601, 2602, 2603, 2604, 2605, 2606, 2607, 2608, 2609, 2610)
   code: module/src/skills.rs
 ---
 # CastleGear Craft

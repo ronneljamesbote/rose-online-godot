@@ -1,0 +1,28 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://oebibt2q23mj"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://0p3o4l6jqxs5" path="res://data/status_effects/21-def-down.tres" id="1_6t1lt"]
+
+[resource]
+id = 3011
+skill_type = "SelfDamage"
+icon_number = 84
+target_filter = "Enemy"
+scope = 1000
+action_mode = "Restore"
+damage_type = "WeaponAttack"
+power = 45
+item_make_number = 45
+success_ratio = 25
+status_effect_1 = ExtResource("1_6t1lt")
+status_effect_seconds = 20
+add_stat_1 = "Defence"
+add_stat_1_value = 20
+add_stat_1_rate = 20
+warp_zone = 19
+warp_x = 20000
+warp_y = 20000
+casting_motion_id = 8
+casting_effect_3 = 1320
+casting_effect_4 = 1315
+action_motion_id = 9
+hit_effect_file_id = 1310

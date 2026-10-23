@@ -19,7 +19,7 @@ levels:
   cost: MP 50
   power: 42
 source:
-  data: LIST_SKILL.STB rows 2631
+  data: godot/data/skills/2631-item-refining/ (levels 2631)
   code: module/src/skills.rs
 ---
 # Item Refining

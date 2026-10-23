@@ -1,0 +1,52 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://b3ah3qtar5pgs"]
+
+[ext_resource type="RoseSkill" uid="uid://cctctgoq3grrx" path="res://data/skills/801-staff-mastery/801-staff-mastery.tres" id="1_083wf"]
+[ext_resource type="RoseStatusEffect" uid="uid://0p3o4l6jqxs5" path="res://data/status_effects/21-def-down.tres" id="2_kwd1a"]
+[ext_resource type="RoseStatusEffect" uid="uid://dbi4ro2cc5h50" path="res://data/status_effects/23-magic-resistance-down.tres" id="3_wdvrn"]
+
+[resource]
+id = 908
+name = "Mana Spear"
+description = "Shoot a Mana Spear at a target from a distance. Decrease target's Defense and Magic Resistance at the same time."
+base_skill_id = 901
+level = 8
+skill_type = "FireBullet"
+page = 1
+icon_number = 67
+learn_point_cost = 45
+required_planet = 2760
+required_skill_1 = ExtResource("1_083wf")
+required_skill_1_level = 14
+required_item_class_1 = "MagicStaff"
+required_item_class_2 = "MagicWand"
+use_stat_1 = "Mana"
+use_stat_1_value = 48
+cooldown_ms = 6400
+target_filter = "Enemy"
+cast_range = 2760
+action_mode = "Restore"
+damage_type = "MagicAttack"
+power = 135
+harm = 1
+item_make_number = 135
+success_ratio = 26
+status_effect_1 = ExtResource("2_kwd1a")
+status_effect_2 = ExtResource("3_wdvrn")
+status_effect_seconds = 20
+add_stat_1 = "Defence"
+add_stat_1_rate = 30
+add_stat_2 = "Resistance"
+add_stat_2_rate = 30
+warp_zone = 19
+warp_y = 30000
+casting_motion_id = 101
+casting_repeat_motion_id = 102
+casting_effect_1 = 1801
+casting_effect_2 = 1811
+casting_effect_2_point = 1
+action_motion_id = 103
+bullet_effect_id = 261
+bullet_point = 1
+bullet_fire_sound_id = 90
+hit_effect_file_id = 1121
+hit_sound_id = 67

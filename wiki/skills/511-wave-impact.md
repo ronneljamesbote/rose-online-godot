@@ -85,7 +85,7 @@ levels:
   area: 8
   cooldown: 19.4
 source:
-  data: LIST_SKILL.STB rows 511, 512, 513, 514, 515, 516, 517, 518, 519, 520
+  data: godot/data/skills/511-wave-impact/ (levels 511, 512, 513, 514, 515, 516, 517, 518, 519, 520)
   code: module/src/skills.rs
 ---
 # Wave Impact

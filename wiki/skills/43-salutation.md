@@ -17,7 +17,7 @@ levels:
   learn_points: 0
   cooldown: 3
 source:
-  data: LIST_SKILL.STB rows 43
+  data: godot/data/skills/43-salutation/ (levels 43)
   code: module/src/skills.rs
 ---
 # Salutation

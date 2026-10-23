@@ -1,0 +1,24 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://4n7h7w7gumeh"]
+
+[ext_resource type="RoseMonster" uid="uid://dmno1g4ee67qh" path="res://data/monsters/816-butterfly.tres" id="1_xiut3"]
+
+[resource]
+id = 1156
+name = "Call Butterfly"
+description = "Summon a magic butterfly to confuse nearby enemies."
+base_skill_id = 1151
+level = 6
+skill_type = "SummonPet"
+page = 1
+icon_number = 76
+learn_point_cost = 24
+use_stat_1 = "Mana"
+use_stat_1_value = 60
+cooldown_ms = 13000
+summon_monster = ExtResource("1_xiut3")
+casting_motion_id = 118
+casting_repeat_motion_id = 138
+action_motion_id = 155
+bullet_effect_id = 221
+bullet_point = 3
+bullet_fire_sound_id = 90

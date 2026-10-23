@@ -1,0 +1,28 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://bdf8vhyb6osco"]
+
+[ext_resource type="RoseSkill" uid="uid://cctctgoq3grrx" path="res://data/skills/801-staff-mastery/801-staff-mastery.tres" id="1_5jyv0"]
+[ext_resource type="RoseMonster" uid="uid://cdql5flcs1bxt" path="res://data/monsters/842-elemental.tres" id="2_dfnbo"]
+
+[resource]
+id = 1182
+name = "Call Elemental"
+description = "Summon an Elemental."
+base_skill_id = 1181
+level = 2
+skill_type = "SummonPet"
+page = 1
+icon_number = 204
+learn_point_cost = 40
+required_skill_1 = ExtResource("1_5jyv0")
+required_skill_1_level = 16
+use_stat_1 = "Mana"
+use_stat_1_value = 420
+cooldown_ms = 10600
+action_mode = "Restore"
+summon_monster = ExtResource("2_dfnbo")
+casting_motion_id = 118
+casting_repeat_motion_id = 138
+action_motion_id = 155
+bullet_effect_id = 221
+bullet_point = 3
+bullet_fire_sound_id = 90

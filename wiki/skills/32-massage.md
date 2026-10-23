@@ -18,7 +18,7 @@ levels:
   range: 1
   changes: HP +100
 source:
-  data: LIST_SKILL.STB rows 32
+  data: godot/data/skills/32-massage/ (levels 32)
   code: module/src/skills.rs
 ---
 # Massage

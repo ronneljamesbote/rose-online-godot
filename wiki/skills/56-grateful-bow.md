@@ -14,7 +14,7 @@ levels:
   learn_points: 0
   cooldown: 3
 source:
-  data: LIST_SKILL.STB rows 56
+  data: godot/data/skills/56-grateful-bow/ (levels 56)
   code: module/src/skills.rs
 ---
 # Grateful Bow

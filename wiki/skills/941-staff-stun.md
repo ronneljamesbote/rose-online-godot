@@ -114,7 +114,7 @@ levels:
   success: 67
   effects: Fainted
 source:
-  data: LIST_SKILL.STB rows 941, 942, 943, 944, 945, 946, 947, 948, 949, 950
+  data: godot/data/skills/941-staff-stun/ (levels 941, 942, 943, 944, 945, 946, 947, 948, 949, 950)
   code: module/src/skills.rs
 ---
 # Staff Stun

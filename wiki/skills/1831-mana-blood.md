@@ -82,7 +82,7 @@ levels:
   cooldown: 16
   changes: MP +380
 source:
-  data: LIST_SKILL.STB rows 1831, 1832, 1833, 1834, 1835, 1836, 1837, 1838, 1839, 1840
+  data: godot/data/skills/1831-mana-blood/ (levels 1831, 1832, 1833, 1834, 1835, 1836, 1837, 1838, 1839, 1840)
   code: module/src/skills.rs
 ---
 # Mana Blood

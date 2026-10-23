@@ -97,7 +97,7 @@ levels:
   success: 25
   effects: Fainted
 source:
-  data: LIST_SKILL.STB rows 2281, 2282, 2283, 2284, 2285, 2286, 2287, 2288, 2289, 2290
+  data: godot/data/skills/2281-gun-smash/ (levels 2281, 2282, 2283, 2284, 2285, 2286, 2287, 2288, 2289, 2290)
   code: module/src/skills.rs
 ---
 # Gun Smash

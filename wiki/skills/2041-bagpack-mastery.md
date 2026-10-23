@@ -62,7 +62,7 @@ levels:
   learn_points: 36
   changes: Bagpack Capacity +1000
 source:
-  data: LIST_SKILL.STB rows 2041, 2042, 2043, 2044, 2045, 2046, 2047, 2048, 2049, 2050
+  data: godot/data/skills/2041-bagpack-mastery/ (levels 2041, 2042, 2043, 2044, 2045, 2046, 2047, 2048, 2049, 2050)
   code: module/src/skills.rs
 ---
 # Bagpack Mastery

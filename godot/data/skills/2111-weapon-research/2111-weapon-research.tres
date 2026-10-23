@@ -1,0 +1,22 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://ctq7gwp4wpf0k"]
+
+[ext_resource type="RoseJobClass" uid="uid://coim5bc7gydpp" path="res://data/job_classes/44-dealer-job.tres" id="1_gympg"]
+[ext_resource type="RoseSkill" uid="uid://dujuvqd1tsy3v" path="res://data/skills/2081-craft-mastery/2081-craft-mastery.tres" id="2_rpom0"]
+
+[resource]
+id = 2111
+name = "Weapon Research"
+description = "Allows its user to learn weapon crafting skills. Increase Concentration."
+skill_type = "Passive"
+page = 2
+icon_number = 147
+learn_point_cost = 10
+required_job_class = ExtResource("1_gympg")
+required_skill_1 = ExtResource("2_rpom0")
+required_skill_1_level = 1
+required_stat_1 = "Level"
+required_stat_1_value = 20
+add_stat_1 = "Concentration"
+add_stat_1_value = 1
+warp_zone = 13
+warp_x = 1000

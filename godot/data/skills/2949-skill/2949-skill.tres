@@ -1,0 +1,34 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://sayifdq6qr1a"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://culcqkn47b52" path="res://data/status_effects/16-haste-attack.tres" id="1_qp8ux"]
+[ext_resource type="RoseStatusEffect" uid="uid://d3dno04hk6nkl" path="res://data/status_effects/25-atk-accuracy-down.tres" id="2_gvwmw"]
+
+[resource]
+id = 2949
+skill_type = "TargetBoundDuration"
+icon_number = 84
+required_planet = 3000
+target_filter = "Enemy"
+cast_range = 3000
+action_mode = "Restore"
+success_ratio = 100
+status_effect_1 = ExtResource("1_qp8ux")
+status_effect_2 = ExtResource("2_gvwmw")
+status_effect_seconds = 30
+add_stat_1 = "AttackSpeed"
+add_stat_1_value = 20
+add_stat_1_rate = 5
+add_stat_2 = "Hit"
+add_stat_2_value = 20
+add_stat_2_rate = 20
+warp_zone = 24
+warp_x = 20000
+warp_y = 5000
+casting_motion_id = 6
+casting_effect_2 = 210
+casting_effect_2_point = 3
+casting_effect_3 = 212
+casting_effect_3_point = 1
+action_motion_id = 7
+bullet_effect_id = 252
+bullet_fire_sound_id = 133

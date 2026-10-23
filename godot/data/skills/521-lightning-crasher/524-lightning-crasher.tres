@@ -1,0 +1,42 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://bj4f47my6x1qj"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://bq4n0ny64hflq" path="res://data/status_effects/32-fainted.tres" id="1_dmj2d"]
+
+[resource]
+id = 524
+name = "Lightning Crasher"
+description = "Deliver multiple blows after confusing the target. "
+base_skill_id = 521
+level = 4
+skill_type = "Immediate"
+page = 1
+icon_number = 48
+learn_point_cost = 48
+required_item_class_1 = "OneHandedSword"
+required_item_class_2 = "OneHandedBlunt"
+required_item_class_3 = "TwoHandedSword"
+required_item_class_4 = "Spear"
+required_item_class_5 = "TwoHandedAxe"
+use_stat_1 = "Mana"
+use_stat_1_value = 62
+cooldown_ms = 8600
+target_filter = "Enemy"
+action_mode = "Attack"
+damage_type = "WeaponAttack"
+power = 165
+harm = 1
+item_make_number = 165
+success_ratio = 56
+status_effect_1 = ExtResource("1_dmj2d")
+status_effect_seconds = 4
+casting_motion_id = 111
+casting_motion_speed = 190
+casting_repeat_motion_id = 131
+casting_effect_1 = 1031
+action_motion_id = 177
+hit_effect_file_id = 1067
+hit_sound_id = 141
+hit_dummy_effect_1 = 1001
+hit_dummy_sound_1 = 67
+hit_dummy_effect_2 = 1001
+hit_dummy_sound_2 = 67

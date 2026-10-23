@@ -21,7 +21,7 @@ levels:
   learn_points: 0
   cooldown: 3
 source:
-  data: LIST_SKILL.STB rows 50
+  data: godot/data/skills/50-applause/ (levels 50)
   code: module/src/skills.rs
 ---
 # Applause

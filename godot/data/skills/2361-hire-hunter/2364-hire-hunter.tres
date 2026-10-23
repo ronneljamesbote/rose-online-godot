@@ -1,0 +1,25 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://kra8rs8d157v"]
+
+[ext_resource type="RoseMonster" uid="uid://by65vnkyx23f0" path="res://data/monsters/864-mercenary-hunter.tres" id="1_7j14o"]
+
+[resource]
+id = 2364
+name = "Hire Hunter"
+description = "Use Zulie to summon a Hunter that specializes in long distance attacks."
+base_skill_id = 2361
+level = 4
+skill_type = "SummonPet"
+page = 1
+icon_number = 182
+learn_point_cost = 36
+use_stat_1 = "Money"
+use_stat_1_value = 230
+cooldown_ms = 6000
+action_mode = "Restore"
+summon_monster = ExtResource("1_7j14o")
+casting_motion_id = 118
+casting_repeat_motion_id = 138
+action_motion_id = 155
+bullet_effect_id = 221
+bullet_point = 3
+bullet_fire_sound_id = 90

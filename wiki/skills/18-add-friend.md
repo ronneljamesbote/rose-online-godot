@@ -14,7 +14,7 @@ levels:
   learn_points: 0
   range: 0.1
 source:
-  data: LIST_SKILL.STB rows 18
+  data: godot/data/skills/18-add-friend/ (levels 18)
   code: module/src/skills.rs
 ---
 # Add Friend

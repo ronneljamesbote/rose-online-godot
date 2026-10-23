@@ -84,7 +84,7 @@ levels:
   power: 110
   cooldown: 6
 source:
-  data: LIST_SKILL.STB rows 1501, 1502, 1503, 1504, 1505, 1506, 1507, 1508, 1509, 1510
+  data: godot/data/skills/1501-power-attack/ (levels 1501, 1502, 1503, 1504, 1505, 1506, 1507, 1508, 1509, 1510)
   code: module/src/skills.rs
 ---
 # Power Attack

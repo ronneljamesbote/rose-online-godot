@@ -1,0 +1,40 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://cksr2jnejaoax"]
+
+[ext_resource type="RoseSkill" uid="uid://c1jo3kmtc4sp8" path="res://data/skills/3221-skill/3221-skill.tres" id="1_i3cgn"]
+[ext_resource type="RoseStatusEffect" uid="uid://urqs1ot2ioov" path="res://data/status_effects/20-def-up.tres" id="2_f06eu"]
+[ext_resource type="RoseStatusEffect" uid="uid://yailie1lhx3" path="res://data/status_effects/22-magic-resistance-up.tres" id="3_rswou"]
+
+[resource]
+id = 3211
+skill_type = "SelfBoundDuration"
+icon_number = 68
+required_skill_1 = ExtResource("1_i3cgn")
+required_skill_1_level = 1
+use_stat_1 = "Stamina"
+use_stat_1_value = 1
+cooldown_ms = 2800
+success_ratio = 200
+status_effect_1 = ExtResource("2_f06eu")
+status_effect_2 = ExtResource("3_rswou")
+status_effect_seconds = 300
+add_stat_1 = "Defence"
+add_stat_1_value = 500
+add_stat_2 = "Resistance"
+add_stat_2_value = 500
+warp_zone = 19
+warp_x = 500000
+casting_motion_id = 112
+casting_repeat_motion_id = 132
+casting_effect_1 = 1752
+casting_effect_1_point = 1
+casting_effect_2 = 1761
+casting_effect_2_point = 1
+casting_effect_3 = 1769
+casting_effect_3_point = 0
+casting_effect_4 = 1
+action_motion_id = 151
+bullet_effect_id = 221
+bullet_point = 3
+bullet_fire_sound_id = 90
+hit_effect_file_id = 1501
+hit_sound_id = 141

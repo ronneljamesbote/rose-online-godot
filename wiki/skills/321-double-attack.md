@@ -154,7 +154,7 @@ levels:
   effects: Dodge Rate Down
   changes: Dodge Rate -40 -20%
 source:
-  data: LIST_SKILL.STB rows 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340
+  data: godot/data/skills/321-double-attack/ (levels 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340)
   code: module/src/skills.rs
 ---
 # Double Attack

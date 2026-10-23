@@ -124,7 +124,7 @@ levels:
   effects: Slow, Slow Attack
   changes: Movement Speed -53%, Attack Speed -50%
 source:
-  data: LIST_SKILL.STB rows 1581, 1582, 1583, 1584, 1585, 1586, 1587, 1588, 1589, 1590
+  data: godot/data/skills/1581-trap-shot/ (levels 1581, 1582, 1583, 1584, 1585, 1586, 1587, 1588, 1589, 1590)
   code: module/src/skills.rs
 ---
 # Trap Shot

@@ -103,7 +103,7 @@ levels:
   cost: MP 120
   power: 13
 source:
-  data: LIST_SKILL.STB rows 2471, 2472, 2473, 2474, 2475, 2476, 2477, 2478, 2479, 2480, 2481, 2482, 2483, 2484, 2485
+  data: godot/data/skills/2471-bow-craft/ (levels 2471, 2472, 2473, 2474, 2475, 2476, 2477, 2478, 2479, 2480, 2481, 2482, 2483, 2484, 2485)
   code: module/src/skills.rs
 ---
 # Bow Craft

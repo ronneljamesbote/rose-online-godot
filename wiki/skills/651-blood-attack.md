@@ -90,7 +90,7 @@ levels:
   cooldown: 10
   changes: HP +370
 source:
-  data: LIST_SKILL.STB rows 651, 652, 653, 654, 655, 656, 657, 658, 659, 660
+  data: godot/data/skills/651-blood-attack/ (levels 651, 652, 653, 654, 655, 656, 657, 658, 659, 660)
   code: module/src/skills.rs
 ---
 # Blood Attack

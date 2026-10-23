@@ -103,7 +103,7 @@ levels:
   effects: Haste Attack
   changes: Attack Speed +66
 source:
-  data: LIST_SKILL.STB rows 1681, 1682, 1683, 1684, 1685, 1686, 1687, 1688, 1689, 1690
+  data: godot/data/skills/1681-speed-shot/ (levels 1681, 1682, 1683, 1684, 1685, 1686, 1687, 1688, 1689, 1690)
   code: module/src/skills.rs
 ---
 # Speed Shot

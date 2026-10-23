@@ -93,7 +93,7 @@ levels:
   area: 15.7
   cooldown: 19.6
 source:
-  data: LIST_SKILL.STB rows 2301, 2302, 2303, 2304, 2305, 2306, 2307, 2308, 2309, 2310
+  data: godot/data/skills/2301-zulie-storm/ (levels 2301, 2302, 2303, 2304, 2305, 2306, 2307, 2308, 2309, 2310)
   code: module/src/skills.rs
 ---
 # Zulie Storm

@@ -1,0 +1,47 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://dyf7i5swqjgas"]
+
+[ext_resource type="RoseSkill" uid="uid://codmreajjlkwc" path="res://data/skills/841-spell-mastery/841-spell-mastery.tres" id="1_05bna"]
+[ext_resource type="RoseStatusEffect" uid="uid://5tgxw104x2b6" path="res://data/status_effects/19-atk-power-down.tres" id="2_t4378"]
+
+[resource]
+id = 1035
+name = "Weaken"
+description = "Decrease the Attack Power of a target."
+base_skill_id = 1031
+level = 5
+skill_type = "TargetBoundDuration"
+page = 1
+icon_number = 205
+learn_point_cost = 27
+required_planet = 2400
+required_skill_1 = ExtResource("1_05bna")
+required_skill_1_level = 10
+use_stat_1 = "Mana"
+use_stat_1_value = 42
+cooldown_ms = 8000
+target_filter = "Enemy"
+cast_range = 2400
+harm = 1
+success_ratio = 62
+status_effect_1 = ExtResource("2_t4378")
+status_effect_seconds = 30
+add_stat_1 = "Attack"
+add_stat_1_rate = 28
+warp_zone = 18
+warp_y = 28000
+casting_motion_id = 113
+casting_repeat_motion_id = 133
+casting_effect_1 = 1753
+casting_effect_1_point = 1
+casting_effect_2 = 1762
+casting_effect_2_point = 1
+casting_effect_3 = 1770
+casting_effect_3_point = 0
+casting_effect_4 = 1770
+casting_effect_4_point = 1
+action_motion_id = 152
+bullet_effect_id = 221
+bullet_point = 3
+bullet_fire_sound_id = 90
+hit_effect_file_id = 1501
+hit_sound_id = 170

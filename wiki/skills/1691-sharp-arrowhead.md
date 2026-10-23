@@ -103,7 +103,7 @@ levels:
   effects: Atk Power Increased
   changes: Attack Power +63
 source:
-  data: LIST_SKILL.STB rows 1691, 1692, 1693, 1694, 1695, 1696, 1697, 1698, 1699, 1700
+  data: godot/data/skills/1691-sharp-arrowhead/ (levels 1691, 1692, 1693, 1694, 1695, 1696, 1697, 1698, 1699, 1700)
   code: module/src/skills.rs
 ---
 # Sharp Arrowhead

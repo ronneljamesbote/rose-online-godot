@@ -10,8 +10,9 @@ pub struct StatusEffectId(NonZeroU16);
 
 id_wrapper_impl!(StatusEffectId, NonZeroU16, u16);
 
-#[derive(Copy, Clone, Debug, Enum, Serialize, Deserialize)]
+#[derive(Copy, Clone, Debug, Default, PartialEq, Eq, Enum, Serialize, Deserialize)]
 pub enum StatusEffectType {
+    #[default]
     IncreaseHp,
     IncreaseMp,
     Poisoned,
@@ -90,9 +91,10 @@ impl StatusEffectType {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Copy, Clone, Debug, Default, PartialEq, Eq, Enum, Serialize, Deserialize)]
 pub enum StatusEffectClearedByType {
     // This status effect is cleared by ClearGood
+    #[default]
     ClearGood,
 
     // This status effect is cleared by ClearBad
@@ -120,6 +122,9 @@ pub struct StatusEffectData {
 
 pub struct StatusEffectDatabase {
     _string_database: Arc<StringDatabase>,
+    /// The texts the status effects point into when they don't come from the string
+    /// database (the data export, see `with_text`).
+    _text: Vec<String>,
     status_effects: HashMap<u16, StatusEffectData>,
     decrease_summon_life_status_effect_id: StatusEffectId,
 }
@@ -132,9 +137,22 @@ impl StatusEffectDatabase {
     ) -> Self {
         Self {
             _string_database: string_database,
+            _text: Vec::new(),
             status_effects,
             decrease_summon_life_status_effect_id,
         }
+    }
+
+    /// Keeps `text` alive as long as the database: the status effects' `&'static str` texts
+    /// may point into it.
+    pub fn with_text(mut self, text: Vec<String>) -> Self {
+        self._text = text;
+        self
+    }
+
+    /// Every status effect, in no particular order.
+    pub fn iter(&self) -> impl Iterator<Item = &StatusEffectData> {
+        self.status_effects.values()
     }
 
     pub fn get_status_effect(&self, id: StatusEffectId) -> Option<&StatusEffectData> {

@@ -1,0 +1,42 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://w1d4qlikqmvj"]
+
+[ext_resource type="RoseSkill" uid="uid://codmreajjlkwc" path="res://data/skills/841-spell-mastery/841-spell-mastery.tres" id="1_c3mf5"]
+[ext_resource type="RoseStatusEffect" uid="uid://c43fk10odrqq2" path="res://data/status_effects/15-slow.tres" id="2_bssnd"]
+
+[resource]
+id = 1004
+name = "Freeze"
+description = "Decrease the Movement Speed of a target for skill's duration."
+base_skill_id = 1001
+level = 4
+skill_type = "TargetBoundDuration"
+page = 1
+icon_number = 202
+learn_point_cost = 38
+required_planet = 2650
+required_skill_1 = ExtResource("1_c3mf5")
+required_skill_1_level = 16
+use_stat_1 = "Mana"
+use_stat_1_value = 39
+cooldown_ms = 8000
+target_filter = "Enemy"
+cast_range = 2650
+action_mode = "Restore"
+harm = 1
+success_ratio = 69
+status_effect_1 = ExtResource("2_bssnd")
+status_effect_seconds = 26
+add_stat_1 = "Speed"
+add_stat_1_rate = 65
+warp_zone = 23
+warp_y = 65000
+casting_motion_id = 101
+casting_repeat_motion_id = 102
+casting_effect_1 = 1801
+casting_effect_2 = 1811
+casting_effect_2_point = 1
+action_motion_id = 103
+bullet_effect_id = 262
+bullet_point = 1
+bullet_fire_sound_id = 90
+hit_effect_file_id = 1123

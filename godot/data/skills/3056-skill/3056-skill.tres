@@ -1,0 +1,27 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://de7wx5pcop0cl"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://dv6tggly8x16s" path="res://data/status_effects/30-muting.tres" id="1_kbdiq"]
+
+[resource]
+id = 3056
+skill_type = "SelfDamage"
+icon_number = 93
+target_filter = "Enemy"
+scope = 2000
+action_mode = "Restore"
+damage_type = "MagicAttack"
+power = 120
+item_make_number = 120
+success_ratio = 40
+status_effect_1 = ExtResource("1_kbdiq")
+status_effect_seconds = 15
+add_stat_1 = "Health"
+add_stat_1_rate = 40
+warp_zone = 16
+warp_y = 40000
+casting_motion_id = 8
+casting_effect_1 = 389
+casting_effect_3 = 1320
+casting_effect_4 = 1319
+action_motion_id = 9
+hit_effect_file_id = 1310

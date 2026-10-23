@@ -1,0 +1,49 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://bip6kpv4xyhn6"]
+
+[ext_resource type="RoseJobClass" uid="uid://dwxgadb8sumfe" path="res://data/job_classes/62-champion-job.tres" id="1_4h65j"]
+[ext_resource type="RoseSkill" uid="uid://sckha04qy41b" path="res://data/skills/291-spiritual-training/291-spiritual-training.tres" id="2_v3dy3"]
+
+[resource]
+id = 656
+name = "Blood Attack"
+description = "Special attack in which its user regains an amount of HP calculated by the amount of damage inflicted on a nearby enemy. Only Champions can upgrade this skill above Level 6."
+base_skill_id = 651
+level = 6
+skill_type = "SelfAndTarget"
+page = 1
+icon_number = 56
+learn_point_cost = 51
+required_job_class = ExtResource("1_4h65j")
+required_skill_1 = ExtResource("2_v3dy3")
+required_skill_1_level = 10
+required_item_class_1 = "OneHandedSword"
+required_item_class_2 = "OneHandedBlunt"
+required_item_class_3 = "TwoHandedSword"
+required_item_class_4 = "Spear"
+required_item_class_5 = "TwoHandedAxe"
+use_stat_1 = "Mana"
+use_stat_1_value = 56
+cooldown_ms = 10000
+target_filter = "Enemy"
+action_mode = "Attack"
+damage_type = "WeaponAttack"
+power = 115
+harm = 1
+item_make_number = 115
+add_stat_1 = "Health"
+add_stat_1_value = 230
+warp_zone = 16
+warp_x = 230000
+casting_motion_id = 111
+casting_repeat_motion_id = 131
+casting_effect_1 = 1041
+casting_effect_1_point = 3
+casting_effect_2 = 1042
+casting_effect_2_point = 3
+casting_effect_3 = 1601
+casting_effect_3_point = 3
+action_motion_id = 175
+action_motion_speed = 175
+hit_effect_file_id = 1602
+hit_effect_point = 3
+hit_sound_id = 142

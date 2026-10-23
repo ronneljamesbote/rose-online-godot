@@ -1,0 +1,42 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://bxgtcmxvf17ns"]
+
+[ext_resource type="RoseJobClass" uid="uid://wxui6m5s8xot" path="res://data/job_classes/63-mage-job.tres" id="1_chvv4"]
+[ext_resource type="RoseSkill" uid="uid://cctctgoq3grrx" path="res://data/skills/801-staff-mastery/801-staff-mastery.tres" id="2_0uc47"]
+[ext_resource type="RoseSkill" uid="uid://hocu3l10vewm" path="res://data/skills/1081-wind-storm/1081-wind-storm.tres" id="3_52tpv"]
+
+[resource]
+id = 1091
+name = "Lunar Stone"
+description = "Summon a meteor from the sky to inflict damage on many foes."
+skill_type = "AreaTarget"
+page = 1
+icon_number = 99
+learn_point_cost = 40
+required_job_class = ExtResource("1_chvv4")
+required_planet = 2000
+required_skill_1 = ExtResource("2_0uc47")
+required_skill_1_level = 20
+required_skill_2 = ExtResource("3_52tpv")
+required_skill_2_level = 8
+required_item_class_1 = "MagicStaff"
+required_item_class_2 = "MagicWand"
+use_stat_1 = "Mana"
+use_stat_1_value = 120
+cooldown_ms = 20000
+target_filter = "Enemy"
+cast_range = 2000
+scope = 1200
+damage_type = "MagicAttack"
+power = 160
+harm = 1
+item_make_number = 160
+casting_motion_id = 117
+casting_repeat_motion_id = 137
+casting_effect_1 = 1754
+casting_effect_2 = 1763
+casting_effect_2_point = 3
+action_motion_id = 154
+bullet_effect_id = 265
+bullet_fire_sound_id = 1574
+hit_effect_file_id = 1124
+hit_sound_id = 1574

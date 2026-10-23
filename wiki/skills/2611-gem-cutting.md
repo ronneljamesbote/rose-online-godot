@@ -52,7 +52,7 @@ levels:
   cost: MP 220
   power: 35
 source:
-  data: LIST_SKILL.STB rows 2611, 2612, 2613, 2614, 2615, 2616, 2617
+  data: godot/data/skills/2611-gem-cutting/ (levels 2611, 2612, 2613, 2614, 2615, 2616, 2617)
   code: module/src/skills.rs
 ---
 # Gem Cutting

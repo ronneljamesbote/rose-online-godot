@@ -64,7 +64,7 @@ levels:
   cost: MP 76
   cooldown: 13.8
 source:
-  data: LIST_SKILL.STB rows 1151, 1152, 1153, 1154, 1155, 1156, 1157, 1158, 1159, 1160
+  data: godot/data/skills/1151-call-butterfly/ (levels 1151, 1152, 1153, 1154, 1155, 1156, 1157, 1158, 1159, 1160)
   code: module/src/skills.rs
 ---
 # Call Butterfly

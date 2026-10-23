@@ -1,0 +1,38 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://c7fs2ttd3s8td"]
+
+[ext_resource type="RoseJobClass" uid="uid://dfvt5fdun3qji" path="res://data/job_classes/41-soldier-job.tres" id="1_2g5qv"]
+[ext_resource type="RoseSkill" uid="uid://sckha04qy41b" path="res://data/skills/291-spiritual-training/291-spiritual-training.tres" id="2_tftf1"]
+
+[resource]
+id = 401
+name = "Spin Attack"
+description = "Enables its user to spin and attack at the same time when equipping a Two-Handed Weapon. Also does splashed damage to nearby enemies."
+skill_type = "SelfDamage"
+page = 1
+icon_number = 40
+learn_point_cost = 20
+required_job_class = ExtResource("1_2g5qv")
+required_skill_1 = ExtResource("2_tftf1")
+required_skill_1_level = 6
+required_item_class_1 = "OneHandedSword"
+required_item_class_2 = "OneHandedBlunt"
+required_item_class_3 = "TwoHandedSword"
+required_item_class_4 = "Spear"
+required_item_class_5 = "TwoHandedAxe"
+use_stat_1 = "Mana"
+use_stat_1_value = 50
+cooldown_ms = 16000
+target_filter = "Enemy"
+scope = 700
+action_mode = "Restore"
+damage_type = "MagicAttack"
+power = 80
+harm = 1
+item_make_number = 80
+casting_motion_id = 115
+casting_repeat_motion_id = 135
+casting_effect_2 = 1764
+casting_effect_3 = 1609
+action_motion_id = 171
+hit_effect_file_id = 1121
+hit_sound_id = 139

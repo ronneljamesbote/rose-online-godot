@@ -69,7 +69,7 @@ levels:
   cost: Money 300
   cooldown: 6
 source:
-  data: LIST_SKILL.STB rows 2361, 2362, 2363, 2364, 2365, 2366, 2367, 2368, 2369, 2370
+  data: godot/data/skills/2361-hire-hunter/ (levels 2361, 2362, 2363, 2364, 2365, 2366, 2367, 2368, 2369, 2370)
   code: module/src/skills.rs
 ---
 # Hire Hunter

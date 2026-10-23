@@ -71,7 +71,7 @@ levels:
   cost: MP 350
   cooldown: 14.4
 source:
-  data: LIST_SKILL.STB rows 1191, 1192, 1193, 1194, 1195, 1196, 1197, 1198, 1199, 1200
+  data: godot/data/skills/1191-call-firegon/ (levels 1191, 1192, 1193, 1194, 1195, 1196, 1197, 1198, 1199, 1200)
   code: module/src/skills.rs
 ---
 # Call Firegon

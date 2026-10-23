@@ -73,7 +73,7 @@ levels:
   cost: MP 100
   cooldown: 13.4
 source:
-  data: LIST_SKILL.STB rows 1161, 1162, 1163, 1164, 1165, 1166, 1167, 1168, 1169, 1170
+  data: godot/data/skills/1161-bonfire/ (levels 1161, 1162, 1163, 1164, 1165, 1166, 1167, 1168, 1169, 1170)
   code: module/src/skills.rs
 ---
 # Bonfire

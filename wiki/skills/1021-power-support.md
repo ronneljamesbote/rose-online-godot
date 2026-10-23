@@ -112,7 +112,7 @@ levels:
   effects: Atk Power Increased
   changes: Attack Power +70
 source:
-  data: LIST_SKILL.STB rows 1021, 1022, 1023, 1024, 1025, 1026, 1027, 1028, 1029, 1030
+  data: godot/data/skills/1021-power-support/ (levels 1021, 1022, 1023, 1024, 1025, 1026, 1027, 1028, 1029, 1030)
   code: module/src/skills.rs
 ---
 # Power Support

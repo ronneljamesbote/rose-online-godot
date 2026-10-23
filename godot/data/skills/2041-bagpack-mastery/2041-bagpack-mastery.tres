@@ -1,0 +1,20 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://dln1jvh41sy0v"]
+
+[ext_resource type="RoseJobClass" uid="uid://coim5bc7gydpp" path="res://data/job_classes/44-dealer-job.tres" id="1_8tfdk"]
+[ext_resource type="RoseSkill" uid="uid://cagy6s3a74urs" path="res://data/skills/2001-market-research/2001-market-research.tres" id="2_fgxun"]
+
+[resource]
+id = 2041
+name = "Bagpack Mastery"
+description = "Increase the number of items which can be carried inside a Bagpack."
+skill_type = "Passive"
+page = 2
+icon_number = 169
+learn_point_cost = 6
+required_job_class = ExtResource("1_8tfdk")
+required_skill_1 = ExtResource("2_fgxun")
+required_skill_1_level = 2
+add_stat_1 = "PassiveWeight"
+add_stat_1_value = 280
+warp_zone = 58
+warp_x = 280000

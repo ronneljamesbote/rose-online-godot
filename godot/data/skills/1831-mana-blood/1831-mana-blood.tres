@@ -1,0 +1,31 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://snetdougy40b"]
+
+[ext_resource type="RoseJobClass" uid="uid://b13utty2fjhr8" path="res://data/job_classes/65-raider-job.tres" id="1_ccpi7"]
+[ext_resource type="RoseSkill" uid="uid://bjn20q7e2j8oo" path="res://data/skills/1461-combat-mastery/1461-combat-mastery.tres" id="2_gtxx0"]
+
+[resource]
+id = 1831
+name = "Mana Blood"
+description = "Regain MP by consuming HP. "
+skill_type = "SelfBound"
+page = 1
+icon_number = 126
+learn_point_cost = 20
+required_job_class = ExtResource("1_ccpi7")
+required_skill_1 = ExtResource("2_gtxx0")
+required_skill_1_level = 11
+use_stat_1 = "Health"
+use_stat_1_value = 100
+cooldown_ms = 24000
+add_stat_1 = "Mana"
+add_stat_1_value = 100
+warp_zone = 17
+warp_x = 100000
+casting_motion_id = 114
+casting_repeat_motion_id = 134
+casting_effect_1 = 1754
+casting_effect_2 = 1763
+casting_effect_2_point = 3
+casting_effect_3 = 1771
+casting_effect_3_point = 3
+action_motion_id = 153

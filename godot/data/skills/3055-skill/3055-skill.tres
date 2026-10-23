@@ -1,0 +1,27 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://df4bk3x6vv3xr"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://dv6tggly8x16s" path="res://data/status_effects/30-muting.tres" id="1_xloom"]
+
+[resource]
+id = 3055
+skill_type = "SelfDamage"
+icon_number = 93
+target_filter = "Enemy"
+scope = 1500
+action_mode = "Restore"
+damage_type = "MagicAttack"
+power = 100
+item_make_number = 100
+success_ratio = 30
+status_effect_1 = ExtResource("1_xloom")
+status_effect_seconds = 10
+add_stat_1 = "Health"
+add_stat_1_rate = 20
+warp_zone = 16
+warp_y = 20000
+casting_motion_id = 8
+casting_effect_1 = 389
+casting_effect_3 = 1320
+casting_effect_4 = 1319
+action_motion_id = 9
+hit_effect_file_id = 1310

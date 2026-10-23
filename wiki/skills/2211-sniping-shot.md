@@ -85,7 +85,7 @@ levels:
   power: 330
   cooldown: 12.8
 source:
-  data: LIST_SKILL.STB rows 2211, 2212, 2213, 2214, 2215, 2216, 2217, 2218, 2219, 2220
+  data: godot/data/skills/2211-sniping-shot/ (levels 2211, 2212, 2213, 2214, 2215, 2216, 2217, 2218, 2219, 2220)
   code: module/src/skills.rs
 ---
 # Sniping Shot

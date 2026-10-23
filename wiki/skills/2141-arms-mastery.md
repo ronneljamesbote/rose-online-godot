@@ -94,7 +94,7 @@ levels:
   learn_points: 62
   changes: Gun Attack Speed +22
 source:
-  data: LIST_SKILL.STB rows 2141, 2142, 2143, 2144, 2145, 2146, 2147, 2148, 2149, 2150, 2151, 2152, 2153, 2154, 2155, 2156, 2157, 2158, 2159, 2160
+  data: godot/data/skills/2141-arms-mastery/ (levels 2141, 2142, 2143, 2144, 2145, 2146, 2147, 2148, 2149, 2150, 2151, 2152, 2153, 2154, 2155, 2156, 2157, 2158, 2159, 2160)
   code: module/src/skills.rs
 ---
 # Arms Mastery

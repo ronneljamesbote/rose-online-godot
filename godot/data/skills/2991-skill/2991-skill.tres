@@ -1,0 +1,25 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://ch3vfja36y4wh"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://85qq2h4wdrv4" path="res://data/status_effects/7-poisoned-1.tres" id="1_obe7n"]
+
+[resource]
+id = 2991
+skill_type = "SelfDamage"
+icon_number = 40
+target_filter = "Enemy"
+scope = 1000
+action_mode = "Restore"
+damage_type = "WeaponAttack"
+power = 5
+harm = 1
+item_make_number = 5
+success_ratio = 200
+status_effect_1 = ExtResource("1_obe7n")
+status_effect_seconds = 15
+casting_motion_id = 115
+casting_repeat_motion_id = 135
+casting_effect_2 = 1764
+casting_effect_3 = 244
+action_motion_id = 172
+hit_effect_file_id = 1121
+hit_sound_id = 139

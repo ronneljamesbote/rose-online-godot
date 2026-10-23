@@ -112,7 +112,7 @@ levels:
   effects: Dash
   changes: Movement Speed +200
 source:
-  data: LIST_SKILL.STB rows 961, 962, 963, 964, 965, 966, 967, 968, 969, 970
+  data: godot/data/skills/961-lesser-haste/ (levels 961, 962, 963, 964, 965, 966, 967, 968, 969, 970)
   code: module/src/skills.rs
 ---
 # Lesser Haste

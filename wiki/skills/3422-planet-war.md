@@ -13,7 +13,7 @@ levels:
   id: 3422
   learn_points: 0
 source:
-  data: LIST_SKILL.STB rows 3422
+  data: godot/data/skills/3422-planet-war/ (levels 3422)
   code: module/src/skills.rs
 ---
 # Planet War

@@ -45,7 +45,9 @@ run it. The Lua 4 VM in `godot/rust/src/lua4` is copied from rose-offline-client
 
 rose-data-export is ours: it reads the game data exported from the Godot resources
 (`overrides/data/`, made in `godot/data/`) into the same rose-data databases rose-data-irose
-fills from the iROSE tables (items, then monsters, NPCs, shop tabs and the drop table rows).
+fills from the iROSE tables (items, then monsters, NPCs, shop tabs and the drop table rows,
+then skills, status effects and job classes; for these the three databases got `with_text`,
+the status effects an `iter`, and the skill enums serde and `Enum`).
 For it, rose-data-irose's NPC loader is split (`get_npc_motions`, `get_npc_conversations`,
 `get_npc_action_map` give the parts the export doesn't hold yet) and rose-game-irose's drop
 table can be built from rows (`get_drop_table_from_rows`, `read_drop_rows`).

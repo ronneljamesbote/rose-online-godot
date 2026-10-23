@@ -1,0 +1,35 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://cwineq0ocor5d"]
+
+[ext_resource type="RoseJobClass" uid="uid://n6tm3jlgaskg" path="res://data/job_classes/43-hawker-job.tres" id="1_4t3r2"]
+[ext_resource type="RoseSkill" uid="uid://bjn20q7e2j8oo" path="res://data/skills/1461-combat-mastery/1461-combat-mastery.tres" id="2_ivqie"]
+[ext_resource type="RoseStatusEffect" uid="uid://bnum8yiigk2jc" path="res://data/status_effects/14-dash.tres" id="3_k1sec"]
+
+[resource]
+id = 1561
+name = "Sprint"
+description = "Increase the caster's Movement Speed for skill's duration."
+skill_type = "SelfBoundDuration"
+page = 1
+icon_number = 108
+learn_point_cost = 10
+required_job_class = ExtResource("1_4t3r2")
+required_skill_1 = ExtResource("2_ivqie")
+required_skill_1_level = 4
+use_stat_1 = "Mana"
+use_stat_1_value = 25
+cooldown_ms = 6000
+action_mode = "Restore"
+status_effect_1 = ExtResource("3_k1sec")
+status_effect_seconds = 150
+add_stat_1 = "Speed"
+add_stat_1_value = 85
+warp_zone = 23
+warp_x = 85000
+casting_motion_id = 114
+casting_repeat_motion_id = 134
+casting_effect_1 = 1754
+casting_effect_2 = 1763
+casting_effect_2_point = 3
+casting_effect_3 = 1771
+casting_effect_3_point = 3
+action_motion_id = 153

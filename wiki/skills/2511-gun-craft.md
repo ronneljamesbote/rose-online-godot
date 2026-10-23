@@ -103,7 +103,7 @@ levels:
   cost: MP 120
   power: 14
 source:
-  data: LIST_SKILL.STB rows 2511, 2512, 2513, 2514, 2515, 2516, 2517, 2518, 2519, 2520, 2521, 2522, 2523, 2524, 2525
+  data: godot/data/skills/2511-gun-craft/ (levels 2511, 2512, 2513, 2514, 2515, 2516, 2517, 2518, 2519, 2520, 2521, 2522, 2523, 2524, 2525)
   code: module/src/skills.rs
 ---
 # Gun Craft

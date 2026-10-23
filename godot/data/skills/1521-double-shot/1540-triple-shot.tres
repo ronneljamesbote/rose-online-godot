@@ -1,0 +1,49 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://dgtxx1l6wkvqq"]
+
+[ext_resource type="RoseSkill" uid="uid://c81ycqbxkjt72" path="res://data/skills/1401-bow-mastery/1401-bow-mastery.tres" id="1_50kll"]
+[ext_resource type="RoseStatusEffect" uid="uid://c43fk10odrqq2" path="res://data/status_effects/15-slow.tres" id="2_wvn6j"]
+
+[resource]
+id = 1540
+name = "Triple Shot"
+description = "Shoot 3 arrows at a target at once."
+base_skill_id = 1521
+level = 20
+skill_type = "Immediate"
+page = 1
+icon_number = 109
+learn_point_cost = 78
+required_skill_1 = ExtResource("1_50kll")
+required_skill_1_level = 20
+required_item_class_1 = "Bow"
+use_stat_1 = "Mana"
+use_stat_1_value = 60
+cooldown_ms = 6200
+target_filter = "Enemy"
+action_mode = "Restore"
+power = 100
+harm = 1
+item_make_number = 100
+success_ratio = 20
+status_effect_1 = ExtResource("2_wvn6j")
+status_effect_seconds = 15
+add_stat_1 = "Speed"
+add_stat_1_rate = 50
+warp_zone = 23
+warp_y = 50000
+casting_motion_id = 111
+casting_motion_speed = 156
+casting_repeat_motion_id = 131
+casting_effect_1 = 1041
+casting_effect_1_point = 3
+action_motion_id = 92
+action_motion_speed = 154
+bullet_effect_id = 151
+bullet_point = 1
+bullet_fire_sound_id = 148
+hit_effect_file_id = 110
+hit_sound_id = 67
+hit_dummy_effect_1 = 151
+hit_dummy_sound_1 = 67
+hit_dummy_effect_2 = 151
+hit_dummy_sound_2 = 67

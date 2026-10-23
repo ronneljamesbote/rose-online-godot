@@ -17,7 +17,7 @@ levels:
   id: 25
   learn_points: 0
 source:
-  data: LIST_SKILL.STB rows 25
+  data: godot/data/skills/25-ride-request/ (levels 25)
   code: module/src/skills.rs
 ---
 # Ride Request

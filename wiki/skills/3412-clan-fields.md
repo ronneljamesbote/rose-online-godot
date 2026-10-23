@@ -13,7 +13,7 @@ levels:
   id: 3412
   learn_points: 0
 source:
-  data: LIST_SKILL.STB rows 3412
+  data: godot/data/skills/3412-clan-fields/ (levels 3412)
   code: module/src/skills.rs
 ---
 # Clan Fields

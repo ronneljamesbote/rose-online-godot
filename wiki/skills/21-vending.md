@@ -16,7 +16,7 @@ levels:
   learn_points: 0
   range: 0.1
 source:
-  data: LIST_SKILL.STB rows 21
+  data: godot/data/skills/21-vending/ (levels 21)
   code: module/src/skills.rs
 ---
 # Vending

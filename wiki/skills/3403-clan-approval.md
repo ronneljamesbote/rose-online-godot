@@ -13,7 +13,7 @@ levels:
   id: 3403
   learn_points: 0
 source:
-  data: LIST_SKILL.STB rows 3403
+  data: godot/data/skills/3403-clan-approval/ (levels 3403)
   code: module/src/skills.rs
 ---
 # Clan Approval

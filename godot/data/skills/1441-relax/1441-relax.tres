@@ -1,0 +1,20 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://dkifnqknypcsv"]
+
+[ext_resource type="RoseJobClass" uid="uid://n6tm3jlgaskg" path="res://data/job_classes/43-hawker-job.tres" id="1_mmc4a"]
+[ext_resource type="RoseSkill" uid="uid://bjn20q7e2j8oo" path="res://data/skills/1461-combat-mastery/1461-combat-mastery.tres" id="2_x3uu3"]
+
+[resource]
+id = 1441
+name = "Relax"
+description = "Increase HP Recovery Rate while resting."
+skill_type = "Passive"
+page = 2
+icon_number = 114
+learn_point_cost = 6
+required_job_class = ExtResource("1_mmc4a")
+required_skill_1 = ExtResource("2_x3uu3")
+required_skill_1_level = 2
+add_stat_1 = "PassiveRecoverHealth"
+add_stat_1_value = 6
+warp_zone = 56
+warp_x = 6000

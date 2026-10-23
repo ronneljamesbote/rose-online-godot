@@ -103,7 +103,7 @@ levels:
   effects: Def Up, Slow
   changes: Defense -160, Movement Speed -130
 source:
-  data: LIST_SKILL.STB rows 421, 422, 423, 424, 425, 426, 427, 428, 429, 430
+  data: godot/data/skills/421-endure/ (levels 421, 422, 423, 424, 425, 426, 427, 428, 429, 430)
   code: module/src/skills.rs
 ---
 # Endure

@@ -33,7 +33,7 @@ source:
     - module/src/character.rs (reward_xp)
     - module/src/skills.rs (resurrect, Resurrection cast)
     - crates/rose-game-irose/src/data/ability_values.rs (levelup_require_xp)
-  data: LIST_ZONE.STB (revive points, planet, PvP state); LIST_SKILL.STB (Resurrection power)
+  data: LIST_ZONE.STB (revive points, planet, PvP state); the Resurrection skill resources in godot/data/skills/1131-resurrection/ (power)
 ---
 # Death and Reviving
 

@@ -1,0 +1,37 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://c7c2cgeev76iv"]
+
+[ext_resource type="RoseSkill" uid="uid://ccdg6jfv38yca" path="res://data/skills/271-crossbow-mastery/271-crossbow-mastery.tres" id="1_kph4g"]
+
+[resource]
+id = 488
+name = "Heavy Bow Shot"
+description = "Crossbow required. By focusing your energy before firing an arrow, you can inflict heavy damage on an enemy."
+base_skill_id = 481
+level = 8
+skill_type = "Immediate"
+page = 1
+icon_number = 58
+learn_point_cost = 46
+required_skill_1 = ExtResource("1_kph4g")
+required_skill_1_level = 8
+required_item_class_1 = "Crossbow"
+use_stat_1 = "Mana"
+use_stat_1_value = 48
+cooldown_ms = 9400
+target_filter = "Enemy"
+action_mode = "Attack"
+damage_type = "WeaponAttack"
+power = 130
+harm = 1
+item_make_number = 130
+casting_motion_id = 95
+casting_repeat_motion_id = 96
+casting_effect_1 = 1068
+casting_effect_1_point = 1
+action_motion_id = 97
+action_motion_speed = 110
+bullet_effect_id = 271
+bullet_point = 1
+bullet_fire_sound_id = 148
+hit_effect_file_id = 1067
+hit_sound_id = 67

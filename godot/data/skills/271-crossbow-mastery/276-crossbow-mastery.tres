@@ -1,0 +1,20 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://621lem18uhvq"]
+
+[ext_resource type="RoseJobClass" uid="uid://5yxauvydlw51" path="res://data/job_classes/61-knight-job.tres" id="1_idqt4"]
+
+[resource]
+id = 276
+name = "Crossbow Mastery"
+description = "Increase Crossbow damage. Only Knights can upgrade this skill above Level 5."
+base_skill_id = 271
+level = 6
+skill_type = "Passive"
+page = 2
+icon_number = 42
+learn_point_cost = 27
+required_job_class = ExtResource("1_idqt4")
+required_item_class_1 = "Crossbow"
+add_stat_1 = "PassiveAttackPowerAutoBow"
+add_stat_1_value = 39
+warp_zone = 47
+warp_x = 39000

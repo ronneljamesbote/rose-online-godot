@@ -1,0 +1,47 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://cqbo3sjht5yte"]
+
+[ext_resource type="RoseJobClass" uid="uid://n6tm3jlgaskg" path="res://data/job_classes/43-hawker-job.tres" id="1_egyd8"]
+[ext_resource type="RoseSkill" uid="uid://bjn20q7e2j8oo" path="res://data/skills/1461-combat-mastery/1461-combat-mastery.tres" id="2_50pdq"]
+[ext_resource type="RoseSkill" uid="uid://dcfmbf1rw1mld" path="res://data/skills/1451-hawker-spirit/1451-hawker-spirit.tres" id="3_mn5kj"]
+[ext_resource type="RoseStatusEffect" uid="uid://dd08udjftntul" path="res://data/status_effects/17-slow-attack.tres" id="4_e3xnf"]
+
+[resource]
+id = 1601
+name = "Heart Hit"
+description = "Shoot a heart shaped spirit sphere at a target from a distance. Inflict damage and decrease target's Attack Speed at the same time."
+skill_type = "FireBullet"
+page = 1
+icon_number = 132
+learn_point_cost = 20
+required_job_class = ExtResource("1_egyd8")
+required_planet = 2200
+required_skill_1 = ExtResource("2_50pdq")
+required_skill_1_level = 7
+required_skill_2 = ExtResource("3_mn5kj")
+required_skill_2_level = 5
+use_stat_1 = "Mana"
+use_stat_1_value = 40
+cooldown_ms = 10000
+target_filter = "Enemy"
+cast_range = 2200
+action_mode = "Restore"
+damage_type = "MagicAttack"
+power = 80
+harm = 1
+item_make_number = 80
+success_ratio = 30
+status_effect_1 = ExtResource("4_e3xnf")
+status_effect_seconds = 15
+add_stat_1 = "AttackSpeed"
+add_stat_1_rate = 30
+warp_zone = 24
+warp_y = 30000
+casting_motion_id = 111
+casting_repeat_motion_id = 131
+casting_effect_1 = 1031
+casting_effect_3 = 1662
+action_motion_id = 216
+bullet_effect_id = 277
+bullet_point = 3
+hit_effect_file_id = 1067
+hit_sound_id = 67

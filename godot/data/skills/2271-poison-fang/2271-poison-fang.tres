@@ -1,0 +1,41 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://d0e5ux8am24lo"]
+
+[ext_resource type="RoseJobClass" uid="uid://coim5bc7gydpp" path="res://data/job_classes/44-dealer-job.tres" id="1_3jy5i"]
+[ext_resource type="RoseSkill" uid="uid://pusmnipniy8s" path="res://data/skills/2141-arms-mastery/2141-arms-mastery.tres" id="2_81qeg"]
+[ext_resource type="RoseStatusEffect" uid="uid://b0pbsbqq15i6i" path="res://data/status_effects/8-poisoned-2.tres" id="3_17xha"]
+
+[resource]
+id = 2271
+name = "Poison Fang"
+description = "Shoot a poisonous bullet at a target to inflict damage and Poisoned status. Enemies near the target will be also poisoned at the same time."
+skill_type = "Immediate"
+page = 1
+icon_number = 197
+learn_point_cost = 15
+required_job_class = ExtResource("1_3jy5i")
+required_skill_1 = ExtResource("2_81qeg")
+required_skill_1_level = 6
+required_item_class_1 = "Gun"
+required_item_class_2 = "Launcher"
+use_stat_1 = "Mana"
+use_stat_1_value = 40
+cooldown_ms = 16000
+target_filter = "Enemy"
+scope = 800
+action_mode = "Restore"
+damage_type = "WeaponAttack"
+power = 80
+item_make_number = 80
+success_ratio = 40
+status_effect_1 = ExtResource("3_17xha")
+status_effect_seconds = 16
+casting_motion_id = 95
+casting_repeat_motion_id = 96
+casting_effect_1 = 1041
+casting_effect_1_point = 3
+action_motion_id = 97
+bullet_effect_id = 262
+bullet_point = 1
+bullet_fire_sound_id = 148
+hit_effect_file_id = 110
+hit_sound_id = 67

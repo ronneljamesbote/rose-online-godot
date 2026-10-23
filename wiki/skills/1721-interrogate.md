@@ -117,7 +117,7 @@ levels:
   success: 104
   effects: Sleep
 source:
-  data: LIST_SKILL.STB rows 1721, 1722, 1723, 1724, 1725, 1726, 1727, 1728, 1729, 1730
+  data: godot/data/skills/1721-interrogate/ (levels 1721, 1722, 1723, 1724, 1725, 1726, 1727, 1728, 1729, 1730)
   code: module/src/skills.rs
 ---
 # Interrogate

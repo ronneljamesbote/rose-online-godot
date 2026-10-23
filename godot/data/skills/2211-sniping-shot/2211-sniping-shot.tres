@@ -1,0 +1,40 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://dtxud0x3sa8aw"]
+
+[ext_resource type="RoseJobClass" uid="uid://coim5bc7gydpp" path="res://data/job_classes/44-dealer-job.tres" id="1_t4ph8"]
+[ext_resource type="RoseSkill" uid="uid://kvqch3j56u15" path="res://data/skills/2021-marksmanship/2021-marksmanship.tres" id="2_wfngq"]
+[ext_resource type="RoseSkill" uid="uid://cp73v7ho4q2xi" path="res://data/skills/2201-mighty-shot/2201-mighty-shot.tres" id="3_7quxk"]
+
+[resource]
+id = 2211
+name = "Sniping Shot"
+description = "Inflict a great amount of damage to a target."
+skill_type = "Immediate"
+page = 1
+icon_number = 219
+learn_point_cost = 35
+required_job_class = ExtResource("1_t4ph8")
+required_skill_1 = ExtResource("2_wfngq")
+required_skill_1_level = 10
+required_skill_2 = ExtResource("3_7quxk")
+required_skill_2_level = 10
+required_stat_1 = "Level"
+required_stat_1_value = 70
+required_item_class_1 = "Gun"
+required_item_class_2 = "Launcher"
+use_stat_1 = "Mana"
+use_stat_1_value = 45
+cooldown_ms = 9200
+target_filter = "Enemy"
+action_mode = "Restore"
+damage_type = "WeaponAttack"
+power = 130
+harm = 1
+item_make_number = 130
+casting_motion_id = 95
+casting_repeat_motion_id = 96
+action_motion_id = 97
+bullet_effect_id = 262
+bullet_point = 1
+bullet_fire_sound_id = 148
+hit_effect_file_id = 110
+hit_sound_id = 67

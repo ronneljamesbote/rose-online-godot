@@ -21,7 +21,7 @@ use rose_data_irose::{
     get_skill_database, get_status_effect_database, get_string_database, get_warp_gate_database,
     get_zone_database,
 };
-use rose_data_export::{npcs::DROP_ROW_COLUMNS, Format, ItemsExport, NpcModels, NpcsExport};
+use rose_data_export::{npcs::DROP_ROW_COLUMNS, Format, ItemsExport, NpcModels, NpcsExport, SkillsExport};
 use rose_file_readers::{stb_column, StbFile, VfsFile, VfsPathBuf, VirtualFilesystem};
 use rose_game_overrides::{MotionTimings, ZoneLayout};
 use glam::Vec3;
@@ -60,7 +60,9 @@ pub fn load_game_data(vfs: &VirtualFilesystem) -> Result<GameData, anyhow::Error
         .context("motion database")?;
     apply_motion_timings(vfs, &mut motions, &mut npcs).context("motion timings")?;
     let npcs = Arc::new(npcs);
-    let skills = Arc::new(get_skill_database(vfs, string_database.clone()).context("skill database")?);
+    let (skills, status_effects, job_class) = load_skills(vfs, string_database.clone()).context("skill database")?;
+    check_summons(&skills, &npcs)?;
+    let skills = Arc::new(skills);
     let mut zones = get_zone_database(vfs, string_database.clone()).context("zone database")?;
     apply_zone_layouts(vfs, &mut zones).context("zone layouts")?;
     let zones = Arc::new(zones);
@@ -75,12 +77,10 @@ pub fn load_game_data(vfs: &VirtualFilesystem) -> Result<GameData, anyhow::Error
         data_decoder: get_data_decoder(),
         drop_table,
         ai: Arc::new(get_ai_database(vfs).context("ai database")?),
-        job_class: Arc::new(get_job_class_database(vfs, string_database.clone()).context("job class database")?),
+        job_class: Arc::new(job_class),
         motions: Arc::new(motions),
         quests: Arc::new(get_quest_database(vfs, string_database.clone()).context("quest database")?),
-        status_effects: Arc::new(
-            get_status_effect_database(vfs, string_database.clone()).context("status effect database")?,
-        ),
+        status_effects: Arc::new(status_effects),
         warp_gates: Arc::new(get_warp_gate_database(vfs).context("warp gate database")?),
         craft_recipes: load_craft_recipes(vfs).context("crafting recipes")?,
         items,
@@ -120,6 +120,47 @@ fn read_export_file(vfs: &VirtualFilesystem, path: &str) -> Result<Option<String
         VfsFile::View(data) => data,
     };
     Ok(Some(std::str::from_utf8(bytes).with_context(|| path.clone())?.to_string()))
+}
+
+/// The skills, status effects and job classes exported from the Godot resources
+/// (`overrides/data/skills.toml` ..., as JSON from the upload or as the TOML files
+/// themselves), or without an export the iROSE tables (LIST_SKILL.STB, LIST_STATUS.STB,
+/// LIST_CLASS.STB).
+pub fn load_skills(
+    vfs: &VirtualFilesystem,
+    strings: Arc<StringDatabase>,
+) -> Result<(SkillDatabase, StatusEffectDatabase, JobClassDatabase), anyhow::Error> {
+    if let Some(export) = read_skills_export(vfs)? {
+        return export.to_databases(strings);
+    }
+    Ok((
+        get_skill_database(vfs, strings.clone()).context("LIST_SKILL.STB")?,
+        get_status_effect_database(vfs, strings.clone()).context("LIST_STATUS.STB")?,
+        get_job_class_database(vfs, strings).context("LIST_CLASS.STB")?,
+    ))
+}
+
+/// The skill export as the game files carry it (JSON from the upload, else TOML).
+pub fn read_skills_export(vfs: &VirtualFilesystem) -> Result<Option<SkillsExport>, anyhow::Error> {
+    for format in [Format::Json, Format::Toml] {
+        let export = SkillsExport::from_files_as(format, |name| {
+            read_export_file(vfs, &rose_data_export::data_file_as(name, format))
+        })?;
+        if export.is_some() {
+            return Ok(export);
+        }
+    }
+    Ok(None)
+}
+
+/// Every monster a skill summons must be there.
+pub fn check_summons(skills: &SkillDatabase, npcs: &NpcDatabase) -> Result<(), anyhow::Error> {
+    for skill in skills.iter() {
+        if let Some(npc) = skill.summon_npc_id.filter(|n| npcs.get_npc(*n).is_none()) {
+            anyhow::bail!("skill {} summons monster {}, which isn't there", skill.id.get(), npc.get());
+        }
+    }
+    Ok(())
 }
 
 /// iROSE's number for an item (type × 1000 + number), as drop tables hold them.

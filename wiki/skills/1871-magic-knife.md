@@ -129,7 +129,7 @@ levels:
   effects: Magic Resistance Down
   changes: Magic Resistance -40 -30%
 source:
-  data: LIST_SKILL.STB rows 1871, 1872, 1873, 1874, 1875, 1876, 1877, 1878, 1879, 1880
+  data: godot/data/skills/1871-magic-knife/ (levels 1871, 1872, 1873, 1874, 1875, 1876, 1877, 1878, 1879, 1880)
   code: module/src/skills.rs
 ---
 # Magic Knife

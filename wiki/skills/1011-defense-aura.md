@@ -112,7 +112,7 @@ levels:
   effects: Def Up
   changes: Defense +75
 source:
-  data: LIST_SKILL.STB rows 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020
+  data: godot/data/skills/1011-defense-aura/ (levels 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020)
   code: module/src/skills.rs
 ---
 # Defense Aura

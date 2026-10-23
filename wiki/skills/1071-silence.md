@@ -62,7 +62,7 @@ levels:
   success: 60
   effects: Muting
 source:
-  data: LIST_SKILL.STB rows 1071, 1072, 1073, 1074, 1075
+  data: godot/data/skills/1071-silence/ (levels 1071, 1072, 1073, 1074, 1075)
   code: module/src/skills.rs
 ---
 # Silence

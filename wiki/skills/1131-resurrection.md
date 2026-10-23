@@ -51,7 +51,7 @@ levels:
   range: 10
   cooldown: 6
 source:
-  data: LIST_SKILL.STB rows 1131, 1132, 1133, 1134, 1135
+  data: godot/data/skills/1131-resurrection/ (levels 1131, 1132, 1133, 1134, 1135)
   code: module/src/skills.rs
 ---
 # Resurrection

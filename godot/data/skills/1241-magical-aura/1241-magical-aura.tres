@@ -1,0 +1,45 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://c8x3l8w486ckn"]
+
+[ext_resource type="RoseJobClass" uid="uid://beco32icdj1l0" path="res://data/job_classes/64-cleric-job.tres" id="1_adru5"]
+[ext_resource type="RoseSkill" uid="uid://c0jsu0md0eg0s" path="res://data/skills/821-meditation/821-meditation.tres" id="2_vrehr"]
+[ext_resource type="RoseSkill" uid="uid://bn525h7w5liag" path="res://data/skills/991-enchant-armor/991-enchant-armor.tres" id="3_4l80l"]
+[ext_resource type="RoseStatusEffect" uid="uid://yailie1lhx3" path="res://data/status_effects/22-magic-resistance-up.tres" id="4_rn0o5"]
+
+[resource]
+id = 1241
+name = "Magical Aura"
+description = "Increase nearby party members' Magic Resistance for skill's duration."
+skill_type = "SelfBoundDuration"
+page = 1
+icon_number = 209
+learn_point_cost = 30
+required_job_class = ExtResource("1_adru5")
+required_skill_1 = ExtResource("2_vrehr")
+required_skill_1_level = 10
+required_skill_2 = ExtResource("3_4l80l")
+required_skill_2_level = 5
+use_stat_1 = "Mana"
+use_stat_1_value = 40
+cooldown_ms = 4000
+target_filter = "Group"
+scope = 1300
+status_effect_1 = ExtResource("4_rn0o5")
+status_effect_seconds = 160
+add_stat_1 = "Resistance"
+add_stat_1_value = 40
+warp_zone = 21
+warp_x = 40000
+casting_motion_id = 112
+casting_repeat_motion_id = 132
+casting_effect_1 = 1752
+casting_effect_1_point = 1
+casting_effect_2 = 1761
+casting_effect_2_point = 1
+casting_effect_3 = 1769
+casting_effect_3_point = 0
+casting_effect_4 = 1
+action_motion_id = 151
+bullet_effect_id = 221
+bullet_point = 3
+bullet_fire_sound_id = 90
+hit_effect_file_id = 1501

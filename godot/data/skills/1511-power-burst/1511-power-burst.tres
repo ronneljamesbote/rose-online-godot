@@ -1,0 +1,44 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://cuiupogkwox7y"]
+
+[ext_resource type="RoseJobClass" uid="uid://b13utty2fjhr8" path="res://data/job_classes/65-raider-job.tres" id="1_585bg"]
+[ext_resource type="RoseSkill" uid="uid://bwlrvv7xm4hds" path="res://data/skills/1421-knuckle-mastery/1421-knuckle-mastery.tres" id="2_gvrvn"]
+[ext_resource type="RoseSkill" uid="uid://dflpuj8ctdyfc" path="res://data/skills/1501-power-attack/1501-power-attack.tres" id="3_r5qqn"]
+
+[resource]
+id = 1511
+name = "Power Burst"
+description = "Advanced Power Attack skill. Hit a target with awesome might while using a Knuckle or a Melee Weapon."
+skill_type = "Immediate"
+page = 1
+icon_number = 215
+learn_point_cost = 30
+required_job_class = ExtResource("1_585bg")
+required_skill_1 = ExtResource("2_gvrvn")
+required_skill_1_level = 11
+required_skill_2 = ExtResource("3_r5qqn")
+required_skill_2_level = 10
+required_item_class_1 = "Katar"
+required_item_class_2 = "DualSwords"
+use_stat_1 = "Mana"
+use_stat_1_value = 50
+cooldown_ms = 8000
+target_filter = "Enemy"
+action_mode = "Attack"
+damage_type = "WeaponAttack"
+power = 120
+harm = 1
+item_make_number = 120
+casting_motion_id = 129
+casting_motion_speed = 50
+casting_repeat_motion_id = 149
+casting_effect_1 = 1041
+casting_effect_1_point = 3
+casting_effect_2 = 1042
+casting_effect_2_point = 3
+casting_effect_3 = 1043
+casting_effect_3_point = 0
+casting_effect_4 = 1043
+casting_effect_4_point = 1
+action_motion_id = 94
+hit_effect_file_id = 1040
+hit_sound_id = 67

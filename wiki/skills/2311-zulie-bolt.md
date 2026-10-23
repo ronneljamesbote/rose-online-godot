@@ -93,7 +93,7 @@ levels:
   range: 30
   cooldown: 5.2
 source:
-  data: LIST_SKILL.STB rows 2311, 2312, 2313, 2314, 2315, 2316, 2317, 2318, 2319, 2320
+  data: godot/data/skills/2311-zulie-bolt/ (levels 2311, 2312, 2313, 2314, 2315, 2316, 2317, 2318, 2319, 2320)
   code: module/src/skills.rs
 ---
 # Zulie Bolt

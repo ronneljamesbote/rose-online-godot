@@ -5,7 +5,8 @@
 //!   rose-stdb-import time <data.idx>       how long the databases take to build from memory
 //!   rose-stdb-import pack <data.idx> <dir> upload batches for server/upload-game-data.sh
 //!   rose-stdb-import compare <data.idx>    every value the data export changes from iROSE
-//!                                          (items, monsters, NPCs, shop tabs, drop tables)
+//!                                          (items, monsters, NPCs, shop tabs, drop tables,
+//!                                          skills, status effects, job classes)
 //!
 //! `pack` writes upload-NNN.json files, each the JSON argument list of the module's
 //! `upload_game_files` reducer (well under the server's request size limit), plus manifest.json.
@@ -247,6 +248,8 @@ fn read_export(dir: &Path) -> BTreeMap<PathBuf, Vec<u8>> {
     let toml = rose_data_export::Format::Toml;
     let npcs = rose_data_export::NpcsExport::from_files_as(toml, |name| read(rose_data_export::data_file_as(name, toml)))
         .unwrap_or_else(|e| fail(e));
+    let skills = rose_data_export::SkillsExport::from_files_as(toml, |name| read(rose_data_export::data_file_as(name, toml)))
+        .unwrap_or_else(|e| fail(e));
     let mut files = BTreeMap::new();
     let format = rose_data_export::Format::Json;
     let mut add = |path: String, text: String| {
@@ -264,11 +267,18 @@ fn read_export(dir: &Path) -> BTreeMap<PathBuf, Vec<u8>> {
             add(rose_data_export::data_file_as(name, format), text);
         }
     }
+    if let Some(skills) = skills {
+        skills.check().unwrap_or_else(|e| fail(e));
+        for (name, text) in skills.to_files_as(format).expect("write the skills as JSON") {
+            add(rose_data_export::data_file_as(name, format), text);
+        }
+    }
     files
 }
 
-/// The same-data check: loads the items, monsters, NPCs, shop tabs and drop tables from the
-/// iROSE tables and from the export and prints every value that differs.
+/// The same-data check: loads the items, monsters, NPCs, shop tabs, drop tables, skills,
+/// status effects and job classes from the iROSE tables and from the export and prints every
+/// value that differs.
 fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool) {
     if no_export {
         eprintln!("compare: no export in {}", data_dir.display());
@@ -295,7 +305,7 @@ fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool) {
         .expect("ITEM_DROP.STB");
     let irose_ms = started.elapsed().as_millis();
     let started = Instant::now();
-    let (npcs, rows) = rose_game_data::load_npcs(vfs, strings, &options).expect("exported monsters and NPCs");
+    let (npcs, rows) = rose_game_data::load_npcs(vfs, strings.clone(), &options).expect("exported monsters and NPCs");
     let export_ms = started.elapsed().as_millis();
     match rows {
         None => println!("monsters and NPCs: no export (monsters.toml ...), skipped"),
@@ -309,6 +319,31 @@ fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool) {
                 export.npcs.len(),
                 export.shop_tabs.len(),
                 export.drop_tables.len(),
+            );
+        }
+    }
+
+    let started = Instant::now();
+    let irose_skills = rose_data_irose::get_skill_database(vfs, strings.clone()).expect("iROSE skills");
+    let irose_effects = rose_data_irose::get_status_effect_database(vfs, strings.clone()).expect("iROSE status effects");
+    let irose_classes = rose_data_irose::get_job_class_database(vfs, strings.clone()).expect("iROSE job classes");
+    let irose_ms = started.elapsed().as_millis();
+    match rose_game_data::read_skills_export(vfs).expect("read the skill export") {
+        None => println!("skills: no export (skills.toml ...), skipped"),
+        Some(export) => {
+            let started = Instant::now();
+            let (skills, effects, classes) = rose_game_data::load_skills(vfs, strings).expect("exported skills");
+            let export_ms = started.elapsed().as_millis();
+            rose_game_data::check_summons(&skills, &npcs).expect("summoned monsters");
+            differences.extend(rose_data_export::compare_skill_databases(
+                (&irose_skills, &irose_effects, &irose_classes),
+                (&skills, &effects, &classes),
+            ));
+            println!(
+                "skills: {} skills, {} status effects, {} job classes; iROSE tables {irose_ms} ms, export {export_ms} ms",
+                export.skills.len(),
+                export.status_effects.len(),
+                export.job_classes.len(),
             );
         }
     }

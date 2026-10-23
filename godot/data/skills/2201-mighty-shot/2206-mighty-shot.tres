@@ -1,0 +1,35 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://dg343fowcx7jw"]
+
+[ext_resource type="RoseSkill" uid="uid://kvqch3j56u15" path="res://data/skills/2021-marksmanship/2021-marksmanship.tres" id="1_fajmk"]
+
+[resource]
+id = 2206
+name = "Mighty Shot"
+description = "Increase Gun and Launcher weapon damage."
+base_skill_id = 2201
+level = 6
+skill_type = "Immediate"
+page = 1
+icon_number = 145
+learn_point_cost = 18
+required_skill_1 = ExtResource("1_fajmk")
+required_skill_1_level = 6
+required_item_class_1 = "Gun"
+required_item_class_2 = "Launcher"
+use_stat_1 = "Mana"
+use_stat_1_value = 20
+cooldown_ms = 7400
+target_filter = "Enemy"
+action_mode = "Restore"
+damage_type = "WeaponAttack"
+power = 65
+harm = 1
+item_make_number = 65
+casting_motion_id = 95
+casting_repeat_motion_id = 96
+action_motion_id = 97
+bullet_effect_id = 262
+bullet_point = 1
+bullet_fire_sound_id = 148
+hit_effect_file_id = 110
+hit_sound_id = 67

@@ -92,7 +92,7 @@ levels:
   learn_points: 78
   changes: MP Cost Reduction +30
 source:
-  data: LIST_SKILL.STB rows 841, 842, 843, 844, 845, 846, 847, 848, 849, 850, 851, 852, 853, 854, 855, 856, 857, 858, 859, 860
+  data: godot/data/skills/841-spell-mastery/ (levels 841, 842, 843, 844, 845, 846, 847, 848, 849, 850, 851, 852, 853, 854, 855, 856, 857, 858, 859, 860)
   code: module/src/skills.rs
 ---
 # Spell Mastery

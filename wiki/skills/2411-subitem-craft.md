@@ -103,7 +103,7 @@ levels:
   cost: MP 120
   power: 16
 source:
-  data: LIST_SKILL.STB rows 2411, 2412, 2413, 2414, 2415, 2416, 2417, 2418, 2419, 2420, 2421, 2422, 2423, 2424, 2425
+  data: godot/data/skills/2411-subitem-craft/ (levels 2411, 2412, 2413, 2414, 2415, 2416, 2417, 2418, 2419, 2420, 2421, 2422, 2423, 2424, 2425)
   code: module/src/skills.rs
 ---
 # SubItem Craft

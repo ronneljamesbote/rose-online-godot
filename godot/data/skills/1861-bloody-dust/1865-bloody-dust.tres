@@ -1,0 +1,37 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://cefy8lg6dpfb4"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://cxo27d6njq18d" path="res://data/status_effects/29-dodge-rate-down.tres" id="1_e45hb"]
+
+[resource]
+id = 1865
+name = "Bloody Dust"
+description = "Raise dust around the caster to decrease Dodge Rate of nearby enemies."
+base_skill_id = 1861
+level = 5
+skill_type = "SelfDamage"
+page = 1
+icon_number = 117
+learn_point_cost = 62
+use_stat_1 = "Mana"
+use_stat_1_value = 90
+cooldown_ms = 17600
+target_filter = "Enemy"
+scope = 1400
+damage_type = "MagicAttack"
+power = 92
+harm = 1
+item_make_number = 92
+success_ratio = 54
+status_effect_1 = ExtResource("1_e45hb")
+status_effect_seconds = 24
+add_stat_1 = "Avoid"
+add_stat_1_rate = 34
+warp_zone = 22
+warp_y = 34000
+casting_motion_id = 115
+casting_repeat_motion_id = 135
+casting_effect_2 = 1764
+casting_effect_3 = 1608
+action_motion_id = 172
+hit_effect_file_id = 1121
+hit_sound_id = 139

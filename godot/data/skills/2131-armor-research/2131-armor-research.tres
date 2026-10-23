@@ -1,0 +1,22 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://d0uqsduf4fcmw"]
+
+[ext_resource type="RoseJobClass" uid="uid://coim5bc7gydpp" path="res://data/job_classes/44-dealer-job.tres" id="1_jvnmd"]
+[ext_resource type="RoseSkill" uid="uid://dujuvqd1tsy3v" path="res://data/skills/2081-craft-mastery/2081-craft-mastery.tres" id="2_pfgot"]
+
+[resource]
+id = 2131
+name = "Armor Research"
+description = "Refine your fundamental armor crafting skills. Increase Defense."
+skill_type = "Passive"
+page = 2
+icon_number = 170
+learn_point_cost = 15
+required_job_class = ExtResource("1_jvnmd")
+required_skill_1 = ExtResource("2_pfgot")
+required_skill_1_level = 3
+required_stat_1 = "Level"
+required_stat_1_value = 30
+add_stat_1 = "PassiveDefence"
+add_stat_1_value = 6
+warp_zone = 53
+warp_x = 6000

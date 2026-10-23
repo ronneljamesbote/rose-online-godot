@@ -104,7 +104,7 @@ levels:
   duration: 500
   effects: Additional Damage
 source:
-  data: LIST_SKILL.STB rows 1211, 1212, 1213, 1214, 1215, 1216, 1217, 1218, 1219, 1220
+  data: godot/data/skills/1211-damage-support/ (levels 1211, 1212, 1213, 1214, 1215, 1216, 1217, 1218, 1219, 1220)
   code: module/src/skills.rs
 ---
 # Damage Support

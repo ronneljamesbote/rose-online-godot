@@ -91,7 +91,7 @@ levels:
   area: 7
   cooldown: 19.4
 source:
-  data: LIST_SKILL.STB rows 1571, 1572, 1573, 1574, 1575, 1576, 1577, 1578, 1579, 1580
+  data: godot/data/skills/1571-spiral-kick/ (levels 1571, 1572, 1573, 1574, 1575, 1576, 1577, 1578, 1579, 1580)
   code: module/src/skills.rs
 ---
 # Spiral Kick

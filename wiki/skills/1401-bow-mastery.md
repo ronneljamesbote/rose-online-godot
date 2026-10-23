@@ -93,7 +93,7 @@ levels:
   learn_points: 71
   changes: Bow Attack Power +95
 source:
-  data: LIST_SKILL.STB rows 1401, 1402, 1403, 1404, 1405, 1406, 1407, 1408, 1409, 1410, 1411, 1412, 1413, 1414, 1415, 1416, 1417, 1418, 1419, 1420
+  data: godot/data/skills/1401-bow-mastery/ (levels 1401, 1402, 1403, 1404, 1405, 1406, 1407, 1408, 1409, 1410, 1411, 1412, 1413, 1414, 1415, 1416, 1417, 1418, 1419, 1420)
   code: module/src/skills.rs
 ---
 # Bow Mastery

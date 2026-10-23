@@ -163,7 +163,7 @@ levels:
   effects: Slow
   changes: Movement Speed -50%
 source:
-  data: LIST_SKILL.STB rows 2221, 2222, 2223, 2224, 2225, 2226, 2227, 2228, 2229, 2230, 2231, 2232, 2233, 2234, 2235, 2236, 2237, 2238, 2239, 2240
+  data: godot/data/skills/2221-twin-bullets/ (levels 2221, 2222, 2223, 2224, 2225, 2226, 2227, 2228, 2229, 2230, 2231, 2232, 2233, 2234, 2235, 2236, 2237, 2238, 2239, 2240)
   code: module/src/skills.rs
 ---
 # Twin Bullets

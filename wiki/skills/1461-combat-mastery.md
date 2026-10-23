@@ -94,7 +94,7 @@ levels:
   learn_points: 62
   changes: Bow Attack Speed +23, Combat Weapon Attack Speed +22
 source:
-  data: LIST_SKILL.STB rows 1461, 1462, 1463, 1464, 1465, 1466, 1467, 1468, 1469, 1470, 1471, 1472, 1473, 1474, 1475, 1476, 1477, 1478, 1479, 1480
+  data: godot/data/skills/1461-combat-mastery/ (levels 1461, 1462, 1463, 1464, 1465, 1466, 1467, 1468, 1469, 1470, 1471, 1472, 1473, 1474, 1475, 1476, 1477, 1478, 1479, 1480)
   code: module/src/skills.rs
 ---
 # Combat Mastery

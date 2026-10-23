@@ -1,0 +1,32 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://pdkclh187pco"]
+
+[ext_resource type="RoseSkill" uid="uid://c0jsu0md0eg0s" path="res://data/skills/821-meditation/821-meditation.tres" id="1_b7gfj"]
+
+[resource]
+id = 1133
+name = "Resurrection"
+description = "Revive a dead character on the current spot and restore a certain amount of experience points at the same time."
+base_skill_id = 1131
+level = 3
+skill_type = "Resurrection"
+page = 1
+icon_number = 221
+learn_point_cost = 50
+required_planet = 1000
+required_skill_1 = ExtResource("1_b7gfj")
+required_skill_1_level = 14
+use_stat_1 = "Mana"
+use_stat_1_value = 600
+cooldown_ms = 6000
+target_filter = "DeadAlliedCharacter"
+cast_range = 1000
+power = 30
+item_make_number = 30
+casting_motion_id = 194
+casting_repeat_motion_id = 194
+casting_effect_3 = 163
+action_motion_id = 195
+bullet_effect_id = 266
+bullet_point = 999
+bullet_fire_sound_id = 90
+hit_effect_file_id = 1501

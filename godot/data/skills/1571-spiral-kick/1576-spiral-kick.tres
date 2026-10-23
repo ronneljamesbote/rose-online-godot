@@ -1,0 +1,33 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://c8fhke7luxkko"]
+
+[ext_resource type="RoseSkill" uid="uid://bjn20q7e2j8oo" path="res://data/skills/1461-combat-mastery/1461-combat-mastery.tres" id="1_5qolu"]
+
+[resource]
+id = 1576
+name = "Spiral Kick"
+description = "Enables its caster to spin and kick on a spot to do splash damage to nearby enemies."
+base_skill_id = 1571
+level = 6
+skill_type = "SelfDamage"
+page = 1
+icon_number = 113
+learn_point_cost = 45
+required_skill_1 = ExtResource("1_5qolu")
+required_skill_1_level = 11
+use_stat_1 = "Mana"
+use_stat_1_value = 60
+cooldown_ms = 17000
+target_filter = "Enemy"
+scope = 650
+action_mode = "Restore"
+damage_type = "MagicAttack"
+power = 90
+harm = 1
+item_make_number = 90
+casting_motion_id = 115
+casting_repeat_motion_id = 135
+casting_effect_2 = 1764
+casting_effect_3 = 1609
+action_motion_id = 212
+hit_effect_file_id = 1121
+hit_sound_id = 1555

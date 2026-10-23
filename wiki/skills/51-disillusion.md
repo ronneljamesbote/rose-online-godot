@@ -87,7 +87,7 @@ levels:
   cooldown: 0.2
   success: 100
 source:
-  data: LIST_SKILL.STB rows 51, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110
+  data: godot/data/skills/51-disillusion/ (levels 51, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110)
   code: module/src/skills.rs
 ---
 # Disillusion

@@ -16,7 +16,7 @@ levels:
   learn_points: 0
   range: 0
 source:
-  data: LIST_SKILL.STB rows 11
+  data: godot/data/skills/11-sit/ (levels 11)
   code: module/src/skills.rs
 ---
 # Sit

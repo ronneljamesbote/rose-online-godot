@@ -3,6 +3,7 @@ use crate::{
     SoundId, StatusEffectId, StringDatabase, ZoneId,
 };
 use arrayvec::ArrayVec;
+use enum_map::Enum;
 use num_derive::FromPrimitive;
 use serde::{Deserialize, Serialize};
 use std::{
@@ -116,15 +117,17 @@ pub struct SkillAddAbility {
     pub value: i32,
 }
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, Default, PartialEq, Eq, Enum, Serialize, Deserialize)]
 pub enum SkillActionMode {
+    #[default]
     Stop,
     Attack,
     Restore,
 }
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, Default, PartialEq, Eq, Enum, Serialize, Deserialize)]
 pub enum SkillTargetFilter {
+    #[default]
     OnlySelf,
     Group,
     Guild,
@@ -138,8 +141,9 @@ pub enum SkillTargetFilter {
     EnemyMonster,
 }
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, Default, PartialEq, Eq, Enum, Serialize, Deserialize)]
 pub enum SkillType {
+    #[default]
     BasicAction,
     CreateWindow,
     Immediate,
@@ -162,7 +166,7 @@ pub enum SkillType {
     Resurrection,
 }
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, Enum, Serialize, Deserialize)]
 pub enum SkillBasicCommand {
     Sit,
     PickupItem,
@@ -220,8 +224,9 @@ pub enum SkillCooldown {
     },
 }
 
-#[derive(FromPrimitive, Debug)]
+#[derive(FromPrimitive, Copy, Clone, Debug, Default, PartialEq, Eq, Enum, Serialize, Deserialize)]
 pub enum SkillDamageType {
+    #[default]
     ContinuousAttack = 0,
     WeaponAttack = 1,
     MagicAttack = 2,
@@ -294,6 +299,9 @@ pub struct SkillData {
 
 pub struct SkillDatabase {
     _string_database: Arc<StringDatabase>,
+    /// The names and descriptions the skills point into when they don't come from the
+    /// string database (the data export, see `with_text`).
+    _text: Vec<String>,
     skills: Vec<Option<SkillData>>,
 }
 
@@ -301,8 +309,16 @@ impl SkillDatabase {
     pub fn new(string_database: Arc<StringDatabase>, skills: Vec<Option<SkillData>>) -> Self {
         Self {
             _string_database: string_database,
+            _text: Vec::new(),
             skills,
         }
+    }
+
+    /// Keeps `text` alive as long as the database: the skills' `&'static str` names and
+    /// descriptions may point into it.
+    pub fn with_text(mut self, text: Vec<String>) -> Self {
+        self._text = text;
+        self
     }
 
     pub fn get_skill(&self, id: SkillId) -> Option<&SkillData> {

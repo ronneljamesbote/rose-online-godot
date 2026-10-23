@@ -1,0 +1,28 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://0sscm8ptjea7"]
+
+[ext_resource type="RoseSkill" uid="uid://2a0cp225ot7g" path="res://data/skills/2101-hire-mercenary/2101-hire-mercenary.tres" id="1_37pwa"]
+[ext_resource type="RoseMonster" uid="uid://kq4483obht6d" path="res://data/monsters/859-mercenary-warrior.tres" id="2_acrao"]
+
+[resource]
+id = 2359
+name = "Hire Warrior"
+description = "Summon a melee attack warrior by spending Zulie. "
+base_skill_id = 2351
+level = 9
+skill_type = "SummonPet"
+page = 1
+icon_number = 179
+learn_point_cost = 45
+required_skill_1 = ExtResource("1_37pwa")
+required_skill_1_level = 5
+use_stat_1 = "Money"
+use_stat_1_value = 230
+cooldown_ms = 5000
+action_mode = "Restore"
+summon_monster = ExtResource("2_acrao")
+casting_motion_id = 118
+casting_repeat_motion_id = 138
+action_motion_id = 155
+bullet_effect_id = 221
+bullet_point = 3
+bullet_fire_sound_id = 90

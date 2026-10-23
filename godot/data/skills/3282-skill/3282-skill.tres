@@ -1,0 +1,29 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://cv2xg8h7oco3c"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://dbcjhsq7nm785" path="res://data/status_effects/49-def-power-up.tres" id="1_qvjwt"]
+[ext_resource type="RoseStatusEffect" uid="uid://dgua6p74o65oh" path="res://data/status_effects/50-magic-resistance-up.tres" id="2_84pja"]
+
+[resource]
+id = 3282
+skill_type = "SelfBoundDuration"
+page = 1
+icon_number = 127
+learn_point_cost = 50
+action_mode = "Restore"
+status_effect_1 = ExtResource("1_qvjwt")
+status_effect_2 = ExtResource("2_84pja")
+status_effect_seconds = 600
+add_stat_1 = "Defence"
+add_stat_1_rate = 30
+add_stat_2 = "Resistance"
+add_stat_2_rate = 30
+warp_zone = 19
+warp_y = 30000
+casting_motion_id = 114
+casting_repeat_motion_id = 134
+casting_effect_1 = 1754
+casting_effect_2 = 1763
+casting_effect_2_point = 3
+casting_effect_3 = 1771
+casting_effect_3_point = 3
+action_motion_id = 153

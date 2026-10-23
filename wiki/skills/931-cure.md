@@ -92,7 +92,7 @@ levels:
   cooldown: 2.4
   changes: HP +740
 source:
-  data: LIST_SKILL.STB rows 931, 932, 933, 934, 935, 936, 937, 938, 939, 940
+  data: godot/data/skills/931-cure/ (levels 931, 932, 933, 934, 935, 936, 937, 938, 939, 940)
   code: module/src/skills.rs
 ---
 # Cure

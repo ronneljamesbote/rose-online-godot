@@ -124,7 +124,7 @@ levels:
   success: 60
   effects: Poisoned  4
 source:
-  data: LIST_SKILL.STB rows 2271, 2272, 2273, 2274, 2275, 2276, 2277, 2278, 2279, 2280
+  data: godot/data/skills/2271-poison-fang/ (levels 2271, 2272, 2273, 2274, 2275, 2276, 2277, 2278, 2279, 2280)
   code: module/src/skills.rs
 ---
 # Poison Fang

@@ -63,7 +63,7 @@ levels:
   cost: MP 95
   power: 31
 source:
-  data: LIST_SKILL.STB rows 2641, 2642, 2643, 2644, 2645, 2646, 2647, 2648, 2649, 2650
+  data: godot/data/skills/2641-accessory-craft/ (levels 2641, 2642, 2643, 2644, 2645, 2646, 2647, 2648, 2649, 2650)
   code: module/src/skills.rs
 ---
 # Accessory Craft

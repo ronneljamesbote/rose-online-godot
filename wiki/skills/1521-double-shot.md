@@ -162,7 +162,7 @@ levels:
   effects: Slow
   changes: Movement Speed -50%
 source:
-  data: LIST_SKILL.STB rows 1521, 1522, 1523, 1524, 1525, 1526, 1527, 1528, 1529, 1530, 1531, 1532, 1533, 1534, 1535, 1536, 1537, 1538, 1539, 1540
+  data: godot/data/skills/1521-double-shot/ (levels 1521, 1522, 1523, 1524, 1525, 1526, 1527, 1528, 1529, 1530, 1531, 1532, 1533, 1534, 1535, 1536, 1537, 1538, 1539, 1540)
   code: module/src/skills.rs
 ---
 # Double Shot

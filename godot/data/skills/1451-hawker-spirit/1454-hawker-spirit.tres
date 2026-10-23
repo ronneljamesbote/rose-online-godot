@@ -1,0 +1,35 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://lkpyjliedk7e"]
+
+[ext_resource type="RoseSkill" uid="uid://bjn20q7e2j8oo" path="res://data/skills/1461-combat-mastery/1461-combat-mastery.tres" id="1_e8pr6"]
+[ext_resource type="RoseStatusEffect" uid="uid://bx5l0d2v6jf1u" path="res://data/status_effects/24-atk-accuracy-up.tres" id="2_awei8"]
+
+[resource]
+id = 1454
+name = "Hawker Spirit"
+description = "Increase the caster's Attack Accuracy for skill's duration."
+base_skill_id = 1451
+level = 4
+skill_type = "SelfBoundDuration"
+page = 1
+icon_number = 107
+learn_point_cost = 14
+required_skill_1 = ExtResource("1_e8pr6")
+required_skill_1_level = 6
+use_stat_1 = "Mana"
+use_stat_1_value = 26
+cooldown_ms = 6000
+action_mode = "Restore"
+status_effect_1 = ExtResource("2_awei8")
+status_effect_seconds = 168
+add_stat_1 = "Hit"
+add_stat_1_value = 35
+warp_zone = 20
+warp_x = 35000
+casting_motion_id = 114
+casting_repeat_motion_id = 134
+casting_effect_1 = 1754
+casting_effect_2 = 1763
+casting_effect_2_point = 3
+casting_effect_3 = 1771
+casting_effect_3_point = 3
+action_motion_id = 153

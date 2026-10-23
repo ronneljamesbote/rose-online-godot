@@ -39,7 +39,7 @@ levels:
   duration: 2
   effects: Detection
 source:
-  data: LIST_SKILL.STB rows 1671, 1672, 1673
+  data: godot/data/skills/1671-detect/ (levels 1671, 1672, 1673)
   code: module/src/skills.rs
 ---
 # Detect

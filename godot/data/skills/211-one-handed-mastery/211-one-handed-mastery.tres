@@ -1,0 +1,22 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://dwa0usda2n7yt"]
+
+[ext_resource type="RoseJobClass" uid="uid://5yxauvydlw51" path="res://data/job_classes/61-knight-job.tres" id="1_7wi1k"]
+[ext_resource type="RoseSkill" uid="uid://bq3y5qgvgutyj" path="res://data/skills/201-melee-weapon-mastery/201-melee-weapon-mastery.tres" id="2_d0y24"]
+
+[resource]
+id = 211
+name = "One-Handed Mastery"
+description = " Increase One-Handed Weapon damage."
+skill_type = "Passive"
+page = 2
+icon_number = 26
+learn_point_cost = 27
+required_job_class = ExtResource("1_7wi1k")
+required_skill_1 = ExtResource("2_d0y24")
+required_skill_1_level = 10
+required_item_class_1 = "OneHandedSword"
+required_item_class_2 = "OneHandedBlunt"
+add_stat_1 = "PassiveAttackPowerOneHanded"
+add_stat_1_value = 37
+warp_zone = 42
+warp_x = 37000

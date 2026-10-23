@@ -1,0 +1,44 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://clq1f6u8cobsp"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://dbi4ro2cc5h50" path="res://data/status_effects/23-magic-resistance-down.tres" id="1_p031o"]
+
+[resource]
+id = 1879
+name = "Magic Knife"
+description = "Throw a shuriken at a target to decrease its Magic Resistance."
+base_skill_id = 1871
+level = 9
+skill_type = "FireBullet"
+page = 1
+icon_number = 218
+learn_point_cost = 62
+required_planet = 2900
+use_stat_1 = "Mana"
+use_stat_1_value = 46
+cooldown_ms = 8400
+target_filter = "Enemy"
+cast_range = 2900
+action_mode = "Restore"
+damage_type = "MagicAttack"
+power = 128
+harm = 1
+item_make_number = 128
+success_ratio = 96
+status_effect_1 = ExtResource("1_p031o")
+status_effect_seconds = 28
+add_stat_1 = "Resistance"
+add_stat_1_value = 36
+add_stat_1_rate = 28
+warp_zone = 21
+warp_x = 36000
+warp_y = 28000
+casting_motion_id = 116
+casting_repeat_motion_id = 136
+casting_effect_2 = 1765
+casting_effect_2_point = 3
+action_motion_id = 211
+bullet_effect_id = 276
+bullet_point = 1
+bullet_fire_sound_id = 148
+hit_effect_file_id = 1040
+hit_sound_id = 1563

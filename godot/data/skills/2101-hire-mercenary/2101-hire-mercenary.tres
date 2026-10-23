@@ -1,0 +1,20 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://2a0cp225ot7g"]
+
+[ext_resource type="RoseJobClass" uid="uid://coim5bc7gydpp" path="res://data/job_classes/44-dealer-job.tres" id="1_fb0nu"]
+[ext_resource type="RoseSkill" uid="uid://cagy6s3a74urs" path="res://data/skills/2001-market-research/2001-market-research.tres" id="2_0rj6g"]
+
+[resource]
+id = 2101
+name = "Hire Mercenary"
+description = "Increase Maximum Summon Gauge."
+skill_type = "Passive"
+page = 2
+icon_number = 190
+learn_point_cost = 15
+required_job_class = ExtResource("1_fb0nu")
+required_skill_1 = ExtResource("2_0rj6g")
+required_skill_1_level = 6
+add_stat_1 = "PassiveMaxSummons"
+add_stat_1_value = 30
+warp_zone = 62
+warp_x = 30000

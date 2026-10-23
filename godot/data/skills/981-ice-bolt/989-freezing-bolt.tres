@@ -1,0 +1,46 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://wusa1scm1u4s"]
+
+[ext_resource type="RoseSkill" uid="uid://codmreajjlkwc" path="res://data/skills/841-spell-mastery/841-spell-mastery.tres" id="1_kri8e"]
+[ext_resource type="RoseStatusEffect" uid="uid://c43fk10odrqq2" path="res://data/status_effects/15-slow.tres" id="2_6334e"]
+
+[resource]
+id = 989
+name = "Freezing Bolt"
+description = "Shoot an ice bolt at a target from a distance. Inflict damage and decrease the Movement Speed of the target at the same time."
+base_skill_id = 981
+level = 9
+skill_type = "FireBullet"
+page = 1
+icon_number = 93
+learn_point_cost = 75
+required_planet = 2740
+required_skill_1 = ExtResource("1_kri8e")
+required_skill_1_level = 16
+required_item_class_1 = "MagicStaff"
+required_item_class_2 = "MagicWand"
+use_stat_1 = "Mana"
+use_stat_1_value = 95
+cooldown_ms = 11000
+target_filter = "Enemy"
+cast_range = 2740
+action_mode = "Restore"
+damage_type = "MagicAttack"
+power = 220
+item_make_number = 220
+success_ratio = 42
+status_effect_1 = ExtResource("2_6334e")
+status_effect_seconds = 15
+add_stat_1 = "Speed"
+add_stat_1_rate = 52
+warp_zone = 23
+warp_y = 52000
+casting_motion_id = 101
+casting_repeat_motion_id = 102
+casting_effect_1 = 1801
+casting_effect_2 = 1811
+casting_effect_2_point = 1
+action_motion_id = 103
+bullet_effect_id = 262
+bullet_point = 1
+bullet_fire_sound_id = 90
+hit_effect_file_id = 1123

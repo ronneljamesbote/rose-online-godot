@@ -19,7 +19,7 @@ levels:
   cooldown: 3
   changes: MP +15
 source:
-  data: LIST_SKILL.STB rows 45
+  data: godot/data/skills/45-charming-kiss/ (levels 45)
   code: module/src/skills.rs
 ---
 # Charming Kiss

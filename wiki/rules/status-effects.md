@@ -45,7 +45,7 @@ source:
     - crates/rose-game-common/src/components/ability_values.rs (AbilityValuesAdjust)
     - crates/rose-game-irose/src/data/ability_values.rs (calculate_skill_adjust_value)
     - crates/rose-data-irose/src/status_effect_database.rs
-  data: LIST_STATUS.STB (type, can be reapplied, cleared by, HP per second), LIST_SKILL.STB (effects, success, duration, changes)
+  data: the status effect resources in godot/data/status_effects/ (status_effect_type, can_be_reapplied, cleared_by, HP per second in apply_status_effect_1_value), the skill resources in godot/data/skills/ (status_effect_1/2, success_ratio, status_effect_seconds, add_stat_1/2 for the changes)
 ---
 # Status effects
 
@@ -177,7 +177,7 @@ When an effect starts or ends, the character's stats are worked out again at onc
 ## Changed from iROSE
 
 - **Damage shields** return part of every hit. In iROSE they only return magic damage
-  (and LIST_STATUS.STB names it a shield for attackers within 4 m; there is no distance
+  (and iROSE's LIST_STATUS.STB names it a shield for attackers within 4 m; there is no distance
   limit here).
 
-> Open question: the damage shield's "within 4 m" from LIST_STATUS.STB is not applied. Decide whether to add it.
+> Open question: the damage shield's "within 4 m" from iROSE's LIST_STATUS.STB is not applied. Decide whether to add it.

@@ -103,7 +103,7 @@ levels:
   effects: Haste Attack
   changes: Attack Speed +60
 source:
-  data: LIST_SKILL.STB rows 2241, 2242, 2243, 2244, 2245, 2246, 2247, 2248, 2249, 2250
+  data: godot/data/skills/2241-intensify-weapon/ (levels 2241, 2242, 2243, 2244, 2245, 2246, 2247, 2248, 2249, 2250)
   code: module/src/skills.rs
 ---
 # Intensify Weapon

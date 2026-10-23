@@ -4,15 +4,18 @@
 //! (`rose-data`), the same ones `rose-data-irose` fills from the iROSE tables. Server and
 //! client both load the export, so they always see the same values.
 //!
-//! So far: items (`items/<type>.toml`, see [`items`]), and monsters, NPCs, drop tables and
+//! So far: items (`items/<type>.toml`, see [`items`]), monsters, NPCs, drop tables and
 //! shop tabs (`monsters.toml`, `npcs.toml`, `drop-tables.toml`, `shop-tabs.toml`, see
-//! [`npcs`]).
+//! [`npcs`]), and skills, status effects and job classes (`skills.toml`,
+//! `status-effects.toml`, `job-classes.toml`, see [`skills`]).
 
 pub mod items;
 pub mod npcs;
+pub mod skills;
 
 pub use items::{compare_item_databases, Format, ItemsExport};
 pub use npcs::{compare_drop_rows, compare_npc_databases, NpcModels, NpcsExport};
+pub use skills::{compare_skill_databases, SkillsExport};
 
 /// The export folder in the repository (and next to the game in the Windows build).
 pub const DATA_DIR: &str = "overrides/data";

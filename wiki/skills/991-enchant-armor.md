@@ -110,7 +110,7 @@ levels:
   effects: Def Up
   changes: Defense +210
 source:
-  data: LIST_SKILL.STB rows 991, 992, 993, 994, 995, 996, 997, 998, 999, 1000
+  data: godot/data/skills/991-enchant-armor/ (levels 991, 992, 993, 994, 995, 996, 997, 998, 999, 1000)
   code: module/src/skills.rs
 ---
 # Enchant Armor

@@ -18,7 +18,7 @@ levels:
   range: 5
   changes: Money +10
 source:
-  data: LIST_SKILL.STB rows 33
+  data: godot/data/skills/33-donation-10-zulie/ (levels 33)
   code: module/src/skills.rs
 ---
 # Donation (10 Zulie)

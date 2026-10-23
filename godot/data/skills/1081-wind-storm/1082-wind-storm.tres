@@ -1,0 +1,34 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://dycvhlo8uh2j0"]
+
+[ext_resource type="RoseSkill" uid="uid://cctctgoq3grrx" path="res://data/skills/801-staff-mastery/801-staff-mastery.tres" id="1_xhn6e"]
+
+[resource]
+id = 1082
+name = "Wind Storm"
+description = "Summon a storm to do enormous damage onto enemies near the caster."
+base_skill_id = 1081
+level = 2
+skill_type = "SelfDamage"
+page = 1
+icon_number = 80
+learn_point_cost = 30
+required_skill_1 = ExtResource("1_xhn6e")
+required_skill_1_level = 9
+required_item_class_1 = "MagicStaff"
+required_item_class_2 = "MagicWand"
+use_stat_1 = "Mana"
+use_stat_1_value = 57
+cooldown_ms = 14400
+target_filter = "Enemy"
+scope = 1010
+damage_type = "MagicAttack"
+power = 75
+harm = 1
+item_make_number = 75
+casting_motion_id = 115
+casting_repeat_motion_id = 135
+casting_effect_2 = 1764
+casting_effect_3 = 1631
+action_motion_id = 172
+hit_effect_file_id = 1121
+hit_sound_id = 1576

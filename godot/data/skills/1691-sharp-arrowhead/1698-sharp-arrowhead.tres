@@ -1,0 +1,37 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://bkwfu3rppf6eu"]
+
+[ext_resource type="RoseSkill" uid="uid://c81ycqbxkjt72" path="res://data/skills/1401-bow-mastery/1401-bow-mastery.tres" id="1_p4nen"]
+[ext_resource type="RoseStatusEffect" uid="uid://o87dkptvypm8" path="res://data/status_effects/18-atk-power-increased.tres" id="2_vs6is"]
+
+[resource]
+id = 1698
+name = "Sharp Arrowhead"
+description = "Increase Attack Power of Bow and Crossbow weapon for skill's duration."
+base_skill_id = 1691
+level = 8
+skill_type = "SelfBoundDuration"
+page = 1
+icon_number = 217
+learn_point_cost = 51
+required_skill_1 = ExtResource("1_p4nen")
+required_skill_1_level = 17
+required_item_class_1 = "Bow"
+required_item_class_2 = "Crossbow"
+use_stat_1 = "Mana"
+use_stat_1_value = 44
+cooldown_ms = 89800
+action_mode = "Restore"
+status_effect_1 = ExtResource("2_vs6is")
+status_effect_seconds = 64
+add_stat_1 = "Attack"
+add_stat_1_value = 54
+warp_zone = 18
+warp_x = 54000
+casting_motion_id = 114
+casting_repeat_motion_id = 134
+casting_effect_1 = 1754
+casting_effect_2 = 1763
+casting_effect_2_point = 3
+casting_effect_3 = 1771
+casting_effect_3_point = 3
+action_motion_id = 153

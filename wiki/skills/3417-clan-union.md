@@ -13,7 +13,7 @@ levels:
   id: 3417
   learn_points: 0
 source:
-  data: LIST_SKILL.STB rows 3417
+  data: godot/data/skills/3417-clan-union/ (levels 3417)
   code: module/src/skills.rs
 ---
 # Clan Union

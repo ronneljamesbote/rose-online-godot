@@ -95,7 +95,7 @@ levels:
   area: 13
   cooldown: 29
 source:
-  data: LIST_SKILL.STB rows 1091, 1092, 1093, 1094, 1095, 1096, 1097, 1098, 1099, 1100
+  data: godot/data/skills/1091-lunar-stone/ (levels 1091, 1092, 1093, 1094, 1095, 1096, 1097, 1098, 1099, 1100)
   code: module/src/skills.rs
 ---
 # Lunar Stone

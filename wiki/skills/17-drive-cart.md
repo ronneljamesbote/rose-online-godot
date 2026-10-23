@@ -16,7 +16,7 @@ levels:
   learn_points: 0
   range: 0.1
 source:
-  data: LIST_SKILL.STB rows 17
+  data: godot/data/skills/17-drive-cart/ (levels 17)
   code: module/src/skills.rs
 ---
 # Drive Cart

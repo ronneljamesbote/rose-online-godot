@@ -132,7 +132,7 @@ levels:
   effects: Slow Attack
   changes: Attack Speed -60%
 source:
-  data: LIST_SKILL.STB rows 1601, 1602, 1603, 1604, 1605, 1606, 1607, 1608, 1609, 1610
+  data: godot/data/skills/1601-heart-hit/ (levels 1601, 1602, 1603, 1604, 1605, 1606, 1607, 1608, 1609, 1610)
   code: module/src/skills.rs
 ---
 # Heart Hit

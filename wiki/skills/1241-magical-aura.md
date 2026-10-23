@@ -112,7 +112,7 @@ levels:
   effects: Magic Resistance Up
   changes: Magic Resistance +120
 source:
-  data: LIST_SKILL.STB rows 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250
+  data: godot/data/skills/1241-magical-aura/ (levels 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250)
   code: module/src/skills.rs
 ---
 # Magical Aura

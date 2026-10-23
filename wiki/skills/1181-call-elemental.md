@@ -71,7 +71,7 @@ levels:
   cost: MP 600
   cooldown: 15.4
 source:
-  data: LIST_SKILL.STB rows 1181, 1182, 1183, 1184, 1185, 1186, 1187, 1188, 1189, 1190
+  data: godot/data/skills/1181-call-elemental/ (levels 1181, 1182, 1183, 1184, 1185, 1186, 1187, 1188, 1189, 1190)
   code: module/src/skills.rs
 ---
 # Call Elemental

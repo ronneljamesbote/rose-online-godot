@@ -112,7 +112,7 @@ levels:
   effects: MaxHP Up
   changes: Max HP +560
 source:
-  data: LIST_SKILL.STB rows 971, 972, 973, 974, 975, 976, 977, 978, 979, 980
+  data: godot/data/skills/971-blessing/ (levels 971, 972, 973, 974, 975, 976, 977, 978, 979, 980)
   code: module/src/skills.rs
 ---
 # Blessing

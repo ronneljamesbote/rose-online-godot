@@ -21,7 +21,7 @@ levels:
   cooldown: 3
   changes: HP +20
 source:
-  data: LIST_SKILL.STB rows 30
+  data: godot/data/skills/30-recovery-kiss/ (levels 30)
   code: module/src/skills.rs
 ---
 # Recovery Kiss

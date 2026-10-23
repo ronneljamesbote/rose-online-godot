@@ -7,7 +7,7 @@ skill_pages: 4 (basic, active, passive, clan)
 skill_slots_per_page: 30
 skill_points_per_level: "floor((new level + 2) / 2)"
 global_cooldown_s: 0.25 (from when a skill takes effect)
-cooldown_unit_s: 0.2 (LIST_SKILL.STB stores cooldowns in steps of 0.2 s)
+cooldown_unit_s: 0.001 (cooldown_ms in the skill resources; every cooldown converted from iROSE is a step of 0.2 s)
 minimum_cast_time_s: 0.3
 cast_grace_window_s: 0.3
 range_slack_m: 0.5
@@ -41,7 +41,7 @@ source:
     - module/src/lib.rs (deal_damage, combat_tick, move_to, attack, stop, sit)
     - crates/rose-game-irose/src/data/ability_values.rs (calculate_skill_damage, calculate_skill_adjust_value, calculate_npc, calculate_levelup_reward_skill_points)
     - crates/rose-data-irose/src/skill_database.rs (get_cooldown, load_skill)
-  data: LIST_SKILL.STB, LIST_STATUS.STB, LIST_CLASS.STB (job classes), the monster resources in godot/data/monsters/ (summons)
+  data: the skill resources in godot/data/skills/ (a folder per skill, a file per level), the status effects in godot/data/status_effects/, the job classes in godot/data/job_classes/, the monster resources in godot/data/monsters/ (summons)
 ---
 # Skills
 
@@ -63,7 +63,7 @@ tables. Buffs and debuffs are explained in detail on
 - **Requirements.** To learn a skill (or raise it a level) you need all of these, checked
   in this order:
   1. enough skill points for that level (the `learn_points` column),
-  2. the right job: the skill page's `job` names a job class from LIST_CLASS.STB, and your
+  2. the right job: the skill page's `job` names a job class (godot/data/job_classes/), and your
      job must be one of the jobs in it ("any" means every job),
   3. the other skills in the `needs` column at the levels shown,
   4. the stats in `needs_level` and `needs` (for example level 25, or a minimum STR).
@@ -74,9 +74,10 @@ tables. Buffs and debuffs are explained in detail on
 
 ## Levelling skills
 
-Each level of a skill is its own row in LIST_SKILL.STB (the `id` column of the levels
-table). To raise a skill, click its level-up button in the skill window: the next level
-must be the next row with the same base skill, and you must meet that level's
+Each level of a skill is its own skill resource with its own id (the `id` column of the
+levels table), all in the skill's folder in godot/data/skills/. To raise a skill, click its
+level-up button in the skill window: the next level must be the one with the same base skill
+(`base_skill_id`) and the next `level`, and you must meet that level's
 requirements (points, job, skills, stats) as when learning. The cost is that level's
 `learn_points`. A skill at its last level (`max_level`) can't go higher.
 
@@ -348,7 +349,7 @@ The data block at the top gives the skill as a whole: `type`, `job` (who can lea
 
 | Column | Meaning |
 | --- | --- |
-| level, id | the level, and its row in LIST_SKILL.STB |
+| level, id | the level, and its id (the number of its skill resource) |
 | needs_level | the character level needed to learn this level |
 | needs | other skills (at the level shown) and stats needed |
 | learn_points | skill points this level costs |
@@ -390,7 +391,7 @@ How to read `changes`:
 - **Summons** stay until their owner dies, logs out or changes zone. Their lifetime
   status effect (summons slowly losing HP) is not applied.
 
-> Open question: a skill's casting and action motion speeds (LIST_SKILL.STB columns 53 and 69) multiply the motion's length, so a speed of 200% makes the cast take twice as long instead of half. Check against iROSE.
+> Open question: a skill's casting and action motion speeds (`casting_motion_speed` and `action_motion_speed` in the skill resources, iROSE's LIST_SKILL.STB columns 53 and 69) multiply the motion's length, so a speed of 200% makes the cast take twice as long instead of half. Check against iROSE.
 
 > Open question: a missed skill hit still deals the minimum 5 damage, and damaging skills try their status effects on a target even when the hit missed. iROSE may deal no damage and give no effects on a miss.
 

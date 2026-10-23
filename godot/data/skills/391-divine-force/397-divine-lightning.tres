@@ -1,0 +1,43 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://co2c7qu1tbvwd"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://dbi4ro2cc5h50" path="res://data/status_effects/23-magic-resistance-down.tres" id="1_ae55g"]
+
+[resource]
+id = 397
+name = "Divine Lightning"
+description = "Shoot a Lightning beam to inflict damage onto a target and decrease Magic Resistance of nearby enemies at the same time."
+base_skill_id = 391
+level = 7
+skill_type = "FireBullet"
+page = 1
+icon_number = 39
+learn_point_cost = 57
+required_planet = 2300
+use_stat_1 = "Mana"
+use_stat_1_value = 54
+cooldown_ms = 11200
+target_filter = "Enemy"
+cast_range = 2300
+scope = 450
+action_mode = "Restore"
+damage_type = "MagicAttack"
+power = 150
+item_make_number = 150
+success_ratio = 72
+status_effect_1 = ExtResource("1_ae55g")
+status_effect_seconds = 19
+add_stat_1 = "Resistance"
+add_stat_1_rate = 31
+warp_zone = 21
+warp_y = 31000
+casting_motion_id = 101
+casting_repeat_motion_id = 102
+casting_effect_1 = 1605
+casting_effect_2 = 1606
+casting_effect_2_point = 1
+action_motion_id = 103
+bullet_effect_id = 252
+bullet_point = 1
+bullet_fire_sound_id = 90
+hit_effect_file_id = 1122
+hit_sound_id = 67

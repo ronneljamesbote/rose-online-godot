@@ -1,0 +1,34 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://kfd8pxh5b11k"]
+
+[ext_resource type="RoseStatusEffect" uid="uid://y3o38pfqjw7r" path="res://data/status_effects/51-atk-accuracy-up.tres" id="1_57m8s"]
+[ext_resource type="RoseStatusEffect" uid="uid://bv82uk3fnila2" path="res://data/status_effects/52-cri-up.tres" id="2_vwyr0"]
+
+[resource]
+id = 3111
+skill_type = "SelfBoundDuration"
+page = 1
+icon_number = 127
+learn_point_cost = 16
+use_stat_1 = "Stamina"
+use_stat_1_value = 500
+action_mode = "Restore"
+status_effect_1 = ExtResource("1_57m8s")
+status_effect_2 = ExtResource("2_vwyr0")
+status_effect_seconds = 420
+add_stat_1 = "Hit"
+add_stat_1_value = 50
+add_stat_1_rate = 20
+add_stat_2 = "Critical"
+add_stat_2_value = 50
+add_stat_2_rate = 20
+warp_zone = 20
+warp_x = 50000
+warp_y = 20000
+casting_motion_id = 114
+casting_repeat_motion_id = 134
+casting_effect_1 = 1754
+casting_effect_2 = 1763
+casting_effect_2_point = 3
+casting_effect_3 = 1771
+casting_effect_3_point = 3
+action_motion_id = 153

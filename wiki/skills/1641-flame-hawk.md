@@ -94,7 +94,7 @@ levels:
   range: 40
   cooldown: 21.6
 source:
-  data: LIST_SKILL.STB rows 1641, 1642, 1643, 1644, 1645, 1646, 1647, 1648, 1649, 1650
+  data: godot/data/skills/1641-flame-hawk/ (levels 1641, 1642, 1643, 1644, 1645, 1646, 1647, 1648, 1649, 1650)
   code: module/src/skills.rs
 ---
 # Flame Hawk

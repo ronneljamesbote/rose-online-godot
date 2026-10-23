@@ -139,7 +139,7 @@ levels:
   effects: Magic Resistance Down
   changes: Magic Resistance -35%
 source:
-  data: LIST_SKILL.STB rows 391, 392, 393, 394, 395, 396, 397, 398, 399, 400
+  data: godot/data/skills/391-divine-force/ (levels 391, 392, 393, 394, 395, 396, 397, 398, 399, 400)
   code: module/src/skills.rs
 ---
 # Divine Force

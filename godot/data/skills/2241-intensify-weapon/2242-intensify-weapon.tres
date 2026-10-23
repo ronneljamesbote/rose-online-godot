@@ -1,0 +1,39 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://lgxhjy5m2vsl"]
+
+[ext_resource type="RoseSkill" uid="uid://pusmnipniy8s" path="res://data/skills/2141-arms-mastery/2141-arms-mastery.tres" id="1_fjqhi"]
+[ext_resource type="RoseStatusEffect" uid="uid://culcqkn47b52" path="res://data/status_effects/16-haste-attack.tres" id="2_1rccg"]
+
+[resource]
+id = 2242
+name = "Intensify Weapon"
+description = "Increase the caster's Attack Speed for skill's duration."
+base_skill_id = 2241
+level = 2
+skill_type = "SelfBoundDuration"
+page = 1
+icon_number = 176
+learn_point_cost = 13
+required_skill_1 = ExtResource("1_fjqhi")
+required_skill_1_level = 4
+required_item_class_1 = "Gun"
+required_item_class_2 = "Launcher"
+use_stat_1 = "Mana"
+use_stat_1_value = 32
+cooldown_ms = 132000
+action_mode = "Restore"
+status_effect_1 = ExtResource("2_1rccg")
+status_effect_seconds = 102
+add_stat_1 = "AttackSpeed"
+add_stat_1_value = 28
+warp_zone = 24
+warp_x = 28000
+casting_motion_id = 114
+casting_repeat_motion_id = 134
+casting_effect_1 = 1754
+casting_effect_2 = 1763
+casting_effect_2_point = 3
+casting_effect_3 = 1771
+casting_effect_3_point = 3
+action_motion_id = 153
+bullet_effect_id = 221
+bullet_point = 3

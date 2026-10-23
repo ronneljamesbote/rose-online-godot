@@ -126,7 +126,7 @@ levels:
   effects: Dodge Rate Down
   changes: Dodge Rate -40%
 source:
-  data: LIST_SKILL.STB rows 1861, 1862, 1863, 1864, 1865, 1866, 1867, 1868, 1869, 1870
+  data: godot/data/skills/1861-bloody-dust/ (levels 1861, 1862, 1863, 1864, 1865, 1866, 1867, 1868, 1869, 1870)
   code: module/src/skills.rs
 ---
 # Bloody Dust

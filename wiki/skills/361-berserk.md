@@ -192,7 +192,7 @@ levels:
   effects: Atk Power Increased, Def Down
   changes: Attack Power -100, Defense -35
 source:
-  data: LIST_SKILL.STB rows 361, 362, 363, 364, 365, 366, 367, 368, 369, 370, 371, 372, 373, 374, 375, 376, 377, 378, 379, 380
+  data: godot/data/skills/361-berserk/ (levels 361, 362, 363, 364, 365, 366, 367, 368, 369, 370, 371, 372, 373, 374, 375, 376, 377, 378, 379, 380)
   code: module/src/skills.rs
 ---
 # Berserk

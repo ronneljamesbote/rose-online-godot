@@ -17,7 +17,7 @@ levels:
   learn_points: 0
   cooldown: 3
 source:
-  data: LIST_SKILL.STB rows 48
+  data: godot/data/skills/40-breakdown/ (levels 48)
   code: module/src/skills.rs
 ---
 # Breakdown

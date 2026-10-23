@@ -1,0 +1,36 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://l375k8en1gqo"]
+
+[ext_resource type="RoseJobClass" uid="uid://wxui6m5s8xot" path="res://data/job_classes/63-mage-job.tres" id="1_8fr63"]
+[ext_resource type="RoseSkill" uid="uid://cctctgoq3grrx" path="res://data/skills/801-staff-mastery/801-staff-mastery.tres" id="2_lsqse"]
+
+[resource]
+id = 1086
+name = "Tornado"
+description = "Summon a tornado to do enormous damage on many foes."
+base_skill_id = 1081
+level = 6
+skill_type = "SelfDamage"
+page = 1
+icon_number = 80
+learn_point_cost = 60
+required_job_class = ExtResource("1_8fr63")
+required_skill_1 = ExtResource("2_lsqse")
+required_skill_1_level = 13
+required_item_class_1 = "MagicStaff"
+required_item_class_2 = "MagicWand"
+use_stat_1 = "Mana"
+use_stat_1_value = 85
+cooldown_ms = 16000
+target_filter = "Enemy"
+scope = 1300
+damage_type = "MagicAttack"
+power = 135
+harm = 1
+item_make_number = 135
+casting_motion_id = 115
+casting_repeat_motion_id = 135
+casting_effect_2 = 1764
+casting_effect_3 = 1631
+action_motion_id = 172
+hit_effect_file_id = 1121
+hit_sound_id = 1576

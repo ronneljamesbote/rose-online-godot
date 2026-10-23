@@ -17,7 +17,7 @@ levels:
   learn_points: 0
   cooldown: 3
 source:
-  data: LIST_SKILL.STB rows 47
+  data: godot/data/skills/47-fight-cheer/ (levels 47)
   code: module/src/skills.rs
 ---
 # Fight Cheer

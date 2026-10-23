@@ -1,0 +1,47 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://dqime0liyq3i8"]
+
+[ext_resource type="RoseJobClass" uid="uid://dwxgadb8sumfe" path="res://data/job_classes/62-champion-job.tres" id="1_wr2wi"]
+[ext_resource type="RoseSkill" uid="uid://dgmld7fjdyp34" path="res://data/skills/301-heavy-attack/301-heavy-attack.tres" id="2_yyks7"]
+
+[resource]
+id = 661
+name = "Space Attack"
+description = "Shoot a spirit sphere at an enemy from a distance."
+skill_type = "FireBullet"
+page = 1
+icon_number = 199
+learn_point_cost = 30
+required_job_class = ExtResource("1_wr2wi")
+required_planet = 2000
+required_skill_1 = ExtResource("2_yyks7")
+required_skill_1_level = 10
+required_item_class_1 = "OneHandedSword"
+required_item_class_2 = "OneHandedBlunt"
+required_item_class_3 = "TwoHandedSword"
+required_item_class_4 = "Spear"
+required_item_class_5 = "TwoHandedAxe"
+use_stat_1 = "Mana"
+use_stat_1_value = 40
+cooldown_ms = 7000
+target_filter = "Enemy"
+cast_range = 2000
+action_mode = "Attack"
+damage_type = "WeaponAttack"
+power = 100
+harm = 1
+item_make_number = 100
+casting_motion_id = 129
+casting_repeat_motion_id = 149
+casting_effect_1 = 1041
+casting_effect_1_point = 3
+casting_effect_2 = 1042
+casting_effect_2_point = 3
+casting_effect_3 = 1043
+casting_effect_3_point = 0
+casting_effect_4 = 1043
+casting_effect_4_point = 1
+action_motion_id = 178
+bullet_effect_id = 253
+bullet_fire_sound_id = 90
+hit_effect_file_id = 1040
+hit_sound_id = 1551

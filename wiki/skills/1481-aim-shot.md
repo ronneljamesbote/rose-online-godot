@@ -84,7 +84,7 @@ levels:
   power: 100
   cooldown: 6.8
 source:
-  data: LIST_SKILL.STB rows 1481, 1482, 1483, 1484, 1485, 1486, 1487, 1488, 1489, 1490
+  data: godot/data/skills/1481-aim-shot/ (levels 1481, 1482, 1483, 1484, 1485, 1486, 1487, 1488, 1489, 1490)
   code: module/src/skills.rs
 ---
 # Aim Shot

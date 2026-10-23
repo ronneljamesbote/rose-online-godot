@@ -109,7 +109,7 @@ levels:
   success: 50
   effects: Fainted
 source:
-  data: LIST_SKILL.STB rows 1701, 1702, 1703, 1704, 1705, 1706, 1707, 1708, 1709, 1710
+  data: godot/data/skills/1701-hawk-shot/ (levels 1701, 1702, 1703, 1704, 1705, 1706, 1707, 1708, 1709, 1710)
   code: module/src/skills.rs
 ---
 # Hawk Shot

@@ -92,7 +92,7 @@ levels:
   cooldown: 5.2
   changes: HP +520
 source:
-  data: LIST_SKILL.STB rows 921, 922, 923, 924, 925, 926, 927, 928, 929, 930
+  data: godot/data/skills/921-healing/ (levels 921, 922, 923, 924, 925, 926, 927, 928, 929, 930)
   code: module/src/skills.rs
 ---
 # Healing

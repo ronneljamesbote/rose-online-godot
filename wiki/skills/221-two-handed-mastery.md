@@ -54,7 +54,7 @@ levels:
   learn_points: 77
   changes: Two-Handed Weapon Attack Power +110
 source:
-  data: LIST_SKILL.STB rows 221, 222, 223, 224, 225, 226, 227, 228, 229, 230
+  data: godot/data/skills/221-two-handed-mastery/ (levels 221, 222, 223, 224, 225, 226, 227, 228, 229, 230)
   code: module/src/skills.rs
 ---
 # Two-Handed Mastery

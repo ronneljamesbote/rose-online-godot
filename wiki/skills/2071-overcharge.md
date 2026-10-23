@@ -62,7 +62,7 @@ levels:
   learn_points: 114
   changes: Sales Premium +16
 source:
-  data: LIST_SKILL.STB rows 2071, 2072, 2073, 2074, 2075, 2076, 2077, 2078, 2079, 2080
+  data: godot/data/skills/2071-overcharge/ (levels 2071, 2072, 2073, 2074, 2075, 2076, 2077, 2078, 2079, 2080)
   code: module/src/skills.rs
 ---
 # Overcharge

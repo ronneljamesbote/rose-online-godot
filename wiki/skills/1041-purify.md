@@ -42,7 +42,7 @@ levels:
   success: 100
   effects: Recovery
 source:
-  data: LIST_SKILL.STB rows 1041, 1042, 1043
+  data: godot/data/skills/1041-purify/ (levels 1041, 1042, 1043)
   code: module/src/skills.rs
 ---
 # Purify

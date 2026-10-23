@@ -57,7 +57,7 @@ levels:
   learn_points: 44
   changes: Movement Speed +150
 source:
-  data: LIST_SKILL.STB rows 281, 282, 283, 284, 285, 286, 287, 288, 289, 290
+  data: godot/data/skills/281-quick-step/ (levels 281, 282, 283, 284, 285, 286, 287, 288, 289, 290)
   code: module/src/skills.rs
 ---
 # Quick Step

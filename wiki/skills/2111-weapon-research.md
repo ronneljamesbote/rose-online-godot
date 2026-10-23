@@ -113,7 +113,7 @@ levels:
   learn_points: 29
   changes: Concentration +20
 source:
-  data: LIST_SKILL.STB rows 2111, 2112, 2113, 2114, 2115, 2116, 2117, 2118, 2119, 2120, 2121, 2122, 2123, 2124, 2125, 2126, 2127, 2128, 2129, 2130
+  data: godot/data/skills/2111-weapon-research/ (levels 2111, 2112, 2113, 2114, 2115, 2116, 2117, 2118, 2119, 2120, 2121, 2122, 2123, 2124, 2125, 2126, 2127, 2128, 2129, 2130)
   code: module/src/skills.rs
 ---
 # Weapon Research

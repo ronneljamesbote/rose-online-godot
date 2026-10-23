@@ -63,7 +63,7 @@ levels:
   learn_points: 51
   changes: Defense +60
 source:
-  data: LIST_SKILL.STB rows 2131, 2132, 2133, 2134, 2135, 2136, 2137, 2138, 2139, 2140
+  data: godot/data/skills/2131-armor-research/ (levels 2131, 2132, 2133, 2134, 2135, 2136, 2137, 2138, 2139, 2140)
   code: module/src/skills.rs
 ---
 # Armor Research

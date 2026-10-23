@@ -1,0 +1,22 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://l3hqeaxjlnoe"]
+
+[ext_resource type="RoseJobClass" uid="uid://c5i5b3a7tmcmv" path="res://data/job_classes/67-bourgeois-job.tres" id="1_7ccci"]
+[ext_resource type="RoseSkill" uid="uid://cagy6s3a74urs" path="res://data/skills/2001-market-research/2001-market-research.tres" id="2_43mhv"]
+
+[resource]
+id = 2096
+name = "Stockpile"
+description = "Increase the chance of obtaining items from monsters. "
+base_skill_id = 2091
+level = 6
+skill_type = "Passive"
+page = 2
+icon_number = 169
+learn_point_cost = 32
+required_job_class = ExtResource("1_7ccci")
+required_skill_1 = ExtResource("2_43mhv")
+required_skill_1_level = 10
+add_stat_1 = "PassiveDropRate"
+add_stat_1_value = 14
+warp_zone = 63
+warp_x = 14000

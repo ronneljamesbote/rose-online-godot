@@ -112,7 +112,7 @@ levels:
   effects: Atk Accuracy Up
   changes: Attack Accuracy +80
 source:
-  data: LIST_SKILL.STB rows 1221, 1222, 1223, 1224, 1225, 1226, 1227, 1228, 1229, 1230
+  data: godot/data/skills/1221-hit-support/ (levels 1221, 1222, 1223, 1224, 1225, 1226, 1227, 1228, 1229, 1230)
   code: module/src/skills.rs
 ---
 # Hit Support

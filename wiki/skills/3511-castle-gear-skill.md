@@ -23,7 +23,7 @@ levels:
   effects: Magic Resistance Down
   changes: Magic Resistance -25%
 source:
-  data: LIST_SKILL.STB rows 3511
+  data: godot/data/skills/3511-castle-gear-skill/ (levels 3511)
   code: module/src/skills.rs
 ---
 # Castle Gear Skill

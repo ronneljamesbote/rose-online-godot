@@ -1,0 +1,35 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://bp38sdafa44lc"]
+
+[ext_resource type="RoseSkill" uid="uid://kvqch3j56u15" path="res://data/skills/2021-marksmanship/2021-marksmanship.tres" id="1_1e1sy"]
+
+[resource]
+id = 2216
+name = "Sniping Shot"
+description = "Inflict a great amount of damage to a target."
+base_skill_id = 2211
+level = 6
+skill_type = "Immediate"
+page = 1
+icon_number = 219
+learn_point_cost = 75
+required_skill_1 = ExtResource("1_1e1sy")
+required_skill_1_level = 15
+required_item_class_1 = "Gun"
+required_item_class_2 = "Launcher"
+use_stat_1 = "Mana"
+use_stat_1_value = 75
+cooldown_ms = 11200
+target_filter = "Enemy"
+action_mode = "Restore"
+damage_type = "WeaponAttack"
+power = 230
+harm = 1
+item_make_number = 230
+casting_motion_id = 95
+casting_repeat_motion_id = 96
+action_motion_id = 97
+bullet_effect_id = 262
+bullet_point = 1
+bullet_fire_sound_id = 148
+hit_effect_file_id = 110
+hit_sound_id = 67

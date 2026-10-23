@@ -18,7 +18,7 @@ levels:
   cost: MP 5
   range: 0
 source:
-  data: LIST_SKILL.STB rows 14
+  data: godot/data/skills/14-levitation/ (levels 14)
   code: module/src/skills.rs
 ---
 # Levitation

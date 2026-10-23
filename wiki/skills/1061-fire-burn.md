@@ -139,7 +139,7 @@ levels:
   effects: Def Down
   changes: Defense -20%
 source:
-  data: LIST_SKILL.STB rows 1061, 1062, 1063, 1064, 1065, 1066, 1067, 1068, 1069, 1070
+  data: godot/data/skills/1061-fire-burn/ (levels 1061, 1062, 1063, 1064, 1065, 1066, 1067, 1068, 1069, 1070)
   code: module/src/skills.rs
 ---
 # Fire Burn

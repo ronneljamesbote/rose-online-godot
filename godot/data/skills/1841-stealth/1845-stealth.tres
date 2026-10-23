@@ -1,0 +1,30 @@
+[gd_resource type="RoseSkill" format=3 uid="uid://brgxwcp0lkibb"]
+
+[ext_resource type="RoseSkill" uid="uid://snetdougy40b" path="res://data/skills/1831-mana-blood/1831-mana-blood.tres" id="1_4f0rr"]
+[ext_resource type="RoseStatusEffect" uid="uid://c2ch5i6r1df36" path="res://data/status_effects/33-camouflage.tres" id="2_tfrek"]
+
+[resource]
+id = 1845
+name = "Stealth"
+description = "Enables its caster to be invisible while moving or resting.  Attacking enemy cancels the invisible mode."
+base_skill_id = 1841
+level = 5
+skill_type = "SelfStateDuration"
+page = 1
+icon_number = 131
+learn_point_cost = 40
+required_skill_1 = ExtResource("1_4f0rr")
+required_skill_1_level = 5
+use_stat_1 = "Mana"
+use_stat_1_value = 42
+cooldown_ms = 104000
+status_effect_1 = ExtResource("2_tfrek")
+status_effect_seconds = 90
+casting_motion_id = 114
+casting_repeat_motion_id = 134
+casting_effect_1 = 1754
+casting_effect_2 = 1763
+casting_effect_2_point = 3
+casting_effect_3 = 1771
+casting_effect_3_point = 3
+action_motion_id = 153
