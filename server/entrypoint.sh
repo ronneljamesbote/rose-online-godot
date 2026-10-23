@@ -59,7 +59,7 @@ export ROSE_OVERRIDES=/opt/rose/overrides/game-data.toml
 export ROSE_MOTIONS=/opt/rose/overrides/motions.toml
 export ROSE_ZONES=/opt/rose/overrides/zones
 export ROSE_DATA=/opt/rose/overrides/data
-OVERRIDES_SUM=$(cat "$ROSE_OVERRIDES" "$ROSE_MOTIONS" "$ROSE_ZONES"/*.toml "$ROSE_DATA"/items/*.toml 2>/dev/null | sha256sum | cut -d" " -f1)
+OVERRIDES_SUM=$(cat "$ROSE_OVERRIDES" "$ROSE_MOTIONS" "$ROSE_ZONES"/*.toml "$ROSE_DATA"/*.toml "$ROSE_DATA"/items/*.toml 2>/dev/null | sha256sum | cut -d" " -f1)
 if [ "$READY" != "0" ] && [ "$OVERRIDES_SUM" != "$(cat /data/overrides.sha256 2>/dev/null)" ]; then
   echo "rose: the game data overrides changed, uploading the game data again"
   ROSE_UPLOAD_GAME_DATA=1

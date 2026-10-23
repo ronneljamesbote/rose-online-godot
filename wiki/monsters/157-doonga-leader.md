@@ -194,7 +194,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 157, ITEM_DROP.STB row 176
+  data: godot/data/monsters/157-doonga-leader.tres, drop table godot/data/drop_tables/176-doonga-leader.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

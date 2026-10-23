@@ -107,7 +107,7 @@ spawns:
   count: 1
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 24, ITEM_DROP.STB row 111
+  data: godot/data/monsters/24-cowboy-pumpkin.tres, drop table godot/data/drop_tables/111-cowboy-pumpkin.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

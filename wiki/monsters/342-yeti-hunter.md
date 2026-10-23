@@ -633,7 +633,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 342, ITEM_DROP.STB row 361
+  data: godot/data/monsters/342-yeti-hunter.tres, drop table godot/data/drop_tables/361-yeti-hunter.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

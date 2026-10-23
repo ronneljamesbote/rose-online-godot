@@ -36,7 +36,7 @@ source:
     - module/src/character.rs (levelup triggers)
     - godot/scripts/quest_window.gd
     - godot/rust/src/net.rs (get_quests, time_left)
-  data: "LIST_QUEST.STB (quest names, text and time limits), QSD quest trigger files, LIST_NPC.STB (each monster's death trigger)"
+  data: "LIST_QUEST.STB (quest names, text and time limits), QSD quest trigger files, the monster resources in godot/data/monsters/ (death_quest_trigger_name)"
 ---
 # Quests
 

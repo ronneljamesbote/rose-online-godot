@@ -141,7 +141,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 271, ITEM_DROP.STB row 226
+  data: godot/data/monsters/271-goblin-worker.tres, drop table godot/data/drop_tables/226-goblin-worker.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

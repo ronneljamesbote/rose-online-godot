@@ -115,7 +115,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 211, ITEM_DROP.STB row 206
+  data: godot/data/monsters/211-junon-s-kingkong.tres, drop table godot/data/drop_tables/206-junon-s-kingkong.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

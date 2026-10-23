@@ -9,7 +9,7 @@ locations:
   x: 5819.4
   y: 4634.7
 source:
-  data: 'LIST_NPC.STB row 1260; dialog '
+  data: 'godot/data/npcs/1260-sikuku-residents-parah.tres; dialog '
   code:
   - module/src/npcs.rs
   - godot/rust/src/conversation.rs

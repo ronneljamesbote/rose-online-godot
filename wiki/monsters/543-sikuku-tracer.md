@@ -91,7 +91,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 543, ITEM_DROP.STB row 462
+  data: godot/data/monsters/543-sikuku-tracer.tres, drop table godot/data/drop_tables/462-sikuku-tracer.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

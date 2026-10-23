@@ -125,7 +125,7 @@ spawns:
   count: 1
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 53, ITEM_DROP.STB row 123
+  data: godot/data/monsters/53-old-smouly.tres, drop table godot/data/drop_tables/123-old-smouly.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

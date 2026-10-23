@@ -505,7 +505,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 341, ITEM_DROP.STB row 360
+  data: godot/data/monsters/341-yeti.tres, drop table godot/data/drop_tables/360-yeti.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

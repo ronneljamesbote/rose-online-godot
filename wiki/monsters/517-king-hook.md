@@ -105,7 +105,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 517, ITEM_DROP.STB row 442
+  data: godot/data/monsters/517-king-hook.tres, drop table godot/data/drop_tables/442-king-hook.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

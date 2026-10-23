@@ -41,6 +41,7 @@ pub enum NpcMotionAction {
     Etc,
 }
 
+#[derive(Debug)]
 pub struct NpcData {
     pub id: NpcId,
     pub name: &'static str,
@@ -88,6 +89,7 @@ pub struct NpcData {
     pub motion_data: Vec<(MotionId, MotionFileData)>,
 }
 
+#[derive(Debug)]
 pub struct NpcConversationData {
     pub index: usize,
     pub name: String,
@@ -96,6 +98,7 @@ pub struct NpcConversationData {
     pub filename: String,
 }
 
+#[derive(Debug)]
 pub struct NpcStoreTabData {
     pub name: &'static str,
     pub items: HashMap<u16, ItemReference>,
@@ -107,6 +110,9 @@ pub struct NpcDatabaseOptions {
 
 pub struct NpcDatabase {
     _string_database: Arc<StringDatabase>,
+    /// The names the NPCs and shop tabs point into when they don't come from the string
+    /// database (the data export, see `with_text`).
+    _text: Vec<String>,
     npcs: Vec<Option<NpcData>>,
     conversation_files: HashMap<String, NpcConversationData>,
     store_tabs: HashMap<NpcStoreTabId, NpcStoreTabData>,
@@ -123,11 +129,24 @@ impl NpcDatabase {
     ) -> Self {
         Self {
             _string_database: string_database,
+            _text: Vec::new(),
             npcs,
             conversation_files,
             store_tabs,
             action_map,
         }
+    }
+
+    /// Keeps `text` alive as long as the database: the NPCs' and shop tabs' `&'static str`
+    /// names may point into it.
+    pub fn with_text(mut self, text: Vec<String>) -> Self {
+        self._text = text;
+        self
+    }
+
+    /// Every shop tab, in no particular order.
+    pub fn store_tabs(&self) -> impl Iterator<Item = (NpcStoreTabId, &NpcStoreTabData)> {
+        self.store_tabs.iter().map(|(id, tab)| (*id, tab))
     }
 
     pub fn get_npc(&self, id: NpcId) -> Option<&NpcData> {

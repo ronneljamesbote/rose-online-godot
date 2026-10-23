@@ -407,7 +407,7 @@ spawns:
   count: 2
   group: basic
 source:
-  data: LIST_NPC.STB row 111, ITEM_DROP.STB row 150
+  data: godot/data/monsters/111-moldie.tres, drop table godot/data/drop_tables/150-moldie.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

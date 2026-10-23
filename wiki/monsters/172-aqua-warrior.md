@@ -171,7 +171,7 @@ spawns:
   count: 2
   group: basic
 source:
-  data: LIST_NPC.STB row 172, ITEM_DROP.STB row 187
+  data: godot/data/monsters/172-aqua-warrior.tres, drop table godot/data/drop_tables/187-aqua-warrior.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

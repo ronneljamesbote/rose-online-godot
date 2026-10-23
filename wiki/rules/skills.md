@@ -41,7 +41,7 @@ source:
     - module/src/lib.rs (deal_damage, combat_tick, move_to, attack, stop, sit)
     - crates/rose-game-irose/src/data/ability_values.rs (calculate_skill_damage, calculate_skill_adjust_value, calculate_npc, calculate_levelup_reward_skill_points)
     - crates/rose-data-irose/src/skill_database.rs (get_cooldown, load_skill)
-  data: LIST_SKILL.STB, LIST_STATUS.STB, LIST_CLASS.STB (job classes), LIST_NPC.STB (summons)
+  data: LIST_SKILL.STB, LIST_STATUS.STB, LIST_CLASS.STB (job classes), the monster resources in godot/data/monsters/ (summons)
 ---
 # Skills
 
@@ -300,7 +300,7 @@ Summoning skills (`summons` on the skill page, for example
 you, on your side.
 
 - **Summon points.** You have **50** summon points, plus what passive skills add. Each
-  summon uses the points in its monster's data (LIST_NPC.STB); the ButterFly uses 30. A
+  summon uses the points in its monster's data (`summon_point_requirement`); the ButterFly uses 30. A
   summon that would go over your points fails ("you can't summon any more").
 - **Its stats** come from the monster's data, scaled by your level $L_o$ and the skill's
   level $k$ (all rounded down). Its level is your level.

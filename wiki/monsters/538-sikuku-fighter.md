@@ -126,7 +126,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 538, ITEM_DROP.STB row 456
+  data: godot/data/monsters/538-sikuku-fighter.tres, drop table godot/data/drop_tables/456-sikuku-fighter.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

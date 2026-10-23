@@ -27,12 +27,12 @@ source:
     - module/src/skills.rs (npc_cast, taunter, taunt_tick, is_invisible, summon_tick)
     - module/src/world.rs (spawn_monster)
     - crates/rose-file-readers/src/aip.rs
-  data: LIST_NPC.STB (AI file of each monster), 3DDATA/AI/*.AIP
+  data: the monster resources in godot/data/monsters/ (ai_file_index), FILE_AI.STB, 3DDATA/AI/*.AIP
 ---
 # Monster behaviour
 
-Every monster type has an **AI script** (an AIP file from the iROSE data, named in
-LIST_NPC.STB). The script decides whether the monster wanders, attacks players on sight,
+Every monster type has an **AI script** (an AIP file from the iROSE data, named by the
+monster's `ai_file_index`). The script decides whether the monster wanders, attacks players on sight,
 fights back, calls friends for help, runs away or uses skills. The server runs the same
 scripts the original game used, so each monster behaves as its data says. On top of the
 scripts, the server has a few fixed rules: chasing, giving up and walking home.

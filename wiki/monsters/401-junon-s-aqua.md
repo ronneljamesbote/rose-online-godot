@@ -65,7 +65,7 @@ drops:
 quests:
 - '[[quests/1980-mana-engine-begotten-devil-pest|Mana Engine Begotten: Devil Pest]]'
 source:
-  data: LIST_NPC.STB row 401, ITEM_DROP.STB row 301
+  data: godot/data/monsters/401-junon-s-aqua.tres, drop table godot/data/drop_tables/301-junon-s-aqua.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

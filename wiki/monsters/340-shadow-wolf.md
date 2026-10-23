@@ -734,7 +734,7 @@ spawns:
   count: 3
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 340, ITEM_DROP.STB row 359
+  data: godot/data/monsters/340-shadow-wolf.tres, drop table godot/data/drop_tables/359-shadow-wolf-wolf-keeper.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

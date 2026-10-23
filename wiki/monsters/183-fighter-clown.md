@@ -156,7 +156,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 183, ITEM_DROP.STB row 193
+  data: godot/data/monsters/183-fighter-clown.tres, drop table godot/data/drop_tables/193-fighter-clown.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

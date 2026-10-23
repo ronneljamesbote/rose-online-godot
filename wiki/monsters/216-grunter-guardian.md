@@ -60,7 +60,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 216, ITEM_DROP.STB row 272
+  data: godot/data/monsters/216-grunter-guardian.tres, drop table godot/data/drop_tables/272-grunter-guardian.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

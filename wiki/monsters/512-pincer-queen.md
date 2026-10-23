@@ -105,7 +105,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 512, ITEM_DROP.STB row 438
+  data: godot/data/monsters/512-pincer-queen.tres, drop table godot/data/drop_tables/438-pincer-queen.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

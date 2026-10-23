@@ -101,6 +101,39 @@ fn load_items(vfs: &VirtualFilesystem, strings: Arc<StringDatabase>) -> Result<I
     rose_data_irose::get_item_database(vfs, strings)
 }
 
+/// The monsters, NPCs and shop tabs from the export, or without one from the iROSE tables.
+/// Their models and motions still come from LIST_NPC.CHR.
+fn load_npcs(vfs: &VirtualFilesystem, strings: Arc<StringDatabase>) -> Result<NpcDatabase, anyhow::Error> {
+    let options = NpcDatabaseOptions { load_frame_data: false };
+    if let Some(dir) = find_export() {
+        let toml = rose_data_export::Format::Toml;
+        let export = rose_data_export::NpcsExport::from_files_as(toml, |name| {
+            let path = dir.join(rose_data_export::data_file_as(name, toml));
+            match std::fs::read_to_string(&path) {
+                Ok(text) => Ok(Some(text)),
+                Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(None),
+                Err(e) => Err(anyhow::Error::new(e).context(path.display().to_string())),
+            }
+        })?;
+        if let Some(export) = export {
+            godot::global::godot_print!(
+                "rose: {} monsters and {} NPCs from {}",
+                export.monsters.len(),
+                export.npcs.len(),
+                dir.display()
+            );
+            let models = rose_data_export::NpcModels {
+                motions: rose_data_irose::get_npc_motions(vfs, &options)?,
+                conversations: rose_data_irose::get_npc_conversations(vfs)?,
+                action_map: rose_data_irose::get_npc_action_map(),
+            };
+            return export.to_database(strings, models);
+        }
+    }
+    godot::global::godot_warn!("rose: no monster export (overrides/data/monsters.toml), the monsters and NPCs come from the iROSE tables");
+    rose_data_irose::get_npc_database(vfs, strings, &options)
+}
+
 pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
     if GAME_DATA.get().is_some() {
         return Ok(());
@@ -120,7 +153,7 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
     let skills = rose_data_irose::get_skill_database(&vfs, strings.clone())?;
     let status_effects = rose_data_irose::get_status_effect_database(&vfs, strings.clone())?;
     let quests = rose_data_irose::get_quest_database(&vfs, strings.clone())?;
-    let npcs = rose_data_irose::get_npc_database(&vfs, strings, &NpcDatabaseOptions { load_frame_data: false })?;
+    let npcs = load_npcs(&vfs, strings)?;
     let ltb_event = vfs.read_file::<LtbFile, _>("3DDATA/EVENT/ULNGTB_CON.LTB")?;
     let npc_chr = vfs.read_file::<ChrFile, _>("3DDATA/NPC/LIST_NPC.CHR")?;
     let motions = rose_data_irose::get_character_motion_database(

@@ -133,7 +133,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 182, ITEM_DROP.STB row 192
+  data: godot/data/monsters/182-clown.tres, drop table godot/data/drop_tables/192-clown.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

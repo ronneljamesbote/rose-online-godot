@@ -157,7 +157,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 175, ITEM_DROP.STB row 189
+  data: godot/data/monsters/175-aqua-ranger.tres, drop table godot/data/drop_tables/189-aqua-ranger.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

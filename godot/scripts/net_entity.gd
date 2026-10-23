@@ -117,7 +117,7 @@ func _build() -> void:
 	if model:
 		model.queue_free()
 	if is_monster or is_npc:
-		model = RoseNpc.new()
+		model = RoseNpcModel.new()
 		model.build(npc_id)
 		_idle = "stop"
 		_walk = "move"

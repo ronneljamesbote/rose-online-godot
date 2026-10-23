@@ -9,7 +9,7 @@ locations:
   x: 5425
   y: 4671.5
 source:
-  data: 'LIST_NPC.STB row 1230; dialog '
+  data: 'godot/data/npcs/1230-raknu-warrior-guanu.tres; dialog '
   code:
   - module/src/npcs.rs
   - godot/rust/src/conversation.rs

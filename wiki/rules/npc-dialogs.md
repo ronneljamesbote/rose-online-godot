@@ -31,7 +31,7 @@ source:
     - module/src/npcs.rs (Npc, spawn_npcs, NPC_VARIABLES)
     - module/src/npc_ai.rs (npc_ai_tick, run_trigger, run_npc_trigger, zone_time, is_daytime, npc_message)
     - crates/rose-quest/src/lib.rs (check_trigger, world_ticks)
-  data: "NPC dialog files 3Ddata\\Event\\*.con (menus and a Lua 4 script), EVENT string table (the text), LIST_NPC.STB (each NPC's AI file), NPC AI files (*.AIP), zone files (where NPCs stand and which dialog they use)"
+  data: "NPC dialog files 3Ddata\\Event\\*.con (menus and a Lua 4 script), EVENT string table (the text), the NPC resources in godot/data/npcs/ (each NPC's ai_file_index), NPC AI files (*.AIP), zone files (where NPCs stand and which dialog they use)"
 ---
 # NPC dialogs
 

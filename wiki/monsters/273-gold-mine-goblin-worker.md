@@ -185,7 +185,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 273, ITEM_DROP.STB row 228
+  data: godot/data/monsters/273-gold-mine-goblin-worker.tres, drop table godot/data/drop_tables/228-gold-mine-goblin-worker.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

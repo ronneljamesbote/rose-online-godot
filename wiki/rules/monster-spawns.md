@@ -23,7 +23,7 @@ source:
   code:
     - module/src/world.rs (setup_zones, spawn_tick, spawn_queue, spawn_monster)
     - module/src/lib.rs (spawn_tick timer, reset_monsters, kill, despawn)
-  data: zone IFO files (monster spawn blocks), LIST_ZONE.STB, LIST_NPC.STB
+  data: zone IFO files (monster spawn blocks) or the zone scenes' spawn markers (godot/zones/), LIST_ZONE.STB, the monster resources in godot/data/monsters/
 ---
 # Monster spawns
 

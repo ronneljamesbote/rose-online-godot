@@ -12,7 +12,7 @@ locations:
   x: 5494.8
   y: 4593.5
 source:
-  data: 'LIST_NPC.STB row 1237; dialog '
+  data: 'godot/data/npcs/1237-raknu-residents-netty.tres; dialog '
   code:
   - module/src/npcs.rs
   - godot/rust/src/conversation.rs

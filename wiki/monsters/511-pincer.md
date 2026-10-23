@@ -214,7 +214,7 @@ spawns:
   count: 2
   group: basic
 source:
-  data: LIST_NPC.STB row 511, ITEM_DROP.STB row 437
+  data: godot/data/monsters/511-pincer.tres, drop table godot/data/drop_tables/437-pincer.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

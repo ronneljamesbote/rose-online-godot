@@ -119,7 +119,7 @@ spawns:
   count: 2
   group: basic
 source:
-  data: LIST_NPC.STB row 151, ITEM_DROP.STB row 170
+  data: godot/data/monsters/151-doonga.tres, drop table godot/data/drop_tables/170-doonga.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

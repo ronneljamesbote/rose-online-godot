@@ -149,7 +149,7 @@ spawns:
   count: 1
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 85, ITEM_DROP.STB row 139
+  data: godot/data/monsters/85-turtle-guard.tres, drop table godot/data/drop_tables/139-turtle-guard.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

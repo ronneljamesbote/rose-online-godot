@@ -306,7 +306,7 @@ spawns:
   count: 1
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 369, ITEM_DROP.STB row 387
+  data: godot/data/monsters/369-winter-maul-leader.tres, drop table godot/data/drop_tables/387-vulcan-leader-winter-maul-leader.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

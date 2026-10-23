@@ -165,7 +165,7 @@ spawns:
   count: 2
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 82, ITEM_DROP.STB row 137
+  data: godot/data/monsters/82-beetle-fighter.tres, drop table godot/data/drop_tables/137-beetle-fighter.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

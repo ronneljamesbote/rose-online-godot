@@ -66,7 +66,7 @@ spawns:
   count: 2
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 478, ITEM_DROP.STB row 281
+  data: godot/data/monsters/478-tirwin.tres, drop table godot/data/drop_tables/281-tirwin.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

@@ -125,7 +125,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 103, ITEM_DROP.STB row 149
+  data: godot/data/monsters/103-woopie-glutton.tres, drop table godot/data/drop_tables/149-woopie-glutton.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

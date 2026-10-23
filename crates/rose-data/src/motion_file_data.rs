@@ -8,7 +8,7 @@ pub struct MotionId(u16);
 
 id_wrapper_impl!(MotionId, u16);
 
-#[derive(Clone, Default)]
+#[derive(Clone, Debug, Default)]
 pub struct MotionFileData {
     pub path: VfsPathBuf,
     pub duration: Duration,

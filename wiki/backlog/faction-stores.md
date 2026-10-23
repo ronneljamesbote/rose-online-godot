@@ -10,7 +10,7 @@ npcs:
   - "[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]"
   - "[[npcs/1112-arumic-researcher-carasia|Arumic Researcher Carasia]]"
 source:
-  data: LIST_NPC.STB column 20 (store faction number) rows 1109-1112; LIST_SELL.STB "Faction" tabs; LIST_UNION.STB and LIST_UNION_S.STL (factions); LIST_STRING.STL strings 250-253, 338, 381
+  data: the NPC resources godot/data/npcs/1109-* to 1112-* (store_union, iROSE LIST_NPC.STB column 20); their "Faction" tabs in godot/data/shop_tabs/; LIST_UNION.STB and LIST_UNION_S.STL (factions); LIST_STRING.STL strings 250-253, 338, 381
   reference: iROSE 129_129en client data; NpcStoreTransactionError::NotSameUnion and NotEnoughUnionPoints in crates/rose-game-common/src/messages/server.rs; module/src/npcs.rs
 ---
 # Faction Point Shops
@@ -27,7 +27,8 @@ through the quest system; spending the points at the Faction Point Shop does not
 
 ## How it works in iROSE 129
 
-Four NPCs are faction shops: LIST_NPC.STB column 20 holds their faction number. Each has a
+Four NPCs are faction shops: their `store_union` (LIST_NPC.STB column 20 in iROSE) holds
+their faction number. Each has a
 "Faction" tab of 25 items (faction clothing and gear) and a dialog choice "I'd like to use
 the Faction Point Shop" that opens it.
 

@@ -468,7 +468,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 11, ITEM_DROP.STB row 104
+  data: godot/data/monsters/11-mini-choropy.tres, drop table godot/data/drop_tables/104-mini-choropy.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

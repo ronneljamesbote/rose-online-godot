@@ -431,7 +431,7 @@ spawns:
   count: 2
   group: basic
 source:
-  data: LIST_NPC.STB row 113, ITEM_DROP.STB row 152
+  data: godot/data/monsters/113-gold-mine-moldie.tres, drop table godot/data/drop_tables/152-gold-mine-moldie-coal-mine-moldie.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

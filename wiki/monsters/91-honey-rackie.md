@@ -443,7 +443,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 91, ITEM_DROP.STB row 142
+  data: godot/data/monsters/91-honey-rackie.tres, drop table godot/data/drop_tables/142-honey-rackie.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

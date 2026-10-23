@@ -22,7 +22,7 @@ drop_money_rate: 0
 quests:
 - '[[quests/122-resurrection|Resurrection]]'
 source:
-  data: LIST_NPC.STB row 253, ITEM_DROP.STB row 0
+  data: godot/data/monsters/253-zombie.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

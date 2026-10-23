@@ -2,7 +2,10 @@
 //! rose-offline-server's `irose/data` (game data and character creator) without Bevy, so the
 //! same code runs natively and inside the SpacetimeDB module.
 
-use std::sync::Arc;
+use std::{
+    collections::{BTreeMap, BTreeSet},
+    sync::Arc,
+};
 
 use anyhow::Context;
 use rose_data::{
@@ -12,12 +15,13 @@ use rose_data::{
     ZoneDatabase, ZoneId, ZoneMonsterSpawnPoint, ZoneNpcSpawn,
 };
 use rose_data_irose::{
-    decode_item_base1000, encode_item_class, get_ai_database, get_character_motion_database, get_data_decoder,
-    get_item_database, get_job_class_database, get_npc_database, get_quest_database,
+    decode_item_base1000, encode_item_class, encode_item_type, get_ai_database, get_character_motion_database, get_data_decoder,
+    get_item_database, get_job_class_database, get_npc_action_map, get_npc_conversations, get_npc_database,
+    get_npc_motions, get_quest_database,
     get_skill_database, get_status_effect_database, get_string_database, get_warp_gate_database,
     get_zone_database,
 };
-use rose_data_export::{Format, ItemsExport};
+use rose_data_export::{npcs::DROP_ROW_COLUMNS, Format, ItemsExport, NpcModels, NpcsExport};
 use rose_file_readers::{stb_column, StbFile, VfsFile, VfsPathBuf, VirtualFilesystem};
 use rose_game_overrides::{MotionTimings, ZoneLayout};
 use glam::Vec3;
@@ -25,7 +29,7 @@ use rose_game_common::{
     components::BasicStats,
     data::{AbilityValueCalculator, DropTable},
 };
-use rose_game_irose::data::{get_ability_value_calculator, get_drop_table};
+use rose_game_irose::data::{get_ability_value_calculator, get_drop_table, get_drop_table_from_rows};
 
 pub struct GameData {
     pub character_creator: CharacterCreator,
@@ -50,8 +54,8 @@ pub struct GameData {
 pub fn load_game_data(vfs: &VirtualFilesystem) -> Result<GameData, anyhow::Error> {
     let string_database = get_string_database(vfs, 1).context("string database")?;
     let items = Arc::new(load_items(vfs, string_database.clone()).context("item database")?);
-    let mut npcs = get_npc_database(vfs, string_database.clone(), &NpcDatabaseOptions { load_frame_data: true })
-        .context("npc database")?;
+    let (mut npcs, drop_rows) =
+        load_npcs(vfs, string_database.clone(), &NpcDatabaseOptions { load_frame_data: true }).context("npc database")?;
     let mut motions = get_character_motion_database(vfs, &CharacterMotionDatabaseOptions { load_frame_data: true })
         .context("motion database")?;
     apply_motion_timings(vfs, &mut motions, &mut npcs).context("motion timings")?;
@@ -60,7 +64,10 @@ pub fn load_game_data(vfs: &VirtualFilesystem) -> Result<GameData, anyhow::Error
     let mut zones = get_zone_database(vfs, string_database.clone()).context("zone database")?;
     apply_zone_layouts(vfs, &mut zones).context("zone layouts")?;
     let zones = Arc::new(zones);
-    let drop_table = get_drop_table(vfs, items.clone(), npcs.clone()).context("drop table")?;
+    let drop_table: Box<dyn DropTable + Send + Sync> = match drop_rows {
+        Some(rows) => get_drop_table_from_rows(&rows, DROP_ROW_COLUMNS, items.clone(), npcs.clone()),
+        None => get_drop_table(vfs, items.clone(), npcs.clone()).context("drop table")?,
+    };
 
     Ok(GameData {
         character_creator: CharacterCreator::load(vfs).context("character creator")?,
@@ -91,23 +98,120 @@ pub fn load_items(vfs: &VirtualFilesystem, strings: Arc<StringDatabase>) -> Resu
     // The upload sends JSON; TOML is the export as the repository has it (`compare`).
     for format in [Format::Json, Format::Toml] {
         let export = ItemsExport::from_files_as(format, |name| {
-            let path = format!("{}/{}", rose_data_export::DATA_GAME_DIR, rose_data_export::items_file_as(name, format))
-                .to_uppercase();
-            if !vfs.exists(path.as_str()) {
-                return Ok(None);
-            }
-            let file = vfs.open_file(path.as_str())?;
-            let bytes: &[u8] = match &file {
-                VfsFile::Buffer(data) => data,
-                VfsFile::View(data) => data,
-            };
-            Ok(Some(std::str::from_utf8(bytes).with_context(|| path.clone())?.to_string()))
+            read_export_file(vfs, &rose_data_export::items_file_as(name, format))
         })?;
         if let Some(export) = export {
             return export.to_database(strings);
         }
     }
     get_item_database(vfs, strings)
+}
+
+/// A file of the data export among the game files (`OVERRIDES/DATA/...`, as JSON from the
+/// upload or as the TOML files themselves), or None when it isn't there.
+fn read_export_file(vfs: &VirtualFilesystem, path: &str) -> Result<Option<String>, anyhow::Error> {
+    let path = format!("{}/{}", rose_data_export::DATA_GAME_DIR, path).to_uppercase();
+    if !vfs.exists(path.as_str()) {
+        return Ok(None);
+    }
+    let file = vfs.open_file(path.as_str())?;
+    let bytes: &[u8] = match &file {
+        VfsFile::Buffer(data) => data,
+        VfsFile::View(data) => data,
+    };
+    Ok(Some(std::str::from_utf8(bytes).with_context(|| path.clone())?.to_string()))
+}
+
+/// iROSE's number for an item (type × 1000 + number), as drop tables hold them.
+pub fn encode_item_base1000(item: ItemReference) -> Option<i32> {
+    let item_type = encode_item_type(item.item_type)?;
+    (item.item_number < 1000).then(|| (item_type * 1000 + item.item_number) as i32)
+}
+
+/// The monster and NPC export as the game files carry it (JSON from the upload, else TOML).
+pub fn read_npcs_export(vfs: &VirtualFilesystem) -> Result<Option<NpcsExport>, anyhow::Error> {
+    for format in [Format::Json, Format::Toml] {
+        let export = NpcsExport::from_files_as(format, |name| {
+            read_export_file(vfs, &rose_data_export::data_file_as(name, format))
+        })?;
+        if export.is_some() {
+            return Ok(export);
+        }
+    }
+    Ok(None)
+}
+
+/// The monsters and NPCs (with their shop tabs) and the drop table rows exported from the
+/// Godot resources (`overrides/data/monsters.toml` ...), or without an export the iROSE
+/// tables (LIST_NPC.STB, LIST_SELL.STB; no rows: the drop table is ITEM_DROP.STB). Their
+/// models and motions still come from LIST_NPC.CHR, the conversations from LIST_EVENT.STB.
+pub fn load_npcs(
+    vfs: &VirtualFilesystem,
+    strings: Arc<StringDatabase>,
+    options: &NpcDatabaseOptions,
+) -> Result<(NpcDatabase, Option<BTreeMap<u32, Vec<i32>>>), anyhow::Error> {
+    if let Some(export) = read_npcs_export(vfs)? {
+        let models = NpcModels {
+            motions: get_npc_motions(vfs, options)?,
+            conversations: get_npc_conversations(vfs)?,
+            action_map: get_npc_action_map(),
+        };
+        let rows = export.drop_rows(encode_item_base1000)?;
+        return Ok((export.to_database(strings, models)?, Some(rows)));
+    }
+    Ok((get_npc_database(vfs, strings, options)?, None))
+}
+
+/// The monsters, NPCs, drop tables and shop tabs of the iROSE tables as the export holds
+/// them: the converter's starting point and the same-data check. A town NPC is an id any of
+/// `zones` places as an NPC (or one of `more_town_npcs`, the zone scenes' NPCs); every other
+/// row is a monster. A shop place naming an item `item_exists` doesn't know is left out;
+/// returns those.
+pub fn npcs_export_from_irose(
+    vfs: &VirtualFilesystem,
+    strings: Arc<StringDatabase>,
+    item_exists: impl Fn(ItemReference) -> bool,
+    zones: &ZoneDatabase,
+    more_town_npcs: impl IntoIterator<Item = u16>,
+) -> Result<(NpcsExport, Vec<String>), anyhow::Error> {
+    let npcs = get_npc_database(vfs, strings, &NpcDatabaseOptions { load_frame_data: false })?;
+    let mut town_npcs: BTreeSet<u16> = zones.iter().flat_map(|z| z.npcs.iter().map(|n| n.npc_id.get())).collect();
+    town_npcs.extend(more_town_npcs);
+    let mut rows = rose_game_irose::data::read_drop_rows(vfs, DROP_ROW_COLUMNS).context("ITEM_DROP.STB")?;
+    // A table is named after the monsters using it, else the zone with its number.
+    let mut users: BTreeMap<u32, Vec<&str>> = BTreeMap::new();
+    for npc in npcs.iter() {
+        if npc.drop_table_index != 0 && !town_npcs.contains(&npc.id.get()) {
+            let name = npc.name.trim();
+            let list = users.entry(npc.drop_table_index).or_default();
+            if !name.is_empty() && !list.contains(&name) {
+                list.push(name);
+            }
+            // A monster's table is kept even when the row is empty, so the link stays.
+            rows.entry(npc.drop_table_index).or_insert_with(|| vec![0; DROP_ROW_COLUMNS]);
+        }
+    }
+    let rows: BTreeMap<u32, (String, Vec<i32>)> = rows
+        .into_iter()
+        .map(|(row, cells)| {
+            let name = match users.get(&row) {
+                Some(names) if names.len() > 3 => format!("{} and others", names[..3].join(", ")),
+                Some(names) if !names.is_empty() => names.join(", "),
+                _ => ZoneId::new(row as u16)
+                    .and_then(|z| zones.get_zone(z))
+                    .map(|z| format!("zone {}", z.name.trim()))
+                    .unwrap_or_default(),
+            };
+            (row, (name, cells))
+        })
+        .collect();
+    NpcsExport::from_database(
+        &npcs,
+        &town_npcs,
+        &rows,
+        |v| decode_item_base1000(v.max(0) as usize),
+        item_exists,
+    )
 }
 
 /// The lengths and hit frames of `overrides/motions.toml` (exported from the Godot

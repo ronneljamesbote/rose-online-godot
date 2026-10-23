@@ -393,7 +393,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 371, ITEM_DROP.STB row 375
+  data: godot/data/monsters/371-basilisk.tres, drop table godot/data/drop_tables/375-basilisk.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

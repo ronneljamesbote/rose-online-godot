@@ -39,10 +39,11 @@
 ##   --export-zones[=check]     write ../overrides/zones/<id>-<name>.toml (spawns, NPCs and named
 ##                              spots for the server) from the zone scenes in res://zones/ and quit;
 ##                              check only compares and fails when a file is out of date
-##   --convert-data[=force]     write the item resources in res://data/items/ from the iROSE tables
+##   --convert-data[=force]     write the data resources in res://data/ from the iROSE tables
 ##                              and quit (run once, headless; they are the source after that, so it
-##                              refuses when they are there; force writes them again)
-##   --export-data[=check]      write ../overrides/data/ (the items for the server and the game)
+##                              skips each kind already there; force writes them all again)
+##   --export-data[=check]      write ../overrides/data/ (items, monsters, NPCs, drop tables and
+##                              shop tabs for the server and the game)
 ##                              from the resources in res://data/ and quit; check only compares and
 ##                              fails when a file is out of date. Needs no data.idx
 ##   --merge-zone-blocks=ID|all  move a zone's block_X_Y.tscn files into its zone.tscn (zones
@@ -236,14 +237,19 @@ func _export_zones(check: bool) -> void:
 	get_tree().quit(1 if check and not changed.is_empty() else 0)
 
 
-## Writes the item resources from the iROSE tables, prints how many and quits.
+## Writes the data resources (items, monsters, NPCs ...) from the iROSE tables, prints how
+## many and quits.
 func _convert_data(force: bool) -> void:
 	var result: Dictionary = RoseDataExport.convert(force)
 	if result.has("error"):
 		push_error("rose: %s" % result.error)
 		get_tree().quit(1)
 		return
-	print("rose: %d item resources written to %s" % [result.resources, result.folder])
+	for kind in result.skipped:
+		print("rose: %s already made in Godot, left as they are (--convert-data=force writes them again)" % kind)
+	for line in result.lost:
+		print("rose:   not kept: %s" % line)
+	print("rose: %d resources written to %s" % [result.resources, result.folder])
 	get_tree().quit(0)
 
 
@@ -255,7 +261,7 @@ func _export_data(check: bool) -> void:
 		push_error("rose: %s" % result.error)
 		get_tree().quit(1)
 		return
-	print("rose: %d items from %d resources (read in %d ms)" % [result.items, result.resources, result.read_ms])
+	print("rose: %d items, %d monsters and %d NPCs from %d resources (read in %d ms)" % [result.items, result.monsters, result.npcs, result.resources, result.read_ms])
 	var changed: Array = result.changed
 	for path in changed:
 		print("rose:   %s %s" % ["differs:" if check else "updated:", path])

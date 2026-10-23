@@ -9,7 +9,7 @@ locations:
   x: 5773
   y: 4732.5
 source:
-  data: 'LIST_NPC.STB row 1256; dialog '
+  data: 'godot/data/npcs/1256-sikuku-warrior-seka.tres; dialog '
   code:
   - module/src/npcs.rs
   - godot/rust/src/conversation.rs

@@ -152,7 +152,7 @@ spawns:
   count: 2
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 139, ITEM_DROP.STB row 164
+  data: godot/data/monsters/139-grunter-captain.tres, drop table godot/data/drop_tables/164-grunter-captain.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

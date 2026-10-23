@@ -179,7 +179,7 @@ spawns:
   count: 3
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 282, ITEM_DROP.STB row 237
+  data: godot/data/monsters/282-gem-goblin-mage.tres, drop table godot/data/drop_tables/237-goblin-mage-gem-goblin-mage.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

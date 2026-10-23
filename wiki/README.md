@@ -50,7 +50,7 @@ hp: 37
 drops:
   - { item: "[[items/etc/1-jelly-bean-gel|Jelly Bean Gel]]", chance: "5%" }
 source:
-  data: LIST_NPC.STB row 1
+  data: godot/data/monsters/1-jelly-bean.tres
   code: module/src/monster_brain.rs
 ---
 A small, slow monster ...
@@ -67,8 +67,9 @@ A small, slow monster ...
 - **Changed from iROSE**: a section saying how our game differs from the original iROSE.
 - **Open question**: a note where the page and the game are known to disagree or a fact
   is not checked yet. Start the line with `> Open question:`.
-- **source**: the data the values come from (an item's Godot resource, `godot/data/items/...`,
-  or an iROSE table and row) and the code that uses them, so a change knows where to go.
+- **source**: the data the values come from (a Godot resource such as an item's
+  `godot/data/items/...`, a monster's `godot/data/monsters/...` or its drop table's
+  `godot/data/drop_tables/...`, or an iROSE table and row) and the code that uses them, so a change knows where to go.
   Data values changed through the wiki are made in that resource, or for iROSE tables in
   `overrides/game-data.toml`.
 - **GM command**: item, monster and zone pages show the [[rules/gm-commands|GM command]]

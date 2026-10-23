@@ -14,7 +14,7 @@ map:
   right: 5760
   bottom: 4640
 source:
-  data: LIST_ZONE.STB row 4, the zone's IFO files, ITEM_DROP.STB row 4
+  data: LIST_ZONE.STB row 4, the zone's IFO files, no drop table of its own (none in godot/data/drop_tables/ has number 4)
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

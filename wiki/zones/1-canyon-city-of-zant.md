@@ -288,7 +288,7 @@ zone_drops:
 - '[[items/consumable/102-banana|Banana]]'
 - '[[items/material/112-silver-thread|Silver Thread]]'
 source:
-  data: LIST_ZONE.STB row 1, overrides/zones/1-canyon-city-of-zant.toml (exported from the scenes in godot/zones/1_canyon_city_of_zant), ITEM_DROP.STB row 1
+  data: LIST_ZONE.STB row 1, overrides/zones/1-canyon-city-of-zant.toml (exported from the scenes in godot/zones/1_canyon_city_of_zant), drop table godot/data/drop_tables/1-zone-canyon-city-of-zant.tres
   code:
   - module/src/world.rs
   - crates/rose-game-data/src/lib.rs (apply_zone_layouts)

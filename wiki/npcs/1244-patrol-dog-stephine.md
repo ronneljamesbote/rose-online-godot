@@ -9,7 +9,7 @@ locations:
   x: 5427.5
   y: 4482.4
 source:
-  data: 'LIST_NPC.STB row 1244; dialog '
+  data: 'godot/data/npcs/1244-patrol-dog-stephine.tres; dialog '
   code:
   - module/src/npcs.rs
   - godot/rust/src/conversation.rs

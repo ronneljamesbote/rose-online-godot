@@ -162,7 +162,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 176, ITEM_DROP.STB row 190
+  data: godot/data/monsters/176-aqua-hunter.tres, drop table godot/data/drop_tables/190-aqua-hunter.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

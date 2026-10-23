@@ -86,7 +86,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 287, ITEM_DROP.STB row 241
+  data: godot/data/monsters/287-grandmaster-goblin.tres, drop table godot/data/drop_tables/241-grandmaster-goblin.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

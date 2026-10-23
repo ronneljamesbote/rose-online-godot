@@ -92,7 +92,7 @@ spawns:
   count: 1
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 382, ITEM_DROP.STB row 381
+  data: godot/data/monsters/382-behemoth-king.tres, drop table godot/data/drop_tables/381-behemoth-king.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

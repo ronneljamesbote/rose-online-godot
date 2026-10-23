@@ -57,7 +57,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 217, ITEM_DROP.STB row 273
+  data: godot/data/monsters/217-krawfy-guardian.tres, drop table godot/data/drop_tables/273-krawfy-guardian.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

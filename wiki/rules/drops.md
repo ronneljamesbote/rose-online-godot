@@ -24,7 +24,7 @@ source:
     - module/src/skills.rs (pickup_nearest)
     - crates/rose-game-irose/src/data/ability_values.rs (calculate_drop_rate)
     - tools/wiki-gen/src/main.rs (drop_row, the slots shown on monster pages)
-  data: ITEM_DROP.STB, LIST_NPC.STB (drop item rate, drop money rate, drop table row, level)
+  data: the drop table resources in godot/data/drop_tables/ (RoseDropTable, exported to overrides/data/drop-tables.toml), the monster resources in godot/data/monsters/ (drop_table, drop_item_rate, drop_money_rate, level)
 ---
 # Drops
 
@@ -63,13 +63,13 @@ as 0.
 ```
 
 4. **Which table?** Otherwise it drops an item. With a chance of the monster's
-   `drop_item_rate` in percent it uses the monster's own table (the row named on its
-   page); otherwise the zone's table (the row with the zone's number).
-5. **Which slot?** A drop table row has **30 slots**. One is picked at random from the
+   `drop_item_rate` in percent it uses the monster's own table (the one named on its
+   page); otherwise the zone's table (the drop table with the zone's number).
+5. **Which slot?** A drop table has **30 slots**. One is picked at random from the
    first $\min(\text{drop}, 30)$ slots. At the normal 300% rate "drop" is always 30 or
    more, so all 30 slots are equally likely.
 6. **Groups.** A slot holds either one item, nothing, or a **group** number from 1 to 4.
-   A group is a list of 5 more items on the same row; one of the 5 is picked at random.
+   A group is a list of 5 more items in the same table; one of the 5 is picked at random.
 7. An empty slot (or an empty place in a group) drops nothing.
 
 ### What "slots of 30" means on monster pages

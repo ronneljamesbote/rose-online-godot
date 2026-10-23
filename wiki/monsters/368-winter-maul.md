@@ -409,7 +409,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 368, ITEM_DROP.STB row 373
+  data: godot/data/monsters/368-winter-maul.tres, drop table godot/data/drop_tables/373-winter-maul.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

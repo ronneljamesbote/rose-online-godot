@@ -9,7 +9,7 @@ locations:
   x: 5487.3
   y: 4551
 source:
-  data: 'LIST_NPC.STB row 1243; dialog '
+  data: 'godot/data/npcs/1243-patrol-dog-max.tres; dialog '
   code:
   - module/src/npcs.rs
   - godot/rust/src/conversation.rs

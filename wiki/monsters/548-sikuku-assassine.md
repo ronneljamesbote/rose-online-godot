@@ -81,7 +81,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 548, ITEM_DROP.STB row 467
+  data: godot/data/monsters/548-sikuku-assassine.tres, drop table godot/data/drop_tables/467-sikuku-assassine.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

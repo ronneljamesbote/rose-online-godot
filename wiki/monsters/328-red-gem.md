@@ -83,7 +83,7 @@ spawns:
   count: 1
   group: reinforcements
 source:
-  data: LIST_NPC.STB row 328, ITEM_DROP.STB row 353
+  data: godot/data/monsters/328-red-gem.tres, drop table godot/data/drop_tables/353-red-gem.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

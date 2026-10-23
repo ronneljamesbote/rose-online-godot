@@ -224,7 +224,7 @@ spawns:
   count: 2
   group: basic
 source:
-  data: LIST_NPC.STB row 136, ITEM_DROP.STB row 162
+  data: godot/data/monsters/136-grunter-warrior.tres, drop table godot/data/drop_tables/162-grunter-warrior.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

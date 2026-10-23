@@ -91,7 +91,7 @@ spawns:
   count: 1
   group: basic
 source:
-  data: LIST_NPC.STB row 572, ITEM_DROP.STB row 486
+  data: godot/data/monsters/572-rotten-elemental.tres, drop table godot/data/drop_tables/486-rotten-elemental.tres
   code:
   - module/src/monster_brain.rs
   - crates/rose-game-irose/src/data/drop_table.rs

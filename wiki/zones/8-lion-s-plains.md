@@ -14,7 +14,7 @@ map:
   right: 5760
   bottom: 4320
 source:
-  data: LIST_ZONE.STB row 8, the zone's IFO files, ITEM_DROP.STB row 8
+  data: LIST_ZONE.STB row 8, the zone's IFO files, drop table godot/data/drop_tables/8-mini-bee-firefly-butterfly-and-others.tres
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs
