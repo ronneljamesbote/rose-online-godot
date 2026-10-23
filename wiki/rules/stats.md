@@ -69,9 +69,9 @@ source:
   code:
     - crates/rose-game-irose/src/data/ability_values.rs (calculate, calculate_max_health, calculate_max_mana, calculate_attack_power, calculate_attack_speed, calculate_attack_range, calculate_hit, calculate_defence, calculate_resistance, calculate_critical, calculate_avoid, calculate_run_speed, calculate_max_weight, calculate_basic_stat_increase_cost, basic_stat_increase_cost)
     - crates/rose-game-common/src/components/ability_values.rs (AbilityValues getters, AbilityValuesAdjust)
-    - module/src/character.rs (new_player, starter_kit, ability_values, player_stats, refresh_player, add_basic_stat)
+    - module/src/character.rs (new_player, ability_values, player_stats, refresh_player, add_basic_stat)
     - crates/rose-game-data/src/lib.rs (CharacterCreator)
-  data: INIT_AVATAR.STB rows 0-1 (starting stats and clothes), the item resources in godot/data/items/ (attack_power, attack_speed, attack_range and quality of weapons, move_speed 65 of feet item 0 for barefoot, defence, resistance and durability of armour)
+  data: the new character resources in godot/data/new_characters/ (starting stats, clothes and bag), the item resources in godot/data/items/ (attack_power, attack_speed, attack_range and quality of weapons, move_speed 65 of feet item 0 for barefoot, defence, resistance and durability of armour)
 ---
 # Stats
 

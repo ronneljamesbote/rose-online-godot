@@ -29,6 +29,8 @@ pub struct ZoneListEntry {
 
 pub struct ZoneList {
     _string_database: Arc<StringDatabase>,
+    /// The names and descriptions the entries point into (see `ZoneDatabase::with_text`).
+    _text: Vec<String>,
     zones: Vec<Option<ZoneListEntry>>,
 }
 
@@ -36,8 +38,16 @@ impl ZoneList {
     pub fn new(string_database: Arc<StringDatabase>, zones: Vec<Option<ZoneListEntry>>) -> Self {
         Self {
             _string_database: string_database,
+            _text: Vec::new(),
             zones,
         }
+    }
+
+    /// Keeps `text` alive as long as the list: the entries' `&'static str` names and
+    /// descriptions may point into it.
+    pub fn with_text(mut self, text: Vec<String>) -> Self {
+        self._text = text;
+        self
     }
 
     pub fn len(&self) -> usize {

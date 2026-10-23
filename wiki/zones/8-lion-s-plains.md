@@ -14,7 +14,7 @@ map:
   right: 5760
   bottom: 4320
 source:
-  data: LIST_ZONE.STB row 8, the zone's IFO files, drop table godot/data/drop_tables/8-mini-bee-firefly-butterfly-and-others.tres
+  data: the zone settings godot/data/zones/8-lion-s-plains.tres, the zone's IFO files, drop table godot/data/drop_tables/8-mini-bee-firefly-butterfly-and-others.tres
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

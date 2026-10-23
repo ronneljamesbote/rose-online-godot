@@ -33,9 +33,9 @@ source:
   code:
     - module/src/craft.rs (craft_item)
     - module/src/skills.rs (check_can_use, pay_costs, use_cost)
-    - crates/rose-game-data/src/lib.rs (CraftRecipe, load_craft_recipes)
+    - crates/rose-game-data/src/lib.rs (CraftRecipe, World)
     - module/src/character.rs (reward_xp)
-  data: LIST_PRODUCT.STB (recipes); item STBs columns 8 (quality), 12 (craft skill), 13 (craft skill level), 14 (recipe row), 15 (difficulty), 29 (durability), 30 (rare type); the crafting skills' item_make_number in godot/data/skills/ (iROSE's LIST_SKILL.STB column 9)
+  data: the recipe resources in godot/data/craft_recipes/ (RoseCraftRecipe; raw_material_class, material_1 to 4 and their quantities); the item resources in godot/data/items/ (iROSE's item STB columns 8 (quality), 12 (craft skill), 13 (craft skill level), 14 (recipe row), 15 (difficulty), 29 (durability), 30 (rare type)); the crafting skills' item_make_number in godot/data/skills/ (iROSE's LIST_SKILL.STB column 9)
 ---
 # Crafting
 
@@ -53,7 +53,7 @@ how well the steps went, and it may get a bonus option or a gem socket.
 - A craft skill whose make number matches the item (see the table above). The item page
   shows it as "crafted with", with the skill level it needs. Your skill level must be at
   least that.
-- The recipe's materials (LIST_PRODUCT.STB, the item page shows it as "recipe"). A step
+- The recipe's materials (its recipe resource in `godot/data/craft_recipes/`, the item page shows it as "recipe"). A step
   either names one exact item, or says "any Metal", "any Leather" and so on: then any item
   of that class works, and its quality matters.
 - Enough MP for the skill (the skill's MP cost, lowered by Save Mana like any skill). Crafting

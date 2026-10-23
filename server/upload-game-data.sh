@@ -2,13 +2,11 @@
 # Uploads the game databases' source files from a ROSE client folder to the server.
 # Usage: upload-game-data.sh <path to data.idx> [server URL] [database name]
 # Needs rose-stdb-import (the import tool), spacetimedb-cli logged in as the admin
-# (the identity that published the module) and curl. Applies the data changes in
-# ROSE_OVERRIDES (default: overrides/game-data.toml in the current folder) and sends the
-# player motion timings in ROSE_MOTIONS (default: motions.toml next to that file), the
-# zones edited as Godot scenes in ROSE_ZONES (default: the zones folder next to that file)
-# and the game data exported from the Godot resources in ROSE_DATA (default: the data folder
-# next to that file; its items, monsters, NPCs, drop tables, shop tabs, skills, status
-# effects and job classes replace the iROSE tables they come from).
+# (the identity that published the module) and curl. Sends what the Godot editor exported,
+# from ROSE_EXPORT (default: export/ in the current folder): the game data in its data/
+# folder (or ROSE_DATA; its items, monsters, NPCs, skills, zones ... replace the iROSE tables
+# they come from), the motion timings in motions.toml (or ROSE_MOTIONS) and the zones edited
+# as Godot scenes in zones/ (or ROSE_ZONES).
 set -e
 DATA_IDX=${1:?usage: upload-game-data.sh <data.idx> [server] [database]}
 SERVER=${2:-http://127.0.0.1:3000}

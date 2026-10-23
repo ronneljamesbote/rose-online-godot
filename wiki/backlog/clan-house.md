@@ -10,7 +10,7 @@ npcs:
   - "[[npcs/1162-clan-base-camp-soldier-jason|Clan Base Camp Soldier Jason]]"
   - "[[npcs/1161-clan-base-camp-manager-kushard|Clan Base Camp Manager Kushard]]"
 source:
-  data: QC001.QSD triggers Clan-031 to Clan-036; the skill resources 3431-3432 in godot/data/skills/; LIST_ZONE.STB row 15 (Agit01, PvP state 11); LIST_STRING.STL string 372
+  data: QC001.QSD triggers Clan-031 to Clan-036; the skill resources 3431-3432 in godot/data/skills/; the zone settings godot/data/zones/15-zone.tres (Agit01, pvp_state 11); LIST_STRING.STL string 372
   reference: iROSE 129_129en client data; NPC dialogs of Burtland, Eliot and Jason
 ---
 # Clan house

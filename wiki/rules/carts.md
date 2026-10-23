@@ -37,7 +37,7 @@ source:
     - module/src/lib.rs (move_to, attack loop, recovery tick, kill)
     - module/src/world.rs (teleport)
     - crates/rose-game-irose/src/data/ability_values.rs (calculate_vehicle_move_speed, calculate_vehicle_attack_power, calculate_vehicle_attack_speed, calculate_vehicle_attack_range, calculate_vehicle_hit, calculate_vehicle_critical, calculate_vehicle_avoid, calculate_defence)
-  data: the vehicle part resources in godot/data/items/vehicle/ (vehicle_part, vehicle_type, fuel_use_rate, move_speed, attack_range, attack_power, attack_speed, has_seat); the fuel items' add_fuel (godot/data/items/consumable/); LIST_ZONE.STB column 30 (vehicle ban)
+  data: the vehicle part resources in godot/data/items/vehicle/ (vehicle_part, vehicle_type, fuel_use_rate, move_speed, attack_range, attack_power, attack_speed, has_seat); the fuel items' add_fuel (godot/data/items/consumable/); the zone settings resources in godot/data/zones/ (vehicle_use_flags)
 ---
 # Carts and Castle Gear
 
@@ -65,8 +65,8 @@ stand, and **ends your buffs**. So does getting off.
 
 You get off by yourself when you die, warp or leave the game.
 
-A zone can forbid carts or castle gear (LIST_ZONE column 30), but no zone in the iROSE data
-does.
+A zone can forbid carts or castle gear (`vehicle_use_flags` in its settings: No carts, No
+castle gear), but no zone does yet.
 
 ## While driving
 

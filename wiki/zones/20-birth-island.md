@@ -601,7 +601,7 @@ zone_drops:
 - '[[items/consumable/120-milk|Milk]]'
 - '[[items/consumable/58-vital-jam-5|Vital Jam (+5)]]'
 source:
-  data: LIST_ZONE.STB row 20, overrides/zones/20-birth-island.toml (exported from the scenes in godot/zones/20_birth_island), drop table godot/data/drop_tables/20-zone-birth-island.tres
+  data: the zone settings godot/data/zones/20-birth-island.tres, export/zones/20-birth-island.toml (exported from the scenes in godot/zones/20_birth_island), drop table godot/data/drop_tables/20-zone-birth-island.tres
   code:
   - module/src/world.rs
   - crates/rose-game-data/src/lib.rs (apply_zone_layouts)
@@ -616,5 +616,5 @@ reinforcements show up once a point has been refilled many times (see
 
 Birth Island is edited in Godot: its spawn points, NPCs and start and revive spots are
 markers in the zone's scenes, and the server reads them from
-`overrides/zones/20-birth-island.toml`, which is exported from those scenes. They are the
+`export/zones/20-birth-island.toml`, which is exported from those scenes. They are the
 same as in iROSE's map files.

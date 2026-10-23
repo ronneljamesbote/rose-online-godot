@@ -92,7 +92,7 @@ zone_drops:
 - '[[items/material/163-red-crystal|Red Crystal]]'
 - '[[items/material/164-white-crystal|White Crystal]]'
 source:
-  data: LIST_ZONE.STB row 59, the zone's IFO files, drop table godot/data/drop_tables/59-zone-luna-clan-field.tres
+  data: the zone settings godot/data/zones/59-luna-clan-field.tres, the zone's IFO files, drop table godot/data/drop_tables/59-zone-luna-clan-field.tres
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

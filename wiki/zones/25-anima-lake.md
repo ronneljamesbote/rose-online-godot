@@ -583,7 +583,7 @@ zone_drops:
 - '[[items/material/121-crystal-stone|Crystal Stone]]'
 - '[[items/consumable/383-blood-charm|Blood Charm]]'
 source:
-  data: LIST_ZONE.STB row 25, the zone's IFO files, drop table godot/data/drop_tables/25-zone-anima-lake.tres
+  data: the zone settings godot/data/zones/25-anima-lake.tres, the zone's IFO files, drop table godot/data/drop_tables/25-zone-anima-lake.tres
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

@@ -490,7 +490,7 @@ zone_drops:
 - '[[items/material/16-orihalcon|Orihalcon]]'
 - '[[items/consumable/382-spark-charm|Spark Charm]]'
 source:
-  data: LIST_ZONE.STB row 53, the zone's IFO files, drop table godot/data/drop_tables/53-zone-arumic-valley.tres
+  data: the zone settings godot/data/zones/53-arumic-valley.tres, the zone's IFO files, drop table godot/data/drop_tables/53-zone-arumic-valley.tres
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

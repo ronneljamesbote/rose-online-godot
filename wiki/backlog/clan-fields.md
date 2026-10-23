@@ -8,7 +8,7 @@ npcs:
   - "[[npcs/1115-clan-owner-burtland|Clan Owner Burtland]]"
   - "[[npcs/1191-shamanist-est|Shamanist Est]]"
 source:
-  data: LIST_ZONE.STB rows 11 and 59 (PvP state 1, join trigger Clan-003); QC001.QSD triggers Clan-003, Clan-004, Clan-warp01 to Clan-warp05
+  data: the zone settings godot/data/zones/11-junon-clan-field.tres and 59-luna-clan-field.tres (pvp_state 1); iROSE's LIST_ZONE.STB rows 11 and 59 (join trigger Clan-003, not in the zone settings yet); QC001.QSD triggers Clan-003, Clan-004, Clan-warp01 to Clan-warp05
   reference: iROSE 129_129en client data; Burtland's dialog EM02-035.con; QSD reward TeleportNearbyClanMembers in crates/rose-file-readers/src/qsd.rs
 ---
 # Clan fields

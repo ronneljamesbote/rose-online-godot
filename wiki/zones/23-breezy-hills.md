@@ -419,7 +419,7 @@ zone_drops:
 - '[[items/consumable/104-kiwi|Kiwi]]'
 - '[[items/material/122-wind-stone|Wind Stone]]'
 source:
-  data: LIST_ZONE.STB row 23, overrides/zones/23-breezy-hills.toml (exported from the scenes in godot/zones/23_breezy_hills), drop table godot/data/drop_tables/23-zone-breezy-hills.tres
+  data: the zone settings godot/data/zones/23-breezy-hills.tres, export/zones/23-breezy-hills.toml (exported from the scenes in godot/zones/23_breezy_hills), drop table godot/data/drop_tables/23-zone-breezy-hills.tres
   code:
   - module/src/world.rs
   - crates/rose-game-data/src/lib.rs (apply_zone_layouts)
@@ -434,5 +434,5 @@ reinforcements show up once a point has been refilled many times (see
 
 Breezy Hills is edited in Godot: its spawn points, NPCs and start and revive spots are
 markers in the zone's scenes, and the server reads them from
-`overrides/zones/23-breezy-hills.toml`, which is exported from those scenes. They are the
+`export/zones/23-breezy-hills.toml`, which is exported from those scenes. They are the
 same as in iROSE's map files.

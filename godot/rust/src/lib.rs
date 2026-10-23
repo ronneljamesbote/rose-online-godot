@@ -102,14 +102,12 @@ impl RoseData {
         godot::classes::Image::create_from_data(width, height, false, godot::classes::image::Format::RGBA8, &PackedByteArray::from(rgba.as_slice()))
     }
 
-    /// Item numbers a new character wears (INIT_AVATAR.STB), as RoseCharacter.build takes
-    /// them: head, body, hands, feet, weapon (with the server's starting Short Sword).
+    /// Item numbers a new character wears (its `RoseNewCharacter`), as RoseCharacter.build
+    /// takes them: head, body, hands, feet, weapon (with the server's starting Short Sword).
     #[func]
     fn starting_look(female: bool) -> PackedInt32Array {
-        static CREATOR: std::sync::OnceLock<Option<rose_game_data::CharacterCreator>> = std::sync::OnceLock::new();
-        let creator = CREATOR.get_or_init(|| data::get().and_then(|g| rose_game_data::CharacterCreator::load(&g.vfs).ok()));
         let mut look = [0, 1, 1, 1, 2];
-        if let Some(c) = creator {
+        if let Some(c) = data::get().map(|g| &g.character_creator) {
             for item in &c.genders[female as usize].equipped_items {
                 let slot = match item.item_type {
                     rose_data::ItemType::Head => 0,
@@ -124,7 +122,7 @@ impl RoseData {
         PackedInt32Array::from(&look)
     }
 
-    /// The zone's name from LIST_ZONE.STB, or "".
+    /// The zone's name (its `RoseZoneSettings`), or "".
     #[func]
     fn zone_name(zone_id: i32) -> GString {
         let name = data::get()
@@ -133,7 +131,8 @@ impl RoseData {
         GString::from(name.as_str())
     }
 
-    /// The zone's minimap from LIST_ZONE.STB: {path, start_x, start_y}, or {} when it has none.
+    /// The zone's minimap (from its `RoseZoneSettings`): {path, start_x, start_y}, or {} when
+    /// it has none.
     #[func]
     fn zone_minimap(zone_id: i32) -> VarDictionary {
         let mut dict = VarDictionary::new();

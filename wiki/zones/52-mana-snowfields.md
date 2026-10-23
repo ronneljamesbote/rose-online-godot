@@ -620,7 +620,7 @@ zone_drops:
 - '[[items/consumable/323-white-icicle|White Icicle]]'
 - '[[items/consumable/381-ice-charm|Ice Charm]]'
 source:
-  data: LIST_ZONE.STB row 52, the zone's IFO files, drop table godot/data/drop_tables/52-zone-mana-snowfields.tres
+  data: the zone settings godot/data/zones/52-mana-snowfields.tres, the zone's IFO files, drop table godot/data/drop_tables/52-zone-mana-snowfields.tres
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

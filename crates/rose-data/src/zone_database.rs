@@ -33,6 +33,45 @@ pub struct ZoneEventObject {
     pub position: Vec3,
 }
 
+/// A zone's settings: its iROSE LIST_ZONE.STB row, or its `RoseZoneSettings` resource in the
+/// data export. The zone database and the zone list are built from these (with the zone's
+/// map files for its spawns, NPCs and named spots). Empty text means none.
+#[derive(Clone, Debug, PartialEq)]
+pub struct ZoneSettings {
+    pub id: ZoneId,
+    pub name: String,
+    pub description: String,
+    /// The zone's ZON map file (its blocks' IFO and HIM files sit next to it).
+    pub map_file: String,
+    /// The named spot players arrive at (`start`).
+    pub start_spot: String,
+    /// The named spots fallen players get up at (the nearest of that name).
+    pub revive_spot: String,
+    pub music_day: String,
+    pub music_night: String,
+    pub skybox_id: Option<SkyboxId>,
+    pub minimap: String,
+    pub minimap_start_x: u32,
+    pub minimap_start_y: u32,
+    /// The ZSC model lists of the zone's decorations and buildings.
+    pub decoration_models: String,
+    pub building_models: String,
+    pub day_cycle: u32,
+    pub morning_time: u32,
+    pub day_time: u32,
+    pub evening_time: u32,
+    pub night_time: u32,
+    /// As ZoneData::pvp_state.
+    pub pvp_state: u32,
+    /// As ZoneData::planet.
+    pub planet: u32,
+    pub footstep_type: Option<u32>,
+    /// Centimetres per side of a visibility sector (clamped to 5000 to 12000).
+    pub sector_size: u32,
+    /// As ZoneData::vehicle_use_flags.
+    pub vehicle_use_flags: u32,
+}
+
 pub struct ZoneData {
     pub id: ZoneId,
     pub name: &'static str,
@@ -83,6 +122,9 @@ impl ZoneData {
 
 pub struct ZoneDatabase {
     _string_database: Arc<StringDatabase>,
+    /// The names and descriptions the zones point into when they don't come from the string
+    /// database (the data export, see `with_text`).
+    _text: Vec<String>,
     zones: Vec<Option<ZoneData>>,
 }
 
@@ -90,8 +132,16 @@ impl ZoneDatabase {
     pub fn new(string_database: Arc<StringDatabase>, zones: Vec<Option<ZoneData>>) -> Self {
         Self {
             _string_database: string_database,
+            _text: Vec::new(),
             zones,
         }
+    }
+
+    /// Keeps `text` alive as long as the database: the zones' `&'static str` names and
+    /// descriptions may point into it.
+    pub fn with_text(mut self, text: Vec<String>) -> Self {
+        self._text = text;
+        self
     }
 
     pub fn iter(&self) -> impl Iterator<Item = &ZoneData> {

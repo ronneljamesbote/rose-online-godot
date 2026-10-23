@@ -555,7 +555,7 @@ zone_drops:
 - '[[items/material/39-otherworldly-wood|Otherworldly Wood]]'
 - '[[items/material/40-sephiroth-wood|Sephiroth Wood]]'
 source:
-  data: LIST_ZONE.STB row 62, the zone's IFO files, drop table godot/data/drop_tables/62-zone-shady-jungle.tres
+  data: the zone settings godot/data/zones/62-shady-jungle.tres, the zone's IFO files, drop table godot/data/drop_tables/62-zone-shady-jungle.tres
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

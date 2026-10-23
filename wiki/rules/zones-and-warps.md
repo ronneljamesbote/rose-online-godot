@@ -59,7 +59,8 @@ source:
     - module/src/death.rs (revive, revive_point, set_save_point, save)
     - module/src/skills.rs (warp skills)
     - module/src/quests.rs (quest teleports)
-    - crates/rose-data-irose/src/zone_database.rs (load_zone)
+    - crates/rose-data-irose/src/zone_database.rs (load_zone, get_zone_database_from_settings)
+    - crates/rose-game-data/src/lib.rs (World, load_world)
     - crates/rose-quest/src/lib.rs (world_ticks)
     - godot/scripts/online.gd (_check_warps)
     - godot/rust/src/net.rs (update_interest, Area, get_entities)
@@ -69,7 +70,7 @@ source:
     - godot/scripts/ui/hud/minimap.gd
     - godot/scripts/ui/zone_map.gd
     - tools/wiki-gen/src/zones.rs (map)
-  data: LIST_ZONE.STB (zone file, start and revive points, minimap and its start block, day cycle columns 13-17, PvP state, planet, sector size), WARP.STB, the zones' ZON and IFO files
+  data: the zone settings resources in godot/data/zones/ (RoseZoneSettings; map_file, start_spot, revive_spot, minimap and its start block, day_cycle and the times of day, pvp_state, planet, sector_size), the warp gate resources in godot/data/warp_gates/ (RoseWarpGate; target_zone, target_spot), the zone scenes in godot/zones/ or else the zones' ZON and IFO files
 ---
 # Zones and warps
 
@@ -86,7 +87,7 @@ A zone is built from square map blocks of **160 m**. The world is a grid of 64 b
 blocks, and each zone uses the blocks that have map files.
 
 Each zone page draws the zone's minimap picture, which has **2.5 m per pixel** (64 pixels
-per block). LIST_ZONE.STB gives the block the picture starts at (start x, start y). The
+per block). The zone's settings give the block the picture starts at (`minimap_start_x`, `minimap_start_y`). The
 wiki places the picture with its top-left corner at:
 
 ```math
@@ -106,7 +107,7 @@ $= 5760 - 512 \times 2.5 = 4480$ m.
 
 The server refuses a move to a point outside the zone's rectangle: from the south-west corner
 of its map blocks to the north-east one, rounded down to whole sectors (the sector size is in
-LIST_ZONE.STB). Map block files count their rows from the north, so block row $b$ covers y
+the zone's settings). Map block files count their rows from the north, so block row $b$ covers y
 from $(64 - b) \times 160$ m to $(65 - b) \times 160$ m. See "What the server checks" below.
 
 **Worked example.** [[zones/20-birth-island|Birth Island]] has map blocks in columns 30 to
@@ -116,7 +117,7 @@ start point (5121, 4699) is inside.
 
 ## What you see around you
 
-A zone is cut into square **sectors**. Their size is set per zone in LIST_ZONE.STB, from
+A zone is cut into square **sectors**. Their size is set per zone (`sector_size` in the zone's settings), from
 **50 m** to **120 m** (smaller or larger values are raised or lowered to these). You see
 the monsters, players and dropped items in your own sector and the **eight sectors around
 it**, as in iROSE: at least one sector in every direction, at most two. Monsters further
@@ -139,7 +140,7 @@ the NPCs and your party members among them. Your party members' HP bars work in 
   **3 m** bigger on every side, because many gates have a wall right in front of them.
 - After you arrive you must first step out of every gate before one can take you again,
   and the client waits at least **5 seconds** between two warps.
-- WARP.STB says which zone each gate leads to and the named spot there; you arrive on that
+- The gate's warp gate resource (`godot/data/warp_gates/`) says which zone it leads to and the named spot there; you arrive on that
   spot.
 - You can't use a gate while dead.
 - Warping (by gate, scroll, quest or getting up at a save point in another zone) closes your
@@ -159,7 +160,7 @@ your character stands in the new zone, or after **10 seconds** at most.
 
 ## Save points and getting up after death
 
-- Every zone has a **start point** and one or more **revive points** (named in LIST_ZONE.STB).
+- Every zone has a **start point** and one or more **revive points** (named in the zone's settings).
 - Some NPCs (and some quests) set your **save point**: the revive point of that zone nearest
   to you. You see "Save point set: *zone*".
 - When you get up after dying you choose: at the revive point of your current zone nearest
@@ -178,7 +179,7 @@ A new character starts on [[zones/20-birth-island|Birth Island]] (see
 
 ## Day and night
 
-Each zone has its own day. Time moves in world ticks of **10 seconds**. LIST_ZONE.STB gives
+Each zone has its own day. Time moves in world ticks of **10 seconds**. The zone's settings give
 the length of a zone's day in ticks and the tick at which morning, day, evening and night
 start. Night lasts from its start until morning of the next day. Morning and evening blend
 the light from the time before into the time after.

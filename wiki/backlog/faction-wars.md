@@ -15,7 +15,7 @@ npcs:
   - "[[npcs/1113-referee-leum|Referee Leum]]"
   - "[[npcs/1114-referee-pirre|Referee Pirre]]"
 source:
-  data: PvP10.qsd (quests 2851-2858, triggers PvP10-*); PvP13-01.qsd (quests 3101-3102, triggers PvP1301-*); LIST_QUEST.STB rows 2851-2858, 3101-3102; LIST_ZONE.STB rows 5, 8, 9 (join, kill and death triggers); the monster resources godot/data/monsters/431-* to 433-* (Sunset, Sunrise and Dusk Crystal); NPC AI and dialogs of the NPCs listed
+  data: PvP10.qsd (quests 2851-2858, triggers PvP10-*); PvP13-01.qsd (quests 3101-3102, triggers PvP1301-*); LIST_QUEST.STB rows 2851-2858, 3101-3102; iROSE's LIST_ZONE.STB rows 5, 8, 9 (join, kill and death triggers, not in the zone settings yet); the monster resources godot/data/monsters/431-* to 433-* (Sunset, Sunrise and Dusk Crystal); NPC AI and dialogs of the NPCs listed
   reference: iROSE 129_129en client data, read with a scratch copy of crates/rose-file-readers; NPC dialogs (Raw explains the rules)
 ---
 # Faction Wars

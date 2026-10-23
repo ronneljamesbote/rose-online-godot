@@ -23,11 +23,10 @@
 # client data (ROSE_DATA_IDX, the path to data.idx). The editor's Windows export template
 # (release, or debug and its console wrapper for --dev) is fetched into ~/.local/share/godot/export_templates/ when
 # it's missing.
-# It refuses to build when overrides/motions.toml (the server's hit times) doesn't match
-# the player animations, overrides/zones/ the zone scenes or overrides/data/ the game data
-# resources in godot/data/; run --export-motions, --export-zones or --export-data and commit
-# the files first. The zip carries overrides/data/ next to ROSE.exe: the game reads its items,
-# monsters, NPCs and skills from there, as the server does.
+# It refuses to build when export/ doesn't match what it is exported from (the game data
+# resources in godot/data/, the zone scenes and the animations' hit markers); run
+# --export-data and commit the files first. The zip carries export/data/ next to ROSE.exe:
+# the game reads its items, monsters, NPCs, skills and zones from there, as the server does.
 # Usage: ROSE_DATA_IDX=/path/to/data.idx godot/tools/build-windows.sh [--dev] [--folder] [--game-only] [OUT_DIR]
 #        (OUT_DIR default: dist/ at the repository root)
 set -euo pipefail
@@ -75,22 +74,10 @@ fi
 
 # The converted assets go into ROSE.pck, so make sure they are all there and current.
 "$GODOT" --headless --path godot -- --import-rose --data-idx="$DATA_IDX"
-# The server times hits from overrides/motions.toml, so the animations shipped must match it.
-if ! "$GODOT" --headless --path godot -- --export-motions=check --data-idx="$DATA_IDX"; then
-  echo "build-windows: overrides/motions.toml doesn't match the player animations." >&2
-  echo "build-windows: run  godot --headless --path godot -- --export-motions  and commit it." >&2
-  exit 1
-fi
-# The server places spawns, NPCs and named spots from overrides/zones/, exported from the zone scenes.
-if ! "$GODOT" --headless --path godot -- --export-zones=check --data-idx="$DATA_IDX"; then
-  echo "build-windows: overrides/zones/ doesn't match the zone scenes in godot/zones/." >&2
-  echo "build-windows: run  godot --headless --path godot -- --export-zones  and commit it." >&2
-  exit 1
-fi
-# The server and the game read the items, monsters, NPCs and skills from overrides/data/, exported
-# from godot/data/.
-if ! "$GODOT" --headless --path godot -- --export-data=check; then
-  echo "build-windows: overrides/data/ doesn't match the game data resources in godot/data/." >&2
+# The server and the game read export/ (the game data, the zone layouts and the hit times),
+# exported from godot/data/, the zone scenes and the animations shipped.
+if ! "$GODOT" --headless --path godot -- --export-data=check --data-idx="$DATA_IDX"; then
+  echo "build-windows: export/ doesn't match the game data resources, zone scenes or animations." >&2
   echo "build-windows: run  godot --headless --path godot -- --export-data  and commit it." >&2
   exit 1
 fi
@@ -118,8 +105,8 @@ if [ -z "$GAME_ONLY" ]; then
   [ -f "$STAGE/$DIR/assets.pck" ] || { echo "build-windows: exporting assets.pck failed." >&2; exit 1; }
 fi
 cp godot/tools/README-windows.txt "$STAGE/$DIR/README.txt"
-mkdir -p "$STAGE/$DIR/overrides"
-cp -r overrides/data "$STAGE/$DIR/overrides/data"
+mkdir -p "$STAGE/$DIR/export"
+cp -r export/data "$STAGE/$DIR/export/data"
 
 # GM commands are for dev builds only: the production client must have neither the GM chat
 # scripts (godot/gm/) nor the extension's gm_command. A file in the pck is listed as
@@ -139,7 +126,8 @@ if [ -n "$FOLDER" ]; then
   DEST="$OUT/$NAME"
   mkdir -p "$DEST"
   rm -f "$DEST"/*.exe "$DEST"/ROSE.pck "$DEST"/*.dll "$DEST/README.txt"
-  rm -rf "$DEST/overrides/data"
+  # overrides/ is what export/ was called before 2026-10-23.
+  rm -rf "$DEST/export/data" "$DEST/overrides"
   [ -n "$GAME_ONLY" ] || rm -f "$DEST/assets.pck"
   cp -r "$STAGE/$DIR/." "$DEST/"
   ls -la "$DEST"

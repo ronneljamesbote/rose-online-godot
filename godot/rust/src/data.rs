@@ -28,8 +28,10 @@ pub struct GameData {
     pub decoder: Box<dyn DataDecoder + Send + Sync>,
     /// NPC conversation text (ULNGTB_CON.LTB).
     pub ltb_event: LtbFile,
-    /// Crafting recipes (LIST_PRODUCT.STB), by an item's craft_material.
+    /// Crafting recipes, by an item's craft_material.
     pub craft_recipes: Vec<Option<rose_game_data::CraftRecipe>>,
+    /// What a new character starts with (the look on the character creation screen).
+    pub character_creator: rose_game_data::CharacterCreator,
     pub sounds: Arc<SoundDatabase>,
     pub effects: Arc<EffectDatabase>,
     /// What each ZMO frame event id does (footstep, hit, fire, ...).
@@ -42,32 +44,9 @@ pub struct GameData {
 
 static GAME_DATA: OnceLock<GameData> = OnceLock::new();
 
-/// Our changes to the game data (overrides/game-data.toml), the same file the server's
-/// upload applies: ROSE_OVERRIDES, else the overrides folder next to the game, else the
-/// repository's (when running from the Godot editor).
-fn apply_overrides(vfs: &mut VirtualFilesystem) -> Result<(), anyhow::Error> {
-    let candidates = std::env::var_os("ROSE_OVERRIDES").map(PathBuf::from).into_iter().chain(
-        [
-            std::env::current_exe().ok().and_then(|exe| exe.parent().map(|d| d.join(rose_game_overrides::OVERRIDES_FILE))),
-            std::env::current_dir().ok().map(|d| d.join("..").join(rose_game_overrides::OVERRIDES_FILE)),
-        ]
-        .into_iter()
-        .flatten(),
-    );
-    for path in candidates {
-        if path.is_file() {
-            let overrides = rose_game_overrides::Overrides::load(&path)?;
-            let cells = overrides.apply(vfs)?;
-            godot::global::godot_print!("rose: {} game data changes from {}", cells, path.display());
-            return Ok(());
-        }
-    }
-    Ok(())
-}
-
-/// The game data exported from the Godot resources (`overrides/data/`, see
+/// The game data exported from the Godot resources (`export/data/`, see
 /// `data_resources.rs`), the same files the server's upload sends: ROSE_DATA, else the
-/// overrides folder next to the game, else the repository's (when running from the Godot
+/// export folder next to the game, else the repository's (when running from the Godot
 /// editor).
 fn find_export() -> Option<PathBuf> {
     let candidates = std::env::var_os("ROSE_DATA").map(PathBuf::from).into_iter().chain(
@@ -97,7 +76,7 @@ fn load_items(vfs: &VirtualFilesystem, strings: Arc<StringDatabase>) -> Result<I
             return export.to_database(strings);
         }
     }
-    godot::global::godot_warn!("rose: no item export (overrides/data/items/), the items come from the iROSE tables");
+    godot::global::godot_warn!("rose: no item export (export/data/items/), the items come from the iROSE tables");
     rose_data_irose::get_item_database(vfs, strings)
 }
 
@@ -130,7 +109,7 @@ fn load_npcs(vfs: &VirtualFilesystem, strings: Arc<StringDatabase>) -> Result<Np
             return export.to_database(strings, models);
         }
     }
-    godot::global::godot_warn!("rose: no monster export (overrides/data/monsters.toml), the monsters and NPCs come from the iROSE tables");
+    godot::global::godot_warn!("rose: no monster export (export/data/monsters.toml), the monsters and NPCs come from the iROSE tables");
     rose_data_irose::get_npc_database(vfs, strings, &options)
 }
 
@@ -161,12 +140,40 @@ fn load_skills(
             return export.to_databases(strings);
         }
     }
-    godot::global::godot_warn!("rose: no skill export (overrides/data/skills.toml), the skills come from the iROSE tables");
+    godot::global::godot_warn!("rose: no skill export (export/data/skills.toml), the skills come from the iROSE tables");
     Ok((
         rose_data_irose::get_skill_database(vfs, strings.clone())?,
         rose_data_irose::get_status_effect_database(vfs, strings.clone())?,
         rose_data_irose::get_job_class_database(vfs, strings)?,
     ))
+}
+
+/// The zone settings, warp gates, crafting recipes and new characters from the export, or
+/// without one from the iROSE tables.
+fn load_world(vfs: &VirtualFilesystem, strings: &StringDatabase) -> Result<rose_game_data::World, anyhow::Error> {
+    if let Some(dir) = find_export() {
+        let toml = rose_data_export::Format::Toml;
+        let export = rose_data_export::WorldExport::from_files_as(toml, |name| {
+            let path = dir.join(rose_data_export::data_file_as(name, toml));
+            match std::fs::read_to_string(&path) {
+                Ok(text) => Ok(Some(text)),
+                Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(None),
+                Err(e) => Err(anyhow::Error::new(e).context(path.display().to_string())),
+            }
+        })?;
+        if let Some(export) = export {
+            godot::global::godot_print!(
+                "rose: {} zones, {} warp gates and {} recipes from {}",
+                export.zones.len(),
+                export.warp_gates.len(),
+                export.craft_recipes.len(),
+                dir.display()
+            );
+            return rose_game_data::world_from_export(&export);
+        }
+    }
+    godot::global::godot_warn!("rose: no world export (export/data/zones.toml), the zones come from the iROSE tables");
+    rose_game_data::load_world_irose(vfs, strings)
 }
 
 pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
@@ -175,13 +182,13 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
     }
 
     let root = data_idx.parent().map(|p| p.to_path_buf()).unwrap_or_default();
-    let mut vfs = VirtualFilesystem::new(vec![
+    let vfs = VirtualFilesystem::new(vec![
         Box::new(VfsIndex::load(data_idx)?),
         Box::new(HostFilesystemDevice::new(root.clone())),
     ]);
-    apply_overrides(&mut vfs)?;
     let strings = rose_data_irose::get_string_database(&vfs, 1)?;
-    let zone_list = rose_data_irose::get_zone_list(&vfs, strings.clone())?;
+    let world = load_world(&vfs, &strings)?;
+    let zone_list = rose_data_irose::get_zone_list_from_settings(strings.clone(), &world.zone_settings);
     let skybox = rose_data_irose::get_skybox_database(&vfs)?;
     let items = load_items(&vfs, strings.clone())?;
     let (skills, status_effects, job_classes) = load_skills(&vfs, strings.clone())?;
@@ -194,7 +201,6 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
         &CharacterMotionDatabaseOptions { load_frame_data: false },
     )?;
 
-    let craft_recipes = rose_game_data::load_craft_recipes(&vfs)?;
     let decoder = rose_data_irose::get_data_decoder();
     let sounds = rose_data_irose::get_sound_database(&vfs)?;
     let effects = rose_data_irose::get_effect_database(&vfs)?;
@@ -212,7 +218,8 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
         quests,
         decoder,
         ltb_event,
-        craft_recipes,
+        craft_recipes: world.craft_recipes,
+        character_creator: world.character_creator,
         sounds,
         effects,
         event_flags: rose_data_irose::get_animation_event_flags(),

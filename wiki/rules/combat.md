@@ -36,7 +36,7 @@ source:
     - crates/rose-game-data/src/lib.rs (load_motions)
     - godot/scripts/main.gd (_unhandled_input)
     - godot/scripts/online.gd (_on_damage, _float_number)
-  data: the weapon resources in godot/data/items/weapon/ (attack_power, attack_speed, attack_range, motion_type), TYPE_MOTION.STB and FILE_MOTION.STB (attack animations), overrides/motions.toml (player, monster and NPC animation lengths and hit frames, exported from the Godot animations), the monster resources in godot/data/monsters/ (monster attack values)
+  data: the weapon resources in godot/data/items/weapon/ (attack_power, attack_speed, attack_range, motion_type), TYPE_MOTION.STB and FILE_MOTION.STB (attack animations), export/motions.toml (player, monster and NPC animation lengths and hit frames, exported from the Godot animations), the monster resources in godot/data/monsters/ (monster attack values)
 ---
 # Combat
 
@@ -92,7 +92,7 @@ lengthens both:
 and the damage lands 0.566 × 100 / 107 = **0.529 s** after it starts. With no weapon
 (speed 115): 1.000 × 100 / 115 = 0.870 s per swing, hit after 0.348 s.
 
-The player, monster and NPC animations' lengths and hit frames come from `overrides/motions.toml`, which is
+The player, monster and NPC animations' lengths and hit frames come from `export/motions.toml`, which is
 exported from the hit markers of the Godot animations (`godot/assets/README.md`), so the
 server and the animation you see always agree. The file holds the same frames as the iROSE
 motion files; a motion missing from it uses its iROSE file.
@@ -249,7 +249,7 @@ Monsters use the same rules. Their values come from the monster data (see
 - Max HP is the monster's level × its HP per level (`hp_per_level` on the monster page; the page's `hp` already shows the result).
 - Critical is level × 2.5, rounded down.
 - Range and attack speed are the numbers in the data, with nothing added.
-- Each monster type has its own attack animation and hit frame, from `overrides/motions.toml`
+- Each monster type has its own attack animation and hit frame, from `export/motions.toml`
   like the player's. Several monsters can share one animation (Mini-Jelly Bean and Jelly
   Bean do), so moving its hit marker moves all of their hits.
 

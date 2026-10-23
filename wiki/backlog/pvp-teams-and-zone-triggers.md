@@ -7,7 +7,7 @@ summary: Players carry a team number that decides who can fight whom, and zones 
 npcs:
   - "[[npcs/1090-righteous-crusader-gawain|Righteous Crusader Gawain]]"
 source:
-  data: LIST_ZONE.STB columns 22-24 (join, kill and death trigger); PvP-A.qsd, PvP13-01.qsd (PvP1301-340), PvP10.qsd, QC001.qsd (Clan-003), QP201.qsd (2051-10 to 2051-14); ability 34 (team number); LIST_STRING.STL string 591
+  data: iROSE's LIST_ZONE.STB columns 22-24 (join, kill and death trigger; not in the zone settings in godot/data/zones/ yet); PvP-A.qsd, PvP13-01.qsd (PvP1301-340), PvP10.qsd, QC001.qsd (Clan-003), QP201.qsd (2051-10 to 2051-14); ability 34 (team number); LIST_STRING.STL string 591
   reference: iROSE 129_129en client data; QSD reward SetTeamNumber and TriggerForZoneTeam in crates/rose-file-readers/src/qsd.rs; module/src/pvp.rs and module/src/quests.rs
 ---
 # PvP teams and zone triggers
@@ -34,7 +34,7 @@ war crystals belong to a side. In PvP zones you can only form a party with your 
 
 ### Zone triggers
 
-LIST_ZONE.STB gives each zone up to three quest triggers, run on the player:
+iROSE's LIST_ZONE.STB gives each zone up to three quest triggers, run on the player:
 
 | Column | When it runs |
 | --- | --- |
@@ -86,5 +86,6 @@ The Crusader Training Camp is "everyone except your party" instead of everyone.
   zone's join trigger on every zone change, the kill trigger on the killer and the death
   trigger on the victim of a player kill; `TriggerForZoneTeam`; the party rule of string 591.
 - **Client**: show enemies by team (name colour) in PvP zones.
-- **Data**: none to change; the triggers are already in LIST_ZONE.STB (read by
-  `crates/rose-data-irose/src/zone_database.rs` as join, kill and dead trigger).
+- **Data**: the zone settings (`RoseZoneSettings`, `godot/data/zones/`) get three trigger
+  fields, filled from iROSE's LIST_ZONE.STB columns 22-24 (which
+  `crates/rose-data-irose/src/zone_database.rs` can read as join, kill and dead trigger).

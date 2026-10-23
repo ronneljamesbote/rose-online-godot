@@ -1,6 +1,6 @@
 //! Who sees whom. Every entity's zone sector is kept in `entity_sector`; a client subscribes
 //! to the entities in its own sector and the eight around it, as iROSE's server sends them
-//! (the zone's sector size, column 25 of LIST_ZONE.STB, 50 to 120 m). Monsters in the rest of
+//! (the zone's sector size, `sector_size` in its settings, 50 to 120 m). Monsters in the rest of
 //! the zone, and in other zones, are never sent.
 
 use std::cell::Cell;

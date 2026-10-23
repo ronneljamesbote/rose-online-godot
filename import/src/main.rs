@@ -6,15 +6,16 @@
 //!   rose-stdb-import pack <data.idx> <dir> upload batches for server/upload-game-data.sh
 //!   rose-stdb-import compare <data.idx>    every value the data export changes from iROSE
 //!                                          (items, monsters, NPCs, shop tabs, drop tables,
-//!                                          skills, status effects, job classes)
+//!                                          skills, status effects, job classes, zones, warp
+//!                                          gates, recipes, new characters)
 //!
 //! `pack` writes upload-NNN.json files, each the JSON argument list of the module's
 //! `upload_game_files` reducer (well under the server's request size limit), plus manifest.json.
-//! It first applies our data changes: the file named by ROSE_OVERRIDES, else
-//! overrides/game-data.toml in the current folder, then adds motions.toml (ROSE_MOTIONS) and
-//! the zone files in zones/ (ROSE_ZONES) from beside it (see overrides/README.md). The game
-//! data exported from the Godot resources (data/ beside it, or ROSE_DATA) is read in place of
-//! the iROSE tables it replaces, which are then neither read nor sent.
+//! It sends what the Godot editor exported (see export/README.md), from the folder named by
+//! ROSE_EXPORT, else export/ in the current folder: the game data in data/ (or ROSE_DATA),
+//! read in place of the iROSE tables it replaces, which are then neither read nor sent; the
+//! motion timings in motions.toml (or ROSE_MOTIONS); the zone files in zones/ (or
+//! ROSE_ZONES).
 
 use std::{
     collections::BTreeMap,
@@ -63,14 +64,16 @@ fn main() {
             std::process::exit(2);
         }
     };
-    let path = std::env::var_os("ROSE_OVERRIDES")
+    let export_dir = std::env::var_os("ROSE_EXPORT")
         .map(PathBuf::from)
-        .unwrap_or_else(|| PathBuf::from(rose_game_overrides::OVERRIDES_FILE));
-    // overrides/data/ (exported from the Godot resources), next to the overrides file unless
-    // ROSE_DATA names it.
-    let data_dir = std::env::var_os("ROSE_DATA").map(PathBuf::from).unwrap_or_else(|| {
-        path.parent().unwrap_or(Path::new("")).join(Path::new(rose_data_export::DATA_DIR).file_name().unwrap())
-    });
+        .unwrap_or_else(|| PathBuf::from(rose_data_export::EXPORT_DIR));
+    // A file or folder of the export (by its path in the repository), unless `variable` names it.
+    let in_export = |variable: &str, path: &str| {
+        std::env::var_os(variable)
+            .map(PathBuf::from)
+            .unwrap_or_else(|| export_dir.join(Path::new(path).strip_prefix(rose_data_export::EXPORT_DIR).unwrap()))
+    };
+    let data_dir = in_export("ROSE_DATA", rose_data_export::DATA_DIR);
     let export = read_export(&data_dir);
     let read: &'static Mutex<BTreeMap<PathBuf, Vec<u8>>> = Box::leak(Box::default());
     let root = data_idx.parent().map(|p| p.to_path_buf()).unwrap_or_default();
@@ -97,23 +100,13 @@ fn main() {
     }
     files.extend(export);
     if mode == "pack" || mode == "time" {
-        let overrides = rose_game_overrides::Overrides::load(&path).expect("read the overrides file");
-        let cells = overrides.patch_files(&mut files).expect("apply the overrides");
-        eprintln!("overrides: {} changed cells from {}", cells, path.display());
-
-        // overrides/motions.toml, next to the overrides file unless ROSE_MOTIONS names it.
-        let next_to_overrides = |name: &str| {
-            path.parent().unwrap_or(Path::new("")).join(Path::new(name).file_name().unwrap())
-        };
-        let motions_path = std::env::var_os("ROSE_MOTIONS")
-            .map(PathBuf::from)
-            .unwrap_or_else(|| next_to_overrides(rose_game_overrides::MOTIONS_FILE));
+        let motions_path = in_export("ROSE_MOTIONS", rose_data_export::MOTIONS_FILE);
         match std::fs::read(&motions_path) {
             Ok(data) => {
                 let text = std::str::from_utf8(&data).expect("motions file is UTF-8");
-                let timings = rose_game_overrides::MotionTimings::parse(text).expect("read the motions file");
+                let timings = rose_data_export::MotionTimings::parse(text).expect("read the motions file");
                 eprintln!("motions: {} motion timings from {}", timings.motion.len(), motions_path.display());
-                files.insert(PathBuf::from(rose_game_overrides::MOTIONS_GAME_FILE), data);
+                files.insert(PathBuf::from(rose_data_export::MOTIONS_GAME_FILE), data);
             }
             Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
                 eprintln!("motions: no {}, the ZMO timings stay", motions_path.display())
@@ -121,12 +114,9 @@ fn main() {
             Err(e) => panic!("read {}: {e}", motions_path.display()),
         }
 
-        // overrides/zones/*.toml (exported from the Godot zone scenes), next to the overrides
-        // file unless ROSE_ZONES names the folder.
-        let zones_dir = std::env::var_os("ROSE_ZONES")
-            .map(PathBuf::from)
-            .unwrap_or_else(|| next_to_overrides(rose_game_overrides::ZONES_DIR));
-        let layouts = rose_game_overrides::ZoneLayout::load_dir(&zones_dir).expect("read the zone files");
+        // export/zones/*.toml (exported from the Godot zone scenes).
+        let zones_dir = in_export("ROSE_ZONES", rose_data_export::ZONES_DIR);
+        let layouts = rose_data_export::ZoneLayout::load_dir(&zones_dir).expect("read the zone files");
         for (name, layout) in &layouts {
             eprintln!(
                 "zones: zone {} from {name}: {} spawn points, {} NPCs, {} named spots",
@@ -136,7 +126,7 @@ fn main() {
                 layout.event.len()
             );
             let data = std::fs::read(zones_dir.join(name)).unwrap();
-            files.insert(PathBuf::from(rose_game_overrides::zone_game_file(layout.zone)), data);
+            files.insert(PathBuf::from(rose_data_export::zone_game_file(layout.zone)), data);
         }
         if layouts.is_empty() {
             eprintln!("zones: no files in {}, every zone keeps its IFO and ZON data", zones_dir.display());
@@ -148,7 +138,7 @@ fn main() {
             memory.insert(&path.to_string_lossy(), data.clone());
         }
         if let Err(e) = rose_game_data::load_game_data(&VirtualFilesystem::new(vec![Box::new(memory)])) {
-            eprintln!("overrides: {e:#}");
+            eprintln!("export: {e:#}");
             std::process::exit(1);
         }
     }
@@ -250,6 +240,8 @@ fn read_export(dir: &Path) -> BTreeMap<PathBuf, Vec<u8>> {
         .unwrap_or_else(|e| fail(e));
     let skills = rose_data_export::SkillsExport::from_files_as(toml, |name| read(rose_data_export::data_file_as(name, toml)))
         .unwrap_or_else(|e| fail(e));
+    let world = rose_data_export::WorldExport::from_files_as(toml, |name| read(rose_data_export::data_file_as(name, toml)))
+        .unwrap_or_else(|e| fail(e));
     let mut files = BTreeMap::new();
     let format = rose_data_export::Format::Json;
     let mut add = |path: String, text: String| {
@@ -273,12 +265,18 @@ fn read_export(dir: &Path) -> BTreeMap<PathBuf, Vec<u8>> {
             add(rose_data_export::data_file_as(name, format), text);
         }
     }
+    if let Some(world) = world {
+        world.check().unwrap_or_else(|e| fail(e));
+        for (name, text) in world.to_files_as(format).expect("write the world as JSON") {
+            add(rose_data_export::data_file_as(name, format), text);
+        }
+    }
     files
 }
 
 /// The same-data check: loads the items, monsters, NPCs, shop tabs, drop tables, skills,
-/// status effects and job classes from the iROSE tables and from the export and prints every
-/// value that differs.
+/// status effects, job classes, zone settings, warp gates, crafting recipes and new
+/// characters from the iROSE tables and from the export and prints every value that differs.
 fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool) {
     if no_export {
         eprintln!("compare: no export in {}", data_dir.display());
@@ -289,13 +287,13 @@ fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool) {
     let irose = rose_data_irose::get_item_database(vfs, strings.clone()).expect("iROSE items");
     let irose_ms = started.elapsed().as_millis();
     let started = Instant::now();
-    let export = rose_game_data::load_items(vfs, strings.clone()).expect("exported items");
+    let export_items = rose_game_data::load_items(vfs, strings.clone()).expect("exported items");
     let export_ms = started.elapsed().as_millis();
-    let count = rose_data_export::ItemsExport::from_database(&export).count();
-    let mut differences = rose_data_export::compare_item_databases(&irose, &export);
+    let count = rose_data_export::ItemsExport::from_database(&export_items).count();
+    let mut differences = rose_data_export::compare_item_databases(&irose, &export_items);
     println!(
         "items: {count} items and {} grades; iROSE tables {irose_ms} ms, export {export_ms} ms",
-        export.item_grades().len(),
+        export_items.item_grades().len(),
     );
 
     let options = rose_data::NpcDatabaseOptions { load_frame_data: false };
@@ -332,7 +330,7 @@ fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool) {
         None => println!("skills: no export (skills.toml ...), skipped"),
         Some(export) => {
             let started = Instant::now();
-            let (skills, effects, classes) = rose_game_data::load_skills(vfs, strings).expect("exported skills");
+            let (skills, effects, classes) = rose_game_data::load_skills(vfs, strings.clone()).expect("exported skills");
             let export_ms = started.elapsed().as_millis();
             rose_game_data::check_summons(&skills, &npcs).expect("summoned monsters");
             differences.extend(rose_data_export::compare_skill_databases(
@@ -347,13 +345,34 @@ fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool) {
             );
         }
     }
+
+    let started = Instant::now();
+    let irose_world = rose_game_data::load_world_irose(vfs, &strings).expect("iROSE world");
+    let irose_ms = started.elapsed().as_millis();
+    match rose_game_data::read_world_export(vfs).expect("read the world export") {
+        None => println!("world: no export (zones.toml ...), skipped"),
+        Some(export) => {
+            let started = Instant::now();
+            let world = rose_game_data::world_from_export(&export).expect("exported world");
+            let export_ms = started.elapsed().as_millis();
+            world.check_items(&export_items).expect("the items the world names");
+            differences.extend(rose_game_data::compare_worlds(&irose_world, &world));
+            println!(
+                "world: {} zones, {} warp gates, {} recipes, {} new characters; iROSE tables {irose_ms} ms, export {export_ms} ms",
+                export.zones.len(),
+                export.warp_gates.len(),
+                export.craft_recipes.len(),
+                export.new_characters.len(),
+            );
+        }
+    }
     for line in &differences {
         println!("{line}");
     }
     println!("{} values differ", differences.len());
 }
 
-/// For each zone the uploaded files change (`overrides/zones/`), how far its spawn points,
+/// For each zone the uploaded files change (`export/zones/`), how far its spawn points,
 /// NPCs and named spots are from the ones in the IFO and ZON files.
 fn print_zone_changes(files: &rose_game_data::GameData, uploaded: &rose_game_data::GameData) {
     for (a, b) in files.zones.iter().zip(uploaded.zones.iter()) {
@@ -397,7 +416,7 @@ fn print_zone_changes(files: &rose_game_data::GameData, uploaded: &rose_game_dat
 }
 
 /// Every motion whose length or hits differ between the ZMO files and the uploaded game
-/// files (with `overrides/motions.toml`), then the sword swings the server times hits by.
+/// files (with `export/motions.toml`), then the sword swings the server times hits by.
 fn print_motion_changes(zmo: &rose_game_data::GameData, uploaded: &rose_game_data::GameData) {
     use rose_data::MotionFileData;
     let ms = |d: Option<std::time::Duration>| d.map_or("-".to_string(), |d| format!("{} ms", d.as_millis()));

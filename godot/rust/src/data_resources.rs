@@ -3,10 +3,12 @@
 //! type, `RoseItemWeapon` and so on, plus `RoseItemGrade` for the refine grades), monsters
 //! (`RoseMonster`), town NPCs (`RoseNpc`), drop tables (`RoseDropTable`), shop tabs
 //! (`RoseShopTab`), skills (`RoseSkill`, one per skill level, in a folder per skill),
-//! status effects (`RoseStatusEffect`) and job classes (`RoseJobClass`).
+//! status effects (`RoseStatusEffect`), job classes (`RoseJobClass`), zone settings
+//! (`RoseZoneSettings`), warp gates (`RoseWarpGate`), crafting recipes (`RoseCraftRecipe`)
+//! and new characters (`RoseNewCharacter`).
 //!
 //! The game itself never reads these files. `--export-data` writes them to
-//! `overrides/data/` as TOML (the layout is in `crates/rose-data-export`), and the server and
+//! `export/data/` as TOML (the layout is in `crates/rose-data-export`), and the server and
 //! the client load that. `--convert-data` writes the resources once from the iROSE tables.
 //!
 //! A resource's properties are the export's keys, one to one, so both directions go through
@@ -38,7 +40,8 @@ use rose_data_export::items::{
 };
 use rose_data_export::npcs::{DropTableExport, MonsterExport, NpcExport, ShopTabExport};
 use rose_data_export::skills::{JobClassExport, SkillExport, StatusEffectExport};
-use rose_data_export::{ItemsExport, NpcsExport, SkillsExport};
+use rose_data_export::world::{CraftRecipeExport, NewCharacterExport, WarpGateExport, ZoneExport};
+use rose_data_export::{ItemsExport, NpcsExport, SkillsExport, WorldExport};
 use serde::{de::DeserializeOwned, Serialize};
 use serde_json::{Map, Value};
 
@@ -53,6 +56,11 @@ pub const SHOP_TABS_DIR: &str = "res://data/shop_tabs/";
 pub const SKILLS_DIR: &str = "res://data/skills/";
 pub const STATUS_EFFECTS_DIR: &str = "res://data/status_effects/";
 pub const JOB_CLASSES_DIR: &str = "res://data/job_classes/";
+/// Where the zone settings, warp gate, crafting recipe and new character resources live.
+pub const ZONES_DIR: &str = "res://data/zones/";
+pub const WARP_GATES_DIR: &str = "res://data/warp_gates/";
+pub const CRAFT_RECIPES_DIR: &str = "res://data/craft_recipes/";
+pub const NEW_CHARACTERS_DIR: &str = "res://data/new_characters/";
 
 /// Where to find a linked resource by what the export holds: `items/weapon/3`,
 /// `drop_table/147`, `shop_tab/12` -> its `res://` path.
@@ -88,6 +96,10 @@ fn enum_hint(property: &mut PropertyInfo) {
         variants::<SkillActionMode>(false)
     } else if name == "basic_command" {
         variants::<SkillBasicCommand>(true)
+    } else if name == "raw_material_class" {
+        variants::<ItemClass>(true)
+    } else if name == "gender" {
+        vec!["Male".into(), "Female".into()]
     } else if name == "damage_type" {
         variants::<SkillDamageType>(false)
     } else if name == "status_effect_type" {
@@ -1131,6 +1143,262 @@ pub struct RoseJobClass {
     base: Base<Resource>,
 }
 
+/// A zone's settings: its name, map, music, sky, time of day and rules. One per zone,
+/// including the zones not edited as Godot scenes (their spawns and NPCs stay in the iROSE map
+/// files); a zone scene shows its settings on its root node. Edit it here, then run
+/// `--export-data`. Zones are described on the wiki's zone pages.
+#[derive(GodotClass)]
+#[class(tool, base=Resource, init)]
+pub struct RoseZoneSettings {
+    /// The zone's number (iROSE's LIST_ZONE.STB row; a zone scene's folder starts with it).
+    /// Saved characters, warp gates and quests name the zone by it.
+    #[export_group(name = "Zone")]
+    #[export]
+    id: i64,
+    /// The name players see (loading screen, map, version line).
+    #[export]
+    name: GString,
+    /// The text under the name on the loading screen.
+    #[export(multiline)]
+    description: GString,
+
+    /// The iROSE map file (a `.zon` path in the client data). The game builds the zone from
+    /// it unless the zone has Godot scenes (`godot/zones/`); the server reads its blocks'
+    /// spawns and NPCs unless the zone has an exported layout (`export/zones/`).
+    #[export_group(name = "Map")]
+    #[export]
+    map_file: GString,
+    /// The named spot players arrive at when they come to the zone without a warp gate, and
+    /// new characters start at (usually `start`).
+    #[export]
+    start_spot: GString,
+    /// The named spots fallen players can get up at (the nearest one of this name; usually
+    /// `restore`).
+    #[export]
+    revive_spot: GString,
+    /// The side of the squares the server splits the zone into to decide who sees whom, in
+    /// centimetres (5000 to 12000; the wiki page "Visibility" explains it).
+    #[export(range = (5000.0, 12000.0, 1.0, suffix = "cm"))]
+    sector_size: i64,
+
+    /// The music by day (a sound file path in the client data, empty = none).
+    #[export_group(name = "Look and sound")]
+    #[export]
+    music_day: GString,
+    /// The music by night.
+    #[export]
+    music_night: GString,
+    /// The sky: its row in iROSE's LIST_SKY.STB (-1 = none).
+    #[export]
+    #[init(val = -1)]
+    sky: i64,
+    /// The minimap image (a DDS path in the client data, empty = none).
+    #[export]
+    minimap: GString,
+    /// Where the minimap image starts: the block column its left edge shows.
+    #[export]
+    minimap_start_x: i64,
+    /// Where the minimap image starts: the block row its top edge shows.
+    #[export]
+    minimap_start_y: i64,
+    /// The iROSE model list of the zone's decorations (a ZSC file).
+    #[export]
+    decoration_models: GString,
+    /// The iROSE model list of the zone's buildings (a ZSC file).
+    #[export]
+    building_models: GString,
+    /// The footstep sounds walking here (iROSE's footstep type, -1 = none).
+    #[export]
+    #[init(val = -1)]
+    footstep_type: i64,
+
+    /// The length of a day here in world ticks (one tick is 10 seconds).
+    #[export_group(name = "Time of day")]
+    #[export]
+    day_cycle: i64,
+    /// When in the day morning starts (ticks into the day).
+    #[export]
+    morning_time: i64,
+    /// When day starts.
+    #[export]
+    day_time: i64,
+    /// When evening starts.
+    #[export]
+    evening_time: i64,
+    /// When night starts.
+    #[export]
+    night_time: i64,
+
+    /// Who can fight whom here: no one, everyone except clan members, everyone except party
+    /// members, everyone, or a clan zone. The wiki page "Player against player" has the rules.
+    #[export_group(name = "Rules")]
+    #[export(enum = (NoFighting = 0, AllButClan = 1, AllButParty = 2, Everyone = 3, ClanZone = 11))]
+    pvp_state: i64,
+    /// The planet the zone is on (1 Junon, 2 Luna, 3 Eldeon, 4 Orlo ...). A save point only
+    /// works on the planet it was saved on.
+    #[export]
+    planet: i64,
+    /// What can't be driven here.
+    #[export(flags = (NoCarts = 1, NoCastleGear = 2))]
+    vehicle_use_flags: i64,
+    base: Base<Resource>,
+}
+
+/// A warp gate: where walking into it takes you. The gate models placed in a zone scene link
+/// it (their `warp_gate`). Edit it here, then run `--export-data`.
+#[derive(GodotClass)]
+#[class(tool, base=Resource, init)]
+pub struct RoseWarpGate {
+    /// The gate's number (iROSE's WARP.STB row). The gates placed in the zones name it.
+    #[export]
+    id: i64,
+    /// The zone it takes you to: drag its `RoseZoneSettings` in from `res://data/zones/`.
+    #[export]
+    target_zone: Option<Gd<RoseZoneSettings>>,
+    /// The named spot of that zone you arrive at (a `RoseZoneEvent` of its scene, or a ZON
+    /// event position of its map file).
+    #[export]
+    target_spot: GString,
+    base: Base<Resource>,
+}
+
+/// A crafting or refining recipe: up to four materials, used one step after another. An
+/// item names its recipe by number (its `craft_material`); recipes 1 to 10 refine weapons and
+/// 11 to 20 everything else, one per grade. Edit it here, then run `--export-data`. The wiki
+/// pages "Crafting" and "Refining" have the rules.
+#[derive(GodotClass)]
+#[class(tool, base=Resource, init)]
+pub struct RoseCraftRecipe {
+    /// The number (iROSE's LIST_PRODUCT.STB row). Items name their recipe by it.
+    #[export]
+    id: i64,
+    /// For finding it only (what it makes).
+    #[export]
+    name: GString,
+    /// When `material_1` is empty, any item of this class can be the first material (metal,
+    /// leather ... for crafting; the refining recipes take chemicals).
+    #[export]
+    #[init(val = GString::from(NO_STAT))]
+    raw_material_class: GString,
+    /// The first material: an item resource (drag one in), or empty for any item of the raw
+    /// material class.
+    #[export_group(name = "Materials")]
+    #[export]
+    material_1: Option<Gd<Resource>>,
+    /// How many of the first material.
+    #[export]
+    material_1_quantity: i64,
+    /// The second material (empty = none).
+    #[export]
+    material_2: Option<Gd<Resource>>,
+    /// How many of the second material.
+    #[export]
+    material_2_quantity: i64,
+    /// The third material (empty = none).
+    #[export]
+    material_3: Option<Gd<Resource>>,
+    /// How many of the third material.
+    #[export]
+    material_3_quantity: i64,
+    /// The fourth material (empty = none).
+    #[export]
+    material_4: Option<Gd<Resource>>,
+    /// How many of the fourth material.
+    #[export]
+    material_4_quantity: i64,
+    base: Base<Resource>,
+}
+
+#[godot_api]
+impl IResource for RoseCraftRecipe {
+    fn on_validate_property(&self, property: &mut PropertyInfo) {
+        enum_hint(property);
+    }
+}
+
+/// What a new character starts with: stats, the gear it wears and what is in its bag. One
+/// for male and one for female characters. New characters also know the basic actions
+/// (sit, pick up, emotes ...), which are in code. Edit it here, then run `--export-data`. The
+/// wiki page "Character creation" describes it.
+#[derive(GodotClass)]
+#[class(tool, base=Resource, init)]
+pub struct RoseNewCharacter {
+    /// Which characters this is for.
+    #[export]
+    #[init(val = GString::from("Male"))]
+    gender: GString,
+    /// Starting strength.
+    #[export_group(name = "Stats")]
+    #[export]
+    strength: i64,
+    /// Starting dexterity.
+    #[export]
+    dexterity: i64,
+    /// Starting intelligence.
+    #[export]
+    intelligence: i64,
+    /// Starting concentration.
+    #[export]
+    concentration: i64,
+    /// Starting charm.
+    #[export]
+    charm: i64,
+    /// Starting sense.
+    #[export]
+    sense: i64,
+    /// Worn on the face (an item resource, empty = nothing).
+    #[export_group(name = "Wearing")]
+    #[export]
+    face: Option<Gd<Resource>>,
+    /// Worn on the head.
+    #[export]
+    head: Option<Gd<Resource>>,
+    /// Worn on the body.
+    #[export]
+    body: Option<Gd<Resource>>,
+    /// Worn on the back.
+    #[export]
+    back: Option<Gd<Resource>>,
+    /// Worn on the hands.
+    #[export]
+    hands: Option<Gd<Resource>>,
+    /// Worn on the feet.
+    #[export]
+    feet: Option<Gd<Resource>>,
+    /// Held as the weapon.
+    #[export]
+    weapon: Option<Gd<Resource>>,
+    /// Held in the other hand (a shield or support tool).
+    #[export]
+    sub_weapon: Option<Gd<Resource>>,
+    /// Equipment in the bag (up to 10 item resources).
+    #[export_group(name = "Bag")]
+    #[export]
+    bag_equipment: Array<Option<Gd<Resource>>>,
+    /// Consumables in the bag (up to 5 item resources), how many of each in
+    /// `bag_consumable_counts` (same order).
+    #[export]
+    bag_consumables: Array<Option<Gd<Resource>>>,
+    /// How many of each consumable.
+    #[export]
+    bag_consumable_counts: PackedInt32Array,
+    /// Materials in the bag (up to 5 item resources), how many of each in
+    /// `bag_material_counts`.
+    #[export]
+    bag_materials: Array<Option<Gd<Resource>>>,
+    /// How many of each material.
+    #[export]
+    bag_material_counts: PackedInt32Array,
+    base: Base<Resource>,
+}
+
+#[godot_api]
+impl IResource for RoseNewCharacter {
+    fn on_validate_property(&self, property: &mut PropertyInfo) {
+        enum_hint(property);
+    }
+}
+
 /// `find`'s index of one folder: each number's file (and name), and when it was made.
 type FoundIndex = (std::time::Instant, std::collections::HashMap<i64, (String, String)>);
 
@@ -1229,6 +1497,8 @@ fn link_kind(property: &str) -> &str {
         "job_class"
     } else if property == "summon_monster" {
         "monster"
+    } else if property == "target_zone" {
+        "zone"
     } else {
         property
     }
@@ -1439,7 +1709,7 @@ fn tres_files(dir: &str, out: &mut Vec<String>) {
 }
 
 /// `--convert-data`: writes one resource per item and grade from the iROSE tables
-/// (with `overrides/game-data.toml`) into `res://data/items/`. Refuses when item resources
+/// into `res://data/items/`. Refuses when item resources
 /// are already there, unless `force` (which overwrites files of the same name).
 pub fn convert_items(force: bool) -> Result<(usize, String), String> {
     let data = crate::data::get().ok_or("open the data first")?;
@@ -1663,6 +1933,7 @@ fn index_links(dir: &str, links: &mut Links) -> Result<(), String> {
             "RoseSkill" => format!("skill/{id}"),
             "RoseStatusEffect" => format!("status_effect/{id}"),
             "RoseJobClass" => format!("job_class/{id}"),
+            "RoseZoneSettings" => format!("zone/{id}"),
             _ => match item_kind(&class) {
                 Some(kind) => format!("items/{kind}/{id}"),
                 None => continue,
@@ -1706,10 +1977,10 @@ pub fn convert_npcs(force: bool) -> Result<(usize, Vec<String>), String> {
     let strings =
         rose_data_irose::get_string_database(&data.vfs, 1).map_err(|e| format!("{e:#}"))?;
     let zones = rose_data_irose::get_zone_database(&data.vfs, strings.clone()).map_err(|e| format!("{e:#}"))?;
-    // The zone scenes' NPCs, as exported (overrides/zones/).
+    // The zone scenes' NPCs, as exported (export/zones/).
     let project = ProjectSettings::singleton().globalize_path("res://").to_string();
-    let layouts = rose_game_overrides::ZoneLayout::load_dir(
-        &Path::new(&project).join("..").join(rose_game_overrides::ZONES_DIR),
+    let layouts = rose_data_export::ZoneLayout::load_dir(
+        &Path::new(&project).join("..").join(rose_data_export::ZONES_DIR),
     )
     .map_err(|e| format!("{e:#}"))?;
     let scene_npcs: Vec<u16> = layouts
@@ -1962,9 +2233,129 @@ pub fn read_skills() -> Result<(SkillsExport, usize), String> {
     Ok((export, count))
 }
 
-/// `--export-data`: writes `overrides/data/` (in the repository) from the resources, or
-/// with `check` only compares. Returns the files written or compared and those that differ.
+const WORLD_DIRS: [(&str, &str); 4] = [
+    (ZONES_DIR, "RoseZoneSettings"),
+    (WARP_GATES_DIR, "RoseWarpGate"),
+    (CRAFT_RECIPES_DIR, "RoseCraftRecipe"),
+    (NEW_CHARACTERS_DIR, "RoseNewCharacter"),
+];
+
+/// `--convert-data` for the world: zone settings (LIST_ZONE.STB), warp gates (WARP.STB),
+/// crafting recipes (LIST_PRODUCT.STB) and new characters (INIT_AVATAR.STB), one resource
+/// each, linking the zones and the items (which must be there). Returns how many and what
+/// couldn't be kept.
+pub fn convert_world(force: bool) -> Result<(usize, Vec<String>), String> {
+    let data = crate::data::get().ok_or("open the data first")?;
+    let mut existing = Vec::new();
+    for (dir, _) in WORLD_DIRS {
+        tres_files(dir, &mut existing);
+    }
+    if !existing.is_empty() && !force {
+        return Err(format!(
+            "res://data/ already has {} zone, warp gate, recipe or new character resources; they are the source now (use --convert-data=force to write them again from iROSE)",
+            existing.len()
+        ));
+    }
+    let mut links = Links::new();
+    index_links(ITEMS_DIR, &mut links)?;
+    if links.is_empty() {
+        return Err(format!("no item resources in {ITEMS_DIR}; the recipes and new characters link them"));
+    }
+    let strings = rose_data_irose::get_string_database(&data.vfs, 1).map_err(|e| format!("{e:#}"))?;
+    let (export, lost) =
+        rose_game_data::world_export_from_irose(&data.vfs, &strings, &data.items).map_err(|e| format!("{e:#}"))?;
+    let mut count = 0;
+    let mut zone_names = std::collections::HashMap::new();
+    for zone in &export.zones {
+        let name = if zone.name.trim().is_empty() { "zone" } else { &zone.name };
+        let path = format!("{ZONES_DIR}{}.tres", file_stem(zone.id as u32, name));
+        write_resource("RoseZoneSettings", &path, zone, &links)?;
+        links.insert(format!("zone/{}", zone.id), path);
+        zone_names.insert(zone.id, name.to_string());
+        count += 1;
+    }
+    for gate in &export.warp_gates {
+        let target = zone_names.get(&gate.target_zone).cloned().unwrap_or_default();
+        let path = format!("{WARP_GATES_DIR}{}.tres", file_stem(gate.id as u32, &format!("to {target}")));
+        write_resource("RoseWarpGate", &path, gate, &links)?;
+        count += 1;
+    }
+    for recipe in &export.craft_recipes {
+        let name = if recipe.name.trim().is_empty() { "recipe" } else { &recipe.name };
+        let path = format!("{CRAFT_RECIPES_DIR}{}.tres", file_stem(recipe.id as u32, name));
+        write_resource("RoseCraftRecipe", &path, recipe, &links)?;
+        count += 1;
+    }
+    for character in &export.new_characters {
+        let name = format!("{:?}", character.gender).to_lowercase();
+        let path = format!("{NEW_CHARACTERS_DIR}{name}.tres");
+        write_resource("RoseNewCharacter", &path, character, &links)?;
+        count += 1;
+    }
+    Ok((count, lost))
+}
+
+/// Reads every zone settings, warp gate, recipe and new character resource into the export.
+/// Two of one kind with the same number (or gender) are an error naming both files.
+pub fn read_world() -> Result<(WorldExport, usize), String> {
+    let mut export = WorldExport::default();
+    let mut seen: std::collections::HashMap<(&str, String), String> = std::collections::HashMap::new();
+    let mut loader = ResourceLoader::singleton();
+    let mut count = 0;
+    for (dir, _) in WORLD_DIRS {
+        register_uids(dir);
+    }
+    for (dir, _) in WORLD_DIRS {
+        let mut files = Vec::new();
+        tres_files(dir, &mut files);
+        for path in files {
+            count += 1;
+            let resource = loader.load(&path).ok_or(format!("could not load {path}"))?;
+            let class = resource.get_class().to_string();
+            let mut check = |kind: &'static str, id: String| -> Result<(), String> {
+                match seen.insert((kind, id.clone()), path.clone()) {
+                    Some(other) => Err(format!("{path} and {other} are both {kind} {id}")),
+                    None => Ok(()),
+                }
+            };
+            let read = |e: String| format!("{path}: {e}");
+            match class.as_str() {
+                "RoseZoneSettings" => {
+                    let zone: ZoneExport = from_resource(&resource).map_err(read)?;
+                    check("zone", zone.id.to_string())?;
+                    export.zones.push(zone);
+                }
+                "RoseWarpGate" => {
+                    let gate: WarpGateExport = from_resource(&resource).map_err(read)?;
+                    check("warp gate", gate.id.to_string())?;
+                    export.warp_gates.push(gate);
+                }
+                "RoseCraftRecipe" => {
+                    let recipe: CraftRecipeExport = from_resource(&resource).map_err(read)?;
+                    check("recipe", recipe.id.to_string())?;
+                    export.craft_recipes.push(recipe);
+                }
+                "RoseNewCharacter" => {
+                    let character: NewCharacterExport = from_resource(&resource).map_err(read)?;
+                    check("new character", format!("{:?}", character.gender))?;
+                    export.new_characters.push(character);
+                }
+                _ => return Err(format!("{path} is a {class}, not a zone, warp gate, recipe or new character")),
+            }
+        }
+    }
+    export.check().map_err(|e| format!("{e:#}"))?;
+    Ok((export, count))
+}
+
+/// `--export-data`: writes `export/` (in the repository) from the resources, the zone scenes
+/// and the animations, or with `check` only compares. Needs the data open (the motion list and
+/// the names in the zone files' comments come from it) and the imported animations. Returns
+/// the files written or compared and those that differ.
 pub fn export(check: bool) -> Result<ExportResult, String> {
+    if crate::data::get().is_none() {
+        return Err("open the data first".into());
+    }
     let started = std::time::Instant::now();
     let (items, item_resources) = read_items()?;
     if item_resources == 0 {
@@ -1984,6 +2375,12 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
             "no skill resources in {SKILLS_DIR}; run --convert-data first"
         ));
     }
+    let (world, world_resources) = read_world()?;
+    if world_resources == 0 {
+        return Err(format!(
+            "no zone resources in {ZONES_DIR}; run --convert-data first"
+        ));
+    }
     // A summon must name a monster that is there.
     let monsters: std::collections::HashSet<u16> = npcs.monsters.iter().map(|m| m.id).collect();
     if let Some(skill) = skills.skills.iter().find(|s| s.summon_monster != 0 && !monsters.contains(&s.summon_monster)) {
@@ -1993,31 +2390,23 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
     let project = ProjectSettings::singleton()
         .globalize_path("res://")
         .to_string();
-    let dir = Path::new(&project)
-        .join("..")
-        .join(rose_data_export::DATA_DIR);
+    let dir = Path::new(&project).join("..");
+    // Paths in the repository (`export/data/items/weapon.toml`) and their text.
+    let in_data = |name: String| format!("{}/{name}", rose_data_export::DATA_DIR);
     let toml = rose_data_export::Format::Toml;
     let mut files: Vec<(String, String)> = items
         .to_files()
         .map_err(|e| format!("{e:#}"))?
         .into_iter()
-        .map(|(name, text)| (rose_data_export::items_file(name), text))
+        .map(|(name, text)| (in_data(rose_data_export::items_file(name)), text))
         .collect();
-    files.extend(
-        npcs.to_files_as(toml)
-            .map_err(|e| format!("{e:#}"))?
-            .into_iter()
-            .map(|(name, text)| (rose_data_export::data_file_as(name, toml), text)),
-    );
-    files.extend(
-        skills
-            .to_files_as(toml)
-            .map_err(|e| format!("{e:#}"))?
-            .into_iter()
-            .map(|(name, text)| (rose_data_export::data_file_as(name, toml), text)),
-    );
+    let mut data_files = Vec::new();
+    data_files.extend(npcs.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
+    data_files.extend(skills.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
+    data_files.extend(world.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
+    files.extend(data_files.into_iter().map(|(name, text)| (in_data(rose_data_export::data_file_as(name, toml)), text)));
     // The written files must read back (the server and the game load them the same way).
-    let find = |path: String| Ok(files.iter().find(|(n, _)| *n == path).map(|(_, t)| t.clone()));
+    let find = |path: String| Ok(files.iter().find(|(n, _)| *n == in_data(path.clone())).map(|(_, t)| t.clone()));
     ItemsExport::from_files(|name| find(rose_data_export::items_file(name))).map_err(|e| format!("{e:#}"))?;
     NpcsExport::from_files_as(toml, |name| find(rose_data_export::data_file_as(name, toml)))
         .map_err(|e| format!("{e:#}"))?
@@ -2029,12 +2418,44 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
         .ok_or("the skill export doesn't read back")?
         .check()
         .map_err(|e| format!("{e:#}"))?;
+    let world_back = WorldExport::from_files_as(toml, |name| find(rose_data_export::data_file_as(name, toml)))
+        .map_err(|e| format!("{e:#}"))?
+        .ok_or("the world export doesn't read back")?;
+    rose_game_data::world_from_export(&world_back).map_err(|e| format!("{e:#}"))?;
+
+    // The zones edited as scenes need their settings, and their layouts go to the server.
+    // Their comments name the zone, monsters and NPCs as the resources do now.
+    let zone_names: std::collections::HashMap<u16, &str> = world.zones.iter().map(|z| (z.id, z.name.as_str())).collect();
+    let npc_names: std::collections::HashMap<u32, String> = (npcs.monsters.iter().map(|m| (m.id as u32, m.name.clone())))
+        .chain(npcs.npcs.iter().map(|n| (n.id as u32, n.name.clone())))
+        .collect();
+    let mut zone_scenes = 0;
+    for (zone_id, folder) in crate::zone_scene::zone_folders() {
+        let Some(zone_name) = zone_names.get(&zone_id) else {
+            return Err(format!("{folder} is zone {zone_id}, which has no settings in {ZONES_DIR}"));
+        };
+        let layout = crate::zone_scene::zone_layout(zone_id)?;
+        let name = format!("{}/{}", rose_data_export::ZONES_DIR, crate::zone_scene::layout_file_name(&folder));
+        files.push((name, crate::zone_scene::layout_text(&layout, zone_name, &npc_names)));
+        zone_scenes += 1;
+    }
+    // The motion timings, from the hit markers of the animations.
+    let timings = crate::character::motion_timings().ok_or("open the data first")?;
+    if timings.motion.is_empty() {
+        return Err("no imported animations; run --import-rose first".into());
+    }
+    let motions = timings.motion.len();
+    files.push((rose_data_export::MOTIONS_FILE.to_string(), timings.to_toml()));
+
     let mut result = ExportResult {
-        resources: item_resources + npc_resources + skill_resources,
+        resources: item_resources + npc_resources + skill_resources + world_resources,
         items: items.count(),
         monsters: npcs.monsters.len(),
         npcs: npcs.npcs.len(),
         skills: skills.skills.len(),
+        zones: world.zones.len(),
+        zone_scenes,
+        motions,
         read_ms,
         ..Default::default()
     };
@@ -2072,6 +2493,9 @@ pub struct ExportResult {
     pub monsters: usize,
     pub npcs: usize,
     pub skills: usize,
+    pub zones: usize,
+    pub zone_scenes: usize,
+    pub motions: usize,
     pub read_ms: u128,
 }
 
@@ -2086,8 +2510,10 @@ struct RoseDataExport {
 impl RoseDataExport {
     /// Writes the resources of every kind that has none yet (all of them with `force`) from
     /// the iROSE tables: items first, then monsters, NPCs, drop tables and shop tabs, which
-    /// link the items, then skills, status effects and job classes, which link the monsters. Needs RoseData.open. Returns {resources, folder, skipped (kinds already
-    /// there), lost (values that couldn't be kept)}, or {error}.
+    /// link the items, then skills, status effects and job classes, which link the monsters,
+    /// then zone settings, warp gates, recipes and new characters, which link the zones and
+    /// items. Needs RoseData.open. Returns {resources, folder, skipped (kinds already there),
+    /// lost (values that couldn't be kept)}, or {error}.
     #[func]
     fn convert(force: bool) -> VarDictionary {
         let mut result = VarDictionary::new();
@@ -2142,6 +2568,26 @@ impl RoseDataExport {
         } else {
             kept.push(&"skills, status effects and job classes".to_variant());
         }
+        let mut others = Vec::new();
+        for (dir, _) in WORLD_DIRS {
+            tres_files(dir, &mut others);
+        }
+        if force || others.is_empty() {
+            match convert_world(force) {
+                Ok((n, not_kept)) => {
+                    count += n;
+                    for line in not_kept {
+                        lost.push(&line.to_variant());
+                    }
+                }
+                Err(error) => {
+                    result.set("error", error.as_str());
+                    return result;
+                }
+            }
+        } else {
+            kept.push(&"zones, warp gates, recipes and new characters".to_variant());
+        }
         let folder = ProjectSettings::singleton().globalize_path("res://data/").to_string();
         result.set("resources", count as i64);
         result.set("folder", folder.as_str());
@@ -2150,8 +2596,9 @@ impl RoseDataExport {
         result
     }
 
-    /// Writes (or with `check` compares) `overrides/data/` from the resources. Returns
-    /// {files, changed, resources, items, monsters, npcs, skills, read_ms}, or {error}.
+    /// Writes (or with `check` compares) `export/` from the resources, the zone scenes and the
+    /// animations. Needs RoseData.open and the import. Returns {files, changed, resources,
+    /// items, monsters, npcs, skills, zones, zone_scenes, motions, read_ms}, or {error}.
     #[func]
     fn export(check: bool) -> VarDictionary {
         let mut result = VarDictionary::new();
@@ -2165,6 +2612,9 @@ impl RoseDataExport {
                 result.set("monsters", out.monsters as i64);
                 result.set("npcs", out.npcs as i64);
                 result.set("skills", out.skills as i64);
+                result.set("zones", out.zones as i64);
+                result.set("zone_scenes", out.zone_scenes as i64);
+                result.set("motions", out.motions as i64);
                 result.set("read_ms", out.read_ms as i64);
             }
             Err(error) => result.set("error", error.as_str()),

@@ -1,4 +1,5 @@
-//! Every game database the server needs, loaded from the iROSE client files. Ported from
+//! Every game database the server needs, loaded from the data exported from Godot
+//! (`export/`) where it has them, else from the iROSE client files. Ported from
 //! rose-offline-server's `irose/data` (game data and character creator) without Bevy, so the
 //! same code runs natively and inside the SpacetimeDB module.
 
@@ -10,20 +11,25 @@ use std::{
 use anyhow::Context;
 use rose_data::{
     AiDatabase, CharacterMotionDatabase, CharacterMotionDatabaseOptions, DataDecoder, ItemClass, ItemDatabase,
-    ItemReference, JobClassDatabase, NpcDatabase, NpcDatabaseOptions, QuestDatabase, SkillDatabase,
-    NpcConversationId, NpcId, SkillId, SkillIds, StatusEffectDatabase, StringDatabase, WarpGateDatabase, ZoneData,
-    ZoneDatabase, ZoneId, ZoneMonsterSpawnPoint, ZoneNpcSpawn,
+    ItemReference, ItemType, JobClassDatabase, NpcDatabase, NpcDatabaseOptions, QuestDatabase, SkillDatabase,
+    NpcConversationId, NpcId, SkillId, SkillIds, StatusEffectDatabase, StringDatabase, WarpGateData, WarpGateDatabase, ZoneData,
+    ZoneDatabase, ZoneId, ZoneMonsterSpawnPoint, ZoneNpcSpawn, ZoneSettings,
 };
 use rose_data_irose::{
-    decode_item_base1000, encode_item_class, encode_item_type, get_ai_database, get_character_motion_database, get_data_decoder,
-    get_item_database, get_job_class_database, get_npc_action_map, get_npc_conversations, get_npc_database,
-    get_npc_motions, get_quest_database,
-    get_skill_database, get_status_effect_database, get_string_database, get_warp_gate_database,
-    get_zone_database,
+    decode_item_base1000, decode_item_class, encode_item_class, encode_item_type, get_ai_database,
+    get_character_motion_database, get_data_decoder, get_item_database, get_job_class_database, get_npc_action_map,
+    get_npc_conversations, get_npc_database, get_npc_motions, get_quest_database, get_skill_database,
+    get_status_effect_database, get_string_database, get_warp_gate_database, get_zone_database_from_settings,
+    get_zone_settings,
 };
-use rose_data_export::{npcs::DROP_ROW_COLUMNS, Format, ItemsExport, NpcModels, NpcsExport, SkillsExport};
+use rose_data_export::world::{
+    CraftRecipeExport, Gender, NewCharacterExport, RecipeStep, WarpGateExport, ZoneExport,
+};
+use rose_data_export::{
+    npcs::{item_name, DROP_ROW_COLUMNS},
+    Format, ItemsExport, MotionTimings, NpcModels, NpcsExport, SkillsExport, WorldExport, ZoneLayout,
+};
 use rose_file_readers::{stb_column, StbFile, VfsFile, VfsPathBuf, VirtualFilesystem};
-use rose_game_overrides::{MotionTimings, ZoneLayout};
 use glam::Vec3;
 use rose_game_common::{
     components::BasicStats,
@@ -47,7 +53,7 @@ pub struct GameData {
     pub string_database: Arc<StringDatabase>,
     pub warp_gates: Arc<WarpGateDatabase>,
     pub zones: Arc<ZoneDatabase>,
-    /// Crafting recipes from LIST_PRODUCT.STB, by an item's `craft_material`.
+    /// Crafting recipes, by an item's `craft_material`.
     pub craft_recipes: Vec<Option<CraftRecipe>>,
 }
 
@@ -63,8 +69,10 @@ pub fn load_game_data(vfs: &VirtualFilesystem) -> Result<GameData, anyhow::Error
     let (skills, status_effects, job_class) = load_skills(vfs, string_database.clone()).context("skill database")?;
     check_summons(&skills, &npcs)?;
     let skills = Arc::new(skills);
-    let mut zones = get_zone_database(vfs, string_database.clone()).context("zone database")?;
-    apply_zone_layouts(vfs, &mut zones).context("zone layouts")?;
+    let world = load_world(vfs, &string_database).context("world")?;
+    world.check_items(&items)?;
+    let mut zones = get_zone_database_from_settings(vfs, string_database.clone(), &world.zone_settings);
+    apply_zone_layouts(vfs, &mut zones, &world.zone_settings).context("zone layouts")?;
     let zones = Arc::new(zones);
     let drop_table: Box<dyn DropTable + Send + Sync> = match drop_rows {
         Some(rows) => get_drop_table_from_rows(&rows, DROP_ROW_COLUMNS, items.clone(), npcs.clone()),
@@ -72,7 +80,7 @@ pub fn load_game_data(vfs: &VirtualFilesystem) -> Result<GameData, anyhow::Error
     };
 
     Ok(GameData {
-        character_creator: CharacterCreator::load(vfs).context("character creator")?,
+        character_creator: world.character_creator,
         ability_value_calculator: get_ability_value_calculator(items.clone(), skills.clone(), npcs.clone()),
         data_decoder: get_data_decoder(),
         drop_table,
@@ -81,8 +89,8 @@ pub fn load_game_data(vfs: &VirtualFilesystem) -> Result<GameData, anyhow::Error
         motions: Arc::new(motions),
         quests: Arc::new(get_quest_database(vfs, string_database.clone()).context("quest database")?),
         status_effects: Arc::new(status_effects),
-        warp_gates: Arc::new(get_warp_gate_database(vfs).context("warp gate database")?),
-        craft_recipes: load_craft_recipes(vfs).context("crafting recipes")?,
+        warp_gates: Arc::new(world.warp_gates),
+        craft_recipes: world.craft_recipes,
         items,
         npcs,
         skills,
@@ -91,8 +99,8 @@ pub fn load_game_data(vfs: &VirtualFilesystem) -> Result<GameData, anyhow::Error
     })
 }
 
-/// The items exported from the Godot resources (`overrides/data/items/`, in the game files at
-/// `OVERRIDES/DATA/ITEMS/`, as JSON from the upload or as the TOML files themselves), or
+/// The items exported from the Godot resources (`export/data/items/`, in the game files at
+/// `EXPORT/DATA/ITEMS/`, as JSON from the upload or as the TOML files themselves), or
 /// without an export the iROSE item tables.
 pub fn load_items(vfs: &VirtualFilesystem, strings: Arc<StringDatabase>) -> Result<ItemDatabase, anyhow::Error> {
     // The upload sends JSON; TOML is the export as the repository has it (`compare`).
@@ -107,7 +115,7 @@ pub fn load_items(vfs: &VirtualFilesystem, strings: Arc<StringDatabase>) -> Resu
     get_item_database(vfs, strings)
 }
 
-/// A file of the data export among the game files (`OVERRIDES/DATA/...`, as JSON from the
+/// A file of the data export among the game files (`EXPORT/DATA/...`, as JSON from the
 /// upload or as the TOML files themselves), or None when it isn't there.
 fn read_export_file(vfs: &VirtualFilesystem, path: &str) -> Result<Option<String>, anyhow::Error> {
     let path = format!("{}/{}", rose_data_export::DATA_GAME_DIR, path).to_uppercase();
@@ -123,7 +131,7 @@ fn read_export_file(vfs: &VirtualFilesystem, path: &str) -> Result<Option<String
 }
 
 /// The skills, status effects and job classes exported from the Godot resources
-/// (`overrides/data/skills.toml` ..., as JSON from the upload or as the TOML files
+/// (`export/data/skills.toml` ..., as JSON from the upload or as the TOML files
 /// themselves), or without an export the iROSE tables (LIST_SKILL.STB, LIST_STATUS.STB,
 /// LIST_CLASS.STB).
 pub fn load_skills(
@@ -183,7 +191,7 @@ pub fn read_npcs_export(vfs: &VirtualFilesystem) -> Result<Option<NpcsExport>, a
 }
 
 /// The monsters and NPCs (with their shop tabs) and the drop table rows exported from the
-/// Godot resources (`overrides/data/monsters.toml` ...), or without an export the iROSE
+/// Godot resources (`export/data/monsters.toml` ...), or without an export the iROSE
 /// tables (LIST_NPC.STB, LIST_SELL.STB; no rows: the drop table is ITEM_DROP.STB). Their
 /// models and motions still come from LIST_NPC.CHR, the conversations from LIST_EVENT.STB.
 pub fn load_npcs(
@@ -255,7 +263,7 @@ pub fn npcs_export_from_irose(
     )
 }
 
-/// The lengths and hit frames of `overrides/motions.toml` (exported from the Godot
+/// The lengths and hit frames of `export/motions.toml` (exported from the Godot
 /// animations), when the game files carry it, in place of the ZMO ones: for player motions
 /// (FILE_MOTION.STB) and monster and NPC motions (LIST_NPC.CHR). A file that is neither is
 /// an error.
@@ -264,35 +272,38 @@ pub fn apply_motion_timings(
     motions: &mut CharacterMotionDatabase,
     npcs: &mut NpcDatabase,
 ) -> Result<(), anyhow::Error> {
-    if !vfs.exists(rose_game_overrides::MOTIONS_GAME_FILE) {
+    if !vfs.exists(rose_data_export::MOTIONS_GAME_FILE) {
         return Ok(());
     }
-    let file = vfs.open_file(rose_game_overrides::MOTIONS_GAME_FILE)?;
+    let file = vfs.open_file(rose_data_export::MOTIONS_GAME_FILE)?;
     let bytes: &[u8] = match &file {
         VfsFile::Buffer(data) => data,
         VfsFile::View(data) => data,
     };
-    let timings = MotionTimings::parse(std::str::from_utf8(bytes)?).context("overrides/motions.toml")?;
+    let timings = MotionTimings::parse(std::str::from_utf8(bytes)?).context("export/motions.toml")?;
     for timing in &timings.motion {
         let path = VfsPathBuf::new(&timing.file);
         let (duration, hits, first_hit) = (timing.duration(), timing.hit_frames.len(), timing.first_hit_time());
         let matched = motions.set_motion_timing(path.path(), duration, hits, first_hit)
             + npcs.set_motion_timing(path.path(), duration, hits, first_hit);
         if matched == 0 {
-            anyhow::bail!("overrides/motions.toml: {} is not a player, monster or NPC motion", timing.file);
+            anyhow::bail!("export/motions.toml: {} is not a player, monster or NPC motion", timing.file);
         }
     }
     Ok(())
 }
 
-/// The spawn points, town NPCs and named spots of `overrides/zones/` (exported from the
+/// The spawn points, town NPCs and named spots of `export/zones/` (exported from the
 /// Godot zone scenes), when the game files carry them, in place of the zone's IFO and ZON
-/// ones. The start and revive positions follow the spots LIST_ZONE.STB names.
-pub fn apply_zone_layouts(vfs: &VirtualFilesystem, zones: &mut ZoneDatabase) -> Result<(), anyhow::Error> {
-    let ids: Vec<ZoneId> = zones.iter().map(|z| z.id).collect();
-    let mut list = None;
-    for id in ids {
-        let path = rose_game_overrides::zone_game_file(id.get());
+/// ones. The start and revive positions follow the spots the zone's settings name.
+pub fn apply_zone_layouts(
+    vfs: &VirtualFilesystem,
+    zones: &mut ZoneDatabase,
+    settings: &[ZoneSettings],
+) -> Result<(), anyhow::Error> {
+    for zone_settings in settings {
+        let id = zone_settings.id;
+        let path = rose_data_export::zone_game_file(id.get());
         if !vfs.exists(path.as_str()) {
             continue;
         }
@@ -305,14 +316,9 @@ pub fn apply_zone_layouts(vfs: &VirtualFilesystem, zones: &mut ZoneDatabase) -> 
         if layout.zone != id.get() {
             anyhow::bail!("{path} says zone = {}", layout.zone);
         }
-        if list.is_none() {
-            list = Some(vfs.read_file::<StbFile, _>("3DDATA/STB/LIST_ZONE.STB")?);
-        }
-        let list = list.as_ref().unwrap();
-        let start_name = list.try_get(id.get() as usize, 2).unwrap_or("");
-        let revive_name = list.try_get(id.get() as usize, 3).unwrap_or("");
-        let zone = zones.get_zone_mut(id).unwrap();
-        apply_zone_layout(zone, &layout, start_name, revive_name).with_context(|| format!("zone {}", id.get()))?;
+        let zone = zones.get_zone_mut(id).with_context(|| format!("zone {} has no map files", id.get()))?;
+        apply_zone_layout(zone, &layout, &zone_settings.start_spot, &zone_settings.revive_spot)
+            .with_context(|| format!("zone {}", id.get()))?;
     }
     Ok(())
 }
@@ -365,16 +371,243 @@ pub fn apply_zone_layout(
     Ok(())
 }
 
+/// The world: the zones' settings, the warp gates, the crafting recipes and the new
+/// characters.
+pub struct World {
+    pub zone_settings: Vec<ZoneSettings>,
+    pub warp_gates: WarpGateDatabase,
+    pub craft_recipes: Vec<Option<CraftRecipe>>,
+    pub character_creator: CharacterCreator,
+}
+
+impl World {
+    /// Every item a recipe or a new character names must be there.
+    pub fn check_items(&self, items: &ItemDatabase) -> Result<(), anyhow::Error> {
+        let exists = |item: ItemReference| items.get_base_item(item).is_some();
+        for (id, recipe) in self.craft_recipes.iter().enumerate() {
+            for material in recipe.iter().flat_map(|r| r.materials.iter().flatten()) {
+                if let Some(item) = material.item.filter(|i| !exists(*i)) {
+                    anyhow::bail!("recipe {id} names {}, which isn't there", item_name(item));
+                }
+            }
+        }
+        for (gender, start) in ["male", "female"].iter().zip(&self.character_creator.genders) {
+            let stacks = start.inventory_consumables.iter().chain(&start.inventory_materials).map(|(i, _)| i);
+            for item in start.equipped_items.iter().chain(&start.inventory_equipment).chain(stacks) {
+                if !exists(*item) {
+                    anyhow::bail!("a new {gender} character starts with {}, which isn't there", item_name(*item));
+                }
+            }
+        }
+        Ok(())
+    }
+}
+
+/// The world export as the game files carry it (JSON from the upload, else TOML).
+pub fn read_world_export(vfs: &VirtualFilesystem) -> Result<Option<WorldExport>, anyhow::Error> {
+    for format in [Format::Json, Format::Toml] {
+        let export = WorldExport::from_files_as(format, |name| {
+            read_export_file(vfs, &rose_data_export::data_file_as(name, format))
+        })?;
+        if export.is_some() {
+            return Ok(export);
+        }
+    }
+    Ok(None)
+}
+
+/// The world from the export (`export/data/zones.toml` ...), or without one from the iROSE
+/// tables (LIST_ZONE.STB, WARP.STB, LIST_PRODUCT.STB, INIT_AVATAR.STB).
+pub fn load_world(vfs: &VirtualFilesystem, strings: &StringDatabase) -> Result<World, anyhow::Error> {
+    match read_world_export(vfs)? {
+        Some(export) => world_from_export(&export),
+        None => load_world_irose(vfs, strings),
+    }
+}
+
+/// The world from the iROSE tables. A warp gate to a zone without a map file (which leads
+/// nowhere) is left out.
+pub fn load_world_irose(vfs: &VirtualFilesystem, strings: &StringDatabase) -> Result<World, anyhow::Error> {
+    let zone_settings = get_zone_settings(vfs, strings).context("LIST_ZONE.STB")?;
+    let gates = get_warp_gate_database(vfs).context("WARP.STB")?;
+    let warp_gates = gates
+        .iter()
+        .filter(|(_, gate)| zone_settings.iter().any(|z| z.id == gate.target_zone))
+        .map(|(id, gate)| (*id, WarpGateData { target_zone: gate.target_zone, target_event_object: gate.target_event_object.clone() }))
+        .collect();
+    Ok(World {
+        zone_settings,
+        warp_gates: WarpGateDatabase::new(warp_gates),
+        craft_recipes: load_craft_recipes(vfs).context("LIST_PRODUCT.STB")?,
+        character_creator: CharacterCreator::load(vfs).context("INIT_AVATAR.STB")?,
+    })
+}
+
+/// The world from the export.
+pub fn world_from_export(export: &WorldExport) -> Result<World, anyhow::Error> {
+    export.check()?;
+    let mut craft_recipes = Vec::new();
+    for recipe in export.recipe_steps()? {
+        craft_recipes.push(recipe.map(|(recipe, steps)| craft_recipe(recipe, &steps)));
+    }
+    Ok(World {
+        zone_settings: export.zone_settings()?,
+        warp_gates: export.warp_gate_database()?,
+        craft_recipes,
+        character_creator: CharacterCreator::from_export(export)?,
+    })
+}
+
+fn craft_recipe(recipe: &CraftRecipeExport, steps: &[Option<RecipeStep>; 4]) -> CraftRecipe {
+    CraftRecipe {
+        raw_material_class: recipe.raw_material_class.map_or(0, item_class_number),
+        materials: steps.map(|step| step.map(|(item, quantity)| CraftMaterial { item, quantity })),
+    }
+}
+
+/// The iROSE world tables as the export holds them: the converter's starting point and the
+/// same-data check. Recipes are named after the items `items` makes with them. Also returns
+/// what couldn't be kept (warp gates to zones without a map file).
+pub fn world_export_from_irose(
+    vfs: &VirtualFilesystem,
+    strings: &StringDatabase,
+    items: &ItemDatabase,
+) -> Result<(WorldExport, Vec<String>), anyhow::Error> {
+    let world = load_world_irose(vfs, strings)?;
+    let mut lost: Vec<(u16, String)> = get_warp_gate_database(vfs)?
+        .iter()
+        .filter(|(id, _)| world.warp_gates.get_warp_gate(**id).is_none())
+        .map(|(id, gate)| {
+            (id.get(), format!("warp gate {} goes to zone {}, which has no map file", id.get(), gate.target_zone.get()))
+        })
+        .collect();
+    lost.sort();
+    let lost = lost.into_iter().map(|(_, line)| line).collect();
+    let zones = world.zone_settings.iter().map(ZoneExport::from_settings).collect();
+    let mut warp_gates: Vec<WarpGateExport> =
+        world.warp_gates.iter().map(|(id, gate)| WarpGateExport::from_data(*id, gate)).collect();
+    warp_gates.sort_by_key(|g| g.id);
+
+    // A recipe is named after the items made with it (rows 1 to 20 refine).
+    let mut makes: BTreeMap<u32, Vec<String>> = BTreeMap::new();
+    for item_type in [
+        ItemType::Face,
+        ItemType::Head,
+        ItemType::Body,
+        ItemType::Hands,
+        ItemType::Feet,
+        ItemType::Back,
+        ItemType::Jewellery,
+        ItemType::Weapon,
+        ItemType::SubWeapon,
+        ItemType::Consumable,
+        ItemType::Gem,
+        ItemType::Material,
+        ItemType::Quest,
+        ItemType::Vehicle,
+    ] {
+        for item in items.iter_items(item_type) {
+            let Some(data) = items.get_base_item(item) else { continue };
+            let name = data.name.trim();
+            if data.craft_material != 0 && !name.is_empty() {
+                let list = makes.entry(data.craft_material).or_default();
+                if !list.iter().any(|n| n == name) {
+                    list.push(name.to_string());
+                }
+            }
+        }
+    }
+    let mut craft_recipes = Vec::new();
+    for (id, recipe) in world.craft_recipes.iter().enumerate() {
+        let Some(recipe) = recipe else { continue };
+        let name = match id {
+            1..=10 => format!("Refining weapons from grade {} to {}", id - 1, id),
+            11..=20 => format!("Refining armour from grade {} to {}", id - 11, id - 10),
+            _ => match makes.get(&(id as u32)) {
+                Some(names) if names.len() > 3 => format!("{} and others", names[..3].join(", ")),
+                Some(names) => names.join(", "),
+                None => String::new(),
+            },
+        };
+        let raw = (recipe.raw_material_class != 0)
+            .then(|| decode_item_class(recipe.raw_material_class as usize))
+            .flatten();
+        if recipe.raw_material_class != 0 && raw.is_none() {
+            anyhow::bail!("recipe {id}: raw material class {} is not an item class", recipe.raw_material_class);
+        }
+        let steps = recipe.materials.clone().map(|m| m.map(|m| (m.item, m.quantity)));
+        craft_recipes.push(CraftRecipeExport::from_steps(id as u16, name, raw, &steps));
+    }
+
+    let avatar = StbInitAvatar(vfs.read_file::<StbFile, _>("3DDATA/STB/INIT_AVATAR.STB")?);
+    let mut new_characters = Vec::new();
+    for (row, gender) in [(0, Gender::Male), (1, Gender::Female)] {
+        let start = avatar.character(row).with_context(|| format!("INIT_AVATAR row {row}"))?;
+        let slot = |column: usize| avatar.slot(row, column).map(item_name).unwrap_or_default();
+        let names = |list: &[(ItemReference, u32)]| list.iter().map(|(i, _)| item_name(*i)).collect::<Vec<_>>();
+        let counts = |list: &[(ItemReference, u32)]| list.iter().map(|(_, c)| *c).collect::<Vec<_>>();
+        let stats = &start.basic_stats;
+        new_characters.push(NewCharacterExport {
+            gender,
+            strength: stats.strength,
+            dexterity: stats.dexterity,
+            intelligence: stats.intelligence,
+            concentration: stats.concentration,
+            charm: stats.charm,
+            sense: stats.sense,
+            face: slot(6),
+            head: slot(7),
+            body: slot(8),
+            back: slot(9),
+            hands: slot(10),
+            feet: slot(11),
+            weapon: slot(12),
+            sub_weapon: slot(13),
+            bag_equipment: start.inventory_equipment.iter().map(|i| item_name(*i)).collect(),
+            bag_consumables: names(&start.inventory_consumables),
+            bag_consumable_counts: counts(&start.inventory_consumables),
+            bag_materials: names(&start.inventory_materials),
+            bag_material_counts: counts(&start.inventory_materials),
+        });
+    }
+    let export = WorldExport { zones, warp_gates, craft_recipes, new_characters };
+    export.check()?;
+    Ok((export, lost))
+}
+
+/// Every difference between two worlds (the same-data check).
+pub fn compare_worlds(a: &World, b: &World) -> Vec<String> {
+    let mut out = rose_data_export::compare_zone_settings(&a.zone_settings, &b.zone_settings);
+    out.extend(rose_data_export::compare_warp_gates(&a.warp_gates, &b.warp_gates));
+    let recipes = |list: &[Option<CraftRecipe>]| {
+        list.iter()
+            .enumerate()
+            .filter_map(|(id, r)| r.as_ref().map(|r| (id as u16, format!("{r:#?}"))))
+            .collect::<BTreeMap<_, _>>()
+    };
+    out.extend(rose_data_export::world::compare_text("recipe", recipes(&a.craft_recipes), recipes(&b.craft_recipes)));
+    let characters = |c: &CharacterCreator| {
+        c.genders.iter().enumerate().map(|(i, g)| (i as u16, format!("{g:#?}"))).collect::<BTreeMap<_, _>>()
+    };
+    out.extend(rose_data_export::world::compare_text(
+        "new character (0 male, 1 female)",
+        characters(&a.character_creator),
+        characters(&b.character_creator),
+    ));
+    out
+}
+
 /// One crafting step's material: a given item, or for the first step (`item` None) any
 /// item of the recipe's raw material class.
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct CraftMaterial {
     pub item: Option<ItemReference>,
     pub quantity: u32,
 }
 
-/// A LIST_PRODUCT.STB row: up to four materials, used one step after another.
-#[derive(Clone, Debug)]
+/// A crafting or refining recipe (a `RoseCraftRecipe`, iROSE's LIST_PRODUCT.STB row): up to
+/// four materials, used one step after another.
+#[derive(Clone, Debug, PartialEq)]
 pub struct CraftRecipe {
     /// The item class number (ITEM STB column 4) the first material may be any item of.
     pub raw_material_class: u32,
@@ -401,6 +634,7 @@ pub fn item_class_number(class: ItemClass) -> u32 {
     encode_item_class(class).unwrap_or(0) as u32
 }
 
+/// The crafting recipes of LIST_PRODUCT.STB, by row.
 pub fn load_craft_recipes(vfs: &VirtualFilesystem) -> Result<Vec<Option<CraftRecipe>>, anyhow::Error> {
     let stb = vfs.read_file::<StbFile, _>("3DDATA/STB/LIST_PRODUCT.STB")?;
     let mut recipes = Vec::with_capacity(stb.rows());
@@ -420,13 +654,15 @@ pub fn load_craft_recipes(vfs: &VirtualFilesystem) -> Result<Vec<Option<CraftRec
     Ok(recipes)
 }
 
-/// Starting stats, gear and skills for a new character, from INIT_AVATAR.STB.
+/// Starting stats, gear and skills for a new character (the `RoseNewCharacter` resources,
+/// iROSE's INIT_AVATAR.STB).
 pub struct CharacterCreator {
     /// Index 0 is male, 1 is female.
     pub genders: [StartingCharacter; 2],
     pub skills: Vec<SkillId>,
 }
 
+#[derive(Debug)]
 pub struct StartingCharacter {
     pub basic_stats: BasicStats,
     pub equipped_items: Vec<ItemReference>,
@@ -461,6 +697,11 @@ impl StbInitAvatar {
             .collect()
     }
 
+    /// The item in one cell (an equipment slot's column).
+    fn slot(&self, row: usize, column: usize) -> Option<ItemReference> {
+        decode_item_base1000(self.0.try_get_int(row, column).unwrap_or(0).max(0) as usize)
+    }
+
     fn character(&self, row: usize) -> Option<StartingCharacter> {
         Some(StartingCharacter {
             basic_stats: BasicStats {
@@ -479,32 +720,59 @@ impl StbInitAvatar {
     }
 }
 
+/// The skills every new character has (in code, not in the game data).
+fn starting_skills() -> Vec<SkillId> {
+    [
+        SkillIds::Sit,
+        SkillIds::PickUp,
+        SkillIds::Attack,
+        SkillIds::Trade,
+        SkillIds::RideRequest,
+        SkillIds::Jump,
+        SkillIds::Hi,
+        SkillIds::Bow,
+        SkillIds::Salutation,
+        SkillIds::RecoveryKiss,
+        SkillIds::CharmingKiss,
+        SkillIds::Laugh,
+        SkillIds::FightCheer,
+        SkillIds::BreakDown,
+        SkillIds::Tantrum,
+        SkillIds::Applause,
+    ]
+    .into_iter()
+    .filter_map(|id| SkillId::new(id as u16))
+    .collect()
+}
+
 impl CharacterCreator {
+    /// From INIT_AVATAR.STB.
     pub fn load(vfs: &VirtualFilesystem) -> Result<Self, anyhow::Error> {
         let data = StbInitAvatar(vfs.read_file::<StbFile, _>("3DDATA/STB/INIT_AVATAR.STB")?);
         let male = data.character(0).context("INIT_AVATAR row 0")?;
         let female = data.character(1).context("INIT_AVATAR row 1")?;
-        let skills = [
-            SkillIds::Sit,
-            SkillIds::PickUp,
-            SkillIds::Attack,
-            SkillIds::Trade,
-            SkillIds::RideRequest,
-            SkillIds::Jump,
-            SkillIds::Hi,
-            SkillIds::Bow,
-            SkillIds::Salutation,
-            SkillIds::RecoveryKiss,
-            SkillIds::CharmingKiss,
-            SkillIds::Laugh,
-            SkillIds::FightCheer,
-            SkillIds::BreakDown,
-            SkillIds::Tantrum,
-            SkillIds::Applause,
-        ]
-        .into_iter()
-        .filter_map(|id| SkillId::new(id as u16))
-        .collect();
-        Ok(Self { genders: [male, female], skills })
+        Ok(Self { genders: [male, female], skills: starting_skills() })
+    }
+
+    /// From the data export.
+    pub fn from_export(world: &WorldExport) -> Result<Self, anyhow::Error> {
+        let character = |gender: Gender| -> Result<StartingCharacter, anyhow::Error> {
+            let c = world.new_character(gender)?;
+            Ok(StartingCharacter {
+                basic_stats: BasicStats {
+                    strength: c.strength,
+                    dexterity: c.dexterity,
+                    intelligence: c.intelligence,
+                    concentration: c.concentration,
+                    charm: c.charm,
+                    sense: c.sense,
+                },
+                equipped_items: c.equipped_items()?,
+                inventory_equipment: c.bag_equipment()?,
+                inventory_consumables: c.bag_consumables()?,
+                inventory_materials: c.bag_materials()?,
+            })
+        };
+        Ok(Self { genders: [character(Gender::Male)?, character(Gender::Female)?], skills: starting_skills() })
     }
 }

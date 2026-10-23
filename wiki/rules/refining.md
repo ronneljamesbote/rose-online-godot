@@ -83,7 +83,7 @@ source:
     - godot/rust/src/character.rs (RoseCharacter.show_item_effects)
     - godot/rust/src/material.rs (grade_glow), godot/shaders/rose_item_glow.gdshaderinc
     - godot/rust/src/net.rs (player_look)
-  data: LIST_PRODUCT.STB rows 1-10 (weapon refining) and 11-20 (other equipment), and each item's recipe row; the gem resources in godot/data/items/gem/ (gems from 301, quality, gem_effect_id); the grade resources in godot/data/items/grades/ (grade bonuses and glow colours); the gem_position of each weapon and shield
+  data: the recipe resources 1-10 (weapon refining) and 11-20 (other equipment) in godot/data/craft_recipes/, and each item's recipe; the gem resources in godot/data/items/gem/ (gems from 301, quality, gem_effect_id); the grade resources in godot/data/items/grades/ (grade bonuses and glow colours); the gem_position of each weapon and shield
 ---
 # Refining, Disassembly and Gems
 
@@ -106,7 +106,7 @@ Below, **Q** is the quality of the item being worked on (item page "quality") an
 ## Refining
 
 Refining raises an item's grade by one, up to grade 9. The recipe depends on the grade you
-start from: weapons use LIST_PRODUCT rows 1-10, all other equipment rows 11-20 (tables
+start from: weapons use recipes 1-10, all other equipment recipes 11-20 (tables
 above). The first step takes any **Chemicals** (the powders and Lisents); the quality of
 that chemical matters a lot. The other steps take the exact items listed.
 
@@ -241,4 +241,4 @@ The roll goes wrong when r + 1 + 6 is 30 or less: r from 0 to 23, 24%. Then you 
 [[items/gem/301-garnet-1|Garnet 1]] back; otherwise the Garnet 2.
 
 > Open question: the server accepts refining, disassembly and repair at any NPC within 15 metres; only the client limits these services to NPCs whose dialog offers them.
-> Open question: LIST_PRODUCT rows 10 and 20 (grade 9 to 10, with Hermes) exist, but refining stops at grade 9.
+> Open question: recipes 10 and 20 (grade 9 to 10, with Hermes) exist, but refining stops at grade 9.

@@ -371,7 +371,7 @@ zone_drops:
 - '[[items/consumable/381-ice-charm|Ice Charm]]'
 - '[[items/material/115-precious-platinum-thread|Precious Platinum Thread]]'
 source:
-  data: LIST_ZONE.STB row 27, the zone's IFO files, drop table godot/data/drop_tables/27-zone-kenji-beach.tres
+  data: the zone settings godot/data/zones/27-kenji-beach.tres, the zone's IFO files, drop table godot/data/drop_tables/27-zone-kenji-beach.tres
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

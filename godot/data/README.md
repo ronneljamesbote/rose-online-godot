@@ -2,7 +2,9 @@
 
 The game's own data, made in the Godot editor: one resource (`.tres`) per thing, edited in
 the Inspector. It replaces the iROSE tables one kind at a time
-(plan: `TODO/own-game-data.md` in the project files). So far: **items**, **monsters**, **NPCs**, **drop tables**, **shop tabs**, **skills**, **status effects** and **job classes**.
+(plan: `TODO/own-game-data.md` in the project files). So far: **items**, **monsters**, **NPCs**, **drop tables**, **shop tabs**, **skills**,
+**status effects**, **job classes**, **zone settings**, **warp gates**, **crafting recipes**
+and **new characters**.
 
 | Folder | Class | What |
 | --- | --- | --- |
@@ -28,6 +30,10 @@ the Inspector. It replaces the iROSE tables one kind at a time
 | `skills/<id>-<name>/` | `RoseSkill` | One skill: a resource per level (each level has its own id) |
 | `status_effects/` | `RoseStatusEffect` | Buffs, debuffs, recovery and poison over time, stuns ... |
 | `job_classes/` | `RoseJobClass` | Sets of jobs a skill or item can require ("Soldier Job") |
+| `zones/` | `RoseZoneSettings` | A zone's settings: name, map file, start and revive spots, music, sky, minimap, time of day, PvP, planet, carts |
+| `warp_gates/` | `RoseWarpGate` | Where a warp gate sends you: zone and named spot |
+| `craft_recipes/` | `RoseCraftRecipe` | A crafting or refining recipe: up to 4 materials (recipes 1-20 refine) |
+| `new_characters/` | `RoseNewCharacter` | What a new male or female character starts with: stats, clothes, bag |
 
 Monsters and NPCs share one id space (an NPC and a monster never have the same id), because
 saved quests and the zone markers store just the number. Links between resources are plain
@@ -35,8 +41,19 @@ resource fields: a monster's `drop_table`, an NPC's `shop_tab_1` to `shop_tab_4`
 of a drop table or shop tab, and the monsters of a zone's spawn markers (`RoseSpawnSpot`)
 and the NPC of an NPC marker (`RoseNpcSpot`), a skill's `required_job_class`, the skills it
 needs (`required_skill_1` to `_3`), the status effects it gives (`status_effect_1` and `_2`)
-and the monster it summons (`summon_monster`). Drag a resource from the FileSystem dock onto
-the field to set it.
+and the monster it summons (`summon_monster`), a warp gate's `target_zone`, a recipe's
+materials (`material_1` to `_4`) and a new character's clothes and bag. Drag a resource from
+the FileSystem dock onto the field to set it. A zone scene's root (`RoseZoneScene`) shows its
+zone's settings as `settings` (click it to open them), and a warp gate placed in a zone
+(`RoseZoneObject` of kind warp) links its `RoseWarpGate` as `warp_gate`.
+
+A zone needs its settings to be played: a zone scene without a `RoseZoneSettings` of the same
+number stops the export. A recipe's first material can be any item of a class
+(`raw_material_class`, "Metal"): leave `material_1` empty and set `material_1_quantity`.
+Items name their recipe by its `id` (`craft_material` on the item); the refining recipes are
+fixed: 1 to 10 raise a weapon from
+grade 0 to 10, 11 to 20 armour. A new character's bag counts (`bag_consumable_counts`,
+`bag_material_counts`) go with the item at the same place in the list.
 
 Each level of a skill is its own resource with its own id, as characters store the id of
 the level they learnt; the levels of a skill sit in one folder named after the first level
@@ -61,12 +78,12 @@ file can be renamed or moved to any folder of its kind. Hover a field in the Ins
 2. Export, so the server and the game get it:
 
    ```sh
-   godot --headless --path godot -- --export-data          # writes ../overrides/data/
+   godot --headless --path godot -- --export-data          # writes ../export/
    godot --headless --path godot -- --export-data=check    # fails when it is out of date
    ```
 
-3. Commit the resource and `overrides/data/` together, with the wiki page of the item,
-   monster or NPC (the wiki is the spec, see `AGENTS.md`).
+3. Commit the resource and `export/` together, with the wiki page of the item,
+   monster, NPC, zone or rule (the wiki is the spec, see `AGENTS.md`).
 
 A new item (or monster, NPC, drop table, shop tab) is a new resource of the right class
 with an `id` no other one of that class has (for example duplicate an item in the FileSystem dock and change its id). Two items of
@@ -74,14 +91,19 @@ one class with the same id stop the export with an error naming both files. Ids 
 saved characters, shops, drop lists and quests store, so don't change the id of an item
 players may have.
 
-The export writes `overrides/data/items/<class>.toml` and `overrides/data/monsters.toml`,
+The export writes `export/data/items/<class>.toml` and `export/data/monsters.toml`,
 `npcs.toml`, `drop-tables.toml`, `shop-tabs.toml`, `skills.toml`, `status-effects.toml`,
-`job-classes.toml` (layout in `crates/rose-data-export/src/items.rs`, `npcs.rs` and
-`skills.rs`). A link is written as the linked resource's kind and id (`"weapon/3"`,
+`job-classes.toml`, `zones.toml`, `warp-gates.toml`, `craft-recipes.toml` and
+`new-characters.toml` (layout in `crates/rose-data-export/src/items.rs`, `npcs.rs`,
+`skills.rs` and `world.rs`), and in the same run the zone scenes' spawns and NPCs
+(`export/zones/`) and the animations' hit markers (`export/motions.toml`), see
+`../../export/README.md`. A link is written as the linked resource's kind and id (`"weapon/3"`,
 `drop_table = 147`, `required_skill_1 = 821`). The server's upload sends it (as JSON) in
 place of the iROSE item, NPC (`LIST_NPC`), drop (`ITEM_DROP`), shop (`LIST_SELL`), skill
-(`LIST_SKILL`), status effect (`LIST_STATUS`) and job class (`LIST_CLASS`) tables, and the game reads it from the repository (or from `overrides/data/`
-next to `ROSE.exe` in the Windows build). Both build scripts refuse to build when it is out
+(`LIST_SKILL`), status effect (`LIST_STATUS`), job class (`LIST_CLASS`), zone (`LIST_ZONE`),
+warp (`WARP`), recipe (`LIST_PRODUCT`) and new character (`INIT_AVATAR`) tables, and the game
+reads it from the repository (or from `export/data/` next to `ROSE.exe` in the Windows
+build). Both build scripts refuse to build when it is out
 of date. To list what differs from iROSE:
 `cargo run --release -p rose-stdb-import -- compare /path/to/data.idx`.
 
@@ -100,7 +122,23 @@ uid) and loses every change made since. Converted and exported, every value of a
 items and the 10 grades, the 545 monsters, 117 NPCs, 265 drop tables, 83 shop tabs, 1,782
 skill levels, 60 status effects and 44 job classes was the same as in iROSE
 (`rose-stdb-import compare`), except one shop place: tab 98 listed `material/158`, an item
-that doesn't exist (the game skipped it already), so it was left out.
+that doesn't exist (the game skipped it already), so it was left out. The same holds for the
+38 zones, 57 warp gates, 472 recipes and 2 new characters (2026-10-23), except warp gate 40,
+which led to zone 29, a zone without a map file (the game could never send anyone there), so
+it was left out. After the conversion the new characters got the starting weapons the game
+used to add in code (a Short Sword in hand, a Short Bow and 999 Wooden Arrows in the bag), so
+`compare` lists them as changed from iROSE.
+
+For zones the converter kept the LIST_ZONE rows that have a map file and the columns the game
+reads; it left out the Korean name (column 0 of the text table), the underground flag
+(column 0), the camera type (21), the join, kill and death triggers (22 to 24), the weather
+(27), the party experience values (28, 29) and the revive zone and position (31 to 33), which
+nothing in the game reads (see the backlog pages that would use them). A zone's name and
+description, which iROSE keeps in `LIST_ZONE_S.STL`, are fields of the zone. Recipes are
+named after the items made with them ("Iron Helm, Criker Hat"; 1 to 20 "Refining weapons from
+grade 0 to 1" ...). A new character's slots are INIT_AVATAR's columns 6 to 13 (wearing),
+14 to 23 (bag equipment) and the five consumable and five material places with their counts
+that follow.
 
 Each field is a value the game reads, by the name the game's code gives it. The converter
 left out the columns nothing in the game reads: the Korean name (column 0 of each table),
