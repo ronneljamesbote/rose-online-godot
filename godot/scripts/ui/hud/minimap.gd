@@ -4,7 +4,7 @@
 extends VBoxContainer
 
 ## The zone's minimap image has 64 pixels per 160 m map block. Its top left corner is one
-## block west and one block north of the start block LIST_ZONE.STB gives (warp gates and
+## block west and one block north of the start block the zone settings give (warp gates and
 ## town NPCs land on the spots drawn on the image only with that shift).
 const METRES_PER_PIXEL := 2.5
 const BLOCK := 160.0

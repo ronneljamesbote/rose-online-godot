@@ -3,10 +3,7 @@
 //! experience_points_system), with its components stored as JSON on the player row.
 
 use glam::Vec3;
-use rose_data::{
-    CharacterMotionAction, EquipmentItem, ItemClass, ItemReference, ItemType, StackableItem,
-    ZoneId,
-};
+use rose_data::{CharacterMotionAction, EquipmentItem, StackableItem, ZoneId};
 use rose_data_irose::{IroseSkillPageType, SKILL_PAGE_SIZE};
 use rose_game_common::components::{
     AbilityValues, BasicStatType, BasicStats, CharacterGender, CharacterInfo, Equipment, Hotbar,
@@ -17,10 +14,6 @@ use serde::{de::DeserializeOwned, Serialize};
 use spacetimedb::{Identity, ReducerContext, Table};
 
 use crate::{combat, game_data::game, my_player, player, stats, Player, Stats};
-
-const SHORT_SWORD: usize = 2;
-const SHORT_BOW: usize = 202;
-const STARTING_ARROWS: u32 = 999;
 
 fn to_json<T: Serialize>(value: &T) -> String {
     serde_json::to_string(value).unwrap_or_default()
@@ -131,7 +124,8 @@ impl Player {
     }
 }
 
-/// A new character from INIT_AVATAR: starting stats, clothes, items and basic skills.
+/// A new character as the game data says (the `RoseNewCharacter` resources, or iROSE's
+/// INIT_AVATAR.STB): starting stats, clothes, items and basic skills.
 pub fn new_player(game: &GameData, identity: Identity, name: String, gender: u8, zone: (u16, f32, f32)) -> Player {
     let start = &game.character_creator.genders[if gender == 1 { 1 } else { 0 }];
     let items = &game.items;
@@ -200,35 +194,9 @@ pub fn new_player(game: &GameData, identity: Identity, name: String, gender: u8,
         union_membership: to_json(&UnionMembership::default()),
     };
     player.set_basic_stats(&start.basic_stats);
-    starter_kit(game, &mut equipment, &mut inventory);
     player.set_equipment(&equipment);
     player.set_inventory(&inventory);
     player
-}
-
-/// Our addition to INIT_AVATAR, which has no weapon: a Short Sword in hand, and a Short Bow
-/// with arrows in the bag to try ranged combat.
-fn starter_kit(game: &GameData, equipment: &mut Equipment, inventory: &mut Inventory) {
-    let weapon = |number| {
-        game.items
-            .get_base_item(ItemReference::new(ItemType::Weapon, number))
-            .and_then(EquipmentItem::from_item_data)
-    };
-    if let Some(sword) = weapon(SHORT_SWORD) {
-        equipment.equip_item(sword).ok();
-    }
-    if let Some(bow) = weapon(SHORT_BOW) {
-        inventory.try_add_item(bow.into()).ok();
-    }
-    let arrows = game
-        .items
-        .iter_items(ItemType::Material)
-        .filter_map(|item| game.items.get_base_item(item))
-        .find(|item| item.class == ItemClass::Arrow)
-        .and_then(|item| StackableItem::from_item_data(item, STARTING_ARROWS));
-    if let Some(arrows) = arrows {
-        inventory.try_add_item(arrows.into()).ok();
-    }
 }
 
 /// A player's ability values, with the status effects on their character.

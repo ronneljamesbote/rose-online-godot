@@ -402,7 +402,7 @@ pub fn disassemble_item(ctx: &ReducerContext, tool: CraftTool, page: u8, index: 
     Ok(())
 }
 
-/// The refining recipe for raising this item one grade: LIST_PRODUCT rows 1-10 for weapons,
+/// The refining recipe for raising this item one grade: recipes 1-10 for weapons,
 /// 11-20 for everything else.
 pub fn refine_recipe_index(item: &EquipmentItem) -> usize {
     let base = if item.item.item_type == ItemType::Weapon { 1 } else { 11 };

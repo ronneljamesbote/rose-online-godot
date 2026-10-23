@@ -5,7 +5,7 @@ use log::debug;
 
 use rose_data::{
     NpcConversationId, NpcId, SkyboxId, StringDatabase, ZoneData, ZoneDatabase, ZoneEventObject,
-    ZoneId, ZoneList, ZoneListEntry, ZoneMonsterSpawnPoint, ZoneNpcSpawn, WORLD_TICKS_PER_DAY,
+    ZoneId, ZoneList, ZoneListEntry, ZoneMonsterSpawnPoint, ZoneNpcSpawn, ZoneSettings, WORLD_TICKS_PER_DAY,
 };
 use rose_file_readers::{
     stb_column, IfoEventObject, IfoFile, IfoMonsterSpawn, IfoMonsterSpawnPoint, IfoNpc,
@@ -129,13 +129,74 @@ fn create_event_object(
     }
 }
 
+/// Gives `text` a `'static` lifetime by keeping it in `keep`, which the database owns.
+fn keep(keep: &mut Vec<String>, text: &str) -> &'static str {
+    if text.is_empty() {
+        return "";
+    }
+    let owned = text.to_string();
+    // SAFETY: the String's buffer never moves or changes while it sits in `keep`, and
+    // `keep` lives in the database (`with_text`) as long as the data pointing into it.
+    let text: &'static str = unsafe { std::mem::transmute::<&str, &'static str>(owned.as_str()) };
+    keep.push(owned);
+    text
+}
+
+fn path_or_none(path: &str) -> Option<VfsPathBuf> {
+    (!path.is_empty()).then(|| VfsPathBuf::new(path))
+}
+
+/// One LIST_ZONE.STB row as the zone's settings (name and description from
+/// LIST_ZONE_S.STL); None for a row without a map file, which the game doesn't use.
+fn zone_settings(data: &StbZone, string_database: &StringDatabase, id: usize) -> Option<ZoneSettings> {
+    let map_file = data.get_zone_file(id)?;
+    let zone_strings = string_database.get_zone(data.get_zone_string_id(id).unwrap_or(""));
+    let text = |s: Option<&str>| s.unwrap_or("").to_string();
+    Some(ZoneSettings {
+        id: ZoneId::new(id as u16)?,
+        name: zone_strings.as_ref().map_or(String::new(), |x| x.name.to_string()),
+        description: zone_strings.as_ref().map_or(String::new(), |x| x.description.to_string()),
+        map_file: map_file.to_string(),
+        start_spot: text(data.get_zone_start_event_position_name(id)),
+        revive_spot: text(data.get_zone_revive_event_position_name(id)),
+        music_day: text(data.get_zone_background_music_day(id)),
+        music_night: text(data.get_zone_background_music_night(id)),
+        skybox_id: data.get_zone_skybox_id(id),
+        minimap: text(data.get_zone_minimap_filename(id)),
+        minimap_start_x: data.get_zone_minimap_start_x(id).unwrap_or(0),
+        minimap_start_y: data.get_zone_minimap_start_y(id).unwrap_or(0),
+        decoration_models: text(data.get_zone_deco_table(id)),
+        building_models: text(data.get_zone_cnst_table(id)),
+        day_cycle: data.get_zone_day_cycle_time(id).unwrap_or(WORLD_TICKS_PER_DAY as u32),
+        morning_time: data.get_zone_morning_time(id).unwrap_or((WORLD_TICKS_PER_DAY / 6) as u32),
+        day_time: data.get_zone_day_time(id).unwrap_or((2 * WORLD_TICKS_PER_DAY / 6) as u32),
+        evening_time: data.get_zone_evening_time(id).unwrap_or((4 * WORLD_TICKS_PER_DAY / 6) as u32),
+        night_time: data.get_zone_night_time(id).unwrap_or((5 * WORLD_TICKS_PER_DAY / 6) as u32),
+        pvp_state: data.get_zone_pvp_state(id).unwrap_or(0),
+        planet: data.get_zone_planet(id).unwrap_or(0),
+        footstep_type: data.get_zone_footstep_type(id),
+        sector_size: data.get_zone_sector_size(id).unwrap_or(0).clamp(MIN_SECTOR_SIZE, MAX_SECTOR_SIZE),
+        vehicle_use_flags: data.get_zone_vehicle_use_flags(id).unwrap_or(0),
+    })
+}
+
+/// Every zone's settings from LIST_ZONE.STB, by id (the rows with a map file).
+pub fn get_zone_settings(
+    vfs: &VirtualFilesystem,
+    string_database: &StringDatabase,
+) -> Result<Vec<ZoneSettings>, anyhow::Error> {
+    let data = StbZone(vfs.read_file::<StbFile, _>("3DDATA/STB/LIST_ZONE.STB")?);
+    Ok((1..data.rows()).filter_map(|id| zone_settings(&data, string_database, id)).collect())
+}
+
 fn load_zone(
     vfs: &VirtualFilesystem,
-    data: &StbZone,
-    string_database: &StringDatabase,
-    id: usize,
+    settings: &ZoneSettings,
+    name: &'static str,
+    description: &'static str,
 ) -> Result<ZoneData, LoadZoneError> {
-    let zone_file = VfsPath::from(data.get_zone_file(id).ok_or(LoadZoneError::NotExists)?);
+    let id = settings.id.get();
+    let zone_file = VfsPath::from(settings.map_file.as_str());
     let zone_base_directory = zone_file
         .path()
         .parent()
@@ -152,7 +213,6 @@ fn load_zone(
             },
         )
         .map_err(|_| LoadZoneError::ZonFileNotFound)?;
-
     let mut monster_spawns = Vec::new();
     let mut npcs = Vec::new();
     let mut event_objects = Vec::new();
@@ -237,18 +297,15 @@ fn load_zone(
     let max_x = max_block_x.unwrap() + 1;
     let max_y = 65 - min_block_y.unwrap();
 
-    let sector_size = data
-        .get_zone_sector_size(id)
-        .unwrap_or(0)
-        .clamp(MIN_SECTOR_SIZE, MAX_SECTOR_SIZE);
+    let sector_size = settings.sector_size.clamp(MIN_SECTOR_SIZE, MAX_SECTOR_SIZE);
     let block_size = 16.0 * zon_file.grid_per_patch * zon_file.grid_size;
     let num_blocks_x = max_x - min_x;
     let num_blocks_y = max_y - min_y;
     let num_sectors_x = ((num_blocks_x as f32 * block_size) / sector_size as f32) as u32;
     let num_sectors_y = ((num_blocks_y as f32 * block_size) / sector_size as f32) as u32;
 
-    let start_event_position_name = data.get_zone_start_event_position_name(id).unwrap_or("");
-    let revive_event_position_name = data.get_zone_revive_event_position_name(id).unwrap_or("");
+    let start_event_position_name = settings.start_spot.as_str();
+    let revive_event_position_name = settings.revive_spot.as_str();
     let mut start_position = Vec3::new(0.0, 0.0, 0.0);
     let mut revive_positions = Vec::new();
     for (name, position) in zon_file.event_positions.iter() {
@@ -263,13 +320,6 @@ fn load_zone(
         }
     }
 
-    let zone_strings = string_database.get_zone(data.get_zone_string_id(id).unwrap_or(""));
-    let name = zone_strings
-        .as_ref()
-        .map_or("", |x| unsafe { std::mem::transmute(x.name) });
-    let description = zone_strings
-        .as_ref()
-        .map_or("", |x| unsafe { std::mem::transmute(x.description) });
     debug!(
         "Loaded zone {} {} blocks: {}, spawns: {}, npcs: {}, sectors ({}, {}), start: {}",
         id,
@@ -282,7 +332,7 @@ fn load_zone(
         start_position.xy(),
     );
     Ok(ZoneData {
-        id: ZoneId::new(id as u16).unwrap(),
+        id: settings.id,
         name,
         description,
         sector_size,
@@ -306,98 +356,91 @@ fn load_zone(
                 )
             })
             .collect(),
-        pvp_state: data.get_zone_pvp_state(id).unwrap_or(0),
-        planet: data.get_zone_planet(id).unwrap_or(0),
-        vehicle_use_flags: data.get_zone_vehicle_use_flags(id).unwrap_or(0),
-        day_cycle: data
-            .get_zone_day_cycle_time(id)
-            .unwrap_or(WORLD_TICKS_PER_DAY as u32),
-        morning_time: data
-            .get_zone_morning_time(id)
-            .unwrap_or((WORLD_TICKS_PER_DAY / 6) as u32),
-        day_time: data
-            .get_zone_day_time(id)
-            .unwrap_or((2 * WORLD_TICKS_PER_DAY / 6) as u32),
-        evening_time: data
-            .get_zone_evening_time(id)
-            .unwrap_or((4 * WORLD_TICKS_PER_DAY / 6) as u32),
-        night_time: data
-            .get_zone_night_time(id)
-            .unwrap_or((5 * WORLD_TICKS_PER_DAY / 6) as u32),
-        skybox_id: data.get_zone_skybox_id(id),
+        pvp_state: settings.pvp_state,
+        planet: settings.planet,
+        vehicle_use_flags: settings.vehicle_use_flags,
+        day_cycle: settings.day_cycle,
+        morning_time: settings.morning_time,
+        day_time: settings.day_time,
+        evening_time: settings.evening_time,
+        night_time: settings.night_time,
+        skybox_id: settings.skybox_id,
     })
 }
 
+/// The zones from LIST_ZONE.STB and their map files.
 pub fn get_zone_database(
     vfs: &VirtualFilesystem,
     string_database: Arc<StringDatabase>,
 ) -> Result<ZoneDatabase, anyhow::Error> {
-    let data = StbZone(vfs.read_file::<StbFile, _>("3DDATA/STB/LIST_ZONE.STB")?);
-    let mut zones = Vec::with_capacity(data.rows());
-    zones.push(None); // Zone ID 0
-    for id in 1..data.rows() {
-        zones.push(load_zone(vfs, &data, &string_database, id).ok());
+    let settings = get_zone_settings(vfs, &string_database)?;
+    Ok(get_zone_database_from_settings(vfs, string_database, &settings))
+}
+
+/// The zones from their settings (iROSE's or the data export's) and their map files. A zone
+/// whose map files are missing isn't there, as in iROSE.
+pub fn get_zone_database_from_settings(
+    vfs: &VirtualFilesystem,
+    string_database: Arc<StringDatabase>,
+    settings: &[ZoneSettings],
+) -> ZoneDatabase {
+    let mut text = Vec::new();
+    let mut zones: Vec<Option<ZoneData>> = Vec::new();
+    for zone in settings {
+        let at = zone.id.get() as usize;
+        if zones.len() <= at {
+            zones.resize_with(at + 1, || None);
+        }
+        let name = keep(&mut text, &zone.name);
+        let description = keep(&mut text, &zone.description);
+        zones[at] = load_zone(vfs, zone, name, description).ok();
     }
-
-    Ok(ZoneDatabase::new(string_database, zones))
+    ZoneDatabase::new(string_database, zones).with_text(text)
 }
 
-fn load_zone_list_entry(
-    data: &StbZone,
-    string_database: &StringDatabase,
-    id: usize,
-) -> Result<ZoneListEntry, LoadZoneError> {
-    let zone_strings = string_database.get_zone(data.get_zone_string_id(id).unwrap_or(""));
-
-    Ok(ZoneListEntry {
-        id: ZoneId::new(id as u16).unwrap(),
-        name: zone_strings
-            .as_ref()
-            .map_or("", |x| unsafe { std::mem::transmute(x.name) }),
-        description: zone_strings
-            .as_ref()
-            .map_or("", |x| unsafe { std::mem::transmute(x.description) }),
-        minimap_path: data.get_zone_minimap_filename(id).map(VfsPathBuf::new),
-        minimap_start_x: data.get_zone_minimap_start_x(id).unwrap_or(0),
-        minimap_start_y: data.get_zone_minimap_start_y(id).unwrap_or(0),
-        zon_file_path: VfsPathBuf::new(data.get_zone_file(id).ok_or(LoadZoneError::NotExists)?),
-        zsc_cnst_path: VfsPathBuf::new(data.get_zone_cnst_table(id).unwrap_or("")),
-        zsc_deco_path: VfsPathBuf::new(data.get_zone_deco_table(id).unwrap_or("")),
-        pvp_state: data.get_zone_pvp_state(id).unwrap_or(0),
-        day_cycle: data
-            .get_zone_day_cycle_time(id)
-            .unwrap_or(WORLD_TICKS_PER_DAY as u32),
-        morning_time: data
-            .get_zone_morning_time(id)
-            .unwrap_or((WORLD_TICKS_PER_DAY / 6) as u32),
-        day_time: data
-            .get_zone_day_time(id)
-            .unwrap_or((2 * WORLD_TICKS_PER_DAY / 6) as u32),
-        evening_time: data
-            .get_zone_evening_time(id)
-            .unwrap_or((4 * WORLD_TICKS_PER_DAY / 6) as u32),
-        night_time: data
-            .get_zone_night_time(id)
-            .unwrap_or((5 * WORLD_TICKS_PER_DAY / 6) as u32),
-        skybox_id: data.get_zone_skybox_id(id),
-        background_music_day: data.get_zone_background_music_day(id).map(VfsPathBuf::new),
-        background_music_night: data
-            .get_zone_background_music_night(id)
-            .map(VfsPathBuf::new),
-        footstep_type: data.get_zone_footstep_type(id),
-    })
+fn zone_list_entry(settings: &ZoneSettings, text: &mut Vec<String>) -> ZoneListEntry {
+    ZoneListEntry {
+        id: settings.id,
+        name: keep(text, &settings.name),
+        description: keep(text, &settings.description),
+        minimap_path: path_or_none(&settings.minimap),
+        minimap_start_x: settings.minimap_start_x,
+        minimap_start_y: settings.minimap_start_y,
+        zon_file_path: VfsPathBuf::new(&settings.map_file),
+        zsc_cnst_path: VfsPathBuf::new(&settings.building_models),
+        zsc_deco_path: VfsPathBuf::new(&settings.decoration_models),
+        pvp_state: settings.pvp_state,
+        day_cycle: settings.day_cycle,
+        morning_time: settings.morning_time,
+        day_time: settings.day_time,
+        evening_time: settings.evening_time,
+        night_time: settings.night_time,
+        skybox_id: settings.skybox_id,
+        background_music_day: path_or_none(&settings.music_day),
+        background_music_night: path_or_none(&settings.music_night),
+        footstep_type: settings.footstep_type,
+    }
 }
 
+/// The zone list (what the client needs to draw a zone) from LIST_ZONE.STB.
 pub fn get_zone_list(
     vfs: &VirtualFilesystem,
     string_database: Arc<StringDatabase>,
 ) -> Result<ZoneList, anyhow::Error> {
-    let data = StbZone(vfs.read_file::<StbFile, _>("3DDATA/STB/LIST_ZONE.STB")?);
-    let mut zones = Vec::with_capacity(data.rows());
-    zones.push(None); // Zone ID 0
-    for id in 1..data.rows() {
-        zones.push(load_zone_list_entry(&data, &string_database, id).ok());
-    }
+    let settings = get_zone_settings(vfs, &string_database)?;
+    Ok(get_zone_list_from_settings(string_database, &settings))
+}
 
-    Ok(ZoneList::new(string_database, zones))
+/// The zone list from the zones' settings (iROSE's or the data export's).
+pub fn get_zone_list_from_settings(string_database: Arc<StringDatabase>, settings: &[ZoneSettings]) -> ZoneList {
+    let mut text = Vec::new();
+    let mut zones: Vec<Option<ZoneListEntry>> = vec![None]; // Zone ID 0
+    for zone in settings {
+        let at = zone.id.get() as usize;
+        if zones.len() <= at {
+            zones.resize_with(at + 1, || None);
+        }
+        zones[at] = Some(zone_list_entry(zone, &mut text));
+    }
+    ZoneList::new(string_database, zones).with_text(text)
 }

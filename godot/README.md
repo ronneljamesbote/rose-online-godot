@@ -57,10 +57,10 @@ interface and zone scenes, about 5 MB) and `assets.pck` (the converted ROSE asse
 script also takes `-DataIdx`): it first
 runs `--import-rose`, because `assets.pck` carries the converted models, textures and
 animations (see `assets/README.md`), then checks that
-`overrides/motions.toml`, `overrides/zones/` and `overrides/data/` match the animations,
-zone scenes and game data resources (`--export-motions=check`, `--export-zones=check`,
-`--export-data=check`); when they don't, it stops without building. The zip carries
-`overrides/data/` next to `ROSE.exe`: the game reads its items, monsters, NPCs and skills from there (see
+`export/` matches the game data resources, zone scenes and animations
+(`--export-data=check`, see `../export/README.md`); when it doesn't, it stops without
+building. The zip carries `export/data/` next to `ROSE.exe`: the game reads its items,
+monsters, NPCs, skills, zones, warp gates, recipes and new characters from there (see
 `data/README.md`). The DLL only imports Windows system DLLs. Under
 Wine 9 the build loads the data, builds Zant and plays online headless (Wine's `dinput8`
 crashes Godot here, so the test ran with `WINEDLLOVERRIDES=dinput8=d`); it has not been
@@ -156,7 +156,7 @@ Other options (after `--`):
   TOML (Arumic is the default); the Windows build also reads a `themes` folder next to
   `ROSE.exe`.
 - `zones/` holds the zone scenes, one folder per zone, edited in Godot. Their spawns, NPCs
-  and warps are exported to `../overrides/zones/` for the server.
+  and warps are exported to `../export/zones/` for the server (`--export-data`).
 - `assets/` holds the converted models, textures and animations (see `assets/README.md`).
 - `gm/` is the GM command chat for dev servers, left out of the production export.
 - `tools/` holds the Windows build scripts and the readme that goes in the zip.

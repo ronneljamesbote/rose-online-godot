@@ -33,7 +33,7 @@ source:
     - module/src/character.rs (reward_xp)
     - module/src/skills.rs (resurrect, Resurrection cast)
     - crates/rose-game-irose/src/data/ability_values.rs (levelup_require_xp)
-  data: LIST_ZONE.STB (revive points, planet, PvP state); the Resurrection skill resources in godot/data/skills/1131-resurrection/ (power)
+  data: the zone settings resources in godot/data/zones/ (revive_spot, planet, pvp_state); the Resurrection skill resources in godot/data/skills/1131-resurrection/ (power)
 ---
 # Death and Reviving
 
@@ -119,4 +119,4 @@ A player killed by another player loses no experience. Both players see "*winner
 
 > Open question: Resurrection adds the refunded experience without checking for a level up, so a refund that passes the next level only levels you up at your next kill.
 
-> Open question: LIST_ZONE.STB columns 31 to 33 (more revive settings per zone) are not read; only the revive points are used.
+> Open question: iROSE's LIST_ZONE.STB columns 31 to 33 (more revive settings per zone) were never read and are not in the zone settings; only the revive points are used.

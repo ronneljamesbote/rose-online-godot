@@ -2,7 +2,7 @@
 
 A variant of ROSE Online with its own feature set: a SpacetimeDB server module that runs the
 game rules, a Godot 4 client, an account website and a wiki that describes the game. The base
-game data comes from the iROSE 129_129 client files; our changes to it live in `overrides/`.
+game data comes from the iROSE 129_129 client files; our own game data is made in the Godot editor and exported to `export/`.
 
 ## Quick start
 
@@ -22,7 +22,7 @@ game data comes from the iROSE 129_129 client files; our changes to it live in `
 | [`godot/`](godot/README.md) | The Godot 4 client, with its Rust GDExtension in `godot/rust/` |
 | [`web/`](web/README.md) | The account website (Next.js): sign-up, sign-in for the game, the wiki at `/wiki` |
 | [`wiki/`](wiki/README.md) | The game as it runs: rules, skills, monsters, NPCs, quests, items, zones |
-| [`overrides/`](overrides/README.md) | Our changes to the iROSE data, plus the zones and hit markers exported from Godot |
+| [`export/`](export/README.md) | What the Godot editor exports for the server and the game: the game data, the zones' spawns and NPCs, and the hit markers |
 | [`server/`](server/README.md) | Docker images and scripts for the server, the website and HTTPS |
 | [`crates/`](crates/UPSTREAM.md) | rose-offline's file readers, game data and game rules, vendored and changed |
 | `import/` | `rose-stdb-import`: packs the client files the server reads for upload (see [`server/README.md`](server/README.md#how-it-works)) |

@@ -24,7 +24,7 @@ source:
     - module/src/skills.rs (pickup_nearest)
     - crates/rose-game-irose/src/data/ability_values.rs (calculate_drop_rate)
     - tools/wiki-gen/src/main.rs (drop_row, the slots shown on monster pages)
-  data: the drop table resources in godot/data/drop_tables/ (RoseDropTable, exported to overrides/data/drop-tables.toml), the monster resources in godot/data/monsters/ (drop_table, drop_item_rate, drop_money_rate, level)
+  data: the drop table resources in godot/data/drop_tables/ (RoseDropTable, exported to export/data/drop-tables.toml), the monster resources in godot/data/monsters/ (drop_table, drop_item_rate, drop_money_rate, level)
 ---
 # Drops
 

@@ -7,8 +7,8 @@ trading, chat and the rest. How each rule plays is described in `../wiki/`; this
 about the code.
 
 No game data ships with the module. The host uploads the client files the game databases
-are built from (items, monsters, skills, quests, zones, drop tables, with
-`../overrides/` applied on top), and the module builds the databases from them once per
+are built from (items, monsters, skills, quests, zones, drop tables; the parts made in the
+Godot editor come from `../export/` instead of the iROSE tables), and the module builds the databases from them once per
 instance (`game_data.rs`).
 
 ## Build and publish

@@ -21,17 +21,18 @@ together. Read `AGENTS.md` and `wiki/README.md` first if you haven't.
    it, and say so.
 3. **Decide where each change belongs.** The page's `source:` names the data row and the
    code. `.claude/rules/wiki-sync.md` maps code to pages.
-   - An **item, monster, NPC, drop, shop, skill or status effect value** (an item's stat or
-     price, a monster's level, HP or drop rate, what it drops, what a shop sells, a skill
-     level's cost, power or cooldown, a status effect's amount per second, who may learn a
-     skill) → the resource in `godot/data/` (`items/`, `monsters/`, `npcs/`, `drop_tables/`,
-     `shop_tabs/`, `skills/<skill>/` (one file per level), `status_effects/`,
-     `job_classes/`; the page's `source:` names the file or folder), then
-     `godot --headless --path godot -- --export-data` and commit both. See
-     `godot/data/README.md`.
-   - Another **data value** (a zone setting, a crafting recipe) → an entry in
-     `overrides/game-data.toml` (file, row, column, value, and a `note` naming the page).
-     See `overrides/README.md` for the format and column lists.
+   - A **data value** (an item's stat or price, a monster's level, HP or drop rate, what it
+     drops, what a shop sells, a skill level's cost, power or cooldown, a status effect's
+     amount per second, who may learn a skill, a zone setting, a warp gate's target, a
+     crafting recipe, what a new character starts with) → the resource in `godot/data/`
+     (`items/`, `monsters/`, `npcs/`, `drop_tables/`, `shop_tabs/`, `skills/<skill>/` (one
+     file per level), `status_effects/`, `job_classes/`, `zones/`, `warp_gates/`,
+     `craft_recipes/`, `new_characters/`; the page's `source:` names the file or folder),
+     then `godot --headless --path godot -- --export-data` and commit both. See
+     `godot/data/README.md`. A spawn, NPC or named spot of a zone edited in Godot → its
+     scene in `godot/zones/`, exported the same way. A value of a kind not made in Godot yet
+     (sounds, effects, quests, dialogs, monster AI) can't be changed as data yet: say so on
+     the pull request, or change it in code if the page asks for a rule.
    - A **rule or formula** (damage, hit chance, XP, death penalty, how a skill behaves) →
      code in `crates/rose-game-irose/` or `module/src/`, and the client in `godot/` when
      players see it (tooltips, windows).
@@ -46,9 +47,9 @@ together. Read `AGENTS.md` and `wiki/README.md` first if you haven't.
 6. **Update the page's details** that the edit implies but didn't write: `source:` if the
    code moved, "Changed from iROSE" if we now differ from iROSE, other pages that repeat
    the same value (search `wiki/` for it). Run `node web/scripts/check-wiki.mjs`.
-7. **Rebuild what players download** when the client, the data export or the override
-   file changed: the Windows client zip includes `overrides/data/`, and the server uploads
-   it and `overrides/game-data.toml` with the game data. Only when the person asks for a
+7. **Rebuild what players download** when the client or the data export
+   file changed: the Windows client zip includes `export/data/`, and the server uploads
+   `export/` with the game data. Only when the person asks for a
    build.
 8. **Push to the pull request** and reply with what changed in the game, the media, and
    anything you could not do. Never merge it yourself.
@@ -57,6 +58,6 @@ together. Read `AGENTS.md` and `wiki/README.md` first if you haven't.
 
 - Don't change a page's meaning to fit the code. If something can't be done as written,
   say why on the pull request and leave the page as the person wrote it.
-- Don't edit the iROSE data files; use the override file.
+- Don't edit the iROSE data files; change the resource in `godot/data/`.
 - Don't leave a value in two places: if code hard-codes a number the wiki now owns, read it
-  from data or the override file, or at least point `source:` at the constant.
+  from data, or at least point `source:` at the constant.

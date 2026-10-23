@@ -20,11 +20,10 @@
 #            the ROSE models, textures and animations into godot\assets\rose\
 #            (--import-rose), because assets.pck carries them and the zone scenes need them.
 #
-# It refuses to build when overrides\motions.toml (the server's hit times),
-# overrides\zones\ (spawns and NPCs) or overrides\data\ (items, monsters, NPCs, skills) don't match the
-# animations, the zone scenes and the game data resources in godot\data\; run
-# --export-motions, --export-zones or --export-data and commit the files first. The game
-# reads its items, monsters, NPCs and skills from overrides\data\ next to ROSE.exe, as the server does.
+# It refuses to build when export\ (the game data, the zone layouts and the server's hit
+# times) doesn't match the game data resources in godot\data\, the zone scenes and the
+# animations; run --export-data and commit the files first. The game reads its items,
+# monsters, NPCs, skills and zones from export\data\ next to ROSE.exe, as the server does.
 #
 # The production build checks that no GM code got in and stops if it did.
 #
@@ -338,45 +337,17 @@ if ((Invoke-Godot @("--headless", "--path", "godot", "--", "--import-rose", "--d
     throw "Converting the ROSE assets failed."
 }
 
-# The server times hits from overrides/motions.toml, so the animations
-# shipped must match it.
+# The server and the game read export\ (the game data, the zone layouts and the
+# hit times), exported from godot\data\, the zone scenes and the animations shipped.
 Write-Host ""
-Write-Host "==> Checking overrides\motions.toml..."
-if ((Invoke-Godot @("--headless", "--path", "godot", "--", "--export-motions=check", "--data-idx=$DataIdx")) -ne 0) {
+Write-Host "==> Checking export\..."
+if ((Invoke-Godot @("--headless", "--path", "godot", "--", "--export-data=check", "--data-idx=$DataIdx")) -ne 0) {
     throw @"
-overrides\motions.toml doesn't match the player animations.
-
-Run this and commit the file:
-
-  godot --headless --path godot -- --export-motions --data-idx=$DataIdx
-"@
-}
-
-# The server places spawns, NPCs and named spots from overrides/zones/,
-# exported from the zone scenes.
-Write-Host ""
-Write-Host "==> Checking overrides\zones\..."
-if ((Invoke-Godot @("--headless", "--path", "godot", "--", "--export-zones=check", "--data-idx=$DataIdx")) -ne 0) {
-    throw @"
-overrides\zones\ doesn't match the zone scenes in godot\zones\.
+export\ doesn't match the game data resources in godot\data\, the zone scenes or the animations.
 
 Run this and commit the files:
 
-  godot --headless --path godot -- --export-zones --data-idx=$DataIdx
-"@
-}
-
-# The server and the game read the items, monsters, NPCs and skills from overrides/data/, exported
-# from the game data resources in godot/data/.
-Write-Host ""
-Write-Host "==> Checking overrides\data\..."
-if ((Invoke-Godot @("--headless", "--path", "godot", "--", "--export-data=check")) -ne 0) {
-    throw @"
-overrides\data\ doesn't match the game data resources in godot\data\.
-
-Run this and commit the files:
-
-  godot --headless --path godot -- --export-data
+  godot --headless --path godot -- --export-data --data-idx=$DataIdx
 "@
 }
 
@@ -508,12 +479,12 @@ try {
         $Readme `
         (Join-Path $StageRose "README.txt")
 
-    # The items the game reads, the same export the server loads.
-    $StageOverrides = Join-Path $StageRose "overrides"
-    New-Item -ItemType Directory -Force -Path $StageOverrides | Out-Null
+    # The game data the game reads, the same export the server loads.
+    $StageExport = Join-Path $StageRose "export"
+    New-Item -ItemType Directory -Force -Path $StageExport | Out-Null
     Copy-Item `
-        -Path (Join-Path (Get-Location) "overrides\data") `
-        -Destination $StageOverrides `
+        -Path (Join-Path (Get-Location) "export\data") `
+        -Destination $StageExport `
         -Recurse
 
     # --------------------------------------------------------
@@ -536,9 +507,12 @@ try {
         Get-ChildItem -Path $Dest -File |
             Where-Object { $_.Extension -in ".exe", ".dll" -or $_.Name -in "README.txt", "ROSE.pck" -or ($_.Name -eq "assets.pck" -and -not $GameOnly) } |
             Remove-Item -Force
-        $DestData = Join-Path $Dest "overrides\data"
-        if (Test-Path $DestData) {
-            Remove-Item -Recurse -Force $DestData
+        # overrides\ is what export\ was called before 2026-10-23.
+        foreach ($Old in @("export\data", "overrides")) {
+            $DestData = Join-Path $Dest $Old
+            if (Test-Path $DestData) {
+                Remove-Item -Recurse -Force $DestData
+            }
         }
         Copy-Item -Path (Join-Path $StageRose "*") -Destination $Dest -Recurse -Force
 

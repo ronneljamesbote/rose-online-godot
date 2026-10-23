@@ -2,8 +2,8 @@
 # Starts SpacetimeDB and installs (or updates) the rose module on every start.
 # First start: makes the identity key pair.
 # The game data (items, monsters, zones, ...) is uploaded from the ROSE client mounted at
-# /game whenever the server has none or overrides/game-data.toml, motions.toml or a file in
-# overrides/zones/ or overrides/data/ changed;
+# /game whenever the server has none or a file in export/ (motions.toml, zones/, data/)
+# changed;
 # ROSE_UPLOAD_GAME_DATA=1 uploads it again.
 # ROSE_CLEAR_WORLD=1 wipes the world while publishing (needed after a breaking schema change).
 # ROSE_AUTH_ISSUER is the account website the server trusts (empty: no accounts needed).
@@ -53,15 +53,11 @@ else
   echo "rose: setting the account website failed (see above)"
 fi
 READY=$(spacetimedb-cli sql --server http://127.0.0.1:3000 rose "SELECT ready FROM game_data_status" 2>/dev/null | grep -c true || true)
-# A changed overrides, motions, zone or data export file (built into the image) needs a new
-# upload too.
-export ROSE_OVERRIDES=/opt/rose/overrides/game-data.toml
-export ROSE_MOTIONS=/opt/rose/overrides/motions.toml
-export ROSE_ZONES=/opt/rose/overrides/zones
-export ROSE_DATA=/opt/rose/overrides/data
-OVERRIDES_SUM=$(cat "$ROSE_OVERRIDES" "$ROSE_MOTIONS" "$ROSE_ZONES"/*.toml "$ROSE_DATA"/*.toml "$ROSE_DATA"/items/*.toml 2>/dev/null | sha256sum | cut -d" " -f1)
-if [ "$READY" != "0" ] && [ "$OVERRIDES_SUM" != "$(cat /data/overrides.sha256 2>/dev/null)" ]; then
-  echo "rose: the game data overrides changed, uploading the game data again"
+# A changed export file (built into the image) needs a new upload too.
+export ROSE_EXPORT=/opt/rose/export
+EXPORT_SUM=$(cat "$ROSE_EXPORT"/motions.toml "$ROSE_EXPORT"/zones/*.toml "$ROSE_EXPORT"/data/*.toml "$ROSE_EXPORT"/data/items/*.toml 2>/dev/null | sha256sum | cut -d" " -f1)
+if [ "$READY" != "0" ] && [ "$EXPORT_SUM" != "$(cat /data/export.sha256 2>/dev/null)" ]; then
+  echo "rose: the exported game data changed, uploading the game data again"
   ROSE_UPLOAD_GAME_DATA=1
 fi
 if [ "$READY" = "0" ] || [ "${ROSE_UPLOAD_GAME_DATA:-0}" = "1" ]; then
@@ -69,7 +65,7 @@ if [ "$READY" = "0" ] || [ "${ROSE_UPLOAD_GAME_DATA:-0}" = "1" ]; then
   if [ -n "$DATA_IDX" ]; then
     echo "rose: uploading the game data from $DATA_IDX"
     if /opt/rose/upload-game-data.sh "$DATA_IDX"; then
-      echo "$OVERRIDES_SUM" > /data/overrides.sha256
+      echo "$EXPORT_SUM" > /data/export.sha256
     else
       echo "rose: the game data upload failed (see above)"
     fi

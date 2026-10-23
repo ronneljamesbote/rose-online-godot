@@ -75,12 +75,12 @@ the server's `attack_hit_ms` uses), `step` markers play footsteps and `effect` m
 other sounds and effects. Moving a marker in the Animation panel moves that event in game;
 the id after the colon must stay.
 
-The server times hits from `overrides/motions.toml`, so after moving a `hit` marker (or
+The server times hits from `export/motions.toml`, so after moving a `hit` marker (or
 changing an animation's length) export it and commit it with the animation:
 
 ```sh
-godot --headless --path godot -- --export-motions          # writes ../overrides/motions.toml
-godot --headless --path godot -- --export-motions=check    # fails when it is out of date
+godot --headless --path godot -- --export-data          # writes ../export/ (motions.toml too)
+godot --headless --path godot -- --export-data=check    # fails when it is out of date
 ```
 
 The Windows build (`tools/build-windows.sh`) runs the check and refuses to build while the
@@ -113,7 +113,7 @@ godot --headless --path godot -- --import-zone=20,force --data-idx=...   # repla
 
 Zones converted before 2026-10-18 kept each block in its own `block_X_Y.tscn`. On a branch
 that still has those, merge them into `zone.tscn` once (after `--import-rose`; it changes no
-node, name or position, so `--export-zones=check` still passes):
+node, name or position, so `--export-data=check` still passes):
 
 ```sh
 godot --headless --path godot -- --merge-zone-blocks=24      # or =all
@@ -149,9 +149,12 @@ when the zone has a folder here and its converted assets exist, and builds the z
 the client's map files otherwise (or with `--zone-files`), so both always work.
 
 The server doesn't read the scenes: after moving or changing spawn, NPC or event markers,
-export them to `overrides/zones/<id>-<name>.toml` (`20-birth-island.toml`) with `--export-zones` (see
-`../../overrides/README.md`) and commit it with the scenes. Warp gates stay client-side, as
-before: the server sends a player through a gate by its warp number.
+export them to `export/zones/<id>-<name>.toml` (`20-birth-island.toml`) with `--export-data` (see
+`../../export/README.md`) and commit it with the scenes. A zone scene needs the zone's
+settings (`godot/data/zones/`, the `settings` field of its root shows them), or the export
+stops. Warp gates stay client-side, as before: the server sends a player through a gate by
+its warp number, and the gate's `RoseWarpGate` (`godot/data/warp_gates/`, the `warp_gate`
+field of the placed gate) says where it leads.
 
 The game falls back to the client data for anything not in either folder, so it runs the
 same with or without `rose/`.

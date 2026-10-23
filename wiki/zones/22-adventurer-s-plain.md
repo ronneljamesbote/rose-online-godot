@@ -385,7 +385,7 @@ zone_drops:
 - '[[items/consumable/58-vital-jam-5|Vital Jam (+5)]]'
 - '[[items/consumable/102-banana|Banana]]'
 source:
-  data: LIST_ZONE.STB row 22, overrides/zones/22-adventurer-s-plain.toml (exported from the scenes in godot/zones/22_adventurer_s_plain), drop table godot/data/drop_tables/22-zone-adventurer-s-plain.tres
+  data: the zone settings godot/data/zones/22-adventurer-s-plain.tres, export/zones/22-adventurer-s-plain.toml (exported from the scenes in godot/zones/22_adventurer_s_plain), drop table godot/data/drop_tables/22-zone-adventurer-s-plain.tres
   code:
   - module/src/world.rs
   - crates/rose-game-data/src/lib.rs (apply_zone_layouts)
@@ -400,5 +400,5 @@ reinforcements show up once a point has been refilled many times (see
 
 Adventurer's Plain is edited in Godot: its spawn points, NPCs and start and revive spots are
 markers in the zone's scenes, and the server reads them from
-`overrides/zones/22-adventurer-s-plain.toml`, which is exported from those scenes. They are
+`export/zones/22-adventurer-s-plain.toml`, which is exported from those scenes. They are
 the same as in iROSE's map files.

@@ -70,8 +70,8 @@ A small, slow monster ...
 - **source**: the data the values come from (a Godot resource such as an item's
   `godot/data/items/...`, a monster's `godot/data/monsters/...` or its drop table's
   `godot/data/drop_tables/...`, or an iROSE table and row) and the code that uses them, so a change knows where to go.
-  Data values changed through the wiki are made in that resource, or for iROSE tables in
-  `overrides/game-data.toml`.
+  Data values changed through the wiki are made in that resource (a zone's settings in
+  `godot/data/zones/...`, a recipe in `godot/data/craft_recipes/...`).
 - **GM command**: item, monster and zone pages show the [[rules/gm-commands|GM command]]
   for that page (`/item type number`, `/spawn monster-id`, `/tp zone`) as the last card of
   its details, with a copy icon. The website makes it from the page's `kind` and `id`, so

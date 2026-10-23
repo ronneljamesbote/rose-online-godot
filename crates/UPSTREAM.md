@@ -33,9 +33,10 @@ To compare with upstream later: clone rose-offline at the commit above and diff 
 ## Our own crate
 
 rose-game-data is not from upstream. It builds every database from a virtual filesystem
-(`load_game_data`, ported from rose-offline-server's `irose/data/mod.rs`) and reads the
-starting characters from INIT_AVATAR.STB, and the crafting recipes from LIST_PRODUCT.STB
-(`CraftRecipe`, shared with the client; rows 1-20 are the refining recipes).
+(`load_game_data`, ported from rose-offline-server's `irose/data/mod.rs`), and holds the
+world: the zone settings, warp gates, new characters (`CharacterCreator`) and crafting
+recipes (`CraftRecipe`, shared with the client; recipes 1-20 are the refining ones), from
+the export or else from LIST_ZONE.STB, WARP.STB, INIT_AVATAR.STB and LIST_PRODUCT.STB.
 
 rose-quest is ours too: quest conditions and the quest variables (ported from
 rose-offline-server's quest system), shared by the module, which runs triggers and their
@@ -44,10 +45,17 @@ run it. The Lua 4 VM in `godot/rust/src/lua4` is copied from rose-offline-client
 `scripting/lua4`, with only its module paths changed.
 
 rose-data-export is ours: it reads the game data exported from the Godot resources
-(`overrides/data/`, made in `godot/data/`) into the same rose-data databases rose-data-irose
+(`export/data/`, made in `godot/data/`) into the same rose-data databases rose-data-irose
 fills from the iROSE tables (items, then monsters, NPCs, shop tabs and the drop table rows,
 then skills, status effects and job classes; for these the three databases got `with_text`,
-the status effects an `iter`, and the skill enums serde and `Enum`).
+the status effects an `iter`, and the skill enums serde and `Enum`; then the world, for
+which rose-data has `ZoneSettings`, a zone's LIST_ZONE.STB row as data, and the zone
+database and list got `with_text`; rose-data-irose builds both from settings
+(`get_zone_settings`, `get_zone_database_from_settings`, `get_zone_list_from_settings`)).
+It also reads the zone layouts and hit markers exported from the Godot scenes and animations
+(`export/zones/`, `export/motions.toml`), which a crate of their own read before. The STB
+cell patching for the old `game-data.toml` (`patch_stb` in rose-file-readers) is gone with
+that file.
 For it, rose-data-irose's NPC loader is split (`get_npc_motions`, `get_npc_conversations`,
 `get_npc_action_map` give the parts the export doesn't hold yet) and rose-game-irose's drop
 table can be built from rows (`get_drop_table_from_rows`, `read_drop_rows`).

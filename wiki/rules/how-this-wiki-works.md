@@ -7,8 +7,8 @@ source:
   code:
     - AGENTS.md (the rules developers follow)
     - wiki/README.md (page format)
-    - godot/data/ (the game data made in the Godot editor: items, monsters, NPCs, drop tables, shops, skills, status effects, job classes)
-    - overrides/game-data.toml (our changes to the iROSE game data)
+    - godot/data/ (the game data made in the Godot editor: items, monsters, NPCs, drop tables, shops, skills, status effects, job classes, zone settings, warp gates, recipes, new characters)
+    - godot/zones/ (the zones edited in the Godot editor)
     - tools/wiki-gen (wrote the first draft of the table pages)
 ---
 # How this wiki works
@@ -19,19 +19,18 @@ changes first, and the game is then made to match it.
 
 ## Where the numbers come from
 
-Every number in the game comes from one of four places:
+Every number in the game comes from one of three places:
 
 | Place | What it holds | Example |
 | --- | --- | --- |
-| Our game data (`godot/data/`) | Things made in the Godot editor, one file each, converted once from iROSE: items, monsters, town NPCs, drop tables, shop tabs, skill levels, status effects and job classes so far | Short Sword attack 10, in `godot/data/items/weapon/2-short-sword.tres`; Woopie level 16, in `godot/data/monsters/101-woopie.tres`; a skill's MP cost, in its level's file in `godot/data/skills/` |
-| The iROSE 129 game data | The original tables not converted yet: zones, quests, dialogs, monster AI | A zone's PvP state |
-| The override file (`overrides/game-data.toml`) | Our changes to those iROSE tables, one cell per entry | That zone made PvP-free |
+| Our game data (`godot/data/`, `godot/zones/`) | Things made in the Godot editor, one file each, converted once from iROSE: items, monsters, town NPCs, drop tables, shop tabs, skill levels, status effects, job classes, zone settings, warp gates, crafting recipes and new characters so far, and the zones edited as scenes | Short Sword attack 10, in `godot/data/items/weapon/2-short-sword.tres`; Woopie level 16, in `godot/data/monsters/101-woopie.tres`; a zone's PvP state, in `godot/data/zones/` |
+| The iROSE 129 game data | The original data not converted yet: quests, dialogs, monster AI, sounds, effects, the maps of zones not edited in Godot yet | A quest's reward |
 | The game code | Rules and formulas, and features iROSE didn't have | How attack turns into damage |
 
 The original data is never edited. Our own data is changed in the Godot editor and
-exported (`overrides/data/`); a change to iROSE data not converted yet is one line in the
-override file. Both the server and the game client read the same files, so they always
-agree. A rule or formula change goes into the code instead.
+exported (`export/`). Data not converted yet can't be changed as data until it is (the plan
+converts it one kind at a time). Both the server and the game client read the same files,
+so they always agree. A rule or formula change goes into the code instead.
 
 A page's `source` row names the data (our file, or the iROSE table and row) and the code
 behind it.

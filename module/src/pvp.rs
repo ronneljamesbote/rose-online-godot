@@ -1,4 +1,4 @@
-//! Player against player fights, in the zones LIST_ZONE.STB marks for PvP (the Junon Cartel,
+//! Player against player fights, in the zones whose settings mark them for PvP (the Junon Cartel,
 //! the Crusader Training Camp, Lion's Plains, the clan fields). Like the iROSE server
 //! (CObjAVT::Is_ALLIED): in "all except party" zones party members stay allies, and with no
 //! clans yet "all except clan" zones let everyone fight. Elsewhere players can't hurt

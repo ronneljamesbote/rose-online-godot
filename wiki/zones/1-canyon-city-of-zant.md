@@ -288,7 +288,7 @@ zone_drops:
 - '[[items/consumable/102-banana|Banana]]'
 - '[[items/material/112-silver-thread|Silver Thread]]'
 source:
-  data: LIST_ZONE.STB row 1, overrides/zones/1-canyon-city-of-zant.toml (exported from the scenes in godot/zones/1_canyon_city_of_zant), drop table godot/data/drop_tables/1-zone-canyon-city-of-zant.tres
+  data: the zone settings godot/data/zones/1-canyon-city-of-zant.tres, export/zones/1-canyon-city-of-zant.toml (exported from the scenes in godot/zones/1_canyon_city_of_zant), drop table godot/data/drop_tables/1-zone-canyon-city-of-zant.tres
   code:
   - module/src/world.rs
   - crates/rose-game-data/src/lib.rs (apply_zone_layouts)
@@ -303,5 +303,5 @@ reinforcements show up once a point has been refilled many times (see
 
 Canyon City of Zant is edited in Godot: its spawn points, NPCs and start and revive spots
 are markers in the zone's scenes, and the server reads them from
-`overrides/zones/1-canyon-city-of-zant.toml`, which is exported from those scenes. They are
+`export/zones/1-canyon-city-of-zant.toml`, which is exported from those scenes. They are
 the same as in iROSE's map files.

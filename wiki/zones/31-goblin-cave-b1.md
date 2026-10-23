@@ -110,7 +110,7 @@ zone_drops:
 - '[[items/consumable/381-ice-charm|Ice Charm]]'
 - '[[items/consumable/382-spark-charm|Spark Charm]]'
 source:
-  data: LIST_ZONE.STB row 31, the zone's IFO files, drop table godot/data/drop_tables/31-zone-goblin-cave-b1.tres
+  data: the zone settings godot/data/zones/31-goblin-cave-b1.tres, the zone's IFO files, drop table godot/data/drop_tables/31-zone-goblin-cave-b1.tres
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

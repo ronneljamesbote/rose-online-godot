@@ -676,7 +676,7 @@ zone_drops:
 - '[[items/material/38-red-sandalwood|Red Sandalwood]]'
 - '[[items/material/39-otherworldly-wood|Otherworldly Wood]]'
 source:
-  data: LIST_ZONE.STB row 61, the zone's IFO files, drop table godot/data/drop_tables/61-zone-refuge-xita.tres
+  data: the zone settings godot/data/zones/61-refuge-xita.tres, the zone's IFO files, drop table godot/data/drop_tables/61-zone-refuge-xita.tres
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

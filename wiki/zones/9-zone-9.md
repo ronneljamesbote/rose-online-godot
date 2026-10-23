@@ -21,7 +21,7 @@ npcs:
   x: 5201.6
   y: 4765.7
 source:
-  data: LIST_ZONE.STB row 9, the zone's IFO files, no drop table of its own (none in godot/data/drop_tables/ has number 9)
+  data: the zone settings godot/data/zones/9-zone.tres, the zone's IFO files, no drop table of its own (none in godot/data/drop_tables/ has number 9)
   code:
   - module/src/world.rs
   - crates/rose-data-irose/src/zone_database.rs

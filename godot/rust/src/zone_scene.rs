@@ -38,7 +38,7 @@ use rose_file_readers::{
 };
 
 use crate::{
-    assets, data, data_resources::{self, RoseMonster, RoseNpc}, material, texture,
+    assets, data, data_resources::{self, RoseMonster, RoseNpc, RoseWarpGate, RoseZoneSettings}, material, texture,
     zone::{self, Ground, ObjectSpawner},
 };
 
@@ -173,16 +173,30 @@ fn block_origin(block_x: i32, block_y: i32) -> (f32, f32) {
 /// Its children are one `RoseBlock` per 160 m block, the `Terrain` node (the ground, with
 /// `RoseTerrainLook` under it) and `Events` (the zone's named spots, `RoseZoneEvent`). The
 /// game loads this scene instead of the ROSE map files. Spawns, NPCs and named spots go to
-/// the server through `--export-zones`, which writes `overrides/zones/<id>-<name>.toml`.
+/// the server through `--export-data`, which writes `export/zones/<id>-<name>.toml`. The
+/// zone's name, music, sky, time of day and rules are its `settings`.
 #[derive(GodotClass)]
 #[class(tool, base=Node3D, init)]
 pub struct RoseZoneScene {
     base: Base<Node3D>,
-    /// The zone's number: its row in LIST_ZONE.STB, the same number the folder name starts
-    /// with (`20` for `20_birth_island`). The ROSE Zone Tools plugin uses it for the `/tp`
-    /// command it shows under the mouse. Don't change it.
+    /// The zone's number: the id of its `RoseZoneSettings`, the same number the folder name
+    /// starts with (`20` for `20_birth_island`). The ROSE Zone Tools plugin uses it for the
+    /// `/tp` command it shows under the mouse. Don't change it.
     #[export]
     pub zone_id: i32,
+    /// The zone's settings (name, music, sky, time of day, PvP ...): the `RoseZoneSettings`
+    /// in `res://data/zones/` with this zone's number. Click it to edit them; they are saved
+    /// in that resource, not in the scene.
+    #[var(get = get_settings, no_set, usage_flags = [EDITOR])]
+    settings: PhantomVar<Option<Gd<RoseZoneSettings>>>,
+}
+
+#[godot_api]
+impl RoseZoneScene {
+    #[func]
+    fn get_settings(&self) -> Option<Gd<RoseZoneSettings>> {
+        data_resources::find(data_resources::ZONES_DIR, self.zone_id as i64).and_then(|(r, _)| r.try_cast::<RoseZoneSettings>().ok())
+    }
 }
 
 /// One 160 m x 160 m block of a zone (one IFO/HIM file pair in iROSE).
@@ -696,9 +710,13 @@ pub struct RoseZoneObject {
     /// (column, row, 1 / parts per row). Made by the import; don't change it.
     #[export]
     pub lightmap_cells: PackedVector3Array,
-    /// Warp gates only: the WARP.STB row this gate takes you through. Walking into the gate
-    /// asks the server to warp you along that row (it names the zone and named spot you land
-    /// on). Unused for other models.
+    /// Warp gates only: where the gate takes you. Drag a `RoseWarpGate` in from
+    /// `res://data/warp_gates/` (it names the zone and named spot you land on). Walking into
+    /// the gate asks the server to warp you through it. Unused for other models.
+    #[var(get = get_warp_gate, set = set_warp_gate, usage_flags = [EDITOR])]
+    warp_gate: PhantomVar<Option<Gd<RoseWarpGate>>>,
+    /// Warp gates only: the number of the gate's `RoseWarpGate`, as the scene stores it
+    /// (`warp_gate` shows it as the resource).
     #[export]
     pub warp_id: i32,
     /// Event objects only: the event number from the IFO file. Kept from iROSE; the game
@@ -713,6 +731,24 @@ pub struct RoseZoneObject {
     /// game doesn't use it yet.
     #[export]
     pub script_function: GString,
+}
+
+#[godot_api]
+impl RoseZoneObject {
+    #[func]
+    fn get_warp_gate(&self) -> Option<Gd<RoseWarpGate>> {
+        data_resources::find(data_resources::WARP_GATES_DIR, self.warp_id as i64).and_then(|(r, _)| r.try_cast::<RoseWarpGate>().ok())
+    }
+
+    #[func]
+    fn set_warp_gate(&mut self, gate: Option<Gd<RoseWarpGate>>) {
+        match gate {
+            Some(gate) => self.warp_id = gate.upcast::<godot::classes::Resource>().get("id").try_to::<i64>().unwrap_or(0) as i32,
+            // Cleared in the Inspector: keep a number that has no resource.
+            None if self.get_warp_gate().is_none() => {}
+            None => self.warp_id = 0,
+        }
+    }
 }
 
 #[godot_api]
@@ -898,7 +934,7 @@ marker_class!(
     /// also the tactic monsters (reinforcements, often stronger ones). Only the node's
     /// position matters; its rotation is not used. The full rules and the table of what
     /// spawns when are on the wiki page "Monster spawns" (`wiki/rules/monster-spawns.md`).
-    /// After a change, `--export-zones` gives it to the server.
+    /// After a change, `--export-data` gives it to the server.
     RoseSpawnSpot {
         /// The basic monsters: drag `RoseMonster` resources in from `res://data/monsters/`.
         /// Up to 5 entries are used, and the order matters: each spawn check brings entry 1,
@@ -997,7 +1033,7 @@ impl OldProperties for RoseSpawnSpot {
 
 marker_class!(
     /// A town NPC standing here (an IFO NPC), facing the node's forward direction (turn the
-    /// node to turn the NPC). The server places the NPC from this marker; `--export-zones`
+    /// node to turn the NPC). The server places the NPC from this marker; `--export-data`
     /// gives it a change.
     RoseNpcSpot {
         /// Which NPC: drag a `RoseNpc` resource in from `res://data/npcs/`. Sets the NPC's
@@ -1086,12 +1122,12 @@ marker_class!(
 );
 
 marker_class!(
-    /// A named spot of the zone (a ZON event position). LIST_ZONE.STB names the zone's start
-    /// spot (the default place to arrive in the zone) and its revive spots (fallen players
-    /// get up at the nearest one), and WARP.STB rows name the spot a warp gate lands you on.
-    /// Several spots can share a name. The server reads them through `--export-zones`.
+    /// A named spot of the zone (a ZON event position). The zone's `RoseZoneSettings` names
+    /// its start spot (the default place to arrive in the zone) and its revive spots (fallen
+    /// players get up at the nearest one), and a `RoseWarpGate` names the spot it lands you
+    /// on. Several spots can share a name. The server reads them through `--export-data`.
     RoseZoneEvent {
-        /// The spot's name, as LIST_ZONE.STB and WARP.STB refer to it: usually `start` for the
+        /// The spot's name, as the zone settings and warp gates refer to it: usually `start` for the
         /// start spot and `restore` for revive spots; warp targets have names such as
         /// `WARP-JD01-JG01`. Renaming a spot breaks whatever pointed at the old name.
         #[export]
@@ -1887,11 +1923,11 @@ pub fn write_zone_scenes(zone_id: u16, force: bool) -> Result<(String, usize, us
 // ---------------------------------------------------------------------------------------
 // Export for the server
 
-/// What the server needs from a zone's scenes (`overrides/zones/<id>-<name>.toml`): its
+/// What the server needs from a zone's scenes (`export/zones/<id>-<name>.toml`): its
 /// spawn points, town NPCs and named spots, with positions in metres in the server's frame
 /// (x east, y north, z up). Blocks come in the order the server reads IFO files (north to
 /// south rows, west to east), the markers of a block in scene order.
-pub fn zone_layout(zone_id: u16) -> Result<rose_game_overrides::ZoneLayout, String> {
+pub fn zone_layout(zone_id: u16) -> Result<rose_data_export::ZoneLayout, String> {
     let folder = zone_folder(zone_id).ok_or(format!("zone {zone_id} has no folder in {ZONES}"))?;
     let path = format!("{folder}/zone.tscn");
     let scene = ResourceLoader::singleton()
@@ -1899,7 +1935,7 @@ pub fn zone_layout(zone_id: u16) -> Result<rose_game_overrides::ZoneLayout, Stri
         .and_then(|r| r.try_cast::<PackedScene>().ok())
         .ok_or(format!("could not open {path}"))?;
     let root = scene.instantiate().ok_or(format!("could not open {path}"))?;
-    let mut layout = rose_game_overrides::ZoneLayout { zone: zone_id, ..Default::default() };
+    let mut layout = rose_data_export::ZoneLayout { zone: zone_id, ..Default::default() };
     let mut blocks: Vec<((i32, i32), Gd<Node>)> = Vec::new();
     for child in root.get_children().iter_shared() {
         match block_of(&child) {
@@ -1929,11 +1965,11 @@ fn pairs(monsters: &PackedInt32Array, counts: &PackedInt32Array) -> Vec<[u32; 2]
     monsters.as_slice().iter().enumerate().map(|(i, m)| [*m as u32, counts.get(i).copied().unwrap_or(0).max(0) as u32]).collect()
 }
 
-fn collect_markers(node: &Gd<Node>, transform: Transform3D, path: &str, layout: &mut rose_game_overrides::ZoneLayout) {
+fn collect_markers(node: &Gd<Node>, transform: Transform3D, path: &str, layout: &mut rose_data_export::ZoneLayout) {
     if let Ok(spot) = node.clone().try_cast::<RoseSpawnSpot>() {
         let (x, y, z) = server_metres(transform.origin);
         let s = spot.bind();
-        layout.spawn.push(rose_game_overrides::ZoneSpawn {
+        layout.spawn.push(rose_data_export::ZoneSpawn {
             node: path.to_string(),
             x,
             y,
@@ -1951,7 +1987,7 @@ fn collect_markers(node: &Gd<Node>, transform: Transform3D, path: &str, layout: 
         let q = transform.basis.get_quaternion();
         let direction = glam::Quat::from_xyzw(q.x, -q.z, q.y, q.w).to_euler(glam::EulerRot::XYZ).2.to_degrees();
         let s = spot.bind();
-        layout.npc.push(rose_game_overrides::ZoneNpc {
+        layout.npc.push(rose_data_export::ZoneNpc {
             node: path.to_string(),
             npc: s.npc_id.max(0) as u32,
             x,
@@ -1962,7 +1998,7 @@ fn collect_markers(node: &Gd<Node>, transform: Transform3D, path: &str, layout: 
         });
     } else if let Ok(spot) = node.clone().try_cast::<RoseZoneEvent>() {
         let (x, y, z) = server_metres(transform.origin);
-        layout.event.push(rose_game_overrides::ZoneEvent { name: spot.bind().event_name.to_string(), x, y, z });
+        layout.event.push(rose_data_export::ZoneEvent { name: spot.bind().event_name.to_string(), x, y, z });
     }
     for child in node.get_children().iter_shared() {
         let child_path = format!("{path}/{}", child.get_name());
@@ -1975,18 +2011,14 @@ pub fn layout_file_name(folder: &str) -> String {
     format!("{}.toml", folder.rsplit('/').next().unwrap_or(folder).replace('_', "-"))
 }
 
-/// The export of a zone as text, with monster and NPC names in the comments.
-pub fn layout_text(layout: &rose_game_overrides::ZoneLayout) -> String {
-    let game = data::get();
-    let name = |id: u32| {
-        game.as_ref()
-            .and_then(|g| rose_data::NpcId::new(id as u16).and_then(|n| g.npcs.get_npc(n)).map(|n| n.name.to_string()))
-            .filter(|n| !n.is_empty())
-            .unwrap_or_else(|| format!("#{id}"))
-    };
-    let zone_name = game
-        .and_then(|g| rose_data::ZoneId::new(layout.zone).and_then(|id| g.zone_list.get_zone(id)).map(|z| z.name.to_string()))
-        .filter(|n| !n.is_empty())
-        .unwrap_or_else(|| format!("Zone {}", layout.zone));
+/// The export of a zone as text, with the zone's name and the monster and NPC names (by id,
+/// from the resources being exported) in the comments.
+pub fn layout_text(
+    layout: &rose_data_export::ZoneLayout,
+    zone_name: &str,
+    names: &std::collections::HashMap<u32, String>,
+) -> String {
+    let name = |id: u32| names.get(&id).filter(|n| !n.is_empty()).cloned().unwrap_or_else(|| format!("#{id}"));
+    let zone_name = if zone_name.is_empty() { format!("Zone {}", layout.zone) } else { zone_name.to_string() };
     layout.to_toml(&zone_name, name)
 }

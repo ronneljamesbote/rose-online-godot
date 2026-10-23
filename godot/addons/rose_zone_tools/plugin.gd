@@ -202,11 +202,11 @@ func _go_to_entry(entry: Dictionary) -> void:
 
 
 ## The names of NPCs and spawned monsters, from the zone's export file's comments
-## (overrides/zones/<id>-<name>.toml): {node path: name}.
+## (export/zones/<id>-<name>.toml): {node path: name}.
 func _export_names() -> Dictionary:
 	var names := {}
 	var folder := zone_root.scene_file_path.get_base_dir().get_file()
-	var path := ProjectSettings.globalize_path("res://").path_join("../overrides/zones/%s.toml" % folder.replace("_", "-"))
+	var path := ProjectSettings.globalize_path("res://").path_join("../export/zones/%s.toml" % folder.replace("_", "-"))
 	var file := FileAccess.open(path, FileAccess.READ)
 	if file == null:
 		return names

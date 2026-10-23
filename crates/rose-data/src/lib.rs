@@ -130,6 +130,6 @@ pub use world::{
     WORLD_TICKS_PER_MONTH, WORLD_TICKS_PER_YEAR, WORLD_TICK_DURATION,
 };
 pub use zone_database::{
-    ZoneData, ZoneDatabase, ZoneEventObject, ZoneId, ZoneMonsterSpawnPoint, ZoneNpcSpawn,
+    ZoneData, ZoneDatabase, ZoneEventObject, ZoneId, ZoneMonsterSpawnPoint, ZoneNpcSpawn, ZoneSettings,
 };
 pub use zone_list::{ZoneList, ZoneListEntry};

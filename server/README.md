@@ -148,15 +148,16 @@ in `/game`: the import tool packs the files the databases read (about 2,500 file
 The import tool is `import/` (`rose-stdb-import`, built into the image):
 
 - `rose-stdb-import pack <data.idx> <dir>` writes the upload batches (`upload-NNN.json`, each
-  the arguments of one `upload_game_files` call, plus `manifest.json`). It applies
-  `overrides/game-data.toml` first and adds `overrides/motions.toml`, the zone files in
-  `overrides/zones/` and the game data exported from Godot in `overrides/data/` (as JSON; its
-  items, monsters, NPCs, drop tables, shop tabs, skills, status effects and job classes
-  replace the iROSE tables they come from, which are then not sent) (`ROSE_OVERRIDES`,
-  `ROSE_MOTIONS`, `ROSE_ZONES` and `ROSE_DATA` point elsewhere).
-- `rose-stdb-import compare <data.idx>` lists every value in `overrides/data/` that
-  differs from the iROSE tables (right after the conversion only one shop place, which named
-  an item that doesn't exist).
+  the arguments of one `upload_game_files` call, plus `manifest.json`). It adds what the
+  Godot editor exported to `export/` (see `../export/README.md`): `export/motions.toml`, the
+  zone files in `export/zones/` and the game data in `export/data/` (as JSON; its items,
+  monsters, NPCs, drop tables, shop tabs, skills, status effects, job classes, zone
+  settings, warp gates, recipes and new characters replace the iROSE tables they come from,
+  which are then not sent) (`ROSE_EXPORT` names another export folder; `ROSE_MOTIONS`,
+  `ROSE_ZONES` and `ROSE_DATA` point at single parts elsewhere).
+- `rose-stdb-import compare <data.idx>` lists every value in `export/data/` that
+  differs from the iROSE tables (one shop place, which named an item that doesn't exist,
+  and the new characters' starting weapons, which the game added in code before).
 - `rose-stdb-import list <data.idx>` shows which files the databases read, per folder;
   `time <data.idx>` how long building them takes.
 

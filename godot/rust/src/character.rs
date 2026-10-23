@@ -1242,11 +1242,11 @@ fn vehicle_action_motions(base_motion_index: u32, weapon: usize, is_cart: bool) 
         .collect()
 }
 
-/// `overrides/motions.toml` from the player, monster and NPC animations in the asset folders (`ours/` first):
+/// `export/motions.toml` from the player, monster and NPC animations in the asset folders (`ours/` first):
 /// each motion's frame rate, length in frames and the frames of its `hit` markers. The
-/// server times hits from this file, so it has to match the animations; `--export-motions`
-/// writes it and `--export-motions=check` fails when it is out of date.
-pub fn motion_timings() -> Option<rose_game_overrides::MotionTimings> {
+/// server times hits from this file, so it has to match the animations; `--export-data`
+/// writes it and `--export-data=check` fails when it is out of date.
+pub fn motion_timings() -> Option<rose_data_export::MotionTimings> {
     let game_data = data::get()?;
     let mut motions: Vec<String> = (0..3)
         .flat_map(|gender| game_data.motions.motion_files(gender))
@@ -1255,7 +1255,7 @@ pub fn motion_timings() -> Option<rose_game_overrides::MotionTimings> {
         .collect();
     motions.sort();
     motions.dedup();
-    let mut timings = rose_game_overrides::MotionTimings::default();
+    let mut timings = rose_data_export::MotionTimings::default();
     for path in motions {
         let Some(animation) = assets::load_stem::<Animation>(&assets::stem(&path), &["anim"]) else { continue };
         let fps: f64 = animation.get_meta("fps").try_to().unwrap_or(30.0);
@@ -1270,7 +1270,7 @@ pub fn motion_timings() -> Option<rose_game_overrides::MotionTimings> {
             .map(|name| (animation.get_marker_time(&StringName::from(name)) * fps).round() as u32)
             .collect();
         hit_frames.sort();
-        timings.motion.push(rose_game_overrides::MotionTiming {
+        timings.motion.push(rose_data_export::MotionTiming {
             file: path,
             fps: fps.round() as u32,
             frames: (animation.get_length() as f64 * fps).round() as u32,

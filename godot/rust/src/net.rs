@@ -2128,7 +2128,7 @@ impl RoseNet {
         true
     }
 
-    /// The PvP state of the zone we are in, from LIST_ZONE.STB: 0 when players can't fight,
+    /// The PvP state of the zone we are in, from its settings: 0 when players can't fight,
     /// 1 all except clan, 2 all except party, 3 all.
     #[func]
     fn zone_pvp(&self) -> i64 {

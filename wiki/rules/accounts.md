@@ -54,7 +54,8 @@ start_skills:
 source:
   code:
     - module/src/account.rs (check_connection, name_problem, create_character, assign_character, set_auth_issuer)
-    - module/src/character.rs (new_player, starter_kit)
+    - module/src/character.rs (new_player)
+    - crates/rose-game-data/src/lib.rs (CharacterCreator)
     - module/src/lib.rs (START_ZONE, START_POSITION, client_connected, spawn_player_entity, set_name)
     - crates/rose-game-data/src/lib.rs (CharacterCreator)
     - godot/scripts/character_create.gd
@@ -65,7 +66,7 @@ source:
     - web/src/app/api/signup/route.ts
     - web/src/app/api/game/login/route.ts
     - web/src/app/api/forgot-password/route.ts
-  data: INIT_AVATAR.STB rows 0 (male) and 1 (female)
+  data: the new character resources godot/data/new_characters/male.tres and female.tres (RoseNewCharacter; stats, clothes, bag)
 ---
 # Accounts and new characters
 
@@ -113,7 +114,7 @@ The screen shows a turning preview of the character.
 - **Where**: [[zones/20-birth-island|Birth Island]], at 5305 m, 5395 m.
 - **Level** 1, 0 experience, job Visitor, no stat points or skill points, 0 Zuly, full HP
   and MP.
-- **Stats** from INIT_AVATAR.STB: STR 15, DEX 15, INT 15, CON 15, CHA 10, SEN 10 (the same
+- **Stats**: STR 15, DEX 15, INT 15, CON 15, CHA 10, SEN 10 (the same
   for both genders).
 - **Gear**: wearing the [[items/body/30-visitor-look|Visitor Look]] and holding a
   [[items/weapon/2-short-sword|Short Sword]]. In the bag: a
@@ -131,8 +132,8 @@ for getting around.
 
 - iROSE has up to several characters per account, made on a character select screen; here
   each account has exactly one.
-- INIT_AVATAR.STB gives a [[items/weapon/1-wooden-sword|Wooden Sword]]; we give a Short
-  Sword instead, plus the Short Bow and arrows to try ranged combat.
+- iROSE (INIT_AVATAR.STB) gives a [[items/weapon/1-wooden-sword|Wooden Sword]]; we give a
+  Short Sword instead, plus the Short Bow and arrows to try ranged combat.
 - Accounts live on our website (email and password) instead of the iROSE login server.
 
 > Open question: the Party and Add Friend actions are not on a new character's skill list; players use the right-click menu on another player instead.

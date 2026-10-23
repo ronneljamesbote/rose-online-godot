@@ -31,7 +31,7 @@ source:
     - godot/rust/src/net.rs (zone_pvp, is_enemy_player)
     - godot/scripts/ui/world_overlay.gd
     - godot/scripts/ui/hud/minimap.gd
-  data: LIST_ZONE.STB column 18 (PvP state)
+  data: the zone settings resources in godot/data/zones/ (pvp_state)
 ---
 # PvP
 
@@ -40,7 +40,7 @@ can't hurt each other, and attacks or harmful skills on another player are refus
 
 ## Which zones allow PvP
 
-Each zone has a PvP state in its row of LIST_ZONE.STB:
+Each zone has a PvP state in its settings (`pvp_state`, in `godot/data/zones/`):
 
 - **0**: no PvP. This is most zones, including every town.
 - **2, everyone except your party**: you can attack any player who isn't in your party.

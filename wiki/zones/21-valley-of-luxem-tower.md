@@ -276,7 +276,7 @@ zone_drops:
 - '[[items/material/5-iron|Iron]]'
 - '[[items/material/116-netil|Netil]]'
 source:
-  data: LIST_ZONE.STB row 21, overrides/zones/21-valley-of-luxem-tower.toml (exported from the scenes in godot/zones/21_valley_of_luxem_tower), drop table godot/data/drop_tables/21-zone-valley-of-luxem-tower.tres
+  data: the zone settings godot/data/zones/21-valley-of-luxem-tower.tres, export/zones/21-valley-of-luxem-tower.toml (exported from the scenes in godot/zones/21_valley_of_luxem_tower), drop table godot/data/drop_tables/21-zone-valley-of-luxem-tower.tres
   code:
   - module/src/world.rs
   - crates/rose-game-data/src/lib.rs (apply_zone_layouts)
@@ -291,5 +291,5 @@ reinforcements show up once a point has been refilled many times (see
 
 Valley of Luxem Tower is edited in Godot: its spawn points, NPCs and start and revive spots
 are markers in the zone's scenes, and the server reads them from
-`overrides/zones/21-valley-of-luxem-tower.toml`, which is exported from those scenes. They
+`export/zones/21-valley-of-luxem-tower.toml`, which is exported from those scenes. They
 are the same as in iROSE's map files.

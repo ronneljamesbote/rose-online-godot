@@ -8,7 +8,7 @@
 //! you can't sit, open a shop or use most skills; vehicle skills need the right body.
 //! The engine's life is its fuel: getting on, each attack and every 10 seconds use the
 //! engine's fuel rate. With no fuel left the vehicle stops and can't move or attack until
-//! refuelled with Engine Fuel. Zones can forbid carts or castle gear (LIST_ZONE column 30).
+//! refuelled with Engine Fuel. Zones can forbid carts or castle gear (`vehicle_use_flags`).
 //! Dying or leaving gets you off.
 //!
 //! Passengers (rose-next's Recv_cli_CART_RIDE): a driver whose vehicle has a second seat (an
