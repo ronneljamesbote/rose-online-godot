@@ -937,10 +937,12 @@ impl RoseNet {
         }
     }
 
-    /// Run a GM command line ("/item 10 1 5") on a dev server. `target` is the entity we
-    /// have targeted (-1 for none), for /info and /kill. Results come back as notices
-    /// starting with "GM: ". Only in dev builds of the extension (feature `dev`), so the
-    /// production client can't send GM commands at all.
+    // Run a GM command line ("/item 10 1 5") on a dev server. `target` is the entity we
+    // have targeted (-1 for none), for /info and /kill. Results come back as notices
+    // starting with "GM: ". Only in dev builds of the extension (feature `dev`), so the
+    // production client can't send GM commands at all. A plain comment, not a doc comment:
+    // the class docs (register-docs) would keep the name in the production DLL, which the
+    // build scripts check for.
     #[cfg(feature = "dev")]
     #[func]
     fn gm_command(&self, line: GString, target: i64) {
