@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://bmjtbe7sjc48t" path="res://data/sounds/attack/63-axe-001.tres" id="2_2a93b"]
 [ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_k6lte"]
 [ext_resource type="RoseAttackEffect" uid="uid://b45erl4hp3f0b" path="res://data/attack_effects/131-haedong-sword.tres" id="4_aemxu"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1431.tres" id="5_9kcka"]
 
 [resource]
 id = 444
@@ -13,8 +14,8 @@ item_class = "DualSwords"
 base_price = 328100
 weight = 30
 quality = 76
-icon_index = 1431
-field_model_index = 744
+icon = ExtResource("5_9kcka")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/744.tscn"
 equip_sound = ExtResource("1_myn6u")
 craft_skill_type = 11
 craft_skill_level = 10
@@ -26,6 +27,7 @@ equip_stat_2 = "Dexterity"
 equip_stat_2_value = 163
 durability = 56
 rare_type = 2
+model = "res://assets/rose/3ddata/weapon/list_weapon/444.tscn"
 attack_range = 250
 attack_power = 224
 attack_speed = 10

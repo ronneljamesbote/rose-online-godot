@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://nutfs002k06d" path="res://data/sounds/item/582-item-arrow.tres" id="1_1nqm0"]
 [ext_resource type="RoseAttackEffect" uid="uid://c5in7dcgbs33f" path="res://data/attack_effects/153-metal-arrow.tres" id="2_jgfo0"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1877.tres" id="3_sbzj1"]
 
 [resource]
 id = 306
@@ -10,8 +11,8 @@ description = "An arrow gilded with metal."
 item_class = "Arrow"
 base_price = 7
 quality = 20
-icon_index = 1877
-field_model_index = 204
+icon = ExtResource("3_sbzj1")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/204.tscn"
 equip_sound = ExtResource("1_1nqm0")
 equip_union_1 = 153
 bullet_effect = ExtResource("2_jgfo0")

@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemSubWeapon" format=3 uid="uid://dx323oq32gn14"]
 
 [ext_resource type="RoseSound" uid="uid://bjdly3xikd2h4" path="res://data/sounds/item/576-item-weapon.tres" id="1_tlwt6"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1504.tres" id="2_c3s9t"]
 
 [resource]
 id = 10
@@ -10,8 +11,8 @@ item_class = "Shield"
 base_price = 27350
 weight = 12
 quality = 29
-icon_index = 1504
-field_model_index = 820
+icon = ExtResource("2_c3s9t")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/820.tscn"
 equip_sound = ExtResource("1_tlwt6")
 craft_skill_type = 16
 craft_skill_level = 5
@@ -25,3 +26,4 @@ durability = 35
 rare_type = 2
 defence = 24
 resistance = 8
+model = "res://assets/rose/3ddata/weapon/list_subwpn/10.tscn"

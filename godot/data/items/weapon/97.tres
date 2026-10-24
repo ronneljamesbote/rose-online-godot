@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_d8c7g"]
 [ext_resource type="RoseAttackEffect" uid="uid://dy7uio03t7ie4" path="res://data/attack_effects/101-attack-effect-101.tres" id="2_one21"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/0.tres" id="3_o52zd"]
 
 [resource]
 id = 97
@@ -9,9 +10,11 @@ item_class = "OneHandedSword"
 base_price = 7500
 weight = 10
 quality = 99
-field_model_index = 397
+icon = ExtResource("3_o52zd")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/397.tscn"
 equip_sound = ExtResource("1_d8c7g")
 durability = 45
+model = "res://assets/rose/3ddata/weapon/list_weapon/97.tscn"
 attack_range = 300
 attack_power = 20
 attack_speed = 12

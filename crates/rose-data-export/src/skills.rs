@@ -101,8 +101,9 @@ pub struct SkillExport {
     pub skill_type: SkillType,
     #[serde(skip_serializing_if = "is_default")]
     pub page: u32,
+    /// The icon: a texture's Godot path.
     #[serde(skip_serializing_if = "is_default")]
-    pub icon_number: u32,
+    pub icon: String,
     #[serde(skip_serializing_if = "is_default")]
     pub learn_point_cost: u32,
     #[serde(skip_serializing_if = "is_default")]
@@ -281,7 +282,7 @@ impl SkillExport {
             level: skill.level,
             skill_type: skill.skill_type,
             page: skill.page as u32,
-            icon_number: skill.icon_number,
+            icon: skill.icon.clone(),
             learn_point_cost: skill.learn_point_cost,
             learn_money_cost: skill.learn_money_cost,
             required_job_class: number(skill.required_job_class, JobClassId::get),
@@ -419,7 +420,7 @@ impl SkillExport {
             learn_money_cost: self.learn_money_cost,
             skill_type: self.skill_type,
             page: self.page as usize,
-            icon_number: self.icon_number,
+            icon: self.icon.clone(),
             use_ability: [stat(self.use_stat_1, self.use_stat_1_value), stat(self.use_stat_2, self.use_stat_2_value)]
                 .into_iter()
                 .flatten()
@@ -516,8 +517,9 @@ pub struct StatusEffectExport {
     pub apply_status_effect_2_value: i32,
     #[serde(skip_serializing_if = "is_default")]
     pub effect: u16,
+    /// The icon: a texture's Godot path.
     #[serde(skip_serializing_if = "is_default")]
-    pub icon_id: u32,
+    pub icon: String,
 }
 
 impl StatusEffectExport {
@@ -539,7 +541,7 @@ impl StatusEffectExport {
             apply_status_effect_2,
             apply_status_effect_2_value,
             effect: number(effect.effect_file_id, EffectFileId::get),
-            icon_id: effect.icon_id,
+            icon: effect.icon.clone(),
         }
     }
 
@@ -565,7 +567,7 @@ impl StatusEffectExport {
             apply_status_effects,
             apply_per_second_value: self.apply_status_effect_1_value,
             effect_file_id: EffectFileId::new(self.effect),
-            icon_id: self.icon_id,
+            icon: self.icon.clone(),
         })
     }
 }
@@ -803,7 +805,7 @@ fn compare_debug<T: std::fmt::Debug>(what: &str, a: BTreeMap<u16, &T>, b: BTreeM
             (Some(_), None) => out.push(format!("{what} {id}: missing")),
             (None, Some(_)) => out.push(format!("{what} {id}: extra")),
             (x, y) => {
-                let (x, y) = (format!("{x:#?}"), format!("{y:#?}"));
+                let (x, y) = (crate::same_art_debug(format!("{x:#?}")), crate::same_art_debug(format!("{y:#?}")));
                 if x != y {
                     for (l, r) in x.lines().zip(y.lines()).filter(|(l, r)| l != r) {
                         out.push(format!("{what} {id}: {} -> {}", l.trim(), r.trim()));

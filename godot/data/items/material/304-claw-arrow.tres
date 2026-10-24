@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://nutfs002k06d" path="res://data/sounds/item/582-item-arrow.tres" id="1_4lb6u"]
 [ext_resource type="RoseAttackEffect" uid="uid://dk5lo43u08t6y" path="res://data/attack_effects/152-stone-arrow.tres" id="2_sxpuu"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1875.tres" id="3_iwqf8"]
 
 [resource]
 id = 304
@@ -10,8 +11,8 @@ description = "An arrow tipped with a claw."
 item_class = "Arrow"
 base_price = 4
 quality = 15
-icon_index = 1875
-field_model_index = 204
+icon = ExtResource("3_iwqf8")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/204.tscn"
 equip_sound = ExtResource("1_4lb6u")
 equip_union_1 = 152
 bullet_effect = ExtResource("2_sxpuu")

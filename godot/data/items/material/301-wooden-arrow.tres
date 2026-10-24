@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://nutfs002k06d" path="res://data/sounds/item/582-item-arrow.tres" id="1_i1v9i"]
 [ext_resource type="RoseAttackEffect" uid="uid://dcbf7ymp65kcd" path="res://data/attack_effects/151-simple-bow-gun.tres" id="2_ez4gn"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1872.tres" id="3_srqj0"]
 
 [resource]
 id = 301
@@ -10,8 +11,8 @@ description = "An arrow made out of wood."
 item_class = "Arrow"
 base_price = 1
 quality = 6
-icon_index = 1872
-field_model_index = 204
+icon = ExtResource("3_srqj0")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/204.tscn"
 equip_sound = ExtResource("1_i1v9i")
 equip_union_1 = 151
 bullet_effect = ExtResource("2_ez4gn")

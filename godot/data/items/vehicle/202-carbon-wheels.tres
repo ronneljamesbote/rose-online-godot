@@ -3,6 +3,7 @@
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_b8un8"]
 [ext_resource type="RoseSound" uid="uid://y5kg708oyaqv" path="res://data/sounds/avata/671-cart-move.tres" id="2_3wsh4"]
 [ext_resource type="RoseEffectFile" uid="uid://dhqlpidee7n4q" path="res://data/effect_files/302-smoke-07.tres" id="3_jyjnu"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/2231.tres" id="4_1uvix"]
 
 [resource]
 id = 202
@@ -12,8 +13,8 @@ item_class = "CartWheels"
 base_price = 145900
 weight = 5
 quality = 34
-icon_index = 2231
-field_model_index = 246
+icon = ExtResource("4_1uvix")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/246.tscn"
 equip_sound = ExtResource("1_b8un8")
 craft_skill_type = 21
 craft_skill_level = 1
@@ -24,6 +25,7 @@ add_stat_1_value = 10
 add_stat_2 = "Resistance"
 add_stat_2_value = 4
 durability = 30
+model = "res://assets/rose/3ddata/pat/list_pat/202.tscn"
 vehicle_part = "Leg"
 version = 34
 move_speed = 113

@@ -1,5 +1,5 @@
 use arrayvec::ArrayVec;
-use std::{num::NonZeroUsize, sync::Arc, time::Duration};
+use std::{collections::HashMap, num::NonZeroUsize, sync::Arc, time::Duration};
 
 use rose_data::{
     AbilityType, BackItemData, BaseItemData, BodyItemData, ConsumableItemData, EffectFileId,
@@ -8,7 +8,7 @@ use rose_data::{
     MaterialItemData, QuestItemData, SkillId, SoundId, StatusEffectId, StringDatabase,
     SubWeaponItemData, VehicleItemData, WeaponItemData,
 };
-use rose_file_readers::{stb_column, StbFile, VirtualFilesystem};
+use rose_file_readers::{stb_column, StbFile, VirtualFilesystem, ZscFile};
 
 use crate::data_decoder::{
     decode_ability_type, IroseItemClass, IroseVehiclePartIndex, IroseVehicleType,
@@ -313,7 +313,7 @@ fn load_base_item(
         price_rate: data.get_price_rate(id).unwrap_or(0),
         weight: data.get_weight(id).unwrap_or(0),
         quality: data.get_quality(id).unwrap_or(0),
-        icon_index,
+        icon: rose_data::art::client_part(rose_data::art::ITEM_ICONS, icon_index),
         equip_sound_id: data.get_equip_sound(id),
         craft_skill_type: data.get_craft_skill_type(id).unwrap_or(0),
         craft_skill_level: data.get_craft_skill_level(id).unwrap_or(0),
@@ -328,7 +328,9 @@ fn load_base_item(
         rare_type: data.get_rare_type(id).unwrap_or(0),
         defence: data.get_defence(id).unwrap_or(0),
         resistance: data.get_resistance(id).unwrap_or(0),
-        field_model_index: data.get_field_model(id).unwrap_or(0),
+        field_model: rose_data::art::client_part(rose_data::art::FIELD_ITEM_MODELS, data.get_field_model(id).unwrap_or(0)),
+        model_male: String::new(),
+        model_female: String::new(),
     })
 }
 
@@ -530,6 +532,43 @@ fn load_vehicle_item(
     })
 }
 
+/// The model lists (ZSC), read once, for which objects have parts.
+struct ModelLists<'a> {
+    vfs: &'a VirtualFilesystem,
+    read: HashMap<&'static str, Option<ZscFile>>,
+}
+
+impl<'a> ModelLists<'a> {
+    fn new(vfs: &'a VirtualFilesystem) -> Self {
+        Self { vfs, read: HashMap::new() }
+    }
+
+    /// `list#object` when that object of the list has parts, else empty.
+    fn model(&mut self, list: &'static str, object: u32) -> String {
+        let vfs = self.vfs;
+        let zsc = self.read.entry(list).or_insert_with(|| vfs.read_file::<ZscFile, _>(list).ok());
+        let has_parts = zsc.as_ref().and_then(|z| z.objects.get(object as usize)).is_some_and(|o| !o.parts.is_empty());
+        if has_parts {
+            rose_data::art::client_part(list, object)
+        } else {
+            String::new()
+        }
+    }
+
+    fn set<T>(&mut self, items: &mut [Option<T>], base: fn(&mut T) -> &mut BaseItemData, item_type: ItemType) {
+        for (number, item) in items.iter_mut().enumerate() {
+            let Some(item) = item.as_mut() else { continue };
+            let item = base(item);
+            let field = rose_data::art::client_list(&item.field_model).map_or(0, |(_, n)| n);
+            item.field_model = self.model(rose_data::art::FIELD_ITEM_MODELS, field);
+            if let Some((male, female)) = rose_data::art::worn_model_lists(item_type) {
+                item.model_male = self.model(male, number as u32);
+                item.model_female = self.model(female, number as u32);
+            }
+        }
+    }
+}
+
 macro_rules! load_items {
     ($vfs:ident, $string_database: ident, $path:literal, load_base_item, $item_type:expr, $item_data_type:ident) => {{
         let data = StbItem($vfs.read_file::<StbFile, _>($path)?);
@@ -558,25 +597,43 @@ pub fn get_item_database(
     string_database: Arc<StringDatabase>,
 ) -> Result<ItemDatabase, anyhow::Error> {
     let strings = &*string_database;
-    let face = load_items! { vfs, strings, "3DDATA/STB/LIST_FACEITEM.STB", load_base_item, ItemType::Face, FaceItemData };
-    let head =
+    let mut face = load_items! { vfs, strings, "3DDATA/STB/LIST_FACEITEM.STB", load_base_item, ItemType::Face, FaceItemData };
+    let mut head =
         load_items! { vfs, strings, "3DDATA/STB/LIST_CAP.STB", load_head_item, HeadItemData };
-    let body = load_items! { vfs, strings, "3DDATA/STB/LIST_BODY.STB", load_base_item, ItemType::Body, BodyItemData };
-    let hands = load_items! { vfs, strings, "3DDATA/STB/LIST_ARMS.STB", load_base_item, ItemType::Hands, HandsItemData };
-    let feet =
+    let mut body = load_items! { vfs, strings, "3DDATA/STB/LIST_BODY.STB", load_base_item, ItemType::Body, BodyItemData };
+    let mut hands = load_items! { vfs, strings, "3DDATA/STB/LIST_ARMS.STB", load_base_item, ItemType::Hands, HandsItemData };
+    let mut feet =
         load_items! { vfs, strings, "3DDATA/STB/LIST_FOOT.STB", load_feet_item, FeetItemData };
-    let back =
+    let mut back =
         load_items! { vfs, strings, "3DDATA/STB/LIST_BACK.STB", load_back_item, BackItemData };
-    let jewellery = load_items! { vfs, strings, "3DDATA/STB/LIST_JEWEL.STB", load_base_item, ItemType::Jewellery, JewelleryItemData };
-    let weapon = load_items! { vfs, strings, "3DDATA/STB/LIST_WEAPON.STB", load_weapon_item, WeaponItemData };
-    let subweapon = load_items! { vfs, strings, "3DDATA/STB/LIST_SUBWPN.STB", load_subweapon_item, SubWeaponItemData };
-    let consumable = load_items! { vfs, strings, "3DDATA/STB/LIST_USEITEM.STB", load_consumeable_item, ConsumableItemData };
-    let gem =
+    let mut jewellery = load_items! { vfs, strings, "3DDATA/STB/LIST_JEWEL.STB", load_base_item, ItemType::Jewellery, JewelleryItemData };
+    let mut weapon = load_items! { vfs, strings, "3DDATA/STB/LIST_WEAPON.STB", load_weapon_item, WeaponItemData };
+    let mut subweapon = load_items! { vfs, strings, "3DDATA/STB/LIST_SUBWPN.STB", load_subweapon_item, SubWeaponItemData };
+    let mut consumable = load_items! { vfs, strings, "3DDATA/STB/LIST_USEITEM.STB", load_consumeable_item, ConsumableItemData };
+    let mut gem =
         load_items! { vfs, strings,"3DDATA/STB/LIST_JEMITEM.STB", load_gem_item, GemItemData };
-    let material = load_items! { vfs, strings, "3DDATA/STB/LIST_NATURAL.STB", load_material_item, MaterialItemData };
-    let quest = load_items! { vfs, strings, "3DDATA/STB/LIST_QUESTITEM.STB", load_base_item, ItemType::Quest, QuestItemData };
-    let vehicle =
+    let mut material = load_items! { vfs, strings, "3DDATA/STB/LIST_NATURAL.STB", load_material_item, MaterialItemData };
+    let mut quest = load_items! { vfs, strings, "3DDATA/STB/LIST_QUESTITEM.STB", load_base_item, ItemType::Quest, QuestItemData };
+    let mut vehicle =
         load_items! { vfs, strings, "3DDATA/STB/LIST_PAT.STB", load_vehicle_item, VehicleItemData };
+
+    // The models: the object with the item's number in its kind's list, when it has parts.
+    // A ground model or worn model the lists don't have is none.
+    let mut lists = ModelLists::new(vfs);
+    lists.set(&mut face, |i| &mut i.item_data, ItemType::Face);
+    lists.set(&mut head, |i| &mut i.item_data, ItemType::Head);
+    lists.set(&mut body, |i| &mut i.item_data, ItemType::Body);
+    lists.set(&mut hands, |i| &mut i.item_data, ItemType::Hands);
+    lists.set(&mut feet, |i| &mut i.item_data, ItemType::Feet);
+    lists.set(&mut back, |i| &mut i.item_data, ItemType::Back);
+    lists.set(&mut jewellery, |i| &mut i.item_data, ItemType::Jewellery);
+    lists.set(&mut weapon, |i| &mut i.item_data, ItemType::Weapon);
+    lists.set(&mut subweapon, |i| &mut i.item_data, ItemType::SubWeapon);
+    lists.set(&mut consumable, |i| &mut i.item_data, ItemType::Consumable);
+    lists.set(&mut gem, |i| &mut i.item_data, ItemType::Gem);
+    lists.set(&mut material, |i| &mut i.item_data, ItemType::Material);
+    lists.set(&mut quest, |i| &mut i.item_data, ItemType::Quest);
+    lists.set(&mut vehicle, |i| &mut i.item_data, ItemType::Vehicle);
 
     let mut item_grades = Vec::new();
     if let Ok(data) = vfs.read_file::<StbFile, _>("3DDATA/STB/LIST_GRADE.STB") {

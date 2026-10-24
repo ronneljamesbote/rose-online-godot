@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://nutfs002k06d" path="res://data/sounds/item/582-item-arrow.tres" id="1_hcct1"]
 [ext_resource type="RoseAttackEffect" uid="uid://c5in7dcgbs33f" path="res://data/attack_effects/153-metal-arrow.tres" id="2_8ve7b"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/2106.tres" id="3_7o0i6"]
 
 [resource]
 id = 307
@@ -10,8 +11,8 @@ description = "An arrow made of Platinum."
 item_class = "Arrow"
 base_price = 13
 quality = 31
-icon_index = 2106
-field_model_index = 204
+icon = ExtResource("3_7o0i6")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/204.tscn"
 equip_sound = ExtResource("1_hcct1")
 equip_union_1 = 153
 bullet_effect = ExtResource("2_8ve7b")

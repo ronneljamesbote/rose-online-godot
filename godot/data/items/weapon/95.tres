@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_rageh"]
 [ext_resource type="RoseAttackEffect" uid="uid://dy7uio03t7ie4" path="res://data/attack_effects/101-attack-effect-101.tres" id="2_ew8be"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/0.tres" id="3_jbvdc"]
 
 [resource]
 id = 95
@@ -9,9 +10,11 @@ item_class = "Gun"
 base_price = 5150
 weight = 10
 quality = 45
-field_model_index = 395
+icon = ExtResource("3_jbvdc")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/395.tscn"
 equip_sound = ExtResource("1_rageh")
 durability = 35
+model = "res://assets/rose/3ddata/weapon/list_weapon/95.tscn"
 attack_range = 3000
 attack_power = 20
 attack_speed = 13

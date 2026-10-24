@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemHead" format=3 uid="uid://d12pomou405qi"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_eeg0p"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/146.tres" id="2_dys8c"]
 
 [resource]
 id = 524
@@ -10,8 +11,8 @@ item_class = "MagicHat"
 base_price = 12250
 weight = 2
 quality = 42
-icon_index = 146
-field_model_index = 235
+icon = ExtResource("2_dys8c")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/235.tscn"
 equip_sound = ExtResource("1_eeg0p")
 equip_job_class = 52
 equip_stat_1 = "Level"
@@ -21,4 +22,6 @@ add_stat_1_value = 2
 durability = 43
 defence = 21
 resistance = 18
+model_male = "res://assets/rose/3ddata/avatar/list_mcap/524.tscn"
+model_female = "res://assets/rose/3ddata/avatar/list_wcap/524.tscn"
 hair_type = 2

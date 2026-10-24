@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemBack" format=3 uid="uid://dmdpe2vwuis2s"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_75dy7"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/746.tres" id="2_8amd7"]
 
 [resource]
 id = 337
@@ -9,8 +10,8 @@ description = "A small, cute, and rather feminine bag."
 item_class = "Bag"
 base_price = 68000
 quality = 38
-icon_index = 746
-field_model_index = 248
+icon = ExtResource("2_8amd7")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/248.tscn"
 equip_sound = ExtResource("1_75dy7")
 equip_stat_1 = "Level"
 equip_stat_1_value = 46
@@ -19,3 +20,4 @@ add_stat_1_value = 550
 durability = 47
 defence = 6
 resistance = 5
+model = "res://assets/rose/3ddata/avatar/list_back/337.tscn"

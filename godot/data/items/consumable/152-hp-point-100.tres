@@ -1,13 +1,14 @@
 [gd_resource type="RoseItemConsumable" format=3 uid="uid://b5apjwat0fq3a"]
 
 [ext_resource type="RoseEffectFile" uid="uid://bf814v0jt822v" path="res://data/effect_files/140-recover-01.tres" id="1_dabjd"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1603.tres" id="2_q4iu8"]
 
 [resource]
 id = 152
 name = "HP Point (+100)"
 item_class = "AutomaticConsumption"
-icon_index = 1603
-field_model_index = 132
+icon = ExtResource("2_q4iu8")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/132.tscn"
 equip_stat_1 = "Health"
 equip_stat_1_value = 100
 confile_index = 140

@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemFeet" format=3 uid="uid://cuus7wqru362q"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_rtwss"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/705.tres" id="2_7jca3"]
 
 [resource]
 id = 622
@@ -10,8 +11,8 @@ item_class = "Shoes"
 base_price = 13050
 weight = 3
 quality = 45
-icon_index = 705
-field_model_index = 240
+icon = ExtResource("2_7jca3")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/240.tscn"
 equip_sound = ExtResource("1_rtwss")
 equip_job_class = 54
 equip_stat_1 = "Level"
@@ -19,4 +20,6 @@ equip_stat_1_value = 76
 durability = 48
 defence = 23
 resistance = 5
+model_male = "res://assets/rose/3ddata/avatar/list_mfoot/622.tscn"
+model_female = "res://assets/rose/3ddata/avatar/list_wfoot/622.tscn"
 move_speed = 85

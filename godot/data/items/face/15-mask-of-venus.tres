@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemFace" format=3 uid="uid://ctyg406dojd0y"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_9ic32"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/16.tres" id="2_naegr"]
 
 [resource]
 id = 15
@@ -9,8 +10,8 @@ description = "A mask of Venus' cold facial expression."
 item_class = "FaceMask"
 base_price = 2100
 quality = 44
-icon_index = 16
-field_model_index = 247
+icon = ExtResource("2_naegr")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/247.tscn"
 equip_sound = ExtResource("1_9ic32")
 craft_skill_level = 6
 add_stat_1 = "Charm"

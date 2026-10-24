@@ -47,6 +47,12 @@ fn keep(keep: &mut Vec<String>, text: &str) -> &'static str {
     text
 }
 
+/// Whether an item type looks different on male and female characters (its own model for
+/// each), rather than one model for everyone.
+pub fn gendered_models(item_type: ItemType) -> bool {
+    matches!(item_type, ItemType::Head | ItemType::Body | ItemType::Hands | ItemType::Feet)
+}
+
 /// One export struct per item type: the fields every item has, then the type's own.
 macro_rules! item_export {
     ($(#[$meta:meta])* $name:ident, $item_type:ident { $($(#[$field_meta:meta])* $field:ident: $ty:ty,)* }) => {
@@ -73,10 +79,22 @@ macro_rules! item_export {
             pub weight: u32,
             #[serde(skip_serializing_if = "is_default")]
             pub quality: u32,
+            /// The icon: a texture's Godot path (`res://assets/rose/3ddata/control/res/item1/919.tres`
+            /// for the imported ones).
             #[serde(skip_serializing_if = "is_default")]
-            pub icon_index: u32,
+            pub icon: String,
+            /// The scene shown when it lies on the ground.
             #[serde(skip_serializing_if = "is_default")]
-            pub field_model_index: u32,
+            pub field_model: String,
+            /// The scene worn or held, the same on everyone (face and back items, weapons,
+            /// shields, cart parts).
+            #[serde(skip_serializing_if = "is_default")]
+            pub model: String,
+            /// The scenes worn by male and female characters (hats, armour, gloves, shoes).
+            #[serde(skip_serializing_if = "is_default")]
+            pub model_male: String,
+            #[serde(skip_serializing_if = "is_default")]
+            pub model_female: String,
             #[serde(skip_serializing_if = "is_default")]
             pub equip_sound: u16,
             #[serde(skip_serializing_if = "is_default")]
@@ -141,8 +159,13 @@ macro_rules! item_export {
                 self.price_rate = item.price_rate;
                 self.weight = item.weight;
                 self.quality = item.quality;
-                self.icon_index = item.icon_index;
-                self.field_model_index = item.field_model_index;
+                self.icon = item.icon.clone();
+                self.field_model = item.field_model.clone();
+                if gendered_models(Self::ITEM_TYPE) {
+                    (self.model_male, self.model_female) = (item.model_male.clone(), item.model_female.clone());
+                } else {
+                    self.model = item.model_male.clone();
+                }
                 self.equip_sound = number(item.equip_sound_id, SoundId::get);
                 self.craft_skill_type = item.craft_skill_type;
                 self.craft_skill_level = item.craft_skill_level;
@@ -200,8 +223,10 @@ macro_rules! item_export {
                     price_rate: self.price_rate,
                     weight: self.weight,
                     quality: self.quality,
-                    icon_index: self.icon_index,
-                    field_model_index: self.field_model_index,
+                    icon: self.icon.clone(),
+                    field_model: self.field_model.clone(),
+                    model_male: if self.model.is_empty() { self.model_male.clone() } else { self.model.clone() },
+                    model_female: if self.model.is_empty() { self.model_female.clone() } else { self.model.clone() },
                     equip_sound_id: id(self.equip_sound, SoundId::new),
                     craft_skill_type: self.craft_skill_type,
                     craft_skill_level: self.craft_skill_level,
@@ -1093,7 +1118,7 @@ pub fn compare_item_databases(a: &ItemDatabase, b: &ItemDatabase) -> Vec<String>
                 (Some(_), None) => out.push(format!("{name} {number}: missing")),
                 (None, Some(_)) => out.push(format!("{name} {number}: extra")),
                 _ => {
-                    let (x, y) = (format!("{x:#?}"), format!("{y:#?}"));
+                    let (x, y) = (crate::same_art_debug(format!("{x:#?}")), crate::same_art_debug(format!("{y:#?}")));
                     if x != y {
                         for (l, r) in x.lines().zip(y.lines()).filter(|(l, r)| l != r) {
                             out.push(format!("{name} {number}: {} -> {}", l.trim(), r.trim()));

@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://du04g0rrduxg7" path="res://data/sounds/attack/82-gun-001.tres" id="2_tt3c0"]
 [ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_f6z1g"]
 [ext_resource type="RoseAttackEffect" uid="uid://blpsfnckcpm5b" path="res://data/attack_effects/175-bubble-gun.tres" id="4_q3qcm"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1238.tres" id="5_ypbwy"]
 
 [resource]
 id = 952
@@ -13,8 +14,8 @@ item_class = "Gun"
 base_price = 43750
 weight = 27
 quality = 50
-icon_index = 1238
-field_model_index = 952
+icon = ExtResource("5_ypbwy")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/952.tscn"
 equip_sound = ExtResource("1_480sr")
 equip_stat_1 = "Concentration"
 equip_stat_1_value = 93
@@ -22,6 +23,7 @@ add_stat_1 = "SaveMana"
 add_stat_1_value = 15
 durability = 59
 rare_type = 1
+model = "res://assets/rose/3ddata/weapon/list_weapon/952.tscn"
 attack_range = 3000
 attack_power = 78
 attack_speed = 10

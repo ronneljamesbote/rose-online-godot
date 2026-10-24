@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://bey2khuqu7mu1" path="res://data/sounds/attack/55-spear-001.tres" id="2_b5izx"]
 [ext_resource type="RoseHitSounds" uid="uid://d4huxc3qetp2i" path="res://data/hit_sounds/25-spear-hits.tres" id="3_5wgya"]
 [ext_resource type="RoseAttackEffect" uid="uid://b45erl4hp3f0b" path="res://data/attack_effects/131-haedong-sword.tres" id="4_5vwy4"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1088.tres" id="5_j5mmo"]
 
 [resource]
 id = 170
@@ -13,8 +14,8 @@ item_class = "Spear"
 base_price = 67850
 weight = 30
 quality = 55
-icon_index = 1088
-field_model_index = 470
+icon = ExtResource("5_j5mmo")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/470.tscn"
 equip_sound = ExtResource("1_zk6ni")
 craft_skill_type = 12
 craft_skill_level = 5
@@ -26,6 +27,7 @@ equip_stat_2 = "Strength"
 equip_stat_2_value = 142
 durability = 51
 rare_type = 2
+model = "res://assets/rose/3ddata/weapon/list_weapon/170.tscn"
 attack_range = 400
 attack_power = 123
 attack_speed = 10

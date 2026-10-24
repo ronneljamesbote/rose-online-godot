@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemSubWeapon" format=3 uid="uid://d2h5ocesbpnji"]
 
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_f23dl"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1569.tres" id="2_96l43"]
 
 [resource]
 id = 70
@@ -9,8 +10,8 @@ description = "A magic stone infused with Mana."
 item_class = "Shield"
 base_price = 30630
 quality = 30
-icon_index = 1569
-field_model_index = 880
+icon = ExtResource("2_96l43")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/880.tscn"
 equip_sound = ExtResource("1_f23dl")
 craft_skill_type = 15
 craft_skill_level = 4
@@ -25,3 +26,4 @@ add_stat_2_value = 1
 durability = 30
 defence = 4
 resistance = 11
+model = "res://assets/rose/3ddata/weapon/list_subwpn/70.tscn"

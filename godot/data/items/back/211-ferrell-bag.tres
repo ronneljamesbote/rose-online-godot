@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemBack" format=3 uid="uid://c6c7nu4v532oh"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_meap6"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/751.tres" id="2_hmmva"]
 
 [resource]
 id = 211
@@ -9,8 +10,8 @@ description = "A bag crafted by the Ferrell Union. It's suitable for battle situ
 item_class = "Bag"
 base_price = 50000
 quality = 50
-icon_index = 751
-field_model_index = 248
+icon = ExtResource("2_hmmva")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/248.tscn"
 equip_sound = ExtResource("1_meap6")
 craft_difficulty = 150
 equip_stat_1 = "Level"
@@ -20,3 +21,4 @@ add_stat_1_value = 1000
 durability = 70
 defence = 10
 resistance = 10
+model = "res://assets/rose/3ddata/avatar/list_back/211.tscn"

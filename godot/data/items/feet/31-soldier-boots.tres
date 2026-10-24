@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemFeet" format=3 uid="uid://bl8kxex1lkgm4"]
 
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_vahoo"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/611.tres" id="2_4tjp9"]
 
 [resource]
 id = 31
@@ -10,8 +11,8 @@ item_class = "Boots"
 base_price = 1050
 weight = 5
 quality = 21
-icon_index = 611
-field_model_index = 228
+icon = ExtResource("2_4tjp9")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/228.tscn"
 equip_sound = ExtResource("1_vahoo")
 equip_job_class = 41
 equip_stat_1 = "Level"
@@ -19,4 +20,6 @@ equip_stat_1_value = 10
 durability = 46
 defence = 7
 resistance = 1
+model_male = "res://assets/rose/3ddata/avatar/list_mfoot/31.tscn"
+model_female = "res://assets/rose/3ddata/avatar/list_wfoot/31.tscn"
 move_speed = 77

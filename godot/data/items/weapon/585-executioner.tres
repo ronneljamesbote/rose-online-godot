@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://7jcsa7xbtv6k" path="res://data/sounds/attack/39-sword-003.tres" id="2_a1zo0"]
 [ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_8iy0z"]
 [ext_resource type="RoseAttackEffect" uid="uid://b45erl4hp3f0b" path="res://data/attack_effects/131-haedong-sword.tres" id="4_vtrpy"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1048.tres" id="5_m7y5v"]
 
 [resource]
 id = 585
@@ -13,8 +14,8 @@ item_class = "TwoHandedSword"
 base_price = 67600
 weight = 30
 quality = 74
-icon_index = 1048
-field_model_index = 409
+icon = ExtResource("5_m7y5v")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/409.tscn"
 equip_sound = ExtResource("1_6gywo")
 equip_stat_1 = "Level"
 equip_stat_1_value = 80
@@ -22,6 +23,7 @@ equip_stat_2 = "Strength"
 equip_stat_2_value = 149
 durability = 58
 rare_type = 2
+model = "res://assets/rose/3ddata/weapon/list_weapon/585.tscn"
 attack_range = 250
 attack_power = 144
 attack_speed = 12

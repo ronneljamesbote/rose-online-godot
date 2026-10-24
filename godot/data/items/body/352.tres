@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemBody" format=3 uid="uid://bmj01v2mlroys"]
 
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_ohhub"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/306.tres" id="2_ipc21"]
 
 [resource]
 id = 352
@@ -8,8 +9,8 @@ item_class = "CombatUniform"
 base_price = 229200
 weight = 20
 quality = 72
-icon_index = 306
-field_model_index = 225
+icon = ExtResource("2_ipc21")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/225.tscn"
 equip_sound = ExtResource("1_ohhub")
 equip_job_class = 56
 equip_stat_1 = "Level"

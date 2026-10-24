@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://d3hdp37emo7p0" path="res://data/sounds/attack/72-bow-002.tres" id="2_zwjon"]
 [ext_resource type="RoseHitSounds" uid="uid://d4huxc3qetp2i" path="res://data/hit_sounds/25-spear-hits.tres" id="3_sucy6"]
 [ext_resource type="RoseAttackEffect" uid="uid://b45erl4hp3f0b" path="res://data/attack_effects/131-haedong-sword.tres" id="4_yv1ge"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1287.tres" id="5_htpn3"]
 
 [resource]
 id = 301
@@ -13,8 +14,8 @@ item_class = "MagicStaff"
 base_price = 1400
 weight = 5
 quality = 31
-icon_index = 1287
-field_model_index = 601
+icon = ExtResource("5_htpn3")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/601.tscn"
 equip_sound = ExtResource("1_0zmmd")
 equip_stat_1 = "Level"
 equip_stat_1_value = 10
@@ -23,6 +24,7 @@ equip_stat_2_value = 28
 add_stat_1 = "SaveMana"
 add_stat_1_value = 15
 durability = 38
+model = "res://assets/rose/3ddata/weapon/list_weapon/301.tscn"
 attack_range = 250
 attack_power = 19
 attack_speed = 10

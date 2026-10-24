@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://osald6eflwq1" path="res://data/sounds/attack/37-sword-001.tres" id="2_mdfja"]
 [ext_resource type="RoseSound" uid="uid://np80gbdh8gn3" path="res://data/sounds/attack/89-magic-001.tres" id="3_1fah8"]
 [ext_resource type="RoseAttackEffect" uid="uid://cagvbtqfrwyk1" path="res://data/attack_effects/210-baobab-wand.tres" id="4_92su9"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1334.tres" id="5_m3mc0"]
 
 [resource]
 id = 339
@@ -13,8 +14,8 @@ item_class = "MagicWand"
 base_price = 84450
 weight = 10
 quality = 56
-icon_index = 1334
-field_model_index = 639
+icon = ExtResource("5_m3mc0")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/639.tscn"
 equip_sound = ExtResource("1_ss4wq")
 craft_skill_type = 15
 craft_skill_level = 5
@@ -28,6 +29,7 @@ add_stat_1 = "SaveMana"
 add_stat_1_value = 12
 durability = 51
 rare_type = 2
+model = "res://assets/rose/3ddata/weapon/list_weapon/339.tscn"
 attack_range = 2000
 attack_power = 94
 attack_speed = 12

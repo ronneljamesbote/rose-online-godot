@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemBody" format=3 uid="uid://cpgd4gyekq2k6"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_1rm6n"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/290.tres" id="2_s7mrr"]
 
 [resource]
 id = 299
@@ -9,9 +10,11 @@ description = "Basic clothing for Visitors that is provided by the Akram Kingdom
 item_class = "CasualClothes"
 weight = 10
 quality = 24
-icon_index = 290
-field_model_index = 241
+icon = ExtResource("2_s7mrr")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/241.tscn"
 equip_sound = ExtResource("1_1rm6n")
 durability = 41
 defence = 15
 resistance = 8
+model_male = "res://assets/rose/3ddata/avatar/list_mbody/299.tscn"
+model_female = "res://assets/rose/3ddata/avatar/list_wbody/299.tscn"

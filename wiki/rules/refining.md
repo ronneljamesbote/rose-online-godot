@@ -184,7 +184,9 @@ through blue (5), purple (6), red (7) and orange (8) to a bright yellow at 9. Ot
 see it too, and so does your portrait.
 
 A weapon or shield with a **gem** set in it also plays that gem's effect (LIST_JEMITEM's
-attack effect) on the item's gem point, for as long as it is worn.
+attack effect) on the item's gem point, for as long as it is worn. The gem point is one of
+the effect points of the item's model in the iROSE model list (the weapon's or shield's
+`gem_position`), so a weapon or shield with a model of our own shows no gem yet.
 
 ## Disassembly
 

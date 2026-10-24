@@ -1,13 +1,14 @@
 [gd_resource type="RoseItemConsumable" format=3 uid="uid://dcd01j7vbv8v5"]
 
 [ext_resource type="RoseEffectFile" uid="uid://bf814v0jt822v" path="res://data/effect_files/140-recover-01.tres" id="1_jd6te"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1603.tres" id="2_erhay"]
 
 [resource]
 id = 187
 name = "Clan Point (+15)"
 item_class = "AutomaticConsumption"
-icon_index = 1603
-field_model_index = 134
+icon = ExtResource("2_erhay")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/134.tscn"
 equip_stat_1 = "GuildScore"
 equip_stat_1_value = 15
 confile_index = 140

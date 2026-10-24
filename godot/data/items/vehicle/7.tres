@@ -2,14 +2,15 @@
 
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_pe8qy"]
 [ext_resource type="RoseSound" uid="uid://mj0c05h2c60w" path="res://data/sounds/avata/670-cart-neutral.tres" id="2_ec2cs"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/2172.tres" id="3_3vdr5"]
 
 [resource]
 id = 7
 item_class = "CartBody"
 weight = 10
 quality = 48
-icon_index = 2172
-field_model_index = 246
+icon = ExtResource("3_3vdr5")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/246.tscn"
 equip_sound = ExtResource("1_pe8qy")
 craft_skill_level = 4
 add_stat_1 = "Defence"

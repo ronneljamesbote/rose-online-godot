@@ -73,6 +73,9 @@ pub struct NpcData {
     pub npc_type_index: Option<NonZeroU16>,
     pub hit_sound_material_type: u32,
     pub face_icon_index: u32,
+    /// The model: a Godot scene by its path, or a LIST_NPC.CHR entry (see `art`). Its
+    /// LIST_NPC.CHR entry also gives the motions.
+    pub model: String,
     pub summon_monster_type: u32,
     pub normal_effect_sound_id: Option<SoundId>,
     pub attack_sound_id: Option<SoundId>,

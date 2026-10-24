@@ -118,7 +118,7 @@ pub fn write(cx: &Ctx, pages: &mut Pages) {
             p.set("id", format!("{folder}/{}", item.item_number));
             p.set("name", name.as_str());
             p.set("status", "in-game");
-            p.set("icon", format!("item/{}", base.icon_index));
+            p.set("icon", format!("item/{}", rose_data::art::client_list(&base.icon).map_or(0, |(_, n)| n)));
             p.set("class", class_name(cx, base.class));
             let level = base.equip_ability_requirement.iter().find(|(a, _)| *a == rose_data::AbilityType::Level);
             if let Some((_, l)) = level {

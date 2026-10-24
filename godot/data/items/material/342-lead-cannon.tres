@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://nutfs002k06d" path="res://data/sounds/item/582-item-arrow.tres" id="1_zrx3d"]
 [ext_resource type="RoseAttackEffect" uid="uid://drq5mbo1we4yv" path="res://data/attack_effects/191-basic-launcher.tres" id="2_pb904"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1899.tres" id="3_1wm2p"]
 
 [resource]
 id = 342
@@ -11,8 +12,8 @@ item_class = "Shell"
 base_price = 5
 weight = 1
 quality = 16
-icon_index = 1899
-field_model_index = 203
+icon = ExtResource("3_1wm2p")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/203.tscn"
 equip_sound = ExtResource("1_zrx3d")
 equip_union_1 = 191
 bullet_effect = ExtResource("2_pb904")

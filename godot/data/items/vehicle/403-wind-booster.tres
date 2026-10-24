@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_9xfsd"]
 [ext_resource type="RoseEffectFile" uid="uid://b4faubq5cthj7" path="res://data/effect_files/1258-cart01-ability011.tres" id="2_zfp5v"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/2198.tres" id="3_rp09h"]
 
 [resource]
 id = 403
@@ -12,12 +13,13 @@ base_price = 4000
 weight = 5
 quality = 30
 trade_restriction = 6
-icon_index = 2198
-field_model_index = 246
+icon = ExtResource("3_rp09h")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/246.tscn"
 equip_sound = ExtResource("1_9xfsd")
 add_stat_1 = "Speed"
 add_stat_1_value = 130
 durability = 100
+model = "res://assets/rose/3ddata/pat/list_pat/403.tscn"
 vehicle_part = "Arms"
 version = 30
 bullet_fire_point = 8

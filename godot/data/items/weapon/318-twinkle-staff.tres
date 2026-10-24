@@ -3,6 +3,7 @@
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_50446"]
 [ext_resource type="RoseSound" uid="uid://d3hdp37emo7p0" path="res://data/sounds/attack/72-bow-002.tres" id="2_y9lyn"]
 [ext_resource type="RoseHitSounds" uid="uid://d4huxc3qetp2i" path="res://data/hit_sounds/25-spear-hits.tres" id="3_v9r5l"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1359.tres" id="4_az9ta"]
 
 [resource]
 id = 318
@@ -12,8 +13,8 @@ item_class = "MagicStaff"
 base_price = 537050
 weight = 35
 quality = 88
-icon_index = 1359
-field_model_index = 618
+icon = ExtResource("4_az9ta")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/618.tscn"
 equip_sound = ExtResource("1_50446")
 craft_skill_level = 11
 equip_stat_1 = "Level"
@@ -24,6 +25,7 @@ add_stat_1 = "SaveMana"
 add_stat_1_value = 25
 durability = 61
 rare_type = 2
+model = "res://assets/rose/3ddata/weapon/list_weapon/318.tscn"
 attack_range = 300
 attack_power = 233
 attack_speed = 10

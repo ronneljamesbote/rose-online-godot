@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemSubWeapon" format=3 uid="uid://1jlilsmnpl2i"]
 
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_32rf1"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1575.tres" id="2_afbfg"]
 
 [resource]
 id = 75
@@ -9,8 +10,8 @@ description = "A legendary harp that is a testament to the refinement of the Elv
 item_class = "Shield"
 base_price = 78640
 quality = 38
-icon_index = 1575
-field_model_index = 885
+icon = ExtResource("2_afbfg")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/885.tscn"
 equip_sound = ExtResource("1_32rf1")
 craft_skill_type = 15
 craft_skill_level = 6
@@ -25,3 +26,4 @@ add_stat_2_value = 3
 durability = 36
 defence = 6
 resistance = 18
+model = "res://assets/rose/3ddata/weapon/list_subwpn/75.tscn"

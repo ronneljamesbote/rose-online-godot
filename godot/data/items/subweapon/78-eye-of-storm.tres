@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemSubWeapon" format=3 uid="uid://dg0dd74oix1yg"]
 
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_onihq"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1579.tres" id="2_87ui7"]
 
 [resource]
 id = 78
@@ -9,8 +10,8 @@ description = "A menacing gem containing cold and darkness."
 item_class = "Shield"
 base_price = 122150
 quality = 45
-icon_index = 1579
-field_model_index = 888
+icon = ExtResource("2_87ui7")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/888.tscn"
 equip_sound = ExtResource("1_onihq")
 craft_skill_type = 15
 craft_skill_level = 8
@@ -25,3 +26,4 @@ add_stat_2_value = 5
 durability = 42
 defence = 7
 resistance = 26
+model = "res://assets/rose/3ddata/weapon/list_subwpn/78.tscn"

@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://dkgwy774udjo5" path="res://data/sounds/attack/47-mace-001.tres" id="2_pycyy"]
 [ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_xatfo"]
 [ext_resource type="RoseAttackEffect" uid="uid://cbi83aqyygxw5" path="res://data/attack_effects/121-wooden-bat.tres" id="4_ivwkx"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/950.tres" id="5_433o5"]
 
 [resource]
 id = 32
@@ -13,14 +14,15 @@ item_class = "OneHandedBlunt"
 base_price = 1025
 weight = 10
 quality = 26
-icon_index = 950
-field_model_index = 332
+icon = ExtResource("5_433o5")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/332.tscn"
 equip_sound = ExtResource("1_ki8bb")
 equip_stat_1 = "Level"
 equip_stat_1_value = 11
 equip_stat_2 = "Strength"
 equip_stat_2_value = 35
 durability = 38
+model = "res://assets/rose/3ddata/weapon/list_weapon/32.tscn"
 attack_range = 200
 attack_power = 20
 attack_speed = 11

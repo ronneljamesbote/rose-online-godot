@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemBack" format=3 uid="uid://crncgrhmfuicx"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_a4ph0"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/767.tres" id="2_autfa"]
 
 [resource]
 id = 442
@@ -10,8 +11,8 @@ item_class = "Wings"
 base_price = 21300
 weight = 2
 quality = 22
-icon_index = 767
-field_model_index = 248
+icon = ExtResource("2_autfa")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/248.tscn"
 equip_sound = ExtResource("1_a4ph0")
 equip_stat_1 = "Level"
 equip_stat_1_value = 15
@@ -20,3 +21,4 @@ add_stat_1_value = 50
 durability = 40
 defence = 2
 resistance = 2
+model = "res://assets/rose/3ddata/avatar/list_back/442.tscn"

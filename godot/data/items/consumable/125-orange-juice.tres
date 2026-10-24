@@ -3,6 +3,7 @@
 [ext_resource type="RoseSound" uid="uid://dwbyekfkxg7c8" path="res://data/sounds/item/584-item-potion.tres" id="1_qox03"]
 [ext_resource type="RoseSound" uid="uid://cxrscjnmdhir4" path="res://data/sounds/item/547-useitem-001.tres" id="2_6jkjp"]
 [ext_resource type="RoseEffectFile" uid="uid://bf814v0jt822v" path="res://data/effect_files/140-recover-01.tres" id="3_c0p24"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1645.tres" id="4_4jq0w"]
 
 [resource]
 id = 125
@@ -13,8 +14,8 @@ base_price = 80
 price_rate = 2
 weight = 1
 quality = 30
-icon_index = 1645
-field_model_index = 144
+icon = ExtResource("4_4jq0w")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/144.tscn"
 equip_sound = ExtResource("1_qox03")
 equip_job_class = 10
 equip_stat_1 = "Mana"

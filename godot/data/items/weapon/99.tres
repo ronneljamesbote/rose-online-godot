@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_figyr"]
 [ext_resource type="RoseAttackEffect" uid="uid://dy7uio03t7ie4" path="res://data/attack_effects/101-attack-effect-101.tres" id="2_wq7f4"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/0.tres" id="3_zosv5"]
 
 [resource]
 id = 99
@@ -9,9 +10,11 @@ item_class = "MagicStaff"
 base_price = 9900
 weight = 10
 quality = 99
-field_model_index = 399
+icon = ExtResource("3_zosv5")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/399.tscn"
 equip_sound = ExtResource("1_figyr")
 durability = 40
+model = "res://assets/rose/3ddata/weapon/list_weapon/99.tscn"
 attack_range = 450
 attack_power = 20
 attack_speed = 13

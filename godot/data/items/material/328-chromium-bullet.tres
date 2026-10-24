@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://nutfs002k06d" path="res://data/sounds/item/582-item-arrow.tres" id="1_szvi5"]
 [ext_resource type="RoseAttackEffect" uid="uid://bp0hhv3sc1etq" path="res://data/attack_effects/181-chromium-bullet.tres" id="2_y7mga"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/2111.tres" id="3_2f04h"]
 
 [resource]
 id = 328
@@ -10,8 +11,8 @@ description = "A bullet made out of Chromium."
 item_class = "Bullet"
 base_price = 26
 quality = 38
-icon_index = 2111
-field_model_index = 205
+icon = ExtResource("3_2f04h")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/205.tscn"
 equip_sound = ExtResource("1_szvi5")
 equip_union_1 = 181
 bullet_effect = ExtResource("2_y7mga")

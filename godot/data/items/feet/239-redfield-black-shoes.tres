@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemFeet" format=3 uid="uid://dj7ptfg1xt07r"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_1kkf9"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/588.tres" id="2_r5nr2"]
 
 [resource]
 id = 239
@@ -9,12 +10,14 @@ description = "Refined, elegant shoes for people with refined, elegant tastes."
 item_class = "Shoes"
 base_price = 17300
 quality = 50
-icon_index = 588
-field_model_index = 244
+icon = ExtResource("2_r5nr2")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/244.tscn"
 equip_sound = ExtResource("1_1kkf9")
 equip_stat_1 = "Level"
 equip_stat_1_value = 68
 durability = 53
 defence = 24
 resistance = 8
+model_male = "res://assets/rose/3ddata/avatar/list_mfoot/239.tscn"
+model_female = "res://assets/rose/3ddata/avatar/list_wfoot/239.tscn"
 move_speed = 85

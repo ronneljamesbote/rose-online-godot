@@ -3,6 +3,7 @@
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_v87xb"]
 [ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_9yiru"]
 [ext_resource type="RoseAttackEffect" uid="uid://dcbf7ymp65kcd" path="res://data/attack_effects/151-simple-bow-gun.tres" id="3_owong"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/994.tres" id="4_kf25p"]
 
 [resource]
 id = 565
@@ -12,8 +13,8 @@ item_class = "Crossbow"
 base_price = 98500
 weight = 25
 quality = 81
-icon_index = 994
-field_model_index = 367
+icon = ExtResource("4_kf25p")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/367.tscn"
 equip_sound = ExtResource("1_v87xb")
 equip_stat_1 = "Level"
 equip_stat_1_value = 96
@@ -21,6 +22,7 @@ equip_stat_2 = "Strength"
 equip_stat_2_value = 129
 durability = 58
 rare_type = 2
+model = "res://assets/rose/3ddata/weapon/list_weapon/565.tscn"
 attack_range = 2600
 attack_power = 141
 attack_speed = 8

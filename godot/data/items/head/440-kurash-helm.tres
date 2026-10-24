@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemHead" format=3 uid="uid://b4wx32lj61nek"]
 
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_ks5it"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/122.tres" id="2_w2gut"]
 
 [resource]
 id = 440
@@ -10,8 +11,8 @@ item_class = "Helmet"
 base_price = 29250
 weight = 10
 quality = 53
-icon_index = 122
-field_model_index = 227
+icon = ExtResource("2_w2gut")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/227.tscn"
 equip_sound = ExtResource("1_ks5it")
 equip_job_class = 51
 equip_stat_1 = "Level"
@@ -19,4 +20,6 @@ equip_stat_1_value = 115
 durability = 57
 defence = 43
 resistance = 23
+model_male = "res://assets/rose/3ddata/avatar/list_mcap/440.tscn"
+model_female = "res://assets/rose/3ddata/avatar/list_wcap/440.tscn"
 hair_type = 4

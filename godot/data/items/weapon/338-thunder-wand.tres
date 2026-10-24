@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://osald6eflwq1" path="res://data/sounds/attack/37-sword-001.tres" id="2_dzvg6"]
 [ext_resource type="RoseSound" uid="uid://np80gbdh8gn3" path="res://data/sounds/attack/89-magic-001.tres" id="3_5ll6z"]
 [ext_resource type="RoseAttackEffect" uid="uid://drqfuvuxvws6j" path="res://data/attack_effects/217-thunder-wand.tres" id="4_272v3"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1333.tres" id="5_trheh"]
 
 [resource]
 id = 338
@@ -13,8 +14,8 @@ item_class = "MagicWand"
 base_price = 59600
 weight = 10
 quality = 53
-icon_index = 1333
-field_model_index = 638
+icon = ExtResource("5_trheh")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/638.tscn"
 equip_sound = ExtResource("1_2bx3o")
 craft_skill_type = 15
 craft_skill_level = 5
@@ -28,6 +29,7 @@ add_stat_1 = "SaveMana"
 add_stat_1_value = 11
 durability = 49
 rare_type = 2
+model = "res://assets/rose/3ddata/weapon/list_weapon/338.tscn"
 attack_range = 2000
 attack_power = 83
 attack_speed = 12

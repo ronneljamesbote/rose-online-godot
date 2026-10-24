@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemConsumable" format=3 uid="uid://by2gb3x6fv45b"]
 
 [ext_resource type="RoseEffectFile" uid="uid://bhtq0ptkhuhe4" path="res://data/effect_files/105-goldtan-01.tres" id="1_w43r7"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1690.tres" id="2_sgbfy"]
 
 [resource]
 id = 505
@@ -9,8 +10,8 @@ description = "A letter that vanishes once you finish reading it."
 item_class = "QuestScroll"
 quality = 10
 trade_restriction = 2
-icon_index = 1690
-field_model_index = 151
+icon = ExtResource("2_sgbfy")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/151.tscn"
 store_skin = 10
 confile_index = 105
 effect = ExtResource("1_w43r7")

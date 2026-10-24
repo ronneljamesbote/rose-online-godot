@@ -1038,7 +1038,7 @@ impl RoseNet {
                 DroppedItem::Money(money) => {
                     let mut d = VarDictionary::new();
                     d.set("name", format!("{} Zuly", money.0).as_str());
-                    d.set("model", 0i64);
+                    d.set("model", rose_data::art::client_part(rose_data::art::FIELD_ITEM_MODELS, 0).as_str());
                     d.set("type", "Money");
                     d.set("quantity", money.0);
                     d
@@ -1211,7 +1211,7 @@ impl RoseNet {
             d.set("name", data.name);
             d.set("description", data.description);
             d.set("bad", data.status_effect_type.is_bad());
-            if let Some(texture) = crate::items::icon(crate::items::IconSheet::State, data.icon_id) {
+            if let Some(texture) = crate::items::icon(&data.icon) {
                 d.set("icon", &texture);
             }
             d.set("seconds", ((row.expires_at_us - t).max(0)) as f64 / 1e6);

@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemBack" format=3 uid="uid://cavhypqnxffk6"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_2d7qg"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/775.tres" id="2_j9ykr"]
 
 [resource]
 id = 233
@@ -9,8 +10,8 @@ description = "Astarot's wings. Sadly, it's all that remains of Astarot."
 item_class = "Wings"
 base_price = 129250
 quality = 66
-icon_index = 775
-field_model_index = 248
+icon = ExtResource("2_j9ykr")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/248.tscn"
 equip_sound = ExtResource("1_2d7qg")
 craft_skill_level = 12
 equip_stat_1 = "Level"
@@ -22,3 +23,4 @@ add_stat_2_value = 20
 durability = 77
 defence = 13
 resistance = 19
+model = "res://assets/rose/3ddata/avatar/list_back/233.tscn"

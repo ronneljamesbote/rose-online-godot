@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://b8d8k6psw0js4" path="res://data/sounds/attack/38-sword-002.tres" id="2_px6xx"]
 [ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_yiat7"]
 [ext_resource type="RoseAttackEffect" uid="uid://cbi83aqyygxw5" path="res://data/attack_effects/121-wooden-bat.tres" id="4_x6f1y"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1391.tres" id="5_t3vgi"]
 
 [resource]
 id = 413
@@ -13,8 +14,8 @@ item_class = "Katar"
 base_price = 138100
 weight = 30
 quality = 65
-icon_index = 1391
-field_model_index = 713
+icon = ExtResource("5_t3vgi")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/713.tscn"
 equip_sound = ExtResource("1_an07v")
 craft_skill_type = 12
 craft_skill_level = 8
@@ -26,6 +27,7 @@ equip_stat_2 = "Dexterity"
 equip_stat_2_value = 181
 durability = 55
 rare_type = 2
+model = "res://assets/rose/3ddata/weapon/list_weapon/413.tscn"
 attack_range = 250
 attack_power = 155
 attack_speed = 8

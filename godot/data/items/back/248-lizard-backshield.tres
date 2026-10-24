@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemBack" format=3 uid="uid://c4tch54djtkuo"]
 
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_8s4h8"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/800.tres" id="2_84bev"]
 
 [resource]
 id = 248
@@ -9,8 +10,8 @@ description = "A Backshield that expresses the nimble movements of a lizard."
 item_class = "BackArmor"
 base_price = 40000
 quality = 46
-icon_index = 800
-field_model_index = 248
+icon = ExtResource("2_84bev")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/248.tscn"
 equip_sound = ExtResource("1_8s4h8")
 craft_difficulty = 150
 equip_stat_1 = "Level"
@@ -18,3 +19,4 @@ equip_stat_1_value = 74
 durability = 57
 defence = 24
 resistance = 10
+model = "res://assets/rose/3ddata/avatar/list_back/248.tscn"

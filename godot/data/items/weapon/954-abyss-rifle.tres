@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://du04g0rrduxg7" path="res://data/sounds/attack/82-gun-001.tres" id="2_2npj9"]
 [ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_girrr"]
 [ext_resource type="RoseAttackEffect" uid="uid://bqh41lfm4s70x" path="res://data/attack_effects/171-gloria-gun.tres" id="4_9zdrd"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1240.tres" id="5_qb84u"]
 
 [resource]
 id = 954
@@ -13,8 +14,8 @@ item_class = "Gun"
 base_price = 199725
 weight = 52
 quality = 71
-icon_index = 1240
-field_model_index = 954
+icon = ExtResource("5_qb84u")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/954.tscn"
 equip_sound = ExtResource("1_tzs7p")
 equip_stat_1 = "Concentration"
 equip_stat_1_value = 165
@@ -22,6 +23,7 @@ add_stat_1 = "AttackSpeed"
 add_stat_1_value = 20
 durability = 67
 rare_type = 1
+model = "res://assets/rose/3ddata/weapon/list_weapon/954.tscn"
 attack_range = 3200
 attack_power = 163
 attack_speed = 10

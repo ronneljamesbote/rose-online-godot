@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://nutfs002k06d" path="res://data/sounds/item/582-item-arrow.tres" id="1_img6z"]
 [ext_resource type="RoseAttackEffect" uid="uid://dcbf7ymp65kcd" path="res://data/attack_effects/151-simple-bow-gun.tres" id="2_8md69"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1873.tres" id="3_5t9yq"]
 
 [resource]
 id = 302
@@ -10,8 +11,8 @@ description = "An arrow fashioned out of bone."
 item_class = "Arrow"
 base_price = 2
 quality = 9
-icon_index = 1873
-field_model_index = 204
+icon = ExtResource("3_5t9yq")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/204.tscn"
 equip_sound = ExtResource("1_img6z")
 equip_union_1 = 151
 bullet_effect = ExtResource("2_8md69")

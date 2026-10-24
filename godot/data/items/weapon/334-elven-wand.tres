@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://osald6eflwq1" path="res://data/sounds/attack/37-sword-001.tres" id="2_nyjnk"]
 [ext_resource type="RoseSound" uid="uid://np80gbdh8gn3" path="res://data/sounds/attack/89-magic-001.tres" id="3_gs1ja"]
 [ext_resource type="RoseAttackEffect" uid="uid://c87gqjlifbwxm" path="res://data/attack_effects/213-elven-wand.tres" id="4_2lczc"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1329.tres" id="5_5ajeo"]
 
 [resource]
 id = 334
@@ -13,8 +14,8 @@ item_class = "MagicWand"
 base_price = 9880
 weight = 5
 quality = 40
-icon_index = 1329
-field_model_index = 634
+icon = ExtResource("5_5ajeo")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/634.tscn"
 equip_sound = ExtResource("1_6ozu7")
 craft_skill_type = 15
 craft_skill_level = 2
@@ -28,6 +29,7 @@ add_stat_1 = "SaveMana"
 add_stat_1_value = 8
 durability = 43
 rare_type = 2
+model = "res://assets/rose/3ddata/weapon/list_weapon/334.tscn"
 attack_range = 1800
 attack_power = 41
 attack_speed = 12

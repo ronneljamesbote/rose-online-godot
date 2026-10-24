@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://coa6mw77434ix" path="res://data/sounds/attack/84-gun-003.tres" id="2_oq1rz"]
 [ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_16dsl"]
 [ext_resource type="RoseAttackEffect" uid="uid://b0aq5e3fo1kf2" path="res://data/attack_effects/173-iron-rifle.tres" id="4_h5hae"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1212.tres" id="5_218qi"]
 
 [resource]
 id = 702
@@ -13,8 +14,8 @@ item_class = "Gun"
 base_price = 10560
 weight = 20
 quality = 56
-icon_index = 1212
-field_model_index = 534
+icon = ExtResource("5_218qi")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/534.tscn"
 equip_sound = ExtResource("1_tuzmw")
 equip_stat_1 = "Level"
 equip_stat_1_value = 40
@@ -22,6 +23,7 @@ equip_stat_2 = "Concentration"
 equip_stat_2_value = 76
 durability = 50
 rare_type = 2
+model = "res://assets/rose/3ddata/weapon/list_weapon/702.tscn"
 attack_range = 2600
 attack_power = 67
 attack_speed = 10

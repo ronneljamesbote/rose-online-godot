@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemVehicle" format=3 uid="uid://doa7mw3q5r0ff"]
 
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_fjynt"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/2236.tres" id="2_8lbx7"]
 
 [resource]
 id = 405
@@ -10,14 +11,15 @@ item_class = "CartAccessory"
 base_price = 3000
 weight = 5
 quality = 30
-icon_index = 2236
-field_model_index = 246
+icon = ExtResource("2_8lbx7")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/246.tscn"
 equip_sound = ExtResource("1_fjynt")
 add_stat_1 = "Defence"
 add_stat_1_value = 5
 add_stat_2 = "Resistance"
 add_stat_2_value = 5
 durability = 30
+model = "res://assets/rose/3ddata/pat/list_pat/405.tscn"
 vehicle_part = "Arms"
 version = 30
 bullet_fire_point = 8

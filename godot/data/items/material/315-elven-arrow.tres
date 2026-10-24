@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://nutfs002k06d" path="res://data/sounds/item/582-item-arrow.tres" id="1_7jagx"]
 [ext_resource type="RoseAttackEffect" uid="uid://dbr8o7gbumibs" path="res://data/attack_effects/162-attack-effect-162.tres" id="2_2j01q"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1882.tres" id="3_svmne"]
 
 [resource]
 id = 315
@@ -10,8 +11,8 @@ description = "An arrow strengthened with the magic of the elves."
 item_class = "Arrow"
 base_price = 18
 quality = 34
-icon_index = 1882
-field_model_index = 204
+icon = ExtResource("3_svmne")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/204.tscn"
 equip_sound = ExtResource("1_7jagx")
 equip_union_1 = 162
 bullet_effect = ExtResource("2_2j01q")

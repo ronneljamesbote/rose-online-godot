@@ -252,7 +252,8 @@ pub struct SkillData {
     pub learn_money_cost: u32,
     pub skill_type: SkillType,
     pub page: SkillPageType,
-    pub icon_number: u32,
+    /// The icon: a texture by its Godot path, or a skill icon sheet sprite (see `art`).
+    pub icon: String,
 
     pub use_ability: ArrayVec<(AbilityType, i32), 2>,
     pub required_ability: ArrayVec<(AbilityType, i32), 2>,

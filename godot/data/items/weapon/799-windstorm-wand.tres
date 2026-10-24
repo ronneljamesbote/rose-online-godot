@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://osald6eflwq1" path="res://data/sounds/attack/37-sword-001.tres" id="2_o9ct2"]
 [ext_resource type="RoseSound" uid="uid://np80gbdh8gn3" path="res://data/sounds/attack/89-magic-001.tres" id="3_eics0"]
 [ext_resource type="RoseAttackEffect" uid="uid://2cuesfxoo30i" path="res://data/attack_effects/212-sorcerer-s-wand.tres" id="4_7fxet"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1336.tres" id="5_7ifyv"]
 
 [resource]
 id = 799
@@ -13,8 +14,8 @@ item_class = "MagicWand"
 base_price = 147450
 weight = 10
 quality = 82
-icon_index = 1336
-field_model_index = 641
+icon = ExtResource("5_7ifyv")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/641.tscn"
 equip_sound = ExtResource("1_smwcx")
 equip_stat_1 = "Level"
 equip_stat_1_value = 97
@@ -24,6 +25,7 @@ add_stat_1 = "SaveMana"
 add_stat_1_value = 14
 durability = 61
 rare_type = 2
+model = "res://assets/rose/3ddata/weapon/list_weapon/799.tscn"
 attack_range = 2100
 attack_power = 131
 attack_speed = 12

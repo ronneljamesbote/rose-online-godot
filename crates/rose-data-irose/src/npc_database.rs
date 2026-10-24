@@ -253,6 +253,11 @@ pub fn get_npc_database_with(
             npc_type_index: data.get_npc_type_index(id),
             hit_sound_material_type: data.get_hit_sound_material_type(id).unwrap_or(0),
             face_icon_index: data.get_face_icon_index(id).unwrap_or(0),
+            model: if npc_motions.is_some() {
+                rose_data::art::client_part(rose_data::art::NPC_MODELS, id as u32)
+            } else {
+                String::new()
+            },
             summon_monster_type: data.get_summon_monster_type(id).unwrap_or(0),
             normal_effect_sound_id: data.get_normal_effect_sound_id(id),
             attack_sound_id: data.get_attack_sound_id(id),

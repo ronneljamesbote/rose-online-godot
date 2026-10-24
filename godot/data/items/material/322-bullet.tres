@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://nutfs002k06d" path="res://data/sounds/item/582-item-arrow.tres" id="1_xcjss"]
 [ext_resource type="RoseAttackEffect" uid="uid://bqh41lfm4s70x" path="res://data/attack_effects/171-gloria-gun.tres" id="2_ne9cz"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1886.tres" id="3_rhkjm"]
 
 [resource]
 id = 322
@@ -10,8 +11,8 @@ description = "A bullet. Each time you fire a Gun weapon, 1 bullet is consumed."
 item_class = "Bullet"
 base_price = 3
 quality = 11
-icon_index = 1886
-field_model_index = 205
+icon = ExtResource("3_rhkjm")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/205.tscn"
 equip_sound = ExtResource("1_xcjss")
 equip_union_1 = 171
 bullet_effect = ExtResource("2_ne9cz")

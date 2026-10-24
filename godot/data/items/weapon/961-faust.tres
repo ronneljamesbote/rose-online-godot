@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://coa6mw77434ix" path="res://data/sounds/attack/84-gun-003.tres" id="2_bztse"]
 [ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_v66z0"]
 [ext_resource type="RoseAttackEffect" uid="uid://drq5mbo1we4yv" path="res://data/attack_effects/191-basic-launcher.tres" id="4_zkfdi"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1276.tres" id="5_x4osp"]
 
 [resource]
 id = 961
@@ -13,8 +14,8 @@ item_class = "Launcher"
 base_price = 243665
 weight = 142
 quality = 67
-icon_index = 1276
-field_model_index = 961
+icon = ExtResource("5_x4osp")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/961.tscn"
 equip_sound = ExtResource("1_hpjk6")
 equip_stat_1 = "Strength"
 equip_stat_1_value = 84
@@ -22,6 +23,7 @@ add_stat_1 = "AttackSpeed"
 add_stat_1_value = 20
 durability = 60
 rare_type = 1
+model = "res://assets/rose/3ddata/weapon/list_weapon/961.tscn"
 attack_range = 3200
 attack_power = 155
 attack_speed = 11

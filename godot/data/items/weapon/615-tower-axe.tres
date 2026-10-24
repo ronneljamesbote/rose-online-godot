@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://bmjtbe7sjc48t" path="res://data/sounds/attack/63-axe-001.tres" id="2_izr0d"]
 [ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_vro93"]
 [ext_resource type="RoseAttackEffect" uid="uid://b568js0x8fhfg" path="res://data/attack_effects/141-woodman-axe.tres" id="4_wrie9"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1123.tres" id="5_967pi"]
 
 [resource]
 id = 615
@@ -13,8 +14,8 @@ item_class = "TwoHandedAxe"
 base_price = 35650
 weight = 30
 quality = 69
-icon_index = 1123
-field_model_index = 436
+icon = ExtResource("5_967pi")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/436.tscn"
 equip_sound = ExtResource("1_8hr53")
 equip_stat_1 = "Level"
 equip_stat_1_value = 68
@@ -22,6 +23,7 @@ equip_stat_2 = "Strength"
 equip_stat_2_value = 136
 durability = 56
 rare_type = 2
+model = "res://assets/rose/3ddata/weapon/list_weapon/615.tscn"
 attack_range = 200
 attack_power = 117
 attack_speed = 11

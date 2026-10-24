@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemSubWeapon" format=3 uid="uid://d3kvxlyw5o18u"]
 
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_zc6so"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1560.tres" id="2_kkedd"]
 
 [resource]
 id = 61
@@ -9,11 +10,12 @@ description = "A book in which the fundamentals of life are written."
 item_class = "Shield"
 base_price = 1050
 quality = 15
-icon_index = 1560
-field_model_index = 871
+icon = ExtResource("2_kkedd")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/871.tscn"
 equip_sound = ExtResource("1_zc6so")
 add_stat_1 = "MaxMana"
 add_stat_1_value = 20
 durability = 18
 defence = 1
 resistance = 2
+model = "res://assets/rose/3ddata/weapon/list_subwpn/61.tscn"

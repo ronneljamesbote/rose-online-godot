@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemHands" format=3 uid="uid://ddb16q1cbso24"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_4k9fr"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/483.tres" id="2_juw3r"]
 
 [resource]
 id = 414
@@ -10,8 +11,8 @@ item_class = "MagicGlove"
 base_price = 4650
 weight = 2
 quality = 28
-icon_index = 483
-field_model_index = 234
+icon = ExtResource("2_juw3r")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/234.tscn"
 equip_sound = ExtResource("1_4k9fr")
 equip_job_class = 42
 equip_stat_1 = "Level"
@@ -19,3 +20,5 @@ equip_stat_1_value = 53
 durability = 45
 defence = 12
 resistance = 7
+model_male = "res://assets/rose/3ddata/avatar/list_marms/414.tscn"
+model_female = "res://assets/rose/3ddata/avatar/list_warms/414.tscn"

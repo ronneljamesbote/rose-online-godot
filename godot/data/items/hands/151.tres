@@ -1,15 +1,18 @@
 [gd_resource type="RoseItemHands" format=3 uid="uid://edokf40b0qs4"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_rpgc9"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/434.tres" id="2_n4okr"]
 
 [resource]
 id = 151
 item_class = "Glove"
 weight = 1
 quality = 50
-icon_index = 434
-field_model_index = 234
+icon = ExtResource("2_n4okr")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/234.tscn"
 equip_sound = ExtResource("1_rpgc9")
 durability = 50
 defence = 10
 resistance = 10
+model_male = "res://assets/rose/3ddata/avatar/list_marms/151.tscn"
+model_female = "res://assets/rose/3ddata/avatar/list_warms/151.tscn"
