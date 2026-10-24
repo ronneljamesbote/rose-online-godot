@@ -1568,51 +1568,90 @@ impl IResource for RoseAttackEffect {
     }
 }
 
-/// `find`'s index of one folder: each number's file (and name), and when it was made.
+/// `find`'s index of one folder: each number's file and name, and when it was made.
 type FoundIndex = (std::time::Instant, std::collections::HashMap<i64, (String, String)>);
 
 thread_local! {
     static FOUND: std::cell::RefCell<std::collections::HashMap<String, FoundIndex>> = Default::default();
+    /// The resources `find` handed out, kept loaded. Loading a monster loads everything it
+    /// links (drop table, items, their sounds and effect scenes); let go, Godot frees all of
+    /// it and the next marker that asks loads it again.
+    static KEPT: std::cell::RefCell<std::collections::HashMap<String, Gd<Resource>>> = Default::default();
 }
 
-/// The resource under `dir` with number `id`, and its name (the editor's spawn and NPC
-/// markers, which store numbers). Scans the folder once, and again when a number isn't
-/// found or its file moved (at most every few seconds: the markers ask every frame).
-pub fn find(dir: &str, id: i64) -> Option<(Gd<Resource>, String)> {
+/// The number and name in a data resource's text, read without loading it (and everything
+/// it links): the `id = ` and `name = "..."` lines of its `[resource]` section.
+fn text_id_name(path: &str) -> Option<(i64, String)> {
+    let text = std::fs::read_to_string(ProjectSettings::singleton().globalize_path(path).to_string()).ok()?;
+    let body = &text[text.find("\n[resource]")?..];
+    let (mut id, mut name) = (None, String::new());
+    for line in body.lines().skip(2) {
+        if line.starts_with('[') {
+            break;
+        } else if let Some(value) = line.strip_prefix("id = ") {
+            id = value.trim().parse().ok();
+        } else if let Some(value) = line.strip_prefix("name = \"") {
+            name = value.strip_suffix('"').unwrap_or(value).replace("\\\"", "\"").replace("\\\\", "\\");
+        }
+    }
+    Some((id?, name))
+}
+
+/// The file and name of number `id` under `dir`. Indexes the folder from the files' text
+/// once, and again when a number isn't found (at most every few seconds: the markers ask
+/// every frame).
+fn find_path(dir: &str, id: i64) -> Option<(String, String)> {
     if id <= 0 {
         return None;
     }
-    let mut loader = ResourceLoader::singleton();
     let (cached, fresh) = FOUND.with_borrow(|found| match found.get(dir) {
         Some((made, ids)) => (ids.get(&id).cloned(), made.elapsed().as_secs() < 3),
         None => (None, false),
     });
-    let named = |resource: Gd<Resource>| {
-        let name = resource.get("name").try_to::<GString>().map(|n| n.to_string()).unwrap_or_default();
-        (resource, name)
-    };
-    if let Some((path, _)) = cached {
-        if let Some(resource) = loader.load(&path).filter(|r| r.get("id").try_to::<i64>().ok() == Some(id)) {
-            return Some(named(resource));
-        }
-    }
-    if fresh {
-        return None;
+    if cached.is_some() || fresh {
+        return cached;
     }
     let mut files = Vec::new();
     tres_files(dir, &mut files);
-    let mut ids = std::collections::HashMap::new();
-    for path in files {
-        if let Some(resource) = loader.load(&path) {
-            let number = resource.get("id").try_to::<i64>().unwrap_or(0);
-            let name = resource.get("name").try_to::<GString>().map(|n| n.to_string()).unwrap_or_default();
-            ids.insert(number, (path, name));
-        }
-    }
+    let ids: std::collections::HashMap<_, _> = files.into_iter().filter_map(|path| text_id_name(&path).map(|(number, name)| (number, (path, name)))).collect();
     let found = ids.get(&id).cloned();
     FOUND.with_borrow_mut(|f| f.insert(dir.to_string(), (std::time::Instant::now(), ids)));
-    let (path, _) = found?;
-    Some(named(loader.load(&path)?))
+    found
+}
+
+/// The name of number `id` under `dir`, for the editor's spawn and NPC labels: from the
+/// resource when it is loaded (so an edit shows at once), else from its file's text.
+pub fn find_name(dir: &str, id: i64) -> Option<String> {
+    let (path, name) = find_path(dir, id)?;
+    let loader = ResourceLoader::singleton();
+    if loader.has_cached(&path) {
+        if let Some(resource) = loader.get_cached_ref(&path) {
+            return Some(resource.get("name").try_to::<GString>().map(|n| n.to_string()).unwrap_or(name));
+        }
+    }
+    Some(name)
+}
+
+/// The resource under `dir` with number `id`, and its name (the editor's spawn and NPC
+/// markers, which store numbers). Kept loaded once asked for.
+pub fn find(dir: &str, id: i64) -> Option<(Gd<Resource>, String)> {
+    let (path, _) = find_path(dir, id)?;
+    let resource = match KEPT.with_borrow(|kept| kept.get(&path).cloned()) {
+        Some(resource) => resource,
+        None => {
+            let resource = ResourceLoader::singleton().load(&path)?;
+            KEPT.with_borrow_mut(|kept| kept.insert(path.clone(), resource.clone()));
+            resource
+        }
+    };
+    if resource.get("id").try_to::<i64>().ok() != Some(id) {
+        // Renumbered since the folder was indexed: index it again.
+        FOUND.with_borrow_mut(|f| f.remove(dir));
+        KEPT.with_borrow_mut(|kept| kept.remove(&path));
+        return None;
+    }
+    let name = resource.get("name").try_to::<GString>().map(|n| n.to_string()).unwrap_or_default();
+    Some((resource, name))
 }
 
 /// The class of each export kind, with its file name.

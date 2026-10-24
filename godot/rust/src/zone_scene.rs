@@ -888,8 +888,8 @@ fn npc_model(npc_id: i32) -> Option<String> {
 /// A monster's or NPC's name for the editor labels, from its resource (the number when
 /// there is none).
 fn character_name(dir: &str, id: i32) -> String {
-    match data_resources::find(dir, id as i64) {
-        Some((_, name)) if !name.trim().is_empty() => format!("{} {id}", name.trim()),
+    match data_resources::find_name(dir, id as i64) {
+        Some(name) if !name.trim().is_empty() => format!("{} {id}", name.trim()),
         _ => id.to_string(),
     }
 }
@@ -923,7 +923,7 @@ fn monster_ids(monsters: &Array<Option<Gd<RoseMonster>>>, old: &PackedInt32Array
             Some(monster) => monster.upcast::<godot::classes::Resource>().get("id").try_to::<i64>().unwrap_or(0) as i32,
             None => old
                 .get(i)
-                .filter(|id| data_resources::find(data_resources::MONSTERS_DIR, *id as i64).is_none())
+                .filter(|id| data_resources::find_name(data_resources::MONSTERS_DIR, *id as i64).is_none())
                 .unwrap_or(0),
         })
         .collect()
