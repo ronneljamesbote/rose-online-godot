@@ -441,12 +441,17 @@ fn save_texture(rose_path: &str, target: &str) -> bool {
     let (bytes, needs_mipmaps) = crate::texture::fix_partial_mip_chain(bytes);
     let dds = PackedByteArray::from(bytes.as_slice());
     let mut image = Image::new_gd();
-    if image.load_dds_from_buffer(&dds) != Error::OK {
-        godot_warn!("rose: could not decode texture {rose_path}");
-        return false;
-    }
     let mut payload = (RTEX_DDS, dds);
-    if needs_mipmaps && !image.is_compressed() && !image.has_mipmaps() && matches!(image.get_format(), Format::RGB8 | Format::RGBA8) {
+    if image.load_dds_from_buffer(&payload.1) != Error::OK {
+        // A paletted DDS, which Godot can't read: kept as the decoded image instead.
+        let Some(decoded) = crate::texture::decode_paletted_dds(&bytes) else {
+            godot_warn!("rose: could not decode texture {rose_path}");
+            return false;
+        };
+        payload = (RTEX_WEBP, decoded.save_webp_to_buffer_ex().lossy(false).done());
+        image = decoded;
+    }
+    if payload.0 == RTEX_DDS && needs_mipmaps && !image.is_compressed() && !image.has_mipmaps() && matches!(image.get_format(), Format::RGB8 | Format::RGBA8) {
         let webp = image.save_webp_to_buffer_ex().lossy(false).done();
         let mut decoded = Image::new_gd();
         let same = decoded.load_webp_from_buffer(&webp) == Error::OK && decoded.get_format() == image.get_format() && decoded.get_data() == image.get_data();
