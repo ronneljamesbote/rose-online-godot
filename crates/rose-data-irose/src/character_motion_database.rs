@@ -42,17 +42,15 @@ fn get_vehicle_action_map() -> EnumMap<VehicleMotionAction, u16> {
     }
 }
 
-fn load_motion_file_data(
-    vfs: &VirtualFilesystem,
-    path: &str,
-    options: &CharacterMotionDatabaseOptions,
-) -> Option<MotionFileData> {
+/// A motion file's path and, with `options.load_frame_data`, its length and hits from the
+/// ZMO file. None when the path is empty or the ZMO file can't be read.
+pub fn zmo_motion_file_data(vfs: &VirtualFilesystem, path: &str, load_frame_data: bool) -> Option<MotionFileData> {
     if path.is_empty() {
         return None;
     }
     let path = VfsPathBuf::new(path);
 
-    if options.load_frame_data {
+    if load_frame_data {
         let zmo = vfs
             .read_file_with::<ZmoFile, _>(&path, &ZmoReadOptions { skip_animation: true })
             .ok()?;
@@ -74,6 +72,15 @@ pub fn get_character_motion_database(
     vfs: &VirtualFilesystem,
     options: &CharacterMotionDatabaseOptions,
 ) -> Result<CharacterMotionDatabase, anyhow::Error> {
+    get_character_motion_database_with(vfs, &mut |path| zmo_motion_file_data(vfs, path, options.load_frame_data))
+}
+
+/// The player motions of FILE_MOTION.STB and TYPE_MOTION.STB, each motion file's data made
+/// by `motion_file` from its path (None leaves the motion out, as for a missing file).
+pub fn get_character_motion_database_with(
+    vfs: &VirtualFilesystem,
+    motion_file: &mut dyn FnMut(&str) -> Option<MotionFileData>,
+) -> Result<CharacterMotionDatabase, anyhow::Error> {
     // Read motion file list
     let file_motion = vfs.read_file::<StbFile, _>("3DDATA/STB/FILE_MOTION.STB")?;
 
@@ -81,11 +88,7 @@ pub fn get_character_motion_database(
     for gender in 0..file_motion.columns() {
         let mut gender_motions = Vec::new();
         for index in 0..file_motion.rows() {
-            gender_motions.push(load_motion_file_data(
-                vfs,
-                file_motion.get(index, gender),
-                options,
-            ));
+            gender_motions.push(motion_file(file_motion.get(index, gender)));
         }
         motion_datas.push(gender_motions);
     }

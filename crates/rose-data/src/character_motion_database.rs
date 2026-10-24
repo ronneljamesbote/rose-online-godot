@@ -75,27 +75,6 @@ impl CharacterMotionDatabase {
         self.motion_data.get(gender).into_iter().flatten().flatten()
     }
 
-    /// Replaces the timing of every entry for the motion file `path` (normalised, as
-    /// `VfsPathBuf` stores it). Returns how many entries matched.
-    pub fn set_motion_timing(
-        &mut self,
-        path: &std::path::Path,
-        duration: std::time::Duration,
-        total_attack_frames: usize,
-        first_attack_time: Option<std::time::Duration>,
-    ) -> usize {
-        let mut matched = 0;
-        for motion in self.motion_data.iter_mut().flatten().flatten() {
-            if motion.path.path() == path {
-                motion.duration = duration;
-                motion.total_attack_frames = total_attack_frames;
-                motion.first_attack_time = first_attack_time;
-                matched += 1;
-            }
-        }
-        matched
-    }
-
     pub fn get_character_motion(
         &self,
         motion_id: MotionId,

@@ -75,8 +75,8 @@ the server's `attack_hit_ms` uses), `step` markers play footsteps and `effect` m
 other sounds and effects. Moving a marker in the Animation panel moves that event in game;
 the id after the colon must stay.
 
-The server times hits from `export/motions.toml`, so after moving a `hit` marker (or
-changing an animation's length) export it and commit it with the animation:
+The server times hits from `export/motions.toml` (it reads no ZMO file), so after moving a
+`hit` marker (or changing an animation's length) export it and commit it with the animation:
 
 ```sh
 godot --headless --path godot -- --export-data          # writes ../export/ (motions.toml too)

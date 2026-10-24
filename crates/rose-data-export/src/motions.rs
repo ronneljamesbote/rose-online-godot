@@ -1,7 +1,7 @@
 //! `export/motions.toml`: how long each player, monster and NPC motion is and on which frames it hits,
 //! exported from the hit markers of the Godot animations (`--export-data`). The server's
-//! game data uses these numbers in place of the ones in the ZMO files, so moving a hit
-//! marker in the Godot editor moves the hit on the server too.
+//! game data reads these numbers and no ZMO file, so moving a hit marker in the Godot
+//! editor moves the hit on the server too.
 
 use std::{path::Path, time::Duration};
 

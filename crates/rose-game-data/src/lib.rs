@@ -10,15 +10,16 @@ use std::{
 
 use anyhow::Context;
 use rose_data::{
-    AiDatabase, CharacterMotionDatabase, CharacterMotionDatabaseOptions, DataDecoder, ItemClass, ItemDatabase,
-    ItemReference, ItemType, JobClassDatabase, NpcDatabase, NpcDatabaseOptions, QuestDatabase, SkillDatabase,
+    AiDatabase, CharacterMotionDatabase, DataDecoder, ItemClass, ItemDatabase, ItemReference, ItemType,
+    JobClassDatabase, MotionFileData, NpcDatabase, NpcDatabaseOptions, QuestDatabase, SkillDatabase,
     NpcConversationId, NpcId, SkillId, SkillIds, StatusEffectDatabase, StringDatabase, WarpGateData, WarpGateDatabase, ZoneData,
     ZoneDatabase, ZoneId, ZoneMonsterSpawnPoint, ZoneNpcSpawn, ZoneSettings,
 };
 use rose_data_irose::{
     decode_item_base1000, decode_item_class, encode_item_class, encode_item_type, get_ai_database,
-    get_character_motion_database, get_data_decoder, get_item_database, get_job_class_database, get_npc_action_map,
-    get_npc_conversations, get_npc_database, get_npc_motions, get_quest_database, get_skill_database,
+    get_character_motion_database_with, get_data_decoder, get_item_database, get_job_class_database,
+    get_npc_action_map, get_npc_conversations, get_npc_database, get_npc_database_with, get_npc_motions_with,
+    get_quest_database, get_skill_database, zmo_motion_file_data,
     get_status_effect_database, get_string_database, get_warp_gate_database, get_zone_database_from_settings,
     get_zone_settings,
 };
@@ -60,11 +61,10 @@ pub struct GameData {
 pub fn load_game_data(vfs: &VirtualFilesystem) -> Result<GameData, anyhow::Error> {
     let string_database = get_string_database(vfs, 1).context("string database")?;
     let items = Arc::new(load_items(vfs, string_database.clone()).context("item database")?);
-    let (mut npcs, drop_rows) =
-        load_npcs(vfs, string_database.clone(), &NpcDatabaseOptions { load_frame_data: true }).context("npc database")?;
-    let mut motions = get_character_motion_database(vfs, &CharacterMotionDatabaseOptions { load_frame_data: true })
-        .context("motion database")?;
-    apply_motion_timings(vfs, &mut motions, &mut npcs).context("motion timings")?;
+    let motion_source = MotionSource::from_game_files(vfs).context("motion timings")?;
+    let (npcs, drop_rows) = load_npcs(vfs, string_database.clone(), &motion_source).context("npc database")?;
+    let motions = load_motions(vfs, &motion_source).context("motion database")?;
+    motion_source.check_all_used(&motions, &npcs)?;
     let npcs = Arc::new(npcs);
     let (skills, status_effects, job_class) = load_skills(vfs, string_database.clone()).context("skill database")?;
     check_summons(&skills, &npcs)?;
@@ -192,23 +192,25 @@ pub fn read_npcs_export(vfs: &VirtualFilesystem) -> Result<Option<NpcsExport>, a
 
 /// The monsters and NPCs (with their shop tabs) and the drop table rows exported from the
 /// Godot resources (`export/data/monsters.toml` ...), or without an export the iROSE
-/// tables (LIST_NPC.STB, LIST_SELL.STB; no rows: the drop table is ITEM_DROP.STB). Their
-/// models and motions still come from LIST_NPC.CHR, the conversations from LIST_EVENT.STB.
+/// tables (LIST_NPC.STB, LIST_SELL.STB; no rows: the drop table is ITEM_DROP.STB). Which
+/// motion files they play still comes from LIST_NPC.CHR (their timings from `motions`), the
+/// conversations from LIST_EVENT.STB.
 pub fn load_npcs(
     vfs: &VirtualFilesystem,
     strings: Arc<StringDatabase>,
-    options: &NpcDatabaseOptions,
+    motions: &MotionSource,
 ) -> Result<(NpcDatabase, Option<BTreeMap<u32, Vec<i32>>>), anyhow::Error> {
+    let npc_motions = get_npc_motions_with(vfs, &mut |path| motions.motion_file(vfs, path))?;
     if let Some(export) = read_npcs_export(vfs)? {
         let models = NpcModels {
-            motions: get_npc_motions(vfs, options)?,
+            motions: npc_motions,
             conversations: get_npc_conversations(vfs)?,
             action_map: get_npc_action_map(),
         };
         let rows = export.drop_rows(encode_item_base1000)?;
         return Ok((export.to_database(strings, models)?, Some(rows)));
     }
-    Ok((get_npc_database(vfs, strings, options)?, None))
+    Ok((get_npc_database_with(vfs, strings, npc_motions)?, None))
 }
 
 /// The monsters, NPCs, drop tables and shop tabs of the iROSE tables as the export holds
@@ -263,34 +265,123 @@ pub fn npcs_export_from_irose(
     )
 }
 
-/// The lengths and hit frames of `export/motions.toml` (exported from the Godot
-/// animations), when the game files carry it, in place of the ZMO ones: for player motions
-/// (FILE_MOTION.STB) and monster and NPC motions (LIST_NPC.CHR). A file that is neither is
-/// an error.
-pub fn apply_motion_timings(
-    vfs: &VirtualFilesystem,
-    motions: &mut CharacterMotionDatabase,
-    npcs: &mut NpcDatabase,
-) -> Result<(), anyhow::Error> {
-    if !vfs.exists(rose_data_export::MOTIONS_GAME_FILE) {
-        return Ok(());
+/// Where the length and hit frames of each motion file come from.
+pub enum MotionSource {
+    /// Only the paths, no timings (what the client and the same-data checks need).
+    Paths,
+    /// The ZMO files of the client data.
+    Zmo,
+    /// `export/motions.toml`, exported from the hit markers of the Godot animations, by
+    /// motion file (normalised, as `VfsPathBuf` stores it). No ZMO file is read; a motion the
+    /// file doesn't list has no animation, so it is left out as a missing ZMO file is.
+    Export(BTreeMap<std::path::PathBuf, MotionFileData>),
+}
+
+impl MotionSource {
+    /// `export/motions.toml` when the game files carry it, else the ZMO files.
+    pub fn from_game_files(vfs: &VirtualFilesystem) -> Result<Self, anyhow::Error> {
+        if !vfs.exists(rose_data_export::MOTIONS_GAME_FILE) {
+            return Ok(Self::Zmo);
+        }
+        let file = vfs.open_file(rose_data_export::MOTIONS_GAME_FILE)?;
+        let bytes: &[u8] = match &file {
+            VfsFile::Buffer(data) => data,
+            VfsFile::View(data) => data,
+        };
+        let timings = MotionTimings::parse(std::str::from_utf8(bytes)?).context("export/motions.toml")?;
+        Ok(Self::from_timings(&timings))
     }
-    let file = vfs.open_file(rose_data_export::MOTIONS_GAME_FILE)?;
-    let bytes: &[u8] = match &file {
-        VfsFile::Buffer(data) => data,
-        VfsFile::View(data) => data,
-    };
-    let timings = MotionTimings::parse(std::str::from_utf8(bytes)?).context("export/motions.toml")?;
-    for timing in &timings.motion {
-        let path = VfsPathBuf::new(&timing.file);
-        let (duration, hits, first_hit) = (timing.duration(), timing.hit_frames.len(), timing.first_hit_time());
-        let matched = motions.set_motion_timing(path.path(), duration, hits, first_hit)
-            + npcs.set_motion_timing(path.path(), duration, hits, first_hit);
-        if matched == 0 {
-            anyhow::bail!("export/motions.toml: {} is not a player, monster or NPC motion", timing.file);
+
+    pub fn from_timings(timings: &MotionTimings) -> Self {
+        let motions = timings
+            .motion
+            .iter()
+            .map(|timing| {
+                let path = VfsPathBuf::new(&timing.file);
+                let data = MotionFileData {
+                    path: path.clone(),
+                    duration: timing.duration(),
+                    total_attack_frames: timing.hit_frames.len(),
+                    first_attack_time: timing.first_hit_time(),
+                };
+                (path.path().to_path_buf(), data)
+            })
+            .collect();
+        Self::Export(motions)
+    }
+
+    /// The data of the motion file `path` (as FILE_MOTION.STB or LIST_NPC.CHR names it);
+    /// None for an empty path or a motion that has no file.
+    pub fn motion_file(&self, vfs: &VirtualFilesystem, path: &str) -> Option<MotionFileData> {
+        match self {
+            Self::Paths => zmo_motion_file_data(vfs, path, false),
+            Self::Zmo => zmo_motion_file_data(vfs, path, true),
+            Self::Export(motions) if !path.is_empty() => motions.get(VfsPathBuf::new(path).path()).cloned(),
+            Self::Export(_) => None,
         }
     }
-    Ok(())
+
+    /// Every motion of the export is one a player, monster or NPC plays.
+    pub fn check_all_used(&self, motions: &CharacterMotionDatabase, npcs: &NpcDatabase) -> Result<(), anyhow::Error> {
+        let Self::Export(timings) = self else { return Ok(()) };
+        let used: BTreeSet<&std::path::Path> = (0..3)
+            .flat_map(|gender| motions.motion_files(gender))
+            .chain(npcs.iter().flat_map(|npc| npc.motion_data.iter().map(|(_, m)| m)))
+            .map(|m| m.path.path())
+            .collect();
+        if let Some(path) = timings.keys().find(|path| !used.contains(path.as_path())) {
+            anyhow::bail!("export/motions.toml: {} is not a player, monster or NPC motion", path.display());
+        }
+        Ok(())
+    }
+}
+
+/// The player motions (FILE_MOTION.STB, TYPE_MOTION.STB), their timings from `source`.
+pub fn load_motions(vfs: &VirtualFilesystem, source: &MotionSource) -> Result<CharacterMotionDatabase, anyhow::Error> {
+    get_character_motion_database_with(vfs, &mut |path| source.motion_file(vfs, path))
+}
+
+/// Every motion whose length or hits differ between two loads (the ZMO files and the
+/// export), and every motion only one of them has: the player motions by gender and file,
+/// each monster's and NPC's by its id and motion number.
+pub fn compare_motions(
+    a: (&CharacterMotionDatabase, &NpcDatabase),
+    b: (&CharacterMotionDatabase, &NpcDatabase),
+) -> Vec<String> {
+    fn timings(motions: &CharacterMotionDatabase, npcs: &NpcDatabase) -> BTreeMap<String, String> {
+        let ms = |t: std::time::Duration| format!("{:.3} ms", t.as_secs_f64() * 1000.0);
+        let timing = |m: &MotionFileData| {
+            let first = m.first_attack_time.map_or("-".to_string(), ms);
+            format!("{}, {} hits, first at {first}", ms(m.duration), m.total_attack_frames)
+        };
+        let mut out = BTreeMap::new();
+        for gender in 0..3 {
+            for m in motions.motion_files(gender) {
+                out.insert(format!("player motion {gender} {}", m.path.path().display()), timing(m));
+            }
+        }
+        for npc in npcs.iter() {
+            for (id, m) in &npc.motion_data {
+                out.insert(format!("npc {} motion {} {}", npc.id.get(), id.get(), m.path.path().display()), timing(m));
+            }
+        }
+        out
+    }
+    let (a, b) = (timings(a.0, a.1), timings(b.0, b.1));
+    let mut differences = Vec::new();
+    for (key, x) in &a {
+        match b.get(key) {
+            None => differences.push(format!("{key}: {x} -> missing")),
+            Some(y) if x != y => differences.push(format!("{key}: {x} -> {y}")),
+            Some(_) => {}
+        }
+    }
+    for (key, y) in &b {
+        if !a.contains_key(key) {
+            differences.push(format!("{key}: missing -> {y}"));
+        }
+    }
+    differences
 }
 
 /// The spawn points, town NPCs and named spots of `export/zones/` (exported from the

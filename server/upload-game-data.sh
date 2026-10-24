@@ -5,8 +5,8 @@
 # (the identity that published the module) and curl. Sends what the Godot editor exported,
 # from ROSE_EXPORT (default: export/ in the current folder): the game data in its data/
 # folder (or ROSE_DATA; its items, monsters, NPCs, skills, zones ... replace the iROSE tables
-# they come from), the motion timings in motions.toml (or ROSE_MOTIONS) and the zones edited
-# as Godot scenes in zones/ (or ROSE_ZONES).
+# they come from), the motion timings in motions.toml (or ROSE_MOTIONS; the ZMO files are then
+# not sent) and the zones edited as Godot scenes in zones/ (or ROSE_ZONES).
 set -e
 DATA_IDX=${1:?usage: upload-game-data.sh <data.idx> [server] [database]}
 SERVER=${2:-http://127.0.0.1:3000}
