@@ -40,6 +40,7 @@ unsafe impl ExtensionLibrary for RoseExtension {
     fn on_stage_deinit(stage: InitStage) {
         if stage == InitStage::MainLoop {
             audio::clear_cache();
+            data_resources::clear_cache();
             effect::clear_cache();
             items::clear_cache();
             material::clear_cache();

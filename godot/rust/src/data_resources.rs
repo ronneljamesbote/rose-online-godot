@@ -1579,6 +1579,12 @@ thread_local! {
     static KEPT: std::cell::RefCell<std::collections::HashMap<String, Gd<Resource>>> = Default::default();
 }
 
+/// Drops the resources `find` kept while the engine is still running (a Godot object
+/// freed with the thread's locals, after the engine has gone, aborts the program).
+pub fn clear_cache() {
+    KEPT.with_borrow_mut(|kept| kept.clear());
+}
+
 /// The number and name in a data resource's text, read without loading it (and everything
 /// it links): the `id = ` and `name = "..."` lines of its `[resource]` section.
 fn text_id_name(path: &str) -> Option<(i64, String)> {
