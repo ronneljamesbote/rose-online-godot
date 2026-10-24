@@ -363,10 +363,19 @@ $Stage = Join-Path ([System.IO.Path]::GetTempPath()) `
 
 $StageRose = Join-Path $Stage $DirName
 $VersionFile = Join-Path (Get-Location) "godot\build_version.txt"
+# The editor leaves assets\rose\ out (its .gdignore, see godot\assets\README.md),
+# and so would the export, so take that file away while exporting and put it
+# back at the end.
+$RoseAssets = Join-Path (Get-Location) "godot\assets\rose"
+$Gdignore = Join-Path $RoseAssets ".gdignore"
 
 New-Item -ItemType Directory -Force -Path $StageRose | Out-Null
 
 try {
+
+    if (Test-Path $Gdignore) {
+        Remove-Item -Force $Gdignore
+    }
 
     # --------------------------------------------------------
     # Export Godot project
@@ -556,6 +565,10 @@ finally {
 
     if (Test-Path $VersionFile) {
         Remove-Item -Force $VersionFile
+    }
+
+    if (Test-Path $RoseAssets) {
+        New-Item -ItemType File -Force -Path $Gdignore | Out-Null
     }
 
     if (Test-Path $Stage) {
