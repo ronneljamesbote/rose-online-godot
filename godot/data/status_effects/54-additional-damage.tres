@@ -1,5 +1,7 @@
 [gd_resource type="RoseStatusEffect" format=3 uid="uid://df7iery5ej84w"]
 
+[ext_resource type="RoseEffectFile" uid="uid://kjtp2hfjsya2" path="res://data/effect_files/183-damage-up01.tres" id="1_mtxzk"]
+
 [resource]
 id = 54
 name = "Additional Damage"
@@ -7,5 +9,5 @@ description = "Your attacks have been temporarily given additional damage."
 start_message = "Your attacks no longer have additional damage."
 status_effect_type = "AdditionalDamageRate"
 cleared_by = "ClearNone"
-effect_file_id = 183
+effect = ExtResource("1_mtxzk")
 icon_id = 16

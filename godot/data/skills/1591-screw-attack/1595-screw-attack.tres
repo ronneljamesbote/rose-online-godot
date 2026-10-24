@@ -3,6 +3,8 @@
 [ext_resource type="RoseSkill" uid="uid://bwlrvv7xm4hds" path="res://data/skills/1421-knuckle-mastery/1421-knuckle-mastery.tres" id="1_iskv1"]
 [ext_resource type="RoseStatusEffect" uid="uid://0p3o4l6jqxs5" path="res://data/status_effects/21-def-down.tres" id="2_2q1q1"]
 [ext_resource type="RoseSound" uid="uid://4ujavo2i65n0" path="res://data/sounds/skill/137-skill-magicd01.tres" id="3_heahk"]
+[ext_resource type="RoseEffectFile" uid="uid://s8yrioubd614" path="res://data/effect_files/1031-sequence-casting-01.tres" id="4_nqjhg"]
+[ext_resource type="RoseEffectFile" uid="uid://cp2jbsgybpgic" path="res://data/effect_files/110-gun-blowup-01.tres" id="5_bzn00"]
 
 [resource]
 id = 1595
@@ -40,7 +42,7 @@ warp_x = 20000
 warp_y = 14000
 casting_motion_id = 111
 casting_repeat_motion_id = 131
-casting_effect_1 = 1031
+casting_effect_1 = ExtResource("4_nqjhg")
 action_motion_id = 93
-hit_effect_file_id = 110
+hit_effect = ExtResource("5_bzn00")
 hit_sound = ExtResource("3_heahk")

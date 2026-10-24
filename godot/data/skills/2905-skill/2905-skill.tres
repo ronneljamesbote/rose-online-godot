@@ -2,6 +2,8 @@
 
 [ext_resource type="RoseStatusEffect" uid="uid://urqs1ot2ioov" path="res://data/status_effects/20-def-up.tres" id="1_0u8nq"]
 [ext_resource type="RoseStatusEffect" uid="uid://yailie1lhx3" path="res://data/status_effects/22-magic-resistance-up.tres" id="2_gjnuq"]
+[ext_resource type="RoseEffectFile" uid="uid://btimqwfj57hk2" path="res://data/effect_files/213-casting-03.tres" id="3_3g4zb"]
+[ext_resource type="RoseEffectFile" uid="uid://dwnb187345xi5" path="res://data/effect_files/5-z-hit-01.tres" id="4_d8ji4"]
 
 [resource]
 id = 2905
@@ -23,6 +25,6 @@ add_stat_2_rate = 25
 warp_zone = 19
 warp_x = 10000
 warp_y = 12000
-casting_effect_3 = 213
-hit_effect_file_id = 5
+casting_effect_3 = ExtResource("3_3g4zb")
+hit_effect = ExtResource("4_d8ji4")
 hit_effect_point = 3

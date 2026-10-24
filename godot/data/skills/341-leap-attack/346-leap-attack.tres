@@ -2,6 +2,9 @@
 
 [ext_resource type="RoseStatusEffect" uid="uid://bq4n0ny64hflq" path="res://data/status_effects/32-fainted.tres" id="1_dwo1m"]
 [ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="2_edcmg"]
+[ext_resource type="RoseEffectFile" uid="uid://b0w1erat0mhe4" path="res://data/effect_files/1036-leap-casting-01.tres" id="3_3d7yj"]
+[ext_resource type="RoseEffectFile" uid="uid://c8h1g3u5yt216" path="res://data/effect_files/1037-leap-rotate-01.tres" id="4_sb45h"]
+[ext_resource type="RoseEffectFile" uid="uid://wv36bdk6kw6y" path="res://data/effect_files/1035-leap-hit-01.tres" id="5_828yi"]
 
 [resource]
 id = 346
@@ -32,8 +35,8 @@ status_effect_1 = ExtResource("1_dwo1m")
 status_effect_seconds = 5
 casting_motion_id = 128
 casting_repeat_motion_id = 148
-casting_effect_1 = 1036
-casting_effect_2 = 1037
+casting_effect_1 = ExtResource("3_3d7yj")
+casting_effect_2 = ExtResource("4_sb45h")
 action_motion_id = 93
-hit_effect_file_id = 1035
+hit_effect = ExtResource("5_828yi")
 hit_sound = ExtResource("2_edcmg")

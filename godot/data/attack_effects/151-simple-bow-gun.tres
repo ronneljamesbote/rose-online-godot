@@ -1,0 +1,16 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://dcbf7ymp65kcd"]
+
+[ext_resource type="RoseEffectFile" uid="uid://dib5quc00vweg" path="res://data/effect_files/1051-bow-firing-01.tres" id="1_fdd33"]
+[ext_resource type="RoseEffectFile" uid="uid://dxpiywx02a7wh" path="res://data/effect_files/1061-bow-hit-01.tres" id="2_bu2qh"]
+[ext_resource type="RoseEffectFile" uid="uid://i7jfpycgbxv8" path="res://data/effect_files/1024-twotool-critical-hit-01.tres" id="3_yxqkr"]
+[ext_resource type="RoseSound" uid="uid://6a6nk0si4lkl" path="res://data/sounds/attack/68-axe-h01.tres" id="4_1fxpf"]
+
+[resource]
+id = 151
+name = "Simple Bow Gun"
+hit_effect = ExtResource("2_bu2qh")
+hit_effect_critical = ExtResource("3_yxqkr")
+bullet_effect = ExtResource("1_fdd33")
+bullet_move = "Parabola"
+bullet_speed = 3000.0
+hit_sound = ExtResource("4_1fxpf")

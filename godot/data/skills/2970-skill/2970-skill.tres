@@ -2,6 +2,9 @@
 
 [ext_resource type="RoseStatusEffect" uid="uid://bq4n0ny64hflq" path="res://data/status_effects/32-fainted.tres" id="1_hlcvq"]
 [ext_resource type="RoseSound" uid="uid://75hketpwmdeo" path="res://data/sounds/skill/133-skill-narc01.tres" id="2_nh7ja"]
+[ext_resource type="RoseEffectFile" uid="uid://cafvdfvcybplf" path="res://data/effect_files/210-casting-01.tres" id="3_6sp5f"]
+[ext_resource type="RoseEffectFile" uid="uid://bpw15m5wc0epi" path="res://data/effect_files/212-casting-02.tres" id="4_ihmqx"]
+[ext_resource type="RoseAttackEffect" uid="uid://3yn2ydhyyyok" path="res://data/attack_effects/252-divine-lightning.tres" id="5_pzv2o"]
 
 [resource]
 id = 2970
@@ -15,10 +18,10 @@ success_ratio = 60
 status_effect_1 = ExtResource("1_hlcvq")
 status_effect_seconds = 7
 casting_motion_id = 6
-casting_effect_2 = 210
+casting_effect_2 = ExtResource("3_6sp5f")
 casting_effect_2_point = 3
-casting_effect_3 = 212
+casting_effect_3 = ExtResource("4_ihmqx")
 casting_effect_3_point = 1
 action_motion_id = 7
-bullet_effect_id = 252
+bullet_effect = ExtResource("5_pzv2o")
 bullet_fire_sound = ExtResource("2_nh7ja")

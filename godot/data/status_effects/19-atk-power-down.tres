@@ -1,5 +1,7 @@
 [gd_resource type="RoseStatusEffect" format=3 uid="uid://5tgxw104x2b6"]
 
+[ext_resource type="RoseEffectFile" uid="uid://bokpvybtthfo7" path="res://data/effect_files/164-attackdown-01.tres" id="1_q2lp9"]
+
 [resource]
 id = 19
 name = "Atk Power Down"
@@ -8,5 +10,5 @@ start_message = "Attack Power has returned to normal."
 status_effect_type = "DecreaseAttackPower"
 can_be_reapplied = true
 cleared_by = "ClearBad"
-effect_file_id = 164
+effect = ExtResource("1_q2lp9")
 icon_id = 8

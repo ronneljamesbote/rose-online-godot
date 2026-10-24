@@ -2,6 +2,9 @@
 
 [ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="1_m2c5p"]
 [ext_resource type="RoseSound" uid="uid://bxpxc8f3lqkwr" path="res://data/sounds/skill/1573-point-ice02.tres" id="2_ke2bn"]
+[ext_resource type="RoseEffectFile" uid="uid://b31qjtoqi5na3" path="res://data/effect_files/1765-target-rotate-01.tres" id="3_ketl6"]
+[ext_resource type="RoseAttackEffect" uid="uid://bd0tss5ew2lox" path="res://data/attack_effects/465-attack-effect-465.tres" id="4_0sh50"]
+[ext_resource type="RoseEffectFile" uid="uid://citqbls1oug01" path="res://data/effect_files/1501-status-skill-01.tres" id="5_xtu16"]
 
 [resource]
 id = 3071
@@ -16,11 +19,11 @@ harm = 1
 item_make_number = 25
 casting_motion_id = 8
 casting_repeat_motion_id = 136
-casting_effect_2 = 1765
+casting_effect_2 = ExtResource("3_ketl6")
 casting_effect_2_point = 3
 action_motion_id = 9
-bullet_effect_id = 465
+bullet_effect = ExtResource("4_0sh50")
 bullet_point = 3
 bullet_fire_sound = ExtResource("1_m2c5p")
-hit_effect_file_id = 1501
+hit_effect = ExtResource("5_xtu16")
 hit_sound = ExtResource("2_ke2bn")

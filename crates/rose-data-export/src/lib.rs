@@ -11,7 +11,8 @@
 //!   the world: zone settings, warp gates, crafting recipes and new characters
 //!   (`zones.toml`, `warp-gates.toml`, `craft-recipes.toml`, `new-characters.toml`, see
 //!   [`world`]), and the sounds (`sounds.toml`, `hit-sounds.toml`, `footsteps.toml`, see
-//!   [`sounds`]; only the game reads them).
+//!   [`sounds`]; only the game reads them), and the effects (`effect-files.toml`,
+//!   `attack-effects.toml`, see [`effects`]; only the game reads them too).
 //! - `export/zones/`: the spawns, NPCs and named spots of the zones edited as Godot scenes
 //!   (see [`zone_layouts`]).
 //! - `export/motions.toml`: the length and hit frames of each motion, from the hit markers
@@ -19,6 +20,7 @@
 //!
 //! Server and client both load the export, so they always see the same values.
 
+pub mod effects;
 pub mod items;
 pub mod motions;
 pub mod npcs;
@@ -27,6 +29,7 @@ pub mod sounds;
 pub mod world;
 pub mod zone_layouts;
 
+pub use effects::{compare_effect_databases, effect_stem, EffectsExport};
 pub use items::{compare_item_databases, Format, ItemsExport};
 pub use motions::{MotionTiming, MotionTimings, MOTIONS_FILE, MOTIONS_GAME_FILE};
 pub use npcs::{compare_drop_rows, compare_npc_databases, NpcModels, NpcsExport};

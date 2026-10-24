@@ -3,6 +3,8 @@
 [ext_resource type="RoseSkill" uid="uid://pusmnipniy8s" path="res://data/skills/2141-arms-mastery/2141-arms-mastery.tres" id="1_ddw1k"]
 [ext_resource type="RoseSound" uid="uid://42rl1pnpcxo3" path="res://data/sounds/skill/148-heavyarr001.tres" id="2_uabb5"]
 [ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="3_kxesm"]
+[ext_resource type="RoseAttackEffect" uid="uid://cjgtu0rdyv1ro" path="res://data/attack_effects/262-ice-bolt.tres" id="4_41ltz"]
+[ext_resource type="RoseEffectFile" uid="uid://cp2jbsgybpgic" path="res://data/effect_files/110-gun-blowup-01.tres" id="5_pm1ev"]
 
 [resource]
 id = 2267
@@ -32,8 +34,8 @@ item_make_number = 190
 casting_motion_id = 95
 casting_repeat_motion_id = 96
 action_motion_id = 97
-bullet_effect_id = 262
+bullet_effect = ExtResource("4_41ltz")
 bullet_point = 1
 bullet_fire_sound = ExtResource("2_uabb5")
-hit_effect_file_id = 110
+hit_effect = ExtResource("5_pm1ev")
 hit_sound = ExtResource("3_kxesm")

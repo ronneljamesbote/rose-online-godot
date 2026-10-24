@@ -4,6 +4,8 @@
 [ext_resource type="RoseSound" uid="uid://c1ejmjowob54v" path="res://data/sounds/mob/217-mob10-n.tres" id="2_eoimo"]
 [ext_resource type="RoseSound" uid="uid://ddmgmm5w4axod" path="res://data/sounds/mob/219-mob10-h.tres" id="3_n1opb"]
 [ext_resource type="RoseSound" uid="uid://b0g6mj715bjk8" path="res://data/sounds/mob/218-mob10-d.tres" id="4_xxqf0"]
+[ext_resource type="RoseAttackEffect" uid="uid://bqslyp13mi5oa" path="res://data/attack_effects/403-jellynut.tres" id="5_2seut"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="6_fu1y3"]
 
 [resource]
 id = 84
@@ -27,8 +29,8 @@ npc_type_index = 1
 hit_sound_material_type = 2
 normal_effect_sound = ExtResource("2_eoimo")
 hitted_sound = ExtResource("3_n1opb")
-hand_hit_effect_id = 403
-die_effect_file_id = 1401
+hand_hit_effect = ExtResource("5_2seut")
+die_effect = ExtResource("6_fu1y3")
 die_sound = ExtResource("4_xxqf0")
 drop_table = ExtResource("1_pcd5y")
 drop_money_rate = 20

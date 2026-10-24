@@ -1,6 +1,10 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://mxo281ljbknv"]
 
 [ext_resource type="RoseStatusEffect" uid="uid://dv6tggly8x16s" path="res://data/status_effects/30-muting.tres" id="1_ivn8l"]
+[ext_resource type="RoseEffectFile" uid="uid://c78dgxarn7hpk" path="res://data/effect_files/389-stony-skill-01.tres" id="2_uwedt"]
+[ext_resource type="RoseEffectFile" uid="uid://dpv6vsra8ebsl" path="res://data/effect_files/1320-scope-01.tres" id="3_lba00"]
+[ext_resource type="RoseEffectFile" uid="uid://d024vki2mudr8" path="res://data/effect_files/1319-husehorn-skill.tres" id="4_81h7d"]
+[ext_resource type="RoseEffectFile" uid="uid://datmsj7fgcoav" path="res://data/effect_files/1310-runa-hit-02.tres" id="5_gvrqy"]
 
 [resource]
 id = 3057
@@ -20,8 +24,8 @@ add_stat_1_rate = 60
 warp_zone = 16
 warp_y = 60000
 casting_motion_id = 8
-casting_effect_1 = 389
-casting_effect_3 = 1320
-casting_effect_4 = 1319
+casting_effect_1 = ExtResource("2_uwedt")
+casting_effect_3 = ExtResource("3_lba00")
+casting_effect_4 = ExtResource("4_81h7d")
 action_motion_id = 9
-hit_effect_file_id = 1310
+hit_effect = ExtResource("5_gvrqy")

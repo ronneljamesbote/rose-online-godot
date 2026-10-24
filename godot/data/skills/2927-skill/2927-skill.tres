@@ -1,6 +1,8 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://doe4x54svkmle"]
 
 [ext_resource type="RoseStatusEffect" uid="uid://bnum8yiigk2jc" path="res://data/status_effects/14-dash.tres" id="1_i0l30"]
+[ext_resource type="RoseEffectFile" uid="uid://btimqwfj57hk2" path="res://data/effect_files/213-casting-03.tres" id="2_wu8y3"]
+[ext_resource type="RoseEffectFile" uid="uid://dwnb187345xi5" path="res://data/effect_files/5-z-hit-01.tres" id="3_p1w1j"]
 
 [resource]
 id = 2927
@@ -16,6 +18,6 @@ add_stat_1_rate = 30
 warp_zone = 23
 warp_x = 130000
 warp_y = 30000
-casting_effect_3 = 213
-hit_effect_file_id = 5
+casting_effect_3 = ExtResource("2_wu8y3")
+hit_effect = ExtResource("3_p1w1j")
 hit_effect_point = 3

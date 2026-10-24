@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://o32nrih4i2gy"]
+
+[ext_resource type="RoseEffectFile" uid="uid://bbbyjgtgo6tfh" path="res://data/effect_files/1324-manticore-firing01.tres" id="1_bvyoe"]
+[ext_resource type="RoseSound" uid="uid://cqnwh1xgiobdt" path="res://data/sounds/skill/1121-action-mana02.tres" id="2_2eav7"]
+[ext_resource type="RoseEffectFile" uid="uid://cah5cvu532v78" path="res://data/effect_files/1124-mana-hit-03.tres" id="3_p4eqt"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_v5lyu"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="5_l0yv2"]
+
+[resource]
+id = 460
+name = "attack effect 460"
+hit_effect = ExtResource("3_p4eqt")
+hit_effect_critical = ExtResource("4_v5lyu")
+bullet_effect = ExtResource("1_bvyoe")
+bullet_move = "Linear"
+bullet_speed = 2400.0
+fire_sound = ExtResource("2_2eav7")
+hit_sound = ExtResource("5_l0yv2")

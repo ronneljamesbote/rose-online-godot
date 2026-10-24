@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://d3dkd7plq2doe"]
+
+[ext_resource type="RoseEffectFile" uid="uid://ckjv3phkpuadn" path="res://data/effect_files/1052-bow-twist-01.tres" id="1_pirax"]
+[ext_resource type="RoseSound" uid="uid://cqnwh1xgiobdt" path="res://data/sounds/skill/1121-action-mana02.tres" id="2_wyu27"]
+[ext_resource type="RoseEffectFile" uid="uid://g5o0tb8mhqak" path="res://data/effect_files/1062-bow-twist-hit01.tres" id="3_s2s3n"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_s8wi3"]
+[ext_resource type="RoseSound" uid="uid://6a6nk0si4lkl" path="res://data/sounds/attack/68-axe-h01.tres" id="5_rc7l5"]
+
+[resource]
+id = 164
+name = "Storm Arrow"
+hit_effect = ExtResource("3_s2s3n")
+hit_effect_critical = ExtResource("4_s8wi3")
+bullet_effect = ExtResource("1_pirax")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_wyu27")
+hit_sound = ExtResource("5_rc7l5")

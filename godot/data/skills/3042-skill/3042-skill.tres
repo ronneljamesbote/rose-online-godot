@@ -1,5 +1,8 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://c77l2r2tnibun"]
 
+[ext_resource type="RoseEffectFile" uid="uid://c78dgxarn7hpk" path="res://data/effect_files/389-stony-skill-01.tres" id="1_isyks"]
+[ext_resource type="RoseEffectFile" uid="uid://c5otr5mm1f848" path="res://data/effect_files/242-skill-hit-01.tres" id="2_m924j"]
+
 [resource]
 id = 3042
 skill_type = "SelfDamage"
@@ -11,6 +14,6 @@ damage_type = "MagicAttack"
 power = 90
 item_make_number = 90
 casting_motion_id = 8
-casting_effect_1 = 389
+casting_effect_1 = ExtResource("1_isyks")
 action_motion_id = 9
-hit_effect_file_id = 242
+hit_effect = ExtResource("2_m924j")

@@ -1,5 +1,10 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://dk6fc3e1wwj5x"]
 
+[ext_resource type="RoseEffectFile" uid="uid://b7myivbone3oc" path="res://data/effect_files/161-healing-01.tres" id="1_m2022"]
+[ext_resource type="RoseEffectFile" uid="uid://cafvdfvcybplf" path="res://data/effect_files/210-casting-01.tres" id="2_kgrgb"]
+[ext_resource type="RoseEffectFile" uid="uid://cxae0cvcaipgi" path="res://data/effect_files/410-test.tres" id="3_ev82a"]
+[ext_resource type="RoseEffectFile" uid="uid://dhg687c7ms2qj" path="res://data/effect_files/244-twist-01.tres" id="4_hg9p6"]
+
 [resource]
 id = 3151
 skill_type = "Warp"
@@ -13,12 +18,12 @@ warp_zone = 1
 warp_x = 525000
 warp_y = 525000
 casting_motion_id = 103
-casting_effect_1 = 161
+casting_effect_1 = ExtResource("1_m2022")
 casting_effect_1_point = 3
-casting_effect_2 = 210
+casting_effect_2 = ExtResource("2_kgrgb")
 casting_effect_2_point = 3
-casting_effect_3 = 410
+casting_effect_3 = ExtResource("3_ev82a")
 casting_effect_3_point = 1
 action_motion_id = 202
-hit_effect_file_id = 244
+hit_effect = ExtResource("4_hg9p6")
 hit_effect_point = 3

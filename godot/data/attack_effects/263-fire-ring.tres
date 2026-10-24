@@ -1,0 +1,15 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://bfgmkwxy8hi1e"]
+
+[ext_resource type="RoseEffectFile" uid="uid://2w2faxob1wng" path="res://data/effect_files/1114-mana-firing-03.tres" id="1_5d7jy"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="2_v033l"]
+[ext_resource type="RoseSound" uid="uid://6a6nk0si4lkl" path="res://data/sounds/attack/68-axe-h01.tres" id="3_i6cqx"]
+
+[resource]
+id = 263
+name = "Fire Ring"
+trail_milliseconds = 100
+hit_effect_critical = ExtResource("2_v033l")
+bullet_effect = ExtResource("1_5d7jy")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+hit_sound = ExtResource("3_i6cqx")

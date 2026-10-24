@@ -1,7 +1,7 @@
 use std::{num::NonZeroUsize, sync::Arc, time::Duration};
 
 use rose_data::{EffectData, EffectDatabase, EffectFileId, EffectId, SoundId};
-use rose_file_readers::{stb_column, StbFile, VfsPathBuf, VirtualFilesystem};
+use rose_file_readers::{stb_column, StbFile, VirtualFilesystem};
 
 use crate::data_decoder::IroseEffectBulletMoveType;
 
@@ -63,7 +63,7 @@ pub fn get_effect_database(vfs: &VirtualFilesystem) -> Result<Arc<EffectDatabase
         if path.is_empty() {
             effect_files.push(None);
         } else {
-            effect_files.push(Some(VfsPathBuf::new(path)));
+            effect_files.push(Some(path.to_string()));
         }
     }
 

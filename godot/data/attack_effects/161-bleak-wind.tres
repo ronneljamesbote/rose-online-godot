@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://cfy2gkrx0meur"]
+
+[ext_resource type="RoseEffectFile" uid="uid://ds5bejdgyhmwr" path="res://data/effect_files/85-bow-fire-01.tres" id="1_tkxmy"]
+[ext_resource type="RoseSound" uid="uid://cqnwh1xgiobdt" path="res://data/sounds/skill/1121-action-mana02.tres" id="2_fqu1u"]
+[ext_resource type="RoseEffectFile" uid="uid://c5t53gjuxdsbe" path="res://data/effect_files/95-bow-fire-hit01.tres" id="3_3ro5m"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_xbw34"]
+[ext_resource type="RoseSound" uid="uid://6a6nk0si4lkl" path="res://data/sounds/attack/68-axe-h01.tres" id="5_b55hh"]
+
+[resource]
+id = 161
+name = "Bleak Wind"
+hit_effect = ExtResource("3_3ro5m")
+hit_effect_critical = ExtResource("4_xbw34")
+bullet_effect = ExtResource("1_tkxmy")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_fqu1u")
+hit_sound = ExtResource("5_b55hh")

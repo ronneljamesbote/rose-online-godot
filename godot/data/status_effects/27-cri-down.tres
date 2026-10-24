@@ -1,5 +1,7 @@
 [gd_resource type="RoseStatusEffect" format=3 uid="uid://c2rtprilamnwj"]
 
+[ext_resource type="RoseEffectFile" uid="uid://4ph4p4yjf5po" path="res://data/effect_files/169-criticaldown-01.tres" id="1_cmp9a"]
+
 [resource]
 id = 27
 name = "Cri Down"
@@ -8,5 +10,5 @@ start_message = "Critical hit rate has returned to normal."
 status_effect_type = "DecreaseCritical"
 can_be_reapplied = true
 cleared_by = "ClearBad"
-effect_file_id = 169
+effect = ExtResource("1_cmp9a")
 icon_id = 27

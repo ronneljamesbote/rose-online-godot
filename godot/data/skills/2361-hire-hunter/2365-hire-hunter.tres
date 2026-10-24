@@ -3,6 +3,7 @@
 [ext_resource type="RoseSkill" uid="uid://2a0cp225ot7g" path="res://data/skills/2101-hire-mercenary/2101-hire-mercenary.tres" id="1_h3ia2"]
 [ext_resource type="RoseMonster" uid="uid://b5uojfd34ivpr" path="res://data/monsters/865-mercenary-hunter.tres" id="2_id0gl"]
 [ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="3_wy77u"]
+[ext_resource type="RoseAttackEffect" uid="uid://wxxpgg57j08t" path="res://data/attack_effects/221-berserk.tres" id="4_e6stv"]
 
 [resource]
 id = 2365
@@ -24,6 +25,6 @@ summon_monster = ExtResource("2_id0gl")
 casting_motion_id = 118
 casting_repeat_motion_id = 138
 action_motion_id = 155
-bullet_effect_id = 221
+bullet_effect = ExtResource("4_e6stv")
 bullet_point = 3
 bullet_fire_sound = ExtResource("3_wy77u")

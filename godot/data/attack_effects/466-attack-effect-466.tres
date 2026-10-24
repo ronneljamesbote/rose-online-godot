@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://dnybsq7klj8ah"]
+
+[ext_resource type="RoseEffectFile" uid="uid://0sjbn3oblgl7" path="res://data/effect_files/1337-bandy-skill-02.tres" id="1_ymeau"]
+[ext_resource type="RoseSound" uid="uid://cqnwh1xgiobdt" path="res://data/sounds/skill/1121-action-mana02.tres" id="2_mv1r2"]
+[ext_resource type="RoseEffectFile" uid="uid://citqbls1oug01" path="res://data/effect_files/1501-status-skill-01.tres" id="3_8ddll"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_lynm8"]
+[ext_resource type="RoseSound" uid="uid://6a6nk0si4lkl" path="res://data/sounds/attack/68-axe-h01.tres" id="5_bn133"]
+
+[resource]
+id = 466
+name = "attack effect 466"
+hit_effect = ExtResource("3_8ddll")
+hit_effect_critical = ExtResource("4_lynm8")
+bullet_effect = ExtResource("1_ymeau")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_mv1r2")
+hit_sound = ExtResource("5_bn133")

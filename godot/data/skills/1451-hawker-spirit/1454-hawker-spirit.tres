@@ -2,6 +2,9 @@
 
 [ext_resource type="RoseSkill" uid="uid://bjn20q7e2j8oo" path="res://data/skills/1461-combat-mastery/1461-combat-mastery.tres" id="1_e8pr6"]
 [ext_resource type="RoseStatusEffect" uid="uid://bx5l0d2v6jf1u" path="res://data/status_effects/24-atk-accuracy-up.tres" id="2_awei8"]
+[ext_resource type="RoseEffectFile" uid="uid://bv41ketysp2p" path="res://data/effect_files/1754-self-casting-01.tres" id="3_1ho0e"]
+[ext_resource type="RoseEffectFile" uid="uid://b4f1t17hmgcmv" path="res://data/effect_files/1763-self-rotate-01.tres" id="4_qzl50"]
+[ext_resource type="RoseEffectFile" uid="uid://huc1lgwxotrj" path="res://data/effect_files/1771-self-skill-01.tres" id="5_ojgdm"]
 
 [resource]
 id = 1454
@@ -27,9 +30,9 @@ warp_zone = 20
 warp_x = 35000
 casting_motion_id = 114
 casting_repeat_motion_id = 134
-casting_effect_1 = 1754
-casting_effect_2 = 1763
+casting_effect_1 = ExtResource("3_1ho0e")
+casting_effect_2 = ExtResource("4_qzl50")
 casting_effect_2_point = 3
-casting_effect_3 = 1771
+casting_effect_3 = ExtResource("5_ojgdm")
 casting_effect_3_point = 3
 action_motion_id = 153

@@ -1,6 +1,9 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://oebibt2q23mj"]
 
 [ext_resource type="RoseStatusEffect" uid="uid://0p3o4l6jqxs5" path="res://data/status_effects/21-def-down.tres" id="1_6t1lt"]
+[ext_resource type="RoseEffectFile" uid="uid://dpv6vsra8ebsl" path="res://data/effect_files/1320-scope-01.tres" id="2_7vhol"]
+[ext_resource type="RoseEffectFile" uid="uid://dqbdv35ygbj55" path="res://data/effect_files/1315-tyrant-skill-01.tres" id="3_olvj6"]
+[ext_resource type="RoseEffectFile" uid="uid://datmsj7fgcoav" path="res://data/effect_files/1310-runa-hit-02.tres" id="4_vtjuy"]
 
 [resource]
 id = 3011
@@ -22,7 +25,7 @@ warp_zone = 19
 warp_x = 20000
 warp_y = 20000
 casting_motion_id = 8
-casting_effect_3 = 1320
-casting_effect_4 = 1315
+casting_effect_3 = ExtResource("2_7vhol")
+casting_effect_4 = ExtResource("3_olvj6")
 action_motion_id = 9
-hit_effect_file_id = 1310
+hit_effect = ExtResource("4_vtjuy")

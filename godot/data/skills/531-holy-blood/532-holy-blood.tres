@@ -1,6 +1,9 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://b36ttl4s40o26"]
 
 [ext_resource type="RoseSound" uid="uid://d286ibyhdvhre" path="res://data/sounds/attack/86-gun-d02.tres" id="1_cfiyf"]
+[ext_resource type="RoseEffectFile" uid="uid://qdf6cagi0ydf" path="res://data/effect_files/1753-handicap-casting-01.tres" id="2_cljp9"]
+[ext_resource type="RoseEffectFile" uid="uid://buhdboioxtfms" path="res://data/effect_files/1607-skill-bloodshower-01.tres" id="3_xq5e4"]
+[ext_resource type="RoseEffectFile" uid="uid://wv36bdk6kw6y" path="res://data/effect_files/1035-leap-hit-01.tres" id="4_m5dnb"]
 
 [resource]
 id = 532
@@ -24,9 +27,9 @@ harm = 1
 item_make_number = 150
 casting_motion_id = 113
 casting_repeat_motion_id = 133
-casting_effect_1 = 1753
+casting_effect_1 = ExtResource("2_cljp9")
 casting_effect_1_point = 1
-casting_effect_3 = 1607
+casting_effect_3 = ExtResource("3_xq5e4")
 action_motion_id = 176
-hit_effect_file_id = 1035
+hit_effect = ExtResource("4_m5dnb")
 hit_sound = ExtResource("1_cfiyf")

@@ -1,5 +1,8 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://vedb3n4h2esk"]
 
+[ext_resource type="RoseEffectFile" uid="uid://cafvdfvcybplf" path="res://data/effect_files/210-casting-01.tres" id="1_6ab56"]
+[ext_resource type="RoseEffectFile" uid="uid://b7myivbone3oc" path="res://data/effect_files/161-healing-01.tres" id="2_axk3x"]
+
 [resource]
 id = 106
 name = "Disillusion"
@@ -19,8 +22,8 @@ action_mode = "Restore"
 damage_type = "NaturalMagic"
 success_ratio = 100
 casting_motion_id = 62
-casting_effect_1 = 210
+casting_effect_1 = ExtResource("1_6ab56")
 casting_effect_1_point = 3
-casting_effect_2 = 161
+casting_effect_2 = ExtResource("2_axk3x")
 casting_effect_2_point = 3
 action_motion_id = 75

@@ -3,6 +3,12 @@
 [ext_resource type="RoseSkill" uid="uid://c0jsu0md0eg0s" path="res://data/skills/821-meditation/821-meditation.tres" id="1_hns2h"]
 [ext_resource type="RoseStatusEffect" uid="uid://culcqkn47b52" path="res://data/status_effects/16-haste-attack.tres" id="2_ybm8q"]
 [ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="3_g2l6t"]
+[ext_resource type="RoseEffectFile" uid="uid://yw24ne7tcqbs" path="res://data/effect_files/1752-pay-casting-01.tres" id="4_j43d3"]
+[ext_resource type="RoseEffectFile" uid="uid://dbn0ruiuvbore" path="res://data/effect_files/1761-pay-rotate-01.tres" id="5_hne25"]
+[ext_resource type="RoseEffectFile" uid="uid://be83x7cdnu8sb" path="res://data/effect_files/1769-pay-skill-01.tres" id="6_hq13e"]
+[ext_resource type="RoseEffectFile" uid="uid://dhqy6c8o3exce" path="res://data/effect_files/1-empty-rhit01.tres" id="7_7ys2i"]
+[ext_resource type="RoseAttackEffect" uid="uid://wxxpgg57j08t" path="res://data/attack_effects/221-berserk.tres" id="8_7s8ia"]
+[ext_resource type="RoseEffectFile" uid="uid://citqbls1oug01" path="res://data/effect_files/1501-status-skill-01.tres" id="9_d0wat"]
 
 [resource]
 id = 1203
@@ -30,15 +36,15 @@ warp_zone = 24
 warp_x = 22000
 casting_motion_id = 112
 casting_repeat_motion_id = 132
-casting_effect_1 = 1752
+casting_effect_1 = ExtResource("4_j43d3")
 casting_effect_1_point = 1
-casting_effect_2 = 1761
+casting_effect_2 = ExtResource("5_hne25")
 casting_effect_2_point = 1
-casting_effect_3 = 1769
+casting_effect_3 = ExtResource("6_hq13e")
 casting_effect_3_point = 0
-casting_effect_4 = 1
+casting_effect_4 = ExtResource("7_7ys2i")
 action_motion_id = 151
-bullet_effect_id = 221
+bullet_effect = ExtResource("8_7s8ia")
 bullet_point = 3
 bullet_fire_sound = ExtResource("3_g2l6t")
-hit_effect_file_id = 1501
+hit_effect = ExtResource("9_d0wat")

@@ -2,6 +2,9 @@
 
 [ext_resource type="RoseSkill" uid="uid://bq3y5qgvgutyj" path="res://data/skills/201-melee-weapon-mastery/201-melee-weapon-mastery.tres" id="1_cxfex"]
 [ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="2_vyiuj"]
+[ext_resource type="RoseEffectFile" uid="uid://s8yrioubd614" path="res://data/effect_files/1031-sequence-casting-01.tres" id="3_thvpw"]
+[ext_resource type="RoseEffectFile" uid="uid://cma1g46iffpr" path="res://data/effect_files/371-image-cut-02.tres" id="4_ov6tf"]
+[ext_resource type="RoseEffectFile" uid="uid://dieqauqas1fos" path="res://data/effect_files/373-image-cut-04.tres" id="5_2r6nn"]
 
 [resource]
 id = 329
@@ -31,10 +34,10 @@ item_make_number = 82
 casting_motion_id = 111
 casting_motion_speed = 148
 casting_repeat_motion_id = 131
-casting_effect_1 = 1031
+casting_effect_1 = ExtResource("3_thvpw")
 action_motion_id = 91
 action_motion_speed = 172
-hit_effect_file_id = 371
+hit_effect = ExtResource("4_ov6tf")
 hit_sound = ExtResource("2_vyiuj")
-hit_dummy_effect_1 = 373
+hit_dummy_effect_1 = ExtResource("5_2r6nn")
 hit_dummy_sound_1 = ExtResource("2_vyiuj")

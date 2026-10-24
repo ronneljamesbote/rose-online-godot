@@ -1,0 +1,15 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://bu1jex17gng5u"]
+
+[ext_resource type="RoseEffectFile" uid="uid://dib5quc00vweg" path="res://data/effect_files/1051-bow-firing-01.tres" id="1_s2gkl"]
+[ext_resource type="RoseEffectFile" uid="uid://dxpiywx02a7wh" path="res://data/effect_files/1061-bow-hit-01.tres" id="2_2xam3"]
+[ext_resource type="RoseEffectFile" uid="uid://i7jfpycgbxv8" path="res://data/effect_files/1024-twotool-critical-hit-01.tres" id="3_utxmo"]
+[ext_resource type="RoseSound" uid="uid://6a6nk0si4lkl" path="res://data/sounds/attack/68-axe-h01.tres" id="4_2f2lp"]
+
+[resource]
+id = 157
+name = "attack effect 157"
+hit_effect = ExtResource("2_2xam3")
+hit_effect_critical = ExtResource("3_utxmo")
+bullet_effect = ExtResource("1_s2gkl")
+bullet_move = "Parabola"
+hit_sound = ExtResource("4_2f2lp")

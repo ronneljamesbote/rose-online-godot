@@ -1,5 +1,9 @@
-//! Effects (EFT files): particle systems (PTL) and animated meshes, as one RoseEffect node
-//! that simulates itself and frees itself when everything in it has finished.
+//! Effects as Godot scenes: a `RoseEffect` root with `RoseEffectParticles` (a particle
+//! system, `RoseParticleSystem`, iROSE's PTL file) and `RoseEffectMesh` (an animated mesh)
+//! children, which simulates itself and frees itself when everything in it has finished.
+//! `--import-rose` writes one scene per EFT file (`res://assets/rose/3ddata/effect/*.scn`)
+//! and one particle system per PTL file (`*.particles.res`); without the import the same
+//! scene is built from the client's files when an effect is first shown.
 //! Ported from rose-offline-client's effect_loader.rs, particle_sequence_system.rs,
 //! mesh_animation.rs, transform_animation.rs and effect_system.rs.
 
@@ -7,19 +11,20 @@ use std::{
     cell::{Cell, RefCell},
     collections::HashMap,
     ops::RangeInclusive,
-    rc::Rc,
 };
 
 use godot::{
     classes::{
-        image::Format, multi_mesh::TransformFormat, GeometryInstance3D, INode3D, Image, ImageTexture, MeshInstance3D,
-        MultiMesh, MultiMeshInstance3D, Node3D, QuadMesh, Shader, ShaderMaterial,
+        animation::TrackType, image::Format, multi_mesh::TransformFormat, node::InternalMode, Animation, ArrayMesh,
+        Engine, GeometryInstance3D, INode3D, IResource, Image, ImageTexture, Mesh, MeshInstance3D, MultiMesh,
+        MultiMeshInstance3D, Node3D, PackedScene, QuadMesh, Resource, ResourceLoader, Shader, ShaderMaterial, Texture2D,
     },
+    global::Error,
     prelude::*,
 };
-use rose_file_readers::{EftFile, PtlFile, PtlKeyframeData, PtlUpdateCoords, ZmoChannel, ZmoFile};
+use rose_file_readers::{EftFile, PtlFile, PtlKeyframeData, PtlSequence, PtlUpdateCoords, ZmoChannel, ZmoFile};
 
-use crate::{data, mesh, texture};
+use crate::{assets, data, mesh, texture};
 
 /// ROSE's particle timestep runs 4.8 times faster than real time.
 const PARTICLE_TIME_SCALE: f32 = 4.8;
@@ -28,9 +33,13 @@ thread_local! {
     static RNG: Cell<u64> = Cell::new(0x9E37_79B9_7F4A_7C15 ^ std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH).map_or(1, |d| d.as_nanos() as u64));
     static SHADERS: RefCell<HashMap<ShaderKey, Gd<Shader>>> = RefCell::new(HashMap::new());
-    static PARTICLE_MATERIALS: RefCell<HashMap<(ShaderKey, String, u32, u32, u32), Gd<ShaderMaterial>>> = RefCell::new(HashMap::new());
+    static PARTICLE_MATERIALS: RefCell<HashMap<(ShaderKey, i64, u32, u32, u32), Gd<ShaderMaterial>>> = RefCell::new(HashMap::new());
     static QUAD: RefCell<Option<Gd<QuadMesh>>> = const { RefCell::new(None) };
-    static MESH_ANIMATIONS: RefCell<HashMap<String, Option<Rc<MeshAnimationData>>>> = RefCell::new(HashMap::new());
+    /// What the client's files became when there is no imported copy, by client path.
+    static SCENES: RefCell<HashMap<String, Option<Gd<PackedScene>>>> = RefCell::new(HashMap::new());
+    static PARTICLE_SYSTEMS: RefCell<HashMap<String, Option<Gd<RoseParticleSystem>>>> = RefCell::new(HashMap::new());
+    static MOTIONS: RefCell<HashMap<String, Option<Gd<Animation>>>> = RefCell::new(HashMap::new());
+    static MESH_ANIMATIONS: RefCell<HashMap<String, Option<Gd<RoseMeshAnimation>>>> = RefCell::new(HashMap::new());
 }
 
 fn random() -> f32 {
@@ -233,7 +242,7 @@ impl Clock {
     }
 }
 
-/// Position, rotation and scale keys of a ZMO's first channels (an effect's own motion).
+/// Position, rotation and scale keys of an effect's own motion (a part's `motion`).
 struct TransformAnimation {
     clock: Clock,
     translation: Vec<Vector3>,
@@ -242,26 +251,28 @@ struct TransformAnimation {
 }
 
 impl TransformAnimation {
-    fn load(path: &str, repeat_count: u32) -> Option<Self> {
-        let zmo = data::read_file::<ZmoFile>(path)?;
-        let mut animation = Self {
-            clock: Clock::new(zmo.fps, zmo.num_frames, repeat_count, 0.0),
-            translation: Vec::new(),
-            rotation: Vec::new(),
-            scale: Vec::new(),
-        };
-        for (_, channel) in zmo.channels.iter() {
-            match channel {
-                ZmoChannel::Position(keys) if animation.translation.is_empty() => {
-                    animation.translation = keys.iter().map(|p| Vector3::new(p.x, p.z, -p.y) / 100.0).collect();
-                }
-                ZmoChannel::Rotation(keys) if animation.rotation.is_empty() => {
-                    animation.rotation = keys.iter().map(|r| Quaternion::new(r.x, r.z, -r.y, r.w).normalized()).collect();
-                }
-                ZmoChannel::Scale(keys) if animation.scale.is_empty() => animation.scale = keys.clone(),
-                _ => {}
+    /// The keys of `motion`'s position, rotation and scale tracks, one key per frame.
+    fn from_motion(motion: &Gd<Animation>, repeat_count: u32) -> Option<Self> {
+        let step = motion.get_step();
+        let fps = if step > 0.0 { (1.0 / step).round() as usize } else { 30 };
+        let mut animation = Self { clock: Clock::new(fps, 1, repeat_count, 0.0), translation: Vec::new(), rotation: Vec::new(), scale: Vec::new() };
+        let mut frames = 0;
+        for track in 0..motion.get_track_count() {
+            let keys = motion.track_get_key_count(track);
+            let values = (0..keys).map(|k| motion.track_get_key_value(track, k));
+            match motion.track_get_type(track) {
+                TrackType::POSITION_3D if animation.translation.is_empty() => animation.translation = values.filter_map(|v| v.try_to::<Vector3>().ok()).collect(),
+                TrackType::ROTATION_3D if animation.rotation.is_empty() => animation.rotation = values.filter_map(|v| v.try_to::<Quaternion>().ok()).collect(),
+                TrackType::SCALE_3D if animation.scale.is_empty() => animation.scale = values.filter_map(|v| v.try_to::<Vector3>().ok()).map(|v| v.x).collect(),
+                _ => continue,
             }
+            frames = frames.max(keys as usize);
         }
+        let frames = frames.max((motion.get_length() * fps as f64).round() as usize);
+        if frames == 0 {
+            return None;
+        }
+        animation.clock = Clock::new(fps, frames, repeat_count, 0.0);
         Some(animation)
     }
 
@@ -516,77 +527,656 @@ impl Sequence {
 }
 
 // ---------------------------------------------------------------------------------------
-// Meshes (mesh_animation.rs, zmo_asset_loader.rs's animation texture)
+// The resources an effect scene links: particle systems and baked mesh animations
 
-struct MeshAnimationData {
-    texture: Gd<ImageTexture>,
-    fps: usize,
-    frames: usize,
-    flags: i32,
-    alphas: Vec<f32>,
+/// How a ROSE blend factor is named in the Inspector (the numbers the files store).
+const BLEND_FACTORS: &str = "Zero:1,One:2,Source colour:3,One minus source colour:4,Source alpha:5,One minus source alpha:6,Destination alpha:7,One minus destination alpha:8,Destination colour:9,One minus destination colour:10,Source alpha saturate:11";
+const BLEND_OPS: &str = "Add:1,Subtract:2,Reverse subtract:3,Min:4,Max:5";
+
+/// Gives the blend fields of the effect classes their dropdowns.
+fn blend_hint(property: &mut godot::register::info::PropertyInfo) {
+    let name = property.property_name.to_string();
+    let options = if name.ends_with("_blend") {
+        BLEND_FACTORS
+    } else if name == "blend_op" {
+        BLEND_OPS
+    } else {
+        return;
+    };
+    property.hint_info.hint = godot::register::info::PropertyHint::ENUM;
+    property.hint_info.hint_string = options.into();
 }
 
-/// Bakes a vertex animation ZMO into a float texture: one row per vertex, one column per
-/// frame of position + uv.x, then (with normals or uvs) one per frame of normal + uv.y.
-fn mesh_animation(path: &str) -> Option<Rc<MeshAnimationData>> {
-    let key = path.to_ascii_uppercase();
-    if let Some(cached) = MESH_ANIMATIONS.with_borrow(|cache| cache.get(&key).cloned()) {
-        return cached;
+/// A particle system: what an effect's `RoseEffectParticles` emits (iROSE's PTL file). Each
+/// sequence is one emitter with its own texture. Several effects can share one system, so a
+/// change here shows in all of them; to change it for one effect only, make it unique
+/// (right-click the field) first. The imported ones are
+/// `res://assets/rose/3ddata/effect/particles/*.particles.res`.
+#[derive(GodotClass)]
+#[class(tool, base=Resource, init)]
+pub struct RoseParticleSystem {
+    /// The emitters, drawn together.
+    #[export]
+    sequences: Array<Option<Gd<RoseParticleSequence>>>,
+    base: Base<Resource>,
+}
+
+/// One emitter of a particle system: how many particles it sends out, where, how long they
+/// live, and how they change over their life (the keyframes). Distances are in centimetres
+/// and times in ROSE particle time, which runs 4.8 times faster than real seconds, as in the
+/// PTL files. A value given as a range (x to y) is picked at random in it for each particle.
+#[derive(GodotClass)]
+#[class(tool, base=Resource, init)]
+pub struct RoseParticleSequence {
+    /// For finding it only.
+    #[export]
+    name: GString,
+    /// The particles' picture. With an atlas (columns and rows above 1) a particle shows one
+    /// cell of it, picked by the Texture keyframes.
+    #[export_group(name = "Look")]
+    #[export]
+    texture: Option<Gd<Texture2D>>,
+    /// Cells across the texture.
+    #[export(range = (1.0, 16.0, 1.0, or_greater))]
+    #[init(val = 1)]
+    atlas_columns: i64,
+    /// Cells down the texture.
+    #[export(range = (1.0, 16.0, 1.0, or_greater))]
+    #[init(val = 1)]
+    atlas_rows: i64,
+    /// How a particle faces: the camera, lying flat, or upright turning about the vertical
+    /// axis only.
+    #[export(enum = (FaceCamera = 0, Flat = 1, Upright = 2))]
+    facing: i64,
+    /// The source blend factor (with the destination factor and operation: how the particles
+    /// mix with what is behind them; Source alpha + One is the usual glow).
+    #[export]
+    #[init(val = 5)]
+    source_blend: i64,
+    /// The destination blend factor.
+    #[export]
+    #[init(val = 6)]
+    destination_blend: i64,
+    /// The blend operation.
+    #[export]
+    #[init(val = 1)]
+    blend_op: i64,
+
+    /// The most particles alive at once.
+    #[export_group(name = "Emitting")]
+    #[export(range = (0.0, 1000.0, 1.0, or_greater))]
+    #[init(val = 10)]
+    particles: i64,
+    /// Particles sent out per second (picked between x and y).
+    #[export]
+    emit_rate: Vector2,
+    /// How many times the emitter sends out its `particles` before it stops (0 = forever).
+    #[export]
+    loops: i64,
+    /// How long a particle lives (particle time).
+    #[export]
+    life: Vector2,
+    /// Where a particle starts, sideways (x to y centimetres from the emitter).
+    #[export]
+    emit_radius_x: Vector2,
+    /// Where a particle starts, forwards.
+    #[export]
+    emit_radius_y: Vector2,
+    /// Where a particle starts, upwards.
+    #[export]
+    emit_radius_z: Vector2,
+    /// Pull on the particles sideways.
+    #[export]
+    gravity_x: Vector2,
+    /// Pull forwards.
+    #[export]
+    gravity_y: Vector2,
+    /// Pull upwards (negative falls).
+    #[export]
+    gravity_z: Vector2,
+    /// What the particles move with: World (they stay where they were sent out when the
+    /// effect moves), LocalPosition (they follow the effect's position but not its turning),
+    /// Local (they follow both).
+    #[export(enum = (World = 0, LocalPosition = 1, Local = 2))]
+    #[init(val = 2)]
+    coordinates: i64,
+    /// How the particles change over their life, in order of time.
+    #[export_group(name = "Keyframes")]
+    #[export]
+    keyframes: Array<Option<Gd<RoseParticleKeyframe>>>,
+    base: Base<Resource>,
+}
+
+#[godot_api]
+impl IResource for RoseParticleSequence {
+    fn on_validate_property(&self, property: &mut godot::register::info::PropertyInfo) {
+        blend_hint(property);
     }
-    let baked = data::read_file::<ZmoFile>(path).and_then(|zmo| {
-        let mut vertices = 0;
-        let mut flags = 0;
-        for (vertex, channel) in zmo.channels.iter() {
-            vertices = vertices.max(*vertex as usize + 1);
-            flags |= match channel {
-                ZmoChannel::Position(_) => 1,
-                ZmoChannel::Normal(_) => 2,
-                ZmoChannel::UV1(_) => 4,
-                ZmoChannel::Alpha(_) => 8,
-                _ => 0,
-            };
+}
+
+/// One change to a particle at a moment of its life: set a value (picked in the range), or,
+/// with `fade`, move the value there gradually from the keyframe of the same kind before.
+#[derive(GodotClass)]
+#[class(tool, base=Resource, init)]
+pub struct RoseParticleKeyframe {
+    /// What it changes. Size: `value_1` is the width and `value_2` the height (centimetres).
+    /// Red, Green, Blue, Alpha: 0 to 1. Colour: `value_1` to `value_4` are red, green, blue
+    /// and alpha. Velocity: centimetres per particle time; VelocityXYZ uses `value_1` to
+    /// `value_3`. Texture: the atlas cell. Rotation: degrees. Timer: jumps the particle's
+    /// clock to `value_1` (to repeat keyframes).
+    #[export(enum = (Size = 1, Timer = 2, Red = 3, Green = 4, Blue = 5, Alpha = 6, Colour = 7, VelocityX = 8, VelocityY = 9, VelocityZ = 10, VelocityXYZ = 11, Texture = 12, Rotation = 13))]
+    #[init(val = 1)]
+    kind: i64,
+    /// When, in particle time from the particle's start (picked between x and y).
+    #[export]
+    start_time: Vector2,
+    /// Move the value here gradually from the keyframe of the same kind before, instead of
+    /// setting it at once.
+    #[export]
+    fade: bool,
+    /// The first value (x to y).
+    #[export]
+    value_1: Vector2,
+    /// The second value, for Size, Colour and VelocityXYZ.
+    #[export]
+    value_2: Vector2,
+    /// The third value, for Colour and VelocityXYZ.
+    #[export]
+    value_3: Vector2,
+    /// The fourth value, for Colour (alpha).
+    #[export]
+    value_4: Vector2,
+    base: Base<Resource>,
+}
+
+/// A mesh's vertex animation (an effect ZMO file), baked by the import into an image: one
+/// row per vertex, one column per frame of position and uv. Not edited by hand; make a new
+/// one by importing a ZMO.
+#[derive(GodotClass)]
+#[class(tool, base=Resource, init)]
+pub struct RoseMeshAnimation {
+    /// Frames per second.
+    #[export]
+    #[init(val = 30)]
+    frames_per_second: i64,
+    /// Frames in the animation.
+    #[export]
+    frames: i64,
+    /// What it animates: 1 position, 2 normal, 4 uv, 8 alpha (added together).
+    #[export]
+    channels: i64,
+    /// The transparency of each frame (with channel 8).
+    #[export]
+    alphas: PackedFloat32Array,
+    /// The baked frames.
+    #[export]
+    image: Option<Gd<Image>>,
+    texture: Option<Gd<ImageTexture>>,
+    base: Base<Resource>,
+}
+
+impl RoseMeshAnimation {
+    fn texture(&mut self) -> Option<Gd<ImageTexture>> {
+        if self.texture.is_none() {
+            self.texture = self.image.as_ref().and_then(ImageTexture::create_from_image);
         }
-        let frames = zmo.num_frames.max(1);
-        let stride = if flags & 6 != 0 { frames * 2 } else { frames };
-        let mut pixels = vec![0.0f32; vertices.max(1) * stride * 4];
-        let mut alphas = Vec::new();
-        for (vertex, channel) in zmo.channels.iter() {
-            let row = *vertex as usize * stride * 4;
-            match channel {
-                ZmoChannel::Position(values) => {
-                    for (x, p) in values.iter().enumerate().take(frames) {
-                        pixels[row + x * 4..row + x * 4 + 3].copy_from_slice(&[p.x / 100.0, p.z / 100.0, -p.y / 100.0]);
-                    }
+        self.texture.clone()
+    }
+}
+
+/// Bakes a vertex animation ZMO into a float image: one row per vertex, one column per
+/// frame of position + uv.x, then (with normals or uvs) one per frame of normal + uv.y.
+fn bake_mesh_animation(zmo: &ZmoFile) -> Option<Gd<RoseMeshAnimation>> {
+    let mut vertices = 0;
+    let mut flags = 0;
+    for (vertex, channel) in zmo.channels.iter() {
+        vertices = vertices.max(*vertex as usize + 1);
+        flags |= match channel {
+            ZmoChannel::Position(_) => 1,
+            ZmoChannel::Normal(_) => 2,
+            ZmoChannel::UV1(_) => 4,
+            ZmoChannel::Alpha(_) => 8,
+            _ => 0,
+        };
+    }
+    let frames = zmo.num_frames.max(1);
+    let stride = if flags & 6 != 0 { frames * 2 } else { frames };
+    let mut pixels = vec![0.0f32; vertices.max(1) * stride * 4];
+    let mut alphas = Vec::new();
+    for (vertex, channel) in zmo.channels.iter() {
+        let row = *vertex as usize * stride * 4;
+        match channel {
+            ZmoChannel::Position(values) => {
+                for (x, p) in values.iter().enumerate().take(frames) {
+                    pixels[row + x * 4..row + x * 4 + 3].copy_from_slice(&[p.x / 100.0, p.z / 100.0, -p.y / 100.0]);
                 }
-                ZmoChannel::Normal(values) => {
-                    for (x, n) in values.iter().enumerate().take(frames) {
-                        let o = row + (frames + x) * 4;
-                        pixels[o..o + 3].copy_from_slice(&[n.x, n.z, -n.y]);
-                    }
+            }
+            ZmoChannel::Normal(values) => {
+                for (x, n) in values.iter().enumerate().take(frames) {
+                    let o = row + (frames + x) * 4;
+                    pixels[o..o + 3].copy_from_slice(&[n.x, n.z, -n.y]);
                 }
-                ZmoChannel::UV1(values) => {
-                    for (x, uv) in values.iter().enumerate().take(frames) {
-                        pixels[row + x * 4 + 3] = uv.x;
-                        pixels[row + (frames + x) * 4 + 3] = uv.y;
-                    }
+            }
+            ZmoChannel::UV1(values) => {
+                for (x, uv) in values.iter().enumerate().take(frames) {
+                    pixels[row + x * 4 + 3] = uv.x;
+                    pixels[row + (frames + x) * 4 + 3] = uv.y;
                 }
-                ZmoChannel::Alpha(values) => alphas = values.clone(),
-                _ => {}
+            }
+            ZmoChannel::Alpha(values) => alphas = values.clone(),
+            _ => {}
+        }
+    }
+    let bytes: Vec<u8> = pixels.iter().flat_map(|f| f.to_le_bytes()).collect();
+    let image = Image::create_from_data(stride as i32, vertices.max(1) as i32, false, Format::RGBAF, &PackedByteArray::from(bytes.as_slice()))?;
+    let mut baked = RoseMeshAnimation::new_gd();
+    {
+        let mut b = baked.bind_mut();
+        b.frames_per_second = zmo.fps as i64;
+        b.frames = frames as i64;
+        b.channels = flags as i64;
+        b.alphas = PackedFloat32Array::from(alphas.as_slice());
+        b.image = Some(image);
+    }
+    Some(baked)
+}
+
+/// An effect's own motion (a ZMO's first position, rotation and scale channels) as a Godot
+/// animation with one key per frame, in Godot's axes and metres.
+fn motion_from_zmo(zmo: &ZmoFile) -> Gd<Animation> {
+    let mut motion = Animation::new_gd();
+    let fps = zmo.fps.max(1) as f64;
+    motion.set_step((1.0 / fps) as f32);
+    motion.set_length(zmo.num_frames.max(1) as f64 / fps);
+    let (mut position, mut rotation, mut scale) = (false, false, false);
+    for (_, channel) in zmo.channels.iter() {
+        match channel {
+            ZmoChannel::Position(keys) if !position => {
+                position = true;
+                let track = motion.add_track(TrackType::POSITION_3D);
+                motion.track_set_path(track, ".");
+                for (i, p) in keys.iter().enumerate() {
+                    motion.position_track_insert_key(track, i as f64 / fps, Vector3::new(p.x, p.z, -p.y) / 100.0);
+                }
+            }
+            ZmoChannel::Rotation(keys) if !rotation => {
+                rotation = true;
+                let track = motion.add_track(TrackType::ROTATION_3D);
+                motion.track_set_path(track, ".");
+                for (i, r) in keys.iter().enumerate() {
+                    motion.rotation_track_insert_key(track, i as f64 / fps, Quaternion::new(r.x, r.z, -r.y, r.w).normalized());
+                }
+            }
+            ZmoChannel::Scale(keys) if !scale => {
+                scale = true;
+                let track = motion.add_track(TrackType::SCALE_3D);
+                motion.track_set_path(track, ".");
+                for (i, s) in keys.iter().enumerate() {
+                    motion.scale_track_insert_key(track, i as f64 / fps, Vector3::splat(*s));
+                }
+            }
+            _ => {}
+        }
+    }
+    motion
+}
+
+fn range(v: Vector2) -> RangeInclusive<f32> {
+    v.x..=v.y
+}
+
+fn vector(r: &RangeInclusive<f32>) -> Vector2 {
+    Vector2::new(*r.start(), *r.end())
+}
+
+impl RoseParticleKeyframe {
+    fn data(&self) -> Option<PtlKeyframeData> {
+        let (a, b, c, d) = (range(self.value_1), range(self.value_2), range(self.value_3), range(self.value_4));
+        Some(match self.kind {
+            1 => PtlKeyframeData::SizeXY(a, b),
+            2 => PtlKeyframeData::Timer(a),
+            3 => PtlKeyframeData::Red(a),
+            4 => PtlKeyframeData::Green(a),
+            5 => PtlKeyframeData::Blue(a),
+            6 => PtlKeyframeData::Alpha(a),
+            7 => PtlKeyframeData::ColourRGBA(a, b, c, d),
+            8 => PtlKeyframeData::VelocityX(a),
+            9 => PtlKeyframeData::VelocityY(a),
+            10 => PtlKeyframeData::VelocityZ(a),
+            11 => PtlKeyframeData::VelocityXYZ(a, b, c),
+            12 => PtlKeyframeData::Texture(a),
+            13 => PtlKeyframeData::Rotation(a),
+            _ => return None,
+        })
+    }
+
+    fn from_ptl(start_time: &RangeInclusive<f32>, fade: bool, data: &PtlKeyframeData) -> Gd<Self> {
+        let (kind, values): (i64, Vec<&RangeInclusive<f32>>) = match data {
+            PtlKeyframeData::SizeXY(x, y) => (1, vec![x, y]),
+            PtlKeyframeData::Timer(v) => (2, vec![v]),
+            PtlKeyframeData::Red(v) => (3, vec![v]),
+            PtlKeyframeData::Green(v) => (4, vec![v]),
+            PtlKeyframeData::Blue(v) => (5, vec![v]),
+            PtlKeyframeData::Alpha(v) => (6, vec![v]),
+            PtlKeyframeData::ColourRGBA(r, g, b, a) => (7, vec![r, g, b, a]),
+            PtlKeyframeData::VelocityX(v) => (8, vec![v]),
+            PtlKeyframeData::VelocityY(v) => (9, vec![v]),
+            PtlKeyframeData::VelocityZ(v) => (10, vec![v]),
+            PtlKeyframeData::VelocityXYZ(x, y, z) => (11, vec![x, y, z]),
+            PtlKeyframeData::Texture(v) => (12, vec![v]),
+            PtlKeyframeData::Rotation(v) => (13, vec![v]),
+        };
+        let mut keyframe = Self::new_gd();
+        {
+            let mut k = keyframe.bind_mut();
+            k.kind = kind;
+            k.start_time = vector(start_time);
+            k.fade = fade;
+            let value = |i: usize| values.get(i).map_or(Vector2::ZERO, |r| vector(r));
+            k.value_1 = value(0);
+            k.value_2 = value(1);
+            k.value_3 = value(2);
+            k.value_4 = value(3);
+        }
+        keyframe
+    }
+}
+
+impl RoseParticleSequence {
+    fn from_ptl(sequence: &PtlSequence) -> Gd<Self> {
+        let mut out = Self::new_gd();
+        {
+            let mut s = out.bind_mut();
+            s.name = sequence.name.trim_matches('"').into();
+            s.texture = texture::load_texture(&sequence.texture_path.path().to_string_lossy());
+            s.atlas_columns = sequence.texture_atlas_cols as i64;
+            s.atlas_rows = sequence.texture_atlas_rows as i64;
+            s.facing = sequence.align_type as i64;
+            s.source_blend = sequence.src_blend_mode as i64;
+            s.destination_blend = sequence.dst_blend_mode as i64;
+            s.blend_op = sequence.blend_op as i64;
+            s.particles = sequence.num_particles as i64;
+            s.emit_rate = vector(&sequence.emit_rate);
+            s.loops = sequence.num_loops as i64;
+            s.life = vector(&sequence.life);
+            s.emit_radius_x = vector(&sequence.emit_radius_x);
+            s.emit_radius_y = vector(&sequence.emit_radius_y);
+            s.emit_radius_z = vector(&sequence.emit_radius_z);
+            s.gravity_x = vector(&sequence.gravity_x);
+            s.gravity_y = vector(&sequence.gravity_y);
+            s.gravity_z = vector(&sequence.gravity_z);
+            s.coordinates = match sequence.update_coords {
+                PtlUpdateCoords::World => 0,
+                PtlUpdateCoords::LocalPosition => 1,
+                PtlUpdateCoords::Local => 2,
+            };
+            for keyframe in sequence.keyframes.iter() {
+                s.keyframes.push(Some(&RoseParticleKeyframe::from_ptl(&keyframe.start_time, keyframe.fade, &keyframe.data)));
             }
         }
-        let bytes: Vec<u8> = pixels.iter().flat_map(|f| f.to_le_bytes()).collect();
-        let image = Image::create_from_data(stride as i32, vertices.max(1) as i32, false, Format::RGBAF, &PackedByteArray::from(bytes.as_slice()))?;
-        let texture = ImageTexture::create_from_image(&image)?;
-        Some(Rc::new(MeshAnimationData { texture, fps: zmo.fps, frames, flags, alphas }))
-    });
-    MESH_ANIMATIONS.with_borrow_mut(|cache| cache.insert(key, baked.clone()));
-    baked
+        out
+    }
+}
+
+impl RoseParticleSystem {
+    fn from_ptl(ptl: &PtlFile) -> Gd<Self> {
+        let mut out = Self::new_gd();
+        for sequence in ptl.sequences.iter() {
+            out.bind_mut().sequences.push(Some(&RoseParticleSequence::from_ptl(sequence)));
+        }
+        out
+    }
+}
+
+// ---------------------------------------------------------------------------------------
+// The parts of an effect scene
+
+/// A particle system placed in an effect (an EFT particle entry). Move and turn the node to
+/// move and turn it; the particles start after `start_delay`.
+#[derive(GodotClass)]
+#[class(tool, base=Node3D, init)]
+pub struct RoseEffectParticles {
+    /// What it emits: drag a `RoseParticleSystem` in (the imported ones are
+    /// `res://assets/rose/3ddata/effect/particles/*.particles.res`), or make a new one here.
+    #[export]
+    particle_system: Option<Gd<RoseParticleSystem>>,
+    /// Milliseconds after the effect starts before it begins.
+    #[export(range = (0.0, 10000.0, 1.0, or_greater, suffix = "ms"))]
+    start_delay: i64,
+    /// A motion the emitter follows (position, rotation and scale tracks on "."), empty = it
+    /// stays where the node is. The imported effects keep their ZMO motions here.
+    #[export]
+    motion: Option<Gd<Animation>>,
+    /// How many times the motion plays (0 = forever); the particle system stops with it.
+    #[export]
+    #[init(val = 1)]
+    motion_repeat_count: i64,
+    base: Base<Node3D>,
+}
+
+/// A mesh placed in an effect (an EFT mesh entry), optionally with a vertex animation and a
+/// motion. Move and turn the node to move and turn it.
+#[derive(GodotClass)]
+#[class(tool, base=Node3D, init)]
+pub struct RoseEffectMesh {
+    /// The mesh (an imported `.mesh` or one of our own).
+    #[export_group(name = "Look")]
+    #[export]
+    mesh: Option<Gd<Mesh>>,
+    /// Its texture.
+    #[export]
+    texture: Option<Gd<Texture2D>>,
+    /// Drawn with transparency (with `source_blend` ... deciding how).
+    #[export]
+    alpha_enabled: bool,
+    /// Pixels whose alpha is low are not drawn (for an opaque mesh).
+    #[export]
+    alpha_test: bool,
+    /// Both sides of each triangle are drawn.
+    #[export]
+    two_sided: bool,
+    /// Hidden behind things in front of it.
+    #[export]
+    #[init(val = true)]
+    depth_test: bool,
+    /// Hides what is drawn behind it later.
+    #[export]
+    depth_write: bool,
+    /// The source blend factor (how the mesh mixes with what is behind it).
+    #[export]
+    #[init(val = 5)]
+    source_blend: i64,
+    /// The destination blend factor.
+    #[export]
+    #[init(val = 6)]
+    destination_blend: i64,
+    /// The blend operation.
+    #[export]
+    #[init(val = 1)]
+    blend_op: i64,
+    /// The mesh's vertex animation (empty = it doesn't change shape; the mesh then shows for
+    /// as long as the effect lasts).
+    #[export_group(name = "Animation")]
+    #[export]
+    mesh_animation: Option<Gd<RoseMeshAnimation>>,
+    /// How many times the vertex animation plays (0 = forever).
+    #[export]
+    repeat_count: i64,
+    /// Milliseconds after the effect starts before the vertex animation begins (the mesh is
+    /// hidden until then).
+    #[export(range = (0.0, 10000.0, 1.0, or_greater, suffix = "ms"))]
+    start_delay: i64,
+    /// A motion the mesh follows (position, rotation and scale tracks on "."), empty = it
+    /// stays where the node is.
+    #[export]
+    motion: Option<Gd<Animation>>,
+    /// How many times the motion plays (0 = forever).
+    #[export]
+    #[init(val = 1)]
+    motion_repeat_count: i64,
+    base: Base<Node3D>,
+}
+
+#[godot_api]
+impl INode3D for RoseEffectMesh {
+    fn on_validate_property(&self, property: &mut godot::register::info::PropertyInfo) {
+        blend_hint(property);
+    }
+}
+
+/// Adds `node` to `parent` as an internal child: shown while playing, never saved with the
+/// scene (the editor plays effect scenes too).
+fn add_internal(parent: &mut Gd<Node3D>, node: &Gd<Node3D>) {
+    parent.add_child_ex(node).internal(InternalMode::FRONT).done();
+}
+
+impl RoseEffectParticles {
+    fn start(&self, sequences: &mut Vec<Sequence>) {
+        let Some(system) = self.particle_system.as_ref() else { return };
+        let mut holder = self.to_gd().upcast::<Node3D>();
+        for sequence in system.bind().sequences.iter_shared().flatten() {
+            let sequence = sequence.bind();
+            let mut anchor = Node3D::new_alloc();
+            add_internal(&mut holder, &anchor);
+            let key = ShaderKey {
+                particle: true,
+                mesh_animation: false,
+                blend: resolve_blend(sequence.source_blend as u32, sequence.destination_blend as u32, sequence.blend_op as u32, false),
+                mask: false,
+                two_sided: true,
+                z_write: false,
+                z_test: true,
+            };
+            let billboard = match sequence.facing { 1 => 1, 2 => 2, _ => 0 };
+            let (cols, rows) = (sequence.atlas_columns.max(1) as u32, sequence.atlas_rows.max(1) as u32);
+            let texture_id = sequence.texture.as_ref().map_or(0, |t| t.instance_id().to_i64());
+            let material = PARTICLE_MATERIALS.with_borrow_mut(|cache| {
+                cache
+                    .entry((key, texture_id, billboard, cols, rows))
+                    .or_insert_with(|| {
+                        let mut material = ShaderMaterial::new_gd();
+                        material.set_shader(&shader(key));
+                        if let Some(texture) = sequence.texture.as_ref() {
+                            material.set_shader_parameter("base_texture", &texture.to_variant());
+                        }
+                        material.set_shader_parameter("billboard", &(billboard as i32).to_variant());
+                        material.set_shader_parameter("atlas_size", &Vector2::new(cols as f32, rows as f32).to_variant());
+                        material
+                    })
+                    .clone()
+            });
+            let num_particles = sequence.particles.max(0) as usize;
+            let mut multimesh = MultiMesh::new_gd();
+            multimesh.set_transform_format(TransformFormat::TRANSFORM_3D);
+            multimesh.set_use_colors(true);
+            multimesh.set_use_custom_data(true);
+            multimesh.set_mesh(&quad());
+            multimesh.set_instance_count(num_particles.max(1) as i32);
+            multimesh.set_visible_instance_count(0);
+            let mut instance = MultiMeshInstance3D::new_alloc();
+            instance.set_multimesh(&multimesh);
+            instance.set_as_top_level(true);
+            instance.set_material_override(&material);
+            instance.upcast_mut::<GeometryInstance3D>().set_cast_shadows_setting(godot::classes::geometry_instance_3d::ShadowCastingSetting::OFF);
+            add_internal(&mut anchor, &instance.clone().upcast());
+
+            let mut keyframes: Vec<Keyframe> = sequence
+                .keyframes
+                .iter_shared()
+                .flatten()
+                .filter_map(|k| {
+                    let k = k.bind();
+                    Some(Keyframe { start_time: pick(&range(k.start_time)), fade: k.fade, next_fade: None, data: k.data()? })
+                })
+                .collect();
+            keyframes.sort_by(|a, b| a.start_time.total_cmp(&b.start_time));
+            for i in 0..keyframes.len() {
+                keyframes[i].next_fade = (i + 1..keyframes.len()).find(|&j| {
+                    keyframes[j].fade && std::mem::discriminant(&keyframes[i].data) == std::mem::discriminant(&keyframes[j].data)
+                });
+            }
+            let animation = self.motion.as_ref().and_then(|m| TransformAnimation::from_motion(m, self.motion_repeat_count.max(0) as u32));
+            sequences.push(Sequence {
+                emit_rate: range(sequence.emit_rate),
+                life: range(sequence.life),
+                emit_radius: [range(sequence.emit_radius_x), range(sequence.emit_radius_y), range(sequence.emit_radius_z)],
+                gravity: [range(sequence.gravity_x), range(sequence.gravity_y), range(sequence.gravity_z)],
+                keyframes,
+                update_coords: match sequence.coordinates {
+                    0 => PtlUpdateCoords::World,
+                    1 => PtlUpdateCoords::LocalPosition,
+                    _ => PtlUpdateCoords::Local,
+                },
+                num_loops: sequence.loops as i32,
+                num_particles,
+                start_delay: self.start_delay.max(0) as f32 / 1000.0,
+                emit_counter: 0.0,
+                num_emitted: 0,
+                finished: false,
+                particles: Vec::with_capacity(num_particles),
+                anchor,
+                animation,
+                instance,
+                multimesh,
+            });
+        }
+    }
+}
+
+impl RoseEffectMesh {
+    fn start(&self) -> Option<EffectMesh> {
+        let mesh = self.mesh.as_ref()?;
+        let mesh = match mesh.clone().try_cast::<ArrayMesh>() {
+            Ok(array) => mesh::rigid(&array).upcast::<Mesh>(),
+            Err(other) => other,
+        };
+        let mut animation = self.mesh_animation.clone();
+        let blended = self.alpha_enabled || !self.depth_write;
+        let key = ShaderKey {
+            particle: false,
+            mesh_animation: animation.is_some(),
+            blend: resolve_blend(self.source_blend as u32, self.destination_blend as u32, self.blend_op as u32, !blended),
+            mask: !blended && self.alpha_test,
+            two_sided: self.two_sided,
+            z_write: self.depth_write,
+            z_test: self.depth_test,
+        };
+        let mut material = ShaderMaterial::new_gd();
+        material.set_shader(&shader(key));
+        if let Some(texture) = self.texture.as_ref() {
+            material.set_shader_parameter("base_texture", &texture.to_variant());
+        }
+        let mut instance = MeshInstance3D::new_alloc();
+        instance.set_mesh(&mesh);
+        instance.set_material_override(&material);
+        instance.upcast_mut::<GeometryInstance3D>().set_cast_shadows_setting(godot::classes::geometry_instance_3d::ShadowCastingSetting::OFF);
+        let animation = animation.as_mut().and_then(|data| {
+            let texture = data.bind_mut().texture()?;
+            let d = data.bind();
+            material.set_shader_parameter("animation_texture", &texture.to_variant());
+            material.set_shader_parameter("animation_flags", &(d.channels as i32).to_variant());
+            material.set_shader_parameter("animation_frames", &(d.frames as i32).to_variant());
+            // Vertex animation moves the mesh beyond its rest bounds.
+            instance.set_extra_cull_margin(20.0);
+            let clock = Clock::new(d.frames_per_second.max(1) as usize, d.frames.max(1) as usize, self.repeat_count.max(0) as u32, self.start_delay.max(0) as f32 / 1000.0);
+            Some((clock, d.alphas.as_slice().to_vec()))
+        });
+        // A mesh waiting for its start delay is not drawn yet.
+        if animation.as_ref().is_some_and(|(clock, _)| clock.delay > 0.0) {
+            instance.set_visible(false);
+        }
+        let mut holder = self.to_gd().upcast::<Node3D>();
+        add_internal(&mut holder, &instance.clone().upcast());
+        let motion = self.motion.as_ref().and_then(|m| TransformAnimation::from_motion(m, self.motion_repeat_count.max(0) as u32));
+        Some(EffectMesh { node: instance.upcast(), material, animation, motion })
+    }
 }
 
 struct EffectMesh {
     node: Gd<Node3D>,
     material: Gd<ShaderMaterial>,
-    animation: Option<(Clock, Rc<MeshAnimationData>)>,
+    /// The vertex animation's clock and the alpha of each frame.
+    animation: Option<(Clock, Vec<f32>)>,
     motion: Option<TransformAnimation>,
 }
 
@@ -599,7 +1189,7 @@ impl EffectMesh {
         if let Some(motion) = self.motion.as_mut() {
             motion.apply(delta, &mut self.node);
         }
-        let Some((clock, data)) = self.animation.as_mut() else { return };
+        let Some((clock, alphas)) = self.animation.as_mut() else { return };
         if clock.completed {
             return;
         }
@@ -611,7 +1201,7 @@ impl EffectMesh {
         m.set_shader_parameter("current_frame", &(clock.current as i32).to_variant());
         m.set_shader_parameter("next_frame", &(clock.next as i32).to_variant());
         m.set_shader_parameter("next_weight", &clock.fract.to_variant());
-        if let (Some(a), Some(b)) = (data.alphas.get(clock.current), data.alphas.get(clock.next)) {
+        if let (Some(a), Some(b)) = (alphas.get(clock.current), alphas.get(clock.next)) {
             m.set_shader_parameter("animation_alpha", &(a * (1.0 - clock.fract) + b * clock.fract).to_variant());
         }
     }
@@ -620,34 +1210,54 @@ impl EffectMesh {
 // ---------------------------------------------------------------------------------------
 // The node
 
-/// One EFT effect. Add it to the scene, call `load`, place it; it plays and frees itself
-/// once every particle system and mesh animation in it has finished (effects that loop
-/// forever, like torches in a zone, never do).
+/// Seconds the editor waits before playing a finished effect again, and the longest it lets
+/// one play (effects that loop forever) before starting it over with any changes.
+const EDITOR_PAUSE: f64 = 0.6;
+const EDITOR_REPLAY_AFTER: f64 = 12.0;
+
+/// An effect: the root of an effect scene, whose `RoseEffectParticles` and `RoseEffectMesh`
+/// children are its parts. In the game it plays once it is added and frees itself when every
+/// part has finished (effects that loop forever, like torches in a zone, never do). Opened in
+/// the editor it plays over and over, so changes to its parts show the next time round.
+/// The imported effects are `res://assets/rose/3ddata/effect/*.scn`; a scene of our own in
+/// `res://assets/ours/` at the same path is shown instead, and the effect resources
+/// (`RoseEffectFile`, `res://data/effect_files/`) link either.
 #[derive(GodotClass)]
-#[class(base=Node3D, init)]
+#[class(tool, base=Node3D, init)]
 pub struct RoseEffect {
     base: Base<Node3D>,
     sequences: Vec<Sequence>,
     meshes: Vec<EffectMesh>,
+    started: bool,
     loaded: bool,
+    /// Editor only: seconds since the effect started, and since it finished.
+    playing_for: f64,
+    finished_for: f64,
 }
 
 #[godot_api]
 impl INode3D for RoseEffect {
+    fn ready(&mut self) {
+        if !self.started {
+            self.start();
+        }
+    }
+
     fn process(&mut self, delta: f64) {
         if !self.loaded || !self.base().is_visible_in_tree() {
             return;
         }
-        let delta = delta as f32;
-        for sequence in self.sequences.iter_mut() {
-            sequence.update(delta);
-        }
-        for mesh in self.meshes.iter_mut() {
-            mesh.update(delta);
-        }
-        let parts = self.sequences.len() + self.meshes.len();
-        let done = self.sequences.iter().filter(|s| s.done()).count() + self.meshes.iter().filter(|m| m.done()).count();
-        if parts == 0 || done == parts {
+        let editor = Engine::singleton().is_editor_hint();
+        let done = self.advance(delta as f32);
+        if editor {
+            self.playing_for += delta;
+            if done {
+                self.finished_for += delta;
+            }
+            if self.finished_for > EDITOR_PAUSE || self.playing_for > EDITOR_REPLAY_AFTER {
+                self.start();
+            }
+        } else if done {
             self.loaded = false;
             self.base_mut().queue_free();
         }
@@ -656,14 +1266,16 @@ impl INode3D for RoseEffect {
 
 #[godot_api]
 impl RoseEffect {
-    /// Loads an EFT file by path (e.g. 3DDATA/EFFECT/LEVELUP_01.EFT). Returns false if it
-    /// is missing or empty.
+    /// Loads an effect by its path: an effect scene (`res://assets/rose/3ddata/effect/x.scn`,
+    /// our own copy in `res://assets/ours/` first) or an EFT file in the client data
+    /// (`3DDATA/EFFECT/LEVELUP_01.EFT`, shown from its imported scene when there is one).
+    /// Returns false if it is missing or empty.
     #[func]
     fn load(&mut self, path: GString) -> bool {
         self.load_path(&path.to_string())
     }
 
-    /// Loads an effect by its FILE_EFFECT.STB row.
+    /// Loads an effect by its number (a `RoseEffectFile`'s id, iROSE's FILE_EFFECT.STB row).
     #[func]
     fn load_id(&mut self, file_id: i32) -> bool {
         match effect_file(file_id) {
@@ -681,161 +1293,253 @@ impl RoseEffect {
 
 impl RoseEffect {
     pub fn load_path(&mut self, path: &str) -> bool {
-        let Some(eft) = data::read_file::<EftFile>(path) else { return false };
-
-        for eft_particle in eft.particles.iter() {
-            let Some(ptl) = data::read_file::<PtlFile>(&eft_particle.particle_file.path().to_string_lossy()) else { continue };
-            let mut holder = Node3D::new_alloc();
-            holder.set_position(Vector3::new(eft_particle.position.x, eft_particle.position.z, -eft_particle.position.y) / 100.0);
-            holder.set_basis(rose_rotation(eft_particle.yaw, eft_particle.pitch, eft_particle.roll));
-            self.base_mut().add_child(&holder);
-
-            for sequence in ptl.sequences {
-                let mut anchor = Node3D::new_alloc();
-                holder.add_child(&anchor);
-                let key = ShaderKey {
-                    particle: true,
-                    mesh_animation: false,
-                    blend: resolve_blend(sequence.src_blend_mode, sequence.dst_blend_mode, sequence.blend_op, false),
-                    mask: false,
-                    two_sided: true,
-                    z_write: false,
-                    z_test: true,
-                };
-                let texture_path = sequence.texture_path.path().to_string_lossy().to_string();
-                let billboard = match sequence.align_type { 1 => 1, 2 => 2, _ => 0 };
-                let (cols, rows) = (sequence.texture_atlas_cols.max(1), sequence.texture_atlas_rows.max(1));
-                let material = PARTICLE_MATERIALS.with_borrow_mut(|cache| {
-                    cache
-                        .entry((key, texture_path.to_ascii_uppercase(), billboard, cols, rows))
-                        .or_insert_with(|| {
-                            let mut material = ShaderMaterial::new_gd();
-                            material.set_shader(&shader(key));
-                            if let Some(texture) = texture::load_texture(&texture_path) {
-                                material.set_shader_parameter("base_texture", &texture.to_variant());
-                            }
-                            material.set_shader_parameter("billboard", &(billboard as i32).to_variant());
-                            material.set_shader_parameter("atlas_size", &Vector2::new(cols as f32, rows as f32).to_variant());
-                            material
-                        })
-                        .clone()
-                });
-                let num_particles = sequence.num_particles.max(0) as usize;
-                let mut multimesh = MultiMesh::new_gd();
-                multimesh.set_transform_format(TransformFormat::TRANSFORM_3D);
-                multimesh.set_use_colors(true);
-                multimesh.set_use_custom_data(true);
-                multimesh.set_mesh(&quad());
-                multimesh.set_instance_count(num_particles.max(1) as i32);
-                multimesh.set_visible_instance_count(0);
-                let mut instance = MultiMeshInstance3D::new_alloc();
-                instance.set_multimesh(&multimesh);
-                instance.set_as_top_level(true);
-                instance.set_material_override(&material);
-                instance.upcast_mut::<GeometryInstance3D>().set_cast_shadows_setting(godot::classes::geometry_instance_3d::ShadowCastingSetting::OFF);
-                anchor.add_child(&instance);
-
-                let mut keyframes: Vec<Keyframe> = sequence
-                    .keyframes
-                    .into_iter()
-                    .map(|k| Keyframe { start_time: pick(&k.start_time), fade: k.fade, next_fade: None, data: k.data })
-                    .collect();
-                keyframes.sort_by(|a, b| a.start_time.total_cmp(&b.start_time));
-                for i in 0..keyframes.len() {
-                    keyframes[i].next_fade = (i + 1..keyframes.len()).find(|&j| {
-                        keyframes[j].fade && std::mem::discriminant(&keyframes[i].data) == std::mem::discriminant(&keyframes[j].data)
-                    });
-                }
-                let animation = eft_particle
-                    .animation_file
-                    .as_ref()
-                    .and_then(|path| TransformAnimation::load(&path.path().to_string_lossy(), eft_particle.animation_repeat_count));
-                self.sequences.push(Sequence {
-                    emit_rate: sequence.emit_rate,
-                    life: sequence.life,
-                    emit_radius: [sequence.emit_radius_x, sequence.emit_radius_y, sequence.emit_radius_z],
-                    gravity: [sequence.gravity_x, sequence.gravity_y, sequence.gravity_z],
-                    keyframes,
-                    update_coords: sequence.update_coords,
-                    num_loops: sequence.num_loops,
-                    num_particles,
-                    start_delay: eft_particle.start_delay as f32 / 1000.0,
-                    emit_counter: 0.0,
-                    num_emitted: 0,
-                    finished: false,
-                    particles: Vec::with_capacity(num_particles),
-                    anchor,
-                    animation,
-                    instance,
-                    multimesh,
-                });
-            }
+        let Some(scene) = effect_scene(path) else { return false };
+        let Some(mut instance) = scene.instantiate() else { return false };
+        // The scene's parts become this node's.
+        for mut child in instance.get_children().iter_shared() {
+            child.set_owner(Gd::null_arg());
+            instance.remove_child(&child);
+            self.base_mut().add_child(&child);
         }
-
-        for eft_mesh in eft.meshes.iter() {
-            let Some(effect_mesh) = mesh::load_mesh(&eft_mesh.mesh_file.path().to_string_lossy(), false) else { continue };
-            let mut holder = Node3D::new_alloc();
-            holder.set_position(Vector3::new(eft_mesh.position.x, eft_mesh.position.z, -eft_mesh.position.y) / 100.0);
-            holder.set_basis(rose_rotation(eft_mesh.yaw, eft_mesh.pitch, eft_mesh.roll));
-            self.base_mut().add_child(&holder);
-
-            let animation = eft_mesh.mesh_animation_file.as_ref().and_then(|path| mesh_animation(&path.path().to_string_lossy()));
-            let blended = eft_mesh.alpha_enabled || !eft_mesh.depth_write_enabled;
-            let key = ShaderKey {
-                particle: false,
-                mesh_animation: animation.is_some(),
-                blend: resolve_blend(eft_mesh.src_blend_factor, eft_mesh.dst_blend_factor, eft_mesh.blend_op, !blended),
-                mask: !blended && eft_mesh.alpha_test_enabled,
-                two_sided: eft_mesh.two_sided,
-                z_write: eft_mesh.depth_write_enabled,
-                z_test: eft_mesh.depth_test_enabled,
-            };
-            let mut material = ShaderMaterial::new_gd();
-            material.set_shader(&shader(key));
-            if let Some(texture) = texture::load_texture(&eft_mesh.mesh_texture_file.path().to_string_lossy()) {
-                material.set_shader_parameter("base_texture", &texture.to_variant());
-            }
-            let mut instance = MeshInstance3D::new_alloc();
-            instance.set_mesh(&effect_mesh);
-            instance.set_material_override(&material);
-            instance.upcast_mut::<GeometryInstance3D>().set_cast_shadows_setting(godot::classes::geometry_instance_3d::ShadowCastingSetting::OFF);
-            let animation = animation.map(|data| {
-                material.set_shader_parameter("animation_texture", &data.texture.to_variant());
-                material.set_shader_parameter("animation_flags", &data.flags.to_variant());
-                material.set_shader_parameter("animation_frames", &(data.frames as i32).to_variant());
-                // Vertex animation moves the mesh beyond its rest bounds.
-                instance.set_extra_cull_margin(20.0);
-                let clock = Clock::new(data.fps, data.frames, eft_mesh.repeat_count, eft_mesh.start_delay as f32 / 1000.0);
-                (clock, data)
-            });
-            // A mesh waiting for its start delay is not drawn yet.
-            if animation.as_ref().is_some_and(|(clock, _)| clock.delay > 0.0) {
-                instance.set_visible(false);
-            }
-            holder.add_child(&instance);
-            let motion = eft_mesh
-                .animation_file
-                .as_ref()
-                .and_then(|path| TransformAnimation::load(&path.path().to_string_lossy(), eft_mesh.animation_repeat_count));
-            self.meshes.push(EffectMesh { node: instance.upcast(), material, animation, motion });
-        }
-
-        self.loaded = !self.sequences.is_empty() || !self.meshes.is_empty();
+        instance.free();
+        self.start();
         self.loaded
+    }
+
+    /// Starts (or starts over) every part.
+    fn start(&mut self) {
+        self.stop();
+        self.started = true;
+        let mut sequences = Vec::new();
+        let mut meshes = Vec::new();
+        for child in self.base().get_children().iter_shared() {
+            if let Ok(particles) = child.clone().try_cast::<RoseEffectParticles>() {
+                particles.bind().start(&mut sequences);
+            } else if let Ok(part) = child.try_cast::<RoseEffectMesh>() {
+                meshes.extend(part.bind().start());
+            }
+        }
+        self.sequences = sequences;
+        self.meshes = meshes;
+        self.playing_for = 0.0;
+        self.finished_for = 0.0;
+        self.loaded = !self.sequences.is_empty() || !self.meshes.is_empty();
+    }
+
+    /// Removes what the parts drew.
+    fn stop(&mut self) {
+        for mut sequence in self.sequences.drain(..) {
+            sequence.anchor.queue_free();
+        }
+        for mut mesh in self.meshes.drain(..) {
+            mesh.node.queue_free();
+        }
+    }
+
+    /// Plays every part on by `delta` seconds; true when all have finished.
+    fn advance(&mut self, delta: f32) -> bool {
+        for sequence in self.sequences.iter_mut() {
+            sequence.update(delta);
+        }
+        for mesh in self.meshes.iter_mut() {
+            mesh.update(delta);
+        }
+        let parts = self.sequences.len() + self.meshes.len();
+        let done = self.sequences.iter().filter(|s| s.done()).count() + self.meshes.iter().filter(|m| m.done()).count();
+        parts == 0 || done == parts
     }
 }
 
-/// An effect file path by FILE_EFFECT.STB row.
+// ---------------------------------------------------------------------------------------
+// Effect scenes: imported, our own, or made from the client's files
+
+/// Bumped when the imported effect scenes or particle systems change, so the next import
+/// redoes them.
+pub const EFFECT_IMPORT_VERSION: i64 = 1;
+
+/// The extensions an effect scene may have in the asset folders (the imported `.scn`
+/// first), and a particle system.
+pub const SCENE_EXTENSIONS: &[&str] = &["scn", "tscn"];
+pub const PARTICLE_EXTENSIONS: &[&str] = &["particles.res", "particles.tres"];
+
+/// An effect file path by its number (FILE_EFFECT.STB row, now `RoseEffectFile`).
 pub fn effect_file(file_id: i32) -> Option<String> {
     let id = rose_data::EffectFileId::new(u16::try_from(file_id).ok()?)?;
-    Some(data::get()?.effects.get_effect_file(id)?.path().to_string_lossy().to_string())
+    Some(data::get()?.effects.get_effect_file(id)?.to_string())
 }
 
-/// Drops the cached shaders, materials and animation textures while the engine runs.
+/// The scene an effect path names: a Godot path (in the asset folders, our own copy first)
+/// or a client EFT file (its imported scene, our own copy first); without one, a scene made
+/// from the client's EFT file. None when there is nothing.
+pub fn effect_scene(path: &str) -> Option<Gd<PackedScene>> {
+    if path.trim().is_empty() {
+        return None;
+    }
+    let inner = path.strip_prefix(assets::ROSE).or_else(|| path.strip_prefix(assets::OURS));
+    if inner.is_none() && path.starts_with("res://") {
+        let mut loader = ResourceLoader::singleton();
+        return loader.exists(path).then(|| loader.load(path)).flatten().and_then(|r| r.try_cast::<PackedScene>().ok());
+    }
+    let stem = assets::stem(inner.unwrap_or(path));
+    if let Some(scene) = assets::load_stem::<PackedScene>(&stem, SCENE_EXTENSIONS) {
+        return Some(scene);
+    }
+    let client = format!("{stem}.eft");
+    let key = client.to_ascii_uppercase();
+    if let Some(cached) = SCENES.with_borrow(|cache| cache.get(&key).cloned()) {
+        return cached;
+    }
+    let scene = data::read_file::<EftFile>(&client).and_then(|eft| pack(build_effect(&eft, &stem, false)));
+    if scene.is_none() {
+        godot_warn!("rose: could not load effect {path}");
+    }
+    SCENES.with_borrow_mut(|cache| cache.insert(key, scene.clone()));
+    scene
+}
+
+/// A particle system by its client PTL path: our own or the imported one, else made from the
+/// client's file (kept for the next effect).
+fn particle_system(path: &str) -> Option<Gd<RoseParticleSystem>> {
+    if let Some(system) = assets::load_stem::<RoseParticleSystem>(&assets::stem(path), PARTICLE_EXTENSIONS) {
+        return Some(system);
+    }
+    let key = path.to_ascii_uppercase();
+    if let Some(cached) = PARTICLE_SYSTEMS.with_borrow(|cache| cache.get(&key).cloned()) {
+        return cached;
+    }
+    let system = data::read_file::<PtlFile>(path).map(|ptl| RoseParticleSystem::from_ptl(&ptl));
+    PARTICLE_SYSTEMS.with_borrow_mut(|cache| cache.insert(key, system.clone()));
+    system
+}
+
+fn cached<T: GodotClass>(
+    cache: &'static std::thread::LocalKey<RefCell<HashMap<String, Option<Gd<T>>>>>,
+    path: &str,
+    make: impl FnOnce() -> Option<Gd<T>>,
+) -> Option<Gd<T>> {
+    let key = path.to_ascii_uppercase();
+    if let Some(found) = cache.with_borrow(|c| c.get(&key).cloned()) {
+        return found;
+    }
+    let made = make();
+    cache.with_borrow_mut(|c| c.insert(key, made.clone()));
+    made
+}
+
+/// The parts of an EFT file as an effect scene's root (`RoseEffect`, named after `stem`'s
+/// file) with its part nodes, each owned by the root. `import` links the imported particle
+/// systems (which must be there) and leaves out what isn't imported; otherwise what isn't
+/// imported is made from the client's files.
+pub fn build_effect(eft: &EftFile, stem: &str, import: bool) -> Gd<Node3D> {
+    let mut root = RoseEffect::new_alloc().upcast::<Node3D>();
+    root.set_name(stem.rsplit('/').next().unwrap_or("Effect"));
+    let rose_transform = |position: &rose_file_readers::types::Vec3<f32>, yaw: f32, pitch: f32, roll: f32| {
+        Transform3D::new(rose_rotation(yaw, pitch, roll), Vector3::new(position.x, position.z, -position.y) / 100.0)
+    };
+    let motion = |path: &Option<rose_file_readers::VfsPathBuf>| {
+        let path = path.as_ref()?.path().to_string_lossy().to_string();
+        cached(&MOTIONS, &path, || data::read_file::<ZmoFile>(&path).map(|zmo| motion_from_zmo(&zmo)))
+    };
+    for (i, entry) in eft.particles.iter().enumerate() {
+        let ptl = entry.particle_file.path().to_string_lossy().to_string();
+        let system = if import {
+            assets::load_stem::<RoseParticleSystem>(&assets::stem(&ptl), PARTICLE_EXTENSIONS)
+        } else {
+            particle_system(&ptl)
+        };
+        let Some(system) = system else { continue };
+        let mut part = RoseEffectParticles::new_alloc();
+        part.set_name(&format!("Particles{i}"));
+        part.set_transform(rose_transform(&entry.position, entry.yaw, entry.pitch, entry.roll));
+        {
+            let mut p = part.bind_mut();
+            p.particle_system = Some(system);
+            p.start_delay = entry.start_delay as i64;
+            p.motion = motion(&entry.animation_file);
+            p.motion_repeat_count = entry.animation_repeat_count as i64;
+        }
+        root.add_child(&part);
+        part.set_owner(&root);
+    }
+    for (i, entry) in eft.meshes.iter().enumerate() {
+        let mesh_path = entry.mesh_file.path().to_string_lossy().to_string();
+        let mesh = assets::load_mesh(&mesh_path)
+            .or_else(|| if import { None } else { mesh::load_mesh(&mesh_path, false) })
+            .map(|m| m.upcast::<Mesh>());
+        let Some(mesh) = mesh else { continue };
+        let texture_path = entry.mesh_texture_file.path().to_string_lossy().to_string();
+        let texture = if import { assets::load_texture(&texture_path) } else { texture::load_texture(&texture_path) };
+        let mut part = RoseEffectMesh::new_alloc();
+        part.set_name(&format!("Mesh{i}"));
+        part.set_transform(rose_transform(&entry.position, entry.yaw, entry.pitch, entry.roll));
+        {
+            let mut p = part.bind_mut();
+            p.mesh = Some(mesh);
+            p.texture = texture;
+            p.alpha_enabled = entry.alpha_enabled;
+            p.alpha_test = entry.alpha_test_enabled;
+            p.two_sided = entry.two_sided;
+            p.depth_test = entry.depth_test_enabled;
+            p.depth_write = entry.depth_write_enabled;
+            p.source_blend = entry.src_blend_factor as i64;
+            p.destination_blend = entry.dst_blend_factor as i64;
+            p.blend_op = entry.blend_op as i64;
+            p.mesh_animation = entry.mesh_animation_file.as_ref().and_then(|path| {
+                let path = path.path().to_string_lossy().to_string();
+                cached(&MESH_ANIMATIONS, &path, || data::read_file::<ZmoFile>(&path).and_then(|zmo| bake_mesh_animation(&zmo)))
+            });
+            p.repeat_count = entry.repeat_count as i64;
+            p.start_delay = entry.start_delay as i64;
+            p.motion = motion(&entry.animation_file);
+            p.motion_repeat_count = entry.animation_repeat_count as i64;
+        }
+        root.add_child(&part);
+        part.set_owner(&root);
+    }
+    root
+}
+
+/// Packs a built effect into a scene (and frees the nodes). None when it has no parts.
+fn pack(root: Gd<Node3D>) -> Option<Gd<PackedScene>> {
+    let parts = root.get_child_count();
+    let mut scene = PackedScene::new_gd();
+    let packed = parts > 0 && scene.pack(&root) == Error::OK;
+    root.free();
+    packed.then_some(scene)
+}
+
+/// Writes the imported particle system of a PTL file (`target`, a `.particles.res`).
+pub fn import_particle_system(ptl_path: &str, target: &str) -> bool {
+    match data::read_file::<PtlFile>(ptl_path) {
+        Some(ptl) => assets::save(RoseParticleSystem::from_ptl(&ptl).upcast(), target),
+        None => false,
+    }
+}
+
+/// Writes the imported scene of an EFT file (`target`, a `.scn`), linking the imported
+/// meshes, textures and particle systems. Whether it was saved; None when the file can't be
+/// read or shows nothing (no scene is written).
+pub fn import_effect(eft_path: &str, target: &str) -> Option<bool> {
+    let Some(eft) = data::read_file::<EftFile>(eft_path) else {
+        godot_warn!("rose: effect {eft_path} can't be read; left out");
+        return None;
+    };
+    let Some(scene) = pack(build_effect(&eft, &assets::stem(eft_path), true)) else {
+        godot_warn!("rose: effect {eft_path} has nothing to show; left out");
+        return None;
+    };
+    Some(assets::save(scene.upcast::<Resource>(), target))
+}
+
+/// Drops the cached shaders, materials and effects made from the client's files while the
+/// engine runs.
 pub fn clear_cache() {
     SHADERS.with_borrow_mut(|cache| cache.clear());
     PARTICLE_MATERIALS.with_borrow_mut(|cache| cache.clear());
     QUAD.with_borrow_mut(|quad| *quad = None);
+    SCENES.with_borrow_mut(|cache| cache.clear());
+    PARTICLE_SYSTEMS.with_borrow_mut(|cache| cache.clear());
+    MOTIONS.with_borrow_mut(|cache| cache.clear());
     MESH_ANIMATIONS.with_borrow_mut(|cache| cache.clear());
 }
 
@@ -846,8 +1550,7 @@ pub fn clear_cache() {
 use rose_data::{EffectBulletMoveType, EffectData, EffectId, ItemClass, NpcId, SkillId, SkillType};
 
 fn file_path(id: Option<rose_data::EffectFileId>) -> GString {
-    id.and_then(|id| data::get()?.effects.get_effect_file(id))
-        .map_or(GString::new(), |path| GString::from(path.path().to_string_lossy().as_ref()))
+    id.and_then(|id| data::get()?.effects.get_effect_file(id)).map_or(GString::new(), GString::from)
 }
 
 fn effect_data(id: Option<EffectId>) -> Option<&'static EffectData> {
@@ -891,7 +1594,7 @@ pub struct RoseFx {
 
 #[godot_api]
 impl RoseFx {
-    /// An effect file path by FILE_EFFECT.STB row.
+    /// An effect's path by its number (a `RoseEffectFile`'s id, FILE_EFFECT.STB row).
     #[func]
     fn effect_file(file_id: i32) -> GString {
         effect_file(file_id).map_or(GString::new(), |p| GString::from(p.as_str()))

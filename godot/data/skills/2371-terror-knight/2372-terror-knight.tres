@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseMonster" uid="uid://4efkdxkt6pvb" path="res://data/monsters/872-terror-knight.tres" id="1_aie1h"]
 [ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="2_5i7o0"]
+[ext_resource type="RoseAttackEffect" uid="uid://wxxpgg57j08t" path="res://data/attack_effects/221-berserk.tres" id="3_q6v0n"]
 
 [resource]
 id = 2372
@@ -23,6 +24,6 @@ summon_monster = ExtResource("1_aie1h")
 casting_motion_id = 118
 casting_repeat_motion_id = 138
 action_motion_id = 155
-bullet_effect_id = 221
+bullet_effect = ExtResource("3_q6v0n")
 bullet_point = 3
 bullet_fire_sound = ExtResource("2_5i7o0")

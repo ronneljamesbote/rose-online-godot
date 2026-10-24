@@ -2,6 +2,9 @@
 
 [ext_resource type="RoseSkill" uid="uid://c0jsu0md0eg0s" path="res://data/skills/821-meditation/821-meditation.tres" id="1_f2eh3"]
 [ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="2_zsyny"]
+[ext_resource type="RoseEffectFile" uid="uid://6ffdygcgpano" path="res://data/effect_files/163-healing-03.tres" id="3_e0y89"]
+[ext_resource type="RoseAttackEffect" uid="uid://bn4pxheah3q03" path="res://data/attack_effects/266-resurrection.tres" id="4_y2pnt"]
+[ext_resource type="RoseEffectFile" uid="uid://citqbls1oug01" path="res://data/effect_files/1501-status-skill-01.tres" id="5_26whw"]
 
 [resource]
 id = 1132
@@ -25,9 +28,9 @@ power = 15
 item_make_number = 15
 casting_motion_id = 194
 casting_repeat_motion_id = 194
-casting_effect_3 = 163
+casting_effect_3 = ExtResource("3_e0y89")
 action_motion_id = 195
-bullet_effect_id = 266
+bullet_effect = ExtResource("4_y2pnt")
 bullet_point = 999
 bullet_fire_sound = ExtResource("2_zsyny")
-hit_effect_file_id = 1501
+hit_effect = ExtResource("5_26whw")

@@ -1,6 +1,10 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://w8c3m54crhok"]
 
 [ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="1_qrm16"]
+[ext_resource type="RoseEffectFile" uid="uid://s8yrioubd614" path="res://data/effect_files/1031-sequence-casting-01.tres" id="2_zmul4"]
+[ext_resource type="RoseEffectFile" uid="uid://b3mlxyx58c8hd" path="res://data/effect_files/370-image-cut-01.tres" id="3_hly5b"]
+[ext_resource type="RoseEffectFile" uid="uid://dieqauqas1fos" path="res://data/effect_files/373-image-cut-04.tres" id="4_3jcgc"]
+[ext_resource type="RoseEffectFile" uid="uid://cma1g46iffpr" path="res://data/effect_files/371-image-cut-02.tres" id="5_z1but"]
 
 [resource]
 id = 334
@@ -28,12 +32,12 @@ item_make_number = 60
 casting_motion_id = 111
 casting_motion_speed = 132
 casting_repeat_motion_id = 131
-casting_effect_1 = 1031
+casting_effect_1 = ExtResource("2_zmul4")
 action_motion_id = 92
 action_motion_speed = 118
-hit_effect_file_id = 370
+hit_effect = ExtResource("3_hly5b")
 hit_sound = ExtResource("1_qrm16")
-hit_dummy_effect_1 = 373
+hit_dummy_effect_1 = ExtResource("4_3jcgc")
 hit_dummy_sound_1 = ExtResource("1_qrm16")
-hit_dummy_effect_2 = 371
+hit_dummy_effect_2 = ExtResource("5_z1but")
 hit_dummy_sound_2 = ExtResource("1_qrm16")

@@ -3,6 +3,9 @@
 [ext_resource type="RoseStatusEffect" uid="uid://c43fk10odrqq2" path="res://data/status_effects/15-slow.tres" id="1_hp8dy"]
 [ext_resource type="RoseStatusEffect" uid="uid://dd08udjftntul" path="res://data/status_effects/17-slow-attack.tres" id="2_wp5u7"]
 [ext_resource type="RoseSound" uid="uid://75hketpwmdeo" path="res://data/sounds/skill/133-skill-narc01.tres" id="3_ktb6k"]
+[ext_resource type="RoseEffectFile" uid="uid://cafvdfvcybplf" path="res://data/effect_files/210-casting-01.tres" id="4_l2ada"]
+[ext_resource type="RoseEffectFile" uid="uid://bpw15m5wc0epi" path="res://data/effect_files/212-casting-02.tres" id="5_8dltu"]
+[ext_resource type="RoseAttackEffect" uid="uid://3yn2ydhyyyok" path="res://data/attack_effects/252-divine-lightning.tres" id="6_kv37j"]
 
 [resource]
 id = 2957
@@ -25,10 +28,10 @@ warp_zone = 23
 warp_x = 50000
 warp_y = 35000
 casting_motion_id = 6
-casting_effect_2 = 210
+casting_effect_2 = ExtResource("4_l2ada")
 casting_effect_2_point = 3
-casting_effect_3 = 212
+casting_effect_3 = ExtResource("5_8dltu")
 casting_effect_3_point = 1
 action_motion_id = 7
-bullet_effect_id = 252
+bullet_effect = ExtResource("6_kv37j")
 bullet_fire_sound = ExtResource("3_ktb6k")

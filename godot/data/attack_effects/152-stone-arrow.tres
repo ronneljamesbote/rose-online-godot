@@ -1,0 +1,16 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://dk5lo43u08t6y"]
+
+[ext_resource type="RoseEffectFile" uid="uid://dib5quc00vweg" path="res://data/effect_files/1051-bow-firing-01.tres" id="1_5kdpj"]
+[ext_resource type="RoseEffectFile" uid="uid://dxpiywx02a7wh" path="res://data/effect_files/1061-bow-hit-01.tres" id="2_nlq4o"]
+[ext_resource type="RoseEffectFile" uid="uid://i7jfpycgbxv8" path="res://data/effect_files/1024-twotool-critical-hit-01.tres" id="3_hb6yf"]
+[ext_resource type="RoseSound" uid="uid://6a6nk0si4lkl" path="res://data/sounds/attack/68-axe-h01.tres" id="4_rjlkx"]
+
+[resource]
+id = 152
+name = "Stone Arrow"
+hit_effect = ExtResource("2_nlq4o")
+hit_effect_critical = ExtResource("3_hb6yf")
+bullet_effect = ExtResource("1_5kdpj")
+bullet_move = "Parabola"
+bullet_speed = 3500.0
+hit_sound = ExtResource("4_rjlkx")

@@ -1,0 +1,15 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://18wubal01j7o"]
+
+[ext_resource type="RoseEffectFile" uid="uid://b10om7vf1fu0x" path="res://data/effect_files/1831-snow-firing-02.tres" id="1_xx6rw"]
+[ext_resource type="RoseEffectFile" uid="uid://i7jfpycgbxv8" path="res://data/effect_files/1024-twotool-critical-hit-01.tres" id="2_clydo"]
+[ext_resource type="RoseSound" uid="uid://6a6nk0si4lkl" path="res://data/sounds/attack/68-axe-h01.tres" id="3_r4yl6"]
+
+[resource]
+id = 301
+name = "attack effect 301"
+trail_milliseconds = 100
+hit_effect_critical = ExtResource("2_clydo")
+bullet_effect = ExtResource("1_xx6rw")
+bullet_move = "Linear"
+bullet_speed = 2000.0
+hit_sound = ExtResource("3_r4yl6")

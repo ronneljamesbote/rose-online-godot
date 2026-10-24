@@ -3,6 +3,8 @@
 [ext_resource type="RoseDropTable" uid="uid://bhx7mibqse3os" path="res://data/drop_tables/183-elder-stone-golem.tres" id="1_ndvp8"]
 [ext_resource type="RoseSound" uid="uid://868awwe1cc2c" path="res://data/sounds/mob/251-mob18-h.tres" id="2_cwp9r"]
 [ext_resource type="RoseSound" uid="uid://qg28past5wn0" path="res://data/sounds/mob/250-mob18-d.tres" id="3_ux05h"]
+[ext_resource type="RoseAttackEffect" uid="uid://dirusituyfuud" path="res://data/attack_effects/447-stone-golem.tres" id="4_3kl21"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="5_vqntm"]
 
 [resource]
 id = 165
@@ -24,8 +26,8 @@ ai_file_index = 62
 npc_type_index = 3
 hit_sound_material_type = 2
 hitted_sound = ExtResource("2_cwp9r")
-hand_hit_effect_id = 447
-die_effect_file_id = 1401
+hand_hit_effect = ExtResource("4_3kl21")
+die_effect = ExtResource("5_vqntm")
 die_sound = ExtResource("3_ux05h")
 drop_table = ExtResource("1_ndvp8")
 drop_money_rate = 1

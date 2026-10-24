@@ -1,0 +1,15 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://ch8yet2ryvrhx"]
+
+[ext_resource type="RoseEffectFile" uid="uid://dgi3abksseore" path="res://data/effect_files/1663-hart-firing-01.tres" id="1_ndtkj"]
+[ext_resource type="RoseEffectFile" uid="uid://i7jfpycgbxv8" path="res://data/effect_files/1024-twotool-critical-hit-01.tres" id="2_4luke"]
+[ext_resource type="RoseSound" uid="uid://6a6nk0si4lkl" path="res://data/sounds/attack/68-axe-h01.tres" id="3_vv3jb"]
+
+[resource]
+id = 277
+name = "Heart Hit"
+trail_milliseconds = 100
+hit_effect_critical = ExtResource("2_4luke")
+bullet_effect = ExtResource("1_ndtkj")
+bullet_move = "Linear"
+bullet_speed = 2000.0
+hit_sound = ExtResource("3_vv3jb")

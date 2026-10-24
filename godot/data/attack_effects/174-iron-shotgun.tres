@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://ww0kuxp2uip1"]
+
+[ext_resource type="RoseEffectFile" uid="uid://ctsx6fyakbxdx" path="res://data/effect_files/102-fire-ball-g02.tres" id="1_j7f4p"]
+[ext_resource type="RoseSound" uid="uid://bb6ywn24slw5b" path="res://data/sounds/skill/146-skill-magic08.tres" id="2_s057s"]
+[ext_resource type="RoseEffectFile" uid="uid://jouf1yjphur1" path="res://data/effect_files/130-hit-fireball-01.tres" id="3_5fkk3"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_2xtag"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="5_3ep81"]
+
+[resource]
+id = 174
+name = "Iron Shotgun"
+hit_effect = ExtResource("3_5fkk3")
+hit_effect_critical = ExtResource("4_2xtag")
+bullet_effect = ExtResource("1_j7f4p")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_s057s")
+hit_sound = ExtResource("5_3ep81")

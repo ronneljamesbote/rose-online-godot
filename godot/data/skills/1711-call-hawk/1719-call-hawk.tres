@@ -3,6 +3,7 @@
 [ext_resource type="RoseSkill" uid="uid://dkifnqknypcsv" path="res://data/skills/1441-relax/1441-relax.tres" id="1_dxrmm"]
 [ext_resource type="RoseMonster" uid="uid://lw0d85vreyqx" path="res://data/monsters/889-hawk.tres" id="2_dh2tg"]
 [ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="3_88gfv"]
+[ext_resource type="RoseAttackEffect" uid="uid://wxxpgg57j08t" path="res://data/attack_effects/221-berserk.tres" id="4_ug68h"]
 
 [resource]
 id = 1719
@@ -24,6 +25,6 @@ summon_monster = ExtResource("2_dh2tg")
 casting_motion_id = 118
 casting_repeat_motion_id = 138
 action_motion_id = 155
-bullet_effect_id = 221
+bullet_effect = ExtResource("4_ug68h")
 bullet_point = 3
 bullet_fire_sound = ExtResource("3_88gfv")

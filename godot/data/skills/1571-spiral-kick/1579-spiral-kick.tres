@@ -2,6 +2,9 @@
 
 [ext_resource type="RoseSkill" uid="uid://bjn20q7e2j8oo" path="res://data/skills/1461-combat-mastery/1461-combat-mastery.tres" id="1_5gyw6"]
 [ext_resource type="RoseSound" uid="uid://xtbrcujlnmpo" path="res://data/sounds/skill/1555-point-spin01.tres" id="2_lidm7"]
+[ext_resource type="RoseEffectFile" uid="uid://bkos70jclry3s" path="res://data/effect_files/1764-scope-rotate-01.tres" id="3_6aiac"]
+[ext_resource type="RoseEffectFile" uid="uid://b5yfmnckc3rt4" path="res://data/effect_files/1609-s-spin-attack01.tres" id="4_dj6a3"]
+[ext_resource type="RoseEffectFile" uid="uid://b1laee8axwsgk" path="res://data/effect_files/1121-mana-hit-01.tres" id="5_g8wdh"]
 
 [resource]
 id = 1579
@@ -27,8 +30,8 @@ harm = 1
 item_make_number = 114
 casting_motion_id = 115
 casting_repeat_motion_id = 135
-casting_effect_2 = 1764
-casting_effect_3 = 1609
+casting_effect_2 = ExtResource("3_6aiac")
+casting_effect_3 = ExtResource("4_dj6a3")
 action_motion_id = 212
-hit_effect_file_id = 1121
+hit_effect = ExtResource("5_g8wdh")
 hit_sound = ExtResource("2_lidm7")

@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseDropTable" uid="uid://cus6wexx86gvc" path="res://data/drop_tables/116-flanae.tres" id="1_o663g"]
 [ext_resource type="RoseSound" uid="uid://b447v3sgafwq3" path="res://data/sounds/mob/198-mob05-d.tres" id="2_wws9b"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="3_3f37h"]
 
 [resource]
 id = 41
@@ -23,7 +24,7 @@ death_quest_trigger_name = "902-31"
 npc_type_index = 1
 right_hand_part_index = 1072
 hit_sound_material_type = 1
-die_effect_file_id = 1401
+die_effect = ExtResource("3_3f37h")
 die_sound = ExtResource("2_wws9b")
 drop_table = ExtResource("1_o663g")
 drop_money_rate = 1

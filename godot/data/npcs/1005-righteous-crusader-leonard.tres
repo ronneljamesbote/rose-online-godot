@@ -3,6 +3,7 @@
 [ext_resource type="RoseShopTab" uid="uid://dtwd8v0s1fx4" path="res://data/shop_tabs/217-soldier-skill.tres" id="1_iif3d"]
 [ext_resource type="RoseShopTab" uid="uid://do1kidcxrvx6a" path="res://data/shop_tabs/218-hawker-skill.tres" id="2_i376v"]
 [ext_resource type="RoseShopTab" uid="uid://cieh2kutf3nwp" path="res://data/shop_tabs/219-basic-skill.tres" id="3_2s31t"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="4_61dkk"]
 
 [resource]
 id = 1005
@@ -19,7 +20,7 @@ avoid = 100
 attack_speed = 100
 attack_range = 200
 npc_type_index = 999
-die_effect_file_id = 1401
+die_effect = ExtResource("4_61dkk")
 shop_tab_1 = ExtResource("1_iif3d")
 shop_tab_2 = ExtResource("2_i376v")
 shop_tab_3 = ExtResource("3_2s31t")

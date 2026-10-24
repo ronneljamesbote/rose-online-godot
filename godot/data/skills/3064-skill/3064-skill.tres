@@ -1,6 +1,8 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://b2wsr5xd7up4v"]
 
 [ext_resource type="RoseStatusEffect" uid="uid://urqs1ot2ioov" path="res://data/status_effects/20-def-up.tres" id="1_ubvbq"]
+[ext_resource type="RoseEffectFile" uid="uid://btimqwfj57hk2" path="res://data/effect_files/213-casting-03.tres" id="2_zwj8v"]
+[ext_resource type="RoseEffectFile" uid="uid://dwnb187345xi5" path="res://data/effect_files/5-z-hit-01.tres" id="3_149vq"]
 
 [resource]
 id = 3064
@@ -14,6 +16,6 @@ add_stat_1 = "Defence"
 add_stat_1_rate = 50
 warp_zone = 19
 warp_y = 50000
-casting_effect_3 = 213
-hit_effect_file_id = 5
+casting_effect_3 = ExtResource("2_zwj8v")
+hit_effect = ExtResource("3_149vq")
 hit_effect_point = 3

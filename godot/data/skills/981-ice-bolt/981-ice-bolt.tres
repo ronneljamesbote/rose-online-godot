@@ -3,6 +3,10 @@
 [ext_resource type="RoseJobClass" uid="uid://bkc1lyjomstgg" path="res://data/job_classes/42-muse-job.tres" id="1_xai0b"]
 [ext_resource type="RoseSkill" uid="uid://codmreajjlkwc" path="res://data/skills/841-spell-mastery/841-spell-mastery.tres" id="2_i0xap"]
 [ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="3_hg3sw"]
+[ext_resource type="RoseEffectFile" uid="uid://dsah17k1ph7qw" path="res://data/effect_files/1801-mana-casting-01.tres" id="4_p15b8"]
+[ext_resource type="RoseEffectFile" uid="uid://c5hayox347bkc" path="res://data/effect_files/1811-mana-rotate-01.tres" id="5_nkhv5"]
+[ext_resource type="RoseAttackEffect" uid="uid://cjgtu0rdyv1ro" path="res://data/attack_effects/262-ice-bolt.tres" id="6_3u1q6"]
+[ext_resource type="RoseEffectFile" uid="uid://deul6xbciakfl" path="res://data/effect_files/1123-mana-hit-02.tres" id="7_bl1n6"]
 
 [resource]
 id = 981
@@ -30,11 +34,11 @@ harm = 1
 item_make_number = 60
 casting_motion_id = 101
 casting_repeat_motion_id = 102
-casting_effect_1 = 1801
-casting_effect_2 = 1811
+casting_effect_1 = ExtResource("4_p15b8")
+casting_effect_2 = ExtResource("5_nkhv5")
 casting_effect_2_point = 1
 action_motion_id = 103
-bullet_effect_id = 262
+bullet_effect = ExtResource("6_3u1q6")
 bullet_point = 1
 bullet_fire_sound = ExtResource("3_hg3sw")
-hit_effect_file_id = 1123
+hit_effect = ExtResource("7_bl1n6")

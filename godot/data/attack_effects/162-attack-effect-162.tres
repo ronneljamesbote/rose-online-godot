@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://dbr8o7gbumibs"]
+
+[ext_resource type="RoseEffectFile" uid="uid://d0eciwnd3o074" path="res://data/effect_files/84-fairy-bow-01.tres" id="1_a4v26"]
+[ext_resource type="RoseSound" uid="uid://cqnwh1xgiobdt" path="res://data/sounds/skill/1121-action-mana02.tres" id="2_ee5lg"]
+[ext_resource type="RoseEffectFile" uid="uid://bktjfjcj2fgc2" path="res://data/effect_files/94-fairy-hit-01.tres" id="3_6kr67"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_ruw6v"]
+[ext_resource type="RoseSound" uid="uid://6a6nk0si4lkl" path="res://data/sounds/attack/68-axe-h01.tres" id="5_ggoia"]
+
+[resource]
+id = 162
+name = "attack effect 162"
+hit_effect = ExtResource("3_6kr67")
+hit_effect_critical = ExtResource("4_ruw6v")
+bullet_effect = ExtResource("1_a4v26")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_ee5lg")
+hit_sound = ExtResource("5_ggoia")

@@ -1,6 +1,8 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://nkyykmnstnlv"]
 
 [ext_resource type="RoseStatusEffect" uid="uid://culcqkn47b52" path="res://data/status_effects/16-haste-attack.tres" id="1_st872"]
+[ext_resource type="RoseEffectFile" uid="uid://btimqwfj57hk2" path="res://data/effect_files/213-casting-03.tres" id="2_x5x7m"]
+[ext_resource type="RoseEffectFile" uid="uid://dwnb187345xi5" path="res://data/effect_files/5-z-hit-01.tres" id="3_fvacs"]
 
 [resource]
 id = 2912
@@ -14,6 +16,6 @@ add_stat_1 = "AttackSpeed"
 add_stat_1_value = 30
 warp_zone = 24
 warp_x = 30000
-casting_effect_3 = 213
-hit_effect_file_id = 5
+casting_effect_3 = ExtResource("2_x5x7m")
+hit_effect = ExtResource("3_fvacs")
 hit_effect_point = 3

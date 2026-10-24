@@ -3,6 +3,9 @@
 [ext_resource type="RoseJobClass" uid="uid://b13utty2fjhr8" path="res://data/job_classes/65-raider-job.tres" id="1_5gu5p"]
 [ext_resource type="RoseSkill" uid="uid://snetdougy40b" path="res://data/skills/1831-mana-blood/1831-mana-blood.tres" id="2_ehnth"]
 [ext_resource type="RoseStatusEffect" uid="uid://c2ch5i6r1df36" path="res://data/status_effects/33-camouflage.tres" id="3_t3mca"]
+[ext_resource type="RoseEffectFile" uid="uid://bv41ketysp2p" path="res://data/effect_files/1754-self-casting-01.tres" id="4_sg4nj"]
+[ext_resource type="RoseEffectFile" uid="uid://b4f1t17hmgcmv" path="res://data/effect_files/1763-self-rotate-01.tres" id="5_rceia"]
+[ext_resource type="RoseEffectFile" uid="uid://huc1lgwxotrj" path="res://data/effect_files/1771-self-skill-01.tres" id="6_jjj6v"]
 
 [resource]
 id = 1841
@@ -22,9 +25,9 @@ status_effect_1 = ExtResource("3_t3mca")
 status_effect_seconds = 50
 casting_motion_id = 114
 casting_repeat_motion_id = 134
-casting_effect_1 = 1754
-casting_effect_2 = 1763
+casting_effect_1 = ExtResource("4_sg4nj")
+casting_effect_2 = ExtResource("5_rceia")
 casting_effect_2_point = 3
-casting_effect_3 = 1771
+casting_effect_3 = ExtResource("6_jjj6v")
 casting_effect_3_point = 3
 action_motion_id = 153

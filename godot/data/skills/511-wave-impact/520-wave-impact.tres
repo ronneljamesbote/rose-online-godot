@@ -1,6 +1,9 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://b1wrp5466af86"]
 
 [ext_resource type="RoseSound" uid="uid://c6vygfeu612rx" path="res://data/sounds/skill/139-skill-magic01.tres" id="1_dw9fv"]
+[ext_resource type="RoseEffectFile" uid="uid://bkos70jclry3s" path="res://data/effect_files/1764-scope-rotate-01.tres" id="2_mhk68"]
+[ext_resource type="RoseEffectFile" uid="uid://cc565b7jnsxjl" path="res://data/effect_files/243-holy-sword-01.tres" id="3_j4ydy"]
+[ext_resource type="RoseEffectFile" uid="uid://b1laee8axwsgk" path="res://data/effect_files/1121-mana-hit-01.tres" id="4_z0ara"]
 
 [resource]
 id = 520
@@ -29,8 +32,8 @@ harm = 1
 item_make_number = 240
 casting_motion_id = 115
 casting_repeat_motion_id = 135
-casting_effect_2 = 1764
-casting_effect_3 = 243
+casting_effect_2 = ExtResource("2_mhk68")
+casting_effect_3 = ExtResource("3_j4ydy")
 action_motion_id = 173
-hit_effect_file_id = 1121
+hit_effect = ExtResource("4_z0ara")
 hit_sound = ExtResource("1_dw9fv")

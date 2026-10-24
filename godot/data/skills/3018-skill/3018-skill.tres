@@ -1,6 +1,10 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://c154x6k03xe6"]
 
 [ext_resource type="RoseStatusEffect" uid="uid://b87ditbwhvjba" path="res://data/status_effects/39-dispell.tres" id="1_24g44"]
+[ext_resource type="RoseEffectFile" uid="uid://c78dgxarn7hpk" path="res://data/effect_files/389-stony-skill-01.tres" id="2_ylaw6"]
+[ext_resource type="RoseEffectFile" uid="uid://dpv6vsra8ebsl" path="res://data/effect_files/1320-scope-01.tres" id="3_40hzx"]
+[ext_resource type="RoseEffectFile" uid="uid://d024vki2mudr8" path="res://data/effect_files/1319-husehorn-skill.tres" id="4_inpaj"]
+[ext_resource type="RoseEffectFile" uid="uid://datmsj7fgcoav" path="res://data/effect_files/1310-runa-hit-02.tres" id="5_ai9xa"]
 
 [resource]
 id = 3018
@@ -15,8 +19,8 @@ item_make_number = 80
 success_ratio = 40
 status_effect_1 = ExtResource("1_24g44")
 casting_motion_id = 8
-casting_effect_1 = 389
-casting_effect_3 = 1320
-casting_effect_4 = 1319
+casting_effect_1 = ExtResource("2_ylaw6")
+casting_effect_3 = ExtResource("3_40hzx")
+casting_effect_4 = ExtResource("4_inpaj")
 action_motion_id = 9
-hit_effect_file_id = 1310
+hit_effect = ExtResource("5_ai9xa")

@@ -2,6 +2,9 @@
 
 [ext_resource type="RoseStatusEffect" uid="uid://85qq2h4wdrv4" path="res://data/status_effects/7-poisoned-1.tres" id="1_obe7n"]
 [ext_resource type="RoseSound" uid="uid://c6vygfeu612rx" path="res://data/sounds/skill/139-skill-magic01.tres" id="2_9hjd5"]
+[ext_resource type="RoseEffectFile" uid="uid://bkos70jclry3s" path="res://data/effect_files/1764-scope-rotate-01.tres" id="3_om5bs"]
+[ext_resource type="RoseEffectFile" uid="uid://dhg687c7ms2qj" path="res://data/effect_files/244-twist-01.tres" id="4_7ul0l"]
+[ext_resource type="RoseEffectFile" uid="uid://b1laee8axwsgk" path="res://data/effect_files/1121-mana-hit-01.tres" id="5_luwnw"]
 
 [resource]
 id = 2991
@@ -19,8 +22,8 @@ status_effect_1 = ExtResource("1_obe7n")
 status_effect_seconds = 15
 casting_motion_id = 115
 casting_repeat_motion_id = 135
-casting_effect_2 = 1764
-casting_effect_3 = 244
+casting_effect_2 = ExtResource("3_om5bs")
+casting_effect_3 = ExtResource("4_7ul0l")
 action_motion_id = 172
-hit_effect_file_id = 1121
+hit_effect = ExtResource("5_luwnw")
 hit_sound = ExtResource("2_9hjd5")

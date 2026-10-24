@@ -4,6 +4,9 @@
 [ext_resource type="RoseSkill" uid="uid://pusmnipniy8s" path="res://data/skills/2141-arms-mastery/2141-arms-mastery.tres" id="2_1bpbl"]
 [ext_resource type="RoseSkill" uid="uid://dk3d5sxbpn26h" path="res://data/skills/2241-intensify-weapon/2241-intensify-weapon.tres" id="3_pxbl7"]
 [ext_resource type="RoseSound" uid="uid://c4pyq7wyxrro8" path="res://data/sounds/skill/1551-point-heavy01.tres" id="4_41zhs"]
+[ext_resource type="RoseEffectFile" uid="uid://b2kvgebw3flm4" path="res://data/effect_files/1041-heavy-casting-01.tres" id="5_ocghv"]
+[ext_resource type="RoseEffectFile" uid="uid://ctbpjcwyxsbuj" path="res://data/effect_files/1042-heavy-rotate-01.tres" id="6_jiq5y"]
+[ext_resource type="RoseEffectFile" uid="uid://d1m25iflnhebg" path="res://data/effect_files/1040-heavy-hit-01.tres" id="7_5yjwv"]
 
 [resource]
 id = 2281
@@ -33,10 +36,10 @@ harm = 1
 item_make_number = 60
 casting_motion_id = 129
 casting_repeat_motion_id = 149
-casting_effect_1 = 1041
+casting_effect_1 = ExtResource("5_ocghv")
 casting_effect_1_point = 3
-casting_effect_2 = 1042
+casting_effect_2 = ExtResource("6_jiq5y")
 casting_effect_2_point = 3
 action_motion_id = 231
-hit_effect_file_id = 1040
+hit_effect = ExtResource("7_5yjwv")
 hit_sound = ExtResource("4_41zhs")

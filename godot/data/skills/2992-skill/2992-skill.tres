@@ -1,6 +1,9 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://d10kaetvhxkxn"]
 
 [ext_resource type="RoseSound" uid="uid://c6vygfeu612rx" path="res://data/sounds/skill/139-skill-magic01.tres" id="1_btxva"]
+[ext_resource type="RoseEffectFile" uid="uid://bkos70jclry3s" path="res://data/effect_files/1764-scope-rotate-01.tres" id="2_iu7n0"]
+[ext_resource type="RoseEffectFile" uid="uid://dhg687c7ms2qj" path="res://data/effect_files/244-twist-01.tres" id="3_7upg7"]
+[ext_resource type="RoseEffectFile" uid="uid://chakxwgk3s5xa" path="res://data/effect_files/1322-hit-hawk-01.tres" id="4_mt7yb"]
 
 [resource]
 id = 2992
@@ -16,8 +19,8 @@ harm = 1
 item_make_number = 300
 casting_motion_id = 115
 casting_repeat_motion_id = 135
-casting_effect_2 = 1764
-casting_effect_3 = 244
+casting_effect_2 = ExtResource("2_iu7n0")
+casting_effect_3 = ExtResource("3_7upg7")
 action_motion_id = 172
-hit_effect_file_id = 1322
+hit_effect = ExtResource("4_mt7yb")
 hit_sound = ExtResource("1_btxva")

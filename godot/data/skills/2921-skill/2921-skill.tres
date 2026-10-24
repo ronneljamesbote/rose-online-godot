@@ -1,6 +1,8 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://bs4kiijoto8ga"]
 
 [ext_resource type="RoseStatusEffect" uid="uid://o87dkptvypm8" path="res://data/status_effects/18-atk-power-increased.tres" id="1_txfg5"]
+[ext_resource type="RoseEffectFile" uid="uid://btimqwfj57hk2" path="res://data/effect_files/213-casting-03.tres" id="2_zg81x"]
+[ext_resource type="RoseEffectFile" uid="uid://dwnb187345xi5" path="res://data/effect_files/5-z-hit-01.tres" id="3_4dr9g"]
 
 [resource]
 id = 2921
@@ -16,6 +18,6 @@ add_stat_1_rate = 18
 warp_zone = 18
 warp_x = 20000
 warp_y = 18000
-casting_effect_3 = 213
-hit_effect_file_id = 5
+casting_effect_3 = ExtResource("2_zg81x")
+hit_effect = ExtResource("3_4dr9g")
 hit_effect_point = 3

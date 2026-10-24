@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseShopTab" uid="uid://c6wr5jx0705vj" path="res://data/shop_tabs/303-visitor-weapons.tres" id="1_wemp4"]
 [ext_resource type="RoseShopTab" uid="uid://bahedwu3aejgj" path="res://data/shop_tabs/304-visitor-clothing.tres" id="2_4vnxx"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="3_twtuy"]
 
 [resource]
 id = 1034
@@ -17,7 +18,7 @@ avoid = 100
 attack_speed = 100
 attack_range = 200
 npc_type_index = 999
-die_effect_file_id = 1401
+die_effect = ExtResource("3_twtuy")
 shop_tab_1 = ExtResource("1_wemp4")
 shop_tab_2 = ExtResource("2_4vnxx")
 minimap_icon_index = 65

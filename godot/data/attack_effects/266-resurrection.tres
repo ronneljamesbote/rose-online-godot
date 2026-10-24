@@ -1,0 +1,15 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://bn4pxheah3q03"]
+
+[ext_resource type="RoseEffectFile" uid="uid://caruawpt4vw18" path="res://data/effect_files/1505-revive-01.tres" id="1_cgbp8"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="2_cqowv"]
+[ext_resource type="RoseSound" uid="uid://6a6nk0si4lkl" path="res://data/sounds/attack/68-axe-h01.tres" id="3_knrog"]
+
+[resource]
+id = 266
+name = "Resurrection"
+trail_milliseconds = 100
+hit_effect_critical = ExtResource("2_cqowv")
+bullet_effect = ExtResource("1_cgbp8")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+hit_sound = ExtResource("3_knrog")

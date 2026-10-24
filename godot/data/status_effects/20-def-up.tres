@@ -1,5 +1,7 @@
 [gd_resource type="RoseStatusEffect" format=3 uid="uid://urqs1ot2ioov"]
 
+[ext_resource type="RoseEffectFile" uid="uid://b5krsfw0huth8" path="res://data/effect_files/167-defendup-01.tres" id="1_zrnfe"]
+
 [resource]
 id = 20
 name = "Def Up"
@@ -7,5 +9,5 @@ description = "Your Defense is temporarily increased."
 start_message = "Defense has returned to normal."
 status_effect_type = "IncreaseDefence"
 can_be_reapplied = true
-effect_file_id = 167
+effect = ExtResource("1_zrnfe")
 icon_id = 20

@@ -3,6 +3,9 @@
 [ext_resource type="RoseJobClass" uid="uid://beco32icdj1l0" path="res://data/job_classes/64-cleric-job.tres" id="1_n753d"]
 [ext_resource type="RoseSkill" uid="uid://c0jsu0md0eg0s" path="res://data/skills/821-meditation/821-meditation.tres" id="2_t2lcu"]
 [ext_resource type="RoseStatusEffect" uid="uid://cs0wac0ri6hux" path="res://data/status_effects/13-maxmp-up.tres" id="3_b37bh"]
+[ext_resource type="RoseEffectFile" uid="uid://bv41ketysp2p" path="res://data/effect_files/1754-self-casting-01.tres" id="4_w1vg4"]
+[ext_resource type="RoseEffectFile" uid="uid://b4f1t17hmgcmv" path="res://data/effect_files/1763-self-rotate-01.tres" id="5_vjjyw"]
+[ext_resource type="RoseEffectFile" uid="uid://huc1lgwxotrj" path="res://data/effect_files/1771-self-skill-01.tres" id="6_w8p3m"]
 
 [resource]
 id = 1053
@@ -30,9 +33,9 @@ warp_zone = 39
 warp_x = 200000
 casting_motion_id = 114
 casting_repeat_motion_id = 134
-casting_effect_1 = 1754
-casting_effect_2 = 1763
+casting_effect_1 = ExtResource("4_w1vg4")
+casting_effect_2 = ExtResource("5_vjjyw")
 casting_effect_2_point = 3
-casting_effect_3 = 1771
+casting_effect_3 = ExtResource("6_w8p3m")
 casting_effect_3_point = 3
 action_motion_id = 153

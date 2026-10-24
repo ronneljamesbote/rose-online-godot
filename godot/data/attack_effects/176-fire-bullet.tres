@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://ddybod851f72j"]
+
+[ext_resource type="RoseEffectFile" uid="uid://goxhfmwi21bu" path="res://data/effect_files/1073-firebullet-firing-01.tres" id="1_k3u0w"]
+[ext_resource type="RoseSound" uid="uid://bb6ywn24slw5b" path="res://data/sounds/skill/146-skill-magic08.tres" id="2_tmlrb"]
+[ext_resource type="RoseEffectFile" uid="uid://cah5cvu532v78" path="res://data/effect_files/1124-mana-hit-03.tres" id="3_au0y5"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_6ibfy"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="5_51k80"]
+
+[resource]
+id = 176
+name = "Fire Bullet"
+hit_effect = ExtResource("3_au0y5")
+hit_effect_critical = ExtResource("4_6ibfy")
+bullet_effect = ExtResource("1_k3u0w")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_tmlrb")
+hit_sound = ExtResource("5_51k80")

@@ -3,6 +3,10 @@
 [ext_resource type="RoseSkill" uid="uid://kvqch3j56u15" path="res://data/skills/2021-marksmanship/2021-marksmanship.tres" id="1_0y6sc"]
 [ext_resource type="RoseSound" uid="uid://42rl1pnpcxo3" path="res://data/sounds/skill/148-heavyarr001.tres" id="2_9eyjn"]
 [ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="3_r7z04"]
+[ext_resource type="RoseEffectFile" uid="uid://b2kvgebw3flm4" path="res://data/effect_files/1041-heavy-casting-01.tres" id="4_9usy4"]
+[ext_resource type="RoseAttackEffect" uid="uid://bqh41lfm4s70x" path="res://data/attack_effects/171-gloria-gun.tres" id="5_afm7q"]
+[ext_resource type="RoseEffectFile" uid="uid://cp2jbsgybpgic" path="res://data/effect_files/110-gun-blowup-01.tres" id="6_expvp"]
+[ext_resource type="RoseEffectFile" uid="uid://i0ohi86us81n" path="res://data/effect_files/171-effect-171.tres" id="7_old1i"]
 
 [resource]
 id = 2234
@@ -29,15 +33,15 @@ item_make_number = 60
 casting_motion_id = 111
 casting_motion_speed = 132
 casting_repeat_motion_id = 131
-casting_effect_1 = 1041
+casting_effect_1 = ExtResource("4_9usy4")
 casting_effect_1_point = 3
 action_motion_id = 92
 action_motion_speed = 118
-bullet_effect_id = 171
+bullet_effect = ExtResource("5_afm7q")
 bullet_point = 1
 bullet_fire_sound = ExtResource("2_9eyjn")
-hit_effect_file_id = 110
+hit_effect = ExtResource("6_expvp")
 hit_effect_point = 3
 hit_sound = ExtResource("3_r7z04")
-hit_dummy_effect_1 = 171
+hit_dummy_effect_1 = ExtResource("7_old1i")
 hit_dummy_sound_1 = ExtResource("3_r7z04")

@@ -1,5 +1,9 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://boxn6mmnisfbf"]
 
+[ext_resource type="RoseEffectFile" uid="uid://dpv6vsra8ebsl" path="res://data/effect_files/1320-scope-01.tres" id="1_lx7zr"]
+[ext_resource type="RoseEffectFile" uid="uid://c7abyhw6ae1a0" path="res://data/effect_files/1317-yetityrant-skill-01.tres" id="2_8d1jw"]
+[ext_resource type="RoseEffectFile" uid="uid://datmsj7fgcoav" path="res://data/effect_files/1310-runa-hit-02.tres" id="3_sllns"]
+
 [resource]
 id = 3016
 skill_type = "AreaTarget"
@@ -13,7 +17,7 @@ damage_type = "WeaponAttack"
 power = 62
 item_make_number = 62
 casting_motion_id = 8
-casting_effect_3 = 1320
-casting_effect_4 = 1317
+casting_effect_3 = ExtResource("1_lx7zr")
+casting_effect_4 = ExtResource("2_8d1jw")
 action_motion_id = 9
-hit_effect_file_id = 1310
+hit_effect = ExtResource("3_sllns")

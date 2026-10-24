@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://blpsfnckcpm5b"]
+
+[ext_resource type="RoseEffectFile" uid="uid://c2qdl0wcoqa7l" path="res://data/effect_files/103-fire-ball-y02.tres" id="1_t0p5u"]
+[ext_resource type="RoseSound" uid="uid://bb6ywn24slw5b" path="res://data/sounds/skill/146-skill-magic08.tres" id="2_t60y8"]
+[ext_resource type="RoseEffectFile" uid="uid://jouf1yjphur1" path="res://data/effect_files/130-hit-fireball-01.tres" id="3_0u2vf"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_xruc3"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="5_pxfw0"]
+
+[resource]
+id = 175
+name = "Bubble Gun"
+hit_effect = ExtResource("3_0u2vf")
+hit_effect_critical = ExtResource("4_xruc3")
+bullet_effect = ExtResource("1_t0p5u")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_t60y8")
+hit_sound = ExtResource("5_pxfw0")

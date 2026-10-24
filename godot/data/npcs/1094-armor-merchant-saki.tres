@@ -4,6 +4,7 @@
 [ext_resource type="RoseShopTab" uid="uid://comvb4i5aevxi" path="res://data/shop_tabs/483-hawker.tres" id="2_qtjtn"]
 [ext_resource type="RoseShopTab" uid="uid://dpmjnxaf3s5jh" path="res://data/shop_tabs/484-bagpacks-backshields.tres" id="3_shd6t"]
 [ext_resource type="RoseShopTab" uid="uid://b675bacli7cm7" path="res://data/shop_tabs/485-repair-tool.tres" id="4_tf7c8"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="5_vzxle"]
 
 [resource]
 id = 1094
@@ -19,7 +20,7 @@ avoid = 100
 attack_speed = 100
 attack_range = 200
 npc_type_index = 999
-die_effect_file_id = 1401
+die_effect = ExtResource("5_vzxle")
 shop_tab_1 = ExtResource("1_ounpk")
 shop_tab_2 = ExtResource("2_qtjtn")
 shop_tab_3 = ExtResource("3_shd6t")

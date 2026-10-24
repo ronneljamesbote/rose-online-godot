@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://b0aq5e3fo1kf2"]
+
+[ext_resource type="RoseEffectFile" uid="uid://cjj8bmtksboro" path="res://data/effect_files/1072-gun-firing-03.tres" id="1_bn23h"]
+[ext_resource type="RoseSound" uid="uid://bb6ywn24slw5b" path="res://data/sounds/skill/146-skill-magic08.tres" id="2_fvwg4"]
+[ext_resource type="RoseEffectFile" uid="uid://vd231rdkflay" path="res://data/effect_files/1082-gun-hit-03.tres" id="3_da2x8"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_xfnuk"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="5_k5atp"]
+
+[resource]
+id = 173
+name = "Iron Rifle"
+hit_effect = ExtResource("3_da2x8")
+hit_effect_critical = ExtResource("4_xfnuk")
+bullet_effect = ExtResource("1_bn23h")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_fvwg4")
+hit_sound = ExtResource("5_k5atp")

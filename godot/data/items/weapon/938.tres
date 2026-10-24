@@ -3,6 +3,7 @@
 [ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_yettm"]
 [ext_resource type="RoseSound" uid="uid://bey2khuqu7mu1" path="res://data/sounds/attack/55-spear-001.tres" id="2_g69i4"]
 [ext_resource type="RoseHitSounds" uid="uid://d4huxc3qetp2i" path="res://data/hit_sounds/25-spear-hits.tres" id="3_8zuho"]
+[ext_resource type="RoseAttackEffect" uid="uid://b45erl4hp3f0b" path="res://data/attack_effects/131-haedong-sword.tres" id="4_vnysn"]
 
 [resource]
 id = 938
@@ -21,7 +22,7 @@ attack_range = 450
 attack_power = 21
 attack_speed = 8
 motion_type = 6
-effect_id = 131
+attack_effect = ExtResource("4_vnysn")
 attack_start_sound = ExtResource("2_g69i4")
 hit_sounds = ExtResource("3_8zuho")
 gem_position = 2

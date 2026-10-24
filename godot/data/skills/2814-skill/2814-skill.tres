@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseMonster" uid="uid://bd8adovsrvcet" path="res://data/monsters/914-woopie.tres" id="1_x7bjb"]
 [ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="2_ec3g6"]
+[ext_resource type="RoseAttackEffect" uid="uid://wxxpgg57j08t" path="res://data/attack_effects/221-berserk.tres" id="3_dqn7r"]
 
 [resource]
 id = 2814
@@ -14,6 +15,6 @@ summon_monster = ExtResource("1_x7bjb")
 casting_motion_id = 118
 casting_repeat_motion_id = 138
 action_motion_id = 155
-bullet_effect_id = 221
+bullet_effect = ExtResource("3_dqn7r")
 bullet_point = 3
 bullet_fire_sound = ExtResource("2_ec3g6")

@@ -4,6 +4,7 @@
 [ext_resource type="RoseSkill" uid="uid://ciir7d7qlpm07" path="res://data/skills/861-summon-mastery/861-summon-mastery.tres" id="2_2msk7"]
 [ext_resource type="RoseMonster" uid="uid://d01ccwf3ua75y" path="res://data/monsters/843-elemental.tres" id="3_pe0hs"]
 [ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="4_jefri"]
+[ext_resource type="RoseAttackEffect" uid="uid://wxxpgg57j08t" path="res://data/attack_effects/221-berserk.tres" id="5_y4i67"]
 
 [resource]
 id = 1183
@@ -27,6 +28,6 @@ summon_monster = ExtResource("3_pe0hs")
 casting_motion_id = 118
 casting_repeat_motion_id = 138
 action_motion_id = 155
-bullet_effect_id = 221
+bullet_effect = ExtResource("5_y4i67")
 bullet_point = 3
 bullet_fire_sound = ExtResource("4_jefri")

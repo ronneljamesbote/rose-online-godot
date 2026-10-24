@@ -1,5 +1,7 @@
 [gd_resource type="RoseStatusEffect" format=3 uid="uid://c43fk10odrqq2"]
 
+[ext_resource type="RoseEffectFile" uid="uid://cr0q5flwxbro4" path="res://data/effect_files/170-movedown-01.tres" id="1_e0jt6"]
+
 [resource]
 id = 15
 name = "Slow"
@@ -8,5 +10,5 @@ start_message = "Movement Speed has returned to normal."
 status_effect_type = "DecreaseMoveSpeed"
 can_be_reapplied = true
 cleared_by = "ClearBad"
-effect_file_id = 170
+effect = ExtResource("1_e0jt6")
 icon_id = 10

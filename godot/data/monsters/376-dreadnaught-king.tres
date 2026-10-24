@@ -1,6 +1,8 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://dg5yys4hg3285"]
 
 [ext_resource type="RoseDropTable" uid="uid://ccua506bacq7l" path="res://data/drop_tables/377-dreadnaught-king.tres" id="1_515ts"]
+[ext_resource type="RoseAttackEffect" uid="uid://c5ekiv8d08ve8" path="res://data/attack_effects/454-vulcan.tres" id="2_vl30f"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="3_287ny"]
 
 [resource]
 id = 376
@@ -22,7 +24,7 @@ run_speed = 730
 ai_file_index = 145
 npc_type_index = 10
 hit_sound_material_type = 2
-hand_hit_effect_id = 454
-die_effect_file_id = 1401
+hand_hit_effect = ExtResource("2_vl30f")
+die_effect = ExtResource("3_287ny")
 drop_table = ExtResource("1_515ts")
 drop_item_rate = 80

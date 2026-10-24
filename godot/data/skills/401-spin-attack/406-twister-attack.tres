@@ -2,6 +2,9 @@
 
 [ext_resource type="RoseJobClass" uid="uid://dwxgadb8sumfe" path="res://data/job_classes/62-champion-job.tres" id="1_x7nby"]
 [ext_resource type="RoseSound" uid="uid://c6vygfeu612rx" path="res://data/sounds/skill/139-skill-magic01.tres" id="2_79d83"]
+[ext_resource type="RoseEffectFile" uid="uid://bkos70jclry3s" path="res://data/effect_files/1764-scope-rotate-01.tres" id="3_vdw2s"]
+[ext_resource type="RoseEffectFile" uid="uid://dpverdvlu2my4" path="res://data/effect_files/1608-s-twist-01.tres" id="4_1ntfu"]
+[ext_resource type="RoseEffectFile" uid="uid://b1laee8axwsgk" path="res://data/effect_files/1121-mana-hit-01.tres" id="5_etiau"]
 
 [resource]
 id = 406
@@ -31,8 +34,8 @@ harm = 1
 item_make_number = 135
 casting_motion_id = 115
 casting_repeat_motion_id = 135
-casting_effect_2 = 1764
-casting_effect_3 = 1608
+casting_effect_2 = ExtResource("3_vdw2s")
+casting_effect_3 = ExtResource("4_1ntfu")
 action_motion_id = 172
-hit_effect_file_id = 1121
+hit_effect = ExtResource("5_etiau")
 hit_sound = ExtResource("2_79d83")

@@ -1,0 +1,15 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://bhv1gy55fcyjq"]
+
+[ext_resource type="RoseEffectFile" uid="uid://y6yvwwnoic6c" path="res://data/effect_files/1692-jullypink-01.tres" id="1_wvtr6"]
+[ext_resource type="RoseEffectFile" uid="uid://i7jfpycgbxv8" path="res://data/effect_files/1024-twotool-critical-hit-01.tres" id="2_mrimc"]
+[ext_resource type="RoseSound" uid="uid://6a6nk0si4lkl" path="res://data/sounds/attack/68-axe-h01.tres" id="3_cvri5"]
+
+[resource]
+id = 281
+name = "Zulie Bolt"
+trail_milliseconds = 100
+hit_effect_critical = ExtResource("2_mrimc")
+bullet_effect = ExtResource("1_wvtr6")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+hit_sound = ExtResource("3_cvri5")

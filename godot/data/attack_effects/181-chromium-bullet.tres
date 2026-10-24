@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://bp0hhv3sc1etq"]
+
+[ext_resource type="RoseEffectFile" uid="uid://cw1byn1w805ms" path="res://data/effect_files/1201-gun-firing-04.tres" id="1_x5cad"]
+[ext_resource type="RoseSound" uid="uid://bb6ywn24slw5b" path="res://data/sounds/skill/146-skill-magic08.tres" id="2_qq4ij"]
+[ext_resource type="RoseEffectFile" uid="uid://jouf1yjphur1" path="res://data/effect_files/130-hit-fireball-01.tres" id="3_daud4"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_kcfxs"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="5_v7eb2"]
+
+[resource]
+id = 181
+name = "Chromium Bullet"
+hit_effect = ExtResource("3_daud4")
+hit_effect_critical = ExtResource("4_kcfxs")
+bullet_effect = ExtResource("1_x5cad")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_qq4ij")
+hit_sound = ExtResource("5_v7eb2")

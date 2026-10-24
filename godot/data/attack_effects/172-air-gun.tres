@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://bq0gk8fmds36k"]
+
+[ext_resource type="RoseEffectFile" uid="uid://c5s6ddiyipfam" path="res://data/effect_files/1071-gun-firing-02.tres" id="1_t8ge4"]
+[ext_resource type="RoseSound" uid="uid://bb6ywn24slw5b" path="res://data/sounds/skill/146-skill-magic08.tres" id="2_obbyw"]
+[ext_resource type="RoseEffectFile" uid="uid://cl7tejb00eyuq" path="res://data/effect_files/1081-gun-hit-02.tres" id="3_uumf5"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_foe3q"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="5_s17sv"]
+
+[resource]
+id = 172
+name = "Air Gun"
+hit_effect = ExtResource("3_uumf5")
+hit_effect_critical = ExtResource("4_foe3q")
+bullet_effect = ExtResource("1_t8ge4")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_obbyw")
+hit_sound = ExtResource("5_s17sv")

@@ -3,6 +3,9 @@
 [ext_resource type="RoseJobClass" uid="uid://bkc1lyjomstgg" path="res://data/job_classes/42-muse-job.tres" id="1_tyulf"]
 [ext_resource type="RoseSkill" uid="uid://cctctgoq3grrx" path="res://data/skills/801-staff-mastery/801-staff-mastery.tres" id="2_4ogla"]
 [ext_resource type="RoseSound" uid="uid://dkndsxt5u7nnm" path="res://data/sounds/skill/1576-point-twister02.tres" id="3_iiudf"]
+[ext_resource type="RoseEffectFile" uid="uid://bkos70jclry3s" path="res://data/effect_files/1764-scope-rotate-01.tres" id="4_y11ro"]
+[ext_resource type="RoseEffectFile" uid="uid://cbdbve174vjov" path="res://data/effect_files/1631-wind-01.tres" id="5_yapl9"]
+[ext_resource type="RoseEffectFile" uid="uid://b1laee8axwsgk" path="res://data/effect_files/1121-mana-hit-01.tres" id="6_bt43f"]
 
 [resource]
 id = 1081
@@ -28,8 +31,8 @@ harm = 1
 item_make_number = 60
 casting_motion_id = 115
 casting_repeat_motion_id = 135
-casting_effect_2 = 1764
-casting_effect_3 = 1631
+casting_effect_2 = ExtResource("4_y11ro")
+casting_effect_3 = ExtResource("5_yapl9")
 action_motion_id = 172
-hit_effect_file_id = 1121
+hit_effect = ExtResource("6_bt43f")
 hit_sound = ExtResource("3_iiudf")

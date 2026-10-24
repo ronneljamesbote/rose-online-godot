@@ -3,6 +3,7 @@
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_jswn6"]
 [ext_resource type="RoseSound" uid="uid://osald6eflwq1" path="res://data/sounds/attack/37-sword-001.tres" id="2_zzmay"]
 [ext_resource type="RoseSound" uid="uid://np80gbdh8gn3" path="res://data/sounds/attack/89-magic-001.tres" id="3_btw0b"]
+[ext_resource type="RoseAttackEffect" uid="uid://wlw7t32hh16m" path="res://data/attack_effects/214-silence-wand.tres" id="4_w8bhy"]
 
 [resource]
 id = 343
@@ -32,7 +33,7 @@ attack_power = 142
 attack_speed = 12
 motion_type = 14
 is_magic_damage = true
-bullet_effect_id = 214
+bullet_effect = ExtResource("4_w8bhy")
 attack_start_sound = ExtResource("2_zzmay")
 attack_fire_sound = ExtResource("3_btw0b")
 gem_position = 2

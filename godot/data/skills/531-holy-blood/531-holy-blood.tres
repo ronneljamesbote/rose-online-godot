@@ -4,6 +4,9 @@
 [ext_resource type="RoseSkill" uid="uid://crp0ff87ngyef" path="res://data/skills/651-blood-attack/651-blood-attack.tres" id="2_jl530"]
 [ext_resource type="RoseSkill" uid="uid://sckha04qy41b" path="res://data/skills/291-spiritual-training/291-spiritual-training.tres" id="3_t4f3v"]
 [ext_resource type="RoseSound" uid="uid://d286ibyhdvhre" path="res://data/sounds/attack/86-gun-d02.tres" id="4_e2kga"]
+[ext_resource type="RoseEffectFile" uid="uid://qdf6cagi0ydf" path="res://data/effect_files/1753-handicap-casting-01.tres" id="5_wx9an"]
+[ext_resource type="RoseEffectFile" uid="uid://buhdboioxtfms" path="res://data/effect_files/1607-skill-bloodshower-01.tres" id="6_mg5up"]
+[ext_resource type="RoseEffectFile" uid="uid://wv36bdk6kw6y" path="res://data/effect_files/1035-leap-hit-01.tres" id="7_fakhe"]
 
 [resource]
 id = 531
@@ -30,9 +33,9 @@ harm = 1
 item_make_number = 140
 casting_motion_id = 113
 casting_repeat_motion_id = 133
-casting_effect_1 = 1753
+casting_effect_1 = ExtResource("5_wx9an")
 casting_effect_1_point = 1
-casting_effect_3 = 1607
+casting_effect_3 = ExtResource("6_mg5up")
 action_motion_id = 176
-hit_effect_file_id = 1035
+hit_effect = ExtResource("7_fakhe")
 hit_sound = ExtResource("4_e2kga")

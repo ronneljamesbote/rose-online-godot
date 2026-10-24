@@ -2,6 +2,10 @@
 
 [ext_resource type="RoseStatusEffect" uid="uid://c43fk10odrqq2" path="res://data/status_effects/15-slow.tres" id="1_aggfi"]
 [ext_resource type="RoseSound" uid="uid://fjcemx4nd216" path="res://data/sounds/skill/1574-point-luna01.tres" id="2_c8un9"]
+[ext_resource type="RoseEffectFile" uid="uid://bv41ketysp2p" path="res://data/effect_files/1754-self-casting-01.tres" id="3_sdc73"]
+[ext_resource type="RoseEffectFile" uid="uid://b4f1t17hmgcmv" path="res://data/effect_files/1763-self-rotate-01.tres" id="4_7m1rc"]
+[ext_resource type="RoseAttackEffect" uid="uid://dev2pe6bpnu2m" path="res://data/attack_effects/267-ice-pole.tres" id="5_dkne0"]
+[ext_resource type="RoseEffectFile" uid="uid://datmsj7fgcoav" path="res://data/effect_files/1310-runa-hit-02.tres" id="6_xm6ab"]
 
 [resource]
 id = 1110
@@ -35,11 +39,11 @@ warp_zone = 23
 warp_y = 50000
 casting_motion_id = 117
 casting_repeat_motion_id = 137
-casting_effect_1 = 1754
-casting_effect_2 = 1763
+casting_effect_1 = ExtResource("3_sdc73")
+casting_effect_2 = ExtResource("4_7m1rc")
 casting_effect_2_point = 3
 action_motion_id = 154
-bullet_effect_id = 267
+bullet_effect = ExtResource("5_dkne0")
 bullet_fire_sound = ExtResource("2_c8un9")
-hit_effect_file_id = 1310
+hit_effect = ExtResource("6_xm6ab")
 hit_sound = ExtResource("2_c8un9")

@@ -1,6 +1,8 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://o1uak0awaqlm"]
 
 [ext_resource type="RoseDropTable" uid="uid://ce11rsej4gn6q" path="res://data/drop_tables/359-shadow-wolf-wolf-keeper.tres" id="1_wraxg"]
+[ext_resource type="RoseAttackEffect" uid="uid://itv7oiaamu6n" path="res://data/attack_effects/453-attack-effect-453.tres" id="2_z2vf7"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="3_sbziw"]
 
 [resource]
 id = 340
@@ -21,7 +23,7 @@ run_speed = 590
 ai_file_index = 123
 npc_type_index = 4
 hit_sound_material_type = 1
-hand_hit_effect_id = 453
-die_effect_file_id = 1401
+hand_hit_effect = ExtResource("2_z2vf7")
+die_effect = ExtResource("3_sbziw")
 drop_table = ExtResource("1_wraxg")
 drop_item_rate = 46

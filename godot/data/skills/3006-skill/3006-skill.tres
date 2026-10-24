@@ -1,6 +1,8 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://bp0ory478x8un"]
 
 [ext_resource type="RoseStatusEffect" uid="uid://b87ditbwhvjba" path="res://data/status_effects/39-dispell.tres" id="1_vyf2a"]
+[ext_resource type="RoseEffectFile" uid="uid://btimqwfj57hk2" path="res://data/effect_files/213-casting-03.tres" id="2_g3isb"]
+[ext_resource type="RoseEffectFile" uid="uid://dwnb187345xi5" path="res://data/effect_files/5-z-hit-01.tres" id="3_pv9zm"]
 
 [resource]
 id = 3006
@@ -12,6 +14,6 @@ action_mode = "Restore"
 success_ratio = 80
 status_effect_1 = ExtResource("1_vyf2a")
 status_effect_seconds = 2
-casting_effect_3 = 213
-hit_effect_file_id = 5
+casting_effect_3 = ExtResource("2_g3isb")
+hit_effect = ExtResource("3_pv9zm")
 hit_effect_point = 3

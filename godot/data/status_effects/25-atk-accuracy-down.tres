@@ -1,5 +1,7 @@
 [gd_resource type="RoseStatusEffect" format=3 uid="uid://d3dno04hk6nkl"]
 
+[ext_resource type="RoseEffectFile" uid="uid://v7o5usy6pe8q" path="res://data/effect_files/175-hitdown-01.tres" id="1_uv168"]
+
 [resource]
 id = 25
 name = "Atk Accuracy Down"
@@ -8,5 +10,5 @@ start_message = "Attack Accuracy has returned to normal."
 status_effect_type = "DecreaseHit"
 can_be_reapplied = true
 cleared_by = "ClearBad"
-effect_file_id = 175
+effect = ExtResource("1_uv168")
 icon_id = 19

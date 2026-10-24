@@ -1,0 +1,16 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://r5pk6rlprd40"]
+
+[ext_resource type="RoseEffectFile" uid="uid://ducm3puwlsj1b" path="res://data/effect_files/392-leaf-bow-01.tres" id="1_f8276"]
+[ext_resource type="RoseSound" uid="uid://cqnwh1xgiobdt" path="res://data/sounds/skill/1121-action-mana02.tres" id="2_iqkbq"]
+[ext_resource type="RoseEffectFile" uid="uid://b3x8noxolsy63" path="res://data/effect_files/393-leaf-hit-01.tres" id="3_gxap1"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_say5o"]
+
+[resource]
+id = 435
+name = "attack effect 435"
+hit_effect = ExtResource("3_gxap1")
+hit_effect_critical = ExtResource("4_say5o")
+bullet_effect = ExtResource("1_f8276")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_iqkbq")

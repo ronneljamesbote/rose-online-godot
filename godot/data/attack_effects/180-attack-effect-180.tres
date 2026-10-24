@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://lgkljr1aqsji"]
+
+[ext_resource type="RoseEffectFile" uid="uid://c3ds4wleyqx6d" path="res://data/effect_files/100-gun-ball-01.tres" id="1_dvxw3"]
+[ext_resource type="RoseSound" uid="uid://bb6ywn24slw5b" path="res://data/sounds/skill/146-skill-magic08.tres" id="2_ko418"]
+[ext_resource type="RoseEffectFile" uid="uid://jouf1yjphur1" path="res://data/effect_files/130-hit-fireball-01.tres" id="3_60x0q"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_jk6me"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="5_ui7ol"]
+
+[resource]
+id = 180
+name = "attack effect 180"
+hit_effect = ExtResource("3_60x0q")
+hit_effect_critical = ExtResource("4_jk6me")
+bullet_effect = ExtResource("1_dvxw3")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_ko418")
+hit_sound = ExtResource("5_ui7ol")

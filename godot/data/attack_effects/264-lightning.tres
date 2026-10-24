@@ -1,0 +1,15 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://c31mvp8tf2ljd"]
+
+[ext_resource type="RoseEffectFile" uid="uid://bwumwsnwe406a" path="res://data/effect_files/1633-lighting-firing-01.tres" id="1_06wxi"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="2_51y4t"]
+[ext_resource type="RoseSound" uid="uid://6a6nk0si4lkl" path="res://data/sounds/attack/68-axe-h01.tres" id="3_j5afj"]
+
+[resource]
+id = 264
+name = "Lightning"
+trail_milliseconds = 100
+hit_effect_critical = ExtResource("2_51y4t")
+bullet_effect = ExtResource("1_06wxi")
+bullet_move = "Linear"
+bullet_speed = 5000.0
+hit_sound = ExtResource("3_j5afj")
