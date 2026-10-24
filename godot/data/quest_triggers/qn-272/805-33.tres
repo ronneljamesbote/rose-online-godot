@@ -1,0 +1,38 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://j424tntlepeu"]
+
+[ext_resource type="RoseQuest" uid="uid://cqcd270r0iwpe" path="res://data/quests/805-secretly-learning-to-drive.tres" id="1_64pyq"]
+[ext_resource type="RoseItemQuest" uid="uid://kiq3utbnwwp1" path="res://data/items/quest/100-luce-s-certification.tres" id="2_3rg0f"]
+[ext_resource type="RoseQuestTrigger" uid="uid://p3uvveav1fs6" path="res://data/quest_triggers/qn-272/5014-32.tres" id="3_810j3"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_y2sjl"]
+quest = ExtResource("1_64pyq")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_v1n5c"]
+to = 7
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_3qy4f"]
+item = ExtResource("2_3rg0f")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_jhv5r"]
+variable = 2
+operator = ">="
+value = 15
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_35x3y"]
+quest = ExtResource("1_64pyq")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_k35lt"]
+item = ExtResource("2_3rg0f")
+quantity = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_urngu"]
+operator = "Add"
+value = 1
+
+[resource]
+name = "805-33"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_y2sjl"), SubResource("RoseConditionRandomPercent_v1n5c"), SubResource("RoseConditionQuestItem_3qy4f"), SubResource("RoseConditionQuestVariable_jhv5r")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_35x3y"), SubResource("RoseRewardRemoveItem_k35lt"), SubResource("RoseRewardQuestVariable_urngu")])
+next_trigger = ExtResource("3_810j3")

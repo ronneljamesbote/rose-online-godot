@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/211-junon-s-kingkong|Junon''s KingKong]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 1062; QSD triggers 1052-02, 1062-01, 1062-31, 1062-32
+  data: 'godot/data/quests/1062-namielle-mother-of-all-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj211-06/1052-02, qj211-06/1062-01, qn-211/1062-31, qn-211/1062-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

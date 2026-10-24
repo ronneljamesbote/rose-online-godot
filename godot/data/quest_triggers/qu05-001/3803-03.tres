@@ -1,0 +1,43 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dw5xt37qf5xkc"]
+
+[ext_resource type="RoseQuest" uid="uid://coekpuh2h7o16" path="res://data/quests/3803-ferrell-guild-lounge-construction.tres" id="1_qvqcu"]
+[ext_resource type="RoseItemQuest" uid="uid://cv537oygar6o5" path="res://data/items/quest/302-thick-pulpwood.tres" id="2_vv7u2"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_des70"]
+quest = ExtResource("1_qvqcu")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_lpvqh"]
+ability = "Union"
+value = 5
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_77vpl"]
+operator = ">"
+value = 50
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_cr6h0"]
+item = ExtResource("2_vv7u2")
+equipment_index = 13
+count = 12
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_eqhwh"]
+quest = ExtResource("1_qvqcu")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_annma"]
+item = ExtResource("2_vv7u2")
+quantity = 12
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_28oe1"]
+ability = "UnionPoint5"
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_hf1fl"]
+value = 5000
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_v6hp1"]
+
+[resource]
+name = "3803-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_des70"), SubResource("RoseConditionAbilityValue_lpvqh"), SubResource("RoseConditionAbilityValue_77vpl"), SubResource("RoseConditionQuestItem_cr6h0")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_eqhwh"), SubResource("RoseRewardRemoveItem_annma"), SubResource("RoseRewardAbilityValue_28oe1"), SubResource("RoseRewardCalculatedExperiencePoints_hf1fl"), SubResource("RoseRewardRemoveSelectedQuest_v6hp1")])

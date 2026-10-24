@@ -1,0 +1,16 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cx06cbl0j2rox"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_xbfbf"]
+switch = 2
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_osmxi"]
+value = 40
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_rmvci"]
+switch = 2
+value = true
+
+[resource]
+name = "basicItem"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_xbfbf")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedExperiencePoints_osmxi"), SubResource("RoseRewardSetQuestSwitch_rmvci")])

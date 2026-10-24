@@ -1,0 +1,21 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://y7qhgywjanv1"]
+
+[ext_resource type="RoseItemConsumable" uid="uid://cwtn8me0s3xcn" path="res://data/items/consumable/141-mysterious-fruit.tres" id="1_a8ibn"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_y1dnc"]
+operator = ">="
+value = 55
+
+[sub_resource type="RoseConditionParty" id="RoseConditionParty_nj2lq"]
+level_operator = ">="
+level = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_wxx1t"]
+item = ExtResource("1_a8ibn")
+equipment_index = 12
+count = 1
+operator = "<"
+
+[resource]
+name = "1953-02"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_y1dnc"), SubResource("RoseConditionParty_nj2lq"), SubResource("RoseConditionQuestItem_wxx1t")])

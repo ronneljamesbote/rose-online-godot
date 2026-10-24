@@ -1,0 +1,55 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://beixpyocdcfr5"]
+
+[ext_resource type="RoseQuest" uid="uid://dwj1by8kbvumy" path="res://data/quests/157-skin-of-steel.tres" id="1_4cpvy"]
+[ext_resource type="RoseItemQuest" uid="uid://d3o0jtsrldi7y" path="res://data/items/quest/622-mana-charger.tres" id="2_gtpne"]
+[ext_resource type="RoseItemMaterial" uid="uid://6nmflpypbwk2" path="res://data/items/material/152-green-hearts.tres" id="3_5vorh"]
+[ext_resource type="RoseItemMaterial" uid="uid://6qhexl2os2ao" path="res://data/items/material/154-pink-hearts.tres" id="4_macih"]
+[ext_resource type="RoseItemConsumable" uid="uid://bcg7pe73r6vyg" path="res://data/items/consumable/383-blood-charm.tres" id="5_pdmes"]
+[ext_resource type="RoseQuest" uid="uid://be7dye1g26ebj" path="res://data/quests/158-leaders-in-the-abyss.tres" id="6_7tjyu"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_gygbd"]
+quest = ExtResource("1_4cpvy")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_uiaoi"]
+item = ExtResource("2_gtpne")
+equipment_index = 13
+count = 5
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_r8xoy"]
+quest = ExtResource("1_4cpvy")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_4k86y"]
+item = ExtResource("2_gtpne")
+quantity = 5
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_w1noh"]
+value = 80000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_uiv55"]
+equation = 5
+value = 2
+item = ExtResource("3_5vorh")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_84r5r"]
+equation = 5
+value = 2
+item = ExtResource("4_macih")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_dkkav"]
+equation = 5
+value = 10
+item = ExtResource("5_pdmes")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_fhwvj"]
+quest = ExtResource("6_7tjyu")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_om87n"]
+variable_type = "Episode"
+value = 57
+
+[resource]
+name = "157-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_gygbd"), SubResource("RoseConditionQuestItem_uiaoi")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_r8xoy"), SubResource("RoseRewardRemoveItem_4k86y"), SubResource("RoseRewardCalculatedExperiencePoints_w1noh"), SubResource("RoseRewardCalculatedItem_uiv55"), SubResource("RoseRewardCalculatedItem_84r5r"), SubResource("RoseRewardCalculatedItem_dkkav"), SubResource("RoseRewardChangeSelectedQuest_fhwvj"), SubResource("RoseRewardQuestVariable_om87n")])

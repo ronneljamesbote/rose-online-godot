@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1036-ferrell-guild-staff-seyon|Ferrell Guild Staff Seyon]]'
 steps: 2
 source:
-  data: LIST_QUEST.STB row 101; QSD triggers 101-01, 101-02
+  data: 'godot/data/quests/101-dreadful-epidemic.tres; quest triggers in godot/data/quest_triggers/: qp103/101-01, qp103/101-02'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

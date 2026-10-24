@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/212-krawfy-king|Krawfy King]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 1055; QSD triggers 1051-02, 1055-01, 1055-31, 1055-32
+  data: 'godot/data/quests/1055-lucid-king-of-legend-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj111-06/1051-02, qj111-06/1055-01, qn-212/1055-31, qn-212/1055-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

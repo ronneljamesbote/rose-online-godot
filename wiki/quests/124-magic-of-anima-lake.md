@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1121-ikaness-staff-shroon|Ikaness Staff Shroon]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 124; QSD triggers 123-01, 123-02, 124-01
+  data: 'godot/data/quests/124-magic-of-anima-lake.tres; quest triggers in godot/data/quest_triggers/: qp103/123-01, qp103/123-02, qp103/124-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

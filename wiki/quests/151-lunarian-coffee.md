@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/158-doonga-captain|Doonga Captain]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 151; QSD triggers 150-01, 150-02, 151-01, 151-31
+  data: 'godot/data/quests/151-lunarian-coffee.tres; quest triggers in godot/data/quest_triggers/: qp103/150-01, qp103/150-02, qp103/151-01, qn-158/151-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1094-armor-merchant-saki|Armor Merchant Saki]]'
 steps: 2
 source:
-  data: LIST_QUEST.STB row 1053; QSD triggers 1053-01, 1053-02
+  data: 'godot/data/quests/1053-road-to-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj311-06/1053-01, qj311-06/1053-02'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

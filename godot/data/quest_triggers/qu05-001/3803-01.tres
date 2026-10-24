@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ck0pif4ohldbj"]
+
+[ext_resource type="RoseQuest" uid="uid://coekpuh2h7o16" path="res://data/quests/3803-ferrell-guild-lounge-construction.tres" id="1_kxu5g"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_jyegd"]
+ability = "Union"
+value = 5
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_2oyhh"]
+quest = ExtResource("1_kxu5g")
+
+[resource]
+name = "3803-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_jyegd")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_2oyhh")])

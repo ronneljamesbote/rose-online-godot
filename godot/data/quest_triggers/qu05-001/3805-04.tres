@@ -1,0 +1,49 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b1rupuvlay4wg"]
+
+[ext_resource type="RoseQuest" uid="uid://d2m2d45ex4kia" path="res://data/quests/3805-arms-distribution-effort.tres" id="1_s86h5"]
+[ext_resource type="RoseItemQuest" uid="uid://ceqctpdv3up8j" path="res://data/items/quest/22-iron-fragment.tres" id="2_h77ui"]
+[ext_resource type="RoseItemConsumable" uid="uid://blwiv60eb3cgu" path="res://data/items/consumable/57-vital-jam-2.tres" id="3_ha1m7"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_obr61"]
+quest = ExtResource("1_s86h5")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_xn4p6"]
+ability = "Union"
+value = 5
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_07n0w"]
+operator = ">"
+value = 70
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_mjqse"]
+item = ExtResource("2_h77ui")
+equipment_index = 13
+count = 17
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ahxw6"]
+quest = ExtResource("1_s86h5")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_rwf6l"]
+item = ExtResource("2_h77ui")
+quantity = 17
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_cqcau"]
+ability = "UnionPoint5"
+operator = "Add"
+value = 3
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_xiulv"]
+value = 12000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_c81m3"]
+equation = 5
+value = 1
+item = ExtResource("3_ha1m7")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_7r4in"]
+
+[resource]
+name = "3805-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_obr61"), SubResource("RoseConditionAbilityValue_xn4p6"), SubResource("RoseConditionAbilityValue_07n0w"), SubResource("RoseConditionQuestItem_mjqse")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ahxw6"), SubResource("RoseRewardRemoveItem_rwf6l"), SubResource("RoseRewardAbilityValue_cqcau"), SubResource("RoseRewardCalculatedExperiencePoints_xiulv"), SubResource("RoseRewardCalculatedItem_c81m3"), SubResource("RoseRewardRemoveSelectedQuest_7r4in")])

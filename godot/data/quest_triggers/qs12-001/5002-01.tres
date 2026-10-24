@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cjlyg4f3rihhy"]
+
+[ext_resource type="RoseNpc" uid="uid://dl5c1201kb763" path="res://data/npcs/1008-weapon-seller-raffle.tres" id="1_xjwr8"]
+[ext_resource type="RoseQuest" uid="uid://ddx0vck2q6n87" path="res://data/quests/5002-pomic-hunt-fetch-quest.tres" id="2_ieinh"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_t45m2"]
+operator = "<="
+value = 18
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_tl114"]
+npc = ExtResource("1_xjwr8")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_x6ve8"]
+value = 1
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_dijc0"]
+variable = 2
+operator = "<"
+value = 10
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_ne74j"]
+quest = ExtResource("2_ieinh")
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_xh5gl"]
+variable = 2
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_slr8e"]
+trigger = "5002-10"
+
+[resource]
+name = "5002-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_t45m2"), SubResource("RoseConditionSelectNpc_tl114"), SubResource("RoseConditionObjectVariable_x6ve8"), SubResource("RoseConditionObjectVariable_dijc0")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_ne74j"), SubResource("RoseRewardObjectVariable_xh5gl"), SubResource("RoseRewardTrigger_slr8e")])

@@ -1,0 +1,16 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://3302xp6u4i4g"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_wni32"]
+switch = 19
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_dvo0k"]
+value = 40
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_78d37"]
+switch = 19
+value = true
+
+[resource]
+name = "basicDead"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_wni32")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedExperiencePoints_dvo0k"), SubResource("RoseRewardSetQuestSwitch_78d37")])

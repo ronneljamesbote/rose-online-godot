@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dqumi7ocx736l"]
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_wfpa4"]
+ability = "UnionPoint1"
+operator = "Add"
+value = 999
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_jl6sm"]
+ability = "UnionPoint3"
+operator = "Add"
+value = 999
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_8ra7u"]
+ability = "UnionPoint4"
+operator = "Add"
+value = 999
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_ui37j"]
+ability = "UnionPoint5"
+operator = "Add"
+value = 999
+
+[resource]
+name = "QU-point"
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_wfpa4"), SubResource("RoseRewardAbilityValue_jl6sm"), SubResource("RoseRewardAbilityValue_8ra7u"), SubResource("RoseRewardAbilityValue_ui37j")])

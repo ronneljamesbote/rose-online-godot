@@ -1,0 +1,21 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cbby86oqc5qb4"]
+
+[ext_resource type="RoseQuest" uid="uid://cpwi2pk76hlwq" path="res://data/quests/147-pavrick-the-craftsman-on-lunar.tres" id="1_47cxb"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ndmay"]
+quest = ExtResource("1_47cxb")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_7c2fk"]
+variable = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_1rvbx"]
+quest = ExtResource("1_47cxb")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_m02vy"]
+variable = 1
+value = 10
+
+[resource]
+name = "147-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ndmay"), SubResource("RoseConditionQuestVariable_7c2fk")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_1rvbx"), SubResource("RoseRewardQuestVariable_m02vy")])

@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d17ed4nxc7lvu"]
+
+[ext_resource type="RoseQuest" uid="uid://bdb71sa0qafce" path="res://data/quests/150-kay-s-secret.tres" id="1_x56go"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_xmcpv"]
+variable_type = "Episode"
+value = 49
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_e760k"]
+quest = ExtResource("1_x56go")
+
+[resource]
+name = "149-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_xmcpv")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_e760k")])

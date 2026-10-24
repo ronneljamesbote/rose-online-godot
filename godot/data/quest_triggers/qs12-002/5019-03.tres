@@ -1,0 +1,14 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dugsp8l4ouql"]
+
+[ext_resource type="RoseQuest" uid="uid://ctruddajgswlh" path="res://data/quests/5019-goblin-hunting-competition-fetch-quest.tres" id="1_y58uq"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_r4sdt"]
+quest = ExtResource("1_y58uq")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_m0dm7"]
+variable_type = "Timer"
+operator = ">"
+
+[resource]
+name = "5019-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_r4sdt"), SubResource("RoseConditionQuestVariable_m0dm7")])

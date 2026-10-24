@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c24thmv3hx4qy"]
+
+[ext_resource type="RoseQuest" uid="uid://ynf801ngdhyn" path="res://data/quests/137-the-road-to-justice.tres" id="1_ncseq"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_yus5l"]
+variable_type = "Episode"
+value = 36
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_kqxr0"]
+quest = ExtResource("1_ncseq")
+
+[resource]
+name = "136-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_yus5l")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_kqxr0")])

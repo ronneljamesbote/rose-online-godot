@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1012-ferrell-guild-staff-ulysses|Ferrell Guild Staff Ulysses]]'
 steps: 8
 source:
-  data: LIST_QUEST.STB row 1005; QSD triggers 1005-01, 1005-02, 1005-03, 1005-04, 1005-05, 1005-06, 1005-31, 1005-32
+  data: 'godot/data/quests/1005-an-eye-for-the-marketplace.tres; quest triggers in godot/data/quest_triggers/: qj411-01/1005-01, qj411-01/1005-02, qj411-01/1005-03, qj411-01/1005-04, qj411-01/1005-05, qj411-01/1005-06, qn-081/1005-31, qn-082/1005-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

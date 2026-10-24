@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://rq7av8sn3rb"]
+
+[ext_resource type="RoseQuest" uid="uid://dj7x4lj3ncqmi" path="res://data/quests/5009-candle-ghost-extermination-fetch-quest.tres" id="1_f6us5"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_igyw1"]
+operator = ">="
+value = 15
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_j2cfn"]
+quest = ExtResource("1_f6us5")
+
+[resource]
+name = "5009-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_igyw1")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_j2cfn")])

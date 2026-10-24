@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://5xgnars7jkuc"]
+
+[ext_resource type="RoseQuest" uid="uid://dpwme5hb0ow21" path="res://data/quests/3807-new-recovery-potion.tres" id="1_n37e1"]
+[ext_resource type="RoseItemQuest" uid="uid://blc6g807vp3if" path="res://data/items/quest/317-sticky-fluid.tres" id="2_yhc5x"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_tsyxp"]
+quest = ExtResource("1_n37e1")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_fq548"]
+to = 35
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_l7gem"]
+item = ExtResource("2_yhc5x")
+equipment_index = 13
+count = 30
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_17ndv"]
+quest = ExtResource("1_n37e1")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_vtwod"]
+item = ExtResource("2_yhc5x")
+quantity = 1
+
+[resource]
+name = "3807-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_tsyxp"), SubResource("RoseConditionRandomPercent_fq548"), SubResource("RoseConditionQuestItem_l7gem")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_17ndv"), SubResource("RoseRewardAddItem_vtwod")])

@@ -1,0 +1,22 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bcfxxryjylsb2"]
+
+[ext_resource type="RoseZoneSettings" uid="uid://bwl37lt4wmjj0" path="res://data/zones/11-junon-clan-field.tres" id="1_lp7mn"]
+
+[sub_resource type="RoseConditionClanPosition" id="RoseConditionClanPosition_e32c3"]
+operator = ">="
+value = 5
+
+[sub_resource type="RoseConditionClanPosition" id="RoseConditionClanPosition_2t41g"]
+operator = "<="
+value = 6
+
+[sub_resource type="RoseRewardTeleportNearbyClanMembers" id="RoseRewardTeleportNearbyClanMembers_fjd62"]
+distance = 40
+zone = ExtResource("1_lp7mn")
+x = 551704.0
+y = 500285.0
+
+[resource]
+name = "Clan-warp02"
+conditions = Array[Resource]([SubResource("RoseConditionClanPosition_e32c3"), SubResource("RoseConditionClanPosition_2t41g")])
+rewards = Array[Resource]([SubResource("RoseRewardTeleportNearbyClanMembers_fjd62")])

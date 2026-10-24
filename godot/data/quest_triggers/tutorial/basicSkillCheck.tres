@@ -1,0 +1,22 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://0bdyegkckg2q"]
+
+[ext_resource type="RoseSkill" uid="uid://cptiwgjakvdbr" path="res://data/skills/11-sit/11-sit.tres" id="1_ukd61"]
+[ext_resource type="RoseSkill" uid="uid://14aihsl86cmd" path="res://data/skills/12-pick-up/12-pick-up.tres" id="2_hq2hr"]
+[ext_resource type="RoseSkill" uid="uid://d0ctnyh8ndehl" path="res://data/skills/19-party/19-party.tres" id="3_1agyg"]
+[ext_resource type="RoseSkill" uid="uid://dnmmug7wo2ymp" path="res://data/skills/20-trade/20-trade.tres" id="4_gw55r"]
+
+[sub_resource type="RoseConditionHasSkill" id="RoseConditionHasSkill_og6le"]
+skill = ExtResource("1_ukd61")
+
+[sub_resource type="RoseConditionHasSkill" id="RoseConditionHasSkill_0q2ep"]
+skill = ExtResource("2_hq2hr")
+
+[sub_resource type="RoseConditionHasSkill" id="RoseConditionHasSkill_msoge"]
+skill = ExtResource("3_1agyg")
+
+[sub_resource type="RoseConditionHasSkill" id="RoseConditionHasSkill_x3m4d"]
+skill = ExtResource("4_gw55r")
+
+[resource]
+name = "basicSkillCheck"
+conditions = Array[Resource]([SubResource("RoseConditionHasSkill_og6le"), SubResource("RoseConditionHasSkill_0q2ep"), SubResource("RoseConditionHasSkill_msoge"), SubResource("RoseConditionHasSkill_x3m4d")])

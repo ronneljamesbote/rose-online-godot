@@ -10,7 +10,7 @@ npcs:
 time_limit_minutes: 30
 steps: 4
 source:
-  data: LIST_QUEST.STB row 5001; QSD triggers 5001-01, 5001-02, 5001-03, 5001-04
+  data: 'godot/data/quests/5001-wine-delivery-part-time-job.tres; quest triggers in godot/data/quest_triggers/: qs11-001/5001-01, qs11-001/5001-02, qs11-001/5001-03, qs11-001/5001-04'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

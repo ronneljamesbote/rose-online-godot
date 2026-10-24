@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b5eku2dd5nbat"]
+
+[ext_resource type="RoseNpc" uid="uid://f34l5cvarmj4" path="res://data/npcs/1109-elder-of-junon-order-gorthein.tres" id="1_d2d04"]
+[ext_resource type="RoseQuest" uid="uid://c24wk4eqwnpum" path="res://data/quests/3005-necessity-of-a-new-shrine-2.tres" id="2_pna3b"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_o2j54"]
+ability = "Union"
+value = 1
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_4wm7s"]
+npc = ExtResource("1_d2d04")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_5swuk"]
+value = 7
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_7i7g8"]
+variable = 6
+operator = "<"
+value = 10
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_d7b23"]
+quest = ExtResource("2_pna3b")
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_cxdf0"]
+variable = 6
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_gh4ko"]
+trigger = "3005-02"
+
+[resource]
+name = "3005-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_o2j54"), SubResource("RoseConditionSelectNpc_4wm7s"), SubResource("RoseConditionObjectVariable_5swuk"), SubResource("RoseConditionObjectVariable_7i7g8")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_d7b23"), SubResource("RoseRewardObjectVariable_cxdf0"), SubResource("RoseRewardTrigger_gh4ko")])

@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1092-gypsy-jewel-seller-bellia|Gypsy Jewel Seller Bellia]]'
 steps: 7
 source:
-  data: LIST_QUEST.STB row 5015; QSD triggers 5014-10, 5015-01, 5015-02, 5015-31, 5015-32, 5015-33, 5015-34
+  data: 'godot/data/quests/5015-goblin-cave-expedition-2nd-level.tres; quest triggers in godot/data/quest_triggers/: qs11-002/5014-10, qs11-002/5015-01, qs11-002/5015-02, qn-273/5015-31, qn-275/5015-32, qn-276/5015-33, qn-278/5015-34'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

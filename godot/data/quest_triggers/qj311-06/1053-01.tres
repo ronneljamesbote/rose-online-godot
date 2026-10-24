@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://drgkfal5s80sl"]
+
+[ext_resource type="RoseQuest" uid="uid://73d0830cwu2p" path="res://data/quests/1053-road-to-second-job-change.tres" id="1_7irby"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_sohnu"]
+ability = "Job"
+value = 3
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_bxn82"]
+operator = ">="
+value = 70
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_mbu0a"]
+variable_type = "Job"
+operator = ">="
+value = 1
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_tu04j"]
+variable_type = "Job"
+variable = 1
+operator = "<="
+value = 1
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_l3a64"]
+quest = ExtResource("1_7irby")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_x42ft"]
+variable_type = "Job"
+variable = 1
+value = 1
+
+[resource]
+name = "1053-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_sohnu"), SubResource("RoseConditionAbilityValue_bxn82"), SubResource("RoseConditionQuestVariable_mbu0a"), SubResource("RoseConditionQuestVariable_tu04j")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_l3a64"), SubResource("RoseRewardQuestVariable_x42ft")])

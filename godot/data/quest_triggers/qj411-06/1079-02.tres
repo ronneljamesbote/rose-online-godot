@@ -1,0 +1,40 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b0p80tfnd2bcv"]
+
+[ext_resource type="RoseQuest" uid="uid://d0lyynl8pn827" path="res://data/quests/1079-lillith-woman-of-the-cosmos-second-job-change.tres" id="1_wlq6j"]
+[ext_resource type="RoseItemQuest" uid="uid://ifig771xup7n" path="res://data/items/quest/209-jones-recommendation.tres" id="2_xfa2q"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_htlhf"]
+quest = ExtResource("1_wlq6j")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_k705u"]
+ability = "Money"
+operator = ">="
+value = 200000
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_d7ej2"]
+quest = ExtResource("1_wlq6j")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_8mhqr"]
+item = ExtResource("2_xfa2q")
+quantity = 1
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_808ts"]
+ability = "Money"
+operator = "Subtract"
+value = 200000
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_cdok4"]
+ability = "Job"
+value = 422
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_qlcts"]
+variable_type = "Job"
+variable = 1
+value = 2
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_65ihe"]
+
+[resource]
+name = "1079-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_htlhf"), SubResource("RoseConditionAbilityValue_k705u")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_d7ej2"), SubResource("RoseRewardRemoveItem_8mhqr"), SubResource("RoseRewardAbilityValue_808ts"), SubResource("RoseRewardAbilityValue_cdok4"), SubResource("RoseRewardQuestVariable_qlcts"), SubResource("RoseRewardRemoveSelectedQuest_65ihe")])

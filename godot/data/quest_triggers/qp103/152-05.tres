@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ykq5nox4ww0e"]
+
+[ext_resource type="RoseQuest" uid="uid://dyyovso0s58c7" path="res://data/quests/152-lunarian-coffee.tres" id="1_o1jcb"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_32ww0"]
+quest = ExtResource("1_o1jcb")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_8aicp"]
+variable_type = "Timer"
+operator = "<="
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_cylla"]
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_wwxw7"]
+trigger = "151-03"
+
+[resource]
+name = "152-05"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_32ww0"), SubResource("RoseConditionQuestVariable_8aicp")])
+rewards = Array[Resource]([SubResource("RoseRewardRemoveSelectedQuest_cylla"), SubResource("RoseRewardTrigger_wwxw7")])

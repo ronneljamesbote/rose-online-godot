@@ -1,0 +1,39 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://hqbk2r2i1hmt"]
+
+[ext_resource type="RoseQuest" uid="uid://rcovrfkbphhi" path="res://data/quests/5051-hunting-practice-1.tres" id="1_dswt7"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_5rwa6"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dis46bchkbpl3" path="res://data/quest_triggers/qn-002/5033-31.tres" id="3_7rq3h"]
+[ext_resource type="RoseItemConsumable" uid="uid://rl234dvfqtdo" path="res://data/items/consumable/103-grapes.tres" id="4_gmdwm"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_7mhcj"]
+quest = ExtResource("1_dswt7")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_x5wiy"]
+item = ExtResource("2_5rwa6")
+equipment_index = 13
+count = 2
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_us70u"]
+quest = ExtResource("1_dswt7")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_j3khb"]
+equation = 5
+value = 10
+item = ExtResource("4_gmdwm")
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_5hfu3"]
+equation = 3
+value = 200
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_ommr4"]
+switch = 77
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_jb0kx"]
+
+[resource]
+name = "5051-32"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_7mhcj"), SubResource("RoseConditionQuestItem_x5wiy")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_us70u"), SubResource("RoseRewardCalculatedItem_j3khb"), SubResource("RoseRewardCalculatedMoney_5hfu3"), SubResource("RoseRewardSetQuestSwitch_ommr4"), SubResource("RoseRewardRemoveSelectedQuest_jb0kx")])
+next_trigger = ExtResource("3_7rq3h")

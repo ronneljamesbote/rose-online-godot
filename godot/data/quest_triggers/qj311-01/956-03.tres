@@ -1,0 +1,40 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bxjno4lgbxx5t"]
+
+[ext_resource type="RoseQuest" uid="uid://nxiw827a1j44" path="res://data/quests/956-why-did-toddy-steal-the-jewels.tres" id="1_p0th3"]
+[ext_resource type="RoseItemQuest" uid="uid://d0atr5uuhtyp3" path="res://data/items/quest/114-crystal-necklace.tres" id="2_t5038"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_hvx4m"]
+quest = ExtResource("1_p0th3")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_y4k7b"]
+variable_type = "Job"
+value = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_iahe7"]
+item = ExtResource("2_t5038")
+equipment_index = 13
+count = 7
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_53ccc"]
+quest = ExtResource("1_p0th3")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_n2j5d"]
+item = ExtResource("2_t5038")
+quantity = 7
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_pjnyv"]
+variable_type = "Job"
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_qwi2c"]
+equation = 3
+value = 1800
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_tle5l"]
+
+[resource]
+name = "956-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_hvx4m"), SubResource("RoseConditionQuestVariable_y4k7b"), SubResource("RoseConditionQuestItem_iahe7")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_53ccc"), SubResource("RoseRewardRemoveItem_n2j5d"), SubResource("RoseRewardQuestVariable_pjnyv"), SubResource("RoseRewardCalculatedMoney_qwi2c"), SubResource("RoseRewardRemoveSelectedQuest_tle5l")])

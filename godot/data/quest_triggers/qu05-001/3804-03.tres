@@ -1,0 +1,38 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bcrv0xakkugec"]
+
+[ext_resource type="RoseQuest" uid="uid://dr8vpncaoueyt" path="res://data/quests/3804-charrs-elaborate-market-price-analysis-table.tres" id="1_wriuy"]
+[ext_resource type="RoseItemQuest" uid="uid://myppc4lgojr4" path="res://data/items/quest/310-market-price-analysis-table.tres" id="2_n2ppf"]
+[ext_resource type="RoseNpc" uid="uid://p25b6grhdalj" path="res://data/npcs/1061-ferrell-guild-staff-belz.tres" id="3_ismtw"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_m6vtj"]
+quest = ExtResource("1_wriuy")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_vagx8"]
+item = ExtResource("2_n2ppf")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_v81by"]
+value = 10
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_65xip"]
+npc = ExtResource("3_ismtw")
+
+[sub_resource type="RoseConditionObjectDistance" id="RoseConditionObjectDistance_ecym4"]
+distance = 5
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_eop6b"]
+quest = ExtResource("1_wriuy")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_urgxw"]
+item = ExtResource("2_n2ppf")
+quantity = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_7m0aj"]
+operator = "Add"
+value = 10
+
+[resource]
+name = "3804-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_m6vtj"), SubResource("RoseConditionQuestItem_vagx8"), SubResource("RoseConditionQuestVariable_v81by"), SubResource("RoseConditionSelectNpc_65xip"), SubResource("RoseConditionObjectDistance_ecym4")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_eop6b"), SubResource("RoseRewardRemoveItem_urgxw"), SubResource("RoseRewardQuestVariable_7m0aj")])

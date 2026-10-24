@@ -1,0 +1,31 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dqqwb556c46g8"]
+
+[ext_resource type="RoseQuest" uid="uid://bmlvj6n8843f8" path="res://data/quests/1008-the-humble-smith.tres" id="1_yksso"]
+[ext_resource type="RoseItemWeapon" uid="uid://cel7k1ot8kvvb" path="res://data/items/weapon/262-basic-launcher.tres" id="2_5aiew"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_fss6r"]
+quest = ExtResource("1_yksso")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_ay66u"]
+variable_type = "Switch"
+value = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_q4pg4"]
+quest = ExtResource("1_yksso")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_x0e3r"]
+variable_type = "Job"
+value = 6
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_8syrg"]
+equation = 5
+value = 1
+item = ExtResource("2_5aiew")
+gem = 35
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_fwcwt"]
+
+[resource]
+name = "1008-05"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_fss6r"), SubResource("RoseConditionQuestVariable_ay66u")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_q4pg4"), SubResource("RoseRewardQuestVariable_x0e3r"), SubResource("RoseRewardCalculatedItem_8syrg"), SubResource("RoseRewardRemoveSelectedQuest_fwcwt")])

@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://hukhavyub2x7"]
+
+[ext_resource type="RoseQuest" uid="uid://b5u4skrq4vn0f" path="res://data/quests/142-the-search-for-the-prince.tres" id="1_kt0yy"]
+[ext_resource type="RoseQuest" uid="uid://e7fv2wsgxysl" path="res://data/quests/143-the-ominous-kenji-stone.tres" id="2_sd6ah"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_4tbjj"]
+quest = ExtResource("1_kt0yy")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_die67"]
+quest = ExtResource("1_kt0yy")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_5y4vv"]
+value = 20000
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_v7d31"]
+quest = ExtResource("2_sd6ah")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_ymxny"]
+variable_type = "Episode"
+value = 42
+
+[resource]
+name = "142-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_4tbjj")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_die67"), SubResource("RoseRewardCalculatedExperiencePoints_5y4vv"), SubResource("RoseRewardChangeSelectedQuest_v7d31"), SubResource("RoseRewardQuestVariable_ymxny")])

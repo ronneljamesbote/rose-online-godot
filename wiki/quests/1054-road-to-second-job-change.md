@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1096-ferrell-guild-merchant-mildun|Ferrell Guild Merchant Mildun]]'
 steps: 2
 source:
-  data: LIST_QUEST.STB row 1054; QSD triggers 1054-01, 1054-02
+  data: 'godot/data/quests/1054-road-to-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj411-06/1054-01, qj411-06/1054-02'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

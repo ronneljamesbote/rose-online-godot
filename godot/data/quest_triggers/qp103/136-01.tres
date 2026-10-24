@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bhofxh4jf8uda"]
+
+[ext_resource type="RoseQuest" uid="uid://dpn77q6qiai4e" path="res://data/quests/136-the-scheme.tres" id="1_4ekjs"]
+[ext_resource type="RoseQuest" uid="uid://ynf801ngdhyn" path="res://data/quests/137-the-road-to-justice.tres" id="2_k3ky7"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_k0f2g"]
+quest = ExtResource("1_4ekjs")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_28j7c"]
+quest = ExtResource("1_4ekjs")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_vi8ko"]
+value = 70000
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_mjvpj"]
+quest = ExtResource("2_k3ky7")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_8eagl"]
+variable_type = "Episode"
+value = 36
+
+[resource]
+name = "136-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_k0f2g")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_28j7c"), SubResource("RoseRewardCalculatedExperiencePoints_vi8ko"), SubResource("RoseRewardChangeSelectedQuest_mjvpj"), SubResource("RoseRewardQuestVariable_8eagl")])

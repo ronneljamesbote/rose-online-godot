@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://1owieesqk3ex"]
+
+[ext_resource type="RoseQuest" uid="uid://c6xd41846klj8" path="res://data/quests/148-the-royal-golden-dagger.tres" id="1_lkc8w"]
+[ext_resource type="RoseItemQuest" uid="uid://dyylracpreygy" path="res://data/items/quest/510-golden-dagger.tres" id="2_k674s"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_mjmc5"]
+variable_type = "Episode"
+value = 47
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_easkk"]
+quest = ExtResource("1_lkc8w")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_aspoj"]
+quest = ExtResource("1_lkc8w")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_ccjqp"]
+item = ExtResource("2_k674s")
+quantity = 1
+
+[resource]
+name = "147-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_mjmc5")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_easkk"), SubResource("RoseRewardSelectQuest_aspoj"), SubResource("RoseRewardAddItem_ccjqp")])

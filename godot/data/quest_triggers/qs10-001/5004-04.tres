@@ -1,0 +1,40 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://td0s242l27ye"]
+
+[ext_resource type="RoseQuest" uid="uid://bp53cf48f0jkb" path="res://data/quests/5004-ulysses-price-chart-delivery.tres" id="1_4iawi"]
+[ext_resource type="RoseItemQuest" uid="uid://ip5ypge6qqyv" path="res://data/items/quest/803-daily-price-checklist.tres" id="2_esquc"]
+[ext_resource type="RoseNpc" uid="uid://c7gxntexjag00" path="res://data/npcs/1036-ferrell-guild-staff-seyon.tres" id="3_45efb"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_m82lv"]
+quest = ExtResource("1_4iawi")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_thtyh"]
+operator = ">"
+value = 25
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_rngqw"]
+item = ExtResource("2_esquc")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_srs1g"]
+npc = ExtResource("3_45efb")
+
+[sub_resource type="RoseConditionObjectDistance" id="RoseConditionObjectDistance_v4yvc"]
+distance = 5
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_j6ldj"]
+quest = ExtResource("1_4iawi")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_vvffo"]
+item = ExtResource("2_esquc")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_4know"]
+value = 4000
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_uixin"]
+
+[resource]
+name = "5004-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_m82lv"), SubResource("RoseConditionAbilityValue_thtyh"), SubResource("RoseConditionQuestItem_rngqw"), SubResource("RoseConditionSelectNpc_srs1g"), SubResource("RoseConditionObjectDistance_v4yvc")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_j6ldj"), SubResource("RoseRewardRemoveItem_vvffo"), SubResource("RoseRewardCalculatedExperiencePoints_4know"), SubResource("RoseRewardRemoveSelectedQuest_uixin")])

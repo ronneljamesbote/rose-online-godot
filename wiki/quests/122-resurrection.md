@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/253-zombie|Zombie]]'
 steps: 7
 source:
-  data: LIST_QUEST.STB row 122; QSD triggers 121-01, 121-02, 122-01, 122-02, 122-03, 122-04, 122-05
+  data: 'godot/data/quests/122-resurrection.tres; quest triggers in godot/data/quest_triggers/: qp103/121-01, qp103/121-02, qp103/122-01, qp103/122-02, qp103/122-03, qp103/122-04, qp103/122-05'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

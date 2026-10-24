@@ -1,0 +1,12 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dypeauoq66x33"]
+
+[ext_resource type="RoseZoneSettings" uid="uid://cxp41vub0gvi5" path="res://data/zones/1-canyon-city-of-zant.tres" id="1_oi7pg"]
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_w8ydm"]
+zone = ExtResource("1_oi7pg")
+x = 520000
+y = 520000
+
+[resource]
+name = "partywarp"
+rewards = Array[Resource]([SubResource("RoseRewardTeleport_w8ydm")])

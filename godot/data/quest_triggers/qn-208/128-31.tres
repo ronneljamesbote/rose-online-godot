@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bcjgna2h6rx32"]
+
+[ext_resource type="RoseQuest" uid="uid://cr18grtbeuk8k" path="res://data/quests/128-the-owl-eye.tres" id="1_jc31e"]
+[ext_resource type="RoseItemQuest" uid="uid://bcyich6t2amm2" path="res://data/items/quest/613-hard-fruit.tres" id="2_4kb2o"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_qiqp8"]
+quest = ExtResource("1_jc31e")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_ptdt0"]
+item = ExtResource("2_4kb2o")
+equipment_index = 13
+count = 10
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_jf2ew"]
+quest = ExtResource("1_jc31e")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_bqmog"]
+item = ExtResource("2_4kb2o")
+quantity = 1
+
+[resource]
+name = "128-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_qiqp8"), SubResource("RoseConditionQuestItem_ptdt0")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_jf2ew"), SubResource("RoseRewardAddItem_bqmog")])

@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://uleigy5om6bx"]
+
+[ext_resource type="RoseSkill" uid="uid://bh1156kk5ufiv" path="res://data/skills/17-drive-cart/17-drive-cart.tres" id="1_tte3y"]
+[ext_resource type="RoseItemMaterial" uid="uid://dj1g5yfkebdal" path="res://data/items/material/151-black-hearts.tres" id="2_kmonu"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_0v6lh"]
+operator = ">="
+value = 70
+
+[sub_resource type="RoseConditionHasSkill" id="RoseConditionHasSkill_mkkw8"]
+skill = ExtResource("1_tte3y")
+has = false
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_r1lhs"]
+item = ExtResource("2_kmonu")
+equipment_index = 12
+count = 5
+operator = ">="
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_jvye7"]
+item = ExtResource("2_kmonu")
+quantity = 5
+
+[sub_resource type="RoseRewardAddSkill" id="RoseRewardAddSkill_liloe"]
+skill = ExtResource("1_tte3y")
+
+[resource]
+name = "driveCG"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_0v6lh"), SubResource("RoseConditionHasSkill_mkkw8"), SubResource("RoseConditionQuestItem_r1lhs")])
+rewards = Array[Resource]([SubResource("RoseRewardRemoveItem_jvye7"), SubResource("RoseRewardAddSkill_liloe")])

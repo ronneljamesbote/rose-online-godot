@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c5a3k6bksngh3"]
+
+[ext_resource type="RoseItemVehicle" uid="uid://dq6lqhj5omdca" path="res://data/items/vehicle/101-first-engine.tres" id="1_4jv5h"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_ebfp2"]
+ability = "UnionPoint5"
+operator = ">="
+value = 50
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_baety"]
+switch = 102
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_m8lko"]
+ability = "UnionPoint5"
+operator = "Subtract"
+value = 50
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_lqmmu"]
+equation = 5
+value = 1
+item = ExtResource("1_4jv5h")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_8ua5e"]
+switch = 102
+value = true
+
+[resource]
+name = "QU05-cart1-2"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_ebfp2"), SubResource("RoseConditionQuestSwitch_baety")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_m8lko"), SubResource("RoseRewardCalculatedItem_lqmmu"), SubResource("RoseRewardSetQuestSwitch_8ua5e")])

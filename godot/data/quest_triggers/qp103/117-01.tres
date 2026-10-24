@@ -1,0 +1,33 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b1q0h5gyauktf"]
+
+[ext_resource type="RoseQuest" uid="uid://b6e2vfmwq0e7u" path="res://data/quests/117-proof.tres" id="1_5ywyr"]
+[ext_resource type="RoseItemQuest" uid="uid://f3l5dg7ftjxa" path="res://data/items/quest/602-gypsy-s-permit.tres" id="2_1m1xf"]
+[ext_resource type="RoseQuest" uid="uid://dekbi7w2ymw46" path="res://data/quests/118-forbidden-potion.tres" id="3_gkpwj"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ungir"]
+quest = ExtResource("1_5ywyr")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_ulx3e"]
+item = ExtResource("2_1m1xf")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_23xe4"]
+quest = ExtResource("1_5ywyr")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_wakfa"]
+item = ExtResource("2_1m1xf")
+quantity = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_e0cqs"]
+quest = ExtResource("3_gkpwj")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_hgi13"]
+variable_type = "Episode"
+value = 15
+
+[resource]
+name = "117-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ungir"), SubResource("RoseConditionQuestItem_ulx3e")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_23xe4"), SubResource("RoseRewardRemoveItem_wakfa"), SubResource("RoseRewardChangeSelectedQuest_e0cqs"), SubResource("RoseRewardQuestVariable_hgi13")])

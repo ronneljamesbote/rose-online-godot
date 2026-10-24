@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1095-designer-lisa|Designer Lisa]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 1052; QSD triggers 1052-01, 1052-02, 1052-31
+  data: 'godot/data/quests/1052-road-to-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj211-06/1052-01, qj211-06/1052-02, qn-211/1052-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

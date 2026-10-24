@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/287-grandmaster-goblin|Grandmaster Goblin]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 158; QSD triggers 157-01, 157-02, 158-01, 158-31
+  data: 'godot/data/quests/158-leaders-in-the-abyss.tres; quest triggers in godot/data/quest_triggers/: qp103/157-01, qp103/157-02, qp103/158-01, qn-287/158-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

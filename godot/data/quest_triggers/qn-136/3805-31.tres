@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ctpk5njf2ht8j"]
+
+[ext_resource type="RoseQuest" uid="uid://d2m2d45ex4kia" path="res://data/quests/3805-arms-distribution-effort.tres" id="1_61rd5"]
+[ext_resource type="RoseItemQuest" uid="uid://ceqctpdv3up8j" path="res://data/items/quest/22-iron-fragment.tres" id="2_368ib"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bnyfqb6x5jwgn" path="res://data/quest_triggers/qn-136/3405-31.tres" id="3_n3yc0"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_cxamu"]
+quest = ExtResource("1_61rd5")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_05o08"]
+to = 30
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_6hfjo"]
+item = ExtResource("2_368ib")
+equipment_index = 13
+count = 17
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ebhko"]
+quest = ExtResource("1_61rd5")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_uy5n7"]
+item = ExtResource("2_368ib")
+quantity = 1
+
+[resource]
+name = "3805-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_cxamu"), SubResource("RoseConditionRandomPercent_05o08"), SubResource("RoseConditionQuestItem_6hfjo")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ebhko"), SubResource("RoseRewardAddItem_uy5n7")])
+next_trigger = ExtResource("3_n3yc0")

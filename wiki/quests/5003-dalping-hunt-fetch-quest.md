@@ -10,7 +10,7 @@ monsters:
 time_limit_minutes: 116
 steps: 6
 source:
-  data: LIST_QUEST.STB row 5003; QSD triggers 5003-01, 5003-02, 5003-03, 5003-04, 5003-10, 5003-31
+  data: 'godot/data/quests/5003-dalping-hunt-fetch-quest.tres; quest triggers in godot/data/quest_triggers/: qs12-001/5003-01, qs12-001/5003-02, qs12-001/5003-03, qs12-001/5003-04, qs12-001/5003-10, qn-032/5003-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

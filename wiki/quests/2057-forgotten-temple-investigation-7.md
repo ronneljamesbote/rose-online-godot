@@ -6,7 +6,7 @@ status: in-game
 time_limit_minutes: 180
 steps: 0
 source:
-  data: 'LIST_QUEST.STB row 2057; QSD triggers '
+  data: 'godot/data/quests/2057-forgotten-temple-investigation-7.tres'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

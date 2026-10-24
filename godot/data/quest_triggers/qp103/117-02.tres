@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b8aeiuxwtt51s"]
+
+[ext_resource type="RoseQuest" uid="uid://dekbi7w2ymw46" path="res://data/quests/118-forbidden-potion.tres" id="1_a4857"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_h22v7"]
+variable_type = "Episode"
+value = 15
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_sxsgb"]
+quest = ExtResource("1_a4857")
+
+[resource]
+name = "117-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_h22v7")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_sxsgb")])

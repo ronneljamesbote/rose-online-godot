@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://pto86pj5r6sf"]
+
+[ext_resource type="RoseItemFace" uid="uid://b21ggmgah1ewv" path="res://data/items/face/64-pinocchio-nose.tres" id="1_umjtm"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_u4qqm"]
+ability = "UnionPoint3"
+operator = ">="
+value = 18
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_obhpq"]
+ability = "UnionPoint3"
+operator = "Subtract"
+value = 18
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_r62y6"]
+equation = 5
+value = 1
+item = ExtResource("1_umjtm")
+gem = 35
+
+[resource]
+name = "QU03-item1064"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_u4qqm")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_obhpq"), SubResource("RoseRewardCalculatedItem_r62y6")])

@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1097-tavern-owner-harin|Tavern Owner Harin]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 119; QSD triggers 118-01, 118-02, 119-01
+  data: 'godot/data/quests/119-forbidden-potion.tres; quest triggers in godot/data/quest_triggers/: qp103/118-01, qp103/118-02, qp103/119-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bnwytobbeunwu"]
+
+[ext_resource type="RoseZoneSettings" uid="uid://dqgsg3bg18y2j" path="res://data/zones/22-adventurer-s-plain.tres" id="1_pm25u"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_fnyo4"]
+ability = "Money"
+operator = ">="
+value = 1500
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_ov05p"]
+ability = "Money"
+operator = "Subtract"
+value = 1500
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_hcnmd"]
+zone = ExtResource("1_pm25u")
+x = 583300
+y = 533400
+
+[resource]
+name = "move2_22"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_fnyo4")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_ov05p"), SubResource("RoseRewardTeleport_hcnmd")])

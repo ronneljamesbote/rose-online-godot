@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/31-dalping|Dalping]]'
 steps: 12
 source:
-  data: LIST_QUEST.STB row 1007; QSD triggers 1006-04, 1007-01, 1007-02, 1007-03, 1007-04, 1007-05, 1007-06, 1007-07, 1007-08, 1007-09, 1007-31, 1007-32
+  data: 'godot/data/quests/1007-an-eye-for-the-marketplace.tres; quest triggers in godot/data/quest_triggers/: qj411-01/1006-04, qj411-01/1007-01, qj411-01/1007-02, qj411-01/1007-03, qj411-01/1007-04, qj411-01/1007-05, qj411-01/1007-06, qj411-01/1007-07, qj411-01/1007-08, qj411-01/1007-09, qn-031/1007-31, qn-032/1007-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

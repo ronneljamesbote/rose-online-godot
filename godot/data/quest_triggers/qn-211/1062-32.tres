@@ -1,0 +1,32 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://buomou3urbi2s"]
+
+[ext_resource type="RoseQuest" uid="uid://j4a2xro8xyff" path="res://data/quests/1062-namielle-mother-of-all-second-job-change.tres" id="1_ix2sp"]
+[ext_resource type="RoseItemQuest" uid="uid://cuf1mabj4mlmc" path="res://data/items/quest/211-old-priest-chain.tres" id="2_ro1u8"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_tr0hh"]
+quest = ExtResource("1_ix2sp")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_sbsvp"]
+to = 20
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_hniev"]
+operator = ">="
+value = 8
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_djr0a"]
+item = ExtResource("2_ro1u8")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_0mp4l"]
+quest = ExtResource("1_ix2sp")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_1drca"]
+item = ExtResource("2_ro1u8")
+quantity = 1
+
+[resource]
+name = "1062-32"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_tr0hh"), SubResource("RoseConditionRandomPercent_sbsvp"), SubResource("RoseConditionQuestVariable_hniev"), SubResource("RoseConditionQuestItem_djr0a")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_0mp4l"), SubResource("RoseRewardAddItem_1drca")])

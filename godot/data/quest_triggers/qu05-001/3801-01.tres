@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bi8uj83ajwpuj"]
+
+[ext_resource type="RoseQuest" uid="uid://q4g3gxscb6m1" path="res://data/quests/3801-it-might-be-worth-more-later.tres" id="1_v06ds"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_1cknn"]
+ability = "Union"
+value = 5
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_7kkts"]
+quest = ExtResource("1_v06ds")
+
+[resource]
+name = "3801-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_1cknn")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_7kkts")])

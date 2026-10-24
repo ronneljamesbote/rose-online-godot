@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/61-needle-honeybee|Needle HoneyBee]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 1003; QSD triggers 1002-01, 1003-01, 1003-31
+  data: 'godot/data/quests/1003-dealer-job-change-quest.tres; quest triggers in godot/data/quest_triggers/: qj000-01/1002-01, qj000-01/1003-01, qn-061/1003-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

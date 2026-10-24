@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1141-righteous-crusader-gallahad|Righteous Crusader Gallahad]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 1985; QSD triggers 1984-01, 1985-01, 1985-02
+  data: 'godot/data/quests/1985-the-truth-of-the-golden-dagger.tres; quest triggers in godot/data/quest_triggers/: qp102/1984-01, qp102/1985-01, qp102/1985-02'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

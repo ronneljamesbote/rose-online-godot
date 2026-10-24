@@ -1,0 +1,29 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://daa07nr31b8vs"]
+
+[ext_resource type="RoseQuest" uid="uid://cqcd270r0iwpe" path="res://data/quests/805-secretly-learning-to-drive.tres" id="1_dw8y4"]
+[ext_resource type="RoseQuestTrigger" uid="uid://j424tntlepeu" path="res://data/quest_triggers/qn-272/805-33.tres" id="2_iygqy"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_85d1o"]
+quest = ExtResource("1_dw8y4")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_a1d4d"]
+value = 2
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_6il3r"]
+variable = 2
+operator = "<"
+value = 15
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_eg61j"]
+quest = ExtResource("1_dw8y4")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_tyt22"]
+variable = 2
+operator = "Add"
+value = 1
+
+[resource]
+name = "805-321"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_85d1o"), SubResource("RoseConditionQuestVariable_a1d4d"), SubResource("RoseConditionQuestVariable_6il3r")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_eg61j"), SubResource("RoseRewardQuestVariable_tyt22")])
+next_trigger = ExtResource("2_iygqy")

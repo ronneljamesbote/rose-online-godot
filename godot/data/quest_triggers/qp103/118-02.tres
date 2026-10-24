@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dk5s03l1gy4rn"]
+
+[ext_resource type="RoseQuest" uid="uid://dk8d2m0klerio" path="res://data/quests/119-forbidden-potion.tres" id="1_a3l8q"]
+[ext_resource type="RoseItemQuest" uid="uid://f3l5dg7ftjxa" path="res://data/items/quest/602-gypsy-s-permit.tres" id="2_ijqbs"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_hhipn"]
+variable_type = "Episode"
+value = 16
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_rfa3a"]
+quest = ExtResource("1_a3l8q")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_y6gf8"]
+quest = ExtResource("1_a3l8q")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_hqbgn"]
+item = ExtResource("2_ijqbs")
+quantity = 1
+
+[resource]
+name = "118-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_hhipn")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_rfa3a"), SubResource("RoseRewardSelectQuest_y6gf8"), SubResource("RoseRewardAddItem_hqbgn")])

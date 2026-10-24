@@ -1,0 +1,22 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dcnxjgv1c4h8w"]
+
+[ext_resource type="RoseItemMaterial" uid="uid://go52fjpbqrv3" path="res://data/items/material/451-salon-coupon.tres" id="1_xt75m"]
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_7e5g2"]
+item = ExtResource("1_xt75m")
+equipment_index = 12
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_mijp3"]
+ability = "Hair"
+value = 25
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_yii51"]
+item = ExtResource("1_xt75m")
+quantity = 1
+
+[resource]
+name = "hair1"
+conditions = Array[Resource]([SubResource("RoseConditionQuestItem_7e5g2")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_mijp3"), SubResource("RoseRewardRemoveItem_yii51")])

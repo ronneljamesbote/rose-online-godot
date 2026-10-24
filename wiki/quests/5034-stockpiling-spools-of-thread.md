@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1038-village-chief-gray|Village Chief Gray]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 5034; QSD triggers 5034-01, 5034-02, 5034-03, 5034-31, 5034-32
+  data: 'godot/data/quests/5034-stockpiling-spools-of-thread.tres; quest triggers in godot/data/quest_triggers/: qs10-001/5034-01, qs10-001/5034-02, qs10-001/5034-03, qn-012/5034-31, qn-011/5034-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1110-ferrell-guild-staff-charrs|Ferrell Guild Staff Charrs]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 3807; QSD triggers 3807-01, 3807-02, 3807-03, 3807-31
+  data: 'godot/data/quests/3807-new-recovery-potion.tres; quest triggers in godot/data/quest_triggers/: qu05-001/3807-01, qu05-001/3807-02, qu05-001/3807-03, qn-143/3807-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

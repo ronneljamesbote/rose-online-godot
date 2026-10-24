@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d2ltivohwrnyr"]
+
+[ext_resource type="RoseQuest" uid="uid://dekbi7w2ymw46" path="res://data/quests/118-forbidden-potion.tres" id="1_43e8x"]
+[ext_resource type="RoseItemQuest" uid="uid://1mfh2emb6trj" path="res://data/items/quest/608-sharp-stinger.tres" id="2_uhof4"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_xnrxo"]
+quest = ExtResource("1_43e8x")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_ce4xw"]
+to = 70
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_uycbg"]
+item = ExtResource("2_uhof4")
+equipment_index = 13
+count = 20
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_rvt7d"]
+quest = ExtResource("1_43e8x")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_pcx5n"]
+item = ExtResource("2_uhof4")
+quantity = 1
+
+[resource]
+name = "118-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_xnrxo"), SubResource("RoseConditionRandomPercent_ce4xw"), SubResource("RoseConditionQuestItem_uycbg")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_rvt7d"), SubResource("RoseRewardAddItem_pcx5n")])

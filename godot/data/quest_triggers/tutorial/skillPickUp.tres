@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://i8l2citccxkn"]
+
+[ext_resource type="RoseSkill" uid="uid://14aihsl86cmd" path="res://data/skills/12-pick-up/12-pick-up.tres" id="1_3032w"]
+
+[sub_resource type="RoseConditionHasSkill" id="RoseConditionHasSkill_2rs71"]
+skill = ExtResource("1_3032w")
+has = false
+
+[sub_resource type="RoseRewardAddSkill" id="RoseRewardAddSkill_f0jus"]
+skill = ExtResource("1_3032w")
+
+[resource]
+name = "skillPickUp"
+conditions = Array[Resource]([SubResource("RoseConditionHasSkill_2rs71")])
+rewards = Array[Resource]([SubResource("RoseRewardAddSkill_f0jus")])

@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1051-arumic-resercher-lutis|Arumic Resercher Lutis]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 3604; QSD triggers 3604-01, 3604-02, 3604-03, 3604-04, 3604-05
+  data: 'godot/data/quests/3604-lutis-guard-of-luxem-tower.tres; quest triggers in godot/data/quest_triggers/: qu04-001/3604-01, qu04-001/3604-02, qu04-001/3604-03, qu04-001/3604-04, qu04-001/3604-05'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

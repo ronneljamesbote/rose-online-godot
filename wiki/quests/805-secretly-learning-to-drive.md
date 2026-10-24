@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/272-coal-mine-goblin-worker|Coal Mine Goblin Worker]]'
 steps: 7
 source:
-  data: LIST_QUEST.STB row 805; QSD triggers 804-01, 805-01, 805-31, 805-32, 805-33, 805-311, 805-321
+  data: 'godot/data/quests/805-secretly-learning-to-drive.tres; quest triggers in godot/data/quest_triggers/: tutorial/804-01, tutorial/805-01, qn-272/805-31, qn-272/805-32, qn-272/805-33, qn-272/805-311, qn-272/805-321'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

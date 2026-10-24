@@ -1,0 +1,38 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://drcv2wnsrfwcg"]
+
+[ext_resource type="RoseQuest" uid="uid://jw4vqiaxdgef" path="res://data/quests/3604-lutis-guard-of-luxem-tower.tres" id="1_7ef44"]
+[ext_resource type="RoseItemQuest" uid="uid://drmrbwtn236rl" path="res://data/items/quest/306-mana-focus-potion.tres" id="2_hsygl"]
+[ext_resource type="RoseNpc" uid="uid://csvg7j8k5ygtf" path="res://data/npcs/1051-arumic-resercher-lutis.tres" id="3_2g3yt"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_0vn5e"]
+quest = ExtResource("1_7ef44")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_4s0c0"]
+value = 10
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_rp3q5"]
+item = ExtResource("2_hsygl")
+equipment_index = 13
+count = 3
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_lo10g"]
+npc = ExtResource("3_2g3yt")
+
+[sub_resource type="RoseConditionObjectDistance" id="RoseConditionObjectDistance_sw77i"]
+distance = 5
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ulm82"]
+quest = ExtResource("1_7ef44")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_e2ohl"]
+item = ExtResource("2_hsygl")
+quantity = 3
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_t40ut"]
+operator = "Add"
+value = 10
+
+[resource]
+name = "3604-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_0vn5e"), SubResource("RoseConditionQuestVariable_4s0c0"), SubResource("RoseConditionQuestItem_rp3q5"), SubResource("RoseConditionSelectNpc_lo10g"), SubResource("RoseConditionObjectDistance_sw77i")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ulm82"), SubResource("RoseRewardRemoveItem_e2ohl"), SubResource("RoseRewardQuestVariable_t40ut")])

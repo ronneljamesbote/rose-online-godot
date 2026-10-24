@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1121-ikaness-staff-shroon|Ikaness Staff Shroon]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 132; QSD triggers 131-01, 131-02, 132-01
+  data: 'godot/data/quests/132-forbidden-spell.tres; quest triggers in godot/data/quest_triggers/: qp103/131-01, qp103/131-02, qp103/132-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

@@ -1,0 +1,40 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://453hhkashq8f"]
+
+[ext_resource type="RoseQuest" uid="uid://bhvp11ehgx75w" path="res://data/quests/5031-seyon-s-price-checklist-delivery.tres" id="1_vblr5"]
+[ext_resource type="RoseItemQuest" uid="uid://ip5ypge6qqyv" path="res://data/items/quest/803-daily-price-checklist.tres" id="2_orlxw"]
+[ext_resource type="RoseNpc" uid="uid://dd4qotedt7dua" path="res://data/npcs/1012-ferrell-guild-staff-ulysses.tres" id="3_ugw3e"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_yoahp"]
+quest = ExtResource("1_vblr5")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_21hoq"]
+item = ExtResource("2_orlxw")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_h234j"]
+npc = ExtResource("3_ugw3e")
+
+[sub_resource type="RoseConditionObjectDistance" id="RoseConditionObjectDistance_6bdxe"]
+distance = 5
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_s2ehm"]
+quest = ExtResource("1_vblr5")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_6oclj"]
+item = ExtResource("2_orlxw")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_2pi4d"]
+equation = 1
+value = 100
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_r671q"]
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_ou0lx"]
+trigger = "5004-01"
+
+[resource]
+name = "5031-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_yoahp"), SubResource("RoseConditionQuestItem_21hoq"), SubResource("RoseConditionSelectNpc_h234j"), SubResource("RoseConditionObjectDistance_6bdxe")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_s2ehm"), SubResource("RoseRewardRemoveItem_6oclj"), SubResource("RoseRewardCalculatedExperiencePoints_2pi4d"), SubResource("RoseRewardRemoveSelectedQuest_r671q"), SubResource("RoseRewardTrigger_ou0lx")])

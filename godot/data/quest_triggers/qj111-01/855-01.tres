@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://blot10211n41a"]
+
+[ext_resource type="RoseQuest" uid="uid://bvr5b8y3y7uef" path="res://data/quests/855-living-as-a-true-soldier.tres" id="1_xyp2x"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_kb85d"]
+ability = "Job"
+value = 1
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_63bbj"]
+operator = ">="
+value = 20
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_xb34y"]
+variable_type = "Job"
+value = 1
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_yt0de"]
+quest = ExtResource("1_xyp2x")
+
+[resource]
+name = "855-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_kb85d"), SubResource("RoseConditionAbilityValue_63bbj"), SubResource("RoseConditionQuestVariable_xb34y")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_yt0de")])

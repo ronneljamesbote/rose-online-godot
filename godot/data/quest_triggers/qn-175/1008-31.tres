@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b8uqqdehccdqo"]
+
+[ext_resource type="RoseQuest" uid="uid://bmlvj6n8843f8" path="res://data/quests/1008-the-humble-smith.tres" id="1_6pjog"]
+[ext_resource type="RoseItemQuest" uid="uid://dp8ga4vcemqdt" path="res://data/items/quest/118-aqua-molar.tres" id="2_bk8i5"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_hgh3s"]
+quest = ExtResource("1_6pjog")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_ys076"]
+to = 40
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_xqh87"]
+item = ExtResource("2_bk8i5")
+equipment_index = 13
+count = 10
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_lc0eb"]
+quest = ExtResource("1_6pjog")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_vn2bt"]
+item = ExtResource("2_bk8i5")
+quantity = 1
+
+[resource]
+name = "1008-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_hgh3s"), SubResource("RoseConditionRandomPercent_ys076"), SubResource("RoseConditionQuestItem_xqh87")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_lc0eb"), SubResource("RoseRewardAddItem_vn2bt")])

@@ -1,0 +1,40 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c15g8g8v731oq"]
+
+[ext_resource type="RoseQuest" uid="uid://tvch7kvok0uy" path="res://data/quests/858-hovert-s-mementos.tres" id="1_5lkb7"]
+[ext_resource type="RoseItemQuest" uid="uid://bjk2tjf7ll4p5" path="res://data/items/quest/127-hovert-s-necklace.tres" id="2_fr3bc"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dl32ukttyvkag" path="res://data/quest_triggers/qn-176/1008-32.tres" id="3_fv1xs"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_imt2o"]
+quest = ExtResource("1_5lkb7")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_65uh3"]
+variable = 2
+operator = ">="
+value = 20
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_8ggch"]
+item = ExtResource("2_fr3bc")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_0fojw"]
+to = 7
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_s6ct4"]
+quest = ExtResource("1_5lkb7")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_hk5i7"]
+item = ExtResource("2_fr3bc")
+quantity = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_wc505"]
+variable_type = "Switch"
+variable = 1
+operator = "SetOne"
+
+[resource]
+name = "858-39"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_imt2o"), SubResource("RoseConditionQuestVariable_65uh3"), SubResource("RoseConditionQuestItem_8ggch"), SubResource("RoseConditionRandomPercent_0fojw")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_s6ct4"), SubResource("RoseRewardAddItem_hk5i7"), SubResource("RoseRewardQuestVariable_wc505")])
+next_trigger = ExtResource("3_fv1xs")

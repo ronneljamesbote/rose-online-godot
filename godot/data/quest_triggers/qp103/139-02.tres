@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://jsmd15or7gfr"]
+
+[ext_resource type="RoseQuest" uid="uid://dbpv3hsujjqep" path="res://data/quests/140-the-zeppastone-wind-gem.tres" id="1_5da6s"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_tuigr"]
+variable_type = "Episode"
+value = 39
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_ctfob"]
+quest = ExtResource("1_5da6s")
+
+[resource]
+name = "139-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_tuigr")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_ctfob")])

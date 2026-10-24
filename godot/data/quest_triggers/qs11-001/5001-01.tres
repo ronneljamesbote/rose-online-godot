@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cxb704oac0x2b"]
+
+[ext_resource type="RoseNpc" uid="uid://bp3ncfgmq1vhy" path="res://data/npcs/1013-tavern-owner-sharlin.tres" id="1_u7xf2"]
+[ext_resource type="RoseQuest" uid="uid://c3p24q86n7kaw" path="res://data/quests/5001-wine-delivery-part-time-job.tres" id="2_jx7oi"]
+[ext_resource type="RoseItemQuest" uid="uid://x57dsl5uyaxw" path="res://data/items/quest/801-red-wine.tres" id="3_malne"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_eefse"]
+operator = "<="
+value = 18
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_ewn15"]
+npc = ExtResource("1_u7xf2")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_jswmy"]
+value = 1
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_xqrao"]
+quest = ExtResource("2_jx7oi")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ys83f"]
+quest = ExtResource("2_jx7oi")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_kkncu"]
+item = ExtResource("3_malne")
+quantity = 2
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_yko8i"]
+variable = 1
+operator = "Add"
+value = 1
+
+[resource]
+name = "5001-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_eefse"), SubResource("RoseConditionSelectNpc_ewn15"), SubResource("RoseConditionObjectVariable_jswmy")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_xqrao"), SubResource("RoseRewardSelectQuest_ys83f"), SubResource("RoseRewardAddItem_kkncu"), SubResource("RoseRewardObjectVariable_yko8i")])

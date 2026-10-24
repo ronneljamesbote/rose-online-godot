@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/136-grunter-warrior|Grunter Warrior]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 3005; QSD triggers 3005-01, 3005-02, 3005-03, 3005-04, 3005-31
+  data: 'godot/data/quests/3005-necessity-of-a-new-shrine-2.tres; quest triggers in godot/data/quest_triggers/: qu01-001/3005-01, qu01-001/3005-02, qu01-001/3005-03, qu01-001/3005-04, qn-136/3005-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

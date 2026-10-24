@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dcm3sjgrovyjj"]
+
+[ext_resource type="RoseZoneSettings" uid="uid://dnnfjmvcoom4b" path="res://data/zones/2-city-of-junon-polis.tres" id="1_wevyq"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_7sog3"]
+ability = "Money"
+operator = ">="
+value = 20000
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_am8pn"]
+zone = ExtResource("1_wevyq")
+x = 549433
+y = 498986
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_x2vwj"]
+ability = "Money"
+operator = "Subtract"
+value = 20000
+
+[resource]
+name = "gotoJunon-0"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_7sog3")])
+rewards = Array[Resource]([SubResource("RoseRewardTeleport_am8pn"), SubResource("RoseRewardAbilityValue_x2vwj")])

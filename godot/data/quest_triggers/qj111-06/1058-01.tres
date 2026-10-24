@@ -1,0 +1,44 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://vok5m1pjghh6"]
+
+[ext_resource type="RoseQuest" uid="uid://drldbwmp3m8nx" path="res://data/quests/1058-lucid-king-of-legend-second-job-change.tres" id="1_6awgy"]
+[ext_resource type="RoseItemQuest" uid="uid://bb1onvxluu8gs" path="res://data/items/quest/202-fragment-of-lucid-s-sword-1.tres" id="2_20ndc"]
+[ext_resource type="RoseItemQuest" uid="uid://dubas4t6mfr0e" path="res://data/items/quest/203-fragment-of-lucid-s-sword-2.tres" id="3_ec248"]
+[ext_resource type="RoseItemQuest" uid="uid://chw8tgwittccx" path="res://data/items/quest/204-fragment-of-lucid-s-sword-3.tres" id="4_08ur0"]
+[ext_resource type="RoseItemQuest" uid="uid://dfc5n8rbr8jfv" path="res://data/items/quest/205-fragment-of-lucid-s-sword-4.tres" id="5_l3wg5"]
+[ext_resource type="RoseItemQuest" uid="uid://cgd2ox1sn5m76" path="res://data/items/quest/206-fragment-of-lucid-s-sword-5.tres" id="6_3qpgb"]
+[ext_resource type="RoseQuest" uid="uid://5u4t2kh34be8" path="res://data/quests/1059-lucid-king-of-legend-second-job-change.tres" id="7_eddst"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ywfjn"]
+quest = ExtResource("1_6awgy")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_7knmd"]
+quest = ExtResource("1_6awgy")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_uh64i"]
+item = ExtResource("2_20ndc")
+quantity = 1
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_cgerh"]
+item = ExtResource("3_ec248")
+quantity = 1
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_ci3tu"]
+item = ExtResource("4_08ur0")
+quantity = 1
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_6ox2t"]
+item = ExtResource("5_l3wg5")
+quantity = 1
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_8aswh"]
+item = ExtResource("6_3qpgb")
+quantity = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_mf6l4"]
+quest = ExtResource("7_eddst")
+keep_data = true
+
+[resource]
+name = "1058-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ywfjn")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_7knmd"), SubResource("RoseRewardRemoveItem_uh64i"), SubResource("RoseRewardRemoveItem_cgerh"), SubResource("RoseRewardRemoveItem_ci3tu"), SubResource("RoseRewardRemoveItem_6ox2t"), SubResource("RoseRewardRemoveItem_8aswh"), SubResource("RoseRewardChangeSelectedQuest_mf6l4")])

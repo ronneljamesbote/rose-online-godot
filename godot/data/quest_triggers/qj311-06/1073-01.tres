@@ -1,0 +1,40 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://4vinl3exwy0a"]
+
+[ext_resource type="RoseQuest" uid="uid://d0imu01sr86fj" path="res://data/quests/1073-kirnale-s-journals-second-job-change.tres" id="1_x3k1l"]
+[ext_resource type="RoseItemQuest" uid="uid://d4ak4714iai3d" path="res://data/items/quest/222-sharlin-s-recommendation.tres" id="2_r4uag"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_33euh"]
+quest = ExtResource("1_x3k1l")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_5s146"]
+ability = "Money"
+operator = ">="
+value = 200000
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_43tu5"]
+quest = ExtResource("1_x3k1l")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_1a41i"]
+item = ExtResource("2_r4uag")
+quantity = 1
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_kc5mq"]
+ability = "Money"
+operator = "Subtract"
+value = 200000
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_j7cq8"]
+ability = "Job"
+value = 321
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_wp8dd"]
+variable_type = "Job"
+variable = 1
+value = 2
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_apj55"]
+
+[resource]
+name = "1073-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_33euh"), SubResource("RoseConditionAbilityValue_5s146")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_43tu5"), SubResource("RoseRewardRemoveItem_1a41i"), SubResource("RoseRewardAbilityValue_kc5mq"), SubResource("RoseRewardAbilityValue_j7cq8"), SubResource("RoseRewardQuestVariable_wp8dd"), SubResource("RoseRewardRemoveSelectedQuest_apj55")])

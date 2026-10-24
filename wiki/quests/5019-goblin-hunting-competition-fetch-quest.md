@@ -13,7 +13,7 @@ monsters:
 time_limit_minutes: 180
 steps: 11
 source:
-  data: LIST_QUEST.STB row 5019; QSD triggers 5019-01, 5019-02, 5019-03, 5019-04, 5019-05, 5019-06, 5019-07, 5019-31, 5019-32, 5019-33, 5019-34
+  data: 'godot/data/quests/5019-goblin-hunting-competition-fetch-quest.tres; quest triggers in godot/data/quest_triggers/: qs12-002/5019-01, qs12-002/5019-02, qs12-002/5019-03, qs12-002/5019-04, qs12-002/5019-05, qs12-002/5019-06, qs12-002/5019-07, qn-273/5019-31, qn-275/5019-32, qn-276/5019-33, qn-278/5019-34'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

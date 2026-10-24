@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cidunbwfmj2fq"]
+
+[ext_resource type="RoseQuest" uid="uid://hgpg7whngwdj" path="res://data/quests/132-forbidden-spell.tres" id="1_v6153"]
+[ext_resource type="RoseQuest" uid="uid://k6vtm56bog1a" path="res://data/quests/133-forbidden-spell.tres" id="2_e1abf"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_8n87y"]
+quest = ExtResource("1_v6153")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_7oygv"]
+quest = ExtResource("1_v6153")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_pabsp"]
+value = 10000
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_vx5u5"]
+quest = ExtResource("2_e1abf")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_1cl0k"]
+variable_type = "Episode"
+value = 32
+
+[resource]
+name = "132-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_8n87y")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_7oygv"), SubResource("RoseRewardCalculatedExperiencePoints_pabsp"), SubResource("RoseRewardChangeSelectedQuest_vx5u5"), SubResource("RoseRewardQuestVariable_1cl0k")])

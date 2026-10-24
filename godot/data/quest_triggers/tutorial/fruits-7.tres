@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ttad0ylylff7"]
+
+[ext_resource type="RoseItemConsumable" uid="uid://xx2s6fo28rft" path="res://data/items/consumable/104-kiwi.tres" id="1_csc2f"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_hpcje"]
+value = 7
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_3niyv"]
+switch = 12
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_mbxwa"]
+equation = 5
+value = 30
+item = ExtResource("1_csc2f")
+gem = 52685
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_n18es"]
+switch = 12
+value = true
+
+[resource]
+name = "fruits-7"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_hpcje"), SubResource("RoseConditionQuestSwitch_3niyv")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_mbxwa"), SubResource("RoseRewardSetQuestSwitch_n18es")])

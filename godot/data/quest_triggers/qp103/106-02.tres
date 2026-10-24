@@ -1,0 +1,22 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://7r763ff3ye2w"]
+
+[ext_resource type="RoseQuest" uid="uid://bymtsj2yn6c40" path="res://data/quests/106-healing-hands.tres" id="1_amtnx"]
+[ext_resource type="RoseQuest" uid="uid://c13m8vcmi4n78" path="res://data/quests/105-healing-hands.tres" id="2_xtdtn"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ghmsk"]
+quest = ExtResource("1_amtnx")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_cc2r0"]
+variable_type = "Timer"
+operator = "<="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_bti71"]
+quest = ExtResource("1_amtnx")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_nfqbd"]
+quest = ExtResource("2_xtdtn")
+
+[resource]
+name = "106-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ghmsk"), SubResource("RoseConditionQuestVariable_cc2r0")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_bti71"), SubResource("RoseRewardChangeSelectedQuest_nfqbd")])

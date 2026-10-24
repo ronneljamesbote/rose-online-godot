@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dwsmr2l6pibs7"]
+
+[ext_resource type="RoseNpc" uid="uid://bycpmt64crvyi" path="res://data/npcs/1111-righteous-crusader-huffe.tres" id="1_fbeej"]
+[ext_resource type="RoseQuest" uid="uid://ojfp3aqnqiwn" path="res://data/quests/3405-supplying-training-gloves.tres" id="2_77t2v"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_wf82i"]
+ability = "Union"
+value = 3
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_k1gyg"]
+npc = ExtResource("1_fbeej")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_vic5g"]
+value = 10
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_k16hi"]
+variable = 8
+operator = "<"
+value = 10
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_cw38f"]
+quest = ExtResource("2_77t2v")
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_nnt0f"]
+variable = 8
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_vs2iu"]
+trigger = "3405-02"
+
+[resource]
+name = "3405-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_wf82i"), SubResource("RoseConditionSelectNpc_k1gyg"), SubResource("RoseConditionObjectVariable_vic5g"), SubResource("RoseConditionObjectVariable_k16hi")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_cw38f"), SubResource("RoseRewardObjectVariable_nnt0f"), SubResource("RoseRewardTrigger_vs2iu")])

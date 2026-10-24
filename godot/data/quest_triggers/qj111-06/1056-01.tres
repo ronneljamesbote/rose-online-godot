@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://wmno5xdfes1x"]
+
+[ext_resource type="RoseQuest" uid="uid://b3051pr4limgt" path="res://data/quests/1056-lucid-king-of-legend-second-job-change.tres" id="1_a2nel"]
+[ext_resource type="RoseQuest" uid="uid://bikmaphdx657r" path="res://data/quests/1057-lucid-king-of-legend-second-job-change.tres" id="2_ycequ"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_itxly"]
+quest = ExtResource("1_a2nel")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_aj5ug"]
+quest = ExtResource("1_a2nel")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_calhs"]
+quest = ExtResource("2_ycequ")
+keep_data = true
+
+[resource]
+name = "1056-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_itxly")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_aj5ug"), SubResource("RoseRewardChangeSelectedQuest_calhs")])

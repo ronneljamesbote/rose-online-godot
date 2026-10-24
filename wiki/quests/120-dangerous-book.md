@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1097-tavern-owner-harin|Tavern Owner Harin]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 120; QSD triggers 119-01, 119-02, 120-01, 120-03, 120-04
+  data: 'godot/data/quests/120-dangerous-book.tres; quest triggers in godot/data/quest_triggers/: qp103/119-01, qp103/119-02, qp103/120-01, qp103/120-03, qp103/120-04'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

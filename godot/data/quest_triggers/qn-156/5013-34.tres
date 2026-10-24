@@ -1,0 +1,41 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d1fmv5t1okmpu"]
+
+[ext_resource type="RoseQuest" uid="uid://bgxr1bo5evnne" path="res://data/quests/5013-stockpiling-oak-branches.tres" id="1_he6m7"]
+[ext_resource type="RoseItemQuest" uid="uid://4nr15oavwt0y" path="res://data/items/quest/28-oak-branch.tres" id="2_l1kna"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_hrcrk"]
+quest = ExtResource("1_he6m7")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_4kk30"]
+to = 23
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_745qx"]
+operator = ">="
+value = 51
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_dbt68"]
+operator = "<="
+value = 60
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_fdo11"]
+item = ExtResource("2_l1kna")
+equipment_index = 13
+count = 91
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_6tqnm"]
+quest = ExtResource("1_he6m7")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_hs0bd"]
+item = ExtResource("2_l1kna")
+quantity = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_ldna7"]
+variable = 9
+operator = "Add"
+value = 1
+
+[resource]
+name = "5013-34"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_hrcrk"), SubResource("RoseConditionRandomPercent_4kk30"), SubResource("RoseConditionAbilityValue_745qx"), SubResource("RoseConditionAbilityValue_dbt68"), SubResource("RoseConditionQuestItem_fdo11")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_6tqnm"), SubResource("RoseRewardAddItem_hs0bd"), SubResource("RoseRewardQuestVariable_ldna7")])

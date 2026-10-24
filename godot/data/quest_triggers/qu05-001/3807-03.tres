@@ -1,0 +1,52 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c1m68b3vpt4m8"]
+
+[ext_resource type="RoseQuest" uid="uid://dpwme5hb0ow21" path="res://data/quests/3807-new-recovery-potion.tres" id="1_1mw4s"]
+[ext_resource type="RoseItemQuest" uid="uid://blc6g807vp3if" path="res://data/items/quest/317-sticky-fluid.tres" id="2_8vhpv"]
+[ext_resource type="RoseItemConsumable" uid="uid://cpbfem1aicwi6" path="res://data/items/consumable/3-health-vial-l.tres" id="3_7p67v"]
+[ext_resource type="RoseItemConsumable" uid="uid://djpfhj5gyqoeu" path="res://data/items/consumable/22-mana-vial-m.tres" id="4_1yby7"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_47qp5"]
+quest = ExtResource("1_1mw4s")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_efytd"]
+ability = "Union"
+value = 5
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_lq8nl"]
+operator = ">"
+value = 70
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_xum5j"]
+item = ExtResource("2_8vhpv")
+equipment_index = 13
+count = 30
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_lm7f8"]
+quest = ExtResource("1_1mw4s")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_5prb3"]
+item = ExtResource("2_8vhpv")
+quantity = 30
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_bpw2g"]
+equation = 5
+value = 5
+item = ExtResource("3_7p67v")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_lks4f"]
+equation = 5
+value = 5
+item = ExtResource("4_1yby7")
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_4jdhv"]
+ability = "UnionPoint5"
+operator = "Add"
+value = 3
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_bnti5"]
+
+[resource]
+name = "3807-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_47qp5"), SubResource("RoseConditionAbilityValue_efytd"), SubResource("RoseConditionAbilityValue_lq8nl"), SubResource("RoseConditionQuestItem_xum5j")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_lm7f8"), SubResource("RoseRewardRemoveItem_5prb3"), SubResource("RoseRewardCalculatedItem_bpw2g"), SubResource("RoseRewardCalculatedItem_lks4f"), SubResource("RoseRewardAbilityValue_4jdhv"), SubResource("RoseRewardRemoveSelectedQuest_bnti5")])

@@ -1,0 +1,38 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bak032002qvcx"]
+
+[ext_resource type="RoseQuest" uid="uid://bd0r2q5puev8x" path="res://data/quests/138-the-road-to-justice.tres" id="1_dl1eq"]
+[ext_resource type="RoseItemMaterial" uid="uid://dj1g5yfkebdal" path="res://data/items/material/151-black-hearts.tres" id="2_dsjcm"]
+[ext_resource type="RoseItemMaterial" uid="uid://6nmflpypbwk2" path="res://data/items/material/152-green-hearts.tres" id="3_6kohx"]
+[ext_resource type="RoseQuest" uid="uid://bm61biuxm0rsk" path="res://data/quests/139-punwell-in-windmill-village.tres" id="4_u5iq6"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_rmxu0"]
+quest = ExtResource("1_dl1eq")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_mw68x"]
+quest = ExtResource("1_dl1eq")
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_0xkpt"]
+equation = 3
+value = 20000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_n04f1"]
+equation = 5
+value = 1
+item = ExtResource("2_dsjcm")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_s5rr7"]
+equation = 5
+value = 1
+item = ExtResource("3_6kohx")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_vfcb2"]
+quest = ExtResource("4_u5iq6")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_tv2aj"]
+variable_type = "Episode"
+value = 38
+
+[resource]
+name = "138-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_rmxu0")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_mw68x"), SubResource("RoseRewardCalculatedMoney_0xkpt"), SubResource("RoseRewardCalculatedItem_n04f1"), SubResource("RoseRewardCalculatedItem_s5rr7"), SubResource("RoseRewardChangeSelectedQuest_vfcb2"), SubResource("RoseRewardQuestVariable_tv2aj")])

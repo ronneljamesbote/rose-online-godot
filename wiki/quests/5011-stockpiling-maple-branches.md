@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1082-guide-eva|Guide Eva]]'
 steps: 7
 source:
-  data: LIST_QUEST.STB row 5011; QSD triggers 5011-01, 5011-02, 5011-31, 5011-32, 5011-33, 5011-34, 5011-35
+  data: 'godot/data/quests/5011-stockpiling-maple-branches.tres; quest triggers in godot/data/quest_triggers/: qs10-001/5011-01, qs10-001/5011-02, qn-111/5011-31, qn-112/5011-32, qn-113/5011-33, qn-132/5011-34, qn-133/5011-35'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

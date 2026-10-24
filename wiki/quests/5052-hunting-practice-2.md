@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/11-mini-choropy|Mini-Choropy]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 5052; QSD triggers 5052-31, 5052-32, 5052-33, 5052-34, T78
+  data: 'godot/data/quests/5052-hunting-practice-2.tres; quest triggers in godot/data/quest_triggers/: qn-011/5052-31, qn-011/5052-32, qn-012/5052-33, qn-012/5052-34, tutorial/T78'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

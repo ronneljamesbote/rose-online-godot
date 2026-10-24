@@ -5,7 +5,7 @@ name: Second Job Change Quest
 status: in-game
 steps: 0
 source:
-  data: 'LIST_QUEST.STB row 1050; QSD triggers '
+  data: 'godot/data/quests/1050-second-job-change-quest.tres'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

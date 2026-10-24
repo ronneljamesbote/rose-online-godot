@@ -1,0 +1,40 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dc2p5p12aw1pg"]
+
+[ext_resource type="RoseQuest" uid="uid://peqhbhyjctvy" path="res://data/quests/907-solitary-orias.tres" id="1_wbyik"]
+[ext_resource type="RoseItemWeapon" uid="uid://boduc5jh78lj" path="res://data/items/weapon/333-sorcerer-s-wand.tres" id="2_nx72c"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_8adua"]
+quest = ExtResource("1_wbyik")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_qcdrk"]
+ability = "Job"
+value = 2
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_lwcrx"]
+operator = ">="
+value = 20
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_vm0yo"]
+variable_type = "Job"
+value = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_d073x"]
+quest = ExtResource("1_wbyik")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_rdsje"]
+equation = 5
+value = 1
+item = ExtResource("2_nx72c")
+gem = 58
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_mdamq"]
+variable_type = "Job"
+operator = "Add"
+value = 2
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_yfjiv"]
+
+[resource]
+name = "907-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_8adua"), SubResource("RoseConditionAbilityValue_qcdrk"), SubResource("RoseConditionAbilityValue_lwcrx"), SubResource("RoseConditionQuestVariable_vm0yo")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_d073x"), SubResource("RoseRewardCalculatedItem_rdsje"), SubResource("RoseRewardQuestVariable_mdamq"), SubResource("RoseRewardRemoveSelectedQuest_yfjiv")])

@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bihhh80ks03vq"]
+
+[ext_resource type="RoseNpc" uid="uid://bycpmt64crvyi" path="res://data/npcs/1111-righteous-crusader-huffe.tres" id="1_hp125"]
+[ext_resource type="RoseQuest" uid="uid://knturqqlqp2l" path="res://data/quests/3404-lawless-porkie-hooligans.tres" id="2_j0a2e"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_t75t8"]
+ability = "Union"
+value = 3
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_48akg"]
+npc = ExtResource("1_hp125")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_kcy6h"]
+value = 4
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_hqqpv"]
+variable = 4
+operator = "<"
+value = 10
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_cgvwe"]
+quest = ExtResource("2_j0a2e")
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_xfffv"]
+variable = 4
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_cffii"]
+trigger = "3404-02"
+
+[resource]
+name = "3404-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_t75t8"), SubResource("RoseConditionSelectNpc_48akg"), SubResource("RoseConditionObjectVariable_kcy6h"), SubResource("RoseConditionObjectVariable_hqqpv")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_cgvwe"), SubResource("RoseRewardObjectVariable_xfffv"), SubResource("RoseRewardTrigger_cffii")])

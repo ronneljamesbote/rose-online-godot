@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1115-clan-owner-burtland|Clan Owner Burtland]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 2751; QSD triggers 2751-01, 2751-02, 2751-03
+  data: 'godot/data/quests/2751-clan-house-extension-1.tres; quest triggers in godot/data/quest_triggers/: qc001/2751-01, qc001/2751-02, qc001/2751-03'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

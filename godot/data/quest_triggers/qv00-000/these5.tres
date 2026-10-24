@@ -1,0 +1,13 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://diy0j0aygr4f6"]
+
+[sub_resource type="RoseConditionPartyMemberCount" id="RoseConditionPartyMemberCount_d6ys2"]
+from = 2
+to = 2
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_rqqh4"]
+value = 100000
+
+[resource]
+name = "these5"
+conditions = Array[Resource]([SubResource("RoseConditionPartyMemberCount_d6ys2")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedExperiencePoints_rqqh4")])

@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 steps: 2
 source:
-  data: LIST_QUEST.STB row 1051; QSD triggers 1051-01, 1051-02
+  data: 'godot/data/quests/1051-road-to-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj111-06/1051-01, qj111-06/1051-02'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

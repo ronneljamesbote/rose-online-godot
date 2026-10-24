@@ -1,0 +1,51 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bigo7qi7cl3pf"]
+
+[ext_resource type="RoseQuest" uid="uid://jw4vqiaxdgef" path="res://data/quests/3604-lutis-guard-of-luxem-tower.tres" id="1_x1cup"]
+[ext_resource type="RoseNpc" uid="uid://c5lrdwof7p562" path="res://data/npcs/1112-arumic-researcher-carasia.tres" id="2_4u7j2"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bpics4u4go851" path="res://data/quest_triggers/qu04-001/3604-05.tres" id="3_ltqvi"]
+[ext_resource type="RoseItemConsumable" uid="uid://blwiv60eb3cgu" path="res://data/items/consumable/57-vital-jam-2.tres" id="4_8e0y1"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_rcltv"]
+quest = ExtResource("1_x1cup")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_dmwp6"]
+value = 20
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_csnxb"]
+ability = "Union"
+value = 4
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_ncscm"]
+operator = "<="
+value = 50
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_ikjrn"]
+npc = ExtResource("2_4u7j2")
+
+[sub_resource type="RoseConditionObjectDistance" id="RoseConditionObjectDistance_eeafa"]
+distance = 5
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_act3q"]
+quest = ExtResource("1_x1cup")
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_0luus"]
+ability = "UnionPoint4"
+operator = "Add"
+value = 2
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_0j18d"]
+equation = 1
+value = 80
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_jtdyp"]
+equation = 5
+value = 1
+item = ExtResource("4_8e0y1")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_vgtnl"]
+
+[resource]
+name = "3604-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_rcltv"), SubResource("RoseConditionQuestVariable_dmwp6"), SubResource("RoseConditionAbilityValue_csnxb"), SubResource("RoseConditionAbilityValue_ncscm"), SubResource("RoseConditionSelectNpc_ikjrn"), SubResource("RoseConditionObjectDistance_eeafa")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_act3q"), SubResource("RoseRewardAbilityValue_0luus"), SubResource("RoseRewardCalculatedExperiencePoints_0j18d"), SubResource("RoseRewardCalculatedItem_jtdyp"), SubResource("RoseRewardRemoveSelectedQuest_vgtnl")])
+next_trigger = ExtResource("3_ltqvi")

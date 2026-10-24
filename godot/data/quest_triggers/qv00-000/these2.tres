@@ -1,0 +1,13 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ns4lwisk0b62"]
+
+[ext_resource type="RoseMonster" uid="uid://c354bqhmm25ca" path="res://data/monsters/51-smouly.tres" id="1_l7e2c"]
+
+[sub_resource type="RoseRewardSpawnMonster" id="RoseRewardSpawnMonster_nucer"]
+monster = ExtResource("1_l7e2c")
+count = 5
+distance = 10
+team = 100
+
+[resource]
+name = "these2"
+rewards = Array[Resource]([SubResource("RoseRewardSpawnMonster_nucer")])

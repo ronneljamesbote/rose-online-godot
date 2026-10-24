@@ -1,0 +1,22 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bqxevomf0ikr2"]
+
+[ext_resource type="RoseZoneSettings" uid="uid://mpsx2m3ghks1" path="res://data/zones/51-magic-city-of-the-eucar.tres" id="1_73slx"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_4768w"]
+variable_type = "Union"
+variable = 7
+value = 2
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_ljb1d"]
+variable_type = "Union"
+variable = 7
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_tqceq"]
+zone = ExtResource("1_73slx")
+x = 535732
+y = 499129
+
+[resource]
+name = "Clan-036"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_4768w")])
+rewards = Array[Resource]([SubResource("RoseRewardQuestVariable_ljb1d"), SubResource("RoseRewardTeleport_tqceq")])

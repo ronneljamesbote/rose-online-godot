@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://crsj7iby8c0jw"]
+
+[ext_resource type="RoseQuest" uid="uid://diorgwh3nmrv7" path="res://data/quests/1984-the-ominous-kenji-stone.tres" id="1_0gmyo"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_8pkn4"]
+switch = 130
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_ulkgp"]
+switch = 131
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_qaldy"]
+quest = ExtResource("1_0gmyo")
+
+[resource]
+name = "1984-03"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_8pkn4"), SubResource("RoseConditionQuestSwitch_ulkgp")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_qaldy")])

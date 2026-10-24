@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1082-guide-eva|Guide Eva]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 133; QSD triggers 132-01, 132-02, 133-01
+  data: 'godot/data/quests/133-forbidden-spell.tres; quest triggers in godot/data/quest_triggers/: qp103/132-01, qp103/132-02, qp103/133-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://iu3mmtebs5ev"]
+
+[ext_resource type="RoseQuest" uid="uid://b1crwe538r3xl" path="res://data/quests/108-healing-hands.tres" id="1_07ghe"]
+[ext_resource type="RoseItemQuest" uid="uid://bly8v8q7yfrsn" path="res://data/items/quest/605-antidote-recipe.tres" id="2_7v1ip"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_82uex"]
+variable_type = "Episode"
+value = 5
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_h0oqq"]
+quest = ExtResource("1_07ghe")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_awxgf"]
+quest = ExtResource("1_07ghe")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_5g6ij"]
+item = ExtResource("2_7v1ip")
+quantity = 1
+
+[resource]
+name = "107-07"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_82uex")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_h0oqq"), SubResource("RoseRewardSelectQuest_awxgf"), SubResource("RoseRewardAddItem_5g6ij")])

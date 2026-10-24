@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1110-ferrell-guild-staff-charrs|Ferrell Guild Staff Charrs]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 3803; QSD triggers 3803-01, 3803-02, 3803-03, 3803-31
+  data: 'godot/data/quests/3803-ferrell-guild-lounge-construction.tres; quest triggers in godot/data/quest_triggers/: qu05-001/3803-01, qu05-001/3803-02, qu05-001/3803-03, qn-051/3803-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

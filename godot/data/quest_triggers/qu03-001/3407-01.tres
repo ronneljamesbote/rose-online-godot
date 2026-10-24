@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ds3k1g48kegcq"]
+
+[ext_resource type="RoseQuest" uid="uid://bbg5njyoq35m4" path="res://data/quests/3407-righteous-crusaders-in-preparation.tres" id="1_xwfto"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_wsfw0"]
+ability = "Union"
+value = 3
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_0r0ko"]
+operator = ">="
+value = 55
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_luw7e"]
+quest = ExtResource("1_xwfto")
+
+[resource]
+name = "3407-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_wsfw0"), SubResource("RoseConditionAbilityValue_0r0ko")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_luw7e")])

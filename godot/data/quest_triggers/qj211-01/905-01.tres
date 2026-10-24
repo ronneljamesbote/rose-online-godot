@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bpu346cxyu6ib"]
+
+[ext_resource type="RoseQuest" uid="uid://bl6s7kawe58r0" path="res://data/quests/905-solitary-orias.tres" id="1_jc8bf"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_wgyfs"]
+ability = "Job"
+value = 2
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_twnv3"]
+operator = ">="
+value = 20
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_g56ef"]
+variable_type = "Job"
+value = 1
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_sdwmt"]
+quest = ExtResource("1_jc8bf")
+
+[resource]
+name = "905-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_wgyfs"), SubResource("RoseConditionAbilityValue_twnv3"), SubResource("RoseConditionQuestVariable_g56ef")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_sdwmt")])

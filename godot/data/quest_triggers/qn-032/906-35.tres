@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c83jyi2a0mhtl"]
+
+[ext_resource type="RoseQuest" uid="uid://doj53vfrh1cs" path="res://data/quests/906-solitary-orias.tres" id="1_epq8n"]
+[ext_resource type="RoseItemQuest" uid="uid://f8npdss67muj" path="res://data/items/quest/120-stone-of-nature-water.tres" id="2_g8ljm"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bd4ucid0e2hoq" path="res://data/quest_triggers/qn-032/906-36.tres" id="3_p6fdb"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_fajs0"]
+quest = ExtResource("1_epq8n")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_em4t1"]
+to = 30
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_l7nf4"]
+item = ExtResource("2_g8ljm")
+equipment_index = 13
+count = 5
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_xeb56"]
+quest = ExtResource("1_epq8n")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_4exr0"]
+item = ExtResource("2_g8ljm")
+quantity = 1
+
+[resource]
+name = "906-35"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_fajs0"), SubResource("RoseConditionRandomPercent_em4t1"), SubResource("RoseConditionQuestItem_l7nf4")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_xeb56"), SubResource("RoseRewardAddItem_4exr0")])
+next_trigger = ExtResource("3_p6fdb")

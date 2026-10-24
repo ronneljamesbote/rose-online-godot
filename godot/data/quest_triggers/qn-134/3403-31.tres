@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b0xu2k8k4c8sm"]
+
+[ext_resource type="RoseQuest" uid="uid://bb5casnk8wpoi" path="res://data/quests/3403-supplying-training-weapons.tres" id="1_sdyn8"]
+[ext_resource type="RoseItemQuest" uid="uid://cccj3wjwm6pw" path="res://data/items/quest/312-grunter-axe.tres" id="2_yajgc"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_dlv77"]
+quest = ExtResource("1_sdyn8")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_ok22v"]
+to = 30
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_8ayq3"]
+item = ExtResource("2_yajgc")
+equipment_index = 13
+count = 16
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_u0jd2"]
+quest = ExtResource("1_sdyn8")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_625vf"]
+item = ExtResource("2_yajgc")
+quantity = 1
+
+[resource]
+name = "3403-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_dlv77"), SubResource("RoseConditionRandomPercent_ok22v"), SubResource("RoseConditionQuestItem_8ayq3")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_u0jd2"), SubResource("RoseRewardAddItem_625vf")])

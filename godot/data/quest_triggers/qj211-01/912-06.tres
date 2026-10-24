@@ -1,0 +1,26 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://1gjeihnnulwl"]
+
+[ext_resource type="RoseItemSubWeapon" uid="uid://hh7j6scpo22k" path="res://data/items/subweapon/31-jelly-bean-doll.tres" id="1_qkhyj"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_hu1g2"]
+variable_type = "Job"
+value = 6
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_0nj72"]
+ability = "Job"
+value = 2
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_ueh6d"]
+equation = 5
+value = 1
+item = ExtResource("1_qkhyj")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_arppd"]
+variable_type = "Job"
+operator = "Add"
+value = 1
+
+[resource]
+name = "912-06"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_hu1g2"), SubResource("RoseConditionAbilityValue_0nj72")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_ueh6d"), SubResource("RoseRewardQuestVariable_arppd")])

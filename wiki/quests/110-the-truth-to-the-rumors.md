@@ -10,7 +10,7 @@ npcs:
 - '[[npcs/1015-resident-luth|Resident Luth]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 110; QSD triggers 109-01, 109-02, 110-01
+  data: 'godot/data/quests/110-the-truth-to-the-rumors.tres; quest triggers in godot/data/quest_triggers/: qp103/109-01, qp103/109-02, qp103/110-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

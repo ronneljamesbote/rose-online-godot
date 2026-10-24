@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1181-smith-pavrick|Smith Pavrick]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 1989; QSD triggers 1988-03, 1988-04, 1989-01
+  data: 'godot/data/quests/1989-the-royal-golden-dagger.tres; quest triggers in godot/data/quest_triggers/: qp102/1988-03, qp102/1988-04, qp102/1989-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

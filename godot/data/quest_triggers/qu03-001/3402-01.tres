@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://fvdtsuomahb8"]
+
+[ext_resource type="RoseQuest" uid="uid://ddtlalv0vraho" path="res://data/quests/3402-moldie-s-strange-behavior.tres" id="1_j036w"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_je5d7"]
+ability = "Union"
+value = 3
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_l2876"]
+quest = ExtResource("1_j036w")
+
+[resource]
+name = "3402-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_je5d7")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_l2876")])

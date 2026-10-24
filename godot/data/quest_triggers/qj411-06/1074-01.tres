@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bvt4t0anhx7v2"]
+
+[ext_resource type="RoseQuest" uid="uid://c1laduwh806i2" path="res://data/quests/1074-lillith-woman-of-the-cosmos-second-job-change.tres" id="1_6bslp"]
+[ext_resource type="RoseItemQuest" uid="uid://q4xrnh1rj4yd" path="res://data/items/quest/223-family-emblem.tres" id="2_uyvde"]
+[ext_resource type="RoseQuest" uid="uid://depm0ig7j6xqb" path="res://data/quests/1075-lillith-woman-of-the-cosmos-second-job-change.tres" id="3_fnkai"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_h2k4k"]
+quest = ExtResource("1_6bslp")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_we851"]
+item = ExtResource("2_uyvde")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ussrt"]
+quest = ExtResource("1_6bslp")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_p5x81"]
+item = ExtResource("2_uyvde")
+quantity = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_xqrld"]
+quest = ExtResource("3_fnkai")
+keep_data = true
+
+[resource]
+name = "1074-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_h2k4k"), SubResource("RoseConditionQuestItem_we851")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ussrt"), SubResource("RoseRewardRemoveItem_p5x81"), SubResource("RoseRewardChangeSelectedQuest_xqrld")])

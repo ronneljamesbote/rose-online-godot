@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://utscn3qrqlns"]
+
+[ext_resource type="RoseQuest" uid="uid://c0idle3lxgufw" path="res://data/quests/1001-dealer-job-change-quest.tres" id="1_lrsur"]
+[ext_resource type="RoseQuest" uid="uid://ckmc17bwap5bk" path="res://data/quests/1002-dealer-job-change-quest.tres" id="2_3l62v"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_umhqo"]
+quest = ExtResource("1_lrsur")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_8dwag"]
+quest = ExtResource("1_lrsur")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_331pn"]
+quest = ExtResource("2_3l62v")
+
+[resource]
+name = "1001-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_umhqo")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_8dwag"), SubResource("RoseRewardChangeSelectedQuest_331pn")])

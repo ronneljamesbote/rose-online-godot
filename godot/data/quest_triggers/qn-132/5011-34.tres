@@ -1,0 +1,41 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://40p455d16s4u"]
+
+[ext_resource type="RoseQuest" uid="uid://b66lf4w17w4dx" path="res://data/quests/5011-stockpiling-maple-branches.tres" id="1_0ijbm"]
+[ext_resource type="RoseItemQuest" uid="uid://5pasddv1ij5u" path="res://data/items/quest/26-maple-branch.tres" id="2_nskqb"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_12spk"]
+quest = ExtResource("1_0ijbm")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_5nybu"]
+to = 9
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_byycr"]
+operator = ">="
+value = 31
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_5semr"]
+operator = "<="
+value = 40
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_3ki5t"]
+item = ExtResource("2_nskqb")
+equipment_index = 13
+count = 97
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_nxamh"]
+quest = ExtResource("1_0ijbm")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_37se6"]
+item = ExtResource("2_nskqb")
+quantity = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_j2vbm"]
+variable = 9
+operator = "Add"
+value = 1
+
+[resource]
+name = "5011-34"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_12spk"), SubResource("RoseConditionRandomPercent_5nybu"), SubResource("RoseConditionAbilityValue_byycr"), SubResource("RoseConditionAbilityValue_5semr"), SubResource("RoseConditionQuestItem_3ki5t")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_nxamh"), SubResource("RoseRewardAddItem_37se6"), SubResource("RoseRewardQuestVariable_j2vbm")])

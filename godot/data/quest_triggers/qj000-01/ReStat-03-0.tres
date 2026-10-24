@@ -1,0 +1,50 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cbv4qw7eq4y1"]
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_b33ll"]
+equipment_index = 1
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_qnvaw"]
+equipment_index = 2
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_t7dn2"]
+equipment_index = 3
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_ianwv"]
+equipment_index = 4
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_kk7sv"]
+equipment_index = 5
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_2tqap"]
+equipment_index = 6
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_b6tig"]
+equipment_index = 7
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_44mnd"]
+equipment_index = 8
+count = 1
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_mnk8i"]
+switch = 14
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_juqd3"]
+switch = 14
+value = true
+
+[sub_resource type="RoseRewardResetBasicStats" id="RoseRewardResetBasicStats_bkm4k"]
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_opgt1"]
+trigger = "ReStat-08"
+
+[resource]
+name = "ReStat-03-0"
+conditions = Array[Resource]([SubResource("RoseConditionQuestItem_b33ll"), SubResource("RoseConditionQuestItem_qnvaw"), SubResource("RoseConditionQuestItem_t7dn2"), SubResource("RoseConditionQuestItem_ianwv"), SubResource("RoseConditionQuestItem_kk7sv"), SubResource("RoseConditionQuestItem_2tqap"), SubResource("RoseConditionQuestItem_b6tig"), SubResource("RoseConditionQuestItem_44mnd"), SubResource("RoseConditionQuestSwitch_mnk8i")])
+rewards = Array[Resource]([SubResource("RoseRewardSetQuestSwitch_juqd3"), SubResource("RoseRewardResetBasicStats_bkm4k"), SubResource("RoseRewardTrigger_opgt1")])

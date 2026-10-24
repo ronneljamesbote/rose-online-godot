@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/153-doonga-origin|Doonga Origin]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 134; QSD triggers 133-01, 133-02, 134-01, 134-31
+  data: 'godot/data/quests/134-the-scheme.tres; quest triggers in godot/data/quest_triggers/: qp103/133-01, qp103/133-02, qp103/134-01, qn-153/134-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

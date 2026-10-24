@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1005-righteous-crusader-leonard|Righteous Crusader Leonard]]'
 steps: 2
 source:
-  data: LIST_QUEST.STB row 851; QSD triggers 851-01, 852-01
+  data: 'godot/data/quests/851-solider-job-change-quest.tres; quest triggers in godot/data/quest_triggers/: qj000-01/851-01, qj000-01/852-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

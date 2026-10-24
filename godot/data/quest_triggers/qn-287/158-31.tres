@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dfs21jc5ojqlk"]
+
+[ext_resource type="RoseQuest" uid="uid://be7dye1g26ebj" path="res://data/quests/158-leaders-in-the-abyss.tres" id="1_ud6db"]
+[ext_resource type="RoseItemQuest" uid="uid://feiwwne0ofcl" path="res://data/items/quest/619-scarlet-heart.tres" id="2_3ed10"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_1xr3d"]
+quest = ExtResource("1_ud6db")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_3a7b8"]
+item = ExtResource("2_3ed10")
+equipment_index = 13
+count = 3
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_fjxp6"]
+quest = ExtResource("1_ud6db")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_0th8a"]
+item = ExtResource("2_3ed10")
+quantity = 1
+
+[resource]
+name = "158-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_1xr3d"), SubResource("RoseConditionQuestItem_3a7b8")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_fjxp6"), SubResource("RoseRewardAddItem_0th8a")])

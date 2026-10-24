@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cpby1gmpqew8g"]
+
+[ext_resource type="RoseQuest" uid="uid://22aqios0t8gw" path="res://data/quests/3606-magic-weapon-production.tres" id="1_6dy6h"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_t3ayk"]
+ability = "Union"
+value = 4
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_e7lgq"]
+operator = ">="
+value = 51
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_1kl2g"]
+quest = ExtResource("1_6dy6h")
+
+[resource]
+name = "3606-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_t3ayk"), SubResource("RoseConditionAbilityValue_e7lgq")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_1kl2g")])

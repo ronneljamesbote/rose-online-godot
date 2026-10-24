@@ -1,0 +1,27 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://r7flkty5b5tt"]
+
+[ext_resource type="RoseQuest" uid="uid://blcrlxajbdr2d" path="res://data/quests/852-solider-job-change-quest.tres" id="1_u3bl6"]
+[ext_resource type="RoseItemQuest" uid="uid://cdoj3xf4k1hje" path="res://data/items/quest/103-honeybee-stinger.tres" id="2_1fhoc"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_c838s"]
+quest = ExtResource("1_u3bl6")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_idg0h"]
+item = ExtResource("2_1fhoc")
+equipment_index = 13
+count = 10
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_2l013"]
+quest = ExtResource("1_u3bl6")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_oaumq"]
+variable_type = "Switch"
+variable = 4
+operator = "SetOne"
+value = 1
+
+[resource]
+name = "852-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_c838s"), SubResource("RoseConditionQuestItem_idg0h")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_2l013"), SubResource("RoseRewardQuestVariable_oaumq")])

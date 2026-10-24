@@ -1,0 +1,38 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bgggsaub5td5c"]
+
+[ext_resource type="RoseQuest" uid="uid://bc03eh55gh0k4" path="res://data/quests/155-suspicious-researchers.tres" id="1_ubha7"]
+[ext_resource type="RoseItemQuest" uid="uid://d3o0jtsrldi7y" path="res://data/items/quest/622-mana-charger.tres" id="2_ndik5"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_bnf6e"]
+quest = ExtResource("1_ubha7")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_g6duy"]
+variable_type = "Switch"
+variable = 2
+value = 1
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_b1yqj"]
+variable_type = "Switch"
+variable = 3
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_vm1ln"]
+item = ExtResource("2_ndik5")
+equipment_index = 13
+count = 3
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ymbmo"]
+quest = ExtResource("1_ubha7")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_ajabj"]
+item = ExtResource("2_ndik5")
+quantity = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_blf35"]
+variable_type = "Switch"
+variable = 3
+operator = "SetOne"
+
+[resource]
+name = "155-10"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_bnf6e"), SubResource("RoseConditionQuestVariable_g6duy"), SubResource("RoseConditionQuestVariable_b1yqj"), SubResource("RoseConditionQuestItem_vm1ln")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ymbmo"), SubResource("RoseRewardAddItem_ajabj"), SubResource("RoseRewardQuestVariable_blf35")])

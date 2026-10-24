@@ -1,0 +1,26 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ddlukac5opsql"]
+
+[ext_resource type="RoseSkill" uid="uid://d0ctnyh8ndehl" path="res://data/skills/19-party/19-party.tres" id="1_w6wc2"]
+[ext_resource type="RoseSkill" uid="uid://dyebdkxqeq0u6" path="res://data/skills/21-vending/21-vending.tres" id="2_qsfao"]
+[ext_resource type="RoseZoneSettings" uid="uid://dqgsg3bg18y2j" path="res://data/zones/22-adventurer-s-plain.tres" id="3_s14q6"]
+
+[sub_resource type="RoseRewardAddSkill" id="RoseRewardAddSkill_vxbpw"]
+skill = ExtResource("1_w6wc2")
+
+[sub_resource type="RoseRewardAddSkill" id="RoseRewardAddSkill_ppttf"]
+skill = ExtResource("2_qsfao")
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_xr35u"]
+zone = ExtResource("3_s14q6")
+x = 575360
+y = 520248
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_sh30k"]
+trigger = "801-01"
+
+[sub_resource type="RoseRewardCallLuaFunction" id="RoseRewardCallLuaFunction_kd8mj"]
+function = "Tutorial09button"
+
+[resource]
+name = "T-warp"
+rewards = Array[Resource]([SubResource("RoseRewardAddSkill_vxbpw"), SubResource("RoseRewardAddSkill_ppttf"), SubResource("RoseRewardTeleport_xr35u"), SubResource("RoseRewardTrigger_sh30k"), SubResource("RoseRewardCallLuaFunction_kd8mj")])

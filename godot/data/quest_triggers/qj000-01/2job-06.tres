@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d21j18ynwg3mv"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://dwvtflhq7msmm" path="res://data/quest_triggers/qj000-01/2job-07.tres" id="1_yfplo"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_n167f"]
+variable_type = "Job"
+variable = 1
+value = 2
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_rk8sg"]
+ability = "Job"
+value = 322
+
+[resource]
+name = "2job-06"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_n167f")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_rk8sg")])
+next_trigger = ExtResource("1_yfplo")

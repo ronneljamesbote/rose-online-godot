@@ -1,0 +1,32 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://brcumbxgfdeyx"]
+
+[ext_resource type="RoseItemMaterial" uid="uid://yvadh1d3clei" path="res://data/items/material/144-ice-key-fragment.tres" id="1_2c73i"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cujrqjx5jbs7" path="res://data/quest_triggers/qp201/2053-01.tres" id="2_ryed6"]
+[ext_resource type="RoseQuest" uid="uid://d4i4lkfanrmff" path="res://data/quests/2052-forgotten-temple-investigation-2.tres" id="3_d3bfg"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_eth4e"]
+operator = ">="
+value = 91
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_5obdl"]
+operator = "<="
+value = 110
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_0hqo1"]
+item = ExtResource("1_2c73i")
+equipment_index = 12
+count = 5
+operator = ">="
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_g341y"]
+quest = ExtResource("3_d3bfg")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_tb4ts"]
+item = ExtResource("1_2c73i")
+quantity = 5
+
+[resource]
+name = "2052-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_eth4e"), SubResource("RoseConditionAbilityValue_5obdl"), SubResource("RoseConditionQuestItem_0hqo1")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_g341y"), SubResource("RoseRewardRemoveItem_tb4ts")])
+next_trigger = ExtResource("2_ryed6")

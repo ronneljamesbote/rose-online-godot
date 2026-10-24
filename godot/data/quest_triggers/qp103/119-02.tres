@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c157d8tysmi2k"]
+
+[ext_resource type="RoseQuest" uid="uid://cyhhs68q1khlx" path="res://data/quests/120-dangerous-book.tres" id="1_7ydjt"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_kxqbi"]
+variable_type = "Episode"
+value = 17
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_6hc17"]
+quest = ExtResource("1_7ydjt")
+
+[resource]
+name = "119-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_kxqbi")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_6hc17")])

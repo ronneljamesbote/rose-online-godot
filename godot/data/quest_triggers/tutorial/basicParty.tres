@@ -1,0 +1,16 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d1xxfk7qrgbgr"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_c25db"]
+switch = 20
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_54ndf"]
+value = 40
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_uryra"]
+switch = 20
+value = true
+
+[resource]
+name = "basicParty"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_c25db")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedExperiencePoints_54ndf"), SubResource("RoseRewardSetQuestSwitch_uryra")])

@@ -5,7 +5,7 @@ name: The Truth of the Golden Dagger (2)
 status: in-game
 steps: 0
 source:
-  data: 'LIST_QUEST.STB row 146; QSD triggers '
+  data: 'godot/data/quests/146-the-truth-of-the-golden-dagger-2.tres'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

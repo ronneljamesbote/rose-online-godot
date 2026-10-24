@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bnyfqb6x5jwgn"]
+
+[ext_resource type="RoseQuest" uid="uid://ojfp3aqnqiwn" path="res://data/quests/3405-supplying-training-gloves.tres" id="1_row2m"]
+[ext_resource type="RoseItemQuest" uid="uid://uolystv2mj6j" path="res://data/items/quest/305-training-gloves.tres" id="2_lqf4e"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_f26q0"]
+quest = ExtResource("1_row2m")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_h1p2o"]
+to = 15
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_tdc4q"]
+item = ExtResource("2_lqf4e")
+equipment_index = 13
+count = 8
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ela7a"]
+quest = ExtResource("1_row2m")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_2bqk6"]
+item = ExtResource("2_lqf4e")
+quantity = 1
+
+[resource]
+name = "3405-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_f26q0"), SubResource("RoseConditionRandomPercent_h1p2o"), SubResource("RoseConditionQuestItem_tdc4q")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ela7a"), SubResource("RoseRewardAddItem_2bqk6")])

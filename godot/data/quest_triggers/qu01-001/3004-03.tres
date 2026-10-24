@@ -1,0 +1,38 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dnsx0kd6hut8n"]
+
+[ext_resource type="RoseQuest" uid="uid://ctrl8pm6vxuy4" path="res://data/quests/3004-propagation-risking-danger.tres" id="1_eec5l"]
+[ext_resource type="RoseItemQuest" uid="uid://cct3m7jr8mxmh" path="res://data/items/quest/303-junon-scripture.tres" id="2_3hslw"]
+[ext_resource type="RoseNpc" uid="uid://li64rihfbirj" path="res://data/npcs/1131-mountain-guide-kay.tres" id="3_xa1ks"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_rl5lu"]
+quest = ExtResource("1_eec5l")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_6yskr"]
+item = ExtResource("2_3hslw")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_lmqvi"]
+value = 10
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_7s7eo"]
+npc = ExtResource("3_xa1ks")
+
+[sub_resource type="RoseConditionObjectDistance" id="RoseConditionObjectDistance_ejckr"]
+distance = 5
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_udnub"]
+quest = ExtResource("1_eec5l")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_1ardi"]
+item = ExtResource("2_3hslw")
+quantity = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_crchn"]
+operator = "Add"
+value = 10
+
+[resource]
+name = "3004-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_rl5lu"), SubResource("RoseConditionQuestItem_6yskr"), SubResource("RoseConditionQuestVariable_lmqvi"), SubResource("RoseConditionSelectNpc_7s7eo"), SubResource("RoseConditionObjectDistance_ejckr")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_udnub"), SubResource("RoseRewardRemoveItem_1ardi"), SubResource("RoseRewardQuestVariable_crchn")])

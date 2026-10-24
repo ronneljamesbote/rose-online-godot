@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cvgpeq6vjfrgs"]
+
+[ext_resource type="RoseQuest" uid="uid://dthtc8bau7r83" path="res://data/quests/3601-unexpectedly-useful-porkie-spines.tres" id="1_uxpr0"]
+[ext_resource type="RoseItemQuest" uid="uid://b54lwbb1qvw3w" path="res://data/items/quest/301-porkie-spine.tres" id="2_f2aos"]
+[ext_resource type="RoseQuestTrigger" uid="uid://yvpqxh67hni8" path="res://data/quest_triggers/qn-133/5011-35.tres" id="3_02hqh"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_hsrrb"]
+quest = ExtResource("1_uxpr0")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_kb7ut"]
+to = 40
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_7fytc"]
+item = ExtResource("2_f2aos")
+equipment_index = 13
+count = 10
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_c7sj8"]
+quest = ExtResource("1_uxpr0")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_exjla"]
+item = ExtResource("2_f2aos")
+quantity = 1
+
+[resource]
+name = "3601-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_hsrrb"), SubResource("RoseConditionRandomPercent_kb7ut"), SubResource("RoseConditionQuestItem_7fytc")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_c7sj8"), SubResource("RoseRewardAddItem_exjla")])
+next_trigger = ExtResource("3_02hqh")

@@ -1,0 +1,14 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bxjwvrkqaxql4"]
+
+[ext_resource type="RoseQuest" uid="uid://ddx0vck2q6n87" path="res://data/quests/5002-pomic-hunt-fetch-quest.tres" id="1_a52xb"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_wfhir"]
+quest = ExtResource("1_a52xb")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_8oss6"]
+variable_type = "Timer"
+operator = ">"
+
+[resource]
+name = "5002-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_wfhir"), SubResource("RoseConditionQuestVariable_8oss6")])

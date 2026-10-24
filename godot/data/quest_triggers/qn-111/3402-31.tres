@@ -1,0 +1,27 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cc3aw5jr05w8"]
+
+[ext_resource type="RoseQuest" uid="uid://ddtlalv0vraho" path="res://data/quests/3402-moldie-s-strange-behavior.tres" id="1_t7tsx"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_r85sb"]
+[ext_resource type="RoseQuestTrigger" uid="uid://sdpqpn8ptb2v" path="res://data/quest_triggers/qn-111/5011-31.tres" id="3_wxemm"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_jbx0m"]
+quest = ExtResource("1_t7tsx")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_nagad"]
+item = ExtResource("2_r85sb")
+equipment_index = 13
+count = 30
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_mjgas"]
+quest = ExtResource("1_t7tsx")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_0fe7u"]
+item = ExtResource("2_r85sb")
+quantity = 1
+
+[resource]
+name = "3402-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_jbx0m"), SubResource("RoseConditionQuestItem_nagad")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_mjgas"), SubResource("RoseRewardAddItem_0fe7u")])
+next_trigger = ExtResource("3_wxemm")

@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://by66vkx0gn5xe"]
+
+[ext_resource type="RoseQuest" uid="uid://dthtc8bau7r83" path="res://data/quests/3601-unexpectedly-useful-porkie-spines.tres" id="1_d736s"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_ynbne"]
+ability = "Union"
+value = 4
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_bghut"]
+quest = ExtResource("1_d736s")
+
+[resource]
+name = "3601-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_ynbne")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_bghut")])

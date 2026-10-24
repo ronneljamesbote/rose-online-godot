@@ -1,0 +1,59 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bydo6f5q7iv2l"]
+
+[ext_resource type="RoseQuest" uid="uid://dekbi7w2ymw46" path="res://data/quests/118-forbidden-potion.tres" id="1_g1ngb"]
+[ext_resource type="RoseItemQuest" uid="uid://cyr8wmlf03wp1" path="res://data/items/quest/607-wild-animal-claw.tres" id="2_pi0o2"]
+[ext_resource type="RoseItemQuest" uid="uid://1mfh2emb6trj" path="res://data/items/quest/608-sharp-stinger.tres" id="3_rm7r7"]
+[ext_resource type="RoseItemQuest" uid="uid://f3l5dg7ftjxa" path="res://data/items/quest/602-gypsy-s-permit.tres" id="4_0fpt4"]
+[ext_resource type="RoseItemConsumable" uid="uid://ddfqeu2lv62y0" path="res://data/items/consumable/123-apple-juice.tres" id="5_0i7om"]
+[ext_resource type="RoseQuest" uid="uid://dk8d2m0klerio" path="res://data/quests/119-forbidden-potion.tres" id="6_cihs3"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_sojpu"]
+quest = ExtResource("1_g1ngb")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_hqrw0"]
+item = ExtResource("2_pi0o2")
+equipment_index = 13
+count = 20
+operator = ">="
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_6g5v7"]
+item = ExtResource("3_rm7r7")
+equipment_index = 13
+count = 20
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_p4w6x"]
+quest = ExtResource("1_g1ngb")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_c7wsv"]
+item = ExtResource("2_pi0o2")
+quantity = 20
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_tlyu3"]
+item = ExtResource("3_rm7r7")
+quantity = 20
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_dl5mv"]
+item = ExtResource("4_0fpt4")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_n83cl"]
+value = 2500
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_jac4n"]
+equation = 5
+value = 30
+item = ExtResource("5_0i7om")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_yhbb5"]
+quest = ExtResource("6_cihs3")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_bwpa0"]
+variable_type = "Episode"
+value = 16
+
+[resource]
+name = "118-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_sojpu"), SubResource("RoseConditionQuestItem_hqrw0"), SubResource("RoseConditionQuestItem_6g5v7")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_p4w6x"), SubResource("RoseRewardRemoveItem_c7wsv"), SubResource("RoseRewardRemoveItem_tlyu3"), SubResource("RoseRewardAddItem_dl5mv"), SubResource("RoseRewardCalculatedExperiencePoints_n83cl"), SubResource("RoseRewardCalculatedItem_jac4n"), SubResource("RoseRewardChangeSelectedQuest_yhbb5"), SubResource("RoseRewardQuestVariable_bwpa0")])

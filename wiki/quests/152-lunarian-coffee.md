@@ -10,7 +10,7 @@ npcs:
 time_limit_minutes: 10
 steps: 6
 source:
-  data: LIST_QUEST.STB row 152; QSD triggers 151-02, 151-03, 151-04, 152-01, 152-04, 152-05
+  data: 'godot/data/quests/152-lunarian-coffee.tres; quest triggers in godot/data/quest_triggers/: qp103/151-02, qp103/151-03, qp103/151-04, qp103/152-01, qp103/152-04, qp103/152-05'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

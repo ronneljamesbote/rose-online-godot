@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://vg8h45xxexh6"]
+
+[ext_resource type="RoseQuest" uid="uid://b3r0cgxwm0clf" path="res://data/quests/109-sacrificed-soul.tres" id="1_pjyqe"]
+[ext_resource type="RoseQuest" uid="uid://wd8470dfvyb4" path="res://data/quests/110-the-truth-to-the-rumors.tres" id="2_6s4vy"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_w0g28"]
+quest = ExtResource("1_pjyqe")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_6w0hj"]
+quest = ExtResource("1_pjyqe")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_072mn"]
+value = 300
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_86ya1"]
+quest = ExtResource("2_6s4vy")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_e0sbo"]
+variable_type = "Episode"
+value = 7
+
+[resource]
+name = "109-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_w0g28")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_6w0hj"), SubResource("RoseRewardCalculatedExperiencePoints_072mn"), SubResource("RoseRewardChangeSelectedQuest_86ya1"), SubResource("RoseRewardQuestVariable_e0sbo")])

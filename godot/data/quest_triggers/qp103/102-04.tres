@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ceamb0hoo5o06"]
+
+[ext_resource type="RoseQuest" uid="uid://dwhcn6okj7jok" path="res://data/quests/102-dreadful-epidemic.tres" id="1_wcdwx"]
+[ext_resource type="RoseItemQuest" uid="uid://b08xjqbkh0a5d" path="res://data/items/quest/601-enigmatic-emblem.tres" id="2_p05fo"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cmus0lkb7vfv3" path="res://data/quest_triggers/qp103/102-05.tres" id="3_46kgm"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_yp4os"]
+quest = ExtResource("1_wcdwx")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_b7oue"]
+item = ExtResource("2_p05fo")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseRewardCallLuaFunction" id="RoseRewardCallLuaFunction_q01l5"]
+function = "mushroom"
+
+[resource]
+name = "102-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_yp4os"), SubResource("RoseConditionQuestItem_b7oue")])
+rewards = Array[Resource]([SubResource("RoseRewardCallLuaFunction_q01l5")])
+next_trigger = ExtResource("3_46kgm")

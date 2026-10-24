@@ -1,0 +1,34 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bvnoehq7ncad7"]
+
+[ext_resource type="RoseQuest" uid="uid://d3wd8bsxc3il4" path="res://data/quests/3006-in-readiness-for-war.tres" id="1_t7rpo"]
+[ext_resource type="RoseItemQuest" uid="uid://k6gi4oi4udby" path="res://data/items/quest/23-silver-fragment.tres" id="2_8l4xg"]
+[ext_resource type="RoseQuestTrigger" uid="uid://c08oidhn2vjov" path="res://data/quest_triggers/qn-151/3606-31.tres" id="3_rniiw"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_v2vs1"]
+quest = ExtResource("1_t7rpo")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_rvigm"]
+to = 20
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_rd6it"]
+item = ExtResource("2_8l4xg")
+equipment_index = 13
+count = 15
+operator = "<"
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_32tmj"]
+ability = "Union"
+value = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_pacvn"]
+quest = ExtResource("1_t7rpo")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_oibnf"]
+item = ExtResource("2_8l4xg")
+quantity = 1
+
+[resource]
+name = "3006-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_v2vs1"), SubResource("RoseConditionRandomPercent_rvigm"), SubResource("RoseConditionQuestItem_rd6it"), SubResource("RoseConditionAbilityValue_32tmj")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_pacvn"), SubResource("RoseRewardAddItem_oibnf")])
+next_trigger = ExtResource("3_rniiw")

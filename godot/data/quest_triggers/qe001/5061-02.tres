@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c6qsxjmc54rsw"]
+
+[ext_resource type="RoseQuest" uid="uid://pm0r5k46uljo" path="res://data/quests/5061-the-santa-suit-heist.tres" id="1_0ma74"]
+[ext_resource type="RoseZoneSettings" uid="uid://cxp41vub0gvi5" path="res://data/zones/1-canyon-city-of-zant.tres" id="2_r47xk"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dlpbjxd75csca" path="res://data/quest_triggers/qe001/5061-03.tres" id="3_dd6kl"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_yardc"]
+quest = ExtResource("1_0ma74")
+
+[sub_resource type="RoseConditionPosition" id="RoseConditionPosition_sedut"]
+zone = ExtResource("2_r47xk")
+x = 523100.0
+y = 512900.0
+distance = 100
+
+[resource]
+name = "5061-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_yardc"), SubResource("RoseConditionPosition_sedut")])
+next_trigger = ExtResource("3_dd6kl")

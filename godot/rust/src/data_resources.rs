@@ -8,7 +8,8 @@
 //! new characters (`RoseNewCharacter`) and sounds (`RoseSound`, `RoseHitSounds`,
 //! `RoseFootsteps`, linking the imported audio files), effects (`RoseEffectFile`,
 //! `RoseAttackEffect`), skies (`RoseSky`) and the interface's pictures and cursors
-//! (`RoseInterface`).
+//! (`RoseInterface`), and quests (`RoseQuest`, `RoseQuestTrigger` and its condition and reward
+//! blocks, in `quest_blocks.rs`).
 //!
 //! The game itself never reads these files. `--export-data` writes them to
 //! `export/data/` as TOML (the layout is in `crates/rose-data-export`), and the server and
@@ -50,7 +51,8 @@ use rose_data_export::sounds::{FootstepsExport, HitSoundsExport, SoundExport};
 use rose_data_export::effects::{AttackEffectExport, EffectFileExport};
 use rose_data_export::world::{CraftRecipeExport, NewCharacterExport, WarpGateExport, ZoneExport};
 use rose_data_export::interface::{InterfaceSettingsExport, SkyExport};
-use rose_data_export::{EffectsExport, InterfaceExport, ItemsExport, NpcsExport, SkillsExport, SoundsExport, WorldExport};
+use rose_data_export::quests::{ConditionExport, QuestDataExport, QuestTriggerExport, RewardExport};
+use rose_data_export::{EffectsExport, InterfaceExport, ItemsExport, NpcsExport, QuestsExport, SkillsExport, SoundsExport, WorldExport};
 use serde::{de::DeserializeOwned, Serialize};
 use serde_json::{Map, Value};
 
@@ -81,6 +83,9 @@ pub const ATTACK_EFFECTS_DIR: &str = "res://data/attack_effects/";
 pub const SKIES_DIR: &str = "res://data/skies/";
 pub const INTERFACE_DIR: &str = "res://data/interface/";
 pub const INTERFACE_FILE: &str = "res://data/interface/interface.tres";
+/// Where the quest and quest trigger resources live.
+pub const QUESTS_DIR: &str = "res://data/quests/";
+pub const QUEST_TRIGGERS_DIR: &str = "res://data/quest_triggers/";
 
 /// Where to find a linked resource by what the export holds: `items/weapon/3`,
 /// `drop_table/147`, `shop_tab/12` -> its `res://` path.
@@ -1966,6 +1971,9 @@ fn link_kind(property: &str) -> &str {
         "job_class"
     } else if property == "summon_monster" {
         "monster"
+    } else if matches!(property, "npc" | "npc_1" | "npc_2") {
+        // A quest block's NPC: a town NPC or a monster (they share one numbering).
+        "character"
     } else if property == "target_zone" {
         "zone"
     } else if property.ends_with("_sound") || property.starts_with("hit_dummy_sound") || property.starts_with("on_") || property == "sounds" {
@@ -1982,6 +1990,9 @@ fn class_link_kind(class: &str) -> Option<&'static str> {
         "RoseEffectFile" => Some("effect_file"),
         "RoseAttackEffect" => Some("attack_effect"),
         "RoseSky" => Some("sky"),
+        "RoseQuest" => Some("quest"),
+        "RoseSkill" => Some("skill"),
+        "RoseZoneSettings" => Some("zone"),
         _ => None,
     }
 }
@@ -2328,6 +2339,11 @@ pub fn convert_items(force: bool) -> Result<(usize, String), String> {
 
 fn write_resource<T: Serialize>(class: &str, path: &str, export: &T, links: &Links) -> Result<(), String> {
     let resource = to_resource(class, export, links).map_err(|e| format!("{path}: {e}"))?;
+    save_resource(&resource, path)
+}
+
+/// Saves `resource` at `path`, keeping the uid a file there had (or giving it one).
+fn save_resource(resource: &Gd<Resource>, path: &str) -> Result<(), String> {
     let folder = path.rsplit_once('/').map_or(path, |(dir, _)| dir);
     if DirAccess::make_dir_recursive_absolute(folder) != Error::OK {
         return Err(format!("could not make {folder}"));
@@ -2335,7 +2351,7 @@ fn write_resource<T: Serialize>(class: &str, path: &str, export: &T, links: &Lin
     // A file written again keeps its uid, so what links to it stays linked.
     let uid = file_uid(path).unwrap_or(-1);
     let mut saver = ResourceSaver::singleton();
-    match saver.save_ex(&resource).path(path).done() {
+    match saver.save_ex(resource).path(path).done() {
         Error::OK => {}
         error => return Err(format!("could not write {path}: {error:?}")),
     }
@@ -2482,7 +2498,16 @@ fn index_links(dir: &str, links: &mut Links) -> Result<(), String> {
         let key = match class.as_str() {
             "RoseDropTable" => format!("drop_table/{id}"),
             "RoseShopTab" => format!("shop_tab/{id}"),
-            "RoseMonster" => format!("monster/{id}"),
+            "RoseMonster" => {
+                links.insert(format!("character/{id}"), path.clone());
+                format!("monster/{id}")
+            }
+            "RoseNpc" => {
+                links.insert(format!("character/{id}"), path.clone());
+                format!("npc/{id}")
+            }
+            "RoseQuest" => format!("quest/{id}"),
+            "RoseQuestTrigger" => format!("quest_trigger/{}", resource.get("name")),
             "RoseSkill" => format!("skill/{id}"),
             "RoseStatusEffect" => format!("status_effect/{id}"),
             "RoseJobClass" => format!("job_class/{id}"),
@@ -3435,6 +3460,224 @@ pub fn read_interface() -> Result<(InterfaceExport, usize), String> {
     Ok((export, files.len()))
 }
 
+/// The quest and quest trigger folders, with their classes.
+const QUEST_DIRS: [(&str, &str); 2] = [(QUESTS_DIR, "RoseQuest"), (QUEST_TRIGGERS_DIR, "RoseQuestTrigger")];
+
+/// A trigger's file name: its name, with anything but letters, digits, `-` and `_` made `_`.
+fn trigger_stem(name: &str) -> String {
+    name.chars().map(|c| if c.is_ascii_alphanumeric() || c == '-' || c == '_' { c } else { '_' }).collect()
+}
+
+/// A condition or reward block as its resource (`RoseCondition<kind>` / `RoseReward<kind>`).
+fn block_resource<T: Serialize>(prefix: &str, block: &T, links: &Links) -> Result<Gd<Resource>, String> {
+    let Value::Object(mut object) = serde_json::to_value(block).map_err(|e| e.to_string())? else {
+        return Err(format!("{prefix}: not an object"));
+    };
+    let kind = object.remove("kind").and_then(|k| k.as_str().map(String::from)).ok_or(format!("{prefix}: no kind"))?;
+    let class = format!("{prefix}{kind}");
+    let mut resource = ClassDb::singleton()
+        .instantiate(&class)
+        .try_to::<Gd<Resource>>()
+        .map_err(|_| format!("{class} is not a resource class"))?;
+    set_from_json(&mut resource, &object, links).map_err(|e| format!("{kind}: {e}"))?;
+    Ok(resource)
+}
+
+/// A trigger as its resource, its blocks inside it and its next trigger linked (which must be
+/// in `links` already).
+fn trigger_resource(trigger: &QuestTriggerExport, links: &Links) -> Result<Gd<Resource>, String> {
+    let mut resource = ClassDb::singleton()
+        .instantiate("RoseQuestTrigger")
+        .try_to::<Gd<Resource>>()
+        .map_err(|_| "RoseQuestTrigger is not a resource class".to_string())?;
+    resource.set("name", &GString::from(trigger.name.as_str()).to_variant());
+    for (property, blocks) in [
+        ("conditions", trigger.condition.iter().map(|c| block_resource(crate::quest_blocks::CONDITION_PREFIX, c, links)).collect::<Result<Vec<_>, _>>()?),
+        ("rewards", trigger.reward.iter().map(|r| block_resource(crate::quest_blocks::REWARD_PREFIX, r, links)).collect::<Result<Vec<_>, _>>()?),
+    ] {
+        let list: VarArray = blocks.iter().map(|b| b.to_variant()).collect();
+        let array = resource.get(property);
+        array.call("assign", &[list.to_variant()]);
+        resource.set(property, &array);
+    }
+    if !trigger.next_trigger.is_empty() {
+        let key = format!("quest_trigger/{}", trigger.next_trigger);
+        let path = links.get(&key).ok_or(format!("next_trigger: no resource for {}", trigger.next_trigger))?;
+        let next = ResourceLoader::singleton().load(path).ok_or(format!("next_trigger: could not load {path}"))?;
+        resource.set("next_trigger", &next.to_variant());
+    }
+    Ok(resource)
+}
+
+/// A block resource as the export has it (its class names the kind).
+fn block_export<T: DeserializeOwned>(block: &Gd<Resource>, prefix: &str, what: &str) -> Result<T, String> {
+    let class = block.get_class().to_string();
+    let kind = class.strip_prefix(prefix).filter(|k| !k.is_empty()).ok_or(format!("{what} holds a {class}, not a {prefix} block"))?;
+    let mut object = to_json(block);
+    object.insert("kind".into(), Value::from(kind));
+    serde_json::from_value(Value::Object(object)).map_err(|e| format!("{kind}: {e}"))
+}
+
+/// A trigger resource as the export has it. An empty place in `conditions` or `rewards` is
+/// left out.
+fn trigger_export(resource: &Gd<Resource>) -> Result<QuestTriggerExport, String> {
+    let blocks = |property: &str| -> Vec<Gd<Resource>> {
+        resource
+            .get(property)
+            .try_to::<AnyArray>()
+            .map(|array| array.iter_shared().filter_map(|v| v.try_to::<Option<Gd<Resource>>>().ok().flatten()).collect())
+            .unwrap_or_default()
+    };
+    let next = resource.get("next_trigger").try_to::<Option<Gd<Resource>>>().ok().flatten();
+    Ok(QuestTriggerExport {
+        name: resource.get("name").to::<GString>().to_string(),
+        next_trigger: next.map(|n| n.get("name").to::<GString>().to_string()).unwrap_or_default(),
+        condition: blocks("conditions")
+            .iter()
+            .map(|b| block_export::<ConditionExport>(b, crate::quest_blocks::CONDITION_PREFIX, "conditions"))
+            .collect::<Result<_, _>>()?,
+        reward: blocks("rewards")
+            .iter()
+            .map(|b| block_export::<RewardExport>(b, crate::quest_blocks::REWARD_PREFIX, "rewards"))
+            .collect::<Result<_, _>>()?,
+    })
+}
+
+/// `--convert-data` for quests: one resource per quest (LIST_QUEST.STB with its text) and per
+/// quest trigger (the QSD files LIST_QUESTDATA.STB lists, a folder per file), linking the
+/// quests, items, monsters, NPCs, skills and zones their blocks name (which must be there). A
+/// quest a trigger names gets a resource even when LIST_QUEST has no text for it. Returns the
+/// count and what couldn't be kept.
+pub fn convert_quests(force: bool) -> Result<(usize, Vec<String>), String> {
+    let data = crate::data::get().ok_or("open the data first")?;
+    let mut existing = Vec::new();
+    for (dir, _) in QUEST_DIRS {
+        tres_files(dir, &mut existing);
+    }
+    if !existing.is_empty() && !force {
+        return Err(format!(
+            "res://data/ already has {} quest resources; they are the source now (use --convert-data=force to write them again from iROSE)",
+            existing.len()
+        ));
+    }
+    let strings = rose_data_irose::get_string_database(&data.vfs, 1).map_err(|e| format!("{e:#}"))?;
+    let quests = rose_data_irose::get_quest_database(&data.vfs, strings).map_err(|e| format!("{e:#}"))?;
+    let mut export = QuestsExport::from_database(&quests, &rose_game_data::irose_codes()).map_err(|e| format!("{e:#}"))?;
+    // The QSD file each trigger comes from (the last one, as the game reads them), for its folder.
+    let list = data
+        .vfs
+        .read_file::<rose_file_readers::StbFile, _>("3DDATA/STB/LIST_QUESTDATA.STB")
+        .map_err(|e| format!("LIST_QUESTDATA.STB: {e:#}"))?;
+    let mut folders = std::collections::HashMap::new();
+    for row in 0..list.rows() {
+        let file = list.get(row, 0);
+        let Ok(qsd) = data.vfs.read_file::<rose_file_readers::QsdFile, _>(file) else { continue };
+        let stem = file.rsplit(['\\', '/']).next().unwrap_or(file).trim_end_matches(".qsd").trim_end_matches(".QSD").to_lowercase();
+        for name in qsd.triggers.keys() {
+            folders.insert(name.clone(), trigger_stem(&stem));
+        }
+    }
+    let mut links = Links::new();
+    index_links(ITEMS_DIR, &mut links)?;
+    for dir in [MONSTERS_DIR, NPCS_DIR, SKILLS_DIR, ZONES_DIR] {
+        index_links(dir, &mut links)?;
+    }
+    let mut lost = Vec::new();
+    // A monster with no resource can't be linked; the game spawns nothing for it either.
+    for trigger in &mut export.triggers {
+        for reward in &mut trigger.reward {
+            if let Some(monster) = reward.monster_mut().filter(|m| **m != 0 && !links.contains_key(&format!("monster/{m}"))) {
+                lost.push(format!("trigger {}: spawns monster {monster}, which isn't in the game (left empty)", trigger.name));
+                *monster = 0;
+            }
+        }
+    }
+    // A quest a trigger names but LIST_QUEST has no text for (it is in the journal as "quest 1953").
+    let named: std::collections::BTreeSet<u16> = export
+        .triggers
+        .iter()
+        .flat_map(|t| t.condition.iter().filter_map(ConditionExport::quest).chain(t.reward.iter().filter_map(RewardExport::quest)))
+        .collect();
+    for id in named {
+        if !export.quests.iter().any(|q| q.id == id) {
+            export.quests.push(QuestDataExport { id, ..Default::default() });
+        }
+    }
+    export.check().map_err(|e| format!("{e:#}"))?;
+    let mut count = 0;
+    for quest in &export.quests {
+        let name = if quest.name.trim().is_empty() { "quest" } else { &quest.name };
+        let path = format!("{QUESTS_DIR}{}.tres", file_stem(quest.id as u32, name));
+        write_resource("RoseQuest", &path, quest, &links)?;
+        links.insert(format!("quest/{}", quest.id), path);
+        count += 1;
+    }
+    // A trigger links its next trigger, so the next one is written first.
+    let by_name: std::collections::HashMap<&str, &QuestTriggerExport> = export.triggers.iter().map(|t| (t.name.as_str(), t)).collect();
+    let mut paths = std::collections::HashSet::new();
+    for trigger in &export.triggers {
+        let mut chain = vec![trigger];
+        while let Some(next) = by_name.get(chain.last().unwrap().next_trigger.as_str()) {
+            chain.push(next);
+        }
+        for trigger in chain.into_iter().rev() {
+            let key = format!("quest_trigger/{}", trigger.name);
+            if links.contains_key(&key) {
+                continue;
+            }
+            let folder = folders.get(&trigger.name).cloned().unwrap_or_else(|| "other".into());
+            let path = format!("{QUEST_TRIGGERS_DIR}{folder}/{}.tres", trigger_stem(&trigger.name));
+            if !paths.insert(path.to_lowercase()) {
+                return Err(format!("two triggers would both be {path}"));
+            }
+            let resource = trigger_resource(trigger, &links).map_err(|e| format!("trigger {}: {e}", trigger.name))?;
+            save_resource(&resource, &path)?;
+            links.insert(key, path);
+            count += 1;
+        }
+    }
+    Ok((count, lost))
+}
+
+/// Reads every quest and quest trigger resource into the export. Two quests with the same
+/// number, or two triggers with the same name, are an error naming both files.
+pub fn read_quests() -> Result<(QuestsExport, usize), String> {
+    let mut export = QuestsExport::default();
+    let mut ids: std::collections::HashMap<u16, String> = std::collections::HashMap::new();
+    let mut names: std::collections::HashMap<String, String> = std::collections::HashMap::new();
+    let mut loader = ResourceLoader::singleton();
+    let mut files = register_uids(QUESTS_DIR);
+    files.extend(register_uids(QUEST_TRIGGERS_DIR));
+    // Held until the end: Godot frees a resource nothing holds, so otherwise every step would
+    // load the quests, items and next steps it links again.
+    let mut held = Vec::with_capacity(files.len());
+    for path in &files {
+        let resource = loader.load(path).ok_or(format!("could not load {path}"))?;
+        held.push(resource.clone());
+        let class = resource.get_class().to_string();
+        let read = |e: String| format!("{path}: {e}");
+        match class.as_str() {
+            "RoseQuest" => {
+                let quest: QuestDataExport = from_resource(&resource).map_err(read)?;
+                if let Some(other) = ids.insert(quest.id, path.clone()) {
+                    return Err(format!("{path} and {other} are both quest {}", quest.id));
+                }
+                export.quests.push(quest);
+            }
+            "RoseQuestTrigger" => {
+                let trigger = trigger_export(&resource).map_err(read)?;
+                if let Some(other) = names.insert(trigger.name.clone(), path.clone()) {
+                    return Err(format!("{path} and {other} are both trigger {}", trigger.name));
+                }
+                export.triggers.push(trigger);
+            }
+            _ => return Err(format!("{path} is a {class}, not a quest or a quest trigger")),
+        }
+    }
+    export.check().map_err(|e| format!("{e:#}"))?;
+    Ok((export, files.len()))
+}
+
 /// `--export-data`: writes `export/` (in the repository) from the resources, the zone scenes
 /// and the animations, or with `check` only compares. Needs the data open (the motion list and
 /// the names in the zone files' comments come from it) and the imported animations. Returns
@@ -3506,6 +3749,12 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
             "no sky resources in {SKIES_DIR}; run --convert-data first"
         ));
     }
+    let (quests, quest_resources) = read_quests()?;
+    if quest_resources == 0 {
+        return Err(format!(
+            "no quest resources in {QUESTS_DIR}; run --convert-data first"
+        ));
+    }
     if let Some(zone) = world.zones.iter().find(|z| !interface.has_sky(z.sky)) {
         return Err(format!("zone {} has sky {}, which isn't there", zone.id, zone.sky));
     }
@@ -3543,6 +3792,7 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
     data_files.extend(sounds.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
     data_files.extend(effects.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
     data_files.extend(interface.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
+    data_files.extend(quests.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
     files.extend(data_files.into_iter().map(|(name, text)| (in_data(rose_data_export::data_file_as(name, toml)), text)));
     // The written files must read back (the server and the game load them the same way).
     let find = |path: String| Ok(files.iter().find(|(n, _)| *n == in_data(path.clone())).map(|(_, t)| t.clone()));
@@ -3576,6 +3826,11 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
         .ok_or("the sky export doesn't read back")?
         .to_database()
         .map_err(|e| format!("{e:#}"))?;
+    QuestsExport::from_files_as(toml, |name| find(rose_data_export::data_file_as(name, toml)))
+        .map_err(|e| format!("{e:#}"))?
+        .ok_or("the quest export doesn't read back")?
+        .check()
+        .map_err(|e| format!("{e:#}"))?;
 
     // The zones edited as scenes need their settings, and their layouts go to the server.
     // Their comments name the zone, monsters and NPCs as the resources do now.
@@ -3602,7 +3857,9 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
     files.push((rose_data_export::MOTIONS_FILE.to_string(), timings.to_toml()));
 
     let mut result = ExportResult {
-        resources: item_resources + npc_resources + skill_resources + world_resources + sound_resources + effect_resources + interface_resources,
+        resources: item_resources + npc_resources + skill_resources + world_resources + sound_resources + effect_resources + interface_resources + quest_resources,
+        quests: quests.quests.len(),
+        quest_triggers: quests.triggers.len(),
         skies: interface.skies.len(),
         sounds: sounds.sounds.len(),
         effects: effects.effect_files.len(),
@@ -3656,6 +3913,8 @@ pub struct ExportResult {
     pub effects: usize,
     pub attack_effects: usize,
     pub skies: usize,
+    pub quests: usize,
+    pub quest_triggers: usize,
     pub zone_scenes: usize,
     pub motions: usize,
     pub read_ms: u128,
@@ -3676,7 +3935,8 @@ impl RoseDataExport {
     /// interface settings (they link imported meshes, textures and cursors), then items, then
     /// monsters, NPCs, drop tables and shop tabs, which link the items, then skills, status
     /// effects and job classes, which link the monsters, then zone settings, warp gates,
-    /// recipes and new characters, which link the skies, zones and items. Needs RoseData.open. Returns {resources, folder, skipped (kinds already there),
+    /// recipes and new characters, which link the skies, zones and items, then quests and
+    /// quest triggers, which link items, monsters, NPCs, skills and zones. Needs RoseData.open. Returns {resources, folder, skipped (kinds already there),
     /// lost (values that couldn't be kept)}, or {error}.
     #[func]
     fn convert(force: bool) -> VarDictionary {
@@ -3811,6 +4071,26 @@ impl RoseDataExport {
         } else {
             kept.push(&"zones, warp gates, recipes and new characters".to_variant());
         }
+        let mut others = Vec::new();
+        for (dir, _) in QUEST_DIRS {
+            tres_files(dir, &mut others);
+        }
+        if force || others.is_empty() {
+            match convert_quests(force) {
+                Ok((n, not_kept)) => {
+                    count += n;
+                    for line in not_kept {
+                        lost.push(&line.to_variant());
+                    }
+                }
+                Err(error) => {
+                    result.set("error", error.as_str());
+                    return result;
+                }
+            }
+        } else {
+            kept.push(&"quests and quest triggers".to_variant());
+        }
         let folder = ProjectSettings::singleton().globalize_path("res://data/").to_string();
         result.set("resources", count as i64);
         result.set("folder", folder.as_str());
@@ -3821,7 +4101,8 @@ impl RoseDataExport {
 
     /// Writes (or with `check` compares) `export/` from the resources, the zone scenes and the
     /// animations. Needs RoseData.open and the import. Returns {files, changed, resources,
-    /// items, monsters, npcs, skills, zones, sounds, effects, attack_effects, skies, zone_scenes,
+    /// items, monsters, npcs, skills, zones, sounds, effects, attack_effects, skies, quests,
+    /// quest_triggers, zone_scenes,
     /// motions, read_ms}, or {error}.
     #[func]
     fn export(check: bool) -> VarDictionary {
@@ -3841,6 +4122,8 @@ impl RoseDataExport {
                 result.set("effects", out.effects as i64);
                 result.set("attack_effects", out.attack_effects as i64);
                 result.set("skies", out.skies as i64);
+                result.set("quests", out.quests as i64);
+                result.set("quest_triggers", out.quest_triggers as i64);
                 result.set("zone_scenes", out.zone_scenes as i64);
                 result.set("motions", out.motions as i64);
                 result.set("read_ms", out.read_ms as i64);

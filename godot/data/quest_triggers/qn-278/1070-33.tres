@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://qnhtqw2q624k"]
+
+[ext_resource type="RoseQuest" uid="uid://cl6wq5nhwy24t" path="res://data/quests/1070-kirnale-s-journals-second-job-change.tres" id="1_bvohv"]
+[ext_resource type="RoseItemQuest" uid="uid://dhcae0xhhrdv0" path="res://data/items/quest/216-kirnale-s-journal-vol-3.tres" id="2_nr12v"]
+[ext_resource type="RoseQuestTrigger" uid="uid://c57p5jimw80c7" path="res://data/quest_triggers/qn-278/1070-34.tres" id="3_7yx8e"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_qpe7j"]
+quest = ExtResource("1_bvohv")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_ja7af"]
+to = 20
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_rl48h"]
+item = ExtResource("2_nr12v")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ldfg6"]
+quest = ExtResource("1_bvohv")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_50vey"]
+item = ExtResource("2_nr12v")
+quantity = 1
+
+[resource]
+name = "1070-33"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_qpe7j"), SubResource("RoseConditionRandomPercent_ja7af"), SubResource("RoseConditionQuestItem_rl48h")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ldfg6"), SubResource("RoseRewardAddItem_50vey")])
+next_trigger = ExtResource("3_7yx8e")

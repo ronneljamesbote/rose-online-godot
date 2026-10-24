@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1062-smith-punwell|Smith Punwell]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 139; QSD triggers 138-01, 138-02, 139-01
+  data: 'godot/data/quests/139-punwell-in-windmill-village.tres; quest triggers in godot/data/quest_triggers/: qp103/138-01, qp103/138-02, qp103/139-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 3404; QSD triggers 3404-01, 3404-02, 3404-03, 3404-04, 3404-31
+  data: 'godot/data/quests/3404-lawless-porkie-hooligans.tres; quest triggers in godot/data/quest_triggers/: qu03-001/3404-01, qu03-001/3404-02, qu03-001/3404-03, qu03-001/3404-04, qn-133/3404-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

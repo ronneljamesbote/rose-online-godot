@@ -1,0 +1,22 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d3k5qdhdtiw4r"]
+
+[ext_resource type="RoseItemMaterial" uid="uid://laovxs4bp6d5" path="res://data/items/material/452-plastic-surgery-coupon.tres" id="1_t81hm"]
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_aqwgg"]
+item = ExtResource("1_t81hm")
+equipment_index = 12
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_rejk6"]
+ability = "Face"
+value = 57
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_40h7a"]
+item = ExtResource("1_t81hm")
+quantity = 1
+
+[resource]
+name = "face2"
+conditions = Array[Resource]([SubResource("RoseConditionQuestItem_aqwgg")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_rejk6"), SubResource("RoseRewardRemoveItem_40h7a")])

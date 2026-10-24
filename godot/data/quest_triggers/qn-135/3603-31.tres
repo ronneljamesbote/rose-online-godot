@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://soqcnfkhjmqk"]
+
+[ext_resource type="RoseQuest" uid="uid://iijv3g3klq1d" path="res://data/quests/3603-grunter-s-mysterious-strength.tres" id="1_o0i8y"]
+[ext_resource type="RoseItemQuest" uid="uid://dkduaah51ev2d" path="res://data/items/quest/307-grunter-foot.tres" id="2_nkbjv"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_8cpk4"]
+quest = ExtResource("1_o0i8y")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_ilskr"]
+to = 30
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_bgsks"]
+item = ExtResource("2_nkbjv")
+equipment_index = 13
+count = 14
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_axfb8"]
+quest = ExtResource("1_o0i8y")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_owsil"]
+item = ExtResource("2_nkbjv")
+quantity = 1
+
+[resource]
+name = "3603-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_8cpk4"), SubResource("RoseConditionRandomPercent_ilskr"), SubResource("RoseConditionQuestItem_bgsks")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_axfb8"), SubResource("RoseRewardAddItem_owsil")])

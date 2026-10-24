@@ -1,0 +1,43 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bsalmmtuu1bvv"]
+
+[ext_resource type="RoseQuest" uid="uid://5fdacmx07u6m" path="res://data/quests/5053-hunting-practice-3.tres" id="1_1jshn"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_jloq2"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cdyuibnk0bpc1" path="res://data/quest_triggers/qn-011/5034-32.tres" id="3_w26r3"]
+[ext_resource type="RoseItemConsumable" uid="uid://b16ymqw4vjwcu" path="res://data/items/consumable/102-banana.tres" id="4_qfjj2"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_b0l3f"]
+quest = ExtResource("1_1jshn")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_mq0gk"]
+variable_type = "Timer"
+operator = ">"
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_xe1ot"]
+item = ExtResource("2_jloq2")
+equipment_index = 13
+count = 7
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_1mhoa"]
+quest = ExtResource("1_1jshn")
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_utm84"]
+equation = 3
+value = 400
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_2b8av"]
+equation = 5
+value = 20
+item = ExtResource("4_qfjj2")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_dbhva"]
+switch = 79
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_xhhkp"]
+
+[resource]
+name = "5053-32"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_b0l3f"), SubResource("RoseConditionQuestVariable_mq0gk"), SubResource("RoseConditionQuestItem_xe1ot")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_1mhoa"), SubResource("RoseRewardCalculatedMoney_utm84"), SubResource("RoseRewardCalculatedItem_2b8av"), SubResource("RoseRewardSetQuestSwitch_dbhva"), SubResource("RoseRewardRemoveSelectedQuest_xhhkp")])
+next_trigger = ExtResource("3_w26r3")

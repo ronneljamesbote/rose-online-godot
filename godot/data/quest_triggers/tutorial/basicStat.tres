@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c3ekcykdcsi1d"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_bc0up"]
+switch = 17
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_uxcj1"]
+ability = "BonusPoint"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_1j1nw"]
+switch = 17
+value = true
+
+[resource]
+name = "basicStat"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_bc0up")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_uxcj1"), SubResource("RoseRewardSetQuestSwitch_1j1nw")])

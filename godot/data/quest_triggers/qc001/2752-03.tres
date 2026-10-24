@@ -1,0 +1,31 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bgfwbyfgdg27k"]
+
+[ext_resource type="RoseQuest" uid="uid://cn386lfxlyqkl" path="res://data/quests/2752-clan-house-extension-2.tres" id="1_l6xqh"]
+[ext_resource type="RoseItemMaterial" uid="uid://cam0sdkavwb37" path="res://data/items/material/7-steel.tres" id="2_xc0xm"]
+[ext_resource type="RoseItemMaterial" uid="uid://clm7elxbs1fy8" path="res://data/items/material/37-cinnamon-wood.tres" id="3_r8ekv"]
+[ext_resource type="RoseItemMaterial" uid="uid://dg8ke7k6fqtl6" path="res://data/items/material/123-earth-stone.tres" id="4_rqmqp"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_mygju"]
+quest = ExtResource("1_l6xqh")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_fjcgj"]
+item = ExtResource("2_xc0xm")
+equipment_index = 12
+count = 200
+operator = ">="
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_weels"]
+item = ExtResource("3_r8ekv")
+equipment_index = 12
+count = 150
+operator = ">="
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_2l007"]
+item = ExtResource("4_rqmqp")
+equipment_index = 12
+count = 50
+operator = ">="
+
+[resource]
+name = "2752-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_mygju"), SubResource("RoseConditionQuestItem_fjcgj"), SubResource("RoseConditionQuestItem_weels"), SubResource("RoseConditionQuestItem_2l007")])

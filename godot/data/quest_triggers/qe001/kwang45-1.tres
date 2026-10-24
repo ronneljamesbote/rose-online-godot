@@ -1,0 +1,40 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://rqbdcyidoxnx"]
+
+[ext_resource type="RoseItemBack" uid="uid://colr4ko3l1wim" path="res://data/items/back/224-little-angel-wing.tres" id="1_t72ib"]
+[ext_resource type="RoseItemMaterial" uid="uid://djbglo1lf3d2k" path="res://data/items/material/63-low-ether.tres" id="2_hsa1n"]
+[ext_resource type="RoseItemMaterial" uid="uid://txirltqrlwuc" path="res://data/items/material/404.tres" id="3_fnacv"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_1v5y8"]
+value = 45
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_u6kmn"]
+switch = 484
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_udmss"]
+equation = 5
+value = 1
+item = ExtResource("1_t72ib")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_o6f7o"]
+equation = 5
+value = 20
+item = ExtResource("2_hsa1n")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_028wm"]
+equation = 5
+value = 9
+item = ExtResource("3_fnacv")
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_mw372"]
+ability = "Money"
+operator = "Add"
+value = 8000
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_kstvx"]
+switch = 484
+value = true
+
+[resource]
+name = "kwang45-1"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_1v5y8"), SubResource("RoseConditionQuestSwitch_u6kmn")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_udmss"), SubResource("RoseRewardCalculatedItem_o6f7o"), SubResource("RoseRewardCalculatedItem_028wm"), SubResource("RoseRewardAbilityValue_mw372"), SubResource("RoseRewardSetQuestSwitch_kstvx")])

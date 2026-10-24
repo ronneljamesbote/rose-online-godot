@@ -1,0 +1,13 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://sq5diwwx4fmb"]
+
+[ext_resource type="RoseItemMaterial" uid="uid://laovxs4bp6d5" path="res://data/items/material/452-plastic-surgery-coupon.tres" id="1_71s3l"]
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_qs52j"]
+item = ExtResource("1_71s3l")
+equipment_index = 12
+count = 1
+operator = ">="
+
+[resource]
+name = "item12452"
+conditions = Array[Resource]([SubResource("RoseConditionQuestItem_qs52j")])

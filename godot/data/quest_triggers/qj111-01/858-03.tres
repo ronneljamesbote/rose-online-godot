@@ -1,0 +1,68 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://drbwg3bc5v6l5"]
+
+[ext_resource type="RoseQuest" uid="uid://tvch7kvok0uy" path="res://data/quests/858-hovert-s-mementos.tres" id="1_p8ky0"]
+[ext_resource type="RoseItemQuest" uid="uid://blw5essjldvwl" path="res://data/items/quest/122-old-horse-saddle.tres" id="2_asywx"]
+[ext_resource type="RoseItemQuest" uid="uid://b2bqlinb4mq8c" path="res://data/items/quest/123-rusted-iron-helmet.tres" id="3_gi612"]
+[ext_resource type="RoseItemQuest" uid="uid://bdkwonhmjutdy" path="res://data/items/quest/124-single-leather-boot.tres" id="4_fjgxu"]
+[ext_resource type="RoseItemQuest" uid="uid://cf4lrloxc1eb1" path="res://data/items/quest/125-old-leather-diary.tres" id="5_dla5w"]
+[ext_resource type="RoseItemQuest" uid="uid://cmrn7a5w5ybei" path="res://data/items/quest/128-hovert-s-letter.tres" id="6_cc4pv"]
+[ext_resource type="RoseQuest" uid="uid://b5cjtiljfntve" path="res://data/quests/859-hovert-s-mementos.tres" id="7_a4rs3"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_qvb3j"]
+quest = ExtResource("1_p8ky0")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_d07n5"]
+item = ExtResource("2_asywx")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_14lk2"]
+item = ExtResource("3_gi612")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_p4sjg"]
+item = ExtResource("4_fjgxu")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_y7htg"]
+item = ExtResource("5_dla5w")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_5m11u"]
+quest = ExtResource("1_p8ky0")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_arick"]
+item = ExtResource("2_asywx")
+quantity = 1
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_u5o6k"]
+item = ExtResource("3_gi612")
+quantity = 1
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_8oold"]
+item = ExtResource("4_fjgxu")
+quantity = 1
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_n7iix"]
+item = ExtResource("5_dla5w")
+quantity = 1
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_gkrh5"]
+item = ExtResource("6_cc4pv")
+quantity = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_s51u2"]
+quest = ExtResource("7_a4rs3")
+keep_data = true
+
+[resource]
+name = "858-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_qvb3j"), SubResource("RoseConditionQuestItem_d07n5"), SubResource("RoseConditionQuestItem_14lk2"), SubResource("RoseConditionQuestItem_p4sjg"), SubResource("RoseConditionQuestItem_y7htg")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_5m11u"), SubResource("RoseRewardRemoveItem_arick"), SubResource("RoseRewardRemoveItem_u5o6k"), SubResource("RoseRewardRemoveItem_8oold"), SubResource("RoseRewardRemoveItem_n7iix"), SubResource("RoseRewardAddItem_gkrh5"), SubResource("RoseRewardChangeSelectedQuest_s51u2")])

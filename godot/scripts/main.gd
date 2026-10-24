@@ -228,6 +228,7 @@ func _export_data(check: bool) -> void:
 		get_tree().quit(1)
 		return
 	print("rose: %d items, %d monsters, %d NPCs, %d skills, %d zones, %d sounds, %d effects, %d attack effects and %d skies from %d resources (read in %d ms)" % [result.items, result.monsters, result.npcs, result.skills, result.zones, result.sounds, result.effects, result.attack_effects, result.skies, result.resources, result.read_ms])
+	print("rose: %d quests, %d quest triggers" % [result.quests, result.quest_triggers])
 	print("rose: %d zone scenes, %d motions" % [result.zone_scenes, result.motions])
 	var changed: Array = result.changed
 	for path in changed:

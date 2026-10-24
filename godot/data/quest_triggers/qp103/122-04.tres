@@ -1,0 +1,31 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://52tftp0ek1o2"]
+
+[ext_resource type="RoseQuest" uid="uid://b36qf0ijxmtwe" path="res://data/quests/122-resurrection.tres" id="1_lxj7q"]
+[ext_resource type="RoseItemQuest" uid="uid://rlqkgr3qup4l" path="res://data/items/quest/611-resurrection-medicine.tres" id="2_db013"]
+[ext_resource type="RoseMonster" uid="uid://dlbs2nqfss623" path="res://data/monsters/253-zombie.tres" id="3_kmnxg"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_xotfk"]
+quest = ExtResource("1_lxj7q")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_hthpt"]
+item = ExtResource("2_db013")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_oks66"]
+quest = ExtResource("1_lxj7q")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_ixiqf"]
+item = ExtResource("2_db013")
+quantity = 1
+
+[sub_resource type="RoseRewardSpawnMonster" id="RoseRewardSpawnMonster_obgl4"]
+monster = ExtResource("3_kmnxg")
+count = 1
+distance = 1
+team = 100
+
+[resource]
+name = "122-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_xotfk"), SubResource("RoseConditionQuestItem_hthpt")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_oks66"), SubResource("RoseRewardRemoveItem_ixiqf"), SubResource("RoseRewardSpawnMonster_obgl4")])

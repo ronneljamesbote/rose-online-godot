@@ -10,7 +10,7 @@ monsters:
 - '[[monsters/133-porkie-hooligan|Porkie Hooligan]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 911; QSD triggers 910-01, 911-01, 911-31, 911-32
+  data: 'godot/data/quests/911-an-appropriate-compromise.tres; quest triggers in godot/data/quest_triggers/: qj211-01/910-01, qj211-01/911-01, qn-132/911-31, qn-133/911-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

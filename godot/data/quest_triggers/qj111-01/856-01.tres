@@ -1,0 +1,33 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bluvlg0uh8rvy"]
+
+[ext_resource type="RoseQuest" uid="uid://cwicjfrwuwmn0" path="res://data/quests/856-living-as-a-true-soldier.tres" id="1_gq2ri"]
+[ext_resource type="RoseItemConsumable" uid="uid://cvktjkfrlibs1" path="res://data/items/consumable/5-health-bottle-m.tres" id="2_d60dx"]
+[ext_resource type="RoseQuest" uid="uid://btife5giwkikt" path="res://data/quests/857-living-as-a-true-soldier.tres" id="3_1i48x"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_gojfl"]
+quest = ExtResource("1_gq2ri")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_2q3nt"]
+operator = ">="
+value = 15
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_hlqj3"]
+variable = 1
+operator = ">="
+value = 15
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_nfpwb"]
+quest = ExtResource("1_gq2ri")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_vfe1m"]
+equation = 5
+value = 10
+item = ExtResource("2_d60dx")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_l4qlp"]
+quest = ExtResource("3_1i48x")
+
+[resource]
+name = "856-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_gojfl"), SubResource("RoseConditionQuestVariable_2q3nt"), SubResource("RoseConditionQuestVariable_hlqj3")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_nfpwb"), SubResource("RoseRewardCalculatedItem_vfe1m"), SubResource("RoseRewardChangeSelectedQuest_l4qlp")])

@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bji1tkamf60g2"]
+
+[ext_resource type="RoseQuest" uid="uid://cilxl3wwuqkaj" path="res://data/quests/1064-namielle-mother-of-all-second-job-change.tres" id="1_xo5ki"]
+[ext_resource type="RoseItemQuest" uid="uid://yyqbjd2gtucq" path="res://data/items/quest/210-namielle-s-wedding-ring.tres" id="2_qvyjg"]
+[ext_resource type="RoseQuest" uid="uid://i017l5b2humu" path="res://data/quests/1065-namielle-mother-of-all-second-job-change.tres" id="3_u5re7"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ytu00"]
+quest = ExtResource("1_xo5ki")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_65vuw"]
+item = ExtResource("2_qvyjg")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_jpns7"]
+quest = ExtResource("1_xo5ki")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_8yr7h"]
+item = ExtResource("2_qvyjg")
+quantity = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_yohqw"]
+quest = ExtResource("3_u5re7")
+keep_data = true
+
+[resource]
+name = "1064-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ytu00"), SubResource("RoseConditionQuestItem_65vuw")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_jpns7"), SubResource("RoseRewardRemoveItem_8yr7h"), SubResource("RoseRewardChangeSelectedQuest_yohqw")])

@@ -1,0 +1,13 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bdc2ticwqeec1"]
+
+[ext_resource type="RoseItemMaterial" uid="uid://yvadh1d3clei" path="res://data/items/material/144-ice-key-fragment.tres" id="1_ojfta"]
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_tdpg0"]
+item = ExtResource("1_ojfta")
+equipment_index = 12
+count = 5
+operator = "<"
+
+[resource]
+name = "2051-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestItem_tdpg0")])

@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bykctthpvodog"]
+
+[ext_resource type="RoseQuest" uid="uid://durthts4osbsl" path="res://data/quests/126-falsehoods.tres" id="1_eid2l"]
+[ext_resource type="RoseItemQuest" uid="uid://upgo8ts4wsku" path="res://data/items/quest/615-small-letter.tres" id="2_i68lk"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_ucdb6"]
+variable_type = "Episode"
+value = 25
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_2dqfs"]
+quest = ExtResource("1_eid2l")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_6rswr"]
+quest = ExtResource("1_eid2l")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_btpnp"]
+item = ExtResource("2_i68lk")
+quantity = 1
+
+[resource]
+name = "125-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_ucdb6")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_2dqfs"), SubResource("RoseRewardSelectQuest_6rswr"), SubResource("RoseRewardAddItem_btpnp")])

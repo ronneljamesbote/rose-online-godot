@@ -1,0 +1,31 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cp4llddrqftby"]
+
+[ext_resource type="RoseSkill" uid="uid://b4bafa0rsk08i" path="res://data/skills/3431-clan-house/3431-clan-house.tres" id="1_bs3ru"]
+
+[sub_resource type="RoseConditionHasClan" id="RoseConditionHasClan_2uh4u"]
+has_clan = true
+
+[sub_resource type="RoseConditionClanPosition" id="RoseConditionClanPosition_pusse"]
+value = 6
+
+[sub_resource type="RoseConditionClanLevel" id="RoseConditionClanLevel_4yf5d"]
+operator = ">="
+value = 3
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_4n760"]
+ability = "Money"
+operator = ">="
+value = 1000000
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_bjapp"]
+ability = "Money"
+operator = "Subtract"
+value = 1000000
+
+[sub_resource type="RoseRewardAddClanSkill" id="RoseRewardAddClanSkill_n02he"]
+skill = ExtResource("1_bs3ru")
+
+[resource]
+name = "Clan-031"
+conditions = Array[Resource]([SubResource("RoseConditionHasClan_2uh4u"), SubResource("RoseConditionClanPosition_pusse"), SubResource("RoseConditionClanLevel_4yf5d"), SubResource("RoseConditionAbilityValue_4n760")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_bjapp"), SubResource("RoseRewardAddClanSkill_n02he")])

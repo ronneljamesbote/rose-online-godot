@@ -1,0 +1,41 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d38lef5iapimb"]
+
+[ext_resource type="RoseQuest" uid="uid://bymtsj2yn6c40" path="res://data/quests/106-healing-hands.tres" id="1_wbsn4"]
+[ext_resource type="RoseItemQuest" uid="uid://ds5io6gasghn4" path="res://data/items/quest/603-soil-of-purification.tres" id="2_hiaqm"]
+[ext_resource type="RoseItemConsumable" uid="uid://rl234dvfqtdo" path="res://data/items/consumable/103-grapes.tres" id="3_w78oq"]
+[ext_resource type="RoseQuest" uid="uid://lv4dh1esiiv" path="res://data/quests/107-healing-hands.tres" id="4_5of75"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_6h3gs"]
+quest = ExtResource("1_wbsn4")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_phrlo"]
+item = ExtResource("2_hiaqm")
+equipment_index = 13
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_3hfkx"]
+variable_type = "Timer"
+operator = ">"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_igyl6"]
+quest = ExtResource("1_wbsn4")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_g5lpx"]
+value = 300
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_j6ycb"]
+equation = 5
+value = 10
+item = ExtResource("3_w78oq")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_22l4m"]
+quest = ExtResource("4_5of75")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_7fusj"]
+variable_type = "Episode"
+value = 4
+
+[resource]
+name = "106-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_6h3gs"), SubResource("RoseConditionQuestItem_phrlo"), SubResource("RoseConditionQuestVariable_3hfkx")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_igyl6"), SubResource("RoseRewardCalculatedExperiencePoints_g5lpx"), SubResource("RoseRewardCalculatedItem_j6ycb"), SubResource("RoseRewardChangeSelectedQuest_22l4m"), SubResource("RoseRewardQuestVariable_7fusj")])

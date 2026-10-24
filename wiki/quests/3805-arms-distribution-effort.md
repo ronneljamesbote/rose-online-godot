@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1110-ferrell-guild-staff-charrs|Ferrell Guild Staff Charrs]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 3805; QSD triggers 3805-01, 3805-02, 3805-03, 3805-04, 3805-31
+  data: 'godot/data/quests/3805-arms-distribution-effort.tres; quest triggers in godot/data/quest_triggers/: qu05-001/3805-01, qu05-001/3805-02, qu05-001/3805-03, qu05-001/3805-04, qn-136/3805-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

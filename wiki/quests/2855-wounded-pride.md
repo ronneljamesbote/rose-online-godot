@@ -6,7 +6,7 @@ status: in-game
 time_limit_minutes: 70
 steps: 0
 source:
-  data: 'LIST_QUEST.STB row 2855; QSD triggers '
+  data: 'godot/data/quests/2855-wounded-pride.tres'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

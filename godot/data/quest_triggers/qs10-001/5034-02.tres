@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bcu041mx03x6h"]
+
+[ext_resource type="RoseQuest" uid="uid://cvxt0iyvmaixe" path="res://data/quests/5034-stockpiling-spools-of-thread.tres" id="1_bgoxj"]
+[ext_resource type="RoseItemQuest" uid="uid://cxlsf8hkut5i1" path="res://data/items/quest/805-spool-of-thread.tres" id="2_sed1k"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_10k3l"]
+quest = ExtResource("1_bgoxj")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_rf74s"]
+item = ExtResource("2_sed1k")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_lwsmf"]
+quest = ExtResource("1_bgoxj")
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_3dv3a"]
+equation = 2
+value = 27
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_rhvgj"]
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_tfm4f"]
+trigger = "5034-01"
+
+[resource]
+name = "5034-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_10k3l"), SubResource("RoseConditionQuestItem_rf74s")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_lwsmf"), SubResource("RoseRewardCalculatedMoney_3dv3a"), SubResource("RoseRewardRemoveSelectedQuest_rhvgj"), SubResource("RoseRewardTrigger_tfm4f")])

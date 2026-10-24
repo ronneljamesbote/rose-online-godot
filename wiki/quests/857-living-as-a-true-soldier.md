@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/68-queen-bibi|Queen Bibi]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 857; QSD triggers 856-01, 857-01, 857-02, 857-03, 857-31
+  data: 'godot/data/quests/857-living-as-a-true-soldier.tres; quest triggers in godot/data/quest_triggers/: qj111-01/856-01, qj111-01/857-01, qj111-01/857-02, qj111-01/857-03, qn-068/857-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

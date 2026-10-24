@@ -1,0 +1,32 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bjs3l3a3h4ufu"]
+
+[ext_resource type="RoseQuest" uid="uid://durthts4osbsl" path="res://data/quests/126-falsehoods.tres" id="1_ahbng"]
+[ext_resource type="RoseItemQuest" uid="uid://upgo8ts4wsku" path="res://data/items/quest/615-small-letter.tres" id="2_yxbfl"]
+[ext_resource type="RoseQuest" uid="uid://c7kybhc4pllfb" path="res://data/quests/127-the-owl-eye.tres" id="3_tqwyq"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ihugq"]
+quest = ExtResource("1_ahbng")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_28l52"]
+quest = ExtResource("1_ahbng")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_xint1"]
+item = ExtResource("2_yxbfl")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_3j4vj"]
+equation = 3
+value = 5000
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_v1vr2"]
+quest = ExtResource("3_tqwyq")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_pwmhm"]
+variable_type = "Episode"
+value = 26
+
+[resource]
+name = "126-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ihugq")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_28l52"), SubResource("RoseRewardRemoveItem_xint1"), SubResource("RoseRewardCalculatedMoney_3j4vj"), SubResource("RoseRewardChangeSelectedQuest_v1vr2"), SubResource("RoseRewardQuestVariable_pwmhm")])

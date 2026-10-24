@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c04gqnkhuu45l"]
+
+[ext_resource type="RoseItemFeet" uid="uid://cpp7v42o0p30v" path="res://data/items/feet/30-visitor-sandals.tres" id="1_ha43b"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_224ay"]
+switch = 65
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_7lhxf"]
+equation = 5
+value = 1
+item = ExtResource("1_ha43b")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_snvis"]
+switch = 65
+value = true
+
+[resource]
+name = "T65"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_224ay")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_7lhxf"), SubResource("RoseRewardSetQuestSwitch_snvis")])

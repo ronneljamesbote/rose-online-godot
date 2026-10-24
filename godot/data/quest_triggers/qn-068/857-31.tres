@@ -1,0 +1,27 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://rggrdiflht4d"]
+
+[ext_resource type="RoseQuest" uid="uid://btife5giwkikt" path="res://data/quests/857-living-as-a-true-soldier.tres" id="1_h6cbw"]
+[ext_resource type="RoseItemQuest" uid="uid://dtctymne4tqo4" path="res://data/items/quest/131-queen-bibi-s-staff.tres" id="2_umf2n"]
+[ext_resource type="RoseQuestTrigger" uid="uid://d2ltivohwrnyr" path="res://data/quest_triggers/qn-068/118-31.tres" id="3_564i8"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_tw63y"]
+quest = ExtResource("1_h6cbw")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_3404x"]
+item = ExtResource("2_umf2n")
+equipment_index = 13
+count = 4
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_x1yhm"]
+quest = ExtResource("1_h6cbw")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_rfh2m"]
+item = ExtResource("2_umf2n")
+quantity = 1
+
+[resource]
+name = "857-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_tw63y"), SubResource("RoseConditionQuestItem_3404x")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_x1yhm"), SubResource("RoseRewardAddItem_rfh2m")])
+next_trigger = ExtResource("3_564i8")

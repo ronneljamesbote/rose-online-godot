@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cnudfoboi17sm"]
+
+[ext_resource type="RoseQuest" uid="uid://06voatxfbyda" path="res://data/quests/5006-stockpiling-bronze-fragments.tres" id="1_cob7c"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_32ldr"]
+operator = ">="
+value = 10
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_gojc6"]
+operator = "<="
+value = 18
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_hlq1p"]
+quest = ExtResource("1_cob7c")
+
+[resource]
+name = "5006-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_32ldr"), SubResource("RoseConditionAbilityValue_gojc6")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_hlq1p")])

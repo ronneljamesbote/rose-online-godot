@@ -1,0 +1,48 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bpics4u4go851"]
+
+[ext_resource type="RoseQuest" uid="uid://jw4vqiaxdgef" path="res://data/quests/3604-lutis-guard-of-luxem-tower.tres" id="1_13dxr"]
+[ext_resource type="RoseNpc" uid="uid://c5lrdwof7p562" path="res://data/npcs/1112-arumic-researcher-carasia.tres" id="2_a8kti"]
+[ext_resource type="RoseItemConsumable" uid="uid://blwiv60eb3cgu" path="res://data/items/consumable/57-vital-jam-2.tres" id="3_1axag"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_qtswd"]
+quest = ExtResource("1_13dxr")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_8fbpw"]
+value = 20
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_tterx"]
+ability = "Union"
+value = 4
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_1s1qp"]
+operator = ">"
+value = 50
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_acqxe"]
+npc = ExtResource("2_a8kti")
+
+[sub_resource type="RoseConditionObjectDistance" id="RoseConditionObjectDistance_mr380"]
+distance = 5
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_1j6uc"]
+quest = ExtResource("1_13dxr")
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_fsxnh"]
+ability = "UnionPoint4"
+operator = "Add"
+value = 5
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_ls51u"]
+value = 5000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_fn8it"]
+equation = 5
+value = 1
+item = ExtResource("3_1axag")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_kqnfs"]
+
+[resource]
+name = "3604-05"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_qtswd"), SubResource("RoseConditionQuestVariable_8fbpw"), SubResource("RoseConditionAbilityValue_tterx"), SubResource("RoseConditionAbilityValue_1s1qp"), SubResource("RoseConditionSelectNpc_acqxe"), SubResource("RoseConditionObjectDistance_mr380")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_1j6uc"), SubResource("RoseRewardAbilityValue_fsxnh"), SubResource("RoseRewardCalculatedExperiencePoints_ls51u"), SubResource("RoseRewardCalculatedItem_fn8it"), SubResource("RoseRewardRemoveSelectedQuest_kqnfs")])

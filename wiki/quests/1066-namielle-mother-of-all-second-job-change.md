@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1051-arumic-resercher-lutis|Arumic Resercher Lutis]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 1066; QSD triggers 1065-01, 1066-01, 1066-31
+  data: 'godot/data/quests/1066-namielle-mother-of-all-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj211-06/1065-01, qj211-06/1066-01, qn-164/1066-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

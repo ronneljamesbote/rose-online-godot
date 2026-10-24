@@ -1,0 +1,36 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://rs6csxiw0bpx"]
+
+[ext_resource type="RoseQuest" uid="uid://bu04iff0837lh" path="res://data/quests/129-the-owl-eye.tres" id="1_haa4m"]
+[ext_resource type="RoseItemQuest" uid="uid://bsiwio4pvdy83" path="res://data/items/quest/614-owl-eye.tres" id="2_pbu0o"]
+[ext_resource type="RoseItemQuest" uid="uid://upgo8ts4wsku" path="res://data/items/quest/615-small-letter.tres" id="3_mc7ch"]
+[ext_resource type="RoseQuest" uid="uid://cmh5fvrad1jsh" path="res://data/quests/130-eva-the-sorcerer.tres" id="4_xxqfq"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_b6cb8"]
+quest = ExtResource("1_haa4m")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_tnirs"]
+item = ExtResource("2_pbu0o")
+equipment_index = 13
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_u4kbl"]
+quest = ExtResource("1_haa4m")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_ysanu"]
+item = ExtResource("3_mc7ch")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_1nx0m"]
+value = 7000
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_dc8uc"]
+quest = ExtResource("4_xxqfq")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_wmupe"]
+variable_type = "Episode"
+value = 29
+
+[resource]
+name = "129-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_b6cb8"), SubResource("RoseConditionQuestItem_tnirs")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_u4kbl"), SubResource("RoseRewardAddItem_ysanu"), SubResource("RoseRewardCalculatedExperiencePoints_1nx0m"), SubResource("RoseRewardChangeSelectedQuest_dc8uc"), SubResource("RoseRewardQuestVariable_wmupe")])

@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cpq1gp7cwxo3l"]
+
+[ext_resource type="RoseQuest" uid="uid://b6th8wd1bwg78" path="res://data/quests/1066-namielle-mother-of-all-second-job-change.tres" id="1_jhxf3"]
+[ext_resource type="RoseItemQuest" uid="uid://dmkl3dqhenl6r" path="res://data/items/quest/212-hairpin-of-oblivious.tres" id="2_i7x0g"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bu3mivav2ro7p" path="res://data/quest_triggers/qn-164/1072-31.tres" id="3_md3p8"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_tf6w5"]
+quest = ExtResource("1_jhxf3")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_5moux"]
+to = 15
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_hp6bm"]
+item = ExtResource("2_i7x0g")
+equipment_index = 13
+count = 5
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_h6ub0"]
+quest = ExtResource("1_jhxf3")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_446k4"]
+item = ExtResource("2_i7x0g")
+quantity = 1
+
+[resource]
+name = "1066-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_tf6w5"), SubResource("RoseConditionRandomPercent_5moux"), SubResource("RoseConditionQuestItem_hp6bm")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_h6ub0"), SubResource("RoseRewardAddItem_446k4")])
+next_trigger = ExtResource("3_md3p8")

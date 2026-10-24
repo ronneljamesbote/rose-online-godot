@@ -1,0 +1,43 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://tlg03npuffee"]
+
+[ext_resource type="RoseQuest" uid="uid://iijv3g3klq1d" path="res://data/quests/3603-grunter-s-mysterious-strength.tres" id="1_w4rpl"]
+[ext_resource type="RoseItemQuest" uid="uid://dkduaah51ev2d" path="res://data/items/quest/307-grunter-foot.tres" id="2_mn3v4"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_hswm5"]
+quest = ExtResource("1_w4rpl")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_uoxbe"]
+ability = "Union"
+value = 4
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_hqwvp"]
+operator = ">"
+value = 50
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_ovgk0"]
+item = ExtResource("2_mn3v4")
+equipment_index = 13
+count = 14
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_hfgsh"]
+quest = ExtResource("1_w4rpl")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_l3lgl"]
+item = ExtResource("2_mn3v4")
+quantity = 14
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_sdht3"]
+ability = "UnionPoint4"
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_wfcnv"]
+value = 10000
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_wdjxm"]
+
+[resource]
+name = "3603-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_hswm5"), SubResource("RoseConditionAbilityValue_uoxbe"), SubResource("RoseConditionAbilityValue_hqwvp"), SubResource("RoseConditionQuestItem_ovgk0")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_hfgsh"), SubResource("RoseRewardRemoveItem_l3lgl"), SubResource("RoseRewardAbilityValue_sdht3"), SubResource("RoseRewardCalculatedExperiencePoints_wfcnv"), SubResource("RoseRewardRemoveSelectedQuest_wdjxm")])

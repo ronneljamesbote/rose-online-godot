@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dnumchl5agul3"]
+
+[ext_resource type="RoseItemMaterial" uid="uid://dnn2pmtoltg5u" path="res://data/items/material/405-la-reine.tres" id="1_ajn4t"]
+[ext_resource type="RoseItemJewellery" uid="uid://dpgc5f58x8gjp" path="res://data/items/jewellery/262-socket-necklace.tres" id="2_axfjf"]
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_a6y0o"]
+item = ExtResource("1_ajn4t")
+equipment_index = 12
+count = 30
+operator = ">="
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_slk5p"]
+item = ExtResource("1_ajn4t")
+quantity = 30
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_h2ypu"]
+equation = 5
+value = 1
+item = ExtResource("2_axfjf")
+
+[resource]
+name = "5062-12"
+conditions = Array[Resource]([SubResource("RoseConditionQuestItem_a6y0o")])
+rewards = Array[Resource]([SubResource("RoseRewardRemoveItem_slk5p"), SubResource("RoseRewardCalculatedItem_h2ypu")])

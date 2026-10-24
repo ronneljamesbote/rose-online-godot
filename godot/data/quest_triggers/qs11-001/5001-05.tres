@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c3aoc3qdp5u6p"]
+
+[ext_resource type="RoseNpc" uid="uid://bp3ncfgmq1vhy" path="res://data/npcs/1013-tavern-owner-sharlin.tres" id="1_ujfkh"]
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_5iig5"]
+npc = ExtResource("1_ujfkh")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_vxy55"]
+value = 1
+
+[sub_resource type="RoseRewardNpcMessage" id="RoseRewardNpcMessage_xmrp2"]
+message_type = "Shout"
+text = "Faction War has begun! Those participating in battle, please enter the Warp Gate to transport to Junon Cartel."
+
+[resource]
+name = "5001-05"
+conditions = Array[Resource]([SubResource("RoseConditionSelectNpc_5iig5"), SubResource("RoseConditionObjectVariable_vxy55")])
+rewards = Array[Resource]([SubResource("RoseRewardNpcMessage_xmrp2")])

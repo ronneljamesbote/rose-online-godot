@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d30yhj7cr4p32"]
+
+[ext_resource type="RoseQuest" uid="uid://d2rim1p8l37mx" path="res://data/quests/131-eva-the-sorcerer.tres" id="1_ebkqk"]
+[ext_resource type="RoseItemQuest" uid="uid://b448171be1lia" path="res://data/items/quest/616-flame-of-courage.tres" id="2_l0ijp"]
+[ext_resource type="RoseQuestTrigger" uid="uid://5xgnars7jkuc" path="res://data/quest_triggers/qn-143/3807-31.tres" id="3_gcjcq"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_qreaq"]
+quest = ExtResource("1_ebkqk")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_r7mpl"]
+to = 70
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_uobyx"]
+item = ExtResource("2_l0ijp")
+equipment_index = 13
+count = 20
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_la5e6"]
+quest = ExtResource("1_ebkqk")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_t74e8"]
+item = ExtResource("2_l0ijp")
+quantity = 1
+
+[resource]
+name = "131-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_qreaq"), SubResource("RoseConditionRandomPercent_r7mpl"), SubResource("RoseConditionQuestItem_uobyx")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_la5e6"), SubResource("RoseRewardAddItem_t74e8")])
+next_trigger = ExtResource("3_gcjcq")

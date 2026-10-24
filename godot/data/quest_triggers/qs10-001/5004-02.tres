@@ -1,0 +1,43 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ddffh30b3fppk"]
+
+[ext_resource type="RoseQuest" uid="uid://bp53cf48f0jkb" path="res://data/quests/5004-ulysses-price-chart-delivery.tres" id="1_2v1rj"]
+[ext_resource type="RoseItemQuest" uid="uid://ip5ypge6qqyv" path="res://data/items/quest/803-daily-price-checklist.tres" id="2_4keff"]
+[ext_resource type="RoseNpc" uid="uid://c7gxntexjag00" path="res://data/npcs/1036-ferrell-guild-staff-seyon.tres" id="3_kclh0"]
+[ext_resource type="RoseQuestTrigger" uid="uid://td0s242l27ye" path="res://data/quest_triggers/qs10-001/5004-04.tres" id="4_tuj6i"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_tu5wy"]
+quest = ExtResource("1_2v1rj")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_gk6ef"]
+operator = "<="
+value = 25
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_0sk4l"]
+item = ExtResource("2_4keff")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_ka67a"]
+npc = ExtResource("3_kclh0")
+
+[sub_resource type="RoseConditionObjectDistance" id="RoseConditionObjectDistance_1wxx5"]
+distance = 5
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_vbx31"]
+quest = ExtResource("1_2v1rj")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_dcwc2"]
+item = ExtResource("2_4keff")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_vamsn"]
+equation = 1
+value = 100
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_cxi21"]
+
+[resource]
+name = "5004-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_tu5wy"), SubResource("RoseConditionAbilityValue_gk6ef"), SubResource("RoseConditionQuestItem_0sk4l"), SubResource("RoseConditionSelectNpc_ka67a"), SubResource("RoseConditionObjectDistance_1wxx5")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_vbx31"), SubResource("RoseRewardRemoveItem_dcwc2"), SubResource("RoseRewardCalculatedExperiencePoints_vamsn"), SubResource("RoseRewardRemoveSelectedQuest_cxi21")])
+next_trigger = ExtResource("4_tuj6i")

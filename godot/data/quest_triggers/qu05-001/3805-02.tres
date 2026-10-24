@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://nkv8l7eodvx4"]
+
+[ext_resource type="RoseNpc" uid="uid://dcdam010hu2xy" path="res://data/npcs/1110-ferrell-guild-staff-charrs.tres" id="1_pl4mp"]
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_f6l0w"]
+npc = ExtResource("1_pl4mp")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_1ekqu"]
+value = 7
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_6db70"]
+variable = 6
+operator = ">="
+value = 10
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_7qwvh"]
+value = 8
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_eel6r"]
+variable = 6
+
+[resource]
+name = "3805-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectNpc_f6l0w"), SubResource("RoseConditionObjectVariable_1ekqu"), SubResource("RoseConditionObjectVariable_6db70")])
+rewards = Array[Resource]([SubResource("RoseRewardObjectVariable_7qwvh"), SubResource("RoseRewardObjectVariable_eel6r")])

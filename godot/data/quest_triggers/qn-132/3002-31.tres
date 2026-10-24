@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://y605jslduusm"]
+
+[ext_resource type="RoseQuest" uid="uid://cegog843ogmfe" path="res://data/quests/3002-gorthein-s-hidden-talent.tres" id="1_klayr"]
+[ext_resource type="RoseItemQuest" uid="uid://b54lwbb1qvw3w" path="res://data/items/quest/301-porkie-spine.tres" id="2_mtxlw"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dm1167vsuumuj" path="res://data/quest_triggers/qn-132/3401-31.tres" id="3_340x3"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_bda1g"]
+quest = ExtResource("1_klayr")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_fr656"]
+to = 40
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_qce5r"]
+item = ExtResource("2_mtxlw")
+equipment_index = 13
+count = 10
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_2tkkr"]
+quest = ExtResource("1_klayr")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_pnh6a"]
+item = ExtResource("2_mtxlw")
+quantity = 1
+
+[resource]
+name = "3002-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_bda1g"), SubResource("RoseConditionRandomPercent_fr656"), SubResource("RoseConditionQuestItem_qce5r")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_2tkkr"), SubResource("RoseRewardAddItem_pnh6a")])
+next_trigger = ExtResource("3_340x3")

@@ -1,0 +1,26 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dbuyqsy60twdk"]
+
+[ext_resource type="RoseItemConsumable" uid="uid://7lbemb7bd432" path="res://data/items/consumable/10-vital-water-s.tres" id="1_t4ywj"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_4vbqg"]
+variable_type = "Job"
+value = 6
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_eox0m"]
+ability = "Job"
+value = 2
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_fkepj"]
+equation = 5
+value = 1
+item = ExtResource("1_t4ywj")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_lk2re"]
+variable_type = "Job"
+operator = "Add"
+value = 1
+
+[resource]
+name = "912-04"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_4vbqg"), SubResource("RoseConditionAbilityValue_eox0m")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_fkepj"), SubResource("RoseRewardQuestVariable_lk2re")])

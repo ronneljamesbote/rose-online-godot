@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bpl0k0xib7rq4"]
+
+[ext_resource type="RoseQuest" uid="uid://dbs2tmadwgtjk" path="res://data/quests/3101-wickedness-of-the-righteous-crusaders.tres" id="1_mlkcp"]
+[ext_resource type="RoseZoneSettings" uid="uid://cp0r2dacxvpfb" path="res://data/zones/5-junon-cartel.tres" id="2_7qsnu"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_xqygq"]
+quest = ExtResource("1_mlkcp")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_mmpx3"]
+ability = "Union"
+value = 1
+
+[sub_resource type="RoseRewardSpawnMonster" id="RoseRewardSpawnMonster_eases"]
+count = 1
+location = "Position"
+zone = ExtResource("2_7qsnu")
+x = 520002.0
+y = 546006.0
+distance = 1
+team = 13
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_iqhtm"]
+trigger = "PvP1301-220"
+
+[resource]
+name = "3101-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_xqygq"), SubResource("RoseConditionAbilityValue_mmpx3")])
+rewards = Array[Resource]([SubResource("RoseRewardSpawnMonster_eases"), SubResource("RoseRewardTrigger_iqhtm")])

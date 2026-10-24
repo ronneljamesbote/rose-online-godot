@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cth764b434xbh"]
+
+[ext_resource type="RoseQuest" uid="uid://cxbpjyrut81at" path="res://data/quests/952-hawker-job-change-quest.tres" id="1_gv710"]
+[ext_resource type="RoseItemQuest" uid="uid://bapvceiy4yvtp" path="res://data/items/quest/130-crystal-dew.tres" id="2_c6mjo"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_5wsp1"]
+quest = ExtResource("1_gv710")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_4o543"]
+to = 90
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_nqxds"]
+item = ExtResource("2_c6mjo")
+equipment_index = 13
+count = 20
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_rw7og"]
+quest = ExtResource("1_gv710")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_vp3ri"]
+item = ExtResource("2_c6mjo")
+quantity = 1
+
+[resource]
+name = "952-32"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_5wsp1"), SubResource("RoseConditionRandomPercent_4o543"), SubResource("RoseConditionQuestItem_nqxds")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_rw7og"), SubResource("RoseRewardAddItem_vp3ri")])

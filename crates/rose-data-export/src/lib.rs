@@ -13,7 +13,8 @@
 //!   [`world`]), and the sounds (`sounds.toml`, `hit-sounds.toml`, `footsteps.toml`, see
 //!   [`sounds`]; only the game reads them), and the effects (`effect-files.toml`,
 //!   `attack-effects.toml`, see [`effects`]; only the game reads them too), and the skies
-//!   and interface (`skies.toml`, `interface.toml`, see [`interface`]; the game's only).
+//!   and interface (`skies.toml`, `interface.toml`, see [`interface`]; the game's only),
+//!   and the quests (`quests.toml`, `quest-triggers.toml`, see [`quests`]).
 //!   Icons and models are Godot paths of the imported (or our own) art; [`rose_data::art`]
 //!   matches them with the iROSE lists.
 //! - `export/zones/`: the spawns, NPCs and named spots of the zones edited as Godot scenes
@@ -28,6 +29,7 @@ pub mod interface;
 pub mod items;
 pub mod motions;
 pub mod npcs;
+pub mod quests;
 pub mod skills;
 pub mod sounds;
 pub mod world;
@@ -38,6 +40,7 @@ pub use interface::{compare_interface, compare_sky_databases, InterfaceExport};
 pub use items::{compare_item_databases, Format, ItemsExport};
 pub use motions::{MotionTiming, MotionTimings, MOTIONS_FILE, MOTIONS_GAME_FILE};
 pub use npcs::{compare_drop_rows, compare_npc_databases, NpcModels, NpcsExport};
+pub use quests::{compare_quest_databases, IroseCodes, QuestsExport};
 pub use skills::{compare_skill_databases, SkillsExport};
 pub use sounds::{compare_sound_databases, sound_stem, SoundsExport};
 pub use world::{compare_warp_gates, compare_zone_settings, WorldExport};

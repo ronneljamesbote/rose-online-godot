@@ -1,0 +1,13 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dpqnr8x5qbxdg"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_qi6s2"]
+ability = "Union"
+value = 3
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_gkkos"]
+ability = "Union"
+
+[resource]
+name = "RK03"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_qi6s2")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_gkkos")])

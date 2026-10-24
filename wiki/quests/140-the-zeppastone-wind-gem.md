@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1062-smith-punwell|Smith Punwell]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 140; QSD triggers 139-01, 139-02, 140-01, 140-31
+  data: 'godot/data/quests/140-the-zeppastone-wind-gem.tres; quest triggers in godot/data/quest_triggers/: qp103/139-01, qp103/139-02, qp103/140-01, qn-261/140-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

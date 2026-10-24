@@ -1,0 +1,31 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c5onnr5uhn1a2"]
+
+[ext_resource type="RoseQuest" uid="uid://diy7nnwdt7k3s" path="res://data/quests/3406-majesty-of-the-righteous-crusaders.tres" id="1_j82af"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_41vpy"]
+[ext_resource type="RoseQuestTrigger" uid="uid://ravhgyu7j88a" path="res://data/quest_triggers/qn-152/3806-31.tres" id="3_bali8"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_jec1v"]
+quest = ExtResource("1_j82af")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_iiv5x"]
+item = ExtResource("2_41vpy")
+equipment_index = 13
+count = 45
+operator = "<"
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_rqla6"]
+ability = "Union"
+value = 3
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_tt4d4"]
+quest = ExtResource("1_j82af")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_yqnmy"]
+item = ExtResource("2_41vpy")
+quantity = 1
+
+[resource]
+name = "3406-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_jec1v"), SubResource("RoseConditionQuestItem_iiv5x"), SubResource("RoseConditionAbilityValue_rqla6")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_tt4d4"), SubResource("RoseRewardAddItem_yqnmy")])
+next_trigger = ExtResource("3_bali8")

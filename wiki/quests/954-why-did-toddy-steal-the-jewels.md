@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1063-little-street-vendor-mile|Little Street Vendor Mile]]'
 steps: 2
 source:
-  data: LIST_QUEST.STB row 954; QSD triggers 954-01, 954-02
+  data: 'godot/data/quests/954-why-did-toddy-steal-the-jewels.tres; quest triggers in godot/data/quest_triggers/: qj311-01/954-01, qj311-01/954-02'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

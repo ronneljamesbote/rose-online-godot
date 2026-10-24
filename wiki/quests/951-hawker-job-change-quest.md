@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1052-mountain-guide-shannon|Mountain Guide Shannon]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 951; QSD triggers 951-01, 951-02, 951-03
+  data: 'godot/data/quests/951-hawker-job-change-quest.tres; quest triggers in godot/data/quest_triggers/: qj000-01/951-01, qj000-01/951-02, qj000-01/951-03'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

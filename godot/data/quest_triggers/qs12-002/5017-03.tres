@@ -1,0 +1,14 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ccclj3w3d5v0c"]
+
+[ext_resource type="RoseQuest" uid="uid://dsci8dvlpe3i3" path="res://data/quests/5017-moldie-s-strange-mineral-fetch-quest.tres" id="1_vauxn"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_vmkab"]
+quest = ExtResource("1_vauxn")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_utqmr"]
+variable_type = "Timer"
+operator = ">"
+
+[resource]
+name = "5017-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_vmkab"), SubResource("RoseConditionQuestVariable_utqmr")])

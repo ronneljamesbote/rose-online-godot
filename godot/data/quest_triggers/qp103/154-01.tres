@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://wfqe50uuk7jn"]
+
+[ext_resource type="RoseQuest" uid="uid://cp8pddfjdiric" path="res://data/quests/154-kay-s-request.tres" id="1_0dqcv"]
+[ext_resource type="RoseQuest" uid="uid://bc03eh55gh0k4" path="res://data/quests/155-suspicious-researchers.tres" id="2_3fcsw"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ytbrq"]
+quest = ExtResource("1_0dqcv")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_84uos"]
+quest = ExtResource("1_0dqcv")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_il7j3"]
+value = 50000
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_o53it"]
+quest = ExtResource("2_3fcsw")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_td2ag"]
+variable_type = "Episode"
+value = 54
+
+[resource]
+name = "154-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ytbrq")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_84uos"), SubResource("RoseRewardCalculatedExperiencePoints_il7j3"), SubResource("RoseRewardChangeSelectedQuest_o53it"), SubResource("RoseRewardQuestVariable_td2ag")])

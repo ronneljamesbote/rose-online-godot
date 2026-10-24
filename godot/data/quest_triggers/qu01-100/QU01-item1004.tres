@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bbr47fgfvghoo"]
+
+[ext_resource type="RoseItemFace" uid="uid://ciklbual807l1" path="res://data/items/face/4-zorro-mask.tres" id="1_deupf"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_wb4ej"]
+ability = "UnionPoint1"
+operator = ">="
+value = 20
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_xa12s"]
+ability = "UnionPoint1"
+operator = "Subtract"
+value = 20
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_6puo4"]
+equation = 5
+value = 1
+item = ExtResource("1_deupf")
+gem = 88
+
+[resource]
+name = "QU01-item1004"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_wb4ej")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_xa12s"), SubResource("RoseRewardCalculatedItem_6puo4")])

@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://kgdxo0iektn2"]
+
+[ext_resource type="RoseItemVehicle" uid="uid://dvvnqu1v0s4vx" path="res://data/items/vehicle/201-wooden-wheels.tres" id="1_6yvib"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_icvju"]
+ability = "UnionPoint4"
+operator = ">="
+value = 50
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_ppxyq"]
+switch = 111
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_b1asx"]
+ability = "UnionPoint4"
+operator = "Subtract"
+value = 50
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_l5028"]
+equation = 5
+value = 1
+item = ExtResource("1_6yvib")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_tydgx"]
+switch = 111
+value = true
+
+[resource]
+name = "QU04-cart1-3"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_icvju"), SubResource("RoseConditionQuestSwitch_ppxyq")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_b1asx"), SubResource("RoseRewardCalculatedItem_l5028"), SubResource("RoseRewardSetQuestSwitch_tydgx")])

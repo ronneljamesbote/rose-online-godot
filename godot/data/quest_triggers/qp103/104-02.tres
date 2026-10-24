@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://spajri0djr0n"]
+
+[ext_resource type="RoseQuest" uid="uid://c13m8vcmi4n78" path="res://data/quests/105-healing-hands.tres" id="1_tekwc"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_g1xa2"]
+variable_type = "Episode"
+value = 3
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_bq6se"]
+quest = ExtResource("1_tekwc")
+
+[resource]
+name = "104-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_g1xa2")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_bq6se")])

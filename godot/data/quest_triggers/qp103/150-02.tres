@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bmrvqn5k2g8y"]
+
+[ext_resource type="RoseQuest" uid="uid://dyeqg8lbx2jd2" path="res://data/quests/151-lunarian-coffee.tres" id="1_687s7"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_2mkte"]
+variable_type = "Episode"
+value = 50
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_evdfc"]
+quest = ExtResource("1_687s7")
+
+[resource]
+name = "150-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_2mkte")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_evdfc")])

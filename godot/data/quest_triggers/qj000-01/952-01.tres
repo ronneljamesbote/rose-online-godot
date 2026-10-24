@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bpaehjgc822dw"]
+
+[ext_resource type="RoseQuest" uid="uid://cxbpjyrut81at" path="res://data/quests/952-hawker-job-change-quest.tres" id="1_3m4v0"]
+[ext_resource type="RoseItemQuest" uid="uid://bapvceiy4yvtp" path="res://data/items/quest/130-crystal-dew.tres" id="2_nifar"]
+[ext_resource type="RoseItemQuest" uid="uid://dxmp3tfqw24gw" path="res://data/items/quest/108-tarren-earring.tres" id="3_cl2fj"]
+[ext_resource type="RoseQuest" uid="uid://n7ra3w6ii4xe" path="res://data/quests/953-hawker-job-change-quest.tres" id="4_7k1ux"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_c3ife"]
+quest = ExtResource("1_3m4v0")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_8lh0w"]
+item = ExtResource("2_nifar")
+equipment_index = 13
+count = 20
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ywbyq"]
+quest = ExtResource("1_3m4v0")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_boj03"]
+item = ExtResource("2_nifar")
+quantity = 20
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_w3yd2"]
+item = ExtResource("3_cl2fj")
+quantity = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_gbrtv"]
+quest = ExtResource("4_7k1ux")
+keep_data = true
+
+[resource]
+name = "952-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_c3ife"), SubResource("RoseConditionQuestItem_8lh0w")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ywbyq"), SubResource("RoseRewardRemoveItem_boj03"), SubResource("RoseRewardAddItem_w3yd2"), SubResource("RoseRewardChangeSelectedQuest_gbrtv")])

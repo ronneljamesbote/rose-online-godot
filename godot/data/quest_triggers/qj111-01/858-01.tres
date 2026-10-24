@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cbjpko1smf6ek"]
+
+[ext_resource type="RoseQuest" uid="uid://tvch7kvok0uy" path="res://data/quests/858-hovert-s-mementos.tres" id="1_26mwp"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_a5jmi"]
+variable_type = "Job"
+value = 3
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_h4qof"]
+ability = "Job"
+value = 1
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_4kt43"]
+operator = ">="
+value = 30
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_tkoc4"]
+quest = ExtResource("1_26mwp")
+
+[resource]
+name = "858-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_a5jmi"), SubResource("RoseConditionAbilityValue_h4qof"), SubResource("RoseConditionAbilityValue_4kt43")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_tkoc4")])

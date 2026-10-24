@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/111-moldie|Moldie]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 3402; QSD triggers 3402-01, 3402-02, 3402-03, 3402-31
+  data: 'godot/data/quests/3402-moldie-s-strange-behavior.tres; quest triggers in godot/data/quest_triggers/: qu03-001/3402-01, qu03-001/3402-02, qu03-001/3402-03, qn-111/3402-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

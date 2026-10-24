@@ -1,0 +1,14 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://p2gf8j6q31tt"]
+
+[ext_resource type="RoseQuest" uid="uid://b36qf0ijxmtwe" path="res://data/quests/122-resurrection.tres" id="1_54lih"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_2bihl"]
+quest = ExtResource("1_54lih")
+
+[sub_resource type="RoseRewardCallLuaFunction" id="RoseRewardCallLuaFunction_q4kvk"]
+function = "piramid02"
+
+[resource]
+name = "122-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_2bihl")])
+rewards = Array[Resource]([SubResource("RoseRewardCallLuaFunction_q4kvk")])

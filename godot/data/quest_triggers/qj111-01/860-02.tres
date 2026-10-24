@@ -1,0 +1,51 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://hy3rl8ak7gsa"]
+
+[ext_resource type="RoseQuest" uid="uid://byt6fpgn310os" path="res://data/quests/860-hovert-s-mementos.tres" id="1_ij637"]
+[ext_resource type="RoseItemWeapon" uid="uid://bp0gjnos1qg63" path="res://data/items/weapon/133-battle-axe.tres" id="2_xfawf"]
+[ext_resource type="RoseItemJewellery" uid="uid://b3ulfl2uoxlvo" path="res://data/items/jewellery/88-pointed-necklace.tres" id="3_eky0k"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_pfdol"]
+quest = ExtResource("1_ij637")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_pfxke"]
+variable_type = "Switch"
+variable = 1
+value = 1
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_oqe6x"]
+ability = "Job"
+value = 1
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_sje2l"]
+operator = ">="
+value = 30
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_plpjs"]
+variable_type = "Job"
+value = 3
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_53y5x"]
+quest = ExtResource("1_ij637")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_xshgw"]
+variable_type = "Job"
+value = 7
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_8l422"]
+equation = 5
+value = 1
+item = ExtResource("2_xfawf")
+gem = 89
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_07ngf"]
+equation = 5
+value = 1
+item = ExtResource("3_eky0k")
+gem = 52685
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_4u1j7"]
+
+[resource]
+name = "860-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_pfdol"), SubResource("RoseConditionQuestVariable_pfxke"), SubResource("RoseConditionAbilityValue_oqe6x"), SubResource("RoseConditionAbilityValue_sje2l"), SubResource("RoseConditionQuestVariable_plpjs")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_53y5x"), SubResource("RoseRewardQuestVariable_xshgw"), SubResource("RoseRewardCalculatedItem_8l422"), SubResource("RoseRewardCalculatedItem_07ngf"), SubResource("RoseRewardRemoveSelectedQuest_4u1j7")])

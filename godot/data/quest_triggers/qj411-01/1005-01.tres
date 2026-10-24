@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://i5b5nefgmj4k"]
+
+[ext_resource type="RoseQuest" uid="uid://dmwboo2vj67s3" path="res://data/quests/1005-an-eye-for-the-marketplace.tres" id="1_dcw03"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_6oi48"]
+variable_type = "Job"
+value = 1
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_bam1e"]
+operator = ">="
+value = 20
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_v30g5"]
+ability = "Job"
+value = 4
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_1pxjw"]
+quest = ExtResource("1_dcw03")
+
+[resource]
+name = "1005-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_6oi48"), SubResource("RoseConditionAbilityValue_bam1e"), SubResource("RoseConditionAbilityValue_v30g5")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_1pxjw")])

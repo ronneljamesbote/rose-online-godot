@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b3xmnk735cadj"]
+
+[ext_resource type="RoseQuest" uid="uid://cq6iblel8niqx" path="res://data/quests/5007-stockpiling-iron-fragments.tres" id="1_73e0q"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_1fxd2"]
+operator = ">="
+value = 16
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_n2fut"]
+operator = "<="
+value = 24
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_ul680"]
+quest = ExtResource("1_73e0q")
+
+[resource]
+name = "5007-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_1fxd2"), SubResource("RoseConditionAbilityValue_n2fut")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_ul680")])

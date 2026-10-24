@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dfj3220cd2p4g"]
+
+[ext_resource type="RoseQuest" uid="uid://dwyjmb3eu6nih" path="res://data/quests/1980-mana-engine-begotten-devil-pest.tres" id="1_x7otj"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_qk1se"]
+[ext_resource type="RoseItemGem" uid="uid://dpty0pa4xduk5" path="res://data/items/gem/361-diamond-1.tres" id="3_j7qw4"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_qushs"]
+quest = ExtResource("1_x7otj")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_xvfch"]
+item = ExtResource("2_qk1se")
+equipment_index = 13
+count = 5
+operator = ">="
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_xdedx"]
+item = ExtResource("2_qk1se")
+equipment_index = 13
+count = 6
+operator = "<="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_up6t7"]
+quest = ExtResource("1_x7otj")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_bgppf"]
+equation = 5
+value = 1
+item = ExtResource("3_j7qw4")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_rxun7"]
+
+[resource]
+name = "1980-17"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_qushs"), SubResource("RoseConditionQuestItem_xvfch"), SubResource("RoseConditionQuestItem_xdedx")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_up6t7"), SubResource("RoseRewardCalculatedItem_bgppf"), SubResource("RoseRewardRemoveSelectedQuest_rxun7")])

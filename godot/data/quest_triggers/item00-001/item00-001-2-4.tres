@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bnt0nr5130e7u"]
+
+[ext_resource type="RoseItemConsumable" uid="uid://0vqn8dpy6kth" path="res://data/items/consumable/374-para-dance-refined.tres" id="1_5epun"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_hxp4x"]
+switch = 480
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_358mt"]
+equation = 5
+value = 4
+item = ExtResource("1_5epun")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_nlunm"]
+switch = 480
+value = true
+
+[resource]
+name = "item00-001-2-4"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_hxp4x")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_358mt"), SubResource("RoseRewardSetQuestSwitch_nlunm")])

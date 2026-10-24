@@ -1,0 +1,29 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b6p26cw236fve"]
+
+[ext_resource type="RoseQuest" uid="uid://cob1vyabyytqf" path="res://data/quests/908-an-appropriate-compromise.tres" id="1_mu062"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_uggal"]
+operator = ">="
+value = 30
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_lr00l"]
+ability = "Job"
+value = 2
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_aljnm"]
+variable_type = "Job"
+operator = ">="
+value = 3
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_ypeyp"]
+variable_type = "Job"
+operator = "<"
+value = 6
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_vh77y"]
+quest = ExtResource("1_mu062")
+
+[resource]
+name = "908-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_uggal"), SubResource("RoseConditionAbilityValue_lr00l"), SubResource("RoseConditionQuestVariable_aljnm"), SubResource("RoseConditionQuestVariable_ypeyp")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_vh77y")])

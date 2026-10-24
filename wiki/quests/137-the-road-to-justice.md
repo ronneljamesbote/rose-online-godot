@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1082-guide-eva|Guide Eva]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 137; QSD triggers 136-01, 136-02, 137-01
+  data: 'godot/data/quests/137-the-road-to-justice.tres; quest triggers in godot/data/quest_triggers/: qp103/136-01, qp103/136-02, qp103/137-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

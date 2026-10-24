@@ -1,0 +1,33 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://icrc1jmjfn4x"]
+
+[ext_resource type="RoseQuest" uid="uid://dk8d2m0klerio" path="res://data/quests/119-forbidden-potion.tres" id="1_3yaiu"]
+[ext_resource type="RoseItemQuest" uid="uid://f3l5dg7ftjxa" path="res://data/items/quest/602-gypsy-s-permit.tres" id="2_e6op5"]
+[ext_resource type="RoseQuest" uid="uid://cyhhs68q1khlx" path="res://data/quests/120-dangerous-book.tres" id="3_sh33x"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_tqoum"]
+quest = ExtResource("1_3yaiu")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_tdjgm"]
+item = ExtResource("2_e6op5")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_av82y"]
+quest = ExtResource("1_3yaiu")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_i74q4"]
+item = ExtResource("2_e6op5")
+quantity = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_kkk8k"]
+quest = ExtResource("3_sh33x")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_6fng0"]
+variable_type = "Episode"
+value = 17
+
+[resource]
+name = "119-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_tqoum"), SubResource("RoseConditionQuestItem_tdjgm")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_av82y"), SubResource("RoseRewardRemoveItem_i74q4"), SubResource("RoseRewardChangeSelectedQuest_kkk8k"), SubResource("RoseRewardQuestVariable_6fng0")])

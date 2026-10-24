@@ -10,7 +10,7 @@ monsters:
 - '[[monsters/3-jellynut|JellyNut]]'
 steps: 6
 source:
-  data: LIST_QUEST.STB row 5033; QSD triggers 5033-01, 5033-02, 5033-03, 5033-31, 5033-32, 5033-33
+  data: 'godot/data/quests/5033-stockpiling-jelly-bean-hides.tres; quest triggers in godot/data/quest_triggers/: qs10-001/5033-01, qs10-001/5033-02, qs10-001/5033-03, qn-002/5033-31, qn-001/5033-32, qn-003/5033-33'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

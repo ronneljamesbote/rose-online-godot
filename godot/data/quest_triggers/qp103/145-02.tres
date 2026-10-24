@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dhceeamtp53xw"]
+
+[ext_resource type="RoseQuest" uid="uid://cpwi2pk76hlwq" path="res://data/quests/147-pavrick-the-craftsman-on-lunar.tres" id="1_w2gh6"]
+[ext_resource type="RoseItemQuest" uid="uid://dyylracpreygy" path="res://data/items/quest/510-golden-dagger.tres" id="2_ddn7y"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_bvfqp"]
+variable_type = "Episode"
+value = 45
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_553cg"]
+quest = ExtResource("1_w2gh6")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_uufnc"]
+quest = ExtResource("1_w2gh6")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_4wvy6"]
+item = ExtResource("2_ddn7y")
+quantity = 1
+
+[resource]
+name = "145-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_bvfqp")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_553cg"), SubResource("RoseRewardSelectQuest_uufnc"), SubResource("RoseRewardAddItem_4wvy6")])

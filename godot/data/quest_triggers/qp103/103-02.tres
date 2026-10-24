@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://k3bfuikuu1ho"]
+
+[ext_resource type="RoseQuest" uid="uid://dmlu4lfor2fk3" path="res://data/quests/104-mysterious-emblem.tres" id="1_2uqt8"]
+[ext_resource type="RoseItemQuest" uid="uid://b08xjqbkh0a5d" path="res://data/items/quest/601-enigmatic-emblem.tres" id="2_1ejmh"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_74ai1"]
+variable_type = "Episode"
+value = 2
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_jr1ad"]
+quest = ExtResource("1_2uqt8")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_bsfhq"]
+quest = ExtResource("1_2uqt8")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_4t03w"]
+item = ExtResource("2_1ejmh")
+quantity = 1
+
+[resource]
+name = "103-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_74ai1")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_jr1ad"), SubResource("RoseRewardSelectQuest_bsfhq"), SubResource("RoseRewardAddItem_4t03w")])

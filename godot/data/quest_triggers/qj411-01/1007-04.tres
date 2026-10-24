@@ -1,0 +1,45 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://csqrw6gunf5j"]
+
+[ext_resource type="RoseQuest" uid="uid://cnha4r1ett11l" path="res://data/quests/1007-an-eye-for-the-marketplace.tres" id="1_msr0i"]
+[ext_resource type="RoseItemQuest" uid="uid://dedb7ixfou8mv" path="res://data/items/quest/802-dalping-egg.tres" id="2_03wjg"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bgagsfjcofoaq" path="res://data/quest_triggers/qj411-01/1007-05.tres" id="3_pdpqa"]
+[ext_resource type="RoseItemWeapon" uid="uid://bpf25hf7cavey" path="res://data/items/weapon/233-gloria-gun.tres" id="4_pkjab"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_wjxeh"]
+quest = ExtResource("1_msr0i")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_2objs"]
+variable_type = "Switch"
+variable = 2
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_31664"]
+variable_type = "Switch"
+variable = 3
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_ljivd"]
+item = ExtResource("2_03wjg")
+equipment_index = 13
+count = 10
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_vlw1d"]
+quest = ExtResource("1_msr0i")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_uqi41"]
+variable_type = "Job"
+operator = "Add"
+value = 2
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_yjnwy"]
+equation = 5
+value = 1
+item = ExtResource("4_pkjab")
+gem = 41
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_klfgd"]
+
+[resource]
+name = "1007-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_wjxeh"), SubResource("RoseConditionQuestVariable_2objs"), SubResource("RoseConditionQuestVariable_31664"), SubResource("RoseConditionQuestItem_ljivd")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_vlw1d"), SubResource("RoseRewardQuestVariable_uqi41"), SubResource("RoseRewardCalculatedItem_yjnwy"), SubResource("RoseRewardRemoveSelectedQuest_klfgd")])
+next_trigger = ExtResource("3_pdpqa")

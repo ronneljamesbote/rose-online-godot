@@ -1,0 +1,36 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bf38080fajm1x"]
+
+[ext_resource type="RoseQuest" uid="uid://dwyjmb3eu6nih" path="res://data/quests/1980-mana-engine-begotten-devil-pest.tres" id="1_yl6ya"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bs0syp2qttgg7" path="res://data/quest_triggers/qn-402/1980-51.tres" id="2_u4phs"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="3_pf4tu"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_8oytw"]
+quest = ExtResource("1_yl6ya")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_chp7l"]
+variable_type = "Timer"
+operator = ">"
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_uwxi8"]
+operator = ">="
+value = 66
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_eoggt"]
+operator = "<="
+value = 72
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_ycfs0"]
+to = 30
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_74gb0"]
+quest = ExtResource("1_yl6ya")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_aqi0t"]
+item = ExtResource("3_pf4tu")
+quantity = 1
+
+[resource]
+name = "1980-50"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_8oytw"), SubResource("RoseConditionQuestVariable_chp7l"), SubResource("RoseConditionAbilityValue_uwxi8"), SubResource("RoseConditionAbilityValue_eoggt"), SubResource("RoseConditionRandomPercent_ycfs0")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_74gb0"), SubResource("RoseRewardAddItem_aqi0t")])
+next_trigger = ExtResource("2_u4phs")

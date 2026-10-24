@@ -1,0 +1,46 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cpms6gu13ebhk"]
+
+[ext_resource type="RoseQuest" uid="uid://bwhgrxucjvs7p" path="res://data/quests/3602-coal-mine-moldies-under-arumic-watch.tres" id="1_0j17h"]
+[ext_resource type="RoseItemQuest" uid="uid://dhhitd2bghx7o" path="res://data/items/quest/308-moldie-eyelash.tres" id="2_th7rr"]
+[ext_resource type="RoseQuestTrigger" uid="uid://jsmxs06ogi0x" path="res://data/quest_triggers/qu04-001/3602-03.tres" id="3_f41bh"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_owdbs"]
+quest = ExtResource("1_0j17h")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_twcnl"]
+ability = "Union"
+value = 4
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_73ncg"]
+operator = "<="
+value = 50
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_1smjb"]
+item = ExtResource("2_th7rr")
+equipment_index = 13
+count = 12
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_7qy1l"]
+quest = ExtResource("1_0j17h")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_2e8mi"]
+item = ExtResource("2_th7rr")
+quantity = 12
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_b77xj"]
+ability = "UnionPoint4"
+operator = "Add"
+value = 3
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_txupk"]
+equation = 1
+value = 100
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_d5tih"]
+
+[resource]
+name = "3602-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_owdbs"), SubResource("RoseConditionAbilityValue_twcnl"), SubResource("RoseConditionAbilityValue_73ncg"), SubResource("RoseConditionQuestItem_1smjb")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_7qy1l"), SubResource("RoseRewardRemoveItem_2e8mi"), SubResource("RoseRewardAbilityValue_b77xj"), SubResource("RoseRewardCalculatedExperiencePoints_txupk"), SubResource("RoseRewardRemoveSelectedQuest_d5tih")])
+next_trigger = ExtResource("3_f41bh")

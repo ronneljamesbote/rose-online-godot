@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b8fiahboytu2w"]
+
+[ext_resource type="RoseQuest" uid="uid://dpn77q6qiai4e" path="res://data/quests/136-the-scheme.tres" id="1_ppw3e"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_bg81s"]
+variable_type = "Episode"
+value = 35
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_nqtjq"]
+quest = ExtResource("1_ppw3e")
+
+[resource]
+name = "135-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_bg81s")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_nqtjq")])

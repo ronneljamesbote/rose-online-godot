@@ -1,0 +1,73 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c6mxol1ahl0ry"]
+
+[ext_resource type="RoseQuest" uid="uid://lv4dh1esiiv" path="res://data/quests/107-healing-hands.tres" id="1_70hkq"]
+[ext_resource type="RoseItemQuest" uid="uid://b8usi70yejtik" path="res://data/items/quest/604-karitte-s-antidote.tres" id="2_2b7jd"]
+[ext_resource type="RoseItemQuest" uid="uid://bly8v8q7yfrsn" path="res://data/items/quest/605-antidote-recipe.tres" id="3_iccyl"]
+[ext_resource type="RoseItemHead" uid="uid://cjvmy72i3y7vo" path="res://data/items/head/5-islamic-bandana.tres" id="4_fr1a0"]
+[ext_resource type="RoseItemBody" uid="uid://dko62o460b4lw" path="res://data/items/body/5-yellow-wild-jeans.tres" id="5_bpt04"]
+[ext_resource type="RoseItemHands" uid="uid://dupfc5yivyg0r" path="res://data/items/hands/5-safe-gloves.tres" id="6_hj2vo"]
+[ext_resource type="RoseItemFeet" uid="uid://cpvbx6vugbhve" path="res://data/items/feet/5-dash-shoes.tres" id="7_j2it6"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_n0geu"]
+quest = ExtResource("1_70hkq")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_2ktaa"]
+variable_type = "Timer"
+operator = ">"
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_v142t"]
+item = ExtResource("2_2b7jd")
+equipment_index = 13
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_t82k6"]
+variable_type = "Switch"
+value = 1
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_8npy6"]
+variable_type = "Switch"
+variable = 1
+value = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_2fmay"]
+quest = ExtResource("1_70hkq")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_2nfj4"]
+item = ExtResource("3_iccyl")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_m57u2"]
+value = 400
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_6hhrf"]
+equation = 5
+value = 1
+item = ExtResource("4_fr1a0")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_52q23"]
+equation = 5
+value = 1
+item = ExtResource("5_bpt04")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_tekro"]
+equation = 5
+value = 1
+item = ExtResource("6_hj2vo")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_vkbc7"]
+equation = 5
+value = 1
+item = ExtResource("7_j2it6")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_80wr1"]
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_170o7"]
+variable_type = "Episode"
+value = 5
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_7hw6k"]
+trigger = "107-09"
+
+[resource]
+name = "107-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_n0geu"), SubResource("RoseConditionQuestVariable_2ktaa"), SubResource("RoseConditionQuestItem_v142t"), SubResource("RoseConditionQuestVariable_t82k6"), SubResource("RoseConditionQuestVariable_8npy6")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_2fmay"), SubResource("RoseRewardAddItem_2nfj4"), SubResource("RoseRewardCalculatedExperiencePoints_m57u2"), SubResource("RoseRewardCalculatedItem_6hhrf"), SubResource("RoseRewardCalculatedItem_52q23"), SubResource("RoseRewardCalculatedItem_tekro"), SubResource("RoseRewardCalculatedItem_vkbc7"), SubResource("RoseRewardRemoveSelectedQuest_80wr1"), SubResource("RoseRewardQuestVariable_170o7"), SubResource("RoseRewardTrigger_7hw6k")])

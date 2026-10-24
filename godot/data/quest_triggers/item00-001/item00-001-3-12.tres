@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cgbvx3fnx755h"]
+
+[ext_resource type="RoseItemGem" uid="uid://71bdxqtr163c" path="res://data/items/gem/362-diamond-2.tres" id="1_vk0k4"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_pykx3"]
+switch = 480
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_bxnju"]
+equation = 5
+value = 1
+item = ExtResource("1_vk0k4")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_kg3tl"]
+switch = 480
+value = true
+
+[resource]
+name = "item00-001-3-12"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_pykx3")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_bxnju"), SubResource("RoseRewardSetQuestSwitch_kg3tl")])

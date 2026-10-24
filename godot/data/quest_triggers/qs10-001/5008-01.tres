@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bcnjpdms8hea4"]
+
+[ext_resource type="RoseQuest" uid="uid://cjm2mrd2iuva" path="res://data/quests/5008-stockpiling-silver-fragments.tres" id="1_d8mwt"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_yfkva"]
+operator = ">="
+value = 23
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_re4wl"]
+operator = "<="
+value = 30
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_cl0ma"]
+quest = ExtResource("1_d8mwt")
+
+[resource]
+name = "5008-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_yfkva"), SubResource("RoseConditionAbilityValue_re4wl")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_cl0ma")])

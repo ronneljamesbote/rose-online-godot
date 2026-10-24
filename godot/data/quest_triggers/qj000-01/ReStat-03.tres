@@ -1,0 +1,54 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bgteqky3b7wdu"]
+
+[ext_resource type="RoseNpc" uid="uid://d1ba5k4t8rx8s" path="res://data/npcs/1001-village-chief-cornell.tres" id="1_ley5v"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cbv4qw7eq4y1" path="res://data/quest_triggers/qj000-01/ReStat-03-0.tres" id="2_7eefm"]
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_g78b2"]
+equipment_index = 1
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_jd106"]
+equipment_index = 2
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_kb7av"]
+equipment_index = 3
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_mrqne"]
+equipment_index = 4
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_a538r"]
+equipment_index = 5
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_d1f0d"]
+equipment_index = 6
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_y024r"]
+equipment_index = 7
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_32os5"]
+equipment_index = 8
+count = 1
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_tsp2k"]
+npc = ExtResource("1_ley5v")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_yt1th"]
+variable = 6
+value = 10
+
+[sub_resource type="RoseRewardResetBasicStats" id="RoseRewardResetBasicStats_imqhc"]
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_a5rj2"]
+trigger = "ReStat-08"
+
+[resource]
+name = "ReStat-03"
+conditions = Array[Resource]([SubResource("RoseConditionQuestItem_g78b2"), SubResource("RoseConditionQuestItem_jd106"), SubResource("RoseConditionQuestItem_kb7av"), SubResource("RoseConditionQuestItem_mrqne"), SubResource("RoseConditionQuestItem_a538r"), SubResource("RoseConditionQuestItem_d1f0d"), SubResource("RoseConditionQuestItem_y024r"), SubResource("RoseConditionQuestItem_32os5"), SubResource("RoseConditionSelectNpc_tsp2k"), SubResource("RoseConditionObjectVariable_yt1th")])
+rewards = Array[Resource]([SubResource("RoseRewardResetBasicStats_imqhc"), SubResource("RoseRewardTrigger_a5rj2")])
+next_trigger = ExtResource("2_7eefm")

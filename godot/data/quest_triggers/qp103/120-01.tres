@@ -1,0 +1,33 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dxmqljbgebnn5"]
+
+[ext_resource type="RoseQuest" uid="uid://cyhhs68q1khlx" path="res://data/quests/120-dangerous-book.tres" id="1_kdhvd"]
+[ext_resource type="RoseItemQuest" uid="uid://7sohejgjnoq5" path="res://data/items/quest/609-dreadful-book-vol-2.tres" id="2_brui0"]
+[ext_resource type="RoseQuest" uid="uid://dywrnc17k75g" path="res://data/quests/121-banned-recipe.tres" id="3_evm5f"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_yu188"]
+quest = ExtResource("1_kdhvd")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_xjovr"]
+item = ExtResource("2_brui0")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_o85ig"]
+quest = ExtResource("1_kdhvd")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_f4gpr"]
+item = ExtResource("2_brui0")
+quantity = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_pr6t5"]
+quest = ExtResource("3_evm5f")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_vfpvb"]
+variable_type = "Episode"
+value = 18
+
+[resource]
+name = "120-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_yu188"), SubResource("RoseConditionQuestItem_xjovr")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_o85ig"), SubResource("RoseRewardRemoveItem_f4gpr"), SubResource("RoseRewardChangeSelectedQuest_pr6t5"), SubResource("RoseRewardQuestVariable_vfpvb")])

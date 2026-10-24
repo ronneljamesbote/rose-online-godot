@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dtfh23nrfhi6y"]
+
+[ext_resource type="RoseItemConsumable" uid="uid://rl234dvfqtdo" path="res://data/items/consumable/103-grapes.tres" id="1_eg3cc"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_45ygp"]
+value = 5
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_g7bx7"]
+switch = 10
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_hcg47"]
+equation = 5
+value = 25
+item = ExtResource("1_eg3cc")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_hj4j3"]
+switch = 10
+value = true
+
+[resource]
+name = "fruits-5"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_45ygp"), SubResource("RoseConditionQuestSwitch_g7bx7")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_hcg47"), SubResource("RoseRewardSetQuestSwitch_hj4j3")])

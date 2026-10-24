@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://kamd5gdpxe32"]
+
+[ext_resource type="RoseQuest" uid="uid://bc03eh55gh0k4" path="res://data/quests/155-suspicious-researchers.tres" id="1_a4s4v"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_ddi77"]
+variable_type = "Episode"
+value = 54
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_l70st"]
+quest = ExtResource("1_a4s4v")
+
+[resource]
+name = "154-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_ddi77")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_l70st")])

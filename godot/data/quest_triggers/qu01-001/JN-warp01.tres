@@ -1,0 +1,17 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bh8gr2p3xytmr"]
+
+[ext_resource type="RoseZoneSettings" uid="uid://dnnfjmvcoom4b" path="res://data/zones/2-city-of-junon-polis.tres" id="1_60njn"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_j6lcp"]
+ability = "Union"
+value = 1
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_hn36u"]
+zone = ExtResource("1_60njn")
+x = 532000
+y = 510000
+
+[resource]
+name = "JN-warp01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_j6lcp")])
+rewards = Array[Resource]([SubResource("RoseRewardTeleport_hn36u")])

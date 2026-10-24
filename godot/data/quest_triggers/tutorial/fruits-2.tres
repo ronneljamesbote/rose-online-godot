@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://diil51crx3o4v"]
+
+[ext_resource type="RoseItemConsumable" uid="uid://buvaiplb6vurq" path="res://data/items/consumable/111-strawberry.tres" id="1_20wga"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_2eloy"]
+value = 2
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_xaqap"]
+switch = 7
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_6nkbc"]
+equation = 5
+value = 15
+item = ExtResource("1_20wga")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_5dm1p"]
+switch = 7
+value = true
+
+[resource]
+name = "fruits-2"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_2eloy"), SubResource("RoseConditionQuestSwitch_xaqap")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_6nkbc"), SubResource("RoseRewardSetQuestSwitch_5dm1p")])

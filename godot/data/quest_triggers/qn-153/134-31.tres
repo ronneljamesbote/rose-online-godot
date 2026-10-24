@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b8g1n41btb8ax"]
+
+[ext_resource type="RoseQuest" uid="uid://cl3l4x8fd2l1q" path="res://data/quests/134-the-scheme.tres" id="1_pv1l6"]
+[ext_resource type="RoseItemQuest" uid="uid://vvctm05vtlo1" path="res://data/items/quest/618-odorous-sweat.tres" id="2_62rvj"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_7630i"]
+quest = ExtResource("1_pv1l6")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_hvkjq"]
+to = 60
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_jhqaq"]
+item = ExtResource("2_62rvj")
+equipment_index = 13
+count = 15
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_x62if"]
+quest = ExtResource("1_pv1l6")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_behl6"]
+item = ExtResource("2_62rvj")
+quantity = 1
+
+[resource]
+name = "134-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_7630i"), SubResource("RoseConditionRandomPercent_hvkjq"), SubResource("RoseConditionQuestItem_jhqaq")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_x62if"), SubResource("RoseRewardAddItem_behl6")])

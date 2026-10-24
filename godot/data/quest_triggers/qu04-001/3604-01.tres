@@ -1,0 +1,49 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://64g2oa00oy3u"]
+
+[ext_resource type="RoseNpc" uid="uid://c5lrdwof7p562" path="res://data/npcs/1112-arumic-researcher-carasia.tres" id="1_hf24v"]
+[ext_resource type="RoseQuest" uid="uid://jw4vqiaxdgef" path="res://data/quests/3604-lutis-guard-of-luxem-tower.tres" id="2_smqk2"]
+[ext_resource type="RoseItemQuest" uid="uid://drmrbwtn236rl" path="res://data/items/quest/306-mana-focus-potion.tres" id="3_omtvu"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_bafus"]
+ability = "Union"
+value = 4
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_vpr72"]
+npc = ExtResource("1_hf24v")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_7p606"]
+value = 4
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_s7tri"]
+variable = 4
+operator = "<"
+value = 10
+
+[sub_resource type="RoseConditionObjectDistance" id="RoseConditionObjectDistance_0rmcm"]
+distance = 5
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_8tyy1"]
+quest = ExtResource("2_smqk2")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_xhvq7"]
+quest = ExtResource("2_smqk2")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_nnuoa"]
+item = ExtResource("3_omtvu")
+quantity = 3
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_a80kc"]
+value = 10
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_er4r3"]
+variable = 4
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_2geny"]
+trigger = "3604-02"
+
+[resource]
+name = "3604-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_bafus"), SubResource("RoseConditionSelectNpc_vpr72"), SubResource("RoseConditionObjectVariable_7p606"), SubResource("RoseConditionObjectVariable_s7tri"), SubResource("RoseConditionObjectDistance_0rmcm")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_8tyy1"), SubResource("RoseRewardSelectQuest_xhvq7"), SubResource("RoseRewardAddItem_nnuoa"), SubResource("RoseRewardQuestVariable_a80kc"), SubResource("RoseRewardObjectVariable_er4r3"), SubResource("RoseRewardTrigger_2geny")])

@@ -1,0 +1,40 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bi5b1ddy78j6j"]
+
+[ext_resource type="RoseQuest" uid="uid://bp53cf48f0jkb" path="res://data/quests/5004-ulysses-price-chart-delivery.tres" id="1_ydx2t"]
+[ext_resource type="RoseItemQuest" uid="uid://ip5ypge6qqyv" path="res://data/items/quest/803-daily-price-checklist.tres" id="2_ckdbr"]
+[ext_resource type="RoseNpc" uid="uid://c7gxntexjag00" path="res://data/npcs/1036-ferrell-guild-staff-seyon.tres" id="3_ctd2r"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_38pyg"]
+quest = ExtResource("1_ydx2t")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_wihe6"]
+item = ExtResource("2_ckdbr")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_f72bn"]
+npc = ExtResource("3_ctd2r")
+
+[sub_resource type="RoseConditionObjectDistance" id="RoseConditionObjectDistance_bvrn0"]
+distance = 5
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_rvcwr"]
+quest = ExtResource("1_ydx2t")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_k17px"]
+item = ExtResource("2_ckdbr")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_pf1cg"]
+equation = 1
+value = 100
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_00ecn"]
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_wafvm"]
+trigger = "5031-01"
+
+[resource]
+name = "5004-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_38pyg"), SubResource("RoseConditionQuestItem_wihe6"), SubResource("RoseConditionSelectNpc_f72bn"), SubResource("RoseConditionObjectDistance_bvrn0")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_rvcwr"), SubResource("RoseRewardRemoveItem_k17px"), SubResource("RoseRewardCalculatedExperiencePoints_pf1cg"), SubResource("RoseRewardRemoveSelectedQuest_00ecn"), SubResource("RoseRewardTrigger_wafvm")])

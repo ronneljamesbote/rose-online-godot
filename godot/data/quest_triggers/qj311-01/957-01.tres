@@ -1,0 +1,33 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cx5yso0a67pus"]
+
+[ext_resource type="RoseQuest" uid="uid://dc3uccfugqn0w" path="res://data/quests/957-the-essence-of-speed.tres" id="1_dnnse"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_vvajx"]
+operator = ">="
+value = 30
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_bki48"]
+variable_type = "Job"
+operator = ">="
+value = 2
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_djnaq"]
+variable_type = "Job"
+operator = "<="
+value = 3
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_xm60y"]
+ability = "Job"
+value = 3
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_dbk7a"]
+quest = ExtResource("1_dnnse")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_70piv"]
+switch = 34
+value = true
+
+[resource]
+name = "957-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_vvajx"), SubResource("RoseConditionQuestVariable_bki48"), SubResource("RoseConditionQuestVariable_djnaq"), SubResource("RoseConditionAbilityValue_xm60y")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_dbk7a"), SubResource("RoseRewardSetQuestSwitch_70piv")])

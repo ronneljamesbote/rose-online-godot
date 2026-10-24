@@ -1,0 +1,29 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ddnxxbw43j42q"]
+
+[ext_resource type="RoseQuest" uid="uid://8pm1oyiwcx88" path="res://data/quests/1953-quest.tres" id="1_q0jrn"]
+[ext_resource type="RoseItemQuest" uid="uid://cbfus8u8nvth3" path="res://data/items/quest/502-grandmaster-stone-s-heart.tres" id="2_hp86t"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_mjj26"]
+quest = ExtResource("1_q0jrn")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_xx7s7"]
+item = ExtResource("2_hp86t")
+equipment_index = 13
+count = 3
+operator = "<"
+
+[sub_resource type="RoseConditionParty" id="RoseConditionParty_3qgrp"]
+level_operator = ">="
+level = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ngafu"]
+quest = ExtResource("1_q0jrn")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_p1a70"]
+item = ExtResource("2_hp86t")
+quantity = 1
+
+[resource]
+name = "1953-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_mjj26"), SubResource("RoseConditionQuestItem_xx7s7"), SubResource("RoseConditionParty_3qgrp")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ngafu"), SubResource("RoseRewardAddItem_p1a70")])

@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b5op6oviocg8q"]
+
+[ext_resource type="RoseNpc" uid="uid://d3mpt3fvekbwi" path="res://data/npcs/1099-ferrell-guild-staff-hayen.tres" id="1_kwps3"]
+[ext_resource type="RoseQuest" uid="uid://dladdqbjr0nfi" path="res://data/quests/5018-candle-ghost-s-identity-fetch-quest.tres" id="2_xqher"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_328n2"]
+operator = "<="
+value = 60
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_jymn5"]
+npc = ExtResource("1_kwps3")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_rxi01"]
+value = 1
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_x03ii"]
+quest = ExtResource("2_xqher")
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_fajro"]
+variable = 2
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_e61ci"]
+trigger = "5018-02"
+
+[resource]
+name = "5018-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_328n2"), SubResource("RoseConditionSelectNpc_jymn5"), SubResource("RoseConditionObjectVariable_rxi01")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_x03ii"), SubResource("RoseRewardObjectVariable_fajro"), SubResource("RoseRewardTrigger_e61ci")])

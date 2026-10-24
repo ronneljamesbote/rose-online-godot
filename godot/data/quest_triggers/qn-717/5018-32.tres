@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ckcet0cj80x2m"]
+
+[ext_resource type="RoseQuest" uid="uid://dladdqbjr0nfi" path="res://data/quests/5018-candle-ghost-s-identity-fetch-quest.tres" id="1_442ss"]
+[ext_resource type="RoseItemQuest" uid="uid://bng0f7ft7qvkc" path="res://data/items/quest/809-candle-ghost-mask.tres" id="2_khahr"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_w51wk"]
+quest = ExtResource("1_442ss")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_23jxv"]
+to = 17
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_lpwak"]
+item = ExtResource("2_khahr")
+equipment_index = 13
+count = 20
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ku10k"]
+quest = ExtResource("1_442ss")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_8n6b4"]
+item = ExtResource("2_khahr")
+quantity = 1
+
+[resource]
+name = "5018-32"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_w51wk"), SubResource("RoseConditionRandomPercent_23jxv"), SubResource("RoseConditionQuestItem_lpwak")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ku10k"), SubResource("RoseRewardAddItem_8n6b4")])

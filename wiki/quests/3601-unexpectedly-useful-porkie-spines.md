@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1112-arumic-researcher-carasia|Arumic Researcher Carasia]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 3601; QSD triggers 3601-01, 3601-02, 3601-03, 3601-31
+  data: 'godot/data/quests/3601-unexpectedly-useful-porkie-spines.tres; quest triggers in godot/data/quest_triggers/: qu04-001/3601-01, qu04-001/3601-02, qu04-001/3601-03, qn-133/3601-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

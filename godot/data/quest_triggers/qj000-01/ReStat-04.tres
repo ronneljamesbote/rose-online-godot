@@ -1,0 +1,61 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c18aux2velqfr"]
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_kf5oq"]
+equipment_index = 1
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_g4vty"]
+equipment_index = 2
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_grnab"]
+equipment_index = 3
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_12s3w"]
+equipment_index = 4
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_ee2sd"]
+equipment_index = 5
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_bpk35"]
+equipment_index = 6
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_j5a1b"]
+equipment_index = 7
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_o5p7t"]
+equipment_index = 8
+count = 1
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_yhx2m"]
+operator = "<="
+value = 50
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_hure0"]
+ability = "Money"
+operator = ">="
+value = 5000
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_yophb"]
+switch = 2
+value = true
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_6lxby"]
+ability = "Money"
+operator = "Subtract"
+value = 5000
+
+[sub_resource type="RoseRewardResetBasicStats" id="RoseRewardResetBasicStats_80x3c"]
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_2cu0t"]
+trigger = "ReStat-08"
+
+[resource]
+name = "ReStat-04"
+conditions = Array[Resource]([SubResource("RoseConditionQuestItem_kf5oq"), SubResource("RoseConditionQuestItem_g4vty"), SubResource("RoseConditionQuestItem_grnab"), SubResource("RoseConditionQuestItem_12s3w"), SubResource("RoseConditionQuestItem_ee2sd"), SubResource("RoseConditionQuestItem_bpk35"), SubResource("RoseConditionQuestItem_j5a1b"), SubResource("RoseConditionQuestItem_o5p7t"), SubResource("RoseConditionAbilityValue_yhx2m"), SubResource("RoseConditionAbilityValue_hure0"), SubResource("RoseConditionQuestSwitch_yophb")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_6lxby"), SubResource("RoseRewardResetBasicStats_80x3c"), SubResource("RoseRewardTrigger_2cu0t")])

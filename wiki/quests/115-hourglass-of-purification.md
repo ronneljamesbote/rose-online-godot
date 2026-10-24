@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1053-cleric-karitte|Cleric Karitte]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 115; QSD triggers 114-02, 114-03, 115-01
+  data: 'godot/data/quests/115-hourglass-of-purification.tres; quest triggers in godot/data/quest_triggers/: qp103/114-02, qp103/114-03, qp103/115-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

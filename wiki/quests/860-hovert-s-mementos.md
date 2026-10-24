@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1122-guide-of-plain-pein|Guide of Plain Pein]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 860; QSD triggers 859-01, 860-01, 860-02, 860-03, 860-04
+  data: 'godot/data/quests/860-hovert-s-mementos.tres; quest triggers in godot/data/quest_triggers/: qj111-01/859-01, qj111-01/860-01, qj111-01/860-02, qj111-01/860-03, qj111-01/860-04'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

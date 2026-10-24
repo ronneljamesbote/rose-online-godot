@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cm433uoj3rky0"]
+
+[ext_resource type="RoseQuest" uid="uid://cegog843ogmfe" path="res://data/quests/3002-gorthein-s-hidden-talent.tres" id="1_1mkmh"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_1xvq3"]
+ability = "Union"
+value = 1
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_ml1x1"]
+quest = ExtResource("1_1mkmh")
+
+[resource]
+name = "3002-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_1xvq3")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_ml1x1")])

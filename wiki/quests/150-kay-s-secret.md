@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1143-ferrell-guild-merchant-bith|Ferrell Guild Merchant Bith]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 150; QSD triggers 149-01, 149-02, 150-01
+  data: 'godot/data/quests/150-kay-s-secret.tres; quest triggers in godot/data/quest_triggers/: qp103/149-01, qp103/149-02, qp103/150-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

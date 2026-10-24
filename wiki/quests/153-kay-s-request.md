@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/166-master-stone-golem|Master Stone Golem]]'
 steps: 16
 source:
-  data: LIST_QUEST.STB row 153; QSD triggers 152-02, 152-03, 153-01, 153-03, 153-04, 153-05, 153-06, 153-07, 153-08, 153-09, 153-10, 153-11, 153-12, 153-13, 153-14, 153-31
+  data: 'godot/data/quests/153-kay-s-request.tres; quest triggers in godot/data/quest_triggers/: qp103/152-02, qp103/152-03, qp103/153-01, qp103/153-03, qp103/153-04, qp103/153-05, qp103/153-06, qp103/153-07, qp103/153-08, qp103/153-09, qp103/153-10, qp103/153-11, qp103/153-12, qp103/153-13, qp103/153-14, qn-166/153-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d04iffu1yvnc8"]
+
+[ext_resource type="RoseQuest" uid="uid://diy7nnwdt7k3s" path="res://data/quests/3406-majesty-of-the-righteous-crusaders.tres" id="1_pw6ke"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_qfyeu"]
+ability = "Union"
+value = 3
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_pwr46"]
+operator = ">="
+value = 51
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_bfl7v"]
+quest = ExtResource("1_pw6ke")
+
+[resource]
+name = "3406-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_qfyeu"), SubResource("RoseConditionAbilityValue_pwr46")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_bfl7v")])

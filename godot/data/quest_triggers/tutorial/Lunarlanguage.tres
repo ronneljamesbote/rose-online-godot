@@ -1,0 +1,13 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://l2g0kidbnlt3"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_jsaa5"]
+switch = 3
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_3yykn"]
+switch = 3
+value = true
+
+[resource]
+name = "Lunarlanguage"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_jsaa5")])
+rewards = Array[Resource]([SubResource("RoseRewardSetQuestSwitch_3yykn")])

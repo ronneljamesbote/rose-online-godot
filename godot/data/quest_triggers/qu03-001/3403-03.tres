@@ -1,0 +1,43 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cjhx2b0u68wdx"]
+
+[ext_resource type="RoseQuest" uid="uid://bb5casnk8wpoi" path="res://data/quests/3403-supplying-training-weapons.tres" id="1_b80c5"]
+[ext_resource type="RoseItemQuest" uid="uid://cccj3wjwm6pw" path="res://data/items/quest/312-grunter-axe.tres" id="2_0t6fd"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_oxltl"]
+quest = ExtResource("1_b80c5")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_bsvy8"]
+ability = "Union"
+value = 3
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_78sbm"]
+operator = ">"
+value = 50
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_s4hh8"]
+item = ExtResource("2_0t6fd")
+equipment_index = 13
+count = 16
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_emvsc"]
+quest = ExtResource("1_b80c5")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_io2up"]
+item = ExtResource("2_0t6fd")
+quantity = 16
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_bvdmn"]
+ability = "UnionPoint3"
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_623bo"]
+value = 5000
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_2rsqh"]
+
+[resource]
+name = "3403-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_oxltl"), SubResource("RoseConditionAbilityValue_bsvy8"), SubResource("RoseConditionAbilityValue_78sbm"), SubResource("RoseConditionQuestItem_s4hh8")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_emvsc"), SubResource("RoseRewardRemoveItem_io2up"), SubResource("RoseRewardAbilityValue_bvdmn"), SubResource("RoseRewardCalculatedExperiencePoints_623bo"), SubResource("RoseRewardRemoveSelectedQuest_2rsqh")])

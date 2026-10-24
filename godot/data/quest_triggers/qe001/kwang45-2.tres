@@ -1,0 +1,40 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cql7da2cb6tee"]
+
+[ext_resource type="RoseItemBack" uid="uid://bpe0keujw8q6o" path="res://data/items/back/245-lion-backshield.tres" id="1_8hd5l"]
+[ext_resource type="RoseItemMaterial" uid="uid://djbglo1lf3d2k" path="res://data/items/material/63-low-ether.tres" id="2_n2df7"]
+[ext_resource type="RoseItemMaterial" uid="uid://txirltqrlwuc" path="res://data/items/material/404.tres" id="3_01qa6"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_6k8r8"]
+value = 45
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_xp708"]
+switch = 484
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_rkc1o"]
+equation = 5
+value = 1
+item = ExtResource("1_8hd5l")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_jyeap"]
+equation = 5
+value = 20
+item = ExtResource("2_n2df7")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_sq1u7"]
+equation = 5
+value = 9
+item = ExtResource("3_01qa6")
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_kn51m"]
+ability = "Money"
+operator = "Add"
+value = 8000
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_ctepp"]
+switch = 484
+value = true
+
+[resource]
+name = "kwang45-2"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_6k8r8"), SubResource("RoseConditionQuestSwitch_xp708")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_rkc1o"), SubResource("RoseRewardCalculatedItem_jyeap"), SubResource("RoseRewardCalculatedItem_sq1u7"), SubResource("RoseRewardAbilityValue_kn51m"), SubResource("RoseRewardSetQuestSwitch_ctepp")])

@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 3405; QSD triggers 3405-01, 3405-02, 3405-03, 3405-04, 3405-31
+  data: 'godot/data/quests/3405-supplying-training-gloves.tres; quest triggers in godot/data/quest_triggers/: qu03-001/3405-01, qu03-001/3405-02, qu03-001/3405-03, qu03-001/3405-04, qn-136/3405-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

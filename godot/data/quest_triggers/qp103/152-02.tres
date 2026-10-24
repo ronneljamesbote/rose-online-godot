@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c8ln3ljbw182l"]
+
+[ext_resource type="RoseQuest" uid="uid://b2puv6gwwifhc" path="res://data/quests/153-kay-s-request.tres" id="1_jyjli"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_y3jvy"]
+variable_type = "Episode"
+value = 52
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_amxry"]
+quest = ExtResource("1_jyjli")
+
+[resource]
+name = "152-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_y3jvy")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_amxry")])

@@ -1,0 +1,49 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cqeg3q74upr63"]
+
+[ext_resource type="RoseQuest" uid="uid://cqshirqtn1vql" path="res://data/quests/5062-quest.tres" id="1_smhep"]
+[ext_resource type="RoseItemQuest" uid="uid://g0yr5locnh32" path="res://data/items/quest/902.tres" id="2_tb705"]
+[ext_resource type="RoseItemHead" uid="uid://b3wynetboqjxl" path="res://data/items/head/153-traditional-korean-hat.tres" id="3_uygrp"]
+[ext_resource type="RoseItemBody" uid="uid://bgibbamjcy5ok" path="res://data/items/body/153-hanbok.tres" id="4_yxp6x"]
+[ext_resource type="RoseItemFeet" uid="uid://1ead4srokhmn" path="res://data/items/feet/153-plastic-shoes.tres" id="5_nypui"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_1p4of"]
+quest = ExtResource("1_smhep")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_lo12s"]
+item = ExtResource("2_tb705")
+equipment_index = 13
+count = 20
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_k0s08"]
+quest = ExtResource("1_smhep")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_y2kuf"]
+item = ExtResource("2_tb705")
+quantity = 20
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_wv3fl"]
+equation = 5
+value = 1
+item = ExtResource("3_uygrp")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_aa3x5"]
+equation = 5
+value = 1
+item = ExtResource("4_yxp6x")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_uw8i4"]
+equation = 5
+value = 1
+item = ExtResource("5_nypui")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_glqjj"]
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_xno00"]
+switch = 487
+value = true
+
+[resource]
+name = "5062-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_1p4of"), SubResource("RoseConditionQuestItem_lo12s")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_k0s08"), SubResource("RoseRewardRemoveItem_y2kuf"), SubResource("RoseRewardCalculatedItem_wv3fl"), SubResource("RoseRewardCalculatedItem_aa3x5"), SubResource("RoseRewardCalculatedItem_uw8i4"), SubResource("RoseRewardRemoveSelectedQuest_glqjj"), SubResource("RoseRewardSetQuestSwitch_xno00")])

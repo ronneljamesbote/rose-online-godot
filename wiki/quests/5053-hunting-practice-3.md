@@ -10,7 +10,7 @@ monsters:
 time_limit_minutes: 10
 steps: 5
 source:
-  data: LIST_QUEST.STB row 5053; QSD triggers 5053-31, 5053-32, 5053-33, 5053-34, T79
+  data: 'godot/data/quests/5053-hunting-practice-3.tres; quest triggers in godot/data/quest_triggers/: qn-011/5053-31, qn-011/5053-32, qn-012/5053-33, qn-012/5053-34, tutorial/T79'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

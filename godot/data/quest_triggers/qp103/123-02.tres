@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://lrpkjnm1oc5o"]
+
+[ext_resource type="RoseQuest" uid="uid://cq5q3qa5p0vkl" path="res://data/quests/124-magic-of-anima-lake.tres" id="1_g47sg"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_e4yig"]
+variable_type = "Episode"
+value = 20
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_3ym0f"]
+quest = ExtResource("1_g47sg")
+
+[resource]
+name = "123-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_e4yig")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_3ym0f")])

@@ -10,7 +10,7 @@ monsters:
 - '[[monsters/209-grunter-king|Grunter King]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 131; QSD triggers 130-01, 130-02, 131-01, 131-31, 131-32
+  data: 'godot/data/quests/131-eva-the-sorcerer.tres; quest triggers in godot/data/quest_triggers/: qp103/130-01, qp103/130-02, qp103/131-01, qn-143/131-31, qn-209/131-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

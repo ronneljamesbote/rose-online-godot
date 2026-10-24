@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1117-soldier-winters|Soldier Winters]]'
 steps: 2
 source:
-  data: LIST_QUEST.STB row 1986; QSD triggers 1985-01, 1986-01
+  data: 'godot/data/quests/1986-information-on-lunar.tres; quest triggers in godot/data/quest_triggers/: qp102/1985-01, qp102/1986-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

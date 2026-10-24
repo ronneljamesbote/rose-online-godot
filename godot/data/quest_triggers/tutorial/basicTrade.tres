@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c3y62hwu3rwkv"]
+
+[ext_resource type="RoseItemMaterial" uid="uid://comillmlimxe2" path="res://data/items/material/171-thin-insect-shell.tres" id="1_m5nqg"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_3lfhf"]
+switch = 1
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_2yfkn"]
+equation = 5
+value = 5
+item = ExtResource("1_m5nqg")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_234tw"]
+switch = 1
+value = true
+
+[resource]
+name = "basicTrade"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_3lfhf")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_2yfkn"), SubResource("RoseRewardSetQuestSwitch_234tw")])

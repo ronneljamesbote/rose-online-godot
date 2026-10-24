@@ -1,0 +1,53 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://eb8iam1w06i"]
+
+[ext_resource type="RoseQuest" uid="uid://cn386lfxlyqkl" path="res://data/quests/2752-clan-house-extension-2.tres" id="1_bb4wg"]
+[ext_resource type="RoseItemMaterial" uid="uid://cam0sdkavwb37" path="res://data/items/material/7-steel.tres" id="2_k6obr"]
+[ext_resource type="RoseItemMaterial" uid="uid://clm7elxbs1fy8" path="res://data/items/material/37-cinnamon-wood.tres" id="3_w13xn"]
+[ext_resource type="RoseItemMaterial" uid="uid://dg8ke7k6fqtl6" path="res://data/items/material/123-earth-stone.tres" id="4_jjqch"]
+[ext_resource type="RoseQuestTrigger" uid="uid://oc1dh14fmim7" path="res://data/quest_triggers/qc001/2753-02.tres" id="5_7sgw4"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_5wxxu"]
+quest = ExtResource("1_bb4wg")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_tdw2f"]
+item = ExtResource("2_k6obr")
+equipment_index = 12
+count = 200
+operator = ">="
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_rsaha"]
+item = ExtResource("3_w13xn")
+equipment_index = 12
+count = 150
+operator = ">="
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_rtdc6"]
+item = ExtResource("4_jjqch")
+equipment_index = 12
+count = 50
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_31k6e"]
+quest = ExtResource("1_bb4wg")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_71ale"]
+item = ExtResource("2_k6obr")
+quantity = 200
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_t2c8i"]
+item = ExtResource("3_w13xn")
+quantity = 150
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_23uxm"]
+item = ExtResource("4_jjqch")
+quantity = 50
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_8iuph"]
+
+[sub_resource type="RoseRewardClanLevelIncrease" id="RoseRewardClanLevelIncrease_yku7e"]
+
+[resource]
+name = "2752-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_5wxxu"), SubResource("RoseConditionQuestItem_tdw2f"), SubResource("RoseConditionQuestItem_rsaha"), SubResource("RoseConditionQuestItem_rtdc6")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_31k6e"), SubResource("RoseRewardRemoveItem_71ale"), SubResource("RoseRewardRemoveItem_t2c8i"), SubResource("RoseRewardRemoveItem_23uxm"), SubResource("RoseRewardRemoveSelectedQuest_8iuph"), SubResource("RoseRewardClanLevelIncrease_yku7e")])
+next_trigger = ExtResource("5_7sgw4")

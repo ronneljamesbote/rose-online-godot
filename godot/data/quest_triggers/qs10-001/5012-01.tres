@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cjesvgmyql2k4"]
+
+[ext_resource type="RoseQuest" uid="uid://duy0sshyknrwf" path="res://data/quests/5012-stockpiling-konara-branches.tres" id="1_owfn4"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_lfk8d"]
+operator = ">="
+value = 41
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_vijio"]
+operator = "<="
+value = 50
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_dusag"]
+quest = ExtResource("1_owfn4")
+
+[resource]
+name = "5012-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_lfk8d"), SubResource("RoseConditionAbilityValue_vijio")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_dusag")])

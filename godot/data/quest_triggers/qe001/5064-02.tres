@@ -1,0 +1,52 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c10qgwg8nj4t"]
+
+[ext_resource type="RoseNpc" uid="uid://b0ykfohp8teut" path="res://data/npcs/1201-event-info-judy.tres" id="1_avhb6"]
+[ext_resource type="RoseQuest" uid="uid://c5ssu3umjs5tg" path="res://data/quests/5064-darling-judy-1.tres" id="2_7fvkh"]
+[ext_resource type="RoseItemQuest" uid="uid://ct1g7ihhujnc4" path="res://data/items/quest/904-cherry-blossom.tres" id="3_5subb"]
+[ext_resource type="RoseItemHead" uid="uid://ce0c20nyqx1nd" path="res://data/items/head/154-spring-flower-hat.tres" id="4_hdrpe"]
+[ext_resource type="RoseItemConsumable" uid="uid://b51fxam6mjske" path="res://data/items/consumable/438-cherry-smouly.tres" id="5_ukeu4"]
+[ext_resource type="RoseQuest" uid="uid://ch1lwf1yu5jvh" path="res://data/quests/5065-darling-judy-2.tres" id="6_pd038"]
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_g2iij"]
+npc = ExtResource("1_avhb6")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_g730y"]
+value = 3
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_4okib"]
+quest = ExtResource("2_7fvkh")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_amrkw"]
+item = ExtResource("3_5subb")
+equipment_index = 13
+count = 20
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_cnfy2"]
+quest = ExtResource("2_7fvkh")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_f7ysj"]
+item = ExtResource("3_5subb")
+quantity = 20
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_mnahp"]
+equation = 5
+value = 1
+item = ExtResource("4_hdrpe")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_bc2hx"]
+equation = 5
+value = 2
+item = ExtResource("5_ukeu4")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_rv3wg"]
+quest = ExtResource("6_pd038")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_g507t"]
+switch = 488
+value = true
+
+[resource]
+name = "5064-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectNpc_g2iij"), SubResource("RoseConditionObjectVariable_g730y"), SubResource("RoseConditionSelectQuest_4okib"), SubResource("RoseConditionQuestItem_amrkw")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_cnfy2"), SubResource("RoseRewardRemoveItem_f7ysj"), SubResource("RoseRewardCalculatedItem_mnahp"), SubResource("RoseRewardCalculatedItem_bc2hx"), SubResource("RoseRewardChangeSelectedQuest_rv3wg"), SubResource("RoseRewardSetQuestSwitch_g507t")])

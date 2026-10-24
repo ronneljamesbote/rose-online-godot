@@ -1,0 +1,43 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cenkjmb7niwo8"]
+
+[ext_resource type="RoseQuest" uid="uid://dlu7p80ii1jnb" path="res://data/quests/3003-necessity-of-a-new-shrine-1.tres" id="1_31ysm"]
+[ext_resource type="RoseItemQuest" uid="uid://cv537oygar6o5" path="res://data/items/quest/302-thick-pulpwood.tres" id="2_xwnak"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ipshs"]
+quest = ExtResource("1_31ysm")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_4pg75"]
+item = ExtResource("2_xwnak")
+equipment_index = 13
+count = 12
+operator = ">="
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_f17nt"]
+ability = "Union"
+value = 1
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_0u5t4"]
+operator = ">"
+value = 50
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_28jrr"]
+quest = ExtResource("1_31ysm")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_pk0ll"]
+item = ExtResource("2_xwnak")
+quantity = 12
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_imyhd"]
+ability = "UnionPoint1"
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_h8c66"]
+value = 6000
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_ehrsa"]
+
+[resource]
+name = "3003-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ipshs"), SubResource("RoseConditionQuestItem_4pg75"), SubResource("RoseConditionAbilityValue_f17nt"), SubResource("RoseConditionAbilityValue_0u5t4")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_28jrr"), SubResource("RoseRewardRemoveItem_pk0ll"), SubResource("RoseRewardAbilityValue_imyhd"), SubResource("RoseRewardCalculatedExperiencePoints_h8c66"), SubResource("RoseRewardRemoveSelectedQuest_ehrsa")])

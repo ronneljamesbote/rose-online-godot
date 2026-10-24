@@ -1,0 +1,42 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bsk3ddt04t18b"]
+
+[ext_resource type="RoseQuest" uid="uid://dtkq4sptm8ejk" path="res://data/quests/113-hourglass-of-purification.tres" id="1_gk6bs"]
+[ext_resource type="RoseItemQuest" uid="uid://cxp1jegjyt436" path="res://data/items/quest/606-crystal-key.tres" id="2_tnk7f"]
+[ext_resource type="RoseItemConsumable" uid="uid://clk5fk51es38k" path="res://data/items/consumable/105-orange.tres" id="3_nv408"]
+[ext_resource type="RoseQuest" uid="uid://cxoj61mhysm14" path="res://data/quests/114-hourglass-of-purification.tres" id="4_bxhvl"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ehdbk"]
+quest = ExtResource("1_gk6bs")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_f3yh4"]
+item = ExtResource("2_tnk7f")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ha7wb"]
+quest = ExtResource("1_gk6bs")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_htudc"]
+value = 1000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_oxfsm"]
+equation = 5
+value = 10
+item = ExtResource("3_nv408")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_hltpk"]
+value = 10
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_cbtcl"]
+quest = ExtResource("4_bxhvl")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_sf648"]
+variable_type = "Episode"
+value = 11
+
+[resource]
+name = "113-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ehdbk"), SubResource("RoseConditionQuestItem_f3yh4")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ha7wb"), SubResource("RoseRewardCalculatedExperiencePoints_htudc"), SubResource("RoseRewardCalculatedItem_oxfsm"), SubResource("RoseRewardCalculatedExperiencePoints_hltpk"), SubResource("RoseRewardChangeSelectedQuest_cbtcl"), SubResource("RoseRewardQuestVariable_sf648")])

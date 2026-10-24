@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://v8rvymnpbhmh"]
+
+[ext_resource type="RoseQuest" uid="uid://b3r0cgxwm0clf" path="res://data/quests/109-sacrificed-soul.tres" id="1_yr4pr"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_yve77"]
+variable_type = "Episode"
+value = 6
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_melv7"]
+quest = ExtResource("1_yr4pr")
+
+[resource]
+name = "108-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_yve77")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_melv7")])

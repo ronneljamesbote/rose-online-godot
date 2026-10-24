@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://byyly1141dajn"]
+
+[ext_resource type="RoseItemGem" uid="uid://bsdw6s22q6ps3" path="res://data/items/gem/341-emerald-1.tres" id="1_kf2tv"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_8djvg"]
+switch = 480
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_12oet"]
+equation = 5
+value = 1
+item = ExtResource("1_kf2tv")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_8di6b"]
+switch = 480
+value = true
+
+[resource]
+name = "item00-001-3-7"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_8djvg")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_12oet"), SubResource("RoseRewardSetQuestSwitch_8di6b")])

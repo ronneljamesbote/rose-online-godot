@@ -1,0 +1,21 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b66w367vd0ykb"]
+
+[ext_resource type="RoseQuest" uid="uid://ch6ov7dnqeiv5" path="res://data/quests/3007-the-arumics-request.tres" id="1_rhjqf"]
+[ext_resource type="RoseZoneSettings" uid="uid://cf60xqfegrnx3" path="res://data/zones/27-kenji-beach.tres" id="2_pbeno"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_lq40r"]
+quest = ExtResource("1_rhjqf")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_fudwl"]
+ability = "Union"
+value = 1
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_nfibe"]
+zone = ExtResource("2_pbeno")
+x = 524200
+y = 502200
+
+[resource]
+name = "3007-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_lq40r"), SubResource("RoseConditionAbilityValue_fudwl")])
+rewards = Array[Resource]([SubResource("RoseRewardTeleport_nfibe")])

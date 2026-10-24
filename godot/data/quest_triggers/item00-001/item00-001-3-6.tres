@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b03vw5oa7ctpb"]
+
+[ext_resource type="RoseItemGem" uid="uid://dbemonc8qirua" path="res://data/items/gem/331-topaz-1.tres" id="1_gja4b"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_bdjbv"]
+switch = 480
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_fb0u8"]
+equation = 5
+value = 1
+item = ExtResource("1_gja4b")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_gfjca"]
+switch = 480
+value = true
+
+[resource]
+name = "item00-001-3-6"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_bdjbv")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_fb0u8"), SubResource("RoseRewardSetQuestSwitch_gfjca")])

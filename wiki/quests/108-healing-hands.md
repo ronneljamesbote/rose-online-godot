@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1014-guide-lena|Guide Lena]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 108; QSD triggers 107-06, 107-07, 107-09, 108-01
+  data: 'godot/data/quests/108-healing-hands.tres; quest triggers in godot/data/quest_triggers/: qp103/107-06, qp103/107-07, qp103/107-09, qp103/108-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

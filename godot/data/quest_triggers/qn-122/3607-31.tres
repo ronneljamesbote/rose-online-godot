@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://hdimk3fkcsve"]
+
+[ext_resource type="RoseQuest" uid="uid://u21t0lnj4kv8" path="res://data/quests/3607-weak-mana-waves-from-lunar.tres" id="1_jdfm6"]
+[ext_resource type="RoseItemQuest" uid="uid://36twq304vvil" path="res://data/items/quest/316-krawfy-long-antenna.tres" id="2_6bwqk"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_lrxjc"]
+quest = ExtResource("1_jdfm6")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_6ski3"]
+to = 33
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_d5fo6"]
+item = ExtResource("2_6bwqk")
+equipment_index = 13
+count = 25
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_g6ucd"]
+quest = ExtResource("1_jdfm6")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_btx5f"]
+item = ExtResource("2_6bwqk")
+quantity = 1
+
+[resource]
+name = "3607-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_lrxjc"), SubResource("RoseConditionRandomPercent_6ski3"), SubResource("RoseConditionQuestItem_d5fo6")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_g6ucd"), SubResource("RoseRewardAddItem_btx5f")])

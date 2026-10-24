@@ -1,0 +1,38 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://iv23gau4bg7t"]
+
+[ext_resource type="RoseQuest" uid="uid://4wl5w2xgu47o" path="res://data/quests/959-the-essence-of-speed.tres" id="1_0na8q"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_hl21f"]
+[ext_resource type="RoseItemWeapon" uid="uid://7v8n0yx4tuks" path="res://data/items/weapon/205-white-wing-bow.tres" id="3_rdsis"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_qdi2w"]
+quest = ExtResource("1_0na8q")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_gled3"]
+item = ExtResource("2_hl21f")
+equipment_index = 13
+count = 10
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_m0dwf"]
+quest = ExtResource("1_0na8q")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_4g1ca"]
+item = ExtResource("2_hl21f")
+quantity = 10
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_3w4q0"]
+equation = 5
+value = 1
+item = ExtResource("3_rdsis")
+gem = 35
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_ydfly"]
+variable_type = "Job"
+value = 6
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_50dgd"]
+
+[resource]
+name = "959-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_qdi2w"), SubResource("RoseConditionQuestItem_gled3")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_m0dwf"), SubResource("RoseRewardRemoveItem_4g1ca"), SubResource("RoseRewardCalculatedItem_3w4q0"), SubResource("RoseRewardQuestVariable_ydfly"), SubResource("RoseRewardRemoveSelectedQuest_50dgd")])

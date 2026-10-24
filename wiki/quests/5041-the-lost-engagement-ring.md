@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/43-red-flanae|Red Flanae]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 5041; QSD triggers 5041-01, 5041-02, 5041-03, 5041-31
+  data: 'godot/data/quests/5041-the-lost-engagement-ring.tres; quest triggers in godot/data/quest_triggers/: qs10-001/5041-01, qs10-001/5041-02, qs10-001/5041-03, qn-043/5041-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

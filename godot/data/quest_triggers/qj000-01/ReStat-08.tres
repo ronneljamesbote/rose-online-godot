@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dyfu50t57m3ls"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_adgao"]
+switch = 72
+value = true
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_78sug"]
+ability = "BonusPoint"
+operator = "Add"
+value = 10
+
+[resource]
+name = "ReStat-08"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_adgao")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_78sug")])

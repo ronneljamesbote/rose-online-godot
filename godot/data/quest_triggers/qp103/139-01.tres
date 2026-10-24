@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://6ecos35ixror"]
+
+[ext_resource type="RoseQuest" uid="uid://bm61biuxm0rsk" path="res://data/quests/139-punwell-in-windmill-village.tres" id="1_tn0ai"]
+[ext_resource type="RoseQuest" uid="uid://dbpv3hsujjqep" path="res://data/quests/140-the-zeppastone-wind-gem.tres" id="2_cdri7"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_pugpl"]
+quest = ExtResource("1_tn0ai")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_v6igg"]
+quest = ExtResource("1_tn0ai")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_2xopn"]
+value = 10000
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_efqww"]
+quest = ExtResource("2_cdri7")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_gnasp"]
+variable_type = "Episode"
+value = 39
+
+[resource]
+name = "139-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_pugpl")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_v6igg"), SubResource("RoseRewardCalculatedExperiencePoints_2xopn"), SubResource("RoseRewardChangeSelectedQuest_efqww"), SubResource("RoseRewardQuestVariable_gnasp")])

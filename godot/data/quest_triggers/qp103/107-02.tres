@@ -1,0 +1,38 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bitsyp34x3ota"]
+
+[ext_resource type="RoseQuest" uid="uid://lv4dh1esiiv" path="res://data/quests/107-healing-hands.tres" id="1_h6jbv"]
+[ext_resource type="RoseItemQuest" uid="uid://b8usi70yejtik" path="res://data/items/quest/604-karitte-s-antidote.tres" id="2_mbqnu"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_pwhwa"]
+quest = ExtResource("1_h6jbv")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_2cdag"]
+item = ExtResource("2_mbqnu")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_taslp"]
+variable_type = "Switch"
+variable = 1
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_4y4bm"]
+variable_type = "Timer"
+operator = ">"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_612nt"]
+quest = ExtResource("1_h6jbv")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_koigl"]
+item = ExtResource("2_mbqnu")
+quantity = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_6hr8c"]
+variable_type = "Switch"
+variable = 1
+operator = "SetOne"
+
+[resource]
+name = "107-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_pwhwa"), SubResource("RoseConditionQuestItem_2cdag"), SubResource("RoseConditionQuestVariable_taslp"), SubResource("RoseConditionQuestVariable_4y4bm")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_612nt"), SubResource("RoseRewardRemoveItem_koigl"), SubResource("RoseRewardQuestVariable_6hr8c")])

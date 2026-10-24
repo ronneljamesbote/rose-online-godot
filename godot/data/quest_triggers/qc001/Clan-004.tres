@@ -1,0 +1,13 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cd6ggfgnywddp"]
+
+[sub_resource type="RoseConditionClanPosition" id="RoseConditionClanPosition_iiere"]
+operator = ">="
+value = 5
+
+[sub_resource type="RoseConditionClanPosition" id="RoseConditionClanPosition_a3qfn"]
+operator = "<="
+value = 6
+
+[resource]
+name = "Clan-004"
+conditions = Array[Resource]([SubResource("RoseConditionClanPosition_iiere"), SubResource("RoseConditionClanPosition_a3qfn")])

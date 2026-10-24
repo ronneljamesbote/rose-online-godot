@@ -1,0 +1,16 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cy87lnlrhe7en"]
+
+[ext_resource type="RoseQuest" uid="uid://c3p24q86n7kaw" path="res://data/quests/5001-wine-delivery-part-time-job.tres" id="1_7qbh5"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_6j1od"]
+quest = ExtResource("1_7qbh5")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_li5ei"]
+variable_type = "Timer"
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_bq2hk"]
+
+[resource]
+name = "5001-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_6j1od"), SubResource("RoseConditionQuestVariable_li5ei")])
+rewards = Array[Resource]([SubResource("RoseRewardRemoveSelectedQuest_bq2hk")])

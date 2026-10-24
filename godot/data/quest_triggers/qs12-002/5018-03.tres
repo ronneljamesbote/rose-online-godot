@@ -1,0 +1,14 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d03oeu2hfc407"]
+
+[ext_resource type="RoseQuest" uid="uid://dladdqbjr0nfi" path="res://data/quests/5018-candle-ghost-s-identity-fetch-quest.tres" id="1_val0c"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_rqfaw"]
+quest = ExtResource("1_val0c")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_2e64c"]
+variable_type = "Timer"
+operator = ">"
+
+[resource]
+name = "5018-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_rqfaw"), SubResource("RoseConditionQuestVariable_2e64c")])

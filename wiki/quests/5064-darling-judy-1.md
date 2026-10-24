@@ -13,7 +13,7 @@ monsters:
 - Cherry Smouly (NPC 313)
 steps: 7
 source:
-  data: LIST_QUEST.STB row 5064; QSD triggers 5064-01, 5064-02, 5064-31, 5064-33, 5064-35, 5064-37, 5064-39
+  data: 'godot/data/quests/5064-darling-judy-1.tres; quest triggers in godot/data/quest_triggers/: qe001/5064-01, qe001/5064-02, qe001/5064-31, qe001/5064-33, qe001/5064-35, qe001/5064-37, qe001/5064-39'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

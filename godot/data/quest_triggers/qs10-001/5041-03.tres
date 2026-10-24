@@ -1,0 +1,40 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ceqmt4vt7ru5"]
+
+[ext_resource type="RoseQuest" uid="uid://j34xatmqhkpr" path="res://data/quests/5041-the-lost-engagement-ring.tres" id="1_mjtlu"]
+[ext_resource type="RoseItemQuest" uid="uid://3bnlao2unpsc" path="res://data/items/quest/508-methio-s-engagement-ring.tres" id="2_xk1pb"]
+[ext_resource type="RoseItemConsumable" uid="uid://iy3bxt1he2nr" path="res://data/items/consumable/56-vital-jam-1.tres" id="3_ksu5k"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_uci8o"]
+quest = ExtResource("1_mjtlu")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_wkt4o"]
+item = ExtResource("2_xk1pb")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_n30fa"]
+quest = ExtResource("1_mjtlu")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_kka7c"]
+item = ExtResource("2_xk1pb")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_bsdoh"]
+value = 5100
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_1i8t4"]
+equation = 5
+value = 1
+item = ExtResource("3_ksu5k")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_vkp2f"]
+switch = 32
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_d5jy6"]
+
+[resource]
+name = "5041-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_uci8o"), SubResource("RoseConditionQuestItem_wkt4o")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_n30fa"), SubResource("RoseRewardRemoveItem_kka7c"), SubResource("RoseRewardCalculatedExperiencePoints_bsdoh"), SubResource("RoseRewardCalculatedItem_1i8t4"), SubResource("RoseRewardSetQuestSwitch_vkp2f"), SubResource("RoseRewardRemoveSelectedQuest_d5jy6")])

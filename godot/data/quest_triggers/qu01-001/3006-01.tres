@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://8h1gghpvphcl"]
+
+[ext_resource type="RoseQuest" uid="uid://d3wd8bsxc3il4" path="res://data/quests/3006-in-readiness-for-war.tres" id="1_70fkp"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_64tks"]
+ability = "Union"
+value = 1
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_hm3ab"]
+operator = ">="
+value = 51
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_nnfgo"]
+quest = ExtResource("1_70fkp")
+
+[resource]
+name = "3006-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_64tks"), SubResource("RoseConditionAbilityValue_hm3ab")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_nnfgo")])

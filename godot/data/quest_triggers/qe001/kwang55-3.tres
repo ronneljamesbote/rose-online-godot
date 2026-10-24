@@ -1,0 +1,46 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cl5knsppdan3f"]
+
+[ext_resource type="RoseItemGem" uid="uid://2aq4bcwnkja1" path="res://data/items/gem/321-sapphire-1.tres" id="1_sujc7"]
+[ext_resource type="RoseItemMaterial" uid="uid://dqee6e5tcwg6r" path="res://data/items/material/64-ether.tres" id="2_21xyu"]
+[ext_resource type="RoseItemMaterial" uid="uid://bfh7yai2d7lv1" path="res://data/items/material/76-orange-powder.tres" id="3_be277"]
+[ext_resource type="RoseItemMaterial" uid="uid://txirltqrlwuc" path="res://data/items/material/404.tres" id="4_bwt1y"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_814w4"]
+value = 55
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_ra5bw"]
+switch = 485
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_3gyr8"]
+equation = 5
+value = 1
+item = ExtResource("1_sujc7")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_dnv1u"]
+equation = 5
+value = 20
+item = ExtResource("2_21xyu")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_bcish"]
+equation = 5
+value = 20
+item = ExtResource("3_be277")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_pb702"]
+equation = 5
+value = 10
+item = ExtResource("4_bwt1y")
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_en0yx"]
+ability = "Money"
+operator = "Add"
+value = 13000
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_rh0um"]
+switch = 485
+value = true
+
+[resource]
+name = "kwang55-3"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_814w4"), SubResource("RoseConditionQuestSwitch_ra5bw")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_3gyr8"), SubResource("RoseRewardCalculatedItem_dnv1u"), SubResource("RoseRewardCalculatedItem_bcish"), SubResource("RoseRewardCalculatedItem_pb702"), SubResource("RoseRewardAbilityValue_en0yx"), SubResource("RoseRewardSetQuestSwitch_rh0um")])

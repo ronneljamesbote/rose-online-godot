@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://37bhe65uetr2"]
+
+[ext_resource type="RoseQuest" uid="uid://wd8470dfvyb4" path="res://data/quests/110-the-truth-to-the-rumors.tres" id="1_1u137"]
+[ext_resource type="RoseQuest" uid="uid://2p2bxudh04ea" path="res://data/quests/111-the-truth-to-the-rumors.tres" id="2_388k3"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_1btrt"]
+quest = ExtResource("1_1u137")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_2uelm"]
+quest = ExtResource("1_1u137")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_7il2l"]
+value = 300
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_5rjal"]
+quest = ExtResource("2_388k3")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_lrxdb"]
+variable_type = "Episode"
+value = 8
+
+[resource]
+name = "110-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_1btrt")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_2uelm"), SubResource("RoseRewardCalculatedExperiencePoints_7il2l"), SubResource("RoseRewardChangeSelectedQuest_5rjal"), SubResource("RoseRewardQuestVariable_lrxdb")])

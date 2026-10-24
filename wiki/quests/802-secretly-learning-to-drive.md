@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1032-akram-minister-mairard|Akram Minister Mairard]]'
 steps: 2
 source:
-  data: LIST_QUEST.STB row 802; QSD triggers 802-01, 802-03
+  data: 'godot/data/quests/802-secretly-learning-to-drive.tres; quest triggers in godot/data/quest_triggers/: tutorial/802-01, tutorial/802-03'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

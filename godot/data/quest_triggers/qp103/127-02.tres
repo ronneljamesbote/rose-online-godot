@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bd77w0e84wgkh"]
+
+[ext_resource type="RoseQuest" uid="uid://cr18grtbeuk8k" path="res://data/quests/128-the-owl-eye.tres" id="1_cmkx4"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_pgm6p"]
+variable_type = "Episode"
+value = 27
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_2vo8y"]
+quest = ExtResource("1_cmkx4")
+
+[resource]
+name = "127-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_pgm6p")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_2vo8y")])

@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bji5s8dd1eo6"]
+
+[ext_resource type="RoseNpc" uid="uid://bgklufttirdm4" path="res://data/npcs/1010-designer-keenu.tres" id="1_hxe66"]
+[ext_resource type="RoseQuest" uid="uid://81l04hnr6see" path="res://data/quests/5003-dalping-hunt-fetch-quest.tres" id="2_dko8a"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_nq24x"]
+operator = "<="
+value = 27
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_bw8nn"]
+npc = ExtResource("1_hxe66")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_avvdh"]
+value = 1
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_ohvr6"]
+variable = 2
+operator = "<"
+value = 10
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_uw4ad"]
+quest = ExtResource("2_dko8a")
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_a1uqm"]
+variable = 2
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_qvnnj"]
+trigger = "5003-10"
+
+[resource]
+name = "5003-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_nq24x"), SubResource("RoseConditionSelectNpc_bw8nn"), SubResource("RoseConditionObjectVariable_avvdh"), SubResource("RoseConditionObjectVariable_ohvr6")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_uw4ad"), SubResource("RoseRewardObjectVariable_a1uqm"), SubResource("RoseRewardTrigger_qvnnj")])

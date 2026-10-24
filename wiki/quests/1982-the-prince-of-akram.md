@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1116-soldier-odelo|Soldier Odelo]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 1982; QSD triggers 1981-02, 1982-01, 1982-02
+  data: 'godot/data/quests/1982-the-prince-of-akram.tres; quest triggers in godot/data/quest_triggers/: qp102/1981-02, qp102/1982-01, qp102/1982-02'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

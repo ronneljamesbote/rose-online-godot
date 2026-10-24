@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1112-arumic-researcher-carasia|Arumic Researcher Carasia]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 3605; QSD triggers 3605-01, 3605-02, 3605-03, 3605-04, 3605-31
+  data: 'godot/data/quests/3605-plant-extract-magic-fundamental.tres; quest triggers in godot/data/quest_triggers/: qu04-001/3605-01, qu04-001/3605-02, qu04-001/3605-03, qu04-001/3605-04, qn-051/3605-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

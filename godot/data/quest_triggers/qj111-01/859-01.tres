@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c4p2vsje8y5o7"]
+
+[ext_resource type="RoseQuest" uid="uid://b5cjtiljfntve" path="res://data/quests/859-hovert-s-mementos.tres" id="1_3eas1"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_4r5rb"]
+[ext_resource type="RoseItemQuest" uid="uid://cmrn7a5w5ybei" path="res://data/items/quest/128-hovert-s-letter.tres" id="3_73r7u"]
+[ext_resource type="RoseQuest" uid="uid://byt6fpgn310os" path="res://data/quests/860-hovert-s-mementos.tres" id="4_uy0ua"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_sdmtl"]
+quest = ExtResource("1_3eas1")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_sv55c"]
+item = ExtResource("2_4r5rb")
+equipment_index = 13
+count = 3
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_l5v7p"]
+quest = ExtResource("1_3eas1")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_n8r30"]
+item = ExtResource("2_4r5rb")
+quantity = 3
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_mvhhc"]
+item = ExtResource("3_73r7u")
+quantity = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_vtcvh"]
+quest = ExtResource("4_uy0ua")
+keep_data = true
+
+[resource]
+name = "859-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_sdmtl"), SubResource("RoseConditionQuestItem_sv55c")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_l5v7p"), SubResource("RoseRewardRemoveItem_n8r30"), SubResource("RoseRewardRemoveItem_mvhhc"), SubResource("RoseRewardChangeSelectedQuest_vtcvh")])

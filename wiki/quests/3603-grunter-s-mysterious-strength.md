@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/135-grunter-fighter|Grunter Fighter]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 3603; QSD triggers 3603-01, 3603-02, 3603-03, 3603-31
+  data: 'godot/data/quests/3603-grunter-s-mysterious-strength.tres; quest triggers in godot/data/quest_triggers/: qu04-001/3603-01, qu04-001/3603-02, qu04-001/3603-03, qn-135/3603-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

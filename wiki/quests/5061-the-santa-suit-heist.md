@@ -9,7 +9,7 @@ monsters:
 - Rudolph Santa (NPC 305)
 steps: 11
 source:
-  data: LIST_QUEST.STB row 5061; QSD triggers 5061-01, 5061-02, 5061-03, 5061-04, 5061-11, 5061-12, 5061-13, 5061-14, 5061-31, 5061-32, 5061-33
+  data: 'godot/data/quests/5061-the-santa-suit-heist.tres; quest triggers in godot/data/quest_triggers/: qe001/5061-01, qe001/5061-02, qe001/5061-03, qe001/5061-04, qe001/5061-11, qe001/5061-12, qe001/5061-13, qe001/5061-14, qe001/5061-31, qe001/5061-32, qe001/5061-33'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

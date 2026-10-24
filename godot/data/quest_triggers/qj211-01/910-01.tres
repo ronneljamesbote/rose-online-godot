@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://be52lcruwhpyc"]
+
+[ext_resource type="RoseQuest" uid="uid://dddb72oumgugk" path="res://data/quests/910-an-appropriate-compromise.tres" id="1_e1703"]
+[ext_resource type="RoseQuest" uid="uid://bdibnxwe6fmau" path="res://data/quests/911-an-appropriate-compromise.tres" id="2_v5v0o"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_un0rc"]
+quest = ExtResource("1_e1703")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_33kab"]
+quest = ExtResource("1_e1703")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_vjswe"]
+quest = ExtResource("2_v5v0o")
+keep_data = true
+
+[resource]
+name = "910-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_un0rc")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_33kab"), SubResource("RoseRewardChangeSelectedQuest_vjswe")])

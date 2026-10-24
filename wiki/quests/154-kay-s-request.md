@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1151-ferrell-guild-merchant-med|Ferrell Guild Merchant Med]]'
 steps: 15
 source:
-  data: LIST_QUEST.STB row 154; QSD triggers 153-01, 153-02, 153-03, 153-04, 153-05, 153-06, 153-07, 153-08, 153-09, 153-10, 153-11, 153-12, 153-13, 153-14, 154-01
+  data: 'godot/data/quests/154-kay-s-request.tres; quest triggers in godot/data/quest_triggers/: qp103/153-01, qp103/153-02, qp103/153-03, qp103/153-04, qp103/153-05, qp103/153-06, qp103/153-07, qp103/153-08, qp103/153-09, qp103/153-10, qp103/153-11, qp103/153-12, qp103/153-13, qp103/153-14, qp103/154-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

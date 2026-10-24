@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1201-event-info-judy|Event Info Judy]]'
 steps: 8
 source:
-  data: LIST_QUEST.STB row 5065; QSD triggers 5064-02, 5064-03, 5064-04, 5064-32, 5064-34, 5064-36, 5064-38, 5064-40
+  data: 'godot/data/quests/5065-darling-judy-2.tres; quest triggers in godot/data/quest_triggers/: qe001/5064-02, qe001/5064-03, qe001/5064-04, qe001/5064-32, qe001/5064-34, qe001/5064-36, qe001/5064-38, qe001/5064-40'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

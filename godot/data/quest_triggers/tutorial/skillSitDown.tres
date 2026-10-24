@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c0cogrdp2lllp"]
+
+[ext_resource type="RoseSkill" uid="uid://cptiwgjakvdbr" path="res://data/skills/11-sit/11-sit.tres" id="1_bmkqk"]
+
+[sub_resource type="RoseConditionHasSkill" id="RoseConditionHasSkill_cqdri"]
+skill = ExtResource("1_bmkqk")
+has = false
+
+[sub_resource type="RoseRewardAddSkill" id="RoseRewardAddSkill_vxcs5"]
+skill = ExtResource("1_bmkqk")
+
+[resource]
+name = "skillSitDown"
+conditions = Array[Resource]([SubResource("RoseConditionHasSkill_cqdri")])
+rewards = Array[Resource]([SubResource("RoseRewardAddSkill_vxcs5")])

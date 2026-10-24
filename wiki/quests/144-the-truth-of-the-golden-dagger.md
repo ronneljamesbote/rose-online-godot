@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1051-arumic-resercher-lutis|Arumic Resercher Lutis]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 144; QSD triggers 143-01, 143-02, 144-01
+  data: 'godot/data/quests/144-the-truth-of-the-golden-dagger.tres; quest triggers in godot/data/quest_triggers/: qp103/143-01, qp103/143-02, qp103/144-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

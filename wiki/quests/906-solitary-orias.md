@@ -7,7 +7,7 @@ npcs:
 - '[[npcs/1073-ikaness-staff-orias|Ikaness Staff Orias]]'
 steps: 8
 source:
-  data: LIST_QUEST.STB row 906; QSD triggers 905-02, 906-01, 906-31, 906-32, 906-33, 906-34, 906-35, 906-36
+  data: 'godot/data/quests/906-solitary-orias.tres; quest triggers in godot/data/quest_triggers/: qj211-01/905-02, qj211-01/906-01, qn-031/906-31, qn-031/906-32, qn-031/906-33, qn-032/906-34, qn-032/906-35, qn-032/906-36'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

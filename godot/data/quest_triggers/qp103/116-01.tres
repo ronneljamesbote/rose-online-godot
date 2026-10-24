@@ -1,0 +1,31 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dg6r6gymh0afm"]
+
+[ext_resource type="RoseQuest" uid="uid://dokuobdw4c33r" path="res://data/quests/116-a-favor-for-karitte.tres" id="1_ahn01"]
+[ext_resource type="RoseItemQuest" uid="uid://f3l5dg7ftjxa" path="res://data/items/quest/602-gypsy-s-permit.tres" id="2_h4hhi"]
+[ext_resource type="RoseQuest" uid="uid://b6e2vfmwq0e7u" path="res://data/quests/117-proof.tres" id="3_3oth5"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_pn8dw"]
+quest = ExtResource("1_ahn01")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_htaes"]
+quest = ExtResource("1_ahn01")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_xskbs"]
+item = ExtResource("2_h4hhi")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_xpw5x"]
+value = 500
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_5fsfx"]
+quest = ExtResource("3_3oth5")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_0sg28"]
+variable_type = "Episode"
+value = 14
+
+[resource]
+name = "116-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_pn8dw")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_htaes"), SubResource("RoseRewardAddItem_xskbs"), SubResource("RoseRewardCalculatedExperiencePoints_xpw5x"), SubResource("RoseRewardChangeSelectedQuest_5fsfx"), SubResource("RoseRewardQuestVariable_0sg28")])

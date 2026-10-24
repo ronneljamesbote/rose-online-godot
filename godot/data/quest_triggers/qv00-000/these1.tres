@@ -1,0 +1,14 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://084h8y5mbmcq"]
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_x1rfp"]
+ability = "Union"
+value = 1
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_mttko"]
+ability = "Strength"
+operator = "Add"
+value = 15
+
+[resource]
+name = "these1"
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_x1rfp"), SubResource("RoseRewardAbilityValue_mttko")])

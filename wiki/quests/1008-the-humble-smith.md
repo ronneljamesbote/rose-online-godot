@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1004-ferrell-guild-staff-crow|Ferrell Guild Staff Crow]]'
 steps: 7
 source:
-  data: LIST_QUEST.STB row 1008; QSD triggers 1008-01, 1008-02, 1008-03, 1008-04, 1008-05, 1008-31, 1008-32
+  data: 'godot/data/quests/1008-the-humble-smith.tres; quest triggers in godot/data/quest_triggers/: qj411-01/1008-01, qj411-01/1008-02, qj411-01/1008-03, qj411-01/1008-04, qj411-01/1008-05, qn-175/1008-31, qn-176/1008-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://drdj023hhtxvd"]
+
+[ext_resource type="RoseQuest" uid="uid://dc3uccfugqn0w" path="res://data/quests/957-the-essence-of-speed.tres" id="1_dsgkc"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dk840kv8gdfmf" path="res://data/quest_triggers/qj311-01/958-02.tres" id="2_2j0vs"]
+[ext_resource type="RoseQuest" uid="uid://puudlbtkenqi" path="res://data/quests/958-the-essence-of-speed.tres" id="3_6jq1s"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_yhapg"]
+quest = ExtResource("1_dsgkc")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_3fi2y"]
+quest = ExtResource("1_dsgkc")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_s5goo"]
+quest = ExtResource("3_6jq1s")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_q167q"]
+switch = 35
+value = true
+
+[resource]
+name = "958-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_yhapg")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_3fi2y"), SubResource("RoseRewardChangeSelectedQuest_s5goo"), SubResource("RoseRewardSetQuestSwitch_q167q")])
+next_trigger = ExtResource("2_2j0vs")

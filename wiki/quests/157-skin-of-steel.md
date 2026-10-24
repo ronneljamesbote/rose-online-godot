@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/169-grandmaster-golem|Grandmaster Golem]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 157; QSD triggers 156-01, 156-02, 157-01, 157-31
+  data: 'godot/data/quests/157-skin-of-steel.tres; quest triggers in godot/data/quest_triggers/: qp103/156-01, qp103/156-02, qp103/157-01, qn-169/157-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

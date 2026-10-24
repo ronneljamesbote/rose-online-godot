@@ -1,0 +1,43 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c5kmdug6b3yat"]
+
+[ext_resource type="RoseQuest" uid="uid://c6xd41846klj8" path="res://data/quests/148-the-royal-golden-dagger.tres" id="1_ws8gl"]
+[ext_resource type="RoseItemQuest" uid="uid://dyylracpreygy" path="res://data/items/quest/510-golden-dagger.tres" id="2_45owa"]
+[ext_resource type="RoseItemGem" uid="uid://tdn7gebxxhqd" path="res://data/items/gem/351-peridot-1.tres" id="3_h01sv"]
+[ext_resource type="RoseItemGem" uid="uid://dbemonc8qirua" path="res://data/items/gem/331-topaz-1.tres" id="4_rpq0l"]
+[ext_resource type="RoseQuest" uid="uid://r8wkb68wnm8x" path="res://data/quests/149-an-interesting-proposal.tres" id="5_i3i06"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ndr63"]
+quest = ExtResource("1_ws8gl")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ewcpb"]
+quest = ExtResource("1_ws8gl")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_jd6xx"]
+item = ExtResource("2_45owa")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_vbh2y"]
+value = 40000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_md3k5"]
+equation = 5
+value = 2
+item = ExtResource("3_h01sv")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_mfcus"]
+equation = 5
+value = 2
+item = ExtResource("4_rpq0l")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_wslxn"]
+quest = ExtResource("5_i3i06")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_lhlm8"]
+variable_type = "Episode"
+value = 48
+
+[resource]
+name = "148-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ndr63")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ewcpb"), SubResource("RoseRewardRemoveItem_jd6xx"), SubResource("RoseRewardCalculatedExperiencePoints_vbh2y"), SubResource("RoseRewardCalculatedItem_md3k5"), SubResource("RoseRewardCalculatedItem_mfcus"), SubResource("RoseRewardChangeSelectedQuest_wslxn"), SubResource("RoseRewardQuestVariable_lhlm8")])

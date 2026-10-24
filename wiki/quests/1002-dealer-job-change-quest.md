@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1036-ferrell-guild-staff-seyon|Ferrell Guild Staff Seyon]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 1002; QSD triggers 1001-02, 1002-01, 1002-02, 1002-03
+  data: 'godot/data/quests/1002-dealer-job-change-quest.tres; quest triggers in godot/data/quest_triggers/: qj000-01/1001-02, qj000-01/1002-01, qj000-01/1002-02, qj000-01/1002-03'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

@@ -1,0 +1,45 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cuj14gfums6hh"]
+
+[ext_resource type="RoseQuest" uid="uid://ckmc17bwap5bk" path="res://data/quests/1002-dealer-job-change-quest.tres" id="1_5vr4d"]
+[ext_resource type="RoseItemQuest" uid="uid://cfpyuiydmitwp" path="res://data/items/quest/111-small-metal-board.tres" id="2_ilycr"]
+[ext_resource type="RoseItemQuest" uid="uid://bbh8t87ixdgb3" path="res://data/items/quest/112-fleece.tres" id="3_up5pe"]
+[ext_resource type="RoseQuest" uid="uid://cigruferpayh0" path="res://data/quests/1003-dealer-job-change-quest.tres" id="4_dv5ke"]
+[ext_resource type="RoseItemConsumable" uid="uid://dow06gspjnrnl" path="res://data/items/consumable/1-health-vial-s.tres" id="5_lngca"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_prqtn"]
+quest = ExtResource("1_5vr4d")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_347l3"]
+item = ExtResource("2_ilycr")
+equipment_index = 13
+count = 5
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_4yypg"]
+item = ExtResource("3_up5pe")
+equipment_index = 13
+count = 5
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_gtwvo"]
+quest = ExtResource("1_5vr4d")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_ixqyr"]
+item = ExtResource("2_ilycr")
+quantity = 5
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_4gh6j"]
+item = ExtResource("3_up5pe")
+quantity = 5
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_m0aby"]
+quest = ExtResource("4_dv5ke")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_ov4jj"]
+equation = 5
+value = 5
+item = ExtResource("5_lngca")
+gem = 52685
+
+[resource]
+name = "1002-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_prqtn"), SubResource("RoseConditionQuestItem_347l3"), SubResource("RoseConditionQuestItem_4yypg")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_gtwvo"), SubResource("RoseRewardRemoveItem_ixqyr"), SubResource("RoseRewardRemoveItem_4gh6j"), SubResource("RoseRewardChangeSelectedQuest_m0aby"), SubResource("RoseRewardCalculatedItem_ov4jj")])

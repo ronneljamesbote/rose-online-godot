@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/201-worm-dragon|Worm Dragon]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 156; QSD triggers 155-01, 155-02, 156-01, 156-31
+  data: 'godot/data/quests/156-monsters-in-the-desert.tres; quest triggers in godot/data/quest_triggers/: qp103/155-01, qp103/155-02, qp103/156-01, qn-201/156-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

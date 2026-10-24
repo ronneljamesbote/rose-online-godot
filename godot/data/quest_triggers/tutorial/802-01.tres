@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://deqqysgc72sf1"]
+
+[ext_resource type="RoseSkill" uid="uid://bh1156kk5ufiv" path="res://data/skills/17-drive-cart/17-drive-cart.tres" id="1_3ibqe"]
+[ext_resource type="RoseQuest" uid="uid://bd6ayujh1acvr" path="res://data/quests/802-secretly-learning-to-drive.tres" id="2_fq30w"]
+[ext_resource type="RoseItemQuest" uid="uid://dg230e0na71hn" path="res://data/items/quest/98-mildun-s-recommendation.tres" id="3_jxshm"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_habbu"]
+operator = ">="
+value = 50
+
+[sub_resource type="RoseConditionHasSkill" id="RoseConditionHasSkill_jh1le"]
+skill = ExtResource("1_3ibqe")
+has = false
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_7ldnx"]
+quest = ExtResource("2_fq30w")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_tsc6d"]
+quest = ExtResource("2_fq30w")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_2akoh"]
+item = ExtResource("3_jxshm")
+quantity = 1
+
+[resource]
+name = "802-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_habbu"), SubResource("RoseConditionHasSkill_jh1le")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_7ldnx"), SubResource("RoseRewardSelectQuest_tsc6d"), SubResource("RoseRewardAddItem_2akoh")])

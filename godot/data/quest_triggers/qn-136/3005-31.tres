@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://csbxx66dg5s14"]
+
+[ext_resource type="RoseQuest" uid="uid://c24wk4eqwnpum" path="res://data/quests/3005-necessity-of-a-new-shrine-2.tres" id="1_s56c4"]
+[ext_resource type="RoseItemQuest" uid="uid://ceqctpdv3up8j" path="res://data/items/quest/22-iron-fragment.tres" id="2_sbgj3"]
+[ext_resource type="RoseQuestTrigger" uid="uid://ctpk5njf2ht8j" path="res://data/quest_triggers/qn-136/3805-31.tres" id="3_kg81x"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_7n8ng"]
+quest = ExtResource("1_s56c4")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_i3cw1"]
+to = 30
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_wrvws"]
+item = ExtResource("2_sbgj3")
+equipment_index = 13
+count = 18
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_dqyqy"]
+quest = ExtResource("1_s56c4")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_np0kn"]
+item = ExtResource("2_sbgj3")
+quantity = 1
+
+[resource]
+name = "3005-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_7n8ng"), SubResource("RoseConditionRandomPercent_i3cw1"), SubResource("RoseConditionQuestItem_wrvws")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_dqyqy"), SubResource("RoseRewardAddItem_np0kn")])
+next_trigger = ExtResource("3_kg81x")

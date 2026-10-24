@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1061-ferrell-guild-staff-belz|Ferrell Guild Staff Belz]]'
 steps: 2
 source:
-  data: LIST_QUEST.STB row 5005; QSD triggers 5005-01, 5005-02
+  data: 'godot/data/quests/5005-spero-s-top-secret-cart-schematic.tres; quest triggers in godot/data/quest_triggers/: qs10-001/5005-01, qs10-001/5005-02'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

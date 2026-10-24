@@ -1,0 +1,51 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://doq8n71obav8q"]
+
+[ext_resource type="RoseQuest" uid="uid://dyyovso0s58c7" path="res://data/quests/152-lunarian-coffee.tres" id="1_rc234"]
+[ext_resource type="RoseItemQuest" uid="uid://wc05rywglnf7" path="res://data/items/quest/620-lunarian-coffee.tres" id="2_doeik"]
+[ext_resource type="RoseItemConsumable" uid="uid://da6jjcf0igyq7" path="res://data/items/consumable/381-ice-charm.tres" id="3_edtd5"]
+[ext_resource type="RoseItemConsumable" uid="uid://d31jvgpd7q5h0" path="res://data/items/consumable/382-spark-charm.tres" id="4_spstj"]
+[ext_resource type="RoseItemConsumable" uid="uid://bcg7pe73r6vyg" path="res://data/items/consumable/383-blood-charm.tres" id="5_r30p2"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_dg7kk"]
+quest = ExtResource("1_rc234")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_fkv0y"]
+item = ExtResource("2_doeik")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_bmp4o"]
+quest = ExtResource("1_rc234")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_w6yfq"]
+item = ExtResource("2_doeik")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_qv3qc"]
+equation = 3
+value = 60000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_lonpu"]
+equation = 5
+value = 2
+item = ExtResource("3_edtd5")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_jgvni"]
+equation = 5
+value = 2
+item = ExtResource("4_spstj")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_h0371"]
+equation = 5
+value = 2
+item = ExtResource("5_r30p2")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_wuaim"]
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_3tbdg"]
+trigger = "152-03"
+
+[resource]
+name = "152-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_dg7kk"), SubResource("RoseConditionQuestItem_fkv0y")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_bmp4o"), SubResource("RoseRewardRemoveItem_w6yfq"), SubResource("RoseRewardCalculatedMoney_qv3qc"), SubResource("RoseRewardCalculatedItem_lonpu"), SubResource("RoseRewardCalculatedItem_jgvni"), SubResource("RoseRewardCalculatedItem_h0371"), SubResource("RoseRewardRemoveSelectedQuest_wuaim"), SubResource("RoseRewardTrigger_3tbdg")])

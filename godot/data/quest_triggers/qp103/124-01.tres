@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ccgeuh166ab5i"]
+
+[ext_resource type="RoseQuest" uid="uid://cq5q3qa5p0vkl" path="res://data/quests/124-magic-of-anima-lake.tres" id="1_f1hyw"]
+[ext_resource type="RoseQuest" uid="uid://cwo11hemqccek" path="res://data/quests/125-falsehoods.tres" id="2_6sd4l"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_0of03"]
+quest = ExtResource("1_f1hyw")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_0ortk"]
+quest = ExtResource("1_f1hyw")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_qmrog"]
+value = 2000
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_sl87f"]
+quest = ExtResource("2_6sd4l")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_jadin"]
+variable_type = "Episode"
+value = 24
+
+[resource]
+name = "124-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_0of03")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_0ortk"), SubResource("RoseRewardCalculatedExperiencePoints_qmrog"), SubResource("RoseRewardChangeSelectedQuest_sl87f"), SubResource("RoseRewardQuestVariable_jadin")])

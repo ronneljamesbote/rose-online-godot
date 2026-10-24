@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/134-grunter|Grunter]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 3403; QSD triggers 3403-01, 3403-02, 3403-03, 3403-31
+  data: 'godot/data/quests/3403-supplying-training-weapons.tres; quest triggers in godot/data/quest_triggers/: qu03-001/3403-01, qu03-001/3403-02, qu03-001/3403-03, qn-134/3403-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

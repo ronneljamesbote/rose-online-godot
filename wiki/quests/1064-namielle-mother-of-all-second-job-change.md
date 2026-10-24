@@ -7,7 +7,7 @@ npcs:
 - '[[npcs/1007-gypsy-jewel-seller-mina|Gypsy Jewel Seller Mina]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 1064; QSD triggers 1063-01, 1064-01, 1064-31, 1064-32
+  data: 'godot/data/quests/1064-namielle-mother-of-all-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj211-06/1063-01, qj211-06/1064-01, qn-278/1064-31, qn-278/1064-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

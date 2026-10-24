@@ -1,0 +1,45 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://67on8fy60lw5"]
+
+[ext_resource type="RoseQuest" uid="uid://dyeqg8lbx2jd2" path="res://data/quests/151-lunarian-coffee.tres" id="1_gxc22"]
+[ext_resource type="RoseItemQuest" uid="uid://dv0lmafml3av6" path="res://data/items/quest/313-doonga-claw.tres" id="2_12uwb"]
+[ext_resource type="RoseItemConsumable" uid="uid://7q516elf1dk3" path="res://data/items/consumable/6-health-bottle-l.tres" id="3_5pjkx"]
+[ext_resource type="RoseItemConsumable" uid="uid://gqr13pjqlapg" path="res://data/items/consumable/26-mana-bottle-l.tres" id="4_b3yvk"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_owx0w"]
+quest = ExtResource("1_gxc22")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_ytfcf"]
+item = ExtResource("2_12uwb")
+equipment_index = 13
+count = 20
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_1ol7k"]
+quest = ExtResource("1_gxc22")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_yqfyp"]
+item = ExtResource("2_12uwb")
+quantity = 20
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_07ufb"]
+equation = 5
+value = 30
+item = ExtResource("3_5pjkx")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_lxpv2"]
+equation = 5
+value = 30
+item = ExtResource("4_b3yvk")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_sdsos"]
+value = 30000
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_bniex"]
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_ewjbv"]
+trigger = "151-03"
+
+[resource]
+name = "151-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_owx0w"), SubResource("RoseConditionQuestItem_ytfcf")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_1ol7k"), SubResource("RoseRewardRemoveItem_yqfyp"), SubResource("RoseRewardCalculatedItem_07ufb"), SubResource("RoseRewardCalculatedItem_lxpv2"), SubResource("RoseRewardCalculatedExperiencePoints_sdsos"), SubResource("RoseRewardRemoveSelectedQuest_bniex"), SubResource("RoseRewardTrigger_ewjbv")])

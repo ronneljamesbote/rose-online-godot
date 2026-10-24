@@ -1,0 +1,47 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dnsndw4ng3882"]
+
+[ext_resource type="RoseQuest" uid="uid://cinu8uuf0ga1e" path="res://data/quests/1981-zeppastone-wind-gem.tres" id="1_4inc0"]
+[ext_resource type="RoseItemQuest" uid="uid://3k1ronqfm1fe" path="res://data/items/quest/509-zeppastone-wind-gem.tres" id="2_r0fin"]
+[ext_resource type="RoseItemConsumable" uid="uid://td4q0nvqoy8f" path="res://data/items/consumable/2-health-vial-m.tres" id="3_6m678"]
+[ext_resource type="RoseItemConsumable" uid="uid://djpfhj5gyqoeu" path="res://data/items/consumable/22-mana-vial-m.tres" id="4_2uckn"]
+[ext_resource type="RoseQuest" uid="uid://bn7naykus3jfe" path="res://data/quests/1982-the-prince-of-akram.tres" id="5_xj5wb"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_yq5tw"]
+quest = ExtResource("1_4inc0")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_8pfc5"]
+item = ExtResource("2_r0fin")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_6km6r"]
+quest = ExtResource("1_4inc0")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_owfyd"]
+item = ExtResource("2_r0fin")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_13o1l"]
+value = 5000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_ssf8h"]
+equation = 5
+value = 10
+item = ExtResource("3_6m678")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_xtaat"]
+equation = 5
+value = 10
+item = ExtResource("4_2uckn")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_x2oqy"]
+quest = ExtResource("5_xj5wb")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_o8ru6"]
+switch = 128
+value = true
+
+[resource]
+name = "1981-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_yq5tw"), SubResource("RoseConditionQuestItem_8pfc5")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_6km6r"), SubResource("RoseRewardRemoveItem_owfyd"), SubResource("RoseRewardCalculatedExperiencePoints_13o1l"), SubResource("RoseRewardCalculatedItem_ssf8h"), SubResource("RoseRewardCalculatedItem_xtaat"), SubResource("RoseRewardChangeSelectedQuest_x2oqy"), SubResource("RoseRewardSetQuestSwitch_o8ru6")])

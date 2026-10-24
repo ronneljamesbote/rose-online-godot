@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dp0q3u77vir27"]
+
+[ext_resource type="RoseQuest" uid="uid://bmlvj6n8843f8" path="res://data/quests/1008-the-humble-smith.tres" id="1_oosep"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_8gay8"]
+variable_type = "Job"
+value = 3
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_7hque"]
+ability = "Job"
+value = 4
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_l0euy"]
+operator = ">="
+value = 30
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_4dgxg"]
+quest = ExtResource("1_oosep")
+
+[resource]
+name = "1008-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_8gay8"), SubResource("RoseConditionAbilityValue_7hque"), SubResource("RoseConditionAbilityValue_l0euy")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_4dgxg")])

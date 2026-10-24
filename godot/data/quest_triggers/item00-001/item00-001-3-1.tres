@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dabvsst5wmft5"]
+
+[ext_resource type="RoseItemConsumable" uid="uid://7lbemb7bd432" path="res://data/items/consumable/10-vital-water-s.tres" id="1_mkybh"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_3bgvw"]
+switch = 480
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_dbemd"]
+equation = 5
+value = 1
+item = ExtResource("1_mkybh")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_crm1a"]
+switch = 480
+value = true
+
+[resource]
+name = "item00-001-3-1"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_3bgvw")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_dbemd"), SubResource("RoseRewardSetQuestSwitch_crm1a")])

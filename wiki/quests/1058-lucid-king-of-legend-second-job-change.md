@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1064-weapon-craftsman-mairath|Weapon Craftsman Mairath]]'
 steps: 2
 source:
-  data: LIST_QUEST.STB row 1058; QSD triggers 1057-01, 1058-01
+  data: 'godot/data/quests/1058-lucid-king-of-legend-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj111-06/1057-01, qj111-06/1058-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

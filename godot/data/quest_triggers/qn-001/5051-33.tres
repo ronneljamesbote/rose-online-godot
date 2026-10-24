@@ -1,0 +1,27 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ued66g12l2iw"]
+
+[ext_resource type="RoseQuest" uid="uid://rcovrfkbphhi" path="res://data/quests/5051-hunting-practice-1.tres" id="1_6qgmy"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_2gfu0"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cgfk6bx7aalau" path="res://data/quest_triggers/qn-001/5051-34.tres" id="3_e6sf7"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_40075"]
+quest = ExtResource("1_6qgmy")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_bwm3f"]
+item = ExtResource("2_2gfu0")
+equipment_index = 13
+count = 2
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_btyhe"]
+quest = ExtResource("1_6qgmy")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_byr8g"]
+item = ExtResource("2_2gfu0")
+quantity = 1
+
+[resource]
+name = "5051-33"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_40075"), SubResource("RoseConditionQuestItem_bwm3f")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_btyhe"), SubResource("RoseRewardAddItem_byr8g")])
+next_trigger = ExtResource("3_e6sf7")

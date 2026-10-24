@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1064-weapon-craftsman-mairath|Weapon Craftsman Mairath]]'
 steps: 7
 source:
-  data: LIST_QUEST.STB row 1006; QSD triggers 1005-04, 1005-05, 1005-06, 1006-01, 1006-02, 1006-03, 1006-04
+  data: 'godot/data/quests/1006-an-eye-for-the-marketplace.tres; quest triggers in godot/data/quest_triggers/: qj411-01/1005-04, qj411-01/1005-05, qj411-01/1005-06, qj411-01/1006-01, qj411-01/1006-02, qj411-01/1006-03, qj411-01/1006-04'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

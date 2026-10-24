@@ -1,0 +1,42 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ygodgb6flgtl"]
+
+[ext_resource type="RoseItemVehicle" uid="uid://sabfjche2sd8" path="res://data/items/vehicle/1-wooden-frame.tres" id="1_68v43"]
+[ext_resource type="RoseItemVehicle" uid="uid://dq6lqhj5omdca" path="res://data/items/vehicle/101-first-engine.tres" id="2_wkxg8"]
+[ext_resource type="RoseItemVehicle" uid="uid://dvvnqu1v0s4vx" path="res://data/items/vehicle/201-wooden-wheels.tres" id="3_fdw2t"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_a7xne"]
+ability = "UnionPoint5"
+operator = ">="
+value = 160
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_rmbhb"]
+switch = 100
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_74xbi"]
+ability = "UnionPoint5"
+operator = "Subtract"
+value = 160
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_wcl1u"]
+equation = 5
+value = 1
+item = ExtResource("1_68v43")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_m54ha"]
+equation = 5
+value = 1
+item = ExtResource("2_wkxg8")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_s6801"]
+equation = 5
+value = 1
+item = ExtResource("3_fdw2t")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_rcuxs"]
+switch = 100
+value = true
+
+[resource]
+name = "QU05-cart1-all"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_a7xne"), SubResource("RoseConditionQuestSwitch_rmbhb")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_74xbi"), SubResource("RoseRewardCalculatedItem_wcl1u"), SubResource("RoseRewardCalculatedItem_m54ha"), SubResource("RoseRewardCalculatedItem_s6801"), SubResource("RoseRewardSetQuestSwitch_rcuxs")])

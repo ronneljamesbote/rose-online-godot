@@ -6,7 +6,7 @@ status: in-game
 time_limit_minutes: 60
 steps: 3
 source:
-  data: LIST_QUEST.STB row 3101; QSD triggers 3101-31, 3101-32, PvP1301-220
+  data: 'godot/data/quests/3101-wickedness-of-the-righteous-crusaders.tres; quest triggers in godot/data/quest_triggers/: qn-352/3101-31, qn-354/3101-32, PvP1301-220 (named by a reward, no such trigger)'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

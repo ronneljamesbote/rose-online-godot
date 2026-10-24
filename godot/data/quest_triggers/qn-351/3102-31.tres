@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c3hc86ufi8grm"]
+
+[ext_resource type="RoseQuest" uid="uid://k5ayujscu7tv" path="res://data/quests/3102-arrogance-of-the-junon-order.tres" id="1_6j37o"]
+[ext_resource type="RoseMonster" uid="uid://dye8uxaaxf73b" path="res://data/monsters/353-rider-captain.tres" id="2_fw1gm"]
+[ext_resource type="RoseZoneSettings" uid="uid://cp0r2dacxvpfb" path="res://data/zones/5-junon-cartel.tres" id="3_7d1xi"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ubjyi"]
+quest = ExtResource("1_6j37o")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_xwxnp"]
+ability = "Union"
+value = 3
+
+[sub_resource type="RoseRewardSpawnMonster" id="RoseRewardSpawnMonster_0xkrn"]
+monster = ExtResource("2_fw1gm")
+count = 1
+location = "Position"
+zone = ExtResource("3_7d1xi")
+x = 520010.0
+y = 509902.0
+distance = 1
+team = 11
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_pk328"]
+trigger = "PvP1301-120"
+
+[resource]
+name = "3102-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ubjyi"), SubResource("RoseConditionAbilityValue_xwxnp")])
+rewards = Array[Resource]([SubResource("RoseRewardSpawnMonster_0xkrn"), SubResource("RoseRewardTrigger_pk328")])

@@ -1,0 +1,36 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dhuitj71b7613"]
+
+[ext_resource type="RoseQuest" uid="uid://dbpv3hsujjqep" path="res://data/quests/140-the-zeppastone-wind-gem.tres" id="1_yrium"]
+[ext_resource type="RoseItemQuest" uid="uid://3k1ronqfm1fe" path="res://data/items/quest/509-zeppastone-wind-gem.tres" id="2_m2ey3"]
+[ext_resource type="RoseQuest" uid="uid://c7on84e5lrkrc" path="res://data/quests/141-the-prince-of-akram.tres" id="3_3mshp"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_w0g4v"]
+quest = ExtResource("1_yrium")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_mcoov"]
+item = ExtResource("2_m2ey3")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_r56th"]
+quest = ExtResource("1_yrium")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_8rnve"]
+item = ExtResource("2_m2ey3")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_cl3fh"]
+value = 30000
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_f2f5i"]
+quest = ExtResource("3_3mshp")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_d0b5v"]
+variable_type = "Episode"
+value = 40
+
+[resource]
+name = "140-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_w0g4v"), SubResource("RoseConditionQuestItem_mcoov")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_r56th"), SubResource("RoseRewardRemoveItem_8rnve"), SubResource("RoseRewardCalculatedExperiencePoints_cl3fh"), SubResource("RoseRewardChangeSelectedQuest_f2f5i"), SubResource("RoseRewardQuestVariable_d0b5v")])

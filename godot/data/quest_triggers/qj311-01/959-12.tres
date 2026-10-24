@@ -1,0 +1,14 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ddp7e8be3a1q4"]
+
+[ext_resource type="RoseQuest" uid="uid://4wl5w2xgu47o" path="res://data/quests/959-the-essence-of-speed.tres" id="1_b7fyj"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_yiqlc"]
+quest = ExtResource("1_b7fyj")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_ybufc"]
+variable_type = "Timer"
+operator = ">"
+
+[resource]
+name = "959-12"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_yiqlc"), SubResource("RoseConditionQuestVariable_ybufc")])

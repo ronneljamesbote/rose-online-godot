@@ -1,0 +1,40 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cpaw8t8ipy7yb"]
+
+[ext_resource type="RoseQuest" uid="uid://bhvp11ehgx75w" path="res://data/quests/5031-seyon-s-price-checklist-delivery.tres" id="1_862uc"]
+[ext_resource type="RoseItemQuest" uid="uid://ip5ypge6qqyv" path="res://data/items/quest/803-daily-price-checklist.tres" id="2_keyy6"]
+[ext_resource type="RoseNpc" uid="uid://dd4qotedt7dua" path="res://data/npcs/1012-ferrell-guild-staff-ulysses.tres" id="3_inpwl"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_abccx"]
+quest = ExtResource("1_862uc")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_cri65"]
+operator = ">"
+value = 25
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_l81k0"]
+item = ExtResource("2_keyy6")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_wl5ry"]
+npc = ExtResource("3_inpwl")
+
+[sub_resource type="RoseConditionObjectDistance" id="RoseConditionObjectDistance_bbbf6"]
+distance = 5
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_gh1v3"]
+quest = ExtResource("1_862uc")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_htxo2"]
+item = ExtResource("2_keyy6")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_hlrr2"]
+value = 4000
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_s3g60"]
+
+[resource]
+name = "5031-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_abccx"), SubResource("RoseConditionAbilityValue_cri65"), SubResource("RoseConditionQuestItem_l81k0"), SubResource("RoseConditionSelectNpc_wl5ry"), SubResource("RoseConditionObjectDistance_bbbf6")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_gh1v3"), SubResource("RoseRewardRemoveItem_htxo2"), SubResource("RoseRewardCalculatedExperiencePoints_hlrr2"), SubResource("RoseRewardRemoveSelectedQuest_s3g60")])

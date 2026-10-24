@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://h66u6hro0kra"]
+
+[ext_resource type="RoseNpc" uid="uid://c7gxntexjag00" path="res://data/npcs/1036-ferrell-guild-staff-seyon.tres" id="1_23ad3"]
+[ext_resource type="RoseQuest" uid="uid://bhvp11ehgx75w" path="res://data/quests/5031-seyon-s-price-checklist-delivery.tres" id="2_cg877"]
+[ext_resource type="RoseItemQuest" uid="uid://ip5ypge6qqyv" path="res://data/items/quest/803-daily-price-checklist.tres" id="3_mr636"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_m6r4e"]
+operator = "<="
+value = 20
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_67kpa"]
+npc = ExtResource("1_23ad3")
+
+[sub_resource type="RoseConditionObjectDistance" id="RoseConditionObjectDistance_utkxs"]
+distance = 5
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_sw5l6"]
+quest = ExtResource("2_cg877")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_6od8f"]
+quest = ExtResource("2_cg877")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_r30k7"]
+item = ExtResource("3_mr636")
+quantity = 1
+
+[resource]
+name = "5031-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_m6r4e"), SubResource("RoseConditionSelectNpc_67kpa"), SubResource("RoseConditionObjectDistance_utkxs")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_sw5l6"), SubResource("RoseRewardSelectQuest_6od8f"), SubResource("RoseRewardAddItem_r30k7")])

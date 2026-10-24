@@ -178,6 +178,33 @@ fn load_world(vfs: &VirtualFilesystem, strings: &StringDatabase) -> Result<rose_
     rose_game_data::load_world_irose(vfs, strings)
 }
 
+/// The quests and quest triggers from the export, or without one from the iROSE files (the
+/// game checks a trigger's conditions before asking the server to run it).
+fn load_quests(vfs: &VirtualFilesystem, strings: Arc<StringDatabase>) -> Result<QuestDatabase, anyhow::Error> {
+    if let Some(dir) = find_export() {
+        let toml = rose_data_export::Format::Toml;
+        let export = rose_data_export::QuestsExport::from_files_as(toml, |name| {
+            let path = dir.join(rose_data_export::data_file_as(name, toml));
+            match std::fs::read_to_string(&path) {
+                Ok(text) => Ok(Some(text)),
+                Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(None),
+                Err(e) => Err(anyhow::Error::new(e).context(path.display().to_string())),
+            }
+        })?;
+        if let Some(export) = export {
+            godot::global::godot_print!(
+                "rose: {} quests and {} quest triggers from {}",
+                export.quests.len(),
+                export.triggers.len(),
+                dir.display()
+            );
+            return export.to_database(strings, &rose_game_data::irose_codes());
+        }
+    }
+    godot::global::godot_warn!("rose: no quest export (export/data/quests.toml), the quests come from the iROSE files");
+    rose_data_irose::get_quest_database(vfs, strings)
+}
+
 /// The sounds, hit sounds and footsteps from the export, or without one from the iROSE
 /// tables. Only the game reads them (the server's upload doesn't send them).
 fn load_sounds(vfs: &VirtualFilesystem) -> Result<Arc<SoundDatabase>, anyhow::Error> {
@@ -273,7 +300,7 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
     let (skybox, interface) = load_interface(&vfs)?;
     let items = load_items(&vfs, strings.clone())?;
     let (skills, status_effects, job_classes) = load_skills(&vfs, strings.clone())?;
-    let quests = rose_data_irose::get_quest_database(&vfs, strings.clone())?;
+    let quests = load_quests(&vfs, strings.clone())?;
     let npcs = load_npcs(&vfs, strings)?;
     let ltb_event = vfs.read_file::<LtbFile, _>("3DDATA/EVENT/ULNGTB_CON.LTB")?;
     let npc_chr = vfs.read_file::<ChrFile, _>("3DDATA/NPC/LIST_NPC.CHR")?;

@@ -1,0 +1,13 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dxjtfg6788ujm"]
+
+[ext_resource type="RoseItemMaterial" uid="uid://go52fjpbqrv3" path="res://data/items/material/451-salon-coupon.tres" id="1_qp0kd"]
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_w8e2g"]
+item = ExtResource("1_qp0kd")
+equipment_index = 12
+count = 1
+operator = ">="
+
+[resource]
+name = "item12451"
+conditions = Array[Resource]([SubResource("RoseConditionQuestItem_w8e2g")])

@@ -1,0 +1,43 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b2vqxgcxjq8bv"]
+
+[ext_resource type="RoseQuest" uid="uid://dlajyglkgba3a" path="res://data/quests/2051-forgotten-temple-investigation-1.tres" id="1_ofamn"]
+[ext_resource type="RoseItemQuest" uid="uid://6w7cuajufwn" path="res://data/items/quest/498-proof-of-thief-extermination.tres" id="2_csl3q"]
+[ext_resource type="RoseItemQuest" uid="uid://bqjjo13rsp5uw" path="res://data/items/quest/513-resurrection-spellbook.tres" id="3_fbw8d"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bf5fpmfqqpju4" path="res://data/quest_triggers/qp201/2051-15.tres" id="4_ekldp"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_xkjro"]
+quest = ExtResource("1_ofamn")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_o6l0d"]
+item = ExtResource("2_csl3q")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_f4hvp"]
+item = ExtResource("3_fbw8d")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_xqgq0"]
+quest = ExtResource("1_ofamn")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_pdvn2"]
+item = ExtResource("2_csl3q")
+quantity = 1
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_rulxc"]
+item = ExtResource("3_fbw8d")
+quantity = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_e5p5x"]
+variable = 9
+operator = "Subtract"
+value = 1
+
+[resource]
+name = "2051-14"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_xkjro"), SubResource("RoseConditionQuestItem_o6l0d"), SubResource("RoseConditionQuestItem_f4hvp")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_xqgq0"), SubResource("RoseRewardRemoveItem_pdvn2"), SubResource("RoseRewardRemoveItem_rulxc"), SubResource("RoseRewardQuestVariable_e5p5x")])
+next_trigger = ExtResource("4_ekldp")

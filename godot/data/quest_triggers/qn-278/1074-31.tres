@@ -1,0 +1,26 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bhd14qu7sd23d"]
+
+[ext_resource type="RoseQuest" uid="uid://c1laduwh806i2" path="res://data/quests/1074-lillith-woman-of-the-cosmos-second-job-change.tres" id="1_ks7t1"]
+[ext_resource type="RoseQuestTrigger" uid="uid://poejld8h1btx" path="res://data/quest_triggers/qn-278/1074-32.tres" id="2_652lr"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_7juan"]
+quest = ExtResource("1_ks7t1")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_pwjj5"]
+variable = 1
+operator = "<"
+value = 20
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_mqqfg"]
+quest = ExtResource("1_ks7t1")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_mioxa"]
+variable = 1
+operator = "Add"
+value = 1
+
+[resource]
+name = "1074-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_7juan"), SubResource("RoseConditionQuestVariable_pwjj5")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_mqqfg"), SubResource("RoseRewardQuestVariable_mioxa")])
+next_trigger = ExtResource("2_652lr")
