@@ -12,7 +12,9 @@ dev = []
 
 [dependencies]
 # register-docs: the /// comments of our classes show in the editor (Inspector tooltips, class help).
-godot = { version = "0.5.5", features = ["api-4-7", "register-docs"] }
+# experimental-threads: Godot loads resources on worker threads (the Inspector's Quick Load, threaded
+# scene loads), which creates our resource classes there; without it godot-rust panics and the load fails.
+godot = { version = "0.5.5", features = ["api-4-7", "register-docs", "experimental-threads"] }
 rose-data = { path = "../../crates/rose-data" }
 rose-data-irose = { path = "../../crates/rose-data-irose" }
 rose-data-export = { path = "../../crates/rose-data-export" }
