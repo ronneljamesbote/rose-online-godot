@@ -74,7 +74,8 @@ file can be renamed or moved to any folder of its kind. Hover a field in the Ins
 
 ## Changing something
 
-1. Open the resource, change the field in the Inspector, save.
+1. Open the resource, change the field in the Inspector, save. (Or change many in the
+   Game data table, below.)
 2. Export, so the server and the game get it:
 
    ```sh
@@ -106,6 +107,38 @@ reads it from the repository (or from `export/data/` next to `ROSE.exe` in the W
 build). Both build scripts refuse to build when it is out
 of date. To list what differs from iROSE:
 `cargo run --release -p rose-stdb-import -- compare /path/to/data.idx`.
+
+## Many at once: the Game data table
+
+The **Game data** screen at the top of the editor (next to 2D, 3D and Script; the plugin
+`addons/rose_data_tools/`) shows every resource of one kind as a row and its Inspector fields
+as columns, like a spreadsheet:
+
+- **Kind**: the dropdown lists each class found in `data/` with its folder and count
+  (`items/weapon (950)`, `monsters (545)`, `skills (1782)` ...).
+- **Columns**: the tabs are the Inspector's groups ("Combat", "Drops" ...); the id and name
+  always show. `Columns` hides single ones. Click a column name to sort by it.
+- **Filter**: words to find anywhere, or a field and a value: `level>=30`, `run_speed<400`,
+  `name~jelly` (contains), `drop_table=` (no link). All words must match.
+- **Change a cell**: double-click it (or press Enter), type, Enter. With several rows
+  selected (Shift or Ctrl click) the value goes into all of them. Tick boxes and dropdowns
+  work as in the Inspector. Drop a resource from the FileSystem dock on a link cell
+  (a monster's `drop_table`) to link it (in every selected row too); right-click to clear
+  it.
+- **Change...**: set, add to or multiply one field in the selected rows or in every shown
+  row ("multiply `base_price` by 1.1 for all one-handed swords"). Whole-number fields are
+  rounded.
+- **Spreadsheet**: Ctrl+C copies the selected cells, right-click "Copy table" copies the
+  shown rows with the column names. Change them in a spreadsheet and paste back with
+  Ctrl+V: a table that starts with the column names finds each row by its id; other cells
+  paste from the selected cell on. Cells that didn't change, read-only ones and ones that
+  aren't a value of their column (a word in a number field) are left as they are. Links
+  copy as their path (`res://data/drop_tables/147-woopie.tres`).
+- **Duplicate**: copies the selected rows to new files next to them with the next free ids
+  (monsters and NPCs count together), named `<id>-<name>.tres`.
+- Selecting a row shows the resource in the Inspector, and a change made there shows in the
+  table. Every change can be undone (Ctrl+Z). Changed rows have an orange id until saved:
+  `Save` or Ctrl+S writes them. Then export as below.
 
 ## Where it came from
 
