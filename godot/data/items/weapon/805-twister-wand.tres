@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://bcm0kpprjmlga"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_d0i2v"]
+[ext_resource type="RoseSound" uid="uid://osald6eflwq1" path="res://data/sounds/attack/37-sword-001.tres" id="2_qryrc"]
+[ext_resource type="RoseSound" uid="uid://np80gbdh8gn3" path="res://data/sounds/attack/89-magic-001.tres" id="3_tyumd"]
+
 [resource]
 id = 805
 name = "Twister Wand"
@@ -10,7 +14,7 @@ weight = 20
 quality = 97
 icon_index = 1357
 field_model_index = 646
-equip_sound_id = 578
+equip_sound = ExtResource("1_d0i2v")
 equip_stat_1 = "Level"
 equip_stat_1_value = 132
 equip_stat_2 = "Intelligence"
@@ -25,6 +29,6 @@ attack_speed = 11
 motion_type = 14
 is_magic_damage = true
 bullet_effect_id = 161
-attack_start_sound_id = 37
-attack_fire_sound_id = 89
+attack_start_sound = ExtResource("2_qryrc")
+attack_fire_sound = ExtResource("3_tyumd")
 gem_position = 2

@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://obndmfxw4rp5"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_ah8w8"]
+[ext_resource type="RoseSound" uid="uid://bey2khuqu7mu1" path="res://data/sounds/attack/55-spear-001.tres" id="2_47iba"]
+[ext_resource type="RoseHitSounds" uid="uid://d4huxc3qetp2i" path="res://data/hit_sounds/25-spear-hits.tres" id="3_tezvr"]
+
 [resource]
 id = 166
 name = "Iron Spear"
@@ -10,7 +14,7 @@ weight = 30
 quality = 42
 icon_index = 1084
 field_model_index = 466
-equip_sound_id = 577
+equip_sound = ExtResource("1_ah8w8")
 craft_skill_type = 12
 craft_skill_level = 3
 craft_material = 584
@@ -26,6 +30,6 @@ attack_power = 67
 attack_speed = 9
 motion_type = 6
 effect_id = 131
-attack_start_sound_id = 55
-attack_hit_sound_index = 25
+attack_start_sound = ExtResource("2_47iba")
+hit_sounds = ExtResource("3_tezvr")
 gem_position = 2

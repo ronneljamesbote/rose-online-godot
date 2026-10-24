@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://b1t4jtjf3fluh"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_cd96r"]
+[ext_resource type="RoseSound" uid="uid://bey2khuqu7mu1" path="res://data/sounds/attack/55-spear-001.tres" id="2_4llel"]
+[ext_resource type="RoseHitSounds" uid="uid://d4huxc3qetp2i" path="res://data/hit_sounds/25-spear-hits.tres" id="3_9t22n"]
+
 [resource]
 id = 655
 name = "Dragon Spear"
@@ -10,7 +14,7 @@ weight = 50
 quality = 92
 icon_index = 1094
 field_model_index = 475
-equip_sound_id = 577
+equip_sound = ExtResource("1_cd96r")
 equip_stat_1 = "Level"
 equip_stat_1_value = 121
 equip_stat_2 = "Strength"
@@ -22,6 +26,6 @@ attack_power = 209
 attack_speed = 9
 motion_type = 6
 effect_id = 131
-attack_start_sound_id = 55
-attack_hit_sound_index = 25
+attack_start_sound = ExtResource("2_4llel")
+hit_sounds = ExtResource("3_9t22n")
 gem_position = 2

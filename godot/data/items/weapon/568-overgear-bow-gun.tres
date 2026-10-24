@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://f143s6hh0f6"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_xxptp"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_m41iv"]
+
 [resource]
 id = 568
 name = "OverGear Bow Gun"
@@ -10,7 +13,7 @@ weight = 30
 quality = 87
 icon_index = 996
 field_model_index = 369
-equip_sound_id = 578
+equip_sound = ExtResource("1_xxptp")
 equip_stat_1 = "Level"
 equip_stat_1_value = 110
 equip_stat_2 = "Strength"
@@ -22,5 +25,5 @@ attack_power = 183
 attack_speed = 10
 motion_type = 11
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_m41iv")
 gem_position = 1

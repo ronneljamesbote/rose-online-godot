@@ -1,6 +1,8 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://p2jlogoxdmg2"]
 
 [ext_resource type="RoseDropTable" uid="uid://blohjfvioxoog" path="res://data/drop_tables/207-krawfy-king.tres" id="1_sd6lh"]
+[ext_resource type="RoseSound" uid="uid://c3qpuurjiekiw" path="res://data/sounds/mob/233-mob14-n.tres" id="2_ykebo"]
+[ext_resource type="RoseSound" uid="uid://c7i4josxn6vex" path="res://data/sounds/mob/234-mob14-d.tres" id="3_ei8y4"]
 
 [resource]
 id = 212
@@ -21,9 +23,9 @@ run_speed = 710
 ai_file_index = 61
 death_quest_trigger_name = "1055-31"
 npc_type_index = 10
-normal_effect_sound_id = 233
+normal_effect_sound = ExtResource("2_ykebo")
 die_effect_file_id = 1401
-die_sound_id = 234
+die_sound = ExtResource("3_ei8y4")
 drop_table = ExtResource("1_sd6lh")
 drop_money_rate = 15
 drop_item_rate = 82

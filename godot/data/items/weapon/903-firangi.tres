@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://cnrtk3eoux5n3"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_zrzn2"]
+[ext_resource type="RoseSound" uid="uid://osald6eflwq1" path="res://data/sounds/attack/37-sword-001.tres" id="2_grqj5"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_aqeav"]
+
 [resource]
 id = 903
 name = "Firangi "
@@ -10,7 +14,7 @@ weight = 133
 quality = 65
 icon_index = 943
 field_model_index = 903
-equip_sound_id = 577
+equip_sound = ExtResource("1_zrzn2")
 equip_stat_1 = "Strength"
 equip_stat_1_value = 183
 add_stat_1 = "SaveMana"
@@ -22,6 +26,6 @@ attack_power = 135
 attack_speed = 8
 motion_type = 1
 effect_id = 111
-attack_start_sound_id = 37
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_grqj5")
+hit_sounds = ExtResource("3_aqeav")
 gem_position = 2

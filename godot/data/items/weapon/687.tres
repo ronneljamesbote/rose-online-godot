@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://dexcluoku2oa6"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_az0yl"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_izuyu"]
+
 [resource]
 id = 687
 item_class = "Bow"
@@ -8,7 +11,7 @@ weight = 30
 quality = 103
 icon_index = 1189
 field_model_index = 519
-equip_sound_id = 578
+equip_sound = ExtResource("1_az0yl")
 equip_stat_1 = "Level"
 equip_stat_1_value = 145
 equip_stat_2 = "Dexterity"
@@ -20,4 +23,4 @@ attack_power = 267
 attack_speed = 9
 motion_type = 10
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_izuyu")

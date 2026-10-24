@@ -2,6 +2,8 @@
 
 [ext_resource type="RoseSkill" uid="uid://kvqch3j56u15" path="res://data/skills/2021-marksmanship/2021-marksmanship.tres" id="1_ny3em"]
 [ext_resource type="RoseStatusEffect" uid="uid://c43fk10odrqq2" path="res://data/status_effects/15-slow.tres" id="2_idexm"]
+[ext_resource type="RoseSound" uid="uid://42rl1pnpcxo3" path="res://data/sounds/skill/148-heavyarr001.tres" id="3_5k389"]
+[ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="4_yayyp"]
 
 [resource]
 id = 2239
@@ -41,9 +43,9 @@ action_motion_id = 92
 action_motion_speed = 148
 bullet_effect_id = 171
 bullet_point = 1
-bullet_fire_sound_id = 148
+bullet_fire_sound = ExtResource("3_5k389")
 hit_effect_file_id = 110
 hit_effect_point = 3
-hit_sound_id = 67
+hit_sound = ExtResource("4_yayyp")
 hit_dummy_effect_1 = 171
-hit_dummy_sound_1 = 67
+hit_dummy_sound_1 = ExtResource("4_yayyp")

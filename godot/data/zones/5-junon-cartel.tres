@@ -1,5 +1,8 @@
 [gd_resource type="RoseZoneSettings" format=3 uid="uid://cp0r2dacxvpfb"]
 
+[ext_resource type="AudioStreamOggVorbis" path="res://assets/rose/sound/bgm/town02_junon.res" id="1_8aaka"]
+[ext_resource type="RoseFootsteps" uid="uid://6lsmqnunrm1n" path="res://data/footsteps/4-city-of-junon-polis-and-3-more.tres" id="2_4z49r"]
+
 [resource]
 id = 5
 name = "Junon Cartel"
@@ -7,15 +10,15 @@ map_file = "3DDATA\\Maps\\Junon\\JPVP01\\JPVP01.zon"
 start_spot = "start"
 revive_spot = "restore"
 sector_size = 7000
-music_day = "Sound\\BGM\\Town02_junon.ogg"
-music_night = "Sound\\BGM\\Town02_junon.ogg"
+music_day = ExtResource("1_8aaka")
+music_night = ExtResource("1_8aaka")
 sky = 0
 minimap = "3Ddata\\Maps\\Junon\\JPVP01\\minimap.DDS"
 minimap_start_x = 31
 minimap_start_y = 30
 decoration_models = "3DDATA\\\\JUNON\\\\LIST_DECO_JPT.ZSC"
 building_models = "3DDATA\\\\JUNON\\\\LIST_CNST_JPT.ZSC"
-footstep_type = 4
+footsteps = ExtResource("2_4z49r")
 day_cycle = 720
 evening_time = 720
 night_time = 720

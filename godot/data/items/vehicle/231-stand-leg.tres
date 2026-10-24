@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemVehicle" format=3 uid="uid://bm7b8hbbygst4"]
 
+[ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_de44h"]
+[ext_resource type="RoseSound" uid="uid://dd3j6n3svkjur" path="res://data/sounds/avata/701-gear-move.tres" id="2_rypf0"]
+
 [resource]
 id = 231
 name = "Stand Leg"
@@ -10,7 +13,7 @@ weight = 10
 quality = 30
 icon_index = 2243
 field_model_index = 246
-equip_sound_id = 580
+equip_sound = ExtResource("1_de44h")
 craft_skill_type = 22
 craft_skill_level = 1
 craft_material = 1071
@@ -25,5 +28,5 @@ vehicle_part = "Leg"
 version = 30
 move_speed = 40
 move_effect_file_id = 1251
-move_sound_id = 701
+move_sound = ExtResource("2_rypf0")
 bullet_fire_point = 8

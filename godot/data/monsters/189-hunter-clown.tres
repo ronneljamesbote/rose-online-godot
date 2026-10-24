@@ -1,6 +1,8 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://cuvc5bl3y507g"]
 
 [ext_resource type="RoseDropTable" uid="uid://cn08lwmspwata" path="res://data/drop_tables/195-hunter-clown.tres" id="1_by2og"]
+[ext_resource type="RoseSound" uid="uid://c73nv65esog31" path="res://data/sounds/mob/257-mob20-n.tres" id="2_636kd"]
+[ext_resource type="RoseSound" uid="uid://bmfgodktqjj7r" path="res://data/sounds/mob/258-mob20-d.tres" id="3_vld09"]
 
 [resource]
 id = 189
@@ -22,10 +24,10 @@ ai_file_index = 264
 npc_type_index = 6
 right_hand_part_index = 1042
 hit_sound_material_type = 1
-normal_effect_sound_id = 257
+normal_effect_sound = ExtResource("2_636kd")
 hand_hit_effect_id = 403
 die_effect_file_id = 1401
-die_sound_id = 258
+die_sound = ExtResource("3_vld09")
 drop_table = ExtResource("1_by2og")
 drop_money_rate = 25
 drop_item_rate = 38

@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemConsumable" format=3 uid="uid://xx2s6fo28rft"]
 
+[ext_resource type="RoseSound" uid="uid://dwbyekfkxg7c8" path="res://data/sounds/item/584-item-potion.tres" id="1_s7gdu"]
+[ext_resource type="RoseSound" uid="uid://cxrscjnmdhir4" path="res://data/sounds/item/547-useitem-001.tres" id="2_nzt1w"]
+
 [resource]
 id = 104
 name = "Kiwi"
@@ -11,7 +14,7 @@ weight = 1
 quality = 40
 icon_index = 1628
 field_model_index = 141
-equip_sound_id = 584
+equip_sound = ExtResource("1_s7gdu")
 equip_job_class = 10
 equip_stat_1 = "Health"
 equip_stat_1_value = 160
@@ -27,4 +30,4 @@ use_skill_id = 160
 status_effect_id = 1
 status_effect_value = 160
 effect_file_id = 140
-effect_sound_id = 547
+effect_sound = ExtResource("2_nzt1w")

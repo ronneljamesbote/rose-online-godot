@@ -107,7 +107,7 @@ func use_zone(zone: Node, id: int) -> void:
 		player.queue_free()
 	_ambient.clear()
 	for sound in zone.get_ambient_sounds():
-		var stream: AudioStream = RoseSound.stream(sound["path"])
+		var stream: AudioStream = RoseAudio.stream(sound["path"])
 		if stream == null:
 			continue
 		var player := AudioStreamPlayer3D.new()
@@ -136,12 +136,12 @@ func set_time_state(state: String) -> void:
 
 
 func _play_music() -> void:
-	var stream: AudioStream = RoseSound.zone_music(zone_id, _music_night)
+	var stream: AudioStream = RoseAudio.zone_music(zone_id, _music_night)
 	if stream == _music.stream and _music.playing:
 		return
 	_music.stream = stream
 	if log_sounds:
-		print("rose fx: %s music for zone %d %s" % ["night" if _music_night else "day", zone_id, "plays" if stream else "is missing"])
+		print("rose fx: %s music for zone %d %s" % ["night" if _music_night else "day", zone_id, ("plays " + stream.resource_path.get_file()) if stream else "is missing"])
 	if stream:
 		_music.play()
 
@@ -163,7 +163,7 @@ func _process(delta: float) -> void:
 ## Plays a sound once at a position (or following a node), then frees the player.
 func play_at(stream: AudioStream, where, gain := 1.0, what := "") -> void:
 	if log_sounds and what != "":
-		print("rose fx: %s %s" % [what, "plays" if stream else "has no sound"])
+		print("rose fx: %s %s" % [what, ("plays " + stream.resource_path.get_file()) if stream else "has no sound"])
 	if stream == null:
 		return
 	var player := AudioStreamPlayer3D.new()
@@ -196,16 +196,16 @@ func play_ui(stream: AudioStream, gain := GAIN_UI) -> void:
 
 func level_up(entity: Node3D) -> void:
 	spawn_effect(LEVEL_UP_EFFECT, entity)
-	play_at(RoseSound.by_id(LEVEL_UP_SOUND), entity, GAIN_MY_COMBAT if entity.is_me else GAIN_OTHER_COMBAT, "level up")
+	play_at(RoseAudio.by_id(LEVEL_UP_SOUND), entity, GAIN_MY_COMBAT if entity.is_me else GAIN_OTHER_COMBAT, "level up")
 
 
 func picked_up() -> void:
-	play_ui(RoseSound.by_id(PICKUP_SOUND))
+	play_ui(RoseAudio.by_id(PICKUP_SOUND))
 
 
-## A monster or NPC sound: "idle", "die" and so on (RoseSound.npc).
+## A monster or NPC sound: "idle", "die" and so on (RoseAudio.npc).
 func npc_sound(entity: Node3D, kind: String) -> void:
-	play_at(RoseSound.npc(entity.npc_id, kind), entity.global_position, GAIN_NPC, "%s sound of %s" % [kind, entity.label.text])
+	play_at(RoseAudio.npc(entity.npc_id, kind), entity.global_position, GAIN_NPC, "%s sound of %s" % [kind, entity.label.text])
 
 
 ## A monster's death: its sound and its effect.
@@ -335,7 +335,7 @@ func _skill(id: int) -> Dictionary:
 func frame_event(entity: Node3D, event: int) -> void:
 	if entity == null or not is_instance_valid(entity):
 		return
-	var flags: int = RoseSound.event_flags(event)
+	var flags: int = RoseAudio.event_flags(event)
 	if flags == 0:
 		return
 	var skill: int = entity.active_skill()
@@ -349,7 +349,7 @@ func frame_event(entity: Node3D, event: int) -> void:
 		var zone: Node = entity.zone
 		if zone and entity.global_position.y <= zone.get_terrain_height(entity.global_position.x, entity.global_position.z) + 0.05:
 			tile = zone.get_tile_index(entity.global_position.x, entity.global_position.z)
-		play_at(RoseSound.footstep(zone_id, tile), entity.global_position, GAIN_MY_FOOTSTEP if entity.is_me else GAIN_OTHER_FOOTSTEP, "footstep of %s on tile %d" % [entity.label.text, tile])
+		play_at(RoseAudio.footstep(zone_id, tile), entity.global_position, GAIN_MY_FOOTSTEP if entity.is_me else GAIN_OTHER_FOOTSTEP, "footstep of %s on tile %d" % [entity.label.text, tile])
 	if skill > 0:
 		var data := _skill(skill)
 		for i in 4:
@@ -360,7 +360,7 @@ func frame_event(entity: Node3D, event: int) -> void:
 			spawn_effect(data.get("self_effect", ""), attach_point(entity, data.get("bullet_bone", -1)))
 			spawn_effect(data.get("hit", ""), attach_point(entity, data.get("hit_bone", -1)))
 	if flags & SOUND_WEAPON_ATTACK_START:
-		play_at(RoseSound.attack_start(weapon, entity.npc_id if entity.is_monster else 0), entity.global_position, combat_gain, "swing of " + entity.label.text)
+		play_at(RoseAudio.attack_start(weapon, entity.npc_id if entity.is_monster else 0), entity.global_position, combat_gain, "swing of " + entity.label.text)
 	if target == null:
 		return
 	if flags & EFFECT_WEAPON_ATTACK_HIT:
@@ -388,18 +388,18 @@ func frame_event(entity: Node3D, event: int) -> void:
 			if flags & (EFFECT_SKILL_DUMMY_HIT_0 << i):
 				spawn_effect(data.get("dummy_hits", PackedStringArray(["", ""]))[i], target)
 	if flags & SOUND_WEAPON_ATTACK_HIT:
-		play_at(RoseSound.attack_hit(weapon, target.npc_id if target.is_monster else 0), target.global_position, combat_gain, "hit by %s on %s" % [entity.label.text, target.label.text])
+		play_at(RoseAudio.attack_hit(weapon, target.npc_id if target.is_monster else 0), target.global_position, combat_gain, "hit by %s on %s" % [entity.label.text, target.label.text])
 	if flags & SOUND_WEAPON_FIRE_BULLET:
-		play_at(RoseSound.weapon_fire(weapon), entity.global_position, combat_gain, "shot of " + entity.label.text)
+		play_at(RoseAudio.weapon_fire(weapon), entity.global_position, combat_gain, "shot of " + entity.label.text)
 	if skill > 0:
 		if flags & SOUND_SKILL_FIRE_BULLET:
-			play_at(RoseSound.skill(skill, "fire"), entity.global_position, combat_gain, "skill %d fire sound" % skill)
+			play_at(RoseAudio.skill(skill, "fire"), entity.global_position, combat_gain, "skill %d fire sound" % skill)
 		if flags & SOUND_SKILL_HIT:
-			play_at(RoseSound.skill(skill, "hit"), target.global_position, combat_gain, "skill %d hit sound" % skill)
+			play_at(RoseAudio.skill(skill, "hit"), target.global_position, combat_gain, "skill %d hit sound" % skill)
 		if flags & SOUND_SKILL_DUMMY_HIT_0:
-			play_at(RoseSound.skill(skill, "dummy0"), target.global_position, combat_gain, "skill %d dummy0 sound" % skill)
+			play_at(RoseAudio.skill(skill, "dummy0"), target.global_position, combat_gain, "skill %d dummy0 sound" % skill)
 		if flags & SOUND_SKILL_DUMMY_HIT_1:
-			play_at(RoseSound.skill(skill, "dummy1"), target.global_position, combat_gain, "skill %d dummy1 sound" % skill)
+			play_at(RoseAudio.skill(skill, "dummy1"), target.global_position, combat_gain, "skill %d dummy1 sound" % skill)
 
 
 ## What the entity hits: its skill's target while a skill motion plays, else its attack target.

@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://c05ojx5dbfl5r"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_wyice"]
+[ext_resource type="RoseSound" uid="uid://du04g0rrduxg7" path="res://data/sounds/attack/82-gun-001.tres" id="2_386fk"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_fj44o"]
+
 [resource]
 id = 701
 name = "Gloria Gun"
@@ -10,7 +14,7 @@ weight = 15
 quality = 53
 icon_index = 1211
 field_model_index = 533
-equip_sound_id = 578
+equip_sound = ExtResource("1_wyice")
 equip_stat_1 = "Level"
 equip_stat_1_value = 32
 equip_stat_2 = "Concentration"
@@ -21,6 +25,6 @@ attack_power = 57
 attack_speed = 10
 motion_type = 12
 bullet_effect_id = 171
-attack_start_sound_id = 82
-attack_fire_sound_id = 78
+attack_start_sound = ExtResource("2_386fk")
+attack_fire_sound = ExtResource("3_fj44o")
 gem_position = 1

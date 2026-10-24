@@ -58,6 +58,8 @@ pub struct ZoneExport {
     pub start_spot: String,
     #[serde(skip_serializing_if = "is_default")]
     pub revive_spot: String,
+    /// The music, a Godot audio file (`res://assets/rose/sound/bgm/plain01_junon.res`) or a
+    /// sound file in the client data.
     #[serde(skip_serializing_if = "is_default")]
     pub music_day: String,
     #[serde(skip_serializing_if = "is_default")]
@@ -89,9 +91,9 @@ pub struct ZoneExport {
     pub pvp_state: u32,
     #[serde(skip_serializing_if = "is_default")]
     pub planet: u32,
-    /// -1 = none.
-    #[serde(default = "none", skip_serializing_if = "is_none")]
-    pub footstep_type: i32,
+    /// The footstep sounds (a `footsteps.toml` entry), 0 = none.
+    #[serde(skip_serializing_if = "is_default")]
+    pub footsteps: u32,
     #[serde(skip_serializing_if = "is_default")]
     pub sector_size: u32,
     #[serde(skip_serializing_if = "is_default")]
@@ -122,7 +124,7 @@ impl ZoneExport {
             night_time: zone.night_time,
             pvp_state: zone.pvp_state,
             planet: zone.planet,
-            footstep_type: zone.footstep_type.map_or(NONE, |f| f as i32),
+            footsteps: zone.footstep_type.unwrap_or(0),
             sector_size: zone.sector_size,
             vehicle_use_flags: zone.vehicle_use_flags,
         }
@@ -161,7 +163,7 @@ impl ZoneExport {
             night_time: self.night_time,
             pvp_state: self.pvp_state,
             planet: self.planet,
-            footstep_type: optional(self.footstep_type, "footstep type")?,
+            footstep_type: (self.footsteps != 0).then_some(self.footsteps),
             sector_size: self.sector_size,
             vehicle_use_flags: self.vehicle_use_flags,
         })
@@ -590,9 +592,19 @@ impl WorldExport {
 }
 
 /// Every difference between two lists of zone settings (by their debug output, so every
-/// field counts).
+/// field counts). Music counts by `sound_stem`: a client file and its imported copy are the
+/// same music.
 pub fn compare_zone_settings(a: &[ZoneSettings], b: &[ZoneSettings]) -> Vec<String> {
-    let by_id = |list: &[ZoneSettings]| list.iter().map(|z| (z.id.get(), format!("{z:#?}"))).collect::<BTreeMap<_, _>>();
+    let by_id = |list: &[ZoneSettings]| {
+        list.iter()
+            .map(|z| {
+                let mut z = z.clone();
+                z.music_day = crate::sounds::sound_stem(&z.music_day);
+                z.music_night = crate::sounds::sound_stem(&z.music_night);
+                (z.id.get(), format!("{z:#?}"))
+            })
+            .collect::<BTreeMap<_, _>>()
+    };
     compare_text("zone", by_id(a), by_id(b))
 }
 

@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://cqk52jd3fv0rr"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_cli4k"]
+[ext_resource type="RoseSound" uid="uid://bmjtbe7sjc48t" path="res://data/sounds/attack/63-axe-001.tres" id="2_vyt0w"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_byx1k"]
+
 [resource]
 id = 862
 name = "Spirits Dual Wield"
@@ -10,7 +14,7 @@ weight = 30
 quality = 94
 icon_index = 1430
 field_model_index = 743
-equip_sound_id = 577
+equip_sound = ExtResource("1_cli4k")
 equip_stat_1 = "Level"
 equip_stat_1_value = 125
 equip_stat_2 = "Dexterity"
@@ -22,6 +26,6 @@ attack_power = 238
 attack_speed = 11
 motion_type = 7
 effect_id = 111
-attack_start_sound_id = 63
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_vyt0w")
+hit_sounds = ExtResource("3_byx1k")
 gem_position = 4

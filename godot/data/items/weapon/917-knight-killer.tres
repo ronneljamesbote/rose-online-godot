@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://d2rmn4iswdh0o"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_gb7lh"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_e5eg1"]
+
 [resource]
 id = 917
 name = "Knight Killer"
@@ -10,7 +13,7 @@ weight = 59
 quality = 73
 icon_index = 1024
 field_model_index = 917
-equip_sound_id = 578
+equip_sound = ExtResource("1_gb7lh")
 equip_stat_1 = "Strength"
 equip_stat_1_value = 154
 add_stat_1 = "AttackSpeed"
@@ -22,5 +25,5 @@ attack_power = 179
 attack_speed = 9
 motion_type = 11
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_e5eg1")
 gem_position = 1

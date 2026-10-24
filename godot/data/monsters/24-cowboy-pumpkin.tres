@@ -1,6 +1,7 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://bjwu8laisb3ag"]
 
 [ext_resource type="RoseDropTable" uid="uid://dg5hskh3qoghk" path="res://data/drop_tables/111-cowboy-pumpkin.tres" id="1_f710r"]
+[ext_resource type="RoseSound" uid="uid://js7qhkoxid3m" path="res://data/sounds/mob/182-mob01-d.tres" id="2_w0pd4"]
 
 [resource]
 id = 24
@@ -23,7 +24,7 @@ npc_type_index = 4
 hit_sound_material_type = 1
 hand_hit_effect_id = 403
 die_effect_file_id = 1401
-die_sound_id = 182
+die_sound = ExtResource("2_w0pd4")
 drop_table = ExtResource("1_f710r")
 drop_money_rate = 15
 drop_item_rate = 65

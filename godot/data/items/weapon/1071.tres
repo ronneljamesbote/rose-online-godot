@@ -1,9 +1,12 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://05xawqyemaoa"]
 
+[ext_resource type="RoseSound" uid="uid://du04g0rrduxg7" path="res://data/sounds/attack/82-gun-001.tres" id="1_d9oe7"]
+[ext_resource type="RoseHitSounds" uid="uid://db1xofs8p4ny5" path="res://data/hit_sounds/35-gun-hits.tres" id="2_dv4s7"]
+
 [resource]
 id = 1071
 quality = 50
 bullet_effect_id = 431
-attack_fire_sound_id = 82
-attack_hit_sound_index = 35
+attack_fire_sound = ExtResource("1_d9oe7")
+hit_sounds = ExtResource("2_dv4s7")
 gem_position = 50

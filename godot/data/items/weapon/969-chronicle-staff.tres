@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://dd2p6qsqdqh11"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_0zztv"]
+[ext_resource type="RoseSound" uid="uid://d3hdp37emo7p0" path="res://data/sounds/attack/72-bow-002.tres" id="2_0pc4c"]
+[ext_resource type="RoseHitSounds" uid="uid://d4huxc3qetp2i" path="res://data/hit_sounds/25-spear-hits.tres" id="3_wxugp"]
+
 [resource]
 id = 969
 name = "Chronicle Staff"
@@ -10,7 +14,7 @@ weight = 135
 quality = 71
 icon_index = 1318
 field_model_index = 969
-equip_sound_id = 578
+equip_sound = ExtResource("1_0zztv")
 equip_stat_1 = "Intelligence"
 equip_stat_1_value = 175
 add_stat_1 = "SaveMana"
@@ -23,6 +27,6 @@ attack_speed = 9
 motion_type = 6
 is_magic_damage = true
 effect_id = 131
-attack_start_sound_id = 72
-attack_hit_sound_index = 25
+attack_start_sound = ExtResource("2_0pc4c")
+hit_sounds = ExtResource("3_wxugp")
 gem_position = 2

@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://bt7qaol3en7ka"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_0tkp2"]
+[ext_resource type="RoseSound" uid="uid://d3hdp37emo7p0" path="res://data/sounds/attack/72-bow-002.tres" id="2_u0o7v"]
+[ext_resource type="RoseHitSounds" uid="uid://d4huxc3qetp2i" path="res://data/hit_sounds/25-spear-hits.tres" id="3_g9p7r"]
+
 [resource]
 id = 970
 item_class = "MagicStaff"
@@ -8,7 +12,7 @@ weight = 12
 quality = 28
 icon_index = 1319
 field_model_index = 970
-equip_sound_id = 578
+equip_sound = ExtResource("1_0tkp2")
 equip_stat_1 = "Intelligence"
 equip_stat_1_value = 9
 add_stat_1 = "SaveMana"
@@ -21,6 +25,6 @@ attack_speed = 10
 motion_type = 6
 is_magic_damage = true
 effect_id = 131
-attack_start_sound_id = 72
-attack_hit_sound_index = 25
+attack_start_sound = ExtResource("2_u0o7v")
+hit_sounds = ExtResource("3_g9p7r")
 gem_position = 2

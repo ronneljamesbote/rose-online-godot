@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://cuwlwyuoli2hc"]
 
+[ext_resource type="RoseSound" uid="uid://bjdly3xikd2h4" path="res://data/sounds/item/576-item-weapon.tres" id="1_lvlz0"]
+[ext_resource type="RoseSound" uid="uid://bmjtbe7sjc48t" path="res://data/sounds/attack/63-axe-001.tres" id="2_77cbd"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_vlakq"]
+
 [resource]
 id = 635
 item_class = "TwoHandedAxe"
@@ -8,7 +12,7 @@ weight = 60
 quality = 110
 icon_index = 1138
 field_model_index = 450
-equip_sound_id = 576
+equip_sound = ExtResource("1_lvlz0")
 equip_stat_1 = "Level"
 equip_stat_1_value = 162
 equip_stat_2 = "Strength"
@@ -20,6 +24,6 @@ attack_power = 339
 attack_speed = 11
 motion_type = 8
 effect_id = 141
-attack_start_sound_id = 63
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_77cbd")
+hit_sounds = ExtResource("3_vlakq")
 gem_position = 2

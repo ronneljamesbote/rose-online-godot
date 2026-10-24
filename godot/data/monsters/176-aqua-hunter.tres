@@ -1,6 +1,8 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://bg8kawb5lpeav"]
 
 [ext_resource type="RoseDropTable" uid="uid://bawvv8vuolw6k" path="res://data/drop_tables/190-aqua-hunter.tres" id="1_y7gy1"]
+[ext_resource type="RoseSound" uid="uid://bmkf0tt1l8jbh" path="res://data/sounds/mob/253-mob19-n.tres" id="2_rorom"]
+[ext_resource type="RoseSound" uid="uid://dj6vbiqa3srn4" path="res://data/sounds/mob/254-mob19-d.tres" id="3_7jhtp"]
 
 [resource]
 id = 176
@@ -22,9 +24,9 @@ ai_file_index = 28
 death_quest_trigger_name = "858-37"
 npc_type_index = 6
 right_hand_part_index = 1043
-normal_effect_sound_id = 253
+normal_effect_sound = ExtResource("2_rorom")
 die_effect_file_id = 1401
-die_sound_id = 254
+die_sound = ExtResource("3_7jhtp")
 drop_table = ExtResource("1_y7gy1")
 drop_money_rate = 15
 drop_item_rate = 65

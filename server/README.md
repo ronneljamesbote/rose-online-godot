@@ -153,12 +153,15 @@ The import tool is `import/` (`rose-stdb-import`, built into the image):
   zone files in `export/zones/` and the game data in `export/data/` (as JSON; its items,
   monsters, NPCs, drop tables, shop tabs, skills, status effects, job classes, zone
   settings, warp gates, recipes and new characters replace the iROSE tables they come from,
-  which are then not sent) (`ROSE_EXPORT` names another export folder; `ROSE_MOTIONS`,
+  which are then not sent; the sounds in it are not sent, as the server plays none)
+  (`ROSE_EXPORT` names another export folder; `ROSE_MOTIONS`,
   `ROSE_ZONES` and `ROSE_DATA` point at single parts elsewhere).
 - `rose-stdb-import compare <data.idx>` lists every value in `export/data/` that
   differs from the iROSE tables (one shop place, which named an item that doesn't exist,
   and the new characters' starting weapons, which the game added in code before), and every
-  motion length or hit frame in `export/motions.toml` that differs from the ZMO files.
+  motion length or hit frame in `export/motions.toml` that differs from the ZMO files, and
+  every sound, hit sound or footstep in `export/data/` that differs from FILE_SOUND.STB,
+  LIST_HITSOUND.STB and LIST_STEPSOUND.STB (a sound is the same when it plays the same file).
 - `rose-stdb-import list <data.idx>` shows which files the databases read, per folder;
   `time <data.idx>` how long building them takes.
 

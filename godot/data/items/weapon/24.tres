@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://itw7w3ysjnrg"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_y7l47"]
+[ext_resource type="RoseSound" uid="uid://b8d8k6psw0js4" path="res://data/sounds/attack/38-sword-002.tres" id="2_h3mr9"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_zb0of"]
+
 [resource]
 id = 24
 item_class = "OneHandedSword"
@@ -7,7 +11,7 @@ base_price = 816000
 weight = 40
 quality = 89
 field_model_index = 324
-equip_sound_id = 577
+equip_sound = ExtResource("1_y7l47")
 craft_skill_level = 13
 equip_stat_1 = "Level"
 equip_stat_1_value = 163
@@ -20,6 +24,6 @@ attack_power = 271
 attack_speed = 11
 motion_type = 1
 effect_id = 111
-attack_start_sound_id = 38
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_h3mr9")
+hit_sounds = ExtResource("3_zb0of")
 gem_position = 2

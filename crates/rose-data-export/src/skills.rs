@@ -245,13 +245,13 @@ pub struct SkillExport {
     #[serde(skip_serializing_if = "is_default")]
     pub bullet_point: u32,
     #[serde(skip_serializing_if = "is_default")]
-    pub bullet_fire_sound_id: u16,
+    pub bullet_fire_sound: u16,
     #[serde(skip_serializing_if = "is_default")]
     pub hit_effect_file_id: u16,
     #[serde(default = "no_point", skip_serializing_if = "is_no_point")]
     pub hit_effect_point: i32,
     #[serde(skip_serializing_if = "is_default")]
-    pub hit_sound_id: u16,
+    pub hit_sound: u16,
     #[serde(skip_serializing_if = "is_default")]
     pub hit_dummy_effect_1: u16,
     #[serde(skip_serializing_if = "is_default")]
@@ -311,10 +311,10 @@ impl SkillExport {
             action_motion_speed: speed_percent(skill.action_motion_speed),
             bullet_effect_id: number(skill.bullet_effect_id, EffectId::get),
             bullet_point: skill.bullet_link_dummy_bone_id,
-            bullet_fire_sound_id: number(skill.bullet_fire_sound_id, SoundId::get),
+            bullet_fire_sound: number(skill.bullet_fire_sound_id, SoundId::get),
             hit_effect_file_id: number(skill.hit_effect_file_id, EffectFileId::get),
             hit_effect_point: point(skill.hit_link_dummy_bone_id),
-            hit_sound_id: number(skill.hit_sound_id, SoundId::get),
+            hit_sound: number(skill.hit_sound_id, SoundId::get),
             hit_dummy_effect_1: number(skill.hit_dummy_effect_file_id[0], EffectFileId::get),
             hit_dummy_effect_2: number(skill.hit_dummy_effect_file_id[1], EffectFileId::get),
             hit_dummy_sound_1: number(skill.hit_dummy_sound_id[0], SoundId::get),
@@ -446,7 +446,7 @@ impl SkillExport {
             basic_command: self.basic_command,
             bullet_effect_id: EffectId::new(self.bullet_effect_id),
             bullet_link_dummy_bone_id: self.bullet_point,
-            bullet_fire_sound_id: SoundId::new(self.bullet_fire_sound_id),
+            bullet_fire_sound_id: SoundId::new(self.bullet_fire_sound),
             cast_range: self.cast_range,
             casting_motion_id: motion(self.casting_motion_id),
             casting_motion_speed: speed(self.casting_motion_speed),
@@ -463,7 +463,7 @@ impl SkillExport {
             harm: self.harm,
             hit_effect_file_id: EffectFileId::new(self.hit_effect_file_id),
             hit_link_dummy_bone_id: point_of(self.hit_effect_point),
-            hit_sound_id: SoundId::new(self.hit_sound_id),
+            hit_sound_id: SoundId::new(self.hit_sound),
             hit_dummy_effect_file_id: [
                 EffectFileId::new(self.hit_dummy_effect_1),
                 EffectFileId::new(self.hit_dummy_effect_2),

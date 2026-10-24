@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://bcwvdj2acq5xt"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_orndt"]
+[ext_resource type="RoseSound" uid="uid://osald6eflwq1" path="res://data/sounds/attack/37-sword-001.tres" id="2_znn4h"]
+[ext_resource type="RoseSound" uid="uid://np80gbdh8gn3" path="res://data/sounds/attack/89-magic-001.tres" id="3_98ab6"]
+
 [resource]
 id = 335
 name = "Silence Wand"
@@ -10,7 +14,7 @@ weight = 5
 quality = 43
 icon_index = 1330
 field_model_index = 635
-equip_sound_id = 578
+equip_sound = ExtResource("1_orndt")
 craft_skill_type = 15
 craft_skill_level = 3
 craft_material = 724
@@ -29,6 +33,6 @@ attack_speed = 12
 motion_type = 14
 is_magic_damage = true
 bullet_effect_id = 214
-attack_start_sound_id = 37
-attack_fire_sound_id = 89
+attack_start_sound = ExtResource("2_znn4h")
+attack_fire_sound = ExtResource("3_98ab6")
 gem_position = 2

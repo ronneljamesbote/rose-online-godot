@@ -1,6 +1,7 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://c45jt0se33nyr"]
 
 [ext_resource type="RoseDropTable" uid="uid://c3asl30swfhnb" path="res://data/drop_tables/107-spotted-choropy.tres" id="1_8ty5n"]
+[ext_resource type="RoseSound" uid="uid://js7qhkoxid3m" path="res://data/sounds/mob/182-mob01-d.tres" id="2_bovqb"]
 
 [resource]
 id = 15
@@ -24,7 +25,7 @@ npc_type_index = 2
 hit_sound_material_type = 1
 hand_hit_effect_id = 403
 die_effect_file_id = 1401
-die_sound_id = 182
+die_sound = ExtResource("2_bovqb")
 drop_table = ExtResource("1_8ty5n")
 drop_money_rate = 12
 drop_item_rate = 65

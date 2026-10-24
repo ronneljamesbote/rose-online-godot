@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://ct5yrhheb15v0"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_z0pyx"]
+[ext_resource type="RoseSound" uid="uid://coa6mw77434ix" path="res://data/sounds/attack/84-gun-003.tres" id="2_mkx5m"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_7epip"]
+
 [resource]
 id = 243
 name = "Piercing Gun"
@@ -10,7 +14,7 @@ weight = 30
 quality = 77
 icon_index = 1222
 field_model_index = 543
-equip_sound_id = 578
+equip_sound = ExtResource("1_z0pyx")
 craft_skill_type = 14
 craft_skill_level = 8
 craft_material = 662
@@ -26,6 +30,6 @@ attack_power = 179
 attack_speed = 11
 motion_type = 12
 bullet_effect_id = 174
-attack_start_sound_id = 84
-attack_fire_sound_id = 78
+attack_start_sound = ExtResource("2_mkx5m")
+attack_fire_sound = ExtResource("3_7epip")
 gem_position = 1

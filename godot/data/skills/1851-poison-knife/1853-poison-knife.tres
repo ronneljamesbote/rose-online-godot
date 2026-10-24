@@ -2,6 +2,8 @@
 
 [ext_resource type="RoseSkill" uid="uid://snetdougy40b" path="res://data/skills/1831-mana-blood/1831-mana-blood.tres" id="1_wx058"]
 [ext_resource type="RoseStatusEffect" uid="uid://f0qogt2u3ycl" path="res://data/status_effects/9-poisoned-3.tres" id="2_xp15q"]
+[ext_resource type="RoseSound" uid="uid://42rl1pnpcxo3" path="res://data/sounds/skill/148-heavyarr001.tres" id="3_dlwf3"]
+[ext_resource type="RoseSound" uid="uid://8jup5ps5h8pc" path="res://data/sounds/skill/1563-point-shot04.tres" id="4_a75xx"]
 
 [resource]
 id = 1853
@@ -36,6 +38,6 @@ casting_effect_2_point = 3
 action_motion_id = 211
 bullet_effect_id = 276
 bullet_point = 1
-bullet_fire_sound_id = 148
+bullet_fire_sound = ExtResource("3_dlwf3")
 hit_effect_file_id = 1040
-hit_sound_id = 1563
+hit_sound = ExtResource("4_a75xx")

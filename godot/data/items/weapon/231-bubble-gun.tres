@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://dlpw6k6u08oy3"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_5psol"]
+[ext_resource type="RoseSound" uid="uid://du04g0rrduxg7" path="res://data/sounds/attack/82-gun-001.tres" id="2_zqtl5"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_cyx0g"]
+
 [resource]
 id = 231
 name = "Bubble Gun"
@@ -10,7 +14,7 @@ weight = 10
 quality = 33
 icon_index = 1209
 field_model_index = 531
-equip_sound_id = 578
+equip_sound = ExtResource("1_5psol")
 equip_stat_1 = "Level"
 equip_stat_1_value = 10
 equip_stat_2 = "Concentration"
@@ -21,6 +25,6 @@ attack_power = 24
 attack_speed = 11
 motion_type = 12
 bullet_effect_id = 175
-attack_start_sound_id = 82
-attack_fire_sound_id = 78
+attack_start_sound = ExtResource("2_zqtl5")
+attack_fire_sound = ExtResource("3_cyx0g")
 gem_position = 1

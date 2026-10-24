@@ -8,7 +8,8 @@
 //!                                          (items, monsters, NPCs, shop tabs, drop tables,
 //!                                          skills, status effects, job classes, zones, warp
 //!                                          gates, recipes, new characters, motion
-//!                                          lengths and hit frames against the ZMO files)
+//!                                          lengths and hit frames against the ZMO files,
+//!                                          sounds, hit sounds and footsteps)
 //!
 //! `pack` writes upload-NNN.json files, each the JSON argument list of the module's
 //! `upload_game_files` reducer (well under the server's request size limit), plus manifest.json.
@@ -98,10 +99,10 @@ fn main() {
     let vfs = VirtualFilesystem::new(vec![
         Box::new(export_device),
         Box::new(RecordingDevice { inner: VfsIndex::load(data_idx).expect("load data.idx"), read }),
-        Box::new(RecordingDevice { inner: HostFilesystemDevice::new(root), read }),
+        Box::new(RecordingDevice { inner: HostFilesystemDevice::new(root.clone()), read }),
     ]);
     if mode == "compare" {
-        compare(&vfs, &data_dir, data_files == 0);
+        compare(&vfs, &data_dir, data_files == 0, &root);
         return;
     }
     let started = Instant::now();
@@ -278,7 +279,7 @@ fn read_export(dir: &Path) -> BTreeMap<PathBuf, Vec<u8>> {
 /// The same-data check: loads the items, monsters, NPCs, shop tabs, drop tables, skills,
 /// status effects, job classes, zone settings, warp gates, crafting recipes and new
 /// characters from the iROSE tables and from the export and prints every value that differs.
-fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool) {
+fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool, root: &Path) {
     if no_export {
         eprintln!("compare: no export in {}", data_dir.display());
         std::process::exit(1);
@@ -392,10 +393,56 @@ fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool) {
             );
         }
     }
+    // Only the game plays sounds, so the upload doesn't carry them: read them from the export.
+    let toml = rose_data_export::Format::Toml;
+    let read = |name: &str| {
+        let path = data_dir.join(rose_data_export::data_file_as(name, toml));
+        match std::fs::read_to_string(&path) {
+            Ok(text) => Ok(Some(text)),
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(None),
+            Err(e) => Err(anyhow::Error::new(e).context(path.display().to_string())),
+        }
+    };
+    match rose_data_export::SoundsExport::from_files_as(toml, read).expect("read the sound export") {
+        None => println!("sounds: no export (sounds.toml ...), skipped"),
+        Some(export) => {
+            let started = Instant::now();
+            let irose_sounds = rose_data_irose::get_sound_database(vfs).expect("iROSE sounds");
+            let irose_ms = started.elapsed().as_millis();
+            let started = Instant::now();
+            let sounds = export.to_database().expect("exported sounds");
+            let export_ms = started.elapsed().as_millis();
+            // The client data names some files it doesn't have; the game plays nothing for them.
+            let has_file = |path: &str| path.starts_with("res://") || client_file_exists(root, path);
+            differences.extend(rose_data_export::compare_sound_databases(&irose_sounds, &sounds, has_file));
+            println!(
+                "sounds: {} sounds, {} hit sound sets, {} footstep sets; iROSE tables {irose_ms} ms, export {export_ms} ms",
+                export.sounds.len(),
+                export.hit_sounds.len(),
+                export.footsteps.len(),
+            );
+        }
+    }
     for line in &differences {
         println!("{line}");
     }
     println!("{} values differ", differences.len());
+}
+
+/// Whether the client folder has the file at `path` (a client path such as
+/// `Sound\attack\Sword_001.wav`), ignoring case and slash direction as the game does.
+fn client_file_exists(root: &Path, path: &str) -> bool {
+    let mut at = root.to_path_buf();
+    for part in path.replace('\\', "/").split('/').filter(|p| !p.is_empty()) {
+        let Some(entry) = std::fs::read_dir(&at)
+            .ok()
+            .and_then(|dir| dir.flatten().find(|e| e.file_name().to_string_lossy().eq_ignore_ascii_case(part)))
+        else {
+            return false;
+        };
+        at = entry.path();
+    }
+    at.is_file()
 }
 
 /// For each zone the uploaded files change (`export/zones/`), how far its spawn points,

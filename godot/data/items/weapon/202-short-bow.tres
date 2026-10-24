@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://bq8je3uryubjk"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_gn75h"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_24h6v"]
+
 [resource]
 id = 202
 name = "Short Bow"
@@ -10,7 +13,7 @@ weight = 5
 quality = 32
 icon_index = 1158
 field_model_index = 502
-equip_sound_id = 578
+equip_sound = ExtResource("1_gn75h")
 equip_stat_1 = "Level"
 equip_stat_1_value = 10
 equip_stat_2 = "Dexterity"
@@ -21,4 +24,4 @@ attack_power = 23
 attack_speed = 10
 motion_type = 10
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_24h6v")

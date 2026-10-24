@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://3jjtnr3y5aq8"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_2sxcu"]
+[ext_resource type="RoseSound" uid="uid://bey2khuqu7mu1" path="res://data/sounds/attack/55-spear-001.tres" id="2_wss8l"]
+[ext_resource type="RoseHitSounds" uid="uid://d4huxc3qetp2i" path="res://data/hit_sounds/25-spear-hits.tres" id="3_4fdlt"]
+
 [resource]
 id = 646
 name = "Lightning Spear"
@@ -10,7 +14,7 @@ weight = 30
 quality = 75
 icon_index = 1088
 field_model_index = 470
-equip_sound_id = 577
+equip_sound = ExtResource("1_2sxcu")
 equip_stat_1 = "Level"
 equip_stat_1_value = 82
 equip_stat_2 = "Strength"
@@ -22,6 +26,6 @@ attack_power = 137
 attack_speed = 10
 motion_type = 6
 effect_id = 131
-attack_start_sound_id = 55
-attack_hit_sound_index = 25
+attack_start_sound = ExtResource("2_wss8l")
+hit_sounds = ExtResource("3_4fdlt")
 gem_position = 2

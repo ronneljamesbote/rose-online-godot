@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://rlo1enf6vyok"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_p3srj"]
+[ext_resource type="RoseSound" uid="uid://coa6mw77434ix" path="res://data/sounds/attack/84-gun-003.tres" id="2_rt0ep"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_78u3e"]
+
 [resource]
 id = 240
 name = "Sniper Gun"
@@ -10,7 +14,7 @@ weight = 30
 quality = 68
 icon_index = 1218
 field_model_index = 540
-equip_sound_id = 578
+equip_sound = ExtResource("1_p3srj")
 craft_skill_type = 14
 craft_skill_level = 6
 craft_material = 659
@@ -26,6 +30,6 @@ attack_power = 137
 attack_speed = 11
 motion_type = 12
 bullet_effect_id = 174
-attack_start_sound_id = 84
-attack_fire_sound_id = 78
+attack_start_sound = ExtResource("2_rt0ep")
+attack_fire_sound = ExtResource("3_78u3e")
 gem_position = 1

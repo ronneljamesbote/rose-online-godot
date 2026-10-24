@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://ddjjubc5min5f"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_z4zkg"]
+[ext_resource type="RoseSound" uid="uid://coa6mw77434ix" path="res://data/sounds/attack/84-gun-003.tres" id="2_7zuqr"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_lz8h4"]
+
 [resource]
 id = 962
 item_class = "Launcher"
@@ -8,7 +12,7 @@ weight = 23
 quality = 31
 icon_index = 1277
 field_model_index = 962
-equip_sound_id = 577
+equip_sound = ExtResource("1_z4zkg")
 equip_stat_1 = "Strength"
 equip_stat_1_value = 4294967293
 durability = 49
@@ -18,6 +22,6 @@ attack_power = 27
 attack_speed = 10
 motion_type = 9
 bullet_effect_id = 191
-attack_start_sound_id = 84
-attack_fire_sound_id = 78
+attack_start_sound = ExtResource("2_7zuqr")
+attack_fire_sound = ExtResource("3_lz8h4")
 gem_position = 1

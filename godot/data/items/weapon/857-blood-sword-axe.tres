@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://lduam3jtkiou"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_b57e2"]
+[ext_resource type="RoseSound" uid="uid://bmjtbe7sjc48t" path="res://data/sounds/attack/63-axe-001.tres" id="2_bmvgy"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_nmwa9"]
+
 [resource]
 id = 857
 name = "Blood Sword & Axe"
@@ -10,7 +14,7 @@ weight = 35
 quality = 80
 icon_index = 1424
 field_model_index = 738
-equip_sound_id = 577
+equip_sound = ExtResource("1_b57e2")
 equip_stat_1 = "Level"
 equip_stat_1_value = 93
 equip_stat_2 = "Dexterity"
@@ -22,6 +26,6 @@ attack_power = 158
 attack_speed = 10
 motion_type = 7
 effect_id = 111
-attack_start_sound_id = 63
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_bmvgy")
+hit_sounds = ExtResource("3_nmwa9")
 gem_position = 4

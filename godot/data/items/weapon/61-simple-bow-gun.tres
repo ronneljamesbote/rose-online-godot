@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://de84kajv02nk8"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_hgkmz"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_469r4"]
+
 [resource]
 id = 61
 name = "Simple Bow Gun"
@@ -10,7 +13,7 @@ weight = 10
 quality = 44
 icon_index = 988
 field_model_index = 361
-equip_sound_id = 578
+equip_sound = ExtResource("1_hgkmz")
 craft_skill_type = 13
 craft_skill_level = 2
 craft_material = 631
@@ -26,5 +29,5 @@ attack_power = 52
 attack_speed = 10
 motion_type = 11
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_469r4")
 gem_position = 1

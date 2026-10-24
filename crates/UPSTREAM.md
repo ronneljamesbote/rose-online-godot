@@ -57,7 +57,11 @@ It also reads the zone layouts and hit markers exported from the Godot scenes an
 motions file no ZMO file is read: rose-data-irose's motion loaders take the motion file data
 from a function (`get_character_motion_database_with`, `get_npc_motions_with`,
 `get_npc_database_with`; `zmo_motion_file_data` is the ZMO one), and rose-data's
-`set_motion_timing`, which patched the ZMO timings afterwards, is gone. The STB
+`set_motion_timing`, which patched the ZMO timings afterwards, is gone. For the sounds
+(`export/data/sounds.toml`, `hit-sounds.toml`, `footsteps.toml`) rose-data's `SoundData` is a
+number and a file path (a client path or a Godot `res://` path; `max_mix_count`, which nothing
+read, is gone), the sound database got accessors for the hit and step tables, and a zone's
+`background_music_day`/`_night` are paths (`Option<String>`) instead of client VFS paths. The STB
 cell patching for the old `game-data.toml` (`patch_stb` in rose-file-readers) is gone with
 that file.
 For it, rose-data-irose's NPC loader is split (`get_npc_motions`, `get_npc_conversations`,

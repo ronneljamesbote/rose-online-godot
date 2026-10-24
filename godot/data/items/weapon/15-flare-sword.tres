@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://c7shypeihbce6"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_qwdmc"]
+[ext_resource type="RoseSound" uid="uid://b8d8k6psw0js4" path="res://data/sounds/attack/38-sword-002.tres" id="2_fuvow"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_nvr29"]
+
 [resource]
 id = 15
 name = "Flare Sword"
@@ -10,7 +14,7 @@ weight = 45
 quality = 68
 icon_index = 925
 field_model_index = 315
-equip_sound_id = 577
+equip_sound = ExtResource("1_qwdmc")
 craft_skill_type = 11
 craft_skill_level = 8
 craft_material = 512
@@ -26,6 +30,6 @@ attack_power = 145
 attack_speed = 10
 motion_type = 1
 effect_id = 111
-attack_start_sound_id = 38
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_fuvow")
+hit_sounds = ExtResource("3_nvr29")
 gem_position = 2

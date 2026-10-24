@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemConsumable" format=3 uid="uid://7wwv2y1wtcvd"]
 
+[ext_resource type="RoseSound" uid="uid://dwbyekfkxg7c8" path="res://data/sounds/item/584-item-potion.tres" id="1_tdphx"]
+[ext_resource type="RoseSound" uid="uid://c3piaqml44wn1" path="res://data/sounds/item/548-useitem-002.tres" id="2_keb2b"]
+
 [resource]
 id = 41
 name = " Flanae Root"
@@ -11,7 +14,7 @@ weight = 1
 quality = 30
 icon_index = 1599
 field_model_index = 116
-equip_sound_id = 584
+equip_sound = ExtResource("1_tdphx")
 equip_job_class = 9
 equip_stat_1 = "Health"
 equip_stat_1_value = 100
@@ -27,4 +30,4 @@ use_skill_id = 100
 status_effect_id = 2
 status_effect_value = 100
 effect_file_id = 140
-effect_sound_id = 548
+effect_sound = ExtResource("2_keb2b")

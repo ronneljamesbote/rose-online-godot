@@ -1,6 +1,9 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://dh8exv628o1tm"]
 
 [ext_resource type="RoseDropTable" uid="uid://dsbgxuk7n3iq" path="res://data/drop_tables/486-rotten-elemental.tres" id="1_s0lab"]
+[ext_resource type="RoseSound" uid="uid://ipf7g2oi885t" path="res://data/sounds/mob/401-mob23-n.tres" id="2_2a8ig"]
+[ext_resource type="RoseSound" uid="uid://n5eep6oalwxv" path="res://data/sounds/attack/400-axe-d02.tres" id="3_mx32o"]
+[ext_resource type="RoseSound" uid="uid://2mpy8ov2wtcb" path="res://data/sounds/mob/402-mob18-d.tres" id="4_zr45g"]
 
 [resource]
 id = 572
@@ -22,12 +25,12 @@ run_speed = 650
 ai_file_index = 303
 npc_type_index = 1
 right_hand_part_index = 1075
-normal_effect_sound_id = 401
-attack_sound_id = 400
-hitted_sound_id = 400
+normal_effect_sound = ExtResource("2_2a8ig")
+attack_sound = ExtResource("3_mx32o")
+hitted_sound = ExtResource("3_mx32o")
 hand_hit_effect_id = 454
 die_effect_file_id = 1401
-die_sound_id = 402
+die_sound = ExtResource("4_zr45g")
 drop_table = ExtResource("1_s0lab")
 drop_money_rate = 40
 drop_item_rate = 25

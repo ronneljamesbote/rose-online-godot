@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://d0vqu5x54i5sy"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_z702q"]
+[ext_resource type="RoseSound" uid="uid://b8d8k6psw0js4" path="res://data/sounds/attack/38-sword-002.tres" id="2_rpx1n"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_n9lsf"]
+
 [resource]
 id = 837
 name = "Stiletto"
@@ -10,7 +14,7 @@ weight = 30
 quality = 92
 icon_index = 1392
 field_model_index = 714
-equip_sound_id = 577
+equip_sound = ExtResource("1_z702q")
 equip_stat_1 = "Level"
 equip_stat_1_value = 120
 equip_stat_2 = "Dexterity"
@@ -22,6 +26,6 @@ attack_power = 181
 attack_speed = 7
 motion_type = 16
 effect_id = 121
-attack_start_sound_id = 38
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_rpx1n")
+hit_sounds = ExtResource("3_n9lsf")
 gem_position = 4

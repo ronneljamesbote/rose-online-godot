@@ -1,7 +1,8 @@
-//! Godot-native copies of the ROSE models and textures.
+//! Godot-native copies of the ROSE models, textures and sounds.
 //!
-//! The import command (`--import-rose`, see `RoseImport`) converts the client's ZMS meshes
-//! and DDS textures into Godot resources under `res://assets/rose/`, which git ignores.
+//! The import command (`--import-rose`, see `RoseImport`) converts the client's ZMS meshes,
+//! DDS textures and WAV and OGG sounds into Godot resources under `res://assets/rose/`,
+//! which git ignores.
 //! Edited and new art goes in `res://assets/ours/` (committed) under the same path and wins
 //! over the generated copy. A ROSE path maps to a resource path by lower-casing it and
 //! swapping the extension: `3DDATA/AVATAR/MALE/BODY/BODY1_00.ZMS` becomes
@@ -11,13 +12,17 @@
 //! A texture becomes a `.rtex`: the client's DDS file as it is (cut to the levels it really
 //! stores), compressed, which `scripts/rose_texture_loader.gd` opens as an `ImageTexture`
 //! and gives its mipmaps the way `texture::load_rose_image` does, so it looks the same.
+//!
+//! A sound becomes a `.res`: Godot's own `AudioStreamWAV` or `AudioStreamOggVorbis` of the
+//! file (`Sound/attack/Sword_001.wav` -> `res://assets/rose/sound/attack/sword_001.res`),
+//! which the sound resources (`RoseSound`) and the zone music link.
 
 use std::{collections::BTreeMap, path::Path, time::Instant};
 
 use godot::{
     classes::{
-        file_access::{CompressionMode, ModeFlags}, image::Format, resource_saver::SaverFlags, ArrayMesh, ConfigFile, DirAccess, FileAccess, Image, ProjectSettings,
-        Resource, ResourceLoader, ResourceSaver, Texture2D,
+        file_access::{CompressionMode, ModeFlags}, image::Format, resource_saver::SaverFlags, ArrayMesh, AudioStream, AudioStreamOggVorbis, AudioStreamWav, ConfigFile,
+        DirAccess, FileAccess, Image, ProjectSettings, Resource, ResourceLoader, ResourceSaver, Texture2D,
     },
     global::Error,
     prelude::*,
@@ -33,11 +38,19 @@ const STAMP: &str = "res://assets/rose/import.cfg";
 /// Folders that stay in data.idx for now: effects and the interface.
 const SKIPPED: [&str; 2] = ["3DDATA/EFFECT/", "3DDATA/CONTROL/"];
 
-/// What a ROSE file becomes: Godot's binary mesh or a texture resource.
+/// Where the client keeps its sounds: loose files next to data.idx, outside the VFS.
+const SOUND_FOLDER: &str = "Sound";
+
+/// The extensions a sound may have in the asset folders: the imported `.res` first, then
+/// WAV and OGG files of our own (Godot imports those in the editor).
+pub const AUDIO_EXTENSIONS: &[&str] = &["res", "wav", "ogg"];
+
+/// What a ROSE file becomes: Godot's binary mesh, a texture or an audio resource.
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug)]
 enum Kind {
     Mesh,
     Texture,
+    Sound,
 }
 
 impl Kind {
@@ -47,6 +60,8 @@ impl Kind {
             Some(Kind::Mesh)
         } else if upper.ends_with(".DDS") {
             Some(Kind::Texture)
+        } else if upper.ends_with(".WAV") || upper.ends_with(".OGG") {
+            Some(Kind::Sound)
         } else {
             None
         }
@@ -57,6 +72,7 @@ impl Kind {
         match self {
             Kind::Mesh => &["mesh", "res"],
             Kind::Texture => &["rtex", "res", "png", "dds"],
+            Kind::Sound => AUDIO_EXTENSIONS,
         }
     }
 }
@@ -110,6 +126,65 @@ pub fn load_texture(rose_path: &str) -> Option<Gd<Texture2D>> {
     load(rose_path, Kind::Texture)
 }
 
+/// An audio file by the path the data gives: a client file (`Sound\BGM\Prologue.ogg`) or a
+/// Godot path. A path in the asset folders (`res://assets/rose/sound/bgm/prologue.res`)
+/// takes the file at the same place in `ours/` first, then the imported one; any other
+/// `res://` path is loaded as it is. None when there is no such Godot file (the caller
+/// reads the client's file then).
+pub fn load_audio(path: &str) -> Option<Gd<AudioStream>> {
+    let inner = path.strip_prefix(ROSE).or_else(|| path.strip_prefix(OURS));
+    match inner {
+        Some(inner) => load_stem(&stem(inner), AUDIO_EXTENSIONS),
+        None if path.starts_with("res://") => {
+            let mut loader = ResourceLoader::singleton();
+            loader.exists(path).then(|| loader.load(path)).flatten().and_then(|r| r.try_cast::<AudioStream>().ok())
+        }
+        None => load(path, Kind::Sound),
+    }
+}
+
+/// Every sound file in the client's sound folder, as a path from the client folder
+/// (`Sound/attack/Sword_001.wav`).
+fn client_sound_files(root: &Path) -> Vec<String> {
+    let mut out = Vec::new();
+    let Some(folder) = std::fs::read_dir(root).ok().into_iter().flatten().flatten().find(|e| e.file_name().to_string_lossy().eq_ignore_ascii_case(SOUND_FOLDER)) else {
+        return out;
+    };
+    let mut todo = vec![folder.path()];
+    while let Some(dir) = todo.pop() {
+        for entry in std::fs::read_dir(&dir).into_iter().flatten().flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                todo.push(path);
+            } else if let Ok(relative) = path.strip_prefix(root) {
+                let relative = relative.to_string_lossy().replace('\\', "/");
+                if Kind::of(&relative) == Some(Kind::Sound) {
+                    out.push(relative);
+                }
+            }
+        }
+    }
+    out
+}
+
+/// Writes the Godot copy of a client sound file (WAV or OGG) as a `.res`.
+fn save_sound(rose_path: &str, target: &str) -> bool {
+    let Some(bytes) = crate::data::read_bytes(rose_path) else { return false };
+    let buffer = PackedByteArray::from(bytes.as_slice());
+    let stream = if rose_path.to_ascii_uppercase().ends_with(".OGG") {
+        AudioStreamOggVorbis::load_from_buffer(&buffer).map(|s| s.upcast::<Resource>())
+    } else {
+        AudioStreamWav::load_from_buffer(&buffer).map(|s| s.upcast::<Resource>())
+    };
+    match stream {
+        Some(stream) => save(stream, target),
+        None => {
+            godot_warn!("rose: could not decode sound {rose_path}");
+            false
+        }
+    }
+}
+
 /// The pack with the converted assets that the Windows build writes next to the game.
 pub const ASSETS_PACK: &str = "assets.pck";
 
@@ -130,7 +205,7 @@ pub fn load_assets_pack() {
 }
 
 /// The import command: converts every ZMS mesh and DDS texture in data.idx (outside the
-/// skipped folders) into `res://assets/rose/`.
+/// skipped folders) and every sound in the client's sound folder into `res://assets/rose/`.
 #[derive(GodotClass)]
 #[class(base=RefCounted, init)]
 struct RoseImport {
@@ -140,7 +215,7 @@ struct RoseImport {
 #[godot_api]
 impl RoseImport {
     /// Needs RoseData.open first. Files already converted by this importer version are
-    /// kept unless `force`. Returns {meshes, textures, failed, skipped, bytes, seconds,
+    /// kept unless `force`. Returns {meshes, textures, sounds, failed, skipped, bytes, seconds,
     /// folders: {top folder: bytes}}.
     #[func]
     fn run(force: bool) -> VarDictionary {
@@ -168,7 +243,9 @@ impl RoseImport {
             .filter(|p| !SKIPPED.iter().any(|skip| p.starts_with(skip)))
             .filter_map(|p| Kind::of(&p).map(|kind| (kind, p)))
             .collect();
+        files.extend(client_sound_files(&game_data.root).into_iter().map(|p| (Kind::Sound, p)));
         files.sort();
+        files.dedup_by(|a, b| stem(&a.1) == stem(&b.1));
 
         let root = ProjectSettings::singleton().globalize_path(ROSE).to_string();
         if !same_version {
@@ -176,7 +253,7 @@ impl RoseImport {
             // would be left over and shipped, so start from an empty folder.
             let _ = std::fs::remove_dir_all(&root);
         }
-        let (mut meshes, mut textures, mut failed, mut kept) = (0, 0, 0, 0);
+        let (mut meshes, mut textures, mut sounds, mut failed, mut kept) = (0, 0, 0, 0, 0);
         let mut folders: BTreeMap<String, u64> = BTreeMap::new();
         let mut total_bytes = 0u64;
         for (i, (kind, rose_path)) in files.iter().enumerate() {
@@ -188,11 +265,13 @@ impl RoseImport {
                         .and_then(|zms| crate::mesh::build_mesh(&zms, true))
                         .map(|mesh| save(mesh.upcast(), &target)),
                     Kind::Texture => Some(save_texture(rose_path, &target)),
+                    Kind::Sound => Some(save_sound(rose_path, &target)),
                 };
                 match saved {
                     Some(true) => match kind {
                         Kind::Mesh => meshes += 1,
                         Kind::Texture => textures += 1,
+                        Kind::Sound => sounds += 1,
                     },
                     _ => {
                         failed += 1;
@@ -233,6 +312,7 @@ impl RoseImport {
         }
         result.set("meshes", meshes);
         result.set("textures", textures);
+        result.set("sounds", sounds);
         result.set("failed", failed + avatars.failed + zones.failed);
         result.set("zone_files", zones.saved);
         result.set("zone_kept", zones.kept);

@@ -1,6 +1,8 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://ngtjqcaotifa"]
 
 [ext_resource type="RoseDropTable" uid="uid://0e10vithr306" path="res://data/drop_tables/150-moldie.tres" id="1_gruoy"]
+[ext_resource type="RoseSound" uid="uid://b85mt0jp3eacq" path="res://data/sounds/mob/225-mob12-n.tres" id="2_y6zyl"]
+[ext_resource type="RoseSound" uid="uid://cd7uwmwy6i0xg" path="res://data/sounds/mob/226-mob12-d.tres" id="3_stx4k"]
 
 [resource]
 id = 111
@@ -22,10 +24,10 @@ ai_file_index = 21
 death_quest_trigger_name = "3402-31"
 npc_type_index = 1
 hit_sound_material_type = 1
-normal_effect_sound_id = 225
+normal_effect_sound = ExtResource("2_y6zyl")
 hand_hit_effect_id = 401
 die_effect_file_id = 1401
-die_sound_id = 226
+die_sound = ExtResource("3_stx4k")
 drop_table = ExtResource("1_gruoy")
 drop_money_rate = 20
 drop_item_rate = 58

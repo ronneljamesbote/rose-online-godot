@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://bhkdo70eyhgpg"]
 
+[ext_resource type="RoseSound" uid="uid://bjdly3xikd2h4" path="res://data/sounds/item/576-item-weapon.tres" id="1_ek6ka"]
+[ext_resource type="RoseSound" uid="uid://bmjtbe7sjc48t" path="res://data/sounds/attack/63-axe-001.tres" id="2_euh86"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_bwgw9"]
+
 [resource]
 id = 928
 name = "Dark Buster"
@@ -10,7 +14,7 @@ weight = 153
 quality = 68
 icon_index = 1147
 field_model_index = 928
-equip_sound_id = 576
+equip_sound = ExtResource("1_ek6ka")
 equip_stat_1 = "Strength"
 equip_stat_1_value = 181
 add_stat_1 = "Defence"
@@ -22,6 +26,6 @@ attack_power = 162
 attack_speed = 11
 motion_type = 8
 effect_id = 141
-attack_start_sound_id = 63
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_euh86")
+hit_sounds = ExtResource("3_bwgw9")
 gem_position = 2

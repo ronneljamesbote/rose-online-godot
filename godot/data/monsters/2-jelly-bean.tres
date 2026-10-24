@@ -1,6 +1,7 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://bn13d80aigk3n"]
 
 [ext_resource type="RoseDropTable" uid="uid://hrmd2n2xpg8q" path="res://data/drop_tables/101-jelly-bean.tres" id="1_060lh"]
+[ext_resource type="RoseSound" uid="uid://js7qhkoxid3m" path="res://data/sounds/mob/182-mob01-d.tres" id="2_cv4z1"]
 
 [resource]
 id = 2
@@ -24,7 +25,7 @@ npc_type_index = 1
 hit_sound_material_type = 1
 hand_hit_effect_id = 402
 die_effect_file_id = 1401
-die_sound_id = 182
+die_sound = ExtResource("2_cv4z1")
 drop_table = ExtResource("1_060lh")
 drop_money_rate = 8
 drop_item_rate = 72

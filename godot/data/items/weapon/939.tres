@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://cdpf80v2xmtvv"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_i6l6i"]
+[ext_resource type="RoseSound" uid="uid://bey2khuqu7mu1" path="res://data/sounds/attack/55-spear-001.tres" id="2_zvo5m"]
+[ext_resource type="RoseHitSounds" uid="uid://d4huxc3qetp2i" path="res://data/hit_sounds/25-spear-hits.tres" id="3_n7mld"]
+
 [resource]
 id = 939
 item_class = "Spear"
@@ -8,7 +12,7 @@ weight = 38
 quality = 28
 icon_index = 1115
 field_model_index = 939
-equip_sound_id = 577
+equip_sound = ExtResource("1_i6l6i")
 equip_stat_1 = "Strength"
 equip_stat_1_value = 29
 durability = 52
@@ -18,6 +22,6 @@ attack_power = 22
 attack_speed = 9
 motion_type = 6
 effect_id = 131
-attack_start_sound_id = 55
-attack_hit_sound_index = 25
+attack_start_sound = ExtResource("2_zvo5m")
+hit_sounds = ExtResource("3_n7mld")
 gem_position = 2

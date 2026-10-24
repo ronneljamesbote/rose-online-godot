@@ -1,6 +1,8 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://bumbltnwir1w3"]
 
 [ext_resource type="RoseDropTable" uid="uid://bomvo0ouxyqeo" path="res://data/drop_tables/362-yeti-guard.tres" id="1_yo6l3"]
+[ext_resource type="RoseSound" uid="uid://blr8m3q5aqqqt" path="res://data/sounds/mob/280-mob25-a.tres" id="2_2cn9k"]
+[ext_resource type="RoseSound" uid="uid://bsbe8d45xfmsj" path="res://data/sounds/mob/281-mob26-n.tres" id="3_lle6l"]
 
 [resource]
 id = 343
@@ -22,8 +24,8 @@ ai_file_index = 126
 npc_type_index = 2
 right_hand_part_index = 1008
 left_hand_part_index = 304
-normal_effect_sound_id = 280
+normal_effect_sound = ExtResource("2_2cn9k")
 die_effect_file_id = 1401
-die_sound_id = 281
+die_sound = ExtResource("3_lle6l")
 drop_table = ExtResource("1_yo6l3")
 drop_item_rate = 62

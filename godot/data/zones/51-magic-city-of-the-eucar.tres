@@ -1,5 +1,9 @@
 [gd_resource type="RoseZoneSettings" format=3 uid="uid://mpsx2m3ghks1"]
 
+[ext_resource type="AudioStreamOggVorbis" path="res://assets/rose/sound/bgm/town01_lunar.res" id="1_g2myx"]
+[ext_resource type="AudioStreamOggVorbis" path="res://assets/rose/sound/bgm/event01_junon.res" id="2_jbhpy"]
+[ext_resource type="RoseFootsteps" uid="uid://b14hg1221ovkt" path="res://data/footsteps/3-canyon-city-of-zant-and-8-more.tres" id="3_fkykv"]
+
 [resource]
 id = 51
 name = "Magic City of the Eucar"
@@ -7,15 +11,15 @@ map_file = "3DDATA\\Maps\\Lunar\\LMT01\\LMT01.zon"
 start_spot = "start"
 revive_spot = "restore"
 sector_size = 5000
-music_day = "Sound\\BGM\\Town01_lunar.ogg"
-music_night = "Sound\\BGM\\Event01_junon.ogg"
+music_day = ExtResource("1_g2myx")
+music_night = ExtResource("2_jbhpy")
 sky = 2
 minimap = "3Ddata\\Maps\\Lunar\\LMT01\\minimap.DDS"
 minimap_start_x = 31
 minimap_start_y = 31
 decoration_models = "3DDATA\\\\Lunar\\\\LIST_DECO_LP.ZSC"
 building_models = "3DDATA\\\\Lunar\\\\LIST_CNST_LMT.ZSC"
-footstep_type = 3
+footsteps = ExtResource("3_fkykv")
 day_cycle = 300
 day_time = 6
 evening_time = 261

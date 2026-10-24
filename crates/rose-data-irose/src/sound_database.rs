@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use rose_data::{EffectFileId, SoundData, SoundDatabase, SoundId};
-use rose_file_readers::{stb_column, StbFile, VfsPathBuf, VirtualFilesystem};
+use rose_file_readers::{stb_column, StbFile, VirtualFilesystem};
 
 pub struct StbSound(pub StbFile);
 
@@ -20,8 +20,7 @@ impl StbSound {
 fn load_sound(data: &StbSound, id: usize) -> Option<SoundData> {
     Some(SoundData {
         id: SoundId::new(id as u16)?,
-        path: VfsPathBuf::new(data.get_path(id)?),
-        max_mix_count: data.get_max_mix_count(id).unwrap_or(0) as usize,
+        path: data.get_path(id)?.to_string(),
     })
 }
 

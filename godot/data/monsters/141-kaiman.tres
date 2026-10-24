@@ -1,6 +1,8 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://bwks403iva580"]
 
 [ext_resource type="RoseDropTable" uid="uid://cmw3djhec1738" path="res://data/drop_tables/165-kaiman.tres" id="1_vy0vb"]
+[ext_resource type="RoseSound" uid="uid://x0vj3oqyejoi" path="res://data/sounds/mob/241-mob16-n.tres" id="2_80h9k"]
+[ext_resource type="RoseSound" uid="uid://b20kfpch1okvx" path="res://data/sounds/mob/242-mob16-d.tres" id="3_7a6ek"]
 
 [resource]
 id = 141
@@ -22,9 +24,9 @@ ai_file_index = 3
 npc_type_index = 1
 right_hand_part_index = 103
 hit_sound_material_type = 1
-normal_effect_sound_id = 241
+normal_effect_sound = ExtResource("2_80h9k")
 die_effect_file_id = 1401
-die_sound_id = 242
+die_sound = ExtResource("3_7a6ek")
 drop_table = ExtResource("1_vy0vb")
 drop_money_rate = 16
 drop_item_rate = 48

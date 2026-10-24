@@ -3,6 +3,8 @@
 [ext_resource type="RoseJobClass" uid="uid://beco32icdj1l0" path="res://data/job_classes/64-cleric-job.tres" id="1_kcbuh"]
 [ext_resource type="RoseSkill" uid="uid://c0jsu0md0eg0s" path="res://data/skills/821-meditation/821-meditation.tres" id="2_gh6xs"]
 [ext_resource type="RoseStatusEffect" uid="uid://urqs1ot2ioov" path="res://data/status_effects/20-def-up.tres" id="3_cp6mo"]
+[ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="4_wilwq"]
+[ext_resource type="RoseSound" uid="uid://dvx20nuuuxn4h" path="res://data/sounds/skill/141-skill-magic03.tres" id="5_f9pii"]
 
 [resource]
 id = 995
@@ -40,6 +42,6 @@ action_motion_id = 151
 action_motion_speed = 200
 bullet_effect_id = 221
 bullet_point = 3
-bullet_fire_sound_id = 90
+bullet_fire_sound = ExtResource("4_wilwq")
 hit_effect_file_id = 1501
-hit_sound_id = 141
+hit_sound = ExtResource("5_f9pii")

@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemConsumable" format=3 uid="uid://bkmtr7o56u535"]
 
+[ext_resource type="RoseSound" uid="uid://dwbyekfkxg7c8" path="res://data/sounds/item/584-item-potion.tres" id="1_73nkh"]
+[ext_resource type="RoseSound" uid="uid://cxrscjnmdhir4" path="res://data/sounds/item/547-useitem-001.tres" id="2_snhhk"]
+
 [resource]
 id = 28
 name = "Golden Pilules"
@@ -11,7 +14,7 @@ weight = 1
 quality = 65
 icon_index = 1594
 field_model_index = 121
-equip_sound_id = 584
+equip_sound = ExtResource("1_73nkh")
 equip_job_class = 9
 equip_stat_1 = "Mana"
 equip_stat_1_value = 100
@@ -25,4 +28,4 @@ add_data_value = 100
 learn_skill_id = 100
 use_skill_id = 100
 effect_file_id = 140
-effect_sound_id = 547
+effect_sound = ExtResource("2_snhhk")

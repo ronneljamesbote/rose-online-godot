@@ -2,6 +2,8 @@
 
 [ext_resource type="RoseSkill" uid="uid://codmreajjlkwc" path="res://data/skills/841-spell-mastery/841-spell-mastery.tres" id="1_8m5ge"]
 [ext_resource type="RoseStatusEffect" uid="uid://dv6tggly8x16s" path="res://data/status_effects/30-muting.tres" id="2_8kkr4"]
+[ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="3_zjfe2"]
+[ext_resource type="RoseSound" uid="uid://dkkffvfss6ekm" path="res://data/sounds/skill/175-skill-status15.tres" id="4_nu9kg"]
 
 [resource]
 id = 1072
@@ -38,6 +40,6 @@ casting_effect_4_point = 1
 action_motion_id = 152
 bullet_effect_id = 221
 bullet_point = 3
-bullet_fire_sound_id = 90
+bullet_fire_sound = ExtResource("3_zjfe2")
 hit_effect_file_id = 1501
-hit_sound_id = 175
+hit_sound = ExtResource("4_nu9kg")

@@ -22,8 +22,9 @@ pub struct ZoneListEntry {
     pub evening_time: u32,
     pub night_time: u32,
     pub skybox_id: Option<SkyboxId>,
-    pub background_music_day: Option<VfsPathBuf>,
-    pub background_music_night: Option<VfsPathBuf>,
+    /// The music: a Godot audio file or a sound file in the client data, as written.
+    pub background_music_day: Option<String>,
+    pub background_music_night: Option<String>,
     pub footstep_type: Option<u32>,
 }
 

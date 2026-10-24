@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://dajyc0pxj47uh"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_r9u26"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="2_7j337"]
+
 [resource]
 id = 730
 item_class = "Gun"
@@ -8,7 +11,7 @@ weight = 50
 quality = 117
 icon_index = 1235
 field_model_index = 555
-equip_sound_id = 578
+equip_sound = ExtResource("1_r9u26")
 equip_stat_1 = "Level"
 equip_stat_1_value = 178
 equip_stat_2 = "Concentration"
@@ -20,5 +23,5 @@ attack_power = 375
 attack_speed = 11
 motion_type = 12
 bullet_effect_id = 171
-attack_fire_sound_id = 78
+attack_fire_sound = ExtResource("2_7j337")
 gem_position = 1

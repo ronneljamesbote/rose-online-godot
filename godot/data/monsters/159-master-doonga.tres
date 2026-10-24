@@ -1,6 +1,8 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://cp73r0jvubmvr"]
 
 [ext_resource type="RoseDropTable" uid="uid://sbkg4ck6mcdb" path="res://data/drop_tables/178-master-doonga.tres" id="1_pby67"]
+[ext_resource type="RoseSound" uid="uid://d20q7rg0vm5gw" path="res://data/sounds/mob/245-mob17-n.tres" id="2_cvzl5"]
+[ext_resource type="RoseSound" uid="uid://cbojdr8uyjvrt" path="res://data/sounds/mob/246-mob17-d.tres" id="3_bf9wm"]
 
 [resource]
 id = 159
@@ -21,9 +23,9 @@ run_speed = 570
 ai_file_index = 60
 npc_type_index = 10
 hit_sound_material_type = 1
-normal_effect_sound_id = 245
+normal_effect_sound = ExtResource("2_cvzl5")
 die_effect_file_id = 1401
-die_sound_id = 246
+die_sound = ExtResource("3_bf9wm")
 drop_table = ExtResource("1_pby67")
 drop_money_rate = 20
 drop_item_rate = 72

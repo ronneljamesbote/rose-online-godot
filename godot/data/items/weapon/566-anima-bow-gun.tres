@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://b74o2adk7a123"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_i23hx"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_mcgdp"]
+
 [resource]
 id = 566
 name = "Anima Bow Gun"
@@ -10,7 +13,7 @@ weight = 25
 quality = 83
 icon_index = 995
 field_model_index = 368
-equip_sound_id = 578
+equip_sound = ExtResource("1_i23hx")
 equip_stat_1 = "Level"
 equip_stat_1_value = 101
 equip_stat_2 = "Strength"
@@ -22,5 +25,5 @@ attack_power = 164
 attack_speed = 10
 motion_type = 11
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_mcgdp")
 gem_position = 1

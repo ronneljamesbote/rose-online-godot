@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://bxcd70j2truol"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_mql7u"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_0gv2f"]
+
 [resource]
 id = 948
 item_class = "Bow"
@@ -7,7 +10,7 @@ base_price = 3180
 weight = 5
 quality = 29
 field_model_index = 948
-equip_sound_id = 578
+equip_sound = ExtResource("1_mql7u")
 equip_stat_1 = "Dexterity"
 equip_stat_1_value = 10
 durability = 50
@@ -17,5 +20,5 @@ attack_power = 20
 attack_speed = 8
 motion_type = 10
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_0gv2f")
 gem_position = 1

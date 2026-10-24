@@ -1,6 +1,8 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://dubyqb5lo2tt8"]
 
 [ext_resource type="RoseDropTable" uid="uid://beht7q01w8r5c" path="res://data/drop_tables/161-grunter-fighter.tres" id="1_mtwu8"]
+[ext_resource type="RoseSound" uid="uid://clgb7w2l7vcup" path="res://data/sounds/mob/237-mob15-n.tres" id="2_nsqlv"]
+[ext_resource type="RoseSound" uid="uid://oju8sqdaw0ty" path="res://data/sounds/mob/238-mob15-d.tres" id="3_gclf7"]
 
 [resource]
 id = 135
@@ -22,10 +24,10 @@ ai_file_index = 115
 death_quest_trigger_name = "3603-31"
 npc_type_index = 3
 right_hand_part_index = 134
-normal_effect_sound_id = 237
+normal_effect_sound = ExtResource("2_nsqlv")
 hand_hit_effect_id = 403
 die_effect_file_id = 1401
-die_sound_id = 238
+die_sound = ExtResource("3_gclf7")
 drop_table = ExtResource("1_mtwu8")
 drop_money_rate = 25
 drop_item_rate = 65

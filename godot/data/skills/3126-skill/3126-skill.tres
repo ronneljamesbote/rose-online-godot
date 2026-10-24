@@ -1,5 +1,8 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://bivrwalmq745x"]
 
+[ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="1_5xmns"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="2_faqml"]
+
 [resource]
 id = 3126
 skill_type = "TargetBound"
@@ -15,6 +18,6 @@ casting_repeat_motion_id = 135
 action_motion_id = 76
 action_motion_speed = 150
 bullet_effect_id = 301
-bullet_fire_sound_id = 90
+bullet_fire_sound = ExtResource("1_5xmns")
 hit_effect_file_id = 1311
-hit_sound_id = 83
+hit_sound = ExtResource("2_faqml")

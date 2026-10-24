@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://mgjh33gllxc7"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_6icpt"]
+[ext_resource type="RoseSound" uid="uid://du04g0rrduxg7" path="res://data/sounds/attack/82-gun-001.tres" id="2_kl84q"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_7cr9u"]
+
 [resource]
 id = 462
 item_class = "DualGuns"
@@ -7,7 +11,7 @@ base_price = 4120
 weight = 15
 quality = 35
 field_model_index = 762
-equip_sound_id = 577
+equip_sound = ExtResource("1_6icpt")
 equip_stat_1 = "Level"
 equip_stat_1_value = 24
 equip_stat_2 = "Concentration"
@@ -18,6 +22,6 @@ attack_power = 24
 attack_speed = 12
 motion_type = 12
 bullet_effect_id = 171
-attack_start_sound_id = 82
-attack_fire_sound_id = 78
+attack_start_sound = ExtResource("2_kl84q")
+attack_fire_sound = ExtResource("3_7cr9u")
 gem_position = 1

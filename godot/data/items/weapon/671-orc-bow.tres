@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://d1ohhcam8cjxt"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_jwbly"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_gaczo"]
+
 [resource]
 id = 671
 name = "Orc Bow"
@@ -10,7 +13,7 @@ weight = 10
 quality = 53
 icon_index = 1160
 field_model_index = 504
-equip_sound_id = 578
+equip_sound = ExtResource("1_jwbly")
 equip_stat_1 = "Level"
 equip_stat_1_value = 32
 equip_stat_2 = "Dexterity"
@@ -21,4 +24,4 @@ attack_power = 54
 attack_speed = 9
 motion_type = 10
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_gaczo")

@@ -31,6 +31,7 @@ log changes need no wiki change.
 | `godot/data/zones/`, `godot/data/warp_gates/`, `export/data/zones.toml`, `export/data/warp-gates.toml` | the `wiki/zones/` page of that zone (name, start and revive spots, PvP, planet, carts, warps); `wiki/rules/zones-and-warps.md`, `wiki/rules/pvp.md`, `wiki/rules/carts.md`, `wiki/rules/death.md` for the rules that read them |
 | `godot/data/craft_recipes/`, `export/data/craft-recipes.toml` | `wiki/rules/crafting.md` (crafting recipes) or `wiki/rules/refining.md` (recipes 1-20), and the `wiki/items/` page of every item made with the recipe |
 | `godot/data/new_characters/`, `export/data/new-characters.toml` | `wiki/rules/stats.md` ("New characters") |
+| `godot/data/sounds/`, `godot/data/hit_sounds/`, `godot/data/footsteps/`, `export/data/sounds.toml`, `hit-sounds.toml`, `footsteps.toml` | none: the wiki doesn't list sounds (a page that mentions one says when it changes) |
 | `godot/zones/` spawn, NPC and event markers, `export/zones/` (exported from them) | the `wiki/zones/` page of that zone (spawn points, NPCs) and the pages of monsters and NPCs it places |
 | `export/motions.toml` (exported from the hit markers of the Godot player, monster and NPC animations) | `wiki/rules/combat.md` (animation lengths and hit frames), the page of every monster whose attack moved and of every skill whose hit moved |
 

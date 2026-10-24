@@ -1,5 +1,8 @@
 [gd_resource type="RoseZoneSettings" format=3 uid="uid://d0vag3v7wf0eo"]
 
+[ext_resource type="AudioStreamOggVorbis" path="res://assets/rose/sound/bgm/plain01_junon.res" id="1_63poh"]
+[ext_resource type="RoseFootsteps" uid="uid://bca0fohtsrab2" path="res://data/footsteps/2-dolphin-island-and-10-more.tres" id="2_qq5g5"]
+
 [resource]
 id = 20
 name = "Birth Island"
@@ -7,15 +10,15 @@ map_file = "3DDATA\\Maps\\Junon\\JG07\\JG07.zon"
 start_spot = "start"
 revive_spot = "restore"
 sector_size = 5000
-music_day = "Sound\\BGM\\Plain01_junon.ogg"
-music_night = "Sound\\BGM\\Plain01_junon.ogg"
+music_day = ExtResource("1_63poh")
+music_night = ExtResource("1_63poh")
 sky = 0
 minimap = "3Ddata\\Maps\\Junon\\JG07\\minimap.DDS"
 minimap_start_x = 31
 minimap_start_y = 31
 decoration_models = "3DDATA\\\\JUNON\\\\LIST_DECO_JG.ZSC"
 building_models = "3DDATA\\\\JUNON\\\\LIST_CNST_JG.ZSC"
-footstep_type = 2
+footsteps = ExtResource("2_qq5g5")
 day_cycle = 160
 day_time = 16
 evening_time = 133

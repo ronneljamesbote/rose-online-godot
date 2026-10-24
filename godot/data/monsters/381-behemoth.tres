@@ -1,6 +1,8 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://cmmodvgjnwtxm"]
 
 [ext_resource type="RoseDropTable" uid="uid://blywe3rda8j5u" path="res://data/drop_tables/380-behemoth.tres" id="1_ast0u"]
+[ext_resource type="RoseSound" uid="uid://b33w5s0yy1l2w" path="res://data/sounds/mob/321-mob25-n.tres" id="2_crggl"]
+[ext_resource type="RoseSound" uid="uid://j4oi4ekc5um1" path="res://data/sounds/mob/322-mob36-d.tres" id="3_ypsoc"]
 
 [resource]
 id = 381
@@ -22,10 +24,10 @@ run_speed = 650
 ai_file_index = 143
 npc_type_index = 8
 hit_sound_material_type = 2
-normal_effect_sound_id = 321
+normal_effect_sound = ExtResource("2_crggl")
 hand_hit_effect_id = 454
 die_effect_file_id = 1401
-die_sound_id = 322
+die_sound = ExtResource("3_ypsoc")
 drop_table = ExtResource("1_ast0u")
 drop_money_rate = 60
 drop_item_rate = 70

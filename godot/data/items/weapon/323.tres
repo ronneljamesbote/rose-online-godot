@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://dsi0v357svb5v"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_50ytv"]
+[ext_resource type="RoseSound" uid="uid://d3hdp37emo7p0" path="res://data/sounds/attack/72-bow-002.tres" id="2_o41ns"]
+
 [resource]
 id = 323
 item_class = "MagicStaff"
@@ -7,7 +10,7 @@ base_price = 1194200
 weight = 40
 quality = 98
 field_model_index = 623
-equip_sound_id = 578
+equip_sound = ExtResource("1_50ytv")
 craft_skill_level = 13
 equip_stat_1 = "Level"
 equip_stat_1_value = 168
@@ -22,4 +25,4 @@ attack_power = 289
 attack_speed = 10
 motion_type = 6
 is_magic_damage = true
-attack_start_sound_id = 72
+attack_start_sound = ExtResource("2_o41ns")

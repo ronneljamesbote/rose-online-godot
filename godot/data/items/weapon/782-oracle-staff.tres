@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://c1tt87xlq41pw"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_fww11"]
+[ext_resource type="RoseSound" uid="uid://d3hdp37emo7p0" path="res://data/sounds/attack/72-bow-002.tres" id="2_6mnr2"]
+[ext_resource type="RoseHitSounds" uid="uid://d4huxc3qetp2i" path="res://data/hit_sounds/25-spear-hits.tres" id="3_7e8nk"]
+
 [resource]
 id = 782
 name = "Oracle Staff"
@@ -10,7 +14,7 @@ weight = 35
 quality = 99
 icon_index = 1304
 field_model_index = 617
-equip_sound_id = 578
+equip_sound = ExtResource("1_fww11")
 equip_stat_1 = "Level"
 equip_stat_1_value = 136
 equip_stat_2 = "Intelligence"
@@ -25,6 +29,6 @@ attack_speed = 10
 motion_type = 6
 is_magic_damage = true
 effect_id = 131
-attack_start_sound_id = 72
-attack_hit_sound_index = 25
+attack_start_sound = ExtResource("2_6mnr2")
+hit_sounds = ExtResource("3_7e8nk")
 gem_position = 2

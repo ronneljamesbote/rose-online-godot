@@ -4,8 +4,9 @@
 //! (`RoseMonster`), town NPCs (`RoseNpc`), drop tables (`RoseDropTable`), shop tabs
 //! (`RoseShopTab`), skills (`RoseSkill`, one per skill level, in a folder per skill),
 //! status effects (`RoseStatusEffect`), job classes (`RoseJobClass`), zone settings
-//! (`RoseZoneSettings`), warp gates (`RoseWarpGate`), crafting recipes (`RoseCraftRecipe`)
-//! and new characters (`RoseNewCharacter`).
+//! (`RoseZoneSettings`), warp gates (`RoseWarpGate`), crafting recipes (`RoseCraftRecipe`),
+//! new characters (`RoseNewCharacter`) and sounds (`RoseSound`, `RoseHitSounds`,
+//! `RoseFootsteps`, linking the imported audio files).
 //!
 //! The game itself never reads these files. `--export-data` writes them to
 //! `export/data/` as TOML (the layout is in `crates/rose-data-export`), and the server and
@@ -22,7 +23,7 @@ use std::path::Path;
 use enum_map::Enum;
 use godot::{
     classes::{
-        ClassDb, DirAccess, IResource, ProjectSettings, Resource, ResourceLoader, ResourceSaver,
+        AudioStream, ClassDb, DirAccess, IResource, ProjectSettings, Resource, ResourceLoader, ResourceSaver,
         ResourceUid,
     },
     global::Error,
@@ -40,8 +41,9 @@ use rose_data_export::items::{
 };
 use rose_data_export::npcs::{DropTableExport, MonsterExport, NpcExport, ShopTabExport};
 use rose_data_export::skills::{JobClassExport, SkillExport, StatusEffectExport};
+use rose_data_export::sounds::{FootstepsExport, HitSoundsExport, SoundExport};
 use rose_data_export::world::{CraftRecipeExport, NewCharacterExport, WarpGateExport, ZoneExport};
-use rose_data_export::{ItemsExport, NpcsExport, SkillsExport, WorldExport};
+use rose_data_export::{ItemsExport, NpcsExport, SkillsExport, SoundsExport, WorldExport};
 use serde::{de::DeserializeOwned, Serialize};
 use serde_json::{Map, Value};
 
@@ -61,6 +63,10 @@ pub const ZONES_DIR: &str = "res://data/zones/";
 pub const WARP_GATES_DIR: &str = "res://data/warp_gates/";
 pub const CRAFT_RECIPES_DIR: &str = "res://data/craft_recipes/";
 pub const NEW_CHARACTERS_DIR: &str = "res://data/new_characters/";
+/// Where the sound, hit sound and footstep resources live.
+pub const SOUNDS_DIR: &str = "res://data/sounds/";
+pub const HIT_SOUNDS_DIR: &str = "res://data/hit_sounds/";
+pub const FOOTSTEPS_DIR: &str = "res://data/footsteps/";
 
 /// Where to find a linked resource by what the export holds: `items/weapon/3`,
 /// `drop_table/147`, `shop_tab/12` -> its `res://` path.
@@ -171,9 +177,10 @@ macro_rules! item_resource {
             /// The model shown when the item lies on the ground.
             #[export]
             field_model_index: i64,
-            /// The sound played when it is equipped (0 = none).
+            /// The sound played when it is equipped (empty = none): drag a `RoseSound` in
+            /// from `res://data/sounds/`.
             #[export]
-            equip_sound_id: i64,
+            equip_sound: Option<Gd<RoseSound>>,
 
             /// The crafting skill that makes it (its skill type number, 0 = can't be crafted).
             #[export_group(name = "Crafting")]
@@ -330,12 +337,13 @@ item_resource!(
         bullet_effect_id: i64,
         /// The effect drawn on the weapon (0 = none).
         effect_id: i64,
-        /// The sound when the swing starts (0 = none).
-        attack_start_sound_id: i64,
-        /// The sound when it fires (0 = none).
-        attack_fire_sound_id: i64,
-        /// Which hit sound plays on the target.
-        attack_hit_sound_index: i64,
+        /// The sound when the swing starts (empty = none).
+        attack_start_sound: Option<Gd<RoseSound>>,
+        /// The sound when it fires (empty = its projectile's sound).
+        attack_fire_sound: Option<Gd<RoseSound>>,
+        /// What it sounds like when it hits (a `RoseHitSounds` from `res://data/hit_sounds/`:
+        /// one sound for armour, cloth and stone; empty = silent).
+        hit_sounds: Option<Gd<RoseHitSounds>>,
         /// Where on the model a socketed gem shows.
         gem_position: i64,
     }
@@ -388,8 +396,8 @@ item_resource!(
         cooldown_seconds: i64,
         /// The effect played when it is used (0 = none).
         effect_file_id: i64,
-        /// The sound played when it is used (0 = none).
-        effect_sound_id: i64,
+        /// The sound played when it is used (empty = none).
+        effect_sound: Option<Gd<RoseSound>>,
     }
 );
 item_resource!(
@@ -461,26 +469,26 @@ item_resource!(
         skill_requirement_level: i64,
         /// Effect when getting on (0 = none).
         ride_effect_file_id: i64,
-        /// Sound when getting on (0 = none).
-        ride_sound_id: i64,
+        /// Sound when getting on (empty = none).
+        ride_sound: Option<Gd<RoseSound>>,
         /// Effect when getting off.
         dismount_effect_file_id: i64,
         /// Sound when getting off.
-        dismount_sound_id: i64,
+        dismount_sound: Option<Gd<RoseSound>>,
         /// Effect when it is destroyed.
         dead_effect_file_id: i64,
         /// Sound when it is destroyed.
-        dead_sound_id: i64,
+        dead_sound: Option<Gd<RoseSound>>,
         /// Sound when it stops.
-        stop_sound_id: i64,
+        stop_sound: Option<Gd<RoseSound>>,
         /// Effect while moving.
         move_effect_file_id: i64,
         /// Sound while moving.
-        move_sound_id: i64,
+        move_sound: Option<Gd<RoseSound>>,
         /// Effect on the target when its weapon hits.
         hit_effect_id: i64,
         /// Sound on the target when its weapon hits.
-        hit_sound_id: i64,
+        hit_sound: Option<Gd<RoseSound>>,
         /// The projectile its weapon fires.
         bullet_effect_id: i64,
         /// The model point the projectile leaves from.
@@ -616,33 +624,35 @@ macro_rules! character_resource {
             /// A glow drawn on the model (black = none).
             #[export]
             glow_colour: Color,
-            /// What its body sounds like when hit (the hit sound set).
-            #[export]
+            /// What its body is made of, which picks the sound of a weapon hitting it (the
+            /// attacker's `hit_sounds`). Players count as cloth.
+            #[export(enum = (Armour = 0, Cloth = 1, Stone = 2))]
             hit_sound_material_type: i64,
-            /// The sound it makes now and then (0 = none).
+            /// The sound it makes now and then (empty = none): drag a `RoseSound` in from
+            /// `res://data/sounds/`.
             #[export]
-            normal_effect_sound_id: i64,
-            /// The sound of its attack (0 = none).
+            normal_effect_sound: Option<Gd<RoseSound>>,
+            /// The sound of its attack (empty = none).
             #[export]
-            attack_sound_id: i64,
-            /// The sound when it is hit (0 = none).
+            attack_sound: Option<Gd<RoseSound>>,
+            /// The sound when it is hit (empty = none).
             #[export]
-            hitted_sound_id: i64,
+            hitted_sound: Option<Gd<RoseSound>>,
             /// The effect on its target when its hand hits (0 = none).
             #[export]
             hand_hit_effect_id: i64,
             /// The effect when it dies (0 = none).
             #[export]
             die_effect_file_id: i64,
-            /// The sound when it dies (0 = none).
+            /// The sound when it dies (empty = none).
             #[export]
-            die_sound_id: i64,
+            die_sound: Option<Gd<RoseSound>>,
             /// The effect when it appears (0 = none).
             #[export]
             create_effect_index: i64,
-            /// The sound when it appears (0 = none).
+            /// The sound when it appears (empty = none).
             #[export]
-            create_sound_id: i64,
+            create_sound: Option<Gd<RoseSound>>,
 
             $(
                 $(#[$($field_meta)*])*
@@ -1025,9 +1035,10 @@ pub struct RoseSkill {
     /// The model point the projectile leaves from.
     #[export]
     bullet_point: i64,
-    /// The sound when it fires (0 = none).
+    /// The sound when it fires (empty = none): drag a `RoseSound` in from
+    /// `res://data/sounds/`.
     #[export]
-    bullet_fire_sound_id: i64,
+    bullet_fire_sound: Option<Gd<RoseSound>>,
     /// The effect on the target when it hits (an effect file number, 0 = none).
     #[export]
     hit_effect_file_id: i64,
@@ -1035,21 +1046,21 @@ pub struct RoseSkill {
     #[export]
     #[init(val = -1)]
     hit_effect_point: i64,
-    /// The sound when it hits (0 = none).
+    /// The sound when it hits (empty = none).
     #[export]
-    hit_sound_id: i64,
+    hit_sound: Option<Gd<RoseSound>>,
     /// A second effect on the target when it hits (0 = none).
     #[export]
     hit_dummy_effect_1: i64,
-    /// Its sound (0 = none).
+    /// Its sound (empty = none).
     #[export]
-    hit_dummy_sound_1: i64,
+    hit_dummy_sound_1: Option<Gd<RoseSound>>,
     /// A third effect on the target when it hits (0 = none).
     #[export]
     hit_dummy_effect_2: i64,
-    /// Its sound (0 = none).
+    /// Its sound (empty = none).
     #[export]
-    hit_dummy_sound_2: i64,
+    hit_dummy_sound_2: Option<Gd<RoseSound>>,
     base: Base<Resource>,
 }
 
@@ -1181,13 +1192,15 @@ pub struct RoseZoneSettings {
     #[export(range = (5000.0, 12000.0, 1.0, suffix = "cm"))]
     sector_size: i64,
 
-    /// The music by day (a sound file path in the client data, empty = none).
+    /// The music by day (empty = none): an audio file, such as the imported
+    /// `res://assets/rose/sound/bgm/plain01_junon.res` or one of our own in
+    /// `res://assets/ours/`.
     #[export_group(name = "Look and sound")]
     #[export]
-    music_day: GString,
-    /// The music by night.
+    music_day: Option<Gd<AudioStream>>,
+    /// The music by night (evening and night).
     #[export]
-    music_night: GString,
+    music_night: Option<Gd<AudioStream>>,
     /// The sky: its row in iROSE's LIST_SKY.STB (-1 = none).
     #[export]
     #[init(val = -1)]
@@ -1207,10 +1220,10 @@ pub struct RoseZoneSettings {
     /// The iROSE model list of the zone's buildings (a ZSC file).
     #[export]
     building_models: GString,
-    /// The footstep sounds walking here (iROSE's footstep type, -1 = none).
+    /// The footstep sounds walking here: a `RoseFootsteps` from `res://data/footsteps/`
+    /// (empty = the same step everywhere).
     #[export]
-    #[init(val = -1)]
-    footstep_type: i64,
+    footsteps: Option<Gd<RoseFootsteps>>,
 
     /// The length of a day here in world ticks (one tick is 10 seconds).
     #[export_group(name = "Time of day")]
@@ -1399,6 +1412,70 @@ impl IResource for RoseNewCharacter {
     }
 }
 
+/// A sound the game plays: an audio file, by the number items, monsters, skills and the hit
+/// and footstep sounds link it with. The Inspector plays `stream` (the arrow next to it).
+/// Edit it here, then run `--export-data`.
+#[derive(GodotClass)]
+#[class(tool, base=Resource, init)]
+pub struct RoseSound {
+    /// The number (iROSE's FILE_SOUND.STB row). A new sound takes any free number.
+    #[export]
+    id: i64,
+    /// For finding it only (the file's name).
+    #[export]
+    name: GString,
+    /// The audio: drag an audio file in, such as the imported
+    /// `res://assets/rose/sound/attack/sword_001.res` or a WAV or OGG file of our own in
+    /// `res://assets/ours/` (empty = silent). A file in `res://assets/ours/` with the same
+    /// path as an imported one plays instead of it.
+    #[export]
+    stream: Option<Gd<AudioStream>>,
+    base: Base<Resource>,
+}
+
+/// What one kind of weapon sounds like when it hits: one sound for each material the target
+/// can be made of (a monster's `hit_sound_material_type`; players are cloth). A weapon links
+/// it as its `hit_sounds`. Edit it here, then run `--export-data`.
+#[derive(GodotClass)]
+#[class(tool, base=Resource, init)]
+pub struct RoseHitSounds {
+    /// The number (iROSE's LIST_HITSOUND.STB row).
+    #[export]
+    id: i64,
+    /// For finding it only (the weapon kind).
+    #[export]
+    name: GString,
+    /// Hitting armour (metal monsters such as golems and machines).
+    #[export]
+    on_armour: Option<Gd<RoseSound>>,
+    /// Hitting cloth or flesh (players and most monsters).
+    #[export]
+    on_cloth: Option<Gd<RoseSound>>,
+    /// Hitting stone.
+    #[export]
+    on_stone: Option<Gd<RoseSound>>,
+    base: Base<Resource>,
+}
+
+/// The footstep sound of each ground texture, for the zones that link it as their
+/// `footsteps`. Edit it here, then run `--export-data`.
+#[derive(GodotClass)]
+#[class(tool, base=Resource, init)]
+pub struct RoseFootsteps {
+    /// The number (iROSE's LIST_STEPSOUND.STB column, the zone's footstep type).
+    #[export]
+    id: i64,
+    /// For finding it only (the zones that use it).
+    #[export]
+    name: GString,
+    /// The step on ground texture 0, 1, 2 ... (a zone's texture number, the order of its
+    /// ground textures). An empty place, a texture past the end, buildings and bridges play
+    /// the solid step (sound 653).
+    #[export]
+    sounds: Array<Option<Gd<RoseSound>>>,
+    base: Base<Resource>,
+}
+
 /// `find`'s index of one folder: each number's file (and name), and when it was made.
 type FoundIndex = (std::time::Instant, std::collections::HashMap<i64, (String, String)>);
 
@@ -1499,6 +1576,8 @@ fn link_kind(property: &str) -> &str {
         "monster"
     } else if property == "target_zone" {
         "zone"
+    } else if property.ends_with("_sound") || property.starts_with("hit_dummy_sound") || property.starts_with("on_") || property == "sounds" {
+        "sound"
     } else {
         property
     }
@@ -1512,13 +1591,24 @@ fn item_kind(class: &str) -> Option<&'static str> {
         .map(|(_, kind)| *kind)
 }
 
-/// What a link holds in the export: an item as `weapon/3`, anything else its id.
+/// What a link holds in the export: an item as `weapon/3`, an audio file its path, anything
+/// else its id.
 fn link_value(resource: &Gd<Resource>) -> Value {
+    if resource.is_class("AudioStream") {
+        return Value::from(resource.get_path().to_string());
+    }
     let id = resource.get("id").try_to::<i64>().unwrap_or(0);
     match item_kind(&resource.get_class().to_string()) {
         Some(kind) => Value::from(format!("{kind}/{id}")),
         None => Value::from(id),
     }
+}
+
+/// Whether an array property holds links named by number (a typed array of one of our
+/// classes, `RoseFootsteps.sounds`): an empty place is then 0, not `""`.
+fn numbered_links(array: &Variant) -> bool {
+    let class = array.call("get_typed_class_name", &[]).to_string();
+    !class.is_empty() && class != "Resource"
 }
 
 /// An array element in the export: an empty place is `""`, a link its value, a number itself.
@@ -1570,9 +1660,12 @@ fn to_json(resource: &Gd<Resource>) -> Map<String, Value> {
                 _ => continue,
             },
             VariantType::ARRAY => {
+                let numbered = numbered_links(&value);
                 let Ok(array) = value.try_to::<AnyArray>() else { continue };
-                let mut list: Vec<Value> = array.iter_shared().map(|v| element_value(&v)).collect();
-                while list.last() == Some(&Value::from("")) {
+                let empty = if numbered { Value::from(0) } else { Value::from("") };
+                let mut list: Vec<Value> =
+                    array.iter_shared().map(|v| if v.is_nil() { empty.clone() } else { element_value(&v) }).collect();
+                while list.last() == Some(&empty) {
                     list.pop();
                 }
                 Value::from(list)
@@ -1589,6 +1682,13 @@ fn to_json(resource: &Gd<Resource>) -> Map<String, Value> {
 fn resolve(key: &str, value: &Value, links: &Links) -> Result<Option<Gd<Resource>>, String> {
     let link = match value {
         Value::String(s) if s.is_empty() => return Ok(None),
+        // An audio file, by its path.
+        Value::String(s) if s.starts_with("res://") => {
+            return ResourceLoader::singleton()
+                .load(s.as_str())
+                .map(Some)
+                .ok_or(format!("{key}: could not load {s} (run --import-rose first)"));
+        }
         Value::String(s) => format!("items/{s}"),
         Value::Number(n) if n.as_i64() == Some(0) => return Ok(None),
         Value::Number(n) => format!("{}/{n}", link_kind(key)),
@@ -1630,10 +1730,11 @@ fn set_from_json(resource: &mut Gd<Resource>, object: &Map<String, Value>, links
                 None => Variant::nil(),
             },
             (&VariantType::ARRAY, Value::Array(values)) => {
+                let numbered = numbered_links(&resource.get(key));
                 let mut list = VarArray::new();
                 for element in values {
                     let item = match element {
-                        Value::Number(n) => n.as_i64().ok_or(format!("{key}: {n}"))?.to_variant(),
+                        Value::Number(n) if !numbered => n.as_i64().ok_or(format!("{key}: {n}"))?.to_variant(),
                         _ => match resolve(key, element, links)? {
                             Some(linked) => linked.to_variant(),
                             None => Variant::nil(),
@@ -1726,6 +1827,8 @@ pub fn convert_items(force: bool) -> Result<(usize, String), String> {
     let items =
         rose_data_irose::get_item_database(&data.vfs, strings).map_err(|e| format!("{e:#}"))?;
     let export = ItemsExport::from_database(&items);
+    let mut links = Links::new();
+    index_sound_links(&mut links)?;
     let mut count = 0;
     macro_rules! write_all {
         ($field:ident, $class:literal, $folder:literal) => {
@@ -1738,7 +1841,7 @@ pub fn convert_items(force: bool) -> Result<(usize, String), String> {
                         file_stem(item.id, &item.name)
                     ),
                     item,
-                    &Links::new(),
+                    &links,
                 )?;
                 count += 1;
             }
@@ -1934,6 +2037,9 @@ fn index_links(dir: &str, links: &mut Links) -> Result<(), String> {
             "RoseStatusEffect" => format!("status_effect/{id}"),
             "RoseJobClass" => format!("job_class/{id}"),
             "RoseZoneSettings" => format!("zone/{id}"),
+            "RoseSound" => format!("sound/{id}"),
+            "RoseHitSounds" => format!("hit_sounds/{id}"),
+            "RoseFootsteps" => format!("footsteps/{id}"),
             _ => match item_kind(&class) {
                 Some(kind) => format!("items/{kind}/{id}"),
                 None => continue,
@@ -1974,6 +2080,7 @@ pub fn convert_npcs(force: bool) -> Result<(usize, Vec<String>), String> {
     if links.is_empty() {
         return Err(format!("no item resources in {ITEMS_DIR}; the drop tables and shops link them"));
     }
+    index_sound_links(&mut links)?;
     let strings =
         rose_data_irose::get_string_database(&data.vfs, 1).map_err(|e| format!("{e:#}"))?;
     let zones = rose_data_irose::get_zone_database(&data.vfs, strings.clone()).map_err(|e| format!("{e:#}"))?;
@@ -2136,6 +2243,7 @@ pub fn convert_skills(force: bool) -> Result<usize, String> {
     if links.is_empty() {
         return Err(format!("no monster resources in {MONSTERS_DIR}; the summoning skills link them"));
     }
+    index_sound_links(&mut links)?;
     let strings = rose_data_irose::get_string_database(&data.vfs, 1).map_err(|e| format!("{e:#}"))?;
     let skills = rose_data_irose::get_skill_database(&data.vfs, strings.clone()).map_err(|e| format!("{e:#}"))?;
     let effects =
@@ -2261,9 +2369,25 @@ pub fn convert_world(force: bool) -> Result<(usize, Vec<String>), String> {
     if links.is_empty() {
         return Err(format!("no item resources in {ITEMS_DIR}; the recipes and new characters link them"));
     }
+    index_sound_links(&mut links)?;
     let strings = rose_data_irose::get_string_database(&data.vfs, 1).map_err(|e| format!("{e:#}"))?;
-    let (export, lost) =
+    let (mut export, mut lost) =
         rose_game_data::world_export_from_irose(&data.vfs, &strings, &data.items).map_err(|e| format!("{e:#}"))?;
+    // The music links the imported audio files.
+    for zone in &mut export.zones {
+        for music in [&mut zone.music_day, &mut zone.music_night] {
+            if music.is_empty() {
+                continue;
+            }
+            match audio_link(music) {
+                Some(path) => *music = path,
+                None => {
+                    lost.push(format!("zone {}: the client data has no {music}", zone.id));
+                    music.clear();
+                }
+            }
+        }
+    }
     let mut count = 0;
     let mut zone_names = std::collections::HashMap::new();
     for zone in &export.zones {
@@ -2348,6 +2472,215 @@ pub fn read_world() -> Result<(WorldExport, usize), String> {
     Ok((export, count))
 }
 
+/// The sound, hit sound and footstep folders, with their classes.
+const SOUND_DIRS: [(&str, &str); 3] = [
+    (SOUNDS_DIR, "RoseSound"),
+    (HIT_SOUNDS_DIR, "RoseHitSounds"),
+    (FOOTSTEPS_DIR, "RoseFootsteps"),
+];
+
+/// The links to every sound, hit sound and footstep resource.
+fn index_sound_links(links: &mut Links) -> Result<(), String> {
+    for (dir, _) in SOUND_DIRS {
+        index_links(dir, links)?;
+    }
+    Ok(())
+}
+
+/// The imported Godot copy of a sound file in the client data (`Sound\BGM\Prologue.ogg` ->
+/// `res://assets/rose/sound/bgm/prologue.res`, or our own file at that place in
+/// `res://assets/ours/`), None when there is none.
+pub fn audio_link(client_path: &str) -> Option<String> {
+    if client_path.trim().is_empty() {
+        return None;
+    }
+    crate::assets::find_stem(&crate::assets::stem(client_path), crate::assets::AUDIO_EXTENSIONS)
+}
+
+/// `--convert-data` for sounds: one resource per FILE_SOUND.STB row with a file (or that an
+/// item, monster or skill names), per LIST_HITSOUND.STB row and per LIST_STEPSOUND.STB
+/// column, linking the imported audio files (`--import-rose` first). Sounds go in a folder
+/// per client folder (`sounds/attack/37-sword-001.tres`). Returns the count and the sounds
+/// whose file the client data doesn't have.
+pub fn convert_sounds(force: bool) -> Result<(usize, Vec<String>), String> {
+    let data = crate::data::get().ok_or("open the data first")?;
+    let mut existing = Vec::new();
+    for (dir, _) in SOUND_DIRS {
+        tres_files(dir, &mut existing);
+    }
+    if !existing.is_empty() && !force {
+        return Err(format!(
+            "res://data/ already has {} sound, hit sound or footstep resources; they are the source now (use --convert-data=force to write them again from iROSE)",
+            existing.len()
+        ));
+    }
+    if crate::assets::find_stem("sound/avata/step_solid", crate::assets::AUDIO_EXTENSIONS).is_none() {
+        return Err("the sounds are not imported; run --import-rose first".into());
+    }
+    let sounds = rose_data_irose::get_sound_database(&data.vfs).map_err(|e| format!("{e:#}"))?;
+    // The sounds and hit sounds something names, so their links survive even without a file.
+    let mut used = std::collections::BTreeSet::new();
+    let mut used_hits = std::collections::BTreeSet::new();
+    let mut add = |id: Option<rose_data::SoundId>| {
+        if let Some(id) = id {
+            used.insert(id.get());
+        }
+    };
+    use rose_data::ItemType;
+    for item_type in (0..ItemType::LENGTH).map(ItemType::from_usize) {
+        for item in data.items.iter_items(item_type) {
+            if let Some(base) = data.items.get_base_item(item) {
+                add(base.equip_sound_id);
+            }
+            let number = item.item_number;
+            match item_type {
+                ItemType::Weapon => {
+                    let weapon = data.items.get_weapon_item(number).unwrap();
+                    add(weapon.attack_start_sound_id);
+                    add(weapon.attack_fire_sound_id);
+                    used_hits.insert(weapon.attack_hit_sound_index);
+                }
+                ItemType::Consumable => add(data.items.get_consumable_item(number).unwrap().effect_sound_id),
+                ItemType::Vehicle => {
+                    let part = data.items.get_vehicle_item(number).unwrap();
+                    for id in [part.ride_sound_id, part.dismount_sound_id, part.dead_sound_id, part.stop_sound_id, part.move_sound_id, part.hit_sound_id] {
+                        add(id);
+                    }
+                }
+                _ => {}
+            }
+        }
+    }
+    for npc in data.npcs.iter() {
+        for id in [npc.normal_effect_sound_id, npc.attack_sound_id, npc.hitted_sound_id, npc.die_sound_id, npc.create_sound_id] {
+            add(id);
+        }
+    }
+    for skill in data.skills.iter() {
+        for id in [skill.bullet_fire_sound_id, skill.hit_sound_id, skill.hit_dummy_sound_id[0], skill.hit_dummy_sound_id[1]] {
+            add(id);
+        }
+    }
+    let mut export = SoundsExport::from_database(&sounds, &used, &used_hits);
+    used.extend(export.hit_sounds.iter().flat_map(|h| [h.on_armour, h.on_cloth, h.on_stone]));
+    used.extend(export.footsteps.iter().flat_map(|f| f.sounds.iter().copied()));
+    // FILE_SOUND names some files the client doesn't have (the game plays nothing for them):
+    // a sound something links stays, silent; the others are left out.
+    let mut lost = Vec::new();
+    let mut left_out = 0;
+    export.sounds.retain_mut(|sound| {
+        if sound.stream.is_empty() {
+            return true;
+        }
+        match audio_link(&sound.stream) {
+            Some(path) => {
+                sound.stream = path;
+                true
+            }
+            None if used.contains(&sound.id) => {
+                lost.push(format!("sound {}: the client data has no {}, kept silent", sound.id, sound.stream));
+                sound.stream.clear();
+                true
+            }
+            None => {
+                left_out += 1;
+                false
+            }
+        }
+    });
+    if left_out > 0 {
+        lost.push(format!("{left_out} FILE_SOUND rows nothing links name files the client data doesn't have; left out"));
+    }
+    // A footstep set is named after the zones that walk on it.
+    for set in &mut export.footsteps {
+        let zones: Vec<&str> = data
+            .zone_list
+            .iter()
+            .filter(|z| z.footstep_type == Some(set.id))
+            .map(|z| z.name.trim())
+            .filter(|n| !n.is_empty())
+            .collect();
+        set.name = match zones.len() {
+            0 => format!("footsteps {}", set.id),
+            1 => zones[0].to_string(),
+            n => format!("{} and {} more", zones[0], n - 1),
+        };
+    }
+    let mut links = Links::new();
+    let mut count = 0;
+    for sound in &export.sounds {
+        let folder = sound
+            .stream
+            .strip_prefix(crate::assets::ROSE)
+            .or_else(|| sound.stream.strip_prefix(crate::assets::OURS))
+            .and_then(|p| p.split('/').nth(1).filter(|_| p.matches('/').count() >= 2))
+            .unwrap_or("other");
+        let path = format!("{SOUNDS_DIR}{folder}/{}.tres", file_stem(sound.id as u32, &sound.name));
+        write_resource("RoseSound", &path, sound, &links)?;
+        links.insert(format!("sound/{}", sound.id), path);
+        count += 1;
+    }
+    for set in &export.hit_sounds {
+        let path = format!("{HIT_SOUNDS_DIR}{}.tres", file_stem(set.id, &set.name));
+        write_resource("RoseHitSounds", &path, set, &links)?;
+        count += 1;
+    }
+    for set in &export.footsteps {
+        let path = format!("{FOOTSTEPS_DIR}{}.tres", file_stem(set.id, &set.name));
+        write_resource("RoseFootsteps", &path, set, &links)?;
+        count += 1;
+    }
+    Ok((count, lost))
+}
+
+/// Reads every sound, hit sound and footstep resource into the export. Two of one kind with
+/// the same number are an error naming both files.
+pub fn read_sounds() -> Result<(SoundsExport, usize), String> {
+    let mut export = SoundsExport::default();
+    let mut seen: std::collections::HashMap<(&str, u32), String> = std::collections::HashMap::new();
+    let mut loader = ResourceLoader::singleton();
+    let mut count = 0;
+    for (dir, _) in SOUND_DIRS {
+        register_uids(dir);
+    }
+    for (dir, _) in SOUND_DIRS {
+        let mut files = Vec::new();
+        tres_files(dir, &mut files);
+        for path in files {
+            count += 1;
+            let resource = loader.load(&path).ok_or(format!("could not load {path}"))?;
+            let class = resource.get_class().to_string();
+            let mut check = |kind: &'static str, id: u32| -> Result<(), String> {
+                match seen.insert((kind, id), path.clone()) {
+                    Some(other) => Err(format!("{path} and {other} are both {kind} {id}")),
+                    None => Ok(()),
+                }
+            };
+            let read = |e: String| format!("{path}: {e}");
+            match class.as_str() {
+                "RoseSound" => {
+                    let sound: SoundExport = from_resource(&resource).map_err(read)?;
+                    check("sound", sound.id as u32)?;
+                    export.sounds.push(sound);
+                }
+                "RoseHitSounds" => {
+                    let set: HitSoundsExport = from_resource(&resource).map_err(read)?;
+                    check("hit sounds", set.id)?;
+                    export.hit_sounds.push(set);
+                }
+                "RoseFootsteps" => {
+                    let set: FootstepsExport = from_resource(&resource).map_err(read)?;
+                    check("footsteps", set.id)?;
+                    export.footsteps.push(set);
+                }
+                _ => return Err(format!("{path} is a {class}, not a sound, hit sound or footstep set")),
+            }
+        }
+    }
+    export.check().map_err(|e| format!("{e:#}"))?;
+    Ok((export, count))
+}
+
 /// `--export-data`: writes `export/` (in the repository) from the resources, the zone scenes
 /// and the animations, or with `check` only compares. Needs the data open (the motion list and
 /// the names in the zone files' comments come from it) and the imported animations. Returns
@@ -2381,6 +2714,12 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
             "no zone resources in {ZONES_DIR}; run --convert-data first"
         ));
     }
+    let (sounds, sound_resources) = read_sounds()?;
+    if sound_resources == 0 {
+        return Err(format!(
+            "no sound resources in {SOUNDS_DIR}; run --convert-data first"
+        ));
+    }
     // A summon must name a monster that is there.
     let monsters: std::collections::HashSet<u16> = npcs.monsters.iter().map(|m| m.id).collect();
     if let Some(skill) = skills.skills.iter().find(|s| s.summon_monster != 0 && !monsters.contains(&s.summon_monster)) {
@@ -2404,6 +2743,7 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
     data_files.extend(npcs.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
     data_files.extend(skills.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
     data_files.extend(world.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
+    data_files.extend(sounds.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
     files.extend(data_files.into_iter().map(|(name, text)| (in_data(rose_data_export::data_file_as(name, toml)), text)));
     // The written files must read back (the server and the game load them the same way).
     let find = |path: String| Ok(files.iter().find(|(n, _)| *n == in_data(path.clone())).map(|(_, t)| t.clone()));
@@ -2422,6 +2762,11 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
         .map_err(|e| format!("{e:#}"))?
         .ok_or("the world export doesn't read back")?;
     rose_game_data::world_from_export(&world_back).map_err(|e| format!("{e:#}"))?;
+    SoundsExport::from_files_as(toml, |name| find(rose_data_export::data_file_as(name, toml)))
+        .map_err(|e| format!("{e:#}"))?
+        .ok_or("the sound export doesn't read back")?
+        .to_database()
+        .map_err(|e| format!("{e:#}"))?;
 
     // The zones edited as scenes need their settings, and their layouts go to the server.
     // Their comments name the zone, monsters and NPCs as the resources do now.
@@ -2448,7 +2793,8 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
     files.push((rose_data_export::MOTIONS_FILE.to_string(), timings.to_toml()));
 
     let mut result = ExportResult {
-        resources: item_resources + npc_resources + skill_resources + world_resources,
+        resources: item_resources + npc_resources + skill_resources + world_resources + sound_resources,
+        sounds: sounds.sounds.len(),
         items: items.count(),
         monsters: npcs.monsters.len(),
         npcs: npcs.npcs.len(),
@@ -2494,6 +2840,7 @@ pub struct ExportResult {
     pub npcs: usize,
     pub skills: usize,
     pub zones: usize,
+    pub sounds: usize,
     pub zone_scenes: usize,
     pub motions: usize,
     pub read_ms: u128,
@@ -2509,7 +2856,7 @@ struct RoseDataExport {
 #[godot_api]
 impl RoseDataExport {
     /// Writes the resources of every kind that has none yet (all of them with `force`) from
-    /// the iROSE tables: items first, then monsters, NPCs, drop tables and shop tabs, which
+    /// the iROSE tables: sounds first (they link the imported audio), then items, then monsters, NPCs, drop tables and shop tabs, which
     /// link the items, then skills, status effects and job classes, which link the monsters,
     /// then zone settings, warp gates, recipes and new characters, which link the zones and
     /// items. Needs RoseData.open. Returns {resources, folder, skipped (kinds already there),
@@ -2520,6 +2867,26 @@ impl RoseDataExport {
         let mut count = 0;
         let mut kept = VarArray::new();
         let mut lost = VarArray::new();
+        let mut others = Vec::new();
+        for (dir, _) in SOUND_DIRS {
+            tres_files(dir, &mut others);
+        }
+        if force || others.is_empty() {
+            match convert_sounds(force) {
+                Ok((n, not_kept)) => {
+                    count += n;
+                    for line in not_kept {
+                        lost.push(&line.to_variant());
+                    }
+                }
+                Err(error) => {
+                    result.set("error", error.as_str());
+                    return result;
+                }
+            }
+        } else {
+            kept.push(&"sounds".to_variant());
+        }
         let mut items = Vec::new();
         tres_files(ITEMS_DIR, &mut items);
         if force || items.is_empty() {
@@ -2598,7 +2965,7 @@ impl RoseDataExport {
 
     /// Writes (or with `check` compares) `export/` from the resources, the zone scenes and the
     /// animations. Needs RoseData.open and the import. Returns {files, changed, resources,
-    /// items, monsters, npcs, skills, zones, zone_scenes, motions, read_ms}, or {error}.
+    /// items, monsters, npcs, skills, zones, sounds, zone_scenes, motions, read_ms}, or {error}.
     #[func]
     fn export(check: bool) -> VarDictionary {
         let mut result = VarDictionary::new();
@@ -2613,6 +2980,7 @@ impl RoseDataExport {
                 result.set("npcs", out.npcs as i64);
                 result.set("skills", out.skills as i64);
                 result.set("zones", out.zones as i64);
+                result.set("sounds", out.sounds as i64);
                 result.set("zone_scenes", out.zone_scenes as i64);
                 result.set("motions", out.motions as i64);
                 result.set("read_ms", out.read_ms as i64);

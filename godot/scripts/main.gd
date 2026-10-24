@@ -29,7 +29,7 @@
 ##                              the O key opens the sound window, which saves them)
 ##   --sound-log                print each sound effect played
 ##   --quit-after=SECONDS       quit after this long
-##   --import-rose[=force]      convert the ROSE models and textures into res://assets/rose/
+##   --import-rose[=force]      convert the ROSE models, textures and sounds into res://assets/rose/
 ##                              and quit (run headless; force redoes files already there)
 ##   --import-zone=ID[,force]   write the scenes of zone ID into res://zones/ from the ROSE map
 ##                              files and quit (run headless; force replaces scenes already there)
@@ -161,8 +161,8 @@ func _import_rose(force: bool) -> void:
 	if result.is_empty():
 		get_tree().quit(1)
 		return
-	print("rose: imported %d meshes and %d textures (%d already there, %d failed) in %.0f s" % [
-		result.meshes, result.textures, result.kept, result.failed, result.seconds])
+	print("rose: imported %d meshes, %d textures and %d sounds (%d already there, %d failed) in %.0f s" % [
+		result.meshes, result.textures, result.sounds, result.kept, result.failed, result.seconds])
 	var folders: Dictionary = result.folders
 	for folder in folders:
 		print("rose:   %-24s %8.1f MB" % [folder, folders[folder] / 1048576.0])
@@ -225,7 +225,7 @@ func _export_data(check: bool) -> void:
 		push_error("rose: %s" % result.error)
 		get_tree().quit(1)
 		return
-	print("rose: %d items, %d monsters, %d NPCs, %d skills and %d zones from %d resources (read in %d ms)" % [result.items, result.monsters, result.npcs, result.skills, result.zones, result.resources, result.read_ms])
+	print("rose: %d items, %d monsters, %d NPCs, %d skills, %d zones and %d sounds from %d resources (read in %d ms)" % [result.items, result.monsters, result.npcs, result.skills, result.zones, result.sounds, result.resources, result.read_ms])
 	print("rose: %d zone scenes, %d motions" % [result.zone_scenes, result.motions])
 	var changed: Array = result.changed
 	for path in changed:

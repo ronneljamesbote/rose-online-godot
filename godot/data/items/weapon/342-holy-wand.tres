@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://l4vyb0der2st"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_cnpvm"]
+[ext_resource type="RoseSound" uid="uid://osald6eflwq1" path="res://data/sounds/attack/37-sword-001.tres" id="2_6ebxe"]
+[ext_resource type="RoseSound" uid="uid://np80gbdh8gn3" path="res://data/sounds/attack/89-magic-001.tres" id="3_0ppoq"]
+
 [resource]
 id = 342
 name = "Holy Wand"
@@ -10,7 +14,7 @@ weight = 10
 quality = 65
 icon_index = 1337
 field_model_index = 642
-equip_sound_id = 578
+equip_sound = ExtResource("1_cnpvm")
 craft_skill_type = 15
 craft_skill_level = 7
 craft_material = 731
@@ -29,6 +33,6 @@ attack_speed = 12
 motion_type = 14
 is_magic_damage = true
 bullet_effect_id = 213
-attack_start_sound_id = 37
-attack_fire_sound_id = 89
+attack_start_sound = ExtResource("2_6ebxe")
+attack_fire_sound = ExtResource("3_0ppoq")
 gem_position = 2

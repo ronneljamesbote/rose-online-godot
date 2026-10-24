@@ -1,20 +1,23 @@
 [gd_resource type="RoseZoneSettings" format=3 uid="uid://dij0bqsb4kys8"]
 
+[ext_resource type="AudioStreamOggVorbis" path="res://assets/rose/sound/bgm/town01_eldeon.res" id="1_szj2f"]
+[ext_resource type="RoseFootsteps" uid="uid://bca0fohtsrab2" path="res://data/footsteps/2-dolphin-island-and-10-more.tres" id="2_aj27p"]
+
 [resource]
 id = 16
 map_file = "3DDATA\\Maps\\ELDEON\\EJ\\EJ.zon"
 start_spot = "start"
 revive_spot = "restore"
 sector_size = 6000
-music_day = "Sound\\BGM\\Town01_eldeon.ogg"
-music_night = "Sound\\BGM\\Town01_eldeon.ogg"
+music_day = ExtResource("1_szj2f")
+music_night = ExtResource("1_szj2f")
 sky = 0
 minimap = "3Ddata\\Maps\\Junon\\JG08\\minimap.DDS"
 minimap_start_x = 32
 minimap_start_y = 32
 decoration_models = "3DDATA\\\\ELDEON\\\\LIST_DECO_EJ.ZSC"
 building_models = "3DDATA\\\\ELDEON\\\\LIST_CNST_EJ.ZSC"
-footstep_type = 2
+footsteps = ExtResource("2_aj27p")
 day_cycle = 100
 day_time = 15
 evening_time = 55

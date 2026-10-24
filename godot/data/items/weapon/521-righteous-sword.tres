@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://dnsw8ur5m3r5r"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_34y6j"]
+[ext_resource type="RoseSound" uid="uid://b8d8k6psw0js4" path="res://data/sounds/attack/38-sword-002.tres" id="2_89uih"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_8wccx"]
+
 [resource]
 id = 521
 name = "Righteous Sword"
@@ -10,7 +14,7 @@ weight = 50
 quality = 97
 icon_index = 928
 field_model_index = 318
-equip_sound_id = 577
+equip_sound = ExtResource("1_34y6j")
 equip_stat_1 = "Level"
 equip_stat_1_value = 132
 equip_stat_2 = "Strength"
@@ -22,6 +26,6 @@ attack_power = 193
 attack_speed = 9
 motion_type = 1
 effect_id = 111
-attack_start_sound_id = 38
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_89uih")
+hit_sounds = ExtResource("3_8wccx")
 gem_position = 2

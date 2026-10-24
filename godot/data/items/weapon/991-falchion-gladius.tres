@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://d13dpduw3pcw5"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_n2p22"]
+[ext_resource type="RoseSound" uid="uid://b8d8k6psw0js4" path="res://data/sounds/attack/38-sword-002.tres" id="2_lnheq"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_f0gn0"]
+
 [resource]
 id = 991
 name = "Falchion-Gladius"
@@ -10,7 +14,7 @@ weight = 106
 quality = 47
 icon_index = 1444
 field_model_index = 991
-equip_sound_id = 577
+equip_sound = ExtResource("1_n2p22")
 equip_stat_1 = "Dexterity"
 equip_stat_1_value = 84
 add_stat_1 = "Avoid"
@@ -22,6 +26,6 @@ attack_power = 97
 attack_speed = 10
 motion_type = 7
 effect_id = 111
-attack_start_sound_id = 38
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_lnheq")
+hit_sounds = ExtResource("3_f0gn0")
 gem_position = 4

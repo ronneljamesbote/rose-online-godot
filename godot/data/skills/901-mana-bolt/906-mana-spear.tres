@@ -3,6 +3,8 @@
 [ext_resource type="RoseSkill" uid="uid://cctctgoq3grrx" path="res://data/skills/801-staff-mastery/801-staff-mastery.tres" id="1_jqypn"]
 [ext_resource type="RoseStatusEffect" uid="uid://0p3o4l6jqxs5" path="res://data/status_effects/21-def-down.tres" id="2_s20ax"]
 [ext_resource type="RoseStatusEffect" uid="uid://dbi4ro2cc5h50" path="res://data/status_effects/23-magic-resistance-down.tres" id="3_0soao"]
+[ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="4_y7sos"]
+[ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="5_v2as9"]
 
 [resource]
 id = 906
@@ -49,6 +51,6 @@ casting_effect_2_point = 1
 action_motion_id = 103
 bullet_effect_id = 261
 bullet_point = 1
-bullet_fire_sound_id = 90
+bullet_fire_sound = ExtResource("4_y7sos")
 hit_effect_file_id = 1121
-hit_sound_id = 67
+hit_sound = ExtResource("5_v2as9")

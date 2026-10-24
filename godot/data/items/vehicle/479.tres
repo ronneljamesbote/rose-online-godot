@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemVehicle" format=3 uid="uid://cp1wkx5hbb6m8"]
 
+[ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_vg2lu"]
+[ext_resource type="RoseSound" uid="uid://y5kg708oyaqv" path="res://data/sounds/avata/671-cart-move.tres" id="2_c641t"]
+
 [resource]
 id = 479
 item_class = "CartWheels"
@@ -9,7 +12,7 @@ quality = 72
 trade_restriction = 6
 icon_index = 2239
 field_model_index = 246
-equip_sound_id = 580
+equip_sound = ExtResource("1_vg2lu")
 add_stat_1 = "Defence"
 add_stat_1_value = 25
 add_stat_2 = "Resistance"
@@ -21,5 +24,5 @@ move_speed = 143
 base_motion_index = 281
 base_avatar_motion_index = 261
 move_effect_file_id = 302
-move_sound_id = 671
+move_sound = ExtResource("2_c641t")
 bullet_fire_point = 8

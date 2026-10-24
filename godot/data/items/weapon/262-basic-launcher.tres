@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://cel7k1ot8kvvb"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_6s62a"]
+[ext_resource type="RoseSound" uid="uid://coa6mw77434ix" path="res://data/sounds/attack/84-gun-003.tres" id="2_1v7eh"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_c09yg"]
+
 [resource]
 id = 262
 name = "Basic Launcher"
@@ -10,7 +14,7 @@ weight = 20
 quality = 48
 icon_index = 1249
 field_model_index = 562
-equip_sound_id = 578
+equip_sound = ExtResource("1_6s62a")
 craft_skill_type = 14
 craft_skill_level = 2
 craft_material = 682
@@ -26,6 +30,6 @@ attack_power = 67
 attack_speed = 12
 motion_type = 9
 bullet_effect_id = 191
-attack_start_sound_id = 84
-attack_fire_sound_id = 78
+attack_start_sound = ExtResource("2_1v7eh")
+attack_fire_sound = ExtResource("3_c09yg")
 gem_position = 1

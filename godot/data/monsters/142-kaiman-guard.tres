@@ -1,6 +1,8 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://2ab8ftprrrj8"]
 
 [ext_resource type="RoseDropTable" uid="uid://bv46e83461p7f" path="res://data/drop_tables/166-kaiman-guard.tres" id="1_sg85y"]
+[ext_resource type="RoseSound" uid="uid://x0vj3oqyejoi" path="res://data/sounds/mob/241-mob16-n.tres" id="2_5dhll"]
+[ext_resource type="RoseSound" uid="uid://b20kfpch1okvx" path="res://data/sounds/mob/242-mob16-d.tres" id="3_karp0"]
 
 [resource]
 id = 142
@@ -21,9 +23,9 @@ run_speed = 600
 ai_file_index = 4
 npc_type_index = 2
 right_hand_part_index = 104
-normal_effect_sound_id = 241
+normal_effect_sound = ExtResource("2_5dhll")
 die_effect_file_id = 1401
-die_sound_id = 242
+die_sound = ExtResource("3_karp0")
 drop_table = ExtResource("1_sg85y")
 drop_money_rate = 16
 drop_item_rate = 49

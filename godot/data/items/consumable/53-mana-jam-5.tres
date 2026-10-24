@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemConsumable" format=3 uid="uid://dn6ngdvvlfu8q"]
 
+[ext_resource type="RoseSound" uid="uid://dwbyekfkxg7c8" path="res://data/sounds/item/584-item-potion.tres" id="1_5pav0"]
+[ext_resource type="RoseSound" uid="uid://c3piaqml44wn1" path="res://data/sounds/item/548-useitem-002.tres" id="2_g3to1"]
+
 [resource]
 id = 53
 name = "Mana Jam (+5)"
@@ -11,7 +14,7 @@ weight = 1
 quality = 30
 icon_index = 1602
 field_model_index = 117
-equip_sound_id = 584
+equip_sound = ExtResource("1_5pav0")
 equip_stat_1 = "Skillpoint"
 equip_stat_1_value = 5
 add_stat_union_1 = 548
@@ -24,4 +27,4 @@ add_data_value = 5
 learn_skill_id = 5
 use_skill_id = 5
 effect_file_id = 140
-effect_sound_id = 548
+effect_sound = ExtResource("2_g3to1")

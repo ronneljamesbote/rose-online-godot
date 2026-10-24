@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://cj2b4ekdyu484"]
 
+[ext_resource type="RoseSound" uid="uid://bjdly3xikd2h4" path="res://data/sounds/item/576-item-weapon.tres" id="1_3vrwt"]
+[ext_resource type="RoseSound" uid="uid://coa6mw77434ix" path="res://data/sounds/attack/84-gun-003.tres" id="2_se4gx"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_5yvpz"]
+
 [resource]
 id = 742
 name = "Ferrell Cannon"
@@ -10,7 +14,7 @@ weight = 20
 quality = 98
 icon_index = 1262
 field_model_index = 574
-equip_sound_id = 576
+equip_sound = ExtResource("1_3vrwt")
 equip_stat_1 = "Level"
 equip_stat_1_value = 134
 equip_stat_2 = "Strength"
@@ -22,6 +26,6 @@ attack_power = 274
 attack_speed = 11
 motion_type = 9
 bullet_effect_id = 191
-attack_start_sound_id = 84
-attack_fire_sound_id = 78
+attack_start_sound = ExtResource("2_se4gx")
+attack_fire_sound = ExtResource("3_5yvpz")
 gem_position = 1

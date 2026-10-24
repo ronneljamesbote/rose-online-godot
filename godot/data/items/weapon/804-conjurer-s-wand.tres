@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://bpmhmjdd8a0b7"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_33z9l"]
+[ext_resource type="RoseSound" uid="uid://osald6eflwq1" path="res://data/sounds/attack/37-sword-001.tres" id="2_do956"]
+[ext_resource type="RoseSound" uid="uid://np80gbdh8gn3" path="res://data/sounds/attack/89-magic-001.tres" id="3_4t0ag"]
+
 [resource]
 id = 804
 name = "Conjurer's Wand"
@@ -10,7 +14,7 @@ weight = 20
 quality = 95
 icon_index = 1354
 field_model_index = 645
-equip_sound_id = 578
+equip_sound = ExtResource("1_33z9l")
 equip_stat_1 = "Level"
 equip_stat_1_value = 127
 equip_stat_2 = "Intelligence"
@@ -25,6 +29,6 @@ attack_speed = 11
 motion_type = 14
 is_magic_damage = true
 bullet_effect_id = 161
-attack_start_sound_id = 37
-attack_fire_sound_id = 89
+attack_start_sound = ExtResource("2_do956")
+attack_fire_sound = ExtResource("3_4t0ag")
 gem_position = 2

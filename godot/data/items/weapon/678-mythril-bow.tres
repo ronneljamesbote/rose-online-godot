@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://odhf1ybsk8gd"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_s54y8"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_7kr9y"]
+
 [resource]
 id = 678
 name = "Mythril Bow"
@@ -10,7 +13,7 @@ weight = 20
 quality = 79
 icon_index = 1167
 field_model_index = 511
-equip_sound_id = 578
+equip_sound = ExtResource("1_s54y8")
 equip_stat_1 = "Level"
 equip_stat_1_value = 92
 equip_stat_2 = "Dexterity"
@@ -22,4 +25,4 @@ attack_power = 149
 attack_speed = 9
 motion_type = 10
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_7kr9y")

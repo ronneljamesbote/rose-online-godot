@@ -1,6 +1,9 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://cry651m3ap47i"]
 
 [ext_resource type="RoseDropTable" uid="uid://ci2nstifv3jh1" path="res://data/drop_tables/156-krawfy-captain.tres" id="1_x6gh4"]
+[ext_resource type="RoseSound" uid="uid://c3qpuurjiekiw" path="res://data/sounds/mob/233-mob14-n.tres" id="2_fpnse"]
+[ext_resource type="RoseSound" uid="uid://ddmgmm5w4axod" path="res://data/sounds/mob/219-mob10-h.tres" id="3_18u3h"]
+[ext_resource type="RoseSound" uid="uid://c7i4josxn6vex" path="res://data/sounds/mob/234-mob14-d.tres" id="4_ml43r"]
 
 [resource]
 id = 123
@@ -20,11 +23,11 @@ walk_speed = 240
 run_speed = 530
 ai_file_index = 114
 npc_type_index = 9
-normal_effect_sound_id = 233
-hitted_sound_id = 219
+normal_effect_sound = ExtResource("2_fpnse")
+hitted_sound = ExtResource("3_18u3h")
 hand_hit_effect_id = 403
 die_effect_file_id = 1401
-die_sound_id = 234
+die_sound = ExtResource("4_ml43r")
 drop_table = ExtResource("1_x6gh4")
 drop_money_rate = 20
 drop_item_rate = 63

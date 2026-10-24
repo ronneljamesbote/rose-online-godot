@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://w3gddk6oqodw"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_hcqd4"]
+[ext_resource type="RoseSound" uid="uid://bey2khuqu7mu1" path="res://data/sounds/attack/55-spear-001.tres" id="2_ivtr7"]
+[ext_resource type="RoseHitSounds" uid="uid://d4huxc3qetp2i" path="res://data/hit_sounds/25-spear-hits.tres" id="3_fw305"]
+
 [resource]
 id = 172
 name = "Chaos Spear"
@@ -10,7 +14,7 @@ weight = 40
 quality = 61
 icon_index = 1090
 field_model_index = 472
-equip_sound_id = 577
+equip_sound = ExtResource("1_hcqd4")
 craft_skill_type = 12
 craft_skill_level = 7
 craft_material = 590
@@ -26,6 +30,6 @@ attack_power = 145
 attack_speed = 9
 motion_type = 6
 effect_id = 131
-attack_start_sound_id = 55
-attack_hit_sound_index = 25
+attack_start_sound = ExtResource("2_ivtr7")
+hit_sounds = ExtResource("3_fw305")
 gem_position = 2

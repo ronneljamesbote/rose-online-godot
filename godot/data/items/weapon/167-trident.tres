@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://c083jc4pypmxd"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_ooi46"]
+[ext_resource type="RoseSound" uid="uid://bey2khuqu7mu1" path="res://data/sounds/attack/55-spear-001.tres" id="2_hu5md"]
+[ext_resource type="RoseHitSounds" uid="uid://d4huxc3qetp2i" path="res://data/hit_sounds/25-spear-hits.tres" id="3_xligc"]
+
 [resource]
 id = 167
 name = "Trident"
@@ -10,7 +14,7 @@ weight = 30
 quality = 46
 icon_index = 1085
 field_model_index = 467
-equip_sound_id = 577
+equip_sound = ExtResource("1_ooi46")
 craft_skill_type = 12
 craft_skill_level = 3
 craft_material = 585
@@ -26,6 +30,6 @@ attack_power = 83
 attack_speed = 10
 motion_type = 6
 effect_id = 131
-attack_start_sound_id = 55
-attack_hit_sound_index = 25
+attack_start_sound = ExtResource("2_hu5md")
+hit_sounds = ExtResource("3_xligc")
 gem_position = 2

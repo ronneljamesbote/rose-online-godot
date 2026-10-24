@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://bpi5txfy4icyo"]
 
+[ext_resource type="RoseSound" uid="uid://bjdly3xikd2h4" path="res://data/sounds/item/576-item-weapon.tres" id="1_abzoi"]
+[ext_resource type="RoseSound" uid="uid://dkgwy774udjo5" path="res://data/sounds/attack/47-mace-001.tres" id="2_5uhtk"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_9vt4b"]
+
 [resource]
 id = 909
 name = "Gurz"
@@ -10,7 +14,7 @@ weight = 76
 quality = 43
 icon_index = 979
 field_model_index = 909
-equip_sound_id = 576
+equip_sound = ExtResource("1_abzoi")
 equip_stat_1 = "Strength"
 equip_stat_1_value = 117
 add_stat_1 = "MaxHealth"
@@ -22,6 +26,6 @@ attack_power = 76
 attack_speed = 9
 motion_type = 3
 effect_id = 121
-attack_start_sound_id = 47
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_5uhtk")
+hit_sounds = ExtResource("3_9vt4b")
 gem_position = 2

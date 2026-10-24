@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://c3d50u7xpkp8a"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_534cs"]
+[ext_resource type="RoseSound" uid="uid://b8d8k6psw0js4" path="res://data/sounds/attack/38-sword-002.tres" id="2_3c9w0"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_m2ldl"]
+
 [resource]
 id = 425
 item_class = "Katar"
@@ -7,7 +11,7 @@ base_price = 878900
 weight = 30
 quality = 92
 field_model_index = 725
-equip_sound_id = 577
+equip_sound = ExtResource("1_534cs")
 craft_skill_level = 14
 equip_stat_1 = "Level"
 equip_stat_1_value = 178
@@ -20,6 +24,6 @@ attack_power = 295
 attack_speed = 7
 motion_type = 16
 effect_id = 121
-attack_start_sound_id = 38
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_3c9w0")
+hit_sounds = ExtResource("3_m2ldl")
 gem_position = 4

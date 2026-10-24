@@ -1,5 +1,8 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://bfiyajnht6ifq"]
 
+[ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="1_h9e9a"]
+[ext_resource type="RoseSound" uid="uid://bxpxc8f3lqkwr" path="res://data/sounds/skill/1573-point-ice02.tres" id="2_4nd5d"]
+
 [resource]
 id = 3025
 skill_type = "FireBullet"
@@ -17,6 +20,6 @@ casting_repeat_motion_id = 136
 action_motion_id = 9
 bullet_effect_id = 262
 bullet_point = 1
-bullet_fire_sound_id = 90
+bullet_fire_sound = ExtResource("1_h9e9a")
 hit_effect_file_id = 1310
-hit_sound_id = 1573
+hit_sound = ExtResource("2_4nd5d")

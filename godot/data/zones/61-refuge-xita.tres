@@ -1,5 +1,8 @@
 [gd_resource type="RoseZoneSettings" format=3 uid="uid://dk6ugr8pbg3to"]
 
+[ext_resource type="AudioStreamOggVorbis" path="res://assets/rose/sound/bgm/plain04_eldeon.res" id="1_hdsw5"]
+[ext_resource type="RoseFootsteps" uid="uid://bca0fohtsrab2" path="res://data/footsteps/2-dolphin-island-and-10-more.tres" id="2_hdyi2"]
+
 [resource]
 id = 61
 name = "Refuge Xita"
@@ -7,15 +10,15 @@ map_file = "3DDATA\\Maps\\ELDEON\\EJT01\\EJT01.zon"
 start_spot = "start"
 revive_spot = "restore"
 sector_size = 6000
-music_day = "Sound\\BGM\\Plain04_eldeon.ogg"
-music_night = "Sound\\BGM\\Plain04_eldeon.ogg"
+music_day = ExtResource("1_hdsw5")
+music_night = ExtResource("1_hdsw5")
 sky = 6
 minimap = "3Ddata\\Maps\\ELDEON\\EJT01\\minimap.DDS"
 minimap_start_x = 31
 minimap_start_y = 31
 decoration_models = "3DDATA\\\\ELDEON\\\\LIST_DECO_EJ.ZSC"
 building_models = "3DDATA\\\\ELDEON\\\\LIST_CNST_EJ.ZSC"
-footstep_type = 2
+footsteps = ExtResource("2_hdyi2")
 day_cycle = 200
 day_time = 10
 evening_time = 80

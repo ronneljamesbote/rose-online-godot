@@ -1,8 +1,11 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://dkmwmb5wk5kei"]
 
+[ext_resource type="RoseSound" uid="uid://osald6eflwq1" path="res://data/sounds/attack/37-sword-001.tres" id="1_1yiqs"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="2_pb0n5"]
+
 [resource]
 id = 1005
 quality = 50
 effect_id = 411
-attack_start_sound_id = 37
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("1_1yiqs")
+hit_sounds = ExtResource("2_pb0n5")

@@ -1,4 +1,3 @@
-use rose_file_readers::VfsPathBuf;
 use serde::{Deserialize, Serialize};
 use std::{num::NonZeroU16, str::FromStr};
 
@@ -10,8 +9,9 @@ id_wrapper_impl!(SoundId, NonZeroU16, u16);
 #[derive(Debug)]
 pub struct SoundData {
     pub id: SoundId,
-    pub path: VfsPathBuf,
-    pub max_mix_count: usize,
+    /// The audio file: a Godot resource path (`res://assets/rose/sound/...`) or a file in the
+    /// client data (`Sound\attack\Sword_001.wav`), as written; empty when there is none.
+    pub path: String,
 }
 
 #[derive(Debug)]
@@ -50,6 +50,26 @@ impl SoundDatabase {
 
     pub fn len(&self) -> usize {
         self.sounds.len()
+    }
+
+    /// The hit sound table: `hit_sound_ids()[material + weapon_hit_sound_type * columns]`
+    /// with `hit_sound_material_types()` columns.
+    pub fn hit_sound_ids(&self) -> &[Option<SoundId>] {
+        &self.hit_sounds
+    }
+
+    pub fn hit_sound_material_types(&self) -> usize {
+        self.hit_sound_material_types
+    }
+
+    /// The footstep table: `step_sound_ids()[zone_type + tile_number * columns]` with
+    /// `step_sound_zone_types()` columns.
+    pub fn step_sound_ids(&self) -> &[Option<SoundId>] {
+        &self.step_sounds
+    }
+
+    pub fn step_sound_zone_types(&self) -> usize {
+        self.step_sound_zone_types
     }
 
     pub fn get_sound(&self, id: SoundId) -> Option<&SoundData> {
