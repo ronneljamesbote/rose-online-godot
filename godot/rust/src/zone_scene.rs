@@ -192,7 +192,7 @@ pub struct RoseZoneScene {
     /// The zone's settings (name, music, sky, time of day, PvP ...): the `RoseZoneSettings`
     /// in `res://data/zones/` with this zone's number. Click it to edit them; they are saved
     /// in that resource, not in the scene.
-    #[var(get = get_settings, no_set, usage_flags = [EDITOR])]
+    #[var(get = get_settings, no_set, usage_flags = [EDITOR], hint = RESOURCE_TYPE, hint_string = "RoseZoneSettings")]
     settings: PhantomVar<Option<Gd<RoseZoneSettings>>>,
 }
 
@@ -718,7 +718,7 @@ pub struct RoseZoneObject {
     /// Warp gates only: where the gate takes you. Drag a `RoseWarpGate` in from
     /// `res://data/warp_gates/` (it names the zone and named spot you land on). Walking into
     /// the gate asks the server to warp you through it. Unused for other models.
-    #[var(get = get_warp_gate, set = set_warp_gate, usage_flags = [EDITOR])]
+    #[var(get = get_warp_gate, set = set_warp_gate, usage_flags = [EDITOR], hint = RESOURCE_TYPE, hint_string = "RoseWarpGate")]
     warp_gate: PhantomVar<Option<Gd<RoseWarpGate>>>,
     /// Warp gates only: the number of the gate's `RoseWarpGate`, as the scene stores it
     /// (`warp_gate` shows it as the resource).
@@ -1024,8 +1024,12 @@ impl RoseSpawnSpot {
 
 impl OldProperties for RoseSpawnSpot {
     /// Scenes saved before the markers took resources stored the numbers under the names
-    /// the resource lists have now.
+    /// the resource lists have now. Only a number list is such an old value: the Inspector
+    /// sets the resource list under the same name, and that must reach its setter.
     fn set_old_property(&mut self, name: &str, value: &Variant) -> bool {
+        if value.get_type() != VariantType::PACKED_INT32_ARRAY {
+            return false;
+        }
         let Ok(ids) = value.try_to::<PackedInt32Array>() else { return false };
         match name {
             "basic_monsters" => self.basic_monster_ids = ids,
@@ -1043,7 +1047,7 @@ marker_class!(
     RoseNpcSpot {
         /// Which NPC: drag a `RoseNpc` resource in from `res://data/npcs/`. Sets the NPC's
         /// name, model, shop and AI. The editor shows its model on the marker.
-        #[var(get = get_npc, set = set_npc, usage_flags = [EDITOR])]
+        #[var(get = get_npc, set = set_npc, usage_flags = [EDITOR], hint = RESOURCE_TYPE, hint_string = "RoseNpc")]
         npc: PhantomVar<Option<Gd<RoseNpc>>>,
         /// The NPC's number, as the scene stores it (`npc` shows it as the resource).
         #[export(storage)]
