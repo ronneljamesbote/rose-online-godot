@@ -10,7 +10,8 @@
 //!   classes (`skills.toml`, `status-effects.toml`, `job-classes.toml`, see [`skills`]), and
 //!   the world: zone settings, warp gates, crafting recipes and new characters
 //!   (`zones.toml`, `warp-gates.toml`, `craft-recipes.toml`, `new-characters.toml`, see
-//!   [`world`]).
+//!   [`world`]), and the sounds (`sounds.toml`, `hit-sounds.toml`, `footsteps.toml`, see
+//!   [`sounds`]; only the game reads them).
 //! - `export/zones/`: the spawns, NPCs and named spots of the zones edited as Godot scenes
 //!   (see [`zone_layouts`]).
 //! - `export/motions.toml`: the length and hit frames of each motion, from the hit markers
@@ -22,6 +23,7 @@ pub mod items;
 pub mod motions;
 pub mod npcs;
 pub mod skills;
+pub mod sounds;
 pub mod world;
 pub mod zone_layouts;
 
@@ -29,6 +31,7 @@ pub use items::{compare_item_databases, Format, ItemsExport};
 pub use motions::{MotionTiming, MotionTimings, MOTIONS_FILE, MOTIONS_GAME_FILE};
 pub use npcs::{compare_drop_rows, compare_npc_databases, NpcModels, NpcsExport};
 pub use skills::{compare_skill_databases, SkillsExport};
+pub use sounds::{compare_sound_databases, sound_stem, SoundsExport};
 pub use world::{compare_warp_gates, compare_zone_settings, WorldExport};
 pub use zone_layouts::{zone_game_file, ZoneEvent, ZoneLayout, ZoneNpc, ZoneSpawn, ZONES_DIR};
 

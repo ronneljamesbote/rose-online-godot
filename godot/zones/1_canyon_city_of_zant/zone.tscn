@@ -161,6 +161,18 @@
 [ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/33_33/lightmap/object_128_0.rtex" id="141_o2385"]
 [ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/33_33/lightmap/object_32_0.rtex" id="142_eifyr"]
 [ext_resource type="Texture2D" path="res://assets/rose/3ddata/maps/junon/jdt01/34_33/lightmap/object_64_0.rtex" id="143_58t3x"]
+[ext_resource type="AudioStreamWAV" path="res://assets/rose/sound/terrain/wind_003.res" id="162_dx2o3"]
+[ext_resource type="AudioStreamWAV" path="res://assets/rose/sound/terrain/bird_003.res" id="163_m5rx3"]
+[ext_resource type="AudioStreamWAV" path="res://assets/rose/sound/terrain/wind_001.res" id="164_q2wzh"]
+[ext_resource type="AudioStreamWAV" path="res://assets/rose/sound/terrain/water_003.res" id="165_0yx6a"]
+[ext_resource type="AudioStreamWAV" path="res://assets/rose/sound/terrain/bird_001.res" id="166_rqier"]
+[ext_resource type="AudioStreamWAV" path="res://assets/rose/sound/terrain/windmill_001.res" id="167_cgy1o"]
+[ext_resource type="AudioStreamWAV" path="res://assets/rose/sound/terrain/bug_001.res" id="168_c6zg7"]
+[ext_resource type="AudioStreamWAV" path="res://assets/rose/sound/terrain/bug_002.res" id="169_gjl2z"]
+[ext_resource type="AudioStreamWAV" path="res://assets/rose/sound/terrain/water_001.res" id="170_9apxf"]
+[ext_resource type="AudioStreamWAV" path="res://assets/rose/sound/terrain/motor_001.res" id="171_1djs1"]
+[ext_resource type="AudioStreamWAV" path="res://assets/rose/sound/terrain/bug_003.res" id="172_90xw8"]
+[ext_resource type="AudioStreamWAV" path="res://assets/rose/sound/terrain/fire_001.res" id="173_anco1"]
 
 [sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_kcxia"]
 world_background = 0
@@ -239,12 +251,12 @@ transform = Transform3D(2.5644698, 0.13439819, 0.4067305, -0.13607347, 2.5964365
 [node name="Sounds" type="Node3D" parent="Block_31_30" unique_id=169410795]
 
 [node name="Sound_0" type="RoseSoundSpot" parent="Block_31_30/Sounds" unique_id=723535033]
-sound = "SOUND/TERRAIN/WIND_003.WAV"
+stream = ExtResource("162_dx2o3")
 range = 3.0
 transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5108.187, 11.141317, -5474.5117)
 
 [node name="Sound_1" type="RoseSoundSpot" parent="Block_31_30/Sounds" unique_id=1194350984]
-sound = "SOUND/TERRAIN/BIRD_003.WAV"
+stream = ExtResource("163_m5rx3")
 range = 3.0
 interval = 100.0
 transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5062.267, 12.344061, -5449.726)
@@ -354,7 +366,7 @@ transform = Transform3D(-0.30220678, -0.08097608, -1.9753772, -0.5176382, 1.9318
 [node name="Sounds" type="Node3D" parent="Block_32_30" unique_id=1367435344]
 
 [node name="Sound_0" type="RoseSoundSpot" parent="Block_32_30/Sounds" unique_id=638293670]
-sound = "SOUND/TERRAIN/WIND_001.WAV"
+stream = ExtResource("164_q2wzh")
 range = 3.0
 transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5162.868, 12.468163, -5441.889)
 
@@ -462,17 +474,17 @@ transform = Transform3D(-1.6443841, 0.18948695, 0.7071753, -1.743436e-07, 1.7386
 [node name="Sounds" type="Node3D" parent="Block_33_30" unique_id=670093674]
 
 [node name="Sound_0" type="RoseSoundSpot" parent="Block_33_30/Sounds" unique_id=192784990]
-sound = "SOUND/TERRAIN/WIND_001.WAV"
+stream = ExtResource("164_q2wzh")
 range = 3.0
 transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5396.467, 12.730038, -5497.4224)
 
 [node name="Sound_1" type="RoseSoundSpot" parent="Block_33_30/Sounds" unique_id=1691943013]
-sound = "SOUND/TERRAIN/WIND_001.WAV"
+stream = ExtResource("164_q2wzh")
 range = 3.0
 transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5281.1953, -5.095683, -5442.417)
 
 [node name="Sound_2" type="RoseSoundSpot" parent="Block_33_30/Sounds" unique_id=1943033966]
-sound = "SOUND/TERRAIN/WATER_003.WAV"
+stream = ExtResource("165_0yx6a")
 range = 3.0
 transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5282.431, -24.325817, -5447.612)
 
@@ -681,7 +693,7 @@ transform = Transform3D(1.4265848, 0, -0.46352586, 0, 1.5000001, 0, 0.46352586, 
 [node name="Sounds" type="Node3D" parent="Block_31_31" unique_id=1170880408]
 
 [node name="Sound_0" type="RoseSoundSpot" parent="Block_31_31/Sounds" unique_id=1157797045]
-sound = "SOUND/TERRAIN/BIRD_001.WAV"
+stream = ExtResource("166_rqier")
 range = 5.0
 interval = 10.0
 transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5059.0103, 10.365047, -5369.9873)
@@ -962,18 +974,18 @@ transform = Transform3D(-1.8119814e-06, 1.1167921, 1.5371325, 0, 1.5371325, -1.1
 [node name="Sounds" type="Node3D" parent="Block_32_31" unique_id=1694532274]
 
 [node name="Sound_0" type="RoseSoundSpot" parent="Block_32_31/Sounds" unique_id=1527225529]
-sound = "SOUND/TERRAIN/WINDMILL_001.WAV"
+stream = ExtResource("167_cgy1o")
 range = 3.0
 transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5125.3306, 10.999999, -5381.307)
 
 [node name="Sound_1" type="RoseSoundSpot" parent="Block_32_31/Sounds" unique_id=488653746]
-sound = "SOUND/TERRAIN/BUG_001.WAV"
+stream = ExtResource("168_c6zg7")
 range = 3.0
 interval = 100.0
 transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5137.677, 11.387245, -5410.1826)
 
 [node name="Sound_2" type="RoseSoundSpot" parent="Block_32_31/Sounds" unique_id=2109953957]
-sound = "SOUND/TERRAIN/BUG_002.WAV"
+stream = ExtResource("169_gjl2z")
 range = 3.0
 transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5261.328, 0.012246093, -5314.233)
 
@@ -1253,7 +1265,7 @@ transform = Transform3D(1.960214, 0.9864827, 0.15624693, 2.95043e-07, 0.34416267
 [node name="Sounds" type="Node3D" parent="Block_33_31" unique_id=1374937549]
 
 [node name="Sound_0" type="RoseSoundSpot" parent="Block_33_31/Sounds" unique_id=1732317116]
-sound = "SOUND/TERRAIN/BIRD_001.WAV"
+stream = ExtResource("166_rqier")
 range = 3.0
 transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5352.188, 6.412099, -5373.15)
 
@@ -2006,16 +2018,16 @@ transform = Transform3D(1.3000001, 0, 0, 0, 1.3000001, 0, 0, 0, 1.3000001, 5095.
 [node name="Sounds" type="Node3D" parent="Block_31_32" unique_id=1563016249]
 
 [node name="Sound_0" type="RoseSoundSpot" parent="Block_31_32/Sounds" unique_id=1521919532]
-sound = "SOUND/TERRAIN/WATER_001.WAV"
+stream = ExtResource("170_9apxf")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5097.3247, 3.9999948, -5150.008)
 
 [node name="Sound_1" type="RoseSoundSpot" parent="Block_31_32/Sounds" unique_id=1872194642]
-sound = "SOUND/TERRAIN/MOTOR_001.WAV"
+stream = ExtResource("171_1djs1")
 range = 2.0
 transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5059.7593, 10.210165, -5146.4277)
 
 [node name="Sound_2" type="RoseSoundSpot" parent="Block_31_32/Sounds" unique_id=1018427673]
-sound = "SOUND/TERRAIN/MOTOR_001.WAV"
+stream = ExtResource("171_1djs1")
 range = 2.0
 transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5032.1733, 24.999998, -5163.5825)
 
@@ -3198,27 +3210,27 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5240.328, 7.1, -5192.5654)
 [node name="Sounds" type="Node3D" parent="Block_32_32" unique_id=1966037531]
 
 [node name="Sound_0" type="RoseSoundSpot" parent="Block_32_32/Sounds" unique_id=1526725724]
-sound = "SOUND/TERRAIN/WATER_001.WAV"
+stream = ExtResource("170_9apxf")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5164.392, -3.9999998, -5241.1777)
 
 [node name="Sound_1" type="RoseSoundSpot" parent="Block_32_32/Sounds" unique_id=300750621]
-sound = "SOUND/TERRAIN/WATER_001.WAV"
+stream = ExtResource("170_9apxf")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5164.456, -3.9999998, -5176.9517)
 
 [node name="Sound_2" type="RoseSoundSpot" parent="Block_32_32/Sounds" unique_id=1369372050]
-sound = "SOUND/TERRAIN/BUG_002.WAV"
+stream = ExtResource("169_gjl2z")
 range = 3.0
 interval = 100.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5248.469, 3.073994, -5122.3926)
 
 [node name="Sound_3" type="RoseSoundSpot" parent="Block_32_32/Sounds" unique_id=240762471]
-sound = "SOUND/TERRAIN/BIRD_001.WAV"
+stream = ExtResource("166_rqier")
 range = 3.0
 interval = 5.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5263.425, 4.1473093, -5186.2573)
 
 [node name="Sound_4" type="RoseSoundSpot" parent="Block_32_32/Sounds" unique_id=1258668592]
-sound = "SOUND/TERRAIN/WINDMILL_001.WAV"
+stream = ExtResource("167_cgy1o")
 range = 3.0
 transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5132.4175, 9.999999, -5130.0435)
 
@@ -3731,24 +3743,24 @@ transform = Transform3D(0.66102755, 0.25379905, 0.7061364, -0.40617916, 0.912293
 [node name="Sounds" type="Node3D" parent="Block_33_32" unique_id=1216531440]
 
 [node name="Sound_0" type="RoseSoundSpot" parent="Block_33_32/Sounds" unique_id=653898355]
-sound = "SOUND/TERRAIN/BIRD_003.WAV"
+stream = ExtResource("163_m5rx3")
 range = 5.0
 interval = 5.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5343.442, 3.9845846, -5121.042)
 
 [node name="Sound_1" type="RoseSoundSpot" parent="Block_33_32/Sounds" unique_id=1971515673]
-sound = "SOUND/TERRAIN/BUG_003.WAV"
+stream = ExtResource("172_90xw8")
 range = 3.0
 interval = 5.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5339.503, 0.06003906, -5278.226)
 
 [node name="Sound_2" type="RoseSoundSpot" parent="Block_33_32/Sounds" unique_id=645884403]
-sound = "SOUND/TERRAIN/FIRE_001.WAV"
+stream = ExtResource("173_anco1")
 range = 1.0
 transform = Transform3D(0.19999993, 0, 0, 0, 0.19999993, 0, 0, 0, 0.19999993, 5316.427, 3.9977243, -5192.383)
 
 [node name="Sound_3" type="RoseSoundSpot" parent="Block_33_32/Sounds" unique_id=738642848]
-sound = "SOUND/TERRAIN/FIRE_001.WAV"
+stream = ExtResource("173_anco1")
 range = 1.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5321.755, 3.99999, -5189.65)
 
@@ -3909,7 +3921,7 @@ transform = Transform3D(1.9536144, -0.41525385, 0.10467204, 0.41582373, 1.956295
 [node name="Sounds" type="Node3D" parent="Block_34_32" unique_id=1488773637]
 
 [node name="Sound_0" type="RoseSoundSpot" parent="Block_34_32/Sounds" unique_id=212162515]
-sound = "SOUND/TERRAIN/BIRD_003.WAV"
+stream = ExtResource("163_m5rx3")
 range = 5.0
 interval = 30.0
 transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5499.971, 24.87785, -5234.9824)
@@ -4189,17 +4201,17 @@ transform = Transform3D(0.8660254, 0, -0.50000006, 0, 1, 0, 0.50000006, 0, 0.866
 [node name="Sounds" type="Node3D" parent="Block_31_33" unique_id=1743464978]
 
 [node name="Sound_0" type="RoseSoundSpot" parent="Block_31_33/Sounds" unique_id=1572647965]
-sound = "SOUND/TERRAIN/MOTOR_001.WAV"
+stream = ExtResource("171_1djs1")
 range = 5.0
 transform = Transform3D(0.79999995, 0, 0, 0, 0.79999995, 0, 0, 0, 0.79999995, 5076.66, 9.999999, -5093.7095)
 
 [node name="Sound_1" type="RoseSoundSpot" parent="Block_31_33/Sounds" unique_id=1899104387]
-sound = "SOUND/TERRAIN/MOTOR_001.WAV"
+stream = ExtResource("171_1djs1")
 range = 2.0
 transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5043.0073, 19.999998, -5113.313)
 
 [node name="Sound_2" type="RoseSoundSpot" parent="Block_31_33/Sounds" unique_id=1755424203]
-sound = "SOUND/TERRAIN/MOTOR_001.WAV"
+stream = ExtResource("171_1djs1")
 range = 2.0
 transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5053.0264, 10.467098, -5111.4136)
 
@@ -4732,11 +4744,11 @@ transform = Transform3D(1.271592, 0, -0.27028522, 0, 1.3000001, 0, 0.27028522, 0
 [node name="Sounds" type="Node3D" parent="Block_32_33" unique_id=164948149]
 
 [node name="Sound_0" type="RoseSoundSpot" parent="Block_32_33/Sounds" unique_id=591289237]
-sound = "SOUND/TERRAIN/WATER_001.WAV"
+stream = ExtResource("170_9apxf")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5164.954, -4.000002, -5109.7793)
 
 [node name="Sound_1" type="RoseSoundSpot" parent="Block_32_33/Sounds" unique_id=1297249746]
-sound = "SOUND/TERRAIN/BUG_003.WAV"
+stream = ExtResource("172_90xw8")
 range = 2.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5188.0566, 3.99957, -5080.394)
 
@@ -5027,7 +5039,7 @@ transform = Transform3D(-0.35836756, 0, 0.9335806, 0, 1, 0, -0.9335806, 0, -0.35
 [node name="Sounds" type="Node3D" parent="Block_33_33" unique_id=372208892]
 
 [node name="Sound_0" type="RoseSoundSpot" parent="Block_33_33/Sounds" unique_id=1390355775]
-sound = "SOUND/TERRAIN/BIRD_001.WAV"
+stream = ExtResource("166_rqier")
 range = 3.0
 interval = 20.0
 transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5300.498, 0, -5018.632)
@@ -5107,7 +5119,7 @@ transform = Transform3D(2.4999998, 0, 0, 0, 2.4999998, 0, 0, 0, 2.4999998, 5484.
 [node name="Sounds" type="Node3D" parent="Block_34_33" unique_id=1883669161]
 
 [node name="Sound_0" type="RoseSoundSpot" parent="Block_34_33/Sounds" unique_id=1321398397]
-sound = "SOUND/TERRAIN/BIRD_003.WAV"
+stream = ExtResource("163_m5rx3")
 range = 5.0
 interval = 100.0
 transform = Transform3D(-0.9781481, 0, 0.20790927, 0, 1, 0, -0.20790927, 0, -0.9781481, 5446.188, 38.823826, -5050.9033)

@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://dk70my30t3nrf"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_o0nyo"]
+[ext_resource type="RoseSound" uid="uid://bmjtbe7sjc48t" path="res://data/sounds/attack/63-axe-001.tres" id="2_nnyx1"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_o1r40"]
+
 [resource]
 id = 445
 name = "Glorious Dual Wield"
@@ -10,7 +14,7 @@ weight = 30
 quality = 78
 icon_index = 1432
 field_model_index = 745
-equip_sound_id = 577
+equip_sound = ExtResource("1_o0nyo")
 craft_skill_type = 11
 craft_skill_level = 10
 craft_material = 785
@@ -26,6 +30,6 @@ attack_power = 238
 attack_speed = 10
 motion_type = 7
 effect_id = 131
-attack_start_sound_id = 63
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_nnyx1")
+hit_sounds = ExtResource("3_o1r40")
 gem_position = 4

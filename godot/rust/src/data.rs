@@ -176,6 +176,34 @@ fn load_world(vfs: &VirtualFilesystem, strings: &StringDatabase) -> Result<rose_
     rose_game_data::load_world_irose(vfs, strings)
 }
 
+/// The sounds, hit sounds and footsteps from the export, or without one from the iROSE
+/// tables. Only the game reads them (the server's upload doesn't send them).
+fn load_sounds(vfs: &VirtualFilesystem) -> Result<Arc<SoundDatabase>, anyhow::Error> {
+    if let Some(dir) = find_export() {
+        let toml = rose_data_export::Format::Toml;
+        let export = rose_data_export::SoundsExport::from_files_as(toml, |name| {
+            let path = dir.join(rose_data_export::data_file_as(name, toml));
+            match std::fs::read_to_string(&path) {
+                Ok(text) => Ok(Some(text)),
+                Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(None),
+                Err(e) => Err(anyhow::Error::new(e).context(path.display().to_string())),
+            }
+        })?;
+        if let Some(export) = export {
+            godot::global::godot_print!(
+                "rose: {} sounds, {} hit sound sets and {} footstep sets from {}",
+                export.sounds.len(),
+                export.hit_sounds.len(),
+                export.footsteps.len(),
+                dir.display()
+            );
+            return Ok(Arc::new(export.to_database()?));
+        }
+    }
+    godot::global::godot_warn!("rose: no sound export (export/data/sounds.toml), the sounds come from the iROSE tables");
+    rose_data_irose::get_sound_database(vfs)
+}
+
 pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
     if GAME_DATA.get().is_some() {
         return Ok(());
@@ -202,7 +230,7 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
     )?;
 
     let decoder = rose_data_irose::get_data_decoder();
-    let sounds = rose_data_irose::get_sound_database(&vfs)?;
+    let sounds = load_sounds(&vfs)?;
     let effects = rose_data_irose::get_effect_database(&vfs)?;
     let _ = GAME_DATA.set(GameData {
         vfs,

@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://cs5y4w6xdvn5h"]
 
+[ext_resource type="RoseSound" uid="uid://bjdly3xikd2h4" path="res://data/sounds/item/576-item-weapon.tres" id="1_yprx9"]
+[ext_resource type="RoseSound" uid="uid://fsgnfxsnbspn" path="res://data/sounds/attack/48-mace-002.tres" id="2_7j5qw"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_hq1g0"]
+
 [resource]
 id = 54
 item_class = "OneHandedBlunt"
@@ -7,7 +11,7 @@ base_price = 972200
 weight = 80
 quality = 87
 field_model_index = 354
-equip_sound_id = 576
+equip_sound = ExtResource("1_yprx9")
 craft_skill_level = 13
 equip_stat_1 = "Level"
 equip_stat_1_value = 169
@@ -20,5 +24,5 @@ attack_power = 327
 attack_speed = 13
 motion_type = 3
 effect_id = 121
-attack_start_sound_id = 48
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_7j5qw")
+hit_sounds = ExtResource("3_hq1g0")

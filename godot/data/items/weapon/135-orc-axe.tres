@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://d1gehev3153be"]
 
+[ext_resource type="RoseSound" uid="uid://bjdly3xikd2h4" path="res://data/sounds/item/576-item-weapon.tres" id="1_n13ba"]
+[ext_resource type="RoseSound" uid="uid://bmjtbe7sjc48t" path="res://data/sounds/attack/63-axe-001.tres" id="2_p1i5v"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_x5vfw"]
+
 [resource]
 id = 135
 name = "Orc Axe"
@@ -10,7 +14,7 @@ weight = 30
 quality = 54
 icon_index = 1122
 field_model_index = 435
-equip_sound_id = 576
+equip_sound = ExtResource("1_n13ba")
 craft_skill_type = 12
 craft_skill_level = 3
 craft_material = 569
@@ -26,6 +30,6 @@ attack_power = 86
 attack_speed = 11
 motion_type = 8
 effect_id = 141
-attack_start_sound_id = 63
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_p1i5v")
+hit_sounds = ExtResource("3_x5vfw")
 gem_position = 2

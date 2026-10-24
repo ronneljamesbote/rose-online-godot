@@ -3,8 +3,8 @@
 The game's own data, made in the Godot editor: one resource (`.tres`) per thing, edited in
 the Inspector. It replaces the iROSE tables one kind at a time
 (plan: `TODO/own-game-data.md` in the project files). So far: **items**, **monsters**, **NPCs**, **drop tables**, **shop tabs**, **skills**,
-**status effects**, **job classes**, **zone settings**, **warp gates**, **crafting recipes**
-and **new characters**.
+**status effects**, **job classes**, **zone settings**, **warp gates**, **crafting recipes**,
+**new characters** and **sounds**.
 
 | Folder | Class | What |
 | --- | --- | --- |
@@ -34,6 +34,9 @@ and **new characters**.
 | `warp_gates/` | `RoseWarpGate` | Where a warp gate sends you: zone and named spot |
 | `craft_recipes/` | `RoseCraftRecipe` | A crafting or refining recipe: up to 4 materials (recipes 1-20 refine) |
 | `new_characters/` | `RoseNewCharacter` | What a new male or female character starts with: stats, clothes, bag |
+| `sounds/<folder>/` | `RoseSound` | One sound: a number, a name and the audio file it plays (folders as the client's `Sound/`: attack, mob, skill ...) |
+| `hit_sounds/` | `RoseHitSounds` | What a weapon's hit sounds like on armour, cloth and stone |
+| `footsteps/` | `RoseFootsteps` | A zone's footsteps: the step sound for each of its ground textures |
 
 Monsters and NPCs share one id space (an NPC and a monster never have the same id), because
 saved quests and the zone markers store just the number. Links between resources are plain
@@ -42,7 +45,11 @@ of a drop table or shop tab, and the monsters of a zone's spawn markers (`RoseSp
 and the NPC of an NPC marker (`RoseNpcSpot`), a skill's `required_job_class`, the skills it
 needs (`required_skill_1` to `_3`), the status effects it gives (`status_effect_1` and `_2`)
 and the monster it summons (`summon_monster`), a warp gate's `target_zone`, a recipe's
-materials (`material_1` to `_4`) and a new character's clothes and bag. Drag a resource from
+materials (`material_1` to `_4`) and a new character's clothes and bag. Sounds are links too:
+an item's `equip_sound` and a weapon's `attack_start_sound` and `hit_sounds`, a monster's
+`attack_sound` or `die_sound`, a skill's `bullet_fire_sound`, a zone's `footsteps`, and a
+`RoseSound`'s `stream` (the audio file); a zone's `music_day` and `music_night` and a sound
+spot in a zone scene (`RoseSoundSpot`'s `stream`) link the audio file itself. Drag a resource from
 the FileSystem dock onto the field to set it. A zone scene's root (`RoseZoneScene`) shows its
 zone's settings as `settings` (click it to open them), and a warp gate placed in a zone
 (`RoseZoneObject` of kind warp) links its `RoseWarpGate` as `warp_gate`.
@@ -72,6 +79,20 @@ Files are named `<id>-<name>.tres` (`weapon/2-short-sword.tres`, `monsters/101-w
 The name is only for finding them: the game goes by the `id` field and by the class, so a
 file can be renamed or moved to any folder of its kind. Hover a field in the Inspector for what it does.
 
+## Sounds
+
+A `RoseSound` plays its `stream`: an audio file of the game. `--import-rose` (see
+`../assets/README.md`) turns the client's WAV and OGG files into Godot audio under
+`res://assets/rose/sound/`, so run it before editing sounds; without it the links show as
+missing in the editor and the game plays the client's files instead. To give something a
+new sound, put a WAV or OGG file in `res://assets/ours/` (anywhere), make a new `RoseSound`
+with a free number and drag the file onto its `stream`, then link the sound where it should
+play (an item's `attack_start_sound` ...). A file in `res://assets/ours/` at the same path as
+an imported one (`ours/sound/attack/sword_001.wav`) plays instead of it everywhere.
+
+Sounds are only played by the game, not by the server: the export writes them
+(`sounds.toml`, `hit-sounds.toml`, `footsteps.toml`) and the server upload leaves them out.
+
 ## Changing something
 
 1. Open the resource, change the field in the Inspector, save. (Or change many in the
@@ -94,12 +115,13 @@ players may have.
 
 The export writes `export/data/items/<class>.toml` and `export/data/monsters.toml`,
 `npcs.toml`, `drop-tables.toml`, `shop-tabs.toml`, `skills.toml`, `status-effects.toml`,
-`job-classes.toml`, `zones.toml`, `warp-gates.toml`, `craft-recipes.toml` and
-`new-characters.toml` (layout in `crates/rose-data-export/src/items.rs`, `npcs.rs`,
-`skills.rs` and `world.rs`), and in the same run the zone scenes' spawns and NPCs
+`job-classes.toml`, `zones.toml`, `warp-gates.toml`, `craft-recipes.toml`,
+`new-characters.toml`, `sounds.toml`, `hit-sounds.toml` and `footsteps.toml` (layout in
+`crates/rose-data-export/src/items.rs`, `npcs.rs`, `skills.rs`, `world.rs` and `sounds.rs`), and in the same run the zone scenes' spawns and NPCs
 (`export/zones/`) and the animations' hit markers (`export/motions.toml`), see
 `../../export/README.md`. A link is written as the linked resource's kind and id (`"weapon/3"`,
-`drop_table = 147`, `required_skill_1 = 821`). The server's upload sends it (as JSON) in
+`drop_table = 147`, `required_skill_1 = 821`, `attack_start_sound = 38`), and an audio file as
+its path (`res://assets/rose/sound/attack/sword_001.res`). The server's upload sends it (as JSON) in
 place of the iROSE item, NPC (`LIST_NPC`), drop (`ITEM_DROP`), shop (`LIST_SELL`), skill
 (`LIST_SKILL`), status effect (`LIST_STATUS`), job class (`LIST_CLASS`), zone (`LIST_ZONE`),
 warp (`WARP`), recipe (`LIST_PRODUCT`) and new character (`INIT_AVATAR`) tables, and the game
@@ -202,6 +224,17 @@ class keeps at most eight jobs (class 71 lists ten in iROSE; the game always rea
 The blank `LIST_CLASS` rows have no resource: a class number with no resource takes every
 job, as a blank row did (items ask for classes 9 and 10, which are blank).
 
-Numbers that point at art or sound (`icon_index`, `field_model_index`, the sound and effect
-ids) are still iROSE numbers; later steps of the plan turn them into links to the Godot
-icons, models, sounds and effects.
+For sounds (2026-10-24) the converter kept the `FILE_SOUND` rows that something links, and of
+the others the ones whose file the client has: 344 of 1,284 rows. 950 rows name a file the
+client doesn't have (and nothing plays them) and were left out; sound 125 is linked by skills
+but has no file, so it is kept with an empty `stream`, silent as before. The 37
+`LIST_HITSOUND` rows (columns: armour, cloth, stone) became the hit sound sets, named after
+the weapon kind of their sounds, and the 5 `LIST_STEPSOUND` columns the footstep sets, named
+after the zones that use them. Weapon 1061 named hit sound row 131, which doesn't exist (it
+played nothing), so it has no `hit_sounds`; two zone scenes had sound spots with the file
+`NULL`, which now have no `stream`. The zones' music links the imported files. `compare`
+shows no other difference for sounds.
+
+Numbers that point at art (`icon_index`, `field_model_index`, the effect ids) are still
+iROSE numbers; later steps of the plan turn them into links to the Godot icons, models and
+effects.

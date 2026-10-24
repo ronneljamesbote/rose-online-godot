@@ -1,6 +1,7 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://qkpmrkyxvcu"]
 
 [ext_resource type="RoseDropTable" uid="uid://bbuli4ltnaiwv" path="res://data/drop_tables/198-jelly-king.tres" id="1_vsyl6"]
+[ext_resource type="RoseSound" uid="uid://js7qhkoxid3m" path="res://data/sounds/mob/182-mob01-d.tres" id="2_ls5ly"]
 
 [resource]
 id = 203
@@ -23,7 +24,7 @@ death_quest_trigger_name = "952-33"
 npc_type_index = 9
 hit_sound_material_type = 1
 die_effect_file_id = 1401
-die_sound_id = 182
+die_sound = ExtResource("2_ls5ly")
 drop_table = ExtResource("1_vsyl6")
 drop_money_rate = 1
 drop_item_rate = 60

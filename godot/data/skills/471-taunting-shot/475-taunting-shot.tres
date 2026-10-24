@@ -2,6 +2,8 @@
 
 [ext_resource type="RoseSkill" uid="uid://ccdg6jfv38yca" path="res://data/skills/271-crossbow-mastery/271-crossbow-mastery.tres" id="1_fa0nl"]
 [ext_resource type="RoseStatusEffect" uid="uid://kpb7sbcin378" path="res://data/status_effects/56-taunt.tres" id="2_vnl4i"]
+[ext_resource type="RoseSound" uid="uid://42rl1pnpcxo3" path="res://data/sounds/skill/148-heavyarr001.tres" id="3_caz0c"]
+[ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="4_o9nia"]
 
 [resource]
 id = 475
@@ -36,6 +38,6 @@ action_motion_id = 97
 action_motion_speed = 110
 bullet_effect_id = 271
 bullet_point = 1
-bullet_fire_sound_id = 148
+bullet_fire_sound = ExtResource("3_caz0c")
 hit_effect_file_id = 1067
-hit_sound_id = 67
+hit_sound = ExtResource("4_o9nia")

@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://c3i2bf13divub"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_0m447"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_o5rm7"]
+
 [resource]
 id = 208
 name = "Maiya Bow"
@@ -10,7 +13,7 @@ weight = 15
 quality = 56
 icon_index = 1164
 field_model_index = 508
-equip_sound_id = 578
+equip_sound = ExtResource("1_0m447")
 craft_skill_type = 13
 craft_skill_level = 4
 craft_material = 606
@@ -26,5 +29,5 @@ attack_power = 93
 attack_speed = 10
 motion_type = 10
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_o5rm7")
 gem_position = 1

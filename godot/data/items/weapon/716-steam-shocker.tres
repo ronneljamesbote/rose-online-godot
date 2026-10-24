@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://du11gm76x3ms1"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_r1jju"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="2_urta4"]
+
 [resource]
 id = 716
 name = "Steam Shocker"
@@ -10,7 +13,7 @@ weight = 40
 quality = 98
 icon_index = 1226
 field_model_index = 547
-equip_sound_id = 578
+equip_sound = ExtResource("1_r1jju")
 equip_stat_1 = "Level"
 equip_stat_1_value = 135
 equip_stat_2 = "Concentration"
@@ -22,5 +25,5 @@ attack_power = 256
 attack_speed = 11
 motion_type = 12
 bullet_effect_id = 171
-attack_fire_sound_id = 78
+attack_fire_sound = ExtResource("2_urta4")
 gem_position = 1

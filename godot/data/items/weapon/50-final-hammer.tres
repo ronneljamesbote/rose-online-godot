@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://cnp1tpoc7m1g1"]
 
+[ext_resource type="RoseSound" uid="uid://bjdly3xikd2h4" path="res://data/sounds/item/576-item-weapon.tres" id="1_r2wtw"]
+[ext_resource type="RoseSound" uid="uid://fsgnfxsnbspn" path="res://data/sounds/attack/48-mace-002.tres" id="2_gyg9v"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_7fhc9"]
+
 [resource]
 id = 50
 name = "Final Hammer"
@@ -10,7 +14,7 @@ weight = 70
 quality = 82
 icon_index = 968
 field_model_index = 350
-equip_sound_id = 576
+equip_sound = ExtResource("1_r2wtw")
 craft_skill_level = 11
 equip_stat_1 = "Level"
 equip_stat_1_value = 156
@@ -23,6 +27,6 @@ attack_power = 279
 attack_speed = 12
 motion_type = 3
 effect_id = 121
-attack_start_sound_id = 48
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_gyg9v")
+hit_sounds = ExtResource("3_7fhc9")
 gem_position = 2

@@ -1,6 +1,9 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://bkgen736ds3cq"]
 
 [ext_resource type="RoseDropTable" uid="uid://d2cov3o4scmrt" path="res://data/drop_tables/457-sikuku-veteran.tres" id="1_o850o"]
+[ext_resource type="RoseSound" uid="uid://cs8b10xc8jb8v" path="res://data/sounds/attack/58-spear-d02.tres" id="2_dyscw"]
+[ext_resource type="RoseSound" uid="uid://dlvj1r773a5u2" path="res://data/sounds/mob/276-mob24-a.tres" id="3_m50cq"]
+[ext_resource type="RoseSound" uid="uid://cdmcj8oggmvnh" path="res://data/sounds/mob/358-shout02.tres" id="4_gflww"]
 
 [resource]
 id = 539
@@ -22,11 +25,11 @@ ai_file_index = 292
 npc_type_index = 3
 right_hand_part_index = 1106
 hit_sound_material_type = 1
-attack_sound_id = 58
-hitted_sound_id = 276
+attack_sound = ExtResource("2_dyscw")
+hitted_sound = ExtResource("3_m50cq")
 hand_hit_effect_id = 403
 die_effect_file_id = 1401
-die_sound_id = 358
+die_sound = ExtResource("4_gflww")
 drop_table = ExtResource("1_o850o")
 drop_money_rate = 30
 drop_item_rate = 38

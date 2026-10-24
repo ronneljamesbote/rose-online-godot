@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://cuwud6afedoqj"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_tyjcv"]
+[ext_resource type="RoseSound" uid="uid://bmjtbe7sjc48t" path="res://data/sounds/attack/63-axe-001.tres" id="2_vs7w5"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_r56v2"]
+
 [resource]
 id = 866
 item_class = "DualSwords"
@@ -8,7 +12,7 @@ weight = 30
 quality = 106
 icon_index = 1434
 field_model_index = 747
-equip_sound_id = 577
+equip_sound = ExtResource("1_tyjcv")
 equip_stat_1 = "Level"
 equip_stat_1_value = 152
 equip_stat_2 = "Dexterity"
@@ -20,6 +24,6 @@ attack_power = 296
 attack_speed = 10
 motion_type = 7
 effect_id = 131
-attack_start_sound_id = 63
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_vs7w5")
+hit_sounds = ExtResource("3_r56v2")
 gem_position = 4

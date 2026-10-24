@@ -416,8 +416,8 @@ fn zone_list_entry(settings: &ZoneSettings, text: &mut Vec<String>) -> ZoneListE
         evening_time: settings.evening_time,
         night_time: settings.night_time,
         skybox_id: settings.skybox_id,
-        background_music_day: path_or_none(&settings.music_day),
-        background_music_night: path_or_none(&settings.music_night),
+        background_music_day: (!settings.music_day.is_empty()).then(|| settings.music_day.clone()),
+        background_music_night: (!settings.music_night.is_empty()).then(|| settings.music_night.clone()),
         footstep_type: settings.footstep_type,
     }
 }

@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://j501xfqd7756"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_4dmdv"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_gp2wx"]
+
 [resource]
 id = 213
 name = "Cupid Bow"
@@ -10,7 +13,7 @@ weight = 20
 quality = 72
 icon_index = 1183
 field_model_index = 513
-equip_sound_id = 578
+equip_sound = ExtResource("1_4dmdv")
 craft_skill_type = 13
 craft_skill_level = 7
 craft_material = 611
@@ -26,5 +29,5 @@ attack_power = 163
 attack_speed = 10
 motion_type = 10
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_gp2wx")
 gem_position = 1

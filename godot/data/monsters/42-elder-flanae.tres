@@ -1,6 +1,7 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://cyujk5uu0t7bw"]
 
 [ext_resource type="RoseDropTable" uid="uid://ci475lmwsbv04" path="res://data/drop_tables/117-elder-flanae.tres" id="1_lmujr"]
+[ext_resource type="RoseSound" uid="uid://b447v3sgafwq3" path="res://data/sounds/mob/198-mob05-d.tres" id="2_puduj"]
 
 [resource]
 id = 42
@@ -22,7 +23,7 @@ npc_type_index = 3
 right_hand_part_index = 1072
 hit_sound_material_type = 1
 die_effect_file_id = 1401
-die_sound_id = 198
+die_sound = ExtResource("2_puduj")
 drop_table = ExtResource("1_lmujr")
 drop_money_rate = 1
 drop_item_rate = 60

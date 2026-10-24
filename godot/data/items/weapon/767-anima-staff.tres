@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://byghda2pqp2uy"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_ci2kc"]
+[ext_resource type="RoseSound" uid="uid://d3hdp37emo7p0" path="res://data/sounds/attack/72-bow-002.tres" id="2_2fmfg"]
+[ext_resource type="RoseHitSounds" uid="uid://d4huxc3qetp2i" path="res://data/hit_sounds/25-spear-hits.tres" id="3_ztc28"]
+
 [resource]
 id = 767
 name = "Anima Staff"
@@ -10,7 +14,7 @@ weight = 25
 quality = 76
 icon_index = 1295
 field_model_index = 609
-equip_sound_id = 578
+equip_sound = ExtResource("1_ci2kc")
 equip_stat_1 = "Level"
 equip_stat_1_value = 84
 equip_stat_2 = "Intelligence"
@@ -25,6 +29,6 @@ attack_speed = 9
 motion_type = 6
 is_magic_damage = true
 effect_id = 131
-attack_start_sound_id = 72
-attack_hit_sound_index = 25
+attack_start_sound = ExtResource("2_2fmfg")
+hit_sounds = ExtResource("3_ztc28")
 gem_position = 2

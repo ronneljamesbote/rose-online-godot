@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemConsumable" format=3 uid="uid://c00cjlgw5o1gi"]
 
+[ext_resource type="RoseSound" uid="uid://dwbyekfkxg7c8" path="res://data/sounds/item/584-item-potion.tres" id="1_25v3r"]
+[ext_resource type="RoseSound" uid="uid://cxrscjnmdhir4" path="res://data/sounds/item/547-useitem-001.tres" id="2_b4xw8"]
+
 [resource]
 id = 121
 name = "Banana Milk"
@@ -11,7 +14,7 @@ weight = 1
 quality = 60
 icon_index = 1645
 field_model_index = 144
-equip_sound_id = 584
+equip_sound = ExtResource("1_25v3r")
 equip_job_class = 10
 equip_stat_1 = "Mana"
 equip_stat_1_value = 80
@@ -27,4 +30,4 @@ use_skill_id = 80
 status_effect_id = 4
 status_effect_value = 80
 effect_file_id = 140
-effect_sound_id = 547
+effect_sound = ExtResource("2_b4xw8")

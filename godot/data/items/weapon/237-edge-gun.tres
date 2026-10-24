@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://digvh7baxvvhf"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_vo66t"]
+[ext_resource type="RoseSound" uid="uid://coa6mw77434ix" path="res://data/sounds/attack/84-gun-003.tres" id="2_p0enk"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_1wblk"]
+
 [resource]
 id = 237
 name = "Edge Gun"
@@ -10,7 +14,7 @@ weight = 25
 quality = 57
 icon_index = 1215
 field_model_index = 537
-equip_sound_id = 578
+equip_sound = ExtResource("1_vo66t")
 craft_skill_type = 14
 craft_skill_level = 4
 craft_material = 656
@@ -26,6 +30,6 @@ attack_power = 94
 attack_speed = 11
 motion_type = 12
 bullet_effect_id = 174
-attack_start_sound_id = 84
-attack_fire_sound_id = 78
+attack_start_sound = ExtResource("2_p0enk")
+attack_fire_sound = ExtResource("3_1wblk")
 gem_position = 1

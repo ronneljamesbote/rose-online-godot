@@ -3,6 +3,8 @@
 [ext_resource type="RoseJobClass" uid="uid://5yxauvydlw51" path="res://data/job_classes/61-knight-job.tres" id="1_rl446"]
 [ext_resource type="RoseSkill" uid="uid://dgmld7fjdyp34" path="res://data/skills/301-heavy-attack/301-heavy-attack.tres" id="2_jl7w3"]
 [ext_resource type="RoseStatusEffect" uid="uid://bq4n0ny64hflq" path="res://data/status_effects/32-fainted.tres" id="3_qcwdt"]
+[ext_resource type="RoseSound" uid="uid://dvx20nuuuxn4h" path="res://data/sounds/skill/141-skill-magic03.tres" id="4_hutb3"]
+[ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="5_zn16u"]
 
 [resource]
 id = 521
@@ -38,8 +40,8 @@ casting_repeat_motion_id = 131
 casting_effect_1 = 1031
 action_motion_id = 177
 hit_effect_file_id = 1067
-hit_sound_id = 141
+hit_sound = ExtResource("4_hutb3")
 hit_dummy_effect_1 = 1001
-hit_dummy_sound_1 = 67
+hit_dummy_sound_1 = ExtResource("5_zn16u")
 hit_dummy_effect_2 = 1001
-hit_dummy_sound_2 = 67
+hit_dummy_sound_2 = ExtResource("5_zn16u")

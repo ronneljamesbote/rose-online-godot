@@ -1,6 +1,8 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://cwc64v6ga4abi"]
 
 [ext_resource type="RoseDropTable" uid="uid://dwv1x65ljyg1g" path="res://data/drop_tables/274-golem-guardian.tres" id="1_nx1kk"]
+[ext_resource type="RoseSound" uid="uid://868awwe1cc2c" path="res://data/sounds/mob/251-mob18-h.tres" id="2_f91l6"]
+[ext_resource type="RoseSound" uid="uid://qg28past5wn0" path="res://data/sounds/mob/250-mob18-d.tres" id="3_erpjy"]
 
 [resource]
 id = 218
@@ -21,10 +23,10 @@ run_speed = 690
 ai_file_index = 259
 npc_type_index = 10
 hit_sound_material_type = 2
-hitted_sound_id = 251
+hitted_sound = ExtResource("2_f91l6")
 hand_hit_effect_id = 445
 die_effect_file_id = 1401
-die_sound_id = 250
+die_sound = ExtResource("3_erpjy")
 drop_table = ExtResource("1_nx1kk")
 drop_item_rate = 84
 summon_monster_type = 84

@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemConsumable" format=3 uid="uid://b6k6vxffu88u0"]
 
+[ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_n9gnn"]
+[ext_resource type="RoseSound" uid="uid://c3piaqml44wn1" path="res://data/sounds/item/548-useitem-002.tres" id="2_38wr3"]
+
 [resource]
 id = 628
 item_class = "SkillBook"
@@ -8,7 +11,7 @@ weight = 1
 quality = 1
 icon_index = 1704
 field_model_index = 871
-equip_sound_id = 580
+equip_sound = ExtResource("1_n9gnn")
 add_stat_union_1 = 548
 store_skin = 1
 confile_index = 140
@@ -17,4 +20,4 @@ add_data_value = 38
 learn_skill_id = 38
 use_skill_id = 38
 effect_file_id = 140
-effect_sound_id = 548
+effect_sound = ExtResource("2_38wr3")

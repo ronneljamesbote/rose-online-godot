@@ -1,6 +1,9 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://brdertielec3x"]
 
 [ext_resource type="RoseDropTable" uid="uid://b8b5g4534pmi2" path="res://data/drop_tables/432-warbiz.tres" id="1_oe6sb"]
+[ext_resource type="RoseSound" uid="uid://gydc1rfk8hdx" path="res://data/sounds/mob/325-mob07-n.tres" id="2_frm9h"]
+[ext_resource type="RoseSound" uid="uid://df2lq17ixuqa3" path="res://data/sounds/mob/324-bugs02.tres" id="3_lqc5e"]
+[ext_resource type="RoseSound" uid="uid://cvunkrt3cwcm2" path="res://data/sounds/mob/326-bugs04.tres" id="4_l70po"]
 
 [resource]
 id = 501
@@ -21,12 +24,12 @@ walk_speed = 300
 run_speed = 650
 ai_file_index = 300
 npc_type_index = 4
-normal_effect_sound_id = 325
-attack_sound_id = 324
-hitted_sound_id = 324
+normal_effect_sound = ExtResource("2_frm9h")
+attack_sound = ExtResource("3_lqc5e")
+hitted_sound = ExtResource("3_lqc5e")
 hand_hit_effect_id = 403
 die_effect_file_id = 1401
-die_sound_id = 326
+die_sound = ExtResource("4_l70po")
 drop_table = ExtResource("1_oe6sb")
 drop_money_rate = 50
 drop_item_rate = 30

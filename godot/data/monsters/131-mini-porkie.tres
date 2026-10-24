@@ -1,6 +1,8 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://c8ygh4llgxifq"]
 
 [ext_resource type="RoseDropTable" uid="uid://bpsua1kq5ho2r" path="res://data/drop_tables/157-mini-porkie.tres" id="1_pqvhh"]
+[ext_resource type="RoseSound" uid="uid://clgb7w2l7vcup" path="res://data/sounds/mob/237-mob15-n.tres" id="2_g5knq"]
+[ext_resource type="RoseSound" uid="uid://oju8sqdaw0ty" path="res://data/sounds/mob/238-mob15-d.tres" id="3_aar8l"]
 
 [resource]
 id = 131
@@ -21,10 +23,10 @@ run_speed = 500
 ai_file_index = 4
 npc_type_index = 1
 hit_sound_material_type = 1
-normal_effect_sound_id = 237
+normal_effect_sound = ExtResource("2_g5knq")
 hand_hit_effect_id = 401
 die_effect_file_id = 1401
-die_sound_id = 238
+die_sound = ExtResource("3_aar8l")
 drop_table = ExtResource("1_pqvhh")
 drop_money_rate = 20
 drop_item_rate = 62

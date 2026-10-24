@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://b2dbjrksmlqfj"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_atfnr"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="2_e9vqi"]
+
 [resource]
 id = 255
 item_class = "Gun"
@@ -7,7 +10,7 @@ base_price = 1491950
 weight = 50
 quality = 107
 field_model_index = 555
-equip_sound_id = 578
+equip_sound = ExtResource("1_atfnr")
 craft_skill_level = 15
 equip_stat_1 = "Level"
 equip_stat_1_value = 178
@@ -20,5 +23,5 @@ attack_power = 355
 attack_speed = 11
 motion_type = 12
 bullet_effect_id = 171
-attack_fire_sound_id = 78
+attack_fire_sound = ExtResource("2_e9vqi")
 gem_position = 1

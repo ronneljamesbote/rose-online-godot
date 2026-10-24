@@ -1,5 +1,8 @@
 [gd_resource type="RoseZoneSettings" format=3 uid="uid://n4k6neg038jm"]
 
+[ext_resource type="AudioStreamOggVorbis" path="res://assets/rose/sound/bgm/lunar_dungeon.res" id="1_2q464"]
+[ext_resource type="RoseFootsteps" uid="uid://b14hg1221ovkt" path="res://data/footsteps/3-canyon-city-of-zant-and-8-more.tres" id="2_q0gsb"]
+
 [resource]
 id = 59
 name = "Luna Clan Field"
@@ -7,15 +10,15 @@ map_file = "3DDATA\\Maps\\Lunar\\LPVP01\\LPVP01.zon"
 start_spot = "start"
 revive_spot = "restore"
 sector_size = 6000
-music_day = "Sound\\BGM\\Lunar_dungeon.ogg"
-music_night = "Sound\\BGM\\Lunar_dungeon.ogg"
+music_day = ExtResource("1_2q464")
+music_night = ExtResource("1_2q464")
 sky = 4
 minimap = "3Ddata\\Maps\\Lunar\\LPVP01\\minimap.DDS"
 minimap_start_x = 31
 minimap_start_y = 31
 decoration_models = "3DDATA\\\\Lunar\\\\LIST_DECO_LZ.ZSC"
 building_models = "3DDATA\\\\Lunar\\\\LIST_CNST_LMT.ZSC"
-footstep_type = 3
+footsteps = ExtResource("2_q0gsb")
 day_cycle = 300
 day_time = 10
 evening_time = 237

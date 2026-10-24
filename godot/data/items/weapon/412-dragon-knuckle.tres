@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://bow3ofbjx2gjb"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_ed06m"]
+[ext_resource type="RoseSound" uid="uid://b8d8k6psw0js4" path="res://data/sounds/attack/38-sword-002.tres" id="2_pe3lg"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_l6rhv"]
+
 [resource]
 id = 412
 name = "Dragon Knuckle"
@@ -10,7 +14,7 @@ weight = 30
 quality = 62
 icon_index = 1389
 field_model_index = 712
-equip_sound_id = 578
+equip_sound = ExtResource("1_ed06m")
 craft_skill_type = 12
 craft_skill_level = 7
 craft_material = 761
@@ -26,6 +30,6 @@ attack_power = 142
 attack_speed = 8
 motion_type = 16
 effect_id = 121
-attack_start_sound_id = 38
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_pe3lg")
+hit_sounds = ExtResource("3_l6rhv")
 gem_position = 4

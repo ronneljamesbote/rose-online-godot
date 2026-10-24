@@ -27,7 +27,7 @@ use godot::{
         mesh::PrimitiveType,
         node::InternalMode,
         packed_scene::GenEditState,
-        DirAccess, Engine, FileAccess, INode3D, ImmediateMesh, Label3D, Mesh, MeshInstance3D, Node, Node3D, PackedScene,
+        AudioStream, DirAccess, Engine, FileAccess, INode3D, ImmediateMesh, Label3D, Mesh, MeshInstance3D, Node, Node3D, PackedScene,
         ResourceLoader, ResourceSaver, ShaderMaterial, StandardMaterial3D, Texture2D, Texture2DArray,
     },
     global::Error,
@@ -151,7 +151,9 @@ pub fn gather(map: &Gd<Node>, to_zone: Transform3D, spawner: &mut ObjectSpawner,
         } else if let Ok(sound) = node.clone().try_cast::<RoseSoundSpot>() {
             let position = (to_zone * sound.get_global_transform()).origin;
             let sound = sound.bind();
-            spawner.ambient_sounds.push((position, sound.sound.to_string(), sound.range));
+            if let Some(stream) = sound.stream.as_ref() {
+                spawner.ambient_sounds.push((position, stream.get_path().to_string(), sound.range));
+            }
         }
     });
     materials.len()
@@ -1094,10 +1096,11 @@ marker_class!(
     /// A looping ambient sound played here (an IFO sound), such as running water or birds.
     /// Played by the game only; the server doesn't know about sounds.
     RoseSoundSpot {
-        /// The sound file, as a path in the ROSE data (for example
-        /// `SOUND/TERRAIN/WATER_002.WAV`).
+        /// The sound: an audio file, such as the imported
+        /// `res://assets/rose/sound/terrain/water_002.res` or one of our own in
+        /// `res://assets/ours/`. The Inspector plays it (the arrow next to it).
         #[export]
-        sound: GString,
+        stream: Option<Gd<AudioStream>>,
         /// Metres around the spot where the sound plays at full volume (the green circle in
         /// the editor). It fades out further away and is silent past 4 times this (at least
         /// 20 m).
@@ -1107,7 +1110,7 @@ marker_class!(
         /// loops the sound without a pause.
         #[export(range = (0.0, 600.0, 0.1, or_greater, suffix = "s"))]
         interval: f32,
-    }, |this| (format!("Sound\n{}", this.sound.to_string().rsplit(['/', '\\']).next().unwrap_or("")), Color::from_rgb(0.6, 1.0, 0.5), this.range, None)
+    }, |this| (format!("Sound\n{}", this.stream.as_ref().map(|s| s.get_path().to_string()).unwrap_or_default().rsplit('/').next().unwrap_or("")), Color::from_rgb(0.6, 1.0, 0.5), this.range, None)
 );
 
 marker_class!(
@@ -1135,7 +1138,25 @@ marker_class!(
     }, |this| (format!("Event: {}", this.event_name), Color::from_rgb(0.9, 0.5, 1.0), 1.0, None)
 );
 
-impl OldProperties for RoseSoundSpot {}
+/// The imported audio file of a sound file in the client data (`SOUND/TERRAIN/WIND_001.WAV`),
+/// None when it isn't imported.
+fn sound_stream(client_path: &str) -> Option<Gd<AudioStream>> {
+    let path = data_resources::audio_link(client_path)?;
+    godot::tools::try_load::<AudioStream>(&path).ok()
+}
+
+impl OldProperties for RoseSoundSpot {
+    /// Scenes saved before the spots linked audio files stored the client file as `sound`.
+    fn set_old_property(&mut self, name: &str, value: &Variant) -> bool {
+        match (name, value.try_to::<GString>()) {
+            ("sound", Ok(path)) => {
+                self.stream = sound_stream(&path.to_string());
+                true
+            }
+            _ => false,
+        }
+    }
+}
 impl OldProperties for RoseEffectSpot {}
 impl OldProperties for RoseZoneEvent {}
 
@@ -1840,7 +1861,7 @@ pub fn write_zone_scenes(zone_id: u16, force: bool) -> Result<(String, usize, us
                     spot.set_transform(zone::ifo_transform(&sound.object));
                     {
                         let mut s = spot.bind_mut();
-                        s.sound = sound.sound_path.path().to_string_lossy().to_string().as_str().into();
+                        s.stream = sound_stream(&sound.sound_path.path().to_string_lossy());
                         s.range = sound.range as f32 / 10.0;
                         s.interval = sound.interval.as_secs_f32();
                     }

@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://dr8haddljipc"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_hvvoc"]
+[ext_resource type="RoseSound" uid="uid://coa6mw77434ix" path="res://data/sounds/attack/84-gun-003.tres" id="2_ok63b"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_6j2c9"]
+
 [resource]
 id = 268
 name = "Cross Launcher"
@@ -10,7 +14,7 @@ weight = 20
 quality = 70
 icon_index = 1255
 field_model_index = 568
-equip_sound_id = 577
+equip_sound = ExtResource("1_hvvoc")
 craft_skill_type = 14
 craft_skill_level = 6
 craft_material = 688
@@ -26,6 +30,6 @@ attack_power = 157
 attack_speed = 12
 motion_type = 9
 bullet_effect_id = 191
-attack_start_sound_id = 84
-attack_fire_sound_id = 78
+attack_start_sound = ExtResource("2_ok63b")
+attack_fire_sound = ExtResource("3_6j2c9")
 gem_position = 1

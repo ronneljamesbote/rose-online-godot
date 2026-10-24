@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://nfvwjey8ck0h"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_myn6u"]
+[ext_resource type="RoseSound" uid="uid://bmjtbe7sjc48t" path="res://data/sounds/attack/63-axe-001.tres" id="2_2a93b"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_k6lte"]
+
 [resource]
 id = 444
 name = "Desperado Dual Wield"
@@ -10,7 +14,7 @@ weight = 30
 quality = 76
 icon_index = 1431
 field_model_index = 744
-equip_sound_id = 577
+equip_sound = ExtResource("1_myn6u")
 craft_skill_type = 11
 craft_skill_level = 10
 craft_material = 784
@@ -26,6 +30,6 @@ attack_power = 224
 attack_speed = 10
 motion_type = 7
 effect_id = 131
-attack_start_sound_id = 63
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_2a93b")
+hit_sounds = ExtResource("3_k6lte")
 gem_position = 4

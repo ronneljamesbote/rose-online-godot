@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemConsumable" format=3 uid="uid://b0s4vhlaf0jer"]
 
+[ext_resource type="RoseSound" uid="uid://dwbyekfkxg7c8" path="res://data/sounds/item/584-item-potion.tres" id="1_q8u0o"]
+[ext_resource type="RoseSound" uid="uid://cxrscjnmdhir4" path="res://data/sounds/item/547-useitem-001.tres" id="2_hzzao"]
+
 [resource]
 id = 114
 name = "Sandwich"
@@ -11,7 +14,7 @@ weight = 1
 quality = 90
 icon_index = 1639
 field_model_index = 145
-equip_sound_id = 584
+equip_sound = ExtResource("1_q8u0o")
 equip_job_class = 10
 equip_stat_1 = "Health"
 equip_stat_1_value = 340
@@ -27,4 +30,4 @@ use_skill_id = 340
 status_effect_id = 1
 status_effect_value = 340
 effect_file_id = 140
-effect_sound_id = 547
+effect_sound = ExtResource("2_hzzao")

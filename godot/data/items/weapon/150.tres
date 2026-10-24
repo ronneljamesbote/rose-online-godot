@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://dinik70sc1u0b"]
 
+[ext_resource type="RoseSound" uid="uid://bjdly3xikd2h4" path="res://data/sounds/item/576-item-weapon.tres" id="1_ei0lh"]
+[ext_resource type="RoseSound" uid="uid://bmjtbe7sjc48t" path="res://data/sounds/attack/63-axe-001.tres" id="2_cm8zd"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_uttt1"]
+
 [resource]
 id = 150
 item_class = "TwoHandedAxe"
@@ -7,7 +11,7 @@ base_price = 739700
 weight = 60
 quality = 99
 field_model_index = 450
-equip_sound_id = 576
+equip_sound = ExtResource("1_ei0lh")
 craft_skill_level = 12
 equip_stat_1 = "Level"
 equip_stat_1_value = 159
@@ -20,5 +24,5 @@ attack_power = 324
 attack_speed = 12
 motion_type = 8
 effect_id = 141
-attack_start_sound_id = 63
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_cm8zd")
+hit_sounds = ExtResource("3_uttt1")

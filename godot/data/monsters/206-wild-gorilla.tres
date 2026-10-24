@@ -1,6 +1,8 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://kag56i0i61ll"]
 
 [ext_resource type="RoseDropTable" uid="uid://3tnb2fwlel81" path="res://data/drop_tables/201-wild-gorilla.tres" id="1_o6v6h"]
+[ext_resource type="RoseSound" uid="uid://d20q7rg0vm5gw" path="res://data/sounds/mob/245-mob17-n.tres" id="2_puyy1"]
+[ext_resource type="RoseSound" uid="uid://cbojdr8uyjvrt" path="res://data/sounds/mob/246-mob17-d.tres" id="3_bcqbb"]
 
 [resource]
 id = 206
@@ -21,9 +23,9 @@ run_speed = 550
 ai_file_index = 8
 npc_type_index = 8
 hit_sound_material_type = 1
-normal_effect_sound_id = 245
+normal_effect_sound = ExtResource("2_puyy1")
 die_effect_file_id = 1401
-die_sound_id = 246
+die_sound = ExtResource("3_bcqbb")
 drop_table = ExtResource("1_o6v6h")
 drop_money_rate = 1
 drop_item_rate = 60

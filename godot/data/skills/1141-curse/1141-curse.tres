@@ -4,6 +4,8 @@
 [ext_resource type="RoseSkill" uid="uid://c0jsu0md0eg0s" path="res://data/skills/821-meditation/821-meditation.tres" id="2_sngsr"]
 [ext_resource type="RoseSkill" uid="uid://dfr7xr03lc6he" path="res://data/skills/931-cure/931-cure.tres" id="3_vuyid"]
 [ext_resource type="RoseStatusEffect" uid="uid://li5357w0ovgx" path="res://data/status_effects/10-poisoned-4.tres" id="4_vboul"]
+[ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="5_5vrse"]
+[ext_resource type="RoseSound" uid="uid://dvx20nuuuxn4h" path="res://data/sounds/skill/141-skill-magic03.tres" id="6_b9wrd"]
 
 [resource]
 id = 1141
@@ -39,6 +41,6 @@ casting_effect_2_point = 1
 action_motion_id = 151
 bullet_effect_id = 268
 bullet_point = 3
-bullet_fire_sound_id = 90
+bullet_fire_sound = ExtResource("5_5vrse")
 hit_effect_file_id = 1501
-hit_sound_id = 141
+hit_sound = ExtResource("6_b9wrd")

@@ -1,6 +1,8 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://bjdpbcl7jyeak"]
 
 [ext_resource type="RoseDropTable" uid="uid://n8po27wh03wu" path="res://data/drop_tables/193-fighter-clown.tres" id="1_t7ge4"]
+[ext_resource type="RoseSound" uid="uid://c73nv65esog31" path="res://data/sounds/mob/257-mob20-n.tres" id="2_xqk74"]
+[ext_resource type="RoseSound" uid="uid://bmfgodktqjj7r" path="res://data/sounds/mob/258-mob20-d.tres" id="3_c2uao"]
 
 [resource]
 id = 183
@@ -23,10 +25,10 @@ death_quest_trigger_name = "5012-36"
 npc_type_index = 3
 right_hand_part_index = 1015
 hit_sound_material_type = 1
-normal_effect_sound_id = 257
+normal_effect_sound = ExtResource("2_xqk74")
 hand_hit_effect_id = 403
 die_effect_file_id = 1401
-die_sound_id = 258
+die_sound = ExtResource("3_c2uao")
 drop_table = ExtResource("1_t7ge4")
 drop_money_rate = 28
 drop_item_rate = 56

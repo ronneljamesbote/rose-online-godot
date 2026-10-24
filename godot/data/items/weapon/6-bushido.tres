@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://b7i0vgos45gg2"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_yf2ja"]
+[ext_resource type="RoseSound" uid="uid://b8d8k6psw0js4" path="res://data/sounds/attack/38-sword-002.tres" id="2_6wxzd"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_ggh4m"]
+
 [resource]
 id = 6
 name = "Bushido"
@@ -10,7 +14,7 @@ weight = 15
 quality = 39
 icon_index = 915
 field_model_index = 306
-equip_sound_id = 577
+equip_sound = ExtResource("1_yf2ja")
 craft_skill_type = 11
 craft_skill_level = 2
 craft_material = 503
@@ -26,6 +30,6 @@ attack_power = 39
 attack_speed = 9
 motion_type = 1
 effect_id = 111
-attack_start_sound_id = 38
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_6wxzd")
+hit_sounds = ExtResource("3_ggh4m")
 gem_position = 2

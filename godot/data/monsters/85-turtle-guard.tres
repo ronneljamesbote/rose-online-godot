@@ -1,6 +1,9 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://c8vrvvnkx2a7e"]
 
 [ext_resource type="RoseDropTable" uid="uid://cpvr2tld4u6og" path="res://data/drop_tables/139-turtle-guard.tres" id="1_r73uy"]
+[ext_resource type="RoseSound" uid="uid://c1ejmjowob54v" path="res://data/sounds/mob/217-mob10-n.tres" id="2_vsprt"]
+[ext_resource type="RoseSound" uid="uid://ddmgmm5w4axod" path="res://data/sounds/mob/219-mob10-h.tres" id="3_hal6x"]
+[ext_resource type="RoseSound" uid="uid://b0g6mj715bjk8" path="res://data/sounds/mob/218-mob10-d.tres" id="4_7xi0r"]
 
 [resource]
 id = 85
@@ -22,11 +25,11 @@ ai_file_index = 4
 death_quest_trigger_name = "5008-36"
 npc_type_index = 2
 hit_sound_material_type = 2
-normal_effect_sound_id = 217
-hitted_sound_id = 219
+normal_effect_sound = ExtResource("2_vsprt")
+hitted_sound = ExtResource("3_hal6x")
 hand_hit_effect_id = 403
 die_effect_file_id = 1401
-die_sound_id = 218
+die_sound = ExtResource("4_7xi0r")
 drop_table = ExtResource("1_r73uy")
 drop_money_rate = 23
 drop_item_rate = 60

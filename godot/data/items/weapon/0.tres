@@ -1,8 +1,11 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://5gkj14ku4i57"]
 
+[ext_resource type="RoseSound" uid="uid://ck2i5dewxgdlp" path="res://data/sounds/attack/31-hands-001.tres" id="1_reqfl"]
+[ext_resource type="RoseHitSounds" uid="uid://1gurcxn0p0c2" path="res://data/hit_sounds/1-hands-hits.tres" id="2_r3h6o"]
+
 [resource]
 attack_range = 100
 attack_speed = 8
 effect_id = 101
-attack_start_sound_id = 31
-attack_hit_sound_index = 1
+attack_start_sound = ExtResource("1_reqfl")
+hit_sounds = ExtResource("2_r3h6o")

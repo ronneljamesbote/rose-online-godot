@@ -3,6 +3,8 @@
 [ext_resource type="RoseJobClass" uid="uid://n6tm3jlgaskg" path="res://data/job_classes/43-hawker-job.tres" id="1_qerum"]
 [ext_resource type="RoseSkill" uid="uid://bjn20q7e2j8oo" path="res://data/skills/1461-combat-mastery/1461-combat-mastery.tres" id="2_7a55o"]
 [ext_resource type="RoseStatusEffect" uid="uid://brsj7u2awa1h6" path="res://data/status_effects/31-sleep.tres" id="3_2p0eg"]
+[ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="4_5sojt"]
+[ext_resource type="RoseSound" uid="uid://dkkffvfss6ekm" path="res://data/sounds/skill/175-skill-status15.tres" id="5_j1my5"]
 
 [resource]
 id = 1721
@@ -37,6 +39,6 @@ casting_effect_4_point = 1
 action_motion_id = 152
 bullet_effect_id = 221
 bullet_point = 3
-bullet_fire_sound_id = 90
+bullet_fire_sound = ExtResource("4_5sojt")
 hit_effect_file_id = 1501
-hit_sound_id = 175
+hit_sound = ExtResource("5_j1my5")

@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://chfx7rqjb7fs7"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_tkndx"]
+[ext_resource type="RoseSound" uid="uid://coa6mw77434ix" path="res://data/sounds/attack/84-gun-003.tres" id="2_na47c"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_z2z6o"]
+
 [resource]
 id = 232
 name = "Air Gun"
@@ -10,7 +14,7 @@ weight = 10
 quality = 38
 icon_index = 1210
 field_model_index = 532
-equip_sound_id = 578
+equip_sound = ExtResource("1_tkndx")
 craft_skill_type = 14
 craft_skill_level = 1
 craft_material = 651
@@ -25,6 +29,6 @@ attack_power = 34
 attack_speed = 11
 motion_type = 12
 bullet_effect_id = 172
-attack_start_sound_id = 84
-attack_fire_sound_id = 78
+attack_start_sound = ExtResource("2_na47c")
+attack_fire_sound = ExtResource("3_z2z6o")
 gem_position = 1

@@ -1,6 +1,9 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://wdemig6kvh8l"]
 
 [ext_resource type="RoseDropTable" uid="uid://bsvtsv7pa84qv" path="res://data/drop_tables/355-slag-elder-slag.tres" id="1_jsda1"]
+[ext_resource type="RoseSound" uid="uid://kt5su4sgydxw" path="res://data/sounds/mob/273-mob24-n.tres" id="2_dh9vs"]
+[ext_resource type="RoseSound" uid="uid://dlvj1r773a5u2" path="res://data/sounds/mob/276-mob24-a.tres" id="3_z4ono"]
+[ext_resource type="RoseSound" uid="uid://db1vrtjwthu6h" path="res://data/sounds/mob/274-mob24-d.tres" id="4_4m877"]
 
 [resource]
 id = 331
@@ -20,10 +23,10 @@ walk_speed = 220
 run_speed = 506
 ai_file_index = 139
 npc_type_index = 1
-normal_effect_sound_id = 273
-attack_sound_id = 276
+normal_effect_sound = ExtResource("2_dh9vs")
+attack_sound = ExtResource("3_z4ono")
 hand_hit_effect_id = 401
 die_effect_file_id = 1401
-die_sound_id = 274
+die_sound = ExtResource("4_4m877")
 drop_table = ExtResource("1_jsda1")
 drop_item_rate = 58

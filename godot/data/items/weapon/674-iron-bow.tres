@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://4rki0ftwbkbm"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_fktka"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_tb3yl"]
+
 [resource]
 id = 674
 name = "Iron Bow"
@@ -10,7 +13,7 @@ weight = 15
 quality = 64
 icon_index = 1163
 field_model_index = 507
-equip_sound_id = 578
+equip_sound = ExtResource("1_fktka")
 equip_stat_1 = "Level"
 equip_stat_1_value = 57
 equip_stat_2 = "Dexterity"
@@ -22,4 +25,4 @@ attack_power = 92
 attack_speed = 10
 motion_type = 10
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_tb3yl")

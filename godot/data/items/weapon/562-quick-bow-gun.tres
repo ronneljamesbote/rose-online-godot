@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://1uho3uiq2jbf"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_j4bcb"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_mgnov"]
+
 [resource]
 id = 562
 name = "Quick Bow Gun"
@@ -10,7 +13,7 @@ weight = 15
 quality = 66
 icon_index = 990
 field_model_index = 363
-equip_sound_id = 578
+equip_sound = ExtResource("1_j4bcb")
 equip_stat_1 = "Level"
 equip_stat_1_value = 61
 equip_stat_2 = "Strength"
@@ -22,5 +25,5 @@ attack_power = 82
 attack_speed = 7
 motion_type = 11
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_mgnov")
 gem_position = 1

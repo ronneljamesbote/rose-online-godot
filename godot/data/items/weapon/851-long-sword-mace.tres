@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://dcexw311rn31e"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_e4bok"]
+[ext_resource type="RoseSound" uid="uid://dkgwy774udjo5" path="res://data/sounds/attack/47-mace-001.tres" id="2_z2v55"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_9flv8"]
+
 [resource]
 id = 851
 name = "Long Sword & Mace"
@@ -10,7 +14,7 @@ weight = 15
 quality = 57
 icon_index = 1418
 field_model_index = 732
-equip_sound_id = 577
+equip_sound = ExtResource("1_e4bok")
 equip_stat_1 = "Level"
 equip_stat_1_value = 41
 equip_stat_2 = "Dexterity"
@@ -22,6 +26,6 @@ attack_power = 70
 attack_speed = 10
 motion_type = 7
 effect_id = 111
-attack_start_sound_id = 47
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_z2v55")
+hit_sounds = ExtResource("3_9flv8")
 gem_position = 4

@@ -1,6 +1,8 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://de3v5qp3mifhu"]
 
 [ext_resource type="RoseStatusEffect" uid="uid://dv6tggly8x16s" path="res://data/status_effects/30-muting.tres" id="1_2xcgc"]
+[ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="2_0bmun"]
+[ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="3_s8ogl"]
 
 [resource]
 id = 3123
@@ -30,6 +32,6 @@ casting_effect_2_point = 1
 action_motion_id = 103
 bullet_effect_id = 251
 bullet_point = 1
-bullet_fire_sound_id = 90
+bullet_fire_sound = ExtResource("2_0bmun")
 hit_effect_file_id = 1121
-hit_sound_id = 67
+hit_sound = ExtResource("3_s8ogl")

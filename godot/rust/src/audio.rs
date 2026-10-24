@@ -1,5 +1,7 @@
-//! Sounds from the client data (WAV and OGG files, cached by path) and which sound each
-//! game event plays. Ported from rose-offline-client's animation_sound_system.rs,
+//! Sounds (cached by path) and which sound each game event plays. The sounds, hit sounds and
+//! footsteps come from the export (`export/data/sounds.toml` ..., made from the `RoseSound`
+//! resources), a sound's file from the imported Godot audio (`assets.rs`), else the client's
+//! WAV or OGG file. Ported from rose-offline-client's animation_sound_system.rs,
 //! background_music_system.rs and npc_idle_sound_system.rs.
 
 use std::{cell::RefCell, collections::HashMap};
@@ -10,7 +12,7 @@ use godot::{
 };
 use rose_data::{NpcData, NpcId, SkillId, SoundId, ZoneId};
 
-use crate::data;
+use crate::{assets, data};
 
 thread_local! {
     static STREAMS: RefCell<HashMap<String, Option<Gd<AudioStream>>>> = RefCell::new(HashMap::new());
@@ -22,18 +24,35 @@ const DEFAULT_STEP_SOUND: u16 = 653;
 /// Hit sounds are looked up by the material of what is hit; characters are flesh (1).
 const PLAYER_HIT_MATERIAL: usize = 1;
 
-/// An audio file from the data by path, or None if it is missing or not WAV/OGG.
+/// An audio file by the path the data gives (a Godot audio file, or a sound file in the
+/// client data), or None if it is missing. A Godot file in the asset folders that isn't
+/// there (no import, or the build without `assets.pck`) falls back to the client's WAV or
+/// OGG file at the same place.
 pub fn load_stream(path: &str) -> Option<Gd<AudioStream>> {
-    let key = path.replace('\\', "/").to_ascii_uppercase();
+    if path.is_empty() {
+        return None;
+    }
+    let key = path.replace('\\', "/");
     if let Some(cached) = STREAMS.with_borrow(|cache| cache.get(&key).cloned()) {
         return cached;
     }
-    let stream = data::read_bytes(path).and_then(|bytes| {
-        let buffer = PackedByteArray::from(bytes.as_slice());
-        if key.ends_with(".OGG") {
-            AudioStreamOggVorbis::load_from_buffer(&buffer).map(|s| s.upcast::<AudioStream>())
-        } else {
-            AudioStreamWav::load_from_buffer(&buffer).map(|s| s.upcast::<AudioStream>())
+    let stream = assets::load_audio(path).or_else(|| {
+        let client = |file: &str| {
+            let bytes = data::read_bytes(file)?;
+            let buffer = PackedByteArray::from(bytes.as_slice());
+            if file.to_ascii_uppercase().ends_with(".OGG") {
+                AudioStreamOggVorbis::load_from_buffer(&buffer).map(|s| s.upcast::<AudioStream>())
+            } else {
+                AudioStreamWav::load_from_buffer(&buffer).map(|s| s.upcast::<AudioStream>())
+            }
+        };
+        match path.strip_prefix(assets::ROSE).or_else(|| path.strip_prefix(assets::OURS)) {
+            Some(inner) => {
+                let stem = assets::stem(inner);
+                ["wav", "ogg"].iter().find_map(|extension| client(&format!("{stem}.{extension}")))
+            }
+            None if path.starts_with("res://") => None,
+            None => client(path),
         }
     });
     if stream.is_none() {
@@ -45,7 +64,7 @@ pub fn load_stream(path: &str) -> Option<Gd<AudioStream>> {
 
 pub fn sound(id: Option<SoundId>) -> Option<Gd<AudioStream>> {
     let data = data::get()?.sounds.get_sound(id?)?;
-    load_stream(&data.path.path().to_string_lossy())
+    load_stream(&data.path)
 }
 
 fn npc(npc_id: i32) -> Option<&'static NpcData> {
@@ -64,19 +83,20 @@ pub fn clear_cache() {
 /// Sound lookups for GDScript. Every function returns null when there is no sound.
 #[derive(GodotClass)]
 #[class(base=RefCounted, init)]
-pub struct RoseSound {
+pub struct RoseAudio {
     base: Base<RefCounted>,
 }
 
 #[godot_api]
-impl RoseSound {
-    /// An audio file from the data by path (e.g. SOUND/BGM/CANYON01_JUNON.OGG).
+impl RoseAudio {
+    /// An audio file by path: a Godot audio file (`res://assets/rose/sound/bgm/canyon01_junon.res`)
+    /// or a sound file in the client data (`SOUND/BGM/CANYON01_JUNON.OGG`).
     #[func]
     fn stream(path: GString) -> Option<Gd<AudioStream>> {
         load_stream(&path.to_string())
     }
 
-    /// A sound from FILE_SOUND.STB by row.
+    /// A sound by number (a `RoseSound`'s id, iROSE's FILE_SOUND.STB row).
     #[func]
     fn by_id(id: i32) -> Option<Gd<AudioStream>> {
         sound(sound_id(id))
@@ -95,7 +115,7 @@ impl RoseSound {
     fn zone_music(zone_id: i32, night: bool) -> Option<Gd<AudioStream>> {
         let zone = data::get()?.zone_list.get_zone(ZoneId::new(u16::try_from(zone_id).ok()?)?)?;
         let path = if night { zone.background_music_night.as_ref() } else { zone.background_music_day.as_ref() }?;
-        load_stream(&path.path().to_string_lossy())
+        load_stream(path)
     }
 
     /// A footstep on terrain tile `tile` (RoseZone.get_tile_index), or on an object when -1.
@@ -109,7 +129,7 @@ impl RoseSound {
             .and_then(|zone| zone.footstep_type)
             .unwrap_or(0) as usize;
         match game_data.sounds.get_step_sound(tile, zone_type) {
-            Some(step) => load_stream(&step.path.path().to_string_lossy()),
+            Some(step) => load_stream(&step.path),
             None => default(),
         }
     }
@@ -136,7 +156,7 @@ impl RoseSound {
         let material = if target_npc > 0 { npc(target_npc).map_or(0, |n| n.hit_sound_material_type as usize) } else { PLAYER_HIT_MATERIAL };
         let hit_type = game_data.items.get_weapon_item(weapon.max(0) as usize).map_or(0, |w| w.attack_hit_sound_index as usize);
         let hit = game_data.sounds.get_hit_sound(hit_type, material)?;
-        load_stream(&hit.path.path().to_string_lossy())
+        load_stream(&hit.path)
     }
 
     /// A bow, crossbow, gun or launcher firing (its own sound, else its projectile's).

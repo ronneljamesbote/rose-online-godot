@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://djlt7nc3qg3w2"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_wlbqo"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_5gxin"]
+
 [resource]
 id = 685
 name = "Bifenith Bow"
@@ -10,7 +13,7 @@ weight = 30
 quality = 99
 icon_index = 1188
 field_model_index = 518
-equip_sound_id = 578
+equip_sound = ExtResource("1_wlbqo")
 equip_stat_1 = "Level"
 equip_stat_1_value = 137
 equip_stat_2 = "Dexterity"
@@ -22,4 +25,4 @@ attack_power = 247
 attack_speed = 9
 motion_type = 10
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_5gxin")

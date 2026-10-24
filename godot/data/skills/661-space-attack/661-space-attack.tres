@@ -2,6 +2,8 @@
 
 [ext_resource type="RoseJobClass" uid="uid://dwxgadb8sumfe" path="res://data/job_classes/62-champion-job.tres" id="1_wr2wi"]
 [ext_resource type="RoseSkill" uid="uid://dgmld7fjdyp34" path="res://data/skills/301-heavy-attack/301-heavy-attack.tres" id="2_yyks7"]
+[ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="3_j05qn"]
+[ext_resource type="RoseSound" uid="uid://c4pyq7wyxrro8" path="res://data/sounds/skill/1551-point-heavy01.tres" id="4_nlja3"]
 
 [resource]
 id = 661
@@ -42,6 +44,6 @@ casting_effect_4 = 1043
 casting_effect_4_point = 1
 action_motion_id = 178
 bullet_effect_id = 253
-bullet_fire_sound_id = 90
+bullet_fire_sound = ExtResource("3_j05qn")
 hit_effect_file_id = 1040
-hit_sound_id = 1551
+hit_sound = ExtResource("4_nlja3")

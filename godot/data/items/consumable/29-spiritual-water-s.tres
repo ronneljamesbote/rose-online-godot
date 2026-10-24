@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemConsumable" format=3 uid="uid://dlqpi0tt6clil"]
 
+[ext_resource type="RoseSound" uid="uid://dwbyekfkxg7c8" path="res://data/sounds/item/584-item-potion.tres" id="1_iza7e"]
+[ext_resource type="RoseSound" uid="uid://c3piaqml44wn1" path="res://data/sounds/item/548-useitem-002.tres" id="2_62o6s"]
+
 [resource]
 id = 29
 name = "Spiritual Water (S)"
@@ -11,7 +14,7 @@ weight = 1
 quality = 70
 icon_index = 1595
 field_model_index = 121
-equip_sound_id = 584
+equip_sound = ExtResource("1_iza7e")
 equip_job_class = 9
 equip_stat_1 = "Mana"
 equip_stat_1_value = 200
@@ -25,4 +28,4 @@ add_data_value = 200
 learn_skill_id = 200
 use_skill_id = 200
 effect_file_id = 140
-effect_sound_id = 548
+effect_sound = ExtResource("2_62o6s")

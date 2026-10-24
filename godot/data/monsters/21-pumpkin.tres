@@ -1,6 +1,7 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://dw2613ydkm7ee"]
 
 [ext_resource type="RoseDropTable" uid="uid://b052u8ac84gre" path="res://data/drop_tables/108-pumpkin.tres" id="1_oqbqt"]
+[ext_resource type="RoseSound" uid="uid://js7qhkoxid3m" path="res://data/sounds/mob/182-mob01-d.tres" id="2_gk2mn"]
 
 [resource]
 id = 21
@@ -24,7 +25,7 @@ npc_type_index = 1
 hit_sound_material_type = 1
 hand_hit_effect_id = 401
 die_effect_file_id = 1401
-die_sound_id = 182
+die_sound = ExtResource("2_gk2mn")
 drop_table = ExtResource("1_oqbqt")
 drop_money_rate = 10
 drop_item_rate = 58

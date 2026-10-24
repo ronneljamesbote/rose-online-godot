@@ -1,6 +1,9 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://c7fnm04ymivpv"]
 
 [ext_resource type="RoseDropTable" uid="uid://bhkbny1l6synd" path="res://data/drop_tables/474-elder-sikuku.tres" id="1_6ms8o"]
+[ext_resource type="RoseSound" uid="uid://cs0cbo5amuxa1" path="res://data/sounds/mob/304-mob31-a.tres" id="2_63wad"]
+[ext_resource type="RoseSound" uid="uid://dlvj1r773a5u2" path="res://data/sounds/mob/276-mob24-a.tres" id="3_7joao"]
+[ext_resource type="RoseSound" uid="uid://dilppjc0cq403" path="res://data/sounds/mob/282-mob26-d.tres" id="4_49guy"]
 
 [resource]
 id = 555
@@ -23,11 +26,11 @@ ai_file_index = 295
 npc_type_index = 7
 right_hand_part_index = 1103
 hit_sound_material_type = 1
-attack_sound_id = 304
-hitted_sound_id = 276
+attack_sound = ExtResource("2_63wad")
+hitted_sound = ExtResource("3_7joao")
 hand_hit_effect_id = 454
 die_effect_file_id = 1401
-die_sound_id = 282
+die_sound = ExtResource("4_49guy")
 drop_table = ExtResource("1_6ms8o")
 drop_money_rate = 30
 drop_item_rate = 70

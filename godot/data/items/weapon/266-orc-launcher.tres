@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://chjrv6xxtvw0c"]
 
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_f4bz8"]
+[ext_resource type="RoseSound" uid="uid://coa6mw77434ix" path="res://data/sounds/attack/84-gun-003.tres" id="2_1f1jx"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_1rbfz"]
+
 [resource]
 id = 266
 name = "Orc Launcher"
@@ -10,7 +14,7 @@ weight = 20
 quality = 63
 icon_index = 1253
 field_model_index = 566
-equip_sound_id = 577
+equip_sound = ExtResource("1_f4bz8")
 craft_skill_type = 14
 craft_skill_level = 5
 craft_material = 686
@@ -26,6 +30,6 @@ attack_power = 125
 attack_speed = 12
 motion_type = 9
 bullet_effect_id = 191
-attack_start_sound_id = 84
-attack_fire_sound_id = 78
+attack_start_sound = ExtResource("2_1f1jx")
+attack_fire_sound = ExtResource("3_1rbfz")
 gem_position = 1

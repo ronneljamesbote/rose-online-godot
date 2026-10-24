@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://kb7w3bwo34sn"]
 
+[ext_resource type="RoseSound" uid="uid://bjdly3xikd2h4" path="res://data/sounds/item/576-item-weapon.tres" id="1_gkc1r"]
+[ext_resource type="RoseSound" uid="uid://fsgnfxsnbspn" path="res://data/sounds/attack/48-mace-002.tres" id="2_ge7fu"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_1l48k"]
+
 [resource]
 id = 533
 name = "Ghost Bat"
@@ -10,7 +14,7 @@ weight = 30
 quality = 60
 icon_index = 954
 field_model_index = 336
-equip_sound_id = 576
+equip_sound = ExtResource("1_gkc1r")
 equip_stat_1 = "Level"
 equip_stat_1_value = 48
 equip_stat_2 = "Strength"
@@ -22,6 +26,6 @@ attack_power = 73
 attack_speed = 12
 motion_type = 3
 effect_id = 121
-attack_start_sound_id = 48
-attack_hit_sound_index = 5
+attack_start_sound = ExtResource("2_ge7fu")
+hit_sounds = ExtResource("3_1l48k")
 gem_position = 2

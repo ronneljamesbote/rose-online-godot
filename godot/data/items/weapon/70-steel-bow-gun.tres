@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://c4yxv2crgcq00"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_js46s"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_rry71"]
+
 [resource]
 id = 70
 name = "Steel Bow Gun"
@@ -10,7 +13,7 @@ weight = 30
 quality = 79
 icon_index = 997
 field_model_index = 370
-equip_sound_id = 578
+equip_sound = ExtResource("1_js46s")
 craft_skill_level = 8
 equip_stat_1 = "Level"
 equip_stat_1_value = 122
@@ -23,5 +26,5 @@ attack_power = 192
 attack_speed = 10
 motion_type = 11
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_rry71")
 gem_position = 1

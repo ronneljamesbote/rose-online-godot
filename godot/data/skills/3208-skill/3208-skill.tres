@@ -3,6 +3,8 @@
 [ext_resource type="RoseSkill" uid="uid://c1jo3kmtc4sp8" path="res://data/skills/3221-skill/3221-skill.tres" id="1_tgdsp"]
 [ext_resource type="RoseStatusEffect" uid="uid://culcqkn47b52" path="res://data/status_effects/16-haste-attack.tres" id="2_n2b12"]
 [ext_resource type="RoseStatusEffect" uid="uid://bqfdmgkvl3mlj" path="res://data/status_effects/26-cri-up.tres" id="3_aield"]
+[ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="4_tpqu6"]
+[ext_resource type="RoseSound" uid="uid://dvx20nuuuxn4h" path="res://data/sounds/skill/141-skill-magic03.tres" id="5_zw83i"]
 
 [resource]
 id = 3208
@@ -38,6 +40,6 @@ casting_effect_4 = 1
 action_motion_id = 151
 bullet_effect_id = 221
 bullet_point = 3
-bullet_fire_sound_id = 90
+bullet_fire_sound = ExtResource("4_tpqu6")
 hit_effect_file_id = 1501
-hit_sound_id = 141
+hit_sound = ExtResource("5_zw83i")

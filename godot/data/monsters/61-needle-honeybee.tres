@@ -1,6 +1,8 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://bvcsaaqkpeohp"]
 
 [ext_resource type="RoseDropTable" uid="uid://d1es4hmj6oktp" path="res://data/drop_tables/124-needle-honeybee.tres" id="1_ps0eg"]
+[ext_resource type="RoseSound" uid="uid://dm7bovpy5h023" path="res://data/sounds/mob/205-mob07-n.tres" id="2_xglks"]
+[ext_resource type="RoseSound" uid="uid://cf7m6uul4j4ap" path="res://data/sounds/mob/206-mob07-d.tres" id="3_64h47"]
 
 [resource]
 id = 61
@@ -23,10 +25,10 @@ ai_file_index = 2
 death_quest_trigger_name = "1003-31"
 npc_type_index = 1
 hit_sound_material_type = 1
-normal_effect_sound_id = 205
+normal_effect_sound = ExtResource("2_xglks")
 hand_hit_effect_id = 401
 die_effect_file_id = 1401
-die_sound_id = 206
+die_sound = ExtResource("3_64h47")
 drop_table = ExtResource("1_ps0eg")
 drop_money_rate = 8
 drop_item_rate = 62

@@ -1,6 +1,9 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://dwkdwoeh3yacd"]
 
 [ext_resource type="RoseDropTable" uid="uid://iaaspl1so0sc" path="res://data/drop_tables/387-vulcan-leader-winter-maul-leader.tres" id="1_ds7jy"]
+[ext_resource type="RoseSound" uid="uid://c4ebo82sje6ou" path="res://data/sounds/mob/305-mob31-n.tres" id="2_zmb08"]
+[ext_resource type="RoseSound" uid="uid://t75cyyrytr2k" path="res://data/sounds/mob/308-mob32-a.tres" id="3_kuzug"]
+[ext_resource type="RoseSound" uid="uid://c3ykan6mnal17" path="res://data/sounds/mob/306-mob31-d.tres" id="4_cbgnc"]
 
 [resource]
 id = 369
@@ -20,11 +23,11 @@ walk_speed = 290
 run_speed = 690
 ai_file_index = 144
 npc_type_index = 8
-normal_effect_sound_id = 305
-attack_sound_id = 308
+normal_effect_sound = ExtResource("2_zmb08")
+attack_sound = ExtResource("3_kuzug")
 hand_hit_effect_id = 454
 die_effect_file_id = 1401
-die_sound_id = 306
+die_sound = ExtResource("4_cbgnc")
 drop_table = ExtResource("1_ds7jy")
 drop_money_rate = 55
 drop_item_rate = 62

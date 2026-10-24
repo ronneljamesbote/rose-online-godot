@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://crrm438o4u8co"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_qapll"]
+[ext_resource type="RoseSound" uid="uid://osald6eflwq1" path="res://data/sounds/attack/37-sword-001.tres" id="2_sgadm"]
+[ext_resource type="RoseSound" uid="uid://np80gbdh8gn3" path="res://data/sounds/attack/89-magic-001.tres" id="3_anw5j"]
+
 [resource]
 id = 977
 name = "Crystal Wand"
@@ -10,7 +14,7 @@ weight = 59
 quality = 68
 icon_index = 1370
 field_model_index = 977
-equip_sound_id = 578
+equip_sound = ExtResource("1_qapll")
 equip_stat_1 = "Intelligence"
 equip_stat_1_value = 196
 add_stat_1 = "SaveMana"
@@ -23,5 +27,5 @@ attack_speed = 10
 motion_type = 14
 is_magic_damage = true
 bullet_effect_id = 212
-attack_start_sound_id = 37
-attack_fire_sound_id = 89
+attack_start_sound = ExtResource("2_sgadm")
+attack_fire_sound = ExtResource("3_anw5j")

@@ -1,6 +1,9 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://bet5cf0fg0hwf"]
 
 [ext_resource type="RoseDropTable" uid="uid://bq1nmn1hqveho" path="res://data/drop_tables/458-sikuku-elite-fighter.tres" id="1_10yj7"]
+[ext_resource type="RoseSound" uid="uid://1leuamcye8bg" path="res://data/sounds/attack/59-spear-d03.tres" id="2_5m8qt"]
+[ext_resource type="RoseSound" uid="uid://dlvj1r773a5u2" path="res://data/sounds/mob/276-mob24-a.tres" id="3_ok792"]
+[ext_resource type="RoseSound" uid="uid://dbfo77m5yqm18" path="res://data/sounds/mob/362-shout03.tres" id="4_du9gh"]
 
 [resource]
 id = 540
@@ -22,11 +25,11 @@ ai_file_index = 292
 npc_type_index = 3
 right_hand_part_index = 1107
 hit_sound_material_type = 1
-attack_sound_id = 59
-hitted_sound_id = 276
+attack_sound = ExtResource("2_5m8qt")
+hitted_sound = ExtResource("3_ok792")
 hand_hit_effect_id = 403
 die_effect_file_id = 1401
-die_sound_id = 362
+die_sound = ExtResource("4_du9gh")
 drop_table = ExtResource("1_10yj7")
 drop_money_rate = 30
 drop_item_rate = 40

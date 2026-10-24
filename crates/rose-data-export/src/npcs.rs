@@ -173,21 +173,21 @@ macro_rules! character_export {
             #[serde(skip_serializing_if = "is_default")]
             pub hit_sound_material_type: u32,
             #[serde(skip_serializing_if = "is_default")]
-            pub normal_effect_sound_id: u16,
+            pub normal_effect_sound: u16,
             #[serde(skip_serializing_if = "is_default")]
-            pub attack_sound_id: u16,
+            pub attack_sound: u16,
             #[serde(skip_serializing_if = "is_default")]
-            pub hitted_sound_id: u16,
+            pub hitted_sound: u16,
             #[serde(skip_serializing_if = "is_default")]
             pub hand_hit_effect_id: u16,
             #[serde(skip_serializing_if = "is_default")]
             pub die_effect_file_id: u16,
             #[serde(skip_serializing_if = "is_default")]
-            pub die_sound_id: u16,
+            pub die_sound: u16,
             #[serde(skip_serializing_if = "is_default")]
             pub create_effect_index: u32,
             #[serde(skip_serializing_if = "is_default")]
-            pub create_sound_id: u16,
+            pub create_sound: u16,
             $(
                 $(#[$field_meta])*
                 #[serde(skip_serializing_if = "is_default")]
@@ -224,14 +224,14 @@ macro_rules! character_export {
                 let (r, g, b) = npc.glow_colour;
                 self.glow_colour = [colour_channel(r), colour_channel(g), colour_channel(b)];
                 self.hit_sound_material_type = npc.hit_sound_material_type;
-                self.normal_effect_sound_id = number(npc.normal_effect_sound_id, SoundId::get);
-                self.attack_sound_id = number(npc.attack_sound_id, SoundId::get);
-                self.hitted_sound_id = number(npc.hitted_sound_id, SoundId::get);
+                self.normal_effect_sound = number(npc.normal_effect_sound_id, SoundId::get);
+                self.attack_sound = number(npc.attack_sound_id, SoundId::get);
+                self.hitted_sound = number(npc.hitted_sound_id, SoundId::get);
                 self.hand_hit_effect_id = number(npc.hand_hit_effect_id, EffectId::get);
                 self.die_effect_file_id = number(npc.die_effect_file_id, EffectFileId::get);
-                self.die_sound_id = number(npc.die_sound_id, SoundId::get);
+                self.die_sound = number(npc.die_sound_id, SoundId::get);
                 self.create_effect_index = npc.create_effect_index;
-                self.create_sound_id = number(npc.create_sound_id, SoundId::get);
+                self.create_sound = number(npc.create_sound_id, SoundId::get);
             }
 
             /// The game's NPC data with the fields the kind doesn't have left at none; the
@@ -275,16 +275,16 @@ macro_rules! character_export {
                     hit_sound_material_type: self.hit_sound_material_type,
                     face_icon_index: 0,
                     summon_monster_type: 0,
-                    normal_effect_sound_id: SoundId::new(self.normal_effect_sound_id),
-                    attack_sound_id: SoundId::new(self.attack_sound_id),
-                    hitted_sound_id: SoundId::new(self.hitted_sound_id),
+                    normal_effect_sound_id: SoundId::new(self.normal_effect_sound),
+                    attack_sound_id: SoundId::new(self.attack_sound),
+                    hitted_sound_id: SoundId::new(self.hitted_sound),
                     hand_hit_effect_id: EffectId::new(self.hand_hit_effect_id),
                     die_effect_file_id: EffectFileId::new(self.die_effect_file_id),
-                    die_sound_id: SoundId::new(self.die_sound_id),
+                    die_sound_id: SoundId::new(self.die_sound),
                     npc_quest_type: self.npc_quest_type,
                     glow_colour: (channel(0), channel(1), channel(2)),
                     create_effect_index: self.create_effect_index,
-                    create_sound_id: SoundId::new(self.create_sound_id),
+                    create_sound_id: SoundId::new(self.create_sound),
                     death_quest_trigger_name: self.death_quest_trigger_name.clone(),
                     npc_height: self.height,
                     motion_data: motions.get(&self.id).cloned().unwrap_or_default(),

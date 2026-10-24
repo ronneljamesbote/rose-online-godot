@@ -2,6 +2,8 @@
 
 [ext_resource type="RoseJobClass" uid="uid://b3lx48q5npvch" path="res://data/job_classes/66-scout-job.tres" id="1_kv4xp"]
 [ext_resource type="RoseSkill" uid="uid://c81ycqbxkjt72" path="res://data/skills/1401-bow-mastery/1401-bow-mastery.tres" id="2_rf6gv"]
+[ext_resource type="RoseSound" uid="uid://42rl1pnpcxo3" path="res://data/sounds/skill/148-heavyarr001.tres" id="3_d1jwc"]
+[ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="4_1iwn6"]
 
 [resource]
 id = 1531
@@ -33,10 +35,10 @@ casting_effect_1_point = 3
 action_motion_id = 92
 bullet_effect_id = 151
 bullet_point = 1
-bullet_fire_sound_id = 148
+bullet_fire_sound = ExtResource("3_d1jwc")
 hit_effect_file_id = 110
-hit_sound_id = 67
+hit_sound = ExtResource("4_1iwn6")
 hit_dummy_effect_1 = 151
-hit_dummy_sound_1 = 67
+hit_dummy_sound_1 = ExtResource("4_1iwn6")
 hit_dummy_effect_2 = 151
-hit_dummy_sound_2 = 67
+hit_dummy_sound_2 = ExtResource("4_1iwn6")

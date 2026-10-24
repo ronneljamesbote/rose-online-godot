@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://dgwygbwd4yl04"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_ts1n5"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_v84xi"]
+
 [resource]
 id = 941
 name = "Bow of Artemis"
@@ -10,7 +13,7 @@ weight = 40
 quality = 59
 icon_index = 1201
 field_model_index = 941
-equip_sound_id = 578
+equip_sound = ExtResource("1_ts1n5")
 equip_stat_1 = "Dexterity"
 equip_stat_1_value = 134
 add_stat_1 = "AttackSpeed"
@@ -22,5 +25,5 @@ attack_power = 116
 attack_speed = 9
 motion_type = 10
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_v84xi")
 gem_position = 1

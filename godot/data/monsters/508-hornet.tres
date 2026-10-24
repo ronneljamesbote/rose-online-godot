@@ -1,5 +1,9 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://ptjea0k3ke2t"]
 
+[ext_resource type="RoseSound" uid="uid://cojvd22hkichy" path="res://data/sounds/mob/329-mob07-n.tres" id="1_fntly"]
+[ext_resource type="RoseSound" uid="uid://c24bk1o25388i" path="res://data/sounds/mob/328-bugs02.tres" id="2_3mzi1"]
+[ext_resource type="RoseSound" uid="uid://ofsknjykncqp" path="res://data/sounds/mob/330-bugs04.tres" id="3_2g35e"]
+
 [resource]
 id = 508
 name = "Hornet"
@@ -19,9 +23,9 @@ walk_speed = 350
 run_speed = 750
 ai_file_index = 302
 npc_type_index = 4
-normal_effect_sound_id = 329
-attack_sound_id = 328
-hitted_sound_id = 328
+normal_effect_sound = ExtResource("1_fntly")
+attack_sound = ExtResource("2_3mzi1")
+hitted_sound = ExtResource("2_3mzi1")
 hand_hit_effect_id = 403
 die_effect_file_id = 1401
-die_sound_id = 330
+die_sound = ExtResource("3_2g35e")

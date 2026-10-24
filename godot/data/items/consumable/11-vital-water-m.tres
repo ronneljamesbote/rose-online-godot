@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemConsumable" format=3 uid="uid://bqdvaxk8da3h3"]
 
+[ext_resource type="RoseSound" uid="uid://dwbyekfkxg7c8" path="res://data/sounds/item/584-item-potion.tres" id="1_cf9ep"]
+[ext_resource type="RoseSound" uid="uid://c3piaqml44wn1" path="res://data/sounds/item/548-useitem-002.tres" id="2_3ogfy"]
+
 [resource]
 id = 11
 name = "Vital Water (M)"
@@ -11,7 +14,7 @@ weight = 1
 quality = 75
 icon_index = 1589
 field_model_index = 118
-equip_sound_id = 584
+equip_sound = ExtResource("1_cf9ep")
 equip_job_class = 9
 equip_stat_1 = "Health"
 equip_stat_1_value = 500
@@ -25,4 +28,4 @@ add_data_value = 500
 learn_skill_id = 500
 use_skill_id = 500
 effect_file_id = 140
-effect_sound_id = 548
+effect_sound = ExtResource("2_3ogfy")

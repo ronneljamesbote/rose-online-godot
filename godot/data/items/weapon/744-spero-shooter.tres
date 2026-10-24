@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://bu4i67px1bwwj"]
 
+[ext_resource type="RoseSound" uid="uid://bjdly3xikd2h4" path="res://data/sounds/item/576-item-weapon.tres" id="1_s2dib"]
+[ext_resource type="RoseSound" uid="uid://coa6mw77434ix" path="res://data/sounds/attack/84-gun-003.tres" id="2_f6zwy"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_eyqr2"]
+
 [resource]
 id = 744
 name = "Spero Shooter"
@@ -10,7 +14,7 @@ weight = 20
 quality = 98
 icon_index = 1263
 field_model_index = 575
-equip_sound_id = 576
+equip_sound = ExtResource("1_s2dib")
 equip_stat_1 = "Level"
 equip_stat_1_value = 135
 equip_stat_2 = "Strength"
@@ -22,6 +26,6 @@ attack_power = 288
 attack_speed = 12
 motion_type = 9
 bullet_effect_id = 191
-attack_start_sound_id = 84
-attack_fire_sound_id = 78
+attack_start_sound = ExtResource("2_f6zwy")
+attack_fire_sound = ExtResource("3_eyqr2")
 gem_position = 1

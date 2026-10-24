@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://c0vprhewtjw0s"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_78xo2"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_cva07"]
+
 [resource]
 id = 214
 name = "Bow of Wind Spirit"
@@ -10,7 +13,7 @@ weight = 20
 quality = 75
 icon_index = 1184
 field_model_index = 514
-equip_sound_id = 578
+equip_sound = ExtResource("1_78xo2")
 craft_skill_type = 13
 craft_skill_level = 8
 craft_material = 612
@@ -26,5 +29,5 @@ attack_power = 177
 attack_speed = 10
 motion_type = 10
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_cva07")
 gem_position = 1

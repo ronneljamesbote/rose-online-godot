@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://c58nb0gf750u2"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_bampy"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_kk7wd"]
+
 [resource]
 id = 209
 name = "Rider Bow"
@@ -10,7 +13,7 @@ weight = 20
 quality = 59
 icon_index = 1165
 field_model_index = 509
-equip_sound_id = 578
+equip_sound = ExtResource("1_bampy")
 craft_skill_type = 13
 craft_skill_level = 4
 craft_material = 607
@@ -26,5 +29,5 @@ attack_power = 106
 attack_speed = 10
 motion_type = 10
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_kk7wd")
 gem_position = 1

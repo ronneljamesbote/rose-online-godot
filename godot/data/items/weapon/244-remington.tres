@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://cko0cu2p4kbgp"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_ogetp"]
+[ext_resource type="RoseSound" uid="uid://coa6mw77434ix" path="res://data/sounds/attack/84-gun-003.tres" id="2_uhwvz"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_a19jb"]
+
 [resource]
 id = 244
 name = "Remington"
@@ -10,7 +14,7 @@ weight = 35
 quality = 80
 icon_index = 1223
 field_model_index = 544
-equip_sound_id = 578
+equip_sound = ExtResource("1_ogetp")
 craft_skill_type = 14
 craft_skill_level = 9
 craft_material = 663
@@ -26,6 +30,6 @@ attack_power = 194
 attack_speed = 11
 motion_type = 12
 bullet_effect_id = 174
-attack_start_sound_id = 84
-attack_fire_sound_id = 78
+attack_start_sound = ExtResource("2_uhwvz")
+attack_fire_sound = ExtResource("3_a19jb")
 gem_position = 1

@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://cov45bgss23pu"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_dkz8b"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_u4fw2"]
+
 [resource]
 id = 942
 name = "Bow of Sagittarius"
@@ -10,7 +13,7 @@ weight = 49
 quality = 67
 icon_index = 1202
 field_model_index = 942
-equip_sound_id = 578
+equip_sound = ExtResource("1_dkz8b")
 equip_stat_1 = "Dexterity"
 equip_stat_1_value = 163
 add_stat_1 = "Critical"
@@ -22,5 +25,5 @@ attack_power = 143
 attack_speed = 8
 motion_type = 10
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_u4fw2")
 gem_position = 1

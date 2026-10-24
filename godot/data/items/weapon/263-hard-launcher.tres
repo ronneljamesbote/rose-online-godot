@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://do87mqpwllak"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_ve9mg"]
+[ext_resource type="RoseSound" uid="uid://coa6mw77434ix" path="res://data/sounds/attack/84-gun-003.tres" id="2_iqld7"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_eg69z"]
+
 [resource]
 id = 263
 name = "Hard Launcher"
@@ -10,7 +14,7 @@ weight = 20
 quality = 52
 icon_index = 1250
 field_model_index = 563
-equip_sound_id = 578
+equip_sound = ExtResource("1_ve9mg")
 craft_skill_type = 14
 craft_skill_level = 3
 craft_material = 683
@@ -26,6 +30,6 @@ attack_power = 81
 attack_speed = 12
 motion_type = 9
 bullet_effect_id = 191
-attack_start_sound_id = 84
-attack_fire_sound_id = 78
+attack_start_sound = ExtResource("2_iqld7")
+attack_fire_sound = ExtResource("3_eg69z")
 gem_position = 1

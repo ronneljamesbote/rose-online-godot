@@ -1,5 +1,8 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://bn84eb761kspy"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_9xsfk"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_hbgnw"]
+
 [resource]
 id = 577
 item_class = "Crossbow"
@@ -8,7 +11,7 @@ weight = 40
 quality = 110
 icon_index = 1018
 field_model_index = 377
-equip_sound_id = 578
+equip_sound = ExtResource("1_9xsfk")
 equip_stat_1 = "Level"
 equip_stat_1_value = 161
 equip_stat_2 = "Strength"
@@ -20,5 +23,5 @@ attack_power = 318
 attack_speed = 11
 motion_type = 11
 bullet_effect_id = 151
-attack_fire_sound_id = 71
+attack_fire_sound = ExtResource("2_hbgnw")
 gem_position = 1

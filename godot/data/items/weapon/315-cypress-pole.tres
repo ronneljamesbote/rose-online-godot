@@ -1,5 +1,9 @@
 [gd_resource type="RoseItemWeapon" format=3 uid="uid://dnlwjkwatlsg0"]
 
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_vzc1f"]
+[ext_resource type="RoseSound" uid="uid://d3hdp37emo7p0" path="res://data/sounds/attack/72-bow-002.tres" id="2_fzz58"]
+[ext_resource type="RoseHitSounds" uid="uid://d4huxc3qetp2i" path="res://data/hit_sounds/25-spear-hits.tres" id="3_ed5ms"]
+
 [resource]
 id = 315
 name = "Cypress Pole"
@@ -10,7 +14,7 @@ weight = 30
 quality = 79
 icon_index = 1302
 field_model_index = 615
-equip_sound_id = 578
+equip_sound = ExtResource("1_vzc1f")
 craft_skill_type = 15
 craft_skill_level = 9
 craft_material = 714
@@ -29,6 +33,6 @@ attack_speed = 10
 motion_type = 6
 is_magic_damage = true
 effect_id = 131
-attack_start_sound_id = 72
-attack_hit_sound_index = 25
+attack_start_sound = ExtResource("2_fzz58")
+hit_sounds = ExtResource("3_ed5ms")
 gem_position = 2
