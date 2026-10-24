@@ -218,6 +218,20 @@ pub fn load_assets_pack() {
     }
 }
 
+/// The file that keeps the editor out of `res://assets/rose/`. In its tree view the editor's
+/// FileSystem dock makes a thumbnail of every file in the project each time it opens, even
+/// in folders nobody opens, which means loading the 16,500 converted files one by one (six
+/// minutes and more, until the editor hangs). Everything links them by path, so scenes and
+/// resources load them all the same; the build takes the file away while it packs them.
+const GDIGNORE: &str = ".gdignore";
+
+fn hide_from_editor(root: &str) {
+    let _ = std::fs::create_dir_all(root);
+    if let Err(error) = std::fs::write(Path::new(root).join(GDIGNORE), "") {
+        godot_warn!("rose: could not write {root}{GDIGNORE}: {error}");
+    }
+}
+
 /// The import command: converts every ZMS mesh, DDS texture, PTL particle system and EFT
 /// effect in data.idx (outside the skipped folders) and every sound in the client's sound
 /// folder into `res://assets/rose/`.
@@ -270,6 +284,7 @@ impl RoseImport {
             // would be left over and shipped, so start from an empty folder.
             let _ = std::fs::remove_dir_all(&root);
         }
+        hide_from_editor(&root);
         let (mut meshes, mut textures, mut sounds, mut effects, mut failed, mut kept) = (0, 0, 0, 0, 0, 0);
         let mut empty_effects = 0;
         let mut folders: BTreeMap<String, u64> = BTreeMap::new();

@@ -88,7 +88,10 @@ mkdir -p godot/bin
 x86_64-w64-mingw32-strip -o godot/bin/rose_gd.dll "$TARGET_DIR/x86_64-pc-windows-gnu/release/rose_gd.dll"
 
 STAGE=$(mktemp -d)
-trap 'rm -rf "$STAGE" godot/build_version.txt' EXIT
+# The editor leaves assets/rose/ out (its .gdignore, see assets/README.md), and so would the
+# export, so take that file away while exporting and put it back at the end.
+rm -f godot/assets/rose/.gdignore
+trap 'rm -rf "$STAGE" godot/build_version.txt; [ -d godot/assets/rose ] && touch godot/assets/rose/.gdignore' EXIT
 mkdir -p "$STAGE/$DIR"
 # The version line shows the commit the client was built from (scripts/build_info.gd).
 git rev-parse --short=7 HEAD > godot/build_version.txt 2>/dev/null || echo unknown > godot/build_version.txt

@@ -47,6 +47,22 @@ it again only converts what is missing; `--import-rose=force` redoes everything.
 starts `rose/` afresh after an update that changes the converted output (`IMPORT_VERSION`
 in `rust/src/assets.rs`).
 
+### The editor leaves `rose/` out
+
+The import puts an empty `.gdignore` in `rose/`, so the Godot editor doesn't list the
+converted files. In its tree view the editor's FileSystem dock makes a thumbnail of every
+file in the project each time it opens, even in folders nobody expands, and for the
+16,500 converted files that means loading each one: more than six minutes and 2 GB the
+first time and after every import, until the editor stops responding. Without them it opens
+in about 15 seconds.
+
+Everything links the converted files by path, so zone scenes, the game data resources, the
+game and `--export-data` load them as before. What you lose is browsing and dragging them
+in the FileSystem dock and their thumbnails. To link one in the Inspector, use the
+property's **Load**: its file dialog still shows the folder. The build scripts
+take the `.gdignore` away while they export, because Godot's export would leave the folder
+out too, and put it back at the end. Close the editor during a build, or it rescans the folder.
+
 ### Troubleshooting the import
 
 - **It ran the old import.** The import is code in the extension (`bin/rose_gd.dll`, or
