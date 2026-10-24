@@ -55,12 +55,14 @@ fn the_exported_art_is_the_iroses() {
             + &std::fs::read_to_string(dir.join("monsters.toml")).unwrap()
             + &std::fs::read_to_string(dir.join("npcs.toml")).unwrap()
             + &std::fs::read_to_string(dir.join("skills.toml")).unwrap()
-            + &std::fs::read_to_string(dir.join("status-effects.toml")).unwrap();
+            + &std::fs::read_to_string(dir.join("status-effects.toml")).unwrap()
+            + &std::fs::read_to_string(dir.join("skies.toml")).unwrap()
+            + &std::fs::read_to_string(dir.join("interface.toml")).unwrap();
         let mut paths = 0;
         for path in text.split('"').filter(|t| t.starts_with("res://assets/")) {
             assert!(godot.join(path.trim_start_matches("res://")).is_file(), "{path} is missing");
             paths += 1;
         }
-        eprintln!("{paths} icon and model paths, all there");
+        eprintln!("{paths} icon, model, sky and interface paths, all there");
     }
 }

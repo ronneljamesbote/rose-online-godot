@@ -29,17 +29,21 @@ revive spots, music, sky, minimap, time of day, PvP, planet, carts), the warp ga
 (`data/warp-gates.toml`), the crafting and refining recipes (`data/craft-recipes.toml`),
 what a new character starts with (`data/new-characters.toml`), the sounds
 (`data/sounds.toml`: each sound's audio file, `data/hit-sounds.toml`, `data/footsteps.toml`)
-and the effects (`data/effect-files.toml`: each effect's scene, `data/attack-effects.toml`:
-how attacks look).
+the effects (`data/effect-files.toml`: each effect's scene, `data/attack-effects.toml`:
+how attacks look), the skies (`data/skies.toml`: each sky's mesh, day and night picture and
+light at each time of day) and the interface (`data/interface.toml`: the loading and
+character creation pictures, each mouse cursor and the pixel it clicks at).
 
 The server's upload sends it in place of the iROSE tables it replaces (the item tables,
 LIST_NPC.STB, ITEM_DROP.STB, LIST_SELL.STB, LIST_SKILL.STB, LIST_STATUS.STB, LIST_CLASS.STB,
 LIST_ZONE.STB, WARP.STB, LIST_PRODUCT.STB and INIT_AVATAR.STB; as JSON, which the module
-reads faster; `ROSE_DATA` names another folder; the sounds and effects stay out, the server
-plays and shows none), and the game reads it from here (from
+reads faster; `ROSE_DATA` names another folder; the sounds, effects, skies and interface stay
+out, the server plays and shows none), and the game reads it from here (from
 `export/data/` next to `ROSE.exe` in the Windows build, or where `ROSE_DATA` points). Without
 it both fall back to the iROSE tables (FILE_SOUND.STB, LIST_HITSOUND.STB and
-LIST_STEPSOUND.STB for the sounds, FILE_EFFECT.STB and LIST_EFFECT.STB for the effects).
+LIST_STEPSOUND.STB for the sounds, FILE_EFFECT.STB and LIST_EFFECT.STB for the effects,
+LIST_SKY.STB and the client's own loading picture and cursor files for the skies and
+interface).
 
 Icons and models are Godot paths (`icon = "res://assets/rose/3ddata/control/res/item1/919.tres"`,
 `field_model`, `model`, or `model_male` and `model_female` for hats, bodies, gloves and shoes, and

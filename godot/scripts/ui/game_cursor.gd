@@ -1,4 +1,4 @@
-## The mouse cursor: ROSE's own cursors from the client files, switched by what the mouse is
+## The mouse cursor: ROSE's own cursors (the interface settings link them), switched by what the mouse is
 ## over like the original client (CGameStateMain::UpdateCheckFrame): crossed blades over a
 ## monster or an enemy player, a speech bubble over a town NPC, a hand over an item on the
 ## ground. Over windows it is the normal sword, with the gold hand over items that can be
@@ -7,20 +7,9 @@
 ## Made by the UI autoload; Online sets `online` while we are in the game.
 extends Node
 
-## state -> [cursor file in the client's RES folder, click point at normal size]. The
-## original files all click at the top-left corner; the hands click at the fingertips and
-## the bubble at its tail instead.
-const CURSORS := {
-	"default": ["DEFAULT", Vector2(0, 0)],
-	"attack": ["ATTACK", Vector2(0, 0)],
-	"talk": ["NPC", Vector2(3, 29)],
-	"player": ["USER", Vector2(1, 1)],
-	"pick_up": ["ITEM_PICK", Vector2(1, 12)],
-	"drag": ["ITEM_INVEN", Vector2(2, 4)],
-	"dragging": ["ITEM_INVEM", Vector2(3, 2)],
-	"repair": ["REPAIR", Vector2(0, 0)],
-	"camera": ["WHEEL", Vector2(16, 16)],
-}
+## The cursor states. Each one's picture and click point are in the interface settings
+## (`res://data/interface/interface.tres`, the client's own cursor files by default).
+const CURSORS := ["default", "attack", "talk", "player", "pick_up", "drag", "dragging", "repair", "camera"]
 ## Cursor size setting -> how many times the original 32 pixels. Whole steps keep the pixel
 ## art sharp.
 const SIZES := {"normal": 1, "large": 2, "huge": 3}
@@ -28,7 +17,7 @@ const SIZES := {"normal": 1, "large": 2, "huge": 3}
 const DRAG_SHAPES := [Input.CURSOR_CAN_DROP, Input.CURSOR_FORBIDDEN]
 
 var online: Node
-var _images := {}  # state -> Image at normal size
+var _images := {}  # state -> [Image at normal size, click point]
 var _cursors := {}  # state -> [Image at the chosen size, click point]
 var _shown := ""  # the state on the arrow shape now, "" when the system cursor is in use
 var _next_try := 0
@@ -53,7 +42,7 @@ func _process(_delta: float) -> void:
 		_show(state)
 
 
-## Which cursor fits this screen position now: one of the CURSORS keys.
+## Which cursor fits this screen position now: one of the CURSORS.
 func state_at(mouse: Vector2) -> String:
 	var viewport := get_viewport()
 	if not is_instance_valid(online):
@@ -86,12 +75,12 @@ func state_at(mouse: Vector2) -> String:
 
 func _load() -> bool:
 	for state in CURSORS:
-		var image: Image = RoseData.cursor_image(CURSORS[state][0])
-		if image == null:
-			# Without the client's cursor files the system cursor stays.
+		var cursor: Dictionary = RoseData.cursor(state)
+		if cursor.is_empty():
+			# Without the cursor pictures the system cursor stays.
 			_images.clear()
 			return false
-		_images[state] = image
+		_images[state] = [cursor["image"], cursor["click"]]
 	_scale()
 	return true
 
@@ -101,9 +90,9 @@ func _scale() -> void:
 	_cursors.clear()
 	var times: int = SIZES.get(UI.settings.get("cursor_size", "large"), 2)
 	for state in _images:
-		var image: Image = _images[state].duplicate()
+		var image: Image = _images[state][0].duplicate()
 		image.resize(image.get_width() * times, image.get_height() * times, Image.INTERPOLATE_NEAREST)
-		_cursors[state] = [image, CURSORS[state][1] * times + Vector2(times - 1, times - 1) * 0.5]
+		_cursors[state] = [image, _images[state][1] * times + Vector2(times - 1, times - 1) * 0.5]
 
 
 func _show(state: String) -> void:

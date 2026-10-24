@@ -1,4 +1,36 @@
-//! Windows cursor files (.CUR), the mouse cursors in the client's RES folder.
+//! Windows cursor files (.CUR), the mouse cursors in the client's RES folder, and the
+//! cursor pictures the interface settings link.
+
+use godot::{
+    classes::{image::Format, Image, ResourceLoader, Texture2D},
+    prelude::*,
+};
+
+/// A cursor picture by its path: a Godot texture (the imported `res://assets/rose/res/attack.res`
+/// or a picture of our own), or a client cursor file (`RES/ATTACK.CUR`). As RGBA, None when
+/// it isn't there.
+pub fn load(path: &str) -> Option<Gd<Image>> {
+    let path = path.trim();
+    if path.is_empty() {
+        return None;
+    }
+    let mut image = if path.starts_with("res://") {
+        let mut loader = ResourceLoader::singleton();
+        if !loader.exists(path) {
+            godot_warn!("rose: there is no cursor {path}");
+            return None;
+        }
+        loader.load(path)?.try_cast::<Texture2D>().ok()?.get_image()?
+    } else {
+        let (width, height, rgba) = decode(&crate::data::read_bytes(path)?)?;
+        Image::create_from_data(width, height, false, Format::RGBA8, &PackedByteArray::from(rgba.as_slice()))?
+    };
+    if image.is_compressed() {
+        image.decompress();
+    }
+    image.convert(Format::RGBA8);
+    Some(image)
+}
 
 /// The first image of a .CUR file as (width, height, RGBA8 pixels, top row first).
 /// Handles the palette (1, 4 and 8 bit) and true-colour (24 and 32 bit) bitmaps the

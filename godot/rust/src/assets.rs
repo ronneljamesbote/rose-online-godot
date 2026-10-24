@@ -128,7 +128,17 @@ pub fn load_stem<T: GodotClass + Inherits<Resource>>(stem: &str, extensions: &[&
     }
 }
 
+/// A ROSE file's Godot copy, or a Godot file by its own path (`res://...`, what the
+/// exported game data links).
 fn load<T: GodotClass + Inherits<Resource>>(rose_path: &str, kind: Kind) -> Option<Gd<T>> {
+    if rose_path.starts_with("res://") {
+        let mut loader = ResourceLoader::singleton();
+        if !loader.exists(rose_path) {
+            godot_warn!("rose: there is no {rose_path}");
+            return None;
+        }
+        return loader.load(rose_path).and_then(|r| r.try_cast::<T>().ok());
+    }
     load_stem(&stem(rose_path), kind.extensions())
 }
 

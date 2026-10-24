@@ -10,7 +10,8 @@
 //!                                          gates, recipes, new characters, motion
 //!                                          lengths and hit frames against the ZMO files,
 //!                                          sounds, hit sounds and footsteps, effect files
-//!                                          and attack effects)
+//!                                          and attack effects, skies and the interface's
+//!                                          pictures and cursors)
 //!
 //! `pack` writes upload-NNN.json files, each the JSON argument list of the module's
 //! `upload_game_files` reducer (well under the server's request size limit), plus manifest.json.
@@ -445,6 +446,21 @@ fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool, root: &Pat
                 export.effect_files.len(),
                 export.attack_effects.len(),
             );
+        }
+    }
+    // And the skies and the interface's pictures and cursors.
+    match rose_data_export::InterfaceExport::from_files_as(toml, read).expect("read the sky export") {
+        None => println!("skies: no export (skies.toml, interface.toml), skipped"),
+        Some(export) => {
+            let started = Instant::now();
+            let irose_skies = rose_data_irose::get_skybox_database(vfs).expect("iROSE skies");
+            let irose_ms = started.elapsed().as_millis();
+            let started = Instant::now();
+            let skies = export.to_database().expect("exported skies");
+            let export_ms = started.elapsed().as_millis();
+            differences.extend(rose_data_export::compare_sky_databases(&irose_skies, &skies));
+            differences.extend(rose_data_export::compare_interface(&Default::default(), &export.interface));
+            println!("skies: {} skies and the interface; iROSE tables {irose_ms} ms, export {export_ms} ms", export.skies.len());
         }
     }
     for line in &differences {

@@ -74,6 +74,7 @@ source:
     - godot/scripts/ui/hud/portrait_camera.gd
     - godot/scripts/ui/game_cursor.gd
     - godot/rust/src/cursor.rs
+    - godot/data/interface/interface.tres (the cursors and their click points)
     - godot/scripts/ui/version_line.gd
     - godot/scripts/build_info.gd
   data: ""
@@ -114,8 +115,9 @@ is in the `keys` table above.
 
 ### The mouse cursor
 
-The game uses ROSE's own cursors from the client files, and the cursor shows what a left
-click will do (the `cursors` table above):
+The game uses ROSE's own cursors (the client's cursor files, imported; the interface
+settings in `godot/data/interface/interface.tres` link each one and set the pixel it clicks
+at), and the cursor shows what a left click will do (the `cursors` table above):
 
 - the **sword** over the ground, buildings and windows;
 - **crossed blades** over a monster, or a player you may fight in a PvP zone;
@@ -129,8 +131,8 @@ click will do (the `cursors` table above):
 
 Window title bars and corner grips keep the system's move and resize arrows. Options
 (**Cursor Size**) can turn the ROSE cursor off and set its size: Normal (the original 32
-pixels), Large (twice that, the default) or Huge (three times). Without the client's
-cursor files the system cursor stays.
+pixels), Large (twice that, the default) or Huge (three times). Without the cursor
+pictures the system cursor stays.
 
 ## Keys
 

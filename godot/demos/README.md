@@ -56,5 +56,9 @@ another.
   printing how high the camera is above the terrain and where a click on the screen lands,
   then clicks the ground three times and walks there; `--shots=DIR` saves a picture every
   eighth of the turn. Then quits.
+- `--demo=interface` (`interface.gd`): shows what the interface settings link: the loading
+  screen, the character creation backdrop, then every mouse cursor three times its size
+  with a red dot where it clicks; `--shots=DIR` saves `loading.png`, `character-create.png`
+  and `cursors.png`. Then quits.
 - `--effect=PATH,PATH...` (`effect.gd`): plays these EFT effects in a row in front of the
   camera, each again once it ends. `--screenshot-after=SECONDS` waits before `--screenshot`.

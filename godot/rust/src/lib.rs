@@ -95,12 +95,37 @@ impl RoseData {
         texture::load_texture(&path.to_string())
     }
 
-    /// A mouse cursor from the client's RES folder as an RGBA image ("ATTACK" reads
-    /// RES/ATTACK.CUR), or null when the file is missing.
+    /// A picture of the interface (its `RoseInterface`): "loading" (behind the loading
+    /// screen) or "character_create" (behind character creation). Null when it has none.
     #[func]
-    fn cursor_image(name: GString) -> Option<Gd<godot::classes::Image>> {
-        let (width, height, rgba) = cursor::decode(&data::read_bytes(&format!("RES/{name}.CUR"))?)?;
-        godot::classes::Image::create_from_data(width, height, false, godot::classes::image::Format::RGBA8, &PackedByteArray::from(rgba.as_slice()))
+    fn interface_picture(name: GString) -> Option<Gd<godot::classes::Texture2D>> {
+        let interface = &data::get()?.interface;
+        let path = match name.to_string().as_str() {
+            "loading" => &interface.loading_picture,
+            "character_create" => &interface.character_create_picture,
+            other => {
+                godot_warn!("rose: no interface picture {other}");
+                return None;
+            }
+        };
+        if path.trim().is_empty() {
+            return None;
+        }
+        texture::load_texture(path)
+    }
+
+    /// A mouse cursor (its `RoseInterface`: "default", "attack", "talk", "player", "pick_up",
+    /// "drag", "dragging", "repair" or "camera") as {image: an RGBA Image at normal size,
+    /// click: the pixel it clicks at}, or {} when it has none.
+    #[func]
+    fn cursor(name: GString) -> VarDictionary {
+        let mut out = VarDictionary::new();
+        let Some((path, click)) = data::get().and_then(|g| g.interface.cursor(&name.to_string())) else { return out };
+        if let Some(image) = cursor::load(path) {
+            out.set("image", &image);
+            out.set("click", Vector2::new(click[0] as f32, click[1] as f32));
+        }
+        out
     }
 
     /// Item numbers a new character wears (its `RoseNewCharacter`), as RoseCharacter.build

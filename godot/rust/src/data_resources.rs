@@ -6,7 +6,9 @@
 //! status effects (`RoseStatusEffect`), job classes (`RoseJobClass`), zone settings
 //! (`RoseZoneSettings`), warp gates (`RoseWarpGate`), crafting recipes (`RoseCraftRecipe`),
 //! new characters (`RoseNewCharacter`) and sounds (`RoseSound`, `RoseHitSounds`,
-//! `RoseFootsteps`, linking the imported audio files).
+//! `RoseFootsteps`, linking the imported audio files), effects (`RoseEffectFile`,
+//! `RoseAttackEffect`), skies (`RoseSky`) and the interface's pictures and cursors
+//! (`RoseInterface`).
 //!
 //! The game itself never reads these files. `--export-data` writes them to
 //! `export/data/` as TOML (the layout is in `crates/rose-data-export`), and the server and
@@ -47,7 +49,8 @@ use rose_data_export::skills::{JobClassExport, SkillExport, StatusEffectExport};
 use rose_data_export::sounds::{FootstepsExport, HitSoundsExport, SoundExport};
 use rose_data_export::effects::{AttackEffectExport, EffectFileExport};
 use rose_data_export::world::{CraftRecipeExport, NewCharacterExport, WarpGateExport, ZoneExport};
-use rose_data_export::{EffectsExport, ItemsExport, NpcsExport, SkillsExport, SoundsExport, WorldExport};
+use rose_data_export::interface::{InterfaceSettingsExport, SkyExport};
+use rose_data_export::{EffectsExport, InterfaceExport, ItemsExport, NpcsExport, SkillsExport, SoundsExport, WorldExport};
 use serde::{de::DeserializeOwned, Serialize};
 use serde_json::{Map, Value};
 
@@ -74,6 +77,10 @@ pub const FOOTSTEPS_DIR: &str = "res://data/footsteps/";
 /// Where the effect file and attack effect resources live.
 pub const EFFECT_FILES_DIR: &str = "res://data/effect_files/";
 pub const ATTACK_EFFECTS_DIR: &str = "res://data/attack_effects/";
+/// Where the sky resources and the interface settings live.
+pub const SKIES_DIR: &str = "res://data/skies/";
+pub const INTERFACE_DIR: &str = "res://data/interface/";
+pub const INTERFACE_FILE: &str = "res://data/interface/interface.tres";
 
 /// Where to find a linked resource by what the export holds: `items/weapon/3`,
 /// `drop_table/147`, `shop_tab/12` -> its `res://` path.
@@ -91,19 +98,21 @@ fn variants<E: Enum + std::fmt::Debug>(optional: bool) -> Vec<String> {
         .collect()
 }
 
-/// The text fields that hold a model scene's path.
+/// The text fields that hold a model scene's path, or a sky's mesh.
 fn is_model_path(name: &str) -> bool {
-    matches!(name, "model" | "model_male" | "model_female" | "field_model")
+    matches!(name, "model" | "model_male" | "model_female" | "field_model" | "mesh")
 }
 
 /// The file picker on a model path. A path, not a scene, so loading the resource doesn't load
 /// the scene (and its meshes and textures): the table and the export read thousands of them.
+/// The same for a sky's mesh, whose preview would make the Inspector draw it.
 fn model_hint(property: &mut PropertyInfo) -> bool {
-    if property.variant_type != VariantType::STRING || !is_model_path(&property.property_name.to_string()) {
+    let name = property.property_name.to_string();
+    if property.variant_type != VariantType::STRING || !is_model_path(&name) {
         return false;
     }
     property.hint_info.hint = PropertyHint::FILE_PATH;
-    property.hint_info.hint_string = GString::from("*.tscn,*.scn");
+    property.hint_info.hint_string = GString::from(if name == "mesh" { "*.mesh,*.res" } else { "*.tscn,*.scn" });
     true
 }
 
@@ -1308,10 +1317,10 @@ pub struct RoseZoneSettings {
     /// The music by night (evening and night).
     #[export]
     music_night: Option<Gd<AudioStream>>,
-    /// The sky: its row in iROSE's LIST_SKY.STB (-1 = none).
+    /// The sky around the zone and its light at each time of day: a `RoseSky` from
+    /// `res://data/skies/` (empty = none).
     #[export]
-    #[init(val = -1)]
-    sky: i64,
+    sky: Option<Gd<RoseSky>>,
     /// The minimap image (a DDS path in the client data, empty = none).
     #[export]
     minimap: GString,
@@ -1657,6 +1666,156 @@ impl IResource for RoseAttackEffect {
     }
 }
 
+/// A sky: the dome drawn around a zone, by day and by night, and the light it gives the
+/// ground and the characters at each time of day. Zones link it (their `sky`). Edit it here,
+/// then run `--export-data`.
+#[derive(GodotClass)]
+#[class(tool, base=Resource, init)]
+pub struct RoseSky {
+    /// The number (iROSE's LIST_SKY.STB row, from 0). A new sky takes any free number.
+    #[export_group(name = "Sky")]
+    #[export]
+    id: i64,
+    /// For finding it only (the zones under it).
+    #[export]
+    name: GString,
+    /// The dome's mesh: a path such as the imported
+    /// `res://assets/rose/3ddata/junon/sky/day01.mesh` or one of our own in
+    /// `res://assets/ours/` (a path, so opening the sky doesn't draw a preview of it). The game
+    /// draws it ten times its size, around the camera.
+    #[export]
+    mesh: GString,
+    /// The dome's picture by day (the game blends to the night one through the evening and
+    /// back in the morning).
+    #[export]
+    texture_day: Option<Gd<Texture2D>>,
+    /// The dome's picture by night.
+    #[export]
+    texture_night: Option<Gd<Texture2D>>,
+
+    /// The light on the ground and buildings in the morning (each time of day blends into the
+    /// next).
+    #[export_group(name = "Ground light")]
+    #[export]
+    map_ambient_morning: Color,
+    /// The light on the ground and buildings by day.
+    #[export]
+    map_ambient_day: Color,
+    /// The light on the ground and buildings in the evening.
+    #[export]
+    map_ambient_evening: Color,
+    /// The light on the ground and buildings at night.
+    #[export]
+    map_ambient_night: Color,
+
+    /// The light on characters and monsters from all around, in the morning.
+    #[export_group(name = "Character light")]
+    #[export]
+    character_ambient_morning: Color,
+    /// From all around, by day.
+    #[export]
+    character_ambient_day: Color,
+    /// From all around, in the evening.
+    #[export]
+    character_ambient_evening: Color,
+    /// From all around, at night.
+    #[export]
+    character_ambient_night: Color,
+    /// The light on characters and monsters from the sun's side, in the morning.
+    #[export]
+    character_diffuse_morning: Color,
+    /// From the sun's side, by day.
+    #[export]
+    character_diffuse_day: Color,
+    /// From the sun's side, in the evening.
+    #[export]
+    character_diffuse_evening: Color,
+    /// From the sun's side, at night.
+    #[export]
+    character_diffuse_night: Color,
+    base: Base<Resource>,
+}
+
+#[godot_api]
+impl IResource for RoseSky {
+    fn on_validate_property(&self, property: &mut PropertyInfo) {
+        model_hint(property);
+    }
+}
+
+/// The interface's own pictures and mouse cursors (one, `res://data/interface/interface.tres`).
+/// A picture is any texture: the imported ones in `res://assets/rose/` (open them with Load)
+/// or one of our own in `res://assets/ours/`. Edit it here, then run `--export-data`.
+#[derive(GodotClass)]
+#[class(tool, base=Resource, init)]
+pub struct RoseInterface {
+    /// The picture behind the loading screen (with the zone's name over it).
+    #[export_group(name = "Pictures")]
+    #[export]
+    loading_picture: Option<Gd<Texture2D>>,
+    /// The picture behind character creation (shown darkened).
+    #[export]
+    character_create_picture: Option<Gd<Texture2D>>,
+
+    /// The normal cursor (also over windows). The cursors are drawn 1, 2 or 3 times their size
+    /// (the Cursor size setting), so small pixel art stays sharp.
+    #[export_group(name = "Cursors")]
+    #[export]
+    cursor_default: Option<Gd<Texture2D>>,
+    /// The pixel the normal cursor clicks at, from its top-left corner, at normal size.
+    #[export]
+    cursor_default_click: Vector2i,
+    /// Over a monster or an enemy player.
+    #[export]
+    cursor_attack: Option<Gd<Texture2D>>,
+    /// The pixel it clicks at.
+    #[export]
+    cursor_attack_click: Vector2i,
+    /// Over a town NPC.
+    #[export]
+    cursor_talk: Option<Gd<Texture2D>>,
+    /// The pixel it clicks at.
+    #[export]
+    cursor_talk_click: Vector2i,
+    /// Over another player.
+    #[export]
+    cursor_player: Option<Gd<Texture2D>>,
+    /// The pixel it clicks at.
+    #[export]
+    cursor_player_click: Vector2i,
+    /// Over an item on the ground.
+    #[export]
+    cursor_pick_up: Option<Gd<Texture2D>>,
+    /// The pixel it clicks at.
+    #[export]
+    cursor_pick_up_click: Vector2i,
+    /// Over an item in a window that can be dragged.
+    #[export]
+    cursor_drag: Option<Gd<Texture2D>>,
+    /// The pixel it clicks at.
+    #[export]
+    cursor_drag_click: Vector2i,
+    /// While dragging an item.
+    #[export]
+    cursor_dragging: Option<Gd<Texture2D>>,
+    /// The pixel it clicks at.
+    #[export]
+    cursor_dragging_click: Vector2i,
+    /// While choosing an item to repair.
+    #[export]
+    cursor_repair: Option<Gd<Texture2D>>,
+    /// The pixel it clicks at.
+    #[export]
+    cursor_repair_click: Vector2i,
+    /// While turning the camera (right mouse button held).
+    #[export]
+    cursor_camera: Option<Gd<Texture2D>>,
+    /// The pixel it clicks at.
+    #[export]
+    cursor_camera_click: Vector2i,
+    base: Base<Resource>,
+}
+
 /// `find`'s index of one folder: each number's file and name, and when it was made.
 type FoundIndex = (std::time::Instant, std::collections::HashMap<i64, (String, String)>);
 
@@ -1822,6 +1981,7 @@ fn class_link_kind(class: &str) -> Option<&'static str> {
     match class {
         "RoseEffectFile" => Some("effect_file"),
         "RoseAttackEffect" => Some("attack_effect"),
+        "RoseSky" => Some("sky"),
         _ => None,
     }
 }
@@ -1892,6 +2052,10 @@ fn to_json(resource: &Gd<Resource>) -> Map<String, Value> {
                 let channel = |v: f32| Value::from((v.clamp(0.0, 1.0) * 255.0).round() as u8);
                 Value::from(vec![channel(c.r), channel(c.g), channel(c.b)])
             }
+            VariantType::VECTOR2I => {
+                let v = value.to::<Vector2i>();
+                Value::from(vec![v.x, v.y])
+            }
             VariantType::PACKED_INT32_ARRAY => Value::from(
                 value
                     .to::<PackedInt32Array>()
@@ -1950,7 +2114,9 @@ fn resolve(key: &str, value: &Value, links: &Links, class: &str) -> Result<Optio
                 .ok_or(format!("{key}: could not load {s} (run --import-rose first)"));
         }
         Value::String(s) => format!("items/{s}"),
-        Value::Number(n) if n.as_i64() == Some(0) => return Ok(None),
+        // Skies count from 0 (LIST_SKY's rows), so for them only -1 is none.
+        Value::Number(n) if n.as_i64() == Some(-1) => return Ok(None),
+        Value::Number(n) if n.as_i64() == Some(0) && class_link_kind(class) != Some("sky") => return Ok(None),
         Value::Number(n) => format!("{}/{n}", class_link_kind(class).unwrap_or_else(|| link_kind(key))),
         _ => return Err(format!("{key}: {value} is not a link")),
     };
@@ -1989,6 +2155,10 @@ fn set_from_json(resource: &mut Gd<Resource>, object: &Map<String, Value>, links
             (&VariantType::COLOR, Value::Array(rgb)) if rgb.len() == 3 => {
                 let c = |i: usize| rgb[i].as_u64().unwrap_or(0) as f32 / 255.0;
                 Color::from_rgb(c(0), c(1), c(2)).to_variant()
+            }
+            (&VariantType::VECTOR2I, Value::Array(xy)) if xy.len() == 2 => {
+                let c = |i: usize| xy[i].as_i64().unwrap_or(0) as i32;
+                Vector2i::new(c(0), c(1)).to_variant()
             }
             (&VariantType::PACKED_INT32_ARRAY, Value::Array(values)) => values
                 .iter()
@@ -2043,7 +2213,7 @@ fn from_resource<T: DeserializeOwned>(resource: &Gd<Resource>) -> Result<T, Stri
     for (key, value) in json.iter() {
         if let (true, Value::String(path)) = (is_model_path(key), value) {
             if !FileAccess::file_exists(path) {
-                return Err(format!("{key}: there is no {path} (for an imported model, run --import-rose first)"));
+                return Err(format!("{key}: there is no {path} (for an imported model or mesh, run --import-rose first)"));
             }
         }
     }
@@ -2322,6 +2492,7 @@ fn index_links(dir: &str, links: &mut Links) -> Result<(), String> {
             "RoseFootsteps" => format!("footsteps/{id}"),
             "RoseEffectFile" => format!("effect_file/{id}"),
             "RoseAttackEffect" => format!("attack_effect/{id}"),
+            "RoseSky" => format!("sky/{id}"),
             _ => match item_kind(&class) {
                 Some(kind) => format!("items/{kind}/{id}"),
                 None => continue,
@@ -2652,6 +2823,7 @@ pub fn convert_world(force: bool) -> Result<(usize, Vec<String>), String> {
         return Err(format!("no item resources in {ITEMS_DIR}; the recipes and new characters link them"));
     }
     index_sound_links(&mut links)?;
+    index_links(SKIES_DIR, &mut links)?;
     let strings = rose_data_irose::get_string_database(&data.vfs, 1).map_err(|e| format!("{e:#}"))?;
     let (mut export, mut lost) =
         rose_game_data::world_export_from_irose(&data.vfs, &strings, &data.items).map_err(|e| format!("{e:#}"))?;
@@ -3149,6 +3321,120 @@ pub fn read_sounds() -> Result<(SoundsExport, usize), String> {
     Ok((export, count))
 }
 
+/// The imported Godot copy of a client file (`3DDATA\\SKY\\DAY.ZMS` ->
+/// `res://assets/rose/3ddata/sky/day.mesh`, or our own at that place), None when there is none.
+fn asset_link(client_path: &str, extensions: &[&str]) -> Option<String> {
+    if client_path.trim().is_empty() {
+        return None;
+    }
+    crate::assets::find_stem(&crate::assets::stem(client_path), extensions)
+}
+
+/// What an imported mesh, texture or cursor may be (the imported copy's extension first).
+const MESH_EXTENSIONS: &[&str] = &["mesh", "res"];
+const TEXTURE_EXTENSIONS: &[&str] = &["rtex", "res", "png", "webp"];
+const CURSOR_EXTENSIONS: &[&str] = &["res", "png", "webp"];
+
+/// `--convert-data` for the skies (LIST_SKY.STB, one resource per row) and the interface
+/// settings (the client's loading picture and cursors, one resource), linking the imported
+/// meshes, textures and cursors (`--import-rose` first). Returns the count and what couldn't
+/// be kept.
+pub fn convert_interface(force: bool) -> Result<(usize, Vec<String>), String> {
+    let data = crate::data::get().ok_or("open the data first")?;
+    let mut existing = Vec::new();
+    tres_files(SKIES_DIR, &mut existing);
+    tres_files(INTERFACE_DIR, &mut existing);
+    if !existing.is_empty() && !force {
+        return Err(format!(
+            "res://data/ already has {} sky or interface resources; they are the source now (use --convert-data=force to write them again from iROSE)",
+            existing.len()
+        ));
+    }
+    let mut export = InterfaceExport::from_database(&*rose_data_irose::get_skybox_database(&data.vfs).map_err(|e| format!("{e:#}"))?);
+    let mut lost = Vec::new();
+    for sky in &mut export.skies {
+        for (path, extensions) in [(&mut sky.mesh, MESH_EXTENSIONS), (&mut sky.texture_day, TEXTURE_EXTENSIONS), (&mut sky.texture_night, TEXTURE_EXTENSIONS)] {
+            if path.is_empty() {
+                continue;
+            }
+            match asset_link(path, extensions) {
+                Some(link) => *path = link,
+                None => {
+                    lost.push(format!("sky {}: no imported {path} (run --import-rose first)", sky.id));
+                    path.clear();
+                }
+            }
+        }
+        // A sky is named after the zones under it.
+        let zones: Vec<&str> = data
+            .zone_list
+            .iter()
+            .filter(|z| z.skybox_id.map(|s| s.get()) == Some(sky.id))
+            .map(|z| z.name.trim())
+            .filter(|n| !n.is_empty())
+            .collect();
+        sky.name = match zones.len() {
+            0 => format!("sky {}", sky.id),
+            1 => zones[0].to_string(),
+            n => format!("{} and {} more", zones[0], n - 1),
+        };
+    }
+    // The two pictures first, then the cursors.
+    for (i, path) in export.interface.pictures_mut().into_iter().enumerate() {
+        match asset_link(path, if i < 2 { TEXTURE_EXTENSIONS } else { CURSOR_EXTENSIONS }) {
+            Some(link) => *path = link,
+            None => return Err(format!("the interface picture {path} is not imported; run --import-rose first")),
+        }
+    }
+    let links = Links::new();
+    let mut count = 0;
+    for sky in &export.skies {
+        let path = format!("{SKIES_DIR}{}.tres", file_stem(sky.id as u32, &sky.name));
+        write_resource("RoseSky", &path, sky, &links)?;
+        count += 1;
+    }
+    write_resource("RoseInterface", INTERFACE_FILE, &export.interface, &links)?;
+    Ok((count + 1, lost))
+}
+
+/// Reads every sky resource and the interface settings into the export. Two skies with the
+/// same number are an error naming both files.
+pub fn read_interface() -> Result<(InterfaceExport, usize), String> {
+    let mut export = InterfaceExport::default();
+    let mut seen: std::collections::HashMap<u16, String> = std::collections::HashMap::new();
+    let mut loader = ResourceLoader::singleton();
+    let mut files = register_uids(SKIES_DIR);
+    files.extend(register_uids(INTERFACE_DIR));
+    let mut interface = None;
+    for path in &files {
+        let resource = loader.load(path).ok_or(format!("could not load {path}"))?;
+        let class = resource.get_class().to_string();
+        let read = |e: String| format!("{path}: {e}");
+        match class.as_str() {
+            "RoseSky" => {
+                let sky: SkyExport = from_resource(&resource).map_err(read)?;
+                if let Some(other) = seen.insert(sky.id, path.clone()) {
+                    return Err(format!("{path} and {other} are both sky {}", sky.id));
+                }
+                export.skies.push(sky);
+            }
+            "RoseInterface" => {
+                if let Some(other) = &interface {
+                    return Err(format!("{path} and {other} are both the interface settings; keep one"));
+                }
+                export.interface = from_resource::<InterfaceSettingsExport>(&resource).map_err(read)?;
+                interface = Some(path.clone());
+            }
+            _ => return Err(format!("{path} is a {class}, not a sky or the interface settings")),
+        }
+    }
+    if interface.is_none() && !files.is_empty() {
+        return Err(format!("there is no {INTERFACE_FILE}; run --convert-data first"));
+    }
+    export.check().map_err(|e| format!("{e:#}"))?;
+    Ok((export, files.len()))
+}
+
 /// `--export-data`: writes `export/` (in the repository) from the resources, the zone scenes
 /// and the animations, or with `check` only compares. Needs the data open (the motion list and
 /// the names in the zone files' comments come from it) and the imported animations. Returns
@@ -3168,6 +3454,8 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
     for (dir, _) in SOUND_DIRS.iter().chain(&EFFECT_DIRS) {
         tres_files(dir, &mut shared);
     }
+    // And the skies, which every zone links (with their textures).
+    tres_files(SKIES_DIR, &mut shared);
     let _kept: Vec<Gd<Resource>> = shared.iter().filter_map(|path| loader.load(path)).collect();
     // The same for the icon sheets the items', skills' and status effects' icons cut from,
     // and the items themselves (with their icons), which drop tables, shops, recipes and new
@@ -3212,6 +3500,15 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
             "no effect resources in {EFFECT_FILES_DIR}; run --convert-data first"
         ));
     }
+    let (interface, interface_resources) = read_interface()?;
+    if interface_resources == 0 {
+        return Err(format!(
+            "no sky resources in {SKIES_DIR}; run --convert-data first"
+        ));
+    }
+    if let Some(zone) = world.zones.iter().find(|z| !interface.has_sky(z.sky)) {
+        return Err(format!("zone {} has sky {}, which isn't there", zone.id, zone.sky));
+    }
     if let Some((effect, sound)) = effects
         .attack_effects
         .iter()
@@ -3245,6 +3542,7 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
     data_files.extend(world.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
     data_files.extend(sounds.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
     data_files.extend(effects.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
+    data_files.extend(interface.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
     files.extend(data_files.into_iter().map(|(name, text)| (in_data(rose_data_export::data_file_as(name, toml)), text)));
     // The written files must read back (the server and the game load them the same way).
     let find = |path: String| Ok(files.iter().find(|(n, _)| *n == in_data(path.clone())).map(|(_, t)| t.clone()));
@@ -3273,6 +3571,11 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
         .ok_or("the effect export doesn't read back")?
         .to_database()
         .map_err(|e| format!("{e:#}"))?;
+    InterfaceExport::from_files_as(toml, |name| find(rose_data_export::data_file_as(name, toml)))
+        .map_err(|e| format!("{e:#}"))?
+        .ok_or("the sky export doesn't read back")?
+        .to_database()
+        .map_err(|e| format!("{e:#}"))?;
 
     // The zones edited as scenes need their settings, and their layouts go to the server.
     // Their comments name the zone, monsters and NPCs as the resources do now.
@@ -3299,7 +3602,8 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
     files.push((rose_data_export::MOTIONS_FILE.to_string(), timings.to_toml()));
 
     let mut result = ExportResult {
-        resources: item_resources + npc_resources + skill_resources + world_resources + sound_resources + effect_resources,
+        resources: item_resources + npc_resources + skill_resources + world_resources + sound_resources + effect_resources + interface_resources,
+        skies: interface.skies.len(),
         sounds: sounds.sounds.len(),
         effects: effects.effect_files.len(),
         attack_effects: effects.attack_effects.len(),
@@ -3351,6 +3655,7 @@ pub struct ExportResult {
     pub sounds: usize,
     pub effects: usize,
     pub attack_effects: usize,
+    pub skies: usize,
     pub zone_scenes: usize,
     pub motions: usize,
     pub read_ms: u128,
@@ -3367,10 +3672,11 @@ struct RoseDataExport {
 impl RoseDataExport {
     /// Writes the resources of every kind that has none yet (all of them with `force`) from
     /// the iROSE tables: sounds first (they link the imported audio), then effect files and
-    /// attack effects (they link the imported effect scenes and the sounds), then items, then monsters, NPCs, drop tables and shop tabs, which
-    /// link the items, then skills, status effects and job classes, which link the monsters,
-    /// then zone settings, warp gates, recipes and new characters, which link the zones and
-    /// items. Needs RoseData.open. Returns {resources, folder, skipped (kinds already there),
+    /// attack effects (they link the imported effect scenes and the sounds), then skies and the
+    /// interface settings (they link imported meshes, textures and cursors), then items, then
+    /// monsters, NPCs, drop tables and shop tabs, which link the items, then skills, status
+    /// effects and job classes, which link the monsters, then zone settings, warp gates,
+    /// recipes and new characters, which link the skies, zones and items. Needs RoseData.open. Returns {resources, folder, skipped (kinds already there),
     /// lost (values that couldn't be kept)}, or {error}.
     #[func]
     fn convert(force: bool) -> VarDictionary {
@@ -3417,6 +3723,25 @@ impl RoseDataExport {
             }
         } else {
             kept.push(&"effects".to_variant());
+        }
+        let mut others = Vec::new();
+        tres_files(SKIES_DIR, &mut others);
+        tres_files(INTERFACE_DIR, &mut others);
+        if force || others.is_empty() {
+            match convert_interface(force) {
+                Ok((n, not_kept)) => {
+                    count += n;
+                    for line in not_kept {
+                        lost.push(&line.to_variant());
+                    }
+                }
+                Err(error) => {
+                    result.set("error", error.as_str());
+                    return result;
+                }
+            }
+        } else {
+            kept.push(&"skies and interface".to_variant());
         }
         let mut items = Vec::new();
         tres_files(ITEMS_DIR, &mut items);
@@ -3496,7 +3821,7 @@ impl RoseDataExport {
 
     /// Writes (or with `check` compares) `export/` from the resources, the zone scenes and the
     /// animations. Needs RoseData.open and the import. Returns {files, changed, resources,
-    /// items, monsters, npcs, skills, zones, sounds, effects, attack_effects, zone_scenes,
+    /// items, monsters, npcs, skills, zones, sounds, effects, attack_effects, skies, zone_scenes,
     /// motions, read_ms}, or {error}.
     #[func]
     fn export(check: bool) -> VarDictionary {
@@ -3515,6 +3840,7 @@ impl RoseDataExport {
                 result.set("sounds", out.sounds as i64);
                 result.set("effects", out.effects as i64);
                 result.set("attack_effects", out.attack_effects as i64);
+                result.set("skies", out.skies as i64);
                 result.set("zone_scenes", out.zone_scenes as i64);
                 result.set("motions", out.motions as i64);
                 result.set("read_ms", out.read_ms as i64);

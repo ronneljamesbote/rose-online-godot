@@ -4,7 +4,8 @@ The game's own data, made in the Godot editor: one resource (`.tres`) per thing,
 the Inspector. It replaces the iROSE tables one kind at a time
 (plan: `TODO/own-game-data.md` in the project files). So far: **items**, **monsters**, **NPCs**, **drop tables**, **shop tabs**, **skills**,
 **status effects**, **job classes**, **zone settings**, **warp gates**, **crafting recipes**,
-**new characters**, **sounds** and **effects**.
+**new characters**, **sounds**, **effects**, **skies** and the **interface**'s pictures and
+cursors.
 
 | Folder | Class | What |
 | --- | --- | --- |
@@ -39,6 +40,8 @@ the Inspector. It replaces the iROSE tables one kind at a time
 | `footsteps/` | `RoseFootsteps` | A zone's footsteps: the step sound for each of its ground textures |
 | `effect_files/` | `RoseEffectFile` | One effect the game can show: a number, a name and the effect scene it plays |
 | `attack_effects/` | `RoseAttackEffect` | How an attack looks: the effects on the weapon, the swing's trail, the projectile and its flight, the hit effects and sounds |
+| `skies/` | `RoseSky` | A sky: the dome around a zone (mesh, day and night picture) and its light at each time of day |
+| `interface/interface.tres` | `RoseInterface` | The interface's own pictures (loading screen, character creation) and the mouse cursors with the pixel each clicks at (one resource) |
 
 Monsters and NPCs share one id space (an NPC and a monster never have the same id), because
 saved quests and the zone markers store just the number. Links between resources are plain
@@ -148,6 +151,27 @@ which come from its model's `LIST_NPC.CHR` entry (so a new monster reuses a mode
 copy at the same path in `res://assets/ours/`). The export stops naming the resource when a
 model path names no file. Icons and models are only drawn by the game; the server keeps the
 paths but draws nothing.
+
+## Skies and the interface
+
+A zone's `sky` links a `RoseSky`: the dome drawn around the zone (`mesh`, a path like the
+models, so opening the sky draws no preview of it; `texture_day` and `texture_night`, which
+the game blends through the evening and back in the morning) and the colour of the light at
+each time of day (`map_ambient_*` on the ground and buildings, `character_ambient_*` and
+`character_diffuse_*` on characters and monsters). Several zones share one (sky 0 is every
+zone on Junon above ground). The numbers count from 0 as iROSE's LIST_SKY.STB rows do.
+
+`interface/interface.tres` (a `RoseInterface`) holds the interface's own pictures, the
+loading screen's `loading_picture` and character creation's `character_create_picture`, and a
+picture and click point (`cursor_attack` and `cursor_attack_click`, in pixels from the
+top-left corner at normal size) for each mouse cursor. `--import-rose` imports the client's
+loading picture (`res://assets/rose/3ddata/control/res/loading.rtex`) and cursors
+(`res://assets/rose/res/attack.res` ...); a PNG of our own in `res://assets/ours/` works the
+same way. An empty picture is the client's own. The rest of the interface (windows, fonts,
+colours) is our own and lives in `res://ui/` and the themes.
+
+Skies and the interface are only drawn by the game: the export writes them (`skies.toml`,
+`interface.toml`) and the server upload leaves them out.
 
 ## Changing something
 

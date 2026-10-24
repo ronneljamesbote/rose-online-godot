@@ -28,6 +28,7 @@ const NET_DEMOS := {
 ## --demo=NAME (offline); any other name, or none, runs offline.gd.
 const OFFLINE_DEMOS := {
 	"camera": "camera.gd",
+	"interface": "interface.gd",
 }
 
 
