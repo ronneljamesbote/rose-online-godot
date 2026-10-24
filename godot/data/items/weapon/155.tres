@@ -3,6 +3,7 @@
 [ext_resource type="RoseSound" uid="uid://bjdly3xikd2h4" path="res://data/sounds/item/576-item-weapon.tres" id="1_aornz"]
 [ext_resource type="RoseSound" uid="uid://bmjtbe7sjc48t" path="res://data/sounds/attack/63-axe-001.tres" id="2_y3t29"]
 [ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_kma0y"]
+[ext_resource type="RoseAttackEffect" uid="uid://b568js0x8fhfg" path="res://data/attack_effects/141-woodman-axe.tres" id="4_mycot"]
 
 [resource]
 id = 155
@@ -23,6 +24,6 @@ attack_range = 250
 attack_power = 402
 attack_speed = 12
 motion_type = 8
-effect_id = 141
+attack_effect = ExtResource("4_mycot")
 attack_start_sound = ExtResource("2_y3t29")
 hit_sounds = ExtResource("3_kma0y")

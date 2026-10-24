@@ -1,6 +1,8 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://l46laqf3g41k"]
 
 [ext_resource type="RoseStatusEffect" uid="uid://bq4n0ny64hflq" path="res://data/status_effects/32-fainted.tres" id="1_l8nhe"]
+[ext_resource type="RoseEffectFile" uid="uid://c78dgxarn7hpk" path="res://data/effect_files/389-stony-skill-01.tres" id="2_59t0d"]
+[ext_resource type="RoseEffectFile" uid="uid://c5otr5mm1f848" path="res://data/effect_files/242-skill-hit-01.tres" id="3_u5ejf"]
 
 [resource]
 id = 2984
@@ -16,6 +18,6 @@ success_ratio = 45
 status_effect_1 = ExtResource("1_l8nhe")
 status_effect_seconds = 5
 casting_motion_id = 8
-casting_effect_1 = 389
+casting_effect_1 = ExtResource("2_59t0d")
 action_motion_id = 9
-hit_effect_file_id = 242
+hit_effect = ExtResource("3_u5ejf")

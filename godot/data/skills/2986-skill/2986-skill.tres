@@ -1,6 +1,9 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://ddgysum4bikb2"]
 
 [ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="1_sr6nj"]
+[ext_resource type="RoseEffectFile" uid="uid://b0w1erat0mhe4" path="res://data/effect_files/1036-leap-casting-01.tres" id="2_aphyv"]
+[ext_resource type="RoseEffectFile" uid="uid://41qcxb8obyb6" path="res://data/effect_files/192-jump-01.tres" id="3_jc00i"]
+[ext_resource type="RoseEffectFile" uid="uid://wv36bdk6kw6y" path="res://data/effect_files/1035-leap-hit-01.tres" id="4_5j9j9"]
 
 [resource]
 id = 2986
@@ -13,8 +16,8 @@ power = 32
 harm = 1
 item_make_number = 32
 casting_motion_id = 8
-casting_effect_1 = 1036
-casting_effect_3 = 192
+casting_effect_1 = ExtResource("2_aphyv")
+casting_effect_3 = ExtResource("3_jc00i")
 action_motion_id = 9
-hit_effect_file_id = 1035
+hit_effect = ExtResource("4_5j9j9")
 hit_sound = ExtResource("1_sr6nj")

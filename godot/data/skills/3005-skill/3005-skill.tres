@@ -1,6 +1,8 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://cjful5ovw1pcf"]
 
 [ext_resource type="RoseStatusEffect" uid="uid://cxo27d6njq18d" path="res://data/status_effects/29-dodge-rate-down.tres" id="1_n0nww"]
+[ext_resource type="RoseEffectFile" uid="uid://btimqwfj57hk2" path="res://data/effect_files/213-casting-03.tres" id="2_z564p"]
+[ext_resource type="RoseEffectFile" uid="uid://dwnb187345xi5" path="res://data/effect_files/5-z-hit-01.tres" id="3_nl69a"]
 
 [resource]
 id = 3005
@@ -16,6 +18,6 @@ add_stat_1 = "Avoid"
 add_stat_1_rate = 50
 warp_zone = 22
 warp_y = 50000
-casting_effect_3 = 213
-hit_effect_file_id = 5
+casting_effect_3 = ExtResource("2_z564p")
+hit_effect = ExtResource("3_nl69a")
 hit_effect_point = 3

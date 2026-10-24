@@ -3,6 +3,7 @@
 [ext_resource type="RoseSound" uid="uid://bjdly3xikd2h4" path="res://data/sounds/item/576-item-weapon.tres" id="1_31q89"]
 [ext_resource type="RoseSound" uid="uid://fsgnfxsnbspn" path="res://data/sounds/attack/48-mace-002.tres" id="2_uamlo"]
 [ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_na6sa"]
+[ext_resource type="RoseAttackEffect" uid="uid://cbi83aqyygxw5" path="res://data/attack_effects/121-wooden-bat.tres" id="4_lqp6t"]
 
 [resource]
 id = 58
@@ -23,6 +24,6 @@ attack_range = 250
 attack_power = 372
 attack_speed = 12
 motion_type = 3
-effect_id = 121
+attack_effect = ExtResource("4_lqp6t")
 attack_start_sound = ExtResource("2_uamlo")
 hit_sounds = ExtResource("3_na6sa")

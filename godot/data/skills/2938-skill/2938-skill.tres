@@ -1,6 +1,8 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://hhva0ddlq6p"]
 
 [ext_resource type="RoseStatusEffect" uid="uid://ctjc3ot1ufhha" path="res://data/status_effects/35-shield-damage.tres" id="1_mop8b"]
+[ext_resource type="RoseEffectFile" uid="uid://btimqwfj57hk2" path="res://data/effect_files/213-casting-03.tres" id="2_bpoqd"]
+[ext_resource type="RoseEffectFile" uid="uid://dwnb187345xi5" path="res://data/effect_files/5-z-hit-01.tres" id="3_cenjj"]
 
 [resource]
 id = 2938
@@ -14,6 +16,6 @@ item_make_number = 50
 success_ratio = 200
 status_effect_1 = ExtResource("1_mop8b")
 status_effect_seconds = 35
-casting_effect_3 = 213
-hit_effect_file_id = 5
+casting_effect_3 = ExtResource("2_bpoqd")
+hit_effect = ExtResource("3_cenjj")
 hit_effect_point = 3

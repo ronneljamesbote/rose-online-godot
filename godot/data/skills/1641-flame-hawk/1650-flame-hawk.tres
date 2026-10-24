@@ -3,6 +3,9 @@
 [ext_resource type="RoseSkill" uid="uid://bjn20q7e2j8oo" path="res://data/skills/1461-combat-mastery/1461-combat-mastery.tres" id="1_j8gkn"]
 [ext_resource type="RoseSound" uid="uid://42rl1pnpcxo3" path="res://data/sounds/skill/148-heavyarr001.tres" id="2_zhxb4"]
 [ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="3_px2lt"]
+[ext_resource type="RoseEffectFile" uid="uid://s8yrioubd614" path="res://data/effect_files/1031-sequence-casting-01.tres" id="4_83aid"]
+[ext_resource type="RoseAttackEffect" uid="uid://do65wuw8ubn34" path="res://data/attack_effects/278-flame-hawk.tres" id="5_ffwa3"]
+[ext_resource type="RoseEffectFile" uid="uid://drvalieajl0ta" path="res://data/effect_files/1067-bow-hit-heavy01.tres" id="6_qygg7"]
 
 [resource]
 id = 1650
@@ -29,10 +32,10 @@ harm = 1
 item_make_number = 400
 casting_motion_id = 111
 casting_repeat_motion_id = 131
-casting_effect_1 = 1031
+casting_effect_1 = ExtResource("4_83aid")
 action_motion_id = 216
-bullet_effect_id = 278
+bullet_effect = ExtResource("5_ffwa3")
 bullet_point = 1
 bullet_fire_sound = ExtResource("2_zhxb4")
-hit_effect_file_id = 1067
+hit_effect = ExtResource("6_qygg7")
 hit_sound = ExtResource("3_px2lt")

@@ -1,0 +1,15 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://dj0383ivgeohl"]
+
+[ext_resource type="RoseEffectFile" uid="uid://ueik88yg0owo" path="res://data/effect_files/1636-cuse-firing01.tres" id="1_0i7jc"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="2_xie76"]
+[ext_resource type="RoseSound" uid="uid://6a6nk0si4lkl" path="res://data/sounds/attack/68-axe-h01.tres" id="3_8xbpw"]
+
+[resource]
+id = 268
+name = "Curse"
+trail_milliseconds = 100
+hit_effect_critical = ExtResource("2_xie76")
+bullet_effect = ExtResource("1_0i7jc")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+hit_sound = ExtResource("3_8xbpw")

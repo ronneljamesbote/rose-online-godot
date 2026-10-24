@@ -2,6 +2,9 @@
 
 [ext_resource type="RoseStatusEffect" uid="uid://dbi4ro2cc5h50" path="res://data/status_effects/23-magic-resistance-down.tres" id="1_hln68"]
 [ext_resource type="RoseSound" uid="uid://fjcemx4nd216" path="res://data/sounds/skill/1574-point-luna01.tres" id="2_tlvyh"]
+[ext_resource type="RoseEffectFile" uid="uid://c78dgxarn7hpk" path="res://data/effect_files/389-stony-skill-01.tres" id="3_ra8ab"]
+[ext_resource type="RoseEffectFile" uid="uid://dpv6vsra8ebsl" path="res://data/effect_files/1320-scope-01.tres" id="4_261ns"]
+[ext_resource type="RoseEffectFile" uid="uid://u1jy72fgm4x" path="res://data/effect_files/1637-runaston-02.tres" id="5_x90qk"]
 
 [resource]
 id = 3020
@@ -23,8 +26,8 @@ warp_zone = 21
 warp_x = 30000
 warp_y = 30000
 casting_motion_id = 8
-casting_effect_1 = 389
-casting_effect_3 = 1320
+casting_effect_1 = ExtResource("3_ra8ab")
+casting_effect_3 = ExtResource("4_261ns")
 action_motion_id = 9
-hit_effect_file_id = 1637
+hit_effect = ExtResource("5_x90qk")
 hit_sound = ExtResource("2_tlvyh")

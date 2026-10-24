@@ -4,6 +4,9 @@
 [ext_resource type="RoseSkill" uid="uid://snetdougy40b" path="res://data/skills/1831-mana-blood/1831-mana-blood.tres" id="2_pp2r0"]
 [ext_resource type="RoseStatusEffect" uid="uid://cxo27d6njq18d" path="res://data/status_effects/29-dodge-rate-down.tres" id="3_lksnj"]
 [ext_resource type="RoseSound" uid="uid://c6vygfeu612rx" path="res://data/sounds/skill/139-skill-magic01.tres" id="4_gdiis"]
+[ext_resource type="RoseEffectFile" uid="uid://bkos70jclry3s" path="res://data/effect_files/1764-scope-rotate-01.tres" id="5_2e7r2"]
+[ext_resource type="RoseEffectFile" uid="uid://dpverdvlu2my4" path="res://data/effect_files/1608-s-twist-01.tres" id="6_hleqr"]
+[ext_resource type="RoseEffectFile" uid="uid://b1laee8axwsgk" path="res://data/effect_files/1121-mana-hit-01.tres" id="7_8h2g5"]
 
 [resource]
 id = 1861
@@ -34,8 +37,8 @@ warp_zone = 22
 warp_y = 30000
 casting_motion_id = 115
 casting_repeat_motion_id = 135
-casting_effect_2 = 1764
-casting_effect_3 = 1608
+casting_effect_2 = ExtResource("5_2e7r2")
+casting_effect_3 = ExtResource("6_hleqr")
 action_motion_id = 172
-hit_effect_file_id = 1121
+hit_effect = ExtResource("7_8h2g5")
 hit_sound = ExtResource("4_gdiis")

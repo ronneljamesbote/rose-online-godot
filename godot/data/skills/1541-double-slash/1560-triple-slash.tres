@@ -3,6 +3,10 @@
 [ext_resource type="RoseSkill" uid="uid://bwlrvv7xm4hds" path="res://data/skills/1421-knuckle-mastery/1421-knuckle-mastery.tres" id="1_7g87q"]
 [ext_resource type="RoseStatusEffect" uid="uid://bq4n0ny64hflq" path="res://data/status_effects/32-fainted.tres" id="2_poe12"]
 [ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="3_yozoj"]
+[ext_resource type="RoseEffectFile" uid="uid://s8yrioubd614" path="res://data/effect_files/1031-sequence-casting-01.tres" id="4_1996v"]
+[ext_resource type="RoseEffectFile" uid="uid://b3mlxyx58c8hd" path="res://data/effect_files/370-image-cut-01.tres" id="5_jawq4"]
+[ext_resource type="RoseEffectFile" uid="uid://dieqauqas1fos" path="res://data/effect_files/373-image-cut-04.tres" id="6_1w77u"]
+[ext_resource type="RoseEffectFile" uid="uid://cma1g46iffpr" path="res://data/effect_files/371-image-cut-02.tres" id="7_lyd1a"]
 
 [resource]
 id = 1560
@@ -32,12 +36,12 @@ status_effect_seconds = 6
 casting_motion_id = 111
 casting_motion_speed = 156
 casting_repeat_motion_id = 131
-casting_effect_1 = 1031
+casting_effect_1 = ExtResource("4_1996v")
 action_motion_id = 92
 action_motion_speed = 154
-hit_effect_file_id = 370
+hit_effect = ExtResource("5_jawq4")
 hit_sound = ExtResource("3_yozoj")
-hit_dummy_effect_1 = 373
+hit_dummy_effect_1 = ExtResource("6_1w77u")
 hit_dummy_sound_1 = ExtResource("3_yozoj")
-hit_dummy_effect_2 = 371
+hit_dummy_effect_2 = ExtResource("7_lyd1a")
 hit_dummy_sound_2 = ExtResource("3_yozoj")

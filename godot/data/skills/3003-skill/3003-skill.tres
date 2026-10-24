@@ -1,6 +1,8 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://dqe5bg3xrj5jc"]
 
 [ext_resource type="RoseStatusEffect" uid="uid://d3dno04hk6nkl" path="res://data/status_effects/25-atk-accuracy-down.tres" id="1_nbmnx"]
+[ext_resource type="RoseEffectFile" uid="uid://btimqwfj57hk2" path="res://data/effect_files/213-casting-03.tres" id="2_1l1sn"]
+[ext_resource type="RoseEffectFile" uid="uid://dwnb187345xi5" path="res://data/effect_files/5-z-hit-01.tres" id="3_rr9wd"]
 
 [resource]
 id = 3003
@@ -16,6 +18,6 @@ add_stat_1 = "Hit"
 add_stat_1_rate = 20
 warp_zone = 20
 warp_y = 20000
-casting_effect_3 = 213
-hit_effect_file_id = 5
+casting_effect_3 = ExtResource("2_1l1sn")
+hit_effect = ExtResource("3_rr9wd")
 hit_effect_point = 3

@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://boluc7nntx1ln"]
+
+[ext_resource type="RoseEffectFile" uid="uid://c3vfe2su2ct4k" path="res://data/effect_files/1330-spider-01.tres" id="1_y1bej"]
+[ext_resource type="RoseSound" uid="uid://v2x62uh1rljq" path="res://data/sounds/skill/1110-action-heavyshot01.tres" id="2_36cev"]
+[ext_resource type="RoseEffectFile" uid="uid://by7mrxwtkh2et" path="res://data/effect_files/1309-runa-hit-01.tres" id="3_2i5wl"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_4ye5d"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="5_oylor"]
+
+[resource]
+id = 462
+name = "attack effect 462"
+hit_effect = ExtResource("3_2i5wl")
+hit_effect_critical = ExtResource("4_4ye5d")
+bullet_effect = ExtResource("1_y1bej")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_36cev")
+hit_sound = ExtResource("5_oylor")

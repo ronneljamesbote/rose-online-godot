@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://c40lroq0kdh4b"]
+
+[ext_resource type="RoseEffectFile" uid="uid://42iad3t3ejc5" path="res://data/effect_files/1091-bowgun-firing-01.tres" id="1_t1q5p"]
+[ext_resource type="RoseSound" uid="uid://bb6ywn24slw5b" path="res://data/sounds/skill/146-skill-magic08.tres" id="2_npmw3"]
+[ext_resource type="RoseEffectFile" uid="uid://2ws12b6k8egd" path="res://data/effect_files/1101-bowgun-hit-01.tres" id="3_upeux"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_3rw8t"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="5_7lrrq"]
+
+[resource]
+id = 192
+name = "attack effect 192"
+hit_effect = ExtResource("3_upeux")
+hit_effect_critical = ExtResource("4_3rw8t")
+bullet_effect = ExtResource("1_t1q5p")
+bullet_move = "Parabola"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_npmw3")
+hit_sound = ExtResource("5_7lrrq")

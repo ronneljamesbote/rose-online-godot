@@ -2,6 +2,8 @@
 
 [ext_resource type="RoseDropTable" uid="uid://bqcq5ky0dt6ou" path="res://data/drop_tables/104-mini-choropy.tres" id="1_rggdx"]
 [ext_resource type="RoseSound" uid="uid://js7qhkoxid3m" path="res://data/sounds/mob/182-mob01-d.tres" id="2_a2wfl"]
+[ext_resource type="RoseAttackEffect" uid="uid://cim6mhfjjf741" path="res://data/attack_effects/401-mini-jelly-bean.tres" id="3_m3aqb"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="4_bqdkp"]
 
 [resource]
 id = 11
@@ -23,8 +25,8 @@ ai_file_index = 1
 death_quest_trigger_name = "5052-31"
 npc_type_index = 1
 hit_sound_material_type = 1
-hand_hit_effect_id = 401
-die_effect_file_id = 1401
+hand_hit_effect = ExtResource("3_m3aqb")
+die_effect = ExtResource("4_bqdkp")
 die_sound = ExtResource("2_a2wfl")
 drop_table = ExtResource("1_rggdx")
 drop_money_rate = 5

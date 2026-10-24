@@ -4,6 +4,9 @@
 [ext_resource type="RoseStatusEffect" uid="uid://brsj7u2awa1h6" path="res://data/status_effects/31-sleep.tres" id="2_g8bnv"]
 [ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="3_t56rs"]
 [ext_resource type="RoseSound" uid="uid://drissa8totdmj" path="res://data/sounds/skill/1572-point-ice01.tres" id="4_ohh9v"]
+[ext_resource type="RoseEffectFile" uid="uid://1ttdv4y30gxw" path="res://data/effect_files/1635-lighting-casting-01.tres" id="5_77exd"]
+[ext_resource type="RoseAttackEffect" uid="uid://c31mvp8tf2ljd" path="res://data/attack_effects/264-lightning.tres" id="6_xh58q"]
+[ext_resource type="RoseEffectFile" uid="uid://bx28xtr334jyd" path="res://data/effect_files/1634-lighting-hit-01.tres" id="7_mn0vl"]
 
 [resource]
 id = 954
@@ -33,12 +36,12 @@ status_effect_1 = ExtResource("2_g8bnv")
 status_effect_seconds = 15
 casting_motion_id = 191
 casting_repeat_motion_id = 192
-casting_effect_3 = 1635
+casting_effect_3 = ExtResource("5_77exd")
 casting_effect_3_point = 0
-casting_effect_4 = 1635
+casting_effect_4 = ExtResource("5_77exd")
 casting_effect_4_point = 1
 action_motion_id = 193
-bullet_effect_id = 264
+bullet_effect = ExtResource("6_xh58q")
 bullet_fire_sound = ExtResource("3_t56rs")
-hit_effect_file_id = 1634
+hit_effect = ExtResource("7_mn0vl")
 hit_sound = ExtResource("4_ohh9v")

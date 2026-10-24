@@ -1,0 +1,17 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://d000mujb4ag3q"]
+
+[ext_resource type="RoseEffectFile" uid="uid://ckxqby0735rka" path="res://data/effect_files/1137-magic-firing-07.tres" id="1_w6pio"]
+[ext_resource type="RoseEffectFile" uid="uid://jouf1yjphur1" path="res://data/effect_files/130-hit-fireball-01.tres" id="2_1rmxp"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="3_vnpma"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="4_ufl3y"]
+
+[resource]
+id = 216
+name = "Flame Wand"
+trail_milliseconds = 100
+hit_effect = ExtResource("2_1rmxp")
+hit_effect_critical = ExtResource("3_vnpma")
+bullet_effect = ExtResource("1_w6pio")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+hit_sound = ExtResource("4_ufl3y")

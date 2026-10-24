@@ -2,6 +2,8 @@
 
 [ext_resource type="RoseDropTable" uid="uid://dhs8j3jyho5b2" path="res://data/drop_tables/223-elder-bloodbat.tres" id="1_qp6ty"]
 [ext_resource type="RoseSound" uid="uid://js7qhkoxid3m" path="res://data/sounds/mob/182-mob01-d.tres" id="2_tpry9"]
+[ext_resource type="RoseAttackEffect" uid="uid://cim6mhfjjf741" path="res://data/attack_effects/401-mini-jelly-bean.tres" id="3_bph7x"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="4_bgwbx"]
 
 [resource]
 id = 258
@@ -24,8 +26,8 @@ ai_file_index = 7
 npc_type_index = 3
 right_hand_part_index = 1076
 hit_sound_material_type = 1
-hand_hit_effect_id = 401
-die_effect_file_id = 1401
+hand_hit_effect = ExtResource("3_bph7x")
+die_effect = ExtResource("4_bgwbx")
 die_sound = ExtResource("2_tpry9")
 drop_table = ExtResource("1_qp6ty")
 drop_money_rate = 1

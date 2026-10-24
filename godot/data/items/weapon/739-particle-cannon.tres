@@ -3,6 +3,7 @@
 [ext_resource type="RoseSound" uid="uid://bjdly3xikd2h4" path="res://data/sounds/item/576-item-weapon.tres" id="1_gcyme"]
 [ext_resource type="RoseSound" uid="uid://coa6mw77434ix" path="res://data/sounds/attack/84-gun-003.tres" id="2_pjmva"]
 [ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_jy9gj"]
+[ext_resource type="RoseAttackEffect" uid="uid://drq5mbo1we4yv" path="res://data/attack_effects/191-basic-launcher.tres" id="4_eax6z"]
 
 [resource]
 id = 739
@@ -25,7 +26,7 @@ attack_range = 3100
 attack_power = 238
 attack_speed = 11
 motion_type = 9
-bullet_effect_id = 191
+bullet_effect = ExtResource("4_eax6z")
 attack_start_sound = ExtResource("2_pjmva")
 attack_fire_sound = ExtResource("3_jy9gj")
 gem_position = 1

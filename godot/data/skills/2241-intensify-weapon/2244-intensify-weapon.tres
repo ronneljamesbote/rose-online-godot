@@ -2,6 +2,10 @@
 
 [ext_resource type="RoseSkill" uid="uid://pusmnipniy8s" path="res://data/skills/2141-arms-mastery/2141-arms-mastery.tres" id="1_uqceo"]
 [ext_resource type="RoseStatusEffect" uid="uid://culcqkn47b52" path="res://data/status_effects/16-haste-attack.tres" id="2_uat5t"]
+[ext_resource type="RoseEffectFile" uid="uid://bv41ketysp2p" path="res://data/effect_files/1754-self-casting-01.tres" id="3_w76d6"]
+[ext_resource type="RoseEffectFile" uid="uid://b4f1t17hmgcmv" path="res://data/effect_files/1763-self-rotate-01.tres" id="4_txfvq"]
+[ext_resource type="RoseEffectFile" uid="uid://huc1lgwxotrj" path="res://data/effect_files/1771-self-skill-01.tres" id="5_dkigv"]
+[ext_resource type="RoseAttackEffect" uid="uid://wxxpgg57j08t" path="res://data/attack_effects/221-berserk.tres" id="6_9yq58"]
 
 [resource]
 id = 2244
@@ -29,11 +33,11 @@ warp_zone = 24
 warp_x = 36000
 casting_motion_id = 114
 casting_repeat_motion_id = 134
-casting_effect_1 = 1754
-casting_effect_2 = 1763
+casting_effect_1 = ExtResource("3_w76d6")
+casting_effect_2 = ExtResource("4_txfvq")
 casting_effect_2_point = 3
-casting_effect_3 = 1771
+casting_effect_3 = ExtResource("5_dkigv")
 casting_effect_3_point = 3
 action_motion_id = 153
-bullet_effect_id = 221
+bullet_effect = ExtResource("6_9yq58")
 bullet_point = 3

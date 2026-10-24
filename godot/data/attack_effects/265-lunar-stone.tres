@@ -1,0 +1,15 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://bugay5piqdbgc"]
+
+[ext_resource type="RoseEffectFile" uid="uid://cq85e4h1aegek" path="res://data/effect_files/1632-runaston-01.tres" id="1_mlvh2"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="2_0gb68"]
+[ext_resource type="RoseSound" uid="uid://6a6nk0si4lkl" path="res://data/sounds/attack/68-axe-h01.tres" id="3_auvxn"]
+
+[resource]
+id = 265
+name = "Lunar Stone"
+trail_milliseconds = 100
+hit_effect_critical = ExtResource("2_0gb68")
+bullet_effect = ExtResource("1_mlvh2")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+hit_sound = ExtResource("3_auvxn")

@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://bqh41lfm4s70x"]
+
+[ext_resource type="RoseEffectFile" uid="uid://dh5tfx4s10h1q" path="res://data/effect_files/1070-gun-firing-01.tres" id="1_fqtar"]
+[ext_resource type="RoseSound" uid="uid://bb6ywn24slw5b" path="res://data/sounds/skill/146-skill-magic08.tres" id="2_b70ql"]
+[ext_resource type="RoseEffectFile" uid="uid://rc33uxbeghu1" path="res://data/effect_files/1080-gun-hit-01.tres" id="3_t17pi"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_bj4i8"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="5_ebcj2"]
+
+[resource]
+id = 171
+name = "Gloria Gun"
+hit_effect = ExtResource("3_t17pi")
+hit_effect_critical = ExtResource("4_bj4i8")
+bullet_effect = ExtResource("1_fqtar")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_b70ql")
+hit_sound = ExtResource("5_ebcj2")

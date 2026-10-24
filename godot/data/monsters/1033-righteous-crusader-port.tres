@@ -1,6 +1,7 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://pgg0ekd2elan"]
 
 [ext_resource type="RoseDropTable" uid="uid://dpyavlscdj2jp" path="res://data/drop_tables/55-righteous-crusader-port.tres" id="1_8lq6a"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="2_qfc3m"]
 
 [resource]
 id = 1033
@@ -16,6 +17,6 @@ avoid = 100
 attack_speed = 100
 attack_range = 200
 npc_type_index = 999
-die_effect_file_id = 1401
+die_effect = ExtResource("2_qfc3m")
 drop_table = ExtResource("1_8lq6a")
 summon_monster_type = 10

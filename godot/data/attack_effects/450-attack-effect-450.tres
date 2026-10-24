@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://bkjws10nwwhwu"]
+
+[ext_resource type="RoseEffectFile" uid="uid://c6k21tci8k7u0" path="res://data/effect_files/1305-snow-firing-01.tres" id="1_exrwv"]
+[ext_resource type="RoseSound" uid="uid://v2x62uh1rljq" path="res://data/sounds/skill/1110-action-heavyshot01.tres" id="2_m4fsj"]
+[ext_resource type="RoseEffectFile" uid="uid://b8t0dvmywt6h2" path="res://data/effect_files/1311-runa-hit-03.tres" id="3_ojxcg"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_7jn6m"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="5_82pyv"]
+
+[resource]
+id = 450
+name = "attack effect 450"
+hit_effect = ExtResource("3_ojxcg")
+hit_effect_critical = ExtResource("4_7jn6m")
+bullet_effect = ExtResource("1_exrwv")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_m4fsj")
+hit_sound = ExtResource("5_82pyv")

@@ -3,6 +3,10 @@
 [ext_resource type="RoseSkill" uid="uid://c81ycqbxkjt72" path="res://data/skills/1401-bow-mastery/1401-bow-mastery.tres" id="1_04nvm"]
 [ext_resource type="RoseSound" uid="uid://42rl1pnpcxo3" path="res://data/sounds/skill/148-heavyarr001.tres" id="2_8tyie"]
 [ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="3_2rzu8"]
+[ext_resource type="RoseEffectFile" uid="uid://b2kvgebw3flm4" path="res://data/effect_files/1041-heavy-casting-01.tres" id="4_p2s21"]
+[ext_resource type="RoseAttackEffect" uid="uid://dcbf7ymp65kcd" path="res://data/attack_effects/151-simple-bow-gun.tres" id="5_kfzae"]
+[ext_resource type="RoseEffectFile" uid="uid://cp2jbsgybpgic" path="res://data/effect_files/110-gun-blowup-01.tres" id="6_gwizi"]
+[ext_resource type="RoseEffectFile" uid="uid://c36v6eijwi0gd" path="res://data/effect_files/151-effect-151.tres" id="7_ykeuw"]
 
 [resource]
 id = 1529
@@ -28,14 +32,14 @@ item_make_number = 82
 casting_motion_id = 111
 casting_motion_speed = 148
 casting_repeat_motion_id = 131
-casting_effect_1 = 1041
+casting_effect_1 = ExtResource("4_p2s21")
 casting_effect_1_point = 3
 action_motion_id = 91
 action_motion_speed = 172
-bullet_effect_id = 151
+bullet_effect = ExtResource("5_kfzae")
 bullet_point = 1
 bullet_fire_sound = ExtResource("2_8tyie")
-hit_effect_file_id = 110
+hit_effect = ExtResource("6_gwizi")
 hit_sound = ExtResource("3_2rzu8")
-hit_dummy_effect_1 = 151
+hit_dummy_effect_1 = ExtResource("7_ykeuw")
 hit_dummy_sound_1 = ExtResource("3_2rzu8")

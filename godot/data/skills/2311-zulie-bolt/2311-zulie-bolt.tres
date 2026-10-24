@@ -3,6 +3,10 @@
 [ext_resource type="RoseJobClass" uid="uid://coim5bc7gydpp" path="res://data/job_classes/44-dealer-job.tres" id="1_agusx"]
 [ext_resource type="RoseSkill" uid="uid://pusmnipniy8s" path="res://data/skills/2141-arms-mastery/2141-arms-mastery.tres" id="2_qlgvh"]
 [ext_resource type="RoseSound" uid="uid://bsy3w0y7alp0i" path="res://data/sounds/other/199-sound-199.tres" id="3_spn60"]
+[ext_resource type="RoseEffectFile" uid="uid://dsah17k1ph7qw" path="res://data/effect_files/1801-mana-casting-01.tres" id="4_n2shz"]
+[ext_resource type="RoseEffectFile" uid="uid://c5hayox347bkc" path="res://data/effect_files/1811-mana-rotate-01.tres" id="5_e43w1"]
+[ext_resource type="RoseAttackEffect" uid="uid://bhv1gy55fcyjq" path="res://data/attack_effects/281-zulie-bolt.tres" id="6_gmkow"]
+[ext_resource type="RoseEffectFile" uid="uid://ge82r61yiohg" path="res://data/effect_files/1693-hit-jullypink-01.tres" id="7_mmevk"]
 
 [resource]
 id = 2311
@@ -31,11 +35,11 @@ item_make_number = 110
 casting_motion_id = 116
 casting_motion_speed = 150
 casting_repeat_motion_id = 136
-casting_effect_1 = 1801
-casting_effect_2 = 1811
+casting_effect_1 = ExtResource("4_n2shz")
+casting_effect_2 = ExtResource("5_e43w1")
 casting_effect_2_point = 1
 action_motion_id = 211
-bullet_effect_id = 281
+bullet_effect = ExtResource("6_gmkow")
 bullet_point = 1
-hit_effect_file_id = 1693
+hit_effect = ExtResource("7_mmevk")
 hit_sound = ExtResource("3_spn60")

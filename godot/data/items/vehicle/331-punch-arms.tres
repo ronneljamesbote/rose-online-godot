@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_vl79h"]
 [ext_resource type="RoseSound" uid="uid://dk5t7otbj5v7i" path="res://data/sounds/other/125-skill-attaco01.tres" id="2_4er4n"]
+[ext_resource type="RoseAttackEffect" uid="uid://ldqsutcgbiib" path="res://data/attack_effects/520-punch-arms.tres" id="3_uvr4u"]
 
 [resource]
 id = 331
@@ -32,6 +33,6 @@ attack_range = 300
 attack_power = 350
 attack_speed = 9
 base_avatar_motion_index = 261
-hit_effect_id = 520
+hit_effect = ExtResource("3_uvr4u")
 hit_sound = ExtResource("2_4er4n")
 bullet_fire_point = 8

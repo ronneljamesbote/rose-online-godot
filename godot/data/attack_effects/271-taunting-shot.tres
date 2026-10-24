@@ -1,0 +1,15 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://b5yvppjhi1ym6"]
+
+[ext_resource type="RoseEffectFile" uid="uid://c6kiu8eut2ehv" path="res://data/effect_files/1056-bow-firing-heavy01.tres" id="1_y2rp6"]
+[ext_resource type="RoseEffectFile" uid="uid://i7jfpycgbxv8" path="res://data/effect_files/1024-twotool-critical-hit-01.tres" id="2_36vdj"]
+[ext_resource type="RoseSound" uid="uid://6a6nk0si4lkl" path="res://data/sounds/attack/68-axe-h01.tres" id="3_8bkwm"]
+
+[resource]
+id = 271
+name = "Taunting Shot"
+trail_milliseconds = 100
+hit_effect_critical = ExtResource("2_36vdj")
+bullet_effect = ExtResource("1_y2rp6")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+hit_sound = ExtResource("3_8bkwm")

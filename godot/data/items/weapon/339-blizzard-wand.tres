@@ -3,6 +3,7 @@
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_ss4wq"]
 [ext_resource type="RoseSound" uid="uid://osald6eflwq1" path="res://data/sounds/attack/37-sword-001.tres" id="2_mdfja"]
 [ext_resource type="RoseSound" uid="uid://np80gbdh8gn3" path="res://data/sounds/attack/89-magic-001.tres" id="3_1fah8"]
+[ext_resource type="RoseAttackEffect" uid="uid://cagvbtqfrwyk1" path="res://data/attack_effects/210-baobab-wand.tres" id="4_92su9"]
 
 [resource]
 id = 339
@@ -32,7 +33,7 @@ attack_power = 94
 attack_speed = 12
 motion_type = 14
 is_magic_damage = true
-bullet_effect_id = 210
+bullet_effect = ExtResource("4_92su9")
 attack_start_sound = ExtResource("2_mdfja")
 attack_fire_sound = ExtResource("3_1fah8")
 gem_position = 2

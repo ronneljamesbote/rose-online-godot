@@ -4,7 +4,7 @@ The game's own data, made in the Godot editor: one resource (`.tres`) per thing,
 the Inspector. It replaces the iROSE tables one kind at a time
 (plan: `TODO/own-game-data.md` in the project files). So far: **items**, **monsters**, **NPCs**, **drop tables**, **shop tabs**, **skills**,
 **status effects**, **job classes**, **zone settings**, **warp gates**, **crafting recipes**,
-**new characters** and **sounds**.
+**new characters**, **sounds** and **effects**.
 
 | Folder | Class | What |
 | --- | --- | --- |
@@ -37,6 +37,8 @@ the Inspector. It replaces the iROSE tables one kind at a time
 | `sounds/<folder>/` | `RoseSound` | One sound: a number, a name and the audio file it plays (folders as the client's `Sound/`: attack, mob, skill ...) |
 | `hit_sounds/` | `RoseHitSounds` | What a weapon's hit sounds like on armour, cloth and stone |
 | `footsteps/` | `RoseFootsteps` | A zone's footsteps: the step sound for each of its ground textures |
+| `effect_files/` | `RoseEffectFile` | One effect the game can show: a number, a name and the effect scene it plays |
+| `attack_effects/` | `RoseAttackEffect` | How an attack looks: the effects on the weapon, the swing's trail, the projectile and its flight, the hit effects and sounds |
 
 Monsters and NPCs share one id space (an NPC and a monster never have the same id), because
 saved quests and the zone markers store just the number. Links between resources are plain
@@ -49,7 +51,14 @@ materials (`material_1` to `_4`) and a new character's clothes and bag. Sounds a
 an item's `equip_sound` and a weapon's `attack_start_sound` and `hit_sounds`, a monster's
 `attack_sound` or `die_sound`, a skill's `bullet_fire_sound`, a zone's `footsteps`, and a
 `RoseSound`'s `stream` (the audio file); a zone's `music_day` and `music_night` and a sound
-spot in a zone scene (`RoseSoundSpot`'s `stream`) link the audio file itself. Drag a resource from
+spot in a zone scene (`RoseSoundSpot`'s `stream`) link the audio file itself. Effects are
+links the same way: a weapon's `attack_effect` and `bullet_effect`, a gem's `gem_effect`,
+ammunition's `bullet_effect`, a cart part's `hit_effect` and `bullet_effect`, a monster's
+`hand_hit_effect` link a `RoseAttackEffect`; a potion's `effect`, a cart part's
+`ride_effect` ... and `dummy_effects`, a monster's `die_effect`, a skill's
+`casting_effect_1` to `_4`, `hit_effect` and `hit_dummy_effect_1/2` and a status effect's
+`effect` link a `RoseEffectFile`, whose `scene` links the effect scene; an effect spot in a
+zone scene (`RoseEffectSpot`'s `scene`) links the effect scene itself. Drag a resource from
 the FileSystem dock onto the field to set it. A zone scene's root (`RoseZoneScene`) shows its
 zone's settings as `settings` (click it to open them), and a warp gate placed in a zone
 (`RoseZoneObject` of kind warp) links its `RoseWarpGate` as `warp_gate`.
@@ -93,6 +102,31 @@ an imported one (`ours/sound/attack/sword_001.wav`) plays instead of it everywhe
 Sounds are only played by the game, not by the server: the export writes them
 (`sounds.toml`, `hit-sounds.toml`, `footsteps.toml`) and the server upload leaves them out.
 
+## Effects
+
+A `RoseEffectFile` plays its `scene`: an effect scene, a `RoseEffect` node with one child per
+part (`RoseEffectParticles` for a particle system, `RoseEffectMesh` for a mesh with its
+texture, blending and animation). `--import-rose` turns the client's EFT and PTL files into
+these scenes (`res://assets/rose/3ddata/effect/levelup_01.scn`) and particle systems
+(`.particles.res`, a `RoseParticleSystem` with its `RoseParticleSequence`s and keyframes), so
+run it before editing effects. Open an effect scene to see it play in the editor (it starts
+again every few seconds); select a part to change its place, its particle system, mesh,
+texture or blending in the Inspector, or open a particle system to change its sequences. To
+make a new effect, save a copy of a scene (or a new `RoseEffect` scene) in
+`res://assets/ours/`, make a new `RoseEffectFile` with a free number, drag the scene onto its
+`scene` and link the effect file where it should show. A scene in `res://assets/ours/` at the
+same path as an imported one plays instead of it everywhere.
+
+A `RoseAttackEffect` is one row of how attacks look: up to 4 `point_effects` drawn on the
+weapon's effect points, the swing's trail (`trail_colour`, a row of the client's trail
+colours, and `trail_milliseconds`), the projectile (`bullet_effect`, `bullet_move`: Linear,
+Parabola or Immediate, `bullet_speed` in centimetres per second), the effect on the target
+(`hit_effect`, and `hit_effect_critical` on a critical hit) and the `fire_sound` and
+`hit_sound`. It is named after the first item, monster or skill that uses it.
+
+Effects are only shown by the game, not by the server: the export writes them
+(`effect-files.toml`, `attack-effects.toml`) and the server upload leaves them out.
+
 ## Changing something
 
 1. Open the resource, change the field in the Inspector, save. (Or change many in the
@@ -116,12 +150,14 @@ players may have.
 The export writes `export/data/items/<class>.toml` and `export/data/monsters.toml`,
 `npcs.toml`, `drop-tables.toml`, `shop-tabs.toml`, `skills.toml`, `status-effects.toml`,
 `job-classes.toml`, `zones.toml`, `warp-gates.toml`, `craft-recipes.toml`,
-`new-characters.toml`, `sounds.toml`, `hit-sounds.toml` and `footsteps.toml` (layout in
-`crates/rose-data-export/src/items.rs`, `npcs.rs`, `skills.rs`, `world.rs` and `sounds.rs`), and in the same run the zone scenes' spawns and NPCs
+`new-characters.toml`, `sounds.toml`, `hit-sounds.toml`, `footsteps.toml`,
+`effect-files.toml` and `attack-effects.toml` (layout in
+`crates/rose-data-export/src/items.rs`, `npcs.rs`, `skills.rs`, `world.rs`, `sounds.rs` and
+`effects.rs`), and in the same run the zone scenes' spawns and NPCs
 (`export/zones/`) and the animations' hit markers (`export/motions.toml`), see
 `../../export/README.md`. A link is written as the linked resource's kind and id (`"weapon/3"`,
-`drop_table = 147`, `required_skill_1 = 821`, `attack_start_sound = 38`), and an audio file as
-its path (`res://assets/rose/sound/attack/sword_001.res`). The server's upload sends it (as JSON) in
+`drop_table = 147`, `required_skill_1 = 821`, `attack_start_sound = 38`, `attack_effect = 111`),
+and an audio file or an effect scene as its path (`res://assets/rose/sound/attack/sword_001.res`). The server's upload sends it (as JSON) in
 place of the iROSE item, NPC (`LIST_NPC`), drop (`ITEM_DROP`), shop (`LIST_SELL`), skill
 (`LIST_SKILL`), status effect (`LIST_STATUS`), job class (`LIST_CLASS`), zone (`LIST_ZONE`),
 warp (`WARP`), recipe (`LIST_PRODUCT`) and new character (`INIT_AVATAR`) tables, and the game
@@ -235,6 +271,18 @@ played nothing), so it has no `hit_sounds`; two zone scenes had sound spots with
 `NULL`, which now have no `stream`. The zones' music links the imported files. `compare`
 shows no other difference for sounds.
 
-Numbers that point at art (`icon_index`, `field_model_index`, the effect ids) are still
-iROSE numbers; later steps of the plan turn them into links to the Godot icons, models and
+For effects (2026-10-24) the converter kept the `FILE_EFFECT` rows whose file the client has
+and the ones something links: 332 of 2,002 rows (the client data has 326 of the 349 files
+the table names; 23 rows nothing links name files it doesn't have and were left out, and
+`RAINBOW01.EFT` can't be read, so effect 1173 is kept with no `scene`, showing nothing as
+before). Of the 578 `LIST_EFFECT` rows it kept the 272 that have something in them or that
+something links, without the columns the game doesn't read (1, the type; 7, 12 and 14). A
+monster's `create_effect_index` stays a plain number (the game doesn't show it). The effect
+fields of items, monsters, skills and status effects were renamed when they became links
+(`effect_id` is now a weapon's `attack_effect`, `bullet_effect_id` `bullet_effect`,
+`effect_file_id` a potion's or status effect's `effect`, `hit_effect_file_id` a skill's
+`hit_effect`, `die_effect_file_id` `die_effect` ...). `compare` shows no difference for
 effects.
+
+Numbers that point at art (`icon_index`, `field_model_index`) are still iROSE numbers; a
+later step of the plan turns them into links to the Godot icons and models.

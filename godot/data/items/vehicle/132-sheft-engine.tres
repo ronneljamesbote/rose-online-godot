@@ -1,6 +1,10 @@
 [gd_resource type="RoseItemVehicle" format=3 uid="uid://wxdbrivn6cuc"]
 
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_9ni48"]
+[ext_resource type="RoseEffectFile" uid="uid://ddksyeb1ejvg7" path="res://data/effect_files/1252-castlegear-smoke-01.tres" id="2_t57vn"]
+[ext_resource type="RoseEffectFile" uid="uid://5tov7rmyiapp" path="res://data/effect_files/1253-castlegear-smoke-02.tres" id="3_zsvun"]
+[ext_resource type="RoseEffectFile" uid="uid://dmd7r8qtw71fb" path="res://data/effect_files/1254-castlegear-gas-01.tres" id="4_qp1v1"]
+[ext_resource type="RoseEffectFile" uid="uid://b57lk07wr5god" path="res://data/effect_files/1255-castlegear-gas-02.tres" id="5_dcv54"]
 
 [resource]
 id = 132
@@ -29,4 +33,4 @@ version = 32
 move_speed = 100
 fuel_use_rate = 3
 bullet_fire_point = 8
-dummy_effect_file_ids = PackedInt32Array(0, 0, 0, 0, 1252, 1253, 1254, 1255)
+dummy_effects = Array[RoseEffectFile]([null, null, null, null, ExtResource("2_t57vn"), ExtResource("3_zsvun"), ExtResource("4_qp1v1"), ExtResource("5_dcv54")])

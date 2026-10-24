@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://crg8b6dwo8uw5"]
+
+[ext_resource type="RoseEffectFile" uid="uid://cmyy7jhvg5rvx" path="res://data/effect_files/386-ston-tan-01-01.tres" id="1_tsjhd"]
+[ext_resource type="RoseSound" uid="uid://bb6ywn24slw5b" path="res://data/sounds/skill/146-skill-magic08.tres" id="2_lcn38"]
+[ext_resource type="RoseEffectFile" uid="uid://cy2wmla1dhrcd" path="res://data/effect_files/387-stongolem-hit-01.tres" id="3_fdwsc"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_iu2ab"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="5_gdasw"]
+
+[resource]
+id = 437
+name = "attack effect 437"
+hit_effect = ExtResource("3_fdwsc")
+hit_effect_critical = ExtResource("4_iu2ab")
+bullet_effect = ExtResource("1_tsjhd")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_lcn38")
+hit_sound = ExtResource("5_gdasw")

@@ -3,6 +3,8 @@
 [ext_resource type="RoseSound" uid="uid://cojvd22hkichy" path="res://data/sounds/mob/329-mob07-n.tres" id="1_hzgcq"]
 [ext_resource type="RoseSound" uid="uid://c24bk1o25388i" path="res://data/sounds/mob/328-bugs02.tres" id="2_llzlt"]
 [ext_resource type="RoseSound" uid="uid://ofsknjykncqp" path="res://data/sounds/mob/330-bugs04.tres" id="3_192qb"]
+[ext_resource type="RoseAttackEffect" uid="uid://bqslyp13mi5oa" path="res://data/attack_effects/403-jellynut.tres" id="4_ap04c"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="5_6amqg"]
 
 [resource]
 id = 507
@@ -26,6 +28,6 @@ npc_type_index = 4
 normal_effect_sound = ExtResource("1_hzgcq")
 attack_sound = ExtResource("2_llzlt")
 hitted_sound = ExtResource("2_llzlt")
-hand_hit_effect_id = 403
-die_effect_file_id = 1401
+hand_hit_effect = ExtResource("4_ap04c")
+die_effect = ExtResource("5_6amqg")
 die_sound = ExtResource("3_192qb")

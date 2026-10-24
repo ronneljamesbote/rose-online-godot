@@ -2,6 +2,9 @@
 
 [ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="1_z84s7"]
 [ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="2_5iiy8"]
+[ext_resource type="RoseEffectFile" uid="uid://buciewaj8le56" path="res://data/effect_files/385-ston-tan-01.tres" id="3_jtag6"]
+[ext_resource type="RoseAttackEffect" uid="uid://dix7iti1nptkf" path="res://data/attack_effects/449-attack-effect-449.tres" id="4_zmrq2"]
+[ext_resource type="RoseEffectFile" uid="uid://bc16a2yneqcfv" path="res://data/effect_files/1298-goblin-hit-01.tres" id="5_bzs1y"]
 
 [resource]
 id = 2989
@@ -15,10 +18,10 @@ damage_type = "WeaponAttack"
 power = 20
 item_make_number = 20
 casting_motion_id = 8
-casting_effect_1 = 385
+casting_effect_1 = ExtResource("3_jtag6")
 casting_effect_1_point = 0
 action_motion_id = 9
-bullet_effect_id = 449
+bullet_effect = ExtResource("4_zmrq2")
 bullet_fire_sound = ExtResource("1_z84s7")
-hit_effect_file_id = 1298
+hit_effect = ExtResource("5_bzs1y")
 hit_sound = ExtResource("2_5iiy8")

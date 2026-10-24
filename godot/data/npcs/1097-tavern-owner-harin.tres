@@ -1,6 +1,7 @@
 [gd_resource type="RoseNpc" format=3 uid="uid://d0nk20ec8kboh"]
 
 [ext_resource type="RoseShopTab" uid="uid://dt2oevvm0x6k" path="res://data/shop_tabs/494-food.tres" id="1_ulbtk"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="2_vh9rx"]
 
 [resource]
 id = 1097
@@ -16,7 +17,7 @@ avoid = 100
 attack_speed = 100
 attack_range = 200
 npc_type_index = 999
-die_effect_file_id = 1401
+die_effect = ExtResource("2_vh9rx")
 shop_tab_1 = ExtResource("1_ulbtk")
 minimap_icon_index = 69
 face_icon_index = 8

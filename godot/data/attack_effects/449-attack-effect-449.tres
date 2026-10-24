@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://dix7iti1nptkf"]
+
+[ext_resource type="RoseEffectFile" uid="uid://dd3km082nrpb6" path="res://data/effect_files/1297-goblin-firing-01.tres" id="1_pec6p"]
+[ext_resource type="RoseSound" uid="uid://v2x62uh1rljq" path="res://data/sounds/skill/1110-action-heavyshot01.tres" id="2_usv46"]
+[ext_resource type="RoseEffectFile" uid="uid://bc16a2yneqcfv" path="res://data/effect_files/1298-goblin-hit-01.tres" id="3_05o3k"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_3bwgg"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="5_3ettk"]
+
+[resource]
+id = 449
+name = "attack effect 449"
+hit_effect = ExtResource("3_05o3k")
+hit_effect_critical = ExtResource("4_3bwgg")
+bullet_effect = ExtResource("1_pec6p")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_usv46")
+hit_sound = ExtResource("5_3ettk")

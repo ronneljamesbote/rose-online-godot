@@ -1,5 +1,7 @@
 [gd_resource type="RoseStatusEffect" format=3 uid="uid://0p3o4l6jqxs5"]
 
+[ext_resource type="RoseEffectFile" uid="uid://cm6damklpvain" path="res://data/effect_files/166-defenddown-01.tres" id="1_93xff"]
+
 [resource]
 id = 21
 name = "Def Down"
@@ -8,5 +10,5 @@ start_message = "Defense has returned to normal."
 status_effect_type = "DecreaseDefence"
 can_be_reapplied = true
 cleared_by = "ClearBad"
-effect_file_id = 166
+effect = ExtResource("1_93xff")
 icon_id = 21

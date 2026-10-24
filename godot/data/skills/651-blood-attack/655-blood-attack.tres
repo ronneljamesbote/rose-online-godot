@@ -2,6 +2,10 @@
 
 [ext_resource type="RoseSkill" uid="uid://sckha04qy41b" path="res://data/skills/291-spiritual-training/291-spiritual-training.tres" id="1_rogsk"]
 [ext_resource type="RoseSound" uid="uid://durlyfvhmfuif" path="res://data/sounds/skill/142-skill-magic04.tres" id="2_b78hf"]
+[ext_resource type="RoseEffectFile" uid="uid://b2kvgebw3flm4" path="res://data/effect_files/1041-heavy-casting-01.tres" id="3_9g9jq"]
+[ext_resource type="RoseEffectFile" uid="uid://ctbpjcwyxsbuj" path="res://data/effect_files/1042-heavy-rotate-01.tres" id="4_y7gmr"]
+[ext_resource type="RoseEffectFile" uid="uid://cw7qi5d418pmu" path="res://data/effect_files/1601-s-blood-01.tres" id="5_yq6l9"]
+[ext_resource type="RoseEffectFile" uid="uid://bikiwa07s5d7j" path="res://data/effect_files/1602-s-bloodout-hit-01.tres" id="6_dsrgu"]
 
 [resource]
 id = 655
@@ -35,14 +39,14 @@ warp_zone = 16
 warp_x = 200000
 casting_motion_id = 111
 casting_repeat_motion_id = 131
-casting_effect_1 = 1041
+casting_effect_1 = ExtResource("3_9g9jq")
 casting_effect_1_point = 3
-casting_effect_2 = 1042
+casting_effect_2 = ExtResource("4_y7gmr")
 casting_effect_2_point = 3
-casting_effect_3 = 1601
+casting_effect_3 = ExtResource("5_yq6l9")
 casting_effect_3_point = 3
 action_motion_id = 175
 action_motion_speed = 168
-hit_effect_file_id = 1602
+hit_effect = ExtResource("6_dsrgu")
 hit_effect_point = 3
 hit_sound = ExtResource("2_b78hf")

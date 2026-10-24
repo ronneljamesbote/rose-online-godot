@@ -9,7 +9,8 @@
 //!                                          skills, status effects, job classes, zones, warp
 //!                                          gates, recipes, new characters, motion
 //!                                          lengths and hit frames against the ZMO files,
-//!                                          sounds, hit sounds and footsteps)
+//!                                          sounds, hit sounds and footsteps, effect files
+//!                                          and attack effects)
 //!
 //! `pack` writes upload-NNN.json files, each the JSON argument list of the module's
 //! `upload_game_files` reducer (well under the server's request size limit), plus manifest.json.
@@ -420,6 +421,29 @@ fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool, root: &Pat
                 export.sounds.len(),
                 export.hit_sounds.len(),
                 export.footsteps.len(),
+            );
+        }
+    }
+    // Only the game shows effects too.
+    match rose_data_export::EffectsExport::from_files_as(toml, read).expect("read the effect export") {
+        None => println!("effects: no export (effect-files.toml ...), skipped"),
+        Some(export) => {
+            let started = Instant::now();
+            let irose_effects = rose_data_irose::get_effect_database(vfs).expect("iROSE effects");
+            let irose_ms = started.elapsed().as_millis();
+            let started = Instant::now();
+            let effects = export.to_database().expect("exported effects");
+            let export_ms = started.elapsed().as_millis();
+            // FILE_EFFECT names some files the client data doesn't have (or can't read); the
+            // game shows nothing for them.
+            let has_file = |path: &str| {
+                path.starts_with("res://") || vfs.read_file::<rose_file_readers::EftFile, _>(path).is_ok()
+            };
+            differences.extend(rose_data_export::compare_effect_databases(&irose_effects, &effects, has_file));
+            println!(
+                "effects: {} effect files, {} attack effects; iROSE tables {irose_ms} ms, export {export_ms} ms",
+                export.effect_files.len(),
+                export.attack_effects.len(),
             );
         }
     }

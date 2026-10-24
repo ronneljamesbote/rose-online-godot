@@ -1,6 +1,8 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://dovyyjxi8amtk"]
 
 [ext_resource type="RoseDropTable" uid="uid://bxhd2ijql4e45" path="res://data/drop_tables/3-bonfire-butterfly-phantomsword-and-others.tres" id="1_1i4l3"]
+[ext_resource type="RoseAttackEffect" uid="uid://ckm6voivcem6c" path="res://data/attack_effects/402-jelly-bean.tres" id="2_zwroj"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="3_4nltp"]
 
 [resource]
 id = 850
@@ -20,8 +22,8 @@ walk_speed = 263
 run_speed = 576
 ai_file_index = 158
 hit_sound_material_type = 2
-hand_hit_effect_id = 402
-die_effect_file_id = 1401
+hand_hit_effect = ExtResource("2_zwroj")
+die_effect = ExtResource("3_4nltp")
 drop_table = ExtResource("1_1i4l3")
 drop_item_rate = 100
 summon_point_requirement = 89

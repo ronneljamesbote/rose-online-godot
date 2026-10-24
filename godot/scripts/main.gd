@@ -20,7 +20,7 @@
 ##   --profile=NAME             identity file to use (user://identity-NAME-HOST-PORT.token), so two
 ##                              clients on one PC are two players
 ##   --offline                  skip the start screen and play offline
-##   --net-demo[=NAME], --demo, --effect=PATH,...   scripted runs for tests and recordings,
+##   --net-demo[=NAME], --demo, --effect=PATH|ID,...   scripted runs for tests and recordings,
 ##                              see demos/README.md (not in the Windows build)
 ##   --net-log                  online: print every player's position once a second
 ##   --perf-log                 online: print frame rate, entities drawn and frame times every 2 seconds
@@ -29,7 +29,7 @@
 ##                              the O key opens the sound window, which saves them)
 ##   --sound-log                print each sound effect played
 ##   --quit-after=SECONDS       quit after this long
-##   --import-rose[=force]      convert the ROSE models, textures and sounds into res://assets/rose/
+##   --import-rose[=force]      convert the ROSE models, textures, sounds and effects into res://assets/rose/
 ##                              and quit (run headless; force redoes files already there)
 ##   --import-zone=ID[,force]   write the scenes of zone ID into res://zones/ from the ROSE map
 ##                              files and quit (run headless; force replaces scenes already there)
@@ -161,8 +161,10 @@ func _import_rose(force: bool) -> void:
 	if result.is_empty():
 		get_tree().quit(1)
 		return
-	print("rose: imported %d meshes, %d textures and %d sounds (%d already there, %d failed) in %.0f s" % [
-		result.meshes, result.textures, result.sounds, result.kept, result.failed, result.seconds])
+	print("rose: imported %d meshes, %d textures, %d sounds and %d effects and particle systems (%d already there, %d failed) in %.0f s" % [
+		result.meshes, result.textures, result.sounds, result.effects, result.kept, result.failed, result.seconds])
+	if result.empty_effects > 0:
+		print("rose: %d effect files show nothing in the client data either; left out" % result.empty_effects)
 	var folders: Dictionary = result.folders
 	for folder in folders:
 		print("rose:   %-24s %8.1f MB" % [folder, folders[folder] / 1048576.0])
@@ -225,7 +227,7 @@ func _export_data(check: bool) -> void:
 		push_error("rose: %s" % result.error)
 		get_tree().quit(1)
 		return
-	print("rose: %d items, %d monsters, %d NPCs, %d skills, %d zones and %d sounds from %d resources (read in %d ms)" % [result.items, result.monsters, result.npcs, result.skills, result.zones, result.sounds, result.resources, result.read_ms])
+	print("rose: %d items, %d monsters, %d NPCs, %d skills, %d zones, %d sounds, %d effects and %d attack effects from %d resources (read in %d ms)" % [result.items, result.monsters, result.npcs, result.skills, result.zones, result.sounds, result.effects, result.attack_effects, result.resources, result.read_ms])
 	print("rose: %d zone scenes, %d motions" % [result.zone_scenes, result.motions])
 	var changed: Array = result.changed
 	for path in changed:

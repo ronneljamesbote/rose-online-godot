@@ -2,6 +2,8 @@
 
 [ext_resource type="RoseDropTable" uid="uid://boh1gtvfrsw6y" path="res://data/drop_tables/305-junon-s-krawfy.tres" id="1_3ouyh"]
 [ext_resource type="RoseSound" uid="uid://cr3u1346v0w5s" path="res://data/sounds/other/5143-sound-5143.tres" id="2_ge5io"]
+[ext_resource type="RoseAttackEffect" uid="uid://jy8fkdl336xw" path="res://data/attack_effects/445-jewel-golem.tres" id="3_r9afm"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="4_2t8s0"]
 
 [resource]
 id = 405
@@ -25,8 +27,8 @@ npc_quest_type = 1
 npc_type_index = 10
 glow_colour = Color(0.74509805, 0.7058824, 0.39215687, 1)
 attack_sound = ExtResource("2_ge5io")
-hand_hit_effect_id = 445
-die_effect_file_id = 1401
+hand_hit_effect = ExtResource("3_r9afm")
+die_effect = ExtResource("4_2t8s0")
 drop_table = ExtResource("1_3ouyh")
 drop_money_rate = 1
 drop_item_rate = 93

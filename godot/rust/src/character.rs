@@ -600,7 +600,7 @@ impl RoseCharacter {
             let Some(point) = zsc.objects.get(*id).and_then(|o| o.effects.get(gem_position as usize)) else { continue };
             let Some(parent) = instances.get(point.parent.unwrap_or(0) as usize) else { continue };
             let mut effect = crate::effect::RoseEffect::new_alloc();
-            if !effect.bind_mut().load_path(&path.path().to_string_lossy()) {
+            if !effect.bind_mut().load_path(path) {
                 effect.free();
                 continue;
             }

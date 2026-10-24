@@ -5,6 +5,10 @@
 [ext_resource type="RoseStatusEffect" uid="uid://dbi4ro2cc5h50" path="res://data/status_effects/23-magic-resistance-down.tres" id="3_32ws5"]
 [ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="4_lwaov"]
 [ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="5_1a620"]
+[ext_resource type="RoseEffectFile" uid="uid://dsah17k1ph7qw" path="res://data/effect_files/1801-mana-casting-01.tres" id="6_6ci42"]
+[ext_resource type="RoseEffectFile" uid="uid://c5hayox347bkc" path="res://data/effect_files/1811-mana-rotate-01.tres" id="7_f7qy8"]
+[ext_resource type="RoseAttackEffect" uid="uid://cfq3uqyqrc5hw" path="res://data/attack_effects/261-mana-bolt.tres" id="8_wptmt"]
+[ext_resource type="RoseEffectFile" uid="uid://b1laee8axwsgk" path="res://data/effect_files/1121-mana-hit-01.tres" id="9_ryiej"]
 
 [resource]
 id = 907
@@ -43,12 +47,12 @@ warp_zone = 19
 warp_y = 30000
 casting_motion_id = 101
 casting_repeat_motion_id = 102
-casting_effect_1 = 1801
-casting_effect_2 = 1811
+casting_effect_1 = ExtResource("6_6ci42")
+casting_effect_2 = ExtResource("7_f7qy8")
 casting_effect_2_point = 1
 action_motion_id = 103
-bullet_effect_id = 261
+bullet_effect = ExtResource("8_wptmt")
 bullet_point = 1
 bullet_fire_sound = ExtResource("4_lwaov")
-hit_effect_file_id = 1121
+hit_effect = ExtResource("9_ryiej")
 hit_sound = ExtResource("5_1a620")

@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://bhm8fi587xh0j"]
+
+[ext_resource type="RoseEffectFile" uid="uid://c7jmhf38r2eqd" path="res://data/effect_files/1075-poisonbullet-firing-01.tres" id="1_mta74"]
+[ext_resource type="RoseSound" uid="uid://bb6ywn24slw5b" path="res://data/sounds/skill/146-skill-magic08.tres" id="2_hjxku"]
+[ext_resource type="RoseEffectFile" uid="uid://b1laee8axwsgk" path="res://data/effect_files/1121-mana-hit-01.tres" id="3_knjfq"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_olfct"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="5_y58na"]
+
+[resource]
+id = 178
+name = "Poison Bullet"
+hit_effect = ExtResource("3_knjfq")
+hit_effect_critical = ExtResource("4_olfct")
+bullet_effect = ExtResource("1_mta74")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_hjxku")
+hit_sound = ExtResource("5_y58na")

@@ -173,6 +173,7 @@
 [ext_resource type="AudioStreamWAV" path="res://assets/rose/sound/terrain/motor_001.res" id="171_1djs1"]
 [ext_resource type="AudioStreamWAV" path="res://assets/rose/sound/terrain/bug_003.res" id="172_90xw8"]
 [ext_resource type="AudioStreamWAV" path="res://assets/rose/sound/terrain/fire_001.res" id="173_anco1"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/effect/bandy_01.scn" id="174_nzb35"]
 
 [sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_kcxia"]
 world_background = 0
@@ -3204,7 +3205,7 @@ transform = Transform3D(-0.52843404, 0.05173108, 0.84739697, 0.7716342, 0.445501
 [node name="Effects" type="Node3D" parent="Block_32_32" unique_id=1552069665]
 
 [node name="Effect_0" type="RoseEffectSpot" parent="Block_32_32/Effects" unique_id=100551162]
-effect = "3DDATA/EFFECT/BANDY_01.EFT"
+scene = ExtResource("174_nzb35")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5240.328, 7.1, -5192.5654)
 
 [node name="Sounds" type="Node3D" parent="Block_32_32" unique_id=1966037531]
@@ -4195,7 +4196,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5067.5024, 10.124111, -5099.1
 [node name="Effects" type="Node3D" parent="Block_31_33" unique_id=561573209]
 
 [node name="Effect_0" type="RoseEffectSpot" parent="Block_31_33/Effects" unique_id=1168472827]
-effect = "3DDATA/EFFECT/BANDY_01.EFT"
+scene = ExtResource("174_nzb35")
 transform = Transform3D(0.8660254, 0, -0.50000006, 0, 1, 0, 0.50000006, 0, 0.8660254, 5086.7144, 22.29223, -5069.394)
 
 [node name="Sounds" type="Node3D" parent="Block_31_33" unique_id=1743464978]

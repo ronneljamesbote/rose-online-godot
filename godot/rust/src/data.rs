@@ -204,6 +204,33 @@ fn load_sounds(vfs: &VirtualFilesystem) -> Result<Arc<SoundDatabase>, anyhow::Er
     rose_data_irose::get_sound_database(vfs)
 }
 
+/// The effect files and attack effects from the export, or without one from the iROSE
+/// tables. Only the game reads them (the server's upload doesn't send them).
+fn load_effects(vfs: &VirtualFilesystem) -> Result<Arc<EffectDatabase>, anyhow::Error> {
+    if let Some(dir) = find_export() {
+        let toml = rose_data_export::Format::Toml;
+        let export = rose_data_export::EffectsExport::from_files_as(toml, |name| {
+            let path = dir.join(rose_data_export::data_file_as(name, toml));
+            match std::fs::read_to_string(&path) {
+                Ok(text) => Ok(Some(text)),
+                Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(None),
+                Err(e) => Err(anyhow::Error::new(e).context(path.display().to_string())),
+            }
+        })?;
+        if let Some(export) = export {
+            godot::global::godot_print!(
+                "rose: {} effect files and {} attack effects from {}",
+                export.effect_files.len(),
+                export.attack_effects.len(),
+                dir.display()
+            );
+            return Ok(Arc::new(export.to_database()?));
+        }
+    }
+    godot::global::godot_warn!("rose: no effect export (export/data/effect-files.toml), the effects come from the iROSE tables");
+    rose_data_irose::get_effect_database(vfs)
+}
+
 pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
     if GAME_DATA.get().is_some() {
         return Ok(());
@@ -231,7 +258,7 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
 
     let decoder = rose_data_irose::get_data_decoder();
     let sounds = load_sounds(&vfs)?;
-    let effects = rose_data_irose::get_effect_database(&vfs)?;
+    let effects = load_effects(&vfs)?;
     let _ = GAME_DATA.set(GameData {
         vfs,
         zone_list,

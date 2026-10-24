@@ -3,6 +3,7 @@
 [ext_resource type="RoseDropTable" uid="uid://dq3l5wa4di0s8" path="res://data/drop_tables/134-pomic-soldier.tres" id="1_2huku"]
 [ext_resource type="RoseSound" uid="uid://b0v0bj24amgg3" path="res://data/sounds/mob/213-mob09-n.tres" id="2_ez55u"]
 [ext_resource type="RoseSound" uid="uid://6fo6grrhmlv1" path="res://data/sounds/mob/214-mob09-d.tres" id="3_c5fef"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="4_nkpkw"]
 
 [resource]
 id = 74
@@ -25,7 +26,7 @@ death_quest_trigger_name = "5006-34"
 npc_type_index = 2
 right_hand_part_index = 1031
 normal_effect_sound = ExtResource("2_ez55u")
-die_effect_file_id = 1401
+die_effect = ExtResource("4_nkpkw")
 die_sound = ExtResource("3_c5fef")
 drop_table = ExtResource("1_2huku")
 drop_money_rate = 30

@@ -3,6 +3,7 @@
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_2on59"]
 [ext_resource type="RoseSound" uid="uid://osald6eflwq1" path="res://data/sounds/attack/37-sword-001.tres" id="2_45ppw"]
 [ext_resource type="RoseSound" uid="uid://np80gbdh8gn3" path="res://data/sounds/attack/89-magic-001.tres" id="3_phsqw"]
+[ext_resource type="RoseAttackEffect" uid="uid://d000mujb4ag3q" path="res://data/attack_effects/216-flame-wand.tres" id="4_nsih8"]
 
 [resource]
 id = 795
@@ -28,7 +29,7 @@ attack_power = 81
 attack_speed = 12
 motion_type = 14
 is_magic_damage = true
-bullet_effect_id = 216
+bullet_effect = ExtResource("4_nsih8")
 attack_start_sound = ExtResource("2_45ppw")
 attack_fire_sound = ExtResource("3_phsqw")
 gem_position = 2

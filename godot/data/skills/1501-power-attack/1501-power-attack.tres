@@ -3,6 +3,10 @@
 [ext_resource type="RoseJobClass" uid="uid://n6tm3jlgaskg" path="res://data/job_classes/43-hawker-job.tres" id="1_hd8ua"]
 [ext_resource type="RoseSkill" uid="uid://bwlrvv7xm4hds" path="res://data/skills/1421-knuckle-mastery/1421-knuckle-mastery.tres" id="2_aym35"]
 [ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="3_h7bi8"]
+[ext_resource type="RoseEffectFile" uid="uid://b2kvgebw3flm4" path="res://data/effect_files/1041-heavy-casting-01.tres" id="4_jpq2t"]
+[ext_resource type="RoseEffectFile" uid="uid://ctbpjcwyxsbuj" path="res://data/effect_files/1042-heavy-rotate-01.tres" id="5_lizor"]
+[ext_resource type="RoseEffectFile" uid="uid://bfpflhnrkt00a" path="res://data/effect_files/1043-heavy-skill-01.tres" id="6_j8wux"]
+[ext_resource type="RoseEffectFile" uid="uid://d1m25iflnhebg" path="res://data/effect_files/1040-heavy-hit-01.tres" id="7_8clsj"]
 
 [resource]
 id = 1501
@@ -28,14 +32,14 @@ harm = 1
 item_make_number = 35
 casting_motion_id = 129
 casting_repeat_motion_id = 149
-casting_effect_1 = 1041
+casting_effect_1 = ExtResource("4_jpq2t")
 casting_effect_1_point = 3
-casting_effect_2 = 1042
+casting_effect_2 = ExtResource("5_lizor")
 casting_effect_2_point = 3
-casting_effect_3 = 1043
+casting_effect_3 = ExtResource("6_j8wux")
 casting_effect_3_point = 0
-casting_effect_4 = 1043
+casting_effect_4 = ExtResource("6_j8wux")
 casting_effect_4_point = 1
 action_motion_id = 94
-hit_effect_file_id = 1040
+hit_effect = ExtResource("7_8clsj")
 hit_sound = ExtResource("3_h7bi8")

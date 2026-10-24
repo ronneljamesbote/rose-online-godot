@@ -16,6 +16,10 @@
 //! A sound becomes a `.res`: Godot's own `AudioStreamWAV` or `AudioStreamOggVorbis` of the
 //! file (`Sound/attack/Sword_001.wav` -> `res://assets/rose/sound/attack/sword_001.res`),
 //! which the sound resources (`RoseSound`) and the zone music link.
+//!
+//! An effect becomes a scene: each EFT file a `.scn` (a `RoseEffect` with its parts, see
+//! `effect.rs`) and each PTL file a `RoseParticleSystem` in a `.particles.res`, linking the
+//! effects' imported meshes and textures, which the effect resources (`RoseEffectFile`) link.
 
 use std::{collections::BTreeMap, path::Path, time::Instant};
 
@@ -35,8 +39,8 @@ pub const ROSE: &str = "res://assets/rose/";
 const IMPORT_VERSION: i64 = 4;
 const STAMP: &str = "res://assets/rose/import.cfg";
 
-/// Folders that stay in data.idx for now: effects and the interface.
-const SKIPPED: [&str; 2] = ["3DDATA/EFFECT/", "3DDATA/CONTROL/"];
+/// Folders that stay in data.idx for now: the interface.
+const SKIPPED: [&str; 1] = ["3DDATA/CONTROL/"];
 
 /// Where the client keeps its sounds: loose files next to data.idx, outside the VFS.
 const SOUND_FOLDER: &str = "Sound";
@@ -45,12 +49,16 @@ const SOUND_FOLDER: &str = "Sound";
 /// WAV and OGG files of our own (Godot imports those in the editor).
 pub const AUDIO_EXTENSIONS: &[&str] = &["res", "wav", "ogg"];
 
-/// What a ROSE file becomes: Godot's binary mesh, a texture or an audio resource.
+/// What a ROSE file becomes: Godot's binary mesh, a texture, an audio resource, a particle
+/// system or an effect scene. Particle systems and effects come last, as they link the
+/// others.
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug)]
 enum Kind {
     Mesh,
     Texture,
     Sound,
+    Particles,
+    Effect,
 }
 
 impl Kind {
@@ -62,6 +70,10 @@ impl Kind {
             Some(Kind::Texture)
         } else if upper.ends_with(".WAV") || upper.ends_with(".OGG") {
             Some(Kind::Sound)
+        } else if upper.ends_with(".PTL") {
+            Some(Kind::Particles)
+        } else if upper.ends_with(".EFT") {
+            Some(Kind::Effect)
         } else {
             None
         }
@@ -73,6 +85,8 @@ impl Kind {
             Kind::Mesh => &["mesh", "res"],
             Kind::Texture => &["rtex", "res", "png", "dds"],
             Kind::Sound => AUDIO_EXTENSIONS,
+            Kind::Particles => crate::effect::PARTICLE_EXTENSIONS,
+            Kind::Effect => crate::effect::SCENE_EXTENSIONS,
         }
     }
 }
@@ -204,8 +218,9 @@ pub fn load_assets_pack() {
     }
 }
 
-/// The import command: converts every ZMS mesh and DDS texture in data.idx (outside the
-/// skipped folders) and every sound in the client's sound folder into `res://assets/rose/`.
+/// The import command: converts every ZMS mesh, DDS texture, PTL particle system and EFT
+/// effect in data.idx (outside the skipped folders) and every sound in the client's sound
+/// folder into `res://assets/rose/`.
 #[derive(GodotClass)]
 #[class(base=RefCounted, init)]
 struct RoseImport {
@@ -215,8 +230,9 @@ struct RoseImport {
 #[godot_api]
 impl RoseImport {
     /// Needs RoseData.open first. Files already converted by this importer version are
-    /// kept unless `force`. Returns {meshes, textures, sounds, failed, skipped, bytes, seconds,
-    /// folders: {top folder: bytes}}.
+    /// kept unless `force`. Returns {meshes, textures, sounds, effects (particle systems and
+    /// effect scenes), empty_effects (EFT files with nothing to show, left out), failed,
+    /// skipped, bytes, seconds, folders: {top folder: bytes}}.
     #[func]
     fn run(force: bool) -> VarDictionary {
         let mut result = VarDictionary::new();
@@ -236,6 +252,7 @@ impl RoseImport {
         let mut stamp = ConfigFile::new_gd();
         let same_version = stamp.load(STAMP) == Error::OK && stamp.get_value_ex("import", "version").default(&Variant::nil()).done().try_to::<i64>().ok() == Some(IMPORT_VERSION);
         let redo = force || !same_version;
+        let same_effects = same_version && stamp.get_value_ex("import", "effects").default(&0.to_variant()).done().try_to::<i64>().ok() == Some(crate::effect::EFFECT_IMPORT_VERSION);
 
         let mut files: Vec<(Kind, String)> = index
             .file_paths()
@@ -253,12 +270,14 @@ impl RoseImport {
             // would be left over and shipped, so start from an empty folder.
             let _ = std::fs::remove_dir_all(&root);
         }
-        let (mut meshes, mut textures, mut sounds, mut failed, mut kept) = (0, 0, 0, 0, 0);
+        let (mut meshes, mut textures, mut sounds, mut effects, mut failed, mut kept) = (0, 0, 0, 0, 0, 0);
+        let mut empty_effects = 0;
         let mut folders: BTreeMap<String, u64> = BTreeMap::new();
         let mut total_bytes = 0u64;
         for (i, (kind, rose_path)) in files.iter().enumerate() {
             let target = format!("{ROSE}{}.{}", stem(rose_path), kind.extensions()[0]);
             let disk = Path::new(&root).join(target.trim_start_matches(ROSE));
+            let redo = redo || (matches!(kind, Kind::Particles | Kind::Effect) && !same_effects);
             if redo || !disk.is_file() {
                 let saved = match kind {
                     Kind::Mesh => crate::data::read_file::<ZmsFile>(rose_path)
@@ -266,12 +285,22 @@ impl RoseImport {
                         .map(|mesh| save(mesh.upcast(), &target)),
                     Kind::Texture => Some(save_texture(rose_path, &target)),
                     Kind::Sound => Some(save_sound(rose_path, &target)),
+                    Kind::Particles => Some(crate::effect::import_particle_system(rose_path, &target)),
+                    Kind::Effect => match crate::effect::import_effect(rose_path, &target) {
+                        Some(saved) => Some(saved),
+                        None => {
+                            // Unreadable or empty in the client data: the game shows nothing for it either.
+                            empty_effects += 1;
+                            continue;
+                        }
+                    },
                 };
                 match saved {
                     Some(true) => match kind {
                         Kind::Mesh => meshes += 1,
                         Kind::Texture => textures += 1,
                         Kind::Sound => sounds += 1,
+                        Kind::Particles | Kind::Effect => effects += 1,
                     },
                     _ => {
                         failed += 1;
@@ -291,6 +320,7 @@ impl RoseImport {
         }
 
         stamp.set_value("import", "version", &IMPORT_VERSION.to_variant());
+        stamp.set_value("import", "effects", &crate::effect::EFFECT_IMPORT_VERSION.to_variant());
 
         // Player characters: skeletons, part scenes, motions and motion libraries.
         let same_avatars = same_version && stamp.get_value_ex("import", "avatars").default(&Variant::nil()).done().try_to::<i64>().ok() == Some(crate::character::AVATAR_IMPORT_VERSION);
@@ -313,6 +343,8 @@ impl RoseImport {
         result.set("meshes", meshes);
         result.set("textures", textures);
         result.set("sounds", sounds);
+        result.set("effects", effects);
+        result.set("empty_effects", empty_effects);
         result.set("failed", failed + avatars.failed + zones.failed);
         result.set("zone_files", zones.saved);
         result.set("zone_kept", zones.kept);

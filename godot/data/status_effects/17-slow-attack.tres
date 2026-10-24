@@ -1,5 +1,7 @@
 [gd_resource type="RoseStatusEffect" format=3 uid="uid://dd08udjftntul"]
 
+[ext_resource type="RoseEffectFile" uid="uid://dvg71bqgoh6w6" path="res://data/effect_files/182-atspeed-down-01.tres" id="1_9g1gj"]
+
 [resource]
 id = 17
 name = "Slow Attack"
@@ -8,5 +10,5 @@ start_message = "Attack Speed has returned to normal."
 status_effect_type = "DecreaseAttackSpeed"
 can_be_reapplied = true
 cleared_by = "ClearBad"
-effect_file_id = 182
+effect = ExtResource("1_9g1gj")
 icon_id = 24

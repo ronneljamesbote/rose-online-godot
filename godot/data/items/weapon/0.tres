@@ -2,10 +2,11 @@
 
 [ext_resource type="RoseSound" uid="uid://ck2i5dewxgdlp" path="res://data/sounds/attack/31-hands-001.tres" id="1_reqfl"]
 [ext_resource type="RoseHitSounds" uid="uid://1gurcxn0p0c2" path="res://data/hit_sounds/1-hands-hits.tres" id="2_r3h6o"]
+[ext_resource type="RoseAttackEffect" uid="uid://dy7uio03t7ie4" path="res://data/attack_effects/101-attack-effect-101.tres" id="3_t6avo"]
 
 [resource]
 attack_range = 100
 attack_speed = 8
-effect_id = 101
+attack_effect = ExtResource("3_t6avo")
 attack_start_sound = ExtResource("1_reqfl")
 hit_sounds = ExtResource("2_r3h6o")

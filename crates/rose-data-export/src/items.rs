@@ -264,8 +264,8 @@ item_export!(
         attack_speed: i32,
         motion_type: u32,
         is_magic_damage: bool,
-        bullet_effect_id: u16,
-        effect_id: u16,
+        bullet_effect: u16,
+        attack_effect: u16,
         attack_start_sound: u16,
         attack_fire_sound: u16,
         hit_sounds: u32,
@@ -295,7 +295,7 @@ item_export!(
         status_effect_value: i32,
         cooldown_type_id: usize,
         cooldown_seconds: u32,
-        effect_file_id: u16,
+        effect: u16,
         effect_sound: u16,
     }
 );
@@ -306,14 +306,14 @@ item_export!(
         gem_stat_1_value: i32,
         gem_stat_2: Option<AbilityType>,
         gem_stat_2_value: i32,
-        gem_effect_id: u16,
+        gem_effect: u16,
         gem_sprite_id: u32,
     }
 );
 item_export!(
     /// A crafting material or ammunition (`material.toml`).
     MaterialExport, Material {
-        bullet_effect_id: u16,
+        bullet_effect: u16,
     }
 );
 item_export!(
@@ -336,21 +336,21 @@ item_export!(
         base_avatar_motion_index: u32,
         skill_requirement_id: u16,
         skill_requirement_level: i32,
-        ride_effect_file_id: u16,
+        ride_effect: u16,
         ride_sound: u16,
-        dismount_effect_file_id: u16,
+        dismount_effect: u16,
         dismount_sound: u16,
-        dead_effect_file_id: u16,
+        dead_effect: u16,
         dead_sound: u16,
         stop_sound: u16,
-        move_effect_file_id: u16,
+        move_effect: u16,
         move_sound: u16,
-        hit_effect_id: u16,
+        hit_effect: u16,
         hit_sound: u16,
-        bullet_effect_id: u16,
+        bullet_effect: u16,
         bullet_fire_point: u32,
         /// Up to 8 effect files, 0 for none; trailing zeros left out.
-        dummy_effect_file_ids: Vec<u16>,
+        dummy_effects: Vec<u16>,
         has_seat: bool,
     }
 );
@@ -462,8 +462,8 @@ impl WeaponExport {
             attack_speed: item.attack_speed,
             motion_type: item.motion_type,
             is_magic_damage: item.is_magic_damage,
-            bullet_effect_id: number(item.bullet_effect_id, EffectId::get),
-            effect_id: number(item.effect_id, EffectId::get),
+            bullet_effect: number(item.bullet_effect_id, EffectId::get),
+            attack_effect: number(item.effect_id, EffectId::get),
             attack_start_sound: number(item.attack_start_sound_id, SoundId::get),
             attack_fire_sound: number(item.attack_fire_sound_id, SoundId::get),
             hit_sounds: item.attack_hit_sound_index,
@@ -482,8 +482,8 @@ impl WeaponExport {
             attack_speed: self.attack_speed,
             motion_type: self.motion_type,
             is_magic_damage: self.is_magic_damage,
-            bullet_effect_id: id(self.bullet_effect_id, EffectId::new),
-            effect_id: id(self.effect_id, EffectId::new),
+            bullet_effect_id: id(self.bullet_effect, EffectId::new),
+            effect_id: id(self.attack_effect, EffectId::new),
             attack_start_sound_id: id(self.attack_start_sound, SoundId::new),
             attack_fire_sound_id: id(self.attack_fire_sound, SoundId::new),
             attack_hit_sound_index: self.hit_sounds,
@@ -533,7 +533,7 @@ impl ConsumableExport {
             status_effect_value,
             cooldown_type_id: item.cooldown_type_id,
             cooldown_seconds: item.cooldown_duration.as_secs() as u32,
-            effect_file_id: number(item.effect_file_id, EffectFileId::get),
+            effect: number(item.effect_file_id, EffectFileId::get),
             effect_sound: number(item.effect_sound_id, SoundId::get),
             ..Default::default()
         };
@@ -556,7 +556,7 @@ impl ConsumableExport {
                 .map(|id| (id, self.status_effect_value)),
             cooldown_type_id: self.cooldown_type_id,
             cooldown_duration: Duration::from_secs(self.cooldown_seconds as u64),
-            effect_file_id: id(self.effect_file_id, EffectFileId::new),
+            effect_file_id: id(self.effect, EffectFileId::new),
             effect_sound_id: id(self.effect_sound, SoundId::new),
         })
     }
@@ -576,7 +576,7 @@ impl GemExport {
             gem_stat_1_value,
             gem_stat_2,
             gem_stat_2_value,
-            gem_effect_id: number(item.gem_effect_id, EffectId::get),
+            gem_effect: number(item.gem_effect_id, EffectId::get),
             gem_sprite_id: item.gem_sprite_id,
             ..Default::default()
         };
@@ -594,7 +594,7 @@ impl GemExport {
             .into_iter()
             .flatten()
             .collect(),
-            gem_effect_id: id(self.gem_effect_id, EffectId::new),
+            gem_effect_id: id(self.gem_effect, EffectId::new),
             gem_sprite_id: self.gem_sprite_id,
         })
     }
@@ -603,7 +603,7 @@ impl GemExport {
 impl MaterialExport {
     pub fn from_data(item: &MaterialItemData) -> Self {
         let mut out = Self {
-            bullet_effect_id: number(item.bullet_effect_id, EffectId::get),
+            bullet_effect: number(item.bullet_effect_id, EffectId::get),
             ..Default::default()
         };
         out.set_base(&item.item_data);
@@ -613,7 +613,7 @@ impl MaterialExport {
     pub fn to_data(&self, text: &mut Vec<String>) -> Result<MaterialItemData, anyhow::Error> {
         Ok(MaterialItemData {
             item_data: self.base(text)?,
-            bullet_effect_id: id(self.bullet_effect_id, EffectId::new),
+            bullet_effect_id: id(self.bullet_effect, EffectId::new),
         })
     }
 }
@@ -645,20 +645,20 @@ impl VehicleExport {
             base_avatar_motion_index: item.base_avatar_motion_index,
             skill_requirement_id,
             skill_requirement_level,
-            ride_effect_file_id: number(item.ride_effect_file_id, EffectFileId::get),
+            ride_effect: number(item.ride_effect_file_id, EffectFileId::get),
             ride_sound: number(item.ride_sound_id, SoundId::get),
-            dismount_effect_file_id: number(item.dismount_effect_file_id, EffectFileId::get),
+            dismount_effect: number(item.dismount_effect_file_id, EffectFileId::get),
             dismount_sound: number(item.dismount_sound_id, SoundId::get),
-            dead_effect_file_id: number(item.dead_effect_file_id, EffectFileId::get),
+            dead_effect: number(item.dead_effect_file_id, EffectFileId::get),
             dead_sound: number(item.dead_sound_id, SoundId::get),
             stop_sound: number(item.stop_sound_id, SoundId::get),
-            move_effect_file_id: number(item.move_effect_file_id, EffectFileId::get),
+            move_effect: number(item.move_effect_file_id, EffectFileId::get),
             move_sound: number(item.move_sound_id, SoundId::get),
-            hit_effect_id: number(item.hit_effect_id, EffectId::get),
+            hit_effect: number(item.hit_effect_id, EffectId::get),
             hit_sound: number(item.hit_sound_id, SoundId::get),
-            bullet_effect_id: number(item.bullet_effect_id, EffectId::get),
+            bullet_effect: number(item.bullet_effect_id, EffectId::get),
             bullet_fire_point: item.bullet_fire_point,
-            dummy_effect_file_ids,
+            dummy_effects: dummy_effect_file_ids,
             has_seat: item.has_seat,
             ..Default::default()
         };
@@ -667,16 +667,16 @@ impl VehicleExport {
     }
 
     pub fn to_data(&self, text: &mut Vec<String>) -> Result<VehicleItemData, anyhow::Error> {
-        if self.dummy_effect_file_ids.len() > 8 {
+        if self.dummy_effects.len() > 8 {
             bail!(
-                "dummy_effect_file_ids has {} entries, at most 8",
-                self.dummy_effect_file_ids.len()
+                "dummy_effects has {} entries, at most 8",
+                self.dummy_effects.len()
             );
         }
         let mut dummy_effect_file_ids = [None; 8];
         for (slot, number) in dummy_effect_file_ids
             .iter_mut()
-            .zip(&self.dummy_effect_file_ids)
+            .zip(&self.dummy_effects)
         {
             *slot = id(*number, EffectFileId::new);
         }
@@ -695,18 +695,18 @@ impl VehicleExport {
             base_avatar_motion_index: self.base_avatar_motion_index,
             equip_skill_requirement: id(self.skill_requirement_id, SkillId::new)
                 .map(|id| (id, self.skill_requirement_level)),
-            ride_effect_file_id: id(self.ride_effect_file_id, EffectFileId::new),
+            ride_effect_file_id: id(self.ride_effect, EffectFileId::new),
             ride_sound_id: id(self.ride_sound, SoundId::new),
-            dismount_effect_file_id: id(self.dismount_effect_file_id, EffectFileId::new),
+            dismount_effect_file_id: id(self.dismount_effect, EffectFileId::new),
             dismount_sound_id: id(self.dismount_sound, SoundId::new),
-            dead_effect_file_id: id(self.dead_effect_file_id, EffectFileId::new),
+            dead_effect_file_id: id(self.dead_effect, EffectFileId::new),
             dead_sound_id: id(self.dead_sound, SoundId::new),
             stop_sound_id: id(self.stop_sound, SoundId::new),
-            move_effect_file_id: id(self.move_effect_file_id, EffectFileId::new),
+            move_effect_file_id: id(self.move_effect, EffectFileId::new),
             move_sound_id: id(self.move_sound, SoundId::new),
-            hit_effect_id: id(self.hit_effect_id, EffectId::new),
+            hit_effect_id: id(self.hit_effect, EffectId::new),
             hit_sound_id: id(self.hit_sound, SoundId::new),
-            bullet_effect_id: id(self.bullet_effect_id, EffectId::new),
+            bullet_effect_id: id(self.bullet_effect, EffectId::new),
             bullet_fire_point: self.bullet_fire_point,
             dummy_effect_file_ids,
             has_seat: self.has_seat,

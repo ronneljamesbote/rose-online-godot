@@ -4,6 +4,9 @@
 [ext_resource type="RoseStatusEffect" uid="uid://f0qogt2u3ycl" path="res://data/status_effects/9-poisoned-3.tres" id="2_y4j6l"]
 [ext_resource type="RoseSound" uid="uid://42rl1pnpcxo3" path="res://data/sounds/skill/148-heavyarr001.tres" id="3_b0d9x"]
 [ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="4_67exk"]
+[ext_resource type="RoseEffectFile" uid="uid://b2kvgebw3flm4" path="res://data/effect_files/1041-heavy-casting-01.tres" id="5_lotrx"]
+[ext_resource type="RoseAttackEffect" uid="uid://cjgtu0rdyv1ro" path="res://data/attack_effects/262-ice-bolt.tres" id="6_822hb"]
+[ext_resource type="RoseEffectFile" uid="uid://cp2jbsgybpgic" path="res://data/effect_files/110-gun-blowup-01.tres" id="7_f5rnz"]
 
 [resource]
 id = 2276
@@ -33,11 +36,11 @@ status_effect_1 = ExtResource("2_y4j6l")
 status_effect_seconds = 21
 casting_motion_id = 95
 casting_repeat_motion_id = 96
-casting_effect_1 = 1041
+casting_effect_1 = ExtResource("5_lotrx")
 casting_effect_1_point = 3
 action_motion_id = 97
-bullet_effect_id = 262
+bullet_effect = ExtResource("6_822hb")
 bullet_point = 1
 bullet_fire_sound = ExtResource("3_b0d9x")
-hit_effect_file_id = 110
+hit_effect = ExtResource("7_f5rnz")
 hit_sound = ExtResource("4_67exk")

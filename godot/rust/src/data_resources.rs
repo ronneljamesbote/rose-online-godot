@@ -42,8 +42,9 @@ use rose_data_export::items::{
 use rose_data_export::npcs::{DropTableExport, MonsterExport, NpcExport, ShopTabExport};
 use rose_data_export::skills::{JobClassExport, SkillExport, StatusEffectExport};
 use rose_data_export::sounds::{FootstepsExport, HitSoundsExport, SoundExport};
+use rose_data_export::effects::{AttackEffectExport, EffectFileExport};
 use rose_data_export::world::{CraftRecipeExport, NewCharacterExport, WarpGateExport, ZoneExport};
-use rose_data_export::{ItemsExport, NpcsExport, SkillsExport, SoundsExport, WorldExport};
+use rose_data_export::{EffectsExport, ItemsExport, NpcsExport, SkillsExport, SoundsExport, WorldExport};
 use serde::{de::DeserializeOwned, Serialize};
 use serde_json::{Map, Value};
 
@@ -67,6 +68,9 @@ pub const NEW_CHARACTERS_DIR: &str = "res://data/new_characters/";
 pub const SOUNDS_DIR: &str = "res://data/sounds/";
 pub const HIT_SOUNDS_DIR: &str = "res://data/hit_sounds/";
 pub const FOOTSTEPS_DIR: &str = "res://data/footsteps/";
+/// Where the effect file and attack effect resources live.
+pub const EFFECT_FILES_DIR: &str = "res://data/effect_files/";
+pub const ATTACK_EFFECTS_DIR: &str = "res://data/attack_effects/";
 
 /// Where to find a linked resource by what the export holds: `items/weapon/3`,
 /// `drop_table/147`, `shop_tab/12` -> its `res://` path.
@@ -118,6 +122,8 @@ fn enum_hint(property: &mut PropertyInfo) {
             .collect()
     } else if name == "vehicle_type" {
         vec!["Cart".into(), "CastleGear".into()]
+    } else if name == "bullet_move" {
+        vec![NO_STAT.into(), "Linear".into(), "Parabola".into(), "Immediate".into()]
     } else if name == "vehicle_part" {
         vec!["Body".into(), "Engine".into(), "Leg".into(), "Arms".into()]
     } else {
@@ -333,10 +339,12 @@ item_resource!(
         motion_type: i64,
         /// Hits with magic damage (staffs and wands) instead of physical.
         is_magic_damage: bool,
-        /// The projectile it shoots (an effect number, 0 = none).
-        bullet_effect_id: i64,
-        /// The effect drawn on the weapon (0 = none).
-        effect_id: i64,
+        /// The projectile it shoots (empty = none): drag a `RoseAttackEffect` in from
+        /// `res://data/attack_effects/`. Bows and guns shoot their ammunition's instead.
+        bullet_effect: Option<Gd<RoseAttackEffect>>,
+        /// How its attacks look (empty = none): the effects on the weapon, its trail and the
+        /// spark on what it hits, a `RoseAttackEffect`.
+        attack_effect: Option<Gd<RoseAttackEffect>>,
         /// The sound when the swing starts (empty = none).
         attack_start_sound: Option<Gd<RoseSound>>,
         /// The sound when it fires (empty = its projectile's sound).
@@ -394,8 +402,9 @@ item_resource!(
         cooldown_type_id: i64,
         /// Seconds before an item of the same cooldown type can be used again.
         cooldown_seconds: i64,
-        /// The effect played when it is used (0 = none).
-        effect_file_id: i64,
+        /// The effect played when it is used (empty = none): drag a `RoseEffectFile` in from
+        /// `res://data/effect_files/`.
+        effect: Option<Gd<RoseEffectFile>>,
         /// The sound played when it is used (empty = none).
         effect_sound: Option<Gd<RoseSound>>,
     }
@@ -415,8 +424,9 @@ item_resource!(
         gem_stat_2: GString,
         /// How much the second one adds.
         gem_stat_2_value: i64,
-        /// The glow effect on the socketed item (0 = none).
-        gem_effect_id: i64,
+        /// The glow on the socketed item (empty = none): a `RoseAttackEffect` whose point
+        /// effects are drawn on the weapon.
+        gem_effect: Option<Gd<RoseAttackEffect>>,
         /// The gem's picture in the socket.
         gem_sprite_id: i64,
     }
@@ -425,9 +435,10 @@ item_resource!(
     /// A crafting material or ammunition. Edit it here, then run `--export-data` (see
     /// `godot/data/README.md`).
     RoseItemMaterial {
-        /// Arrows, bullets and shells: the projectile they fly as (0 = none).
+        /// Arrows, bullets and shells: the projectile they fly as (empty = none), a
+        /// `RoseAttackEffect` from `res://data/attack_effects/`.
         #[export_group(name = "Material")]
-        bullet_effect_id: i64,
+        bullet_effect: Option<Gd<RoseAttackEffect>>,
     }
 );
 item_resource!(
@@ -467,34 +478,35 @@ item_resource!(
         skill_requirement_id: i64,
         /// The level of that skill needed.
         skill_requirement_level: i64,
-        /// Effect when getting on (0 = none).
-        ride_effect_file_id: i64,
+        /// Effect when getting on (empty = none): a `RoseEffectFile`.
+        ride_effect: Option<Gd<RoseEffectFile>>,
         /// Sound when getting on (empty = none).
         ride_sound: Option<Gd<RoseSound>>,
         /// Effect when getting off.
-        dismount_effect_file_id: i64,
+        dismount_effect: Option<Gd<RoseEffectFile>>,
         /// Sound when getting off.
         dismount_sound: Option<Gd<RoseSound>>,
         /// Effect when it is destroyed.
-        dead_effect_file_id: i64,
+        dead_effect: Option<Gd<RoseEffectFile>>,
         /// Sound when it is destroyed.
         dead_sound: Option<Gd<RoseSound>>,
         /// Sound when it stops.
         stop_sound: Option<Gd<RoseSound>>,
         /// Effect while moving.
-        move_effect_file_id: i64,
+        move_effect: Option<Gd<RoseEffectFile>>,
         /// Sound while moving.
         move_sound: Option<Gd<RoseSound>>,
-        /// Effect on the target when its weapon hits.
-        hit_effect_id: i64,
+        /// How its weapon's hits look (a `RoseAttackEffect`).
+        hit_effect: Option<Gd<RoseAttackEffect>>,
         /// Sound on the target when its weapon hits.
         hit_sound: Option<Gd<RoseSound>>,
-        /// The projectile its weapon fires.
-        bullet_effect_id: i64,
+        /// The projectile its weapon fires (a `RoseAttackEffect`).
+        bullet_effect: Option<Gd<RoseAttackEffect>>,
         /// The model point the projectile leaves from.
         bullet_fire_point: i64,
-        /// Up to 8 effects fixed to the model's points (0 = none).
-        dummy_effect_file_ids: PackedInt32Array,
+        /// Up to 8 effects fixed to the model's points, in order (`RoseEffectFile`s; an
+        /// empty place = none on that point).
+        dummy_effects: Array<Option<Gd<RoseEffectFile>>>,
         /// It has a second seat: the driver can take a passenger.
         has_seat: bool,
     }
@@ -638,12 +650,14 @@ macro_rules! character_resource {
             /// The sound when it is hit (empty = none).
             #[export]
             hitted_sound: Option<Gd<RoseSound>>,
-            /// The effect on its target when its hand hits (0 = none).
+            /// How its bare-hand hits look on its target (empty = none): drag a
+            /// `RoseAttackEffect` in from `res://data/attack_effects/`.
             #[export]
-            hand_hit_effect_id: i64,
-            /// The effect when it dies (0 = none).
+            hand_hit_effect: Option<Gd<RoseAttackEffect>>,
+            /// The effect when it dies (empty = none): a `RoseEffectFile` from
+            /// `res://data/effect_files/`.
             #[export]
-            die_effect_file_id: i64,
+            die_effect: Option<Gd<RoseEffectFile>>,
             /// The sound when it dies (empty = none).
             #[export]
             die_sound: Option<Gd<RoseSound>>,
@@ -994,30 +1008,31 @@ pub struct RoseSkill {
     #[export]
     #[init(val = 1)]
     casting_repeat_motion_count: i64,
-    /// An effect while casting (an effect file number, 0 = none).
+    /// An effect while casting (empty = none): drag a `RoseEffectFile` in from
+    /// `res://data/effect_files/`.
     #[export]
-    casting_effect_1: i64,
+    casting_effect_1: Option<Gd<RoseEffectFile>>,
     /// The model point it sits on (-1 = the character's position).
     #[export]
     #[init(val = -1)]
     casting_effect_1_point: i64,
     /// A second casting effect.
     #[export]
-    casting_effect_2: i64,
+    casting_effect_2: Option<Gd<RoseEffectFile>>,
     /// Its model point (-1 = none).
     #[export]
     #[init(val = -1)]
     casting_effect_2_point: i64,
     /// A third casting effect.
     #[export]
-    casting_effect_3: i64,
+    casting_effect_3: Option<Gd<RoseEffectFile>>,
     /// Its model point (-1 = none).
     #[export]
     #[init(val = -1)]
     casting_effect_3_point: i64,
     /// A fourth casting effect.
     #[export]
-    casting_effect_4: i64,
+    casting_effect_4: Option<Gd<RoseEffectFile>>,
     /// Its model point (-1 = none).
     #[export]
     #[init(val = -1)]
@@ -1029,9 +1044,11 @@ pub struct RoseSkill {
     #[export(range = (1.0, 1000.0, 1.0, or_greater, suffix = "%"))]
     #[init(val = 100)]
     action_motion_speed: i64,
-    /// The projectile it fires (an effect number, 0 = none).
+    /// The projectile it fires (empty = none): a `RoseAttackEffect` from
+    /// `res://data/attack_effects/` (its bullet, speed, flight and hit). A self skill shows
+    /// the projectile's bullet effect on its caster instead.
     #[export]
-    bullet_effect_id: i64,
+    bullet_effect: Option<Gd<RoseAttackEffect>>,
     /// The model point the projectile leaves from.
     #[export]
     bullet_point: i64,
@@ -1039,9 +1056,9 @@ pub struct RoseSkill {
     /// `res://data/sounds/`.
     #[export]
     bullet_fire_sound: Option<Gd<RoseSound>>,
-    /// The effect on the target when it hits (an effect file number, 0 = none).
+    /// The effect on the target when it hits (empty = none): a `RoseEffectFile`.
     #[export]
-    hit_effect_file_id: i64,
+    hit_effect: Option<Gd<RoseEffectFile>>,
     /// The target's model point the hit effect sits on (-1 = none).
     #[export]
     #[init(val = -1)]
@@ -1049,15 +1066,15 @@ pub struct RoseSkill {
     /// The sound when it hits (empty = none).
     #[export]
     hit_sound: Option<Gd<RoseSound>>,
-    /// A second effect on the target when it hits (0 = none).
+    /// A second effect on the target when it hits (empty = none).
     #[export]
-    hit_dummy_effect_1: i64,
+    hit_dummy_effect_1: Option<Gd<RoseEffectFile>>,
     /// Its sound (empty = none).
     #[export]
     hit_dummy_sound_1: Option<Gd<RoseSound>>,
-    /// A third effect on the target when it hits (0 = none).
+    /// A third effect on the target when it hits (empty = none).
     #[export]
-    hit_dummy_effect_2: i64,
+    hit_dummy_effect_2: Option<Gd<RoseEffectFile>>,
     /// Its sound (empty = none).
     #[export]
     hit_dummy_sound_2: Option<Gd<RoseSound>>,
@@ -1118,9 +1135,10 @@ pub struct RoseStatusEffect {
     /// Its amount per second.
     #[export]
     apply_status_effect_2_value: i64,
-    /// The effect drawn on the character while it lasts (an effect file number, 0 = none).
+    /// The effect drawn on the character while it lasts (empty = none): drag a
+    /// `RoseEffectFile` in from `res://data/effect_files/`.
     #[export]
-    effect_file_id: i64,
+    effect: Option<Gd<RoseEffectFile>>,
     /// The icon over the character frame: its number in the status icon sheet.
     #[export]
     icon_id: i64,
@@ -1476,6 +1494,80 @@ pub struct RoseFootsteps {
     base: Base<Resource>,
 }
 
+/// An effect the game can show, by the number items, monsters, skills, status effects and
+/// attack effects link it with: an effect scene (a `RoseEffect` with its particle and mesh
+/// parts). Open the scene to see it play. Edit it here, then run `--export-data`.
+#[derive(GodotClass)]
+#[class(tool, base=Resource, init)]
+pub struct RoseEffectFile {
+    /// The number (iROSE's FILE_EFFECT.STB row). A new effect takes any free number.
+    #[export]
+    id: i64,
+    /// For finding it only (the file's name).
+    #[export]
+    name: GString,
+    /// The effect scene: drag one in, such as the imported
+    /// `res://assets/rose/3ddata/effect/levelup_01.scn` or a scene of our own in
+    /// `res://assets/ours/` (empty = nothing shows). A scene in `res://assets/ours/` with the
+    /// same path as an imported one plays instead of it.
+    #[export]
+    scene: Option<Gd<PackedScene>>,
+    base: Base<Resource>,
+}
+
+/// How an attack looks: the effects on the weapon, the swing's trail, the projectile and its
+/// flight, and the hit. Weapons, gems, ammunition, cart parts, monsters and skills link it.
+/// Edit it here, then run `--export-data`.
+#[derive(GodotClass)]
+#[class(tool, base=Resource, init)]
+pub struct RoseAttackEffect {
+    /// The number (iROSE's LIST_EFFECT.STB row). A new one takes any free number.
+    #[export]
+    id: i64,
+    /// For finding it only (the first thing that uses it).
+    #[export]
+    name: GString,
+    /// Effects drawn on the weapon's effect points, in order (up to 4 `RoseEffectFile`s).
+    #[export]
+    point_effects: Array<Option<Gd<RoseEffectFile>>>,
+    /// The colour of the swing's trail (a row of the client's trail colours, 0 = no trail).
+    #[export]
+    trail_colour: i64,
+    /// How long the trail stays, in milliseconds.
+    #[export]
+    trail_milliseconds: i64,
+    /// The effect on the target when it hits (empty = none).
+    #[export]
+    hit_effect: Option<Gd<RoseEffectFile>>,
+    /// The effect on the target on a critical hit (empty = the normal one).
+    #[export]
+    hit_effect_critical: Option<Gd<RoseEffectFile>>,
+    /// The projectile (empty = none): an arrow, a bullet, a fire ball.
+    #[export]
+    bullet_effect: Option<Gd<RoseEffectFile>>,
+    /// How the projectile flies: Linear (straight to the target), Parabola (in an arc) or
+    /// Immediate (appears on the target).
+    #[export]
+    bullet_move: GString,
+    /// How fast the projectile flies, in centimetres per second.
+    #[export]
+    bullet_speed: f32,
+    /// The sound when it shoots (empty = none).
+    #[export]
+    fire_sound: Option<Gd<RoseSound>>,
+    /// The sound when it hits (empty = none).
+    #[export]
+    hit_sound: Option<Gd<RoseSound>>,
+    base: Base<Resource>,
+}
+
+#[godot_api]
+impl IResource for RoseAttackEffect {
+    fn on_validate_property(&self, property: &mut PropertyInfo) {
+        enum_hint(property);
+    }
+}
+
 /// `find`'s index of one folder: each number's file (and name), and when it was made.
 type FoundIndex = (std::time::Instant, std::collections::HashMap<i64, (String, String)>);
 
@@ -1542,8 +1634,9 @@ const ITEM_CLASSES: [(&str, &str); 15] = [
     ("RoseItemGrade", GRADES_FILE),
 ];
 
-/// The saved properties a class declares itself: name and type.
-fn own_properties(class: &str) -> Vec<(String, VariantType)> {
+/// The saved properties a class declares itself: name, type and, for a link, the class it
+/// links.
+fn own_properties(class: &str) -> Vec<(String, VariantType, String)> {
     let list = ClassDb::singleton()
         .class_get_property_list_ex(class)
         .no_inheritance(true)
@@ -1556,7 +1649,13 @@ fn own_properties(class: &str) -> Vec<(String, VariantType)> {
             }
             let name = p.get("name")?.try_to::<GString>().ok()?.to_string();
             let ty = p.get("type")?.try_to::<i64>().ok()?;
-            Some((name, VariantType::from_ord(ty as i32)))
+            let linked = p.get("class_name").and_then(|c| c.try_to::<StringName>().ok()).map(|c| c.to_string()).unwrap_or_default();
+            let linked = if linked.is_empty() {
+                p.get("hint_string").and_then(|h| h.try_to::<GString>().ok()).map(|h| h.to_string()).unwrap_or_default()
+            } else {
+                linked
+            };
+            Some((name, VariantType::from_ord(ty as i32), linked))
         })
         .collect()
 }
@@ -1583,6 +1682,16 @@ fn link_kind(property: &str) -> &str {
     }
 }
 
+/// The kind a link to one of these classes names, whatever the property is called (a skill's
+/// `hit_effect` is an effect file, a cart part's an attack effect).
+fn class_link_kind(class: &str) -> Option<&'static str> {
+    match class {
+        "RoseEffectFile" => Some("effect_file"),
+        "RoseAttackEffect" => Some("attack_effect"),
+        _ => None,
+    }
+}
+
 /// The item kind of an item class (`RoseItemWeapon` -> `weapon`).
 fn item_kind(class: &str) -> Option<&'static str> {
     ITEM_CLASSES
@@ -1591,10 +1700,10 @@ fn item_kind(class: &str) -> Option<&'static str> {
         .map(|(_, kind)| *kind)
 }
 
-/// What a link holds in the export: an item as `weapon/3`, an audio file its path, anything
+/// What a link holds in the export: an item as `weapon/3`, an audio file or a scene its path, anything
 /// else its id.
 fn link_value(resource: &Gd<Resource>) -> Value {
-    if resource.is_class("AudioStream") {
+    if resource.is_class("AudioStream") || resource.is_class("PackedScene") {
         return Value::from(resource.get_path().to_string());
     }
     let id = resource.get("id").try_to::<i64>().unwrap_or(0);
@@ -1630,10 +1739,12 @@ fn element_value(value: &Variant) -> Value {
 /// place `""`).
 fn to_json(resource: &Gd<Resource>) -> Map<String, Value> {
     let mut out = Map::new();
-    for (name, ty) in own_properties(&resource.get_class().to_string()) {
+    for (name, ty, _) in own_properties(&resource.get_class().to_string()) {
         let value = resource.get(&name);
         let json = match ty {
             VariantType::INT => Value::from(value.to::<i64>()),
+            // Through f32, as the export holds it, so 0.1 stays 0.1.
+            VariantType::FLOAT => Value::from(value.to::<f64>() as f32),
             VariantType::BOOL => Value::from(value.to::<bool>()),
             VariantType::STRING => {
                 let text = value.to::<GString>().to_string();
@@ -1679,10 +1790,10 @@ fn to_json(resource: &Gd<Resource>) -> Map<String, Value> {
 
 /// The resource a link value names (`weapon/3` -> the item, 147 in `drop_table` -> that
 /// drop table), `None` for an empty one.
-fn resolve(key: &str, value: &Value, links: &Links) -> Result<Option<Gd<Resource>>, String> {
+fn resolve(key: &str, value: &Value, links: &Links, class: &str) -> Result<Option<Gd<Resource>>, String> {
     let link = match value {
         Value::String(s) if s.is_empty() => return Ok(None),
-        // An audio file, by its path.
+        // An audio file or a scene, by its path.
         Value::String(s) if s.starts_with("res://") => {
             return ResourceLoader::singleton()
                 .load(s.as_str())
@@ -1691,7 +1802,7 @@ fn resolve(key: &str, value: &Value, links: &Links) -> Result<Option<Gd<Resource
         }
         Value::String(s) => format!("items/{s}"),
         Value::Number(n) if n.as_i64() == Some(0) => return Ok(None),
-        Value::Number(n) => format!("{}/{n}", link_kind(key)),
+        Value::Number(n) => format!("{}/{n}", class_link_kind(class).unwrap_or_else(|| link_kind(key))),
         _ => return Err(format!("{key}: {value} is not a link")),
     };
     let path = links.get(&link).ok_or(format!("{key}: no resource for {link}"))?;
@@ -1707,12 +1818,17 @@ fn set_from_json(resource: &mut Gd<Resource>, object: &Map<String, Value>, links
     let class = resource.get_class().to_string();
     let properties = own_properties(&class);
     for (key, value) in object {
-        let Some((_, ty)) = properties.iter().find(|(name, _)| name == key) else {
+        let Some((_, ty, linked)) = properties.iter().find(|(name, _, _)| name == key) else {
             return Err(format!("{class} has no property {key}"));
         };
         let variant = match (ty, value) {
             (&VariantType::INT, Value::Number(n)) => {
                 n.as_i64().ok_or(format!("{key}: {n}"))?.to_variant()
+            }
+            // The export's f32 as written (0.1, not 0.10000000149).
+            (&VariantType::FLOAT, Value::Number(n)) => {
+                let single = n.as_f64().ok_or(format!("{key}: {n}"))? as f32;
+                single.to_string().parse::<f64>().unwrap_or(single as f64).to_variant()
             }
             (&VariantType::BOOL, Value::Bool(b)) => b.to_variant(),
             (&VariantType::STRING, Value::String(s)) => GString::from(s.as_str()).to_variant(),
@@ -1725,17 +1841,18 @@ fn set_from_json(resource: &mut Gd<Resource>, object: &Map<String, Value>, links
                 .map(|v| v.as_i64().unwrap_or(0) as i32)
                 .collect::<PackedInt32Array>()
                 .to_variant(),
-            (&VariantType::OBJECT, _) => match resolve(key, value, links)? {
+            (&VariantType::OBJECT, _) => match resolve(key, value, links, linked)? {
                 Some(linked) => linked.to_variant(),
                 None => Variant::nil(),
             },
             (&VariantType::ARRAY, Value::Array(values)) => {
                 let numbered = numbered_links(&resource.get(key));
+                let element_class = resource.get(key).call("get_typed_class_name", &[]).to_string();
                 let mut list = VarArray::new();
                 for element in values {
                     let item = match element {
                         Value::Number(n) if !numbered => n.as_i64().ok_or(format!("{key}: {n}"))?.to_variant(),
-                        _ => match resolve(key, element, links)? {
+                        _ => match resolve(key, element, links, &element_class)? {
                             Some(linked) => linked.to_variant(),
                             None => Variant::nil(),
                         },
@@ -2040,6 +2157,8 @@ fn index_links(dir: &str, links: &mut Links) -> Result<(), String> {
             "RoseSound" => format!("sound/{id}"),
             "RoseHitSounds" => format!("hit_sounds/{id}"),
             "RoseFootsteps" => format!("footsteps/{id}"),
+            "RoseEffectFile" => format!("effect_file/{id}"),
+            "RoseAttackEffect" => format!("attack_effect/{id}"),
             _ => match item_kind(&class) {
                 Some(kind) => format!("items/{kind}/{id}"),
                 None => continue,
@@ -2479,9 +2598,9 @@ const SOUND_DIRS: [(&str, &str); 3] = [
     (FOOTSTEPS_DIR, "RoseFootsteps"),
 ];
 
-/// The links to every sound, hit sound and footstep resource.
+/// The links to every sound, hit sound, footstep, effect file and attack effect resource.
 fn index_sound_links(links: &mut Links) -> Result<(), String> {
-    for (dir, _) in SOUND_DIRS {
+    for (dir, _) in SOUND_DIRS.iter().chain(&EFFECT_DIRS) {
         index_links(dir, links)?;
     }
     Ok(())
@@ -2633,6 +2752,192 @@ pub fn convert_sounds(force: bool) -> Result<(usize, Vec<String>), String> {
     Ok((count, lost))
 }
 
+/// The effect file and attack effect folders, with their classes.
+const EFFECT_DIRS: [(&str, &str); 2] = [(EFFECT_FILES_DIR, "RoseEffectFile"), (ATTACK_EFFECTS_DIR, "RoseAttackEffect")];
+
+/// The fields of each exported thing that link an effect file and those that link an attack
+/// effect (the same name can be either: a skill's `hit_effect` is a file, a cart part's an
+/// attack effect).
+type EffectFields = (&'static [&'static str], &'static [&'static str]);
+
+/// The effect files and attack effects one exported thing (as JSON) links, the attack effects
+/// with the thing's name.
+fn effect_links(json: &Value, (files, attacks): EffectFields, used: &mut std::collections::BTreeSet<u16>, attack_names: &mut std::collections::BTreeMap<u16, String>) {
+    let numbers = |key: &str| -> Vec<u16> {
+        match json.get(key) {
+            Some(Value::Number(n)) => n.as_u64().into_iter().map(|n| n as u16).collect(),
+            Some(Value::Array(list)) => list.iter().filter_map(|v| v.as_u64()).map(|n| n as u16).collect(),
+            _ => Vec::new(),
+        }
+    };
+    used.extend(files.iter().flat_map(|key| numbers(key)).filter(|id| *id != 0));
+    let name = json.get("name").and_then(|n| n.as_str()).unwrap_or("").trim().to_string();
+    for id in attacks.iter().flat_map(|key| numbers(key)).filter(|id| *id != 0) {
+        attack_names.entry(id).or_insert_with(|| name.clone());
+    }
+}
+
+/// `--convert-data` for effects: one resource per FILE_EFFECT.STB row with a file (or that
+/// something names) and per LIST_EFFECT.STB row with something in it (or that something
+/// names), linking the imported effect scenes (`--import-rose` first) and the sound
+/// resources. An attack effect is named after the first item, monster or skill that uses it.
+/// Returns the count and the effects whose file the client data doesn't have.
+pub fn convert_effects(force: bool) -> Result<(usize, Vec<String>), String> {
+    let data = crate::data::get().ok_or("open the data first")?;
+    let mut existing = Vec::new();
+    for (dir, _) in EFFECT_DIRS {
+        tres_files(dir, &mut existing);
+    }
+    if !existing.is_empty() && !force {
+        return Err(format!(
+            "res://data/ already has {} effect file or attack effect resources; they are the source now (use --convert-data=force to write them again from iROSE)",
+            existing.len()
+        ));
+    }
+    if crate::assets::find_stem("3ddata/effect/levelup_01", crate::effect::SCENE_EXTENSIONS).is_none() {
+        return Err("the effects are not imported; run --import-rose first".into());
+    }
+    let effects = rose_data_irose::get_effect_database(&data.vfs).map_err(|e| format!("{e:#}"))?;
+    let mut used = std::collections::BTreeSet::new();
+    let mut attack_names = std::collections::BTreeMap::new();
+    let mut add = |json: Result<Value, serde_json::Error>, fields: EffectFields| {
+        if let Ok(json) = json {
+            effect_links(&json, fields, &mut used, &mut attack_names);
+        }
+    };
+    let items = ItemsExport::from_database(&data.items);
+    for item in &items.weapon {
+        add(serde_json::to_value(item), (&[], &["attack_effect", "bullet_effect"]));
+    }
+    for item in &items.gem {
+        add(serde_json::to_value(item), (&[], &["gem_effect"]));
+    }
+    for item in &items.material {
+        add(serde_json::to_value(item), (&[], &["bullet_effect"]));
+    }
+    for item in &items.consumable {
+        add(serde_json::to_value(item), (&["effect"], &[]));
+    }
+    for item in &items.vehicle {
+        add(
+            serde_json::to_value(item),
+            (&["ride_effect", "dismount_effect", "dead_effect", "move_effect", "dummy_effects"], &["hit_effect", "bullet_effect"]),
+        );
+    }
+    for npc in data.npcs.iter() {
+        add(serde_json::to_value(MonsterExport::from_data(npc)), (&["die_effect"], &["hand_hit_effect"]));
+    }
+    for skill in data.skills.iter() {
+        add(
+            serde_json::to_value(SkillExport::from_data(skill)),
+            (
+                &["casting_effect_1", "casting_effect_2", "casting_effect_3", "casting_effect_4", "hit_effect", "hit_dummy_effect_1", "hit_dummy_effect_2"],
+                &["bullet_effect"],
+            ),
+        );
+    }
+    for effect in data.status_effects.iter() {
+        add(serde_json::to_value(StatusEffectExport::from_data(effect)), (&["effect"], &[]));
+    }
+    let used_attacks = attack_names.keys().copied().collect();
+    let mut export = EffectsExport::from_database(&effects, &used, &used_attacks);
+    for effect in &mut export.attack_effects {
+        effect.name = match attack_names.get(&effect.id) {
+            Some(name) if !name.is_empty() => name.clone(),
+            _ => format!("attack effect {}", effect.id),
+        };
+    }
+    used.extend(export.attack_effects.iter().flat_map(|e| e.effect_files().collect::<Vec<_>>()));
+    // FILE_EFFECT names some files the client doesn't have (or can't read): one something
+    // links stays, empty; the others are left out.
+    let mut lost = Vec::new();
+    let mut left_out = 0;
+    export.effect_files.retain_mut(|file| {
+        if file.scene.is_empty() {
+            return true;
+        }
+        let stem = crate::assets::stem(&file.scene);
+        match crate::assets::find_stem(&stem, crate::effect::SCENE_EXTENSIONS) {
+            Some(path) => {
+                file.scene = path;
+                true
+            }
+            None if used.contains(&file.id) => {
+                lost.push(format!("effect {}: the client data has no readable {}, kept empty", file.id, file.scene));
+                file.scene.clear();
+                true
+            }
+            None => {
+                left_out += 1;
+                false
+            }
+        }
+    });
+    if left_out > 0 {
+        lost.push(format!("{left_out} FILE_EFFECT rows nothing links name files the client data doesn't have; left out"));
+    }
+    let mut links = Links::new();
+    for (dir, _) in SOUND_DIRS {
+        index_links(dir, &mut links)?;
+    }
+    let mut count = 0;
+    for file in &export.effect_files {
+        let path = format!("{EFFECT_FILES_DIR}{}.tres", file_stem(file.id as u32, &file.name));
+        write_resource("RoseEffectFile", &path, file, &links)?;
+        links.insert(format!("effect_file/{}", file.id), path);
+        count += 1;
+    }
+    for effect in &export.attack_effects {
+        let path = format!("{ATTACK_EFFECTS_DIR}{}.tres", file_stem(effect.id as u32, &effect.name));
+        write_resource("RoseAttackEffect", &path, effect, &links)?;
+        count += 1;
+    }
+    Ok((count, lost))
+}
+
+/// Reads every effect file and attack effect resource into the export. Two of one kind with
+/// the same number are an error naming both files.
+pub fn read_effects() -> Result<(EffectsExport, usize), String> {
+    let mut export = EffectsExport::default();
+    let mut seen: std::collections::HashMap<(&str, u16), String> = std::collections::HashMap::new();
+    let mut loader = ResourceLoader::singleton();
+    let mut count = 0;
+    for (dir, _) in EFFECT_DIRS {
+        register_uids(dir);
+    }
+    for (dir, _) in EFFECT_DIRS {
+        let mut files = Vec::new();
+        tres_files(dir, &mut files);
+        for path in files {
+            count += 1;
+            let resource = loader.load(&path).ok_or(format!("could not load {path}"))?;
+            let class = resource.get_class().to_string();
+            let mut check = |kind: &'static str, id: u16| -> Result<(), String> {
+                match seen.insert((kind, id), path.clone()) {
+                    Some(other) => Err(format!("{path} and {other} are both {kind} {id}")),
+                    None => Ok(()),
+                }
+            };
+            let read = |e: String| format!("{path}: {e}");
+            match class.as_str() {
+                "RoseEffectFile" => {
+                    let file: EffectFileExport = from_resource(&resource).map_err(read)?;
+                    check("effect file", file.id)?;
+                    export.effect_files.push(file);
+                }
+                "RoseAttackEffect" => {
+                    let effect: AttackEffectExport = from_resource(&resource).map_err(read)?;
+                    check("attack effect", effect.id)?;
+                    export.attack_effects.push(effect);
+                }
+                _ => return Err(format!("{path} is a {class}, not an effect file or attack effect")),
+            }
+        }
+    }
+    export.check().map_err(|e| format!("{e:#}"))?;
+    Ok((export, count))
+}
+
 /// Reads every sound, hit sound and footstep resource into the export. Two of one kind with
 /// the same number are an error naming both files.
 pub fn read_sounds() -> Result<(SoundsExport, usize), String> {
@@ -2690,6 +2995,17 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
         return Err("open the data first".into());
     }
     let started = std::time::Instant::now();
+    // Every kind links others (items link effects and sounds ...): the uid cache must know
+    // them all before the first load, or each link loads the slow way.
+    register_uids("res://data/");
+    // Godot frees a loaded resource once nothing holds it, so without this every item and
+    // monster would load its effects' scenes (and their textures) and sounds again.
+    let mut loader = ResourceLoader::singleton();
+    let mut shared = Vec::new();
+    for (dir, _) in SOUND_DIRS.iter().chain(&EFFECT_DIRS) {
+        tres_files(dir, &mut shared);
+    }
+    let _kept: Vec<Gd<Resource>> = shared.iter().filter_map(|path| loader.load(path)).collect();
     let (items, item_resources) = read_items()?;
     if item_resources == 0 {
         return Err(format!(
@@ -2720,6 +3036,20 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
             "no sound resources in {SOUNDS_DIR}; run --convert-data first"
         ));
     }
+    let (effects, effect_resources) = read_effects()?;
+    if effect_resources == 0 {
+        return Err(format!(
+            "no effect resources in {EFFECT_FILES_DIR}; run --convert-data first"
+        ));
+    }
+    if let Some((effect, sound)) = effects
+        .attack_effects
+        .iter()
+        .flat_map(|e| [(e.id, e.fire_sound), (e.id, e.hit_sound)])
+        .find(|(_, sound)| !sounds.has_sound(*sound))
+    {
+        return Err(format!("attack effect {effect} plays sound {sound}, which isn't there"));
+    }
     // A summon must name a monster that is there.
     let monsters: std::collections::HashSet<u16> = npcs.monsters.iter().map(|m| m.id).collect();
     if let Some(skill) = skills.skills.iter().find(|s| s.summon_monster != 0 && !monsters.contains(&s.summon_monster)) {
@@ -2744,6 +3074,7 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
     data_files.extend(skills.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
     data_files.extend(world.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
     data_files.extend(sounds.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
+    data_files.extend(effects.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
     files.extend(data_files.into_iter().map(|(name, text)| (in_data(rose_data_export::data_file_as(name, toml)), text)));
     // The written files must read back (the server and the game load them the same way).
     let find = |path: String| Ok(files.iter().find(|(n, _)| *n == in_data(path.clone())).map(|(_, t)| t.clone()));
@@ -2765,6 +3096,11 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
     SoundsExport::from_files_as(toml, |name| find(rose_data_export::data_file_as(name, toml)))
         .map_err(|e| format!("{e:#}"))?
         .ok_or("the sound export doesn't read back")?
+        .to_database()
+        .map_err(|e| format!("{e:#}"))?;
+    EffectsExport::from_files_as(toml, |name| find(rose_data_export::data_file_as(name, toml)))
+        .map_err(|e| format!("{e:#}"))?
+        .ok_or("the effect export doesn't read back")?
         .to_database()
         .map_err(|e| format!("{e:#}"))?;
 
@@ -2793,8 +3129,10 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
     files.push((rose_data_export::MOTIONS_FILE.to_string(), timings.to_toml()));
 
     let mut result = ExportResult {
-        resources: item_resources + npc_resources + skill_resources + world_resources + sound_resources,
+        resources: item_resources + npc_resources + skill_resources + world_resources + sound_resources + effect_resources,
         sounds: sounds.sounds.len(),
+        effects: effects.effect_files.len(),
+        attack_effects: effects.attack_effects.len(),
         items: items.count(),
         monsters: npcs.monsters.len(),
         npcs: npcs.npcs.len(),
@@ -2841,6 +3179,8 @@ pub struct ExportResult {
     pub skills: usize,
     pub zones: usize,
     pub sounds: usize,
+    pub effects: usize,
+    pub attack_effects: usize,
     pub zone_scenes: usize,
     pub motions: usize,
     pub read_ms: u128,
@@ -2856,7 +3196,8 @@ struct RoseDataExport {
 #[godot_api]
 impl RoseDataExport {
     /// Writes the resources of every kind that has none yet (all of them with `force`) from
-    /// the iROSE tables: sounds first (they link the imported audio), then items, then monsters, NPCs, drop tables and shop tabs, which
+    /// the iROSE tables: sounds first (they link the imported audio), then effect files and
+    /// attack effects (they link the imported effect scenes and the sounds), then items, then monsters, NPCs, drop tables and shop tabs, which
     /// link the items, then skills, status effects and job classes, which link the monsters,
     /// then zone settings, warp gates, recipes and new characters, which link the zones and
     /// items. Needs RoseData.open. Returns {resources, folder, skipped (kinds already there),
@@ -2886,6 +3227,26 @@ impl RoseDataExport {
             }
         } else {
             kept.push(&"sounds".to_variant());
+        }
+        let mut others = Vec::new();
+        for (dir, _) in EFFECT_DIRS {
+            tres_files(dir, &mut others);
+        }
+        if force || others.is_empty() {
+            match convert_effects(force) {
+                Ok((n, not_kept)) => {
+                    count += n;
+                    for line in not_kept {
+                        lost.push(&line.to_variant());
+                    }
+                }
+                Err(error) => {
+                    result.set("error", error.as_str());
+                    return result;
+                }
+            }
+        } else {
+            kept.push(&"effects".to_variant());
         }
         let mut items = Vec::new();
         tres_files(ITEMS_DIR, &mut items);
@@ -2965,7 +3326,8 @@ impl RoseDataExport {
 
     /// Writes (or with `check` compares) `export/` from the resources, the zone scenes and the
     /// animations. Needs RoseData.open and the import. Returns {files, changed, resources,
-    /// items, monsters, npcs, skills, zones, sounds, zone_scenes, motions, read_ms}, or {error}.
+    /// items, monsters, npcs, skills, zones, sounds, effects, attack_effects, zone_scenes,
+    /// motions, read_ms}, or {error}.
     #[func]
     fn export(check: bool) -> VarDictionary {
         let mut result = VarDictionary::new();
@@ -2981,6 +3343,8 @@ impl RoseDataExport {
                 result.set("skills", out.skills as i64);
                 result.set("zones", out.zones as i64);
                 result.set("sounds", out.sounds as i64);
+                result.set("effects", out.effects as i64);
+                result.set("attack_effects", out.attack_effects as i64);
                 result.set("zone_scenes", out.zone_scenes as i64);
                 result.set("motions", out.motions as i64);
                 result.set("read_ms", out.read_ms as i64);

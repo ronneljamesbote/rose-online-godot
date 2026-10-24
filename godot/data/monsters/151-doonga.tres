@@ -3,6 +3,7 @@
 [ext_resource type="RoseDropTable" uid="uid://ccpaw8j8q8bw6" path="res://data/drop_tables/170-doonga.tres" id="1_ga8nc"]
 [ext_resource type="RoseSound" uid="uid://d20q7rg0vm5gw" path="res://data/sounds/mob/245-mob17-n.tres" id="2_pv5na"]
 [ext_resource type="RoseSound" uid="uid://cbojdr8uyjvrt" path="res://data/sounds/mob/246-mob17-d.tres" id="3_f6fx1"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="4_spkxo"]
 
 [resource]
 id = 151
@@ -25,7 +26,7 @@ death_quest_trigger_name = "3006-31"
 npc_type_index = 2
 hit_sound_material_type = 1
 normal_effect_sound = ExtResource("2_pv5na")
-die_effect_file_id = 1401
+die_effect = ExtResource("4_spkxo")
 die_sound = ExtResource("3_f6fx1")
 drop_table = ExtResource("1_ga8nc")
 drop_money_rate = 10

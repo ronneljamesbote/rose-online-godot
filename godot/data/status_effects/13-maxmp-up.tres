@@ -1,5 +1,7 @@
 [gd_resource type="RoseStatusEffect" format=3 uid="uid://cs0wac0ri6hux"]
 
+[ext_resource type="RoseEffectFile" uid="uid://6ffdygcgpano" path="res://data/effect_files/163-healing-03.tres" id="1_mf4cy"]
+
 [resource]
 id = 13
 name = "MaxMP Up"
@@ -7,5 +9,5 @@ description = "Your Max MP is temporarily increased by a mysterious power."
 start_message = "Max MP has returned to normal."
 status_effect_type = "IncreaseMaxMp"
 can_be_reapplied = true
-effect_file_id = 163
+effect = ExtResource("1_mf4cy")
 icon_id = 2

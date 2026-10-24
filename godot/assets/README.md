@@ -1,6 +1,6 @@
 # Game assets
 
-Models, textures and sounds as Godot resources, in two folders with the same layout:
+Models, textures, sounds and effects as Godot resources, in two folders with the same layout:
 
 - `rose/` is made from the ROSE client data by the import command and is not committed.
 - `ours/` holds edited and new art and is committed. A file here wins over the one with the
@@ -21,13 +21,18 @@ godot --headless --path godot --import                     # once, so Godot know
 godot --headless --path godot -- --import-rose --data-idx=/path/to/iRose_129_129/data.idx
 ```
 
-It converts every ZMS mesh and DDS texture in `data.idx` except effects (`3DDATA/EFFECT`)
-and the interface (`3DDATA/CONTROL`), which still load from the client data, and the 315 WAV
+It converts every ZMS mesh and DDS texture in `data.idx` except the interface
+(`3DDATA/CONTROL`), which still loads from the client data; every effect (the 351 EFT files)
+into an effect scene (`3DDATA/EFFECT/LEVELUP_01.EFT` is `3ddata/effect/levelup_01.scn`, a
+`RoseEffect` with a node per part that links the imported meshes, textures and particle
+systems, its motions as Godot `Animation`s) and every PTL particle system into a `.particles.res`
+(a `RoseParticleSystem`), which the effect resources (`../data/README.md`) and the zones'
+effect spots link (one EFT, `RAINBOW01.EFT`, can't be read and is left out); and the 315 WAV
 and OGG files of the client's `Sound/` folder (loose files next to `data.idx`): a sound
 becomes Godot's own `AudioStreamWAV` or `AudioStreamOggVorbis` in a `.res`
 (`Sound/attack/Sword_001.wav` is `sound/attack/sword_001.res`), which the sound resources
 (`../data/README.md`) and the zones' music link. In `ours/` a sound may also be a `.wav` or
-`.ogg`. Meshes keep
+`.ogg`, and an effect a `.tscn`. Meshes keep
 their bone weights. A texture becomes a `.rtex`: the client's DDS file as it is, in a
 compressed file, which `scripts/rose_texture_loader.gd` opens as an `ImageTexture` in the
 game and in the editor (the inspector and the FileSystem thumbnails show it like any
@@ -35,7 +40,7 @@ texture). Most ROSE textures declare mipmaps they don't store; for those the DDS
 the level it has and the loader makes the mipmaps from the decompressed image, the same
 way the game treats the client files, so they look exactly like the client data. An
 uncompressed DDS is kept as lossless WebP instead when that is smaller and decodes to the
-same pixels. `rose/` is about 405 MB (88 MB of it sounds) and the import takes about 35 seconds. (Earlier
+same pixels. `rose/` is about 413 MB (88 MB of it sounds, 8 MB effects) and the import takes about 35 seconds. (Earlier
 imports saved every mip level as WebP, 840 MB in 5 minutes, or re-compressed to S3TC,
 400 MB but with blue and grey marks along the UV seams of skin and blocky skies.) Running
 it again only converts what is missing; `--import-rose=force` redoes everything. It also
@@ -48,8 +53,8 @@ in `rust/src/assets.rs`).
   `librose_gd.so`), so pulling a change to `rust/src/` does nothing until the extension is
   rebuilt. Rebuild it first (`cargo build --release -p rose-gd` and copy it into `bin/`, or
   run `tools/build-windows.ps1`, which builds it and then runs the import). The size on the
-  last line tells which import ran: `assets/rose is` about 405 MB is the current one (about
-320 MB before the sounds were imported); about
+  last line tells which import ran: `assets/rose is` about 413 MB is the current one (about
+405 MB before the effects were imported, 320 MB before the sounds); about
   840 MB (after about 5 minutes) or about 400 MB are older ones, and the zone scenes then
   show grey ground and untextured objects.
 - **It looks stuck on Windows.** When `godot` is the editor exe rather than the

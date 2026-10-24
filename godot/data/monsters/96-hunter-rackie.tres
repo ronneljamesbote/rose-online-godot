@@ -3,6 +3,7 @@
 [ext_resource type="RoseDropTable" uid="uid://d316lj5b1emsn" path="res://data/drop_tables/146-hunter-rackie.tres" id="1_iuufd"]
 [ext_resource type="RoseSound" uid="uid://dxbrfjd1l30m0" path="res://data/sounds/mob/221-mob11-n.tres" id="2_5krf0"]
 [ext_resource type="RoseSound" uid="uid://ds7xvppgdrk8r" path="res://data/sounds/mob/222-mob11-d.tres" id="3_824hq"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="4_dt3km"]
 
 [resource]
 id = 96
@@ -25,7 +26,7 @@ death_quest_trigger_name = "5008-34"
 npc_type_index = 6
 right_hand_part_index = 941
 normal_effect_sound = ExtResource("2_5krf0")
-die_effect_file_id = 1401
+die_effect = ExtResource("4_dt3km")
 die_sound = ExtResource("3_824hq")
 drop_table = ExtResource("1_iuufd")
 drop_money_rate = 30

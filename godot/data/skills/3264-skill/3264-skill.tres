@@ -1,6 +1,12 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://brywdhb4mtuhi"]
 
 [ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="1_2yz86"]
+[ext_resource type="RoseEffectFile" uid="uid://yw24ne7tcqbs" path="res://data/effect_files/1752-pay-casting-01.tres" id="2_o0dia"]
+[ext_resource type="RoseEffectFile" uid="uid://dbn0ruiuvbore" path="res://data/effect_files/1761-pay-rotate-01.tres" id="3_0f3le"]
+[ext_resource type="RoseEffectFile" uid="uid://cfou3p5l46o2r" path="res://data/effect_files/1192-iloveyou-01.tres" id="4_q2n15"]
+[ext_resource type="RoseEffectFile" uid="uid://dhqy6c8o3exce" path="res://data/effect_files/1-empty-rhit01.tres" id="5_qsk9j"]
+[ext_resource type="RoseAttackEffect" uid="uid://wxxpgg57j08t" path="res://data/attack_effects/221-berserk.tres" id="6_4zc26"]
+[ext_resource type="RoseEffectFile" uid="uid://citqbls1oug01" path="res://data/effect_files/1501-status-skill-01.tres" id="7_rh5nj"]
 
 [resource]
 id = 3264
@@ -14,15 +20,15 @@ warp_zone = 16
 warp_x = 100000
 casting_motion_id = 112
 casting_repeat_motion_id = 132
-casting_effect_1 = 1752
+casting_effect_1 = ExtResource("2_o0dia")
 casting_effect_1_point = 1
-casting_effect_2 = 1761
+casting_effect_2 = ExtResource("3_0f3le")
 casting_effect_2_point = 1
-casting_effect_3 = 1192
+casting_effect_3 = ExtResource("4_q2n15")
 casting_effect_3_point = 0
-casting_effect_4 = 1
+casting_effect_4 = ExtResource("5_qsk9j")
 action_motion_id = 151
-bullet_effect_id = 221
+bullet_effect = ExtResource("6_4zc26")
 bullet_point = 3
 bullet_fire_sound = ExtResource("1_2yz86")
-hit_effect_file_id = 1501
+hit_effect = ExtResource("7_rh5nj")

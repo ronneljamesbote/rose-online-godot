@@ -1,8 +1,12 @@
 extends "res://demos/demo.gd"
 
-## Plays EFT effects in a row 10 m in front of the camera, each again once it ends.
+## Plays effects in a row 10 m in front of the camera, each again once it ends: EFT files,
+## effect scenes (res://...) or effect file numbers of the game data (1061).
 func run() -> void:
 	var paths: PackedStringArray = String(options["effect"]).split(",")
+	for i in paths.size():
+		if paths[i].is_valid_int():
+			paths[i] = RoseFx.effect_file(int(paths[i]))
 	for i in 3:
 		await get_tree().process_frame
 	var forward := -main.camera.global_basis.z

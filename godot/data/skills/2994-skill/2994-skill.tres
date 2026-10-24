@@ -1,5 +1,10 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://bhkqbhtkigi14"]
 
+[ext_resource type="RoseEffectFile" uid="uid://d17gr5joj7i6t" path="res://data/effect_files/1901-casting-01.tres" id="1_ke9ec"]
+[ext_resource type="RoseEffectFile" uid="uid://6byq34qeee8m" path="res://data/effect_files/1300-goblin-boss-casting01.tres" id="2_sl6su"]
+[ext_resource type="RoseEffectFile" uid="uid://d2sd6g1c7dj6r" path="res://data/effect_files/1299-goblin-boss-skill01.tres" id="3_64vpi"]
+[ext_resource type="RoseEffectFile" uid="uid://wv36bdk6kw6y" path="res://data/effect_files/1035-leap-hit-01.tres" id="4_y08b9"]
+
 [resource]
 id = 2994
 skill_type = "SelfDamage"
@@ -11,11 +16,11 @@ damage_type = "WeaponAttack"
 power = 30
 item_make_number = 30
 casting_motion_id = 8
-casting_effect_1 = 1901
+casting_effect_1 = ExtResource("1_ke9ec")
 casting_effect_1_point = 3
-casting_effect_2 = 1901
+casting_effect_2 = ExtResource("1_ke9ec")
 casting_effect_2_point = 3
-casting_effect_3 = 1300
-casting_effect_4 = 1299
+casting_effect_3 = ExtResource("2_sl6su")
+casting_effect_4 = ExtResource("3_64vpi")
 action_motion_id = 9
-hit_effect_file_id = 1035
+hit_effect = ExtResource("4_y08b9")

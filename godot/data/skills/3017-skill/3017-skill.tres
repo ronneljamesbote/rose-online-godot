@@ -1,5 +1,10 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://boxyts8iw40ev"]
 
+[ext_resource type="RoseEffectFile" uid="uid://c78dgxarn7hpk" path="res://data/effect_files/389-stony-skill-01.tres" id="1_wnh26"]
+[ext_resource type="RoseEffectFile" uid="uid://dpv6vsra8ebsl" path="res://data/effect_files/1320-scope-01.tres" id="2_st8ou"]
+[ext_resource type="RoseEffectFile" uid="uid://d024vki2mudr8" path="res://data/effect_files/1319-husehorn-skill.tres" id="3_c96yd"]
+[ext_resource type="RoseEffectFile" uid="uid://datmsj7fgcoav" path="res://data/effect_files/1310-runa-hit-02.tres" id="4_f0mlx"]
+
 [resource]
 id = 3017
 skill_type = "SelfDamage"
@@ -11,8 +16,8 @@ damage_type = "WeaponAttack"
 power = 55
 item_make_number = 55
 casting_motion_id = 8
-casting_effect_1 = 389
-casting_effect_3 = 1320
-casting_effect_4 = 1319
+casting_effect_1 = ExtResource("1_wnh26")
+casting_effect_3 = ExtResource("2_st8ou")
+casting_effect_4 = ExtResource("3_c96yd")
 action_motion_id = 9
-hit_effect_file_id = 1310
+hit_effect = ExtResource("4_f0mlx")

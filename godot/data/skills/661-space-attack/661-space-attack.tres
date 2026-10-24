@@ -4,6 +4,11 @@
 [ext_resource type="RoseSkill" uid="uid://dgmld7fjdyp34" path="res://data/skills/301-heavy-attack/301-heavy-attack.tres" id="2_yyks7"]
 [ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="3_j05qn"]
 [ext_resource type="RoseSound" uid="uid://c4pyq7wyxrro8" path="res://data/sounds/skill/1551-point-heavy01.tres" id="4_nlja3"]
+[ext_resource type="RoseEffectFile" uid="uid://b2kvgebw3flm4" path="res://data/effect_files/1041-heavy-casting-01.tres" id="5_mr9dd"]
+[ext_resource type="RoseEffectFile" uid="uid://ctbpjcwyxsbuj" path="res://data/effect_files/1042-heavy-rotate-01.tres" id="6_d31p6"]
+[ext_resource type="RoseEffectFile" uid="uid://bfpflhnrkt00a" path="res://data/effect_files/1043-heavy-skill-01.tres" id="7_9t0k4"]
+[ext_resource type="RoseAttackEffect" uid="uid://b5b6vl07gx700" path="res://data/attack_effects/253-space-attack.tres" id="8_mye91"]
+[ext_resource type="RoseEffectFile" uid="uid://d1m25iflnhebg" path="res://data/effect_files/1040-heavy-hit-01.tres" id="9_y6j8v"]
 
 [resource]
 id = 661
@@ -34,16 +39,16 @@ harm = 1
 item_make_number = 100
 casting_motion_id = 129
 casting_repeat_motion_id = 149
-casting_effect_1 = 1041
+casting_effect_1 = ExtResource("5_mr9dd")
 casting_effect_1_point = 3
-casting_effect_2 = 1042
+casting_effect_2 = ExtResource("6_d31p6")
 casting_effect_2_point = 3
-casting_effect_3 = 1043
+casting_effect_3 = ExtResource("7_9t0k4")
 casting_effect_3_point = 0
-casting_effect_4 = 1043
+casting_effect_4 = ExtResource("7_9t0k4")
 casting_effect_4_point = 1
 action_motion_id = 178
-bullet_effect_id = 253
+bullet_effect = ExtResource("8_mye91")
 bullet_fire_sound = ExtResource("3_j05qn")
-hit_effect_file_id = 1040
+hit_effect = ExtResource("9_y6j8v")
 hit_sound = ExtResource("4_nlja3")

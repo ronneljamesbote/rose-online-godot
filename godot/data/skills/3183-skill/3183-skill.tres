@@ -1,6 +1,10 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://c47qwhu4a22ev"]
 
 [ext_resource type="RoseSound" uid="uid://fjcemx4nd216" path="res://data/sounds/skill/1574-point-luna01.tres" id="1_2yt71"]
+[ext_resource type="RoseEffectFile" uid="uid://bkos70jclry3s" path="res://data/effect_files/1764-scope-rotate-01.tres" id="2_rfbav"]
+[ext_resource type="RoseEffectFile" uid="uid://cbdbve174vjov" path="res://data/effect_files/1631-wind-01.tres" id="3_wu2xe"]
+[ext_resource type="RoseEffectFile" uid="uid://c7abyhw6ae1a0" path="res://data/effect_files/1317-yetityrant-skill-01.tres" id="4_ewm7y"]
+[ext_resource type="RoseEffectFile" uid="uid://cah5cvu532v78" path="res://data/effect_files/1124-mana-hit-03.tres" id="5_l7khw"]
 
 [resource]
 id = 3183
@@ -17,9 +21,9 @@ power = 900
 item_make_number = 900
 casting_motion_id = 115
 casting_repeat_motion_id = 135
-casting_effect_2 = 1764
-casting_effect_3 = 1631
-casting_effect_4 = 1317
+casting_effect_2 = ExtResource("2_rfbav")
+casting_effect_3 = ExtResource("3_wu2xe")
+casting_effect_4 = ExtResource("4_ewm7y")
 action_motion_id = 172
-hit_effect_file_id = 1124
+hit_effect = ExtResource("5_l7khw")
 hit_sound = ExtResource("1_2yt71")

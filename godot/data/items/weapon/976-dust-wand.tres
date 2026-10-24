@@ -3,6 +3,7 @@
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_2sakc"]
 [ext_resource type="RoseSound" uid="uid://osald6eflwq1" path="res://data/sounds/attack/37-sword-001.tres" id="2_ud3co"]
 [ext_resource type="RoseSound" uid="uid://np80gbdh8gn3" path="res://data/sounds/attack/89-magic-001.tres" id="3_k6k60"]
+[ext_resource type="RoseAttackEffect" uid="uid://dwr1ldoi7hkon" path="res://data/attack_effects/211-mage-s-wand.tres" id="4_hf65b"]
 
 [resource]
 id = 976
@@ -26,6 +27,6 @@ attack_power = 114
 attack_speed = 11
 motion_type = 14
 is_magic_damage = true
-bullet_effect_id = 211
+bullet_effect = ExtResource("4_hf65b")
 attack_start_sound = ExtResource("2_ud3co")
 attack_fire_sound = ExtResource("3_k6k60")

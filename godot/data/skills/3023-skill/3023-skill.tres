@@ -3,6 +3,8 @@
 [ext_resource type="RoseStatusEffect" uid="uid://dbi4ro2cc5h50" path="res://data/status_effects/23-magic-resistance-down.tres" id="1_phmjb"]
 [ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="2_nge38"]
 [ext_resource type="RoseSound" uid="uid://bxpxc8f3lqkwr" path="res://data/sounds/skill/1573-point-ice02.tres" id="3_76atw"]
+[ext_resource type="RoseAttackEffect" uid="uid://cjgtu0rdyv1ro" path="res://data/attack_effects/262-ice-bolt.tres" id="4_e9omi"]
+[ext_resource type="RoseEffectFile" uid="uid://datmsj7fgcoav" path="res://data/effect_files/1310-runa-hit-02.tres" id="5_8gjfb"]
 
 [resource]
 id = 3023
@@ -27,8 +29,8 @@ warp_y = 30000
 casting_motion_id = 8
 casting_repeat_motion_id = 136
 action_motion_id = 9
-bullet_effect_id = 262
+bullet_effect = ExtResource("4_e9omi")
 bullet_point = 1
 bullet_fire_sound = ExtResource("2_nge38")
-hit_effect_file_id = 1310
+hit_effect = ExtResource("5_8gjfb")
 hit_sound = ExtResource("3_76atw")

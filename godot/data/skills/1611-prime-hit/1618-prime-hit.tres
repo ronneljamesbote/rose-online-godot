@@ -1,6 +1,9 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://doselcwphhrgo"]
 
 [ext_resource type="RoseSound" uid="uid://4ujavo2i65n0" path="res://data/sounds/skill/137-skill-magicd01.tres" id="1_ajpb6"]
+[ext_resource type="RoseEffectFile" uid="uid://s8yrioubd614" path="res://data/effect_files/1031-sequence-casting-01.tres" id="2_u11db"]
+[ext_resource type="RoseEffectFile" uid="uid://k8tem1io4kwc" path="res://data/effect_files/1666-prime-attack01.tres" id="3_ny6bu"]
+[ext_resource type="RoseEffectFile" uid="uid://b3vxk4e3cvtd8" path="res://data/effect_files/1665-prime-casting01.tres" id="4_um2mw"]
 
 [resource]
 id = 1618
@@ -28,9 +31,9 @@ item_make_number = 382
 casting_motion_id = 111
 casting_motion_speed = 76
 casting_repeat_motion_id = 131
-casting_effect_1 = 1031
+casting_effect_1 = ExtResource("2_u11db")
 action_motion_id = 93
-hit_effect_file_id = 1666
+hit_effect = ExtResource("3_ny6bu")
 hit_sound = ExtResource("1_ajpb6")
-hit_dummy_effect_1 = 1665
+hit_dummy_effect_1 = ExtResource("4_um2mw")
 hit_dummy_sound_1 = ExtResource("1_ajpb6")

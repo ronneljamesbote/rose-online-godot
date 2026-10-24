@@ -32,6 +32,7 @@ log changes need no wiki change.
 | `godot/data/craft_recipes/`, `export/data/craft-recipes.toml` | `wiki/rules/crafting.md` (crafting recipes) or `wiki/rules/refining.md` (recipes 1-20), and the `wiki/items/` page of every item made with the recipe |
 | `godot/data/new_characters/`, `export/data/new-characters.toml` | `wiki/rules/stats.md` ("New characters") |
 | `godot/data/sounds/`, `godot/data/hit_sounds/`, `godot/data/footsteps/`, `export/data/sounds.toml`, `hit-sounds.toml`, `footsteps.toml` | none: the wiki doesn't list sounds (a page that mentions one says when it changes) |
+| `godot/data/effect_files/`, `godot/data/attack_effects/`, `export/data/effect-files.toml`, `attack-effects.toml`, effect scenes | none: the wiki doesn't list effects (a page that mentions one says when it changes) |
 | `godot/zones/` spawn, NPC and event markers, `export/zones/` (exported from them) | the `wiki/zones/` page of that zone (spawn points, NPCs) and the pages of monsters and NPCs it places |
 | `export/motions.toml` (exported from the hit markers of the Godot player, monster and NPC animations) | `wiki/rules/combat.md` (animation lengths and hit frames), the page of every monster whose attack moved and of every skill whose hit moved |
 

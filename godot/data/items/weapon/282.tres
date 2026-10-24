@@ -3,6 +3,7 @@
 [ext_resource type="RoseSound" uid="uid://bjdly3xikd2h4" path="res://data/sounds/item/576-item-weapon.tres" id="1_6bl6w"]
 [ext_resource type="RoseSound" uid="uid://coa6mw77434ix" path="res://data/sounds/attack/84-gun-003.tres" id="2_fp973"]
 [ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_142t6"]
+[ext_resource type="RoseAttackEffect" uid="uid://drq5mbo1we4yv" path="res://data/attack_effects/191-basic-launcher.tres" id="4_5g0bh"]
 
 [resource]
 id = 282
@@ -23,6 +24,6 @@ attack_range = 3600
 attack_power = 384
 attack_speed = 12
 motion_type = 9
-bullet_effect_id = 191
+bullet_effect = ExtResource("4_5g0bh")
 attack_start_sound = ExtResource("2_fp973")
 attack_fire_sound = ExtResource("3_142t6")

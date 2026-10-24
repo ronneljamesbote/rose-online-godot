@@ -1,5 +1,7 @@
 [gd_resource type="RoseStatusEffect" format=3 uid="uid://dnta07o68wlqa"]
 
+[ext_resource type="RoseEffectFile" uid="uid://bp0gd052kvsjj" path="res://data/effect_files/162-healing-02.tres" id="1_b36n5"]
+
 [resource]
 id = 44
 name = "Max HP Increased"
@@ -7,5 +9,5 @@ description = "Your Max HP is temporarily increased by a mysterious power."
 start_message = "Max HP has returned to normal."
 status_effect_type = "IncreaseMaxHp"
 cleared_by = "ClearNone"
-effect_file_id = 162
+effect = ExtResource("1_b36n5")
 icon_id = 3

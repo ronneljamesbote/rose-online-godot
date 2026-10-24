@@ -3,6 +3,7 @@
 [ext_resource type="RoseSound" uid="uid://bjdly3xikd2h4" path="res://data/sounds/item/576-item-weapon.tres" id="1_otgda"]
 [ext_resource type="RoseSound" uid="uid://7jcsa7xbtv6k" path="res://data/sounds/attack/39-sword-003.tres" id="2_986to"]
 [ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_y5wd0"]
+[ext_resource type="RoseAttackEffect" uid="uid://b45erl4hp3f0b" path="res://data/attack_effects/131-haedong-sword.tres" id="4_vsocs"]
 
 [resource]
 id = 604
@@ -23,7 +24,7 @@ attack_range = 250
 attack_power = 356
 attack_speed = 11
 motion_type = 5
-effect_id = 131
+attack_effect = ExtResource("4_vsocs")
 attack_start_sound = ExtResource("2_986to")
 hit_sounds = ExtResource("3_y5wd0")
 gem_position = 2

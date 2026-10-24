@@ -3,6 +3,9 @@
 [ext_resource type="RoseStatusEffect" uid="uid://c43fk10odrqq2" path="res://data/status_effects/15-slow.tres" id="1_kymhs"]
 [ext_resource type="RoseSound" uid="uid://42rl1pnpcxo3" path="res://data/sounds/skill/148-heavyarr001.tres" id="2_mlqys"]
 [ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="3_czh71"]
+[ext_resource type="RoseEffectFile" uid="uid://clxnllqi77uen" path="res://data/effect_files/1068-bow-casting-01.tres" id="4_62e8k"]
+[ext_resource type="RoseAttackEffect" uid="uid://b5yvppjhi1ym6" path="res://data/attack_effects/271-taunting-shot.tres" id="5_8hktz"]
+[ext_resource type="RoseEffectFile" uid="uid://drvalieajl0ta" path="res://data/effect_files/1067-bow-hit-heavy01.tres" id="6_np7ue"]
 
 [resource]
 id = 498
@@ -33,11 +36,11 @@ warp_zone = 23
 warp_y = 51000
 casting_motion_id = 95
 casting_repeat_motion_id = 96
-casting_effect_1 = 1068
+casting_effect_1 = ExtResource("4_62e8k")
 casting_effect_1_point = 1
 action_motion_id = 97
-bullet_effect_id = 271
+bullet_effect = ExtResource("5_8hktz")
 bullet_point = 1
 bullet_fire_sound = ExtResource("2_mlqys")
-hit_effect_file_id = 1067
+hit_effect = ExtResource("6_np7ue")
 hit_sound = ExtResource("3_czh71")

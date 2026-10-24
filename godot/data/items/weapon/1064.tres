@@ -3,11 +3,12 @@
 [ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="1_8cbsu"]
 [ext_resource type="RoseSound" uid="uid://bhpgjpyigx46a" path="res://data/sounds/skill/131-skill-attack01.tres" id="2_69hxx"]
 [ext_resource type="RoseHitSounds" uid="uid://db1xofs8p4ny5" path="res://data/hit_sounds/35-gun-hits.tres" id="3_1o8fs"]
+[ext_resource type="RoseAttackEffect" uid="uid://bkjws10nwwhwu" path="res://data/attack_effects/450-attack-effect-450.tres" id="4_7ornf"]
 
 [resource]
 id = 1064
 quality = 50
-bullet_effect_id = 450
+bullet_effect = ExtResource("4_7ornf")
 attack_start_sound = ExtResource("1_8cbsu")
 attack_fire_sound = ExtResource("2_69hxx")
 hit_sounds = ExtResource("3_1o8fs")

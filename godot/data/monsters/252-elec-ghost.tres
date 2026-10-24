@@ -1,6 +1,8 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://cr6ld7ve8877k"]
 
 [ext_resource type="RoseSound" uid="uid://dweyaxdcgid11" path="res://data/sounds/mob/262-mob21-d.tres" id="1_9gfzu"]
+[ext_resource type="RoseAttackEffect" uid="uid://cim6mhfjjf741" path="res://data/attack_effects/401-mini-jelly-bean.tres" id="2_2a6r8"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="3_tqyvm"]
 
 [resource]
 id = 252
@@ -23,8 +25,8 @@ ai_file_index = 18
 npc_type_index = 7
 right_hand_part_index = 1079
 hit_sound_material_type = 1
-hand_hit_effect_id = 401
-die_effect_file_id = 1401
+hand_hit_effect = ExtResource("2_2a6r8")
+die_effect = ExtResource("3_tqyvm")
 die_sound = ExtResource("1_9gfzu")
 drop_money_rate = 1
 drop_item_rate = 45

@@ -1,6 +1,8 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://b0cd14mr8ektw"]
 
 [ext_resource type="RoseStatusEffect" uid="uid://bjw26381t28tg" path="res://data/status_effects/28-dodge-rate-up.tres" id="1_0j6gt"]
+[ext_resource type="RoseEffectFile" uid="uid://btimqwfj57hk2" path="res://data/effect_files/213-casting-03.tres" id="2_b0z1n"]
+[ext_resource type="RoseEffectFile" uid="uid://dwnb187345xi5" path="res://data/effect_files/5-z-hit-01.tres" id="3_3ko1k"]
 
 [resource]
 id = 2906
@@ -18,6 +20,6 @@ add_stat_1_rate = 15
 warp_zone = 22
 warp_x = 20000
 warp_y = 15000
-casting_effect_3 = 213
-hit_effect_file_id = 5
+casting_effect_3 = ExtResource("2_b0z1n")
+hit_effect = ExtResource("3_3ko1k")
 hit_effect_point = 3

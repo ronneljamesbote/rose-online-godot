@@ -147,7 +147,10 @@ pub fn gather(map: &Gd<Node>, to_zone: Transform3D, spawner: &mut ObjectSpawner,
             }
         } else if let Ok(effect) = node.clone().try_cast::<RoseEffectSpot>() {
             let transform = to_zone * effect.get_global_transform();
-            spawner.effect_spots.push((transform, effect.bind().effect.to_string(), false));
+            let path = effect.bind().scene.as_ref().map(|s| s.get_path().to_string()).unwrap_or_default();
+            if !path.is_empty() {
+                spawner.effect_spots.push((transform, path, false));
+            }
         } else if let Ok(sound) = node.clone().try_cast::<RoseSoundSpot>() {
             let position = (to_zone * sound.get_global_transform()).origin;
             let sound = sound.bind();
@@ -1117,11 +1120,12 @@ marker_class!(
     /// An effect playing here all the time (an IFO effect), such as fire, smoke or sparkles.
     /// Turn and scale the node to turn and scale the effect. Played by the game only.
     RoseEffectSpot {
-        /// The effect file, as a path in the ROSE data (an EFT file, for example
-        /// `3DDATA/EFFECT/BANDY_01.EFT`).
+        /// The effect scene: drag one in, such as the imported
+        /// `res://assets/rose/3ddata/effect/bandy_01.scn` or a scene of our own in
+        /// `res://assets/ours/`.
         #[export]
-        effect: GString,
-    }, |this| (format!("Effect\n{}", this.effect.to_string().rsplit(['/', '\\']).next().unwrap_or("")), Color::from_rgb(1.0, 0.85, 0.3), 0.0, None)
+        scene: Option<Gd<PackedScene>>,
+    }, |this| (format!("Effect\n{}", this.scene.as_ref().map(|s| s.get_path().to_string()).unwrap_or_default().rsplit('/').next().unwrap_or("")), Color::from_rgb(1.0, 0.85, 0.3), 0.0, None)
 );
 
 marker_class!(
@@ -1157,7 +1161,18 @@ impl OldProperties for RoseSoundSpot {
         }
     }
 }
-impl OldProperties for RoseEffectSpot {}
+impl OldProperties for RoseEffectSpot {
+    /// Scenes saved before the spots linked effect scenes stored the client file as `effect`.
+    fn set_old_property(&mut self, name: &str, value: &Variant) -> bool {
+        match (name, value.try_to::<GString>()) {
+            ("effect", Ok(path)) => {
+                self.scene = crate::effect::effect_scene(&path.to_string());
+                true
+            }
+            _ => false,
+        }
+    }
+}
 impl OldProperties for RoseZoneEvent {}
 
 // ---------------------------------------------------------------------------------------
@@ -1848,7 +1863,7 @@ pub fn write_zone_scenes(zone_id: u16, force: bool) -> Result<(String, usize, us
                     let mut spot = RoseEffectSpot::new_alloc();
                     spot.set_name(&format!("Effect_{i}"));
                     spot.set_transform(zone::ifo_transform(&effect.object));
-                    spot.bind_mut().effect = effect.effect_path.path().to_string_lossy().to_string().as_str().into();
+                    spot.bind_mut().scene = crate::effect::effect_scene(&effect.effect_path.path().to_string_lossy());
                     add_owned(&mut parent, &root, spot.upcast());
                     marker_count += 1;
                 }

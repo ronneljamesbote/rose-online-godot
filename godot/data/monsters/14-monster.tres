@@ -1,9 +1,12 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://csklxuoy32m8e"]
 
+[ext_resource type="RoseAttackEffect" uid="uid://bqslyp13mi5oa" path="res://data/attack_effects/403-jellynut.tres" id="1_ivyy8"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="2_7yr9n"]
+
 [resource]
 id = 14
 reward_xp = 4
 attack_range = 250
 hit_sound_material_type = 1
-hand_hit_effect_id = 403
-die_effect_file_id = 1401
+hand_hit_effect = ExtResource("1_ivyy8")
+die_effect = ExtResource("2_7yr9n")

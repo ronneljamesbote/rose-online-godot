@@ -1,5 +1,7 @@
 [gd_resource type="RoseStatusEffect" format=3 uid="uid://cxo27d6njq18d"]
 
+[ext_resource type="RoseEffectFile" uid="uid://b18n8fbdsiyrb" path="res://data/effect_files/177-shirkdown-01.tres" id="1_m0zsl"]
+
 [resource]
 id = 29
 name = "Dodge Rate Down"
@@ -8,5 +10,5 @@ start_message = "Dodge Rate has returned to normal."
 status_effect_type = "DecreaseAvoid"
 can_be_reapplied = true
 cleared_by = "ClearBad"
-effect_file_id = 177
+effect = ExtResource("1_m0zsl")
 icon_id = 8

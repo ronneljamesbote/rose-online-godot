@@ -1,5 +1,9 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://beloe63m6e8l5"]
 
+[ext_resource type="RoseEffectFile" uid="uid://dpv6vsra8ebsl" path="res://data/effect_files/1320-scope-01.tres" id="1_pbvjp"]
+[ext_resource type="RoseEffectFile" uid="uid://ph25k3xgjhyb" path="res://data/effect_files/1316-tyrantmagic-skill-01.tres" id="2_4xlaj"]
+[ext_resource type="RoseEffectFile" uid="uid://datmsj7fgcoav" path="res://data/effect_files/1310-runa-hit-02.tres" id="3_e0zsh"]
+
 [resource]
 id = 3015
 skill_type = "AreaTarget"
@@ -13,7 +17,7 @@ damage_type = "WeaponAttack"
 power = 55
 item_make_number = 55
 casting_motion_id = 8
-casting_effect_3 = 1320
-casting_effect_4 = 1316
+casting_effect_3 = ExtResource("1_pbvjp")
+casting_effect_4 = ExtResource("2_4xlaj")
 action_motion_id = 9
-hit_effect_file_id = 1310
+hit_effect = ExtResource("3_e0zsh")

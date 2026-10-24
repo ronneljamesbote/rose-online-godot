@@ -1,6 +1,10 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://du2c4l8jo0fxa"]
 
 [ext_resource type="RoseSound" uid="uid://durlyfvhmfuif" path="res://data/sounds/skill/142-skill-magic04.tres" id="1_94dzj"]
+[ext_resource type="RoseEffectFile" uid="uid://b2kvgebw3flm4" path="res://data/effect_files/1041-heavy-casting-01.tres" id="2_4dwof"]
+[ext_resource type="RoseEffectFile" uid="uid://ctbpjcwyxsbuj" path="res://data/effect_files/1042-heavy-rotate-01.tres" id="3_xaqct"]
+[ext_resource type="RoseEffectFile" uid="uid://cw7qi5d418pmu" path="res://data/effect_files/1601-s-blood-01.tres" id="4_l85rq"]
+[ext_resource type="RoseEffectFile" uid="uid://bikiwa07s5d7j" path="res://data/effect_files/1602-s-bloodout-hit-01.tres" id="5_shbj9"]
 
 [resource]
 id = 660
@@ -32,14 +36,14 @@ warp_zone = 16
 warp_x = 370000
 casting_motion_id = 111
 casting_repeat_motion_id = 131
-casting_effect_1 = 1041
+casting_effect_1 = ExtResource("2_4dwof")
 casting_effect_1_point = 3
-casting_effect_2 = 1042
+casting_effect_2 = ExtResource("3_xaqct")
 casting_effect_2_point = 3
-casting_effect_3 = 1601
+casting_effect_3 = ExtResource("4_l85rq")
 casting_effect_3_point = 3
 action_motion_id = 175
 action_motion_speed = 203
-hit_effect_file_id = 1602
+hit_effect = ExtResource("5_shbj9")
 hit_effect_point = 3
 hit_sound = ExtResource("1_94dzj")

@@ -1,0 +1,17 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://bvsu1qypvucrv"]
+
+[ext_resource type="RoseEffectFile" uid="uid://bxh1cws8stvlf" path="res://data/effect_files/1136-magic-firing-06.tres" id="1_53lt1"]
+[ext_resource type="RoseEffectFile" uid="uid://jouf1yjphur1" path="res://data/effect_files/130-hit-fireball-01.tres" id="2_xstfe"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="3_1i7vk"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="4_soe0l"]
+
+[resource]
+id = 215
+name = "Windphon Wand"
+trail_milliseconds = 100
+hit_effect = ExtResource("2_xstfe")
+hit_effect_critical = ExtResource("3_1i7vk")
+bullet_effect = ExtResource("1_53lt1")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+hit_sound = ExtResource("4_soe0l")

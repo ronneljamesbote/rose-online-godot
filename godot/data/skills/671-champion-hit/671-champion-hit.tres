@@ -3,6 +3,9 @@
 [ext_resource type="RoseJobClass" uid="uid://dwxgadb8sumfe" path="res://data/job_classes/62-champion-job.tres" id="1_lsghi"]
 [ext_resource type="RoseSkill" uid="uid://dwqa2avbfm3gx" path="res://data/skills/341-leap-attack/341-leap-attack.tres" id="2_0qhn2"]
 [ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="3_obage"]
+[ext_resource type="RoseEffectFile" uid="uid://b0w1erat0mhe4" path="res://data/effect_files/1036-leap-casting-01.tres" id="4_labey"]
+[ext_resource type="RoseEffectFile" uid="uid://c8h1g3u5yt216" path="res://data/effect_files/1037-leap-rotate-01.tres" id="5_g46o7"]
+[ext_resource type="RoseEffectFile" uid="uid://wv36bdk6kw6y" path="res://data/effect_files/1035-leap-hit-01.tres" id="6_kxjvw"]
 
 [resource]
 id = 671
@@ -30,8 +33,8 @@ item_make_number = 160
 casting_motion_id = 128
 casting_motion_speed = 80
 casting_repeat_motion_id = 148
-casting_effect_1 = 1036
-casting_effect_2 = 1037
+casting_effect_1 = ExtResource("4_labey")
+casting_effect_2 = ExtResource("5_g46o7")
 action_motion_id = 93
-hit_effect_file_id = 1035
+hit_effect = ExtResource("6_kxjvw")
 hit_sound = ExtResource("3_obage")

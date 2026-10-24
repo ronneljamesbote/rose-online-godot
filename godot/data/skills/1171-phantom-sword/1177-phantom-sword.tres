@@ -3,6 +3,7 @@
 [ext_resource type="RoseSkill" uid="uid://cctctgoq3grrx" path="res://data/skills/801-staff-mastery/801-staff-mastery.tres" id="1_7belb"]
 [ext_resource type="RoseMonster" uid="uid://qc6l3s5rkt7o" path="res://data/monsters/827-phantomsword.tres" id="2_hs5po"]
 [ext_resource type="RoseSound" uid="uid://bo7u03fko7bo2" path="res://data/sounds/attack/90-magic-002.tres" id="3_66cfv"]
+[ext_resource type="RoseAttackEffect" uid="uid://wxxpgg57j08t" path="res://data/attack_effects/221-berserk.tres" id="4_uq8rf"]
 
 [resource]
 id = 1177
@@ -24,6 +25,6 @@ summon_monster = ExtResource("2_hs5po")
 casting_motion_id = 118
 casting_repeat_motion_id = 138
 action_motion_id = 155
-bullet_effect_id = 221
+bullet_effect = ExtResource("4_uq8rf")
 bullet_point = 3
 bullet_fire_sound = ExtResource("3_66cfv")

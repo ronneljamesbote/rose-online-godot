@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://bf7tc3vdllqqj"]
+
+[ext_resource type="RoseEffectFile" uid="uid://cp8556hb1ukby" path="res://data/effect_files/1074-icebullet-firing-01.tres" id="1_060f4"]
+[ext_resource type="RoseSound" uid="uid://bb6ywn24slw5b" path="res://data/sounds/skill/146-skill-magic08.tres" id="2_3i1a8"]
+[ext_resource type="RoseEffectFile" uid="uid://deul6xbciakfl" path="res://data/effect_files/1123-mana-hit-02.tres" id="3_ipakv"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_hkir8"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="5_sinf8"]
+
+[resource]
+id = 177
+name = "Cold Bullet"
+hit_effect = ExtResource("3_ipakv")
+hit_effect_critical = ExtResource("4_hkir8")
+bullet_effect = ExtResource("1_060f4")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_3i1a8")
+hit_sound = ExtResource("5_sinf8")

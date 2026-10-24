@@ -1,6 +1,9 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://c2fo83hgju7u7"]
 
 [ext_resource type="RoseStatusEffect" uid="uid://df7iery5ej84w" path="res://data/status_effects/54-additional-damage.tres" id="1_uax6y"]
+[ext_resource type="RoseEffectFile" uid="uid://bv41ketysp2p" path="res://data/effect_files/1754-self-casting-01.tres" id="2_8rdsz"]
+[ext_resource type="RoseEffectFile" uid="uid://b4f1t17hmgcmv" path="res://data/effect_files/1763-self-rotate-01.tres" id="3_sppdm"]
+[ext_resource type="RoseEffectFile" uid="uid://huc1lgwxotrj" path="res://data/effect_files/1771-self-skill-01.tres" id="4_2kj74"]
 
 [resource]
 id = 3132
@@ -19,9 +22,9 @@ warp_zone = 18
 warp_y = 37000
 casting_motion_id = 114
 casting_repeat_motion_id = 134
-casting_effect_1 = 1754
-casting_effect_2 = 1763
+casting_effect_1 = ExtResource("2_8rdsz")
+casting_effect_2 = ExtResource("3_sppdm")
 casting_effect_2_point = 3
-casting_effect_3 = 1771
+casting_effect_3 = ExtResource("4_2kj74")
 casting_effect_3_point = 3
 action_motion_id = 153

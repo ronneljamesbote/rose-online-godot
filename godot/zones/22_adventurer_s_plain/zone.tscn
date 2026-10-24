@@ -236,6 +236,8 @@
 [ext_resource type="AudioStreamWAV" path="res://assets/rose/sound/terrain/bug_003.res" id="234_kfx39"]
 [ext_resource type="AudioStreamWAV" path="res://assets/rose/sound/terrain/water_001.res" id="235_707l2"]
 [ext_resource type="AudioStreamWAV" path="res://assets/rose/sound/terrain/bird_003.res" id="236_t37uk"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/effect/pokposu01.scn" id="237_3y5mz"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/effect/pokposu01_top.scn" id="238_f5obr"]
 
 [sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_gjt1m"]
 world_background = 0
@@ -1637,23 +1639,23 @@ transform = Transform3D(1.2713482, 0, -1.4119754, 0, 1.9000002, 0, 1.4119754, 0,
 [node name="Effects" type="Node3D" parent="Block_34_30" unique_id=1994540307]
 
 [node name="Effect_0" type="RoseEffectSpot" parent="Block_34_30/Effects" unique_id=1407127818]
-effect = "3DDATA/EFFECT/POKPOSU01.EFT"
+scene = ExtResource("237_3y5mz")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5486.6333, 0.2013037, -5497.102)
 
 [node name="Effect_1" type="RoseEffectSpot" parent="Block_34_30/Effects" unique_id=1215311678]
-effect = "3DDATA/EFFECT/POKPOSU01.EFT"
+scene = ExtResource("237_3y5mz")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5569.1206, -0.7076318, -5485.964)
 
 [node name="Effect_2" type="RoseEffectSpot" parent="Block_34_30/Effects" unique_id=906371864]
-effect = "3DDATA/EFFECT/POKPOSU01.EFT"
+scene = ExtResource("237_3y5mz")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5583.9556, -0.59038085, -5486.854)
 
 [node name="Effect_3" type="RoseEffectSpot" parent="Block_34_30/Effects" unique_id=817280639]
-effect = "3DDATA/EFFECT/POKPOSU01_TOP.EFT"
+scene = ExtResource("238_f5obr")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5484.9263, 37, -5508.003)
 
 [node name="Effect_4" type="RoseEffectSpot" parent="Block_34_30/Effects" unique_id=1510312019]
-effect = "3DDATA/EFFECT/POKPOSU01_TOP.EFT"
+scene = ExtResource("238_f5obr")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5574.4546, 39.89837, -5506.648)
 
 [node name="Sounds" type="Node3D" parent="Block_34_30" unique_id=1928025474]
@@ -1732,15 +1734,15 @@ transform = Transform3D(2.8319902, 0, -1.2608831, 0, 3.0999992, 0, 1.2608831, 0,
 [node name="Effects" type="Node3D" parent="Block_35_30" unique_id=1432025612]
 
 [node name="Effect_0" type="RoseEffectSpot" parent="Block_35_30/Effects" unique_id=1149292038]
-effect = "3DDATA/EFFECT/POKPOSU01.EFT"
+scene = ExtResource("237_3y5mz")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5638.388, -0.8007715, -5472.051)
 
 [node name="Effect_1" type="RoseEffectSpot" parent="Block_35_30/Effects" unique_id=1033525324]
-effect = "3DDATA/EFFECT/POKPOSU01.EFT"
+scene = ExtResource("237_3y5mz")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5652.221, -0.67514646, -5472.1426)
 
 [node name="Effect_2" type="RoseEffectSpot" parent="Block_35_30/Effects" unique_id=1888549152]
-effect = "3DDATA/EFFECT/POKPOSU01_TOP.EFT"
+scene = ExtResource("238_f5obr")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5646.5405, 39.270317, -5490.858)
 
 [node name="Sounds" type="Node3D" parent="Block_35_30" unique_id=934737583]
@@ -8773,15 +8775,15 @@ transform = Transform3D(1.4000001, 0, 0, 0, 1.2474092, 0.6355868, 0, -0.6355868,
 [node name="Effects" type="Node3D" parent="Block_31_33" unique_id=1666748302]
 
 [node name="Effect_0" type="RoseEffectSpot" parent="Block_31_33/Effects" unique_id=1539822770]
-effect = "3DDATA/EFFECT/POKPOSU01.EFT"
+scene = ExtResource("237_3y5mz")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5108.65, -0.19552124, -5103.231)
 
 [node name="Effect_1" type="RoseEffectSpot" parent="Block_31_33/Effects" unique_id=1218020899]
-effect = "3DDATA/EFFECT/POKPOSU01.EFT"
+scene = ExtResource("237_3y5mz")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5094.71, -0.55419314, -5106.597)
 
 [node name="Effect_2" type="RoseEffectSpot" parent="Block_31_33/Effects" unique_id=772584746]
-effect = "3DDATA/EFFECT/POKPOSU01_TOP.EFT"
+scene = ExtResource("238_f5obr")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5098.805, 39.31949, -5090.6855)
 
 [node name="Sounds" type="Node3D" parent="Block_31_33" unique_id=493195516]
@@ -9021,19 +9023,19 @@ transform = Transform3D(-0.10452783, 0, -0.99452204, 0, 1, 0, 0.99452204, 0, -0.
 [node name="Effects" type="Node3D" parent="Block_32_33" unique_id=476355056]
 
 [node name="Effect_0" type="RoseEffectSpot" parent="Block_32_33/Effects" unique_id=610425339]
-effect = "3DDATA/EFFECT/POKPOSU01.EFT"
+scene = ExtResource("237_3y5mz")
 transform = Transform3D(-0.777145, 0, 0.62932163, 0, 1, 0, -0.62932163, 0, -0.777145, 5181.128, -0.3549301, -5077.5356)
 
 [node name="Effect_1" type="RoseEffectSpot" parent="Block_32_33/Effects" unique_id=94474568]
-effect = "3DDATA/EFFECT/POKPOSU01.EFT"
+scene = ExtResource("237_3y5mz")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5165.4834, -0.7866074, -5083.217)
 
 [node name="Effect_2" type="RoseEffectSpot" parent="Block_32_33/Effects" unique_id=378185219]
-effect = "3DDATA/EFFECT/POKPOSU01.EFT"
+scene = ExtResource("237_3y5mz")
 transform = Transform3D(-0.97814715, 0, 0.2079137, 0, 1, 0, -0.2079137, 0, -0.97814715, 5150.428, -0.2535864, -5087.2495)
 
 [node name="Effect_3" type="RoseEffectSpot" parent="Block_32_33/Effects" unique_id=2143868442]
-effect = "3DDATA/EFFECT/POKPOSU01_TOP.EFT"
+scene = ExtResource("238_f5obr")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5164.4463, 39.170338, -5071.7407)
 
 [node name="Sounds" type="Node3D" parent="Block_32_33" unique_id=1259057277]

@@ -1,5 +1,8 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://bs1fw1ha3kbax"]
 
+[ext_resource type="RoseEffectFile" uid="uid://btimqwfj57hk2" path="res://data/effect_files/213-casting-03.tres" id="1_v3brx"]
+[ext_resource type="RoseEffectFile" uid="uid://dwnb187345xi5" path="res://data/effect_files/5-z-hit-01.tres" id="2_1ldsf"]
+
 [resource]
 id = 3062
 skill_type = "SelfBound"
@@ -7,6 +10,6 @@ icon_number = 84
 target_filter = "Allied"
 success_ratio = 200
 status_effect_seconds = 10
-casting_effect_3 = 213
-hit_effect_file_id = 5
+casting_effect_3 = ExtResource("1_v3brx")
+hit_effect = ExtResource("2_1ldsf")
 hit_effect_point = 3

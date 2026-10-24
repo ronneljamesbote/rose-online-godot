@@ -2,6 +2,10 @@
 
 [ext_resource type="RoseStatusEffect" uid="uid://dd08udjftntul" path="res://data/status_effects/17-slow-attack.tres" id="1_o1r3p"]
 [ext_resource type="RoseSound" uid="uid://dkndsxt5u7nnm" path="res://data/sounds/skill/1576-point-twister02.tres" id="2_43ss5"]
+[ext_resource type="RoseEffectFile" uid="uid://bkos70jclry3s" path="res://data/effect_files/1764-scope-rotate-01.tres" id="3_owhl0"]
+[ext_resource type="RoseEffectFile" uid="uid://cbdbve174vjov" path="res://data/effect_files/1631-wind-01.tres" id="4_nfenj"]
+[ext_resource type="RoseEffectFile" uid="uid://c7abyhw6ae1a0" path="res://data/effect_files/1317-yetityrant-skill-01.tres" id="5_u57mg"]
+[ext_resource type="RoseEffectFile" uid="uid://datmsj7fgcoav" path="res://data/effect_files/1310-runa-hit-02.tres" id="6_weylr"]
 
 [resource]
 id = 3181
@@ -25,9 +29,9 @@ warp_zone = 24
 warp_y = 60000
 casting_motion_id = 115
 casting_repeat_motion_id = 135
-casting_effect_2 = 1764
-casting_effect_3 = 1631
-casting_effect_4 = 1317
+casting_effect_2 = ExtResource("3_owhl0")
+casting_effect_3 = ExtResource("4_nfenj")
+casting_effect_4 = ExtResource("5_u57mg")
 action_motion_id = 172
-hit_effect_file_id = 1310
+hit_effect = ExtResource("6_weylr")
 hit_sound = ExtResource("2_43ss5")

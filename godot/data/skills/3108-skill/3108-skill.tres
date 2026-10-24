@@ -2,6 +2,9 @@
 
 [ext_resource type="RoseStatusEffect" uid="uid://bbp1icd6ydrpy" path="res://data/status_effects/46-movement-speed-increased.tres" id="1_1mwsr"]
 [ext_resource type="RoseStatusEffect" uid="uid://covtuiwpksfxb" path="res://data/status_effects/53-dodge-rate-up.tres" id="2_3op3v"]
+[ext_resource type="RoseEffectFile" uid="uid://bv41ketysp2p" path="res://data/effect_files/1754-self-casting-01.tres" id="3_a3t0l"]
+[ext_resource type="RoseEffectFile" uid="uid://b4f1t17hmgcmv" path="res://data/effect_files/1763-self-rotate-01.tres" id="4_6syx7"]
+[ext_resource type="RoseEffectFile" uid="uid://huc1lgwxotrj" path="res://data/effect_files/1771-self-skill-01.tres" id="5_utc2o"]
 
 [resource]
 id = 3108
@@ -24,9 +27,9 @@ warp_zone = 23
 warp_x = 400000
 casting_motion_id = 114
 casting_repeat_motion_id = 134
-casting_effect_1 = 1754
-casting_effect_2 = 1763
+casting_effect_1 = ExtResource("3_a3t0l")
+casting_effect_2 = ExtResource("4_6syx7")
 casting_effect_2_point = 3
-casting_effect_3 = 1771
+casting_effect_3 = ExtResource("5_utc2o")
 casting_effect_3_point = 3
 action_motion_id = 153

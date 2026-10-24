@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://0gajnhekda2d"]
+
+[ext_resource type="RoseEffectFile" uid="uid://chws428eogtls" path="res://data/effect_files/397-wormd-bow-01.tres" id="1_2malc"]
+[ext_resource type="RoseSound" uid="uid://cqnwh1xgiobdt" path="res://data/sounds/skill/1121-action-mana02.tres" id="2_t1o1x"]
+[ext_resource type="RoseEffectFile" uid="uid://dlv0vwcc71rg4" path="res://data/effect_files/398-wormd-hit-01.tres" id="3_25b18"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_dj8eb"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="5_i04ee"]
+
+[resource]
+id = 443
+name = "attack effect 443"
+hit_effect = ExtResource("3_25b18")
+hit_effect_critical = ExtResource("4_dj8eb")
+bullet_effect = ExtResource("1_2malc")
+bullet_move = "Linear"
+bullet_speed = 2400.0
+fire_sound = ExtResource("2_t1o1x")
+hit_sound = ExtResource("5_i04ee")

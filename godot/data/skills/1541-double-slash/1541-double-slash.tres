@@ -3,6 +3,9 @@
 [ext_resource type="RoseJobClass" uid="uid://n6tm3jlgaskg" path="res://data/job_classes/43-hawker-job.tres" id="1_qsjfa"]
 [ext_resource type="RoseSkill" uid="uid://bwlrvv7xm4hds" path="res://data/skills/1421-knuckle-mastery/1421-knuckle-mastery.tres" id="2_8rtow"]
 [ext_resource type="RoseSound" uid="uid://b17inmaemtc6g" path="res://data/sounds/attack/67-axe-d03.tres" id="3_6kcy8"]
+[ext_resource type="RoseEffectFile" uid="uid://s8yrioubd614" path="res://data/effect_files/1031-sequence-casting-01.tres" id="4_jv760"]
+[ext_resource type="RoseEffectFile" uid="uid://cma1g46iffpr" path="res://data/effect_files/371-image-cut-02.tres" id="5_ydgby"]
+[ext_resource type="RoseEffectFile" uid="uid://dieqauqas1fos" path="res://data/effect_files/373-image-cut-04.tres" id="6_8wl70"]
 
 [resource]
 id = 1541
@@ -27,9 +30,9 @@ harm = 1
 item_make_number = 40
 casting_motion_id = 111
 casting_repeat_motion_id = 131
-casting_effect_1 = 1031
+casting_effect_1 = ExtResource("4_jv760")
 action_motion_id = 91
-hit_effect_file_id = 371
+hit_effect = ExtResource("5_ydgby")
 hit_sound = ExtResource("3_6kcy8")
-hit_dummy_effect_1 = 373
+hit_dummy_effect_1 = ExtResource("6_8wl70")
 hit_dummy_sound_1 = ExtResource("3_6kcy8")

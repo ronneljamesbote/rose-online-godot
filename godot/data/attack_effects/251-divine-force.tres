@@ -1,0 +1,15 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://p4t87thxwncc"]
+
+[ext_resource type="RoseEffectFile" uid="uid://cfp5xhas77uqv" path="res://data/effect_files/1112-mana-firing-01.tres" id="1_4jio7"]
+[ext_resource type="RoseSound" uid="uid://bb6ywn24slw5b" path="res://data/sounds/skill/146-skill-magic08.tres" id="2_bhysh"]
+[ext_resource type="RoseSound" uid="uid://dxxdg1imoh6mi" path="res://data/sounds/attack/83-gun-002.tres" id="3_yg2mh"]
+
+[resource]
+id = 251
+name = "Divine Force"
+trail_milliseconds = 100
+bullet_effect = ExtResource("1_4jio7")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_bhysh")
+hit_sound = ExtResource("3_yg2mh")

@@ -1,5 +1,7 @@
 [gd_resource type="RoseStatusEffect" format=3 uid="uid://dbi4ro2cc5h50"]
 
+[ext_resource type="RoseEffectFile" uid="uid://4ym6vv7bbf75" path="res://data/effect_files/172-horsepower-01.tres" id="1_ywkcu"]
+
 [resource]
 id = 23
 name = "Magic Resistance Down"
@@ -8,5 +10,5 @@ start_message = "Magic Resistance has returned to normal."
 status_effect_type = "DecreaseResistance"
 can_be_reapplied = true
 cleared_by = "ClearBad"
-effect_file_id = 172
+effect = ExtResource("1_ywkcu")
 icon_id = 11

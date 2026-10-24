@@ -1,6 +1,9 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://bukl0hhogktf2"]
 
 [ext_resource type="RoseStatusEffect" uid="uid://cvu0lmlilcoek" path="res://data/status_effects/48-atk-power-up.tres" id="1_hny0a"]
+[ext_resource type="RoseEffectFile" uid="uid://bv41ketysp2p" path="res://data/effect_files/1754-self-casting-01.tres" id="2_j68j0"]
+[ext_resource type="RoseEffectFile" uid="uid://b4f1t17hmgcmv" path="res://data/effect_files/1763-self-rotate-01.tres" id="3_o62ca"]
+[ext_resource type="RoseEffectFile" uid="uid://huc1lgwxotrj" path="res://data/effect_files/1771-self-skill-01.tres" id="4_kwai2"]
 
 [resource]
 id = 3131
@@ -17,9 +20,9 @@ warp_zone = 18
 warp_x = 80000
 casting_motion_id = 114
 casting_repeat_motion_id = 134
-casting_effect_1 = 1754
-casting_effect_2 = 1763
+casting_effect_1 = ExtResource("2_j68j0")
+casting_effect_2 = ExtResource("3_o62ca")
 casting_effect_2_point = 3
-casting_effect_3 = 1771
+casting_effect_3 = ExtResource("4_kwai2")
 casting_effect_3_point = 3
 action_motion_id = 153

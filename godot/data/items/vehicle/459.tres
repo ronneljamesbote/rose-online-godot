@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemVehicle" format=3 uid="uid://cc84dpnbo7cx4"]
 
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_midka"]
+[ext_resource type="RoseEffectFile" uid="uid://8yligqioljpe" path="res://data/effect_files/299-smoke-06.tres" id="2_mh03i"]
 
 [resource]
 id = 459
@@ -17,4 +18,4 @@ vehicle_part = "Engine"
 version = 72
 move_speed = 134
 bullet_fire_point = 8
-dummy_effect_file_ids = PackedInt32Array(0, 0, 0, 299, 299)
+dummy_effects = Array[RoseEffectFile]([null, null, null, ExtResource("2_mh03i"), ExtResource("2_mh03i")])

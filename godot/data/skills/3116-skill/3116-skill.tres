@@ -2,6 +2,11 @@
 
 [ext_resource type="RoseStatusEffect" uid="uid://cvu0lmlilcoek" path="res://data/status_effects/48-atk-power-up.tres" id="1_wmtfx"]
 [ext_resource type="RoseStatusEffect" uid="uid://d352y6dyusy7e" path="res://data/status_effects/47-atk-speed-up.tres" id="2_sxyyd"]
+[ext_resource type="RoseEffectFile" uid="uid://bv41ketysp2p" path="res://data/effect_files/1754-self-casting-01.tres" id="3_supxq"]
+[ext_resource type="RoseEffectFile" uid="uid://b4f1t17hmgcmv" path="res://data/effect_files/1763-self-rotate-01.tres" id="4_86s90"]
+[ext_resource type="RoseEffectFile" uid="uid://huc1lgwxotrj" path="res://data/effect_files/1771-self-skill-01.tres" id="5_2fu2c"]
+[ext_resource type="RoseAttackEffect" uid="uid://bq0gk8fmds36k" path="res://data/attack_effects/172-air-gun.tres" id="6_56ss3"]
+[ext_resource type="RoseEffectFile" uid="uid://cp2jbsgybpgic" path="res://data/effect_files/110-gun-blowup-01.tres" id="7_bleur"]
 
 [resource]
 id = 3116
@@ -25,13 +30,13 @@ warp_x = 70000
 warp_y = 20000
 casting_motion_id = 114
 casting_repeat_motion_id = 134
-casting_effect_1 = 1754
-casting_effect_2 = 1763
+casting_effect_1 = ExtResource("3_supxq")
+casting_effect_2 = ExtResource("4_86s90")
 casting_effect_2_point = 3
-casting_effect_3 = 1771
+casting_effect_3 = ExtResource("5_2fu2c")
 casting_effect_3_point = 3
 action_motion_id = 153
-bullet_effect_id = 172
+bullet_effect = ExtResource("6_56ss3")
 bullet_point = 1
-hit_effect_file_id = 110
+hit_effect = ExtResource("7_bleur")
 hit_effect_point = 3

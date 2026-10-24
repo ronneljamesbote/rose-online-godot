@@ -1,6 +1,9 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://bc8o50r1go7cn"]
 
 [ext_resource type="RoseSound" uid="uid://75hketpwmdeo" path="res://data/sounds/skill/133-skill-narc01.tres" id="1_fsnrw"]
+[ext_resource type="RoseEffectFile" uid="uid://buciewaj8le56" path="res://data/effect_files/385-ston-tan-01.tres" id="2_nkj5a"]
+[ext_resource type="RoseAttackEffect" uid="uid://crg8b6dwo8uw5" path="res://data/attack_effects/437-attack-effect-437.tres" id="3_rb3nh"]
+[ext_resource type="RoseEffectFile" uid="uid://cy2wmla1dhrcd" path="res://data/effect_files/387-stongolem-hit-01.tres" id="4_oixit"]
 
 [resource]
 id = 2982
@@ -14,9 +17,9 @@ damage_type = "MagicAttack"
 power = 35
 item_make_number = 35
 casting_motion_id = 8
-casting_effect_1 = 385
+casting_effect_1 = ExtResource("2_nkj5a")
 casting_effect_1_point = 0
 action_motion_id = 9
-bullet_effect_id = 437
+bullet_effect = ExtResource("3_rb3nh")
 bullet_fire_sound = ExtResource("1_fsnrw")
-hit_effect_file_id = 387
+hit_effect = ExtResource("4_oixit")

@@ -179,9 +179,9 @@ macro_rules! character_export {
             #[serde(skip_serializing_if = "is_default")]
             pub hitted_sound: u16,
             #[serde(skip_serializing_if = "is_default")]
-            pub hand_hit_effect_id: u16,
+            pub hand_hit_effect: u16,
             #[serde(skip_serializing_if = "is_default")]
-            pub die_effect_file_id: u16,
+            pub die_effect: u16,
             #[serde(skip_serializing_if = "is_default")]
             pub die_sound: u16,
             #[serde(skip_serializing_if = "is_default")]
@@ -227,8 +227,8 @@ macro_rules! character_export {
                 self.normal_effect_sound = number(npc.normal_effect_sound_id, SoundId::get);
                 self.attack_sound = number(npc.attack_sound_id, SoundId::get);
                 self.hitted_sound = number(npc.hitted_sound_id, SoundId::get);
-                self.hand_hit_effect_id = number(npc.hand_hit_effect_id, EffectId::get);
-                self.die_effect_file_id = number(npc.die_effect_file_id, EffectFileId::get);
+                self.hand_hit_effect = number(npc.hand_hit_effect_id, EffectId::get);
+                self.die_effect = number(npc.die_effect_file_id, EffectFileId::get);
                 self.die_sound = number(npc.die_sound_id, SoundId::get);
                 self.create_effect_index = npc.create_effect_index;
                 self.create_sound = number(npc.create_sound_id, SoundId::get);
@@ -278,8 +278,8 @@ macro_rules! character_export {
                     normal_effect_sound_id: SoundId::new(self.normal_effect_sound),
                     attack_sound_id: SoundId::new(self.attack_sound),
                     hitted_sound_id: SoundId::new(self.hitted_sound),
-                    hand_hit_effect_id: EffectId::new(self.hand_hit_effect_id),
-                    die_effect_file_id: EffectFileId::new(self.die_effect_file_id),
+                    hand_hit_effect_id: EffectId::new(self.hand_hit_effect),
+                    die_effect_file_id: EffectFileId::new(self.die_effect),
                     die_sound_id: SoundId::new(self.die_sound),
                     npc_quest_type: self.npc_quest_type,
                     glow_colour: (channel(0), channel(1), channel(2)),

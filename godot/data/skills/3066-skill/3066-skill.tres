@@ -1,6 +1,8 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://yo8r6utfncr7"]
 
 [ext_resource type="RoseStatusEffect" uid="uid://c2ch5i6r1df36" path="res://data/status_effects/33-camouflage.tres" id="1_8ymsi"]
+[ext_resource type="RoseEffectFile" uid="uid://btimqwfj57hk2" path="res://data/effect_files/213-casting-03.tres" id="2_nl0wv"]
+[ext_resource type="RoseEffectFile" uid="uid://dwnb187345xi5" path="res://data/effect_files/5-z-hit-01.tres" id="3_oxpva"]
 
 [resource]
 id = 3066
@@ -9,6 +11,6 @@ icon_number = 84
 success_ratio = 200
 status_effect_1 = ExtResource("1_8ymsi")
 status_effect_seconds = 100
-casting_effect_3 = 213
-hit_effect_file_id = 5
+casting_effect_3 = ExtResource("2_nl0wv")
+hit_effect = ExtResource("3_oxpva")
 hit_effect_point = 3

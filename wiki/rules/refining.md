@@ -83,7 +83,7 @@ source:
     - godot/rust/src/character.rs (RoseCharacter.show_item_effects)
     - godot/rust/src/material.rs (grade_glow), godot/shaders/rose_item_glow.gdshaderinc
     - godot/rust/src/net.rs (player_look)
-  data: the recipe resources 1-10 (weapon refining) and 11-20 (other equipment) in godot/data/craft_recipes/, and each item's recipe; the gem resources in godot/data/items/gem/ (gems from 301, quality, gem_effect_id); the grade resources in godot/data/items/grades/ (grade bonuses and glow colours); the gem_position of each weapon and shield
+  data: the recipe resources 1-10 (weapon refining) and 11-20 (other equipment) in godot/data/craft_recipes/, and each item's recipe; the gem resources in godot/data/items/gem/ (gems from 301, quality, gem_effect, the attack effect in godot/data/attack_effects/ drawn on the weapon); the grade resources in godot/data/items/grades/ (grade bonuses and glow colours); the gem_position of each weapon and shield
 ---
 # Refining, Disassembly and Gems
 

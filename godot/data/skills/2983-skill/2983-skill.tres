@@ -1,6 +1,8 @@
 [gd_resource type="RoseSkill" format=3 uid="uid://7d54tgaddvpi"]
 
 [ext_resource type="RoseStatusEffect" uid="uid://0p3o4l6jqxs5" path="res://data/status_effects/21-def-down.tres" id="1_ao46d"]
+[ext_resource type="RoseEffectFile" uid="uid://c78dgxarn7hpk" path="res://data/effect_files/389-stony-skill-01.tres" id="2_f9ocp"]
+[ext_resource type="RoseEffectFile" uid="uid://c5otr5mm1f848" path="res://data/effect_files/242-skill-hit-01.tres" id="3_huir0"]
 
 [resource]
 id = 2983
@@ -22,6 +24,6 @@ warp_zone = 19
 warp_x = 20000
 warp_y = 20000
 casting_motion_id = 8
-casting_effect_1 = 389
+casting_effect_1 = ExtResource("2_f9ocp")
 action_motion_id = 9
-hit_effect_file_id = 242
+hit_effect = ExtResource("3_huir0")

@@ -1,6 +1,7 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://51quodcqk8yp"]
 
 [ext_resource type="RoseDropTable" uid="uid://cs2kw3qt7nvko" path="res://data/drop_tables/73-little-street-vendor-tom-little-street-vendor-je.tres" id="1_tlwf6"]
+[ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="2_hwk9m"]
 
 [resource]
 id = 1101
@@ -16,6 +17,6 @@ avoid = 100
 attack_speed = 100
 attack_range = 200
 npc_type_index = 999
-die_effect_file_id = 1401
+die_effect = ExtResource("2_hwk9m")
 drop_table = ExtResource("1_tlwf6")
 summon_monster_type = 43

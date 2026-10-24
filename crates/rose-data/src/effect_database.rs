@@ -6,8 +6,6 @@ use std::{
     time::Duration,
 };
 
-use rose_file_readers::VfsPathBuf;
-
 use crate::SoundId;
 
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Debug, Serialize, Deserialize)]
@@ -20,7 +18,7 @@ pub struct EffectFileId(NonZeroU16);
 
 id_wrapper_impl!(EffectFileId, NonZeroU16, u16);
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum EffectBulletMoveType {
     Linear,
     Parabola,
@@ -45,11 +43,14 @@ pub struct EffectData {
 #[derive(Debug)]
 pub struct EffectDatabase {
     effects: Vec<Option<EffectData>>,
-    effect_files: Vec<Option<VfsPathBuf>>,
+    effect_files: Vec<Option<String>>,
 }
 
 impl EffectDatabase {
-    pub fn new(effects: Vec<Option<EffectData>>, effect_files: Vec<Option<VfsPathBuf>>) -> Self {
+    /// `effect_files` are the effect files by number: a Godot resource path
+    /// (`res://assets/rose/3ddata/effect/levelup_01.scn`, an effect scene) or a file in the
+    /// client data (`3DData\Effect\levelup_01.eft`), as written; None or empty when there is none.
+    pub fn new(effects: Vec<Option<EffectData>>, effect_files: Vec<Option<String>>) -> Self {
         Self {
             effects,
             effect_files,
@@ -60,19 +61,25 @@ impl EffectDatabase {
         self.effects.get(id.get() as usize).and_then(|x| x.as_ref())
     }
 
-    pub fn get_effect_file(&self, id: EffectFileId) -> Option<&VfsPathBuf> {
+    pub fn get_effect_file(&self, id: EffectFileId) -> Option<&str> {
         self.effect_files
             .get(id.get() as usize)
-            .and_then(|x| x.as_ref())
+            .and_then(|x| x.as_deref())
+            .filter(|path| !path.is_empty())
     }
 
-    pub fn iter_files(&self) -> impl Iterator<Item = (EffectFileId, &VfsPathBuf)> {
+    pub fn iter(&self) -> impl Iterator<Item = &EffectData> {
+        self.effects.iter().filter_map(|x| x.as_ref())
+    }
+
+    pub fn iter_files(&self) -> impl Iterator<Item = (EffectFileId, &str)> {
         self.effect_files
             .iter()
             .enumerate()
             .filter_map(|(id, path)| {
-                path.as_ref()
-                    .map(|path| (EffectFileId::new(id as u16).unwrap(), path))
+                path.as_deref()
+                    .filter(|path| !path.is_empty())
+                    .and_then(|path| Some((EffectFileId::new(id as u16)?, path)))
             })
     }
 }

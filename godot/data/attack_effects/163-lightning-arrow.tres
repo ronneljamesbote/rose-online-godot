@@ -1,0 +1,18 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://cm0exw5qhncmd"]
+
+[ext_resource type="RoseEffectFile" uid="uid://bs7s1x7r5f7a0" path="res://data/effect_files/86-elect-bow-01.tres" id="1_gtqlb"]
+[ext_resource type="RoseSound" uid="uid://cqnwh1xgiobdt" path="res://data/sounds/skill/1121-action-mana02.tres" id="2_d2cn2"]
+[ext_resource type="RoseEffectFile" uid="uid://co5h5h1fvtlyf" path="res://data/effect_files/96-elect-hit-01.tres" id="3_y1i0y"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="4_ct24b"]
+[ext_resource type="RoseSound" uid="uid://6a6nk0si4lkl" path="res://data/sounds/attack/68-axe-h01.tres" id="5_i0n0q"]
+
+[resource]
+id = 163
+name = "Lightning Arrow"
+hit_effect = ExtResource("3_y1i0y")
+hit_effect_critical = ExtResource("4_ct24b")
+bullet_effect = ExtResource("1_gtqlb")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+fire_sound = ExtResource("2_d2cn2")
+hit_sound = ExtResource("5_i0n0q")

@@ -1,0 +1,15 @@
+[gd_resource type="RoseAttackEffect" format=3 uid="uid://cjgtu0rdyv1ro"]
+
+[ext_resource type="RoseEffectFile" uid="uid://fmwm1pnkky4b" path="res://data/effect_files/1113-mana-firing-02.tres" id="1_dwb46"]
+[ext_resource type="RoseEffectFile" uid="uid://bqtx01mafn54n" path="res://data/effect_files/71-hit-critical-01.tres" id="2_57aia"]
+[ext_resource type="RoseSound" uid="uid://6a6nk0si4lkl" path="res://data/sounds/attack/68-axe-h01.tres" id="3_t0tqn"]
+
+[resource]
+id = 262
+name = "Ice Bolt"
+trail_milliseconds = 100
+hit_effect_critical = ExtResource("2_57aia")
+bullet_effect = ExtResource("1_dwb46")
+bullet_move = "Linear"
+bullet_speed = 3000.0
+hit_sound = ExtResource("3_t0tqn")
