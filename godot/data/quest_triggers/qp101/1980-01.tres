@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ypoquf3vdb75"]
+
+[ext_resource type="RoseNpc" uid="uid://d3exaqvi43lj3" path="res://data/npcs/1104-historian-jones.tres" id="1_xei7p"]
+[ext_resource type="RoseQuest" uid="uid://dwyjmb3eu6nih" path="res://data/quests/1980-mana-engine-begotten-devil-pest.tres" id="2_cx65c"]
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_pp86s"]
+npc = ExtResource("1_xei7p")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_7bx8g"]
+value = 1
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_sysdj"]
+quest = ExtResource("2_cx65c")
+
+[resource]
+name = "1980-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectNpc_pp86s"), SubResource("RoseConditionObjectVariable_7bx8g")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_sysdj")])

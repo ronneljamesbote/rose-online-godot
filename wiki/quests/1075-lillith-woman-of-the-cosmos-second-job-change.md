@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1144-residents-hotch|Residents Hotch]]'
 steps: 2
 source:
-  data: LIST_QUEST.STB row 1075; QSD triggers 1074-01, 1075-01
+  data: 'godot/data/quests/1075-lillith-woman-of-the-cosmos-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj411-06/1074-01, qj411-06/1075-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

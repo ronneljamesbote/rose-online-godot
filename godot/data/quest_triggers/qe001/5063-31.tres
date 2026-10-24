@@ -1,0 +1,46 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cdldsx8dmdd4h"]
+
+[ext_resource type="RoseQuest" uid="uid://hu1ontjv2egc" path="res://data/quests/5063-quest.tres" id="1_u8stg"]
+[ext_resource type="RoseItemQuest" uid="uid://bk2mvnh066xfy" path="res://data/items/quest/903.tres" id="2_ravvo"]
+[ext_resource type="RoseItemHead" uid="uid://b3wynetboqjxl" path="res://data/items/head/153-traditional-korean-hat.tres" id="3_0nu3w"]
+[ext_resource type="RoseItemBody" uid="uid://bgibbamjcy5ok" path="res://data/items/body/153-hanbok.tres" id="4_o517b"]
+[ext_resource type="RoseItemFeet" uid="uid://1ead4srokhmn" path="res://data/items/feet/153-plastic-shoes.tres" id="5_rpm7b"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_6yyag"]
+quest = ExtResource("1_u8stg")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_hv33w"]
+item = ExtResource("2_ravvo")
+equipment_index = 13
+count = 10
+operator = "<"
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_lpesx"]
+item = ExtResource("3_0nu3w")
+equipment_index = 2
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_oi7tm"]
+item = ExtResource("4_o517b")
+equipment_index = 3
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_g51ef"]
+item = ExtResource("5_rpm7b")
+equipment_index = 6
+count = 1
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_kpsdd"]
+to = 50
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_niklj"]
+quest = ExtResource("1_u8stg")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_bgv2l"]
+item = ExtResource("2_ravvo")
+quantity = 1
+
+[resource]
+name = "5063-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_6yyag"), SubResource("RoseConditionQuestItem_hv33w"), SubResource("RoseConditionQuestItem_lpesx"), SubResource("RoseConditionQuestItem_oi7tm"), SubResource("RoseConditionQuestItem_g51ef"), SubResource("RoseConditionRandomPercent_kpsdd")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_niklj"), SubResource("RoseRewardAddItem_bgv2l")])

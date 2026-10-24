@@ -1,0 +1,43 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dtviw80cppta2"]
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_2k3ak"]
+equipment_index = 1
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_rxkhm"]
+equipment_index = 2
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_xa5xj"]
+equipment_index = 3
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_2mr7m"]
+equipment_index = 4
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_opmsi"]
+equipment_index = 5
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_6gs1l"]
+equipment_index = 6
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_kmwdx"]
+equipment_index = 7
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_3wm73"]
+equipment_index = 8
+count = 1
+
+[sub_resource type="RoseRewardResetBasicStats" id="RoseRewardResetBasicStats_xy2th"]
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_aujmn"]
+trigger = "ReStat-08"
+
+[resource]
+name = "ReStat-09"
+conditions = Array[Resource]([SubResource("RoseConditionQuestItem_2k3ak"), SubResource("RoseConditionQuestItem_rxkhm"), SubResource("RoseConditionQuestItem_xa5xj"), SubResource("RoseConditionQuestItem_2mr7m"), SubResource("RoseConditionQuestItem_opmsi"), SubResource("RoseConditionQuestItem_6gs1l"), SubResource("RoseConditionQuestItem_kmwdx"), SubResource("RoseConditionQuestItem_3wm73")])
+rewards = Array[Resource]([SubResource("RoseRewardResetBasicStats_xy2th"), SubResource("RoseRewardTrigger_aujmn")])

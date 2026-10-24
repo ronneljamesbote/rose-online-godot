@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/62-honeybee|HoneyBee]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 852; QSD triggers 852-01, 852-02, 852-03, 852-31
+  data: 'godot/data/quests/852-solider-job-change-quest.tres; quest triggers in godot/data/quest_triggers/: qj000-01/852-01, qj000-01/852-02, qj000-01/852-03, qn-062/852-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

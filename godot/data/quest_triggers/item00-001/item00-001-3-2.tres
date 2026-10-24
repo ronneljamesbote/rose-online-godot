@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://devsgdl17dwnw"]
+
+[ext_resource type="RoseItemConsumable" uid="uid://dlqpi0tt6clil" path="res://data/items/consumable/29-spiritual-water-s.tres" id="1_ngd5v"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_yry47"]
+switch = 480
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_18q4r"]
+equation = 5
+value = 1
+item = ExtResource("1_ngd5v")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_ig68q"]
+switch = 480
+value = true
+
+[resource]
+name = "item00-001-3-2"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_yry47")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_18q4r"), SubResource("RoseRewardSetQuestSwitch_ig68q")])

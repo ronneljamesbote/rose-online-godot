@@ -10,7 +10,7 @@ monsters:
 - '[[monsters/156-doonga-hunter|Doonga Hunter]]'
 steps: 6
 source:
-  data: LIST_QUEST.STB row 5013; QSD triggers 5013-01, 5013-02, 5013-31, 5013-32, 5013-33, 5013-34
+  data: 'godot/data/quests/5013-stockpiling-oak-branches.tres; quest triggers in godot/data/quest_triggers/: qs10-001/5013-01, qs10-001/5013-02, qn-151/5013-31, qn-152/5013-32, qn-154/5013-33, qn-156/5013-34'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

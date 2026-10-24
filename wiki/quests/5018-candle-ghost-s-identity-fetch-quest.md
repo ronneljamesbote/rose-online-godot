@@ -8,7 +8,7 @@ given_by:
 time_limit_minutes: 180
 steps: 15
 source:
-  data: LIST_QUEST.STB row 5018; QSD triggers 5018-01, 5018-02, 5018-03, 5018-04, 5018-05, 5018-06, 5018-07, 5018-31, 5018-32, 5018-33, 5018-34, 5018-35, 5018-36, 5018-37, 5018-38
+  data: 'godot/data/quests/5018-candle-ghost-s-identity-fetch-quest.tres; quest triggers in godot/data/quest_triggers/: qs12-002/5018-01, qs12-002/5018-02, qs12-002/5018-03, qs12-002/5018-04, qs12-002/5018-05, qs12-002/5018-06, qs12-002/5018-07, qn-716/5018-31, qn-717/5018-32, qn-718/5018-33, qn-719/5018-34, qn-720/5018-35, qn-721/5018-36, qn-722/5018-37, qn-723/5018-38'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

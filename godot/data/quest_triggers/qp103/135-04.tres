@@ -1,0 +1,36 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dooh8r3v1676"]
+
+[ext_resource type="RoseQuest" uid="uid://jcqfih2dxotv" path="res://data/quests/135-the-scheme.tres" id="1_y0a2e"]
+[ext_resource type="RoseItemQuest" uid="uid://vvctm05vtlo1" path="res://data/items/quest/618-odorous-sweat.tres" id="2_6mhha"]
+[ext_resource type="RoseItemQuest" uid="uid://feiwwne0ofcl" path="res://data/items/quest/619-scarlet-heart.tres" id="3_f0gke"]
+[ext_resource type="RoseMonster" uid="uid://ckes8xomkbnq7" path="res://data/monsters/254-stone-golem.tres" id="4_vwmc1"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_8ib2o"]
+quest = ExtResource("1_y0a2e")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_32tp1"]
+item = ExtResource("2_6mhha")
+equipment_index = 13
+count = 15
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_niq8l"]
+item = ExtResource("3_f0gke")
+equipment_index = 13
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_us1xu"]
+quest = ExtResource("1_y0a2e")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_4dh16"]
+item = ExtResource("2_6mhha")
+quantity = 15
+
+[sub_resource type="RoseRewardSpawnMonster" id="RoseRewardSpawnMonster_7akgr"]
+monster = ExtResource("4_vwmc1")
+count = 1
+distance = 5
+team = 100
+
+[resource]
+name = "135-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_8ib2o"), SubResource("RoseConditionQuestItem_32tp1"), SubResource("RoseConditionQuestItem_niq8l")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_us1xu"), SubResource("RoseRewardRemoveItem_4dh16"), SubResource("RoseRewardSpawnMonster_7akgr")])

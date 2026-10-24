@@ -1,0 +1,46 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cshcd5x57tuu"]
+
+[ext_resource type="RoseQuest" uid="uid://dlu7p80ii1jnb" path="res://data/quests/3003-necessity-of-a-new-shrine-1.tres" id="1_b635r"]
+[ext_resource type="RoseItemQuest" uid="uid://cv537oygar6o5" path="res://data/items/quest/302-thick-pulpwood.tres" id="2_4jat4"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cenkjmb7niwo8" path="res://data/quest_triggers/qu01-001/3003-03.tres" id="3_48ka1"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_m43q3"]
+quest = ExtResource("1_b635r")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_0ywtu"]
+item = ExtResource("2_4jat4")
+equipment_index = 13
+count = 12
+operator = ">="
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_nms7x"]
+ability = "Union"
+value = 1
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_513ot"]
+operator = "<="
+value = 50
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_2il7q"]
+quest = ExtResource("1_b635r")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_bpdeo"]
+item = ExtResource("2_4jat4")
+quantity = 12
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_28gnq"]
+ability = "UnionPoint1"
+operator = "Add"
+value = 4
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_y2sko"]
+equation = 1
+value = 100
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_dkkdd"]
+
+[resource]
+name = "3003-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_m43q3"), SubResource("RoseConditionQuestItem_0ywtu"), SubResource("RoseConditionAbilityValue_nms7x"), SubResource("RoseConditionAbilityValue_513ot")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_2il7q"), SubResource("RoseRewardRemoveItem_bpdeo"), SubResource("RoseRewardAbilityValue_28gnq"), SubResource("RoseRewardCalculatedExperiencePoints_y2sko"), SubResource("RoseRewardRemoveSelectedQuest_dkkdd")])
+next_trigger = ExtResource("3_48ka1")

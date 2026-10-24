@@ -11,7 +11,7 @@ monsters:
 - '[[monsters/203-jelly-king|Jelly King]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 952; QSD triggers 951-02, 952-01, 952-31, 952-32, 952-33
+  data: 'godot/data/quests/952-hawker-job-change-quest.tres; quest triggers in godot/data/quest_triggers/: qj000-01/951-02, qj000-01/952-01, qn-013/952-31, qn-015/952-32, qn-203/952-33'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

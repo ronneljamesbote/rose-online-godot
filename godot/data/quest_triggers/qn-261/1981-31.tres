@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dgtj5d8giul1c"]
+
+[ext_resource type="RoseQuest" uid="uid://cinu8uuf0ga1e" path="res://data/quests/1981-zeppastone-wind-gem.tres" id="1_8h8l4"]
+[ext_resource type="RoseItemQuest" uid="uid://3k1ronqfm1fe" path="res://data/items/quest/509-zeppastone-wind-gem.tres" id="2_513rj"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dk5bwwtt7xbvd" path="res://data/quest_triggers/qn-261/140-31.tres" id="3_npbjg"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_05k6k"]
+quest = ExtResource("1_8h8l4")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_vmgco"]
+to = 70
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_hv6y6"]
+item = ExtResource("2_513rj")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_as3n6"]
+quest = ExtResource("1_8h8l4")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_e48ba"]
+item = ExtResource("2_513rj")
+quantity = 1
+
+[resource]
+name = "1981-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_05k6k"), SubResource("RoseConditionRandomPercent_vmgco"), SubResource("RoseConditionQuestItem_hv6y6")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_as3n6"), SubResource("RoseRewardAddItem_e48ba")])
+next_trigger = ExtResource("3_npbjg")

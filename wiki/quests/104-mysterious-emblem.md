@@ -10,7 +10,7 @@ npcs:
 - '[[npcs/1053-cleric-karitte|Cleric Karitte]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 104; QSD triggers 103-01, 103-02, 104-01
+  data: 'godot/data/quests/104-mysterious-emblem.tres; quest triggers in godot/data/quest_triggers/: qp103/103-01, qp103/103-02, qp103/104-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

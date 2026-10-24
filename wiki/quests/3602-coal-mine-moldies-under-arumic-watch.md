@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/112-coal-mine-moldie|Coal Mine Moldie]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 3602; QSD triggers 3602-01, 3602-02, 3602-03, 3602-31
+  data: 'godot/data/quests/3602-coal-mine-moldies-under-arumic-watch.tres; quest triggers in godot/data/quest_triggers/: qu04-001/3602-01, qu04-001/3602-02, qu04-001/3602-03, qn-112/3602-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

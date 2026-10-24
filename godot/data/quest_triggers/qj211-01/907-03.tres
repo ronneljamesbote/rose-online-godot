@@ -1,0 +1,37 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bok1gc0uukcyq"]
+
+[ext_resource type="RoseQuest" uid="uid://peqhbhyjctvy" path="res://data/quests/907-solitary-orias.tres" id="1_3ixhs"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_tvjtw"]
+quest = ExtResource("1_3ixhs")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_curoo"]
+ability = "Job"
+value = 2
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_f2cuy"]
+operator = ">="
+value = 20
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_nmhn0"]
+variable_type = "Job"
+value = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ogp7c"]
+quest = ExtResource("1_3ixhs")
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_1bdbb"]
+equation = 3
+value = 1800
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_ucomw"]
+variable_type = "Job"
+operator = "Add"
+value = 2
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_7agdi"]
+
+[resource]
+name = "907-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_tvjtw"), SubResource("RoseConditionAbilityValue_curoo"), SubResource("RoseConditionAbilityValue_f2cuy"), SubResource("RoseConditionQuestVariable_nmhn0")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ogp7c"), SubResource("RoseRewardCalculatedMoney_1bdbb"), SubResource("RoseRewardQuestVariable_ucomw"), SubResource("RoseRewardRemoveSelectedQuest_7agdi")])

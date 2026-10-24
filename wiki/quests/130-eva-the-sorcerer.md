@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1082-guide-eva|Guide Eva]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 130; QSD triggers 129-01, 129-02, 130-01
+  data: 'godot/data/quests/130-eva-the-sorcerer.tres; quest triggers in godot/data/quest_triggers/: qp103/129-01, qp103/129-02, qp103/130-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

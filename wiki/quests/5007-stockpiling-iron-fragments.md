@@ -10,7 +10,7 @@ monsters:
 - '[[monsters/45-big-flanae|Big Flanae]]'
 steps: 7
 source:
-  data: LIST_QUEST.STB row 5007; QSD triggers 5007-01, 5007-02, 5007-31, 5007-32, 5007-33, 5007-34, 5007-35
+  data: 'godot/data/quests/5007-stockpiling-iron-fragments.tres; quest triggers in godot/data/quest_triggers/: qs10-001/5007-01, qs10-001/5007-02, qn-043/5007-31, qn-044/5007-32, qn-045/5007-33, qn-081/5007-34, qn-082/5007-35'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

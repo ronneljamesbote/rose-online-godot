@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1093-weapon-merchant-crune|Weapon Merchant Crune]]'
 steps: 2
 source:
-  data: LIST_QUEST.STB row 1056; QSD triggers 1055-01, 1056-01
+  data: 'godot/data/quests/1056-lucid-king-of-legend-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj111-06/1055-01, qj111-06/1056-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

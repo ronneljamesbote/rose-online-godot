@@ -1,0 +1,54 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bj3iurfig7n3"]
+
+[ext_resource type="RoseQuest" uid="uid://u21t0lnj4kv8" path="res://data/quests/3607-weak-mana-waves-from-lunar.tres" id="1_jeog3"]
+[ext_resource type="RoseItemQuest" uid="uid://36twq304vvil" path="res://data/items/quest/316-krawfy-long-antenna.tres" id="2_xk3qg"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cwx1fbh83eu1o" path="res://data/quest_triggers/qu04-001/3607-03.tres" id="3_5ml4s"]
+[ext_resource type="RoseItemConsumable" uid="uid://cvktjkfrlibs1" path="res://data/items/consumable/5-health-bottle-m.tres" id="4_biedp"]
+[ext_resource type="RoseItemConsumable" uid="uid://djpfhj5gyqoeu" path="res://data/items/consumable/22-mana-vial-m.tres" id="5_83stl"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_jmol1"]
+quest = ExtResource("1_jeog3")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_qthc2"]
+ability = "Union"
+value = 4
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_xx2bl"]
+operator = "<="
+value = 70
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_iqok4"]
+item = ExtResource("2_xk3qg")
+equipment_index = 13
+count = 25
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_wba7d"]
+quest = ExtResource("1_jeog3")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_12ync"]
+item = ExtResource("2_xk3qg")
+quantity = 25
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_2i0iw"]
+equation = 5
+value = 5
+item = ExtResource("4_biedp")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_aawhd"]
+equation = 5
+value = 5
+item = ExtResource("5_83stl")
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_8qmbx"]
+ability = "UnionPoint4"
+operator = "Add"
+value = 8
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_fie35"]
+
+[resource]
+name = "3607-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_jmol1"), SubResource("RoseConditionAbilityValue_qthc2"), SubResource("RoseConditionAbilityValue_xx2bl"), SubResource("RoseConditionQuestItem_iqok4")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_wba7d"), SubResource("RoseRewardRemoveItem_12ync"), SubResource("RoseRewardCalculatedItem_2i0iw"), SubResource("RoseRewardCalculatedItem_aawhd"), SubResource("RoseRewardAbilityValue_8qmbx"), SubResource("RoseRewardRemoveSelectedQuest_fie35")])
+next_trigger = ExtResource("3_5ml4s")

@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://braffvfmk6c5s"]
+
+[ext_resource type="RoseQuest" uid="uid://ch6ov7dnqeiv5" path="res://data/quests/3007-the-arumics-request.tres" id="1_itxk1"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_k4mcs"]
+ability = "Union"
+value = 1
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_t6o22"]
+operator = ">="
+value = 55
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_1bufd"]
+quest = ExtResource("1_itxk1")
+
+[resource]
+name = "3007-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_k4mcs"), SubResource("RoseConditionAbilityValue_t6o22")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_1bufd")])

@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dewmi7416m2ju"]
+
+[ext_resource type="RoseQuest" uid="uid://c763ypp6rdeq1" path="res://data/quests/804-secretly-learning-to-drive.tres" id="1_ei0ky"]
+[ext_resource type="RoseQuest" uid="uid://cqcd270r0iwpe" path="res://data/quests/805-secretly-learning-to-drive.tres" id="2_thgtu"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_8wqgg"]
+quest = ExtResource("1_ei0ky")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_6g8xv"]
+quest = ExtResource("1_ei0ky")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_cl20q"]
+quest = ExtResource("2_thgtu")
+keep_data = true
+
+[resource]
+name = "804-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_8wqgg")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_6g8xv"), SubResource("RoseRewardChangeSelectedQuest_cl20q")])

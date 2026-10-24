@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1092-gypsy-jewel-seller-bellia|Gypsy Jewel Seller Bellia]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 117; QSD triggers 116-01, 116-02, 117-01
+  data: 'godot/data/quests/117-proof.tres; quest triggers in godot/data/quest_triggers/: qp103/116-01, qp103/116-02, qp103/117-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

@@ -28,7 +28,8 @@ use rose_data_export::world::{
 };
 use rose_data_export::{
     npcs::{item_name, DROP_ROW_COLUMNS},
-    Format, ItemsExport, MotionTimings, NpcModels, NpcsExport, SkillsExport, WorldExport, ZoneLayout,
+    Format, IroseCodes, ItemsExport, MotionTimings, NpcModels, NpcsExport, QuestsExport, SkillsExport, WorldExport,
+    ZoneLayout,
 };
 use rose_file_readers::{stb_column, StbFile, VfsFile, VfsPathBuf, VirtualFilesystem};
 use glam::Vec3;
@@ -87,7 +88,7 @@ pub fn load_game_data(vfs: &VirtualFilesystem) -> Result<GameData, anyhow::Error
         ai: Arc::new(get_ai_database(vfs).context("ai database")?),
         job_class: Arc::new(job_class),
         motions: Arc::new(motions),
-        quests: Arc::new(get_quest_database(vfs, string_database.clone()).context("quest database")?),
+        quests: Arc::new(load_quests(vfs, string_database.clone()).context("quest database")?),
         status_effects: Arc::new(status_effects),
         warp_gates: Arc::new(world.warp_gates),
         craft_recipes: world.craft_recipes,
@@ -159,6 +160,40 @@ pub fn read_skills_export(vfs: &VirtualFilesystem) -> Result<Option<SkillsExport
         }
     }
     Ok(None)
+}
+
+/// iROSE's numbers for ability and item types, which the quest blocks hold for the quest
+/// engine.
+pub fn irose_codes() -> IroseCodes {
+    IroseCodes {
+        decode_ability: rose_data_irose::decode_ability_type,
+        encode_ability: rose_data_irose::encode_ability_type,
+        decode_item_type: rose_data_irose::decode_item_type,
+        encode_item_type: rose_data_irose::encode_item_type,
+    }
+}
+
+/// The quest export as the game files carry it (JSON from the upload, else TOML).
+pub fn read_quests_export(vfs: &VirtualFilesystem) -> Result<Option<QuestsExport>, anyhow::Error> {
+    for format in [Format::Json, Format::Toml] {
+        let export = QuestsExport::from_files_as(format, |name| {
+            read_export_file(vfs, &rose_data_export::data_file_as(name, format))
+        })?;
+        if export.is_some() {
+            return Ok(export);
+        }
+    }
+    Ok(None)
+}
+
+/// The quests and quest triggers exported from the Godot resources
+/// (`export/data/quests.toml`, `quest-triggers.toml`), or without an export the iROSE files
+/// (LIST_QUEST.STB, LIST_QUEST_S.STL, QUEST_S.STB and the QSD files LIST_QUESTDATA.STB lists).
+pub fn load_quests(vfs: &VirtualFilesystem, strings: Arc<StringDatabase>) -> Result<QuestDatabase, anyhow::Error> {
+    match read_quests_export(vfs)? {
+        Some(export) => export.to_database(strings, &irose_codes()),
+        None => get_quest_database(vfs, strings),
+    }
 }
 
 /// Every monster a skill summons must be there.

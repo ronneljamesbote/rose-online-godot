@@ -1,0 +1,26 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://x5vh4myjwhv3"]
+
+[ext_resource type="RoseQuest" uid="uid://b5d3q13bd7n13" path="res://data/quests/2053-forgotten-temple-investigation-3.tres" id="1_1n2hr"]
+[ext_resource type="RoseItemQuest" uid="uid://bmp7hj2h1wunl" path="res://data/items/quest/512-shamanic-artifact.tres" id="2_xi072"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_64xn8"]
+quest = ExtResource("1_1n2hr")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_on6r5"]
+variable_type = "Timer"
+operator = ">"
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_eavum"]
+to = 82
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_hqf8k"]
+quest = ExtResource("1_1n2hr")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_8nfyp"]
+item = ExtResource("2_xi072")
+quantity = 1
+
+[resource]
+name = "2053-32"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_64xn8"), SubResource("RoseConditionQuestVariable_on6r5"), SubResource("RoseConditionRandomPercent_eavum")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_hqf8k"), SubResource("RoseRewardAddItem_8nfyp")])

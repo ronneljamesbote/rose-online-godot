@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bc0ubyx3jy0yu"]
+
+[ext_resource type="RoseNpc" uid="uid://dcdam010hu2xy" path="res://data/npcs/1110-ferrell-guild-staff-charrs.tres" id="1_k6vtt"]
+[ext_resource type="RoseQuest" uid="uid://d2m2d45ex4kia" path="res://data/quests/3805-arms-distribution-effort.tres" id="2_um8sb"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_tpygc"]
+ability = "Union"
+value = 5
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_i1831"]
+npc = ExtResource("1_k6vtt")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_yikj4"]
+value = 7
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_q1hw7"]
+variable = 6
+operator = "<"
+value = 10
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_jsfx7"]
+quest = ExtResource("2_um8sb")
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_7yhsr"]
+variable = 6
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_8mwqp"]
+trigger = "3805-02"
+
+[resource]
+name = "3805-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_tpygc"), SubResource("RoseConditionSelectNpc_i1831"), SubResource("RoseConditionObjectVariable_yikj4"), SubResource("RoseConditionObjectVariable_q1hw7")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_jsfx7"), SubResource("RoseRewardObjectVariable_7yhsr"), SubResource("RoseRewardTrigger_8mwqp")])

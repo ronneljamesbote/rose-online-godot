@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d0wuhdbwhhxpt"]
+
+[ext_resource type="RoseItemFace" uid="uid://qvqd21wvxqbx" path="res://data/items/face/32-dork-glasses.tres" id="1_pbgr4"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_y15su"]
+ability = "UnionPoint4"
+operator = ">="
+value = 20
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_j2p3s"]
+ability = "UnionPoint4"
+operator = "Subtract"
+value = 20
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_ewq23"]
+equation = 5
+value = 1
+item = ExtResource("1_pbgr4")
+gem = 89
+
+[resource]
+name = "QU04-item1032"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_y15su")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_j2p3s"), SubResource("RoseRewardCalculatedItem_ewq23")])

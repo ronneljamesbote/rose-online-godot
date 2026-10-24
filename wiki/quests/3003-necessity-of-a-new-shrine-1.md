@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/51-smouly|Smouly]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 3003; QSD triggers 3003-01, 3003-02, 3003-03, 3003-31
+  data: 'godot/data/quests/3003-necessity-of-a-new-shrine-1.tres; quest triggers in godot/data/quest_triggers/: qu01-001/3003-01, qu01-001/3003-02, qu01-001/3003-03, qn-051/3003-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

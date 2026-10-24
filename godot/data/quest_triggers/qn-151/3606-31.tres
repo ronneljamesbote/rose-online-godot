@@ -1,0 +1,34 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c08oidhn2vjov"]
+
+[ext_resource type="RoseQuest" uid="uid://22aqios0t8gw" path="res://data/quests/3606-magic-weapon-production.tres" id="1_1a6hc"]
+[ext_resource type="RoseItemQuest" uid="uid://dv0lmafml3av6" path="res://data/items/quest/313-doonga-claw.tres" id="2_mrnux"]
+[ext_resource type="RoseQuestTrigger" uid="uid://6aa4km1t5hm4" path="res://data/quest_triggers/qn-151/5013-31.tres" id="3_65oct"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_qcqwh"]
+quest = ExtResource("1_1a6hc")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_d3va8"]
+item = ExtResource("2_mrnux")
+equipment_index = 13
+count = 30
+operator = "<"
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_f5gd8"]
+ability = "Union"
+value = 4
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_qmub0"]
+to = 40
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_oyaja"]
+quest = ExtResource("1_1a6hc")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_tbk8b"]
+item = ExtResource("2_mrnux")
+quantity = 1
+
+[resource]
+name = "3606-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_qcqwh"), SubResource("RoseConditionQuestItem_d3va8"), SubResource("RoseConditionAbilityValue_f5gd8"), SubResource("RoseConditionRandomPercent_qmub0")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_oyaja"), SubResource("RoseRewardAddItem_tbk8b")])
+next_trigger = ExtResource("3_65oct")

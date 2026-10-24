@@ -1,0 +1,54 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://6gjffyanfnmh"]
+
+[ext_resource type="RoseQuest" uid="uid://diorgwh3nmrv7" path="res://data/quests/1984-the-ominous-kenji-stone.tres" id="1_abevl"]
+[ext_resource type="RoseItemConsumable" uid="uid://td4q0nvqoy8f" path="res://data/items/consumable/2-health-vial-m.tres" id="2_6kix0"]
+[ext_resource type="RoseItemConsumable" uid="uid://djpfhj5gyqoeu" path="res://data/items/consumable/22-mana-vial-m.tres" id="3_g0nhn"]
+[ext_resource type="RoseItemQuest" uid="uid://dyylracpreygy" path="res://data/items/quest/510-golden-dagger.tres" id="4_t5jeq"]
+[ext_resource type="RoseQuest" uid="uid://2t6y3x4v6wet" path="res://data/quests/1985-the-truth-of-the-golden-dagger.tres" id="5_ukrto"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_rwyo8"]
+quest = ExtResource("1_abevl")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_yrkxf"]
+variable_type = "Switch"
+value = 1
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_winya"]
+switch = 130
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_esp56"]
+switch = 131
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_gfwig"]
+quest = ExtResource("1_abevl")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_2m1e0"]
+value = 5000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_mbnx1"]
+equation = 5
+value = 10
+item = ExtResource("2_6kix0")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_klfby"]
+equation = 5
+value = 10
+item = ExtResource("3_g0nhn")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_wsiv4"]
+item = ExtResource("4_t5jeq")
+quantity = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_1nnxp"]
+quest = ExtResource("5_ukrto")
+keep_data = true
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_mjn5v"]
+switch = 131
+value = true
+
+[resource]
+name = "1984-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_rwyo8"), SubResource("RoseConditionQuestVariable_yrkxf"), SubResource("RoseConditionQuestSwitch_winya"), SubResource("RoseConditionQuestSwitch_esp56")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_gfwig"), SubResource("RoseRewardCalculatedExperiencePoints_2m1e0"), SubResource("RoseRewardCalculatedItem_mbnx1"), SubResource("RoseRewardCalculatedItem_klfby"), SubResource("RoseRewardAddItem_wsiv4"), SubResource("RoseRewardChangeSelectedQuest_1nnxp"), SubResource("RoseRewardSetQuestSwitch_mjn5v")])

@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://blqghiwqk7rcd"]
+
+[ext_resource type="RoseNpc" uid="uid://d3exaqvi43lj3" path="res://data/npcs/1104-historian-jones.tres" id="1_wonp6"]
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_fyogi"]
+npc = ExtResource("1_wonp6")
+
+[sub_resource type="RoseRewardNpcMessage" id="RoseRewardNpcMessage_hqk67"]
+message_type = "Shout"
+text = "Is there anyone who can deliver wine to Punwell for me? If you're interested, come to me!"
+
+[resource]
+name = "QP101-502"
+conditions = Array[Resource]([SubResource("RoseConditionSelectNpc_fyogi")])
+rewards = Array[Resource]([SubResource("RoseRewardNpcMessage_hqk67")])

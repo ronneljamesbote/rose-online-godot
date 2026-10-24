@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bv51l5v8bim8s"]
+
+[ext_resource type="RoseQuest" uid="uid://bu04iff0837lh" path="res://data/quests/129-the-owl-eye.tres" id="1_6msia"]
+[ext_resource type="RoseItemQuest" uid="uid://bsiwio4pvdy83" path="res://data/items/quest/614-owl-eye.tres" id="2_75bii"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_n8lca"]
+quest = ExtResource("1_6msia")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_x4r5b"]
+item = ExtResource("2_75bii")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseRewardCallLuaFunction" id="RoseRewardCallLuaFunction_buew5"]
+function = "owl"
+
+[resource]
+name = "129-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_n8lca"), SubResource("RoseConditionQuestItem_x4r5b")])
+rewards = Array[Resource]([SubResource("RoseRewardCallLuaFunction_buew5")])

@@ -1,0 +1,38 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://co3f5fl4i5k7d"]
+
+[ext_resource type="RoseNpc" uid="uid://d3exaqvi43lj3" path="res://data/npcs/1104-historian-jones.tres" id="1_k3isv"]
+[ext_resource type="RoseMonster" uid="uid://mhvt8l66dvoh" path="res://data/monsters/407-junon-s-doonga.tres" id="2_38jqc"]
+[ext_resource type="RoseZoneSettings" uid="uid://dnnfjmvcoom4b" path="res://data/zones/2-city-of-junon-polis.tres" id="3_uqrsx"]
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_5lxvi"]
+npc = ExtResource("1_k3isv")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_mk5e7"]
+variable = 1
+value = 30
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_ovygj"]
+variable = 4
+
+[sub_resource type="RoseRewardSpawnMonster" id="RoseRewardSpawnMonster_j3a3n"]
+monster = ExtResource("2_38jqc")
+count = 1
+location = "Position"
+zone = ExtResource("3_uqrsx")
+x = 501289.0
+y = 548334.0
+distance = 1
+team = 100
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_rpk24"]
+variable = 4
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_3akkr"]
+trigger = "QP101-302"
+
+[resource]
+name = "QP101-301"
+conditions = Array[Resource]([SubResource("RoseConditionSelectNpc_5lxvi"), SubResource("RoseConditionObjectVariable_mk5e7"), SubResource("RoseConditionObjectVariable_ovygj")])
+rewards = Array[Resource]([SubResource("RoseRewardSpawnMonster_j3a3n"), SubResource("RoseRewardObjectVariable_rpk24"), SubResource("RoseRewardTrigger_3akkr")])

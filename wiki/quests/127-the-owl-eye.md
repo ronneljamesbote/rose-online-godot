@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/114-captain-moldie|Captain Moldie]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 127; QSD triggers 126-01, 126-02, 127-01, 127-31, 127-32
+  data: 'godot/data/quests/127-the-owl-eye.tres; quest triggers in godot/data/quest_triggers/: qp103/126-01, qp103/126-02, qp103/127-01, qn-114/127-31, qn-114/127-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

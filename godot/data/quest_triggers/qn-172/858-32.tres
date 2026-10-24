@@ -1,0 +1,31 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cm5nn7nwrmhm7"]
+
+[ext_resource type="RoseQuest" uid="uid://tvch7kvok0uy" path="res://data/quests/858-hovert-s-mementos.tres" id="1_yqxre"]
+[ext_resource type="RoseItemQuest" uid="uid://blw5essjldvwl" path="res://data/items/quest/122-old-horse-saddle.tres" id="2_0yvw2"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dns6aaupavdma" path="res://data/quest_triggers/qn-172/858-33.tres" id="3_bw4ih"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_i7jb0"]
+quest = ExtResource("1_yqxre")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_f5voj"]
+operator = "<"
+value = 10
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_owoxb"]
+item = ExtResource("2_0yvw2")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_swkyt"]
+quest = ExtResource("1_yqxre")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_rern1"]
+operator = "Add"
+value = 1
+
+[resource]
+name = "858-32"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_i7jb0"), SubResource("RoseConditionQuestVariable_f5voj"), SubResource("RoseConditionQuestItem_owoxb")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_swkyt"), SubResource("RoseRewardQuestVariable_rern1")])
+next_trigger = ExtResource("3_bw4ih")

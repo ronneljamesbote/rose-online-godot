@@ -1,0 +1,55 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://sdu1u4j5fq0n"]
+
+[ext_resource type="RoseQuest" uid="uid://dladdqbjr0nfi" path="res://data/quests/5018-candle-ghost-s-identity-fetch-quest.tres" id="1_fjjqu"]
+[ext_resource type="RoseItemQuest" uid="uid://bng0f7ft7qvkc" path="res://data/items/quest/809-candle-ghost-mask.tres" id="2_ij6uy"]
+[ext_resource type="RoseNpc" uid="uid://d3mpt3fvekbwi" path="res://data/npcs/1099-ferrell-guild-staff-hayen.tres" id="3_tgepi"]
+[ext_resource type="RoseQuestTrigger" uid="uid://hctpb7whv0pv" path="res://data/quest_triggers/qs12-002/5018-05.tres" id="4_gwprx"]
+[ext_resource type="RoseItemConsumable" uid="uid://ds3a61oikk67i" path="res://data/items/consumable/58-vital-jam-5.tres" id="5_kaqer"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_0qelt"]
+quest = ExtResource("1_fjjqu")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_vg4om"]
+item = ExtResource("2_ij6uy")
+equipment_index = 13
+count = 20
+operator = ">="
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_graoy"]
+variable_type = "Timer"
+operator = ">"
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_ds3kf"]
+npc = ExtResource("3_tgepi")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_83vbe"]
+variable = 3
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_kqact"]
+quest = ExtResource("1_fjjqu")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_miekq"]
+item = ExtResource("2_ij6uy")
+quantity = 20
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_m6mcs"]
+equation = 3
+value = 20000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_cvciw"]
+equation = 5
+value = 2
+item = ExtResource("5_kaqer")
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_ty4m1"]
+variable = 3
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_mtk1n"]
+
+[resource]
+name = "5018-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_0qelt"), SubResource("RoseConditionQuestItem_vg4om"), SubResource("RoseConditionQuestVariable_graoy"), SubResource("RoseConditionSelectNpc_ds3kf"), SubResource("RoseConditionObjectVariable_83vbe")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_kqact"), SubResource("RoseRewardRemoveItem_miekq"), SubResource("RoseRewardCalculatedMoney_m6mcs"), SubResource("RoseRewardCalculatedItem_cvciw"), SubResource("RoseRewardObjectVariable_ty4m1"), SubResource("RoseRewardRemoveSelectedQuest_mtk1n")])
+next_trigger = ExtResource("4_gwprx")

@@ -1,0 +1,27 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://byil1k6q0le7k"]
+
+[ext_resource type="RoseQuest" uid="uid://b66lf4w17w4dx" path="res://data/quests/5011-stockpiling-maple-branches.tres" id="1_t0r7o"]
+[ext_resource type="RoseItemQuest" uid="uid://5pasddv1ij5u" path="res://data/items/quest/26-maple-branch.tres" id="2_qlpyl"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_tvaqb"]
+quest = ExtResource("1_t0r7o")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_gstmg"]
+item = ExtResource("2_qlpyl")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_himoi"]
+quest = ExtResource("1_t0r7o")
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_ejv7h"]
+equation = 2
+value = 75
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_1gn6b"]
+
+[resource]
+name = "5011-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_tvaqb"), SubResource("RoseConditionQuestItem_gstmg")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_himoi"), SubResource("RoseRewardCalculatedMoney_ejv7h"), SubResource("RoseRewardRemoveSelectedQuest_1gn6b")])

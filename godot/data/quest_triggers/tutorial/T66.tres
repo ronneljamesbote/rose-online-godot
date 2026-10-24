@@ -1,0 +1,16 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dmym5cx08xm5i"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_3mkbc"]
+switch = 66
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_74ss3"]
+value = 30
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_f6rnx"]
+switch = 66
+value = true
+
+[resource]
+name = "T66"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_3mkbc")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedExperiencePoints_74ss3"), SubResource("RoseRewardSetQuestSwitch_f6rnx")])

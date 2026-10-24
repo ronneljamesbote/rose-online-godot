@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1061-ferrell-guild-staff-belz|Ferrell Guild Staff Belz]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 3804; QSD triggers 3804-01, 3804-02, 3804-03, 3804-04, 3804-05
+  data: 'godot/data/quests/3804-charrs-elaborate-market-price-analysis-table.tres; quest triggers in godot/data/quest_triggers/: qu05-001/3804-01, qu05-001/3804-02, qu05-001/3804-03, qu05-001/3804-04, qu05-001/3804-05'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

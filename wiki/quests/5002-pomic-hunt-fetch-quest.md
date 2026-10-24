@@ -10,7 +10,7 @@ monsters:
 time_limit_minutes: 96
 steps: 6
 source:
-  data: LIST_QUEST.STB row 5002; QSD triggers 5002-01, 5002-02, 5002-03, 5002-04, 5002-10, 5002-31
+  data: 'godot/data/quests/5002-pomic-hunt-fetch-quest.tres; quest triggers in godot/data/quest_triggers/: qs12-001/5002-01, qs12-001/5002-02, qs12-001/5002-03, qs12-001/5002-04, qs12-001/5002-10, qn-072/5002-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

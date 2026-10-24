@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d3jba0pub52aa"]
+
+[ext_resource type="RoseQuest" uid="uid://bmlvj6n8843f8" path="res://data/quests/1008-the-humble-smith.tres" id="1_aw7in"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_dm2s4"]
+quest = ExtResource("1_aw7in")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_ejyq1"]
+variable_type = "Switch"
+value = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_o6xjm"]
+variable_type = "Switch"
+operator = "SetZero"
+
+[resource]
+name = "1008-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_dm2s4"), SubResource("RoseConditionQuestVariable_ejyq1")])
+rewards = Array[Resource]([SubResource("RoseRewardQuestVariable_o6xjm")])

@@ -1,0 +1,39 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bb053ey1gr6v0"]
+
+[ext_resource type="RoseQuest" uid="uid://btife5giwkikt" path="res://data/quests/857-living-as-a-true-soldier.tres" id="1_6pvqa"]
+[ext_resource type="RoseItemQuest" uid="uid://dtctymne4tqo4" path="res://data/items/quest/131-queen-bibi-s-staff.tres" id="2_a188s"]
+[ext_resource type="RoseItemWeapon" uid="uid://dpd78foi1wmay" path="res://data/items/weapon/5-long-sword.tres" id="3_oh3cc"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_n4lbk"]
+quest = ExtResource("1_6pvqa")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_vddak"]
+item = ExtResource("2_a188s")
+equipment_index = 13
+count = 4
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_wgsbx"]
+quest = ExtResource("1_6pvqa")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_6hrrw"]
+item = ExtResource("2_a188s")
+quantity = 4
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_jkn6q"]
+variable_type = "Job"
+operator = "Add"
+value = 2
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_sf7a2"]
+equation = 5
+value = 1
+item = ExtResource("3_oh3cc")
+gem = 11
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_rl4ma"]
+
+[resource]
+name = "857-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_n4lbk"), SubResource("RoseConditionQuestItem_vddak")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_wgsbx"), SubResource("RoseRewardRemoveItem_6hrrw"), SubResource("RoseRewardQuestVariable_jkn6q"), SubResource("RoseRewardCalculatedItem_sf7a2"), SubResource("RoseRewardRemoveSelectedQuest_rl4ma")])

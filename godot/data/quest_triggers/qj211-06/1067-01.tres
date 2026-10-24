@@ -1,0 +1,40 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bwkwyfbs073ij"]
+
+[ext_resource type="RoseQuest" uid="uid://sinbgx2v4t3i" path="res://data/quests/1067-namielle-mother-of-all-second-job-change.tres" id="1_esdtd"]
+[ext_resource type="RoseItemQuest" uid="uid://dxb21wwv2dsj" path="res://data/items/quest/213-mina-s-recommendation.tres" id="2_187it"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_0l7j1"]
+quest = ExtResource("1_esdtd")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_h4w0d"]
+ability = "Money"
+operator = ">="
+value = 200000
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ei2p2"]
+quest = ExtResource("1_esdtd")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_lood3"]
+item = ExtResource("2_187it")
+quantity = 1
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_2ixjo"]
+ability = "Money"
+operator = "Subtract"
+value = 200000
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_8acg0"]
+ability = "Job"
+value = 221
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_fayww"]
+variable_type = "Job"
+variable = 1
+value = 2
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_kbooj"]
+
+[resource]
+name = "1067-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_0l7j1"), SubResource("RoseConditionAbilityValue_h4w0d")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ei2p2"), SubResource("RoseRewardRemoveItem_lood3"), SubResource("RoseRewardAbilityValue_2ixjo"), SubResource("RoseRewardAbilityValue_8acg0"), SubResource("RoseRewardQuestVariable_fayww"), SubResource("RoseRewardRemoveSelectedQuest_kbooj")])

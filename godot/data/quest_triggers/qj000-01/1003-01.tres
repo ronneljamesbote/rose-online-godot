@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dor52iodr881v"]
+
+[ext_resource type="RoseQuest" uid="uid://cigruferpayh0" path="res://data/quests/1003-dealer-job-change-quest.tres" id="1_it0jw"]
+[ext_resource type="RoseItemQuest" uid="uid://cdoj3xf4k1hje" path="res://data/items/quest/103-honeybee-stinger.tres" id="2_0avgj"]
+[ext_resource type="RoseItemQuest" uid="uid://ctegfu8ynkxqo" path="res://data/items/quest/109-dealer-job-recommendation.tres" id="3_uyj7h"]
+[ext_resource type="RoseQuest" uid="uid://cf3m5g8nj4fv0" path="res://data/quests/1004-dealer-job-change-quest.tres" id="4_7s0pf"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_vldm0"]
+quest = ExtResource("1_it0jw")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_1ps8y"]
+item = ExtResource("2_0avgj")
+equipment_index = 13
+count = 15
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_x6eno"]
+quest = ExtResource("1_it0jw")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_tfdl1"]
+item = ExtResource("2_0avgj")
+quantity = 15
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_i6ls8"]
+item = ExtResource("3_uyj7h")
+quantity = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_kk85p"]
+quest = ExtResource("4_7s0pf")
+keep_data = true
+
+[resource]
+name = "1003-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_vldm0"), SubResource("RoseConditionQuestItem_1ps8y")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_x6eno"), SubResource("RoseRewardRemoveItem_tfdl1"), SubResource("RoseRewardAddItem_i6ls8"), SubResource("RoseRewardChangeSelectedQuest_kk85p")])

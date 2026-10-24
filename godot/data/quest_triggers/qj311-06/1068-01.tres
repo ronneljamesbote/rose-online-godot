@@ -1,0 +1,33 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cgjqgwlfr4qr7"]
+
+[ext_resource type="RoseQuest" uid="uid://dojejuifxx867" path="res://data/quests/1068-kirnale-s-journals-second-job-change.tres" id="1_mig5w"]
+[ext_resource type="RoseItemQuest" uid="uid://bovqo3ont24mj" path="res://data/items/quest/220-kirnale-s-compass.tres" id="2_fhk3v"]
+[ext_resource type="RoseItemQuest" uid="uid://btulo7xta8vp5" path="res://data/items/quest/221-portable-sundial.tres" id="3_cbe1o"]
+[ext_resource type="RoseQuest" uid="uid://c4txte575gflm" path="res://data/quests/1069-kirnale-s-journals-second-job-change.tres" id="4_lcp43"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_e0nnf"]
+quest = ExtResource("1_mig5w")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_eeypq"]
+item = ExtResource("2_fhk3v")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_g4k82"]
+item = ExtResource("3_cbe1o")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_bvifr"]
+quest = ExtResource("1_mig5w")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_enabg"]
+quest = ExtResource("4_lcp43")
+keep_data = true
+
+[resource]
+name = "1068-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_e0nnf"), SubResource("RoseConditionQuestItem_eeypq"), SubResource("RoseConditionQuestItem_g4k82")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_bvifr"), SubResource("RoseRewardChangeSelectedQuest_enabg")])

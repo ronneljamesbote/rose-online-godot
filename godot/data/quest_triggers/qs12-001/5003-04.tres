@@ -1,0 +1,14 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dnrfosxsssygr"]
+
+[ext_resource type="RoseQuest" uid="uid://81l04hnr6see" path="res://data/quests/5003-dalping-hunt-fetch-quest.tres" id="1_ccve0"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_f16l2"]
+quest = ExtResource("1_ccve0")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_0gh3o"]
+variable_type = "Timer"
+operator = ">"
+
+[resource]
+name = "5003-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_f16l2"), SubResource("RoseConditionQuestVariable_0gh3o")])

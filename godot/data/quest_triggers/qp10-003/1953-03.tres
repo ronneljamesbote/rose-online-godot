@@ -1,0 +1,45 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://0160xsss88t5"]
+
+[ext_resource type="RoseItemConsumable" uid="uid://cwtn8me0s3xcn" path="res://data/items/consumable/141-mysterious-fruit.tres" id="1_0cvak"]
+[ext_resource type="RoseItemConsumable" uid="uid://bqdvaxk8da3h3" path="res://data/items/consumable/11-vital-water-m.tres" id="2_87c06"]
+[ext_resource type="RoseQuest" uid="uid://8pm1oyiwcx88" path="res://data/quests/1953-quest.tres" id="3_jt2ye"]
+[ext_resource type="RoseItemQuest" uid="uid://cvhoudk4t123s" path="res://data/items/quest/503-kingkong-s-red-sword.tres" id="4_2mjsf"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_qtij4"]
+operator = ">="
+value = 55
+
+[sub_resource type="RoseConditionParty" id="RoseConditionParty_fvdco"]
+level_operator = ">="
+level = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_ej88f"]
+item = ExtResource("1_0cvak")
+equipment_index = 12
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_1mpoi"]
+item = ExtResource("1_0cvak")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_7ufrd"]
+equation = 5
+value = 10
+item = ExtResource("2_87c06")
+gem = 52685
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_p3s3k"]
+quest = ExtResource("3_jt2ye")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_mm2f0"]
+quest = ExtResource("3_jt2ye")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_moqf6"]
+item = ExtResource("4_2mjsf")
+quantity = 1
+
+[resource]
+name = "1953-03"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_qtij4"), SubResource("RoseConditionParty_fvdco"), SubResource("RoseConditionQuestItem_ej88f")])
+rewards = Array[Resource]([SubResource("RoseRewardRemoveItem_1mpoi"), SubResource("RoseRewardCalculatedItem_7ufrd"), SubResource("RoseRewardAddQuest_p3s3k"), SubResource("RoseRewardSelectQuest_mm2f0"), SubResource("RoseRewardAddItem_moqf6")])

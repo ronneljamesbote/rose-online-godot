@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/173-aqua-captain|Aqua Captain]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 859; QSD triggers 858-02, 858-03, 859-01, 859-31
+  data: 'godot/data/quests/859-hovert-s-mementos.tres; quest triggers in godot/data/quest_triggers/: qj111-01/858-02, qj111-01/858-03, qj111-01/859-01, qn-173/859-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

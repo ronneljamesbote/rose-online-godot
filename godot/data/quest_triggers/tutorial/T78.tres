@@ -1,0 +1,14 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://diyxrawwn4qkx"]
+
+[ext_resource type="RoseQuest" uid="uid://cugbsgd3fj0cg" path="res://data/quests/5052-hunting-practice-2.tres" id="1_lfgof"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_4s8kp"]
+switch = 78
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_2o1bj"]
+quest = ExtResource("1_lfgof")
+
+[resource]
+name = "T78"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_4s8kp")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_2o1bj")])

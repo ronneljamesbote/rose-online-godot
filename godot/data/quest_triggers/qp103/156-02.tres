@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bysxfdhut2s5p"]
+
+[ext_resource type="RoseQuest" uid="uid://dwj1by8kbvumy" path="res://data/quests/157-skin-of-steel.tres" id="1_kycck"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_nomi0"]
+variable_type = "Episode"
+value = 56
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_67qoe"]
+quest = ExtResource("1_kycck")
+
+[resource]
+name = "156-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_nomi0")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_67qoe")])

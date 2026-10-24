@@ -1,0 +1,27 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d3dn56tlq1wtd"]
+
+[ext_resource type="RoseQuest" uid="uid://ctruddajgswlh" path="res://data/quests/5019-goblin-hunting-competition-fetch-quest.tres" id="1_rcgvt"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_0eh51"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bpatpp6yimn1m" path="res://data/quest_triggers/qn-275/5015-32.tres" id="3_bt1h4"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_hbafo"]
+quest = ExtResource("1_rcgvt")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_8xe4b"]
+item = ExtResource("2_0eh51")
+equipment_index = 13
+count = 55
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_36wgq"]
+quest = ExtResource("1_rcgvt")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_jyhjs"]
+item = ExtResource("2_0eh51")
+quantity = 1
+
+[resource]
+name = "5019-32"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_hbafo"), SubResource("RoseConditionQuestItem_8xe4b")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_36wgq"), SubResource("RoseRewardAddItem_jyhjs")])
+next_trigger = ExtResource("3_bt1h4")

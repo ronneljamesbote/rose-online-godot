@@ -1,0 +1,37 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c7wqc3xpynwaa"]
+
+[ext_resource type="RoseQuest" uid="uid://c3if5ockng008" path="res://data/quests/5035-stockpiling-on-flanae-petals.tres" id="1_dj5q5"]
+[ext_resource type="RoseItemQuest" uid="uid://mr72bwunelet" path="res://data/items/quest/806-flanae-petal.tres" id="2_pju8s"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_fgu1v"]
+quest = ExtResource("1_dj5q5")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_iywif"]
+to = 75
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_37a3m"]
+item = ExtResource("2_pju8s")
+equipment_index = 13
+count = 32
+operator = "<"
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_q256s"]
+operator = "<="
+value = 15
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_jbfsh"]
+quest = ExtResource("1_dj5q5")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_danff"]
+item = ExtResource("2_pju8s")
+quantity = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_136ad"]
+variable = 9
+operator = "Add"
+value = 1
+
+[resource]
+name = "5035-32"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_fgu1v"), SubResource("RoseConditionRandomPercent_iywif"), SubResource("RoseConditionQuestItem_37a3m"), SubResource("RoseConditionAbilityValue_q256s")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_jbfsh"), SubResource("RoseRewardAddItem_danff"), SubResource("RoseRewardQuestVariable_136ad")])

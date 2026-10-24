@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bf33edm1ix8bx"]
+
+[ext_resource type="RoseQuest" uid="uid://bmgcemdkw2s0" path="res://data/quests/1052-road-to-second-job-change.tres" id="1_systs"]
+[ext_resource type="RoseQuest" uid="uid://j4a2xro8xyff" path="res://data/quests/1062-namielle-mother-of-all-second-job-change.tres" id="2_toh5p"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_5yrb1"]
+quest = ExtResource("1_systs")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_p48g1"]
+quest = ExtResource("1_systs")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_m0mk3"]
+quest = ExtResource("2_toh5p")
+keep_data = true
+
+[resource]
+name = "1052-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_5yrb1")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_p48g1"), SubResource("RoseRewardChangeSelectedQuest_m0mk3")])

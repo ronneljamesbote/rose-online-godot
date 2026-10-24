@@ -1,0 +1,27 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://31q36d04dqrm"]
+
+[ext_resource type="RoseQuest" uid="uid://duy0sshyknrwf" path="res://data/quests/5012-stockpiling-konara-branches.tres" id="1_cr8ui"]
+[ext_resource type="RoseItemQuest" uid="uid://cf7f4psq4s3iv" path="res://data/items/quest/27-konara-branch.tres" id="2_lvyi3"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_iinul"]
+quest = ExtResource("1_cr8ui")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_d2x14"]
+item = ExtResource("2_lvyi3")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_mkon2"]
+quest = ExtResource("1_cr8ui")
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_a2k1n"]
+equation = 2
+value = 89
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_aagws"]
+
+[resource]
+name = "5012-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_iinul"), SubResource("RoseConditionQuestItem_d2x14")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_mkon2"), SubResource("RoseRewardCalculatedMoney_a2k1n"), SubResource("RoseRewardRemoveSelectedQuest_aagws")])

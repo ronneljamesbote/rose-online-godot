@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1004-ferrell-guild-staff-crow|Ferrell Guild Staff Crow]]'
 steps: 2
 source:
-  data: LIST_QUEST.STB row 1004; QSD triggers 1003-01, 1004-01
+  data: 'godot/data/quests/1004-dealer-job-change-quest.tres; quest triggers in godot/data/quest_triggers/: qj000-01/1003-01, qj000-01/1004-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

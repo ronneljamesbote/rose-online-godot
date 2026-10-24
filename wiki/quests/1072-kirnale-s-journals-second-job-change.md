@@ -7,7 +7,7 @@ npcs:
 - '[[npcs/1013-tavern-owner-sharlin|Tavern Owner Sharlin]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 1072; QSD triggers 1071-01, 1072-01, 1072-31, 1072-32
+  data: 'godot/data/quests/1072-kirnale-s-journals-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj311-06/1071-01, qj311-06/1072-01, qn-164/1072-31, qn-164/1072-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

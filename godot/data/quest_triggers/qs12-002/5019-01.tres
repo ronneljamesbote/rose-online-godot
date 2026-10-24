@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://utav8pn8yvar"]
+
+[ext_resource type="RoseNpc" uid="uid://dv33k1oyh1faw" path="res://data/npcs/1100-ferrell-guild-staff-itz.tres" id="1_ggx0h"]
+[ext_resource type="RoseQuest" uid="uid://ctruddajgswlh" path="res://data/quests/5019-goblin-hunting-competition-fetch-quest.tres" id="2_ysg18"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_qifdt"]
+operator = "<="
+value = 70
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_8a6lw"]
+npc = ExtResource("1_ggx0h")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_lqfug"]
+value = 1
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_qjqbm"]
+quest = ExtResource("2_ysg18")
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_bcokb"]
+variable = 2
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_1esic"]
+trigger = "5019-02"
+
+[resource]
+name = "5019-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_qifdt"), SubResource("RoseConditionSelectNpc_8a6lw"), SubResource("RoseConditionObjectVariable_lqfug")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_qjqbm"), SubResource("RoseRewardObjectVariable_bcokb"), SubResource("RoseRewardTrigger_1esic")])

@@ -1,0 +1,33 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b0eoc1s71ye38"]
+
+[ext_resource type="RoseQuest" uid="uid://ccy4f7qubef65" path="res://data/quests/1078-lillith-woman-of-the-cosmos-second-job-change.tres" id="1_eljkq"]
+[ext_resource type="RoseItemQuest" uid="uid://dcikt301xup20" path="res://data/items/quest/225-lillith-s-scales.tres" id="2_gp5b0"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_3yqac"]
+quest = ExtResource("1_eljkq")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_m4v13"]
+to = 10
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_r63sy"]
+variable = 2
+operator = ">="
+value = 20
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_7wyx3"]
+item = ExtResource("2_gp5b0")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_qtb2r"]
+quest = ExtResource("1_eljkq")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_ncnph"]
+item = ExtResource("2_gp5b0")
+quantity = 1
+
+[resource]
+name = "1078-32"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_3yqac"), SubResource("RoseConditionRandomPercent_m4v13"), SubResource("RoseConditionQuestVariable_r63sy"), SubResource("RoseConditionQuestItem_7wyx3")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_qtb2r"), SubResource("RoseRewardAddItem_ncnph")])

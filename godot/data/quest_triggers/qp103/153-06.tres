@@ -1,0 +1,41 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dc8wlt458jcc0"]
+
+[ext_resource type="RoseQuest" uid="uid://b2puv6gwwifhc" path="res://data/quests/153-kay-s-request.tres" id="1_aipnp"]
+[ext_resource type="RoseItemQuest" uid="uid://biyxe7e38ss7v" path="res://data/items/quest/621-old-box.tres" id="2_1n468"]
+[ext_resource type="RoseItemWeapon" uid="uid://csc7ruc3ilyap" path="res://data/items/weapon/616-silver-axe.tres" id="3_e0hoc"]
+[ext_resource type="RoseQuest" uid="uid://cp8pddfjdiric" path="res://data/quests/154-kay-s-request.tres" id="4_sgoa4"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ww6ja"]
+quest = ExtResource("1_aipnp")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_dxhg1"]
+item = ExtResource("2_1n468")
+equipment_index = 13
+count = 11
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_cgs0x"]
+quest = ExtResource("1_aipnp")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_1giew"]
+item = ExtResource("2_1n468")
+quantity = 11
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_j5mk8"]
+equation = 5
+value = 1
+item = ExtResource("3_e0hoc")
+gem = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_uoxcg"]
+quest = ExtResource("4_sgoa4")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_pj3qs"]
+variable_type = "Episode"
+value = 53
+
+[resource]
+name = "153-06"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ww6ja"), SubResource("RoseConditionQuestItem_dxhg1")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_cgs0x"), SubResource("RoseRewardRemoveItem_1giew"), SubResource("RoseRewardCalculatedItem_j5mk8"), SubResource("RoseRewardChangeSelectedQuest_uoxcg"), SubResource("RoseRewardQuestVariable_pj3qs")])

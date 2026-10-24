@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/254-stone-golem|Stone Golem]]'
 steps: 8
 source:
-  data: LIST_QUEST.STB row 135; QSD triggers 134-01, 134-02, 135-01, 135-03, 135-03-0, 135-04, 135-05, 135-31
+  data: 'godot/data/quests/135-the-scheme.tres; quest triggers in godot/data/quest_triggers/: qp103/134-01, qp103/134-02, qp103/135-01, qp103/135-03, qp103/135-03-0, qp103/135-04, qp103/135-05, qn-164/135-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

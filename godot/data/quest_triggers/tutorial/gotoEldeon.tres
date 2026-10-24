@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://0crmsit5qg3p"]
+
+[ext_resource type="RoseZoneSettings" uid="uid://dk6ugr8pbg3to" path="res://data/zones/61-refuge-xita.tres" id="1_vx3et"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_fip0x"]
+ability = "Money"
+operator = ">="
+value = 20000
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_xc1c0"]
+zone = ExtResource("1_vx3et")
+x = 523228
+y = 443773
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_10iqk"]
+ability = "Money"
+operator = "Subtract"
+value = 20000
+
+[resource]
+name = "gotoEldeon"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_fip0x")])
+rewards = Array[Resource]([SubResource("RoseRewardTeleport_xc1c0"), SubResource("RoseRewardAbilityValue_10iqk")])

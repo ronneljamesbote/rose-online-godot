@@ -1,0 +1,27 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b1c4ujorfurf5"]
+
+[ext_resource type="RoseQuest" uid="uid://bgxr1bo5evnne" path="res://data/quests/5013-stockpiling-oak-branches.tres" id="1_ubsjx"]
+[ext_resource type="RoseItemQuest" uid="uid://4nr15oavwt0y" path="res://data/items/quest/28-oak-branch.tres" id="2_oouav"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_dqc0t"]
+quest = ExtResource("1_ubsjx")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_p6mbr"]
+item = ExtResource("2_oouav")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_wj77a"]
+quest = ExtResource("1_ubsjx")
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_bmeej"]
+equation = 2
+value = 116
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_ykixd"]
+
+[resource]
+name = "5013-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_dqc0t"), SubResource("RoseConditionQuestItem_p6mbr")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_wj77a"), SubResource("RoseRewardCalculatedMoney_bmeej"), SubResource("RoseRewardRemoveSelectedQuest_ykixd")])

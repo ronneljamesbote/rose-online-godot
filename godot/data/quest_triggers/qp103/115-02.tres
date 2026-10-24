@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://5hsqcs6hl5hr"]
+
+[ext_resource type="RoseQuest" uid="uid://dokuobdw4c33r" path="res://data/quests/116-a-favor-for-karitte.tres" id="1_fxg56"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_7rlrt"]
+variable_type = "Episode"
+value = 13
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_eh06h"]
+quest = ExtResource("1_fxg56")
+
+[resource]
+name = "115-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_7rlrt")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_eh06h")])

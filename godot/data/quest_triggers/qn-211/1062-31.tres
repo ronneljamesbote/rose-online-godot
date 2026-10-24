@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b3xa44m62vg0q"]
+
+[ext_resource type="RoseQuest" uid="uid://j4a2xro8xyff" path="res://data/quests/1062-namielle-mother-of-all-second-job-change.tres" id="1_k6div"]
+[ext_resource type="RoseQuestTrigger" uid="uid://buomou3urbi2s" path="res://data/quest_triggers/qn-211/1062-32.tres" id="2_beamh"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_j8vtu"]
+quest = ExtResource("1_k6div")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_rk41i"]
+operator = "<"
+value = 8
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_8g2db"]
+quest = ExtResource("1_k6div")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_mwqpf"]
+operator = "Add"
+value = 1
+
+[resource]
+name = "1062-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_j8vtu"), SubResource("RoseConditionQuestVariable_rk41i")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_8g2db"), SubResource("RoseRewardQuestVariable_mwqpf")])
+next_trigger = ExtResource("2_beamh")

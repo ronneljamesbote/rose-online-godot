@@ -1,0 +1,42 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ejg6rxm0rcx8"]
+
+[ext_resource type="RoseQuest" uid="uid://c3p24q86n7kaw" path="res://data/quests/5001-wine-delivery-part-time-job.tres" id="1_ptbcq"]
+[ext_resource type="RoseItemQuest" uid="uid://x57dsl5uyaxw" path="res://data/items/quest/801-red-wine.tres" id="2_71k3a"]
+[ext_resource type="RoseItemConsumable" uid="uid://cvktjkfrlibs1" path="res://data/items/consumable/5-health-bottle-m.tres" id="3_1r1yq"]
+[ext_resource type="RoseItemConsumable" uid="uid://iy3bxt1he2nr" path="res://data/items/consumable/56-vital-jam-1.tres" id="4_sn8dq"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_160ht"]
+quest = ExtResource("1_ptbcq")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_lyk4w"]
+item = ExtResource("2_71k3a")
+equipment_index = 13
+count = 2
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_s75rf"]
+quest = ExtResource("1_ptbcq")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_7jj2a"]
+item = ExtResource("2_71k3a")
+quantity = 2
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_7h0qr"]
+equation = 3
+value = 1500
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_4mwtn"]
+equation = 5
+value = 10
+item = ExtResource("3_1r1yq")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_8k65r"]
+equation = 5
+value = 1
+item = ExtResource("4_sn8dq")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_sbf4s"]
+
+[resource]
+name = "5001-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_160ht"), SubResource("RoseConditionQuestItem_lyk4w")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_s75rf"), SubResource("RoseRewardRemoveItem_7jj2a"), SubResource("RoseRewardCalculatedMoney_7h0qr"), SubResource("RoseRewardCalculatedItem_4mwtn"), SubResource("RoseRewardCalculatedItem_8k65r"), SubResource("RoseRewardRemoveSelectedQuest_sbf4s")])

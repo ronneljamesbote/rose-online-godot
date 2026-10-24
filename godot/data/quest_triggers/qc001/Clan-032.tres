@@ -1,0 +1,10 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cabu1g3h8dif3"]
+
+[ext_resource type="RoseSkill" uid="uid://b4bafa0rsk08i" path="res://data/skills/3431-clan-house/3431-clan-house.tres" id="1_6j0wu"]
+
+[sub_resource type="RoseConditionHasClanSkill" id="RoseConditionHasClanSkill_aqatq"]
+skill = ExtResource("1_6j0wu")
+
+[resource]
+name = "Clan-032"
+conditions = Array[Resource]([SubResource("RoseConditionHasClanSkill_aqatq")])

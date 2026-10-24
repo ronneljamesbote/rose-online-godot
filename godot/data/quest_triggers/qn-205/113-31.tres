@@ -1,0 +1,33 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b5jh4dfc71jrr"]
+
+[ext_resource type="RoseQuest" uid="uid://dtkq4sptm8ejk" path="res://data/quests/113-hourglass-of-purification.tres" id="1_e1mq4"]
+[ext_resource type="RoseItemQuest" uid="uid://cxp1jegjyt436" path="res://data/items/quest/606-crystal-key.tres" id="2_noruk"]
+[ext_resource type="RoseQuestTrigger" uid="uid://du8nv4o6f5a5d" path="res://data/quest_triggers/qn-205/113-32.tres" id="3_ugcvo"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_codo0"]
+quest = ExtResource("1_e1mq4")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_rswbv"]
+variable = 4
+operator = "<"
+value = 5
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_abwuv"]
+item = ExtResource("2_noruk")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_f7mco"]
+quest = ExtResource("1_e1mq4")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_x1kj3"]
+variable = 4
+operator = "Add"
+value = 1
+
+[resource]
+name = "113-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_codo0"), SubResource("RoseConditionQuestVariable_rswbv"), SubResource("RoseConditionQuestItem_abwuv")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_f7mco"), SubResource("RoseRewardQuestVariable_x1kj3")])
+next_trigger = ExtResource("3_ugcvo")

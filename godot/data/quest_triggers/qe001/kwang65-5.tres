@@ -1,0 +1,58 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c37238boqmgc8"]
+
+[ext_resource type="RoseItemGem" uid="uid://ca1kt28qlem5w" path="res://data/items/gem/342-emerald-2.tres" id="1_fvmtu"]
+[ext_resource type="RoseItemMaterial" uid="uid://cvtcsnfwh4vxb" path="res://data/items/material/65-high-ether.tres" id="2_5c2tp"]
+[ext_resource type="RoseItemMaterial" uid="uid://c4qutwsavrkla" path="res://data/items/material/77-red-powder.tres" id="3_3xqxn"]
+[ext_resource type="RoseItemMaterial" uid="uid://txirltqrlwuc" path="res://data/items/material/404.tres" id="4_xup0d"]
+[ext_resource type="RoseItemMaterial" uid="uid://dj1g5yfkebdal" path="res://data/items/material/151-black-hearts.tres" id="5_j3p2r"]
+[ext_resource type="RoseItemMaterial" uid="uid://6nmflpypbwk2" path="res://data/items/material/152-green-hearts.tres" id="6_ciwtc"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_g7632"]
+value = 65
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_dyprn"]
+switch = 486
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_x1re1"]
+equation = 5
+value = 1
+item = ExtResource("1_fvmtu")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_lmvm5"]
+equation = 5
+value = 20
+item = ExtResource("2_5c2tp")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_qllgv"]
+equation = 5
+value = 20
+item = ExtResource("3_3xqxn")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_ojqf7"]
+equation = 5
+value = 10
+item = ExtResource("4_xup0d")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_txqlm"]
+equation = 5
+value = 1
+item = ExtResource("5_j3p2r")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_nn20y"]
+equation = 5
+value = 1
+item = ExtResource("6_ciwtc")
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_ak60d"]
+ability = "Money"
+operator = "Add"
+value = 20000
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_onvo3"]
+switch = 486
+value = true
+
+[resource]
+name = "kwang65-5"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_g7632"), SubResource("RoseConditionQuestSwitch_dyprn")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_x1re1"), SubResource("RoseRewardCalculatedItem_lmvm5"), SubResource("RoseRewardCalculatedItem_qllgv"), SubResource("RoseRewardCalculatedItem_ojqf7"), SubResource("RoseRewardCalculatedItem_txqlm"), SubResource("RoseRewardCalculatedItem_nn20y"), SubResource("RoseRewardAbilityValue_ak60d"), SubResource("RoseRewardSetQuestSwitch_onvo3")])

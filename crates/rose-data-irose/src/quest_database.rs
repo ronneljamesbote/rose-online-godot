@@ -86,5 +86,6 @@ pub fn get_quest_database(
         strings,
         triggers,
         triggers_by_hash,
+        _text: Vec::new(),
     })
 }

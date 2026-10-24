@@ -1,0 +1,67 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cwvcdb660h5ib"]
+
+[ext_resource type="RoseQuest" uid="uid://dsci8dvlpe3i3" path="res://data/quests/5017-moldie-s-strange-mineral-fetch-quest.tres" id="1_t7rey"]
+[ext_resource type="RoseItemQuest" uid="uid://bquhw74gdfe7q" path="res://data/items/quest/807-black-mineral.tres" id="2_nb1n8"]
+[ext_resource type="RoseItemQuest" uid="uid://qrbr7iehxlxe" path="res://data/items/quest/808-green-mineral.tres" id="3_agq40"]
+[ext_resource type="RoseNpc" uid="uid://d2kye0vejeyvd" path="res://data/npcs/1098-ferrell-guild-staff-kiroth.tres" id="4_haj8c"]
+[ext_resource type="RoseQuestTrigger" uid="uid://jspe3os0n1wt" path="res://data/quest_triggers/qs12-002/5017-07.tres" id="5_hf14u"]
+[ext_resource type="RoseItemConsumable" uid="uid://blwiv60eb3cgu" path="res://data/items/consumable/57-vital-jam-2.tres" id="6_i0kkp"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_bspi5"]
+quest = ExtResource("1_t7rey")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_b36x5"]
+item = ExtResource("2_nb1n8")
+equipment_index = 13
+count = 10
+operator = ">="
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_jx6j8"]
+item = ExtResource("3_agq40")
+equipment_index = 13
+count = 10
+operator = ">="
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_r3tta"]
+variable_type = "Timer"
+operator = ">"
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_ro6qs"]
+npc = ExtResource("4_haj8c")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_gb4cd"]
+variable = 3
+value = 2
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_q306t"]
+quest = ExtResource("1_t7rey")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_ruxa3"]
+item = ExtResource("2_nb1n8")
+quantity = 10
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_xvafg"]
+item = ExtResource("3_agq40")
+quantity = 10
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_xvyym"]
+equation = 3
+value = 5000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_q65l4"]
+equation = 5
+value = 1
+item = ExtResource("6_i0kkp")
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_dgw2o"]
+variable = 3
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_2ldcw"]
+
+[resource]
+name = "5017-06"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_bspi5"), SubResource("RoseConditionQuestItem_b36x5"), SubResource("RoseConditionQuestItem_jx6j8"), SubResource("RoseConditionQuestVariable_r3tta"), SubResource("RoseConditionSelectNpc_ro6qs"), SubResource("RoseConditionObjectVariable_gb4cd")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_q306t"), SubResource("RoseRewardRemoveItem_ruxa3"), SubResource("RoseRewardRemoveItem_xvafg"), SubResource("RoseRewardCalculatedMoney_xvyym"), SubResource("RoseRewardCalculatedItem_q65l4"), SubResource("RoseRewardObjectVariable_dgw2o"), SubResource("RoseRewardRemoveSelectedQuest_2ldcw")])
+next_trigger = ExtResource("5_hf14u")

@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cg34h0m1vnwdg"]
+
+[ext_resource type="RoseQuest" uid="uid://c5ndt2re5ho12" path="res://data/quests/951-hawker-job-change-quest.tres" id="1_1wchk"]
+[ext_resource type="RoseQuest" uid="uid://cxbpjyrut81at" path="res://data/quests/952-hawker-job-change-quest.tres" id="2_i08m2"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_phesx"]
+quest = ExtResource("1_1wchk")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ynf61"]
+quest = ExtResource("1_1wchk")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_73vmi"]
+quest = ExtResource("2_i08m2")
+
+[resource]
+name = "951-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_phesx")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ynf61"), SubResource("RoseRewardChangeSelectedQuest_73vmi")])

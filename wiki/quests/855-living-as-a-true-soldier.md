@@ -10,7 +10,7 @@ monsters:
 - '[[monsters/82-beetle-fighter|Beetle Fighter]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 855; QSD triggers 855-01, 855-02, 855-31, 855-32
+  data: 'godot/data/quests/855-living-as-a-true-soldier.tres; quest triggers in godot/data/quest_triggers/: qj111-01/855-01, qj111-01/855-02, qn-081/855-31, qn-082/855-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

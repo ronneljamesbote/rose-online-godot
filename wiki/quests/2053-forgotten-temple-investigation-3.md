@@ -11,7 +11,7 @@ monsters:
 time_limit_minutes: 180
 steps: 22
 source:
-  data: LIST_QUEST.STB row 2053; QSD triggers 2053-01, 2053-03, 2053-04, 2053-05, 2053-07, 2053-08, 2053-09, 2053-10, 2053-10-0, 2053-11, 2053-12, 2053-12-0, 2053-13, 2053-14, 2053-15, 2053-15-0, 2053-16, 2053-17, 2053-18, 2053-19, 2053-31, 2053-32
+  data: 'godot/data/quests/2053-forgotten-temple-investigation-3.tres; quest triggers in godot/data/quest_triggers/: qp201/2053-01, qp201/2053-03, qp201/2053-04, qp201/2053-05, qp201/2053-07, qp201/2053-08, qp201/2053-09, qp201/2053-10, qp201/2053-10-0, qp201/2053-11, qp201/2053-12, qp201/2053-12-0, qp201/2053-13, qp201/2053-14, qp201/2053-15, qp201/2053-15-0, qp201/2053-16, qp201/2053-17, qp201/2053-18, qp201/2053-19, qn-453/2053-31, qn-453/2053-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b3i48yh0lfmp7"]
+
+[ext_resource type="RoseNpc" uid="uid://c5lrdwof7p562" path="res://data/npcs/1112-arumic-researcher-carasia.tres" id="1_ji8ri"]
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_ac6ng"]
+npc = ExtResource("1_ji8ri")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_56uig"]
+value = 4
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_c4nat"]
+variable = 4
+operator = ">="
+value = 10
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_e67ky"]
+value = 5
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_tf2pd"]
+variable = 4
+
+[resource]
+name = "3604-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectNpc_ac6ng"), SubResource("RoseConditionObjectVariable_56uig"), SubResource("RoseConditionObjectVariable_c4nat")])
+rewards = Array[Resource]([SubResource("RoseRewardObjectVariable_e67ky"), SubResource("RoseRewardObjectVariable_tf2pd")])

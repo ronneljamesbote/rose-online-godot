@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c1lt4web8h0g7"]
+
+[ext_resource type="RoseQuest" uid="uid://cq6cdc5ht1p12" path="res://data/quests/1077-lillith-woman-of-the-cosmos-second-job-change.tres" id="1_jrdeg"]
+[ext_resource type="RoseItemQuest" uid="uid://c84uhlddn0qg6" path="res://data/items/quest/224-bottled-love-letter.tres" id="2_x4xor"]
+[ext_resource type="RoseQuest" uid="uid://ccy4f7qubef65" path="res://data/quests/1078-lillith-woman-of-the-cosmos-second-job-change.tres" id="3_qnk88"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_5bjtl"]
+quest = ExtResource("1_jrdeg")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_p38h3"]
+quest = ExtResource("1_jrdeg")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_il57f"]
+item = ExtResource("2_x4xor")
+quantity = 5
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_35ys8"]
+quest = ExtResource("3_qnk88")
+keep_data = true
+
+[resource]
+name = "1077-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_5bjtl")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_p38h3"), SubResource("RoseRewardRemoveItem_il57f"), SubResource("RoseRewardChangeSelectedQuest_35ys8")])

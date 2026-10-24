@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://di3fvjfkvyqjk"]
+
+[ext_resource type="RoseQuest" uid="uid://dnorlhkx5ok23" path="res://data/quests/115-hourglass-of-purification.tres" id="1_2uocn"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_mxxvw"]
+variable_type = "Episode"
+value = 12
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_xw7q6"]
+quest = ExtResource("1_2uocn")
+
+[resource]
+name = "114-03"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_mxxvw")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_xw7q6")])

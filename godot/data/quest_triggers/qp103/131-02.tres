@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c2x7jqc0sooup"]
+
+[ext_resource type="RoseQuest" uid="uid://hgpg7whngwdj" path="res://data/quests/132-forbidden-spell.tres" id="1_s5vvm"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_6qe7q"]
+variable_type = "Episode"
+value = 31
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_fxmc3"]
+quest = ExtResource("1_s5vvm")
+
+[resource]
+name = "131-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_6qe7q")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_fxmc3")])

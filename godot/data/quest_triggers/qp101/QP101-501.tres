@@ -1,0 +1,36 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cmhvwwjm2d2ax"]
+
+[ext_resource type="RoseNpc" uid="uid://d3exaqvi43lj3" path="res://data/npcs/1104-historian-jones.tres" id="1_d8nil"]
+[ext_resource type="RoseZoneSettings" uid="uid://5w1b8g3shvhe" path="res://data/zones/28-gorge-of-silence.tres" id="2_4b2lk"]
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_ocnue"]
+npc = ExtResource("1_d8nil")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_pblv8"]
+variable = 1
+value = 50
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_wboi3"]
+variable = 6
+
+[sub_resource type="RoseRewardSpawnMonster" id="RoseRewardSpawnMonster_ojmb6"]
+count = 1
+location = "Position"
+zone = ExtResource("2_4b2lk")
+x = 530679.0
+y = 499023.0
+distance = 1
+team = 100
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_0lsq4"]
+variable = 6
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_xmfgs"]
+trigger = "QP101-502"
+
+[resource]
+name = "QP101-501"
+conditions = Array[Resource]([SubResource("RoseConditionSelectNpc_ocnue"), SubResource("RoseConditionObjectVariable_pblv8"), SubResource("RoseConditionObjectVariable_wboi3")])
+rewards = Array[Resource]([SubResource("RoseRewardSpawnMonster_ojmb6"), SubResource("RoseRewardObjectVariable_0lsq4"), SubResource("RoseRewardTrigger_xmfgs")])

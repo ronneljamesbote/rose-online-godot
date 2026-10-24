@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bxvmlm1mhc330"]
+
+[ext_resource type="RoseQuest" uid="uid://ygrsulyqu8ol" path="res://data/quests/145-information-on-lunar.tres" id="1_eq07q"]
+[ext_resource type="RoseItemQuest" uid="uid://dyylracpreygy" path="res://data/items/quest/510-golden-dagger.tres" id="2_1ga8f"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_q3cuc"]
+variable_type = "Episode"
+value = 44
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_33f3s"]
+quest = ExtResource("1_eq07q")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_fcqhm"]
+quest = ExtResource("1_eq07q")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_x5iyg"]
+item = ExtResource("2_1ga8f")
+quantity = 1
+
+[resource]
+name = "144-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_q3cuc")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_33f3s"), SubResource("RoseRewardSelectQuest_fcqhm"), SubResource("RoseRewardAddItem_x5iyg")])

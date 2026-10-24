@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://33ysep8uiohf"]
+
+[ext_resource type="RoseQuest" uid="uid://cenbess3gd6o8" path="res://data/quests/902-muse-job-change-quest.tres" id="1_r1ed6"]
+[ext_resource type="RoseItemQuest" uid="uid://ccqtvweqeb2ue" path="res://data/items/quest/106-flanae-seed.tres" id="2_npwm1"]
+[ext_resource type="RoseQuest" uid="uid://dhk7heriy2j43" path="res://data/quests/903-muse-job-change-quest.tres" id="3_2ousa"]
+[ext_resource type="RoseItemConsumable" uid="uid://dow06gspjnrnl" path="res://data/items/consumable/1-health-vial-s.tres" id="4_smhh0"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_bqk0e"]
+quest = ExtResource("1_r1ed6")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_mvei0"]
+item = ExtResource("2_npwm1")
+equipment_index = 13
+count = 20
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_83kei"]
+quest = ExtResource("1_r1ed6")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_u2e5i"]
+item = ExtResource("2_npwm1")
+quantity = 20
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_3om14"]
+quest = ExtResource("3_2ousa")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_l4sxh"]
+equation = 5
+value = 5
+item = ExtResource("4_smhh0")
+
+[resource]
+name = "902-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_bqk0e"), SubResource("RoseConditionQuestItem_mvei0")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_83kei"), SubResource("RoseRewardRemoveItem_u2e5i"), SubResource("RoseRewardChangeSelectedQuest_3om14"), SubResource("RoseRewardCalculatedItem_l4sxh")])

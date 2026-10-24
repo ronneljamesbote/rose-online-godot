@@ -1,0 +1,26 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dpoefyj864xj0"]
+
+[ext_resource type="RoseQuest" uid="uid://6nny813ghvym" path="res://data/quests/1006-an-eye-for-the-marketplace.tres" id="1_h6uun"]
+[ext_resource type="RoseItemQuest" uid="uid://m5mqsl5jsli2" path="res://data/items/quest/116-cobra-leather.tres" id="2_nrgc1"]
+[ext_resource type="RoseQuest" uid="uid://cnha4r1ett11l" path="res://data/quests/1007-an-eye-for-the-marketplace.tres" id="3_w0or2"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_higeq"]
+quest = ExtResource("1_h6uun")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_da134"]
+item = ExtResource("2_nrgc1")
+equipment_index = 13
+count = 3
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_tc715"]
+quest = ExtResource("1_h6uun")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_7csnx"]
+quest = ExtResource("3_w0or2")
+keep_data = true
+
+[resource]
+name = "1006-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_higeq"), SubResource("RoseConditionQuestItem_da134")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_tc715"), SubResource("RoseRewardChangeSelectedQuest_7csnx")])

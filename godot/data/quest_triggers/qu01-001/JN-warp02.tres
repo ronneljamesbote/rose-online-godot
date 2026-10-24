@@ -1,0 +1,17 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bs2au1ihtji84"]
+
+[ext_resource type="RoseZoneSettings" uid="uid://cxp41vub0gvi5" path="res://data/zones/1-canyon-city-of-zant.tres" id="1_g6kvc"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_y4bw1"]
+ability = "Union"
+value = 1
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_g57bi"]
+zone = ExtResource("1_g6kvc")
+x = 508500
+y = 507200
+
+[resource]
+name = "JN-warp02"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_y4bw1")])
+rewards = Array[Resource]([SubResource("RoseRewardTeleport_g57bi")])

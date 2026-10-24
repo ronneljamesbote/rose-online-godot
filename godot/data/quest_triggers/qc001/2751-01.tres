@@ -1,0 +1,21 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dcm7m81plwfqv"]
+
+[ext_resource type="RoseQuest" uid="uid://d1vye26jvwufk" path="res://data/quests/2751-clan-house-extension-1.tres" id="1_eu7nt"]
+
+[sub_resource type="RoseConditionClanPosition" id="RoseConditionClanPosition_x4vm5"]
+value = 6
+
+[sub_resource type="RoseConditionClanLevel" id="RoseConditionClanLevel_w2xtq"]
+value = 2
+
+[sub_resource type="RoseConditionClanPoints" id="RoseConditionClanPoints_rqflv"]
+operator = ">="
+value = 5000
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_773sy"]
+quest = ExtResource("1_eu7nt")
+
+[resource]
+name = "2751-01"
+conditions = Array[Resource]([SubResource("RoseConditionClanPosition_x4vm5"), SubResource("RoseConditionClanLevel_w2xtq"), SubResource("RoseConditionClanPoints_rqflv")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_773sy")])

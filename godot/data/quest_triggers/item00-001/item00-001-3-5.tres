@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bopuu8e58o462"]
+
+[ext_resource type="RoseItemGem" uid="uid://2aq4bcwnkja1" path="res://data/items/gem/321-sapphire-1.tres" id="1_03e50"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_gmo6w"]
+switch = 480
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_hoq5h"]
+equation = 5
+value = 1
+item = ExtResource("1_03e50")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_ko4rg"]
+switch = 480
+value = true
+
+[resource]
+name = "item00-001-3-5"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_gmo6w")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_hoq5h"), SubResource("RoseRewardSetQuestSwitch_ko4rg")])

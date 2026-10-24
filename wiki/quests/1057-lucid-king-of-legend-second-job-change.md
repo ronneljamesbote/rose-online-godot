@@ -7,7 +7,7 @@ npcs:
 - '[[npcs/1005-righteous-crusader-leonard|Righteous Crusader Leonard]]'
 steps: 7
 source:
-  data: LIST_QUEST.STB row 1057; QSD triggers 1056-01, 1057-01, 1057-31, 1057-32, 1057-33, 1057-34, 1057-35
+  data: 'godot/data/quests/1057-lucid-king-of-legend-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj111-06/1056-01, qj111-06/1057-01, qn-278/1057-31, qn-278/1057-32, qn-278/1057-33, qn-278/1057-34, qn-278/1057-35'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

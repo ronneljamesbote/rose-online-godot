@@ -1,0 +1,34 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ravhgyu7j88a"]
+
+[ext_resource type="RoseQuest" uid="uid://celxu0j4r1016" path="res://data/quests/3806-reassuring-support.tres" id="1_bpkxg"]
+[ext_resource type="RoseItemQuest" uid="uid://rvdnhwo8jisu" path="res://data/items/quest/314-doonga-s-sausage.tres" id="2_41poh"]
+[ext_resource type="RoseQuestTrigger" uid="uid://nbm5n7tqunx3" path="res://data/quest_triggers/qn-152/5013-32.tres" id="3_eiw21"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_vcj7e"]
+quest = ExtResource("1_bpkxg")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_8ca3c"]
+to = 24
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_638b1"]
+ability = "Union"
+value = 5
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_a6ap8"]
+item = ExtResource("2_41poh")
+equipment_index = 13
+count = 20
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_pp2h5"]
+quest = ExtResource("1_bpkxg")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_q25yn"]
+item = ExtResource("2_41poh")
+quantity = 1
+
+[resource]
+name = "3806-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_vcj7e"), SubResource("RoseConditionRandomPercent_8ca3c"), SubResource("RoseConditionAbilityValue_638b1"), SubResource("RoseConditionQuestItem_a6ap8")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_pp2h5"), SubResource("RoseRewardAddItem_q25yn")])
+next_trigger = ExtResource("3_eiw21")

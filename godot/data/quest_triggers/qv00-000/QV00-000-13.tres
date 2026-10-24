@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cy2qx16gws3wu"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_i7pw4"]
+operator = ">="
+value = 70
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_2pv47"]
+ability = "Job"
+value = 2
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_tujhm"]
+ability = "Money"
+operator = ">="
+value = 200000
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_6olws"]
+ability = "Money"
+operator = "Subtract"
+value = 200000
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_u6vgu"]
+ability = "Job"
+value = 222
+
+[resource]
+name = "QV00-000-13"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_i7pw4"), SubResource("RoseConditionAbilityValue_2pv47"), SubResource("RoseConditionAbilityValue_tujhm")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_6olws"), SubResource("RoseRewardAbilityValue_u6vgu")])

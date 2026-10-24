@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dco4trfu1xfds"]
+
+[ext_resource type="RoseNpc" uid="uid://c5lrdwof7p562" path="res://data/npcs/1112-arumic-researcher-carasia.tres" id="1_q6hpb"]
+[ext_resource type="RoseQuest" uid="uid://cohf2hhejb0nu" path="res://data/quests/3605-plant-extract-magic-fundamental.tres" id="2_wf735"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_khmjo"]
+ability = "Union"
+value = 4
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_oivkd"]
+npc = ExtResource("1_q6hpb")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_mrpk1"]
+value = 10
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_sy6kp"]
+variable = 8
+operator = "<"
+value = 10
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_53uoj"]
+quest = ExtResource("2_wf735")
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_s25xv"]
+variable = 8
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_6jfvy"]
+trigger = "3605-02"
+
+[resource]
+name = "3605-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_khmjo"), SubResource("RoseConditionSelectNpc_oivkd"), SubResource("RoseConditionObjectVariable_mrpk1"), SubResource("RoseConditionObjectVariable_sy6kp")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_53uoj"), SubResource("RoseRewardObjectVariable_s25xv"), SubResource("RoseRewardTrigger_6jfvy")])

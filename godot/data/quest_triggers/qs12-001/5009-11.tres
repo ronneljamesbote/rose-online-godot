@@ -1,0 +1,21 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dkrqyjkujs14l"]
+
+[ext_resource type="RoseQuest" uid="uid://dj7x4lj3ncqmi" path="res://data/quests/5009-candle-ghost-extermination-fetch-quest.tres" id="1_w6h5x"]
+[ext_resource type="RoseItemQuest" uid="uid://bng0f7ft7qvkc" path="res://data/items/quest/809-candle-ghost-mask.tres" id="2_7sylo"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_qem6x"]
+quest = ExtResource("1_w6h5x")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_wkxof"]
+variable_type = "Timer"
+operator = ">"
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_e07v6"]
+item = ExtResource("2_7sylo")
+equipment_index = 13
+count = 20
+operator = "<"
+
+[resource]
+name = "5009-11"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_qem6x"), SubResource("RoseConditionQuestVariable_wkxof"), SubResource("RoseConditionQuestItem_e07v6")])

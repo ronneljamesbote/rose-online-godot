@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://doa464vjtckbi"]
+
+[ext_resource type="RoseItemConsumable" uid="uid://uufqbe0x3ega" path="res://data/items/consumable/101-apple.tres" id="1_peatp"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_nckls"]
+value = 1
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_eu167"]
+switch = 6
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_drsy7"]
+equation = 5
+value = 10
+item = ExtResource("1_peatp")
+gem = 52685
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_s8i47"]
+switch = 6
+value = true
+
+[resource]
+name = "fruits-1"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_nckls"), SubResource("RoseConditionQuestSwitch_eu167")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_drsy7"), SubResource("RoseRewardSetQuestSwitch_s8i47")])

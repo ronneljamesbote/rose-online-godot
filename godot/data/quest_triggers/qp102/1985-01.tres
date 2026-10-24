@@ -1,0 +1,45 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://om8vimxksau5"]
+
+[ext_resource type="RoseQuest" uid="uid://2t6y3x4v6wet" path="res://data/quests/1985-the-truth-of-the-golden-dagger.tres" id="1_5bbs4"]
+[ext_resource type="RoseItemConsumable" uid="uid://td4q0nvqoy8f" path="res://data/items/consumable/2-health-vial-m.tres" id="2_x6nuf"]
+[ext_resource type="RoseItemConsumable" uid="uid://djpfhj5gyqoeu" path="res://data/items/consumable/22-mana-vial-m.tres" id="3_tgj37"]
+[ext_resource type="RoseQuest" uid="uid://b01tquyrhmeol" path="res://data/quests/1986-information-on-lunar.tres" id="4_7l61c"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_1n6t3"]
+quest = ExtResource("1_5bbs4")
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_jyper"]
+switch = 131
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_7b833"]
+switch = 132
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_b7h75"]
+quest = ExtResource("1_5bbs4")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_lh5h8"]
+value = 1000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_htmbl"]
+equation = 5
+value = 10
+item = ExtResource("2_x6nuf")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_pdj4q"]
+equation = 5
+value = 10
+item = ExtResource("3_tgj37")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_dv8qw"]
+quest = ExtResource("4_7l61c")
+keep_data = true
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_caoj6"]
+switch = 132
+value = true
+
+[resource]
+name = "1985-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_1n6t3"), SubResource("RoseConditionQuestSwitch_jyper"), SubResource("RoseConditionQuestSwitch_7b833")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_b7h75"), SubResource("RoseRewardCalculatedExperiencePoints_lh5h8"), SubResource("RoseRewardCalculatedItem_htmbl"), SubResource("RoseRewardCalculatedItem_pdj4q"), SubResource("RoseRewardChangeSelectedQuest_dv8qw"), SubResource("RoseRewardSetQuestSwitch_caoj6")])

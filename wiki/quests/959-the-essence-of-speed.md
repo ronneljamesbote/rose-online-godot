@@ -8,7 +8,7 @@ npcs:
 time_limit_minutes: 30
 steps: 7
 source:
-  data: LIST_QUEST.STB row 959; QSD triggers 959-01, 959-02, 959-03, 959-04, 959-11, 959-12, 959-31
+  data: 'godot/data/quests/959-the-essence-of-speed.tres; quest triggers in godot/data/quest_triggers/: qj311-01/959-01, qj311-01/959-02, qj311-01/959-03, qj311-01/959-04, qj311-01/959-11, qj311-01/959-12, qn-173/959-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

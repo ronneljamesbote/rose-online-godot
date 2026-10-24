@@ -6,7 +6,7 @@ status: in-game
 time_limit_minutes: 70
 steps: 0
 source:
-  data: 'LIST_QUEST.STB row 2854; QSD triggers '
+  data: 'godot/data/quests/2854-dignity-of-the-righteous-crusaders.tres'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

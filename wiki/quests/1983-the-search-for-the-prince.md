@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1141-righteous-crusader-gallahad|Righteous Crusader Gallahad]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 1983; QSD triggers 1982-01, 1983-01, 1983-02
+  data: 'godot/data/quests/1983-the-search-for-the-prince.tres; quest triggers in godot/data/quest_triggers/: qp102/1982-01, qp102/1983-01, qp102/1983-02'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

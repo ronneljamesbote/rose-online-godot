@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ftatxe1bas4m"]
+
+[ext_resource type="RoseQuest" uid="uid://dnorlhkx5ok23" path="res://data/quests/115-hourglass-of-purification.tres" id="1_qxg1o"]
+[ext_resource type="RoseItemJewellery" uid="uid://dm21qnq1rqtjx" path="res://data/items/jewellery/13-talisman-ring.tres" id="2_evgff"]
+[ext_resource type="RoseQuest" uid="uid://dokuobdw4c33r" path="res://data/quests/116-a-favor-for-karitte.tres" id="3_ker46"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_nhcns"]
+quest = ExtResource("1_qxg1o")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_gyqqk"]
+quest = ExtResource("1_qxg1o")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_svxj6"]
+value = 1000
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_3hs33"]
+equation = 3
+value = 5000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_aunv4"]
+equation = 5
+value = 1
+item = ExtResource("2_evgff")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_15ysk"]
+quest = ExtResource("3_ker46")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_ilj6o"]
+variable_type = "Episode"
+value = 13
+
+[resource]
+name = "115-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_nhcns")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_gyqqk"), SubResource("RoseRewardCalculatedExperiencePoints_svxj6"), SubResource("RoseRewardCalculatedMoney_3hs33"), SubResource("RoseRewardCalculatedItem_aunv4"), SubResource("RoseRewardChangeSelectedQuest_15ysk"), SubResource("RoseRewardQuestVariable_ilj6o")])

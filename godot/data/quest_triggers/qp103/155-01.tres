@@ -1,0 +1,73 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://6w54476ktmbr"]
+
+[ext_resource type="RoseQuest" uid="uid://bc03eh55gh0k4" path="res://data/quests/155-suspicious-researchers.tres" id="1_sydbk"]
+[ext_resource type="RoseItemQuest" uid="uid://d3o0jtsrldi7y" path="res://data/items/quest/622-mana-charger.tres" id="2_yen3f"]
+[ext_resource type="RoseItemConsumable" uid="uid://ckjdxtg401fm4" path="res://data/items/consumable/316-advanced-strength-scroll-solo.tres" id="3_0fpse"]
+[ext_resource type="RoseItemConsumable" uid="uid://cbr1jl2joyvkb" path="res://data/items/consumable/317-advanced-defense-scroll-solo.tres" id="4_f3xwi"]
+[ext_resource type="RoseItemConsumable" uid="uid://da6jjcf0igyq7" path="res://data/items/consumable/381-ice-charm.tres" id="5_d888i"]
+[ext_resource type="RoseQuest" uid="uid://dfs1lg8ou4l57" path="res://data/quests/156-monsters-in-the-desert.tres" id="6_xk5fc"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_t86o0"]
+quest = ExtResource("1_sydbk")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_27ghp"]
+item = ExtResource("2_yen3f")
+equipment_index = 13
+count = 4
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_56xoh"]
+variable_type = "Switch"
+value = 1
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_wm4aj"]
+variable_type = "Switch"
+variable = 1
+value = 1
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_vm2x7"]
+variable_type = "Switch"
+variable = 2
+value = 1
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_q4x1r"]
+variable_type = "Switch"
+variable = 3
+value = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_t1u0y"]
+quest = ExtResource("1_sydbk")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_rqoxv"]
+item = ExtResource("2_yen3f")
+quantity = 4
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_ghosa"]
+equation = 5
+value = 3
+item = ExtResource("3_0fpse")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_if2bx"]
+equation = 5
+value = 3
+item = ExtResource("4_f3xwi")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_ojlud"]
+value = 40000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_a28ya"]
+equation = 5
+value = 10
+item = ExtResource("5_d888i")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_wk5w3"]
+quest = ExtResource("6_xk5fc")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_h1bep"]
+variable_type = "Episode"
+value = 55
+
+[resource]
+name = "155-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_t86o0"), SubResource("RoseConditionQuestItem_27ghp"), SubResource("RoseConditionQuestVariable_56xoh"), SubResource("RoseConditionQuestVariable_wm4aj"), SubResource("RoseConditionQuestVariable_vm2x7"), SubResource("RoseConditionQuestVariable_q4x1r")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_t1u0y"), SubResource("RoseRewardRemoveItem_rqoxv"), SubResource("RoseRewardCalculatedItem_ghosa"), SubResource("RoseRewardCalculatedItem_if2bx"), SubResource("RoseRewardCalculatedExperiencePoints_ojlud"), SubResource("RoseRewardCalculatedItem_a28ya"), SubResource("RoseRewardChangeSelectedQuest_wk5w3"), SubResource("RoseRewardQuestVariable_h1bep")])

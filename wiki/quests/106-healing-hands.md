@@ -9,7 +9,7 @@ npcs:
 time_limit_minutes: 30
 steps: 6
 source:
-  data: LIST_QUEST.STB row 106; QSD triggers 102-05, 102-06, 105-02, 106-01, 106-02, 106-03
+  data: 'godot/data/quests/106-healing-hands.tres; quest triggers in godot/data/quest_triggers/: qp103/102-05, qp103/102-06, qp103/105-02, qp103/106-01, qp103/106-02, qp103/106-03'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

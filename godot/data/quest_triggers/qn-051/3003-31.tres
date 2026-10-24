@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://413k8rytf6nf"]
+
+[ext_resource type="RoseQuest" uid="uid://dlu7p80ii1jnb" path="res://data/quests/3003-necessity-of-a-new-shrine-1.tres" id="1_c5fs7"]
+[ext_resource type="RoseItemQuest" uid="uid://cv537oygar6o5" path="res://data/items/quest/302-thick-pulpwood.tres" id="2_7uthf"]
+[ext_resource type="RoseQuestTrigger" uid="uid://2w120l8d7ab6" path="res://data/quest_triggers/qn-051/3605-31.tres" id="3_d3mej"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_brm1m"]
+quest = ExtResource("1_c5fs7")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_mpi4g"]
+to = 30
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_evj7h"]
+item = ExtResource("2_7uthf")
+equipment_index = 13
+count = 12
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_a8mm2"]
+quest = ExtResource("1_c5fs7")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_sumvd"]
+item = ExtResource("2_7uthf")
+quantity = 1
+
+[resource]
+name = "3003-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_brm1m"), SubResource("RoseConditionRandomPercent_mpi4g"), SubResource("RoseConditionQuestItem_evj7h")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_a8mm2"), SubResource("RoseRewardAddItem_sumvd")])
+next_trigger = ExtResource("3_d3mej")

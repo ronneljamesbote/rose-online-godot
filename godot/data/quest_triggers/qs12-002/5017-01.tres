@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dcmd84mlnt0ur"]
+
+[ext_resource type="RoseNpc" uid="uid://d2kye0vejeyvd" path="res://data/npcs/1098-ferrell-guild-staff-kiroth.tres" id="1_tb8t7"]
+[ext_resource type="RoseQuest" uid="uid://dsci8dvlpe3i3" path="res://data/quests/5017-moldie-s-strange-mineral-fetch-quest.tres" id="2_rvkqj"]
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_wqru4"]
+npc = ExtResource("1_tb8t7")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_k6pdc"]
+value = 1
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_sgyvq"]
+operator = "<="
+value = 43
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_sihjm"]
+quest = ExtResource("2_rvkqj")
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_n8j3k"]
+variable = 2
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_rn82k"]
+trigger = "5017-02"
+
+[resource]
+name = "5017-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectNpc_wqru4"), SubResource("RoseConditionObjectVariable_k6pdc"), SubResource("RoseConditionAbilityValue_sgyvq")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_sihjm"), SubResource("RoseRewardObjectVariable_n8j3k"), SubResource("RoseRewardTrigger_rn82k")])

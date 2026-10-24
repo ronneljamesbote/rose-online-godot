@@ -1,0 +1,46 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c68idcrj8q6jq"]
+
+[ext_resource type="RoseItemGem" uid="uid://dbemonc8qirua" path="res://data/items/gem/331-topaz-1.tres" id="1_nnoo5"]
+[ext_resource type="RoseItemMaterial" uid="uid://dqee6e5tcwg6r" path="res://data/items/material/64-ether.tres" id="2_725cw"]
+[ext_resource type="RoseItemMaterial" uid="uid://bfh7yai2d7lv1" path="res://data/items/material/76-orange-powder.tres" id="3_6tqyk"]
+[ext_resource type="RoseItemMaterial" uid="uid://txirltqrlwuc" path="res://data/items/material/404.tres" id="4_p66p3"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_osnv7"]
+value = 55
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_6f57w"]
+switch = 485
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_aqreh"]
+equation = 5
+value = 1
+item = ExtResource("1_nnoo5")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_l51lp"]
+equation = 5
+value = 20
+item = ExtResource("2_725cw")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_hsseq"]
+equation = 5
+value = 20
+item = ExtResource("3_6tqyk")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_hvm0y"]
+equation = 5
+value = 10
+item = ExtResource("4_p66p3")
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_iu7o4"]
+ability = "Money"
+operator = "Add"
+value = 13000
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_jflpp"]
+switch = 485
+value = true
+
+[resource]
+name = "kwang55-4"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_osnv7"), SubResource("RoseConditionQuestSwitch_6f57w")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_aqreh"), SubResource("RoseRewardCalculatedItem_l51lp"), SubResource("RoseRewardCalculatedItem_hsseq"), SubResource("RoseRewardCalculatedItem_hvm0y"), SubResource("RoseRewardAbilityValue_iu7o4"), SubResource("RoseRewardSetQuestSwitch_jflpp")])

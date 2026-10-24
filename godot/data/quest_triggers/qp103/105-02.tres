@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bbfiglajga75x"]
+
+[ext_resource type="RoseQuest" uid="uid://bymtsj2yn6c40" path="res://data/quests/106-healing-hands.tres" id="1_6mlv1"]
+[ext_resource type="RoseItemQuest" uid="uid://ds5io6gasghn4" path="res://data/items/quest/603-soil-of-purification.tres" id="2_jploj"]
+[ext_resource type="RoseItemQuest" uid="uid://b8usi70yejtik" path="res://data/items/quest/604-karitte-s-antidote.tres" id="3_bs4jn"]
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_mq744"]
+quest = ExtResource("1_6mlv1")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_2r3e5"]
+quest = ExtResource("1_6mlv1")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_8b7jp"]
+item = ExtResource("2_jploj")
+quantity = 1
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_0b7as"]
+item = ExtResource("3_bs4jn")
+quantity = 2
+
+[resource]
+name = "105-02"
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_mq744"), SubResource("RoseRewardSelectQuest_2r3e5"), SubResource("RoseRewardAddItem_8b7jp"), SubResource("RoseRewardAddItem_0b7as")])

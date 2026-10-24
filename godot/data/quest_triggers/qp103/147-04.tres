@@ -1,0 +1,32 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cgwjo1qmkso7c"]
+
+[ext_resource type="RoseQuest" uid="uid://cpwi2pk76hlwq" path="res://data/quests/147-pavrick-the-craftsman-on-lunar.tres" id="1_2sfol"]
+[ext_resource type="RoseItemQuest" uid="uid://dg5yc08sfb3ma" path="res://data/items/quest/511-luna-whiskey.tres" id="2_0je42"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_n1e6f"]
+quest = ExtResource("1_2sfol")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_56qx3"]
+variable = 1
+value = 10
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_m157l"]
+quest = ExtResource("1_2sfol")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_db045"]
+variable = 1
+value = 20
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_fgimu"]
+ability = "Money"
+operator = "Subtract"
+value = 500
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_t1ect"]
+item = ExtResource("2_0je42")
+quantity = 1
+
+[resource]
+name = "147-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_n1e6f"), SubResource("RoseConditionQuestVariable_56qx3")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_m157l"), SubResource("RoseRewardQuestVariable_db045"), SubResource("RoseRewardAbilityValue_fgimu"), SubResource("RoseRewardAddItem_t1ect")])

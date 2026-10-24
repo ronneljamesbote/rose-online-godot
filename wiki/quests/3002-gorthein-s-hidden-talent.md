@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1109-elder-of-junon-order-gorthein|Elder of Junon Order Gorthein]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 3002; QSD triggers 3002-01, 3002-02, 3002-03, 3002-31
+  data: 'godot/data/quests/3002-gorthein-s-hidden-talent.tres; quest triggers in godot/data/quest_triggers/: qu01-001/3002-01, qu01-001/3002-02, qu01-001/3002-03, qn-132/3002-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

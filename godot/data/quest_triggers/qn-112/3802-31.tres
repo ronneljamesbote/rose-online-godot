@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bddaw0sn7qcxp"]
+
+[ext_resource type="RoseQuest" uid="uid://lwj1ju40apps" path="res://data/quests/3802-stockpiling-high-quality-coal.tres" id="1_wr87j"]
+[ext_resource type="RoseItemQuest" uid="uid://xpmc24wh6jj2" path="res://data/items/quest/311-high-quality-coal.tres" id="2_vcx77"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dwx1ax3jgmnwj" path="res://data/quest_triggers/qn-112/5017-33.tres" id="3_8jl7e"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_doxpb"]
+quest = ExtResource("1_wr87j")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_lyohw"]
+to = 30
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_lonv2"]
+item = ExtResource("2_vcx77")
+equipment_index = 13
+count = 10
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ghnco"]
+quest = ExtResource("1_wr87j")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_0p5ko"]
+item = ExtResource("2_vcx77")
+quantity = 1
+
+[resource]
+name = "3802-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_doxpb"), SubResource("RoseConditionRandomPercent_lyohw"), SubResource("RoseConditionQuestItem_lonv2")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ghnco"), SubResource("RoseRewardAddItem_0p5ko")])
+next_trigger = ExtResource("3_8jl7e")

@@ -1,0 +1,37 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://5tuptn2nsxqx"]
+
+[ext_resource type="RoseZoneSettings" uid="uid://dudo2k2lp8q04" path="res://data/zones/6-crusader-training-camp.tres" id="1_jl4kn"]
+[ext_resource type="RoseItemConsumable" uid="uid://7lbemb7bd432" path="res://data/items/consumable/10-vital-water-s.tres" id="2_dgaw8"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_63wqc"]
+operator = ">="
+value = 60
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_wlh1y"]
+operator = "<"
+value = 70
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_wjp22"]
+ability = "Money"
+operator = ">="
+value = 1000
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_a0n4q"]
+ability = "Money"
+operator = "Subtract"
+value = 1000
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_2erc7"]
+zone = ExtResource("1_jl4kn")
+x = 520047
+y = 522290
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_uvnbw"]
+equation = 5
+value = 2
+item = ExtResource("2_dgaw8")
+
+[resource]
+name = "PvP-A-002"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_63wqc"), SubResource("RoseConditionAbilityValue_wlh1y"), SubResource("RoseConditionAbilityValue_wjp22")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_a0n4q"), SubResource("RoseRewardTeleport_2erc7"), SubResource("RoseRewardCalculatedItem_uvnbw")])

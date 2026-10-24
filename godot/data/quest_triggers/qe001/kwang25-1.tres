@@ -1,0 +1,47 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dyg17sic2ui7n"]
+
+[ext_resource type="RoseItemHead" uid="uid://ckban0dluhoo7" path="res://data/items/head/311-luxurious-rodeo-hat.tres" id="1_jfm0d"]
+[ext_resource type="RoseItemConsumable" uid="uid://bo36bac64hxao" path="res://data/items/consumable/309-strength-scroll-solo.tres" id="2_b6gwx"]
+[ext_resource type="RoseItemConsumable" uid="uid://cy13po4b5h1c" path="res://data/items/consumable/310-defense-scroll-solo.tres" id="3_7mjfx"]
+[ext_resource type="RoseItemMaterial" uid="uid://txirltqrlwuc" path="res://data/items/material/404.tres" id="4_pte66"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_hq5wc"]
+value = 25
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_fmcqd"]
+switch = 482
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_f0va8"]
+equation = 5
+value = 1
+item = ExtResource("1_jfm0d")
+gem = 118
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_rtgdg"]
+equation = 5
+value = 3
+item = ExtResource("2_b6gwx")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_em3lr"]
+equation = 5
+value = 3
+item = ExtResource("3_7mjfx")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_7byka"]
+equation = 5
+value = 7
+item = ExtResource("4_pte66")
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_v6dxg"]
+ability = "Money"
+operator = "Add"
+value = 3000
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_musgo"]
+switch = 482
+value = true
+
+[resource]
+name = "kwang25-1"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_hq5wc"), SubResource("RoseConditionQuestSwitch_fmcqd")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_f0va8"), SubResource("RoseRewardCalculatedItem_rtgdg"), SubResource("RoseRewardCalculatedItem_em3lr"), SubResource("RoseRewardCalculatedItem_7byka"), SubResource("RoseRewardAbilityValue_v6dxg"), SubResource("RoseRewardSetQuestSwitch_musgo")])

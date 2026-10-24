@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1112-arumic-researcher-carasia|Arumic Researcher Carasia]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 3607; QSD triggers 3607-01, 3607-02, 3607-03, 3607-31
+  data: 'godot/data/quests/3607-weak-mana-waves-from-lunar.tres; quest triggers in godot/data/quest_triggers/: qu04-001/3607-01, qu04-001/3607-02, qu04-001/3607-03, qn-122/3607-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

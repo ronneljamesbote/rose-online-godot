@@ -32,11 +32,13 @@ what a new character starts with (`data/new-characters.toml`), the sounds
 the effects (`data/effect-files.toml`: each effect's scene, `data/attack-effects.toml`:
 how attacks look), the skies (`data/skies.toml`: each sky's mesh, day and night picture and
 light at each time of day) and the interface (`data/interface.toml`: the loading and
-character creation pictures, each mouse cursor and the pixel it clicks at).
+character creation pictures, each mouse cursor and the pixel it clicks at) and the quests
+(`data/quests.toml`: each quest's name, text and time limit; `data/quest-triggers.toml`:
+every step with its conditions, rewards and next step).
 
 The server's upload sends it in place of the iROSE tables it replaces (the item tables,
 LIST_NPC.STB, ITEM_DROP.STB, LIST_SELL.STB, LIST_SKILL.STB, LIST_STATUS.STB, LIST_CLASS.STB,
-LIST_ZONE.STB, WARP.STB, LIST_PRODUCT.STB and INIT_AVATAR.STB; as JSON, which the module
+LIST_ZONE.STB, WARP.STB, LIST_PRODUCT.STB, INIT_AVATAR.STB, LIST_QUEST.STB and the QSD files; as JSON, which the module
 reads faster; `ROSE_DATA` names another folder; the sounds, effects, skies and interface stay
 out, the server plays and shows none), and the game reads it from here (from
 `export/data/` next to `ROSE.exe` in the Windows build, or where `ROSE_DATA` points). Without

@@ -1,0 +1,76 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://e0nqmn3bwajb"]
+
+[ext_resource type="RoseQuest" uid="uid://b16qwj88pk1ej" path="res://data/quests/123-resurrection.tres" id="1_xadhf"]
+[ext_resource type="RoseItemQuest" uid="uid://b08xjqbkh0a5d" path="res://data/items/quest/601-enigmatic-emblem.tres" id="2_pp08s"]
+[ext_resource type="RoseItemQuest" uid="uid://coaqirusvj2ry" path="res://data/items/quest/612-small-necklace.tres" id="3_6jyi2"]
+[ext_resource type="RoseItemConsumable" uid="uid://emai6saqx76" path="res://data/items/consumable/352-junon-polis-return-scroll.tres" id="4_3ecnp"]
+[ext_resource type="RoseItemHead" uid="uid://bmllfd46budm2" path="res://data/items/head/314-joker-jester.tres" id="5_un33c"]
+[ext_resource type="RoseItemBody" uid="uid://1xulbf6gcj0b" path="res://data/items/body/214-islamic-dress.tres" id="6_cw6m0"]
+[ext_resource type="RoseItemHands" uid="uid://cp2biqnoo3xxp" path="res://data/items/hands/214-gloves-of-iguje.tres" id="7_a2mva"]
+[ext_resource type="RoseItemFeet" uid="uid://lifu5iimop2x" path="res://data/items/feet/214-land-walkers.tres" id="8_8l2qr"]
+[ext_resource type="RoseQuest" uid="uid://cq5q3qa5p0vkl" path="res://data/quests/124-magic-of-anima-lake.tres" id="9_rkdec"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_e85cy"]
+quest = ExtResource("1_xadhf")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_huj8v"]
+item = ExtResource("2_pp08s")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_ttsfs"]
+item = ExtResource("3_6jyi2")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_rmwj2"]
+quest = ExtResource("1_xadhf")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_4ctge"]
+item = ExtResource("2_pp08s")
+quantity = 1
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_k3nk0"]
+item = ExtResource("3_6jyi2")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_etd1b"]
+value = 6000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_umauu"]
+equation = 5
+value = 5
+item = ExtResource("4_3ecnp")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_b0kct"]
+equation = 5
+value = 1
+item = ExtResource("5_un33c")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_56o7f"]
+equation = 5
+value = 1
+item = ExtResource("6_cw6m0")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_oad5p"]
+equation = 5
+value = 1
+item = ExtResource("7_a2mva")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_ybn6t"]
+equation = 5
+value = 1
+item = ExtResource("8_8l2qr")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_c8jis"]
+quest = ExtResource("9_rkdec")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_sthdp"]
+variable_type = "Episode"
+value = 20
+
+[resource]
+name = "123-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_e85cy"), SubResource("RoseConditionQuestItem_huj8v"), SubResource("RoseConditionQuestItem_ttsfs")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_rmwj2"), SubResource("RoseRewardRemoveItem_4ctge"), SubResource("RoseRewardRemoveItem_k3nk0"), SubResource("RoseRewardCalculatedExperiencePoints_etd1b"), SubResource("RoseRewardCalculatedItem_umauu"), SubResource("RoseRewardCalculatedItem_b0kct"), SubResource("RoseRewardCalculatedItem_56o7f"), SubResource("RoseRewardCalculatedItem_oad5p"), SubResource("RoseRewardCalculatedItem_ybn6t"), SubResource("RoseRewardChangeSelectedQuest_c8jis"), SubResource("RoseRewardQuestVariable_sthdp")])

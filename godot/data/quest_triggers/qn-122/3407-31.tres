@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b6j0whf2x375c"]
+
+[ext_resource type="RoseQuest" uid="uid://bbg5njyoq35m4" path="res://data/quests/3407-righteous-crusaders-in-preparation.tres" id="1_ce3qn"]
+[ext_resource type="RoseItemQuest" uid="uid://c0c0iq1tntt5o" path="res://data/items/quest/315-krawfy-hard-shell.tres" id="2_4gyqq"]
+[ext_resource type="RoseQuestTrigger" uid="uid://hdimk3fkcsve" path="res://data/quest_triggers/qn-122/3607-31.tres" id="3_r65j1"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_8aia5"]
+quest = ExtResource("1_ce3qn")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_uxtgt"]
+to = 30
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_4sjlo"]
+item = ExtResource("2_4gyqq")
+equipment_index = 13
+count = 30
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_7niqf"]
+quest = ExtResource("1_ce3qn")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_lcx80"]
+item = ExtResource("2_4gyqq")
+quantity = 1
+
+[resource]
+name = "3407-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_8aia5"), SubResource("RoseConditionRandomPercent_uxtgt"), SubResource("RoseConditionQuestItem_4sjlo")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_7niqf"), SubResource("RoseRewardAddItem_lcx80")])
+next_trigger = ExtResource("3_r65j1")

@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://1em2o6sau5mt"]
+
+[ext_resource type="RoseQuest" uid="uid://bdp4kdbvo2yn0" path="res://data/quests/1054-road-to-second-job-change.tres" id="1_dsrhk"]
+[ext_resource type="RoseQuest" uid="uid://c1laduwh806i2" path="res://data/quests/1074-lillith-woman-of-the-cosmos-second-job-change.tres" id="2_txwb0"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_qh4m3"]
+quest = ExtResource("1_dsrhk")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_qdba3"]
+quest = ExtResource("1_dsrhk")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_61sod"]
+quest = ExtResource("2_txwb0")
+keep_data = true
+
+[resource]
+name = "1054-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_qh4m3")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_qdba3"), SubResource("RoseRewardChangeSelectedQuest_61sod")])

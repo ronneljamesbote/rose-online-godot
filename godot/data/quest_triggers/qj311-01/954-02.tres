@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://mghdmox88hbh"]
+
+[ext_resource type="RoseQuest" uid="uid://pasv8aqbvhe" path="res://data/quests/954-why-did-toddy-steal-the-jewels.tres" id="1_wo3eo"]
+[ext_resource type="RoseQuest" uid="uid://dtve2m6fq1tku" path="res://data/quests/955-why-did-toddy-steal-the-jewels.tres" id="2_o441y"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ky4vx"]
+quest = ExtResource("1_wo3eo")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_537er"]
+quest = ExtResource("1_wo3eo")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_ursyd"]
+quest = ExtResource("2_o441y")
+
+[resource]
+name = "954-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ky4vx")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_537er"), SubResource("RoseRewardChangeSelectedQuest_ursyd")])

@@ -1,0 +1,16 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://hc361yxuab6p"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_aq77f"]
+switch = 18
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_lrkd4"]
+value = 40
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_68n6m"]
+switch = 18
+value = true
+
+[resource]
+name = "basicHunt"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_aq77f")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedExperiencePoints_lrkd4"), SubResource("RoseRewardSetQuestSwitch_68n6m")])

@@ -1,0 +1,45 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://4vv0tdw5i4yn"]
+
+[ext_resource type="RoseQuest" uid="uid://8pm1oyiwcx88" path="res://data/quests/1953-quest.tres" id="1_nbaa6"]
+[ext_resource type="RoseItemQuest" uid="uid://cbfus8u8nvth3" path="res://data/items/quest/502-grandmaster-stone-s-heart.tres" id="2_yp3yr"]
+[ext_resource type="RoseItemQuest" uid="uid://cvhoudk4t123s" path="res://data/items/quest/503-kingkong-s-red-sword.tres" id="3_xi0n5"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ecgtb"]
+quest = ExtResource("1_nbaa6")
+
+[sub_resource type="RoseConditionParty" id="RoseConditionParty_4dsnh"]
+level_operator = ">="
+level = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_s7u4k"]
+item = ExtResource("2_yp3yr")
+equipment_index = 13
+count = 3
+operator = ">="
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_gdl6i"]
+operator = ">="
+value = 70
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_50fiu"]
+quest = ExtResource("1_nbaa6")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_hjvdm"]
+item = ExtResource("2_yp3yr")
+quantity = 3
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_5bw7k"]
+item = ExtResource("3_xi0n5")
+quantity = 1
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_y6a0u"]
+ability = "Skillpoint"
+operator = "Add"
+value = 2
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_jpptd"]
+
+[resource]
+name = "1953-05"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ecgtb"), SubResource("RoseConditionParty_4dsnh"), SubResource("RoseConditionQuestItem_s7u4k"), SubResource("RoseConditionAbilityValue_gdl6i")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_50fiu"), SubResource("RoseRewardRemoveItem_hjvdm"), SubResource("RoseRewardRemoveItem_5bw7k"), SubResource("RoseRewardAbilityValue_y6a0u"), SubResource("RoseRewardRemoveSelectedQuest_jpptd")])

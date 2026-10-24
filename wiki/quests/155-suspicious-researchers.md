@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1151-ferrell-guild-merchant-med|Ferrell Guild Merchant Med]]'
 steps: 11
 source:
-  data: LIST_QUEST.STB row 155; QSD triggers 154-01, 154-02, 155-01, 155-03, 155-04, 155-05, 155-06, 155-07, 155-08, 155-09, 155-10
+  data: 'godot/data/quests/155-suspicious-researchers.tres; quest triggers in godot/data/quest_triggers/: qp103/154-01, qp103/154-02, qp103/155-01, qp103/155-03, qp103/155-04, qp103/155-05, qp103/155-06, qp103/155-07, qp103/155-08, qp103/155-09, qp103/155-10'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

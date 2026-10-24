@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1131-mountain-guide-kay|Mountain Guide Kay]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 149; QSD triggers 148-01, 148-02, 149-01
+  data: 'godot/data/quests/149-an-interesting-proposal.tres; quest triggers in godot/data/quest_triggers/: qp103/148-01, qp103/148-02, qp103/149-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

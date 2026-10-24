@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://36iemvwdo20y"]
+
+[ext_resource type="RoseQuest" uid="uid://b66lf4w17w4dx" path="res://data/quests/5011-stockpiling-maple-branches.tres" id="1_lqgcn"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_x0cjg"]
+operator = ">="
+value = 31
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_8esoh"]
+operator = "<="
+value = 40
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_5ip3v"]
+quest = ExtResource("1_lqgcn")
+
+[resource]
+name = "5011-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_x0cjg"), SubResource("RoseConditionAbilityValue_8esoh")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_5ip3v")])

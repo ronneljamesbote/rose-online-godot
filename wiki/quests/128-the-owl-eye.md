@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/208-guardian-tree|Guardian Tree]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 128; QSD triggers 127-02, 127-03, 128-01, 128-31
+  data: 'godot/data/quests/128-the-owl-eye.tres; quest triggers in godot/data/quest_triggers/: qp103/127-02, qp103/127-03, qp103/128-01, qn-208/128-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

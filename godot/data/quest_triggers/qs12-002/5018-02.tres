@@ -1,0 +1,22 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b6f51brnbtlj1"]
+
+[ext_resource type="RoseNpc" uid="uid://d3mpt3fvekbwi" path="res://data/npcs/1099-ferrell-guild-staff-hayen.tres" id="1_7drco"]
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_ayjd0"]
+npc = ExtResource("1_7drco")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_tunq7"]
+variable = 2
+value = 10
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_ksn2g"]
+value = 2
+
+[sub_resource type="RoseRewardNpcMessage" id="RoseRewardNpcMessage_qdbf8"]
+message_type = "Shout"
+text = "We are no longer accepting participants for the Goblin Hunting Competition! (Rival) Please try again later~"
+
+[resource]
+name = "5018-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectNpc_ayjd0"), SubResource("RoseConditionObjectVariable_tunq7")])
+rewards = Array[Resource]([SubResource("RoseRewardObjectVariable_ksn2g"), SubResource("RoseRewardNpcMessage_qdbf8")])

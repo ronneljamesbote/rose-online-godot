@@ -1,0 +1,31 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c81lg4i73kg76"]
+
+[ext_resource type="RoseQuest" uid="uid://cxoj61mhysm14" path="res://data/quests/114-hourglass-of-purification.tres" id="1_nnvqd"]
+[ext_resource type="RoseItemQuest" uid="uid://cxp1jegjyt436" path="res://data/items/quest/606-crystal-key.tres" id="2_0g1tb"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_1n24k"]
+quest = ExtResource("1_nnvqd")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_d4ids"]
+variable_type = "Switch"
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_igg0l"]
+item = ExtResource("2_0g1tb")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_g10d2"]
+quest = ExtResource("1_nnvqd")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_nrs31"]
+item = ExtResource("2_0g1tb")
+quantity = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_a673i"]
+variable_type = "Switch"
+operator = "SetOne"
+
+[resource]
+name = "114-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_1n24k"), SubResource("RoseConditionQuestVariable_d4ids"), SubResource("RoseConditionQuestItem_igg0l")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_g10d2"), SubResource("RoseRewardRemoveItem_nrs31"), SubResource("RoseRewardQuestVariable_a673i")])

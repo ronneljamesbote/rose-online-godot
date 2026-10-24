@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cadl78oxf514e"]
+
+[ext_resource type="RoseItemGem" uid="uid://cnifi8hvwdvg5" path="res://data/items/gem/311-ruby-1.tres" id="1_35idr"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_d3wk0"]
+switch = 480
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_mba2n"]
+equation = 5
+value = 1
+item = ExtResource("1_35idr")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_i3gsw"]
+switch = 480
+value = true
+
+[resource]
+name = "item00-001-3-4"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_d3wk0")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_mba2n"), SubResource("RoseRewardSetQuestSwitch_i3gsw")])

@@ -1,0 +1,38 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ckega05i1l66a"]
+
+[ext_resource type="RoseQuest" uid="uid://jcqfih2dxotv" path="res://data/quests/135-the-scheme.tres" id="1_ew1mu"]
+[ext_resource type="RoseItemQuest" uid="uid://vvctm05vtlo1" path="res://data/items/quest/618-odorous-sweat.tres" id="2_7nk7h"]
+[ext_resource type="RoseItemQuest" uid="uid://feiwwne0ofcl" path="res://data/items/quest/619-scarlet-heart.tres" id="3_qq3l4"]
+[ext_resource type="RoseQuest" uid="uid://dpn77q6qiai4e" path="res://data/quests/136-the-scheme.tres" id="4_t8r04"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_igrej"]
+quest = ExtResource("1_ew1mu")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_rfft4"]
+item = ExtResource("2_7nk7h")
+equipment_index = 13
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_2xhne"]
+item = ExtResource("3_qq3l4")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_itp7b"]
+quest = ExtResource("1_ew1mu")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_we3ow"]
+item = ExtResource("3_qq3l4")
+quantity = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_c4juy"]
+quest = ExtResource("4_t8r04")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_dwag8"]
+variable_type = "Episode"
+value = 35
+
+[resource]
+name = "135-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_igrej"), SubResource("RoseConditionQuestItem_rfft4"), SubResource("RoseConditionQuestItem_2xhne")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_itp7b"), SubResource("RoseRewardRemoveItem_we3ow"), SubResource("RoseRewardChangeSelectedQuest_c4juy"), SubResource("RoseRewardQuestVariable_dwag8")])

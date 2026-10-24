@@ -4,8 +4,8 @@ The game's own data, made in the Godot editor: one resource (`.tres`) per thing,
 the Inspector. It replaces the iROSE tables one kind at a time
 (plan: `TODO/own-game-data.md` in the project files). So far: **items**, **monsters**, **NPCs**, **drop tables**, **shop tabs**, **skills**,
 **status effects**, **job classes**, **zone settings**, **warp gates**, **crafting recipes**,
-**new characters**, **sounds**, **effects**, **skies** and the **interface**'s pictures and
-cursors.
+**new characters**, **sounds**, **effects**, **skies**, the **interface**'s pictures and
+cursors, and **quests**.
 
 | Folder | Class | What |
 | --- | --- | --- |
@@ -41,6 +41,8 @@ cursors.
 | `effect_files/` | `RoseEffectFile` | One effect the game can show: a number, a name and the effect scene it plays |
 | `attack_effects/` | `RoseAttackEffect` | How an attack looks: the effects on the weapon, the swing's trail, the projectile and its flight, the hit effects and sounds |
 | `skies/` | `RoseSky` | A sky: the dome around a zone (mesh, day and night picture) and its light at each time of day |
+| `quests/` | `RoseQuest` | A quest: its name, text (description, start and end messages) and time limit |
+| `quest_triggers/<qsd file>/` | `RoseQuestTrigger` | A quest step: its conditions, its rewards and the step tried when it fails (a folder per iROSE QSD file) |
 | `interface/interface.tres` | `RoseInterface` | The interface's own pictures (loading screen, character creation) and the mouse cursors with the pixel each clicks at (one resource) |
 
 Monsters and NPCs share one id space (an NPC and a monster never have the same id), because
@@ -172,6 +174,33 @@ colours) is our own and lives in `res://ui/` and the themes.
 
 Skies and the interface are only drawn by the game: the export writes them (`skies.toml`,
 `interface.toml`) and the server upload leaves them out.
+
+## Quests
+
+A quest (`quests/<id>-<name>.tres`, a `RoseQuest`) is its `id` (saved characters store it, so
+don't change it), `name`, `description`, `start_message`, `end_message` and `time_limit` in
+seconds (0: none). The game runs a quest by its **steps**: a `RoseQuestTrigger` in
+`quest_triggers/`, named like `5051-34` (the name is what NPC dialogs, monster deaths and
+`levelup_<level>` ask for, so a rename must change those too). A step has:
+
+- `conditions`: blocks that must all pass, such as `RoseConditionSelectQuest` (works on
+  this quest), `RoseConditionQuestItem` (carries `count` of an `item`, compared with
+  `operator`) or `RoseConditionAbilityValue` (your level, stats, Zuly). 31 kinds.
+- `rewards`: blocks given in order, such as `RoseRewardAddItem`, `RoseRewardCalculatedMoney`
+  (Zuly from a reward formula, `equation`, and a `value`), `RoseRewardSpawnMonster` or
+  `RoseRewardNpcMessage` (its `text` is written in the block). 40 kinds.
+- `next_trigger`: the step tried when this one fails, so one answer can try several steps.
+
+In the Inspector, click **Conditions** or **Rewards**, then a block to open it; **Add
+Element** and the empty slot's menu list only the condition or reward blocks. A block links
+what it is about: a quest, an item (any `items/` class), a monster or NPC, a skill
+(`RoseSkill`) or a zone (`RoseZoneSettings`); drag one from the FileSystem dock. Blocks that
+pick from a list (`operator`, `ability`, `variable_type` ...) show a menu. Each block's class
+help (hover, or **Help** in the editor) says what it does and which blocks the server
+doesn't run yet (clans, teams, Lua, monster spawn switches, delayed and zone-team steps).
+
+The blocks are saved inside the step's file, so 1,177 steps are 1,177 small files and
+opening one loads only the quests, items and steps it links.
 
 ## Changing something
 
@@ -340,3 +369,14 @@ is empty where iROSE had no model: 333 items name a ground model the list doesn'
 showed nothing and still don't) and three NPCs have no `LIST_NPC.CHR`
 entry. An NPC's minimap and face icon and a monster's hand weapon parts stay numbers, and so
 do the faces and hair of characters. `compare` shows no difference for art.
+
+For quests (2026-10-24) the converter read `LIST_QUEST.STB` and its text table
+(`LIST_QUEST_S.STL`) and every QSD file the client lists (`3DDATA/QUESTDATA`). It wrote the
+224 quests that have text or a time limit or that a step names (1953, 5062 and 5063 have no
+row; they got a quest with only the number), and the 1,177 steps, each in the folder of its
+QSD file (`QN-002.QSD` → `qn-002/`; a step name in two files keeps the last, as the game
+did). A block's numbers became links where they name something; three `SpawnMonster`
+rewards named monsters that aren't in the game (354 in `3101-31`, 413 in `QP101-401`, 417 in
+`QP101-501`, which spawned nothing) and were left empty. An NPC message's text, which iROSE
+looks up by number in the quest string table, is written in the block. Times are seconds
+(iROSE counted ticks of 10 s). `compare` shows no difference for quests.

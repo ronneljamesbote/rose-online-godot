@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bqkvpisfo6i1q"]
+
+[ext_resource type="RoseQuest" uid="uid://jcqfih2dxotv" path="res://data/quests/135-the-scheme.tres" id="1_0n0jv"]
+[ext_resource type="RoseItemQuest" uid="uid://vvctm05vtlo1" path="res://data/items/quest/618-odorous-sweat.tres" id="2_w8uyj"]
+[ext_resource type="RoseItemQuest" uid="uid://feiwwne0ofcl" path="res://data/items/quest/619-scarlet-heart.tres" id="3_5hkyf"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_62yrx"]
+quest = ExtResource("1_0n0jv")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_2k4gc"]
+item = ExtResource("2_w8uyj")
+equipment_index = 13
+count = 15
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_l8b02"]
+item = ExtResource("3_5hkyf")
+equipment_index = 13
+
+[sub_resource type="RoseRewardCallLuaFunction" id="RoseRewardCallLuaFunction_rapyl"]
+function = "piramid03"
+
+[resource]
+name = "135-03-0"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_62yrx"), SubResource("RoseConditionQuestItem_2k4gc"), SubResource("RoseConditionQuestItem_l8b02")])
+rewards = Array[Resource]([SubResource("RoseRewardCallLuaFunction_rapyl")])

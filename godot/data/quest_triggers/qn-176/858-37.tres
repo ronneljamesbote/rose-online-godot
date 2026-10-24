@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cue83qtkv00r0"]
+
+[ext_resource type="RoseQuest" uid="uid://tvch7kvok0uy" path="res://data/quests/858-hovert-s-mementos.tres" id="1_4xn4v"]
+[ext_resource type="RoseItemQuest" uid="uid://cf4lrloxc1eb1" path="res://data/items/quest/125-old-leather-diary.tres" id="2_f1ydw"]
+[ext_resource type="RoseQuestTrigger" uid="uid://8264dp2aemps" path="res://data/quest_triggers/qn-176/858-38.tres" id="3_yfxcl"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_1a06o"]
+quest = ExtResource("1_4xn4v")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_roagm"]
+item = ExtResource("2_f1ydw")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_qsgcb"]
+to = 10
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_lal6q"]
+quest = ExtResource("1_4xn4v")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_clc2s"]
+item = ExtResource("2_f1ydw")
+quantity = 1
+
+[resource]
+name = "858-37"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_1a06o"), SubResource("RoseConditionQuestItem_roagm"), SubResource("RoseConditionRandomPercent_qsgcb")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_lal6q"), SubResource("RoseRewardAddItem_clc2s")])
+next_trigger = ExtResource("3_yfxcl")

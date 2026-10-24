@@ -1,0 +1,22 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://6x44dfaf536n"]
+
+[ext_resource type="RoseQuest" uid="uid://b36qf0ijxmtwe" path="res://data/quests/122-resurrection.tres" id="1_mk2ha"]
+[ext_resource type="RoseItemQuest" uid="uid://rlqkgr3qup4l" path="res://data/items/quest/611-resurrection-medicine.tres" id="2_1rkgh"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bqkvpisfo6i1q" path="res://data/quest_triggers/qp103/135-03-0.tres" id="3_t56qe"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ab5u6"]
+quest = ExtResource("1_mk2ha")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_nx2v1"]
+item = ExtResource("2_1rkgh")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseRewardCallLuaFunction" id="RoseRewardCallLuaFunction_da18j"]
+function = "piramid01"
+
+[resource]
+name = "122-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ab5u6"), SubResource("RoseConditionQuestItem_nx2v1")])
+rewards = Array[Resource]([SubResource("RoseRewardCallLuaFunction_da18j")])
+next_trigger = ExtResource("3_t56qe")

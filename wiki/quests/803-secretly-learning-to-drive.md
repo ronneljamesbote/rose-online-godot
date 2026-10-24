@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1142-akram-minister-luce|Akram Minister Luce]]'
 steps: 2
 source:
-  data: LIST_QUEST.STB row 803; QSD triggers 802-03, 803-01
+  data: 'godot/data/quests/803-secretly-learning-to-drive.tres; quest triggers in godot/data/quest_triggers/: tutorial/802-03, tutorial/803-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

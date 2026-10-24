@@ -1,0 +1,40 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ryfytmxe173u"]
+
+[ext_resource type="RoseQuest" uid="uid://bulx8d5q0leqd" path="res://data/quests/1061-lucid-king-of-legend-second-job-change.tres" id="1_gks4e"]
+[ext_resource type="RoseItemQuest" uid="uid://ifig771xup7n" path="res://data/items/quest/209-jones-recommendation.tres" id="2_478rn"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_tia5l"]
+quest = ExtResource("1_gks4e")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_roa6w"]
+ability = "Money"
+operator = ">="
+value = 200000
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_u12kj"]
+quest = ExtResource("1_gks4e")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_s1qef"]
+item = ExtResource("2_478rn")
+quantity = 1
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_8wi3c"]
+ability = "Money"
+operator = "Subtract"
+value = 200000
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_h02d5"]
+ability = "Job"
+value = 121
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_mlqrn"]
+variable_type = "Job"
+variable = 1
+value = 2
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_dmvjl"]
+
+[resource]
+name = "1061-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_tia5l"), SubResource("RoseConditionAbilityValue_roa6w")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_u12kj"), SubResource("RoseRewardRemoveItem_s1qef"), SubResource("RoseRewardAbilityValue_8wi3c"), SubResource("RoseRewardAbilityValue_h02d5"), SubResource("RoseRewardQuestVariable_mlqrn"), SubResource("RoseRewardRemoveSelectedQuest_dmvjl")])

@@ -1,0 +1,32 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://otydrvbx5gxb"]
+
+[ext_resource type="RoseQuest" uid="uid://dlajyglkgba3a" path="res://data/quests/2051-forgotten-temple-investigation-1.tres" id="1_fcjih"]
+[ext_resource type="RoseItemQuest" uid="uid://bmp7hj2h1wunl" path="res://data/items/quest/512-shamanic-artifact.tres" id="2_ye3nf"]
+[ext_resource type="RoseItemQuest" uid="uid://6w7cuajufwn" path="res://data/items/quest/498-proof-of-thief-extermination.tres" id="3_bwafr"]
+[ext_resource type="RoseQuestTrigger" uid="uid://co04wi3qdj5hs" path="res://data/quest_triggers/qp201/2052-08.tres" id="4_vpxqw"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_oyir4"]
+quest = ExtResource("1_fcjih")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_m5633"]
+item = ExtResource("2_ye3nf")
+equipment_index = 13
+count = 10
+operator = "<"
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_xuyx0"]
+item = ExtResource("3_bwafr")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_f2whw"]
+quest = ExtResource("1_fcjih")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_1rsav"]
+
+[resource]
+name = "2051-08"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_oyir4"), SubResource("RoseConditionQuestItem_m5633"), SubResource("RoseConditionQuestItem_xuyx0")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_f2whw"), SubResource("RoseRewardRemoveSelectedQuest_1rsav")])
+next_trigger = ExtResource("4_vpxqw")

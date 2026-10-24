@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://doynwfhfkkcmp"]
+
+[ext_resource type="RoseQuest" uid="uid://coekpuh2h7o16" path="res://data/quests/3803-ferrell-guild-lounge-construction.tres" id="1_27yr8"]
+[ext_resource type="RoseItemQuest" uid="uid://cv537oygar6o5" path="res://data/items/quest/302-thick-pulpwood.tres" id="2_7deic"]
+[ext_resource type="RoseQuestTrigger" uid="uid://wu5qbd2gq4wf" path="res://data/quest_triggers/qn-051/5012-31.tres" id="3_gps2m"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ntffh"]
+quest = ExtResource("1_27yr8")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_qkbvr"]
+to = 30
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_2gkf0"]
+item = ExtResource("2_7deic")
+equipment_index = 13
+count = 12
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_0s6ra"]
+quest = ExtResource("1_27yr8")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_mdqam"]
+item = ExtResource("2_7deic")
+quantity = 1
+
+[resource]
+name = "3803-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ntffh"), SubResource("RoseConditionRandomPercent_qkbvr"), SubResource("RoseConditionQuestItem_2gkf0")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_0s6ra"), SubResource("RoseRewardAddItem_mdqam")])
+next_trigger = ExtResource("3_gps2m")

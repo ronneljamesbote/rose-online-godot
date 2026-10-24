@@ -1,0 +1,34 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c7846udvbpxg5"]
+
+[ext_resource type="RoseQuest" uid="uid://c7on84e5lrkrc" path="res://data/quests/141-the-prince-of-akram.tres" id="1_gai1k"]
+[ext_resource type="RoseItemConsumable" uid="uid://bqdvaxk8da3h3" path="res://data/items/consumable/11-vital-water-m.tres" id="2_83sjg"]
+[ext_resource type="RoseItemConsumable" uid="uid://bf3mh1w87s81w" path="res://data/items/consumable/30-spiritual-water-m.tres" id="3_d7j0k"]
+[ext_resource type="RoseQuest" uid="uid://b5u4skrq4vn0f" path="res://data/quests/142-the-search-for-the-prince.tres" id="4_eppt7"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_7whre"]
+quest = ExtResource("1_gai1k")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_1538k"]
+quest = ExtResource("1_gai1k")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_pyg6v"]
+equation = 5
+value = 10
+item = ExtResource("2_83sjg")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_3wypj"]
+equation = 5
+value = 10
+item = ExtResource("3_d7j0k")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_t3qo1"]
+quest = ExtResource("4_eppt7")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_tqv8v"]
+variable_type = "Episode"
+value = 41
+
+[resource]
+name = "141-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_7whre")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_1538k"), SubResource("RoseRewardCalculatedItem_pyg6v"), SubResource("RoseRewardCalculatedItem_3wypj"), SubResource("RoseRewardChangeSelectedQuest_t3qo1"), SubResource("RoseRewardQuestVariable_tqv8v")])

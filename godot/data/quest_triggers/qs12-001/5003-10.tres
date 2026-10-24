@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b4km4uk8dbohn"]
+
+[ext_resource type="RoseNpc" uid="uid://bgklufttirdm4" path="res://data/npcs/1010-designer-keenu.tres" id="1_5v60a"]
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_7tfma"]
+npc = ExtResource("1_5v60a")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_sqa6q"]
+variable = 2
+operator = ">="
+value = 10
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_65qyb"]
+value = 2
+
+[resource]
+name = "5003-10"
+conditions = Array[Resource]([SubResource("RoseConditionSelectNpc_7tfma"), SubResource("RoseConditionObjectVariable_sqa6q")])
+rewards = Array[Resource]([SubResource("RoseRewardObjectVariable_65qyb")])

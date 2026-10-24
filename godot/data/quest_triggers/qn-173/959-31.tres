@@ -1,0 +1,29 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cdyielt6uxupa"]
+
+[ext_resource type="RoseQuest" uid="uid://4wl5w2xgu47o" path="res://data/quests/959-the-essence-of-speed.tres" id="1_p722a"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_6bghd"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_dtdra"]
+quest = ExtResource("1_p722a")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_34opu"]
+item = ExtResource("2_6bghd")
+equipment_index = 13
+count = 10
+operator = "<"
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_uhvy3"]
+variable_type = "Timer"
+operator = ">"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_gs45k"]
+quest = ExtResource("1_p722a")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_s2hm1"]
+item = ExtResource("2_6bghd")
+quantity = 1
+
+[resource]
+name = "959-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_dtdra"), SubResource("RoseConditionQuestItem_34opu"), SubResource("RoseConditionQuestVariable_uhvy3")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_gs45k"), SubResource("RoseRewardAddItem_s2hm1")])

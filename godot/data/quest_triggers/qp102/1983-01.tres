@@ -1,0 +1,32 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bki6i0pxo2sv2"]
+
+[ext_resource type="RoseQuest" uid="uid://btfra2jhftkiq" path="res://data/quests/1983-the-search-for-the-prince.tres" id="1_71bvv"]
+[ext_resource type="RoseQuest" uid="uid://diorgwh3nmrv7" path="res://data/quests/1984-the-ominous-kenji-stone.tres" id="2_od67v"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_6ndd0"]
+quest = ExtResource("1_71bvv")
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_q1sbw"]
+switch = 129
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_uqocc"]
+switch = 130
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_y7ge5"]
+quest = ExtResource("1_71bvv")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_wrbtt"]
+value = 1000
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_yn5lv"]
+quest = ExtResource("2_od67v")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_nsfs5"]
+switch = 130
+value = true
+
+[resource]
+name = "1983-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_6ndd0"), SubResource("RoseConditionQuestSwitch_q1sbw"), SubResource("RoseConditionQuestSwitch_uqocc")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_y7ge5"), SubResource("RoseRewardCalculatedExperiencePoints_wrbtt"), SubResource("RoseRewardChangeSelectedQuest_yn5lv"), SubResource("RoseRewardSetQuestSwitch_nsfs5")])

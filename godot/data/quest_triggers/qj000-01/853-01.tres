@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cknwa24ajg7ri"]
+
+[ext_resource type="RoseQuest" uid="uid://b1ycugw4h1a20" path="res://data/quests/853-solider-job-change-quest.tres" id="1_myky4"]
+[ext_resource type="RoseItemQuest" uid="uid://xfkek3e4t4gq" path="res://data/items/quest/129-pumpkin-seed.tres" id="2_vaf6a"]
+[ext_resource type="RoseItemQuest" uid="uid://bhmdy6i4qtl1o" path="res://data/items/quest/102-soldier-job-recommendation.tres" id="3_p0ehs"]
+[ext_resource type="RoseQuest" uid="uid://d0lb0orsmv0dr" path="res://data/quests/854-solider-job-change-quest.tres" id="4_3nt5h"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_0mtqy"]
+quest = ExtResource("1_myky4")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_1amh6"]
+item = ExtResource("2_vaf6a")
+equipment_index = 13
+count = 3
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_xehvq"]
+quest = ExtResource("1_myky4")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_mfsa7"]
+item = ExtResource("2_vaf6a")
+quantity = 3
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_al46k"]
+item = ExtResource("3_p0ehs")
+quantity = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_3b5vr"]
+quest = ExtResource("4_3nt5h")
+keep_data = true
+
+[resource]
+name = "853-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_0mtqy"), SubResource("RoseConditionQuestItem_1amh6")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_xehvq"), SubResource("RoseRewardRemoveItem_mfsa7"), SubResource("RoseRewardAddItem_al46k"), SubResource("RoseRewardChangeSelectedQuest_3b5vr")])

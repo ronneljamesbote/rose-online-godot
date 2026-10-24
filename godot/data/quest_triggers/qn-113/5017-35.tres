@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dmd382jqf6mf7"]
+
+[ext_resource type="RoseQuest" uid="uid://dsci8dvlpe3i3" path="res://data/quests/5017-moldie-s-strange-mineral-fetch-quest.tres" id="1_bb4ai"]
+[ext_resource type="RoseItemQuest" uid="uid://qrbr7iehxlxe" path="res://data/items/quest/808-green-mineral.tres" id="2_riesh"]
+[ext_resource type="RoseQuestTrigger" uid="uid://co3he4aq0811m" path="res://data/quest_triggers/qn-113/5017-36.tres" id="3_gs55h"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_08fc7"]
+quest = ExtResource("1_bb4ai")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_0rtl2"]
+to = 20
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_cykjv"]
+item = ExtResource("2_riesh")
+equipment_index = 13
+count = 10
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_s4yeh"]
+quest = ExtResource("1_bb4ai")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_d7sxa"]
+item = ExtResource("2_riesh")
+quantity = 1
+
+[resource]
+name = "5017-35"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_08fc7"), SubResource("RoseConditionRandomPercent_0rtl2"), SubResource("RoseConditionQuestItem_cykjv")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_s4yeh"), SubResource("RoseRewardAddItem_d7sxa")])
+next_trigger = ExtResource("3_gs55h")

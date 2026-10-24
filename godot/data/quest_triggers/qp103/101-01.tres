@@ -1,0 +1,14 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://fu8tx5h5mp2a"]
+
+[ext_resource type="RoseQuest" uid="uid://dj2gr1b54cdt3" path="res://data/quests/101-dreadful-epidemic.tres" id="1_54d7l"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_pkj55"]
+variable_type = "Episode"
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_sjlmh"]
+quest = ExtResource("1_54d7l")
+
+[resource]
+name = "101-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_pkj55")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_sjlmh")])

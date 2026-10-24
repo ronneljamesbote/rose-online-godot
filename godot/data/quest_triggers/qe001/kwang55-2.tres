@@ -1,0 +1,46 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://j8s7l25m26wu"]
+
+[ext_resource type="RoseItemGem" uid="uid://cnifi8hvwdvg5" path="res://data/items/gem/311-ruby-1.tres" id="1_nyd7v"]
+[ext_resource type="RoseItemMaterial" uid="uid://dqee6e5tcwg6r" path="res://data/items/material/64-ether.tres" id="2_p17lj"]
+[ext_resource type="RoseItemMaterial" uid="uid://bfh7yai2d7lv1" path="res://data/items/material/76-orange-powder.tres" id="3_idplv"]
+[ext_resource type="RoseItemMaterial" uid="uid://txirltqrlwuc" path="res://data/items/material/404.tres" id="4_5g6rl"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_7eh8a"]
+value = 55
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_ohrwp"]
+switch = 485
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_pw6qt"]
+equation = 5
+value = 1
+item = ExtResource("1_nyd7v")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_ba4xb"]
+equation = 5
+value = 20
+item = ExtResource("2_p17lj")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_5r2do"]
+equation = 5
+value = 20
+item = ExtResource("3_idplv")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_ktcfa"]
+equation = 5
+value = 10
+item = ExtResource("4_5g6rl")
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_lnrvm"]
+ability = "Money"
+operator = "Add"
+value = 13000
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_fhtoo"]
+switch = 485
+value = true
+
+[resource]
+name = "kwang55-2"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_7eh8a"), SubResource("RoseConditionQuestSwitch_ohrwp")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_pw6qt"), SubResource("RoseRewardCalculatedItem_ba4xb"), SubResource("RoseRewardCalculatedItem_5r2do"), SubResource("RoseRewardCalculatedItem_ktcfa"), SubResource("RoseRewardAbilityValue_lnrvm"), SubResource("RoseRewardSetQuestSwitch_fhtoo")])

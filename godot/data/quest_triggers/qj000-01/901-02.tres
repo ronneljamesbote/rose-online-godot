@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bqgs3vftbcl4e"]
+
+[ext_resource type="RoseQuest" uid="uid://bv3o7dsbw31cn" path="res://data/quests/901-muse-job-change-quest.tres" id="1_5qcrb"]
+[ext_resource type="RoseQuest" uid="uid://cenbess3gd6o8" path="res://data/quests/902-muse-job-change-quest.tres" id="2_fynp7"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_abd4l"]
+quest = ExtResource("1_5qcrb")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_cskek"]
+quest = ExtResource("1_5qcrb")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_ckhp2"]
+quest = ExtResource("2_fynp7")
+
+[resource]
+name = "901-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_abd4l")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_cskek"), SubResource("RoseRewardChangeSelectedQuest_ckhp2")])

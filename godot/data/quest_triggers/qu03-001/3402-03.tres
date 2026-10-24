@@ -1,0 +1,42 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bdnlbtt5jjcx"]
+
+[ext_resource type="RoseQuest" uid="uid://ddtlalv0vraho" path="res://data/quests/3402-moldie-s-strange-behavior.tres" id="1_xmda3"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_gq24q"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ev8mx"]
+quest = ExtResource("1_xmda3")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_n5ko4"]
+ability = "Union"
+value = 3
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_fjbxj"]
+operator = ">"
+value = 50
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_1rvak"]
+item = ExtResource("2_gq24q")
+equipment_index = 13
+count = 30
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_3h7ra"]
+quest = ExtResource("1_xmda3")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_yml4f"]
+item = ExtResource("2_gq24q")
+quantity = 30
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_s0kei"]
+ability = "UnionPoint3"
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_hog7a"]
+value = 5000
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_nemxg"]
+
+[resource]
+name = "3402-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ev8mx"), SubResource("RoseConditionAbilityValue_n5ko4"), SubResource("RoseConditionAbilityValue_fjbxj"), SubResource("RoseConditionQuestItem_1rvak")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_3h7ra"), SubResource("RoseRewardRemoveItem_yml4f"), SubResource("RoseRewardAbilityValue_s0kei"), SubResource("RoseRewardCalculatedExperiencePoints_hog7a"), SubResource("RoseRewardRemoveSelectedQuest_nemxg")])

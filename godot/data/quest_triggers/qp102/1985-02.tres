@@ -1,0 +1,26 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://donfnfwhsxjge"]
+
+[ext_resource type="RoseQuest" uid="uid://2t6y3x4v6wet" path="res://data/quests/1985-the-truth-of-the-golden-dagger.tres" id="1_e7blj"]
+[ext_resource type="RoseItemQuest" uid="uid://dyylracpreygy" path="res://data/items/quest/510-golden-dagger.tres" id="2_nnr3j"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_oj8fn"]
+switch = 131
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_n8fgv"]
+switch = 132
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_pqsbb"]
+quest = ExtResource("1_e7blj")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_43pl4"]
+quest = ExtResource("1_e7blj")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_2vqha"]
+item = ExtResource("2_nnr3j")
+quantity = 1
+
+[resource]
+name = "1985-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_oj8fn"), SubResource("RoseConditionQuestSwitch_n8fgv")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_pqsbb"), SubResource("RoseRewardSelectQuest_43pl4"), SubResource("RoseRewardAddItem_2vqha")])

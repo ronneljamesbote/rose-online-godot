@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/21-pumpkin|Pumpkin]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 105; QSD triggers 104-01, 104-02, 105-01, 105-31, 106-02
+  data: 'godot/data/quests/105-healing-hands.tres; quest triggers in godot/data/quest_triggers/: qp103/104-01, qp103/104-02, qp103/105-01, qn-021/105-31, qp103/106-02'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

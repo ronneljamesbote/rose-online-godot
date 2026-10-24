@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/2-jelly-bean|Jelly Bean]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 5051; QSD triggers 5051-31, 5051-32, 5051-33, 5051-34, T77
+  data: 'godot/data/quests/5051-hunting-practice-1.tres; quest triggers in godot/data/quest_triggers/: qn-002/5051-31, qn-002/5051-32, qn-001/5051-33, qn-001/5051-34, tutorial/T77'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

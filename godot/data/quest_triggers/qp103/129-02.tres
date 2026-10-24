@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cbuubw0mlh0bf"]
+
+[ext_resource type="RoseQuest" uid="uid://cmh5fvrad1jsh" path="res://data/quests/130-eva-the-sorcerer.tres" id="1_8ixgc"]
+[ext_resource type="RoseItemQuest" uid="uid://upgo8ts4wsku" path="res://data/items/quest/615-small-letter.tres" id="2_iovd1"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_76jex"]
+variable_type = "Episode"
+value = 29
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_r2r2n"]
+quest = ExtResource("1_8ixgc")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_tbnr2"]
+quest = ExtResource("1_8ixgc")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_q5m27"]
+item = ExtResource("2_iovd1")
+quantity = 1
+
+[resource]
+name = "129-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_76jex")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_r2r2n"), SubResource("RoseRewardSelectQuest_tbnr2"), SubResource("RoseRewardAddItem_q5m27")])

@@ -1,0 +1,43 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bb1ykrvq4f5ip"]
+
+[ext_resource type="RoseQuest" uid="uid://byt6fpgn310os" path="res://data/quests/860-hovert-s-mementos.tres" id="1_xqqfw"]
+[ext_resource type="RoseItemWeapon" uid="uid://ivmjeohbm8xo" path="res://data/items/weapon/35-onion-mace.tres" id="2_g1dk0"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_jx1qp"]
+quest = ExtResource("1_xqqfw")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_exsu7"]
+variable_type = "Switch"
+variable = 1
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_ymj6e"]
+ability = "Job"
+value = 1
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_1nmv1"]
+operator = ">="
+value = 30
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_8qchi"]
+variable_type = "Job"
+value = 3
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_12cbs"]
+quest = ExtResource("1_xqqfw")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_neql1"]
+variable_type = "Job"
+value = 7
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_lunfe"]
+equation = 5
+value = 1
+item = ExtResource("2_g1dk0")
+gem = 35
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_lvchb"]
+
+[resource]
+name = "860-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_jx1qp"), SubResource("RoseConditionQuestVariable_exsu7"), SubResource("RoseConditionAbilityValue_ymj6e"), SubResource("RoseConditionAbilityValue_1nmv1"), SubResource("RoseConditionQuestVariable_8qchi")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_12cbs"), SubResource("RoseRewardQuestVariable_neql1"), SubResource("RoseRewardCalculatedItem_lunfe"), SubResource("RoseRewardRemoveSelectedQuest_lvchb")])

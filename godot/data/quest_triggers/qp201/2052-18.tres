@@ -1,0 +1,37 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cg7k24oc6ecvk"]
+
+[ext_resource type="RoseQuest" uid="uid://d4i4lkfanrmff" path="res://data/quests/2052-forgotten-temple-investigation-2.tres" id="1_ywcnl"]
+[ext_resource type="RoseItemQuest" uid="uid://bqjjo13rsp5uw" path="res://data/items/quest/513-resurrection-spellbook.tres" id="2_uso8v"]
+[ext_resource type="RoseQuestTrigger" uid="uid://ce0km4uv6y60c" path="res://data/quest_triggers/qp201/2053-18.tres" id="3_i8hmf"]
+[ext_resource type="RoseZoneSettings" uid="uid://nvmmxga077n5" path="res://data/zones/56-forgotten-temple-b1.tres" id="4_b5212"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_8a33x"]
+quest = ExtResource("1_ywcnl")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_ofamq"]
+variable_type = "Timer"
+operator = ">"
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_ncsof"]
+variable_type = "Switch"
+value = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_l8ekf"]
+item = ExtResource("2_uso8v")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_utd40"]
+quest = ExtResource("1_ywcnl")
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_6nnbl"]
+zone = ExtResource("4_b5212")
+x = 566423
+y = 483490
+
+[resource]
+name = "2052-18"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_8a33x"), SubResource("RoseConditionQuestVariable_ofamq"), SubResource("RoseConditionQuestVariable_ncsof"), SubResource("RoseConditionQuestItem_l8ekf")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_utd40"), SubResource("RoseRewardTeleport_6nnbl")])
+next_trigger = ExtResource("3_i8hmf")

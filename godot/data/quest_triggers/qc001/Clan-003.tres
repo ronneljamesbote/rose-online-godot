@@ -1,0 +1,12 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bl7j0bf2cnm3g"]
+
+[sub_resource type="RoseConditionHasClan" id="RoseConditionHasClan_4um6q"]
+has_clan = true
+
+[sub_resource type="RoseRewardSetTeamNumber" id="RoseRewardSetTeamNumber_sq3yi"]
+source = "Clan"
+
+[resource]
+name = "Clan-003"
+conditions = Array[Resource]([SubResource("RoseConditionHasClan_4um6q")])
+rewards = Array[Resource]([SubResource("RoseRewardSetTeamNumber_sq3yi")])

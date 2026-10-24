@@ -1,0 +1,14 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://8ffdjtsixgbe"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_igd02"]
+operator = ">="
+value = 70
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_xuicr"]
+ability = "Money"
+operator = "<"
+value = 2000
+
+[resource]
+name = "PvP-A-022"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_igd02"), SubResource("RoseConditionAbilityValue_xuicr")])

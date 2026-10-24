@@ -1,0 +1,43 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dlh7o0fc8yyeq"]
+
+[ext_resource type="RoseQuest" uid="uid://dthtc8bau7r83" path="res://data/quests/3601-unexpectedly-useful-porkie-spines.tres" id="1_ul2rs"]
+[ext_resource type="RoseItemQuest" uid="uid://b54lwbb1qvw3w" path="res://data/items/quest/301-porkie-spine.tres" id="2_emcwi"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_w48r4"]
+quest = ExtResource("1_ul2rs")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_mg5tw"]
+ability = "Union"
+value = 4
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_pydk7"]
+operator = ">"
+value = 50
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_q1amu"]
+item = ExtResource("2_emcwi")
+equipment_index = 13
+count = 10
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_8qpfo"]
+quest = ExtResource("1_ul2rs")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_mf1rk"]
+item = ExtResource("2_emcwi")
+quantity = 10
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_y6aig"]
+ability = "UnionPoint4"
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_pac7f"]
+value = 5000
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_k38dm"]
+
+[resource]
+name = "3601-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_w48r4"), SubResource("RoseConditionAbilityValue_mg5tw"), SubResource("RoseConditionAbilityValue_pydk7"), SubResource("RoseConditionQuestItem_q1amu")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_8qpfo"), SubResource("RoseRewardRemoveItem_mf1rk"), SubResource("RoseRewardAbilityValue_y6aig"), SubResource("RoseRewardCalculatedExperiencePoints_pac7f"), SubResource("RoseRewardRemoveSelectedQuest_k38dm")])

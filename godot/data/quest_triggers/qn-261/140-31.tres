@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dk5bwwtt7xbvd"]
+
+[ext_resource type="RoseQuest" uid="uid://dbpv3hsujjqep" path="res://data/quests/140-the-zeppastone-wind-gem.tres" id="1_5gymi"]
+[ext_resource type="RoseItemQuest" uid="uid://3k1ronqfm1fe" path="res://data/items/quest/509-zeppastone-wind-gem.tres" id="2_514n6"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_jdn0r"]
+quest = ExtResource("1_5gymi")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_0s4y8"]
+to = 70
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_foif4"]
+item = ExtResource("2_514n6")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_v45g7"]
+quest = ExtResource("1_5gymi")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_yvoj1"]
+item = ExtResource("2_514n6")
+quantity = 1
+
+[resource]
+name = "140-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_jdn0r"), SubResource("RoseConditionRandomPercent_0s4y8"), SubResource("RoseConditionQuestItem_foif4")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_v45g7"), SubResource("RoseRewardAddItem_yvoj1")])

@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dg04gi0tt8hfh"]
+
+[ext_resource type="RoseNpc" uid="uid://bycpmt64crvyi" path="res://data/npcs/1111-righteous-crusader-huffe.tres" id="1_pbehm"]
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_5fkl0"]
+npc = ExtResource("1_pbehm")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_7a0tx"]
+value = 4
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_b4d4e"]
+variable = 4
+operator = ">="
+value = 10
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_r1jst"]
+value = 5
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_m8nov"]
+variable = 4
+
+[resource]
+name = "3404-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectNpc_5fkl0"), SubResource("RoseConditionObjectVariable_7a0tx"), SubResource("RoseConditionObjectVariable_b4d4e")])
+rewards = Array[Resource]([SubResource("RoseRewardObjectVariable_r1jst"), SubResource("RoseRewardObjectVariable_m8nov")])

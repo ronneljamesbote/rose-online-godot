@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dbnp7oydgdbo4"]
+
+[ext_resource type="RoseQuest" uid="uid://dmwboo2vj67s3" path="res://data/quests/1005-an-eye-for-the-marketplace.tres" id="1_oo5yv"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_odexj"]
+quest = ExtResource("1_oo5yv")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_oiniv"]
+quest = ExtResource("1_oo5yv")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_eq66b"]
+variable_type = "Switch"
+variable = 2
+operator = "SetZero"
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_vg3ac"]
+variable_type = "Switch"
+variable = 3
+operator = "SetOne"
+
+[resource]
+name = "1005-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_odexj")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_oiniv"), SubResource("RoseRewardQuestVariable_eq66b"), SubResource("RoseRewardQuestVariable_vg3ac")])

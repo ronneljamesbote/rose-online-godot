@@ -1,0 +1,33 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://xmq62jyiwpns"]
+
+[ext_resource type="RoseQuest" uid="uid://ckxp2ngkqayjq" path="res://data/quests/912-an-appropriate-compromise.tres" id="1_ykoqp"]
+[ext_resource type="RoseItemJewellery" uid="uid://dhtnct5n3rpr5" path="res://data/items/jewellery/83-textual-necklace.tres" id="2_f2y1s"]
+[ext_resource type="RoseItemJewellery" uid="uid://ckvv8c6ti76nc" path="res://data/items/jewellery/153-textual-earring.tres" id="3_8ea1j"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_oixa3"]
+quest = ExtResource("1_ykoqp")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_6tlh0"]
+quest = ExtResource("1_ykoqp")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_n5kj8"]
+equation = 5
+value = 1
+item = ExtResource("2_f2y1s")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_5ldut"]
+equation = 5
+value = 1
+item = ExtResource("3_8ea1j")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_b6jy6"]
+variable_type = "Job"
+operator = "Add"
+value = 3
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_1r7j2"]
+
+[resource]
+name = "912-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_oixa3")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_6tlh0"), SubResource("RoseRewardCalculatedItem_n5kj8"), SubResource("RoseRewardCalculatedItem_5ldut"), SubResource("RoseRewardQuestVariable_b6jy6"), SubResource("RoseRewardRemoveSelectedQuest_1r7j2")])

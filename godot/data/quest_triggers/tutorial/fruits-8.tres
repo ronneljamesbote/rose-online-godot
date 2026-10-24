@@ -1,0 +1,31 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://caqdghxk1cn5i"]
+
+[ext_resource type="RoseItemConsumable" uid="uid://xx2s6fo28rft" path="res://data/items/consumable/104-kiwi.tres" id="1_fo07o"]
+[ext_resource type="RoseItemConsumable" uid="uid://ddfqeu2lv62y0" path="res://data/items/consumable/123-apple-juice.tres" id="2_sp2lt"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_4vs7m"]
+value = 8
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_evox8"]
+switch = 13
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_bbaxc"]
+equation = 5
+value = 30
+item = ExtResource("1_fo07o")
+gem = 52685
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_d8xl4"]
+equation = 5
+value = 10
+item = ExtResource("2_sp2lt")
+gem = 52685
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_1q2r4"]
+switch = 13
+value = true
+
+[resource]
+name = "fruits-8"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_4vs7m"), SubResource("RoseConditionQuestSwitch_evox8")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_bbaxc"), SubResource("RoseRewardCalculatedItem_d8xl4"), SubResource("RoseRewardSetQuestSwitch_1q2r4")])

@@ -1,0 +1,31 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dbl5unt4hkwox"]
+
+[ext_resource type="RoseQuest" uid="uid://k5ayujscu7tv" path="res://data/quests/3102-arrogance-of-the-junon-order.tres" id="1_3ubg8"]
+[ext_resource type="RoseNpc" uid="uid://c83lsjibema64" path="res://data/npcs/1086-akram-minister-rodath.tres" id="2_llgwq"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_js5mw"]
+quest = ExtResource("1_3ubg8")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_037gt"]
+ability = "Union"
+value = 3
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_l1eps"]
+npc = ExtResource("2_llgwq")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_28dxa"]
+variable = 1
+value = 20
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_75sil"]
+variable = 1
+value = 22
+
+[sub_resource type="RoseRewardNpcMessage" id="RoseRewardNpcMessage_rxots"]
+message_type = "Shout"
+text = "The protective spirit of the Righteous Crusaders has been defeated. The Junon Order has won the battle."
+
+[resource]
+name = "3102-32"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_js5mw"), SubResource("RoseConditionAbilityValue_037gt"), SubResource("RoseConditionSelectNpc_l1eps"), SubResource("RoseConditionObjectVariable_28dxa")])
+rewards = Array[Resource]([SubResource("RoseRewardObjectVariable_75sil"), SubResource("RoseRewardNpcMessage_rxots")])

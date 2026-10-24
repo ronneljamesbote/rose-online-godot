@@ -1,0 +1,13 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cr1ol525gjium"]
+
+[sub_resource type="RoseConditionServerChannelNumber" id="RoseConditionServerChannelNumber_n5y8h"]
+from = 2
+to = 2
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_o0yaw"]
+value = 100
+
+[resource]
+name = "testtest2"
+conditions = Array[Resource]([SubResource("RoseConditionServerChannelNumber_n5y8h")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedExperiencePoints_o0yaw")])

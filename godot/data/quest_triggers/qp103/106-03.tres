@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://nxwxqav7xswh"]
+
+[ext_resource type="RoseQuest" uid="uid://bymtsj2yn6c40" path="res://data/quests/106-healing-hands.tres" id="1_lp5e8"]
+[ext_resource type="RoseItemQuest" uid="uid://ds5io6gasghn4" path="res://data/items/quest/603-soil-of-purification.tres" id="2_5iy1b"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_qw461"]
+quest = ExtResource("1_lp5e8")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_2d8xx"]
+variable_type = "Timer"
+operator = ">"
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_3qm8x"]
+item = ExtResource("2_5iy1b")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_yrdo2"]
+quest = ExtResource("1_lp5e8")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_ujymy"]
+item = ExtResource("2_5iy1b")
+quantity = 1
+
+[resource]
+name = "106-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_qw461"), SubResource("RoseConditionQuestVariable_2d8xx"), SubResource("RoseConditionQuestItem_3qm8x")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_yrdo2"), SubResource("RoseRewardRemoveItem_ujymy")])

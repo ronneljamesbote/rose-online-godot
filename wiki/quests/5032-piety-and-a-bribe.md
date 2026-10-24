@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1003-co-founder-of-the-junon-order-francis|Co-Founder of the Junon Order Francis]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 5032; QSD triggers 5032-01, 5032-02, 5032-03
+  data: 'godot/data/quests/5032-piety-and-a-bribe.tres; quest triggers in godot/data/quest_triggers/: qs10-001/5032-01, qs10-001/5032-02, qs10-001/5032-03'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

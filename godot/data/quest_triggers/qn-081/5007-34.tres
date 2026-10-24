@@ -1,0 +1,37 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b7jv7wyjcil0c"]
+
+[ext_resource type="RoseQuest" uid="uid://cq6iblel8niqx" path="res://data/quests/5007-stockpiling-iron-fragments.tres" id="1_w7w2w"]
+[ext_resource type="RoseItemQuest" uid="uid://ceqctpdv3up8j" path="res://data/items/quest/22-iron-fragment.tres" id="2_r64wc"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_f6c18"]
+quest = ExtResource("1_w7w2w")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_a4o76"]
+to = 21
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_k4o4u"]
+operator = "<="
+value = 24
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_l8nkx"]
+item = ExtResource("2_r64wc")
+equipment_index = 13
+count = 53
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_who10"]
+quest = ExtResource("1_w7w2w")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_avwc4"]
+item = ExtResource("2_r64wc")
+quantity = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_rpnns"]
+variable = 9
+operator = "Add"
+value = 1
+
+[resource]
+name = "5007-34"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_f6c18"), SubResource("RoseConditionRandomPercent_a4o76"), SubResource("RoseConditionAbilityValue_k4o4u"), SubResource("RoseConditionQuestItem_l8nkx")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_who10"), SubResource("RoseRewardAddItem_avwc4"), SubResource("RoseRewardQuestVariable_rpnns")])

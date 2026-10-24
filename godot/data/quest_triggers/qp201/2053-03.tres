@@ -1,0 +1,39 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b73wuev4s34rg"]
+
+[ext_resource type="RoseQuest" uid="uid://b5d3q13bd7n13" path="res://data/quests/2053-forgotten-temple-investigation-3.tres" id="1_ferfo"]
+[ext_resource type="RoseItemQuest" uid="uid://bmp7hj2h1wunl" path="res://data/items/quest/512-shamanic-artifact.tres" id="2_qpupe"]
+[ext_resource type="RoseQuestTrigger" uid="uid://d0mcpcah2k3gu" path="res://data/quest_triggers/qp201/2053-04.tres" id="3_84djt"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_efrgg"]
+quest = ExtResource("1_ferfo")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_0xerr"]
+item = ExtResource("2_qpupe")
+equipment_index = 13
+count = 10
+operator = ">="
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_6xxky"]
+item = ExtResource("2_qpupe")
+equipment_index = 13
+count = 13
+operator = "<="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_metrk"]
+quest = ExtResource("1_ferfo")
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_sayjv"]
+equation = 2
+value = 3000
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_p75rr"]
+equation = 3
+value = 150000
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_84dgk"]
+
+[resource]
+name = "2053-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_efrgg"), SubResource("RoseConditionQuestItem_0xerr"), SubResource("RoseConditionQuestItem_6xxky")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_metrk"), SubResource("RoseRewardCalculatedMoney_sayjv"), SubResource("RoseRewardCalculatedMoney_p75rr"), SubResource("RoseRewardRemoveSelectedQuest_84dgk")])
+next_trigger = ExtResource("3_84djt")

@@ -1,0 +1,37 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dis46bchkbpl3"]
+
+[ext_resource type="RoseQuest" uid="uid://bsepecuvu0oge" path="res://data/quests/5033-stockpiling-jelly-bean-hides.tres" id="1_7t33a"]
+[ext_resource type="RoseItemQuest" uid="uid://b1vadkkeysngn" path="res://data/items/quest/804-jelly-bean-hide.tres" id="2_c5ao0"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_2qg1s"]
+quest = ExtResource("1_7t33a")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_tcxi2"]
+to = 75
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_ty7kj"]
+item = ExtResource("2_c5ao0")
+equipment_index = 13
+count = 26
+operator = "<"
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_dkd7a"]
+operator = "<="
+value = 15
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_eimjj"]
+quest = ExtResource("1_7t33a")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_bisem"]
+item = ExtResource("2_c5ao0")
+quantity = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_se6eq"]
+variable = 9
+operator = "Add"
+value = 1
+
+[resource]
+name = "5033-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_2qg1s"), SubResource("RoseConditionRandomPercent_tcxi2"), SubResource("RoseConditionQuestItem_ty7kj"), SubResource("RoseConditionAbilityValue_dkd7a")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_eimjj"), SubResource("RoseRewardAddItem_bisem"), SubResource("RoseRewardQuestVariable_se6eq")])

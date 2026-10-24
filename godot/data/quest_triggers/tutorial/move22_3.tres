@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c228fg5easj25"]
+
+[ext_resource type="RoseZoneSettings" uid="uid://kapdirla37qr" path="res://data/zones/3-dolphin-island.tres" id="1_kdwpe"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_qk8ko"]
+ability = "Money"
+operator = ">="
+value = 1500
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_vnp4m"]
+ability = "Money"
+operator = "Subtract"
+value = 1500
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_htg5a"]
+zone = ExtResource("1_kdwpe")
+x = 510100
+y = 502600
+
+[resource]
+name = "move22_3"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_qk8ko")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_vnp4m"), SubResource("RoseRewardTeleport_htg5a")])

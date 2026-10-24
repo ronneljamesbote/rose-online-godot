@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bcel2ncn5fnnh"]
+
+[ext_resource type="RoseQuest" uid="uid://u21t0lnj4kv8" path="res://data/quests/3607-weak-mana-waves-from-lunar.tres" id="1_yiyns"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_bcku3"]
+ability = "Union"
+value = 4
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_n2g0r"]
+operator = ">="
+value = 55
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_y63p0"]
+quest = ExtResource("1_yiyns")
+
+[resource]
+name = "3607-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_bcku3"), SubResource("RoseConditionAbilityValue_n2g0r")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_y63p0")])

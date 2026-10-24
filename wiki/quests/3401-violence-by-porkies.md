@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1111-righteous-crusader-huffe|Righteous Crusader Huffe]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 3401; QSD triggers 3401-01, 3401-02, 3401-03, 3401-31
+  data: 'godot/data/quests/3401-violence-by-porkies.tres; quest triggers in godot/data/quest_triggers/: qu03-001/3401-01, qu03-001/3401-02, qu03-001/3401-03, qn-132/3401-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

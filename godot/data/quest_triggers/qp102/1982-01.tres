@@ -1,0 +1,32 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bl13tjp5lgwjh"]
+
+[ext_resource type="RoseQuest" uid="uid://bn7naykus3jfe" path="res://data/quests/1982-the-prince-of-akram.tres" id="1_t5ttw"]
+[ext_resource type="RoseQuest" uid="uid://btfra2jhftkiq" path="res://data/quests/1983-the-search-for-the-prince.tres" id="2_bg6ng"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_7vuie"]
+quest = ExtResource("1_t5ttw")
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_22u1y"]
+switch = 128
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_2ye1r"]
+switch = 129
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_rsnqy"]
+quest = ExtResource("1_t5ttw")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_a2wq5"]
+value = 1000
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_11awe"]
+quest = ExtResource("2_bg6ng")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_g3hv3"]
+switch = 129
+value = true
+
+[resource]
+name = "1982-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_7vuie"), SubResource("RoseConditionQuestSwitch_22u1y"), SubResource("RoseConditionQuestSwitch_2ye1r")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_rsnqy"), SubResource("RoseRewardCalculatedExperiencePoints_a2wq5"), SubResource("RoseRewardChangeSelectedQuest_11awe"), SubResource("RoseRewardSetQuestSwitch_g3hv3")])

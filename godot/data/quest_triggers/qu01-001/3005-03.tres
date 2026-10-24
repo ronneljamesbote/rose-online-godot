@@ -1,0 +1,52 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cyhyrjq8ypmn8"]
+
+[ext_resource type="RoseQuest" uid="uid://c24wk4eqwnpum" path="res://data/quests/3005-necessity-of-a-new-shrine-2.tres" id="1_54hlt"]
+[ext_resource type="RoseItemQuest" uid="uid://ceqctpdv3up8j" path="res://data/items/quest/22-iron-fragment.tres" id="2_u1puf"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dcl8f00c73ae7" path="res://data/quest_triggers/qu01-001/3005-04.tres" id="3_8biw3"]
+[ext_resource type="RoseItemConsumable" uid="uid://blwiv60eb3cgu" path="res://data/items/consumable/57-vital-jam-2.tres" id="4_2f406"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_t6tjx"]
+quest = ExtResource("1_54hlt")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_aj0n2"]
+ability = "Union"
+value = 1
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_xcety"]
+operator = "<="
+value = 70
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_5rx1g"]
+item = ExtResource("2_u1puf")
+equipment_index = 13
+count = 18
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_wpooj"]
+quest = ExtResource("1_54hlt")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_ils06"]
+item = ExtResource("2_u1puf")
+quantity = 18
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_iwq7x"]
+ability = "UnionPoint1"
+operator = "Add"
+value = 8
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_7opam"]
+equation = 1
+value = 120
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_76l6a"]
+equation = 5
+value = 1
+item = ExtResource("4_2f406")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_jkyj3"]
+
+[resource]
+name = "3005-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_t6tjx"), SubResource("RoseConditionAbilityValue_aj0n2"), SubResource("RoseConditionAbilityValue_xcety"), SubResource("RoseConditionQuestItem_5rx1g")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_wpooj"), SubResource("RoseRewardRemoveItem_ils06"), SubResource("RoseRewardAbilityValue_iwq7x"), SubResource("RoseRewardCalculatedExperiencePoints_7opam"), SubResource("RoseRewardCalculatedItem_76l6a"), SubResource("RoseRewardRemoveSelectedQuest_jkyj3")])
+next_trigger = ExtResource("3_8biw3")

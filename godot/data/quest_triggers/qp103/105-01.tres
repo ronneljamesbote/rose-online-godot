@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dl4rem51vqqg0"]
+
+[ext_resource type="RoseQuest" uid="uid://c13m8vcmi4n78" path="res://data/quests/105-healing-hands.tres" id="1_5xg13"]
+[ext_resource type="RoseItemQuest" uid="uid://xfkek3e4t4gq" path="res://data/items/quest/129-pumpkin-seed.tres" id="2_smy6j"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_xttci"]
+quest = ExtResource("1_5xg13")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_g26ld"]
+item = ExtResource("2_smy6j")
+equipment_index = 13
+count = 10
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_mg4fo"]
+quest = ExtResource("1_5xg13")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_l1jjn"]
+item = ExtResource("2_smy6j")
+quantity = 10
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_1necd"]
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_me0qc"]
+trigger = "105-02"
+
+[resource]
+name = "105-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_xttci"), SubResource("RoseConditionQuestItem_g26ld")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_mg4fo"), SubResource("RoseRewardRemoveItem_l1jjn"), SubResource("RoseRewardRemoveSelectedQuest_1necd"), SubResource("RoseRewardTrigger_me0qc")])

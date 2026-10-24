@@ -11,7 +11,7 @@ monsters:
 - '[[monsters/121-krawfy|Krawfy]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 3007; QSD triggers 3007-01, 3007-02, 3007-03, 3007-04, 3007-31
+  data: 'godot/data/quests/3007-the-arumics-request.tres; quest triggers in godot/data/quest_triggers/: qu01-001/3007-01, qu01-001/3007-02, qu01-001/3007-03, qu01-001/3007-04, qn-121/3007-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

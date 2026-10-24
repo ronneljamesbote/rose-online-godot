@@ -1,0 +1,49 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bv5ueut4ju1sq"]
+
+[ext_resource type="RoseNpc" uid="uid://dcdam010hu2xy" path="res://data/npcs/1110-ferrell-guild-staff-charrs.tres" id="1_f8npm"]
+[ext_resource type="RoseQuest" uid="uid://dr8vpncaoueyt" path="res://data/quests/3804-charrs-elaborate-market-price-analysis-table.tres" id="2_bod08"]
+[ext_resource type="RoseItemQuest" uid="uid://myppc4lgojr4" path="res://data/items/quest/310-market-price-analysis-table.tres" id="3_woiom"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_7yt7u"]
+ability = "Union"
+value = 5
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_mnjv8"]
+npc = ExtResource("1_f8npm")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_rnnc7"]
+value = 1
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_prnqs"]
+variable = 2
+operator = "<"
+value = 10
+
+[sub_resource type="RoseConditionObjectDistance" id="RoseConditionObjectDistance_d3jmj"]
+distance = 5
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_5djpv"]
+quest = ExtResource("2_bod08")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_vqg6n"]
+quest = ExtResource("2_bod08")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_lx2kn"]
+item = ExtResource("3_woiom")
+quantity = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_fd2n5"]
+value = 10
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_hb6w0"]
+variable = 2
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_e4uhk"]
+trigger = "3804-02"
+
+[resource]
+name = "3804-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_7yt7u"), SubResource("RoseConditionSelectNpc_mnjv8"), SubResource("RoseConditionObjectVariable_rnnc7"), SubResource("RoseConditionObjectVariable_prnqs"), SubResource("RoseConditionObjectDistance_d3jmj")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_5djpv"), SubResource("RoseRewardSelectQuest_vqg6n"), SubResource("RoseRewardAddItem_lx2kn"), SubResource("RoseRewardQuestVariable_fd2n5"), SubResource("RoseRewardObjectVariable_hb6w0"), SubResource("RoseRewardTrigger_e4uhk")])

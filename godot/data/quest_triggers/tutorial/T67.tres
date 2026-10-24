@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dhqj2cempskml"]
+
+[ext_resource type="RoseItemConsumable" uid="uid://uufqbe0x3ega" path="res://data/items/consumable/101-apple.tres" id="1_x8tuk"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_ugxbk"]
+switch = 67
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_8aatu"]
+equation = 5
+value = 10
+item = ExtResource("1_x8tuk")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_tjfkg"]
+switch = 67
+value = true
+
+[resource]
+name = "T67"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_ugxbk")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_8aatu"), SubResource("RoseRewardSetQuestSwitch_tjfkg")])

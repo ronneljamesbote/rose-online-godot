@@ -10,7 +10,7 @@ monsters:
 - '[[monsters/42-elder-flanae|Elder Flanae]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 902; QSD triggers 901-02, 902-01, 902-02, 902-31, 902-32
+  data: 'godot/data/quests/902-muse-job-change-quest.tres; quest triggers in godot/data/quest_triggers/: qj000-01/901-02, qj000-01/902-01, qj000-01/902-02, qn-041/902-31, qn-042/902-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

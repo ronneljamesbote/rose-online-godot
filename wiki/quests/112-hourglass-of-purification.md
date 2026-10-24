@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1015-resident-luth|Resident Luth]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 112; QSD triggers 111-01, 111-02, 112-01
+  data: 'godot/data/quests/112-hourglass-of-purification.tres; quest triggers in godot/data/quest_triggers/: qp103/111-01, qp103/111-02, qp103/112-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

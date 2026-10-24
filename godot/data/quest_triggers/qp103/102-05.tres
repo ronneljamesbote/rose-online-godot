@@ -1,0 +1,26 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cmus0lkb7vfv3"]
+
+[ext_resource type="RoseQuest" uid="uid://bymtsj2yn6c40" path="res://data/quests/106-healing-hands.tres" id="1_y1gny"]
+[ext_resource type="RoseItemQuest" uid="uid://ds5io6gasghn4" path="res://data/items/quest/603-soil-of-purification.tres" id="2_qsemk"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bhn8eoym5yadr" path="res://data/quest_triggers/qp103/102-06.tres" id="3_inbkd"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_8tdyo"]
+quest = ExtResource("1_y1gny")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_hbc7r"]
+variable_type = "Timer"
+operator = ">"
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_qwh6l"]
+item = ExtResource("2_qsemk")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseRewardCallLuaFunction" id="RoseRewardCallLuaFunction_rk0xa"]
+function = "mushroom"
+
+[resource]
+name = "102-05"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_8tdyo"), SubResource("RoseConditionQuestVariable_hbc7r"), SubResource("RoseConditionQuestItem_qwh6l")])
+rewards = Array[Resource]([SubResource("RoseRewardCallLuaFunction_rk0xa")])
+next_trigger = ExtResource("3_inbkd")

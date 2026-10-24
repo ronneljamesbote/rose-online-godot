@@ -1,0 +1,29 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dvlhdgqmbnct2"]
+
+[ext_resource type="RoseQuest" uid="uid://dl8vklhs4tsk3" path="res://data/quests/801-junon-planet-identification.tres" id="1_i5sao"]
+[ext_resource type="RoseItemQuest" uid="uid://dfju2opauegk0" path="res://data/items/quest/101-identification.tres" id="2_rb7hp"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_ox6jr"]
+variable_type = "Job"
+operator = "<"
+value = 1
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_ec7gc"]
+quest = ExtResource("1_i5sao")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_s5pqb"]
+quest = ExtResource("1_i5sao")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_k4fcp"]
+item = ExtResource("2_rb7hp")
+quantity = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_27wn5"]
+variable_type = "Switch"
+operator = "SetOne"
+value = 1
+
+[resource]
+name = "801-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_ox6jr")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_ec7gc"), SubResource("RoseRewardSelectQuest_s5pqb"), SubResource("RoseRewardAddItem_k4fcp"), SubResource("RoseRewardQuestVariable_27wn5")])

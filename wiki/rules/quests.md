@@ -36,7 +36,7 @@ source:
     - module/src/character.rs (levelup triggers)
     - godot/scripts/quest_window.gd
     - godot/rust/src/net.rs (get_quests, time_left)
-  data: "LIST_QUEST.STB (quest names, text and time limits), QSD quest trigger files, the monster resources in godot/data/monsters/ (death_quest_trigger_name)"
+  data: "the quest resources in godot/data/quests/ (names, text and time limits), the quest step resources in godot/data/quest_triggers/ (checks and rewards), the monster resources in godot/data/monsters/ (death_quest_trigger_name)"
 ---
 # Quests
 
@@ -75,6 +75,22 @@ Steps can lead to other steps:
 
 The server follows at most 64 steps in one go. Everything a chain of steps changes is
 saved at once at the end, and you get a notice for each thing you received.
+
+## Where quests are made
+
+Quests and their steps are game data made in the Godot editor (see `godot/data/README.md`):
+
+- A **quest** (`godot/data/quests/`, a `RoseQuest`) holds its name, its text (the
+  description and the start and end messages) and its time limit in seconds.
+- A **step** (`godot/data/quest_triggers/`, a `RoseQuestTrigger`, in a folder per iROSE
+  QSD file) holds its name, its **conditions** (the checks) and its **rewards**, each one a
+  block such as `RoseConditionQuestItem` or `RoseRewardCalculatedMoney`, and its
+  `next_trigger`: the step tried when this one fails (the "same group" above).
+
+A block links what it is about (a quest, an item, a monster or NPC, a skill, a zone), so
+renaming a file keeps the link. The text an NPC says (`RoseRewardNpcMessage`) is written
+in the block itself. `--export-data` writes them to `export/data/quests.toml` and
+`quest-triggers.toml`, which the server and the game both read.
 
 ## How quest pages show steps
 

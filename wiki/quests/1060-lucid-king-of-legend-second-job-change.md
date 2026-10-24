@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1104-historian-jones|Historian Jones]]'
 steps: 2
 source:
-  data: LIST_QUEST.STB row 1060; QSD triggers 1059-02, 1060-01
+  data: 'godot/data/quests/1060-lucid-king-of-legend-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj111-06/1059-02, qj111-06/1060-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

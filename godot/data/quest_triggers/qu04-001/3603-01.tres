@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bklysipl40phs"]
+
+[ext_resource type="RoseQuest" uid="uid://iijv3g3klq1d" path="res://data/quests/3603-grunter-s-mysterious-strength.tres" id="1_37e6k"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_lwo6e"]
+ability = "Union"
+value = 4
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_ewkye"]
+quest = ExtResource("1_37e6k")
+
+[resource]
+name = "3603-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_lwo6e")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_ewkye")])

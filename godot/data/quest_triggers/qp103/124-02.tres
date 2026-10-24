@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bitd23xrn8216"]
+
+[ext_resource type="RoseQuest" uid="uid://cwo11hemqccek" path="res://data/quests/125-falsehoods.tres" id="1_77p66"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_qmkya"]
+variable_type = "Episode"
+value = 24
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_5x6rj"]
+quest = ExtResource("1_77p66")
+
+[resource]
+name = "124-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_qmkya")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_5x6rj")])

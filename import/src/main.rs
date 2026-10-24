@@ -11,7 +11,7 @@
 //!                                          lengths and hit frames against the ZMO files,
 //!                                          sounds, hit sounds and footsteps, effect files
 //!                                          and attack effects, skies and the interface's
-//!                                          pictures and cursors)
+//!                                          pictures and cursors, quests and quest triggers)
 //!
 //! `pack` writes upload-NNN.json files, each the JSON argument list of the module's
 //! `upload_game_files` reducer (well under the server's request size limit), plus manifest.json.
@@ -246,6 +246,8 @@ fn read_export(dir: &Path) -> BTreeMap<PathBuf, Vec<u8>> {
         .unwrap_or_else(|e| fail(e));
     let world = rose_data_export::WorldExport::from_files_as(toml, |name| read(rose_data_export::data_file_as(name, toml)))
         .unwrap_or_else(|e| fail(e));
+    let quests = rose_data_export::QuestsExport::from_files_as(toml, |name| read(rose_data_export::data_file_as(name, toml)))
+        .unwrap_or_else(|e| fail(e));
     let mut files = BTreeMap::new();
     let format = rose_data_export::Format::Json;
     let mut add = |path: String, text: String| {
@@ -272,6 +274,12 @@ fn read_export(dir: &Path) -> BTreeMap<PathBuf, Vec<u8>> {
     if let Some(world) = world {
         world.check().unwrap_or_else(|e| fail(e));
         for (name, text) in world.to_files_as(format).expect("write the world as JSON") {
+            add(rose_data_export::data_file_as(name, format), text);
+        }
+    }
+    if let Some(quests) = quests {
+        quests.check().unwrap_or_else(|e| fail(e));
+        for (name, text) in quests.to_files_as(format).expect("write the quests as JSON") {
             add(rose_data_export::data_file_as(name, format), text);
         }
     }
@@ -368,6 +376,28 @@ fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool, root: &Pat
                 export.warp_gates.len(),
                 export.craft_recipes.len(),
                 export.new_characters.len(),
+            );
+        }
+    }
+    let started = Instant::now();
+    let irose_quests = rose_data_irose::get_quest_database(vfs, strings.clone()).expect("iROSE quests");
+    let irose_ms = started.elapsed().as_millis();
+    match rose_game_data::read_quests_export(vfs).expect("read the quest export") {
+        None => println!("quests: no export (quests.toml, quest-triggers.toml), skipped"),
+        Some(export) => {
+            let started = Instant::now();
+            let quests = rose_game_data::load_quests(vfs, strings.clone()).expect("exported quests");
+            let export_ms = started.elapsed().as_millis();
+            // A monster with no resource is no monster: the game spawns nothing either way.
+            let monsters = npcs.iter().map(|n| n.id.get()).collect();
+            differences.extend(
+                rose_data_export::compare_quest_databases(&irose_quests, &quests, &rose_game_data::irose_codes(), &monsters)
+                    .expect("compare the quests"),
+            );
+            println!(
+                "quests: {} quests, {} quest triggers; iROSE files {irose_ms} ms, export {export_ms} ms",
+                export.quests.len(),
+                export.triggers.len(),
             );
         }
     }

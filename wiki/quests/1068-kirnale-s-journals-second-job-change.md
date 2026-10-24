@@ -7,7 +7,7 @@ npcs:
 - '[[npcs/1094-armor-merchant-saki|Armor Merchant Saki]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 1068; QSD triggers 1053-02, 1068-01, 1068-31, 1068-32, 1068-33
+  data: 'godot/data/quests/1068-kirnale-s-journals-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj311-06/1053-02, qj311-06/1068-01, qn-212/1068-31, qn-212/1068-32, qn-212/1068-33'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

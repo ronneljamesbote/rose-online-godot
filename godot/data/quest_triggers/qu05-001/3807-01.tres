@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c5w3bt4o614qh"]
+
+[ext_resource type="RoseQuest" uid="uid://dpwme5hb0ow21" path="res://data/quests/3807-new-recovery-potion.tres" id="1_ywglx"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_6p0iv"]
+ability = "Union"
+value = 5
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_3b22h"]
+operator = ">="
+value = 55
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_3fcrk"]
+quest = ExtResource("1_ywglx")
+
+[resource]
+name = "3807-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_6p0iv"), SubResource("RoseConditionAbilityValue_3b22h")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_3fcrk")])

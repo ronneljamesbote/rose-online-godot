@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dvhm683qqshvd"]
+
+[ext_resource type="RoseQuest" uid="uid://cnha4r1ett11l" path="res://data/quests/1007-an-eye-for-the-marketplace.tres" id="1_pdpji"]
+[ext_resource type="RoseItemQuest" uid="uid://dedb7ixfou8mv" path="res://data/items/quest/802-dalping-egg.tres" id="2_sw5t0"]
+[ext_resource type="RoseQuestTrigger" uid="uid://4p57vgl2o1hw" path="res://data/quest_triggers/qn-031/955-31.tres" id="3_584js"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_njybt"]
+quest = ExtResource("1_pdpji")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_a2s1d"]
+to = 30
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_0argq"]
+item = ExtResource("2_sw5t0")
+equipment_index = 13
+count = 15
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ygcrp"]
+quest = ExtResource("1_pdpji")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_8wxpg"]
+item = ExtResource("2_sw5t0")
+quantity = 1
+
+[resource]
+name = "1007-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_njybt"), SubResource("RoseConditionRandomPercent_a2s1d"), SubResource("RoseConditionQuestItem_0argq")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ygcrp"), SubResource("RoseRewardAddItem_8wxpg")])
+next_trigger = ExtResource("3_584js")

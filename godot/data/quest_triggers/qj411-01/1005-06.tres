@@ -1,0 +1,40 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://baowuqa1ijsqt"]
+
+[ext_resource type="RoseQuest" uid="uid://dmwboo2vj67s3" path="res://data/quests/1005-an-eye-for-the-marketplace.tres" id="1_sm0r5"]
+[ext_resource type="RoseItemQuest" uid="uid://6jjhp3lytap5" path="res://data/items/quest/132-beetle-shell.tres" id="2_2bgwv"]
+[ext_resource type="RoseItemQuest" uid="uid://m5mqsl5jsli2" path="res://data/items/quest/116-cobra-leather.tres" id="3_uv6g8"]
+[ext_resource type="RoseQuest" uid="uid://6nny813ghvym" path="res://data/quests/1006-an-eye-for-the-marketplace.tres" id="4_qe1oe"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_c3tts"]
+quest = ExtResource("1_sm0r5")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_dahls"]
+item = ExtResource("2_2bgwv")
+equipment_index = 13
+count = 15
+operator = ">="
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_0m2uk"]
+variable_type = "Switch"
+variable = 3
+value = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_amc6h"]
+quest = ExtResource("1_sm0r5")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_8pacv"]
+item = ExtResource("2_2bgwv")
+quantity = 15
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_sl5lm"]
+item = ExtResource("3_uv6g8")
+quantity = 3
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_0b0bt"]
+quest = ExtResource("4_qe1oe")
+keep_data = true
+
+[resource]
+name = "1005-06"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_c3tts"), SubResource("RoseConditionQuestItem_dahls"), SubResource("RoseConditionQuestVariable_0m2uk")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_amc6h"), SubResource("RoseRewardRemoveItem_8pacv"), SubResource("RoseRewardAddItem_sl5lm"), SubResource("RoseRewardChangeSelectedQuest_0b0bt")])

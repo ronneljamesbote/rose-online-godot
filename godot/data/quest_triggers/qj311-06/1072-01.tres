@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bh32hxllvpwn0"]
+
+[ext_resource type="RoseQuest" uid="uid://bw0crxy8csax5" path="res://data/quests/1072-kirnale-s-journals-second-job-change.tres" id="1_gigo1"]
+[ext_resource type="RoseItemQuest" uid="uid://b01dfoqnqtgfe" path="res://data/items/quest/219-phoenix-writing-quill.tres" id="2_as46n"]
+[ext_resource type="RoseItemQuest" uid="uid://d4ak4714iai3d" path="res://data/items/quest/222-sharlin-s-recommendation.tres" id="3_0eqea"]
+[ext_resource type="RoseQuest" uid="uid://d0imu01sr86fj" path="res://data/quests/1073-kirnale-s-journals-second-job-change.tres" id="4_yx5aj"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_q3in7"]
+quest = ExtResource("1_gigo1")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_kiirs"]
+item = ExtResource("2_as46n")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ehvpx"]
+quest = ExtResource("1_gigo1")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_qvjcx"]
+item = ExtResource("2_as46n")
+quantity = 1
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_70bsr"]
+item = ExtResource("3_0eqea")
+quantity = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_lgc8h"]
+quest = ExtResource("4_yx5aj")
+keep_data = true
+
+[resource]
+name = "1072-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_q3in7"), SubResource("RoseConditionQuestItem_kiirs")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ehvpx"), SubResource("RoseRewardRemoveItem_qvjcx"), SubResource("RoseRewardAddItem_70bsr"), SubResource("RoseRewardChangeSelectedQuest_lgc8h")])

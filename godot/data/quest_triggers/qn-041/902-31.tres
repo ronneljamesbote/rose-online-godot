@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://r847dqfhc8f2"]
+
+[ext_resource type="RoseQuest" uid="uid://cenbess3gd6o8" path="res://data/quests/902-muse-job-change-quest.tres" id="1_835qh"]
+[ext_resource type="RoseItemQuest" uid="uid://ccqtvweqeb2ue" path="res://data/items/quest/106-flanae-seed.tres" id="2_mgdqc"]
+[ext_resource type="RoseQuestTrigger" uid="uid://nxy5v4djds1q" path="res://data/quest_triggers/qn-041/5035-31.tres" id="3_dgsbl"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_2gn8d"]
+quest = ExtResource("1_835qh")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_ei0c6"]
+to = 90
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_f1cnp"]
+item = ExtResource("2_mgdqc")
+equipment_index = 13
+count = 20
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_a8swj"]
+quest = ExtResource("1_835qh")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_fw5cn"]
+item = ExtResource("2_mgdqc")
+quantity = 1
+
+[resource]
+name = "902-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_2gn8d"), SubResource("RoseConditionRandomPercent_ei0c6"), SubResource("RoseConditionQuestItem_f1cnp")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_a8swj"), SubResource("RoseRewardAddItem_fw5cn")])
+next_trigger = ExtResource("3_dgsbl")

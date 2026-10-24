@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1097-tavern-owner-harin|Tavern Owner Harin]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 121; QSD triggers 120-01, 120-02, 121-01, 121-31
+  data: 'godot/data/quests/121-banned-recipe.tres; quest triggers in godot/data/quest_triggers/: qp103/120-01, qp103/120-02, qp103/121-01, qn-172/121-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

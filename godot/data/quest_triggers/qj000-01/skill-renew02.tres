@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cf0usqvqav5tc"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_1fff6"]
+switch = 5
+
+[sub_resource type="RoseRewardResetSkills" id="RoseRewardResetSkills_wbh1l"]
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_rx3rt"]
+switch = 5
+value = true
+
+[resource]
+name = "skill-renew02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_1fff6")])
+rewards = Array[Resource]([SubResource("RoseRewardResetSkills_wbh1l"), SubResource("RoseRewardSetQuestSwitch_rx3rt")])

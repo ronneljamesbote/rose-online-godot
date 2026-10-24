@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://davkeeafr15q7"]
+
+[ext_resource type="RoseQuest" uid="uid://blcrlxajbdr2d" path="res://data/quests/852-solider-job-change-quest.tres" id="1_suacv"]
+[ext_resource type="RoseItemQuest" uid="uid://cdoj3xf4k1hje" path="res://data/items/quest/103-honeybee-stinger.tres" id="2_20i6c"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_kkrj3"]
+quest = ExtResource("1_suacv")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_wtarh"]
+to = 90
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_d5okf"]
+item = ExtResource("2_20i6c")
+equipment_index = 13
+count = 10
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_gvwvy"]
+quest = ExtResource("1_suacv")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_3wrm7"]
+item = ExtResource("2_20i6c")
+quantity = 1
+
+[resource]
+name = "852-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_kkrj3"), SubResource("RoseConditionRandomPercent_wtarh"), SubResource("RoseConditionQuestItem_d5okf")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_gvwvy"), SubResource("RoseRewardAddItem_3wrm7")])

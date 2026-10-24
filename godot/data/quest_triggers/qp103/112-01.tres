@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c5elnw0gqoggw"]
+
+[ext_resource type="RoseQuest" uid="uid://devn2kijxxxi3" path="res://data/quests/112-hourglass-of-purification.tres" id="1_xoeu1"]
+[ext_resource type="RoseQuest" uid="uid://dtkq4sptm8ejk" path="res://data/quests/113-hourglass-of-purification.tres" id="2_od604"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_gjutn"]
+quest = ExtResource("1_xoeu1")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_0xh6i"]
+quest = ExtResource("1_xoeu1")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_grtk5"]
+value = 400
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_to4oy"]
+quest = ExtResource("2_od604")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_ysgjm"]
+variable_type = "Episode"
+value = 10
+
+[resource]
+name = "112-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_gjutn")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_0xh6i"), SubResource("RoseRewardCalculatedExperiencePoints_grtk5"), SubResource("RoseRewardChangeSelectedQuest_to4oy"), SubResource("RoseRewardQuestVariable_ysgjm")])

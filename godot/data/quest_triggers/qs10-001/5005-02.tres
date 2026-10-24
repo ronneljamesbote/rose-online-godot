@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d0l4mnmo3cnr5"]
+
+[ext_resource type="RoseQuest" uid="uid://bw2objbqyprx7" path="res://data/quests/5005-spero-s-top-secret-cart-schematic.tres" id="1_tjwvr"]
+[ext_resource type="RoseItemQuest" uid="uid://bvks2oh0ygxsg" path="res://data/items/quest/505-top-secret-cart-schematic.tres" id="2_4ae6s"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_40jem"]
+quest = ExtResource("1_tjwvr")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_a7prq"]
+item = ExtResource("2_4ae6s")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_fsxht"]
+quest = ExtResource("1_tjwvr")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_l6t2r"]
+item = ExtResource("2_4ae6s")
+quantity = 1
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_3cf5d"]
+switch = 33
+value = true
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_htmqs"]
+equation = 1
+value = 220
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_dd5y2"]
+
+[resource]
+name = "5005-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_40jem"), SubResource("RoseConditionQuestItem_a7prq")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_fsxht"), SubResource("RoseRewardRemoveItem_l6t2r"), SubResource("RoseRewardSetQuestSwitch_3cf5d"), SubResource("RoseRewardCalculatedExperiencePoints_htmqs"), SubResource("RoseRewardRemoveSelectedQuest_dd5y2")])

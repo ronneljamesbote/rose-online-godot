@@ -1,0 +1,42 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d4kx3r1mtutaj"]
+
+[ext_resource type="RoseQuest" uid="uid://cnha4r1ett11l" path="res://data/quests/1007-an-eye-for-the-marketplace.tres" id="1_a7v10"]
+[ext_resource type="RoseItemQuest" uid="uid://dedb7ixfou8mv" path="res://data/items/quest/802-dalping-egg.tres" id="2_kg188"]
+[ext_resource type="RoseQuestTrigger" uid="uid://3vs2jw1c3qq6" path="res://data/quest_triggers/qj411-01/1007-08.tres" id="3_vksyu"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_owd0q"]
+quest = ExtResource("1_a7v10")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_wuqv3"]
+variable_type = "Switch"
+variable = 2
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_uihm1"]
+variable_type = "Switch"
+variable = 3
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_h77dy"]
+item = ExtResource("2_kg188")
+equipment_index = 13
+count = 10
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_1jgii"]
+quest = ExtResource("1_a7v10")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_pu7ma"]
+variable_type = "Job"
+operator = "Add"
+value = 2
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_3dc2m"]
+equation = 3
+value = 1800
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_0opji"]
+
+[resource]
+name = "1007-07"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_owd0q"), SubResource("RoseConditionQuestVariable_wuqv3"), SubResource("RoseConditionQuestVariable_uihm1"), SubResource("RoseConditionQuestItem_h77dy")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_1jgii"), SubResource("RoseRewardQuestVariable_pu7ma"), SubResource("RoseRewardCalculatedMoney_3dc2m"), SubResource("RoseRewardRemoveSelectedQuest_0opji")])
+next_trigger = ExtResource("3_vksyu")

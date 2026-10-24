@@ -1,0 +1,54 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cfoj4om3hldds"]
+
+[ext_resource type="RoseQuest" uid="uid://dpwme5hb0ow21" path="res://data/quests/3807-new-recovery-potion.tres" id="1_aaw82"]
+[ext_resource type="RoseItemQuest" uid="uid://blc6g807vp3if" path="res://data/items/quest/317-sticky-fluid.tres" id="2_e2k2j"]
+[ext_resource type="RoseQuestTrigger" uid="uid://c1m68b3vpt4m8" path="res://data/quest_triggers/qu05-001/3807-03.tres" id="3_jp0kk"]
+[ext_resource type="RoseItemConsumable" uid="uid://cpbfem1aicwi6" path="res://data/items/consumable/3-health-vial-l.tres" id="4_x7f6h"]
+[ext_resource type="RoseItemConsumable" uid="uid://djpfhj5gyqoeu" path="res://data/items/consumable/22-mana-vial-m.tres" id="5_sn7cm"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_bj2ds"]
+quest = ExtResource("1_aaw82")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_p1ab4"]
+ability = "Union"
+value = 5
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_afpck"]
+operator = "<="
+value = 70
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_sxl0v"]
+item = ExtResource("2_e2k2j")
+equipment_index = 13
+count = 30
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_5lo5f"]
+quest = ExtResource("1_aaw82")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_f54j3"]
+item = ExtResource("2_e2k2j")
+quantity = 30
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_xtigm"]
+equation = 5
+value = 5
+item = ExtResource("4_x7f6h")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_2eksd"]
+equation = 5
+value = 5
+item = ExtResource("5_sn7cm")
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_hl8sv"]
+ability = "UnionPoint5"
+operator = "Add"
+value = 8
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_dckat"]
+
+[resource]
+name = "3807-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_bj2ds"), SubResource("RoseConditionAbilityValue_p1ab4"), SubResource("RoseConditionAbilityValue_afpck"), SubResource("RoseConditionQuestItem_sxl0v")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_5lo5f"), SubResource("RoseRewardRemoveItem_f54j3"), SubResource("RoseRewardCalculatedItem_xtigm"), SubResource("RoseRewardCalculatedItem_2eksd"), SubResource("RoseRewardAbilityValue_hl8sv"), SubResource("RoseRewardRemoveSelectedQuest_dckat")])
+next_trigger = ExtResource("3_jp0kk")

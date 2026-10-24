@@ -1,0 +1,45 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://3o5dh66m482e"]
+
+[ext_resource type="RoseQuest" uid="uid://js0pujpq4age" path="res://data/quests/904-muse-job-change-quest.tres" id="1_8ka8r"]
+[ext_resource type="RoseItemQuest" uid="uid://b7p11wy2idkj2" path="res://data/items/quest/105-nectar-of-deep-sleep.tres" id="2_tmv5q"]
+[ext_resource type="RoseItemHead" uid="uid://dk7jge55u6est" path="res://data/items/head/61-spiritual-beret.tres" id="3_2n7qt"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_pja1k"]
+quest = ExtResource("1_8ka8r")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_i64er"]
+item = ExtResource("2_tmv5q")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ag7rp"]
+quest = ExtResource("1_8ka8r")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_hw7rk"]
+item = ExtResource("2_tmv5q")
+quantity = 1
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_qspmu"]
+ability = "Job"
+value = 211
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_pcthm"]
+variable_type = "Job"
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardSetHealthManaPercent" id="RoseRewardSetHealthManaPercent_4tdj0"]
+health_percent = 100
+mana_percent = 100
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_0o4x2"]
+equation = 5
+value = 1
+item = ExtResource("3_2n7qt")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_fn46o"]
+
+[resource]
+name = "904-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_pja1k"), SubResource("RoseConditionQuestItem_i64er")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ag7rp"), SubResource("RoseRewardRemoveItem_hw7rk"), SubResource("RoseRewardAbilityValue_qspmu"), SubResource("RoseRewardQuestVariable_pcthm"), SubResource("RoseRewardSetHealthManaPercent_4tdj0"), SubResource("RoseRewardCalculatedItem_0o4x2"), SubResource("RoseRewardRemoveSelectedQuest_fn46o")])

@@ -1,0 +1,22 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dfakcgpxm53ll"]
+
+[ext_resource type="RoseQuest" uid="uid://j34xatmqhkpr" path="res://data/quests/5041-the-lost-engagement-ring.tres" id="1_i7wxf"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_tlrbp"]
+operator = ">="
+value = 15
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_dut6q"]
+operator = "<"
+value = 23
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_8devf"]
+switch = 32
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_4nons"]
+quest = ExtResource("1_i7wxf")
+
+[resource]
+name = "5041-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_tlrbp"), SubResource("RoseConditionAbilityValue_dut6q"), SubResource("RoseConditionQuestSwitch_8devf")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_4nons")])

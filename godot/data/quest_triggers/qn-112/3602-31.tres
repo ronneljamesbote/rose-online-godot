@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bxk0m1mmqi40a"]
+
+[ext_resource type="RoseQuest" uid="uid://bwhgrxucjvs7p" path="res://data/quests/3602-coal-mine-moldies-under-arumic-watch.tres" id="1_nhy36"]
+[ext_resource type="RoseItemQuest" uid="uid://dhhitd2bghx7o" path="res://data/items/quest/308-moldie-eyelash.tres" id="2_pkve7"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bddaw0sn7qcxp" path="res://data/quest_triggers/qn-112/3802-31.tres" id="3_gx58j"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_pc6c0"]
+quest = ExtResource("1_nhy36")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_xs5pn"]
+to = 30
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_6q8v4"]
+item = ExtResource("2_pkve7")
+equipment_index = 13
+count = 12
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_34c2i"]
+quest = ExtResource("1_nhy36")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_pxd56"]
+item = ExtResource("2_pkve7")
+quantity = 1
+
+[resource]
+name = "3602-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_pc6c0"), SubResource("RoseConditionRandomPercent_xs5pn"), SubResource("RoseConditionQuestItem_6q8v4")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_34c2i"), SubResource("RoseRewardAddItem_pxd56")])
+next_trigger = ExtResource("3_gx58j")

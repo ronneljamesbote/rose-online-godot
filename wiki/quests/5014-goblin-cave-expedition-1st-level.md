@@ -10,7 +10,7 @@ monsters:
 - '[[monsters/274-goblin-server|Goblin Server]]'
 steps: 6
 source:
-  data: LIST_QUEST.STB row 5014; QSD triggers 5014-01, 5014-02, 5014-10, 5014-31, 5014-32, 5014-33
+  data: 'godot/data/quests/5014-goblin-cave-expedition-1st-level.tres; quest triggers in godot/data/quest_triggers/: qs11-002/5014-01, qs11-002/5014-02, qs11-002/5014-10, qn-271/5014-31, qn-272/5014-32, qn-274/5014-33'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

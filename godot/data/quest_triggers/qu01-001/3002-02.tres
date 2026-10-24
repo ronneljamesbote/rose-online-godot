@@ -1,0 +1,46 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://crmd1o2prrgp4"]
+
+[ext_resource type="RoseQuest" uid="uid://cegog843ogmfe" path="res://data/quests/3002-gorthein-s-hidden-talent.tres" id="1_hp1r0"]
+[ext_resource type="RoseItemQuest" uid="uid://b54lwbb1qvw3w" path="res://data/items/quest/301-porkie-spine.tres" id="2_ssk42"]
+[ext_resource type="RoseQuestTrigger" uid="uid://by613yyerh5ti" path="res://data/quest_triggers/qu01-001/3002-03.tres" id="3_82gef"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_j7jao"]
+quest = ExtResource("1_hp1r0")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_6inul"]
+item = ExtResource("2_ssk42")
+equipment_index = 13
+count = 10
+operator = ">="
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_1y7uw"]
+ability = "Union"
+value = 1
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_fkdpq"]
+operator = "<="
+value = 50
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_a1hw1"]
+quest = ExtResource("1_hp1r0")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_jrmdw"]
+item = ExtResource("2_ssk42")
+quantity = 10
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_c8c0a"]
+equation = 1
+value = 100
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_1p5dp"]
+ability = "UnionPoint1"
+operator = "Add"
+value = 3
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_cc7xu"]
+
+[resource]
+name = "3002-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_j7jao"), SubResource("RoseConditionQuestItem_6inul"), SubResource("RoseConditionAbilityValue_1y7uw"), SubResource("RoseConditionAbilityValue_fkdpq")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_a1hw1"), SubResource("RoseRewardRemoveItem_jrmdw"), SubResource("RoseRewardCalculatedExperiencePoints_c8c0a"), SubResource("RoseRewardAbilityValue_1p5dp"), SubResource("RoseRewardRemoveSelectedQuest_cc7xu")])
+next_trigger = ExtResource("3_82gef")

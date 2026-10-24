@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cacxyb51vmkyn"]
+
+[ext_resource type="RoseQuest" uid="uid://bn7naykus3jfe" path="res://data/quests/1982-the-prince-of-akram.tres" id="1_ugwr7"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_0k4qk"]
+switch = 128
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_gkj25"]
+switch = 129
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_yoqk7"]
+quest = ExtResource("1_ugwr7")
+
+[resource]
+name = "1982-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_0k4qk"), SubResource("RoseConditionQuestSwitch_gkj25")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_yoqk7")])

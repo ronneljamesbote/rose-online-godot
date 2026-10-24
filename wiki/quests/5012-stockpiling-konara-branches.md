@@ -15,7 +15,7 @@ monsters:
 - '[[monsters/186-hunter-clown|Hunter Clown]]'
 steps: 10
 source:
-  data: LIST_QUEST.STB row 5012; QSD triggers 5012-01, 5012-02, 5012-31, 5012-32, 5012-33, 5012-34, 5012-35, 5012-36, 5012-37, 5012-38
+  data: 'godot/data/quests/5012-stockpiling-konara-branches.tres; quest triggers in godot/data/quest_triggers/: qs10-001/5012-01, qs10-001/5012-02, qn-051/5012-31, qn-052/5012-32, qn-053/5012-33, qn-181/5012-34, qn-182/5012-35, qn-183/5012-36, qn-185/5012-37, qn-186/5012-38'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

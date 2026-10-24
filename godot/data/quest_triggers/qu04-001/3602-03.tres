@@ -1,0 +1,43 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://jsmxs06ogi0x"]
+
+[ext_resource type="RoseQuest" uid="uid://bwhgrxucjvs7p" path="res://data/quests/3602-coal-mine-moldies-under-arumic-watch.tres" id="1_uyahw"]
+[ext_resource type="RoseItemQuest" uid="uid://dhhitd2bghx7o" path="res://data/items/quest/308-moldie-eyelash.tres" id="2_aongx"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ciw24"]
+quest = ExtResource("1_uyahw")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_neyou"]
+ability = "Union"
+value = 4
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_kusgv"]
+operator = ">"
+value = 50
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_td5js"]
+item = ExtResource("2_aongx")
+equipment_index = 13
+count = 12
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_7mpj5"]
+quest = ExtResource("1_uyahw")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_qiywj"]
+item = ExtResource("2_aongx")
+quantity = 12
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_fu167"]
+ability = "UnionPoint4"
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_ewcea"]
+value = 5000
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_eij55"]
+
+[resource]
+name = "3602-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ciw24"), SubResource("RoseConditionAbilityValue_neyou"), SubResource("RoseConditionAbilityValue_kusgv"), SubResource("RoseConditionQuestItem_td5js")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_7mpj5"), SubResource("RoseRewardRemoveItem_qiywj"), SubResource("RoseRewardAbilityValue_fu167"), SubResource("RoseRewardCalculatedExperiencePoints_ewcea"), SubResource("RoseRewardRemoveSelectedQuest_eij55")])

@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://4p57vgl2o1hw"]
+
+[ext_resource type="RoseQuest" uid="uid://dtve2m6fq1tku" path="res://data/quests/955-why-did-toddy-steal-the-jewels.tres" id="1_nappm"]
+[ext_resource type="RoseItemQuest" uid="uid://dl2gpes5cuaqg" path="res://data/items/quest/113-mina-s-ruby.tres" id="2_nmeqd"]
+[ext_resource type="RoseQuestTrigger" uid="uid://icklurr41a4b" path="res://data/quest_triggers/qn-031/906-31.tres" id="3_7q0n7"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_kh6je"]
+quest = ExtResource("1_nappm")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_5kdqt"]
+to = 30
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_0m2bb"]
+item = ExtResource("2_nmeqd")
+equipment_index = 13
+count = 10
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_cvoyc"]
+quest = ExtResource("1_nappm")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_d2f2m"]
+item = ExtResource("2_nmeqd")
+quantity = 1
+
+[resource]
+name = "955-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_kh6je"), SubResource("RoseConditionRandomPercent_5kdqt"), SubResource("RoseConditionQuestItem_0m2bb")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_cvoyc"), SubResource("RoseRewardAddItem_d2f2m")])
+next_trigger = ExtResource("3_7q0n7")

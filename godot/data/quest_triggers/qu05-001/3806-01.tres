@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://qsg3spqxqruw"]
+
+[ext_resource type="RoseQuest" uid="uid://celxu0j4r1016" path="res://data/quests/3806-reassuring-support.tres" id="1_el15h"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_wo4l7"]
+ability = "Union"
+value = 5
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_ob1ts"]
+operator = ">="
+value = 51
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_fl7ar"]
+quest = ExtResource("1_el15h")
+
+[resource]
+name = "3806-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_wo4l7"), SubResource("RoseConditionAbilityValue_ob1ts")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_fl7ar")])

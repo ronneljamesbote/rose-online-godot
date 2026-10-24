@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://vcytqhprhjtp"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_ec6fq"]
+variable_type = "Job"
+variable = 1
+value = 2
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_mhbn6"]
+ability = "Job"
+value = 422
+
+[resource]
+name = "2job-08"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_ec6fq")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_mhbn6")])

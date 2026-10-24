@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dd7k1ri4co21"]
+
+[ext_resource type="RoseQuest" uid="uid://dl8vklhs4tsk3" path="res://data/quests/801-junon-planet-identification.tres" id="1_6sw4k"]
+[ext_resource type="RoseItemQuest" uid="uid://dfju2opauegk0" path="res://data/items/quest/101-identification.tres" id="2_v3x6q"]
+[ext_resource type="RoseQuest" uid="uid://c0idle3lxgufw" path="res://data/quests/1001-dealer-job-change-quest.tres" id="3_31crq"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_2ock0"]
+operator = ">="
+value = 10
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_2stgk"]
+ability = "Job"
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_qk1ru"]
+quest = ExtResource("1_6sw4k")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_l3iyh"]
+item = ExtResource("2_v3x6q")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_1usw0"]
+quest = ExtResource("1_6sw4k")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_ukr0t"]
+item = ExtResource("2_v3x6q")
+quantity = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_p22ya"]
+quest = ExtResource("3_31crq")
+
+[resource]
+name = "1001-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_2ock0"), SubResource("RoseConditionAbilityValue_2stgk"), SubResource("RoseConditionSelectQuest_qk1ru"), SubResource("RoseConditionQuestItem_l3iyh")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_1usw0"), SubResource("RoseRewardRemoveItem_ukr0t"), SubResource("RoseRewardChangeSelectedQuest_p22ya")])

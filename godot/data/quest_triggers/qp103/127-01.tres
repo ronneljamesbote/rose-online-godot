@@ -1,0 +1,41 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d0gcnxdbsgtcx"]
+
+[ext_resource type="RoseQuest" uid="uid://c7kybhc4pllfb" path="res://data/quests/127-the-owl-eye.tres" id="1_pwtgv"]
+[ext_resource type="RoseItemQuest" uid="uid://bfm32bgvrwd71" path="res://data/items/quest/24-gold-fragment.tres" id="2_jgnw6"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_flk7h"]
+quest = ExtResource("1_pwtgv")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_m71fm"]
+item = ExtResource("2_jgnw6")
+equipment_index = 13
+count = 20
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_sun74"]
+quest = ExtResource("1_pwtgv")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_52wkj"]
+item = ExtResource("2_jgnw6")
+quantity = 20
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_ridgk"]
+value = 5000
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_2nssb"]
+equation = 2
+value = 500
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_o4sxm"]
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_6vf0u"]
+variable_type = "Episode"
+value = 27
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_7q2cm"]
+trigger = "127-03"
+
+[resource]
+name = "127-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_flk7h"), SubResource("RoseConditionQuestItem_m71fm")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_sun74"), SubResource("RoseRewardRemoveItem_52wkj"), SubResource("RoseRewardCalculatedExperiencePoints_ridgk"), SubResource("RoseRewardCalculatedMoney_2nssb"), SubResource("RoseRewardRemoveSelectedQuest_o4sxm"), SubResource("RoseRewardQuestVariable_6vf0u"), SubResource("RoseRewardTrigger_7q2cm")])

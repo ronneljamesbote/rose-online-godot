@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b2wtepcyx1pqh"]
+
+[ext_resource type="RoseSkill" uid="uid://dnmmug7wo2ymp" path="res://data/skills/20-trade/20-trade.tres" id="1_rnbhv"]
+
+[sub_resource type="RoseConditionHasSkill" id="RoseConditionHasSkill_pa5no"]
+skill = ExtResource("1_rnbhv")
+has = false
+
+[sub_resource type="RoseRewardAddSkill" id="RoseRewardAddSkill_k6y7q"]
+skill = ExtResource("1_rnbhv")
+
+[resource]
+name = "skilltrade"
+conditions = Array[Resource]([SubResource("RoseConditionHasSkill_pa5no")])
+rewards = Array[Resource]([SubResource("RoseRewardAddSkill_k6y7q")])

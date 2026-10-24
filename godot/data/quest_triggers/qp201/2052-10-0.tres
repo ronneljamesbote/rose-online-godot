@@ -1,0 +1,26 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bj75vnt8fc2he"]
+
+[ext_resource type="RoseQuest" uid="uid://d4i4lkfanrmff" path="res://data/quests/2052-forgotten-temple-investigation-2.tres" id="1_gme8t"]
+[ext_resource type="RoseItemQuest" uid="uid://bqjjo13rsp5uw" path="res://data/items/quest/513-resurrection-spellbook.tres" id="2_or3pi"]
+[ext_resource type="RoseQuestTrigger" uid="uid://c681p58ejvmhu" path="res://data/quest_triggers/qp201/2052-12.tres" id="3_wleev"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_t1nki"]
+quest = ExtResource("1_gme8t")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_a6lgt"]
+item = ExtResource("2_or3pi")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSetTeamNumber" id="RoseRewardSetTeamNumber_152em"]
+
+[sub_resource type="RoseRewardSetRevivePosition" id="RoseRewardSetRevivePosition_70jd3"]
+x = 566423.0
+y = 483490.0
+
+[resource]
+name = "2052-10-0"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_t1nki"), SubResource("RoseConditionQuestItem_a6lgt")])
+rewards = Array[Resource]([SubResource("RoseRewardSetTeamNumber_152em"), SubResource("RoseRewardSetRevivePosition_70jd3")])
+next_trigger = ExtResource("3_wleev")

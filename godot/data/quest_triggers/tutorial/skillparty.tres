@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dacrta5rjh5ur"]
+
+[ext_resource type="RoseSkill" uid="uid://d0ctnyh8ndehl" path="res://data/skills/19-party/19-party.tres" id="1_yquyt"]
+
+[sub_resource type="RoseConditionHasSkill" id="RoseConditionHasSkill_ytylo"]
+skill = ExtResource("1_yquyt")
+has = false
+
+[sub_resource type="RoseRewardAddSkill" id="RoseRewardAddSkill_gqfpa"]
+skill = ExtResource("1_yquyt")
+
+[resource]
+name = "skillparty"
+conditions = Array[Resource]([SubResource("RoseConditionHasSkill_ytylo")])
+rewards = Array[Resource]([SubResource("RoseRewardAddSkill_gqfpa")])

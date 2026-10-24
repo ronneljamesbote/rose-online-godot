@@ -1,0 +1,44 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dlmleen0xiicy"]
+
+[ext_resource type="RoseQuest" uid="uid://puudlbtkenqi" path="res://data/quests/958-the-essence-of-speed.tres" id="1_r6drj"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_8j0m3"]
+[ext_resource type="RoseItemWeapon" uid="uid://7v8n0yx4tuks" path="res://data/items/weapon/205-white-wing-bow.tres" id="3_6hs0r"]
+[ext_resource type="RoseItemConsumable" uid="uid://b8m1vcdrmuhgi" path="res://data/items/consumable/21-mana-vial-s.tres" id="4_3gnqq"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_jaoh5"]
+quest = ExtResource("1_r6drj")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_nx18h"]
+item = ExtResource("2_8j0m3")
+equipment_index = 13
+count = 10
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ksg4b"]
+quest = ExtResource("1_r6drj")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_qq7vd"]
+item = ExtResource("2_8j0m3")
+quantity = 10
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_c7754"]
+equation = 5
+value = 1
+item = ExtResource("3_6hs0r")
+gem = 35
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_spyht"]
+equation = 5
+value = 10
+item = ExtResource("4_3gnqq")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_8wwc5"]
+variable_type = "Job"
+value = 6
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_apoyc"]
+
+[resource]
+name = "958-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_jaoh5"), SubResource("RoseConditionQuestItem_nx18h")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ksg4b"), SubResource("RoseRewardRemoveItem_qq7vd"), SubResource("RoseRewardCalculatedItem_c7754"), SubResource("RoseRewardCalculatedItem_spyht"), SubResource("RoseRewardQuestVariable_8wwc5"), SubResource("RoseRewardRemoveSelectedQuest_apoyc")])

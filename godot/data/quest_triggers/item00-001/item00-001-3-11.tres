@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dap2upwa30rie"]
+
+[ext_resource type="RoseItemGem" uid="uid://d4cawstc5bt2s" path="res://data/items/gem/352-peridot-2.tres" id="1_hsw2m"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_m5f5r"]
+switch = 480
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_5pjuw"]
+equation = 5
+value = 1
+item = ExtResource("1_hsw2m")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_iegvj"]
+switch = 480
+value = true
+
+[resource]
+name = "item00-001-3-11"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_m5f5r")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_5pjuw"), SubResource("RoseRewardSetQuestSwitch_iegvj")])

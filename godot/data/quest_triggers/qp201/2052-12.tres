@@ -1,0 +1,26 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c681p58ejvmhu"]
+
+[ext_resource type="RoseQuest" uid="uid://d4i4lkfanrmff" path="res://data/quests/2052-forgotten-temple-investigation-2.tres" id="1_to8u3"]
+[ext_resource type="RoseItemQuest" uid="uid://bqjjo13rsp5uw" path="res://data/items/quest/513-resurrection-spellbook.tres" id="2_dpuyp"]
+[ext_resource type="RoseQuestTrigger" uid="uid://r2ph53a2idux" path="res://data/quest_triggers/qp201/2053-11.tres" id="3_l0dnb"]
+[ext_resource type="RoseZoneSettings" uid="uid://bikadsb7a5sbp" path="res://data/zones/54-crystal-snowfields.tres" id="4_k2ngj"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_4xmr0"]
+quest = ExtResource("1_to8u3")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_dmymb"]
+item = ExtResource("2_dpuyp")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_wgsaj"]
+zone = ExtResource("4_k2ngj")
+x = 509908
+y = 424748
+
+[resource]
+name = "2052-12"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_4xmr0"), SubResource("RoseConditionQuestItem_dmymb")])
+rewards = Array[Resource]([SubResource("RoseRewardTeleport_wgsaj")])
+next_trigger = ExtResource("3_l0dnb")

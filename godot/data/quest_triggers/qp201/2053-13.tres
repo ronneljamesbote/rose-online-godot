@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dc6mbr8yu7o3f"]
+
+[ext_resource type="RoseQuest" uid="uid://b5d3q13bd7n13" path="res://data/quests/2053-forgotten-temple-investigation-3.tres" id="1_vbdkn"]
+[ext_resource type="RoseItemQuest" uid="uid://6w7cuajufwn" path="res://data/items/quest/498-proof-of-thief-extermination.tres" id="2_ko2ct"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_dk17f"]
+quest = ExtResource("1_vbdkn")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_vvrea"]
+variable_type = "Timer"
+operator = ">"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_cwfhs"]
+quest = ExtResource("1_vbdkn")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_ls8i8"]
+item = ExtResource("2_ko2ct")
+quantity = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_pntot"]
+variable = 9
+operator = "Add"
+value = 1
+
+[resource]
+name = "2053-13"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_dk17f"), SubResource("RoseConditionQuestVariable_vvrea")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_cwfhs"), SubResource("RoseRewardAddItem_ls8i8"), SubResource("RoseRewardQuestVariable_pntot")])

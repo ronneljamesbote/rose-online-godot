@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://db6hidbhyobvn"]
+
+[ext_resource type="RoseQuest" uid="uid://dywrnc17k75g" path="res://data/quests/121-banned-recipe.tres" id="1_jpdqv"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_uhkeg"]
+variable_type = "Episode"
+value = 18
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_i7pju"]
+quest = ExtResource("1_jpdqv")
+
+[resource]
+name = "120-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_uhkeg")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_i7pju")])

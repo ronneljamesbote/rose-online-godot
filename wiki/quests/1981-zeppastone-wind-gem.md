@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/261-goblin-jar|Goblin Jar]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 1981; QSD triggers 1981-01, 1981-02, 1981-31
+  data: 'godot/data/quests/1981-zeppastone-wind-gem.tres; quest triggers in godot/data/quest_triggers/: qp102/1981-01, qp102/1981-02, qn-261/1981-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

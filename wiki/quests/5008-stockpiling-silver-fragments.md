@@ -13,7 +13,7 @@ monsters:
 - '[[monsters/96-hunter-rackie|Hunter Rackie]]'
 steps: 8
 source:
-  data: LIST_QUEST.STB row 5008; QSD triggers 5008-01, 5008-02, 5008-31, 5008-32, 5008-33, 5008-34, 5008-35, 5008-36
+  data: 'godot/data/quests/5008-stockpiling-silver-fragments.tres; quest triggers in godot/data/quest_triggers/: qs10-001/5008-01, qs10-001/5008-02, qn-091/5008-31, qn-092/5008-32, qn-093/5008-33, qn-096/5008-34, qn-084/5008-35, qn-085/5008-36'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

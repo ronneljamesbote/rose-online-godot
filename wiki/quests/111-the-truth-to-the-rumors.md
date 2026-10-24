@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1014-guide-lena|Guide Lena]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 111; QSD triggers 110-01, 110-02, 111-01
+  data: 'godot/data/quests/111-the-truth-to-the-rumors.tres; quest triggers in godot/data/quest_triggers/: qp103/110-01, qp103/110-02, qp103/111-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

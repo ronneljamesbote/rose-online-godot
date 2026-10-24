@@ -1,0 +1,45 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b4pgmuhkc41ey"]
+
+[ext_resource type="RoseQuest" uid="uid://dlajyglkgba3a" path="res://data/quests/2051-forgotten-temple-investigation-1.tres" id="1_q67oa"]
+[ext_resource type="RoseItemQuest" uid="uid://bmp7hj2h1wunl" path="res://data/items/quest/512-shamanic-artifact.tres" id="2_tp3mw"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bunn41osrooh5" path="res://data/quest_triggers/qp201/2051-05.tres" id="3_7mo76"]
+[ext_resource type="RoseItemMaterial" uid="uid://b6ipqqxvljkew" path="res://data/items/material/82-lisent-cu.tres" id="4_std8u"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_k3b8b"]
+quest = ExtResource("1_q67oa")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_2id36"]
+item = ExtResource("2_tp3mw")
+equipment_index = 13
+count = 14
+operator = ">="
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_hpypr"]
+item = ExtResource("2_tp3mw")
+equipment_index = 13
+count = 17
+operator = "<="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_0v6qi"]
+quest = ExtResource("1_q67oa")
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_sh4n7"]
+equation = 2
+value = 3000
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_gkq6i"]
+equation = 3
+value = 80000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_opcul"]
+equation = 5
+value = 7
+item = ExtResource("4_std8u")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_32bth"]
+
+[resource]
+name = "2051-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_k3b8b"), SubResource("RoseConditionQuestItem_2id36"), SubResource("RoseConditionQuestItem_hpypr")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_0v6qi"), SubResource("RoseRewardCalculatedMoney_sh4n7"), SubResource("RoseRewardCalculatedMoney_gkq6i"), SubResource("RoseRewardCalculatedItem_opcul"), SubResource("RoseRewardRemoveSelectedQuest_32bth")])
+next_trigger = ExtResource("3_7mo76")

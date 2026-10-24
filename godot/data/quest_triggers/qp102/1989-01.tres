@@ -1,0 +1,43 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://brd7n0vu0vica"]
+
+[ext_resource type="RoseQuest" uid="uid://clb1yoyqw47je" path="res://data/quests/1989-the-royal-golden-dagger.tres" id="1_rk7bx"]
+[ext_resource type="RoseItemQuest" uid="uid://dyylracpreygy" path="res://data/items/quest/510-golden-dagger.tres" id="2_07nx0"]
+[ext_resource type="RoseItemGem" uid="uid://tdn7gebxxhqd" path="res://data/items/gem/351-peridot-1.tres" id="3_41o0b"]
+[ext_resource type="RoseItemGem" uid="uid://dbemonc8qirua" path="res://data/items/gem/331-topaz-1.tres" id="4_vvpgf"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_wl6em"]
+quest = ExtResource("1_rk7bx")
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_sh3md"]
+switch = 135
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_na2mo"]
+quest = ExtResource("1_rk7bx")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_jt2q0"]
+item = ExtResource("2_07nx0")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_uy5v8"]
+value = 12000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_sfvo6"]
+equation = 5
+value = 1
+item = ExtResource("3_41o0b")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_og1fo"]
+equation = 5
+value = 1
+item = ExtResource("4_vvpgf")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_4f0lt"]
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_e4kce"]
+switch = 135
+value = true
+
+[resource]
+name = "1989-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_wl6em"), SubResource("RoseConditionQuestSwitch_sh3md")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_na2mo"), SubResource("RoseRewardRemoveItem_jt2q0"), SubResource("RoseRewardCalculatedExperiencePoints_uy5v8"), SubResource("RoseRewardCalculatedItem_sfvo6"), SubResource("RoseRewardCalculatedItem_og1fo"), SubResource("RoseRewardRemoveSelectedQuest_4f0lt"), SubResource("RoseRewardSetQuestSwitch_e4kce")])

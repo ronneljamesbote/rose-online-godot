@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d15qoj8ome0o6"]
+
+[ext_resource type="RoseItemConsumable" uid="uid://b16ymqw4vjwcu" path="res://data/items/consumable/102-banana.tres" id="1_4nf3h"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_4fh2d"]
+switch = 73
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_0hyp0"]
+equation = 5
+value = 5
+item = ExtResource("1_4nf3h")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_k1ooc"]
+switch = 73
+value = true
+
+[resource]
+name = "T73"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_4fh2d")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_0hyp0"), SubResource("RoseRewardSetQuestSwitch_k1ooc")])

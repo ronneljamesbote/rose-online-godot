@@ -7,7 +7,7 @@ npcs:
 - '[[npcs/1141-righteous-crusader-gallahad|Righteous Crusader Gallahad]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 1984; QSD triggers 1983-01, 1984-01, 1984-02, 1984-03
+  data: 'godot/data/quests/1984-the-ominous-kenji-stone.tres; quest triggers in godot/data/quest_triggers/: qp102/1983-01, qp102/1984-01, qp103/1984-02, qp102/1984-03'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

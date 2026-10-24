@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://s3lw80advjf1"]
+
+[ext_resource type="RoseQuest" uid="uid://ckmc17bwap5bk" path="res://data/quests/1002-dealer-job-change-quest.tres" id="1_goae6"]
+[ext_resource type="RoseItemQuest" uid="uid://cfpyuiydmitwp" path="res://data/items/quest/111-small-metal-board.tres" id="2_8d1aa"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_c6qfo"]
+quest = ExtResource("1_goae6")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_uq421"]
+item = ExtResource("2_8d1aa")
+equipment_index = 13
+count = 5
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_b5vea"]
+quest = ExtResource("1_goae6")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_eki3f"]
+item = ExtResource("2_8d1aa")
+quantity = 5
+
+[resource]
+name = "1002-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_c6qfo"), SubResource("RoseConditionQuestItem_uq421")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_b5vea"), SubResource("RoseRewardAddItem_eki3f")])

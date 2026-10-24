@@ -10,7 +10,7 @@ monsters:
 - '[[monsters/93-fighter-rackie|Fighter Rackie]]'
 steps: 6
 source:
-  data: LIST_QUEST.STB row 118; QSD triggers 117-01, 117-02, 118-01, 118-31, 118-32, 118-33
+  data: 'godot/data/quests/118-forbidden-potion.tres; quest triggers in godot/data/quest_triggers/: qp103/117-01, qp103/117-02, qp103/118-01, qn-068/118-31, qn-067/118-32, qn-093/118-33'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

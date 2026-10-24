@@ -1,0 +1,40 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dnvteymtkvfis"]
+
+[ext_resource type="RoseItemBack" uid="uid://d0cu2a7rgfv36" path="res://data/items/back/206-cutie-bag.tres" id="1_yep0e"]
+[ext_resource type="RoseItemMaterial" uid="uid://djbglo1lf3d2k" path="res://data/items/material/63-low-ether.tres" id="2_vnmso"]
+[ext_resource type="RoseItemMaterial" uid="uid://txirltqrlwuc" path="res://data/items/material/404.tres" id="3_dsqaa"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_rmssj"]
+value = 45
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_yforg"]
+switch = 484
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_5mahh"]
+equation = 5
+value = 1
+item = ExtResource("1_yep0e")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_2t8yn"]
+equation = 5
+value = 20
+item = ExtResource("2_vnmso")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_h483u"]
+equation = 5
+value = 9
+item = ExtResource("3_dsqaa")
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_prgdp"]
+ability = "Money"
+operator = "Add"
+value = 8000
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_tu4na"]
+switch = 484
+value = true
+
+[resource]
+name = "kwang45-3"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_rmssj"), SubResource("RoseConditionQuestSwitch_yforg")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_5mahh"), SubResource("RoseRewardCalculatedItem_2t8yn"), SubResource("RoseRewardCalculatedItem_h483u"), SubResource("RoseRewardAbilityValue_prgdp"), SubResource("RoseRewardSetQuestSwitch_tu4na")])

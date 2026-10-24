@@ -1,0 +1,32 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://db8wxpb6dttem"]
+
+[ext_resource type="RoseQuest" uid="uid://did7euta1qauf" path="res://data/quests/144-the-truth-of-the-golden-dagger.tres" id="1_476xl"]
+[ext_resource type="RoseItemMaterial" uid="uid://dn6t5xd66wdjw" path="res://data/items/material/153-blue-hearts.tres" id="2_4btxq"]
+[ext_resource type="RoseQuest" uid="uid://ygrsulyqu8ol" path="res://data/quests/145-information-on-lunar.tres" id="3_fwree"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_vfwrw"]
+quest = ExtResource("1_476xl")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_c2mja"]
+quest = ExtResource("1_476xl")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_4qa2k"]
+value = 20000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_8qnv0"]
+equation = 5
+value = 1
+item = ExtResource("2_4btxq")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_m07ma"]
+quest = ExtResource("3_fwree")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_lgstc"]
+variable_type = "Episode"
+value = 44
+
+[resource]
+name = "144-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_vfwrw")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_c2mja"), SubResource("RoseRewardCalculatedExperiencePoints_4qa2k"), SubResource("RoseRewardCalculatedItem_8qnv0"), SubResource("RoseRewardChangeSelectedQuest_m07ma"), SubResource("RoseRewardQuestVariable_lgstc")])

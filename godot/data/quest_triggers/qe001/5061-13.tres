@@ -1,0 +1,37 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d1r25jvls4viv"]
+
+[ext_resource type="RoseQuest" uid="uid://pm0r5k46uljo" path="res://data/quests/5061-the-santa-suit-heist.tres" id="1_nvfl5"]
+[ext_resource type="RoseItemQuest" uid="uid://dachjktlc865e" path="res://data/items/quest/901-stolen-santa-suit.tres" id="2_3a2xi"]
+[ext_resource type="RoseItemHead" uid="uid://gnhoplbk2kr4" path="res://data/items/head/152-santa-hat.tres" id="3_wgd0f"]
+[ext_resource type="RoseItemConsumable" uid="uid://cygxhybfmvlui" path="res://data/items/consumable/912.tres" id="4_lell1"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_fxatl"]
+quest = ExtResource("1_nvfl5")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_x62su"]
+item = ExtResource("2_3a2xi")
+equipment_index = 13
+count = 20
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_wkvju"]
+quest = ExtResource("1_nvfl5")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_7rgi4"]
+item = ExtResource("2_3a2xi")
+quantity = 20
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_yolug"]
+equation = 5
+value = 1
+item = ExtResource("3_wgd0f")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_1iggi"]
+equation = 5
+value = 2
+item = ExtResource("4_lell1")
+
+[resource]
+name = "5061-13"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_fxatl"), SubResource("RoseConditionQuestItem_x62su")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_wkvju"), SubResource("RoseRewardRemoveItem_7rgi4"), SubResource("RoseRewardCalculatedItem_yolug"), SubResource("RoseRewardCalculatedItem_1iggi")])

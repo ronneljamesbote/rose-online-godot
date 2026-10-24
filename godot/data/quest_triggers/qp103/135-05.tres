@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://x6h1dxto0qnp"]
+
+[ext_resource type="RoseQuest" uid="uid://jcqfih2dxotv" path="res://data/quests/135-the-scheme.tres" id="1_e6yst"]
+[ext_resource type="RoseItemQuest" uid="uid://vvctm05vtlo1" path="res://data/items/quest/618-odorous-sweat.tres" id="2_asrtl"]
+[ext_resource type="RoseItemQuest" uid="uid://feiwwne0ofcl" path="res://data/items/quest/619-scarlet-heart.tres" id="3_5pq6b"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_hdamh"]
+quest = ExtResource("1_e6yst")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_54dsy"]
+item = ExtResource("2_asrtl")
+equipment_index = 13
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_ang3i"]
+item = ExtResource("3_5pq6b")
+equipment_index = 13
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_yrqyi"]
+quest = ExtResource("1_e6yst")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_vic6y"]
+item = ExtResource("2_asrtl")
+quantity = 15
+
+[resource]
+name = "135-05"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_hdamh"), SubResource("RoseConditionQuestItem_54dsy"), SubResource("RoseConditionQuestItem_ang3i")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_yrqyi"), SubResource("RoseRewardAddItem_vic6y")])

@@ -1,0 +1,17 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dlpbjxd75csca"]
+
+[ext_resource type="RoseQuest" uid="uid://pm0r5k46uljo" path="res://data/quests/5061-the-santa-suit-heist.tres" id="1_2ktlg"]
+[ext_resource type="RoseZoneSettings" uid="uid://dnnfjmvcoom4b" path="res://data/zones/2-city-of-junon-polis.tres" id="2_c1126"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_1ytgp"]
+quest = ExtResource("1_2ktlg")
+
+[sub_resource type="RoseConditionPosition" id="RoseConditionPosition_8se5y"]
+zone = ExtResource("2_c1126")
+x = 552200.0
+y = 534700.0
+distance = 100
+
+[resource]
+name = "5061-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_1ytgp"), SubResource("RoseConditionPosition_8se5y")])

@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/122-krawfy-warrior|Krawfy Warrior]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 3407; QSD triggers 3407-01, 3407-02, 3407-03, 3407-31
+  data: 'godot/data/quests/3407-righteous-crusaders-in-preparation.tres; quest triggers in godot/data/quest_triggers/: qu03-001/3407-01, qu03-001/3407-02, qu03-001/3407-03, qn-122/3407-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

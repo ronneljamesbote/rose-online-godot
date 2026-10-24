@@ -1,0 +1,10 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bghj0k7ioqodn"]
+
+[ext_resource type="RoseSkill" uid="uid://bh1156kk5ufiv" path="res://data/skills/17-drive-cart/17-drive-cart.tres" id="1_3uyta"]
+
+[sub_resource type="RoseConditionHasSkill" id="RoseConditionHasSkill_52vfk"]
+skill = ExtResource("1_3uyta")
+
+[resource]
+name = "802-02"
+conditions = Array[Resource]([SubResource("RoseConditionHasSkill_52vfk")])

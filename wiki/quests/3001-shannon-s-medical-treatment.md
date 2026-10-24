@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1052-mountain-guide-shannon|Mountain Guide Shannon]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 3001; QSD triggers 3001-01, 3001-02, 3001-03, 3001-04
+  data: 'godot/data/quests/3001-shannon-s-medical-treatment.tres; quest triggers in godot/data/quest_triggers/: qu01-001/3001-01, qu01-001/3001-02, qu01-001/3001-03, qu01-001/3001-04'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

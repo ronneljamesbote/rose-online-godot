@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b3gejqrg12kbf"]
+
+[ext_resource type="RoseQuest" uid="uid://b36qf0ijxmtwe" path="res://data/quests/122-resurrection.tres" id="1_4j36a"]
+[ext_resource type="RoseItemQuest" uid="uid://rlqkgr3qup4l" path="res://data/items/quest/611-resurrection-medicine.tres" id="2_2asuq"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_w05nv"]
+variable_type = "Episode"
+value = 19
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_5cdw1"]
+quest = ExtResource("1_4j36a")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_fif3j"]
+quest = ExtResource("1_4j36a")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_r5mdp"]
+item = ExtResource("2_2asuq")
+quantity = 1
+
+[resource]
+name = "121-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_w05nv")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_5cdw1"), SubResource("RoseRewardSelectQuest_fif3j"), SubResource("RoseRewardAddItem_r5mdp")])

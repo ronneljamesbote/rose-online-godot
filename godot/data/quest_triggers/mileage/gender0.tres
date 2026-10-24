@@ -1,0 +1,27 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ccslvu408hcas"]
+
+[ext_resource type="RoseItemMaterial" uid="uid://blbqcg8lc7g38" path="res://data/items/material/453-transgender-coupon.tres" id="1_62t4w"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bupvlg51bnctk" path="res://data/quest_triggers/mileage/gender1.tres" id="2_tjyfh"]
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_ej0fk"]
+item = ExtResource("1_62t4w")
+equipment_index = 12
+count = 1
+operator = ">="
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_7mkul"]
+ability = "Gender"
+value = 1
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_r8h5g"]
+ability = "Gender"
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_xm5fc"]
+item = ExtResource("1_62t4w")
+quantity = 1
+
+[resource]
+name = "gender0"
+conditions = Array[Resource]([SubResource("RoseConditionQuestItem_ej0fk"), SubResource("RoseConditionAbilityValue_7mkul")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_r8h5g"), SubResource("RoseRewardRemoveItem_xm5fc")])
+next_trigger = ExtResource("2_tjyfh")

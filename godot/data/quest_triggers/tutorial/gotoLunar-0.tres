@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bcl4utv5n5ka5"]
+
+[ext_resource type="RoseZoneSettings" uid="uid://mpsx2m3ghks1" path="res://data/zones/51-magic-city-of-the-eucar.tres" id="1_4axu5"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_4yak3"]
+ability = "Money"
+operator = ">="
+value = 13000
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_58xr8"]
+zone = ExtResource("1_4axu5")
+x = 511400
+y = 500600
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_nk1f1"]
+ability = "Money"
+operator = "Subtract"
+value = 13000
+
+[resource]
+name = "gotoLunar-0"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_4yak3")])
+rewards = Array[Resource]([SubResource("RoseRewardTeleport_58xr8"), SubResource("RoseRewardAbilityValue_nk1f1")])

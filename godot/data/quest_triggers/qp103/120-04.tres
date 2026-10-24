@@ -1,0 +1,21 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b4p2523vvqs10"]
+
+[ext_resource type="RoseQuest" uid="uid://cyhhs68q1khlx" path="res://data/quests/120-dangerous-book.tres" id="1_1yddc"]
+[ext_resource type="RoseItemQuest" uid="uid://7sohejgjnoq5" path="res://data/items/quest/609-dreadful-book-vol-2.tres" id="2_pkva6"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_jlked"]
+quest = ExtResource("1_1yddc")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_wdeq7"]
+item = ExtResource("2_pkva6")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseRewardCallLuaFunction" id="RoseRewardCallLuaFunction_1xkm7"]
+function = "horriblebook"
+
+[resource]
+name = "120-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_jlked"), SubResource("RoseConditionQuestItem_wdeq7")])
+rewards = Array[Resource]([SubResource("RoseRewardCallLuaFunction_1xkm7")])

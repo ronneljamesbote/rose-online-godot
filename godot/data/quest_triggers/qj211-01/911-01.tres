@@ -1,0 +1,41 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bhm33loin7h45"]
+
+[ext_resource type="RoseQuest" uid="uid://bdibnxwe6fmau" path="res://data/quests/911-an-appropriate-compromise.tres" id="1_nquuk"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_d3j18"]
+[ext_resource type="RoseItemQuest" uid="uid://biyja0cbw07vd" path="res://data/items/quest/499-proof-of-monster-extermination.tres" id="3_vq2u2"]
+[ext_resource type="RoseQuest" uid="uid://ckxp2ngkqayjq" path="res://data/quests/912-an-appropriate-compromise.tres" id="4_upc0k"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_04uc7"]
+quest = ExtResource("1_nquuk")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_ycugx"]
+item = ExtResource("2_d3j18")
+equipment_index = 13
+count = 20
+operator = ">="
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_xjr20"]
+item = ExtResource("3_vq2u2")
+equipment_index = 13
+count = 5
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_48lr1"]
+quest = ExtResource("1_nquuk")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_sea1t"]
+item = ExtResource("2_d3j18")
+quantity = 20
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_rryos"]
+item = ExtResource("3_vq2u2")
+quantity = 5
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_6cvni"]
+quest = ExtResource("4_upc0k")
+keep_data = true
+
+[resource]
+name = "911-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_04uc7"), SubResource("RoseConditionQuestItem_ycugx"), SubResource("RoseConditionQuestItem_xjr20")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_48lr1"), SubResource("RoseRewardRemoveItem_sea1t"), SubResource("RoseRewardRemoveItem_rryos"), SubResource("RoseRewardChangeSelectedQuest_6cvni")])

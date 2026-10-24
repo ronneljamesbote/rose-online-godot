@@ -11,7 +11,7 @@ monsters:
 - '[[monsters/205-woopie-king|Woopie King]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 113; QSD triggers 112-01, 112-02, 113-01, 113-31, 113-32
+  data: 'godot/data/quests/113-hourglass-of-purification.tres; quest triggers in godot/data/quest_triggers/: qp103/112-01, qp103/112-02, qp103/113-01, qn-205/113-31, qn-205/113-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

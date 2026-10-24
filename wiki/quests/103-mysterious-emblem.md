@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1037-old-fisherman-myad|Old Fisherman Myad]]'
 steps: 2
 source:
-  data: LIST_QUEST.STB row 103; QSD triggers 102-01, 103-01
+  data: 'godot/data/quests/103-mysterious-emblem.tres; quest triggers in godot/data/quest_triggers/: qp103/102-01, qp103/103-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

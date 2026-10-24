@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cppn6f4xy7r5p"]
+
+[ext_resource type="RoseItemFeet" uid="uid://cpp7v42o0p30v" path="res://data/items/feet/30-visitor-sandals.tres" id="1_o5uu0"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_qe2i7"]
+switch = 3
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_qh4tt"]
+equation = 5
+value = 1
+item = ExtResource("1_o5uu0")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_qp8gg"]
+switch = 3
+value = true
+
+[resource]
+name = "basicShoes"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_qe2i7")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_qh4tt"), SubResource("RoseRewardSetQuestSwitch_qp8gg")])

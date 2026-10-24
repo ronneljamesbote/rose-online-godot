@@ -1,0 +1,47 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c1al0v8mlppg2"]
+
+[ext_resource type="RoseQuest" uid="uid://j34xatmqhkpr" path="res://data/quests/5041-the-lost-engagement-ring.tres" id="1_335o1"]
+[ext_resource type="RoseItemQuest" uid="uid://3bnlao2unpsc" path="res://data/items/quest/508-methio-s-engagement-ring.tres" id="2_se4vu"]
+[ext_resource type="RoseQuestTrigger" uid="uid://ceqmt4vt7ru5" path="res://data/quest_triggers/qs10-001/5041-03.tres" id="3_wnjb6"]
+[ext_resource type="RoseItemConsumable" uid="uid://iy3bxt1he2nr" path="res://data/items/consumable/56-vital-jam-1.tres" id="4_w441t"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_3pgdk"]
+quest = ExtResource("1_335o1")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_lk0se"]
+item = ExtResource("2_se4vu")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_ij0lq"]
+operator = "<"
+value = 23
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_juboj"]
+quest = ExtResource("1_335o1")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_syskl"]
+item = ExtResource("2_se4vu")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_aeew4"]
+equation = 1
+value = 300
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_nfoke"]
+equation = 5
+value = 1
+item = ExtResource("4_w441t")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_3fhpf"]
+switch = 32
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_xybia"]
+
+[resource]
+name = "5041-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_3pgdk"), SubResource("RoseConditionQuestItem_lk0se"), SubResource("RoseConditionAbilityValue_ij0lq")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_juboj"), SubResource("RoseRewardRemoveItem_syskl"), SubResource("RoseRewardCalculatedExperiencePoints_aeew4"), SubResource("RoseRewardCalculatedItem_nfoke"), SubResource("RoseRewardSetQuestSwitch_3fhpf"), SubResource("RoseRewardRemoveSelectedQuest_xybia")])
+next_trigger = ExtResource("3_wnjb6")

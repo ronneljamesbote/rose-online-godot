@@ -1,0 +1,16 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b2q2wlu585m37"]
+
+[ext_resource type="RoseZoneSettings" uid="uid://n4k6neg038jm" path="res://data/zones/59-luna-clan-field.tres" id="1_yrddk"]
+
+[sub_resource type="RoseConditionHasClan" id="RoseConditionHasClan_2jvwx"]
+has_clan = true
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_4t451"]
+zone = ExtResource("1_yrddk")
+x = 509508
+y = 512913
+
+[resource]
+name = "Clan-warp05"
+conditions = Array[Resource]([SubResource("RoseConditionHasClan_2jvwx")])
+rewards = Array[Resource]([SubResource("RoseRewardTeleport_4t451")])

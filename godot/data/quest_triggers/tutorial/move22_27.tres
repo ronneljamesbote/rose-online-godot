@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bbku46kkwp6ui"]
+
+[ext_resource type="RoseZoneSettings" uid="uid://cf60xqfegrnx3" path="res://data/zones/27-kenji-beach.tres" id="1_qlcne"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_sqq61"]
+ability = "Money"
+operator = ">="
+value = 1500
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_l2hlk"]
+ability = "Money"
+operator = "Subtract"
+value = 1500
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_3rkfe"]
+zone = ExtResource("1_qlcne")
+x = 524200
+y = 502200
+
+[resource]
+name = "move22_27"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_sqq61")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_l2hlk"), SubResource("RoseRewardTeleport_3rkfe")])

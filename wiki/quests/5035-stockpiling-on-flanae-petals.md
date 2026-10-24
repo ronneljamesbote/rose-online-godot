@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1038-village-chief-gray|Village Chief Gray]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 5035; QSD triggers 5035-01, 5035-02, 5035-03, 5035-31, 5035-32
+  data: 'godot/data/quests/5035-stockpiling-on-flanae-petals.tres; quest triggers in godot/data/quest_triggers/: qs10-001/5035-01, qs10-001/5035-02, qs10-001/5035-03, qn-041/5035-31, qn-042/5035-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

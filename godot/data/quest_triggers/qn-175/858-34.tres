@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cwci6tb30nbqg"]
+
+[ext_resource type="RoseQuest" uid="uid://tvch7kvok0uy" path="res://data/quests/858-hovert-s-mementos.tres" id="1_ncobx"]
+[ext_resource type="RoseItemQuest" uid="uid://b2bqlinb4mq8c" path="res://data/items/quest/123-rusted-iron-helmet.tres" id="2_cspjd"]
+[ext_resource type="RoseQuestTrigger" uid="uid://b8uqqdehccdqo" path="res://data/quest_triggers/qn-175/1008-31.tres" id="3_jfvyw"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_3qiq7"]
+quest = ExtResource("1_ncobx")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_45nwu"]
+item = ExtResource("2_cspjd")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_dwa8a"]
+to = 10
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_1l5wn"]
+quest = ExtResource("1_ncobx")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_ca0gu"]
+item = ExtResource("2_cspjd")
+quantity = 1
+
+[resource]
+name = "858-34"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_3qiq7"), SubResource("RoseConditionQuestItem_45nwu"), SubResource("RoseConditionRandomPercent_dwa8a")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_1l5wn"), SubResource("RoseRewardAddItem_ca0gu")])
+next_trigger = ExtResource("3_jfvyw")

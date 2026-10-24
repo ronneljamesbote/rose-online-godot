@@ -1,0 +1,40 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d2f0cadx8qlo1"]
+
+[ext_resource type="RoseQuest" uid="uid://dj7x4lj3ncqmi" path="res://data/quests/5009-candle-ghost-extermination-fetch-quest.tres" id="1_qyg2e"]
+[ext_resource type="RoseItemQuest" uid="uid://bng0f7ft7qvkc" path="res://data/items/quest/809-candle-ghost-mask.tres" id="2_78rc8"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_h1i5a"]
+quest = ExtResource("1_qyg2e")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_r18jc"]
+variable_type = "Timer"
+operator = ">"
+
+[sub_resource type="RoseConditionMonthDayTime" id="RoseConditionMonthDayTime_ui5y2"]
+from_minute = 1190
+to_minute = 1439
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_25mys"]
+operator = "<="
+value = 91
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_h6xt5"]
+to = 20
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_jfwue"]
+item = ExtResource("2_78rc8")
+equipment_index = 13
+count = 20
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_kmggo"]
+quest = ExtResource("1_qyg2e")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_h7w6g"]
+item = ExtResource("2_78rc8")
+quantity = 1
+
+[resource]
+name = "5009-48"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_h1i5a"), SubResource("RoseConditionQuestVariable_r18jc"), SubResource("RoseConditionMonthDayTime_ui5y2"), SubResource("RoseConditionAbilityValue_25mys"), SubResource("RoseConditionRandomPercent_h6xt5"), SubResource("RoseConditionQuestItem_jfwue")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_kmggo"), SubResource("RoseRewardAddItem_h7w6g")])

@@ -1,0 +1,34 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://rf6rs8dbatde"]
+
+[ext_resource type="RoseQuest" uid="uid://cl3l4x8fd2l1q" path="res://data/quests/134-the-scheme.tres" id="1_iafb1"]
+[ext_resource type="RoseItemQuest" uid="uid://vvctm05vtlo1" path="res://data/items/quest/618-odorous-sweat.tres" id="2_ypj7p"]
+[ext_resource type="RoseQuest" uid="uid://jcqfih2dxotv" path="res://data/quests/135-the-scheme.tres" id="3_tl6uf"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ealc3"]
+quest = ExtResource("1_iafb1")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_k1ei3"]
+item = ExtResource("2_ypj7p")
+equipment_index = 13
+count = 15
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_y2wm5"]
+quest = ExtResource("1_iafb1")
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_64h71"]
+equation = 3
+value = 30000
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_jeurm"]
+quest = ExtResource("3_tl6uf")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_rtff6"]
+variable_type = "Episode"
+value = 34
+
+[resource]
+name = "134-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ealc3"), SubResource("RoseConditionQuestItem_k1ei3")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_y2wm5"), SubResource("RoseRewardCalculatedMoney_64h71"), SubResource("RoseRewardChangeSelectedQuest_jeurm"), SubResource("RoseRewardQuestVariable_rtff6")])

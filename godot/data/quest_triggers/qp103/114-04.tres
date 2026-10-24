@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dni8uwv267vqj"]
+
+[ext_resource type="RoseQuest" uid="uid://cxoj61mhysm14" path="res://data/quests/114-hourglass-of-purification.tres" id="1_7hulq"]
+[ext_resource type="RoseItemQuest" uid="uid://cxp1jegjyt436" path="res://data/items/quest/606-crystal-key.tres" id="2_7p4ti"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_77jyw"]
+quest = ExtResource("1_7hulq")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_hpwkg"]
+variable_type = "Switch"
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_421rm"]
+item = ExtResource("2_7p4ti")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseRewardCallLuaFunction" id="RoseRewardCallLuaFunction_tarca"]
+function = "sandglass"
+
+[resource]
+name = "114-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_77jyw"), SubResource("RoseConditionQuestVariable_hpwkg"), SubResource("RoseConditionQuestItem_421rm")])
+rewards = Array[Resource]([SubResource("RoseRewardCallLuaFunction_tarca")])

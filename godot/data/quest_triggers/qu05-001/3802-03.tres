@@ -1,0 +1,43 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cag6i7winx85w"]
+
+[ext_resource type="RoseQuest" uid="uid://lwj1ju40apps" path="res://data/quests/3802-stockpiling-high-quality-coal.tres" id="1_76tv8"]
+[ext_resource type="RoseItemQuest" uid="uid://xpmc24wh6jj2" path="res://data/items/quest/311-high-quality-coal.tres" id="2_riql4"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_hu5mg"]
+quest = ExtResource("1_76tv8")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_xk8q7"]
+ability = "Union"
+value = 5
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_ivkhv"]
+operator = ">"
+value = 50
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_2q0nf"]
+item = ExtResource("2_riql4")
+equipment_index = 13
+count = 10
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_qg6yr"]
+quest = ExtResource("1_76tv8")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_v86f7"]
+item = ExtResource("2_riql4")
+quantity = 10
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_q45h4"]
+ability = "UnionPoint5"
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_41adl"]
+value = 10000
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_qpfmd"]
+
+[resource]
+name = "3802-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_hu5mg"), SubResource("RoseConditionAbilityValue_xk8q7"), SubResource("RoseConditionAbilityValue_ivkhv"), SubResource("RoseConditionQuestItem_2q0nf")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_qg6yr"), SubResource("RoseRewardRemoveItem_v86f7"), SubResource("RoseRewardAbilityValue_q45h4"), SubResource("RoseRewardCalculatedExperiencePoints_41adl"), SubResource("RoseRewardRemoveSelectedQuest_qpfmd")])

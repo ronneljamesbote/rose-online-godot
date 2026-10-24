@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dnrcx4fw67sfc"]
+
+[ext_resource type="RoseQuest" uid="uid://c5ajqx0qgbakb" path="res://data/quests/3401-violence-by-porkies.tres" id="1_mhx6d"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_yte6n"]
+ability = "Union"
+value = 3
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_dhgln"]
+quest = ExtResource("1_mhx6d")
+
+[resource]
+name = "3401-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_yte6n")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_dhgln")])

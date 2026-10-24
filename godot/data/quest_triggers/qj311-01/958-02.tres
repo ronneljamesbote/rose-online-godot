@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dk840kv8gdfmf"]
+
+[ext_resource type="RoseQuest" uid="uid://puudlbtkenqi" path="res://data/quests/958-the-essence-of-speed.tres" id="1_bqey6"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_6542l"]
+switch = 34
+value = true
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_dviqg"]
+quest = ExtResource("1_bqey6")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_j5e4u"]
+switch = 35
+value = true
+
+[resource]
+name = "958-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_6542l")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_dviqg"), SubResource("RoseRewardSetQuestSwitch_j5e4u")])

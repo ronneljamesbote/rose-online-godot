@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1002-akram-kingdom-minister-warren|Akram Kingdom Minister Warren]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 801; QSD triggers 801-01, 851-01, 901-01, 951-01, 1001-01
+  data: 'godot/data/quests/801-junon-planet-identification.tres; quest triggers in godot/data/quest_triggers/: qj000-01/801-01, qj000-01/851-01, qj000-01/901-01, qj000-01/951-01, qj000-01/1001-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

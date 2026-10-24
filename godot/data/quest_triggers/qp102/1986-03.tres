@@ -1,0 +1,26 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ut4ujlmq2xk6"]
+
+[ext_resource type="RoseQuest" uid="uid://du0wv01busneu" path="res://data/quests/1988-pavrick-the-craftsman-on-lunar.tres" id="1_nc7ef"]
+[ext_resource type="RoseItemQuest" uid="uid://dyylracpreygy" path="res://data/items/quest/510-golden-dagger.tres" id="2_blho6"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_h6ox3"]
+switch = 133
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_8g2vf"]
+switch = 134
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_ccb6k"]
+quest = ExtResource("1_nc7ef")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_7o80k"]
+quest = ExtResource("1_nc7ef")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_xgjkx"]
+item = ExtResource("2_blho6")
+quantity = 1
+
+[resource]
+name = "1986-03"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_h6ox3"), SubResource("RoseConditionQuestSwitch_8g2vf")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_ccb6k"), SubResource("RoseRewardSelectQuest_7o80k"), SubResource("RoseRewardAddItem_xgjkx")])

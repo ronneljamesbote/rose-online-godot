@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dpvpvi7ewd8xw"]
+
+[ext_resource type="RoseQuest" uid="uid://bmgcemdkw2s0" path="res://data/quests/1052-road-to-second-job-change.tres" id="1_jr3im"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_mhgt0"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_p5i5e"]
+quest = ExtResource("1_jr3im")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_7bh4v"]
+item = ExtResource("2_mhgt0")
+equipment_index = 13
+count = 3
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_41jdk"]
+quest = ExtResource("1_jr3im")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_golef"]
+item = ExtResource("2_mhgt0")
+quantity = 1
+
+[resource]
+name = "1052-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_p5i5e"), SubResource("RoseConditionQuestItem_7bh4v")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_41jdk"), SubResource("RoseRewardAddItem_golef")])

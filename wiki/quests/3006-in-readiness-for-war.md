@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/151-doonga|Doonga]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 3006; QSD triggers 3006-01, 3006-02, 3006-03, 3006-31
+  data: 'godot/data/quests/3006-in-readiness-for-war.tres; quest triggers in godot/data/quest_triggers/: qu01-001/3006-01, qu01-001/3006-02, qu01-001/3006-03, qn-151/3006-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

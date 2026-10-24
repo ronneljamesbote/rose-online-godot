@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dabysfr364e17"]
+
+[ext_resource type="RoseQuest" uid="uid://ckxp2ngkqayjq" path="res://data/quests/912-an-appropriate-compromise.tres" id="1_1t6u7"]
+[ext_resource type="RoseItemWeapon" uid="uid://dl3w7oqbsdi83" path="res://data/items/weapon/304-mage-s-rod.tres" id="2_owvde"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_jj385"]
+quest = ExtResource("1_1t6u7")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_3rq4s"]
+quest = ExtResource("1_1t6u7")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_k671f"]
+equation = 5
+value = 1
+item = ExtResource("2_owvde")
+gem = 87
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_cmold"]
+variable_type = "Job"
+operator = "Add"
+value = 3
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_ie44o"]
+
+[resource]
+name = "912-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_jj385")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_3rq4s"), SubResource("RoseRewardCalculatedItem_k671f"), SubResource("RoseRewardQuestVariable_cmold"), SubResource("RoseRewardRemoveSelectedQuest_ie44o")])

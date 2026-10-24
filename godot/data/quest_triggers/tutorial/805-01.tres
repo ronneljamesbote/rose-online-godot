@@ -1,0 +1,41 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://xe0k1m3eqk8u"]
+
+[ext_resource type="RoseQuest" uid="uid://cqcd270r0iwpe" path="res://data/quests/805-secretly-learning-to-drive.tres" id="1_lodu5"]
+[ext_resource type="RoseItemQuest" uid="uid://dg230e0na71hn" path="res://data/items/quest/98-mildun-s-recommendation.tres" id="2_sv1hf"]
+[ext_resource type="RoseItemQuest" uid="uid://dj80hwsb0867i" path="res://data/items/quest/99-mairard-s-certification.tres" id="3_dbsgo"]
+[ext_resource type="RoseItemQuest" uid="uid://kiq3utbnwwp1" path="res://data/items/quest/100-luce-s-certification.tres" id="4_6po2o"]
+[ext_resource type="RoseSkill" uid="uid://bh1156kk5ufiv" path="res://data/skills/17-drive-cart/17-drive-cart.tres" id="5_mb3bg"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_5dpqw"]
+quest = ExtResource("1_lodu5")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_flqbh"]
+item = ExtResource("2_sv1hf")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_4nawa"]
+item = ExtResource("3_dbsgo")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_8rii8"]
+item = ExtResource("4_6po2o")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_28kpc"]
+quest = ExtResource("1_lodu5")
+
+[sub_resource type="RoseRewardAddSkill" id="RoseRewardAddSkill_jdpoh"]
+skill = ExtResource("5_mb3bg")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_43jsn"]
+
+[resource]
+name = "805-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_5dpqw"), SubResource("RoseConditionQuestItem_flqbh"), SubResource("RoseConditionQuestItem_4nawa"), SubResource("RoseConditionQuestItem_8rii8")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_28kpc"), SubResource("RoseRewardAddSkill_jdpoh"), SubResource("RoseRewardRemoveSelectedQuest_43jsn")])

@@ -1,0 +1,38 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bebccke1co68g"]
+
+[ext_resource type="RoseQuest" uid="uid://j34xatmqhkpr" path="res://data/quests/5041-the-lost-engagement-ring.tres" id="1_cfe1v"]
+[ext_resource type="RoseItemQuest" uid="uid://3bnlao2unpsc" path="res://data/items/quest/508-methio-s-engagement-ring.tres" id="2_bkjsj"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bm40stw3umu8a" path="res://data/quest_triggers/qn-043/5007-31.tres" id="3_3ai23"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_k6opd"]
+quest = ExtResource("1_cfe1v")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_n8st4"]
+to = 7
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_3sfq2"]
+operator = ">="
+value = 15
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_eebhn"]
+operator = "<"
+value = 23
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_uxnjk"]
+item = ExtResource("2_bkjsj")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_td7xx"]
+quest = ExtResource("1_cfe1v")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_0qij1"]
+item = ExtResource("2_bkjsj")
+quantity = 1
+
+[resource]
+name = "5041-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_k6opd"), SubResource("RoseConditionRandomPercent_n8st4"), SubResource("RoseConditionAbilityValue_3sfq2"), SubResource("RoseConditionAbilityValue_eebhn"), SubResource("RoseConditionQuestItem_uxnjk")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_td7xx"), SubResource("RoseRewardAddItem_0qij1")])
+next_trigger = ExtResource("3_3ai23")

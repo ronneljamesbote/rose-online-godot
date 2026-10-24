@@ -1,0 +1,21 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cnabgin8we3lm"]
+
+[ext_resource type="RoseNpc" uid="uid://b0ykfohp8teut" path="res://data/npcs/1201-event-info-judy.tres" id="1_8mw06"]
+[ext_resource type="RoseQuest" uid="uid://cqshirqtn1vql" path="res://data/quests/5062-quest.tres" id="2_fho77"]
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_bovbl"]
+npc = ExtResource("1_8mw06")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_lunw4"]
+value = 1
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_d4egu"]
+switch = 487
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_ypgib"]
+quest = ExtResource("2_fho77")
+
+[resource]
+name = "5062-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectNpc_bovbl"), SubResource("RoseConditionObjectVariable_lunw4"), SubResource("RoseConditionQuestSwitch_d4egu")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_ypgib")])

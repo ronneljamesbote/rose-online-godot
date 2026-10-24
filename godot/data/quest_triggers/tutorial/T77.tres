@@ -1,0 +1,17 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://xqf0x2qoirka"]
+
+[ext_resource type="RoseQuest" uid="uid://rcovrfkbphhi" path="res://data/quests/5051-hunting-practice-1.tres" id="1_xh4tl"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_q8fek"]
+switch = 77
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_d4ok0"]
+quest = ExtResource("1_xh4tl")
+
+[sub_resource type="RoseRewardCallLuaFunction" id="RoseRewardCallLuaFunction_hpgbh"]
+function = "Tutorial07button"
+
+[resource]
+name = "T77"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_q8fek")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_d4ok0"), SubResource("RoseRewardCallLuaFunction_hpgbh")])

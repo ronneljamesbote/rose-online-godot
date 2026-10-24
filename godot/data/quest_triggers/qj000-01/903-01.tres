@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dumsqnpeoygbr"]
+
+[ext_resource type="RoseQuest" uid="uid://dhk7heriy2j43" path="res://data/quests/903-muse-job-change-quest.tres" id="1_oxmsx"]
+[ext_resource type="RoseItemQuest" uid="uid://xfkek3e4t4gq" path="res://data/items/quest/129-pumpkin-seed.tres" id="2_k7at8"]
+[ext_resource type="RoseItemQuest" uid="uid://b7p11wy2idkj2" path="res://data/items/quest/105-nectar-of-deep-sleep.tres" id="3_1x3jc"]
+[ext_resource type="RoseQuest" uid="uid://js0pujpq4age" path="res://data/quests/904-muse-job-change-quest.tres" id="4_j2ap3"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_uypln"]
+quest = ExtResource("1_oxmsx")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_hyldn"]
+item = ExtResource("2_k7at8")
+equipment_index = 13
+count = 5
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ntj48"]
+quest = ExtResource("1_oxmsx")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_hwdbe"]
+item = ExtResource("2_k7at8")
+quantity = 5
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_ng5gw"]
+item = ExtResource("3_1x3jc")
+quantity = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_bnyjh"]
+quest = ExtResource("4_j2ap3")
+keep_data = true
+
+[resource]
+name = "903-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_uypln"), SubResource("RoseConditionQuestItem_hyldn")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ntj48"), SubResource("RoseRewardRemoveItem_hwdbe"), SubResource("RoseRewardAddItem_ng5gw"), SubResource("RoseRewardChangeSelectedQuest_bnyjh")])

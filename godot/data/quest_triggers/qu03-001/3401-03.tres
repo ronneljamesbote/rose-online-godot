@@ -1,0 +1,43 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://omkfuckiwb4v"]
+
+[ext_resource type="RoseQuest" uid="uid://c5ajqx0qgbakb" path="res://data/quests/3401-violence-by-porkies.tres" id="1_01o20"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_hdcjl"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_8fxdy"]
+quest = ExtResource("1_01o20")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_6pf5i"]
+ability = "Union"
+value = 3
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_oi8pm"]
+operator = ">"
+value = 50
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_us7op"]
+item = ExtResource("2_hdcjl")
+equipment_index = 13
+count = 17
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ar5la"]
+quest = ExtResource("1_01o20")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_0fom7"]
+item = ExtResource("2_hdcjl")
+quantity = 17
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_5xs0j"]
+ability = "UnionPoint3"
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_v0c2j"]
+value = 5000
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_idbtn"]
+
+[resource]
+name = "3401-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_8fxdy"), SubResource("RoseConditionAbilityValue_6pf5i"), SubResource("RoseConditionAbilityValue_oi8pm"), SubResource("RoseConditionQuestItem_us7op")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ar5la"), SubResource("RoseRewardRemoveItem_0fom7"), SubResource("RoseRewardAbilityValue_5xs0j"), SubResource("RoseRewardCalculatedExperiencePoints_v0c2j"), SubResource("RoseRewardRemoveSelectedQuest_idbtn")])

@@ -1,0 +1,27 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://8wjgqehs0y0s"]
+
+[ext_resource type="RoseQuest" uid="uid://c5ssu3umjs5tg" path="res://data/quests/5064-darling-judy-1.tres" id="1_rvy6c"]
+[ext_resource type="RoseItemQuest" uid="uid://ct1g7ihhujnc4" path="res://data/items/quest/904-cherry-blossom.tres" id="2_7p8m7"]
+[ext_resource type="RoseQuestTrigger" uid="uid://c4gjcf5o2a1re" path="res://data/quest_triggers/qe001/5064-38.tres" id="3_c7mvn"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_c304k"]
+quest = ExtResource("1_rvy6c")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_y8n62"]
+item = ExtResource("2_7p8m7")
+equipment_index = 13
+count = 20
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_fg8bf"]
+quest = ExtResource("1_rvy6c")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_kqjlc"]
+item = ExtResource("2_7p8m7")
+quantity = 1
+
+[resource]
+name = "5064-37"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_c304k"), SubResource("RoseConditionQuestItem_y8n62")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_fg8bf"), SubResource("RoseRewardAddItem_kqjlc")])
+next_trigger = ExtResource("3_c7mvn")

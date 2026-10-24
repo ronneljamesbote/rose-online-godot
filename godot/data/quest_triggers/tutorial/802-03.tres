@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://beuk3pl5o0pdh"]
+
+[ext_resource type="RoseQuest" uid="uid://bd6ayujh1acvr" path="res://data/quests/802-secretly-learning-to-drive.tres" id="1_n2w1l"]
+[ext_resource type="RoseItemQuest" uid="uid://dj80hwsb0867i" path="res://data/items/quest/99-mairard-s-certification.tres" id="2_xbwkh"]
+[ext_resource type="RoseQuest" uid="uid://c1nrqa0j7qipg" path="res://data/quests/803-secretly-learning-to-drive.tres" id="3_k348b"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_3y1ru"]
+quest = ExtResource("1_n2w1l")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_uqtd1"]
+quest = ExtResource("1_n2w1l")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_lt3fs"]
+item = ExtResource("2_xbwkh")
+quantity = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_q2nkq"]
+quest = ExtResource("3_k348b")
+keep_data = true
+
+[resource]
+name = "802-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_3y1ru")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_uqtd1"), SubResource("RoseRewardAddItem_lt3fs"), SubResource("RoseRewardChangeSelectedQuest_q2nkq")])

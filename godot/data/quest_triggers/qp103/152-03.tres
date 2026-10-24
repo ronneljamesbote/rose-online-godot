@@ -1,0 +1,14 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dvvnfiiqcohkq"]
+
+[ext_resource type="RoseQuest" uid="uid://b2puv6gwwifhc" path="res://data/quests/153-kay-s-request.tres" id="1_1gkd4"]
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_grvse"]
+quest = ExtResource("1_1gkd4")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_xw2y2"]
+variable_type = "Episode"
+value = 52
+
+[resource]
+name = "152-03"
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_grvse"), SubResource("RoseRewardQuestVariable_xw2y2")])

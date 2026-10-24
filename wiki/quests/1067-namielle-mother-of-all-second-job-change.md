@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 1067; QSD triggers 1066-01, 1067-01, 1067-02
+  data: 'godot/data/quests/1067-namielle-mother-of-all-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj211-06/1066-01, qj211-06/1067-01, qj211-06/1067-02'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

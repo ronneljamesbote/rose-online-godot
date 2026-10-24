@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/164-stone-golem|Stone Golem]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 1059; QSD triggers 1058-01, 1059-01, 1059-02, 1059-31, 1059-32
+  data: 'godot/data/quests/1059-lucid-king-of-legend-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj111-06/1058-01, qj111-06/1059-01, qj111-06/1059-02, qn-164/1059-31, qn-164/1059-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

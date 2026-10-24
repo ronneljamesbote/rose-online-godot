@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cpl81n2kjxemo"]
+
+[ext_resource type="RoseQuest" uid="uid://bb5casnk8wpoi" path="res://data/quests/3403-supplying-training-weapons.tres" id="1_q04ta"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_jm08v"]
+ability = "Union"
+value = 3
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_4cvqi"]
+quest = ExtResource("1_q04ta")
+
+[resource]
+name = "3403-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_jm08v")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_4cvqi")])

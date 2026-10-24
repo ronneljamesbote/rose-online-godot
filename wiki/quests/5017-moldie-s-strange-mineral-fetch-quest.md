@@ -10,7 +10,7 @@ monsters:
 time_limit_minutes: 150
 steps: 13
 source:
-  data: LIST_QUEST.STB row 5017; QSD triggers 5017-01, 5017-02, 5017-03, 5017-04, 5017-05, 5017-06, 5017-07, 5017-31, 5017-32, 5017-33, 5017-34, 5017-35, 5017-36
+  data: 'godot/data/quests/5017-moldie-s-strange-mineral-fetch-quest.tres; quest triggers in godot/data/quest_triggers/: qs12-002/5017-01, qs12-002/5017-02, qs12-002/5017-03, qs12-002/5017-04, qs12-002/5017-05, qs12-002/5017-06, qs12-002/5017-07, qn-111/5017-31, qn-111/5017-32, qn-112/5017-33, qn-112/5017-34, qn-113/5017-35, qn-113/5017-36'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

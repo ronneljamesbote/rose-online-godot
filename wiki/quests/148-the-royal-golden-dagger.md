@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1141-righteous-crusader-gallahad|Righteous Crusader Gallahad]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 148; QSD triggers 147-01, 147-02, 148-01
+  data: 'godot/data/quests/148-the-royal-golden-dagger.tres; quest triggers in godot/data/quest_triggers/: qp103/147-01, qp103/147-02, qp103/148-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

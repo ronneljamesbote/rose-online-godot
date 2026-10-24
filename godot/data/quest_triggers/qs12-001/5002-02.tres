@@ -1,0 +1,53 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cj82qejrtruo4"]
+
+[ext_resource type="RoseQuest" uid="uid://ddx0vck2q6n87" path="res://data/quests/5002-pomic-hunt-fetch-quest.tres" id="1_xs4wk"]
+[ext_resource type="RoseItemQuest" uid="uid://cmatiwafxij80" path="res://data/items/quest/110-pomic-skin.tres" id="2_slv2h"]
+[ext_resource type="RoseNpc" uid="uid://dl5c1201kb763" path="res://data/npcs/1008-weapon-seller-raffle.tres" id="3_drg0x"]
+[ext_resource type="RoseQuestTrigger" uid="uid://diis6gc55m2cm" path="res://data/quest_triggers/qs12-001/5002-03.tres" id="4_kqj8d"]
+[ext_resource type="RoseItemConsumable" uid="uid://blwiv60eb3cgu" path="res://data/items/consumable/57-vital-jam-2.tres" id="5_3sppk"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_cvdty"]
+quest = ExtResource("1_xs4wk")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_i6fyy"]
+item = ExtResource("2_slv2h")
+equipment_index = 13
+count = 10
+operator = ">="
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_byh6q"]
+npc = ExtResource("3_drg0x")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_o5njj"]
+variable = 3
+operator = "<="
+value = 2
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_pkokt"]
+quest = ExtResource("1_xs4wk")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_mda6b"]
+item = ExtResource("2_slv2h")
+quantity = 10
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_x5fjk"]
+equation = 3
+value = 2000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_j1tjo"]
+equation = 5
+value = 1
+item = ExtResource("5_3sppk")
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_3231b"]
+variable = 3
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_gxvge"]
+
+[resource]
+name = "5002-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_cvdty"), SubResource("RoseConditionQuestItem_i6fyy"), SubResource("RoseConditionSelectNpc_byh6q"), SubResource("RoseConditionObjectVariable_o5njj")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_pkokt"), SubResource("RoseRewardRemoveItem_mda6b"), SubResource("RoseRewardCalculatedMoney_x5fjk"), SubResource("RoseRewardCalculatedItem_j1tjo"), SubResource("RoseRewardObjectVariable_3231b"), SubResource("RoseRewardRemoveSelectedQuest_gxvge")])
+next_trigger = ExtResource("4_kqj8d")

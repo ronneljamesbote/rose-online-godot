@@ -1,0 +1,38 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bnpcpjq5x0e1c"]
+
+[ext_resource type="RoseQuest" uid="uid://d4i4lkfanrmff" path="res://data/quests/2052-forgotten-temple-investigation-2.tres" id="1_qcyun"]
+[ext_resource type="RoseItemMaterial" uid="uid://yvadh1d3clei" path="res://data/items/material/144-ice-key-fragment.tres" id="2_dn3fi"]
+[ext_resource type="RoseQuestTrigger" uid="uid://rn6fdypoten0" path="res://data/quest_triggers/qp201/2053-19.tres" id="3_ixf5a"]
+[ext_resource type="RoseItemQuest" uid="uid://bqjjo13rsp5uw" path="res://data/items/quest/513-resurrection-spellbook.tres" id="4_aexpo"]
+[ext_resource type="RoseZoneSettings" uid="uid://nvmmxga077n5" path="res://data/zones/56-forgotten-temple-b1.tres" id="5_tmqeg"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_cai3i"]
+quest = ExtResource("1_qcyun")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_sq3es"]
+item = ExtResource("2_dn3fi")
+equipment_index = 12
+count = 15
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_8kgyx"]
+quest = ExtResource("1_qcyun")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_022v8"]
+item = ExtResource("4_aexpo")
+quantity = 3
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_s2e7l"]
+item = ExtResource("2_dn3fi")
+quantity = 15
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_v2yh0"]
+zone = ExtResource("5_tmqeg")
+x = 566423
+y = 483490
+
+[resource]
+name = "2052-19"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_cai3i"), SubResource("RoseConditionQuestItem_sq3es")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_8kgyx"), SubResource("RoseRewardAddItem_022v8"), SubResource("RoseRewardRemoveItem_s2e7l"), SubResource("RoseRewardTeleport_v2yh0")])
+next_trigger = ExtResource("3_ixf5a")

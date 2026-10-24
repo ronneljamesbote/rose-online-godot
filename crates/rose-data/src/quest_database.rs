@@ -86,6 +86,9 @@ pub struct QuestDatabase {
     pub strings: HashMap<u16, String>,
     pub triggers: HashMap<String, QuestTrigger>,
     pub triggers_by_hash: HashMap<QuestTriggerHash, String>,
+    /// Keeps the quests' text alive when it doesn't come from `_string_database` (the export):
+    /// their `&'static str` fields may point into it.
+    pub _text: Vec<String>,
 }
 
 impl QuestDatabase {

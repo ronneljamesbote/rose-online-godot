@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://drd7a6ogromi7"]
+
+[ext_resource type="RoseItemConsumable" uid="uid://drcn6uu4ojs7g" path="res://data/items/consumable/375-funky-dance-basic.tres" id="1_r5gm1"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_yvwmj"]
+switch = 480
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_35a31"]
+equation = 5
+value = 5
+item = ExtResource("1_r5gm1")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_eguwj"]
+switch = 480
+value = true
+
+[resource]
+name = "item00-001-2-5"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_yvwmj")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_35a31"), SubResource("RoseRewardSetQuestSwitch_eguwj")])

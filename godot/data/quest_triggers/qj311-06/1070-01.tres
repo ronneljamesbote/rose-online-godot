@@ -1,0 +1,74 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cbbtstuvbxgnc"]
+
+[ext_resource type="RoseQuest" uid="uid://cl6wq5nhwy24t" path="res://data/quests/1070-kirnale-s-journals-second-job-change.tres" id="1_7fwjr"]
+[ext_resource type="RoseItemQuest" uid="uid://d3lgjplurs41l" path="res://data/items/quest/214-kirnale-s-journal-vol-1.tres" id="2_fww30"]
+[ext_resource type="RoseItemQuest" uid="uid://5p02daealjs4" path="res://data/items/quest/215-kirnale-s-journal-vol-2.tres" id="3_ecjf5"]
+[ext_resource type="RoseItemQuest" uid="uid://dhcae0xhhrdv0" path="res://data/items/quest/216-kirnale-s-journal-vol-3.tres" id="4_ywrx8"]
+[ext_resource type="RoseItemQuest" uid="uid://d28emggjlpd4s" path="res://data/items/quest/217-kirnale-s-journal-vol-4.tres" id="5_efm8x"]
+[ext_resource type="RoseItemQuest" uid="uid://b32moyv3fr3aj" path="res://data/items/quest/218-kirnale-s-journal-vol-5.tres" id="6_876ok"]
+[ext_resource type="RoseQuest" uid="uid://f7y4g3g7n7rd" path="res://data/quests/1071-kirnale-s-journals-second-job-change.tres" id="7_a4bii"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_jfkc3"]
+quest = ExtResource("1_7fwjr")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_pjh1s"]
+item = ExtResource("2_fww30")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_nmpkx"]
+item = ExtResource("3_ecjf5")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_b8dbf"]
+item = ExtResource("4_ywrx8")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_otbqa"]
+item = ExtResource("5_efm8x")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_bku5g"]
+item = ExtResource("6_876ok")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_st6jg"]
+quest = ExtResource("1_7fwjr")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_1di1v"]
+item = ExtResource("2_fww30")
+quantity = 1
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_rins7"]
+item = ExtResource("3_ecjf5")
+quantity = 1
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_galwk"]
+item = ExtResource("4_ywrx8")
+quantity = 1
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_eml2t"]
+item = ExtResource("5_efm8x")
+quantity = 1
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_d2jff"]
+item = ExtResource("6_876ok")
+quantity = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_6sa1g"]
+quest = ExtResource("7_a4bii")
+keep_data = true
+
+[resource]
+name = "1070-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_jfkc3"), SubResource("RoseConditionQuestItem_pjh1s"), SubResource("RoseConditionQuestItem_nmpkx"), SubResource("RoseConditionQuestItem_b8dbf"), SubResource("RoseConditionQuestItem_otbqa"), SubResource("RoseConditionQuestItem_bku5g")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_st6jg"), SubResource("RoseRewardRemoveItem_1di1v"), SubResource("RoseRewardRemoveItem_rins7"), SubResource("RoseRewardRemoveItem_galwk"), SubResource("RoseRewardRemoveItem_eml2t"), SubResource("RoseRewardRemoveItem_d2jff"), SubResource("RoseRewardChangeSelectedQuest_6sa1g")])

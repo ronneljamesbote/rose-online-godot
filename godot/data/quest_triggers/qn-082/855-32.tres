@@ -1,0 +1,35 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://slf4hwpvxlpa"]
+
+[ext_resource type="RoseQuest" uid="uid://bvr5b8y3y7uef" path="res://data/quests/855-living-as-a-true-soldier.tres" id="1_pvg03"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_qw6vm"]
+[ext_resource type="RoseQuestTrigger" uid="uid://gq5cns5iy0a1" path="res://data/quest_triggers/qn-082/1005-32.tres" id="3_6vn2b"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_jdbuo"]
+quest = ExtResource("1_pvg03")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_uvxcd"]
+operator = "<"
+value = 40
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_bvm4x"]
+item = ExtResource("2_qw6vm")
+equipment_index = 13
+count = 40
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_4j86u"]
+quest = ExtResource("1_pvg03")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_w0tdm"]
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_0wr7b"]
+item = ExtResource("2_qw6vm")
+quantity = 1
+
+[resource]
+name = "855-32"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_jdbuo"), SubResource("RoseConditionQuestVariable_uvxcd"), SubResource("RoseConditionQuestItem_bvm4x")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_4j86u"), SubResource("RoseRewardQuestVariable_w0tdm"), SubResource("RoseRewardAddItem_0wr7b")])
+next_trigger = ExtResource("3_6vn2b")

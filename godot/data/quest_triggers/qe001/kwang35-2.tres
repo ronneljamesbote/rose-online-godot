@@ -1,0 +1,41 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cb0yjkqkfbs76"]
+
+[ext_resource type="RoseItemJewellery" uid="uid://bboqnar603kd8" path="res://data/items/jewellery/95-meditation-necklace.tres" id="1_iwju0"]
+[ext_resource type="RoseItemFeet" uid="uid://cwyes1lkcs14c" path="res://data/items/feet/217-earth-walkers.tres" id="2_yp6yu"]
+[ext_resource type="RoseItemMaterial" uid="uid://txirltqrlwuc" path="res://data/items/material/404.tres" id="3_0uw8k"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_nay3h"]
+value = 35
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_ad6eq"]
+switch = 483
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_b8ka0"]
+equation = 5
+value = 1
+item = ExtResource("1_iwju0")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_sp6vj"]
+equation = 5
+value = 1
+item = ExtResource("2_yp6yu")
+gem = 97
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_i03jc"]
+equation = 5
+value = 8
+item = ExtResource("3_0uw8k")
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_d8y5a"]
+ability = "Money"
+operator = "Add"
+value = 5000
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_s6g81"]
+switch = 483
+value = true
+
+[resource]
+name = "kwang35-2"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_nay3h"), SubResource("RoseConditionQuestSwitch_ad6eq")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_b8ka0"), SubResource("RoseRewardCalculatedItem_sp6vj"), SubResource("RoseRewardCalculatedItem_i03jc"), SubResource("RoseRewardAbilityValue_d8y5a"), SubResource("RoseRewardSetQuestSwitch_s6g81")])

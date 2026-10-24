@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dt1hk4l2wrij1"]
+
+[ext_resource type="RoseItemGem" uid="uid://bku0pyw37s7m3" path="res://data/items/gem/301-garnet-1.tres" id="1_ikma6"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_4fc0c"]
+switch = 480
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_cryjk"]
+equation = 5
+value = 1
+item = ExtResource("1_ikma6")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_gnlb5"]
+switch = 480
+value = true
+
+[resource]
+name = "item00-001-3-3"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_4fc0c")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_cryjk"), SubResource("RoseRewardSetQuestSwitch_gnlb5")])

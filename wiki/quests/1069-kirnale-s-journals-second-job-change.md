@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1104-historian-jones|Historian Jones]]'
 steps: 2
 source:
-  data: LIST_QUEST.STB row 1069; QSD triggers 1068-01, 1069-01
+  data: 'godot/data/quests/1069-kirnale-s-journals-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj311-06/1068-01, qj311-06/1069-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

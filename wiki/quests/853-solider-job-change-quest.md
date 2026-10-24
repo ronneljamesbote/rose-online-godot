@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/23-elder-pumpkin|Elder Pumpkin]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 853; QSD triggers 852-02, 853-01, 853-31
+  data: 'godot/data/quests/853-solider-job-change-quest.tres; quest triggers in godot/data/quest_triggers/: qj000-01/852-02, qj000-01/853-01, qn-023/853-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

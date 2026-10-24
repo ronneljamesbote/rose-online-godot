@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1110-ferrell-guild-staff-charrs|Ferrell Guild Staff Charrs]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 3806; QSD triggers 3806-01, 3806-02, 3806-03, 3806-31
+  data: 'godot/data/quests/3806-reassuring-support.tres; quest triggers in godot/data/quest_triggers/: qu05-001/3806-01, qu05-001/3806-02, qu05-001/3806-03, qn-152/3806-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

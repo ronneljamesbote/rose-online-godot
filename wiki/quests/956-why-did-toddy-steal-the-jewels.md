@@ -7,7 +7,7 @@ npcs:
 - '[[npcs/1007-gypsy-jewel-seller-mina|Gypsy Jewel Seller Mina]]'
 steps: 6
 source:
-  data: LIST_QUEST.STB row 956; QSD triggers 955-01, 956-01, 956-02, 956-03, 956-08, 956-31
+  data: 'godot/data/quests/956-why-did-toddy-steal-the-jewels.tres; quest triggers in godot/data/quest_triggers/: qj311-01/955-01, qj311-01/956-01, qj311-01/956-02, qj311-01/956-03, qj311-01/956-08, qn-082/956-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

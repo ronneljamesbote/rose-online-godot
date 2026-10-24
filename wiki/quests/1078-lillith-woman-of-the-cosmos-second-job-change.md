@@ -7,7 +7,7 @@ npcs:
 - '[[npcs/1104-historian-jones|Historian Jones]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 1078; QSD triggers 1077-01, 1078-01, 1078-31, 1078-32
+  data: 'godot/data/quests/1078-lillith-woman-of-the-cosmos-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj411-06/1077-01, qj411-06/1078-01, qn-164/1078-31, qn-164/1078-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

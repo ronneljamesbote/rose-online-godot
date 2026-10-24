@@ -1,0 +1,22 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://uh2fogqb8m0q"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_btg7n"]
+variable_type = "Job"
+value = 2
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_u4y6c"]
+ability = "Job"
+value = 3
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_40kv2"]
+variable_type = "Job"
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_nfafg"]
+value = 850
+
+[resource]
+name = "956-06"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_btg7n"), SubResource("RoseConditionAbilityValue_u4y6c")])
+rewards = Array[Resource]([SubResource("RoseRewardQuestVariable_40kv2"), SubResource("RoseRewardCalculatedExperiencePoints_nfafg")])

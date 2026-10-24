@@ -1,0 +1,48 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dmeo46575sxum"]
+
+[ext_resource type="RoseQuest" uid="uid://ctrl8pm6vxuy4" path="res://data/quests/3004-propagation-risking-danger.tres" id="1_nedvm"]
+[ext_resource type="RoseNpc" uid="uid://f34l5cvarmj4" path="res://data/npcs/1109-elder-of-junon-order-gorthein.tres" id="2_411go"]
+[ext_resource type="RoseItemConsumable" uid="uid://blwiv60eb3cgu" path="res://data/items/consumable/57-vital-jam-2.tres" id="3_rx2pj"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_n4p5k"]
+quest = ExtResource("1_nedvm")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_nijd8"]
+value = 20
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_0kovf"]
+ability = "Union"
+value = 1
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_c8pp3"]
+operator = ">"
+value = 50
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_34rb8"]
+npc = ExtResource("2_411go")
+
+[sub_resource type="RoseConditionObjectDistance" id="RoseConditionObjectDistance_2gm8m"]
+distance = 5
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_uafxd"]
+quest = ExtResource("1_nedvm")
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_ptc2y"]
+ability = "UnionPoint1"
+operator = "Add"
+value = 2
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_8jcbx"]
+value = 5000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_k6sbf"]
+equation = 5
+value = 1
+item = ExtResource("3_rx2pj")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_gd80x"]
+
+[resource]
+name = "3004-05"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_n4p5k"), SubResource("RoseConditionQuestVariable_nijd8"), SubResource("RoseConditionAbilityValue_0kovf"), SubResource("RoseConditionAbilityValue_c8pp3"), SubResource("RoseConditionSelectNpc_34rb8"), SubResource("RoseConditionObjectDistance_2gm8m")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_uafxd"), SubResource("RoseRewardAbilityValue_ptc2y"), SubResource("RoseRewardCalculatedExperiencePoints_8jcbx"), SubResource("RoseRewardCalculatedItem_k6sbf"), SubResource("RoseRewardRemoveSelectedQuest_gd80x")])

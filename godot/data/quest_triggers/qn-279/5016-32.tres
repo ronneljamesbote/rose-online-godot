@@ -1,0 +1,41 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dv2n5j4280gpk"]
+
+[ext_resource type="RoseQuest" uid="uid://0nx0mwhwxwae" path="res://data/quests/5016-goblin-cave-expedition-3rd-level.tres" id="1_k4p71"]
+[ext_resource type="RoseItemQuest" uid="uid://sxw030x2vitl" path="res://data/items/quest/812-small-diamond.tres" id="2_3x4um"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_rnist"]
+quest = ExtResource("1_k4p71")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_pcu6g"]
+to = 18
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_kuulf"]
+operator = ">="
+value = 71
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_xvqu3"]
+operator = "<="
+value = 110
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_u8bmb"]
+item = ExtResource("2_3x4um")
+equipment_index = 13
+count = 58
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ikrv6"]
+quest = ExtResource("1_k4p71")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_p14s8"]
+item = ExtResource("2_3x4um")
+quantity = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_4bedm"]
+variable = 9
+operator = "Add"
+value = 1
+
+[resource]
+name = "5016-32"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_rnist"), SubResource("RoseConditionRandomPercent_pcu6g"), SubResource("RoseConditionAbilityValue_kuulf"), SubResource("RoseConditionAbilityValue_xvqu3"), SubResource("RoseConditionQuestItem_u8bmb")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ikrv6"), SubResource("RoseRewardAddItem_p14s8"), SubResource("RoseRewardQuestVariable_4bedm")])

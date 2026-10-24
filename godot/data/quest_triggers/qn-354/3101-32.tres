@@ -1,0 +1,31 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dixo5ve1vnl6m"]
+
+[ext_resource type="RoseQuest" uid="uid://dbs2tmadwgtjk" path="res://data/quests/3101-wickedness-of-the-righteous-crusaders.tres" id="1_f80ye"]
+[ext_resource type="RoseNpc" uid="uid://c83lsjibema64" path="res://data/npcs/1086-akram-minister-rodath.tres" id="2_u83hg"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_brtmd"]
+quest = ExtResource("1_f80ye")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_3g6wl"]
+ability = "Union"
+value = 1
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_ausuj"]
+npc = ExtResource("2_u83hg")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_eu0yo"]
+variable = 1
+value = 20
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_k6nm6"]
+variable = 1
+value = 21
+
+[sub_resource type="RoseRewardNpcMessage" id="RoseRewardNpcMessage_0pi47"]
+message_type = "Shout"
+text = "Oh no! Junon's Doonga has appeared in Zant! Lower leveled Visitors should run away! Someone, please stop him!"
+
+[resource]
+name = "3101-32"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_brtmd"), SubResource("RoseConditionAbilityValue_3g6wl"), SubResource("RoseConditionSelectNpc_ausuj"), SubResource("RoseConditionObjectVariable_eu0yo")])
+rewards = Array[Resource]([SubResource("RoseRewardObjectVariable_k6nm6"), SubResource("RoseRewardNpcMessage_0pi47")])

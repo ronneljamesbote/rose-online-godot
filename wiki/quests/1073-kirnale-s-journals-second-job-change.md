@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1081-mayor-darren|Mayor Darren]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 1073; QSD triggers 1072-01, 1073-01, 1073-02
+  data: 'godot/data/quests/1073-kirnale-s-journals-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj311-06/1072-01, qj311-06/1073-01, qj311-06/1073-02'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

@@ -1,0 +1,39 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bbnaguejlckmw"]
+
+[ext_resource type="RoseQuest" uid="uid://hu1ontjv2egc" path="res://data/quests/5063-quest.tres" id="1_d8mkj"]
+[ext_resource type="RoseItemQuest" uid="uid://bk2mvnh066xfy" path="res://data/items/quest/903.tres" id="2_wxub6"]
+[ext_resource type="RoseItemConsumable" uid="uid://clhwj14lnrmvr" path="res://data/items/consumable/914-grab-bag.tres" id="3_24chw"]
+[ext_resource type="RoseItemConsumable" uid="uid://b3pj2xfxlqavk" path="res://data/items/consumable/915-grab-bag.tres" id="4_pm40c"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_rdn3g"]
+quest = ExtResource("1_d8mkj")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_lnbdx"]
+item = ExtResource("2_wxub6")
+equipment_index = 13
+count = 10
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_a4kh7"]
+quest = ExtResource("1_d8mkj")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_g57yx"]
+item = ExtResource("2_wxub6")
+quantity = 10
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_o2gub"]
+equation = 5
+value = 2
+item = ExtResource("3_24chw")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_1jjmi"]
+equation = 5
+value = 2
+item = ExtResource("4_pm40c")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_aqm2i"]
+
+[resource]
+name = "5063-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_rdn3g"), SubResource("RoseConditionQuestItem_lnbdx")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_a4kh7"), SubResource("RoseRewardRemoveItem_g57yx"), SubResource("RoseRewardCalculatedItem_o2gub"), SubResource("RoseRewardCalculatedItem_1jjmi"), SubResource("RoseRewardRemoveSelectedQuest_aqm2i")])

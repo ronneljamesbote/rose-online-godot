@@ -6,7 +6,7 @@ status: in-game
 time_limit_minutes: 60
 steps: 3
 source:
-  data: LIST_QUEST.STB row 3102; QSD triggers 3102-31, 3102-32, PvP1301-120
+  data: 'godot/data/quests/3102-arrogance-of-the-junon-order.tres; quest triggers in godot/data/quest_triggers/: qn-351/3102-31, qn-353/3102-32, PvP1301-120 (named by a reward, no such trigger)'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

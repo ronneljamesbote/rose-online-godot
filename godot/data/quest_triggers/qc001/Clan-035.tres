@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cru1vmffl21m6"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://bqxevomf0ikr2" path="res://data/quest_triggers/qc001/Clan-036.tres" id="1_0k7px"]
+[ext_resource type="RoseZoneSettings" uid="uid://dnnfjmvcoom4b" path="res://data/zones/2-city-of-junon-polis.tres" id="2_jymfb"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_njscp"]
+variable_type = "Union"
+variable = 7
+value = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_cy3m4"]
+variable_type = "Union"
+variable = 7
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_gqioh"]
+zone = ExtResource("2_jymfb")
+x = 559620
+y = 503428
+
+[resource]
+name = "Clan-035"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_njscp")])
+rewards = Array[Resource]([SubResource("RoseRewardQuestVariable_cy3m4"), SubResource("RoseRewardTeleport_gqioh")])
+next_trigger = ExtResource("1_0k7px")

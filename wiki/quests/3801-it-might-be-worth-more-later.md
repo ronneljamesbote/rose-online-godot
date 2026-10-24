@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1110-ferrell-guild-staff-charrs|Ferrell Guild Staff Charrs]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 3801; QSD triggers 3801-01, 3801-02, 3801-03, 3801-31
+  data: 'godot/data/quests/3801-it-might-be-worth-more-later.tres; quest triggers in godot/data/quest_triggers/: qu05-001/3801-01, qu05-001/3801-02, qu05-001/3801-03, qn-132/3801-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

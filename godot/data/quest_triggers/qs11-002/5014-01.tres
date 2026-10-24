@@ -1,0 +1,39 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://7k5hv1yxpp3"]
+
+[ext_resource type="RoseNpc" uid="uid://b3bh3prm2ehb1" path="res://data/npcs/1092-gypsy-jewel-seller-bellia.tres" id="1_lakov"]
+[ext_resource type="RoseQuest" uid="uid://bknpmhfymvw8v" path="res://data/quests/5014-goblin-cave-expedition-1st-level.tres" id="2_o3p66"]
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_otcot"]
+npc = ExtResource("1_lakov")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_xcmfl"]
+value = 1
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_17mkt"]
+variable = 2
+operator = "<"
+value = 20
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_ie20i"]
+operator = ">="
+value = 36
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_jmdx2"]
+operator = "<="
+value = 55
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_uhglg"]
+quest = ExtResource("2_o3p66")
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_16xrc"]
+variable = 2
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_h0iqm"]
+trigger = "5014-10"
+
+[resource]
+name = "5014-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectNpc_otcot"), SubResource("RoseConditionObjectVariable_xcmfl"), SubResource("RoseConditionObjectVariable_17mkt"), SubResource("RoseConditionAbilityValue_ie20i"), SubResource("RoseConditionAbilityValue_jmdx2")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_uhglg"), SubResource("RoseRewardObjectVariable_16xrc"), SubResource("RoseRewardTrigger_h0iqm")])

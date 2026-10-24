@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ctee88yd4rgm7"]
+
+[ext_resource type="RoseQuest" uid="uid://dlajyglkgba3a" path="res://data/quests/2051-forgotten-temple-investigation-1.tres" id="1_40h3u"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cltgv2h0kcjtx" path="res://data/quest_triggers/qp201/2052-16.tres" id="2_4eru5"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_8xu0a"]
+quest = ExtResource("1_40h3u")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_b2rr6"]
+variable_type = "Timer"
+operator = ">"
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_hhrec"]
+variable_type = "Switch"
+value = 1
+
+[resource]
+name = "2051-16"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_8xu0a"), SubResource("RoseConditionQuestVariable_b2rr6"), SubResource("RoseConditionQuestVariable_hhrec")])
+next_trigger = ExtResource("2_4eru5")

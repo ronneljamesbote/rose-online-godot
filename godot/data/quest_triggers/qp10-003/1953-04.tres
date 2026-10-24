@@ -1,0 +1,50 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bouxdjqxprmd4"]
+
+[ext_resource type="RoseQuest" uid="uid://8pm1oyiwcx88" path="res://data/quests/1953-quest.tres" id="1_eawbq"]
+[ext_resource type="RoseItemQuest" uid="uid://cbfus8u8nvth3" path="res://data/items/quest/502-grandmaster-stone-s-heart.tres" id="2_qxs4n"]
+[ext_resource type="RoseQuestTrigger" uid="uid://4vv0tdw5i4yn" path="res://data/quest_triggers/qp10-003/1953-05.tres" id="3_cn5c3"]
+[ext_resource type="RoseItemQuest" uid="uid://cvhoudk4t123s" path="res://data/items/quest/503-kingkong-s-red-sword.tres" id="4_7cap3"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ymmd5"]
+quest = ExtResource("1_eawbq")
+
+[sub_resource type="RoseConditionParty" id="RoseConditionParty_vbfb4"]
+level_operator = ">="
+level = 1
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_teuwk"]
+item = ExtResource("2_qxs4n")
+equipment_index = 13
+count = 3
+operator = ">="
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_jak32"]
+operator = "<"
+value = 70
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_otd63"]
+quest = ExtResource("1_eawbq")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_qdr2a"]
+item = ExtResource("2_qxs4n")
+quantity = 3
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_7qq6l"]
+item = ExtResource("4_7cap3")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_b2dve"]
+value = 100000
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_1q8qj"]
+ability = "Skillpoint"
+operator = "Add"
+value = 2
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_3l0rn"]
+
+[resource]
+name = "1953-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ymmd5"), SubResource("RoseConditionParty_vbfb4"), SubResource("RoseConditionQuestItem_teuwk"), SubResource("RoseConditionAbilityValue_jak32")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_otd63"), SubResource("RoseRewardRemoveItem_qdr2a"), SubResource("RoseRewardRemoveItem_7qq6l"), SubResource("RoseRewardCalculatedExperiencePoints_b2dve"), SubResource("RoseRewardAbilityValue_1q8qj"), SubResource("RoseRewardRemoveSelectedQuest_3l0rn")])
+next_trigger = ExtResource("3_cn5c3")

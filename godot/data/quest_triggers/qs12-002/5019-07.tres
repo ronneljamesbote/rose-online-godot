@@ -1,0 +1,50 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cssywcbgxvh0y"]
+
+[ext_resource type="RoseQuest" uid="uid://ctruddajgswlh" path="res://data/quests/5019-goblin-hunting-competition-fetch-quest.tres" id="1_qibul"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_sow75"]
+[ext_resource type="RoseNpc" uid="uid://dv33k1oyh1faw" path="res://data/npcs/1100-ferrell-guild-staff-itz.tres" id="3_gscr5"]
+[ext_resource type="RoseItemConsumable" uid="uid://iy3bxt1he2nr" path="res://data/items/consumable/56-vital-jam-1.tres" id="4_7f72t"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_7s5oq"]
+quest = ExtResource("1_qibul")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_fd4qq"]
+item = ExtResource("2_sow75")
+equipment_index = 13
+count = 55
+operator = ">="
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_jjom3"]
+variable_type = "Timer"
+operator = ">"
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_udwap"]
+npc = ExtResource("3_gscr5")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_tfo5d"]
+variable = 3
+operator = ">="
+value = 3
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_tmtsy"]
+quest = ExtResource("1_qibul")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_l7rqe"]
+item = ExtResource("2_sow75")
+quantity = 55
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_ar68x"]
+equation = 3
+value = 2500
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_au8gl"]
+equation = 5
+value = 1
+item = ExtResource("4_7f72t")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_gp8w8"]
+
+[resource]
+name = "5019-07"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_7s5oq"), SubResource("RoseConditionQuestItem_fd4qq"), SubResource("RoseConditionQuestVariable_jjom3"), SubResource("RoseConditionSelectNpc_udwap"), SubResource("RoseConditionObjectVariable_tfo5d")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_tmtsy"), SubResource("RoseRewardRemoveItem_l7rqe"), SubResource("RoseRewardCalculatedMoney_ar68x"), SubResource("RoseRewardCalculatedItem_au8gl"), SubResource("RoseRewardRemoveSelectedQuest_gp8w8")])

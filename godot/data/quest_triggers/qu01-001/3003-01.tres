@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d1ykhmk8q70di"]
+
+[ext_resource type="RoseQuest" uid="uid://dlu7p80ii1jnb" path="res://data/quests/3003-necessity-of-a-new-shrine-1.tres" id="1_qh33h"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_1g1y8"]
+ability = "Union"
+value = 1
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_clwc0"]
+quest = ExtResource("1_qh33h")
+
+[resource]
+name = "3003-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_1g1y8")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_clwc0")])

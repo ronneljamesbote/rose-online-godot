@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1092-gypsy-jewel-seller-bellia|Gypsy Jewel Seller Bellia]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 129; QSD triggers 128-01, 128-02, 129-01, 129-03, 129-04
+  data: 'godot/data/quests/129-the-owl-eye.tres; quest triggers in godot/data/quest_triggers/: qp103/128-01, qp103/128-02, qp103/129-01, qp103/129-03, qp103/129-04'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

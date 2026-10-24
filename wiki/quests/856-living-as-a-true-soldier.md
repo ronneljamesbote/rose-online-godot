@@ -7,7 +7,7 @@ npcs:
 - '[[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 856; QSD triggers 855-02, 856-01, 856-31, 856-32
+  data: 'godot/data/quests/856-living-as-a-true-soldier.tres; quest triggers in godot/data/quest_triggers/: qj111-01/855-02, qj111-01/856-01, qn-031/856-31, qn-032/856-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

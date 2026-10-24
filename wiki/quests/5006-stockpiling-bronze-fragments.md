@@ -12,7 +12,7 @@ monsters:
 - '[[monsters/75-pomic-fighter|Pomic Fighter]]'
 steps: 7
 source:
-  data: LIST_QUEST.STB row 5006; QSD triggers 5006-01, 5006-02, 5006-31, 5006-32, 5006-33, 5006-34, 5006-35
+  data: 'godot/data/quests/5006-stockpiling-bronze-fragments.tres; quest triggers in godot/data/quest_triggers/: qs10-001/5006-01, qs10-001/5006-02, qn-071/5006-31, qn-072/5006-32, qn-073/5006-33, qn-074/5006-34, qn-075/5006-35'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

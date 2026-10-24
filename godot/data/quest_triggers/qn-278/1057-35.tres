@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bktsrdw0npjf5"]
+
+[ext_resource type="RoseQuest" uid="uid://bikmaphdx657r" path="res://data/quests/1057-lucid-king-of-legend-second-job-change.tres" id="1_jfio3"]
+[ext_resource type="RoseItemQuest" uid="uid://cgd2ox1sn5m76" path="res://data/items/quest/206-fragment-of-lucid-s-sword-5.tres" id="2_neb4b"]
+[ext_resource type="RoseQuestTrigger" uid="uid://eke27fwkx2nl" path="res://data/quest_triggers/qn-278/1064-31.tres" id="3_0u87d"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_c6idp"]
+quest = ExtResource("1_jfio3")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_t0wt8"]
+to = 10
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_e84in"]
+item = ExtResource("2_neb4b")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_m2fo0"]
+quest = ExtResource("1_jfio3")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_g5ki2"]
+item = ExtResource("2_neb4b")
+quantity = 1
+
+[resource]
+name = "1057-35"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_c6idp"), SubResource("RoseConditionRandomPercent_t0wt8"), SubResource("RoseConditionQuestItem_e84in")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_m2fo0"), SubResource("RoseRewardAddItem_g5ki2")])
+next_trigger = ExtResource("3_0u87d")

@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dnyji1j177vgq"]
+
+[ext_resource type="RoseItemConsumable" uid="uid://cq1eei1tf65dq" path="res://data/items/consumable/373-para-dance-intermediate.tres" id="1_kb1w3"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_aqa8v"]
+switch = 480
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_e5c1h"]
+equation = 5
+value = 4
+item = ExtResource("1_kb1w3")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_gomrt"]
+switch = 480
+value = true
+
+[resource]
+name = "item00-001-2-3"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_aqa8v")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_e5c1h"), SubResource("RoseRewardSetQuestSwitch_gomrt")])

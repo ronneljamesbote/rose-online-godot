@@ -1,0 +1,17 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://gcbclrem3oip"]
+
+[ext_resource type="RoseQuest" uid="uid://pm0r5k46uljo" path="res://data/quests/5061-the-santa-suit-heist.tres" id="1_run4n"]
+[ext_resource type="RoseZoneSettings" uid="uid://mpsx2m3ghks1" path="res://data/zones/51-magic-city-of-the-eucar.tres" id="2_6lw6w"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_as1cv"]
+quest = ExtResource("1_run4n")
+
+[sub_resource type="RoseConditionPosition" id="RoseConditionPosition_ynjor"]
+zone = ExtResource("2_6lw6w")
+x = 533800.0
+y = 498400.0
+distance = 100
+
+[resource]
+name = "5061-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_as1cv"), SubResource("RoseConditionPosition_ynjor")])

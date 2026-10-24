@@ -9,7 +9,7 @@ monsters:
 - '[[monsters/152-elder-doonga|Elder Doonga]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 3406; QSD triggers 3406-01, 3406-02, 3406-03, 3406-31
+  data: 'godot/data/quests/3406-majesty-of-the-righteous-crusaders.tres; quest triggers in godot/data/quest_triggers/: qu03-001/3406-01, qu03-001/3406-02, qu03-001/3406-03, qn-152/3406-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

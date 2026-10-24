@@ -1,0 +1,45 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dkdxfdnwq6sdt"]
+
+[ext_resource type="RoseQuest" uid="uid://d0lb0orsmv0dr" path="res://data/quests/854-solider-job-change-quest.tres" id="1_akify"]
+[ext_resource type="RoseItemQuest" uid="uid://bhmdy6i4qtl1o" path="res://data/items/quest/102-soldier-job-recommendation.tres" id="2_8irwg"]
+[ext_resource type="RoseItemHands" uid="uid://b2dodrdrdlge2" path="res://data/items/hands/31-soldier-gloves.tres" id="3_n3bif"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_11724"]
+quest = ExtResource("1_akify")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_dkwg4"]
+item = ExtResource("2_8irwg")
+equipment_index = 13
+count = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_kejx5"]
+quest = ExtResource("1_akify")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_o6dd6"]
+item = ExtResource("2_8irwg")
+quantity = 1
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_mwcxa"]
+ability = "Job"
+value = 111
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_d53kn"]
+variable_type = "Job"
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardSetHealthManaPercent" id="RoseRewardSetHealthManaPercent_5fav1"]
+health_percent = 100
+mana_percent = 100
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_qr712"]
+equation = 5
+value = 1
+item = ExtResource("3_n3bif")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_p2dnj"]
+
+[resource]
+name = "854-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_11724"), SubResource("RoseConditionQuestItem_dkwg4")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_kejx5"), SubResource("RoseRewardRemoveItem_o6dd6"), SubResource("RoseRewardAbilityValue_mwcxa"), SubResource("RoseRewardQuestVariable_d53kn"), SubResource("RoseRewardSetHealthManaPercent_5fav1"), SubResource("RoseRewardCalculatedItem_qr712"), SubResource("RoseRewardRemoveSelectedQuest_p2dnj")])

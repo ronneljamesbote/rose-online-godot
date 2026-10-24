@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://2w120l8d7ab6"]
+
+[ext_resource type="RoseQuest" uid="uid://cohf2hhejb0nu" path="res://data/quests/3605-plant-extract-magic-fundamental.tres" id="1_hjbts"]
+[ext_resource type="RoseItemQuest" uid="uid://bb0v3jc62rjbh" path="res://data/items/quest/309-smouly-leaf.tres" id="2_h05j0"]
+[ext_resource type="RoseQuestTrigger" uid="uid://doynwfhfkkcmp" path="res://data/quest_triggers/qn-051/3803-31.tres" id="3_x2xyo"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_uw7dr"]
+quest = ExtResource("1_hjbts")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_tj0gy"]
+to = 19
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_rue38"]
+item = ExtResource("2_h05j0")
+equipment_index = 13
+count = 13
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_yrm72"]
+quest = ExtResource("1_hjbts")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_anc3l"]
+item = ExtResource("2_h05j0")
+quantity = 1
+
+[resource]
+name = "3605-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_uw7dr"), SubResource("RoseConditionRandomPercent_tj0gy"), SubResource("RoseConditionQuestItem_rue38")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_yrm72"), SubResource("RoseRewardAddItem_anc3l")])
+next_trigger = ExtResource("3_x2xyo")

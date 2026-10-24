@@ -1,0 +1,33 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cj77rje3ri2pw"]
+
+[ext_resource type="RoseQuest" uid="uid://6nny813ghvym" path="res://data/quests/1006-an-eye-for-the-marketplace.tres" id="1_1ao2k"]
+[ext_resource type="RoseItemQuest" uid="uid://m5mqsl5jsli2" path="res://data/items/quest/116-cobra-leather.tres" id="2_snov8"]
+[ext_resource type="RoseQuestTrigger" uid="uid://jxxl8yt66mkk" path="res://data/quest_triggers/qj411-01/1006-03.tres" id="3_jhina"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ge5xy"]
+quest = ExtResource("1_1ao2k")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_a0mfc"]
+item = ExtResource("2_snov8")
+equipment_index = 13
+count = 4
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_q4b64"]
+quest = ExtResource("1_1ao2k")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_c564r"]
+variable_type = "Job"
+operator = "Add"
+value = 2
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_6t3hv"]
+equation = 3
+value = 200
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_ibcon"]
+
+[resource]
+name = "1006-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ge5xy"), SubResource("RoseConditionQuestItem_a0mfc")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_q4b64"), SubResource("RoseRewardQuestVariable_c564r"), SubResource("RoseRewardCalculatedExperiencePoints_6t3hv"), SubResource("RoseRewardRemoveSelectedQuest_ibcon")])
+next_trigger = ExtResource("3_jhina")

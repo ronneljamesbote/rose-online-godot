@@ -1,0 +1,47 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cycex5bsfng6y"]
+
+[ext_resource type="RoseItemFace" uid="uid://bhe3wpj5fh4i8" path="res://data/items/face/1-flu-mask.tres" id="1_s5vk4"]
+[ext_resource type="RoseItemConsumable" uid="uid://dow06gspjnrnl" path="res://data/items/consumable/1-health-vial-s.tres" id="2_afn0d"]
+[ext_resource type="RoseItemConsumable" uid="uid://b8m1vcdrmuhgi" path="res://data/items/consumable/21-mana-vial-s.tres" id="3_gckxx"]
+[ext_resource type="RoseItemMaterial" uid="uid://txirltqrlwuc" path="res://data/items/material/404.tres" id="4_5livl"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_2oheg"]
+value = 15
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_xfhgc"]
+switch = 481
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_kytx3"]
+equation = 5
+value = 1
+item = ExtResource("1_s5vk4")
+gem = 59
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_cofom"]
+equation = 5
+value = 10
+item = ExtResource("2_afn0d")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_hhihj"]
+equation = 5
+value = 10
+item = ExtResource("3_gckxx")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_h33un"]
+equation = 5
+value = 6
+item = ExtResource("4_5livl")
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_hxept"]
+ability = "Money"
+operator = "Add"
+value = 1000
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_tnplx"]
+switch = 481
+value = true
+
+[resource]
+name = "kwang15-1"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_2oheg"), SubResource("RoseConditionQuestSwitch_xfhgc")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedItem_kytx3"), SubResource("RoseRewardCalculatedItem_cofom"), SubResource("RoseRewardCalculatedItem_hhihj"), SubResource("RoseRewardCalculatedItem_h33un"), SubResource("RoseRewardAbilityValue_hxept"), SubResource("RoseRewardSetQuestSwitch_tnplx")])

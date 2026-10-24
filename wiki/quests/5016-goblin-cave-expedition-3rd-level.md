@@ -12,7 +12,7 @@ monsters:
 - '[[monsters/282-gem-goblin-mage|Gem Goblin Mage]]'
 steps: 7
 source:
-  data: LIST_QUEST.STB row 5016; QSD triggers 5014-10, 5016-01, 5016-02, 5016-31, 5016-32, 5016-33, 5016-34
+  data: 'godot/data/quests/5016-goblin-cave-expedition-3rd-level.tres; quest triggers in godot/data/quest_triggers/: qs11-002/5014-10, qs11-002/5016-01, qs11-002/5016-02, qn-277/5016-31, qn-279/5016-32, qn-281/5016-33, qn-282/5016-34'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

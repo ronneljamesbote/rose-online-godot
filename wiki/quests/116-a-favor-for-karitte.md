@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1097-tavern-owner-harin|Tavern Owner Harin]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 116; QSD triggers 115-01, 115-02, 116-01
+  data: 'godot/data/quests/116-a-favor-for-karitte.tres; quest triggers in godot/data/quest_triggers/: qp103/115-01, qp103/115-02, qp103/116-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

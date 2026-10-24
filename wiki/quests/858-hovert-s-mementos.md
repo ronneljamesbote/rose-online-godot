@@ -13,7 +13,7 @@ monsters:
 - '[[monsters/176-aqua-hunter|Aqua Hunter]]'
 steps: 10
 source:
-  data: LIST_QUEST.STB row 858; QSD triggers 858-01, 858-02, 858-03, 858-31, 858-32, 858-33, 858-34, 858-37, 858-38, 858-39
+  data: 'godot/data/quests/858-hovert-s-mementos.tres; quest triggers in godot/data/quest_triggers/: qj111-01/858-01, qj111-01/858-02, qj111-01/858-03, qn-172/858-31, qn-172/858-32, qn-172/858-33, qn-175/858-34, qn-176/858-37, qn-176/858-38, qn-176/858-39'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

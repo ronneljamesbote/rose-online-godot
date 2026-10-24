@@ -1,0 +1,32 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://vk2m8i0gyxvc"]
+
+[ext_resource type="RoseQuest" uid="uid://dtmlc6ptaun1y" path="res://data/quests/3001-shannon-s-medical-treatment.tres" id="1_73pdt"]
+[ext_resource type="RoseItemQuest" uid="uid://yvw7b7lpufgg" path="res://data/items/quest/304-healing-medicine.tres" id="2_vm6op"]
+[ext_resource type="RoseNpc" uid="uid://q3gwqrbkbetm" path="res://data/npcs/1052-mountain-guide-shannon.tres" id="3_sqmy3"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_7ks6w"]
+quest = ExtResource("1_73pdt")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_dt0ce"]
+item = ExtResource("2_vm6op")
+equipment_index = 13
+count = 10
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_7uq3m"]
+npc = ExtResource("3_sqmy3")
+
+[sub_resource type="RoseConditionObjectDistance" id="RoseConditionObjectDistance_5lonm"]
+distance = 5
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_xeom6"]
+item = ExtResource("2_vm6op")
+quantity = 10
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_yufqr"]
+operator = "Add"
+value = 10
+
+[resource]
+name = "3001-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_7ks6w"), SubResource("RoseConditionQuestItem_dt0ce"), SubResource("RoseConditionSelectNpc_7uq3m"), SubResource("RoseConditionObjectDistance_5lonm")])
+rewards = Array[Resource]([SubResource("RoseRewardRemoveItem_xeom6"), SubResource("RoseRewardQuestVariable_yufqr")])

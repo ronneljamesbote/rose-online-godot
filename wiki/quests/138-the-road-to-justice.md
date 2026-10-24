@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1097-tavern-owner-harin|Tavern Owner Harin]]'
 steps: 3
 source:
-  data: LIST_QUEST.STB row 138; QSD triggers 137-01, 137-02, 138-01
+  data: 'godot/data/quests/138-the-road-to-justice.tres; quest triggers in godot/data/quest_triggers/: qp103/137-01, qp103/137-02, qp103/138-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

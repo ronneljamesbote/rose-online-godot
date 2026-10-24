@@ -1,0 +1,41 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ccqcs33pjue3j"]
+
+[ext_resource type="RoseQuest" uid="uid://e7fv2wsgxysl" path="res://data/quests/143-the-ominous-kenji-stone.tres" id="1_vlbaj"]
+[ext_resource type="RoseItemQuest" uid="uid://dyylracpreygy" path="res://data/items/quest/510-golden-dagger.tres" id="2_re5ce"]
+[ext_resource type="RoseItemConsumable" uid="uid://be3qja6c3188m" path="res://data/items/consumable/308-dexterity-scroll-solo.tres" id="3_bvspi"]
+[ext_resource type="RoseQuest" uid="uid://did7euta1qauf" path="res://data/quests/144-the-truth-of-the-golden-dagger.tres" id="4_sxei1"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_mlaqd"]
+quest = ExtResource("1_vlbaj")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_mggyy"]
+variable_type = "Switch"
+value = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_osrag"]
+quest = ExtResource("1_vlbaj")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_vic5n"]
+item = ExtResource("2_re5ce")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_rlw2g"]
+value = 50000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_0kcoj"]
+equation = 5
+value = 5
+item = ExtResource("3_bvspi")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_ad447"]
+quest = ExtResource("4_sxei1")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_2hjjc"]
+variable_type = "Episode"
+value = 43
+
+[resource]
+name = "143-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_mlaqd"), SubResource("RoseConditionQuestVariable_mggyy")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_osrag"), SubResource("RoseRewardAddItem_vic5n"), SubResource("RoseRewardCalculatedExperiencePoints_rlw2g"), SubResource("RoseRewardCalculatedItem_0kcoj"), SubResource("RoseRewardChangeSelectedQuest_ad447"), SubResource("RoseRewardQuestVariable_2hjjc")])

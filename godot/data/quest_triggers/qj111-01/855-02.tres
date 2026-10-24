@@ -1,0 +1,22 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://wcre2nwawefv"]
+
+[ext_resource type="RoseQuest" uid="uid://bvr5b8y3y7uef" path="res://data/quests/855-living-as-a-true-soldier.tres" id="1_1f7bu"]
+[ext_resource type="RoseQuest" uid="uid://cwicjfrwuwmn0" path="res://data/quests/856-living-as-a-true-soldier.tres" id="2_yf68l"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_geyhp"]
+quest = ExtResource("1_1f7bu")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_erspd"]
+operator = ">="
+value = 40
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_tuu5d"]
+quest = ExtResource("1_1f7bu")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_32dvs"]
+quest = ExtResource("2_yf68l")
+
+[resource]
+name = "855-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_geyhp"), SubResource("RoseConditionQuestVariable_erspd")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_tuu5d"), SubResource("RoseRewardChangeSelectedQuest_32dvs")])

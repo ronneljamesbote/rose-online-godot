@@ -1,0 +1,27 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cu3omdwqpp2jq"]
+
+[ext_resource type="RoseQuest" uid="uid://c3if5ockng008" path="res://data/quests/5035-stockpiling-on-flanae-petals.tres" id="1_p58es"]
+[ext_resource type="RoseItemQuest" uid="uid://mr72bwunelet" path="res://data/items/quest/806-flanae-petal.tres" id="2_3rhmp"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_xam5m"]
+quest = ExtResource("1_p58es")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_qhy1o"]
+item = ExtResource("2_3rhmp")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_uofvx"]
+quest = ExtResource("1_p58es")
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_uvo75"]
+equation = 2
+value = 35
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_crjut"]
+
+[resource]
+name = "5035-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_xam5m"), SubResource("RoseConditionQuestItem_qhy1o")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_uofvx"), SubResource("RoseRewardCalculatedMoney_uvo75"), SubResource("RoseRewardRemoveSelectedQuest_crjut")])

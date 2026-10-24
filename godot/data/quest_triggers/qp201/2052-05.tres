@@ -1,0 +1,43 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b6r42bdeblfhf"]
+
+[ext_resource type="RoseQuest" uid="uid://d4i4lkfanrmff" path="res://data/quests/2052-forgotten-temple-investigation-2.tres" id="1_ebhf2"]
+[ext_resource type="RoseItemQuest" uid="uid://bmp7hj2h1wunl" path="res://data/items/quest/512-shamanic-artifact.tres" id="2_o8cm5"]
+[ext_resource type="RoseItemMaterial" uid="uid://fcivgylcbgd1" path="res://data/items/material/83-lisent-pb.tres" id="3_eybbp"]
+[ext_resource type="RoseItemMaterial" uid="uid://6nmflpypbwk2" path="res://data/items/material/152-green-hearts.tres" id="4_i1um4"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_jv04l"]
+quest = ExtResource("1_ebhf2")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_ja0te"]
+item = ExtResource("2_o8cm5")
+equipment_index = 13
+count = 18
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_qgisp"]
+quest = ExtResource("1_ebhf2")
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_h64v5"]
+equation = 2
+value = 3000
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_ilxqq"]
+equation = 3
+value = 120000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_7dbil"]
+equation = 5
+value = 10
+item = ExtResource("3_eybbp")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_fpdr4"]
+equation = 5
+value = 1
+item = ExtResource("4_i1um4")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_1oaom"]
+
+[resource]
+name = "2052-05"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_jv04l"), SubResource("RoseConditionQuestItem_ja0te")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_qgisp"), SubResource("RoseRewardCalculatedMoney_h64v5"), SubResource("RoseRewardCalculatedMoney_ilxqq"), SubResource("RoseRewardCalculatedItem_7dbil"), SubResource("RoseRewardCalculatedItem_fpdr4"), SubResource("RoseRewardRemoveSelectedQuest_1oaom")])

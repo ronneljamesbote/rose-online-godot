@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://de52i0xnqxbd5"]
+
+[ext_resource type="RoseQuest" uid="uid://lwj1ju40apps" path="res://data/quests/3802-stockpiling-high-quality-coal.tres" id="1_m1b6m"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_r3joj"]
+ability = "Union"
+value = 5
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_2fxjc"]
+quest = ExtResource("1_m1b6m")
+
+[resource]
+name = "3802-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_r3joj")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_2fxjc")])

@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1121-ikaness-staff-shroon|Ikaness Staff Shroon]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 912; QSD triggers 911-01, 912-01, 912-02, 912-03
+  data: 'godot/data/quests/912-an-appropriate-compromise.tres; quest triggers in godot/data/quest_triggers/: qj211-01/911-01, qj211-01/912-01, qj211-01/912-02, qj211-01/912-03'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

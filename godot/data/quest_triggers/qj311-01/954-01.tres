@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://u30t5oxabb21"]
+
+[ext_resource type="RoseQuest" uid="uid://pasv8aqbvhe" path="res://data/quests/954-why-did-toddy-steal-the-jewels.tres" id="1_1qdli"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_qyrxm"]
+variable_type = "Job"
+value = 1
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_tfd1v"]
+ability = "Job"
+value = 3
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_wn44v"]
+operator = ">="
+value = 20
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_loi2d"]
+quest = ExtResource("1_1qdli")
+
+[resource]
+name = "954-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_qyrxm"), SubResource("RoseConditionAbilityValue_tfd1v"), SubResource("RoseConditionAbilityValue_wn44v")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_loi2d")])

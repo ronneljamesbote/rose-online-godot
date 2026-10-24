@@ -7,7 +7,7 @@ given_by:
 - '[[npcs/1110-ferrell-guild-staff-charrs|Ferrell Guild Staff Charrs]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 3802; QSD triggers 3802-01, 3802-02, 3802-03, 3802-31
+  data: 'godot/data/quests/3802-stockpiling-high-quality-coal.tres; quest triggers in godot/data/quest_triggers/: qu05-001/3802-01, qu05-001/3802-02, qu05-001/3802-03, qn-112/3802-31'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://7wgi5jg34drx"]
+
+[ext_resource type="RoseQuest" uid="uid://dmwboo2vj67s3" path="res://data/quests/1005-an-eye-for-the-marketplace.tres" id="1_b3emc"]
+[ext_resource type="RoseItemQuest" uid="uid://6jjhp3lytap5" path="res://data/items/quest/132-beetle-shell.tres" id="2_segoj"]
+[ext_resource type="RoseQuestTrigger" uid="uid://b7jv7wyjcil0c" path="res://data/quest_triggers/qn-081/5007-34.tres" id="3_4wtga"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_dr3ba"]
+quest = ExtResource("1_b3emc")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_ieu8c"]
+to = 35
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_6wip7"]
+item = ExtResource("2_segoj")
+equipment_index = 13
+count = 15
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_7v4v1"]
+quest = ExtResource("1_b3emc")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_sgid3"]
+item = ExtResource("2_segoj")
+quantity = 1
+
+[resource]
+name = "1005-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_dr3ba"), SubResource("RoseConditionRandomPercent_ieu8c"), SubResource("RoseConditionQuestItem_6wip7")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_7v4v1"), SubResource("RoseRewardAddItem_sgid3")])
+next_trigger = ExtResource("3_4wtga")

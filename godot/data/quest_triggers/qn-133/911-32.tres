@@ -1,0 +1,27 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cmqhfujn173ym"]
+
+[ext_resource type="RoseQuest" uid="uid://bdibnxwe6fmau" path="res://data/quests/911-an-appropriate-compromise.tres" id="1_0idbi"]
+[ext_resource type="RoseItemQuest" uid="uid://biyja0cbw07vd" path="res://data/items/quest/499-proof-of-monster-extermination.tres" id="2_p70dj"]
+[ext_resource type="RoseQuestTrigger" uid="uid://blu4tkgq22hlf" path="res://data/quest_triggers/qn-133/3404-31.tres" id="3_cfaf6"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_mvjpy"]
+quest = ExtResource("1_0idbi")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_ns28d"]
+item = ExtResource("2_p70dj")
+equipment_index = 13
+count = 5
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_eno32"]
+quest = ExtResource("1_0idbi")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_3xf4o"]
+item = ExtResource("2_p70dj")
+quantity = 1
+
+[resource]
+name = "911-32"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_mvjpy"), SubResource("RoseConditionQuestItem_ns28d")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_eno32"), SubResource("RoseRewardAddItem_3xf4o")])
+next_trigger = ExtResource("3_cfaf6")

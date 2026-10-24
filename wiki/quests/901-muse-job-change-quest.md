@@ -8,7 +8,7 @@ npcs:
 - '[[npcs/1006-arumic-merchant-tryteh|Arumic Merchant Tryteh]]'
 steps: 2
 source:
-  data: LIST_QUEST.STB row 901; QSD triggers 901-01, 901-02
+  data: 'godot/data/quests/901-muse-job-change-quest.tres; quest triggers in godot/data/quest_triggers/: qj000-01/901-01, qj000-01/901-02'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

@@ -1,0 +1,23 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://3tiqh1ptuxdf"]
+
+[ext_resource type="RoseSkill" uid="uid://b4bafa0rsk08i" path="res://data/skills/3431-clan-house/3431-clan-house.tres" id="1_22egf"]
+[ext_resource type="RoseZoneSettings" uid="uid://1l3f3q8teiem" path="res://data/zones/15-zone.tres" id="2_4us4f"]
+
+[sub_resource type="RoseConditionHasClan" id="RoseConditionHasClan_a0pjy"]
+has_clan = true
+
+[sub_resource type="RoseConditionHasClanSkill" id="RoseConditionHasClanSkill_543dq"]
+skill = ExtResource("1_22egf")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_nxbnj"]
+variable_type = "Union"
+variable = 7
+value = 2
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_iw1dh"]
+zone = ExtResource("2_4us4f")
+
+[resource]
+name = "Clan-034"
+conditions = Array[Resource]([SubResource("RoseConditionHasClan_a0pjy"), SubResource("RoseConditionHasClanSkill_543dq")])
+rewards = Array[Resource]([SubResource("RoseRewardQuestVariable_nxbnj"), SubResource("RoseRewardTeleport_iw1dh")])

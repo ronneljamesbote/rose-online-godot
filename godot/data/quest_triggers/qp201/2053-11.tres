@@ -1,0 +1,32 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://r2ph53a2idux"]
+
+[ext_resource type="RoseQuest" uid="uid://b5d3q13bd7n13" path="res://data/quests/2053-forgotten-temple-investigation-3.tres" id="1_v7u8y"]
+[ext_resource type="RoseItemQuest" uid="uid://bqjjo13rsp5uw" path="res://data/items/quest/513-resurrection-spellbook.tres" id="2_w7h5v"]
+[ext_resource type="RoseZoneSettings" uid="uid://nvmmxga077n5" path="res://data/zones/56-forgotten-temple-b1.tres" id="3_vmsjl"]
+[ext_resource type="RoseQuestTrigger" uid="uid://b0y40bsa141c2" path="res://data/quest_triggers/qp201/2053-10.tres" id="4_ospwo"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_qi3qj"]
+quest = ExtResource("1_v7u8y")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_pcvmg"]
+item = ExtResource("2_w7h5v")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseConditionPosition" id="RoseConditionPosition_vh7bl"]
+zone = ExtResource("3_vmsjl")
+x = 503548.0
+y = 519511.0
+distance = 20
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_m8v41"]
+zone = ExtResource("3_vmsjl")
+x = 503498
+y = 438617
+
+[resource]
+name = "2053-11"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_qi3qj"), SubResource("RoseConditionQuestItem_pcvmg"), SubResource("RoseConditionPosition_vh7bl")])
+rewards = Array[Resource]([SubResource("RoseRewardTeleport_m8v41")])
+next_trigger = ExtResource("4_ospwo")

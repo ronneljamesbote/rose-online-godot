@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://caavlamk0u1vu"]
+
+[ext_resource type="RoseQuest" uid="uid://bgxr1bo5evnne" path="res://data/quests/5013-stockpiling-oak-branches.tres" id="1_ksny1"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_0fqdb"]
+operator = ">="
+value = 51
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_0gpkk"]
+operator = "<="
+value = 60
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_hduf6"]
+quest = ExtResource("1_ksny1")
+
+[resource]
+name = "5013-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_0fqdb"), SubResource("RoseConditionAbilityValue_0gpkk")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_hduf6")])

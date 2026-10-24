@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dnv6rtbmio4j3"]
+
+[ext_resource type="RoseQuest" uid="uid://c7on84e5lrkrc" path="res://data/quests/141-the-prince-of-akram.tres" id="1_25nme"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_kjx0b"]
+variable_type = "Episode"
+value = 40
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_yy0yb"]
+quest = ExtResource("1_25nme")
+
+[resource]
+name = "140-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_kjx0b")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_yy0yb")])

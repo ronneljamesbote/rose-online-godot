@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1012-ferrell-guild-staff-ulysses|Ferrell Guild Staff Ulysses]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 5031; QSD triggers 5031-01, 5031-02, 5031-03, 5031-04
+  data: 'godot/data/quests/5031-seyon-s-price-checklist-delivery.tres; quest triggers in godot/data/quest_triggers/: qs10-001/5031-01, qs10-001/5031-02, qs10-001/5031-03, qs10-001/5031-04'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

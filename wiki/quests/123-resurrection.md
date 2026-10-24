@@ -7,7 +7,7 @@ npcs:
 - '[[npcs/1097-tavern-owner-harin|Tavern Owner Harin]]'
 steps: 2
 source:
-  data: LIST_QUEST.STB row 123; QSD triggers 122-01, 123-01
+  data: 'godot/data/quests/123-resurrection.tres; quest triggers in godot/data/quest_triggers/: qp103/122-01, qp103/123-01'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

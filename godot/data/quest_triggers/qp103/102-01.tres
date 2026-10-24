@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c0m0mahpoejr2"]
+
+[ext_resource type="RoseQuest" uid="uid://dwhcn6okj7jok" path="res://data/quests/102-dreadful-epidemic.tres" id="1_iqd1x"]
+[ext_resource type="RoseItemQuest" uid="uid://b08xjqbkh0a5d" path="res://data/items/quest/601-enigmatic-emblem.tres" id="2_kpkbu"]
+[ext_resource type="RoseQuest" uid="uid://r3bygdypkksv" path="res://data/quests/103-mysterious-emblem.tres" id="3_nihl1"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_l2jou"]
+quest = ExtResource("1_iqd1x")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_h4wbc"]
+item = ExtResource("2_kpkbu")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_eeb56"]
+quest = ExtResource("1_iqd1x")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_n24av"]
+item = ExtResource("2_kpkbu")
+quantity = 1
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_slq3p"]
+quest = ExtResource("3_nihl1")
+keep_data = true
+
+[resource]
+name = "102-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_l2jou"), SubResource("RoseConditionQuestItem_h4wbc")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_eeb56"), SubResource("RoseRewardAddItem_n24av"), SubResource("RoseRewardChangeSelectedQuest_slq3p")])

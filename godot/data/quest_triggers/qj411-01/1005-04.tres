@@ -1,0 +1,45 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cgnvyla747w3p"]
+
+[ext_resource type="RoseQuest" uid="uid://dmwboo2vj67s3" path="res://data/quests/1005-an-eye-for-the-marketplace.tres" id="1_jvrds"]
+[ext_resource type="RoseItemQuest" uid="uid://6jjhp3lytap5" path="res://data/items/quest/132-beetle-shell.tres" id="2_nms5j"]
+[ext_resource type="RoseQuestTrigger" uid="uid://ch6nxdsj1tn8r" path="res://data/quest_triggers/qj411-01/1005-05.tres" id="3_qhfeg"]
+[ext_resource type="RoseItemQuest" uid="uid://m5mqsl5jsli2" path="res://data/items/quest/116-cobra-leather.tres" id="4_ra801"]
+[ext_resource type="RoseQuest" uid="uid://6nny813ghvym" path="res://data/quests/1006-an-eye-for-the-marketplace.tres" id="5_gqxan"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_jpe2b"]
+quest = ExtResource("1_jvrds")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_eyom2"]
+item = ExtResource("2_nms5j")
+equipment_index = 13
+count = 15
+operator = ">="
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_8tvi1"]
+variable_type = "Switch"
+variable = 2
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_hstkv"]
+variable_type = "Switch"
+variable = 3
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_e8u5c"]
+quest = ExtResource("1_jvrds")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_01adl"]
+item = ExtResource("2_nms5j")
+quantity = 15
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_mgst6"]
+item = ExtResource("4_ra801")
+quantity = 5
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_y0sku"]
+quest = ExtResource("5_gqxan")
+keep_data = true
+
+[resource]
+name = "1005-04"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_jpe2b"), SubResource("RoseConditionQuestItem_eyom2"), SubResource("RoseConditionQuestVariable_8tvi1"), SubResource("RoseConditionQuestVariable_hstkv")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_e8u5c"), SubResource("RoseRewardRemoveItem_01adl"), SubResource("RoseRewardAddItem_mgst6"), SubResource("RoseRewardChangeSelectedQuest_y0sku")])
+next_trigger = ExtResource("3_qhfeg")

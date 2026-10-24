@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://5mnj0wkrmayu"]
+
+[ext_resource type="RoseQuest" uid="uid://wd8470dfvyb4" path="res://data/quests/110-the-truth-to-the-rumors.tres" id="1_hrtvy"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_t0eiv"]
+variable_type = "Episode"
+value = 7
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_q7phx"]
+quest = ExtResource("1_hrtvy")
+
+[resource]
+name = "109-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_t0eiv")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_q7phx")])

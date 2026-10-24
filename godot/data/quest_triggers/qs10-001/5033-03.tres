@@ -1,0 +1,27 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d0bhdgj3ou53v"]
+
+[ext_resource type="RoseQuest" uid="uid://bsepecuvu0oge" path="res://data/quests/5033-stockpiling-jelly-bean-hides.tres" id="1_6rd2q"]
+[ext_resource type="RoseItemQuest" uid="uid://b1vadkkeysngn" path="res://data/items/quest/804-jelly-bean-hide.tres" id="2_v2kgr"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_lsqnk"]
+quest = ExtResource("1_6rd2q")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_awqnp"]
+item = ExtResource("2_v2kgr")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_3nnnn"]
+quest = ExtResource("1_6rd2q")
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_ardci"]
+equation = 2
+value = 20
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_plpfx"]
+
+[resource]
+name = "5033-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_lsqnk"), SubResource("RoseConditionQuestItem_awqnp")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_3nnnn"), SubResource("RoseRewardCalculatedMoney_ardci"), SubResource("RoseRewardRemoveSelectedQuest_plpfx")])

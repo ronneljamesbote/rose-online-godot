@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b5pt3mykkgqao"]
+
+[sub_resource type="RoseConditionClanPosition" id="RoseConditionClanPosition_nvipa"]
+value = 6
+
+[sub_resource type="RoseConditionClanPoints" id="RoseConditionClanPoints_hq5c3"]
+operator = ">="
+value = 1000
+
+[sub_resource type="RoseConditionClanLevel" id="RoseConditionClanLevel_kw5au"]
+value = 1
+
+[sub_resource type="RoseRewardClanLevelIncrease" id="RoseRewardClanLevelIncrease_s84u3"]
+
+[resource]
+name = "Clan-011"
+conditions = Array[Resource]([SubResource("RoseConditionClanPosition_nvipa"), SubResource("RoseConditionClanPoints_hq5c3"), SubResource("RoseConditionClanLevel_kw5au")])
+rewards = Array[Resource]([SubResource("RoseRewardClanLevelIncrease_s84u3")])

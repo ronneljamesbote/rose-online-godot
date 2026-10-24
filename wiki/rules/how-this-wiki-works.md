@@ -23,8 +23,8 @@ Every number in the game comes from one of three places:
 
 | Place | What it holds | Example |
 | --- | --- | --- |
-| Our game data (`godot/data/`, `godot/zones/`) | Things made in the Godot editor, one file each, converted once from iROSE: items, monsters, town NPCs, drop tables, shop tabs, skill levels, status effects, job classes, zone settings, warp gates, crafting recipes, new characters, sounds, effect files, attack effects, skies, the interface's pictures and mouse cursors, and the icons and models they link so far, and the zones edited as scenes | Short Sword attack 10, in `godot/data/items/weapon/2-short-sword.tres`; Woopie level 16, in `godot/data/monsters/101-woopie.tres`; a zone's PvP state, in `godot/data/zones/` |
-| The iROSE 129 game data | The original data not converted yet: quests, dialogs, monster AI, the maps of zones not edited in Godot yet | A quest's reward |
+| Our game data (`godot/data/`, `godot/zones/`) | Things made in the Godot editor, one file each, converted once from iROSE: items, monsters, town NPCs, drop tables, shop tabs, skill levels, status effects, job classes, zone settings, warp gates, crafting recipes, new characters, sounds, effect files, attack effects, skies, the interface's pictures and mouse cursors, quests (their text and every step's conditions and rewards), and the icons and models they link so far, and the zones edited as scenes | Short Sword attack 10, in `godot/data/items/weapon/2-short-sword.tres`; Woopie level 16, in `godot/data/monsters/101-woopie.tres`; a zone's PvP state, in `godot/data/zones/`; a quest's reward, in `godot/data/quest_triggers/` |
+| The iROSE 129 game data | The original data not converted yet: dialogs, monster AI, the maps of zones not edited in Godot yet | An NPC's dialog |
 | The game code | Rules and formulas, and features iROSE didn't have | How attack turns into damage |
 
 The original data is never edited. Our own data is changed in the Godot editor and

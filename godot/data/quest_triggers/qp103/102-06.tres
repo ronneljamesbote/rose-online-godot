@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bhn8eoym5yadr"]
+
+[ext_resource type="RoseQuest" uid="uid://bymtsj2yn6c40" path="res://data/quests/106-healing-hands.tres" id="1_q22xw"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_5mlff"]
+quest = ExtResource("1_q22xw")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_5hjan"]
+variable_type = "Timer"
+operator = "<="
+
+[sub_resource type="RoseRewardCallLuaFunction" id="RoseRewardCallLuaFunction_4oq3p"]
+function = "mushroom"
+
+[resource]
+name = "102-06"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_5mlff"), SubResource("RoseConditionQuestVariable_5hjan")])
+rewards = Array[Resource]([SubResource("RoseRewardCallLuaFunction_4oq3p")])

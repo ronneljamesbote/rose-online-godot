@@ -7,7 +7,7 @@ npcs:
 - '[[npcs/1096-ferrell-guild-merchant-mildun|Ferrell Guild Merchant Mildun]]'
 steps: 4
 source:
-  data: LIST_QUEST.STB row 1074; QSD triggers 1054-02, 1074-01, 1074-31, 1074-32
+  data: 'godot/data/quests/1074-lillith-woman-of-the-cosmos-second-job-change.tres; quest triggers in godot/data/quest_triggers/: qj411-06/1054-02, qj411-06/1074-01, qn-278/1074-31, qn-278/1074-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://gbrgjl0nsc8n"]
+
+[ext_resource type="RoseQuest" uid="uid://c7kybhc4pllfb" path="res://data/quests/127-the-owl-eye.tres" id="1_sbyo1"]
+[ext_resource type="RoseItemQuest" uid="uid://bfm32bgvrwd71" path="res://data/items/quest/24-gold-fragment.tres" id="2_myaqa"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bjkmed4rtne7n" path="res://data/quest_triggers/qn-114/127-32.tres" id="3_vd543"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_wgn2m"]
+quest = ExtResource("1_sbyo1")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_f68ow"]
+item = ExtResource("2_myaqa")
+equipment_index = 13
+count = 20
+operator = "<"
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_7qbyq"]
+to = 80
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_obid8"]
+quest = ExtResource("1_sbyo1")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_iryfy"]
+item = ExtResource("2_myaqa")
+quantity = 1
+
+[resource]
+name = "127-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_wgn2m"), SubResource("RoseConditionQuestItem_f68ow"), SubResource("RoseConditionRandomPercent_7qbyq")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_obid8"), SubResource("RoseRewardAddItem_iryfy")])
+next_trigger = ExtResource("3_vd543")

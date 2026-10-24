@@ -10,7 +10,7 @@ npcs:
 - '[[npcs/1186-tavern-owner-anzhelika|Tavern Owner Anzhelika]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 147; QSD triggers 145-01, 145-02, 147-01, 147-03, 147-04
+  data: 'godot/data/quests/147-pavrick-the-craftsman-on-lunar.tres; quest triggers in godot/data/quest_triggers/: qp103/145-01, qp103/145-02, qp103/147-01, qp103/147-03, qp103/147-04'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

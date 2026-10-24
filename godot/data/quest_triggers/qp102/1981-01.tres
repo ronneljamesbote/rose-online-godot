@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://418kcng1gjek"]
+
+[ext_resource type="RoseQuest" uid="uid://cinu8uuf0ga1e" path="res://data/quests/1981-zeppastone-wind-gem.tres" id="1_qu2cl"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_x17er"]
+operator = ">="
+value = 41
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_13wxo"]
+switch = 128
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_46765"]
+quest = ExtResource("1_qu2cl")
+
+[resource]
+name = "1981-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_x17er"), SubResource("RoseConditionQuestSwitch_13wxo")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_46765")])

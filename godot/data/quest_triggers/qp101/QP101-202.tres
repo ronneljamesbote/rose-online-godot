@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ccj270ocaupeb"]
+
+[ext_resource type="RoseNpc" uid="uid://d3exaqvi43lj3" path="res://data/npcs/1104-historian-jones.tres" id="1_ob5g1"]
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_0yag5"]
+npc = ExtResource("1_ob5g1")
+
+[sub_resource type="RoseRewardNpcMessage" id="RoseRewardNpcMessage_gv8ly"]
+message_type = "Shout"
+text = "An enormous monster threat has just appeared on Junon! Courageous warriors! Please vanquish them for the sake of Junon!"
+
+[resource]
+name = "QP101-202"
+conditions = Array[Resource]([SubResource("RoseConditionSelectNpc_0yag5")])
+rewards = Array[Resource]([SubResource("RoseRewardNpcMessage_gv8ly")])

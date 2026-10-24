@@ -1,0 +1,27 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dm1167vsuumuj"]
+
+[ext_resource type="RoseQuest" uid="uid://c5ajqx0qgbakb" path="res://data/quests/3401-violence-by-porkies.tres" id="1_4iiqu"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_dx3t4"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cqr50mck3tlis" path="res://data/quest_triggers/qn-132/3801-31.tres" id="3_s5bc2"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_wiine"]
+quest = ExtResource("1_4iiqu")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_bxe8f"]
+item = ExtResource("2_dx3t4")
+equipment_index = 13
+count = 17
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_khs4s"]
+quest = ExtResource("1_4iiqu")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_dfd1b"]
+item = ExtResource("2_dx3t4")
+quantity = 1
+
+[resource]
+name = "3401-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_wiine"), SubResource("RoseConditionQuestItem_bxe8f")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_khs4s"), SubResource("RoseRewardAddItem_dfd1b")])
+next_trigger = ExtResource("3_s5bc2")

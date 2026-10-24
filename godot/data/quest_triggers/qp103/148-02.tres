@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dbgbgbfrqpmks"]
+
+[ext_resource type="RoseQuest" uid="uid://r8wkb68wnm8x" path="res://data/quests/149-an-interesting-proposal.tres" id="1_pmn8x"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_0pqsq"]
+variable_type = "Episode"
+value = 48
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_k6c7h"]
+quest = ExtResource("1_pmn8x")
+
+[resource]
+name = "148-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_0pqsq")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_k6c7h")])

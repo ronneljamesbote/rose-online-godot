@@ -1,0 +1,41 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d0b8wdvamow06"]
+
+[ext_resource type="RoseQuest" uid="uid://duy0sshyknrwf" path="res://data/quests/5012-stockpiling-konara-branches.tres" id="1_10otq"]
+[ext_resource type="RoseItemQuest" uid="uid://cf7f4psq4s3iv" path="res://data/items/quest/27-konara-branch.tres" id="2_y4e0q"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_c5swh"]
+quest = ExtResource("1_10otq")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_kvnbe"]
+to = 25
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_ct3to"]
+operator = ">="
+value = 41
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_v3ph4"]
+operator = "<="
+value = 50
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_7bsyd"]
+item = ExtResource("2_y4e0q")
+equipment_index = 13
+count = 84
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_rgj7h"]
+quest = ExtResource("1_10otq")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_vlsyh"]
+item = ExtResource("2_y4e0q")
+quantity = 1
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_offnq"]
+variable = 9
+operator = "Add"
+value = 1
+
+[resource]
+name = "5012-37"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_c5swh"), SubResource("RoseConditionRandomPercent_kvnbe"), SubResource("RoseConditionAbilityValue_ct3to"), SubResource("RoseConditionAbilityValue_v3ph4"), SubResource("RoseConditionQuestItem_7bsyd")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_rgj7h"), SubResource("RoseRewardAddItem_vlsyh"), SubResource("RoseRewardQuestVariable_offnq")])

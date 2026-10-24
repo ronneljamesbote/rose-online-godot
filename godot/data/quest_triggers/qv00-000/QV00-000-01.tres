@@ -1,0 +1,14 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ci8kuh2hhep5q"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_uh6ei"]
+operator = ">="
+value = 10
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_kv5ts"]
+ability = "Job"
+value = 111
+
+[resource]
+name = "QV00-000-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_uh6ei")])
+rewards = Array[Resource]([SubResource("RoseRewardAbilityValue_kv5ts")])

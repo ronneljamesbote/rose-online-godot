@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d30e6fopn04d6"]
+
+[ext_resource type="RoseQuest" uid="uid://btfra2jhftkiq" path="res://data/quests/1983-the-search-for-the-prince.tres" id="1_j64ig"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_jh5c8"]
+switch = 129
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_wcj53"]
+switch = 130
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_0pdr6"]
+quest = ExtResource("1_j64ig")
+
+[resource]
+name = "1983-02"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_jh5c8"), SubResource("RoseConditionQuestSwitch_wcj53")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_0pdr6")])

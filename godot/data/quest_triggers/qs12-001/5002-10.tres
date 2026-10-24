@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b6hygcjus1xoo"]
+
+[ext_resource type="RoseNpc" uid="uid://dl5c1201kb763" path="res://data/npcs/1008-weapon-seller-raffle.tres" id="1_1es72"]
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_73xfy"]
+npc = ExtResource("1_1es72")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_2heys"]
+variable = 2
+operator = ">="
+value = 10
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_jw58l"]
+value = 2
+
+[resource]
+name = "5002-10"
+conditions = Array[Resource]([SubResource("RoseConditionSelectNpc_73xfy"), SubResource("RoseConditionObjectVariable_2heys")])
+rewards = Array[Resource]([SubResource("RoseRewardObjectVariable_jw58l")])

@@ -1,0 +1,51 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dk25butq5k1ue"]
+
+[ext_resource type="RoseQuest" uid="uid://cpwi2pk76hlwq" path="res://data/quests/147-pavrick-the-craftsman-on-lunar.tres" id="1_y6riy"]
+[ext_resource type="RoseItemQuest" uid="uid://dg5yc08sfb3ma" path="res://data/items/quest/511-luna-whiskey.tres" id="2_brrk6"]
+[ext_resource type="RoseItemConsumable" uid="uid://c1quj53bu6hw5" path="res://data/items/consumable/12-vital-water-l.tres" id="3_k56be"]
+[ext_resource type="RoseItemConsumable" uid="uid://ce5r3g0k1q3ea" path="res://data/items/consumable/31-spiritual-water-l.tres" id="4_f47af"]
+[ext_resource type="RoseQuest" uid="uid://c6xd41846klj8" path="res://data/quests/148-the-royal-golden-dagger.tres" id="5_pdcjh"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_b5tri"]
+quest = ExtResource("1_y6riy")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_v8k5n"]
+variable = 1
+value = 20
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_you3g"]
+quest = ExtResource("1_y6riy")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_hvbk2"]
+item = ExtResource("2_brrk6")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_eyb2q"]
+value = 60000
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_xybbg"]
+equation = 3
+value = 40000
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_2cvqr"]
+equation = 5
+value = 7
+item = ExtResource("3_k56be")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_ediqx"]
+equation = 5
+value = 7
+item = ExtResource("4_f47af")
+
+[sub_resource type="RoseRewardChangeSelectedQuest" id="RoseRewardChangeSelectedQuest_08bul"]
+quest = ExtResource("5_pdcjh")
+keep_data = true
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_x45mu"]
+variable_type = "Episode"
+value = 47
+
+[resource]
+name = "147-01"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_b5tri"), SubResource("RoseConditionQuestVariable_v8k5n")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_you3g"), SubResource("RoseRewardRemoveItem_hvbk2"), SubResource("RoseRewardCalculatedExperiencePoints_eyb2q"), SubResource("RoseRewardCalculatedMoney_xybbg"), SubResource("RoseRewardCalculatedItem_2cvqr"), SubResource("RoseRewardCalculatedItem_ediqx"), SubResource("RoseRewardChangeSelectedQuest_08bul"), SubResource("RoseRewardQuestVariable_x45mu")])

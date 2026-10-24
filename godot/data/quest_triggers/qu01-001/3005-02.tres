@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c07gct4luxlix"]
+
+[ext_resource type="RoseNpc" uid="uid://f34l5cvarmj4" path="res://data/npcs/1109-elder-of-junon-order-gorthein.tres" id="1_4ouib"]
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_omwxe"]
+npc = ExtResource("1_4ouib")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_77d5k"]
+value = 7
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_rrj4w"]
+variable = 6
+operator = ">="
+value = 10
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_h642c"]
+value = 8
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_f58j4"]
+variable = 6
+
+[resource]
+name = "3005-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectNpc_omwxe"), SubResource("RoseConditionObjectVariable_77d5k"), SubResource("RoseConditionObjectVariable_rrj4w")])
+rewards = Array[Resource]([SubResource("RoseRewardObjectVariable_h642c"), SubResource("RoseRewardObjectVariable_f58j4")])

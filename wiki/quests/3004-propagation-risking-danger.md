@@ -9,7 +9,7 @@ npcs:
 - '[[npcs/1131-mountain-guide-kay|Mountain Guide Kay]]'
 steps: 5
 source:
-  data: LIST_QUEST.STB row 3004; QSD triggers 3004-01, 3004-02, 3004-03, 3004-04, 3004-05
+  data: 'godot/data/quests/3004-propagation-risking-danger.tres; quest triggers in godot/data/quest_triggers/: qu01-001/3004-01, qu01-001/3004-02, qu01-001/3004-03, qu01-001/3004-04, qu01-001/3004-05'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs

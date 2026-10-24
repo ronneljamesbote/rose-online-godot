@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d154ykgpyxyah"]
+
+[ext_resource type="RoseNpc" uid="uid://b3bh3prm2ehb1" path="res://data/npcs/1092-gypsy-jewel-seller-bellia.tres" id="1_5ngou"]
+
+[sub_resource type="RoseConditionSelectNpc" id="RoseConditionSelectNpc_4kyg2"]
+npc = ExtResource("1_5ngou")
+
+[sub_resource type="RoseConditionObjectVariable" id="RoseConditionObjectVariable_00j6x"]
+variable = 2
+operator = ">="
+value = 20
+
+[sub_resource type="RoseRewardObjectVariable" id="RoseRewardObjectVariable_3ohnw"]
+value = 2
+
+[resource]
+name = "5014-10"
+conditions = Array[Resource]([SubResource("RoseConditionSelectNpc_4kyg2"), SubResource("RoseConditionObjectVariable_00j6x")])
+rewards = Array[Resource]([SubResource("RoseRewardObjectVariable_3ohnw")])

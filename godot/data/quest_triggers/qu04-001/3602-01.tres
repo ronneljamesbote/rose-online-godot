@@ -1,0 +1,15 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c4iutopslqdrk"]
+
+[ext_resource type="RoseQuest" uid="uid://bwhgrxucjvs7p" path="res://data/quests/3602-coal-mine-moldies-under-arumic-watch.tres" id="1_mop5c"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_elt1g"]
+ability = "Union"
+value = 4
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_tpwpf"]
+quest = ExtResource("1_mop5c")
+
+[resource]
+name = "3602-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_elt1g")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_tpwpf")])

@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://daie3bmodonlr"]
+
+[ext_resource type="RoseQuest" uid="uid://dojejuifxx867" path="res://data/quests/1068-kirnale-s-journals-second-job-change.tres" id="1_2tsqp"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cql3pc8vqucbr" path="res://data/quest_triggers/qn-212/1068-32.tres" id="2_3ec77"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_w2srl"]
+quest = ExtResource("1_2tsqp")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_xoxk5"]
+operator = "<"
+value = 5
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_qkt3d"]
+quest = ExtResource("1_2tsqp")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_q0gpk"]
+operator = "Add"
+value = 1
+
+[resource]
+name = "1068-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_w2srl"), SubResource("RoseConditionQuestVariable_xoxk5")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_qkt3d"), SubResource("RoseRewardQuestVariable_q0gpk")])
+next_trigger = ExtResource("2_3ec77")
