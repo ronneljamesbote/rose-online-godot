@@ -64,6 +64,25 @@ pub fn fix_partial_mip_chain(mut bytes: Vec<u8>) -> (Vec<u8>, bool) {
     (bytes, true)
 }
 
+/// Decodes a DDS file whose pixels are 8-bit indices into a 256-colour palette, which
+/// Godot can't read (the effect particle texture `RING_04.DDS`), into RGBA. None for any
+/// other DDS.
+pub fn decode_paletted_dds(bytes: &[u8]) -> Option<Gd<Image>> {
+    const PALETTE: usize = 256 * 4;
+    if bytes.len() < 128 + PALETTE || &bytes[0..4] != b"DDS " {
+        return None;
+    }
+    let u32_at = |o: usize| u32::from_le_bytes([bytes[o], bytes[o + 1], bytes[o + 2], bytes[o + 3]]);
+    let (height, width) = (u32_at(12) as usize, u32_at(16) as usize);
+    if u32_at(80) & 0x20 == 0 || u32_at(88) != 8 {
+        return None; // not DDPF_PALETTEINDEXED8
+    }
+    let palette = &bytes[128..128 + PALETTE];
+    let indices = bytes.get(128 + PALETTE..128 + PALETTE + width * height)?;
+    let rgba: Vec<u8> = indices.iter().flat_map(|&i| palette[i as usize * 4..i as usize * 4 + 4].iter().copied()).collect();
+    Image::create_from_data(width as i32, height as i32, false, Format::RGBA8, &PackedByteArray::from(rgba.as_slice()))
+}
+
 pub fn load_image(path: &str) -> Option<Gd<Image>> {
     if let Some(image) = crate::assets::load_texture(path).and_then(|texture| texture.get_image()) {
         return Some(image);
@@ -76,8 +95,13 @@ pub fn load_rose_image(path: &str) -> Option<Gd<Image>> {
     let (bytes, needs_mipmaps) = fix_partial_mip_chain(crate::data::read_bytes(path)?);
     let mut image = Image::new_gd();
     if image.load_dds_from_buffer(&PackedByteArray::from(bytes.as_slice())) != Error::OK {
-        godot_warn!("rose: could not decode texture {path}");
-        return None;
+        match decode_paletted_dds(&bytes) {
+            Some(decoded) => image = decoded,
+            None => {
+                godot_warn!("rose: could not decode texture {path}");
+                return None;
+            }
+        }
     }
     if needs_mipmaps && !image.has_mipmaps() {
         if image.is_compressed() {
