@@ -45,7 +45,7 @@ pub fn write(cx: &Ctx, pages: &mut Pages) {
         p.set("id", base as i64);
         p.set("name", name.as_str());
         p.set("status", "in-game");
-        p.set("icon", format!("skill/{}", first.icon_number));
+        p.set("icon", format!("skill/{}", rose_data::art::client_list(&first.icon).map_or(0, |(_, n)| n)));
         let t = game.string_database.get_skill_type(first.skill_type);
         p.set("type", if t.trim().is_empty() { format!("{:?}", first.skill_type) } else { t.trim().to_string() });
         if let Some(j) = first.required_job_class {

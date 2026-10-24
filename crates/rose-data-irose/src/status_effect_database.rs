@@ -79,7 +79,7 @@ fn load_status_effect(
         apply_status_effects: data.get_apply_status_effects(row),
         apply_per_second_value: data.get_apply_status_effect_value(row)[0].unwrap_or(0),
         effect_file_id: data.get_step_effect_file_id(row),
-        icon_id: data.get_icon_id(row).unwrap_or(0),
+        icon: rose_data::art::client_part(rose_data::art::STATUS_EFFECT_ICONS, data.get_icon_id(row).unwrap_or(0)),
     })
 }
 

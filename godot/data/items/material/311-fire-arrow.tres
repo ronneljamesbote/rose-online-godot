@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://nutfs002k06d" path="res://data/sounds/item/582-item-arrow.tres" id="1_18z1c"]
 [ext_resource type="RoseAttackEffect" uid="uid://cfy2gkrx0meur" path="res://data/attack_effects/161-bleak-wind.tres" id="2_037p3"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1878.tres" id="3_whpiv"]
 
 [resource]
 id = 311
@@ -10,8 +11,8 @@ description = "An arrow with a flaming arrowhead."
 item_class = "Arrow"
 base_price = 3
 quality = 12
-icon_index = 1878
-field_model_index = 204
+icon = ExtResource("3_whpiv")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/204.tscn"
 equip_sound = ExtResource("1_18z1c")
 equip_union_1 = 161
 bullet_effect = ExtResource("2_037p3")

@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemBack" format=3 uid="uid://bw4a5e7fxo8t7"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_eg0ng"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/750.tres" id="2_sd2kk"]
 
 [resource]
 id = 375
@@ -10,8 +11,8 @@ item_class = "Bag"
 base_price = 304900
 weight = 5
 quality = 57
-icon_index = 750
-field_model_index = 248
+icon = ExtResource("2_sd2kk")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/248.tscn"
 equip_sound = ExtResource("1_eg0ng")
 equip_stat_1 = "Level"
 equip_stat_1_value = 89
@@ -20,3 +21,4 @@ add_stat_1_value = 1000
 durability = 55
 defence = 18
 resistance = 16
+model = "res://assets/rose/3ddata/avatar/list_back/375.tscn"

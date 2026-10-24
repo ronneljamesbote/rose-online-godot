@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemConsumable" format=3 uid="uid://b07a8nrcmcukx"]
 
 [ext_resource type="RoseEffectFile" uid="uid://bqy1gtmnw38gj" path="res://data/effect_files/801-effect-801.tres" id="1_2bahu"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/2073.tres" id="2_nemjx"]
 
 [resource]
 id = 551
@@ -9,8 +10,8 @@ description = "You can check what prize it awards by double clicking it. If you 
 item_class = "QuestScroll"
 quality = 10
 trade_restriction = 3
-icon_index = 2073
-field_model_index = 151
+icon = ExtResource("2_nemjx")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/151.tscn"
 store_skin = 10
 confile_index = 801
 effect = ExtResource("1_2bahu")

@@ -3,6 +3,7 @@
 [ext_resource type="RoseSound" uid="uid://dwbyekfkxg7c8" path="res://data/sounds/item/584-item-potion.tres" id="1_vzkd6"]
 [ext_resource type="RoseSound" uid="uid://cxrscjnmdhir4" path="res://data/sounds/item/547-useitem-001.tres" id="2_bjo5s"]
 [ext_resource type="RoseEffectFile" uid="uid://bf814v0jt822v" path="res://data/effect_files/140-recover-01.tres" id="3_2ausw"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1625.tres" id="4_hrqle"]
 
 [resource]
 id = 101
@@ -13,8 +14,8 @@ base_price = 30
 price_rate = 1
 weight = 1
 quality = 40
-icon_index = 1625
-field_model_index = 141
+icon = ExtResource("4_hrqle")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/141.tscn"
 equip_sound = ExtResource("1_vzkd6")
 equip_job_class = 10
 equip_stat_1 = "Health"

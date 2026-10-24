@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemSubWeapon" format=3 uid="uid://b4fsvh17uklpd"]
 
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_6jgrn"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1568.tres" id="2_dw6hp"]
 
 [resource]
 id = 69
@@ -9,8 +10,8 @@ description = "A cursed mirror which reveals your dark thoughts."
 item_class = "Shield"
 base_price = 22900
 quality = 29
-icon_index = 1568
-field_model_index = 879
+icon = ExtResource("2_dw6hp")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/879.tscn"
 equip_sound = ExtResource("1_6jgrn")
 craft_skill_type = 15
 craft_skill_level = 3
@@ -23,3 +24,4 @@ add_stat_1_value = 100
 durability = 29
 defence = 4
 resistance = 9
+model = "res://assets/rose/3ddata/weapon/list_subwpn/69.tscn"

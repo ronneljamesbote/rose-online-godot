@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemHead" format=3 uid="uid://kmsfnpii5k6o"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_67kjj"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/213.tres" id="2_dmikc"]
 
 [resource]
 id = 739
@@ -10,8 +11,8 @@ item_class = "Hat"
 base_price = 30250
 weight = 2
 quality = 57
-icon_index = 213
-field_model_index = 239
+icon = ExtResource("2_dmikc")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/239.tscn"
 equip_sound = ExtResource("1_67kjj")
 equip_job_class = 54
 equip_stat_1 = "Level"
@@ -19,4 +20,6 @@ equip_stat_1_value = 110
 durability = 51
 defence = 36
 resistance = 23
+model_male = "res://assets/rose/3ddata/avatar/list_mcap/739.tscn"
+model_female = "res://assets/rose/3ddata/avatar/list_wcap/739.tscn"
 hair_type = 2

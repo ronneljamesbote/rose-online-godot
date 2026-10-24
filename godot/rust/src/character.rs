@@ -93,8 +93,9 @@ pub struct RoseCharacter {
     gender: usize,
     weapon_motion_type: usize,
     dummy_offset: usize,
-    /// The mesh instances of each equipped part, in ZSC part order, with its item number.
-    parts: Vec<(Part, usize, Vec<Gd<MeshInstance3D>>)>,
+    /// The mesh instances of each equipped part, in the model's part order, with its item
+    /// number and model path.
+    parts: Vec<(Part, usize, String, Vec<Gd<MeshInstance3D>>)>,
     /// Gem effects shown on the weapons.
     gem_effects: Vec<Gd<Node3D>>,
 }
@@ -365,18 +366,17 @@ fn attach_object(
         .collect()
 }
 
-/// The imported scene of one part (`3ddata/avatar/list_mbody/12.tscn`): its mesh instances
-/// carry `skinned` and `bone` metadata. Returns None when there is no such scene.
-fn attach_part_scene(skeleton: &mut Gd<Skeleton3D>, skin: Option<&Gd<Skin>>, list: &str, object_id: usize) -> Option<Vec<Gd<MeshInstance3D>>> {
-    let scene = assets::load_stem::<PackedScene>(&format!("{}/{object_id}", assets::stem(list)), &["tscn", "scn"])?;
+/// A part's scene (`3ddata/avatar/list_mbody/12.tscn`, or one of our own): its mesh
+/// instances, with `skinned` and `bone` metadata, go onto the skeleton.
+fn attach_scene(skeleton: &mut Gd<Skeleton3D>, skin: Option<&Gd<Skin>>, scene: &Gd<PackedScene>) -> Option<Vec<Gd<MeshInstance3D>>> {
     let mut root = scene.instantiate()?;
     let mut placed = Vec::new();
     for child in root.get_children().iter_shared() {
         let Ok(mut instance) = child.try_cast::<MeshInstance3D>() else { continue };
         instance.set_owner(Gd::null_arg());
         root.remove_child(&instance);
-        let skinned = instance.get_meta("skinned").try_to::<bool>().unwrap_or(false);
-        let bone = instance.get_meta("bone").try_to::<GString>().map(|b| b.to_string()).unwrap_or_default();
+        let skinned = instance.get_meta_ex("skinned").default(&false.to_variant()).done().try_to::<bool>().unwrap_or(false);
+        let bone = instance.get_meta_ex("bone").default(&GString::new().to_variant()).done().try_to::<GString>().map(|b| b.to_string()).unwrap_or_default();
         if !skinned {
             if let Some(rigid) = instance.get_mesh().and_then(|m| m.try_cast::<ArrayMesh>().ok()).map(|m| mesh::rigid(&m)) {
                 instance.set_mesh(&rigid);
@@ -386,6 +386,42 @@ fn attach_part_scene(skeleton: &mut Gd<Skeleton3D>, skin: Option<&Gd<Skin>>, lis
     }
     root.free();
     Some(placed)
+}
+
+/// Puts a model on the skeleton by its path (an item's model, see `rose_data::art`): its
+/// scene, or without one the object of the client's model list. None when there is neither.
+fn attach_model(
+    skeleton: &mut Gd<Skeleton3D>,
+    skin: Option<&Gd<Skin>>,
+    path: &str,
+    dummy_offset: usize,
+    default_bone: Option<usize>,
+) -> Option<Vec<Gd<MeshInstance3D>>> {
+    if let Some(scene) = crate::items::model_scene(path) {
+        return attach_scene(skeleton, skin, &scene);
+    }
+    let (list, object) = rose_data::art::client_list(path)?;
+    let zsc = crate::items::zsc_list(&format!("{list}.ZSC"))?;
+    Some(attach_object(skeleton, skin, zsc, object as usize, dummy_offset, default_bone))
+}
+
+/// The model path of an equipped item for a male or female character (empty when it has
+/// none).
+fn item_model(part: Part, number: usize, male: bool) -> String {
+    let Some(game_data) = data::get() else { return String::new() };
+    let items = &game_data.items;
+    let base = match part {
+        Part::Face | Part::Hair => return rose_data::art::client_part(part.list(male), number as u32),
+        Part::Head => items.get_head_item(number).map(|i| &i.item_data),
+        Part::Body => items.get_body_item(number).map(|i| &i.item_data),
+        Part::Hands => items.get_hands_item(number).map(|i| &i.item_data),
+        Part::Feet => items.get_feet_item(number).map(|i| &i.item_data),
+        Part::Weapon => items.get_weapon_item(number).map(|i| &i.item_data),
+        Part::SubWeapon => items.get_sub_weapon_item(number).map(|i| &i.item_data),
+        Part::FaceItem => items.get_face_item(number).map(|i| &i.item_data),
+        Part::Back => items.get_back_item(number).map(|i| &i.item_data),
+    };
+    base.map_or(String::new(), |b| if male { b.model_male.clone() } else { b.model_female.clone() })
 }
 
 fn add_player(node: &mut Gd<Node3D>, library: Gd<AnimationLibrary>) {
@@ -495,15 +531,15 @@ impl RoseCharacter {
             if id <= 0 && !matches!(part, Part::Face | Part::Hair) {
                 continue;
             }
-            let placed = match (id >= 0).then(|| attach_part_scene(&mut skeleton, skin.as_ref(), part.list(male), id as usize)).flatten() {
-                Some(placed) => placed,
-                None => {
-                    let Some(zsc) = data::read_file::<ZscFile>(part.list(male)) else { continue };
-                    attach_object(&mut skeleton, skin.as_ref(), &zsc, id as usize, dummy_offset, part.default_bone(dummy_offset))
-                }
+            if id < 0 {
+                continue;
+            }
+            let model = item_model(part, id as usize, male);
+            let Some(placed) = attach_model(&mut skeleton, skin.as_ref(), &model, dummy_offset, part.default_bone(dummy_offset)) else {
+                continue;
             };
             if id > 0 {
-                self.parts.push((part, id as usize, placed));
+                self.parts.push((part, id as usize, model, placed));
             }
         }
 
@@ -560,9 +596,8 @@ impl RoseCharacter {
         }
         const GRADED: [Part; 8] =
             [Part::Head, Part::Body, Part::Hands, Part::Feet, Part::Weapon, Part::SubWeapon, Part::FaceItem, Part::Back];
-        let male = self.gender == 0;
         let mut effects = Vec::new();
-        for (part, id, instances) in self.parts.iter_mut() {
+        for (part, id, model, instances) in self.parts.iter_mut() {
             let grade = GRADED.iter().position(|p| p == part).and_then(|i| grades.get(i)).unwrap_or(0);
             let colour = (grade > 0)
                 .then(|| game_data.items.get_item_grade(grade as u8))
@@ -596,8 +631,10 @@ impl RoseCharacter {
             else {
                 continue;
             };
-            let Some(zsc) = data::read_file::<ZscFile>(part.list(male)) else { continue };
-            let Some(point) = zsc.objects.get(*id).and_then(|o| o.effects.get(gem_position as usize)) else { continue };
+            // The gem point is the model list's (a scene of our own has none yet).
+            let Some((list, object)) = rose_data::art::client_list(model) else { continue };
+            let Some(zsc) = crate::items::zsc_list(&format!("{list}.ZSC")) else { continue };
+            let Some(point) = zsc.objects.get(object as usize).and_then(|o| o.effects.get(gem_position as usize)) else { continue };
             let Some(parent) = instances.get(point.parent.unwrap_or(0) as usize) else { continue };
             let mut effect = crate::effect::RoseEffect::new_alloc();
             if !effect.bind_mut().load_path(path) {
@@ -738,12 +775,10 @@ impl RoseVehicle {
             }
         };
         let skin = skeleton.create_skin_from_rest_transforms();
-        let zsc = data::read_file::<ZscFile>(VEHICLE_ZSC);
         for part in [body, engine, leg, arms] {
-            if part > 0 && attach_part_scene(&mut skeleton, skin.as_ref(), VEHICLE_ZSC, part as usize).is_none() {
-                if let Some(zsc) = &zsc {
-                    attach_object(&mut skeleton, skin.as_ref(), zsc, part as usize, dummy_offset, None);
-                }
+            let model = game_data.items.get_vehicle_item(part.max(0) as usize).map_or(String::new(), |v| v.item_data.model_male.clone());
+            if part > 0 {
+                attach_model(&mut skeleton, skin.as_ref(), &model, dummy_offset, None);
             }
         }
 
@@ -805,7 +840,8 @@ pub struct RoseNpcModel {
 
 #[godot_api]
 impl RoseNpcModel {
-    /// Builds the model for an NPC id, scaled as in LIST_NPC.STB. Animations are named after
+    /// Builds the model of a monster or NPC (its `model`: the scene, or without one the
+    /// LIST_NPC.CHR entry it names), scaled as in its data. Animations are named after
     /// NpcMotionAction in lower case: stop, move, attack, hit, die, run.
     #[func]
     fn build(&mut self, npc_id: i32) -> bool {
@@ -814,55 +850,54 @@ impl RoseNpcModel {
             return false;
         };
         let Some(npc_id) = u16::try_from(npc_id).ok().and_then(NpcId::new) else { return false };
-        let Some(model) = game_data.npc_chr.npcs.get(&npc_id.get()) else {
+        let Some(npc) = game_data.npcs.get_npc(npc_id) else { return false };
+        if npc.model.is_empty() {
             godot_warn!("rose: no model for npc {}", npc_id.get());
             return false;
-        };
-        let zmd = game_data
-            .npc_chr
-            .skeleton_files
-            .get(model.skeleton_index as usize)
-            .and_then(|path| data::read_file::<ZmdFile>(path));
-        let Some(zmd) = zmd else { return false };
-        let dummy_offset = zmd.bones.len();
+        }
         self.npc_id = npc_id.get();
-        self.dummy_offset = dummy_offset;
+        let entry = rose_data::art::npc_model_entry(&npc.model).and_then(|entry| game_data.npc_chr.npcs.get(&entry));
+        let zmd = || {
+            let entry = entry?;
+            game_data.npc_chr.skeleton_files.get(entry.skeleton_index as usize).and_then(|path| data::read_file::<ZmdFile>(path))
+        };
 
-        // The imported model scene (skeleton, parts and action motions) when there is one.
-        let scene_root = assets::load_stem::<PackedScene>(&npc_scene_stem(npc_id.get()), &["tscn", "scn"])
-            .and_then(|scene| scene.instantiate());
+        // The model scene (skeleton, parts and action motions) when there is one.
+        let scene_root = crate::items::model_scene(&npc.model).and_then(|scene| scene.instantiate());
         let mut node = self.to_gd().upcast::<Node3D>();
-        let (mut skeleton, imported) = match scene_root.and_then(|root| adopt_scene(&mut node, root)) {
+        let (mut skeleton, imported, dummy_offset) = match scene_root.and_then(|root| adopt_scene(&mut node, root)) {
             Some(skeleton) => {
                 use_rigid_meshes(&skeleton.clone().upcast());
-                (skeleton, true)
+                // Dummy bones (`d0` ...) come after the regular ones (`b0` ...).
+                let regular = (0..skeleton.get_bone_count()).filter(|&i| !skeleton.get_bone_name(i).to_string().starts_with('d')).count();
+                (skeleton, true, regular)
             }
             None => {
+                let (Some(entry), Some(zmd)) = (entry, zmd()) else {
+                    godot_warn!("rose: no model {} for npc {}", npc.model, npc_id.get());
+                    return false;
+                };
                 let mut skeleton = build_skeleton(&zmd);
                 let skin = skeleton.create_skin_from_rest_transforms();
                 self.base_mut().add_child(&skeleton);
                 let Some(zsc) = npc_zsc() else { return false };
-                for model_id in model.model_ids.iter() {
-                    attach_object(&mut skeleton, skin.as_ref(), zsc, *model_id as usize, dummy_offset, None);
+                for model_id in entry.model_ids.iter() {
+                    attach_object(&mut skeleton, skin.as_ref(), zsc, *model_id as usize, zmd.bones.len(), None);
                 }
-                (skeleton, false)
+                (skeleton, false, zmd.bones.len())
             }
         };
+        self.dummy_offset = dummy_offset;
         let skin = skeleton.create_skin_from_rest_transforms();
-        let npc = game_data.npcs.get_npc(npc_id);
-        if let Some(npc) = npc {
-            for (list, part) in [
-                ("3DDATA/WEAPON/LIST_WEAPON.ZSC", npc.right_hand_part_index),
-                ("3DDATA/WEAPON/LIST_SUBWPN.ZSC", npc.left_hand_part_index),
-            ] {
-                if part != 0 && attach_part_scene(&mut skeleton, skin.as_ref(), list, part as usize).is_none() {
-                    if let Some(weapon_zsc) = data::read_file::<ZscFile>(list) {
-                        attach_object(&mut skeleton, skin.as_ref(), &weapon_zsc, part as usize, dummy_offset, None);
-                    }
-                }
+        for (list, part) in [
+            ("3DDATA/WEAPON/LIST_WEAPON.ZSC", npc.right_hand_part_index),
+            ("3DDATA/WEAPON/LIST_SUBWPN.ZSC", npc.left_hand_part_index),
+        ] {
+            if part != 0 {
+                attach_model(&mut skeleton, skin.as_ref(), &rose_data::art::client_part(list, part), dummy_offset, None);
             }
-            self.base_mut().set_scale(Vector3::ONE * npc.scale);
         }
+        self.base_mut().set_scale(Vector3::ONE * npc.scale);
 
         let looping = |name: &str| matches!(name, "stop" | "move" | "run");
         let player = imported.then(|| self.base().try_get_node_as::<AnimationPlayer>("AnimationPlayer")).flatten();
@@ -940,7 +975,7 @@ pub struct AvatarImport {
 
 impl AvatarImport {
     /// Saves (or with `redo` false, keeps an existing) `res://assets/rose/<stem>.<ext>`.
-    fn save(&mut self, redo: bool, stem: &str, extension: &str, make: impl FnOnce() -> Option<Gd<godot::classes::Resource>>) {
+    pub fn save(&mut self, redo: bool, stem: &str, extension: &str, make: impl FnOnce() -> Option<Gd<godot::classes::Resource>>) {
         let target = format!("{}{stem}.{extension}", assets::ROSE);
         let disk = godot::classes::ProjectSettings::singleton().globalize_path(&target).to_string();
         if !redo && std::path::Path::new(&disk).is_file() {
@@ -957,14 +992,14 @@ impl AvatarImport {
 }
 
 /// Packs `root` and its children (owned by it) as a scene.
-fn pack(root: Gd<Node3D>) -> Option<Gd<godot::classes::Resource>> {
+pub(crate) fn pack(root: Gd<Node3D>) -> Option<Gd<godot::classes::Resource>> {
     let mut scene = PackedScene::new_gd();
     let packed = scene.pack(&root) == godot::global::Error::OK;
     root.free();
     packed.then(|| scene.upcast())
 }
 
-fn own<T: Inherits<Node>>(root: &Gd<Node3D>, node: Gd<T>) {
+pub(crate) fn own<T: Inherits<Node>>(root: &Gd<Node3D>, node: Gd<T>) {
     node.upcast::<Node>().set_owner(root);
 }
 

@@ -17,14 +17,17 @@
 //! `ClassDb` lists them) on the other. A property the struct doesn't know, or a key the
 //! class doesn't have, is an error, so the two can't drift apart unnoticed. A link to another
 //! resource is, in the export, the item it names (`weapon/3`) or the other thing's id.
+//! A linked file (an audio stream, an effect scene, an icon texture) is its path, and so is a
+//! model, which is a plain path property (a file hint, not a loaded scene) so that opening a
+//! resource never loads a mesh.
 
 use std::path::Path;
 
 use enum_map::Enum;
 use godot::{
     classes::{
-        AudioStream, ClassDb, DirAccess, IResource, ProjectSettings, Resource, ResourceLoader, ResourceSaver,
-        ResourceUid,
+        AudioStream, ClassDb, DirAccess, FileAccess, IResource, ProjectSettings, Resource, ResourceLoader,
+        ResourceSaver, ResourceUid, Texture2D,
     },
     global::Error,
     prelude::*,
@@ -88,9 +91,29 @@ fn variants<E: Enum + std::fmt::Debug>(optional: bool) -> Vec<String> {
         .collect()
 }
 
-/// The Inspector's dropdowns for the text fields that name a game enum.
+/// The text fields that hold a model scene's path.
+fn is_model_path(name: &str) -> bool {
+    matches!(name, "model" | "model_male" | "model_female" | "field_model")
+}
+
+/// The file picker on a model path. A path, not a scene, so loading the resource doesn't load
+/// the scene (and its meshes and textures): the table and the export read thousands of them.
+fn model_hint(property: &mut PropertyInfo) -> bool {
+    if property.variant_type != VariantType::STRING || !is_model_path(&property.property_name.to_string()) {
+        return false;
+    }
+    property.hint_info.hint = PropertyHint::FILE_PATH;
+    property.hint_info.hint_string = GString::from("*.tscn,*.scn");
+    true
+}
+
+/// The Inspector's dropdowns for the text fields that name a game enum, and the file picker
+/// of the model paths.
 fn enum_hint(property: &mut PropertyInfo) {
     if property.variant_type != VariantType::STRING {
+        return;
+    }
+    if model_hint(property) {
         return;
     }
     let name = property.property_name.to_string();
@@ -176,13 +199,16 @@ macro_rules! item_resource {
             #[export]
             trade_restriction: i64,
 
-            /// The icon: its number in the item icon sheets (0 = none).
+            /// The icon in the bag, shops and tooltips (empty = none). The imported ones are
+            /// in `res://assets/rose/3ddata/control/res/item1/` (open them with Load); a new
+            /// icon can be any image, best 40 × 40.
             #[export_group(name = "Look and sound")]
             #[export]
-            icon_index: i64,
-            /// The model shown when the item lies on the ground.
+            icon: Option<Gd<Texture2D>>,
+            /// The scene shown when the item lies on the ground (empty = none, only its name
+            /// shows). The imported ones are `res://assets/rose/3ddata/item/list_fielditem/<number>.tscn`.
             #[export]
-            field_model_index: i64,
+            field_model: GString,
             /// The sound played when it is equipped (empty = none): drag a `RoseSound` in
             /// from `res://data/sounds/`.
             #[export]
@@ -283,11 +309,22 @@ macro_rules! item_resource {
 item_resource!(
     /// A face item: a mask, glasses or the like. Edit it here, then run `--export-data` so
     /// the server and the game get the change (see `godot/data/README.md`).
-    RoseItemFace {}
+    RoseItemFace {
+        /// The scene worn on the face (empty = none): imported ones are
+        /// `res://assets/rose/3ddata/avatar/list_faceiem/<number>.tscn`, or make your own.
+        #[export_group(name = "Model")]
+        model: GString,
+    }
 );
 item_resource!(
     /// A helmet or hat. Edit it here, then run `--export-data` (see `godot/data/README.md`).
     RoseItemHead {
+        /// The scene worn by male characters (empty = none): imported ones are
+        /// `res://assets/rose/3ddata/avatar/list_mcap/<number>.tscn`, or make your own.
+        #[export_group(name = "Model")]
+        model_male: GString,
+        /// The scene worn by female characters (`res://assets/rose/3ddata/avatar/list_wcap/...`).
+        model_female: GString,
         /// How the hair is drawn under it (0 = all of it, higher numbers hide more).
         #[export_group(name = "Head")]
         hair_type: i64,
@@ -295,16 +332,36 @@ item_resource!(
 );
 item_resource!(
     /// Armour or clothes. Edit it here, then run `--export-data` (see `godot/data/README.md`).
-    RoseItemBody {}
+    RoseItemBody {
+        /// The scene worn by male characters (empty = none): imported ones are
+        /// `res://assets/rose/3ddata/avatar/list_mbody/<number>.tscn`, or make your own.
+        #[export_group(name = "Model")]
+        model_male: GString,
+        /// The scene worn by female characters (`res://assets/rose/3ddata/avatar/list_wbody/...`).
+        model_female: GString,
+    }
 );
 item_resource!(
     /// Gloves or gauntlets. Edit it here, then run `--export-data` (see `godot/data/README.md`).
-    RoseItemHands {}
+    RoseItemHands {
+        /// The scene worn by male characters (empty = none): imported ones are
+        /// `res://assets/rose/3ddata/avatar/list_marms/<number>.tscn`, or make your own.
+        #[export_group(name = "Model")]
+        model_male: GString,
+        /// The scene worn by female characters (`res://assets/rose/3ddata/avatar/list_warms/...`).
+        model_female: GString,
+    }
 );
 item_resource!(
     /// Boots or shoes. Item 0 holds the walking speed without shoes. Edit it here, then run
     /// `--export-data` (see `godot/data/README.md`).
     RoseItemFeet {
+        /// The scene worn by male characters (empty = none): imported ones are
+        /// `res://assets/rose/3ddata/avatar/list_mfoot/<number>.tscn`, or make your own.
+        #[export_group(name = "Model")]
+        model_male: GString,
+        /// The scene worn by female characters (`res://assets/rose/3ddata/avatar/list_wfoot/...`).
+        model_female: GString,
         /// The run speed they give (iROSE's move speed; item 0's is the speed barefoot).
         #[export_group(name = "Feet")]
         move_speed: i64,
@@ -314,6 +371,10 @@ item_resource!(
     /// Back armour, a bag, wings or an ammunition box. Edit it here, then run `--export-data`
     /// (see `godot/data/README.md`).
     RoseItemBack {
+        /// The scene worn on the back (empty = none): imported ones are
+        /// `res://assets/rose/3ddata/avatar/list_back/<number>.tscn`, or make your own.
+        #[export_group(name = "Model")]
+        model: GString,
         /// The move speed it adds.
         #[export_group(name = "Back")]
         move_speed: i64,
@@ -328,6 +389,10 @@ item_resource!(
     /// A weapon. Item 0 is fighting unarmed (its range, sounds and effects). Edit it here,
     /// then run `--export-data` (see `godot/data/README.md`).
     RoseItemWeapon {
+        /// The scene held in the hand (empty = none): imported ones are
+        /// `res://assets/rose/3ddata/weapon/list_weapon/<number>.tscn`, or make your own.
+        #[export_group(name = "Model")]
+        model: GString,
         /// How far it reaches, in centimetres (bows and guns: how far they shoot).
         #[export_group(name = "Weapon")]
         attack_range: i64,
@@ -360,6 +425,10 @@ item_resource!(
     /// A shield or support tool. Edit it here, then run `--export-data` (see
     /// `godot/data/README.md`).
     RoseItemSubWeapon {
+        /// The scene held in the other hand (empty = none): imported ones are
+        /// `res://assets/rose/3ddata/weapon/list_subwpn/<number>.tscn`, or make your own.
+        #[export_group(name = "Model")]
+        model: GString,
         /// Where on the model a socketed gem shows.
         #[export_group(name = "Sub weapon")]
         gem_position: i64,
@@ -449,6 +518,10 @@ item_resource!(
     /// A cart or castle gear part. Edit it here, then run `--export-data` (see
     /// `godot/data/README.md`).
     RoseItemVehicle {
+        /// The scene of the part (empty = none): imported ones are
+        /// `res://assets/rose/3ddata/pat/list_pat/<number>.tscn`, or make your own.
+        #[export_group(name = "Model")]
+        model: GString,
         /// A cart or a castle gear.
         #[export_group(name = "Vehicle")]
         #[init(val = GString::from("Cart"))]
@@ -551,8 +624,7 @@ macro_rules! character_resource {
         pub struct $name {
             /// The number, shared by monsters and NPCs (iROSE's LIST_NPC.STB row): no monster
             /// and NPC may have the same one. Spawn points, zone NPC markers, quests and skills
-            /// name it by this, and it picks the model and motions (LIST_NPC.CHR) until models
-            /// are made in Godot. Don't change it once it is in use.
+            /// name it by this. Don't change it once it is in use.
             #[export_group(name = "Character")]
             #[export]
             id: i64,
@@ -626,8 +698,15 @@ macro_rules! character_resource {
             #[export]
             npc_type_index: i64,
 
-            /// The weapon model part in its right hand (0 = none).
+            /// The model scene: skeleton, parts and motions (empty = none). The imported ones
+            /// are `res://assets/rose/3ddata/npc/list_npc/<number>.tscn` (open them with
+            /// Load); several monsters can share one. An imported model also brings its
+            /// motion timings to the server (or our own scene saved at the same path under
+            /// `res://assets/ours/`); a scene of our own elsewhere has none there yet.
             #[export_group(name = "Look and sound")]
+            #[export]
+            model: GString,
+            /// The weapon model part in its right hand (0 = none).
             #[export]
             right_hand_part_index: i64,
             /// The model part in its left hand (0 = none).
@@ -674,6 +753,13 @@ macro_rules! character_resource {
                 $field: $ty,
             )*
             base: Base<Resource>,
+        }
+
+        #[godot_api]
+        impl IResource for $name {
+            fn on_validate_property(&self, property: &mut PropertyInfo) {
+                model_hint(property);
+            }
         }
     };
 }
@@ -811,9 +897,11 @@ pub struct RoseSkill {
     /// The tab of the skill window it shows on (0 basic, 1 active, 2 passive, 3 clan ...).
     #[export]
     page: i64,
-    /// The icon: its number in the skill icon sheet.
+    /// The icon (empty = none). The imported ones are in
+    /// `res://assets/rose/3ddata/control/res/skillicon/` (open them with Load); a new icon
+    /// can be any image, best 40 × 40.
     #[export]
-    icon_number: i64,
+    icon: Option<Gd<Texture2D>>,
 
     /// Skill points it costs to learn this level.
     #[export_group(name = "Learning")]
@@ -1139,9 +1227,10 @@ pub struct RoseStatusEffect {
     /// `RoseEffectFile` in from `res://data/effect_files/`.
     #[export]
     effect: Option<Gd<RoseEffectFile>>,
-    /// The icon over the character frame: its number in the status icon sheet.
+    /// The icon over the character frame (empty = none). The imported ones are in
+    /// `res://assets/rose/3ddata/control/res/stateicon/`.
     #[export]
-    icon_id: i64,
+    icon: Option<Gd<Texture2D>>,
     base: Base<Resource>,
 }
 
@@ -1748,7 +1837,7 @@ fn item_kind(class: &str) -> Option<&'static str> {
 /// What a link holds in the export: an item as `weapon/3`, an audio file or a scene its path, anything
 /// else its id.
 fn link_value(resource: &Gd<Resource>) -> Value {
-    if resource.is_class("AudioStream") || resource.is_class("PackedScene") {
+    if resource.is_class("AudioStream") || resource.is_class("PackedScene") || resource.is_class("Texture2D") {
         return Value::from(resource.get_path().to_string());
     }
     let id = resource.get("id").try_to::<i64>().unwrap_or(0);
@@ -1833,12 +1922,27 @@ fn to_json(resource: &Gd<Resource>) -> Map<String, Value> {
     out
 }
 
+/// The imported resource of a model or icon the iROSE tables name (`3DDATA/AVATAR/LIST_MBODY.ZSC#12`
+/// -> `res://assets/rose/3ddata/avatar/list_mbody/12.tscn`), or our own at the same place in
+/// `res://assets/ours/`, when there is one.
+fn imported_art(client: &str, extension: &str) -> Option<String> {
+    let stem = rose_data::art::art_stem(client);
+    [crate::assets::OURS, crate::assets::ROSE]
+        .iter()
+        .map(|root| format!("{root}{stem}.{extension}"))
+        .find(|path| FileAccess::file_exists(path))
+}
+
 /// The resource a link value names (`weapon/3` -> the item, 147 in `drop_table` -> that
 /// drop table), `None` for an empty one.
 fn resolve(key: &str, value: &Value, links: &Links, class: &str) -> Result<Option<Gd<Resource>>, String> {
     let link = match value {
         Value::String(s) if s.is_empty() => return Ok(None),
-        // An audio file or a scene, by its path.
+        // An icon sheet sprite of the iROSE tables: its imported icon, if the import made one.
+        Value::String(s) if s.contains('#') => {
+            return Ok(imported_art(s, "tres").and_then(|path| ResourceLoader::singleton().load(&path)));
+        }
+        // An audio file, a scene or an image, by its path.
         Value::String(s) if s.starts_with("res://") => {
             return ResourceLoader::singleton()
                 .load(s.as_str())
@@ -1876,6 +1980,11 @@ fn set_from_json(resource: &mut Gd<Resource>, object: &Map<String, Value>, links
                 single.to_string().parse::<f64>().unwrap_or(single as f64).to_variant()
             }
             (&VariantType::BOOL, Value::Bool(b)) => b.to_variant(),
+            // A model of the iROSE tables (`3DDATA/AVATAR/LIST_MBODY.ZSC#12`): its imported
+            // scene, if the import made one.
+            (&VariantType::STRING, Value::String(s)) if is_model_path(key) && s.contains('#') => {
+                GString::from(imported_art(s, "tscn").unwrap_or_default().as_str()).to_variant()
+            }
             (&VariantType::STRING, Value::String(s)) => GString::from(s.as_str()).to_variant(),
             (&VariantType::COLOR, Value::Array(rgb)) if rgb.len() == 3 => {
                 let c = |i: usize| rgb[i].as_u64().unwrap_or(0) as f32 / 255.0;
@@ -1929,7 +2038,16 @@ fn to_resource<T: Serialize>(class: &str, export: &T, links: &Links) -> Result<G
 }
 
 fn from_resource<T: DeserializeOwned>(resource: &Gd<Resource>) -> Result<T, String> {
-    serde_json::from_value(Value::Object(to_json(resource))).map_err(|e| e.to_string())
+    let json = to_json(resource);
+    // A model path has to name a file (an icon is a link, which Godot already checked).
+    for (key, value) in json.iter() {
+        if let (true, Value::String(path)) = (is_model_path(key), value) {
+            if !FileAccess::file_exists(path) {
+                return Err(format!("{key}: there is no {path} (for an imported model, run --import-rose first)"));
+            }
+        }
+    }
+    serde_json::from_value(Value::Object(json)).map_err(|e| e.to_string())
 }
 
 /// A file name for a thing: its number, then its name in lower case with dashes
@@ -3051,6 +3169,13 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
         tres_files(dir, &mut shared);
     }
     let _kept: Vec<Gd<Resource>> = shared.iter().filter_map(|path| loader.load(path)).collect();
+    // The same for the icon sheets the items', skills' and status effects' icons cut from,
+    // and the items themselves (with their icons), which drop tables, shops, recipes and new
+    // characters link again.
+    let _sheets = crate::items::icon_sheets();
+    let mut items_kept = Vec::new();
+    tres_files(ITEMS_DIR, &mut items_kept);
+    let _items_kept: Vec<Gd<Resource>> = items_kept.iter().filter_map(|path| loader.load(path)).collect();
     let (items, item_resources) = read_items()?;
     if item_resources == 0 {
         return Err(format!(

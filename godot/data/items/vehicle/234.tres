@@ -3,6 +3,7 @@
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_47mwb"]
 [ext_resource type="RoseSound" uid="uid://dd3j6n3svkjur" path="res://data/sounds/avata/701-gear-move.tres" id="2_mljw2"]
 [ext_resource type="RoseEffectFile" uid="uid://c5sheii3unghb" path="res://data/effect_files/1251-castlegear-dust-01.tres" id="3_75ax9"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/2246.tres" id="4_pj4dc"]
 
 [resource]
 id = 234
@@ -10,8 +11,8 @@ item_class = "CastleGearLeg"
 base_price = 392200
 weight = 10
 quality = 42
-icon_index = 2246
-field_model_index = 246
+icon = ExtResource("4_pj4dc")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/246.tscn"
 equip_sound = ExtResource("1_47mwb")
 craft_skill_level = 3
 add_stat_1 = "Defence"

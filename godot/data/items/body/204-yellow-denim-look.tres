@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemBody" format=3 uid="uid://djke7qtdfcx3q"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_jfmid"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/265.tres" id="2_cutu0"]
 
 [resource]
 id = 204
@@ -10,8 +11,8 @@ item_class = "CasualClothes"
 base_price = 3400
 weight = 10
 quality = 28
-icon_index = 265
-field_model_index = 241
+icon = ExtResource("2_cutu0")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/241.tscn"
 equip_sound = ExtResource("1_jfmid")
 equip_stat_1 = "Level"
 equip_stat_1_value = 13
@@ -20,3 +21,5 @@ add_stat_1_value = 46
 durability = 41
 defence = 22
 resistance = 11
+model_male = "res://assets/rose/3ddata/avatar/list_mbody/204.tscn"
+model_female = "res://assets/rose/3ddata/avatar/list_wbody/204.tscn"

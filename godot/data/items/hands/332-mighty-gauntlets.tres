@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemHands" format=3 uid="uid://c5iffy25tccmt"]
 
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_myl5r"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/459.tres" id="2_yah2b"]
 
 [resource]
 id = 332
@@ -10,8 +11,8 @@ item_class = "Gauntlet"
 base_price = 16650
 weight = 3
 quality = 44
-icon_index = 459
-field_model_index = 226
+icon = ExtResource("2_yah2b")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/226.tscn"
 equip_sound = ExtResource("1_myl5r")
 equip_job_class = 51
 equip_stat_1 = "Level"
@@ -19,3 +20,5 @@ equip_stat_1_value = 92
 durability = 56
 defence = 28
 resistance = 12
+model_male = "res://assets/rose/3ddata/avatar/list_marms/332.tscn"
+model_female = "res://assets/rose/3ddata/avatar/list_warms/332.tscn"

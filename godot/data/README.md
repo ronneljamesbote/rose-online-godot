@@ -127,6 +127,28 @@ Parabola or Immediate, `bullet_speed` in centimetres per second), the effect on 
 Effects are only shown by the game, not by the server: the export writes them
 (`effect-files.toml`, `attack-effects.toml`) and the server upload leaves them out.
 
+## Icons and models
+
+An item's, skill's and status effect's `icon` is a texture: the Inspector shows its thumbnail,
+and the Game data table shows it in the row. `--import-rose` (see `../assets/README.md`) makes
+one small `AtlasTexture` per client icon (`res://assets/rose/3ddata/control/res/item1/919.tres`,
+`skillicon/`, `stateicon/`), so run it before editing these. Models are paths, not loaded
+resources, so opening a resource or the table never loads a mesh: an item's `field_model` (the
+model lying on the ground; empty for none, only its name shows), a worn item's `model` (face
+items, back items, weapons, shields, cart parts) or `model_male` and `model_female` (hats,
+bodies, gloves, shoes), and a monster's or NPC's `model`
+(`res://assets/rose/3ddata/npc/list_npc/12.tscn`).
+
+To give something new art, put the file in `res://assets/ours/` (anywhere): a PNG or any
+texture for an icon, a scene built like the imported ones for a model. Then pick it with the
+field's **Load** (the folder icon): its dialog shows `assets/`, which the FileSystem dock
+hides. Two things don't follow a model of our own yet: a weapon's gem point (where a
+socketed gem shows), read from the iROSE model list, and a monster's or NPC's motions,
+which come from its model's `LIST_NPC.CHR` entry (so a new monster reuses a model, or an edited
+copy at the same path in `res://assets/ours/`). The export stops naming the resource when a
+model path names no file. Icons and models are only drawn by the game; the server keeps the
+paths but draws nothing.
+
 ## Changing something
 
 1. Open the resource, change the field in the Inspector, save. (Or change many in the
@@ -157,7 +179,8 @@ The export writes `export/data/items/<class>.toml` and `export/data/monsters.tom
 (`export/zones/`) and the animations' hit markers (`export/motions.toml`), see
 `../../export/README.md`. A link is written as the linked resource's kind and id (`"weapon/3"`,
 `drop_table = 147`, `required_skill_1 = 821`, `attack_start_sound = 38`, `attack_effect = 111`),
-and an audio file or an effect scene as its path (`res://assets/rose/sound/attack/sword_001.res`). The server's upload sends it (as JSON) in
+and an audio file, an effect scene, an icon or a model as its path
+(`res://assets/rose/sound/attack/sword_001.res`). The server's upload sends it (as JSON) in
 place of the iROSE item, NPC (`LIST_NPC`), drop (`ITEM_DROP`), shop (`LIST_SELL`), skill
 (`LIST_SKILL`), status effect (`LIST_STATUS`), job class (`LIST_CLASS`), zone (`LIST_ZONE`),
 warp (`WARP`), recipe (`LIST_PRODUCT`) and new character (`INIT_AVATAR`) tables, and the game
@@ -284,5 +307,12 @@ fields of items, monsters, skills and status effects were renamed when they beca
 `hit_effect`, `die_effect_file_id` `die_effect` ...). `compare` shows no difference for
 effects.
 
-Numbers that point at art (`icon_index`, `field_model_index`) are still iROSE numbers; a
-later step of the plan turns them into links to the Godot icons and models.
+For icons and models (2026-10-24) the numbers that pointed at art became links: an item's
+`icon_index` its `icon`, its `field_model_index` its `field_model`, a skill's `icon_number` and
+a status effect's `icon_id` their `icon`. Worn items got a `model` (or `model_male` and
+`model_female`), which iROSE took from the item's number in the part list of its kind, and
+monsters and NPCs a `model`, which iROSE took from their own number in `LIST_NPC.CHR`. A link
+is empty where iROSE had no model: 333 items name a ground model the list doesn't have (they
+showed nothing and still don't) and three NPCs have no `LIST_NPC.CHR`
+entry. An NPC's minimap and face icon and a monster's hand weapon parts stay numbers, and so
+do the faces and hair of characters. `compare` shows no difference for art.

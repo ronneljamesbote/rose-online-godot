@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemBody" format=3 uid="uid://btidb2ykr35k"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_jnq0z"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/342.tres" id="2_hugck"]
 
 [resource]
 id = 65
@@ -10,8 +11,8 @@ item_class = "MagicClothes"
 base_price = 74550
 weight = 20
 quality = 57
-icon_index = 342
-field_model_index = 233
+icon = ExtResource("2_hugck")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/233.tscn"
 equip_sound = ExtResource("1_jnq0z")
 craft_skill_type = 18
 craft_skill_level = 4
@@ -25,3 +26,5 @@ add_stat_1_value = 108
 durability = 48
 defence = 55
 resistance = 38
+model_male = "res://assets/rose/3ddata/avatar/list_mbody/65.tscn"
+model_female = "res://assets/rose/3ddata/avatar/list_wbody/65.tscn"

@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://nutfs002k06d" path="res://data/sounds/item/582-item-arrow.tres" id="1_hgph4"]
 [ext_resource type="RoseAttackEffect" uid="uid://bq0gk8fmds36k" path="res://data/attack_effects/172-air-gun.tres" id="2_o5bww"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1888.tres" id="3_rnqvu"]
 
 [resource]
 id = 324
@@ -10,8 +11,8 @@ description = "A bullet. Each time you fire a Gun weapon, 1 bullet is consumed."
 item_class = "Bullet"
 base_price = 6
 quality = 18
-icon_index = 1888
-field_model_index = 205
+icon = ExtResource("3_rnqvu")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/205.tscn"
 equip_sound = ExtResource("1_hgph4")
 equip_union_1 = 172
 bullet_effect = ExtResource("2_o5bww")

@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemBody" format=3 uid="uid://c617npv83nxcy"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_iwin0"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/370.tres" id="2_imz0s"]
 
 [resource]
 id = 97
@@ -10,8 +11,8 @@ item_class = "CombatUniform"
 base_price = 205350
 weight = 20
 quality = 71
-icon_index = 370
-field_model_index = 229
+icon = ExtResource("2_imz0s")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/229.tscn"
 equip_sound = ExtResource("1_iwin0")
 craft_skill_type = 17
 craft_skill_level = 6
@@ -23,3 +24,5 @@ equip_stat_1_value = 120
 durability = 56
 defence = 91
 resistance = 42
+model_male = "res://assets/rose/3ddata/avatar/list_mbody/97.tscn"
+model_female = "res://assets/rose/3ddata/avatar/list_wbody/97.tscn"

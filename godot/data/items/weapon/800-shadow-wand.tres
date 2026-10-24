@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://osald6eflwq1" path="res://data/sounds/attack/37-sword-001.tres" id="2_pboec"]
 [ext_resource type="RoseSound" uid="uid://np80gbdh8gn3" path="res://data/sounds/attack/89-magic-001.tres" id="3_38a0t"]
 [ext_resource type="RoseAttackEffect" uid="uid://wlw7t32hh16m" path="res://data/attack_effects/214-silence-wand.tres" id="4_qiedv"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1352.tres" id="5_21r6j"]
 
 [resource]
 id = 800
@@ -13,8 +14,8 @@ item_class = "MagicWand"
 base_price = 248050
 weight = 15
 quality = 89
-icon_index = 1352
-field_model_index = 643
+icon = ExtResource("5_21r6j")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/643.tscn"
 equip_sound = ExtResource("1_iwfsp")
 equip_stat_1 = "Level"
 equip_stat_1_value = 113
@@ -24,6 +25,7 @@ add_stat_1 = "SaveMana"
 add_stat_1_value = 15
 durability = 63
 rare_type = 2
+model = "res://assets/rose/3ddata/weapon/list_weapon/800.tscn"
 attack_range = 2300
 attack_power = 153
 attack_speed = 11

@@ -3,6 +3,7 @@
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_93fxd"]
 [ext_resource type="RoseSound" uid="uid://y5kg708oyaqv" path="res://data/sounds/avata/671-cart-move.tres" id="2_mui3k"]
 [ext_resource type="RoseEffectFile" uid="uid://dhqlpidee7n4q" path="res://data/effect_files/302-smoke-07.tres" id="3_skb93"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/2233.tres" id="4_n11kz"]
 
 [resource]
 id = 471
@@ -12,14 +13,15 @@ base_price = 5000
 weight = 5
 quality = 30
 trade_restriction = 6
-icon_index = 2233
-field_model_index = 246
+icon = ExtResource("4_n11kz")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/246.tscn"
 equip_sound = ExtResource("1_93fxd")
 add_stat_1 = "Defence"
 add_stat_1_value = 25
 add_stat_2 = "Resistance"
 add_stat_2_value = 15
 durability = 100
+model = "res://assets/rose/3ddata/pat/list_pat/471.tscn"
 vehicle_part = "Leg"
 version = 30
 move_speed = 114

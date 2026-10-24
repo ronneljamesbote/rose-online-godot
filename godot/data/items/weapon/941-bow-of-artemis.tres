@@ -3,6 +3,7 @@
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_ts1n5"]
 [ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_v84xi"]
 [ext_resource type="RoseAttackEffect" uid="uid://dcbf7ymp65kcd" path="res://data/attack_effects/151-simple-bow-gun.tres" id="3_wdk1k"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1201.tres" id="4_yo2k3"]
 
 [resource]
 id = 941
@@ -12,8 +13,8 @@ item_class = "Bow"
 base_price = 76590
 weight = 40
 quality = 59
-icon_index = 1201
-field_model_index = 941
+icon = ExtResource("4_yo2k3")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/941.tscn"
 equip_sound = ExtResource("1_ts1n5")
 equip_stat_1 = "Dexterity"
 equip_stat_1_value = 134
@@ -21,6 +22,7 @@ add_stat_1 = "AttackSpeed"
 add_stat_1_value = 20
 durability = 63
 rare_type = 1
+model = "res://assets/rose/3ddata/weapon/list_weapon/941.tscn"
 attack_range = 2900
 attack_power = 116
 attack_speed = 9

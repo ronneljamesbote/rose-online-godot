@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://nutfs002k06d" path="res://data/sounds/item/582-item-arrow.tres" id="1_m2jkg"]
 [ext_resource type="RoseAttackEffect" uid="uid://cfy2gkrx0meur" path="res://data/attack_effects/161-bleak-wind.tres" id="2_qdhni"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1879.tres" id="3_tn7nm"]
 
 [resource]
 id = 312
@@ -10,8 +11,8 @@ description = "An arrow that burns with white fire."
 item_class = "Arrow"
 base_price = 6
 quality = 18
-icon_index = 1879
-field_model_index = 204
+icon = ExtResource("3_tn7nm")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/204.tscn"
 equip_sound = ExtResource("1_m2jkg")
 equip_union_1 = 161
 bullet_effect = ExtResource("2_qdhni")

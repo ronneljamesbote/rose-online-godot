@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemSubWeapon" format=3 uid="uid://bcbs46tlombl6"]
 
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_v45xd"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1565.tres" id="2_i0cp1"]
 
 [resource]
 id = 66
@@ -9,8 +10,8 @@ description = "A collection of translated songs and poetry by the Elves."
 item_class = "Shield"
 base_price = 10400
 quality = 24
-icon_index = 1565
-field_model_index = 876
+icon = ExtResource("2_i0cp1")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/876.tscn"
 equip_sound = ExtResource("1_v45xd")
 craft_skill_type = 15
 craft_skill_level = 2
@@ -23,3 +24,4 @@ add_stat_1_value = 70
 durability = 25
 defence = 2
 resistance = 6
+model = "res://assets/rose/3ddata/weapon/list_subwpn/66.tscn"

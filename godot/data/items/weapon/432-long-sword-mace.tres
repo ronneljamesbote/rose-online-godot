@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://dkgwy774udjo5" path="res://data/sounds/attack/47-mace-001.tres" id="2_ied20"]
 [ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_fvsqv"]
 [ext_resource type="RoseAttackEffect" uid="uid://djmlc6hbabswu" path="res://data/attack_effects/111-wooden-sword.tres" id="4_zcfcq"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1418.tres" id="5_anbo0"]
 
 [resource]
 id = 432
@@ -13,8 +14,8 @@ item_class = "DualSwords"
 base_price = 10240
 weight = 15
 quality = 40
-icon_index = 1418
-field_model_index = 732
+icon = ExtResource("5_anbo0")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/732.tscn"
 equip_sound = ExtResource("1_cdqz0")
 craft_skill_type = 11
 craft_skill_level = 2
@@ -26,6 +27,7 @@ equip_stat_2 = "Dexterity"
 equip_stat_2_value = 56
 durability = 42
 rare_type = 2
+model = "res://assets/rose/3ddata/weapon/list_weapon/432.tscn"
 attack_range = 250
 attack_power = 59
 attack_speed = 11

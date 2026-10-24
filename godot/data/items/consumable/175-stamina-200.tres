@@ -1,13 +1,14 @@
 [gd_resource type="RoseItemConsumable" format=3 uid="uid://pghtxmrtyiyc"]
 
 [ext_resource type="RoseEffectFile" uid="uid://bf814v0jt822v" path="res://data/effect_files/140-recover-01.tres" id="1_ebmza"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1603.tres" id="2_rs7pu"]
 
 [resource]
 id = 175
 name = "Stamina (+200)"
 item_class = "AutomaticConsumption"
-icon_index = 1603
-field_model_index = 134
+icon = ExtResource("2_rs7pu")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/134.tscn"
 equip_stat_1 = "Stamina"
 equip_stat_1_value = 200
 confile_index = 140

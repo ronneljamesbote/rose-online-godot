@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemBack" format=3 uid="uid://cubip2tui6mvn"]
 
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_f1lzp"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/793.tres" id="2_teoig"]
 
 [resource]
 id = 241
@@ -10,8 +11,8 @@ item_class = "BackArmor"
 base_price = 3300
 weight = 20
 quality = 21
-icon_index = 793
-field_model_index = 248
+icon = ExtResource("2_teoig")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/248.tscn"
 equip_sound = ExtResource("1_f1lzp")
 craft_skill_type = 16
 craft_skill_level = 1
@@ -22,3 +23,4 @@ equip_stat_1_value = 12
 durability = 33
 defence = 5
 resistance = 1
+model = "res://assets/rose/3ddata/avatar/list_back/241.tscn"

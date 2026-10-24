@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemFeet" format=3 uid="uid://br8q36g6xfhnk"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_rbxm6"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/643.tres" id="2_p6xcd"]
 
 [resource]
 id = 442
@@ -10,8 +11,8 @@ item_class = "MagicBoots"
 base_price = 45350
 weight = 3
 quality = 61
-icon_index = 643
-field_model_index = 236
+icon = ExtResource("2_p6xcd")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/236.tscn"
 equip_sound = ExtResource("1_rbxm6")
 equip_job_class = 57
 equip_stat_1 = "Level"
@@ -19,4 +20,6 @@ equip_stat_1_value = 122
 durability = 53
 defence = 35
 resistance = 7
+model_male = "res://assets/rose/3ddata/avatar/list_mfoot/442.tscn"
+model_female = "res://assets/rose/3ddata/avatar/list_wfoot/442.tscn"
 move_speed = 84

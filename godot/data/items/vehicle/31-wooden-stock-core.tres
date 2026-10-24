@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_vgf7j"]
 [ext_resource type="RoseSound" uid="uid://d2k31n0q2i2av" path="res://data/sounds/avata/700-gear-neutral.tres" id="2_usunc"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/2178.tres" id="3_2ju3g"]
 
 [resource]
 id = 31
@@ -11,8 +12,8 @@ item_class = "CastleGearBody"
 base_price = 472100
 weight = 20
 quality = 35
-icon_index = 2178
-field_model_index = 246
+icon = ExtResource("3_2ju3g")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/246.tscn"
 equip_sound = ExtResource("1_vgf7j")
 craft_skill_type = 22
 craft_skill_level = 1
@@ -26,6 +27,7 @@ add_stat_2 = "Resistance"
 add_stat_2_value = 40
 durability = 51
 resistance = 20
+model = "res://assets/rose/3ddata/pat/list_pat/31.tscn"
 vehicle_type = "CastleGear"
 version = 35
 fuel_use_rate = 20

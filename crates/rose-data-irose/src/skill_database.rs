@@ -249,7 +249,7 @@ fn load_skill(data: &StbSkill, string_database: &StringDatabase, id: usize) -> O
         hit_sound_id: data.get_hit_sound_id(id),
         hit_dummy_effect_file_id: data.get_hit_dummy_effect_file_id(id),
         hit_dummy_sound_id: data.get_hit_dummy_sound_id(id),
-        icon_number,
+        icon: rose_data::art::client_part(rose_data::art::SKILL_ICONS, icon_number),
         item_make_number: data.get_item_make_number(id).unwrap_or(0),
         level: data.get_skill_level(id).unwrap_or(1),
         learn_money_cost: data.get_learn_money_cost(id).unwrap_or(0),

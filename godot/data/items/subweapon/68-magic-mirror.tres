@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemSubWeapon" format=3 uid="uid://dfdj0s6sy027f"]
 
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_tg186"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1567.tres" id="2_uth6l"]
 
 [resource]
 id = 68
@@ -9,8 +10,8 @@ description = "A magic mirror which illuminates your true heart."
 item_class = "Shield"
 base_price = 17800
 quality = 27
-icon_index = 1567
-field_model_index = 878
+icon = ExtResource("2_uth6l")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/878.tscn"
 equip_sound = ExtResource("1_tg186")
 craft_skill_type = 15
 craft_skill_level = 3
@@ -23,3 +24,4 @@ add_stat_1_value = 90
 durability = 28
 defence = 3
 resistance = 8
+model = "res://assets/rose/3ddata/weapon/list_subwpn/68.tscn"

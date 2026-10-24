@@ -1,14 +1,15 @@
 [gd_resource type="RoseItemFace" format=3 uid="uid://ceedna8erlnw"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_ffnxn"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/18.tres" id="2_x899t"]
 
 [resource]
 id = 17
 item_class = "FaceMask"
 base_price = 2400
 quality = 46
-icon_index = 18
-field_model_index = 247
+icon = ExtResource("2_x899t")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/247.tscn"
 equip_sound = ExtResource("1_ffnxn")
 craft_skill_level = 7
 add_stat_1 = "Charm"

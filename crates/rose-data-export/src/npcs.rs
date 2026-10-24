@@ -158,6 +158,11 @@ macro_rules! character_export {
             pub npc_quest_type: u32,
             #[serde(skip_serializing_if = "is_default")]
             pub npc_type_index: u16,
+            /// The model scene (`res://assets/rose/3ddata/npc/list_npc/12.tscn` for an imported
+            /// one). An imported model, or our own at the same path, also brings the motions of
+            /// its LIST_NPC.CHR entry.
+            #[serde(skip_serializing_if = "is_default")]
+            pub model: String,
             /// Size in percent of the model's.
             #[serde(skip_serializing_if = "is_default")]
             pub scale: u32,
@@ -199,6 +204,7 @@ macro_rules! character_export {
             fn set_common(&mut self, npc: &NpcData) {
                 self.id = npc.id.get();
                 self.name = npc.name.to_string();
+                self.model = npc.model.clone();
                 self.level = npc.level;
                 self.health_points = npc.health_points;
                 self.attack = npc.attack;
@@ -287,7 +293,11 @@ macro_rules! character_export {
                     create_sound_id: SoundId::new(self.create_sound),
                     death_quest_trigger_name: self.death_quest_trigger_name.clone(),
                     npc_height: self.height,
-                    motion_data: motions.get(&self.id).cloned().unwrap_or_default(),
+                    model: self.model.clone(),
+                    motion_data: rose_data::art::npc_model_entry(&self.model)
+                        .and_then(|entry| motions.get(&entry))
+                        .cloned()
+                        .unwrap_or_default(),
                 })
             }
         }
@@ -807,7 +817,7 @@ pub fn compare_npc_databases(a: &NpcDatabase, b: &NpcDatabase) -> Vec<String> {
             (Some(_), None) => out.push(format!("npc {id}: missing")),
             (None, Some(_)) => out.push(format!("npc {id}: extra")),
             (x, y) => {
-                let (x, y) = (format!("{x:#?}"), format!("{y:#?}"));
+                let (x, y) = (crate::same_art_debug(format!("{x:#?}")), crate::same_art_debug(format!("{y:#?}")));
                 if x != y {
                     for (l, r) in x.lines().zip(y.lines()).filter(|(l, r)| l != r) {
                         out.push(format!("npc {id}: {} -> {}", l.trim(), r.trim()));

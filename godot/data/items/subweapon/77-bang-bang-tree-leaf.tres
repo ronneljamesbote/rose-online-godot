@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemSubWeapon" format=3 uid="uid://do10sx0kcvugp"]
 
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_5i76l"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1578.tres" id="2_0l9dz"]
 
 [resource]
 id = 77
@@ -9,8 +10,8 @@ description = "A tree leaf that contains magical power. An essential for a Muse.
 item_class = "Shield"
 base_price = 104410
 quality = 42
-icon_index = 1578
-field_model_index = 887
+icon = ExtResource("2_0l9dz")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/887.tscn"
 equip_sound = ExtResource("1_5i76l")
 craft_skill_type = 15
 craft_skill_level = 7
@@ -25,3 +26,4 @@ add_stat_2_value = 4
 durability = 40
 defence = 7
 resistance = 23
+model = "res://assets/rose/3ddata/weapon/list_subwpn/77.tscn"

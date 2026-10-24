@@ -342,6 +342,11 @@ impl RoseImport {
         let avatars = crate::character::import_avatars(force || !same_avatars);
         stamp.set_value("import", "avatars", &crate::character::AVATAR_IMPORT_VERSION.to_variant());
 
+        // Icons and ground item models, which the data resources link.
+        let same_art = same_version && stamp.get_value_ex("import", "art").default(&Variant::nil()).done().try_to::<i64>().ok() == Some(crate::items::ART_IMPORT_VERSION);
+        let art = crate::items::import_art(force || !same_art);
+        stamp.set_value("import", "art", &crate::items::ART_IMPORT_VERSION.to_variant());
+
         // Zones with scenes in res://zones/: their model scenes and texture arrays.
         let same_zones = same_version && stamp.get_value_ex("import", "zones").default(&Variant::nil()).done().try_to::<i64>().ok() == Some(crate::zone_scene::ZONE_IMPORT_VERSION);
         let mut zones = crate::zone_scene::ZoneImport::default();
@@ -360,7 +365,10 @@ impl RoseImport {
         result.set("sounds", sounds);
         result.set("effects", effects);
         result.set("empty_effects", empty_effects);
-        result.set("failed", failed + avatars.failed + zones.failed);
+        result.set("failed", failed + avatars.failed + zones.failed + art.failed);
+        result.set("art_files", art.saved);
+        result.set("art_kept", art.kept);
+        result.set("art_bytes", art.bytes as i64);
         result.set("zone_files", zones.saved);
         result.set("zone_kept", zones.kept);
         result.set("zone_bytes", zones.bytes as i64);
@@ -436,7 +444,7 @@ const RTEX_WEBP: u8 = 1;
 /// never re-compressed: re-compressing to S3TC smeared the colour next to UV seams and
 /// made the sky blocky). An uncompressed file is kept as lossless WebP instead when that is
 /// smaller and decodes to the same pixels.
-fn save_texture(rose_path: &str, target: &str) -> bool {
+pub(crate) fn save_texture(rose_path: &str, target: &str) -> bool {
     let Some(bytes) = crate::data::read_bytes(rose_path) else { return false };
     let (bytes, needs_mipmaps) = crate::texture::fix_partial_mip_chain(bytes);
     let dds = PackedByteArray::from(bytes.as_slice());

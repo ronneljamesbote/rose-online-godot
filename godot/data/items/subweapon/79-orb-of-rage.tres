@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemSubWeapon" format=3 uid="uid://demtexm4vc7oo"]
 
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_v5ssy"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1580.tres" id="2_p8jie"]
 
 [resource]
 id = 79
@@ -9,8 +10,8 @@ description = "A gem in which the rage of the deceased is sealed."
 item_class = "Shield"
 base_price = 137600
 quality = 48
-icon_index = 1580
-field_model_index = 889
+icon = ExtResource("2_p8jie")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/889.tscn"
 equip_sound = ExtResource("1_v5ssy")
 craft_skill_type = 15
 craft_skill_level = 9
@@ -25,3 +26,4 @@ add_stat_2_value = 5
 durability = 44
 defence = 8
 resistance = 31
+model = "res://assets/rose/3ddata/weapon/list_subwpn/79.tscn"

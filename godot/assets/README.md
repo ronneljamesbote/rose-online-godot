@@ -22,7 +22,8 @@ godot --headless --path godot -- --import-rose --data-idx=/path/to/iRose_129_129
 ```
 
 It converts every ZMS mesh and DDS texture in `data.idx` except the interface
-(`3DDATA/CONTROL`), which still loads from the client data; every effect (the 351 EFT files)
+(`3DDATA/CONTROL`), which still loads from the client data apart from the icons (see
+"Icons and ground models" below); every effect (the 351 EFT files)
 into an effect scene (`3DDATA/EFFECT/LEVELUP_01.EFT` is `3ddata/effect/levelup_01.scn`, a
 `RoseEffect` with a node per part that links the imported meshes, textures and particle
 systems, its motions as Godot `Animation`s) and every PTL particle system into a `.particles.res`
@@ -115,6 +116,26 @@ file is out of date. An edited animation or scene goes in `ours/` under the same
 `ours/3ddata/motion/avatar/onehand_attack01_m1.anim` or `ours/3ddata/npc/list_npc/1.tscn`),
 since `rose/` is remade by the import. Monsters often share an animation file, so moving a
 marker in one moves it for all of them, as in iROSE.
+
+## Icons and ground models
+
+The game data (`../data/README.md`) links each item's, skill's and status effect's icon and
+each model by path, so the import makes those files too:
+
+| File | What it is |
+| --- | --- |
+| `3ddata/control/res/item1.rtex`, `skillicon.rtex`, `stateicon.rtex` | The icon sheets (the TSI files' textures). |
+| `3ddata/control/res/item1/919.tres` and so on | One `AtlasTexture` per icon, a region of its sheet: 2,366 item icons, 338 skill icons, 168 status effect icons. It is a few hundred bytes and loads only its sheet, so the Inspector shows its thumbnail without slowing the editor. |
+| `3ddata/item/list_fielditem/12.tscn` and so on | One scene per item model lying on the ground (`LIST_FIELDITEM.ZSC`, 441 of them). |
+
+New art goes in `ours/` under any path, for example `ours/items/my_sword.png` for an icon (any
+texture works, a whole picture or an `AtlasTexture` of a sheet) or `ours/items/my_sword.tscn`
+for a model built like the imported part scenes (each `MeshInstance3D` with `skinned` or a
+`bone`). Link it from the item, monster or skill (`../data/README.md`). A model scene of our
+own has no gem point yet (weapons draw a socketed gem at the point the ZSC list names) and a
+monster takes its motions (and the server its hit timing) from its model's `LIST_NPC.CHR`
+entry, so a new monster reuses an imported model, or an edited copy under the same path in
+`ours/` (`ours/3ddata/npc/list_npc/12.tscn`); a model elsewhere has no motions yet.
 
 ## Zones
 

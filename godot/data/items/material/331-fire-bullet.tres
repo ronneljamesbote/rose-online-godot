@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://nutfs002k06d" path="res://data/sounds/item/582-item-arrow.tres" id="1_rcxde"]
 [ext_resource type="RoseAttackEffect" uid="uid://ddybod851f72j" path="res://data/attack_effects/176-fire-bullet.tres" id="2_tjvwm"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1891.tres" id="3_bg6z9"]
 
 [resource]
 id = 331
@@ -11,8 +12,8 @@ item_class = "Bullet"
 base_price = 2
 weight = 1
 quality = 9
-icon_index = 1891
-field_model_index = 205
+icon = ExtResource("3_bg6z9")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/205.tscn"
 equip_sound = ExtResource("1_rcxde")
 equip_union_1 = 176
 bullet_effect = ExtResource("2_tjvwm")

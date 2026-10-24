@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemBack" format=3 uid="uid://22imj3o6n6sw"]
 
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_liacd"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/795.tres" id="2_k9tim"]
 
 [resource]
 id = 595
@@ -10,8 +11,8 @@ item_class = "BackArmor"
 base_price = 15250
 weight = 20
 quality = 32
-icon_index = 795
-field_model_index = 248
+icon = ExtResource("2_k9tim")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/248.tscn"
 equip_sound = ExtResource("1_liacd")
 equip_job_class = 71
 equip_stat_1 = "Level"
@@ -19,3 +20,4 @@ equip_stat_1_value = 31
 durability = 44
 defence = 11
 resistance = 6
+model = "res://assets/rose/3ddata/avatar/list_back/595.tscn"

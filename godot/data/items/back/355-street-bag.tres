@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemBack" format=3 uid="uid://c0xd7408ppf8n"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_e4dgw"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/748.tres" id="2_m4kbp"]
 
 [resource]
 id = 355
@@ -9,8 +10,8 @@ description = "A highly practical, multi-purpose bag."
 item_class = "Bag"
 base_price = 114100
 quality = 49
-icon_index = 748
-field_model_index = 248
+icon = ExtResource("2_m4kbp")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/248.tscn"
 equip_sound = ExtResource("1_e4dgw")
 equip_stat_1 = "Level"
 equip_stat_1_value = 66
@@ -19,3 +20,4 @@ add_stat_1_value = 650
 durability = 53
 defence = 9
 resistance = 9
+model = "res://assets/rose/3ddata/avatar/list_back/355.tscn"

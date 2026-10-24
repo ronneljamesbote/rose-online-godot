@@ -335,8 +335,14 @@ pub struct BaseItemData {
     pub price_rate: u32,
     pub weight: u32,
     pub quality: u32,
-    pub icon_index: u32,
-    pub field_model_index: u32,
+    /// The icon: a texture by its Godot path, or an item icon sheet sprite (see `art`).
+    pub icon: String,
+    /// The model shown when it lies on the ground (see `art`; empty = none).
+    pub field_model: String,
+    /// The model worn or held, on a male and on a female character (the same for items that
+    /// look the same on both; empty = none, or not a worn item). See `art`.
+    pub model_male: String,
+    pub model_female: String,
     pub equip_sound_id: Option<SoundId>,
     pub craft_skill_type: u32,
     pub craft_skill_level: u32,

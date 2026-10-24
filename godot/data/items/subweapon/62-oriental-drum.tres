@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemSubWeapon" format=3 uid="uid://dugoc2hmti45t"]
 
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_hm7ua"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1561.tres" id="2_g5ak2"]
 
 [resource]
 id = 62
@@ -9,8 +10,8 @@ description = "A small tabor drum that is played to ensure a good harvest."
 item_class = "Shield"
 base_price = 7050
 quality = 18
-icon_index = 1561
-field_model_index = 872
+icon = ExtResource("2_g5ak2")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/872.tscn"
 equip_sound = ExtResource("1_hm7ua")
 craft_skill_type = 15
 craft_skill_level = 1
@@ -25,3 +26,4 @@ add_stat_2_value = 5
 durability = 20
 defence = 1
 resistance = 3
+model = "res://assets/rose/3ddata/weapon/list_subwpn/62.tscn"

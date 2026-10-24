@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://osald6eflwq1" path="res://data/sounds/attack/37-sword-001.tres" id="2_u8bwz"]
 [ext_resource type="RoseSound" uid="uid://np80gbdh8gn3" path="res://data/sounds/attack/89-magic-001.tres" id="3_nt3r2"]
 [ext_resource type="RoseAttackEffect" uid="uid://dwr1ldoi7hkon" path="res://data/attack_effects/211-mage-s-wand.tres" id="4_1og3n"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1327.tres" id="5_e6kbx"]
 
 [resource]
 id = 332
@@ -13,8 +14,8 @@ item_class = "MagicWand"
 base_price = 2580
 weight = 3
 quality = 32
-icon_index = 1327
-field_model_index = 632
+icon = ExtResource("5_e6kbx")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/632.tscn"
 equip_sound = ExtResource("1_555zs")
 craft_skill_type = 15
 craft_skill_level = 1
@@ -27,6 +28,7 @@ equip_stat_2_value = 50
 add_stat_1 = "SaveMana"
 add_stat_1_value = 6
 durability = 40
+model = "res://assets/rose/3ddata/weapon/list_weapon/332.tscn"
 attack_range = 1800
 attack_power = 24
 attack_speed = 12

@@ -440,6 +440,10 @@ func _fill_row(item: TreeItem, row: Dictionary) -> void:
 				item.set_tooltip_text(i, value.resource_path if value is Resource else text)
 				item.set_editable(i, false)
 				item.set_custom_color(i, Color(0.65, 0.8, 1.0) if c.kind == "link" else Color(1, 1, 1, 0.6))
+				# An icon shows itself (it is loaded with the resource anyway).
+				if value is Texture2D:
+					item.set_icon(i, value)
+					item.set_icon_max_width(i, 20)
 			_:
 				item.set_cell_mode(i, TreeItem.CELL_MODE_STRING)
 				item.set_text(i, _text(value, c))

@@ -59,6 +59,7 @@ macro_rules! id_wrapper_impl {
 }
 
 mod ability;
+pub mod art;
 mod ai_database;
 mod animation_event_flags;
 mod character_motion_database;

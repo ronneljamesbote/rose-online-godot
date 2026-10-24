@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemSubWeapon" format=3 uid="uid://dyxy4xwyhe2l8"]
 
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_cbklm"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1549.tres" id="2_ccran"]
 
 [resource]
 id = 33
@@ -10,8 +11,8 @@ item_class = "Shield"
 base_price = 13450
 weight = 4
 quality = 25
-icon_index = 1549
-field_model_index = 843
+icon = ExtResource("2_ccran")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/843.tscn"
 equip_sound = ExtResource("1_cbklm")
 craft_skill_type = 16
 craft_skill_level = 3
@@ -22,3 +23,4 @@ add_stat_1_value = 10
 durability = 20
 defence = 1
 resistance = 1
+model = "res://assets/rose/3ddata/weapon/list_subwpn/33.tscn"

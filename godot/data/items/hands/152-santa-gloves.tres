@@ -1,5 +1,7 @@
 [gd_resource type="RoseItemHands" format=3 uid="uid://dse4eq5n6yumm"]
 
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/431.tres" id="1_vza9e"]
+
 [resource]
 id = 152
 name = "Santa Gloves"
@@ -8,10 +10,12 @@ item_class = "Glove"
 base_price = 1200
 weight = 2
 quality = 15
-icon_index = 431
-field_model_index = 234
+icon = ExtResource("1_vza9e")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/234.tscn"
 equip_stat_1 = "Level"
 equip_stat_1_value = 10
 durability = 16
 defence = 5
 resistance = 3
+model_male = "res://assets/rose/3ddata/avatar/list_marms/152.tscn"
+model_female = "res://assets/rose/3ddata/avatar/list_warms/152.tscn"

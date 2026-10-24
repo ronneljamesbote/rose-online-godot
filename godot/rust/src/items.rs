@@ -1,69 +1,103 @@
-//! Items for the UI and the world: icons from ITEM1.TSI, ground models from
-//! LIST_FIELDITEM.ZSC, and item descriptions for slots and tooltips.
+//! Items for the UI and the world: icons and ground models by their path (the imported
+//! resources, or without them the client's icon sheets and LIST_FIELDITEM.ZSC), and item
+//! descriptions for slots and tooltips.
 
 use std::collections::HashMap;
-use std::sync::OnceLock;
 
 use godot::{
-    classes::{AtlasTexture, MeshInstance3D, Texture2D},
+    classes::{AtlasTexture, MeshInstance3D, PackedScene, Texture2D},
     prelude::*,
 };
 use rose_data::{AbilityType, Item, ItemClass, ItemType};
 use rose_file_readers::{TsiFile, ZscFile};
 
-use crate::{data, material, mesh, texture};
+use crate::{assets, data, material, mesh, texture};
 
-/// The UI sprite sheets icons come from.
-#[derive(Clone, Copy, PartialEq, Eq, Hash)]
-pub enum IconSheet {
-    Item,
-    Skill,
-    State,
-}
-
-fn icon_sheet(sheet: IconSheet) -> Option<&'static TsiFile> {
-    static ITEM: OnceLock<Option<TsiFile>> = OnceLock::new();
-    static SKILL: OnceLock<Option<TsiFile>> = OnceLock::new();
-    static STATE: OnceLock<Option<TsiFile>> = OnceLock::new();
-    let (lock, path) = match sheet {
-        IconSheet::Item => (&ITEM, "3DDATA/CONTROL/RES/ITEM1.TSI"),
-        IconSheet::Skill => (&SKILL, "3DDATA/CONTROL/RES/SKILLICON.TSI"),
-        IconSheet::State => (&STATE, "3DDATA/CONTROL/RES/STATEICON.TSI"),
-    };
-    lock.get_or_init(|| data::read_file::<TsiFile>(path)).as_ref()
+/// Icon sheets read from the client, by path (without the import, or for an icon the import
+/// doesn't have).
+fn icon_sheet(path: &str) -> Option<&'static TsiFile> {
+    static SHEETS: std::sync::Mutex<Option<HashMap<String, Option<&'static TsiFile>>>> = std::sync::Mutex::new(None);
+    let mut sheets = SHEETS.lock().ok()?;
+    *sheets
+        .get_or_insert_with(HashMap::new)
+        .entry(path.to_ascii_uppercase())
+        .or_insert_with(|| data::read_file::<TsiFile>(path).map(|sheet| &*Box::leak(Box::new(sheet))))
 }
 
 thread_local! {
-    static ICONS: std::cell::RefCell<HashMap<(IconSheet, u32), Gd<AtlasTexture>>> = Default::default();
+    static ICONS: std::cell::RefCell<HashMap<String, Option<Gd<Texture2D>>>> = Default::default();
 }
 
 pub fn clear_cache() {
     ICONS.with(|icons| icons.borrow_mut().clear());
 }
 
-/// The inventory icon with this index (BaseItemData::icon_index).
+/// The item icon with this number in the item icon sheet (the interface sample).
 pub fn item_icon(index: u32) -> Option<Gd<Texture2D>> {
-    icon(IconSheet::Item, index)
+    icon(&rose_data::art::client_part(rose_data::art::ITEM_ICONS, index))
 }
 
-/// A sprite from one of the icon sheets (items, skills, status effects).
-pub fn icon(sheet_type: IconSheet, index: u32) -> Option<Gd<Texture2D>> {
-    if let Some(icon) = ICONS.with(|icons| icons.borrow().get(&(sheet_type, index)).cloned()) {
-        return Some(icon.upcast());
+/// An icon by its path (an item's, skill's or status effect's `icon`, see `rose_data::art`):
+/// the Godot texture (ours or the imported one), else the sprite cut from the client's icon
+/// sheet. None for an empty path or one that names nothing.
+pub fn icon(path: &str) -> Option<Gd<Texture2D>> {
+    if path.trim().is_empty() {
+        return None;
     }
-    let sheet = icon_sheet(sheet_type)?;
+    if let Some(cached) = ICONS.with(|icons| icons.borrow().get(path).cloned()) {
+        return cached;
+    }
+    let texture = load_icon(path);
+    if texture.is_none() {
+        godot_warn!("rose: no icon {path}");
+    }
+    ICONS.with(|icons| icons.borrow_mut().insert(path.to_string(), texture.clone()));
+    texture
+}
+
+fn load_icon(path: &str) -> Option<Gd<Texture2D>> {
+    let stem = rose_data::art::art_stem(path);
+    if stem.starts_with("res://") {
+        let mut loader = godot::classes::ResourceLoader::singleton();
+        return loader.exists(&stem).then(|| loader.load(&stem)).flatten().and_then(|r| r.try_cast::<Texture2D>().ok());
+    }
+    if let Some(texture) = assets::load_stem::<Texture2D>(&stem, ICON_EXTENSIONS) {
+        return Some(texture);
+    }
+    let (list, index) = rose_data::art::client_list(path)?;
+    let sheet = icon_sheet(&format!("{list}.TSI"))?;
     let sprite = sheet.sprites.get(index as usize)?;
     let file = sheet.textures.get(sprite.texture_id as usize)?;
-    let atlas_texture = texture::load_texture(&format!("3DDATA/CONTROL/RES/{}", file.filename))?;
+    let folder = list.rsplit_once('/').map_or("", |(folder, _)| folder);
+    let atlas_texture = texture::load_texture(&format!("{folder}/{}", file.filename))?;
     let mut icon = AtlasTexture::new_gd();
     icon.set_atlas(&atlas_texture);
-    icon.set_region(Rect2::new(
-        Vector2::new(sprite.left as f32, sprite.top as f32),
-        Vector2::new((sprite.right - sprite.left) as f32, (sprite.bottom - sprite.top) as f32),
-    ));
-    ICONS.with(|icons| icons.borrow_mut().insert((sheet_type, index), icon.clone()));
+    icon.set_region(sprite_region(sprite));
     Some(icon.upcast())
 }
+
+/// The imported textures of the icon sheets. A caller loading many icons (the export) holds
+/// these, so Godot doesn't free a sheet between two icons and decode it again.
+pub fn icon_sheets() -> Vec<Gd<Texture2D>> {
+    let mut out = Vec::new();
+    for sheet_path in [rose_data::art::ITEM_ICONS, rose_data::art::SKILL_ICONS, rose_data::art::STATUS_EFFECT_ICONS] {
+        let Some(sheet) = icon_sheet(sheet_path) else { continue };
+        let folder = sheet_path.rsplit_once('/').map_or("", |(folder, _)| folder);
+        out.extend(sheet.textures.iter().filter_map(|t| assets::load_texture(&format!("{folder}/{}", t.filename))));
+    }
+    out
+}
+
+/// Where an icon's picture sits on its sheet.
+fn sprite_region(sprite: &rose_file_readers::TsiSprite) -> Rect2 {
+    Rect2::new(
+        Vector2::new(sprite.left as f32, sprite.top as f32),
+        Vector2::new((sprite.right - sprite.left) as f32, (sprite.bottom - sprite.top) as f32),
+    )
+}
+
+/// What an icon of ours may be: the imported ones are `.tres` (an AtlasTexture on its sheet).
+pub const ICON_EXTENSIONS: &[&str] = &["tres", "png", "webp", "res"];
 
 fn ability_name(ability: AbilityType) -> String {
     match ability {
@@ -110,9 +144,9 @@ pub fn item_dict(item: &Item) -> VarDictionary {
     };
     d.set("name", base.name);
     d.set("tradeable", base.trade_restriction & 0x02 == 0);
-    d.set("model", base.field_model_index as i64);
+    d.set("model", base.field_model.as_str());
     d.set("class", class_name(base.class).as_str());
-    if let Some(icon) = item_icon(base.icon_index) {
+    if let Some(icon) = icon(&base.icon) {
         d.set("icon", &icon);
     }
 
@@ -211,11 +245,6 @@ fn gem_bonus(gem: &rose_data::GemItemData) -> String {
     gem.gem_add_ability.iter().map(|(ability, value)| format!("{} {:+}", ability_name(*ability), value)).collect::<Vec<_>>().join(", ")
 }
 
-fn field_item_zsc() -> Option<&'static ZscFile> {
-    static ZSC: OnceLock<Option<ZscFile>> = OnceLock::new();
-    ZSC.get_or_init(|| data::read_file::<ZscFile>("3DDATA/ITEM/LIST_FIELDITEM.ZSC")).as_ref()
-}
-
 /// An item lying on the ground.
 #[derive(GodotClass)]
 #[class(base=Node3D, init)]
@@ -225,26 +254,144 @@ pub struct RoseFieldItem {
 
 #[godot_api]
 impl RoseFieldItem {
-    /// Builds the ground model with this index (0 is the money bag).
+    /// Builds a ground model by its path (an item's `model`, see `item_dict`; money's is
+    /// object 0 of the ground model list). Returns false for none (empty) or a missing one.
     #[func]
-    fn build(&mut self, model: i32) -> bool {
-        let Some(zsc) = field_item_zsc() else { return false };
-        let Some(object) = zsc.objects.get(model.max(0) as usize) else { return false };
+    fn build(&mut self, model: GString) -> bool {
+        let path = model.to_string();
+        let Some(scene) = model_scene(&path) else { return self.build_from_client(&path) };
+        let Some(root) = scene.instantiate() else { return false };
+        self.base_mut().add_child(&root);
+        true
+    }
+}
+
+impl RoseFieldItem {
+    /// Without an imported scene: the object of the client's ground model list.
+    fn build_from_client(&mut self, path: &str) -> bool {
+        let Some((list, object)) = rose_data::art::client_list(path) else { return false };
+        let Some(zsc) = zsc_list(&format!("{list}.ZSC")) else { return false };
+        let Some(object) = zsc.objects.get(object as usize) else { return false };
         let mut built = false;
-        for part in object.parts.iter() {
-            let Some(mesh_path) = zsc.meshes.get(part.mesh_id as usize) else { continue };
-            let Some(part_mesh) = mesh::load_mesh(&mesh_path.path().to_string_lossy(), false) else { continue };
-            let Some(zsc_material) = zsc.materials.get(part.material_id as usize) else { continue };
-            let mut instance = MeshInstance3D::new_alloc();
-            instance.set_mesh(&part_mesh);
-            instance.set_material_override(&material::object_material(zsc_material, None));
-            instance.set_position(Vector3::new(part.position.x, part.position.z, -part.position.y) / 100.0);
-            let q = Quaternion::new(part.rotation.x, part.rotation.z, -part.rotation.y, part.rotation.w);
-            instance.set_quaternion(if q.length_squared() > 0.0 { q.normalized() } else { Quaternion::IDENTITY });
-            instance.set_scale(Vector3::new(part.scale.x, part.scale.z, part.scale.y));
+        for instance in object_meshes(zsc, object, false) {
             self.base_mut().add_child(&instance);
             built = true;
         }
         built
     }
+}
+
+/// A model list read from the client, kept.
+pub fn zsc_list(path: &str) -> Option<&'static ZscFile> {
+    static LISTS: std::sync::Mutex<Option<HashMap<String, Option<&'static ZscFile>>>> = std::sync::Mutex::new(None);
+    let mut lists = LISTS.lock().ok()?;
+    *lists
+        .get_or_insert_with(HashMap::new)
+        .entry(path.to_ascii_uppercase())
+        .or_insert_with(|| data::read_file::<ZscFile>(path).map(|zsc| &*Box::leak(Box::new(zsc))))
+}
+
+/// A ground model object's parts as mesh instances, placed as the ZSC places them. With
+/// `imported`, the meshes are the imported resources (for saving a scene that links them).
+pub fn object_meshes(zsc: &ZscFile, object: &rose_file_readers::ZscObject, imported: bool) -> Vec<Gd<MeshInstance3D>> {
+    let mut out = Vec::new();
+    for part in object.parts.iter() {
+        let Some(mesh_path) = zsc.meshes.get(part.mesh_id as usize) else { continue };
+        let mesh_path = mesh_path.path().to_string_lossy();
+        let part_mesh = if imported { assets::load_mesh(&mesh_path) } else { mesh::load_mesh(&mesh_path, false) };
+        let Some(part_mesh) = part_mesh else { continue };
+        let Some(zsc_material) = zsc.materials.get(part.material_id as usize) else { continue };
+        let mut instance = MeshInstance3D::new_alloc();
+        instance.set_mesh(&part_mesh);
+        instance.set_material_override(&material::object_material(zsc_material, None));
+        instance.set_position(Vector3::new(part.position.x, part.position.z, -part.position.y) / 100.0);
+        let q = Quaternion::new(part.rotation.x, part.rotation.z, -part.rotation.y, part.rotation.w);
+        instance.set_quaternion(if q.length_squared() > 0.0 { q.normalized() } else { Quaternion::IDENTITY });
+        instance.set_scale(Vector3::new(part.scale.x, part.scale.z, part.scale.y));
+        out.push(instance);
+    }
+    out
+}
+
+/// A model scene by its path (an item's or monster's model, see `rose_data::art`): ours or
+/// the imported one, else None (the caller builds it from the client's files).
+pub fn model_scene(path: &str) -> Option<Gd<PackedScene>> {
+    if path.trim().is_empty() {
+        return None;
+    }
+    let stem = rose_data::art::art_stem(path);
+    if stem.starts_with("res://") {
+        let mut loader = godot::classes::ResourceLoader::singleton();
+        let scene = loader.exists(&stem).then(|| loader.load(&stem)).flatten().and_then(|r| r.try_cast::<PackedScene>().ok());
+        if scene.is_none() {
+            godot_warn!("rose: no model {path}");
+        }
+        return scene;
+    }
+    assets::load_stem::<PackedScene>(&stem, &["tscn", "scn"])
+}
+
+/// Bumped when the imported icons or ground models change, so the next import redoes them.
+pub const ART_IMPORT_VERSION: i64 = 1;
+
+/// The import of the icons and ground models (step 9 of the own game data plan):
+/// - every sprite of the item, skill and status icon sheets as an `AtlasTexture` on its
+///   imported sheet (`3ddata/control/res/item1/919.tres` is sprite 919 of ITEM1.TSI);
+/// - every object of LIST_FIELDITEM.ZSC as a scene of mesh instances
+///   (`3ddata/item/list_fielditem/310.tscn`).
+/// The data resources link these. Needs the textures and meshes imported first.
+pub fn import_art(redo: bool) -> crate::character::AvatarImport {
+    let mut out = crate::character::AvatarImport::default();
+    for sheet_path in [rose_data::art::ITEM_ICONS, rose_data::art::SKILL_ICONS, rose_data::art::STATUS_EFFECT_ICONS] {
+        let Some(sheet) = data::read_file::<TsiFile>(sheet_path) else {
+            out.failed += 1;
+            continue;
+        };
+        let folder = sheet_path.rsplit_once('/').map_or("", |(folder, _)| folder);
+        // The sheets' textures (the import leaves the rest of the interface out), loaded once
+        // and linked by path.
+        let atlases: Vec<Option<Gd<Texture2D>>> = sheet
+            .textures
+            .iter()
+            .map(|t| {
+                let client = format!("{folder}/{}", t.filename);
+                let target = format!("{}{}.rtex", assets::ROSE, assets::stem(&client));
+                if (redo || !godot::classes::FileAccess::file_exists(&target)) && !assets::save_texture(&client, &target) {
+                    out.failed += 1;
+                    return None;
+                }
+                assets::load_texture(&client).filter(|t| t.get_path().to_string().starts_with("res://"))
+            })
+            .collect();
+        for (index, sprite) in sheet.sprites.iter().enumerate() {
+            let Some(Some(atlas)) = atlases.get(sprite.texture_id as usize) else { continue };
+            let stem = rose_data::art::art_stem(&rose_data::art::client_part(sheet_path, index as u32));
+            out.save(redo, &stem, "tres", || {
+                let mut icon = AtlasTexture::new_gd();
+                icon.set_atlas(atlas);
+                icon.set_region(sprite_region(sprite));
+                Some(icon.upcast())
+            });
+        }
+    }
+    if let Some(zsc) = zsc_list(rose_data::art::FIELD_ITEM_MODELS) {
+        for (index, object) in zsc.objects.iter().enumerate() {
+            let meshes = object_meshes(zsc, object, true);
+            if meshes.is_empty() {
+                continue;
+            }
+            let stem = rose_data::art::art_stem(&rose_data::art::client_part(rose_data::art::FIELD_ITEM_MODELS, index as u32));
+            out.save(redo, &stem, "tscn", || {
+                let mut root = Node3D::new_alloc();
+                root.set_name(&format!("FieldItem{index}"));
+                for (i, mut instance) in meshes.into_iter().enumerate() {
+                    instance.set_name(&format!("Part{i}"));
+                    root.add_child(&instance);
+                    crate::character::own(&root, instance);
+                }
+                crate::character::pack(root)
+            });
+        }
+    }
+    out
 }

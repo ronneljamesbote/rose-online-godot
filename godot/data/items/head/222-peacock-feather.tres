@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemHead" format=3 uid="uid://cwupa7e46gmmj"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_4rlv5"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/248.tres" id="2_ugrmd"]
 
 [resource]
 id = 222
@@ -10,9 +11,11 @@ item_class = "HairAccessory"
 weight = 1
 quality = 13
 trade_restriction = 1
-icon_index = 248
-field_model_index = 247
+icon = ExtResource("2_ugrmd")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/247.tscn"
 equip_sound = ExtResource("1_4rlv5")
 durability = 32
 defence = 1
 resistance = 4
+model_male = "res://assets/rose/3ddata/avatar/list_mcap/222.tscn"
+model_female = "res://assets/rose/3ddata/avatar/list_wcap/222.tscn"

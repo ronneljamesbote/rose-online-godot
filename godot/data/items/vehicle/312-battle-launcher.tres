@@ -3,6 +3,7 @@
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_5m30u"]
 [ext_resource type="RoseSound" uid="uid://dk5t7otbj5v7i" path="res://data/sounds/other/125-skill-attaco01.tres" id="2_2oo11"]
 [ext_resource type="RoseAttackEffect" uid="uid://drq5mbo1we4yv" path="res://data/attack_effects/191-basic-launcher.tres" id="3_l9aeu"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/2250.tres" id="4_mw79j"]
 
 [resource]
 id = 312
@@ -12,14 +13,15 @@ item_class = "CartAccessory"
 base_price = 105800
 weight = 5
 quality = 60
-icon_index = 2250
-field_model_index = 246
+icon = ExtResource("4_mw79j")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/246.tscn"
 equip_sound = ExtResource("1_5m30u")
 craft_skill_level = 4
 craft_material = 1032
 craft_difficulty = 95
 durability = 36
 resistance = 7
+model = "res://assets/rose/3ddata/pat/list_pat/312.tscn"
 vehicle_part = "Arms"
 version = 35
 fuel_use_rate = 7

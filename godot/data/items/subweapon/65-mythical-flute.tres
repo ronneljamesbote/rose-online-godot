@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemSubWeapon" format=3 uid="uid://ddfouy14df3tm"]
 
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_n0kig"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1564.tres" id="2_wc9so"]
 
 [resource]
 id = 65
@@ -9,8 +10,8 @@ description = "A beautiful, legendary flute that makes an antiquated sound."
 item_class = "Shield"
 base_price = 8640
 quality = 23
-icon_index = 1564
-field_model_index = 875
+icon = ExtResource("2_wc9so")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/875.tscn"
 equip_sound = ExtResource("1_n0kig")
 craft_skill_type = 15
 craft_skill_level = 2
@@ -25,3 +26,4 @@ add_stat_2_value = 1
 durability = 24
 defence = 2
 resistance = 5
+model = "res://assets/rose/3ddata/weapon/list_subwpn/65.tscn"

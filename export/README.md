@@ -41,6 +41,12 @@ plays and shows none), and the game reads it from here (from
 it both fall back to the iROSE tables (FILE_SOUND.STB, LIST_HITSOUND.STB and
 LIST_STEPSOUND.STB for the sounds, FILE_EFFECT.STB and LIST_EFFECT.STB for the effects).
 
+Icons and models are Godot paths (`icon = "res://assets/rose/3ddata/control/res/item1/919.tres"`,
+`field_model`, `model`, or `model_male` and `model_female` for hats, bodies, gloves and shoes, and
+a monster's or NPC's `model`), which the game loads from its `assets/`; empty means none. The
+server only keeps them, except that a monster's or NPC's motions follow its model's
+`LIST_NPC.CHR` entry, so a model change can change its attack timing.
+
 Every number the game reads from these tables is a field of a resource now, so changing the
 game data means changing a resource (or code, for a rule). There is no file of changes laid on
 top of the iROSE tables any more (`game-data.toml` before 2026-10-23): the original client

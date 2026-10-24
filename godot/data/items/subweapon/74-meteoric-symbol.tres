@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemSubWeapon" format=3 uid="uid://5sg5rxpxaws4"]
 
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_xcmen"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1574.tres" id="2_l2zt8"]
 
 [resource]
 id = 74
@@ -9,8 +10,8 @@ description = "It is said that the power of the meteor symbolizes destruction."
 item_class = "Shield"
 base_price = 67600
 quality = 36
-icon_index = 1574
-field_model_index = 884
+icon = ExtResource("2_l2zt8")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/884.tscn"
 equip_sound = ExtResource("1_xcmen")
 craft_skill_type = 15
 craft_skill_level = 6
@@ -25,3 +26,4 @@ add_stat_2_value = 3
 durability = 35
 defence = 6
 resistance = 16
+model = "res://assets/rose/3ddata/weapon/list_subwpn/74.tscn"

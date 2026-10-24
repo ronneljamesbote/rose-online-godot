@@ -13,6 +13,8 @@
 //!   [`world`]), and the sounds (`sounds.toml`, `hit-sounds.toml`, `footsteps.toml`, see
 //!   [`sounds`]; only the game reads them), and the effects (`effect-files.toml`,
 //!   `attack-effects.toml`, see [`effects`]; only the game reads them too).
+//!   Icons and models are Godot paths of the imported (or our own) art; [`rose_data::art`]
+//!   matches them with the iROSE lists.
 //! - `export/zones/`: the spawns, NPCs and named spots of the zones edited as Godot scenes
 //!   (see [`zone_layouts`]).
 //! - `export/motions.toml`: the length and hit frames of each motion, from the hit markers
@@ -61,4 +63,28 @@ pub fn items_file_as(name: &str, format: Format) -> String {
 /// The path of a file at the top of the export (`monsters` -> `monsters.toml`) in `format`.
 pub fn data_file_as(name: &str, format: Format) -> String {
     format!("{name}.{}", format.extension())
+}
+
+/// The art fields a pretty-printed item, monster, skill or status effect holds (its icon and
+/// models), with each path made its art stem, so the same-data checks see a client path
+/// (`3DDATA/AVATAR/LIST_MBODY.ZSC#12`) and its imported scene as the same model.
+pub fn same_art_debug(text: String) -> String {
+    const ART_FIELDS: [&str; 5] = ["icon", "field_model", "model", "model_male", "model_female"];
+    let mut out = String::with_capacity(text.len());
+    for line in text.lines() {
+        let trimmed = line.trim_start();
+        let art = ART_FIELDS.iter().find_map(|field| {
+            let value = trimmed.strip_prefix(field)?.strip_prefix(": \"")?;
+            Some((field, value.strip_suffix("\",").unwrap_or(value)))
+        });
+        match art {
+            Some((field, value)) => {
+                let indent = &line[..line.len() - trimmed.len()];
+                out.push_str(&format!("{indent}{field}: {:?},", rose_data::art::art_stem(value)));
+            }
+            None => out.push_str(line),
+        }
+        out.push('\n');
+    }
+    out
 }

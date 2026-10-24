@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemFeet" format=3 uid="uid://uef25xgw8av3"]
 
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_sq09u"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/616.tres" id="2_d71rr"]
 
 [resource]
 id = 36
@@ -10,8 +11,8 @@ item_class = "Boots"
 base_price = 35400
 weight = 6
 quality = 53
-icon_index = 616
-field_model_index = 228
+icon = ExtResource("2_d71rr")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/228.tscn"
 equip_sound = ExtResource("1_sq09u")
 craft_skill_type = 17
 craft_skill_level = 5
@@ -23,4 +24,6 @@ equip_stat_1_value = 104
 durability = 61
 defence = 32
 resistance = 3
+model_male = "res://assets/rose/3ddata/avatar/list_mfoot/36.tscn"
+model_female = "res://assets/rose/3ddata/avatar/list_wfoot/36.tscn"
 move_speed = 84

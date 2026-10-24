@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://nutfs002k06d" path="res://data/sounds/item/582-item-arrow.tres" id="1_ox1ji"]
 [ext_resource type="RoseAttackEffect" uid="uid://cm0exw5qhncmd" path="res://data/attack_effects/163-lightning-arrow.tres" id="2_ptc5b"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1883.tres" id="3_nm01b"]
 
 [resource]
 id = 316
@@ -10,8 +11,8 @@ description = "An arrow infused with the power of lightning."
 item_class = "Arrow"
 base_price = 22
 quality = 38
-icon_index = 1883
-field_model_index = 204
+icon = ExtResource("3_nm01b")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/204.tscn"
 equip_sound = ExtResource("1_ox1ji")
 equip_union_1 = 163
 bullet_effect = ExtResource("2_ptc5b")

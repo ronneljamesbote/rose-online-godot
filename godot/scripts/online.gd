@@ -1152,7 +1152,7 @@ func _update_ground() -> void:
 		if not ground.has(id):
 			var node := Node3D.new()
 			var model := RoseFieldItem.new()
-			model.build(item.get("model", 0))
+			model.build(item.get("model", ""))
 			node.add_child(model)
 			add_child(node)
 			var x: float = state["x"]

@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://nutfs002k06d" path="res://data/sounds/item/582-item-arrow.tres" id="1_930sy"]
 [ext_resource type="RoseAttackEffect" uid="uid://dbr8o7gbumibs" path="res://data/attack_effects/162-attack-effect-162.tres" id="2_sfma2"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1881.tres" id="3_un7ea"]
 
 [resource]
 id = 314
@@ -10,8 +11,8 @@ description = "An arrow strengthened with the magic of the nymphs."
 item_class = "Arrow"
 base_price = 13
 quality = 28
-icon_index = 1881
-field_model_index = 204
+icon = ExtResource("3_un7ea")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/204.tscn"
 equip_sound = ExtResource("1_930sy")
 equip_union_1 = 162
 bullet_effect = ExtResource("2_sfma2")

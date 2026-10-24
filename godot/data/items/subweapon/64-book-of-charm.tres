@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemSubWeapon" format=3 uid="uid://c77jou8fif4dj"]
 
 [ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_5lmvd"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1563.tres" id="2_q9cwv"]
 
 [resource]
 id = 64
@@ -9,8 +10,8 @@ description = "A book containing the secrets to charm and seduction."
 item_class = "Shield"
 base_price = 14100
 quality = 21
-icon_index = 1563
-field_model_index = 874
+icon = ExtResource("2_q9cwv")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/874.tscn"
 equip_sound = ExtResource("1_5lmvd")
 craft_skill_type = 15
 craft_skill_level = 2
@@ -25,3 +26,4 @@ add_stat_2_value = 7
 durability = 23
 defence = 1
 resistance = 4
+model = "res://assets/rose/3ddata/weapon/list_subwpn/64.tscn"

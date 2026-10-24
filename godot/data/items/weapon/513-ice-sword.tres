@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://b8d8k6psw0js4" path="res://data/sounds/attack/38-sword-002.tres" id="2_qbzyl"]
 [ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_ywj3a"]
 [ext_resource type="RoseAttackEffect" uid="uid://djmlc6hbabswu" path="res://data/attack_effects/111-wooden-sword.tres" id="4_z0d58"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/924.tres" id="5_pdgkb"]
 
 [resource]
 id = 513
@@ -13,8 +14,8 @@ item_class = "OneHandedSword"
 base_price = 124500
 weight = 45
 quality = 84
-icon_index = 924
-field_model_index = 314
+icon = ExtResource("5_pdgkb")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/314.tscn"
 equip_sound = ExtResource("1_xp4o1")
 equip_stat_1 = "Level"
 equip_stat_1_value = 103
@@ -22,6 +23,7 @@ equip_stat_2 = "Strength"
 equip_stat_2_value = 178
 durability = 62
 rare_type = 2
+model = "res://assets/rose/3ddata/weapon/list_weapon/513.tscn"
 attack_range = 200
 attack_power = 152
 attack_speed = 11

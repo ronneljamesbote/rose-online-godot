@@ -1,13 +1,14 @@
 [gd_resource type="RoseItemConsumable" format=3 uid="uid://bnu1op7tj40px"]
 
 [ext_resource type="RoseEffectFile" uid="uid://bf814v0jt822v" path="res://data/effect_files/140-recover-01.tres" id="1_cq5ab"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1603.tres" id="2_v422u"]
 
 [resource]
 id = 166
 name = "MP Point (+500)"
 item_class = "AutomaticConsumption"
-icon_index = 1603
-field_model_index = 133
+icon = ExtResource("2_v422u")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/133.tscn"
 equip_stat_1 = "Mana"
 equip_stat_1_value = 500
 confile_index = 140

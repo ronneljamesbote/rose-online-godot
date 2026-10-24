@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseSound" uid="uid://belrsqknp1v4w" path="res://data/sounds/item/580-item-armor2.tres" id="1_dsgly"]
 [ext_resource type="RoseSound" uid="uid://mj0c05h2c60w" path="res://data/sounds/avata/670-cart-neutral.tres" id="2_chxfm"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/2165.tres" id="3_z4766"]
 
 [resource]
 id = 1
@@ -11,8 +12,8 @@ item_class = "CartBody"
 base_price = 197000
 weight = 10
 quality = 30
-icon_index = 2165
-field_model_index = 246
+icon = ExtResource("3_z4766")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/246.tscn"
 equip_sound = ExtResource("1_dsgly")
 craft_skill_type = 21
 craft_skill_level = 1
@@ -24,6 +25,7 @@ add_stat_2 = "Resistance"
 add_stat_2_value = 12
 durability = 34
 rare_type = 1
+model = "res://assets/rose/3ddata/pat/list_pat/1.tscn"
 version = 30
 base_motion_index = 281
 base_avatar_motion_index = 261

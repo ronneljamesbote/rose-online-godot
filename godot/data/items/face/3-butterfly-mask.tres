@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemFace" format=3 uid="uid://kwu57w3rtnje"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_2m52a"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/3.tres" id="2_9jis7"]
 
 [resource]
 id = 3
@@ -11,8 +12,8 @@ base_price = 1000
 price_rate = 10
 weight = 2
 quality = 32
-icon_index = 3
-field_model_index = 247
+icon = ExtResource("2_9jis7")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/247.tscn"
 equip_sound = ExtResource("1_2m52a")
 craft_skill_type = 19
 craft_skill_level = 1
@@ -21,3 +22,4 @@ craft_difficulty = 20
 add_stat_1 = "Charm"
 add_stat_1_value = 6
 durability = 22
+model = "res://assets/rose/3ddata/avatar/list_faceiem/3.tscn"

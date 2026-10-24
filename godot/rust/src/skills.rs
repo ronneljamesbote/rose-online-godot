@@ -1,4 +1,4 @@
-//! Skills and status effects for the UI: icons from SKILLICON.TSI and STATEICON.TSI, and
+//! Skills and status effects for the UI: icons (see `items::icon`), and
 //! descriptions for skill slots and tooltips.
 
 use godot::prelude::*;
@@ -6,7 +6,7 @@ use rose_data::{AbilityType, SkillCooldown, SkillData, SkillId, SkillType};
 
 use crate::{
     data,
-    items::{icon, IconSheet},
+    items::icon,
 };
 
 pub fn split_camel_case(raw: &str) -> String {
@@ -37,7 +37,7 @@ pub fn skill_dict(skill: &SkillData) -> VarDictionary {
     d.set("id", skill.id.get() as i64);
     d.set("name", skill.name);
     d.set("level", skill.level as i64);
-    if let Some(texture) = icon(IconSheet::Skill, skill.icon_number) {
+    if let Some(texture) = icon(&skill.icon) {
         d.set("icon", &texture);
     }
     let kind = split_camel_case(&format!("{:?}", skill.skill_type));

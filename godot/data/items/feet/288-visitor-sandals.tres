@@ -1,6 +1,7 @@
 [gd_resource type="RoseItemFeet" format=3 uid="uid://bljfq3a0b6m46"]
 
 [ext_resource type="RoseSound" uid="uid://dmsbrc1gg880c" path="res://data/sounds/item/579-item-armor.tres" id="1_8uljn"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/602.tres" id="2_9uyfl"]
 
 [resource]
 id = 288
@@ -9,10 +10,12 @@ description = "Basic shoes for Visitors that are furnished by the Akram Kingdom.
 item_class = "Shoes"
 weight = 2
 quality = 21
-icon_index = 602
-field_model_index = 244
+icon = ExtResource("2_9uyfl")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/244.tscn"
 equip_sound = ExtResource("1_8uljn")
 durability = 40
 defence = 4
 resistance = 2
+model_male = "res://assets/rose/3ddata/avatar/list_mfoot/288.tscn"
+model_female = "res://assets/rose/3ddata/avatar/list_wfoot/288.tscn"
 move_speed = 70
