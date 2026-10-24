@@ -10,7 +10,9 @@ use rose_data::{
     NpcDatabaseOptions, NpcId, NpcMotionAction, NpcStoreTabData, NpcStoreTabId, SoundId,
     StringDatabase,
 };
-use rose_file_readers::{stb_column, ChrFile, StbFile, VfsPathBuf, VirtualFilesystem, ZmoFile, ZmoReadOptions};
+use rose_file_readers::{stb_column, ChrFile, StbFile, VirtualFilesystem};
+
+use crate::zmo_motion_file_data;
 
 use crate::data_decoder::decode_item_base1000;
 
@@ -101,44 +103,25 @@ impl StbEvent {
     stb_column! { 3, get_filename, &str }
 }
 
-fn load_motion_file_data(
-    vfs: &VirtualFilesystem,
-    path: &str,
-    options: &NpcDatabaseOptions,
-) -> Option<MotionFileData> {
-    if path.is_empty() {
-        return None;
-    }
-    let path = VfsPathBuf::new(path);
-
-    if options.load_frame_data {
-        let zmo = vfs
-            .read_file_with::<ZmoFile, _>(&path, &ZmoReadOptions { skip_animation: true })
-            .ok()?;
-        Some(MotionFileData {
-            path,
-            duration: zmo.get_duration(),
-            total_attack_frames: zmo.total_attack_frames,
-            first_attack_time: zmo.first_attack_frame_time(),
-        })
-    } else {
-        Some(MotionFileData {
-            path,
-            ..Default::default()
-        })
-    }
-}
-
 /// Each NPC's motions from LIST_NPC.CHR, by NPC id: the parts of an NPC the data export
 /// doesn't hold yet (its model and animations).
 pub fn get_npc_motions(
     vfs: &VirtualFilesystem,
     options: &NpcDatabaseOptions,
 ) -> Result<HashMap<u16, Vec<(MotionId, MotionFileData)>>, anyhow::Error> {
+    get_npc_motions_with(vfs, &mut |path| zmo_motion_file_data(vfs, path, options.load_frame_data))
+}
+
+/// Each NPC's motions from LIST_NPC.CHR, each motion file's data made by `motion_file` from
+/// its path (None leaves the motion out, as for a missing file).
+pub fn get_npc_motions_with(
+    vfs: &VirtualFilesystem,
+    motion_file: &mut dyn FnMut(&str) -> Option<MotionFileData>,
+) -> Result<HashMap<u16, Vec<(MotionId, MotionFileData)>>, anyhow::Error> {
     let model_data = vfs.read_file::<ChrFile, _>("3DDATA/NPC/LIST_NPC.CHR")?;
     let mut motions = Vec::with_capacity(model_data.motion_files.len());
     for path in model_data.motion_files.iter() {
-        motions.push(load_motion_file_data(vfs, path, options));
+        motions.push(motion_file(path));
     }
     let mut out = HashMap::new();
     for (&id, npc_model_data) in model_data.npcs.iter() {
@@ -204,7 +187,15 @@ pub fn get_npc_database(
     string_database: Arc<StringDatabase>,
     options: &NpcDatabaseOptions,
 ) -> Result<NpcDatabase, anyhow::Error> {
-    let model_motions = get_npc_motions(vfs, options)?;
+    get_npc_database_with(vfs, string_database, get_npc_motions(vfs, options)?)
+}
+
+/// LIST_NPC.STB with each NPC's motions (from `get_npc_motions` or `get_npc_motions_with`).
+pub fn get_npc_database_with(
+    vfs: &VirtualFilesystem,
+    string_database: Arc<StringDatabase>,
+    model_motions: HashMap<u16, Vec<(MotionId, MotionFileData)>>,
+) -> Result<NpcDatabase, anyhow::Error> {
 
     let data = StbNpc(vfs.read_file::<StbFile, _>("3DDATA/STB/LIST_NPC.STB")?);
 

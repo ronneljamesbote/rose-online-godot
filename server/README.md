@@ -142,8 +142,8 @@ binaries and the module on Ubuntu 24.04. `server/entrypoint.sh` makes the key pa
 first start, starts SpacetimeDB, and publishes the module on every start: unchanged it is a
 no-op, changed it is an update that keeps the data. Then, if the module has no game data
 yet (or `ROSE_UPLOAD_GAME_DATA=1`), it runs `upload-game-data.sh` on the `data.idx` it finds
-in `/game`: the import tool packs the files the databases read (about 2,500 files, 33 MB for
-129_129en) and the script sends them to the module's admin reducers in batches.
+in `/game`: the import tool packs the files the databases read (about 1,430 files, 14 MB for
+129_129en with the export; no ZMO motion files, their timings come from `export/motions.toml`) and the script sends them to the module's admin reducers in batches.
 
 The import tool is `import/` (`rose-stdb-import`, built into the image):
 
@@ -157,7 +157,8 @@ The import tool is `import/` (`rose-stdb-import`, built into the image):
   `ROSE_ZONES` and `ROSE_DATA` point at single parts elsewhere).
 - `rose-stdb-import compare <data.idx>` lists every value in `export/data/` that
   differs from the iROSE tables (one shop place, which named an item that doesn't exist,
-  and the new characters' starting weapons, which the game added in code before).
+  and the new characters' starting weapons, which the game added in code before), and every
+  motion length or hit frame in `export/motions.toml` that differs from the ZMO files.
 - `rose-stdb-import list <data.idx>` shows which files the databases read, per folder;
   `time <data.idx>` how long building them takes.
 

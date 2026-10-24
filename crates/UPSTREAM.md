@@ -53,7 +53,11 @@ which rose-data has `ZoneSettings`, a zone's LIST_ZONE.STB row as data, and the 
 database and list got `with_text`; rose-data-irose builds both from settings
 (`get_zone_settings`, `get_zone_database_from_settings`, `get_zone_list_from_settings`)).
 It also reads the zone layouts and hit markers exported from the Godot scenes and animations
-(`export/zones/`, `export/motions.toml`), which a crate of their own read before. The STB
+(`export/zones/`, `export/motions.toml`), which a crate of their own read before. With the
+motions file no ZMO file is read: rose-data-irose's motion loaders take the motion file data
+from a function (`get_character_motion_database_with`, `get_npc_motions_with`,
+`get_npc_database_with`; `zmo_motion_file_data` is the ZMO one), and rose-data's
+`set_motion_timing`, which patched the ZMO timings afterwards, is gone. The STB
 cell patching for the old `game-data.toml` (`patch_stb` in rose-file-readers) is gone with
 that file.
 For it, rose-data-irose's NPC loader is split (`get_npc_motions`, `get_npc_conversations`,

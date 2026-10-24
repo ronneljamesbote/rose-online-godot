@@ -7,15 +7,16 @@
 //!   rose-stdb-import compare <data.idx>    every value the data export changes from iROSE
 //!                                          (items, monsters, NPCs, shop tabs, drop tables,
 //!                                          skills, status effects, job classes, zones, warp
-//!                                          gates, recipes, new characters)
+//!                                          gates, recipes, new characters, motion
+//!                                          lengths and hit frames against the ZMO files)
 //!
 //! `pack` writes upload-NNN.json files, each the JSON argument list of the module's
 //! `upload_game_files` reducer (well under the server's request size limit), plus manifest.json.
 //! It sends what the Godot editor exported (see export/README.md), from the folder named by
 //! ROSE_EXPORT, else export/ in the current folder: the game data in data/ (or ROSE_DATA),
 //! read in place of the iROSE tables it replaces, which are then neither read nor sent; the
-//! motion timings in motions.toml (or ROSE_MOTIONS); the zone files in zones/ (or
-//! ROSE_ZONES).
+//! motion timings in motions.toml (or ROSE_MOTIONS), read in place of the ZMO files, which
+//! are then neither read nor sent either; the zone files in zones/ (or ROSE_ZONES).
 
 use std::{
     collections::BTreeMap,
@@ -74,7 +75,20 @@ fn main() {
             .unwrap_or_else(|| export_dir.join(Path::new(path).strip_prefix(rose_data_export::EXPORT_DIR).unwrap()))
     };
     let data_dir = in_export("ROSE_DATA", rose_data_export::DATA_DIR);
-    let export = read_export(&data_dir);
+    let mut export = read_export(&data_dir);
+    let data_files = export.len();
+    // export/motions.toml (exported from the Godot animations), read in place of the ZMO files.
+    let motions_path = in_export("ROSE_MOTIONS", rose_data_export::MOTIONS_FILE);
+    let motion_count = match std::fs::read(&motions_path) {
+        Ok(data) => {
+            let text = std::str::from_utf8(&data).expect("motions file is UTF-8");
+            let timings = rose_data_export::MotionTimings::parse(text).expect("read the motions file");
+            export.insert(PathBuf::from(rose_data_export::MOTIONS_GAME_FILE), data);
+            Some(timings.motion.len())
+        }
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => None,
+        Err(e) => panic!("read {}: {e}", motions_path.display()),
+    };
     let read: &'static Mutex<BTreeMap<PathBuf, Vec<u8>>> = Box::leak(Box::default());
     let root = data_idx.parent().map(|p| p.to_path_buf()).unwrap_or_default();
     let mut export_device = rose_file_readers::MemoryFilesystemDevice::default();
@@ -87,32 +101,23 @@ fn main() {
         Box::new(RecordingDevice { inner: HostFilesystemDevice::new(root), read }),
     ]);
     if mode == "compare" {
-        compare(&vfs, &data_dir, export.is_empty());
+        compare(&vfs, &data_dir, data_files == 0);
         return;
     }
     let started = Instant::now();
-    let zmo_data = rose_game_data::load_game_data(&vfs).expect("load game data");
+    let files_data = rose_game_data::load_game_data(&vfs).expect("load game data");
     let mut files = std::mem::take(&mut *read.lock().unwrap());
-    if export.is_empty() {
+    if data_files == 0 {
         eprintln!("data: no export in {}, the items come from the iROSE tables", data_dir.display());
     } else {
-        eprintln!("data: {} files from {}", export.len(), data_dir.display());
+        eprintln!("data: {} files from {}", data_files, data_dir.display());
+    }
+    match motion_count {
+        Some(count) => eprintln!("motions: {count} motion timings from {}, no ZMO files", motions_path.display()),
+        None => eprintln!("motions: no {}, the timings come from the ZMO files", motions_path.display()),
     }
     files.extend(export);
     if mode == "pack" || mode == "time" {
-        let motions_path = in_export("ROSE_MOTIONS", rose_data_export::MOTIONS_FILE);
-        match std::fs::read(&motions_path) {
-            Ok(data) => {
-                let text = std::str::from_utf8(&data).expect("motions file is UTF-8");
-                let timings = rose_data_export::MotionTimings::parse(text).expect("read the motions file");
-                eprintln!("motions: {} motion timings from {}", timings.motion.len(), motions_path.display());
-                files.insert(PathBuf::from(rose_data_export::MOTIONS_GAME_FILE), data);
-            }
-            Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
-                eprintln!("motions: no {}, the ZMO timings stay", motions_path.display())
-            }
-            Err(e) => panic!("read {}: {e}", motions_path.display()),
-        }
 
         // export/zones/*.toml (exported from the Godot zone scenes).
         let zones_dir = in_export("ROSE_ZONES", rose_data_export::ZONES_DIR);
@@ -160,12 +165,8 @@ fn main() {
             let started = Instant::now();
             let game_data = rose_game_data::load_game_data(&vfs).expect("load from memory");
             eprintln!("from memory: {} ms", started.elapsed().as_millis());
-            print_motion_changes(&zmo_data, &game_data);
-            print_zone_changes(&zmo_data, &game_data);
-            let started = Instant::now();
-            let strings = rose_data_irose::get_string_database(&vfs, 1).unwrap();
-            rose_data_irose::get_zone_database(&vfs, strings).unwrap();
-            eprintln!("zones from memory: {} ms", started.elapsed().as_millis());
+            print_motion_hits(&game_data);
+            print_zone_changes(&files_data, &game_data);
         }
         "list" => {
             let mut by_dir: BTreeMap<String, (usize, usize)> = BTreeMap::new();
@@ -297,13 +298,14 @@ fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool) {
     );
 
     let options = rose_data::NpcDatabaseOptions { load_frame_data: false };
+    let paths = rose_game_data::MotionSource::Paths;
     let started = Instant::now();
     let irose_npcs = rose_data_irose::get_npc_database(vfs, strings.clone(), &options).expect("iROSE NPCs");
     let irose_rows = rose_game_irose::data::read_drop_rows(vfs, rose_data_export::npcs::DROP_ROW_COLUMNS)
         .expect("ITEM_DROP.STB");
     let irose_ms = started.elapsed().as_millis();
     let started = Instant::now();
-    let (npcs, rows) = rose_game_data::load_npcs(vfs, strings.clone(), &options).expect("exported monsters and NPCs");
+    let (npcs, rows) = rose_game_data::load_npcs(vfs, strings.clone(), &paths).expect("exported monsters and NPCs");
     let export_ms = started.elapsed().as_millis();
     match rows {
         None => println!("monsters and NPCs: no export (monsters.toml ...), skipped"),
@@ -366,6 +368,30 @@ fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool) {
             );
         }
     }
+    match rose_game_data::MotionSource::from_game_files(vfs).expect("read the motion export") {
+        rose_game_data::MotionSource::Zmo => println!("motions: no export (motions.toml), skipped"),
+        export => {
+            let load = |source: &rose_game_data::MotionSource| {
+                let started = Instant::now();
+                let motions = rose_game_data::load_motions(vfs, source).expect("player motions");
+                let (npcs, _) = rose_game_data::load_npcs(vfs, strings.clone(), source).expect("monster and NPC motions");
+                (motions, npcs, started.elapsed().as_millis())
+            };
+            let (zmo_motions, zmo_npcs, zmo_ms) = load(&rose_game_data::MotionSource::Zmo);
+            let (motions, npcs, export_ms) = load(&export);
+            export.check_all_used(&motions, &npcs).expect("the exported motions");
+            let count = |m: &rose_data::CharacterMotionDatabase, n: &rose_data::NpcDatabase| {
+                (0..3).map(|g| m.motion_files(g).count()).sum::<usize>() + n.iter().map(|n| n.motion_data.len()).sum::<usize>()
+            };
+            differences.extend(rose_game_data::compare_motions((&zmo_motions, &zmo_npcs), (&motions, &npcs)));
+            let rose_game_data::MotionSource::Export(files) = &export else { unreachable!() };
+            println!(
+                "motions: {} motion files, {} player and monster/NPC motions using them; ZMO files {zmo_ms} ms, export {export_ms} ms",
+                files.len(),
+                count(&motions, &npcs),
+            );
+        }
+    }
     for line in &differences {
         println!("{line}");
     }
@@ -415,39 +441,9 @@ fn print_zone_changes(files: &rose_game_data::GameData, uploaded: &rose_game_dat
     }
 }
 
-/// Every motion whose length or hits differ between the ZMO files and the uploaded game
-/// files (with `export/motions.toml`), then the sword swings the server times hits by.
-fn print_motion_changes(zmo: &rose_game_data::GameData, uploaded: &rose_game_data::GameData) {
-    use rose_data::MotionFileData;
+/// The sword swings and monster attacks the server times hits by, as uploaded.
+fn print_motion_hits(uploaded: &rose_game_data::GameData) {
     let ms = |d: Option<std::time::Duration>| d.map_or("-".to_string(), |d| format!("{} ms", d.as_millis()));
-    let (mut changed, mut total) = (0, 0);
-    let mut compare = |a: &MotionFileData, b: &MotionFileData| {
-        total += 1;
-        if (a.duration, a.total_attack_frames, a.first_attack_time) != (b.duration, b.total_attack_frames, b.first_attack_time) {
-            changed += 1;
-            println!(
-                "changed {}: {} ms {} hits first {} -> {} ms {} hits first {}",
-                a.path.path().display(),
-                a.duration.as_millis(),
-                a.total_attack_frames,
-                ms(a.first_attack_time),
-                b.duration.as_millis(),
-                b.total_attack_frames,
-                ms(b.first_attack_time)
-            );
-        }
-    };
-    for gender in 0..2 {
-        for (a, b) in zmo.motions.motion_files(gender).zip(uploaded.motions.motion_files(gender)) {
-            compare(a, b);
-        }
-    }
-    for (a, b) in zmo.npcs.iter().zip(uploaded.npcs.iter()) {
-        for ((_, a), (_, b)) in a.motion_data.iter().zip(b.motion_data.iter()) {
-            compare(a, b);
-        }
-    }
-    println!("motions: {changed} of {total} (player motions, and each NPC's) differ from the ZMO files");
     use rose_data::CharacterMotionAction::{Attack, Attack2, Attack3};
     for (gender, name) in [(0, "male"), (1, "female")] {
         let times: Vec<String> = [Attack, Attack2, Attack3]

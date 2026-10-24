@@ -18,13 +18,18 @@ mod zone_database;
 
 pub use ai_database::get_ai_database;
 pub use animation_event_flags::get_animation_event_flags;
-pub use character_motion_database::get_character_motion_database;
+pub use character_motion_database::{
+    get_character_motion_database, get_character_motion_database_with, zmo_motion_file_data,
+};
 pub use client_strings::get_client_strings;
 pub use data_decoder::get_data_decoder;
 pub use effect_database::get_effect_database;
 pub use item_database::get_item_database;
 pub use job_class_database::get_job_class_database;
-pub use npc_database::{get_npc_action_map, get_npc_conversations, get_npc_database, get_npc_motions};
+pub use npc_database::{
+    get_npc_action_map, get_npc_conversations, get_npc_database, get_npc_database_with, get_npc_motions,
+    get_npc_motions_with,
+};
 pub use quest_database::get_quest_database;
 pub use skill_database::{get_skill_database, SKILL_PAGE_SIZE};
 pub use skybox_database::get_skybox_database;

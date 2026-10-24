@@ -95,7 +95,10 @@ and the damage lands 0.566 × 100 / 107 = **0.529 s** after it starts. With no w
 The player, monster and NPC animations' lengths and hit frames come from `export/motions.toml`, which is
 exported from the hit markers of the Godot animations (`godot/assets/README.md`), so the
 server and the animation you see always agree. The file holds the same frames as the iROSE
-motion files; a motion missing from it uses its iROSE file.
+motion files, and the server reads only it, never the iROSE motion files. A motion missing
+from it has no animation, as when its iROSE file is missing (a weapon with no animation data,
+below). Which animation each weapon, monster and action plays still comes from the iROSE lists
+(TYPE_MOTION.STB, FILE_MOTION.STB, LIST_NPC.CHR).
 
 The next swing is timed from when the last one was due, not from when the tick noticed it,
 so the 100 ms tick doesn't make you slower. A hit can land up to 100 ms after its hit frame.

@@ -61,7 +61,10 @@ The length and hit frames of every player, monster and NPC motion, from the hit 
 the Godot animations (`godot/assets/README.md`): move a `hit` marker in the Godot editor, then
 export. The server times every swing, monster attack and skill hit from it (the upload sends
 it with the game files, `ROSE_MOTIONS` names another file); the client plays the markers
-themselves. A motion missing from the file keeps the time in its ZMO file.
+themselves. The server reads no ZMO file: a motion missing from the file has no animation
+there, as when its ZMO file is missing, and a motion in the file that no player, monster or
+NPC plays stops the upload. `rose-stdb-import compare` checks every length and hit frame
+against the ZMO files.
 
 ## After a change
 
