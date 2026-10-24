@@ -1,6 +1,5 @@
 use glam::Vec4;
 use enum_map::{Enum, EnumMap};
-use rose_file_readers::VfsPathBuf;
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
@@ -17,12 +16,15 @@ pub enum SkyboxState {
     Night,
 }
 
+/// A sky: the dome around a zone and the light it gives at each time of day. The mesh and
+/// textures are paths: a client file (`3DDATA\SKY\DAY_SKY.ZMS`) or a Godot resource
+/// (`res://assets/rose/3ddata/sky/day_sky.mesh`).
+#[derive(Clone, Debug, PartialEq)]
 pub struct SkyboxData {
     pub id: SkyboxId,
-    pub mesh: VfsPathBuf,
-    pub texture_day: VfsPathBuf,
-    pub texture_night: VfsPathBuf,
-    pub lightmap_blend_op: u32,
+    pub mesh: String,
+    pub texture_day: String,
+    pub texture_night: String,
     pub map_ambient_color: EnumMap<SkyboxState, Vec4>,
     pub character_ambient_color: EnumMap<SkyboxState, Vec4>,
     pub character_diffuse_color: EnumMap<SkyboxState, Vec4>,
@@ -39,5 +41,9 @@ impl SkyboxDatabase {
 
     pub fn get_skybox_data(&self, id: SkyboxId) -> Option<&SkyboxData> {
         self.skyboxs.get(id.get() as usize).and_then(|x| x.as_ref())
+    }
+
+    pub fn iter(&self) -> impl Iterator<Item = &SkyboxData> {
+        self.skyboxs.iter().filter_map(|x| x.as_ref())
     }
 }

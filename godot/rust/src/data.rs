@@ -34,6 +34,8 @@ pub struct GameData {
     pub character_creator: rose_game_data::CharacterCreator,
     pub sounds: Arc<SoundDatabase>,
     pub effects: Arc<EffectDatabase>,
+    /// The loading and character creation pictures and the mouse cursors.
+    pub interface: rose_data_export::interface::InterfaceSettingsExport,
     /// What each ZMO frame event id does (footstep, hit, fire, ...).
     pub event_flags: Vec<AnimationEventFlags>,
     /// The install folder, for loose files outside the VFS (the Sound folder).
@@ -231,6 +233,30 @@ fn load_effects(vfs: &VirtualFilesystem) -> Result<Arc<EffectDatabase>, anyhow::
     rose_data_irose::get_effect_database(vfs)
 }
 
+/// The skies and the interface's pictures and cursors from the export, or without one the
+/// iROSE sky table and the client's own pictures and cursors. Only the game reads them.
+fn load_interface(
+    vfs: &VirtualFilesystem,
+) -> Result<(Arc<SkyboxDatabase>, rose_data_export::interface::InterfaceSettingsExport), anyhow::Error> {
+    if let Some(dir) = find_export() {
+        let toml = rose_data_export::Format::Toml;
+        let export = rose_data_export::InterfaceExport::from_files_as(toml, |name| {
+            let path = dir.join(rose_data_export::data_file_as(name, toml));
+            match std::fs::read_to_string(&path) {
+                Ok(text) => Ok(Some(text)),
+                Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(None),
+                Err(e) => Err(anyhow::Error::new(e).context(path.display().to_string())),
+            }
+        })?;
+        if let Some(export) = export {
+            godot::global::godot_print!("rose: {} skies and the interface from {}", export.skies.len(), dir.display());
+            return Ok((Arc::new(export.to_database()?), export.interface));
+        }
+    }
+    godot::global::godot_warn!("rose: no sky export (export/data/skies.toml), the skies come from the iROSE tables");
+    Ok((rose_data_irose::get_skybox_database(vfs)?, Default::default()))
+}
+
 pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
     if GAME_DATA.get().is_some() {
         return Ok(());
@@ -244,7 +270,7 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
     let strings = rose_data_irose::get_string_database(&vfs, 1)?;
     let world = load_world(&vfs, &strings)?;
     let zone_list = rose_data_irose::get_zone_list_from_settings(strings.clone(), &world.zone_settings);
-    let skybox = rose_data_irose::get_skybox_database(&vfs)?;
+    let (skybox, interface) = load_interface(&vfs)?;
     let items = load_items(&vfs, strings.clone())?;
     let (skills, status_effects, job_classes) = load_skills(&vfs, strings.clone())?;
     let quests = rose_data_irose::get_quest_database(&vfs, strings.clone())?;
@@ -277,6 +303,7 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
         character_creator: world.character_creator,
         sounds,
         effects,
+        interface,
         event_flags: rose_data_irose::get_animation_event_flags(),
         root,
         data_idx: data_idx.to_path_buf(),

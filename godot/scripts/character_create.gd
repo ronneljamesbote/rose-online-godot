@@ -28,7 +28,7 @@ func _ready() -> void:
 	# The whole screen behind the creation panel, in the theme's colours.
 	var backdrop := TextureRect.new()
 	backdrop.set_anchors_preset(Control.PRESET_FULL_RECT)
-	backdrop.texture = RoseData.texture("3DDATA/CONTROL/RES/LOADING.DDS")
+	backdrop.texture = RoseData.interface_picture("character_create")
 	backdrop.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	backdrop.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	backdrop.modulate = Color(0.45, 0.45, 0.55)

@@ -22,8 +22,8 @@ godot --headless --path godot -- --import-rose --data-idx=/path/to/iRose_129_129
 ```
 
 It converts every ZMS mesh and DDS texture in `data.idx` except the interface
-(`3DDATA/CONTROL`), which still loads from the client data apart from the icons (see
-"Icons and ground models" below); every effect (the 351 EFT files)
+(`3DDATA/CONTROL`), which still loads from the client data apart from the icons, the
+loading picture and the mouse cursors (see "Icons and ground models" below); every effect (the 351 EFT files)
 into an effect scene (`3DDATA/EFFECT/LEVELUP_01.EFT` is `3ddata/effect/levelup_01.scn`, a
 `RoseEffect` with a node per part that links the imported meshes, textures and particle
 systems, its motions as Godot `Animation`s) and every PTL particle system into a `.particles.res`
@@ -127,6 +127,8 @@ each model by path, so the import makes those files too:
 | `3ddata/control/res/item1.rtex`, `skillicon.rtex`, `stateicon.rtex` | The icon sheets (the TSI files' textures). |
 | `3ddata/control/res/item1/919.tres` and so on | One `AtlasTexture` per icon, a region of its sheet: 2,366 item icons, 338 skill icons, 168 status effect icons. It is a few hundred bytes and loads only its sheet, so the Inspector shows its thumbnail without slowing the editor. |
 | `3ddata/item/list_fielditem/12.tscn` and so on | One scene per item model lying on the ground (`LIST_FIELDITEM.ZSC`, 441 of them). |
+| `3ddata/control/res/loading.rtex` | The loading picture (also behind character creation), which the interface settings link. |
+| `res/attack.res` and so on | The nine mouse cursors (the client's `RES/*.CUR` files) as `ImageTexture`s, which the interface settings link. |
 
 New art goes in `ours/` under any path, for example `ours/items/my_sword.png` for an icon (any
 texture works, a whole picture or an `AtlasTexture` of a sheet) or `ours/items/my_sword.tscn`

@@ -21,7 +21,7 @@ func _ready() -> void:
 	background.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_root.add_child(background)
 	var picture := TextureRect.new()
-	picture.texture = RoseData.texture("3DDATA/CONTROL/RES/LOADING.DDS")
+	picture.texture = RoseData.interface_picture("loading")
 	picture.set_anchors_preset(Control.PRESET_FULL_RECT)
 	picture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	picture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED

@@ -365,13 +365,13 @@ impl RoseZone {
         }
 
         if let Some(sky) = zone_entry.skybox_id.and_then(|id| game_data.skybox.get_skybox_data(id)) {
-            if let Some(sky_mesh) = mesh::load_mesh(&sky.mesh.path().to_string_lossy(), false) {
+            if let Some(sky_mesh) = mesh::load_mesh(&sky.mesh, false) {
                 let mut sky_material = ShaderMaterial::new_gd();
                 sky_material.set_shader(&load_shader("res://shaders/rose_sky.gdshader"));
-                if let Some(day) = texture::load_texture(&sky.texture_day.path().to_string_lossy()) {
+                if let Some(day) = texture::load_texture(&sky.texture_day) {
                     sky_material.set_shader_parameter("texture_day", &day.to_variant());
                 }
-                if let Some(night) = texture::load_texture(&sky.texture_night.path().to_string_lossy()) {
+                if let Some(night) = texture::load_texture(&sky.texture_night) {
                     sky_material.set_shader_parameter("texture_night", &night.to_variant());
                 }
                 let mut sky_node = MeshInstance3D::new_alloc();

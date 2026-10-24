@@ -66,6 +66,7 @@ source:
     - godot/rust/src/net.rs (update_interest, Area, get_entities)
     - godot/scripts/main.gd (_load_zone, _on_zone_needed, world_ticks)
     - godot/scripts/loading_screen.gd
+    - godot/data/skies/ (each zone's sky), godot/data/interface/interface.tres (loading_picture)
     - godot/rust/src/zone.rs (get_warps, get_lighting_at)
     - godot/scripts/ui/hud/minimap.gd
     - godot/scripts/ui/zone_map.gd
@@ -155,7 +156,8 @@ and quest rewards that move you (see [[rules/quests|Quests]]).
 ## Loading screen
 
 When the server has moved your character to another zone (and when you sign in), the game
-shows the loading picture with the zone's name while it loads the zone. It goes away when
+shows the loading picture (the interface settings' `loading_picture`, iROSE's LOADING.DDS)
+with the zone's name while it loads the zone. It goes away when
 your character stands in the new zone, or after **10 seconds** at most.
 
 ## Save points and getting up after death
@@ -183,6 +185,12 @@ Each zone has its own day. Time moves in world ticks of **10 seconds**. The zone
 the length of a zone's day in ticks and the tick at which morning, day, evening and night
 start. Night lasts from its start until morning of the next day. Morning and evening blend
 the light from the time before into the time after.
+
+The zone's **sky** (a sky resource in `godot/data/skies/`, iROSE's LIST_SKY.STB) is the dome
+drawn around it, with a picture by day and one by night, and the colour of the light at each
+time of day: on the ground and buildings, and on characters and monsters from all around and
+from the sun's side. Zones share skies: every zone on Junon above ground uses sky 0, the
+Goblin Cave floors sky 1, Eucar and its snowfields sky 2.
 
 ```math
 \text{day length (seconds)} = \text{ticks per day} \times 10

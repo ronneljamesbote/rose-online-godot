@@ -338,7 +338,9 @@ pub const ART_IMPORT_VERSION: i64 = 1;
 /// - every sprite of the item, skill and status icon sheets as an `AtlasTexture` on its
 ///   imported sheet (`3ddata/control/res/item1/919.tres` is sprite 919 of ITEM1.TSI);
 /// - every object of LIST_FIELDITEM.ZSC as a scene of mesh instances
-///   (`3ddata/item/list_fielditem/310.tscn`).
+///   (`3ddata/item/list_fielditem/310.tscn`);
+/// - the loading picture (`3ddata/control/res/loading.rtex`) and the mouse cursors
+///   (`res/attack.res`, an ImageTexture of the client's RES/ATTACK.CUR).
 /// The data resources link these. Needs the textures and meshes imported first.
 pub fn import_art(redo: bool) -> crate::character::AvatarImport {
     let mut out = crate::character::AvatarImport::default();
@@ -373,6 +375,22 @@ pub fn import_art(redo: bool) -> crate::character::AvatarImport {
                 Some(icon.upcast())
             });
         }
+    }
+    // The interface's own pictures and mouse cursors (the interface settings link them).
+    let loading = rose_data_export::interface::LOADING_PICTURE;
+    let target = format!("{}{}.rtex", assets::ROSE, assets::stem(loading));
+    if !redo && godot::classes::FileAccess::file_exists(&target) {
+        out.kept += 1;
+    } else if assets::save_texture(loading, &target) {
+        out.saved += 1;
+    } else {
+        out.failed += 1;
+    }
+    for (_, file, _) in rose_data_export::interface::CURSORS {
+        out.save(redo, &assets::stem(file), "res", || {
+            let image = crate::cursor::load(file)?;
+            godot::classes::ImageTexture::create_from_image(&image).map(|t| t.upcast())
+        });
     }
     if let Some(zsc) = zsc_list(rose_data::art::FIELD_ITEM_MODELS) {
         for (index, object) in zsc.objects.iter().enumerate() {

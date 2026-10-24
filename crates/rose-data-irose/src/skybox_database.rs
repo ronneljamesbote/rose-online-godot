@@ -3,7 +3,7 @@ use std::sync::Arc;
 use glam::Vec4;
 use enum_map::EnumMap;
 use rose_data::{SkyboxData, SkyboxDatabase, SkyboxId, SkyboxState};
-use rose_file_readers::{stb_column, StbFile, VfsPathBuf, VirtualFilesystem};
+use rose_file_readers::{stb_column, StbFile, VirtualFilesystem};
 
 struct StbSkybox(pub StbFile);
 
@@ -16,7 +16,6 @@ impl StbSkybox {
     stb_column! { 0, get_mesh, &str }
     stb_column! { 1, get_texture_day, &str }
     stb_column! { 2, get_texture_night, &str }
-    stb_column! { 5, get_lightmap_blend_op, u32 }
     stb_column! { (6..10), get_map_ambient_color, [u32; 4] }
     stb_column! { (10..18).step_by(2), get_character_ambient_color, [u32; 4] }
     stb_column! { (10..18).skip(1).step_by(2), get_character_diffuse_color, [u32; 4] }
@@ -42,10 +41,9 @@ fn convert_colors(data: &[u32; 4]) -> EnumMap<SkyboxState, Vec4> {
 fn load_skybox(data: &StbSkybox, id: usize) -> Option<SkyboxData> {
     Some(SkyboxData {
         id: SkyboxId::new(id as u16),
-        mesh: VfsPathBuf::new(data.get_mesh(id)?),
-        texture_day: VfsPathBuf::new(data.get_texture_day(id).unwrap_or_default()),
-        texture_night: VfsPathBuf::new(data.get_texture_night(id).unwrap_or_default()),
-        lightmap_blend_op: data.get_lightmap_blend_op(id).unwrap_or(0),
+        mesh: data.get_mesh(id)?.trim().to_string(),
+        texture_day: data.get_texture_day(id).unwrap_or_default().trim().to_string(),
+        texture_night: data.get_texture_night(id).unwrap_or_default().trim().to_string(),
         map_ambient_color: convert_colors(&data.get_map_ambient_color(id)),
         character_ambient_color: convert_colors(&data.get_character_ambient_color(id)),
         character_diffuse_color: convert_colors(&data.get_character_diffuse_color(id)),
