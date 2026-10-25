@@ -1,0 +1,1212 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://csxtfvokkenac"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://b7no5hlnnhntq" path="res://data/quest_triggers/tutorial/T64.tres" id="1_4djki"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dmym5cx08xm5i" path="res://data/quest_triggers/tutorial/T66.tres" id="2_fj2vk"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dhqj2cempskml" path="res://data/quest_triggers/tutorial/T67.tres" id="3_tv40l"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cexbsoe3exdhq" path="res://data/quest_triggers/tutorial/T68.tres" id="4_3ouqu"]
+[ext_resource type="RoseQuestTrigger" uid="uid://ck8yubaswu8rv" path="res://data/quest_triggers/tutorial/T69.tres" id="5_yw2ad"]
+[ext_resource type="RoseQuestTrigger" uid="uid://5duwt75ch520" path="res://data/quest_triggers/tutorial/T70.tres" id="6_hp71j"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bhqpr2e7toqp5" path="res://data/quest_triggers/tutorial/T71.tres" id="7_6xilq"]
+[ext_resource type="RoseQuestTrigger" uid="uid://b3akg7djbo8dm" path="res://data/quest_triggers/tutorial/T76.tres" id="8_aakjg"]
+[ext_resource type="RoseQuestTrigger" uid="uid://s1k46loffm33" path="res://data/quest_triggers/tutorial/T75.tres" id="9_mt4ce"]
+[ext_resource type="RoseQuestTrigger" uid="uid://5aclyiw1o3j2" path="res://data/quest_triggers/tutorial/T74.tres" id="10_ic5p1"]
+[ext_resource type="RoseQuestTrigger" uid="uid://d15qoj8ome0o6" path="res://data/quest_triggers/tutorial/T73.tres" id="11_todu6"]
+[ext_resource type="RoseQuestTrigger" uid="uid://b6xwh67mnsrgn" path="res://data/quest_triggers/tutorial/T72.tres" id="12_j2q8f"]
+[ext_resource type="RoseQuest" uid="uid://rcovrfkbphhi" path="res://data/quests/5051-hunting-practice-1.tres" id="13_p4w6n"]
+[ext_resource type="RoseQuest" uid="uid://cugbsgd3fj0cg" path="res://data/quests/5052-hunting-practice-2.tres" id="14_vycvy"]
+[ext_resource type="RoseQuest" uid="uid://5fdacmx07u6m" path="res://data/quests/5053-hunting-practice-3.tres" id="15_bf5yu"]
+[ext_resource type="RoseQuestTrigger" uid="uid://xqf0x2qoirka" path="res://data/quest_triggers/tutorial/T77.tres" id="16_d31ed"]
+[ext_resource type="RoseQuestTrigger" uid="uid://diyxrawwn4qkx" path="res://data/quest_triggers/tutorial/T78.tres" id="17_etior"]
+[ext_resource type="RoseQuestTrigger" uid="uid://c7bdwaq0adx3k" path="res://data/quest_triggers/tutorial/T79.tres" id="18_f1itx"]
+[ext_resource type="RoseQuestTrigger" uid="uid://c04gqnkhuu45l" path="res://data/quest_triggers/tutorial/T65.tres" id="19_3j1no"]
+[ext_resource type="RoseQuestTrigger" uid="uid://ddlukac5opsql" path="res://data/quest_triggers/tutorial/T-warp.tres" id="20_tq8r8"]
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_ll2tu"]
+switch = 64
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_lmoe2"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_ll2tu")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pcmop"]
+text = "Welcome, <NAME>, you've just joined the world of Seven Hearts. I believe <NAME> will become a hero for this universe, so I'll do my best to help you get acquainted with this world."
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_lmoe2")])
+resource_name = "NPC: Welcome, <NAME>, you've just joined the world of…"
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_g6n0k"]
+switch = 64
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_wp6nw"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_g6n0k")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_funfc"]
+text = "Do you feel comfortable now? Now let me give you some useful tips. Which one would you like to check first?"
+next_menu = 12
+show_if = Array[Resource]([SubResource("RoseDialogCase_wp6nw")])
+resource_name = "NPC: Do you feel comfortable now? Now let me give you…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ammaq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_pcmop"), SubResource("RoseDialogLine_funfc")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_t3voq"]
+kind = "Answer"
+text = "Seven Hearts…?"
+next_menu = 2
+resource_name = "You: Seven Hearts…?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_83kp4"]
+kind = "Answer"
+text = "Visitor…? What is that?"
+next_menu = 4
+resource_name = "You: Visitor…? What is that?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vh2j6"]
+kind = "Answer"
+text = "I don't know what's going on. Would you help me?"
+next_menu = 8
+resource_name = "You: I don't know what's going on. Would you help me?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3p3ty"]
+lines = Array[Resource]([SubResource("RoseDialogLine_t3voq"), SubResource("RoseDialogLine_83kp4"), SubResource("RoseDialogLine_vh2j6")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xhfhk"]
+text = "Each of the Seven Hearts is a planet created through the love of the goddess, Arua."
+next_menu = 3
+resource_name = "NPC: Each of the Seven Hearts is a planet created thr…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2q8js"]
+lines = Array[Resource]([SubResource("RoseDialogLine_xhfhk")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bhbxx"]
+kind = "Answer"
+text = "Ah, I see."
+resource_name = "You: Ah, I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ws7ft"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bhbxx")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_51l1w"]
+text = "A Visitor is a little soul sent by Arua to save the world of Seven Hearts from danger. You, <NAME>, are also a Visitor."
+next_menu = 5
+resource_name = "NPC: A Visitor is a little soul sent by Arua to save …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2uqdk"]
+lines = Array[Resource]([SubResource("RoseDialogLine_51l1w")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5gtdn"]
+kind = "Answer"
+text = "Me, a little soul?"
+next_menu = 6
+resource_name = "You: Me, a little soul?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4uycx"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5gtdn")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_yvrf8"]
+text = "Yes! So you don't need to eat food or sleep like the humans. You won't grow old, and you'll never really disappear, unless Arua calls you back."
+next_menu = 7
+resource_name = "NPC: Yes! So you don't need to eat food or sleep like…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ifx5k"]
+lines = Array[Resource]([SubResource("RoseDialogLine_yvrf8")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_r45xh"]
+kind = "Answer"
+text = "Wow… That's fantastic!"
+resource_name = "You: Wow… That's fantastic!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1737r"]
+lines = Array[Resource]([SubResource("RoseDialogLine_r45xh")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_uxcc1"]
+text = "Visitors are very weak when they first manifest, but have great potential. Let me tell you how you can grow by adventuring with other Visitors."
+next_menu = 9
+resource_name = "NPC: Visitors are very weak when they first manifest,…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gvsdl"]
+lines = Array[Resource]([SubResource("RoseDialogLine_uxcc1")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cw6rx"]
+kind = "Answer"
+text = "Great, knowing that would help me a lot."
+next_menu = 10
+resource_name = "You: Great, knowing that would help me a lot."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_d5i8u"]
+lines = Array[Resource]([SubResource("RoseDialogLine_cw6rx")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_y5xya"]
+text = "If you're ready, please take a deep breath before we begin."
+next_menu = 11
+resource_name = "NPC: If you're ready, please take a deep breath befor…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_pjrpe"]
+lines = Array[Resource]([SubResource("RoseDialogLine_y5xya")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_f30u1"]
+step = ExtResource("1_4djki")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_akvsq"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_f30u1")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ndnou"]
+kind = "Answer"
+text = "Okay."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_akvsq")])
+resource_name = "You: Okay."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_j8b36"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ndnou")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_fkyjd"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_seia1"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_fkyjd")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5cq4u"]
+kind = "Answer"
+text = "I want to trade."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_seia1")])
+resource_name = "You: I want to trade."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_n3jsu"]
+kind = "Answer"
+text = "I want to know how to move and how to interact with other people."
+next_menu = 13
+resource_name = "You: I want to know how to move and how to interact w…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qv3i3"]
+kind = "Answer"
+text = "Tell me about items and how to vend."
+next_menu = 23
+resource_name = "You: Tell me about items and how to vend."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qh4cl"]
+kind = "Answer"
+text = "Tell me about battles and leveling up."
+next_menu = 35
+resource_name = "You: Tell me about battles and leveling up."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_u0itp"]
+kind = "Answer"
+text = "I think I'll learn faster by experiencing things firsthand."
+next_menu = 66
+resource_name = "You: I think I'll learn faster by experiencing things…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fr0hp"]
+kind = "Answer"
+text = "I want to set off into the wide world!"
+next_menu = 77
+resource_name = "You: I want to set off into the wide world!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jyf16"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5cq4u"), SubResource("RoseDialogLine_n3jsu"), SubResource("RoseDialogLine_qv3i3"), SubResource("RoseDialogLine_qh4cl"), SubResource("RoseDialogLine_u0itp"), SubResource("RoseDialogLine_fr0hp")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qno1v"]
+text = "Basically, everything depends on the state of your mind, <NAME>. When you wish to be friends with other people, you will find the answer while trying. However, I can teach you the most basic things."
+next_menu = 14
+resource_name = "NPC: Basically, everything depends on the state of yo…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_p6cev"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qno1v")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_g0f8l"]
+kind = "Answer"
+text = "Then, how can I run or walk?"
+next_menu = 72
+resource_name = "You: Then, how can I run or walk?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_blrof"]
+kind = "Answer"
+text = "What kind of basic skills do I have?"
+next_menu = 15
+resource_name = "You: What kind of basic skills do I have?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4rjad"]
+lines = Array[Resource]([SubResource("RoseDialogLine_g0f8l"), SubResource("RoseDialogLine_blrof")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nab67"]
+text = "Please open your Skill Window in the menu bar. There are several Basic Skills that you can use."
+next_menu = 16
+resource_name = "NPC: Please open your Skill Window in the menu bar. T…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_tvhnf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_nab67")])
+resource_name = "Menu 15"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bq47a"]
+kind = "Answer"
+text = "Tell me how to sit."
+next_menu = 17
+resource_name = "You: Tell me how to sit."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6wi1o"]
+kind = "Answer"
+text = "Tell me how to pick up items from the ground."
+next_menu = 18
+resource_name = "You: Tell me how to pick up items from the ground."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b7ir7"]
+kind = "Answer"
+text = "Tell me how to trade."
+next_menu = 19
+resource_name = "You: Tell me how to trade."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fbeao"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bq47a"), SubResource("RoseDialogLine_6wi1o"), SubResource("RoseDialogLine_b7ir7")])
+resource_name = "Menu 16"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_t7b0u"]
+text = "It's good to sit and take a rest when you're exhausted from hunting. While sitting, your HP and MP will be restored. Double click a skill in the Skill Window to use a skill. You can also drag and drop a skill icon from the Skill Window to the Hot Key Window to register that skill to a Hot Key."
+next_menu = 20
+resource_name = "NPC: It's good to sit and take a rest when you're exh…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ltygi"]
+lines = Array[Resource]([SubResource("RoseDialogLine_t7b0u")])
+resource_name = "Menu 17"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qby8r"]
+text = "When using the Pick Up skill, you can easily obtain items after hunting. Double click a skill in the Skill Window to use it. You can register a skill to your Hot Key Window by dragging and dropping the skill icon from your Skill Window to your Hot Key Window."
+next_menu = 21
+resource_name = "NPC: When using the Pick Up skill, you can easily obt…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_v6v7m"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qby8r")])
+resource_name = "Menu 18"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hy3u2"]
+text = "The Trade skill allows you to transfer your items from your character to other characters. Click the targeted character and activate the Trade skill. You can also register the Trade skill to one of your Hot Keys."
+next_menu = 22
+resource_name = "NPC: The Trade skill allows you to transfer your item…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_nsn0v"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hy3u2")])
+resource_name = "Menu 19"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_b23bv"]
+step = ExtResource("2_fj2vk")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_x2xu7"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_b23bv")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_l0fxy"]
+kind = "Answer"
+text = "I see."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_x2xu7")])
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_86uil"]
+lines = Array[Resource]([SubResource("RoseDialogLine_l0fxy")])
+resource_name = "Menu 20"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_uay1d"]
+step = ExtResource("3_tv40l")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_o18ym"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_uay1d")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_f3qix"]
+kind = "Answer"
+text = "I see."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_o18ym")])
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_a5ifg"]
+lines = Array[Resource]([SubResource("RoseDialogLine_f3qix")])
+resource_name = "Menu 21"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_t8243"]
+step = ExtResource("4_3ouqu")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2d6ax"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_t8243")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bttkl"]
+kind = "Answer"
+text = "I see."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_2d6ax")])
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ux52j"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bttkl")])
+resource_name = "Menu 22"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gj4fh"]
+text = "Depending on the items you are using, as well as their attributes, your effectiveness in battle will be enhanced. Also, opening a vending shop will help you to make more money or get a better item."
+next_menu = 24
+resource_name = "NPC: Depending on the items you are using, as well as…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_su3p3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_gj4fh")])
+resource_name = "Menu 23"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3xqdm"]
+kind = "Answer"
+text = "Tell me how to equip or unequip an item."
+next_menu = 25
+resource_name = "You: Tell me how to equip or unequip an item."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8j4ii"]
+kind = "Answer"
+text = "Tell me about how to use NPC shops."
+next_menu = 29
+resource_name = "You: Tell me about how to use NPC shops."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_86866"]
+kind = "Answer"
+text = "Tell me about the Inventory Window."
+next_menu = 33
+resource_name = "You: Tell me about the Inventory Window."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_l3b3r"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3xqdm"), SubResource("RoseDialogLine_8j4ii"), SubResource("RoseDialogLine_86866")])
+resource_name = "Menu 24"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_j0oin"]
+text = "Double click the equipment in your Inventory Window, or drag and drop the item into an available slot in your Equipment Window. It works the same way when you unequip an item. When using a Gun or Bow which need bullets or arrows, you must equip the bullets or arrows when you equip those weapons."
+next_menu = 26
+resource_name = "NPC: Double click the equipment in your Inventory Win…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qx1x1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_j0oin")])
+resource_name = "Menu 25"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gr0c4"]
+kind = "Answer"
+text = "Ah, I will keep that in mind."
+next_menu = 27
+resource_name = "You: Ah, I will keep that in mind."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_doqgv"]
+lines = Array[Resource]([SubResource("RoseDialogLine_gr0c4")])
+resource_name = "Menu 26"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_yv21b"]
+text = "Now, try to equip and unequip an item."
+next_menu = 28
+resource_name = "NPC: Now, try to equip and unequip an item."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ortvw"]
+lines = Array[Resource]([SubResource("RoseDialogLine_yv21b")])
+resource_name = "Menu 27"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_luhot"]
+step = ExtResource("5_yw2ad")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_vhrm3"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_luhot")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bwep0"]
+kind = "Answer"
+text = "Thank you."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_vhrm3")])
+resource_name = "You: Thank you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_daxkn"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bwep0")])
+resource_name = "Menu 28"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_s40k1"]
+text = "Double click an NPC to ask to make a trade. Then you will see a trade window pop up. If you have items that you want to sell, put them into the Selling List. You do the same when you want to buy items from an NPC. When you click the Accept button, the trade will be completed. For consumable items, which can be purchased in bulk, you can enter the number of items you wish to buy for convenience."
+next_menu = 30
+resource_name = "NPC: Double click an NPC to ask to make a trade. Then…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_t7yf2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_s40k1")])
+resource_name = "Menu 29"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2sn0s"]
+kind = "Answer"
+text = "I see. But I'm not sure if I understand clearly."
+next_menu = 31
+resource_name = "You: I see. But I'm not sure if I understand clearly."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_u4kkt"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2sn0s")])
+resource_name = "Menu 30"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_s8xhj"]
+text = "Then let me give you an item so you can sell it to an NPC. With the money you receive by selling the item, you may also purchase an item from that NPC."
+next_menu = 32
+resource_name = "NPC: Then let me give you an item so you can sell it …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_g4i1e"]
+lines = Array[Resource]([SubResource("RoseDialogLine_s8xhj")])
+resource_name = "Menu 31"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_d7yps"]
+step = ExtResource("6_hp71j")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_hq6g8"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_d7yps")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2ibmu"]
+kind = "Answer"
+text = "Thank you."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_hq6g8")])
+resource_name = "You: Thank you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b4ucy"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2ibmu")])
+resource_name = "Menu 32"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_73ypl"]
+text = "The Inventory Window allows you to carry many items. The Inventory is separated into Equipment, Consumable and Miscellaneous subwindows. Consumable items can be registered to your Hot Keys. Remember, if you're carrying too many items and are overweight, you will suffer from certain disadvantages."
+next_menu = 34
+resource_name = "NPC: The Inventory Window allows you to carry many it…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_sqke2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_73ypl")])
+resource_name = "Menu 33"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_cufwh"]
+step = ExtResource("7_6xilq")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_yx31h"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_cufwh")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_s7i1i"]
+kind = "Answer"
+text = "Thank you."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_yx31h")])
+resource_name = "You: Thank you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hfciw"]
+lines = Array[Resource]([SubResource("RoseDialogLine_s7i1i")])
+resource_name = "Menu 34"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_h75um"]
+text = "While adventuring in Seven Hearts, you will encounter many dangerous situations. With the right understanding, you will easily overcome these obstacles. Now, what would you like to learn first?"
+next_menu = 36
+resource_name = "NPC: While adventuring in Seven Hearts, you will enco…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_cr7hm"]
+lines = Array[Resource]([SubResource("RoseDialogLine_h75um")])
+resource_name = "Menu 35"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ma8tj"]
+kind = "Answer"
+text = "Tell me about battles and leveling up."
+next_menu = 47
+resource_name = "You: Tell me about battles and leveling up."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vuaa8"]
+kind = "Answer"
+text = "Tell me about battles."
+next_menu = 45
+resource_name = "You: Tell me about battles."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vgg1e"]
+kind = "Answer"
+text = "Tell me about death and revival."
+next_menu = 41
+resource_name = "You: Tell me about death and revival."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wg50g"]
+kind = "Answer"
+text = "Tell me how to party with other people."
+next_menu = 39
+resource_name = "You: Tell me how to party with other people."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2kens"]
+kind = "Answer"
+text = "Tell me how to do quests."
+next_menu = 37
+resource_name = "You: Tell me how to do quests."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_r47d6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ma8tj"), SubResource("RoseDialogLine_vuaa8"), SubResource("RoseDialogLine_vgg1e"), SubResource("RoseDialogLine_wg50g"), SubResource("RoseDialogLine_2kens")])
+resource_name = "Menu 36"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rq3d7"]
+text = "You can receive most quests by talking to NPCs. Listen carefully to the NPCs so that you don't miss any important information. You can use the Quest Window to check your quests in progress and your objectives."
+next_menu = 38
+resource_name = "NPC: You can receive most quests by talking to NPCs. …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1fvrk"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rq3d7")])
+resource_name = "Menu 37"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_a1qn2"]
+step = ExtResource("8_aakjg")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7j1vk"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_a1qn2")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jg0gl"]
+kind = "Answer"
+text = "I see."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_7j1vk")])
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3ware"]
+lines = Array[Resource]([SubResource("RoseDialogLine_jg0gl")])
+resource_name = "Menu 38"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_evrn4"]
+text = "When you make a party with other people, you can hunt monsters that you cannot handle alone. As you hunt in a party, the party itself will level up. Leveling your party will give you many advantages."
+next_menu = 40
+resource_name = "NPC: When you make a party with other people, you can…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_43cdg"]
+lines = Array[Resource]([SubResource("RoseDialogLine_evrn4")])
+resource_name = "Menu 39"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_g4xju"]
+step = ExtResource("9_mt4ce")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7xfhb"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_g4xju")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_42q8y"]
+kind = "Answer"
+text = "Ah, I see."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_7xfhb")])
+resource_name = "You: Ah, I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_tunfp"]
+lines = Array[Resource]([SubResource("RoseDialogLine_42q8y")])
+resource_name = "Menu 40"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tejwb"]
+text = "When you die, you're given two options for when you revive. You can choose to respawn in a town, or to respawn near the field where you fainted. Choosing a town will take 3% of your experience points and choosing the field will take 5%."
+next_menu = 42
+resource_name = "NPC: When you die, you're given two options for when …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_skeg5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tejwb")])
+resource_name = "Menu 41"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_p0gtn"]
+kind = "Answer"
+text = "I see."
+next_menu = 43
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dfgbf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_p0gtn")])
+resource_name = "Menu 42"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_l4eom"]
+text = "When you adventure further to large towns, you can save your respawn point in that town. However, it's more important to avoid dying."
+next_menu = 44
+resource_name = "NPC: When you adventure further to large towns, you c…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_un1id"]
+lines = Array[Resource]([SubResource("RoseDialogLine_l4eom")])
+resource_name = "Menu 43"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_5lj0b"]
+step = ExtResource("10_ic5p1")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_s88i6"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_5lj0b")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2rbb2"]
+kind = "Answer"
+text = "I see."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_s88i6")])
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_r8ti6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2rbb2")])
+resource_name = "Menu 44"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tjkrc"]
+text = "When you click on a monster, you will see its information. Double clicking the left mouse button will initiate attacks. When you click only once on a monster, you are allowed to use a skill or move to a different spot. You can choose one of two different attack modes through the Game tab of the Game Option Window."
+next_menu = 46
+resource_name = "NPC: When you click on a monster, you will see its in…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rnf42"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tjkrc")])
+resource_name = "Menu 45"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_gfe55"]
+step = ExtResource("11_todu6")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_bm46f"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_gfe55")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_w4dl8"]
+kind = "Answer"
+text = "I see."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_bm46f")])
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7my5g"]
+lines = Array[Resource]([SubResource("RoseDialogLine_w4dl8")])
+resource_name = "Menu 46"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_va5fu"]
+text = "The Statuses you can develop are Strength, Dexterity, Intelligence, Concentration, Charm and Sense. Each Status affects you differently, so it is suggested to distribute Status points suited to your class."
+next_menu = 48
+resource_name = "NPC: The Statuses you can develop are Strength, Dexte…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3f577"]
+lines = Array[Resource]([SubResource("RoseDialogLine_va5fu")])
+resource_name = "Menu 47"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3cit1"]
+kind = "Answer"
+text = "Tell me how each Status works."
+next_menu = 49
+resource_name = "You: Tell me how each Status works."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ska2j"]
+kind = "Answer"
+text = "Tell me about Status points."
+next_menu = 51
+resource_name = "You: Tell me about Status points."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7cf0o"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3cit1"), SubResource("RoseDialogLine_ska2j")])
+resource_name = "Menu 48"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e6wac"]
+text = "Which Status would you like to know more about?"
+next_menu = 50
+resource_name = "NPC: Which Status would you like to know more about?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wbfv2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e6wac")])
+resource_name = "Menu 49"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6l2jf"]
+kind = "Answer"
+text = "Strength."
+next_menu = 54
+resource_name = "You: Strength."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_le2wu"]
+kind = "Answer"
+text = "Dexterity."
+next_menu = 56
+resource_name = "You: Dexterity."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0nrme"]
+kind = "Answer"
+text = "Intelligence."
+next_menu = 58
+resource_name = "You: Intelligence."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5pgkt"]
+kind = "Answer"
+text = "Concentration."
+next_menu = 60
+resource_name = "You: Concentration."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rl4y6"]
+kind = "Answer"
+text = "Charm."
+next_menu = 62
+resource_name = "You: Charm."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7ch13"]
+kind = "Answer"
+text = "Sense."
+next_menu = 64
+resource_name = "You: Sense."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gqth2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6l2jf"), SubResource("RoseDialogLine_le2wu"), SubResource("RoseDialogLine_0nrme"), SubResource("RoseDialogLine_5pgkt"), SubResource("RoseDialogLine_rl4y6"), SubResource("RoseDialogLine_7ch13")])
+resource_name = "Menu 50"
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_k8y03"]
+switch = 72
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_wjim7"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_k8y03")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5ht4m"]
+text = "When you level up or complete a quest, you will be given a certain amount of Status points. Increasing a Status will require a different amount of points according to the current level of that Status. Once you distribute your points, you will not be able to reset them. Therefore, think carefully before you distribute them. Now, let me give you 10 Status points, so you can try it."
+next_menu = 52
+show_if = Array[Resource]([SubResource("RoseDialogCase_wjim7")])
+resource_name = "NPC: When you level up or complete a quest, you will …"
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_u51lc"]
+switch = 72
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_dfmkh"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_u51lc")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cdb2j"]
+text = "When you level up or complete a quest, you will be given a certain amount of Status points. Increasing a Status will require a different amount of points according to the current level of that Status. Once you distribute your points, you will not be able to reset them. Therefore, think carefully before you distribute them. Now, let me give you 10 Status points, so you can try it."
+next_menu = 53
+show_if = Array[Resource]([SubResource("RoseDialogCase_dfmkh")])
+resource_name = "NPC: When you level up or complete a quest, you will …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4yqwo"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5ht4m"), SubResource("RoseDialogLine_cdb2j")])
+resource_name = "Menu 51"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_oghby"]
+step = ExtResource("12_j2q8f")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_vuqmv"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_oghby")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cla0m"]
+kind = "Answer"
+text = "I see."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_vuqmv")])
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ahbd0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_cla0m")])
+resource_name = "Menu 52"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ocip1"]
+kind = "Answer"
+text = "I see."
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_elr3p"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ocip1")])
+resource_name = "Menu 53"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jpyi8"]
+text = "Strength affects the Maximum HP, the amount of items you can carry, and physical attack strength."
+next_menu = 55
+resource_name = "NPC: Strength affects the Maximum HP, the amount of i…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ybana"]
+lines = Array[Resource]([SubResource("RoseDialogLine_jpyi8")])
+resource_name = "Menu 54"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_aqqv0"]
+kind = "Answer"
+text = "I see."
+next_menu = 47
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lefcw"]
+lines = Array[Resource]([SubResource("RoseDialogLine_aqqv0")])
+resource_name = "Menu 55"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5o8mw"]
+text = "Dexterity affects your Dodge Rate, Movement Speed, long range weapon strength, and Knuckle weapon attack power."
+next_menu = 57
+resource_name = "NPC: Dexterity affects your Dodge Rate, Movement Spee…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1p31f"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5o8mw")])
+resource_name = "Menu 56"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_evt1p"]
+kind = "Answer"
+text = "I see."
+next_menu = 47
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_f2e6s"]
+lines = Array[Resource]([SubResource("RoseDialogLine_evt1p")])
+resource_name = "Menu 57"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_k1ry1"]
+text = "Intelligence affects your Maximum MP, Magic Weapon Attack Power, and Magic Resistance."
+next_menu = 59
+resource_name = "NPC: Intelligence affects your Maximum MP, Magic Weap…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_45ggb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_k1ry1")])
+resource_name = "Menu 58"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mj2ru"]
+kind = "Answer"
+text = "I see."
+next_menu = 47
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_njagf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_mj2ru")])
+resource_name = "Menu 59"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_l6g0j"]
+text = "Concentration affects your Attack Accuracy, the success chance of item crafting, and the HP and MP Recovery Rates."
+next_menu = 61
+resource_name = "NPC: Concentration affects your Attack Accuracy, the …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ww1vt"]
+lines = Array[Resource]([SubResource("RoseDialogLine_l6g0j")])
+resource_name = "Menu 60"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_u2ehr"]
+kind = "Answer"
+text = "I see."
+next_menu = 47
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4n7lc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_u2ehr")])
+resource_name = "Menu 61"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pyhhb"]
+text = "Charm affects your interaction with NPCs, as well as your progress in quests."
+next_menu = 63
+resource_name = "NPC: Charm affects your interaction with NPCs, as wel…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_e64pf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_pyhhb")])
+resource_name = "Menu 62"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ka3cy"]
+kind = "Answer"
+text = "I see."
+next_menu = 47
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ntx04"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ka3cy")])
+resource_name = "Menu 63"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_myx7a"]
+text = "Sense affects the options added to crafted items, as well as damage of long ranged skill attacks and critical attacks."
+next_menu = 65
+resource_name = "NPC: Sense affects the options added to crafted items…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_uuadc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_myx7a")])
+resource_name = "Menu 64"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gxkqd"]
+kind = "Answer"
+text = "I see."
+next_menu = 47
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gft2p"]
+lines = Array[Resource]([SubResource("RoseDialogLine_gxkqd")])
+resource_name = "Menu 65"
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_cqwkq"]
+switch = 77
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_1htkt"]
+quest = ExtResource("13_p4w6n")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_onbvr"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_cqwkq"), SubResource("RoseDialogIfQuest_1htkt")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c2ygv"]
+text = "Good idea. You don't want to waste your time by listening to what you already know. Then, let me check your basic battle ability. Please go hunt {fc=12}3 Jelly Beans{/fc}. If you can hunt 3 Jelly Beans, you will receive a special gift."
+next_menu = 67
+show_if = Array[Resource]([SubResource("RoseDialogCase_onbvr")])
+resource_name = "NPC: Good idea. You don't want to waste your time by …"
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_5mmu3"]
+switch = 77
+value = 1
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_t4cof"]
+switch = 78
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_k1qnv"]
+quest = ExtResource("14_vycvy")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ocd54"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_5mmu3"), SubResource("RoseDialogIfQuestSwitch_t4cof"), SubResource("RoseDialogIfQuest_k1qnv")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_r6cp6"]
+text = "Now, it's the time for you to challenge to a difficult hunting. Please go hunt {fc=12}4 Mini-Choropies{/fc}. When you succeed, you will be given a special gift."
+next_menu = 68
+show_if = Array[Resource]([SubResource("RoseDialogCase_ocd54")])
+resource_name = "NPC: Now, it's the time for you to challenge to a dif…"
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_7md32"]
+switch = 77
+value = 1
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_jk1ra"]
+switch = 78
+value = 1
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_pul04"]
+switch = 79
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_5fvsf"]
+quest = ExtResource("15_bf5yu")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_qyvxv"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_7md32"), SubResource("RoseDialogIfQuestSwitch_jk1ra"), SubResource("RoseDialogIfQuestSwitch_pul04"), SubResource("RoseDialogIfQuest_5fvsf")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_oek8w"]
+text = "Now, let me give you one last challenge. Please go hunt {fc=12}8 Mini-Choropies or Choropies{/fc} within {/fc=5}10 minutes{/fc}. You can check the remaining time in your Quest Window. When you succeed, you will be given a special gift."
+next_menu = 69
+show_if = Array[Resource]([SubResource("RoseDialogCase_qyvxv")])
+resource_name = "NPC: Now, let me give you one last challenge. Please …"
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_a77di"]
+switch = 79
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_baq68"]
+quest = ExtResource("15_bf5yu")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ekqdq"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_a77di"), SubResource("RoseDialogIfQuest_baq68")])
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_fiinf"]
+switch = 78
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_6e76l"]
+quest = ExtResource("14_vycvy")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2q7vx"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_fiinf"), SubResource("RoseDialogIfQuest_6e76l")])
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_05nvv"]
+switch = 77
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_d6bit"]
+quest = ExtResource("13_p4w6n")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_cjrbb"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_05nvv"), SubResource("RoseDialogIfQuest_d6bit")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_36rr2"]
+text = "I am sure you will get more experience while doing the quests I gave you."
+next_menu = 70
+show_if = Array[Resource]([SubResource("RoseDialogCase_ekqdq"), SubResource("RoseDialogCase_2q7vx"), SubResource("RoseDialogCase_cjrbb")])
+resource_name = "NPC: I am sure you will get more experience while doi…"
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_2t7o1"]
+switch = 77
+value = 1
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_n84au"]
+switch = 78
+value = 1
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_h8hub"]
+switch = 79
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_o5a5y"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_2t7o1"), SubResource("RoseDialogIfQuestSwitch_n84au"), SubResource("RoseDialogIfQuestSwitch_h8hub")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bgc5h"]
+text = "The best way to learn is to experience things for yourself."
+next_menu = 71
+show_if = Array[Resource]([SubResource("RoseDialogCase_o5a5y")])
+resource_name = "NPC: The best way to learn is to experience things fo…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ahvv1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c2ygv"), SubResource("RoseDialogLine_r6cp6"), SubResource("RoseDialogLine_oek8w"), SubResource("RoseDialogLine_36rr2"), SubResource("RoseDialogLine_bgc5h")])
+resource_name = "Menu 66"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ost13"]
+step = ExtResource("16_d31ed")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_e6agu"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_ost13")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_n52ig"]
+kind = "Answer"
+text = "Okay."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_e6agu")])
+resource_name = "You: Okay."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5q3uk"]
+lines = Array[Resource]([SubResource("RoseDialogLine_n52ig")])
+resource_name = "Menu 67"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ejdhl"]
+step = ExtResource("17_etior")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_rpwge"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_ejdhl")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fopav"]
+kind = "Answer"
+text = "I see."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_rpwge")])
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rpwp6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fopav")])
+resource_name = "Menu 68"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_q5yvh"]
+step = ExtResource("18_f1itx")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5wrix"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_q5yvh")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_evnxp"]
+kind = "Answer"
+text = "I see."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_5wrix")])
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vxc51"]
+lines = Array[Resource]([SubResource("RoseDialogLine_evnxp")])
+resource_name = "Menu 69"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_upray"]
+kind = "Answer"
+text = "I see."
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ktx1c"]
+lines = Array[Resource]([SubResource("RoseDialogLine_upray")])
+resource_name = "Menu 70"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_llwxb"]
+kind = "Answer"
+text = "Okay, let me try."
+resource_name = "You: Okay, let me try."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1tii7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_llwxb")])
+resource_name = "Menu 71"
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_fpueb"]
+switch = 65
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_kl4gk"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_fpueb")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_s2wub"]
+text = "You can toggle between running and walking by pressing the [Tab] key."
+next_menu = 73
+show_if = Array[Resource]([SubResource("RoseDialogCase_kl4gk")])
+resource_name = "NPC: You can toggle between running and walking by pr…"
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_0k8j8"]
+switch = 65
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_wr8d1"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_0k8j8")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_iovrp"]
+text = "You can toggle between running and walking by pressing the [Tab] key."
+next_menu = 74
+show_if = Array[Resource]([SubResource("RoseDialogCase_wr8d1")])
+resource_name = "NPC: You can toggle between running and walking by pr…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vhhr2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_s2wub"), SubResource("RoseDialogLine_iovrp")])
+resource_name = "Menu 72"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gymkb"]
+kind = "Answer"
+text = "Ah~ I see."
+next_menu = 75
+resource_name = "You: Ah~ I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_14g1l"]
+lines = Array[Resource]([SubResource("RoseDialogLine_gymkb")])
+resource_name = "Menu 73"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_05off"]
+kind = "Answer"
+text = "Ah~ I see."
+resource_name = "You: Ah~ I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rp6m3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_05off")])
+resource_name = "Menu 74"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pq2s2"]
+text = "This pair of shoes should make walking a little more comfortable. Please make good use of them, okay?"
+next_menu = 76
+resource_name = "NPC: This pair of shoes should make walking a little …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xw8ke"]
+lines = Array[Resource]([SubResource("RoseDialogLine_pq2s2")])
+resource_name = "Menu 75"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_7gm8v"]
+step = ExtResource("19_3j1no")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_s18n0"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_7gm8v")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2gmds"]
+kind = "Answer"
+text = "Thanks, you're so kind!"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_s18n0")])
+resource_name = "You: Thanks, you're so kind!"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_77k0f"]
+kind = "Answer"
+text = "Oh, I don't need any shoes."
+resource_name = "You: Oh, I don't need any shoes."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3ynkl"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2gmds"), SubResource("RoseDialogLine_77k0f")])
+resource_name = "Menu 76"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pfbyv"]
+text = "I don't think you're quite ready yet. Why don't you try training some more in this area?"
+next_menu = 78
+resource_name = "NPC: I don't think you're quite ready yet. Why don't …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1xbwp"]
+lines = Array[Resource]([SubResource("RoseDialogLine_pfbyv")])
+resource_name = "Menu 77"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e2hon"]
+kind = "Answer"
+text = "You've trained enough. It's time to let you out into the wide world."
+next_menu = 79
+resource_name = "You: You've trained enough. It's time to let you out …"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4e2hy"]
+kind = "Answer"
+text = "Well then, I'll train more and get stronger before I come back!"
+resource_name = "You: Well then, I'll train more and get stronger befo…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8je6u"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e2hon"), SubResource("RoseDialogLine_4e2hy")])
+resource_name = "Menu 78"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tpsku"]
+text = "Good. I will give you two basic skills and your identification papers. Here is where your adventures truly begin. Good luck!"
+next_menu = 80
+resource_name = "NPC: Good. I will give you two basic skills and your …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ebrqa"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tpsku")])
+resource_name = "Menu 79"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_47fam"]
+step = ExtResource("20_tq8r8")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_t7t8b"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_47fam")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_aiv2y"]
+kind = "Answer"
+text = "Thank you."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_t7t8b")])
+resource_name = "You: Thank you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dyvul"]
+lines = Array[Resource]([SubResource("RoseDialogLine_aiv2y")])
+resource_name = "Menu 80"
+
+[resource]
+key = "EM20-001.con"
+name = "[Visitor Guide] Fairy of Arua"
+menus = Array[Resource]([SubResource("RoseDialogMenu_ammaq"), SubResource("RoseDialogMenu_3p3ty"), SubResource("RoseDialogMenu_2q8js"), SubResource("RoseDialogMenu_ws7ft"), SubResource("RoseDialogMenu_2uqdk"), SubResource("RoseDialogMenu_4uycx"), SubResource("RoseDialogMenu_ifx5k"), SubResource("RoseDialogMenu_1737r"), SubResource("RoseDialogMenu_gvsdl"), SubResource("RoseDialogMenu_d5i8u"), SubResource("RoseDialogMenu_pjrpe"), SubResource("RoseDialogMenu_j8b36"), SubResource("RoseDialogMenu_jyf16"), SubResource("RoseDialogMenu_p6cev"), SubResource("RoseDialogMenu_4rjad"), SubResource("RoseDialogMenu_tvhnf"), SubResource("RoseDialogMenu_fbeao"), SubResource("RoseDialogMenu_ltygi"), SubResource("RoseDialogMenu_v6v7m"), SubResource("RoseDialogMenu_nsn0v"), SubResource("RoseDialogMenu_86uil"), SubResource("RoseDialogMenu_a5ifg"), SubResource("RoseDialogMenu_ux52j"), SubResource("RoseDialogMenu_su3p3"), SubResource("RoseDialogMenu_l3b3r"), SubResource("RoseDialogMenu_qx1x1"), SubResource("RoseDialogMenu_doqgv"), SubResource("RoseDialogMenu_ortvw"), SubResource("RoseDialogMenu_daxkn"), SubResource("RoseDialogMenu_t7yf2"), SubResource("RoseDialogMenu_u4kkt"), SubResource("RoseDialogMenu_g4i1e"), SubResource("RoseDialogMenu_b4ucy"), SubResource("RoseDialogMenu_sqke2"), SubResource("RoseDialogMenu_hfciw"), SubResource("RoseDialogMenu_cr7hm"), SubResource("RoseDialogMenu_r47d6"), SubResource("RoseDialogMenu_1fvrk"), SubResource("RoseDialogMenu_3ware"), SubResource("RoseDialogMenu_43cdg"), SubResource("RoseDialogMenu_tunfp"), SubResource("RoseDialogMenu_skeg5"), SubResource("RoseDialogMenu_dfgbf"), SubResource("RoseDialogMenu_un1id"), SubResource("RoseDialogMenu_r8ti6"), SubResource("RoseDialogMenu_rnf42"), SubResource("RoseDialogMenu_7my5g"), SubResource("RoseDialogMenu_3f577"), SubResource("RoseDialogMenu_7cf0o"), SubResource("RoseDialogMenu_wbfv2"), SubResource("RoseDialogMenu_gqth2"), SubResource("RoseDialogMenu_4yqwo"), SubResource("RoseDialogMenu_ahbd0"), SubResource("RoseDialogMenu_elr3p"), SubResource("RoseDialogMenu_ybana"), SubResource("RoseDialogMenu_lefcw"), SubResource("RoseDialogMenu_1p31f"), SubResource("RoseDialogMenu_f2e6s"), SubResource("RoseDialogMenu_45ggb"), SubResource("RoseDialogMenu_njagf"), SubResource("RoseDialogMenu_ww1vt"), SubResource("RoseDialogMenu_4n7lc"), SubResource("RoseDialogMenu_e64pf"), SubResource("RoseDialogMenu_ntx04"), SubResource("RoseDialogMenu_uuadc"), SubResource("RoseDialogMenu_gft2p"), SubResource("RoseDialogMenu_ahvv1"), SubResource("RoseDialogMenu_5q3uk"), SubResource("RoseDialogMenu_rpwp6"), SubResource("RoseDialogMenu_vxc51"), SubResource("RoseDialogMenu_ktx1c"), SubResource("RoseDialogMenu_1tii7"), SubResource("RoseDialogMenu_vhhr2"), SubResource("RoseDialogMenu_14g1l"), SubResource("RoseDialogMenu_rp6m3"), SubResource("RoseDialogMenu_xw8ke"), SubResource("RoseDialogMenu_3ynkl"), SubResource("RoseDialogMenu_1xbwp"), SubResource("RoseDialogMenu_8je6u"), SubResource("RoseDialogMenu_ebrqa"), SubResource("RoseDialogMenu_dyvul")])

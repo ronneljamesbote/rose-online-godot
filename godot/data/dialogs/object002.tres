@@ -1,0 +1,110 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://b6ghvhc7620nw"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://c0m0mahpoejr2" path="res://data/quest_triggers/qp103/102-01.tres" id="1_5tncp"]
+[ext_resource type="RoseQuestTrigger" uid="uid://nxwxqav7xswh" path="res://data/quest_triggers/qp103/106-03.tres" id="2_dwtey"]
+[ext_resource type="RoseQuestTrigger" uid="uid://7r763ff3ye2w" path="res://data/quest_triggers/qp103/106-02.tres" id="3_rwate"]
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_enspp"]
+step = ExtResource("1_5tncp")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_a0n0h"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_enspp")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_u54c0"]
+text = "There's a half buried object within the vicinity of the mushrooms."
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_a0n0h")])
+resource_name = "NPC: There's a half buried object within the vicinity…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_desaq"]
+step = ExtResource("2_dwtey")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_xie45"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_desaq")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b71w0"]
+text = "The rotten mushrooms began to grow healthy again as soon as you sprinkled the {fc=14}Soil of Purification{/fc}."
+next_menu = 4
+show_if = Array[Resource]([SubResource("RoseDialogCase_xie45")])
+resource_name = "NPC: The rotten mushrooms began to grow healthy again…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_l2atq"]
+step = ExtResource("3_rwate")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_uuv11"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_l2atq")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1n2l2"]
+text = "Nothing happened after sprinkling the {fc=14}Soil of Purification{/fc}."
+next_menu = 5
+show_if = Array[Resource]([SubResource("RoseDialogCase_uuv11")])
+resource_name = "NPC: Nothing happened after sprinkling the {fc=14}Soi…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5eijp"]
+lines = Array[Resource]([SubResource("RoseDialogLine_u54c0"), SubResource("RoseDialogLine_b71w0"), SubResource("RoseDialogLine_1n2l2")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dley5"]
+kind = "Answer"
+text = "Dig it up with your hands."
+next_menu = 2
+resource_name = "You: Dig it up with your hands."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_aanb8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dley5")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_34vee"]
+text = "You obtained an emblem decorated with strange patterns."
+next_menu = 3
+resource_name = "NPC: You obtained an emblem decorated with strange pa…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_sl0y7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_34vee")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_fdqro"]
+step = ExtResource("1_5tncp")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_xaqtc"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_fdqro")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ed0js"]
+kind = "Answer"
+text = "I gotta show this to {fc=1}Myad{/fc}."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_xaqtc")])
+resource_name = "You: I gotta show this to {fc=1}Myad{/fc}."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vrm2l"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ed0js")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_oaedx"]
+step = ExtResource("2_dwtey")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2ions"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_oaedx")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kewn1"]
+kind = "Answer"
+text = "*Phew!* I did it!"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_2ions")])
+resource_name = "You: *Phew!* I did it!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1uqf6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_kewn1")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_r02nq"]
+kind = "Answer"
+text = "Oh no, it looks like I ran out of time! Alright, I better go back to {fc=1}Karitte{/fc} to see what I can do."
+resource_name = "You: Oh no, it looks like I ran out of time! Alright,…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_nrvcw"]
+lines = Array[Resource]([SubResource("RoseDialogLine_r02nq")])
+resource_name = "Menu 5"
+
+[resource]
+key = "Object002.con"
+name = "버섯 이벤트"
+menus = Array[Resource]([SubResource("RoseDialogMenu_5eijp"), SubResource("RoseDialogMenu_aanb8"), SubResource("RoseDialogMenu_sl0y7"), SubResource("RoseDialogMenu_vrm2l"), SubResource("RoseDialogMenu_1uqf6"), SubResource("RoseDialogMenu_nrvcw")])

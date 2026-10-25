@@ -1,0 +1,303 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://dqoo7vlqyav38"]
+
+[ext_resource type="RoseQuest" uid="uid://depm0ig7j6xqb" path="res://data/quests/1075-lillith-woman-of-the-cosmos-second-job-change.tres" id="1_i3org"]
+[ext_resource type="RoseQuest" uid="uid://cc2uxxk4latmp" path="res://data/quests/1076-lillith-woman-of-the-cosmos-second-job-change.tres" id="2_bcb0u"]
+[ext_resource type="RoseItemQuest" uid="uid://c84uhlddn0qg6" path="res://data/items/quest/224-bottled-love-letter.tres" id="3_etpu0"]
+[ext_resource type="RoseQuestTrigger" uid="uid://c4kr86hksqvqk" path="res://data/quest_triggers/qj411-06/1075-01.tres" id="4_u3nax"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dq6nj7jklrcjp" path="res://data/quest_triggers/qj411-06/1076-01.tres" id="5_4v8pf"]
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_11b3x"]
+quest = ExtResource("1_i3org")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_i5nft"]
+quest = ExtResource("2_bcb0u")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_qiyxp"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_11b3x"), SubResource("RoseDialogIfQuest_i5nft")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3hj7n"]
+text = "Kenji Beach may look beautiful during the day, but sometimes eerie incidents happen at night."
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_qiyxp")])
+resource_name = "NPC: Kenji Beach may look beautiful during the day, b…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_xhjg7"]
+quest = ExtResource("1_i3org")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_u7k8y"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_xhjg7")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2rlky"]
+text = "Great waves of water often flow towards Kenji Beach. Many strange objects ride these waves and drift to shore where they are found."
+next_menu = 4
+show_if = Array[Resource]([SubResource("RoseDialogCase_u7k8y")])
+resource_name = "NPC: Great waves of water often flow towards Kenji Be…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_x3bl5"]
+quest = ExtResource("2_bcb0u")
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_og1cs"]
+quest = ExtResource("2_bcb0u")
+item = ExtResource("3_etpu0")
+operator = "<"
+value = 5
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_dhgkt"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_x3bl5"), SubResource("RoseDialogIfQuestItem_og1cs")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nxlml"]
+text = "You know, it's alright to quit if you're too afraid of Krawfy King."
+next_menu = 15
+show_if = Array[Resource]([SubResource("RoseDialogCase_dhgkt")])
+resource_name = "NPC: You know, it's alright to quit if you're too afr…"
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_nr57x"]
+quest = ExtResource("2_bcb0u")
+item = ExtResource("3_etpu0")
+value = 5
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_8qfpa"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_nr57x")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_t81ed"]
+text = "So how did it go with Krawfy King? Did you beat it into submission?"
+next_menu = 18
+show_if = Array[Resource]([SubResource("RoseDialogCase_8qfpa")])
+resource_name = "NPC: So how did it go with Krawfy King? Did you beat …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6y70s"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3hj7n"), SubResource("RoseDialogLine_2rlky"), SubResource("RoseDialogLine_nxlml"), SubResource("RoseDialogLine_t81ed")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kr6fj"]
+kind = "Answer"
+text = "What kinds of things have happened?"
+next_menu = 2
+resource_name = "You: What kinds of things have happened?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2blyb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_kr6fj")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dju0k"]
+text = "It's better if you see it for yourself."
+next_menu = 3
+resource_name = "NPC: It's better if you see it for yourself."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_k0yy5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dju0k")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8hp62"]
+kind = "Answer"
+text = "Hmpf!"
+resource_name = "You: Hmpf!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6hexi"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8hp62")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kxj2h"]
+kind = "Answer"
+text = "Strange objects?"
+next_menu = 5
+resource_name = "You: Strange objects?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ropcr"]
+lines = Array[Resource]([SubResource("RoseDialogLine_kxj2h")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5oxny"]
+text = "Most of the time, we find garbage like old shoes, rusted shields and rotten wood. Ah, but sometimes we find Bottled Love Letters."
+next_menu = 6
+resource_name = "NPC: Most of the time, we find garbage like old shoes…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fm4tb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5oxny")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_51oq5"]
+kind = "Answer"
+text = "Bottled Love Letters? You mean the letters Lillith wrote to Kirnale."
+next_menu = 7
+resource_name = "You: Bottled Love Letters? You mean the letters Lilli…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_a0c8x"]
+lines = Array[Resource]([SubResource("RoseDialogLine_51oq5")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_61edy"]
+text = "How did you know that?"
+next_menu = 8
+resource_name = "NPC: How did you know that?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_g6yia"]
+lines = Array[Resource]([SubResource("RoseDialogLine_61edy")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_31pyc"]
+kind = "Answer"
+text = "Well, I've heard about Kirnale and Lillith's story before."
+next_menu = 9
+resource_name = "You: Well, I've heard about Kirnale and Lillith's sto…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_w6prs"]
+lines = Array[Resource]([SubResource("RoseDialogLine_31pyc")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5ntly"]
+text = "Each line of Lillith's love letters to Kirnale is so full of sincerity. I enjoyed reading them, but it's a pity that I can't do that anymore."
+next_menu = 10
+resource_name = "NPC: Each line of Lillith's love letters to Kirnale i…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xtk34"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5ntly")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7yrf1"]
+kind = "Answer"
+text = "Anymore?! I came here to read them! What happened?"
+next_menu = 11
+resource_name = "You: Anymore?! I came here to read them! What happene…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_yropo"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7yrf1")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nbdqk"]
+text = "A while ago, my home was attacked by a swarm of Krawfies. They took many of my possessions with them, including the love letters Lillith wrote to Kirnale."
+next_menu = 12
+resource_name = "NPC: A while ago, my home was attacked by a swarm of …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gle0y"]
+lines = Array[Resource]([SubResource("RoseDialogLine_nbdqk")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vu7r1"]
+kind = "Answer"
+text = "How dare those Krawfies do that! I ought to punish them!"
+next_menu = 13
+resource_name = "You: How dare those Krawfies do that! I ought to puni…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lmaj7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vu7r1")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xi3v2"]
+text = "Are you really planning to do that? If you want to get those letters back, you should investigate Krawfy King, since the Krawfies usually give him their plunder. I would be truly grateful if you could retrieve all {fc=14}5 Bottled Love Letters{/fc} from {fc=12}Krawfy King{/fc}."
+next_menu = 14
+resource_name = "NPC: Are you really planning to do that? If you want …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dvupx"]
+lines = Array[Resource]([SubResource("RoseDialogLine_xi3v2")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_w6tqu"]
+step = ExtResource("4_u3nax")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_hj6hj"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_w6tqu")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fubdj"]
+kind = "Answer"
+text = "Alright. I'll beat up those Krawfies and bring those Bottled Love Letters back to you."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_hj6hj")])
+resource_name = "You: Alright. I'll beat up those Krawfies and bring t…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vcny8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fubdj")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8x2t4"]
+kind = "Answer"
+text = "Afraid? No way! Just you wait, I'll get those Bottled Love Letters back for sure!"
+resource_name = "You: Afraid? No way! Just you wait, I'll get those Bo…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_duj5j"]
+kind = "Answer"
+text = "Are you sure Krawfy King has those Bottled Love Letters? You weren't talking about Kaiman or Doonga, right?"
+next_menu = 16
+resource_name = "You: Are you sure Krawfy King has those Bottled Love …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lu0xb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8x2t4"), SubResource("RoseDialogLine_duj5j")])
+resource_name = "Menu 15"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b3a0o"]
+text = "I'm absolutely certain Krawfy King has them. I can tell just from the smell of those Krawfy."
+next_menu = 17
+resource_name = "NPC: I'm absolutely certain Krawfy King has them. I c…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dlho6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_b3a0o")])
+resource_name = "Menu 16"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7p0us"]
+kind = "Answer"
+text = "Really? Alright then, I'll check into Krawfy King a little bit more."
+resource_name = "You: Really? Alright then, I'll check into Krawfy Kin…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_n47o4"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7p0us")])
+resource_name = "Menu 17"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_daxaq"]
+kind = "Answer"
+text = "I just punished that Krawfy King, and I've come with the Bottled Love Letters."
+next_menu = 19
+resource_name = "You: I just punished that Krawfy King, and I've come …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_latmb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_daxaq")])
+resource_name = "Menu 18"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cf8p2"]
+text = "Oh? Did you get a chance to read the letters?"
+next_menu = 20
+resource_name = "NPC: Oh? Did you get a chance to read the letters?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rkvs2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_cf8p2")])
+resource_name = "Menu 19"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dveth"]
+kind = "Answer"
+text = "No, they're so old that I can't even read them."
+next_menu = 21
+resource_name = "You: No, they're so old that I can't even read them."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6c8x7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dveth")])
+resource_name = "Menu 20"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2083h"]
+text = "Well, it's more important that we have them. Would you bring them to {fc=1}Jones{/fc} the historian in {fc=2}Junon Polis{/fc}? It's best that Junon's relics are placed in his custody."
+next_menu = 22
+resource_name = "NPC: Well, it's more important that we have them. Wou…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_akjfe"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2083h")])
+resource_name = "Menu 21"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_lnf6a"]
+step = ExtResource("5_4v8pf")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_dpw7e"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_lnf6a")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_go34t"]
+kind = "Answer"
+text = "Right, I'll do just that."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_dpw7e")])
+resource_name = "You: Right, I'll do just that."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_urj33"]
+lines = Array[Resource]([SubResource("RoseDialogLine_go34t")])
+resource_name = "Menu 22"
+
+[resource]
+key = "EM27-004.con"
+name = "[Residents] Hotch"
+menus = Array[Resource]([SubResource("RoseDialogMenu_6y70s"), SubResource("RoseDialogMenu_2blyb"), SubResource("RoseDialogMenu_k0yy5"), SubResource("RoseDialogMenu_6hexi"), SubResource("RoseDialogMenu_ropcr"), SubResource("RoseDialogMenu_fm4tb"), SubResource("RoseDialogMenu_a0c8x"), SubResource("RoseDialogMenu_g6yia"), SubResource("RoseDialogMenu_w6prs"), SubResource("RoseDialogMenu_xtk34"), SubResource("RoseDialogMenu_yropo"), SubResource("RoseDialogMenu_gle0y"), SubResource("RoseDialogMenu_lmaj7"), SubResource("RoseDialogMenu_dvupx"), SubResource("RoseDialogMenu_vcny8"), SubResource("RoseDialogMenu_lu0xb"), SubResource("RoseDialogMenu_dlho6"), SubResource("RoseDialogMenu_n47o4"), SubResource("RoseDialogMenu_latmb"), SubResource("RoseDialogMenu_rkvs2"), SubResource("RoseDialogMenu_6c8x7"), SubResource("RoseDialogMenu_akjfe"), SubResource("RoseDialogMenu_urj33")])

@@ -1,0 +1,126 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://c08kr61ql8j54"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://52tftp0ek1o2" path="res://data/quest_triggers/qp103/122-04.tres" id="1_w6fts"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dooh8r3v1676" path="res://data/quest_triggers/qp103/135-04.tres" id="2_884fj"]
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_hecjx"]
+step = ExtResource("1_w6fts")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_y283p"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_hecjx")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_r6m3t"]
+text = "Maybe I can sprinkle the Resurrection Medicine around here."
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_y283p")])
+resource_name = "NPC: Maybe I can sprinkle the Resurrection Medicine a…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_y1ll1"]
+step = ExtResource("2_884fj")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_eatrt"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_y1ll1")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_71t4y"]
+text = "This looks like a good place to sprinkle the sweat."
+next_menu = 6
+show_if = Array[Resource]([SubResource("RoseDialogCase_eatrt")])
+resource_name = "NPC: This looks like a good place to sprinkle the swe…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2gfoc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_r6m3t"), SubResource("RoseDialogLine_71t4y")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b5lp1"]
+kind = "Answer"
+text = "Sprinkle a little bit of the secret potion."
+next_menu = 2
+resource_name = "You: Sprinkle a little bit of the secret potion."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2ji3j"]
+lines = Array[Resource]([SubResource("RoseDialogLine_b5lp1")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tlurc"]
+text = "The sand's color slowly turned to gray."
+next_menu = 3
+resource_name = "NPC: The sand's color slowly turned to gray."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_sfubd"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tlurc")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_t1f23"]
+kind = "Answer"
+text = "I've got to find someplace where I can use the rest of this potion."
+next_menu = 4
+resource_name = "You: I've got to find someplace where I can use the r…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_oliua"]
+lines = Array[Resource]([SubResource("RoseDialogLine_t1f23")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_53xln"]
+text = "The sand's color slowly turned to gray. {br} Something’s happening!"
+next_menu = 5
+resource_name = "NPC: The sand's color slowly turned to gray. {br} Som…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fptbp"]
+lines = Array[Resource]([SubResource("RoseDialogLine_53xln")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_4j2qi"]
+step = ExtResource("1_w6fts")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_fn1ej"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_4j2qi")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mk0ry"]
+kind = "Answer"
+text = "All of the Resurrection Medicine has been sprinkled. The earth's surface begins to tremble…"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_fn1ej")])
+resource_name = "You: All of the Resurrection Medicine has been sprink…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_yngrs"]
+lines = Array[Resource]([SubResource("RoseDialogLine_mk0ry")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dahhx"]
+kind = "Answer"
+text = "Sprinkled the Odorous Sweat."
+next_menu = 7
+resource_name = "You: Sprinkled the Odorous Sweat."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rtac5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dahhx")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wh30q"]
+text = "The horrendous smell is more than any being can endure!"
+next_menu = 8
+resource_name = "NPC: The horrendous smell is more than any being can …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_kwxly"]
+lines = Array[Resource]([SubResource("RoseDialogLine_wh30q")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ml6uw"]
+step = ExtResource("2_884fj")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_flnec"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_ml6uw")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_isyje"]
+kind = "Answer"
+text = "I can hear a loud roar coming from somewhere."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_flnec")])
+resource_name = "You: I can hear a loud roar coming from somewhere."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ikld8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_isyje")])
+resource_name = "Menu 8"
+
+[resource]
+key = "Object005.con"
+name = "부활의 비약"
+menus = Array[Resource]([SubResource("RoseDialogMenu_2gfoc"), SubResource("RoseDialogMenu_2ji3j"), SubResource("RoseDialogMenu_sfubd"), SubResource("RoseDialogMenu_oliua"), SubResource("RoseDialogMenu_fptbp"), SubResource("RoseDialogMenu_yngrs"), SubResource("RoseDialogMenu_rtac5"), SubResource("RoseDialogMenu_kwxly"), SubResource("RoseDialogMenu_ikld8")])

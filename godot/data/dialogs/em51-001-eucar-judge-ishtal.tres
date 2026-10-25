@@ -1,0 +1,656 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://bnfgo3qkfgio"]
+
+[ext_resource type="RoseQuest" uid="uid://dlajyglkgba3a" path="res://data/quests/2051-forgotten-temple-investigation-1.tres" id="1_c0dkg"]
+[ext_resource type="RoseQuest" uid="uid://d4i4lkfanrmff" path="res://data/quests/2052-forgotten-temple-investigation-2.tres" id="2_q36wk"]
+[ext_resource type="RoseQuest" uid="uid://b5d3q13bd7n13" path="res://data/quests/2053-forgotten-temple-investigation-3.tres" id="3_4avrc"]
+[ext_resource type="RoseQuest" uid="uid://b7kqayafoglvx" path="res://data/quests/2054-forgotten-temple-investigation-4.tres" id="4_swgfi"]
+[ext_resource type="RoseQuest" uid="uid://dcef2rvnqw6ew" path="res://data/quests/2055-forgotten-temple-investigation-5.tres" id="5_grt3r"]
+[ext_resource type="RoseQuest" uid="uid://dqsrjn4fho8yx" path="res://data/quests/2056-forgotten-temple-investigation-6.tres" id="6_xenwv"]
+[ext_resource type="RoseQuest" uid="uid://d4nv3cyrdyujg" path="res://data/quests/2057-forgotten-temple-investigation-7.tres" id="7_f7ppu"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bdc2ticwqeec1" path="res://data/quest_triggers/qp201/2051-02.tres" id="8_ua83k"]
+[ext_resource type="RoseQuestTrigger" uid="uid://d3qx8q4i83bhk" path="res://data/quest_triggers/qp201/2051-01.tres" id="9_4vr6b"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cjh203c77ynbv" path="res://data/quest_triggers/qp201/2051-03.tres" id="10_3uprx"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bqf2rtgdbis8n" path="res://data/quest_triggers/qp201/2052-03.tres" id="11_t21sd"]
+[ext_resource type="RoseQuestTrigger" uid="uid://b73wuev4s34rg" path="res://data/quest_triggers/qp201/2053-03.tres" id="12_ap1au"]
+[ext_resource type="RoseQuestTrigger" uid="uid://b8k02dcuhacjs" path="res://data/quest_triggers/qp201/2051-07.tres" id="13_ibw4e"]
+[ext_resource type="RoseQuestTrigger" uid="uid://otydrvbx5gxb" path="res://data/quest_triggers/qp201/2051-08.tres" id="14_ycn3u"]
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_eru7r"]
+switch = 3
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_p4qh7"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_eru7r")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_juf8e"]
+text = "Alecksmugi Tanikus thal moohikanzil Kunickaree romonromn pipiroo."
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_p4qh7")])
+resource_name = "NPC: Alecksmugi Tanikus thal moohikanzil Kunickaree r…"
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_q3cu4"]
+switch = 3
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_m16ao"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_q3cu4")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0w1j7"]
+text = "I'm Ishtal, the Eucar Judge. I pride myself on treating everyone equally. It doesn't matter if you're an Arumic or a shamanist, as far as I'm concerned."
+next_menu = 4
+show_if = Array[Resource]([SubResource("RoseDialogCase_m16ao")])
+resource_name = "NPC: I'm Ishtal, the Eucar Judge. I pride myself on t…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ik4ma"]
+lines = Array[Resource]([SubResource("RoseDialogLine_juf8e"), SubResource("RoseDialogLine_0w1j7")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c2ls4"]
+kind = "Answer"
+text = "I beg your pardon?"
+next_menu = 2
+resource_name = "You: I beg your pardon?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_tvk21"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c2ls4")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vioep"]
+text = "Tonetsi ngongaong jhabuleinunu!"
+next_menu = 3
+resource_name = "NPC: Tonetsi ngongaong jhabuleinunu!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2avi2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vioep")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rqrbg"]
+kind = "Answer"
+text = "(I don't know this language!)"
+resource_name = "You: (I don't know this language!)"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wk1jy"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rqrbg")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8vrt5"]
+kind = "Answer"
+text = "Being impartial really is meritable."
+next_menu = 7
+resource_name = "You: Being impartial really is meritable."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ly268"]
+kind = "Answer"
+text = "Would you tell me more about the Magic City of the Eucar?"
+next_menu = 5
+resource_name = "You: Would you tell me more about the Magic City of t…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_v66uo"]
+quest = ExtResource("1_c0dkg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_vqfd6"]
+quest = ExtResource("2_q36wk")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_yfkb8"]
+quest = ExtResource("3_4avrc")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_y61hi"]
+quest = ExtResource("4_swgfi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_nivwv"]
+quest = ExtResource("5_grt3r")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_05vbi"]
+quest = ExtResource("6_xenwv")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_i0f63"]
+quest = ExtResource("7_f7ppu")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_fjx24"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_v66uo"), SubResource("RoseDialogIfQuest_vqfd6"), SubResource("RoseDialogIfQuest_yfkb8"), SubResource("RoseDialogIfQuest_y61hi"), SubResource("RoseDialogIfQuest_nivwv"), SubResource("RoseDialogIfQuest_05vbi"), SubResource("RoseDialogIfQuest_i0f63")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5iojt"]
+kind = "Answer"
+text = "I'd like to participate in the Forgotten Temple Investigation."
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_fjx24")])
+resource_name = "You: I'd like to participate in the Forgotten Temple …"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_is687"]
+quest = ExtResource("1_c0dkg")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_1ipgp"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_is687")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_qlcmw"]
+quest = ExtResource("1_c0dkg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_b4pg2"]
+quest = ExtResource("2_q36wk")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_kukh6"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_qlcmw"), SubResource("RoseDialogIfQuest_b4pg2")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_kjbq0"]
+quest = ExtResource("1_c0dkg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_xanuk"]
+quest = ExtResource("2_q36wk")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_5qjr2"]
+quest = ExtResource("3_4avrc")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_k4e8m"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_kjbq0"), SubResource("RoseDialogIfQuest_xanuk"), SubResource("RoseDialogIfQuest_5qjr2")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_eh6me"]
+quest = ExtResource("1_c0dkg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_a7itu"]
+quest = ExtResource("2_q36wk")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_sqjbw"]
+quest = ExtResource("3_4avrc")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_3ujtx"]
+quest = ExtResource("4_swgfi")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_t78wx"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_eh6me"), SubResource("RoseDialogIfQuest_a7itu"), SubResource("RoseDialogIfQuest_sqjbw"), SubResource("RoseDialogIfQuest_3ujtx")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_5ol5m"]
+quest = ExtResource("1_c0dkg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_h8whs"]
+quest = ExtResource("2_q36wk")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_hcog4"]
+quest = ExtResource("3_4avrc")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_qo3y3"]
+quest = ExtResource("4_swgfi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_bihym"]
+quest = ExtResource("5_grt3r")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_e6tot"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_5ol5m"), SubResource("RoseDialogIfQuest_h8whs"), SubResource("RoseDialogIfQuest_hcog4"), SubResource("RoseDialogIfQuest_qo3y3"), SubResource("RoseDialogIfQuest_bihym")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_aa8ry"]
+quest = ExtResource("1_c0dkg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_qc5l7"]
+quest = ExtResource("2_q36wk")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_k5166"]
+quest = ExtResource("3_4avrc")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_nq1am"]
+quest = ExtResource("4_swgfi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_tcmjl"]
+quest = ExtResource("5_grt3r")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_7c873"]
+quest = ExtResource("6_xenwv")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2ja3n"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_aa8ry"), SubResource("RoseDialogIfQuest_qc5l7"), SubResource("RoseDialogIfQuest_k5166"), SubResource("RoseDialogIfQuest_nq1am"), SubResource("RoseDialogIfQuest_tcmjl"), SubResource("RoseDialogIfQuest_7c873")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_tukbb"]
+quest = ExtResource("1_c0dkg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_lm6ik"]
+quest = ExtResource("2_q36wk")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_tfg1f"]
+quest = ExtResource("3_4avrc")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_3wgu7"]
+quest = ExtResource("4_swgfi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_j4aa8"]
+quest = ExtResource("5_grt3r")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_h1b5h"]
+quest = ExtResource("6_xenwv")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_8es5x"]
+quest = ExtResource("7_f7ppu")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_bclwx"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_tukbb"), SubResource("RoseDialogIfQuest_lm6ik"), SubResource("RoseDialogIfQuest_tfg1f"), SubResource("RoseDialogIfQuest_3wgu7"), SubResource("RoseDialogIfQuest_j4aa8"), SubResource("RoseDialogIfQuest_h1b5h"), SubResource("RoseDialogIfQuest_8es5x")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lkweb"]
+kind = "Answer"
+text = "Well, I brought these artifacts from the Forgotten Temple…"
+next_menu = 23
+show_if = Array[Resource]([SubResource("RoseDialogCase_1ipgp"), SubResource("RoseDialogCase_kukh6"), SubResource("RoseDialogCase_k4e8m"), SubResource("RoseDialogCase_t78wx"), SubResource("RoseDialogCase_e6tot"), SubResource("RoseDialogCase_2ja3n"), SubResource("RoseDialogCase_bclwx")])
+resource_name = "You: Well, I brought these artifacts from the Forgott…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4cfwi"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8vrt5"), SubResource("RoseDialogLine_ly268"), SubResource("RoseDialogLine_5iojt"), SubResource("RoseDialogLine_lkweb")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rj2ny"]
+text = "Well, this history doesn't really have a very long history. The Arumics, who have very good relations with the Eucar, built a fort in the middle of Luna as protection from attacks by monsters infected with the Devil Pest. Eventually, this stronghold developed into the Magic City of the Eucar."
+next_menu = 6
+resource_name = "NPC: Well, this history doesn't really have a very lo…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ct443"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rj2ny")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0ji40"]
+kind = "Answer"
+text = "Ah, so this city used to be a fort?"
+resource_name = "You: Ah, so this city used to be a fort?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4gtqi"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0ji40")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dkc3e"]
+text = "Yes, but there used to be strong discrimination against the shamanists. Up until just recently, they've been oppressed."
+next_menu = 8
+resource_name = "NPC: Yes, but there used to be strong discrimination …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4bv8p"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dkc3e")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_yxcws"]
+kind = "Answer"
+text = "Ah, it seems the rumors about you being a good leader were true."
+resource_name = "You: Ah, it seems the rumors about you being a good l…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_pmjox"]
+lines = Array[Resource]([SubResource("RoseDialogLine_yxcws")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_xr7bx"]
+value = 71
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_jiugr"]
+operator = "<="
+value = 130
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_fctb4"]
+quest = ExtResource("1_c0dkg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_5lgau"]
+quest = ExtResource("2_q36wk")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_7jnpb"]
+quest = ExtResource("3_4avrc")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_dfv0d"]
+quest = ExtResource("4_swgfi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_tt0tn"]
+quest = ExtResource("5_grt3r")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_03hhw"]
+quest = ExtResource("6_xenwv")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_hw01y"]
+quest = ExtResource("7_f7ppu")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_pg222"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_xr7bx"), SubResource("RoseDialogIfAbility_jiugr"), SubResource("RoseDialogIfQuest_fctb4"), SubResource("RoseDialogIfQuest_5lgau"), SubResource("RoseDialogIfQuest_7jnpb"), SubResource("RoseDialogIfQuest_dfv0d"), SubResource("RoseDialogIfQuest_tt0tn"), SubResource("RoseDialogIfQuest_03hhw"), SubResource("RoseDialogIfQuest_hw01y")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_x7gix"]
+text = "Someday, I hope that shamanists and Arumics can peacefully coexist on Luna. Still, I know that it's just a dream."
+next_menu = 10
+show_if = Array[Resource]([SubResource("RoseDialogCase_pg222")])
+resource_name = "NPC: Someday, I hope that shamanists and Arumics can …"
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_wlld2"]
+operator = "<"
+value = 71
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_w7clt"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_wlld2")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_rdbp0"]
+operator = ">"
+value = 130
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_wnd6l"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_rdbp0")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_74gek"]
+text = "I regret to say that I don't think you're ready for the kind of mission I'm offering. Please come again later when you grow more capable."
+next_menu = 22
+show_if = Array[Resource]([SubResource("RoseDialogCase_w7clt"), SubResource("RoseDialogCase_wnd6l")])
+resource_name = "NPC: I regret to say that I don't think you're ready …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fdj2i"]
+lines = Array[Resource]([SubResource("RoseDialogLine_x7gix"), SubResource("RoseDialogLine_74gek")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tkgff"]
+kind = "Answer"
+text = "I've heard from Ishtal that peace has been maintained on Luna thanks to your efforts. Is there anything I can do to help you?"
+next_menu = 11
+resource_name = "You: I've heard from Ishtal that peace has been maint…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0q777"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tkgff")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d85cx"]
+text = "Yes, Luna appears peaceful, but there are some Arumics who refuse to recognize the shamanists. I intend to investigate shamanist history and prove that the shamanists have actually been living on Luna for a long time. In doing so, I hope those Arumics will reevaluate their opinions of the shamanists."
+next_menu = 12
+resource_name = "NPC: Yes, Luna appears peaceful, but there are some A…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_oloel"]
+lines = Array[Resource]([SubResource("RoseDialogLine_d85cx")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qq5hy"]
+kind = "Answer"
+text = "Ah, I see. Is there anything I can do to help?"
+next_menu = 13
+resource_name = "You: Ah, I see. Is there anything I can do to help?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7wttl"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qq5hy")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_twvli"]
+step = ExtResource("8_ua83k")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_y25v7"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_twvli")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qqbut"]
+text = "Do you any Ice Key Fragments? If so, enter the temple and find at least {fc=14}10 Shamanic Artifacts{/fc}. If you can do that for me, I'll reward you. If you can bring even more, I suppose I'll have to reward you accordingly."
+next_menu = 14
+show_if = Array[Resource]([SubResource("RoseDialogCase_y25v7")])
+resource_name = "NPC: Do you any Ice Key Fragments? If so, enter the t…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_ayq53"]
+step = ExtResource("8_ua83k")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7rlyh"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_ayq53")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dhpvb"]
+text = "You need to have an Ice Key to enter the Forgotten Temple. Do you happen to have any?"
+next_menu = 19
+show_if = Array[Resource]([SubResource("RoseDialogCase_7rlyh")])
+resource_name = "NPC: You need to have an Ice Key to enter the Forgott…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_we6su"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qqbut"), SubResource("RoseDialogLine_dhpvb")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8qi6w"]
+kind = "Answer"
+text = "Sure thing! But where's the Forgotten Temple?"
+next_menu = 15
+resource_name = "You: Sure thing! But where's the Forgotten Temple?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_mxlkb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8qi6w")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gwul6"]
+text = "The {fc=2}Forgotten Temple{/fc} is located in the Northwest region of the Crystal Snowfields. If you go there, you'll meet {fc=1}Est{/fc}, a shamanist, who will let you enter the temple if you mention I sent you."
+next_menu = 16
+resource_name = "NPC: The {fc=2}Forgotten Temple{/fc} is located in th…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_o8iw7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_gwul6")])
+resource_name = "Menu 15"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2j5ne"]
+kind = "Answer"
+text = "Okay, I'll go right away."
+next_menu = 17
+resource_name = "You: Okay, I'll go right away."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dkl2c"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2j5ne")])
+resource_name = "Menu 16"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pxr3l"]
+text = "Oh! I almost forgot! I've also heard that thieves have been roaming the temple, seeking to steal the artifacts. If you can punish them, I'd be most grateful."
+next_menu = 18
+resource_name = "NPC: Oh! I almost forgot! I've also heard that thieve…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5lj08"]
+lines = Array[Resource]([SubResource("RoseDialogLine_pxr3l")])
+resource_name = "Menu 17"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_nogbx"]
+step = ExtResource("9_4vr6b")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_syml0"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_nogbx")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nsc1v"]
+kind = "Answer"
+text = "I see."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_syml0")])
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_51q02"]
+lines = Array[Resource]([SubResource("RoseDialogLine_nsc1v")])
+resource_name = "Menu 18"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_sg1ry"]
+kind = "Answer"
+text = "Um, no I don't have any…"
+next_menu = 20
+resource_name = "You: Um, no I don't have any…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_i68fb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_sg1ry")])
+resource_name = "Menu 19"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_yo182"]
+text = "In that case you better look for at least 5 Ice Key Fragments. You can find them if you look all over Luna."
+next_menu = 21
+resource_name = "NPC: In that case you better look for at least 5 Ice …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qjjiy"]
+lines = Array[Resource]([SubResource("RoseDialogLine_yo182")])
+resource_name = "Menu 20"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ntuvq"]
+kind = "Answer"
+text = "Alright, thanks for letting me know."
+resource_name = "You: Alright, thanks for letting me know."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6piu1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ntuvq")])
+resource_name = "Menu 21"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b3qic"]
+kind = "Answer"
+text = "Alright, I understand."
+resource_name = "You: Alright, I understand."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_p7np7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_b3qic")])
+resource_name = "Menu 22"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_preuk"]
+step = ExtResource("10_3uprx")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_0ng8j"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_preuk")])
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_w6o8g"]
+step = ExtResource("11_t21sd")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_wua8i"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_w6o8g")])
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_h32t7"]
+step = ExtResource("12_ap1au")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_hfhkl"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_h32t7")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ig2w5"]
+text = "Ah, excellent, you've exceeded my expectations, <NAME>. Here is your reward as promised. Now, I still don't have enough artifacts, so I would appreciate it if you helped me again like this in the future."
+next_menu = 24
+show_if = Array[Resource]([SubResource("RoseDialogCase_0ng8j"), SubResource("RoseDialogCase_wua8i"), SubResource("RoseDialogCase_hfhkl")])
+resource_name = "NPC: Ah, excellent, you've exceeded my expectations, …"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_cqrkd"]
+step = ExtResource("13_ibw4e")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_23uah"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_cqrkd")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7gplm"]
+text = "Well, although I can't reward you for bringing at least 10 Shamanic Artifacts, you did fight off a lot of thieves. Let me offer you this as a reward."
+next_menu = 25
+show_if = Array[Resource]([SubResource("RoseDialogCase_23uah")])
+resource_name = "NPC: Well, although I can't reward you for bringing a…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_qji16"]
+step = ExtResource("14_ycn3u")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_bs2hk"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_qji16")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4bg1c"]
+text = "I'm sorry, but you don't qualify for any reward since you haven't returned with at least 10 Shamanic Artifacts. Please give it another shot later."
+next_menu = 26
+show_if = Array[Resource]([SubResource("RoseDialogCase_bs2hk")])
+resource_name = "NPC: I'm sorry, but you don't qualify for any reward …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_okfdl"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ig2w5"), SubResource("RoseDialogLine_7gplm"), SubResource("RoseDialogLine_4bg1c")])
+resource_name = "Menu 23"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_12aym"]
+step = ExtResource("10_3uprx")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_1ni2h"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_12aym")])
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_s2g43"]
+step = ExtResource("10_3uprx")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_fpguf"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_s2g43")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_guuaf"]
+kind = "Answer"
+text = "Alright~"
+show_if = Array[Resource]([SubResource("RoseDialogCase_fpguf")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_1ni2h")])
+resource_name = "You: Alright~"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_gerdl"]
+step = ExtResource("11_t21sd")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_rkx6c"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_gerdl")])
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_htlio"]
+step = ExtResource("11_t21sd")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_g1tai"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_htlio")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xloc0"]
+kind = "Answer"
+text = "Yes, I see. "
+show_if = Array[Resource]([SubResource("RoseDialogCase_g1tai")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_rkx6c")])
+resource_name = "You: Yes, I see."
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_6gkd8"]
+step = ExtResource("12_ap1au")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_t6np2"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_6gkd8")])
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_scv7m"]
+step = ExtResource("12_ap1au")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_mt36p"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_scv7m")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5im5j"]
+kind = "Answer"
+text = "Yes, I see. "
+show_if = Array[Resource]([SubResource("RoseDialogCase_mt36p")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_t6np2")])
+resource_name = "You: Yes, I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ne2wb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_guuaf"), SubResource("RoseDialogLine_xloc0"), SubResource("RoseDialogLine_5im5j")])
+resource_name = "Menu 24"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_7yn58"]
+step = ExtResource("13_ibw4e")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_25ujv"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_7yn58")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bhfuu"]
+kind = "Answer"
+text = "Yes, thank you."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_25ujv")])
+resource_name = "You: Yes, thank you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1i66p"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bhfuu")])
+resource_name = "Menu 25"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_max7c"]
+kind = "Answer"
+text = "Alright, I'll try harder next time."
+resource_name = "You: Alright, I'll try harder next time."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8hb31"]
+lines = Array[Resource]([SubResource("RoseDialogLine_max7c")])
+resource_name = "Menu 26"
+
+[resource]
+key = "EM51-001.con"
+name = "[Eucar Judge] Ishtal"
+menus = Array[Resource]([SubResource("RoseDialogMenu_ik4ma"), SubResource("RoseDialogMenu_tvk21"), SubResource("RoseDialogMenu_2avi2"), SubResource("RoseDialogMenu_wk1jy"), SubResource("RoseDialogMenu_4cfwi"), SubResource("RoseDialogMenu_ct443"), SubResource("RoseDialogMenu_4gtqi"), SubResource("RoseDialogMenu_4bv8p"), SubResource("RoseDialogMenu_pmjox"), SubResource("RoseDialogMenu_fdj2i"), SubResource("RoseDialogMenu_0q777"), SubResource("RoseDialogMenu_oloel"), SubResource("RoseDialogMenu_7wttl"), SubResource("RoseDialogMenu_we6su"), SubResource("RoseDialogMenu_mxlkb"), SubResource("RoseDialogMenu_o8iw7"), SubResource("RoseDialogMenu_dkl2c"), SubResource("RoseDialogMenu_5lj08"), SubResource("RoseDialogMenu_51q02"), SubResource("RoseDialogMenu_i68fb"), SubResource("RoseDialogMenu_qjjiy"), SubResource("RoseDialogMenu_6piu1"), SubResource("RoseDialogMenu_p7np7"), SubResource("RoseDialogMenu_okfdl"), SubResource("RoseDialogMenu_ne2wb"), SubResource("RoseDialogMenu_1i66p"), SubResource("RoseDialogMenu_8hb31")])

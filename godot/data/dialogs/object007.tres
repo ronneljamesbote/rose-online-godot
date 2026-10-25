@@ -1,0 +1,71 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://b4umgs1kblgfp"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://bndagoywbyv58" path="res://data/quest_triggers/qp103/129-04.tres" id="1_1hk0k"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xgco6"]
+text = "This doesn't seem like a good place to hide the Owl Eye."
+next_menu = 1
+resource_name = "NPC: This doesn't seem like a good place to hide the …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_r6y41"]
+lines = Array[Resource]([SubResource("RoseDialogLine_xgco6")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nnaji"]
+kind = "Answer"
+text = "I better hurry before Shroon finds me."
+next_menu = 2
+resource_name = "You: I better hurry before Shroon finds me."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_j6av6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_nnaji")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bkrfc"]
+text = "You've found some small rocks."
+next_menu = 3
+resource_name = "NPC: You've found some small rocks."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ejqhv"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bkrfc")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0ychj"]
+kind = "Answer"
+text = "It'd be best to hide the Owl Eye among these rocks."
+next_menu = 4
+resource_name = "You: It'd be best to hide the Owl Eye among these roc…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_s53wt"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0ychj")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nhmri"]
+text = "Hiding the Owl Eye."
+next_menu = 5
+resource_name = "NPC: Hiding the Owl Eye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_55kc1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_nhmri")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_y8rm6"]
+step = ExtResource("1_1hk0k")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_wev1c"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_y8rm6")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0d2on"]
+kind = "Answer"
+text = "Now, I should return to {fc=1}Bellia{/fc}."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_wev1c")])
+resource_name = "You: Now, I should return to {fc=1}Bellia{/fc}."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bpai7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0d2on")])
+resource_name = "Menu 5"
+
+[resource]
+key = "Object007.con"
+name = "아니마호수 올빼미의 눈"
+menus = Array[Resource]([SubResource("RoseDialogMenu_r6y41"), SubResource("RoseDialogMenu_j6av6"), SubResource("RoseDialogMenu_ejqhv"), SubResource("RoseDialogMenu_s53wt"), SubResource("RoseDialogMenu_55kc1"), SubResource("RoseDialogMenu_bpai7")])

@@ -1,0 +1,24 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://bsd3ybp7dw6qk"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_je8qb"]
+text = "As king, I must enforce order in the Akram Kingdom! Well, as peacefully as I can, anyway."
+next_menu = 1
+resource_name = "NPC: As king, I must enforce order in the Akram Kingd…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1imra"]
+lines = Array[Resource]([SubResource("RoseDialogLine_je8qb")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cmo76"]
+kind = "Answer"
+text = "[Come back later]"
+resource_name = "You: [Come back later]"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_e525c"]
+lines = Array[Resource]([SubResource("RoseDialogLine_cmo76")])
+resource_name = "Menu 1"
+
+[resource]
+key = "EM02-003.con"
+name = "주논폴리스-아크람국왕-로데릭"
+menus = Array[Resource]([SubResource("RoseDialogMenu_1imra"), SubResource("RoseDialogMenu_e525c")])

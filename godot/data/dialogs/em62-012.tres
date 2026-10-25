@@ -1,0 +1,24 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://byd1parsw8gtg"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6823y"]
+text = "*Outch* It hurts so much!"
+next_menu = 1
+resource_name = "NPC: *Outch* It hurts so much!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_trvke"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6823y")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qnfty"]
+kind = "Answer"
+text = "Oh my! What shall I do now?"
+resource_name = "You: Oh my! What shall I do now?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3nj3i"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qnfty")])
+resource_name = "Menu 1"
+
+[resource]
+key = "EM62-012.con"
+name = "그림자정글-부상병"
+menus = Array[Resource]([SubResource("RoseDialogMenu_trvke"), SubResource("RoseDialogMenu_3nj3i")])

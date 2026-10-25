@@ -23,7 +23,8 @@ services:
   - { answer: "→ founds a clan / disbands your clan", does: "does nothing yet (no clans)", page: "" }
 source:
   code:
-    - godot/rust/src/conversation.rs (Conversation::open, run_menu, choose, ScriptContext::call, format_text)
+    - crates/rose-data/src/dialog_database.rs (Dialog::open, choose, run_menu, run_cases)
+    - godot/rust/src/conversation.rs (Conversation::open, choose, ScriptContext check and act, format_text)
     - godot/rust/src/net.rs (conversation actions)
     - godot/scripts/conversation_window.gd (TALK_RANGE, keys 1-9)
     - godot/scripts/online.gd (talk_to, _open_npc, TALK_RANGE)
@@ -31,7 +32,7 @@ source:
     - module/src/npcs.rs (Npc, spawn_npcs, NPC_VARIABLES)
     - module/src/npc_ai.rs (npc_ai_tick, run_trigger, run_npc_trigger, zone_time, is_daytime, npc_message)
     - crates/rose-quest/src/lib.rs (check_trigger, world_ticks)
-  data: "NPC dialog files 3Ddata\\Event\\*.con (menus and a Lua 4 script), EVENT string table (the text), the NPC resources in godot/data/npcs/ (each NPC's ai_file_index), NPC AI files (*.AIP), zone files (where NPCs stand and which dialog they use)"
+  data: "the dialog resources in godot/data/dialogs/ (RoseDialog, exported to export/data/dialogs.toml; made from iROSE's 3Ddata\\Event\\*.con menus, their Lua 4 scripts and the EVENT string table), the NPC resources in godot/data/npcs/ (each NPC's ai_file_index), NPC AI files (*.AIP), zone files (where NPCs stand and which dialog they use)"
 ---
 # NPC dialogs
 
@@ -48,7 +49,7 @@ see "<name> has nothing to say".
 
 Every NPC's dialog is a list of menus. A menu holds the NPC's possible messages and your
 possible answers, each with an optional **condition** (a check on your character, your
-quests or the NPC).
+quests or the NPC). The zone says which dialog each NPC uses.
 
 When a menu opens, the game goes through its lines from top to bottom:
 
@@ -72,7 +73,12 @@ bold text and colours.
 
 ## Conditions
 
-Conditions are small scripts in the dialog file. The ones the game understands:
+A line's condition is a list of **cases**. The game tries them from the top: the first
+case whose checks all pass decides, and says whether the line shows. If no case passes,
+the line is hidden; a line with no cases always shows. An answer's action is a list of
+cases the same way: the first case whose checks pass runs its actions. (iROSE wrote these
+as small Lua scripts in the dialog file; they were turned into cases that do exactly what
+the scripts did.) The checks:
 
 | Condition on the page | What it checks |
 | --- | --- |
@@ -83,6 +89,11 @@ Conditions are small scripts in the dialog file. The ones the game understands:
 | your level, your job, your union | your character (job is the raw job number) |
 | the NPC's quest switch | the NPC's own variable 0, which its time-of-day script sets (below) |
 | quest step `X` passes | the checks of that quest step all pass right now |
+
+A quest step or quest that isn't in the game never passes and nobody has it, so the
+cases that needed one were taken out when the dialogs were converted: steps `2851-01` to
+`2858-10` and `PvP1301-103`/`303` named by NPCs in Junon Polis, and quest 1509 named by
+[Weapon Craftsman] Mairath. The NPCs say and do the same as before.
 
 "Quest step `X` passes" uses the same checks as the quest itself (see
 [[rules/quests|Quests]]). Your game checks them to decide what to show; random rolls
@@ -101,7 +112,8 @@ An answer's action can do one or more of these:
 - **Set your save point** to this zone (where you get up after dying, see
   [[rules/death|Death]]).
 
-NPC motions and effects while talking are not shown yet.
+NPC motions and effects while talking are not shown yet (the iROSE scripts' motion
+calls were left out when the dialogs were converted).
 
 ## How NPC pages show dialogs
 

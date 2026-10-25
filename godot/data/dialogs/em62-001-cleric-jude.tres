@@ -1,0 +1,43 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://jptx537a251c"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mnly3"]
+text = "Phew, I'm very busy. Sikuku tribes are innocent. I hope you don't make any misunderstanding."
+next_menu = 1
+resource_name = "NPC: Phew, I'm very busy. Sikuku tribes are innocent.…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5v3g8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_mnly3")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6u3hy"]
+kind = "Answer"
+text = "I thought so."
+next_menu = 2
+resource_name = "You: I thought so."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0tx4b"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6u3hy")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_oyriu"]
+text = "Why don’t you help us out?"
+next_menu = 3
+resource_name = "NPC: Why don’t you help us out?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jcwy2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_oyriu")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_g5kaa"]
+kind = "Answer"
+text = "Oh, sorry! But I have to leave right now. I forgot I had an appointment."
+resource_name = "You: Oh, sorry! But I have to leave right now. I forg…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lwgtq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_g5kaa")])
+resource_name = "Menu 3"
+
+[resource]
+key = "EM62-001.con"
+name = "[Cleric] Jude"
+menus = Array[Resource]([SubResource("RoseDialogMenu_5v3g8"), SubResource("RoseDialogMenu_0tx4b"), SubResource("RoseDialogMenu_jcwy2"), SubResource("RoseDialogMenu_lwgtq")])

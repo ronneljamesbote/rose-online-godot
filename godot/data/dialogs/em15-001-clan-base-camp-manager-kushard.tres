@@ -1,0 +1,103 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://d3dhnfp6f2612"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hsqls"]
+text = "I hope that good fortune accompanies you and your Clan."
+next_menu = 1
+resource_name = "NPC: I hope that good fortune accompanies you and you…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_u3abt"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hsqls")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_w28gc"]
+kind = "Answer"
+text = "Our Clan really is awesome, isn't it?"
+resource_name = "You: Our Clan really is awesome, isn't it?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nxt1d"]
+kind = "Answer"
+text = "There's something I'd like to ask."
+next_menu = 2
+resource_name = "You: There's something I'd like to ask."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vqlbr"]
+lines = Array[Resource]([SubResource("RoseDialogLine_w28gc"), SubResource("RoseDialogLine_nxt1d")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_m4fqq"]
+text = "How can I help you?"
+next_menu = 3
+resource_name = "NPC: How can I help you?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3788i"]
+lines = Array[Resource]([SubResource("RoseDialogLine_m4fqq")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_bqtrj"]
+window = "Storage"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ftg1h"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_bqtrj")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_x6udu"]
+kind = "Answer"
+text = "I'd like to use the Storage."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_ftg1h")])
+resource_name = "You: I'd like to use the Storage."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_n2p2m"]
+window = "Repair"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_qdhnw"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_n2p2m")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1o7w5"]
+kind = "Answer"
+text = "I'd like to have an item repaired."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_qdhnw")])
+resource_name = "You: I'd like to have an item repaired."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_w0ypk"]
+window = "Appraisal"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_slakl"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_w0ypk")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hgpp4"]
+kind = "Answer"
+text = "I'd like to have an item appraised."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_slakl")])
+resource_name = "You: I'd like to have an item appraised."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_vn5cl"]
+window = "Refining"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_sccdx"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_vn5cl")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b13pa"]
+kind = "Answer"
+text = "I'd like to have an item refined."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_sccdx")])
+resource_name = "You: I'd like to have an item refined."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_ekkta"]
+window = "Disassembly"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_hbkcv"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_ekkta")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pbfq5"]
+kind = "Answer"
+text = "I'd like to have an item disassembled."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_hbkcv")])
+resource_name = "You: I'd like to have an item disassembled."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_aaoss"]
+lines = Array[Resource]([SubResource("RoseDialogLine_x6udu"), SubResource("RoseDialogLine_1o7w5"), SubResource("RoseDialogLine_hgpp4"), SubResource("RoseDialogLine_b13pa"), SubResource("RoseDialogLine_pbfq5")])
+resource_name = "Menu 3"
+
+[resource]
+key = "EM15-001.con"
+name = "[Clan Base Camp Manager] Kushard"
+menus = Array[Resource]([SubResource("RoseDialogMenu_u3abt"), SubResource("RoseDialogMenu_vqlbr"), SubResource("RoseDialogMenu_3788i"), SubResource("RoseDialogMenu_aaoss")])

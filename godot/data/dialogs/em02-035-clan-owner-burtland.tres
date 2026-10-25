@@ -1,0 +1,855 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://kb7vfyhnribd"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://cllf7t52wut2n" path="res://data/quest_triggers/qc001/Clan-001.tres" id="1_4f23o"]
+[ext_resource type="RoseQuestTrigger" uid="uid://b1ajiujjdgjfs" path="res://data/quest_triggers/qc001/Clan-002.tres" id="2_bbtpl"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cd6ggfgnywddp" path="res://data/quest_triggers/qc001/Clan-004.tres" id="3_v62qy"]
+[ext_resource type="RoseQuestTrigger" uid="uid://sxnph2mbf6eq" path="res://data/quest_triggers/qc001/Clan-033.tres" id="4_3op8r"]
+[ext_resource type="RoseQuest" uid="uid://d1vye26jvwufk" path="res://data/quests/2751-clan-house-extension-1.tres" id="5_pc70g"]
+[ext_resource type="RoseQuest" uid="uid://cn386lfxlyqkl" path="res://data/quests/2752-clan-house-extension-2.tres" id="6_1r6e1"]
+[ext_resource type="RoseQuest" uid="uid://d07camvld0op4" path="res://data/quests/2753-clan-house-extension-3.tres" id="7_qacsl"]
+[ext_resource type="RoseQuestTrigger" uid="uid://ol6tuw65sk7" path="res://data/quest_triggers/qc001/2753-03.tres" id="8_3f64i"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bgfwbyfgdg27k" path="res://data/quest_triggers/qc001/2752-03.tres" id="9_4oc4d"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bjflhm2ojxsh0" path="res://data/quest_triggers/qc001/2751-03.tres" id="10_l3gtt"]
+[ext_resource type="RoseQuestTrigger" uid="uid://b5pt3mykkgqao" path="res://data/quest_triggers/qc001/Clan-011.tres" id="11_dyf74"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dnplxrr4vb3ka" path="res://data/quest_triggers/qc001/Clan-021.tres" id="12_5xp3l"]
+[ext_resource type="RoseQuestTrigger" uid="uid://ct321yxal2028" path="res://data/quest_triggers/qc001/Clan-022.tres" id="13_147ln"]
+[ext_resource type="RoseQuestTrigger" uid="uid://iv0fvumbvmqg" path="res://data/quest_triggers/qc001/Clan-014.tres" id="14_3el4e"]
+[ext_resource type="RoseQuestTrigger" uid="uid://doe166r1kky2i" path="res://data/quest_triggers/qc001/Clan-013.tres" id="15_e0yvd"]
+[ext_resource type="RoseQuestTrigger" uid="uid://6ir23m57c1h7" path="res://data/quest_triggers/qc001/Clan-012.tres" id="16_lt4uh"]
+[ext_resource type="RoseQuestTrigger" uid="uid://8df8nl7jawmv" path="res://data/quest_triggers/qc001/Clan-023.tres" id="17_ag2un"]
+[ext_resource type="RoseQuestTrigger" uid="uid://brxlogt867l7p" path="res://data/quest_triggers/qc001/Clan-warp01.tres" id="18_kftu4"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bcfxxryjylsb2" path="res://data/quest_triggers/qc001/Clan-warp02.tres" id="19_ko3d4"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dc3xu8y7dsg5m" path="res://data/quest_triggers/qc001/Clan-warp03.tres" id="20_2enqw"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bsgstqisvj6o6" path="res://data/quest_triggers/qc001/Clan-warp04.tres" id="21_bqsar"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dcm7m81plwfqv" path="res://data/quest_triggers/qc001/2751-01.tres" id="22_vgkj3"]
+[ext_resource type="RoseQuestTrigger" uid="uid://c1pt51g05ge8n" path="res://data/quest_triggers/qc001/2752-01.tres" id="23_8uaf3"]
+[ext_resource type="RoseQuestTrigger" uid="uid://8uv6be5dhi2q" path="res://data/quest_triggers/qc001/2753-01.tres" id="24_5r252"]
+[ext_resource type="RoseQuestTrigger" uid="uid://c5jx0s3ak2wcd" path="res://data/quest_triggers/qc001/2751-02.tres" id="25_v1pyu"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cp4llddrqftby" path="res://data/quest_triggers/qc001/Clan-031.tres" id="26_hts4i"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cabu1g3h8dif3" path="res://data/quest_triggers/qc001/Clan-032.tres" id="27_yh2h4"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lgg30"]
+text = "Welcome, I am Burtland, manager of Clan business in Junon. Please speak to me when you'd like to create or disorganize a Clan."
+next_menu = 1
+resource_name = "NPC: Welcome, I am Burtland, manager of Clan business…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_tbwhv"]
+lines = Array[Resource]([SubResource("RoseDialogLine_lgg30")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6cte2"]
+kind = "Answer"
+text = "I'd like to know more about creating a Clan."
+next_menu = 2
+resource_name = "You: I'd like to know more about creating a Clan."
+
+[sub_resource type="RoseDialogDoFoundClan" id="RoseDialogDoFoundClan_xfxds"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_6ccjo"]
+actions = Array[Resource]([SubResource("RoseDialogDoFoundClan_xfxds")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_cwnxq"]
+value = 30
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_7qmbj"]
+step = ExtResource("1_4f23o")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_qtqoa"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_cwnxq"), SubResource("RoseDialogIfQuestStep_7qmbj")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fqbtw"]
+kind = "Answer"
+text = "I would like to create a Clan."
+show_if = Array[Resource]([SubResource("RoseDialogCase_qtqoa")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_6ccjo")])
+resource_name = "You: I would like to create a Clan."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_je8wn"]
+step = ExtResource("2_bbtpl")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3e6g4"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_je8wn")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1tq28"]
+kind = "Answer"
+text = "I'd like to disorganize my Clan."
+next_menu = 8
+show_if = Array[Resource]([SubResource("RoseDialogCase_3e6g4")])
+resource_name = "You: I'd like to disorganize my Clan."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_ekap8"]
+step = ExtResource("3_v62qy")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3xfhr"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_ekap8")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0bu83"]
+kind = "Answer"
+text = "I would like to manage my Clan."
+next_menu = 10
+show_if = Array[Resource]([SubResource("RoseDialogCase_3xfhr")])
+resource_name = "You: I would like to manage my Clan."
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_03od5"]
+step = ExtResource("4_3op8r")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_auc2f"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_03od5")])
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_4pqj3"]
+step = ExtResource("4_3op8r")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_8w1gk"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_4pqj3")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jhmcx"]
+kind = "Answer"
+text = "I'd like to be transported to the Clan House."
+show_if = Array[Resource]([SubResource("RoseDialogCase_8w1gk")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_auc2f")])
+resource_name = "You: I'd like to be transported to the Clan House."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fndc2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6cte2"), SubResource("RoseDialogLine_fqbtw"), SubResource("RoseDialogLine_1tq28"), SubResource("RoseDialogLine_0bu83"), SubResource("RoseDialogLine_jhmcx")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_t4v5q"]
+text = "To create a Clan, you must be above Level 30 and pay a fee of 1,000,000 Zulie. You also must not belong to any other Clan."
+next_menu = 3
+resource_name = "NPC: To create a Clan, you must be above Level 30 and…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ghd5y"]
+lines = Array[Resource]([SubResource("RoseDialogLine_t4v5q")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ttide"]
+kind = "Answer"
+text = "Those seem like pretty high requirements."
+next_menu = 4
+resource_name = "You: Those seem like pretty high requirements."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vcsey"]
+kind = "Answer"
+text = "Also, I'd like to know more about managing a Clan."
+next_menu = 6
+resource_name = "You: Also, I'd like to know more about managing a Cla…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_cw1fd"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ttide"), SubResource("RoseDialogLine_vcsey")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7260n"]
+text = "Being a Clan Master is a tough job, but it will offer many benefits for your adventures. Try to take on the challenge with a positive outlook!"
+next_menu = 5
+resource_name = "NPC: Being a Clan Master is a tough job, but it will …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_inogw"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7260n")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7iu8d"]
+kind = "Answer"
+text = "Alright."
+resource_name = "You: Alright."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qkgqd"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7iu8d")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6lh13"]
+text = "At first, your Clan can have up to 15 members. As your Clan Grade rises, your member limit will increase and you will be able to use distinctive Clan functions. I'll explain about this more in detail later."
+next_menu = 7
+resource_name = "NPC: At first, your Clan can have up to 15 members. A…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fol7o"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6lh13")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3hs7p"]
+kind = "Answer"
+text = "Alright."
+resource_name = "You: Alright."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_atyr5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3hs7p")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ixmg8"]
+text = "If you disorganize the Clan, all information related to the Clan will be deleted. Are you sure you want to do this?"
+next_menu = 9
+resource_name = "NPC: If you disorganize the Clan, all information rel…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1u8d0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ixmg8")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_f5sq7"]
+kind = "Answer"
+text = "Let me think about this a little more."
+resource_name = "You: Let me think about this a little more."
+
+[sub_resource type="RoseDialogDoDisbandClan" id="RoseDialogDoDisbandClan_3iajm"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_lfvla"]
+actions = Array[Resource]([SubResource("RoseDialogDoDisbandClan_3iajm")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_drjgm"]
+kind = "Answer"
+text = "Yes, I would like to disorganize my Clan."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_lfvla")])
+resource_name = "You: Yes, I would like to disorganize my Clan."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_epfu2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_f5sq7"), SubResource("RoseDialogLine_drjgm")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_72dkq"]
+text = "So what would you like to do?"
+next_menu = 11
+resource_name = "NPC: So what would you like to do?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wb0or"]
+lines = Array[Resource]([SubResource("RoseDialogLine_72dkq")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_gy3ct"]
+step = ExtResource("2_bbtpl")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_th1fo"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_gy3ct")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_isbax"]
+kind = "Answer"
+text = "I would like to raise my Clan Grade."
+next_menu = 12
+show_if = Array[Resource]([SubResource("RoseDialogCase_th1fo")])
+resource_name = "You: I would like to raise my Clan Grade."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_j5yox"]
+step = ExtResource("2_bbtpl")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_afhua"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_j5yox")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_aia6n"]
+kind = "Answer"
+text = "I'd like to learn a Clan skill."
+next_menu = 17
+show_if = Array[Resource]([SubResource("RoseDialogCase_afhua")])
+resource_name = "You: I'd like to learn a Clan skill."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_dhwm8"]
+step = ExtResource("3_v62qy")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_hss3o"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_dhwm8")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_46wk2"]
+kind = "Answer"
+text = "I'd like to use this place for Clan Training Camp."
+next_menu = 18
+show_if = Array[Resource]([SubResource("RoseDialogCase_hss3o")])
+resource_name = "You: I'd like to use this place for Clan Training Cam…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wuxf4"]
+lines = Array[Resource]([SubResource("RoseDialogLine_isbax"), SubResource("RoseDialogLine_aia6n"), SubResource("RoseDialogLine_46wk2")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_s7ib7"]
+quest = ExtResource("5_pc70g")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ordb7"]
+quest = ExtResource("6_1r6e1")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_kj0ov"]
+quest = ExtResource("7_qacsl")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_d3q4f"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_s7ib7"), SubResource("RoseDialogIfQuest_ordb7"), SubResource("RoseDialogIfQuest_kj0ov")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0m07q"]
+text = "If your Clan increases in grade, you can accept more members and learn more Clan skills. You must have a certain amount of Clan Points to raise your Clan Grade."
+next_menu = 13
+show_if = Array[Resource]([SubResource("RoseDialogCase_d3q4f")])
+resource_name = "NPC: If your Clan increases in grade, you can accept …"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_fhgdl"]
+quest = ExtResource("7_qacsl")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_0v3gu"]
+step = ExtResource("8_3f64i")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_dp5od"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_fhgdl"), SubResource("RoseDialogIfQuestStep_0v3gu")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ifbxw"]
+quest = ExtResource("6_1r6e1")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_rr8vo"]
+step = ExtResource("9_4oc4d")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_yldad"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_ifbxw"), SubResource("RoseDialogIfQuestStep_rr8vo")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_qnkdx"]
+quest = ExtResource("5_pc70g")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_bvu33"]
+step = ExtResource("10_l3gtt")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_d6crs"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_qnkdx"), SubResource("RoseDialogIfQuestStep_bvu33")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ka5hq"]
+text = "Are you ready to level up your Clan to Grade 3?"
+next_menu = 32
+show_if = Array[Resource]([SubResource("RoseDialogCase_dp5od"), SubResource("RoseDialogCase_yldad"), SubResource("RoseDialogCase_d6crs")])
+resource_name = "NPC: Are you ready to level up your Clan to Grade 3?"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ghshf"]
+quest = ExtResource("7_qacsl")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_jmxb7"]
+step = ExtResource("8_3f64i")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_vwx8s"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_ghshf"), SubResource("RoseDialogIfQuestStep_jmxb7")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ugdaj"]
+quest = ExtResource("6_1r6e1")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_e76ed"]
+step = ExtResource("9_4oc4d")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_pkdkk"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_ugdaj"), SubResource("RoseDialogIfQuestStep_e76ed")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_6t324"]
+quest = ExtResource("5_pc70g")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_fl7xi"]
+step = ExtResource("10_l3gtt")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_j7x8s"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_6t324"), SubResource("RoseDialogIfQuestStep_fl7xi")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1qahl"]
+text = "Didn’t you say that you wanted to raise your Clan Grade? You should first gather the materials I asked of you so that we can actually expand your Clan House."
+next_menu = 35
+show_if = Array[Resource]([SubResource("RoseDialogCase_vwx8s"), SubResource("RoseDialogCase_pkdkk"), SubResource("RoseDialogCase_j7x8s")])
+resource_name = "NPC: Didn’t you say that you wanted to raise your Cla…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5vw80"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0m07q"), SubResource("RoseDialogLine_ka5hq"), SubResource("RoseDialogLine_1qahl")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_aela2"]
+kind = "Answer"
+text = "Alright, I'd like to raise my Clan Grade."
+next_menu = 14
+resource_name = "You: Alright, I'd like to raise my Clan Grade."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dg8yc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_aela2")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_wifvf"]
+step = ExtResource("11_dyf74")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_x4lhs"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_wifvf")])
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_y68di"]
+step = ExtResource("12_5xp3l")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7rfw5"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_y68di")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6cqdy"]
+text = "Great, raising your Clan Grade will expand the scope of your Clan's activities."
+next_menu = 23
+show_if = Array[Resource]([SubResource("RoseDialogCase_x4lhs"), SubResource("RoseDialogCase_7rfw5")])
+resource_name = "NPC: Great, raising your Clan Grade will expand the s…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_1udmo"]
+step = ExtResource("13_147ln")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_cn0lv"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_1udmo")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dgfwe"]
+text = "Your Clan has been raised to Grade 2, and can't be upgraded anymore. "
+next_menu = 15
+show_if = Array[Resource]([SubResource("RoseDialogCase_cn0lv")])
+resource_name = "NPC: Your Clan has been raised to Grade 2, and can't …"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_thk4g"]
+step = ExtResource("14_3el4e")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_186k1"]
+step = ExtResource("15_e0yvd")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5fqjt"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_thk4g"), SubResource("RoseDialogIfQuestStep_186k1")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ufam6"]
+text = "You'll need 1,000 Clan Points to earn the Clan Grade 2. You will be able to get earn these points by achieving Clan Objectives."
+next_menu = 16
+show_if = Array[Resource]([SubResource("RoseDialogCase_5fqjt")])
+resource_name = "NPC: You'll need 1,000 Clan Points to earn the Clan G…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_wuird"]
+step = ExtResource("16_lt4uh")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_10xhr"]
+step = ExtResource("17_ag2un")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_8kmef"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_wuird"), SubResource("RoseDialogIfQuestStep_10xhr")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dqusv"]
+text = "You need 5,000 Clan Points to raise your Clan Grade to 3. You'll be able to accumulate Clan Points by completing Clan Objectives in the Clan Field."
+next_menu = 22
+show_if = Array[Resource]([SubResource("RoseDialogCase_8kmef")])
+resource_name = "NPC: You need 5,000 Clan Points to raise your Clan Gr…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_pt0eb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6cqdy"), SubResource("RoseDialogLine_dgfwe"), SubResource("RoseDialogLine_ufam6"), SubResource("RoseDialogLine_dqusv")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1b4o5"]
+kind = "Answer"
+text = "Okay."
+resource_name = "You: Okay."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fktrm"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1b4o5")])
+resource_name = "Menu 15"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ofpxo"]
+kind = "Answer"
+text = "Alright, I'll work even harder."
+resource_name = "You: Alright, I'll work even harder."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lawyj"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ofpxo")])
+resource_name = "Menu 16"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_ybrlw"]
+step = ExtResource("2_bbtpl")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_uggq5"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_ybrlw")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_q2md2"]
+text = "When your Clan Grade is high enough, it will become possible to use Clan Skills. With the proper use of Clan Skills, your Clan will grow even stronger."
+next_menu = 36
+show_if = Array[Resource]([SubResource("RoseDialogCase_uggq5")])
+resource_name = "NPC: When your Clan Grade is high enough, it will bec…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_cawl5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_q2md2")])
+resource_name = "Menu 17"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_l0iyh"]
+text = "The Exclusive Clan Training Camp is a place where fights between Clans often occur. If you choose to warp there, all your Clan members will be transported along with you."
+next_menu = 19
+resource_name = "NPC: The Exclusive Clan Training Camp is a place wher…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vmuba"]
+lines = Array[Resource]([SubResource("RoseDialogLine_l0iyh")])
+resource_name = "Menu 18"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pl5xo"]
+kind = "Answer"
+text = "Yes, I'd like to be transported."
+next_menu = 20
+resource_name = "You: Yes, I'd like to be transported."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_mtua6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_pl5xo")])
+resource_name = "Menu 19"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rt37q"]
+text = "Exclusive Clan Training Camp is divided into four large sectors. Consider the level of your Clan Members and choose where you'd like to go."
+next_menu = 21
+resource_name = "NPC: Exclusive Clan Training Camp is divided into fou…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_i2a1a"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rt37q")])
+resource_name = "Menu 20"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_gd6oi"]
+step = ExtResource("18_kftu4")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_mb6c7"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_gd6oi")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ksf6i"]
+kind = "Answer"
+text = "Northeast area (Extra low class)"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_mb6c7")])
+resource_name = "You: Northeast area (Extra low class)"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_8l38j"]
+step = ExtResource("19_ko3d4")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_mh8ub"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_8l38j")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jcsxs"]
+kind = "Answer"
+text = "Southeast area (Low class)"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_mh8ub")])
+resource_name = "You: Southeast area (Low class)"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_mo8sx"]
+step = ExtResource("20_2enqw")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_gqeso"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_mo8sx")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_68r2j"]
+kind = "Answer"
+text = "Southwest area (Middle class)"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_gqeso")])
+resource_name = "You: Southwest area (Middle class)"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_iffrn"]
+step = ExtResource("21_bqsar")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7lwxs"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_iffrn")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_sr75f"]
+kind = "Answer"
+text = "Northwest area (Middle high class)"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_7lwxs")])
+resource_name = "You: Northwest area (Middle high class)"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3e2jb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ksf6i"), SubResource("RoseDialogLine_jcsxs"), SubResource("RoseDialogLine_68r2j"), SubResource("RoseDialogLine_sr75f")])
+resource_name = "Menu 21"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_n6lm8"]
+kind = "Answer"
+text = "Alright, I'll try harder."
+resource_name = "You: Alright, I'll try harder."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_sf4uh"]
+lines = Array[Resource]([SubResource("RoseDialogLine_n6lm8")])
+resource_name = "Menu 22"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_edqxe"]
+step = ExtResource("11_dyf74")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_8kive"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_edqxe")])
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_x11gl"]
+step = ExtResource("11_dyf74")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_s2wj0"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_x11gl")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_exfya"]
+kind = "Answer"
+text = "Would you raise my Clan Grade to 2, please?"
+show_if = Array[Resource]([SubResource("RoseDialogCase_s2wj0")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_8kive")])
+resource_name = "You: Would you raise my Clan Grade to 2, please?"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_rmakl"]
+step = ExtResource("12_5xp3l")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_xlhmr"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_rmakl")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_l5cdm"]
+kind = "Answer"
+text = "Would you raise my Clan Grade to 3, please?"
+next_menu = 24
+show_if = Array[Resource]([SubResource("RoseDialogCase_xlhmr")])
+resource_name = "You: Would you raise my Clan Grade to 3, please?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7foa2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_exfya"), SubResource("RoseDialogLine_l5cdm")])
+resource_name = "Menu 23"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_r223m"]
+text = "Because of the recent expansion of the Clan House, we've been running out of materials. If you would choose one of the following item groups and provide us with the listed items, we'd much appreciate it. If it's too tough to collect them on your own, you can ask your Clan members to help you."
+next_menu = 25
+resource_name = "NPC: Because of the recent expansion of the Clan Hous…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vmia2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_r223m")])
+resource_name = "Menu 24"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ois4l"]
+kind = "Answer"
+text = "Item Group 1 – 600 Silver Iron, 400 Pine Wood, 10 Blue Crystals"
+next_menu = 26
+resource_name = "You: Item Group 1 – 600 Silver Iron, 400 Pine Wood, 1…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d7dvf"]
+kind = "Answer"
+text = "Item Group 2 – 200 Steel, 150 Cinnamon Wood, 50 Earth Stones"
+next_menu = 28
+resource_name = "You: Item Group 2 – 200 Steel, 150 Cinnamon Wood, 50 …"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qo8vh"]
+kind = "Answer"
+text = "Item Group 3 – 100 Molive, 50 Cromium, 2 Green Hearts"
+next_menu = 30
+resource_name = "You: Item Group 3 – 100 Molive, 50 Cromium, 2 Green H…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ibnmy"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ois4l"), SubResource("RoseDialogLine_d7dvf"), SubResource("RoseDialogLine_qo8vh")])
+resource_name = "Menu 25"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lufxy"]
+text = "Remember, these are all general items, not quest items, so don’t get confused. Well, good luck!"
+next_menu = 27
+resource_name = "NPC: Remember, these are all general items, not quest…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_d41ss"]
+lines = Array[Resource]([SubResource("RoseDialogLine_lufxy")])
+resource_name = "Menu 26"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_01o1t"]
+step = ExtResource("22_vgkj3")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_lrgr0"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_01o1t")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_w6og1"]
+kind = "Answer"
+text = "Alright, sir."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_lrgr0")])
+resource_name = "You: Alright, sir."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ytnc2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_w6og1")])
+resource_name = "Menu 27"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8q55x"]
+text = "Remember, these are all general items, not quest items, so don’t get confused. Well, good luck!"
+next_menu = 29
+resource_name = "NPC: Remember, these are all general items, not quest…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_l7170"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8q55x")])
+resource_name = "Menu 28"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_3muic"]
+step = ExtResource("23_8uaf3")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_6eqxf"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_3muic")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_br1qj"]
+kind = "Answer"
+text = "Alright, sir."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_6eqxf")])
+resource_name = "You: Alright, sir."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_uv554"]
+lines = Array[Resource]([SubResource("RoseDialogLine_br1qj")])
+resource_name = "Menu 29"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ukool"]
+text = "Remember, these are all general items, not quest items, so don’t get confused. Well, good luck!"
+next_menu = 31
+resource_name = "NPC: Remember, these are all general items, not quest…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5a537"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ukool")])
+resource_name = "Menu 30"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ldb46"]
+step = ExtResource("24_5r252")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_jlne4"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_ldb46")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cedjo"]
+kind = "Answer"
+text = "Alright, sir."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_jlne4")])
+resource_name = "You: Alright, sir."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jclav"]
+lines = Array[Resource]([SubResource("RoseDialogLine_cedjo")])
+resource_name = "Menu 31"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_uxcqn"]
+kind = "Answer"
+text = "Yes, I brought all the items."
+next_menu = 33
+resource_name = "You: Yes, I brought all the items."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8t08c"]
+lines = Array[Resource]([SubResource("RoseDialogLine_uxcqn")])
+resource_name = "Menu 32"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_siaml"]
+text = "Good job. Now you are now at Clan Grade 3. You are now able to enter the Clan House. "
+next_menu = 34
+resource_name = "NPC: Good job. Now you are now at Clan Grade 3. You a…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_m8yd7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_siaml")])
+resource_name = "Menu 33"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_sx6y3"]
+step = ExtResource("25_v1pyu")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_42jhy"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_sx6y3")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_h0460"]
+kind = "Answer"
+text = "Thank you, sir!"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_42jhy")])
+resource_name = "You: Thank you, sir!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ciygx"]
+lines = Array[Resource]([SubResource("RoseDialogLine_h0460")])
+resource_name = "Menu 34"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hqvva"]
+kind = "Answer"
+text = "Right, I'm still in the middle of gathering those materials."
+resource_name = "You: Right, I'm still in the middle of gathering thos…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wgejt"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hqvva")])
+resource_name = "Menu 35"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xw3f8"]
+kind = "Answer"
+text = "I'd like to learn the Clan House Skill."
+next_menu = 37
+resource_name = "You: I'd like to learn the Clan House Skill."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3vd7l"]
+lines = Array[Resource]([SubResource("RoseDialogLine_xw3f8")])
+resource_name = "Menu 36"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7mq2f"]
+text = "To learn the skill, your Clan must be {fc=5}Grade 3{/fc}, and you need to pay {fc=5}1,000,000 Zulie{/fc}. You can use your Clan House for only {fc=5}30 days{/fc}. Then, you must learn the skill again in order to use it for another 30 days. Would you like to learn it?"
+next_menu = 38
+resource_name = "NPC: To learn the skill, your Clan must be {fc=5}Grad…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rowqi"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7mq2f")])
+resource_name = "Menu 37"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_va6uk"]
+kind = "Answer"
+text = "Yes!"
+next_menu = 39
+resource_name = "You: Yes!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3epr5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_va6uk")])
+resource_name = "Menu 38"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_2ud2e"]
+step = ExtResource("26_hts4i")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_6u3bj"]
+step = ExtResource("27_yh2h4")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_y1pni"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_2ud2e"), SubResource("RoseDialogIfQuestStep_6u3bj")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_blrpc"]
+text = "I shall pray for the prosperity of your Clan. If you want to move to your Clan House, please come to me or visit {fc=1}Eliot{/fc}, the Akram Ambassador in the {fc=2}Magic City of the Eucar{/fc}."
+next_menu = 40
+show_if = Array[Resource]([SubResource("RoseDialogCase_y1pni")])
+resource_name = "NPC: I shall pray for the prosperity of your Clan. If…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_7jeag"]
+step = ExtResource("26_hts4i")
+passes = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_hkkhs"]
+step = ExtResource("27_yh2h4")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5talc"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_7jeag"), SubResource("RoseDialogIfQuestStep_hkkhs")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7wiwj"]
+text = "Hmm. I'm sorry, but you've failed to meet the requirements. Please check the requirements before trying again."
+next_menu = 41
+show_if = Array[Resource]([SubResource("RoseDialogCase_5talc")])
+resource_name = "NPC: Hmm. I'm sorry, but you've failed to meet the re…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_rknpv"]
+step = ExtResource("27_yh2h4")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_grsdu"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_rknpv")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tq0fl"]
+text = "You still have the Clan House skill. You can only relearn this skill once the 30 day period has elapsed."
+next_menu = 42
+show_if = Array[Resource]([SubResource("RoseDialogCase_grsdu")])
+resource_name = "NPC: You still have the Clan House skill. You can onl…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qpofv"]
+lines = Array[Resource]([SubResource("RoseDialogLine_blrpc"), SubResource("RoseDialogLine_7wiwj"), SubResource("RoseDialogLine_tq0fl")])
+resource_name = "Menu 39"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_xkjiw"]
+step = ExtResource("26_hts4i")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_f2qn7"]
+step = ExtResource("27_yh2h4")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_itk1e"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_f2qn7")])
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_xkjiw")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nuqts"]
+kind = "Answer"
+text = "Thank you."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_itk1e")])
+resource_name = "You: Thank you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0ouki"]
+lines = Array[Resource]([SubResource("RoseDialogLine_nuqts")])
+resource_name = "Menu 40"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_453ay"]
+kind = "Answer"
+text = "I see."
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fbaj0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_453ay")])
+resource_name = "Menu 41"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_r4rqp"]
+kind = "Answer"
+text = "I see."
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jtggc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_r4rqp")])
+resource_name = "Menu 42"
+
+[resource]
+key = "EM02-035.con"
+name = "[Clan Owner] Burtland"
+menus = Array[Resource]([SubResource("RoseDialogMenu_tbwhv"), SubResource("RoseDialogMenu_fndc2"), SubResource("RoseDialogMenu_ghd5y"), SubResource("RoseDialogMenu_cw1fd"), SubResource("RoseDialogMenu_inogw"), SubResource("RoseDialogMenu_qkgqd"), SubResource("RoseDialogMenu_fol7o"), SubResource("RoseDialogMenu_atyr5"), SubResource("RoseDialogMenu_1u8d0"), SubResource("RoseDialogMenu_epfu2"), SubResource("RoseDialogMenu_wb0or"), SubResource("RoseDialogMenu_wuxf4"), SubResource("RoseDialogMenu_5vw80"), SubResource("RoseDialogMenu_dg8yc"), SubResource("RoseDialogMenu_pt0eb"), SubResource("RoseDialogMenu_fktrm"), SubResource("RoseDialogMenu_lawyj"), SubResource("RoseDialogMenu_cawl5"), SubResource("RoseDialogMenu_vmuba"), SubResource("RoseDialogMenu_mtua6"), SubResource("RoseDialogMenu_i2a1a"), SubResource("RoseDialogMenu_3e2jb"), SubResource("RoseDialogMenu_sf4uh"), SubResource("RoseDialogMenu_7foa2"), SubResource("RoseDialogMenu_vmia2"), SubResource("RoseDialogMenu_ibnmy"), SubResource("RoseDialogMenu_d41ss"), SubResource("RoseDialogMenu_ytnc2"), SubResource("RoseDialogMenu_l7170"), SubResource("RoseDialogMenu_uv554"), SubResource("RoseDialogMenu_5a537"), SubResource("RoseDialogMenu_jclav"), SubResource("RoseDialogMenu_8t08c"), SubResource("RoseDialogMenu_m8yd7"), SubResource("RoseDialogMenu_ciygx"), SubResource("RoseDialogMenu_wgejt"), SubResource("RoseDialogMenu_3vd7l"), SubResource("RoseDialogMenu_rowqi"), SubResource("RoseDialogMenu_3epr5"), SubResource("RoseDialogMenu_qpofv"), SubResource("RoseDialogMenu_0ouki"), SubResource("RoseDialogMenu_fbaj0"), SubResource("RoseDialogMenu_jtggc")])

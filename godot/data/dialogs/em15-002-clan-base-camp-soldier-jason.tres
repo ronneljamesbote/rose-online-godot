@@ -1,0 +1,38 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://4ol4383ki8yl"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://cru1vmffl21m6" path="res://data/quest_triggers/qc001/Clan-035.tres" id="1_rgw7t"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kkppt"]
+text = "I am protecting your Clan House. What are your orders?"
+next_menu = 1
+resource_name = "NPC: I am protecting your Clan House. What are your o…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rbs0x"]
+lines = Array[Resource]([SubResource("RoseDialogLine_kkppt")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_db14y"]
+step = ExtResource("1_rgw7t")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_hf8xk"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_db14y")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tvdrf"]
+kind = "Answer"
+text = "I'd like to leave the Clan House."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_hf8xk")])
+resource_name = "You: I'd like to leave the Clan House."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pm06b"]
+kind = "Answer"
+text = "That will be all. Carry on."
+resource_name = "You: That will be all. Carry on."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4pgo4"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tvdrf"), SubResource("RoseDialogLine_pm06b")])
+resource_name = "Menu 1"
+
+[resource]
+key = "EM15-002.con"
+name = "[Clan Base Camp Soldier] Jason"
+menus = Array[Resource]([SubResource("RoseDialogMenu_rbs0x"), SubResource("RoseDialogMenu_4pgo4")])

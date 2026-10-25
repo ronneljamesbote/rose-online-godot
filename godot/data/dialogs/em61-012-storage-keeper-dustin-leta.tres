@@ -1,0 +1,84 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://bc82sy4benaa0"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b6a2j"]
+text = "Yes right! {br}You might have a reason to visit me, don't you?"
+next_menu = 1
+resource_name = "NPC: Yes right! {br}You might have a reason to visit …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1mlfv"]
+lines = Array[Resource]([SubResource("RoseDialogLine_b6a2j")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_rav1m"]
+window = "Storage"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ufqs2"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_rav1m")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1kthr"]
+kind = "Answer"
+text = "I just came here to use my storage."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_ufqs2")])
+resource_name = "You: I just came here to use my storage."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_3gb0a"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_bp463"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_3gb0a")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jic1p"]
+kind = "Answer"
+text = "I just came here to buy some materials. "
+on_choose = Array[Resource]([SubResource("RoseDialogCase_bp463")])
+resource_name = "You: I just came here to buy some materials."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d5ck6"]
+kind = "Answer"
+text = "Right. (Well, he is a little strange.)"
+next_menu = 2
+resource_name = "You: Right. (Well, he is a little strange.)"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_l3eve"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1kthr"), SubResource("RoseDialogLine_jic1p"), SubResource("RoseDialogLine_d5ck6")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6d036"]
+text = "Well, I'm listening. Just tell me what you want."
+next_menu = 3
+resource_name = "NPC: Well, I'm listening. Just tell me what you want."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_guedn"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6d036")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_ktox1"]
+window = "Storage"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_o0l37"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_ktox1")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_asa5s"]
+kind = "Answer"
+text = "I just came here to use my storage."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_o0l37")])
+resource_name = "You: I just came here to use my storage."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_fh883"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_kqtok"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_fh883")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qs3df"]
+kind = "Answer"
+text = "I just came here to buy some materials"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_kqtok")])
+resource_name = "You: I just came here to buy some materials"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_cb4ab"]
+lines = Array[Resource]([SubResource("RoseDialogLine_asa5s"), SubResource("RoseDialogLine_qs3df")])
+resource_name = "Menu 3"
+
+[resource]
+key = "EM61-012.con"
+name = "[Storage Keeper] Dustin Leta"
+menus = Array[Resource]([SubResource("RoseDialogMenu_1mlfv"), SubResource("RoseDialogMenu_l3eve"), SubResource("RoseDialogMenu_guedn"), SubResource("RoseDialogMenu_cb4ab")])

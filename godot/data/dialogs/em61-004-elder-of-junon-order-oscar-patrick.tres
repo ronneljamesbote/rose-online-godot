@@ -1,0 +1,54 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://iornmu8igsqd"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_o0o41"]
+text = "It's not Turak! Zika is right behind all this plot. Find her and let her stop this conspiracy."
+next_menu = 1
+resource_name = "NPC: It's not Turak! Zika is right behind all this pl…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_iud8q"]
+lines = Array[Resource]([SubResource("RoseDialogLine_o0o41")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_ofscl"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_mure6"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_ofscl")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fsctf"]
+kind = "Answer"
+text = "I’d like to look around faction store indeed."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_mure6")])
+resource_name = "You: I’d like to look around faction store indeed."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_251cq"]
+kind = "Answer"
+text = "Zika? What's her conspiracy?"
+next_menu = 2
+resource_name = "You: Zika? What's her conspiracy?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_j10b6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fsctf"), SubResource("RoseDialogLine_251cq")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6a6k4"]
+text = "I don't know exactly. She introduces herself as a newly appointed official of Ikaness, and does all the horrible things around. It’s such a disaster if we can't stop her."
+next_menu = 3
+resource_name = "NPC: I don't know exactly. She introduces herself as …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_umri7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6a6k4")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fbmg8"]
+kind = "Answer"
+text = "But, we don't have enough information so far."
+resource_name = "You: But, we don't have enough information so far."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5bug4"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fbmg8")])
+resource_name = "Menu 3"
+
+[resource]
+key = "EM61-004.con"
+name = "[Elder of Junon Order] Oscar Patrick"
+menus = Array[Resource]([SubResource("RoseDialogMenu_iud8q"), SubResource("RoseDialogMenu_j10b6"), SubResource("RoseDialogMenu_umri7"), SubResource("RoseDialogMenu_5bug4")])

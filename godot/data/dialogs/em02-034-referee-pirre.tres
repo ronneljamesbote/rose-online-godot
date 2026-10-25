@@ -1,0 +1,27 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://bhh7jioekj7ig"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cpwdp"]
+text = "What business brings you here?"
+next_menu = 1
+resource_name = "NPC: What business brings you here?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1x37c"]
+lines = Array[Resource]([SubResource("RoseDialogLine_cpwdp")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_fgmdi"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_20avg"]
+kind = "Answer"
+text = "This place is too eerie! I'm going back to town."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_fgmdi")])
+resource_name = "You: This place is too eerie! I'm going back to town."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_s8ym1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_20avg")])
+resource_name = "Menu 1"
+
+[resource]
+key = "EM02-034.con"
+name = "[Referee] Pirre"
+menus = Array[Resource]([SubResource("RoseDialogMenu_1x37c"), SubResource("RoseDialogMenu_s8ym1")])

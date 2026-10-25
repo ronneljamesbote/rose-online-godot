@@ -1,0 +1,150 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://dwmlv5a0b6go5"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://l2g0kidbnlt3" path="res://data/quest_triggers/tutorial/Lunarlanguage.tres" id="1_7bjgl"]
+[ext_resource type="RoseQuestTrigger" uid="uid://3tiqh1ptuxdf" path="res://data/quest_triggers/qc001/Clan-034.tres" id="2_ved1r"]
+[ext_resource type="RoseQuestTrigger" uid="uid://sxnph2mbf6eq" path="res://data/quest_triggers/qc001/Clan-033.tres" id="3_31pjj"]
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_j8whl"]
+switch = 3
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_p7s1r"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_j8whl")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0gnrw"]
+text = "Ah, another strange Visitor on our peaceful planet. So why are you here? The delicious cuisine?"
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_p7s1r")])
+resource_name = "NPC: Ah, another strange Visitor on our peaceful plan…"
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_4bttj"]
+switch = 3
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_yo6dc"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_4bttj")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gacx5"]
+text = "So how do you like Luna? Here we've got many delicious foods that you can try."
+next_menu = 4
+show_if = Array[Resource]([SubResource("RoseDialogCase_yo6dc")])
+resource_name = "NPC: So how do you like Luna? Here we've got many del…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8aauh"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0gnrw"), SubResource("RoseDialogLine_gacx5")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_x0wcs"]
+kind = "Answer"
+text = "Cuisine? I can't even understand what people are saying. "
+next_menu = 2
+resource_name = "You: Cuisine? I can't even understand what people are…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_odxgj"]
+lines = Array[Resource]([SubResource("RoseDialogLine_x0wcs")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_50i2k"]
+text = "Haha, you still haven't learned to speak the Luna language? Oh well, I guess I'll teach you. It's really easy, just remember that we mostly communicate through the heart. Once you get that, you'll understand what people are saying."
+next_menu = 3
+resource_name = "NPC: Haha, you still haven't learned to speak the Lun…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_aphst"]
+lines = Array[Resource]([SubResource("RoseDialogLine_50i2k")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_picg4"]
+step = ExtResource("1_7bjgl")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ummjq"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_picg4")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_suuhu"]
+kind = "Answer"
+text = "Communicate through my heart? Well, I'll give it a try."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_ummjq")])
+resource_name = "You: Communicate through my heart? Well, I'll give it…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lthgy"]
+lines = Array[Resource]([SubResource("RoseDialogLine_suuhu")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lm506"]
+kind = "Answer"
+text = "Ooh, I haven't tried any of the cuisine on this planet yet."
+next_menu = 5
+resource_name = "You: Ooh, I haven't tried any of the cuisine on this …"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2s8xy"]
+kind = "Answer"
+text = "Say, why have you come here anyway?"
+next_menu = 7
+resource_name = "You: Say, why have you come here anyway?"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_e3dyi"]
+step = ExtResource("2_ved1r")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_h5cha"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_e3dyi")])
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_7wwss"]
+step = ExtResource("3_31pjj")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ugb45"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_7wwss")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_uaylt"]
+kind = "Answer"
+text = "I'd like to be transported to the Clan House."
+show_if = Array[Resource]([SubResource("RoseDialogCase_ugb45")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_h5cha")])
+resource_name = "You: I'd like to be transported to the Clan House."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b4tj6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_lm506"), SubResource("RoseDialogLine_2s8xy"), SubResource("RoseDialogLine_uaylt")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_uv0fm"]
+text = "Sure, you've got to struggle through the cold and fend off all the giant monsters, but I've hung in there and managed to survive."
+next_menu = 6
+resource_name = "NPC: Sure, you've got to struggle through the cold an…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vhwj1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_uv0fm")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_n2pum"]
+kind = "Answer"
+text = "I hope I get used to this place really soon."
+resource_name = "You: I hope I get used to this place really soon."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dvawd"]
+kind = "Answer"
+text = "Yeah, I'm already used to this place."
+resource_name = "You: Yeah, I'm already used to this place."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_avla5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_n2pum"), SubResource("RoseDialogLine_dvawd")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4y2ud"]
+text = "These days, there are many people that have been curious about me. It's enough to know that I'm an ambassador from the Akram Kingdom. If anything worries you, please let me know."
+next_menu = 8
+resource_name = "NPC: These days, there are many people that have been…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_c1idf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4y2ud")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wvlg3"]
+kind = "Answer"
+text = "(What a strange guy…)"
+resource_name = "You: (What a strange guy…)"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8d7of"]
+lines = Array[Resource]([SubResource("RoseDialogLine_wvlg3")])
+resource_name = "Menu 8"
+
+[resource]
+key = "EM51-002.con"
+name = "[Akram Ambassador] Eliot"
+menus = Array[Resource]([SubResource("RoseDialogMenu_8aauh"), SubResource("RoseDialogMenu_odxgj"), SubResource("RoseDialogMenu_aphst"), SubResource("RoseDialogMenu_lthgy"), SubResource("RoseDialogMenu_b4tj6"), SubResource("RoseDialogMenu_vhwj1"), SubResource("RoseDialogMenu_avla5"), SubResource("RoseDialogMenu_c1idf"), SubResource("RoseDialogMenu_8d7of")])

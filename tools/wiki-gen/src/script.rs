@@ -6,7 +6,7 @@ use std::{collections::HashMap, sync::Arc};
 
 use rose_file_readers::{ConFile, ConMessageType};
 
-use crate::lua4::{Lua4Function, Lua4Instruction};
+use rose_file_readers::lua4::{Lua4Function, Lua4Instruction};
 
 #[derive(Clone, Debug, PartialEq)]
 enum Sym {

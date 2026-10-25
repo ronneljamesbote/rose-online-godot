@@ -1,0 +1,610 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://coo777sm101jl"]
+
+[ext_resource type="RoseQuest" uid="uid://pm0r5k46uljo" path="res://data/quests/5061-the-santa-suit-heist.tres" id="1_cnmig"]
+[ext_resource type="RoseItemQuest" uid="uid://dachjktlc865e" path="res://data/items/quest/901-stolen-santa-suit.tres" id="2_jekve"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bnc5g6ko08noq" path="res://data/quest_triggers/qe001/5061-01.tres" id="3_mpejc"]
+[ext_resource type="RoseQuestTrigger" uid="uid://c6qsxjmc54rsw" path="res://data/quest_triggers/qe001/5061-02.tres" id="4_kly06"]
+[ext_resource type="RoseQuestTrigger" uid="uid://gcbclrem3oip" path="res://data/quest_triggers/qe001/5061-04.tres" id="5_yv6do"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dtr2w25hl461g" path="res://data/quest_triggers/qe001/5061-11.tres" id="6_ud55i"]
+[ext_resource type="RoseQuestTrigger" uid="uid://xqtr61psxlvj" path="res://data/quest_triggers/qe001/5061-12.tres" id="7_eg3cm"]
+[ext_resource type="RoseQuestTrigger" uid="uid://d1r25jvls4viv" path="res://data/quest_triggers/qe001/5061-13.tres" id="8_ky6y3"]
+[ext_resource type="RoseQuestTrigger" uid="uid://drijtijqo6pyy" path="res://data/quest_triggers/qe001/5061-14.tres" id="9_yfjnj"]
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_wqhrw"]
+quest = ExtResource("1_cnmig")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_qkca4"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_wqhrw")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1he41"]
+text = "I'm sorry, but all the good Santas went on vacation. And I'm not really that good at being a Santa…"
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_qkca4")])
+resource_name = "NPC: I'm sorry, but all the good Santas went on vacat…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_sfbnq"]
+quest = ExtResource("1_cnmig")
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_si48p"]
+quest = ExtResource("1_cnmig")
+item = ExtResource("2_jekve")
+operator = "<"
+value = 8
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_gpyib"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_sfbnq"), SubResource("RoseDialogIfQuestItem_si48p")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vajy7"]
+text = "Hm? What have you been doing up till now? Oh, I haven't forgotten about you, but just in case I took notes on my list…"
+next_menu = 14
+show_if = Array[Resource]([SubResource("RoseDialogCase_gpyib")])
+resource_name = "NPC: Hm? What have you been doing up till now? Oh, I …"
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_uows4"]
+quest = ExtResource("1_cnmig")
+item = ExtResource("2_jekve")
+value = 8
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_m4qmn"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_uows4")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4aq2d"]
+text = "Huh? You've brought Stolen Santa Suits. But who in the world are you?"
+next_menu = 18
+show_if = Array[Resource]([SubResource("RoseDialogCase_m4qmn")])
+resource_name = "NPC: Huh? You've brought Stolen Santa Suits. But who …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b1t2j"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1he41"), SubResource("RoseDialogLine_vajy7"), SubResource("RoseDialogLine_4aq2d")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_p4mg4"]
+kind = "Answer"
+text = "But Santa, won't you give me a present?"
+next_menu = 2
+resource_name = "You: But Santa, won't you give me a present?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bptdi"]
+lines = Array[Resource]([SubResource("RoseDialogLine_p4mg4")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_or060"]
+text = "Present? I've got other things to worry about. Those Rudolphs I just hired stole all our precious Santa costumes and took off! Why are the rest of the Santas vacationing on Eldeon, while I'm the only one stuck here? I hate it! "
+next_menu = 3
+resource_name = "NPC: Present? I've got other things to worry about. T…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ym4og"]
+lines = Array[Resource]([SubResource("RoseDialogLine_or060")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_m0u0b"]
+kind = "Answer"
+text = "But I came all this way ask for a present from Santa…"
+next_menu = 37
+resource_name = "You: But I came all this way ask for a present from S…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2qb00"]
+kind = "Answer"
+text = "Rudolphs stole the Santa costumes? How'd they do that?"
+next_menu = 4
+resource_name = "You: Rudolphs stole the Santa costumes? How'd they do…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_01f7u"]
+lines = Array[Resource]([SubResource("RoseDialogLine_m0u0b"), SubResource("RoseDialogLine_2qb00")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tpuub"]
+text = "Well, while the other Santas were on vacation, they were supposed to deliver their costumes to them in Eldeon. But they never did!"
+next_menu = 5
+resource_name = "NPC: Well, while the other Santas were on vacation, t…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_aw5ju"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tpuub")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_q6s3c"]
+kind = "Answer"
+text = "Well, maybe they'll come back."
+next_menu = 6
+resource_name = "You: Well, maybe they'll come back."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_mdm77"]
+lines = Array[Resource]([SubResource("RoseDialogLine_q6s3c")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_r2vyl"]
+text = "Come back?! Haven't you heard that Rudolphs have been running around, masquerading as Santas?! They even had the audacity to turn our sacred Santa Suits… blue!"
+next_menu = 7
+resource_name = "NPC: Come back?! Haven't you heard that Rudolphs have…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qavf7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_r2vyl")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ghcvi"]
+kind = "Answer"
+text = "Isn't there any way I can help you?"
+next_menu = 8
+resource_name = "You: Isn't there any way I can help you?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fwcwk"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ghcvi")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2b5fj"]
+text = "Well, I have all these gifts to deliver, but seeing as how you've been begging me for a present, I better do that myself. Hmm, why don't bring back those Santa Suits from those Rudolphs for me?"
+next_menu = 9
+resource_name = "NPC: Well, I have all these gifts to deliver, but see…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_s4gb2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2b5fj")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wxcje"]
+kind = "Answer"
+text = "Alright, you got it."
+next_menu = 10
+resource_name = "You: Alright, you got it."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_h3o8v"]
+lines = Array[Resource]([SubResource("RoseDialogLine_wxcje")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vs40s"]
+text = "Ooh, I'm getting old and forgetful. I better put your name down on my list so I remember to reward you with a present. Now, what's your name?"
+next_menu = 11
+resource_name = "NPC: Ooh, I'm getting old and forgetful. I better put…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_q1j4j"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vs40s")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_406gu"]
+kind = "Answer"
+text = "Yes, I'm <NAME>. Please don't forget!"
+next_menu = 12
+resource_name = "You: Yes, I'm <NAME>. Please don't forget!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gwvxy"]
+lines = Array[Resource]([SubResource("RoseDialogLine_406gu")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0bwbr"]
+text = "Ah yes. <NAME>! I will remember you until I forget you. Now hurry and recover at least {fc=14}8 Stolen Santa Suits{/fc} from {fc=12}Rudolph Santas{/fc} and bring them to me. Of course, it'd be better to find more of them."
+next_menu = 13
+resource_name = "NPC: Ah yes. <NAME>! I will remember you until I forg…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_u7mss"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0bwbr")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_3pl5x"]
+step = ExtResource("3_mpejc")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_rgagy"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_3pl5x")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nhp6c"]
+kind = "Answer"
+text = "Alright, I'll do my best."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_rgagy")])
+resource_name = "You: Alright, I'll do my best."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_coceb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_nhp6c")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pyk62"]
+kind = "Answer"
+text = "Um, so where can I find Rudolphs?"
+next_menu = 15
+resource_name = "You: Um, so where can I find Rudolphs?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ixwuf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_pyk62")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_83sdj"]
+step = ExtResource("4_kly06")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_qd6i6"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_83sdj")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0gjl2"]
+text = "I haven't seen them since I came to Junon, but because of their shining red noses, you can see them in the dark. Perhaps you should wait until night to find them."
+next_menu = 16
+show_if = Array[Resource]([SubResource("RoseDialogCase_qd6i6")])
+resource_name = "NPC: I haven't seen them since I came to Junon, but b…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_poxwt"]
+step = ExtResource("5_yv6do")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_yg75p"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_poxwt")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_v1vy1"]
+text = "Rudolphs usually appear without any sign. When you're looking for them, they may be laughing right behind you."
+next_menu = 17
+show_if = Array[Resource]([SubResource("RoseDialogCase_yg75p")])
+resource_name = "NPC: Rudolphs usually appear without any sign. When y…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6ebth"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0gjl2"), SubResource("RoseDialogLine_v1vy1")])
+resource_name = "Menu 15"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qe38o"]
+kind = "Answer"
+text = "Ah, I see."
+resource_name = "You: Ah, I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8w50r"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qe38o")])
+resource_name = "Menu 16"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4glnf"]
+kind = "Answer"
+text = "I see. "
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_falpd"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4glnf")])
+resource_name = "Menu 17"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cdr2q"]
+kind = "Answer"
+text = "I'm <NAME>. You haven't forgotten me, have you?"
+next_menu = 19
+resource_name = "You: I'm <NAME>. You haven't forgotten me, have you?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_tn082"]
+lines = Array[Resource]([SubResource("RoseDialogLine_cdr2q")])
+resource_name = "Menu 18"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_toesi"]
+text = "I've never heard that name before in my life. I'd be happy to accept those costumes, but I can't reward you since your name isn't on my list."
+next_menu = 20
+resource_name = "NPC: I've never heard that name before in my life. I'…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_esf8v"]
+lines = Array[Resource]([SubResource("RoseDialogLine_toesi")])
+resource_name = "Menu 19"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7376k"]
+kind = "Answer"
+text = "What?! My name's written right over there!"
+next_menu = 21
+resource_name = "You: What?! My name's written right over there!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b4r05"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7376k")])
+resource_name = "Menu 20"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ngn5j"]
+text = "Oh? Ah, I guess you're right! Er, but I've already given all the presents away. Let me give you something else instead."
+next_menu = 22
+resource_name = "NPC: Oh? Ah, I guess you're right! Er, but I've alrea…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_l0lwq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ngn5j")])
+resource_name = "Menu 21"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_my8lm"]
+kind = "Answer"
+text = "Alright, I want some genuine Santa clothes."
+next_menu = 23
+resource_name = "You: Alright, I want some genuine Santa clothes."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_osq0d"]
+lines = Array[Resource]([SubResource("RoseDialogLine_my8lm")])
+resource_name = "Menu 22"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bgsxs"]
+text = "Hmm. Alright then, choose what you like."
+next_menu = 24
+resource_name = "NPC: Hmm. Alright then, choose what you like."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ucy4v"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bgsxs")])
+resource_name = "Menu 23"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5w3dp"]
+kind = "Answer"
+text = "I'd like to choose Santa Boots. (8 Stolen Santa Suits)"
+next_menu = 25
+resource_name = "You: I'd like to choose Santa Boots. (8 Stolen Santa …"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gj1gt"]
+kind = "Answer"
+text = "I'd like to choose Santa Gloves. (13 Stolen Santa Suits)"
+next_menu = 26
+resource_name = "You: I'd like to choose Santa Gloves. (13 Stolen Sant…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wjqjc"]
+kind = "Answer"
+text = "I'd like to choose Santa Hat. (20 Stolen Santa Suits)"
+next_menu = 27
+resource_name = "You: I'd like to choose Santa Hat. (20 Stolen Santa S…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_sy32s"]
+kind = "Answer"
+text = "I'd like to choose Santa Sweater. (28 Stolen Santa Suits)"
+next_menu = 28
+resource_name = "You: I'd like to choose Santa Sweater. (28 Stolen San…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_h1anh"]
+kind = "Answer"
+text = "I'll find more Stolen Santa Suits and come back."
+resource_name = "You: I'll find more Stolen Santa Suits and come back."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5xhmx"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5w3dp"), SubResource("RoseDialogLine_gj1gt"), SubResource("RoseDialogLine_wjqjc"), SubResource("RoseDialogLine_sy32s"), SubResource("RoseDialogLine_h1anh")])
+resource_name = "Menu 24"
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_lhvcw"]
+quest = ExtResource("1_cnmig")
+item = ExtResource("2_jekve")
+value = 8
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_d1hfa"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_lhvcw")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ja6g3"]
+text = "Thank you! Ah, and please take these two, unaddressed presents. Once again, thank you for a job well done."
+next_menu = 29
+show_if = Array[Resource]([SubResource("RoseDialogCase_d1hfa")])
+resource_name = "NPC: Thank you! Ah, and please take these two, unaddr…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_a4ffv"]
+quest = ExtResource("1_cnmig")
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_838tx"]
+quest = ExtResource("1_cnmig")
+item = ExtResource("2_jekve")
+operator = "<"
+value = 8
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_fypud"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_a4ffv"), SubResource("RoseDialogIfQuestItem_838tx")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4fikd"]
+text = "If you want Santa Boots, you need 8 Stolen Santa Suits. Please come back with more Santa costumes."
+next_menu = 36
+show_if = Array[Resource]([SubResource("RoseDialogCase_fypud")])
+resource_name = "NPC: If you want Santa Boots, you need 8 Stolen Santa…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_c0d1s"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ja6g3"), SubResource("RoseDialogLine_4fikd")])
+resource_name = "Menu 25"
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_cu22s"]
+quest = ExtResource("1_cnmig")
+item = ExtResource("2_jekve")
+value = 13
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ga6xk"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_cu22s")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tqwam"]
+text = "Thank you! Ah, and please take these two, unaddressed presents. Once again, thank you for a job well done."
+next_menu = 30
+show_if = Array[Resource]([SubResource("RoseDialogCase_ga6xk")])
+resource_name = "NPC: Thank you! Ah, and please take these two, unaddr…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_r8p1u"]
+quest = ExtResource("1_cnmig")
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_4bqx4"]
+quest = ExtResource("1_cnmig")
+item = ExtResource("2_jekve")
+operator = "<"
+value = 13
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_1aw40"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_r8p1u"), SubResource("RoseDialogIfQuestItem_4bqx4")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ohcpe"]
+text = "If you want Santa Gloves, you need 13 Stolen Santa Suits. Please come back with more Santa costumes."
+next_menu = 35
+show_if = Array[Resource]([SubResource("RoseDialogCase_1aw40")])
+resource_name = "NPC: If you want Santa Gloves, you need 13 Stolen San…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wsr82"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tqwam"), SubResource("RoseDialogLine_ohcpe")])
+resource_name = "Menu 26"
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_xidhb"]
+quest = ExtResource("1_cnmig")
+item = ExtResource("2_jekve")
+value = 20
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_uoisd"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_xidhb")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xdnyh"]
+text = "Thank you! Ah, and please take these two, unaddressed presents. Once again, thank you for a job well done."
+next_menu = 31
+show_if = Array[Resource]([SubResource("RoseDialogCase_uoisd")])
+resource_name = "NPC: Thank you! Ah, and please take these two, unaddr…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_6dglt"]
+quest = ExtResource("1_cnmig")
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_a3fm6"]
+quest = ExtResource("1_cnmig")
+item = ExtResource("2_jekve")
+operator = "<"
+value = 20
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_gk0oe"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_6dglt"), SubResource("RoseDialogIfQuestItem_a3fm6")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1cg7k"]
+text = "If you want a Santa Hat, you need 20 Stolen Santa Suits. Please come back with more Santa costumes."
+next_menu = 34
+show_if = Array[Resource]([SubResource("RoseDialogCase_gk0oe")])
+resource_name = "NPC: If you want a Santa Hat, you need 20 Stolen Sant…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_mgmpk"]
+lines = Array[Resource]([SubResource("RoseDialogLine_xdnyh"), SubResource("RoseDialogLine_1cg7k")])
+resource_name = "Menu 27"
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_oqkiq"]
+quest = ExtResource("1_cnmig")
+item = ExtResource("2_jekve")
+value = 28
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_6nq5y"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_oqkiq")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8klae"]
+text = "Thank you! Ah, and please take these two, unaddressed presents. Once again, thank you for a job well done."
+next_menu = 32
+show_if = Array[Resource]([SubResource("RoseDialogCase_6nq5y")])
+resource_name = "NPC: Thank you! Ah, and please take these two, unaddr…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_vbfax"]
+quest = ExtResource("1_cnmig")
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_q3rr6"]
+quest = ExtResource("1_cnmig")
+item = ExtResource("2_jekve")
+operator = "<"
+value = 28
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_turkq"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_vbfax"), SubResource("RoseDialogIfQuestItem_q3rr6")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tfsb6"]
+text = "If you want a Santa Sweater, you need 28 Stolen Santa Suits. Please come back with more Santa costumes."
+next_menu = 33
+show_if = Array[Resource]([SubResource("RoseDialogCase_turkq")])
+resource_name = "NPC: If you want a Santa Sweater, you need 28 Stolen …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_msasg"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8klae"), SubResource("RoseDialogLine_tfsb6")])
+resource_name = "Menu 28"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_k3t35"]
+step = ExtResource("6_ud55i")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_amaqe"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_k3t35")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_51ugo"]
+kind = "Answer"
+text = "Alright, I hope we meet again!"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_amaqe")])
+resource_name = "You: Alright, I hope we meet again!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_uvegg"]
+lines = Array[Resource]([SubResource("RoseDialogLine_51ugo")])
+resource_name = "Menu 29"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_835ey"]
+step = ExtResource("7_eg3cm")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_e8m2l"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_835ey")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mokqa"]
+kind = "Answer"
+text = "Alright, I hope we meet again!"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_e8m2l")])
+resource_name = "You: Alright, I hope we meet again!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_a8u3m"]
+lines = Array[Resource]([SubResource("RoseDialogLine_mokqa")])
+resource_name = "Menu 30"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_6ldqk"]
+step = ExtResource("8_ky6y3")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5g80j"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_6ldqk")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0l04w"]
+kind = "Answer"
+text = "Alright, I hope we meet again!"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_5g80j")])
+resource_name = "You: Alright, I hope we meet again!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lxo41"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0l04w")])
+resource_name = "Menu 31"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_8j8vq"]
+step = ExtResource("9_yfjnj")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_cyglg"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_8j8vq")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_y48a2"]
+kind = "Answer"
+text = "Alright, I hope we meet again!"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_cyglg")])
+resource_name = "You: Alright, I hope we meet again!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_udigg"]
+lines = Array[Resource]([SubResource("RoseDialogLine_y48a2")])
+resource_name = "Menu 32"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_18pvj"]
+kind = "Answer"
+text = "Alright, I understand."
+resource_name = "You: Alright, I understand."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1dnta"]
+lines = Array[Resource]([SubResource("RoseDialogLine_18pvj")])
+resource_name = "Menu 33"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rnkgs"]
+kind = "Answer"
+text = "Alright, I understand."
+resource_name = "You: Alright, I understand."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_tw7sq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rnkgs")])
+resource_name = "Menu 34"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ca436"]
+kind = "Answer"
+text = "Alright, I understand."
+resource_name = "You: Alright, I understand."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_oliey"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ca436")])
+resource_name = "Menu 35"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_p6kxq"]
+kind = "Answer"
+text = "Alright, I understand."
+resource_name = "You: Alright, I understand."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_05lkn"]
+lines = Array[Resource]([SubResource("RoseDialogLine_p6kxq")])
+resource_name = "Menu 36"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ok7wy"]
+text = "Right now, all I can think about is Rudolph. It's more stress than I can handle! Eh? Why are there so many kids on my Good List?!"
+next_menu = 38
+resource_name = "NPC: Right now, all I can think about is Rudolph. It'…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lxjh2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ok7wy")])
+resource_name = "Menu 37"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vdsnu"]
+kind = "Answer"
+text = "Would you tell me more about this Rudolph incident?"
+next_menu = 4
+resource_name = "You: Would you tell me more about this Rudolph incide…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_tqqi3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vdsnu")])
+resource_name = "Menu 38"
+
+[resource]
+key = "EM01-100.con"
+name = "산타 "
+menus = Array[Resource]([SubResource("RoseDialogMenu_b1t2j"), SubResource("RoseDialogMenu_bptdi"), SubResource("RoseDialogMenu_ym4og"), SubResource("RoseDialogMenu_01f7u"), SubResource("RoseDialogMenu_aw5ju"), SubResource("RoseDialogMenu_mdm77"), SubResource("RoseDialogMenu_qavf7"), SubResource("RoseDialogMenu_fwcwk"), SubResource("RoseDialogMenu_s4gb2"), SubResource("RoseDialogMenu_h3o8v"), SubResource("RoseDialogMenu_q1j4j"), SubResource("RoseDialogMenu_gwvxy"), SubResource("RoseDialogMenu_u7mss"), SubResource("RoseDialogMenu_coceb"), SubResource("RoseDialogMenu_ixwuf"), SubResource("RoseDialogMenu_6ebth"), SubResource("RoseDialogMenu_8w50r"), SubResource("RoseDialogMenu_falpd"), SubResource("RoseDialogMenu_tn082"), SubResource("RoseDialogMenu_esf8v"), SubResource("RoseDialogMenu_b4r05"), SubResource("RoseDialogMenu_l0lwq"), SubResource("RoseDialogMenu_osq0d"), SubResource("RoseDialogMenu_ucy4v"), SubResource("RoseDialogMenu_5xhmx"), SubResource("RoseDialogMenu_c0d1s"), SubResource("RoseDialogMenu_wsr82"), SubResource("RoseDialogMenu_mgmpk"), SubResource("RoseDialogMenu_msasg"), SubResource("RoseDialogMenu_uvegg"), SubResource("RoseDialogMenu_a8u3m"), SubResource("RoseDialogMenu_lxo41"), SubResource("RoseDialogMenu_udigg"), SubResource("RoseDialogMenu_1dnta"), SubResource("RoseDialogMenu_tw7sq"), SubResource("RoseDialogMenu_oliey"), SubResource("RoseDialogMenu_05lkn"), SubResource("RoseDialogMenu_lxjh2"), SubResource("RoseDialogMenu_tqqi3")])

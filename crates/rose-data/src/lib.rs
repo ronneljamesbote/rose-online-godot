@@ -66,6 +66,7 @@ mod character_motion_database;
 mod clan;
 mod client_strings;
 mod data_decoder;
+mod dialog_database;
 mod effect_database;
 mod item;
 mod item_database;
@@ -93,6 +94,11 @@ pub use character_motion_database::{
 pub use clan::ClanMemberPosition;
 pub use client_strings::ClientStrings;
 pub use data_decoder::DataDecoder;
+pub use dialog_database::{
+    compare as dialog_compare, run_cases as run_dialog_cases, Dialog, DialogAction, DialogCase,
+    DialogCondition, DialogContext, DialogDatabase, DialogLine, DialogLineKind, DialogMenu,
+    DialogQuestValue, DialogVariable, DialogView,
+};
 pub use effect_database::{
     EffectBulletMoveType, EffectData, EffectDatabase, EffectFileId, EffectId,
 };

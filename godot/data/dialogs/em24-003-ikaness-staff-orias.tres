@@ -1,0 +1,362 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://qtsamv5d3q0t"]
+
+[ext_resource type="RoseQuest" uid="uid://bl6s7kawe58r0" path="res://data/quests/905-solitary-orias.tres" id="1_jcbgt"]
+[ext_resource type="RoseQuest" uid="uid://doj53vfrh1cs" path="res://data/quests/906-solitary-orias.tres" id="2_2fxcr"]
+[ext_resource type="RoseQuestTrigger" uid="uid://satfk2qss2wc" path="res://data/quest_triggers/qj211-01/906-01.tres" id="3_saeib"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bur4qtxjom8o0" path="res://data/quest_triggers/qj211-01/905-02.tres" id="4_5pnas"]
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_irfg2"]
+quest = ExtResource("1_jcbgt")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_g043q"]
+quest = ExtResource("2_2fxcr")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_0du00"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_irfg2"), SubResource("RoseDialogIfQuest_g043q")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pvyop"]
+text = "Ikaness is the only force that watches over me in this world. Open your eyes and believe!"
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_0du00")])
+resource_name = "NPC: Ikaness is the only force that watches over me i…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_4f6sr"]
+quest = ExtResource("1_jcbgt")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_w03ts"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_4f6sr")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gb1fn"]
+text = "This is such a big problem! Magic will no longer be usable if this situation continues."
+next_menu = 16
+show_if = Array[Resource]([SubResource("RoseDialogCase_w03ts")])
+resource_name = "NPC: This is such a big problem! Magic will no longer…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_pdcew"]
+quest = ExtResource("2_2fxcr")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_u5ijx"]
+step = ExtResource("3_saeib")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_16udm"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_pdcew"), SubResource("RoseDialogIfQuestStep_u5ijx")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wrpva"]
+text = "It's not easy to gather Stones of Nature. But if you try your best, you'll be able to find them."
+next_menu = 13
+show_if = Array[Resource]([SubResource("RoseDialogCase_16udm")])
+resource_name = "NPC: It's not easy to gather Stones of Nature. But if…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_s7s10"]
+step = ExtResource("3_saeib")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ofnt4"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_s7s10")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2bcy3"]
+text = "Oh! You found some Stones of Nature! This will be a great help in maintaining nature's power!"
+next_menu = 8
+show_if = Array[Resource]([SubResource("RoseDialogCase_ofnt4")])
+resource_name = "NPC: Oh! You found some Stones of Nature! This will b…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_l8gxb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_pvyop"), SubResource("RoseDialogLine_gb1fn"), SubResource("RoseDialogLine_wrpva"), SubResource("RoseDialogLine_2bcy3")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rxkhp"]
+kind = "Answer"
+text = "I would like to save my [Respawn Point]."
+next_menu = 2
+resource_name = "You: I would like to save my [Respawn Point]."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d5iy1"]
+kind = "Answer"
+text = "I don't talk to crazy people."
+resource_name = "You: I don't talk to crazy people."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_iyqst"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rxkhp"), SubResource("RoseDialogLine_d5iy1")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rdrga"]
+text = "If you save your respawn point on a specific spot, you will be brought back to that spot when you become unconscious during a battle. Would you like to save your respawn point here?"
+next_menu = 3
+resource_name = "NPC: If you save your respawn point on a specific spo…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_r8vus"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rdrga")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogDoSetSavePoint" id="RoseDialogDoSetSavePoint_yi8if"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_v4qco"]
+actions = Array[Resource]([SubResource("RoseDialogDoSetSavePoint_yi8if")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_esab4"]
+kind = "Answer"
+text = "Yes, please."
+next_menu = 4
+on_choose = Array[Resource]([SubResource("RoseDialogCase_v4qco")])
+resource_name = "You: Yes, please."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_75sxs"]
+kind = "Answer"
+text = "I would like to know my current respawn point."
+next_menu = 6
+resource_name = "You: I would like to know my current respawn point."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kbll8"]
+kind = "Answer"
+text = "No, thanks. I'm content with my current respawn point."
+resource_name = "You: No, thanks. I'm content with my current respawn …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_66y38"]
+lines = Array[Resource]([SubResource("RoseDialogLine_esab4"), SubResource("RoseDialogLine_75sxs"), SubResource("RoseDialogLine_kbll8")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_s6503"]
+text = "<NAME>'s respawn point has been changed to <REVIVE_ZONE>."
+next_menu = 5
+resource_name = "NPC: <NAME>'s respawn point has been changed to <REVI…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wbxul"]
+lines = Array[Resource]([SubResource("RoseDialogLine_s6503")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4dr7l"]
+kind = "Answer"
+text = "Thank you."
+resource_name = "You: Thank you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ug311"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4dr7l")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_yjsaj"]
+text = "<NAME>'s respawn point is <REVIVE_ZONE>."
+next_menu = 7
+resource_name = "NPC: <NAME>'s respawn point is <REVIVE_ZONE>."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8l86y"]
+lines = Array[Resource]([SubResource("RoseDialogLine_yjsaj")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kbck7"]
+kind = "Answer"
+text = "Thanks."
+resource_name = "You: Thanks."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fa0je"]
+lines = Array[Resource]([SubResource("RoseDialogLine_kbck7")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lrd3n"]
+kind = "Answer"
+text = "Yes, that's good."
+next_menu = 9
+resource_name = "You: Yes, that's good."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_15gkr"]
+lines = Array[Resource]([SubResource("RoseDialogLine_lrd3n")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_eboqc"]
+text = "I really want to show you my gratitude. But since the El Verloon Desert doesn't have much in the way of materials, there's nothing I can give you for now."
+next_menu = 10
+resource_name = "NPC: I really want to show you my gratitude. But sinc…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_171b7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_eboqc")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_makh7"]
+kind = "Answer"
+text = "No thanks, I don't need anything."
+next_menu = 11
+resource_name = "You: No thanks, I don't need anything."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_v63t0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_makh7")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a80ww"]
+text = "No, I'm going to speak with Keenu, so please visit him so that he can give you a small present."
+next_menu = 12
+resource_name = "NPC: No, I'm going to speak with Keenu, so please vis…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2m3h4"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a80ww")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_wgovv"]
+step = ExtResource("3_saeib")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_0kjjb"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_wgovv")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_iwt7b"]
+kind = "Answer"
+text = "Thank you."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_0kjjb")])
+resource_name = "You: Thank you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_mwycg"]
+lines = Array[Resource]([SubResource("RoseDialogLine_iwt7b")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lymlp"]
+kind = "Answer"
+text = "Can you tell me where I can find them once again?"
+next_menu = 14
+resource_name = "You: Can you tell me where I can find them once again…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0qv6o"]
+kind = "Answer"
+text = "Okay."
+resource_name = "You: Okay."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_nupqc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_lymlp"), SubResource("RoseDialogLine_0qv6o")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dbpj4"]
+text = "People say {fc=12}Dalpings{/fc} and {fc=12}Ranger Dalpings{/fc} keep many Stones of Nature. Most of them are living in the Northeast part of Breezy Hills. Please go and get them."
+next_menu = 15
+resource_name = "NPC: People say {fc=12}Dalpings{/fc} and {fc=12}Range…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qpsvp"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dbpj4")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tlndi"]
+kind = "Answer"
+text = "Okay."
+resource_name = "You: Okay."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_q7m3m"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tlndi")])
+resource_name = "Menu 15"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_36r5i"]
+kind = "Answer"
+text = "Hey, hey!"
+next_menu = 17
+resource_name = "You: Hey, hey!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ukx8n"]
+lines = Array[Resource]([SubResource("RoseDialogLine_36r5i")])
+resource_name = "Menu 16"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ji64j"]
+text = "Yes, what's up?"
+next_menu = 18
+resource_name = "NPC: Yes, what's up?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_42tv6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ji64j")])
+resource_name = "Menu 17"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1fmbr"]
+kind = "Answer"
+text = "I hear a strange phenomenon in the El Verloon Desert is weakening the power of nature."
+next_menu = 19
+resource_name = "You: I hear a strange phenomenon in the El Verloon De…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_op15o"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1fmbr")])
+resource_name = "Menu 18"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_atclu"]
+text = "You're right. We have detected a strange phenomenon a while ago that has suddenly decreased the power of nature. I'm afraid that Muses and all Mages will not be able to survive if this continues."
+next_menu = 20
+resource_name = "NPC: You're right. We have detected a strange phenome…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lm4h1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_atclu")])
+resource_name = "Menu 19"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_eyle2"]
+kind = "Answer"
+text = "Then what should we do?"
+next_menu = 21
+resource_name = "You: Then what should we do?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3drrt"]
+lines = Array[Resource]([SubResource("RoseDialogLine_eyle2")])
+resource_name = "Menu 20"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qw8km"]
+text = "There are two solutions. First, find and eliminate the cause of this strange phenomenon. Or, we could strengthen the power of nature to counteract the phenomenon's effects. Since we don't know its cause, we only have one choice: strengthen the power of nature."
+next_menu = 22
+resource_name = "NPC: There are two solutions. First, find and elimina…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_yyhdl"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qw8km")])
+resource_name = "Menu 21"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3ogw5"]
+kind = "Answer"
+text = "So how would we strengthen the power of nature?"
+next_menu = 23
+resource_name = "You: So how would we strengthen the power of nature?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_tpnpv"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3ogw5")])
+resource_name = "Menu 22"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jye62"]
+text = "We must amplify the power of Water, Fire and Earth. In order to do that, we need to gather as many Stones of Nature as we can."
+next_menu = 24
+resource_name = "NPC: We must amplify the power of Water, Fire and Ear…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_naram"]
+lines = Array[Resource]([SubResource("RoseDialogLine_jye62")])
+resource_name = "Menu 23"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_00fpm"]
+kind = "Answer"
+text = "Stones of Nature? How can we find them?"
+next_menu = 25
+resource_name = "You: Stones of Nature? How can we find them?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gi60w"]
+lines = Array[Resource]([SubResource("RoseDialogLine_00fpm")])
+resource_name = "Menu 24"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wmdup"]
+text = "There are three different types of Stones of Nature: Water, Fire and Earth. They are commonly scattered in El Verloon Desert, but I hear it's easier to investigate {fc=12}Dalpings{/fc} and {fc=12}Ranger Dalpings{/fc}. People say they keep a lot of Stones of Nature with them. These Dalpings live Northeast of Breezy Hills. Would you go gather {fc=14}5 Stones of Nature of each attribute{/fc}?"
+next_menu = 26
+resource_name = "NPC: There are three different types of Stones of Nat…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jd2ag"]
+lines = Array[Resource]([SubResource("RoseDialogLine_wmdup")])
+resource_name = "Menu 25"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_qjrm3"]
+step = ExtResource("4_5pnas")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_oagll"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_qjrm3")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7qv5x"]
+kind = "Answer"
+text = "Okay, I will go find them."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_oagll")])
+resource_name = "You: Okay, I will go find them."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2j2cq"]
+kind = "Answer"
+text = "I'm sorry, but I'm sort of busy."
+resource_name = "You: I'm sorry, but I'm sort of busy."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wsnj2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7qv5x"), SubResource("RoseDialogLine_2j2cq")])
+resource_name = "Menu 26"
+
+[resource]
+key = "EM24-003.con"
+name = "[Ikaness Staff] Orias"
+menus = Array[Resource]([SubResource("RoseDialogMenu_l8gxb"), SubResource("RoseDialogMenu_iyqst"), SubResource("RoseDialogMenu_r8vus"), SubResource("RoseDialogMenu_66y38"), SubResource("RoseDialogMenu_wbxul"), SubResource("RoseDialogMenu_ug311"), SubResource("RoseDialogMenu_8l86y"), SubResource("RoseDialogMenu_fa0je"), SubResource("RoseDialogMenu_15gkr"), SubResource("RoseDialogMenu_171b7"), SubResource("RoseDialogMenu_v63t0"), SubResource("RoseDialogMenu_2m3h4"), SubResource("RoseDialogMenu_mwycg"), SubResource("RoseDialogMenu_nupqc"), SubResource("RoseDialogMenu_qpsvp"), SubResource("RoseDialogMenu_q7m3m"), SubResource("RoseDialogMenu_ukx8n"), SubResource("RoseDialogMenu_42tv6"), SubResource("RoseDialogMenu_op15o"), SubResource("RoseDialogMenu_lm4h1"), SubResource("RoseDialogMenu_3drrt"), SubResource("RoseDialogMenu_yyhdl"), SubResource("RoseDialogMenu_tpnpv"), SubResource("RoseDialogMenu_naram"), SubResource("RoseDialogMenu_gi60w"), SubResource("RoseDialogMenu_jd2ag"), SubResource("RoseDialogMenu_wsnj2")])

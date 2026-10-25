@@ -1,0 +1,309 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://wrful4d6e0dt"]
+
+[ext_resource type="RoseQuest" uid="uid://dsci8dvlpe3i3" path="res://data/quests/5017-moldie-s-strange-mineral-fetch-quest.tres" id="1_quyw3"]
+[ext_resource type="RoseItemQuest" uid="uid://bquhw74gdfe7q" path="res://data/items/quest/807-black-mineral.tres" id="2_frc5j"]
+[ext_resource type="RoseItemQuest" uid="uid://qrbr7iehxlxe" path="res://data/items/quest/808-green-mineral.tres" id="3_lbr20"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dcmd84mlnt0ur" path="res://data/quest_triggers/qs12-002/5017-01.tres" id="4_abnst"]
+[ext_resource type="RoseQuestTrigger" uid="uid://ccclj3w3d5v0c" path="res://data/quest_triggers/qs12-002/5017-03.tres" id="5_66jgk"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dmwokti2wfltc" path="res://data/quest_triggers/qs12-002/5017-04.tres" id="6_wnntl"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_sqfns"]
+text = "All goods require my materials, so I'm proud of what I do."
+next_menu = 1
+resource_name = "NPC: All goods require my materials, so I'm proud of …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4o51w"]
+lines = Array[Resource]([SubResource("RoseDialogLine_sqfns")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_b5ra4"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7rygh"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_b5ra4")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_peho0"]
+kind = "Answer"
+text = "I want to buy materials."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_7rygh")])
+resource_name = "You: I want to buy materials."
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_hl2ju"]
+quest = ExtResource("1_quyw3")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_73d4i"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_hl2ju")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1txoq"]
+kind = "Answer"
+text = "I was told that you gather some strange materials."
+next_menu = 2
+show_if = Array[Resource]([SubResource("RoseDialogCase_73d4i")])
+resource_name = "You: I was told that you gather some strange material…"
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_ujgpa"]
+quest = ExtResource("1_quyw3")
+item = ExtResource("2_frc5j")
+value = 10
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_s1js3"]
+quest = ExtResource("1_quyw3")
+item = ExtResource("3_lbr20")
+value = 10
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3gld7"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_ujgpa"), SubResource("RoseDialogIfQuestItem_s1js3")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ffkuo"]
+kind = "Answer"
+text = "I've brought Moldie's Strange Mineral."
+next_menu = 11
+show_if = Array[Resource]([SubResource("RoseDialogCase_3gld7")])
+resource_name = "You: I've brought Moldie's Strange Mineral."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_uis4w"]
+window = "Disassembly"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_lwxn8"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_uis4w")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a70xi"]
+kind = "Answer"
+text = "I'd like to disassemble my item."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_lwxn8")])
+resource_name = "You: I'd like to disassemble my item."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hydhu"]
+lines = Array[Resource]([SubResource("RoseDialogLine_peho0"), SubResource("RoseDialogLine_1txoq"), SubResource("RoseDialogLine_ffkuo"), SubResource("RoseDialogLine_a70xi")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_s53yg"]
+operator = "<="
+value = 43
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_4y2lp"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_s53yg")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7pphr"]
+text = "Every natural object you can gather on Junon Planet can be the root of a new creation. Therefore, I have always been interested in finding undiscovered natural objects."
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_4y2lp")])
+resource_name = "NPC: Every natural object you can gather on Junon Pla…"
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_m5414"]
+operator = ">"
+value = 43
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_kjdd2"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_m5414")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ih66o"]
+text = "In order to maintain a fair game, only characters lower than Level 43 are allowed to participate in this quest."
+next_menu = 10
+show_if = Array[Resource]([SubResource("RoseDialogCase_kjdd2")])
+resource_name = "NPC: In order to maintain a fair game, only character…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8ll2v"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7pphr"), SubResource("RoseDialogLine_ih66o")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_trs66"]
+kind = "Answer"
+text = "I thought every possible material has been discovered?"
+next_menu = 4
+resource_name = "You: I thought every possible material has been disco…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8lrix"]
+lines = Array[Resource]([SubResource("RoseDialogLine_trs66")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_euygb"]
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_p4uo8"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_euygb")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_v4l48"]
+text = "That's a misunderstanding. There are still many materials that we don't know about. Speaking of which, it is rumored that Moldies carry a strange mineral with them. Could you gather some of those minerals for me so that I can research it?"
+next_menu = 5
+show_if = Array[Resource]([SubResource("RoseDialogCase_p4uo8")])
+resource_name = "NPC: That's a misunderstanding. There are still many …"
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_lpvk7"]
+operator = "!="
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ebe3h"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_lpvk7")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4g1gh"]
+text = "Yes, I think you're right. But I can't stop being interested in new natural objects. I hope you will help me gather them if I find a new object later."
+next_menu = 13
+show_if = Array[Resource]([SubResource("RoseDialogCase_ebe3h")])
+resource_name = "NPC: Yes, I think you're right. But I can't stop bein…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_n3axx"]
+lines = Array[Resource]([SubResource("RoseDialogLine_v4l48"), SubResource("RoseDialogLine_4g1gh")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nn1ih"]
+kind = "Answer"
+text = "Of course. Well then, what should I gather, and how many?"
+next_menu = 6
+resource_name = "You: Of course. Well then, what should I gather, and …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vmwsi"]
+lines = Array[Resource]([SubResource("RoseDialogLine_nn1ih")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_udbq0"]
+text = "{fc=12}Moldies{/fc} supposedly carry {fc=14}Green Minerals{/fc} and {fc=14}Black Minerals{/fc} with them. I hope you will gather 10 of each mineral. And if you can bring them faster than other people, I'll pay you more."
+next_menu = 7
+resource_name = "NPC: {fc=12}Moldies{/fc} supposedly carry {fc=14}Gree…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_al0o5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_udbq0")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_pium1"]
+step = ExtResource("4_abnst")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2aswn"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_pium1")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_o0bfa"]
+kind = "Answer"
+text = "Alright."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_2aswn")])
+resource_name = "You: Alright."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0idjb"]
+kind = "Answer"
+text = "Would you let me know what kind of reward I'll get?"
+next_menu = 8
+resource_name = "You: Would you let me know what kind of reward I'll g…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jxokc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_o0bfa"), SubResource("RoseDialogLine_0idjb")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qkssm"]
+text = "Since I'm compensating people by the order they complete this task and come back to me, I can't tell you your specific reward. However, I promise I will pay 15,000 Zulie to the 1st person."
+next_menu = 9
+resource_name = "NPC: Since I'm compensating people by the order they …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ua7wf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qkssm")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_pxe14"]
+step = ExtResource("4_abnst")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_w3x7g"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_pxe14")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_iwjmg"]
+kind = "Answer"
+text = "I see."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_w3x7g")])
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0l8sf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_iwjmg")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0rcc5"]
+kind = "Answer"
+text = "I see."
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5iiqr"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0rcc5")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_tgv2j"]
+step = ExtResource("5_66jgk")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_upavf"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_tgv2j")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_i8ap5"]
+text = "You've come! Now, let me pay you. Don't be disappointed with the amount of money you're paid, as I'm paying people by the order they have come back."
+next_menu = 12
+show_if = Array[Resource]([SubResource("RoseDialogCase_upavf")])
+resource_name = "NPC: You've come! Now, let me pay you. Don't be disap…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_r3ckt"]
+step = ExtResource("5_66jgk")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ymwn1"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_r3ckt")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0w2pp"]
+text = "You came back a little late. Your reward becomes null if you can't come back within the allotted time. Next time, please return as soon as you can."
+next_menu = 16
+show_if = Array[Resource]([SubResource("RoseDialogCase_ymwn1")])
+resource_name = "NPC: You came back a little late. Your reward becomes…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gdmhj"]
+lines = Array[Resource]([SubResource("RoseDialogLine_i8ap5"), SubResource("RoseDialogLine_0w2pp")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_70myu"]
+step = ExtResource("6_wnntl")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_0ucuk"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_70myu")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_r1dq3"]
+kind = "Answer"
+text = "I see."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_0ucuk")])
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wt6co"]
+lines = Array[Resource]([SubResource("RoseDialogLine_r1dq3")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d6jc7"]
+kind = "Answer"
+text = "I promise I will, but I'm kind of disappointed in the fact that I didn't get anything for my effort."
+next_menu = 14
+resource_name = "You: I promise I will, but I'm kind of disappointed i…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_g5ixg"]
+lines = Array[Resource]([SubResource("RoseDialogLine_d6jc7")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_65prt"]
+text = "When you hear me call you, please come back as quickly as you can!"
+next_menu = 15
+resource_name = "NPC: When you hear me call you, please come back as q…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_yq0qe"]
+lines = Array[Resource]([SubResource("RoseDialogLine_65prt")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qbpxb"]
+kind = "Answer"
+text = "Alright."
+resource_name = "You: Alright."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_js7mw"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qbpxb")])
+resource_name = "Menu 15"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vd0g0"]
+kind = "Answer"
+text = "Yes, I understand."
+resource_name = "You: Yes, I understand."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wtnat"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vd0g0")])
+resource_name = "Menu 16"
+
+[resource]
+key = "EM02-018.con"
+name = "[Ferrell Guild Staff] Kiroth"
+menus = Array[Resource]([SubResource("RoseDialogMenu_4o51w"), SubResource("RoseDialogMenu_hydhu"), SubResource("RoseDialogMenu_8ll2v"), SubResource("RoseDialogMenu_8lrix"), SubResource("RoseDialogMenu_n3axx"), SubResource("RoseDialogMenu_vmwsi"), SubResource("RoseDialogMenu_al0o5"), SubResource("RoseDialogMenu_jxokc"), SubResource("RoseDialogMenu_ua7wf"), SubResource("RoseDialogMenu_0l8sf"), SubResource("RoseDialogMenu_5iiqr"), SubResource("RoseDialogMenu_gdmhj"), SubResource("RoseDialogMenu_wt6co"), SubResource("RoseDialogMenu_g5ixg"), SubResource("RoseDialogMenu_yq0qe"), SubResource("RoseDialogMenu_js7mw"), SubResource("RoseDialogMenu_wtnat")])

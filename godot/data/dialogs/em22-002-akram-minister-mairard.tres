@@ -1,0 +1,1388 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://caomao8f83o82"]
+
+[ext_resource type="RoseQuest" uid="uid://dl8vklhs4tsk3" path="res://data/quests/801-junon-planet-identification.tres" id="1_o1cmi"]
+[ext_resource type="RoseQuest" uid="uid://bpwatn142f2lt" path="res://data/quests/851-solider-job-change-quest.tres" id="2_pvs0n"]
+[ext_resource type="RoseQuest" uid="uid://blcrlxajbdr2d" path="res://data/quests/852-solider-job-change-quest.tres" id="3_6v8bg"]
+[ext_resource type="RoseQuest" uid="uid://b1ycugw4h1a20" path="res://data/quests/853-solider-job-change-quest.tres" id="4_vdc77"]
+[ext_resource type="RoseQuest" uid="uid://d0lb0orsmv0dr" path="res://data/quests/854-solider-job-change-quest.tres" id="5_ejfqw"]
+[ext_resource type="RoseQuest" uid="uid://bv3o7dsbw31cn" path="res://data/quests/901-muse-job-change-quest.tres" id="6_s2ffa"]
+[ext_resource type="RoseQuest" uid="uid://cenbess3gd6o8" path="res://data/quests/902-muse-job-change-quest.tres" id="7_pre0i"]
+[ext_resource type="RoseQuest" uid="uid://dhk7heriy2j43" path="res://data/quests/903-muse-job-change-quest.tres" id="8_28nj7"]
+[ext_resource type="RoseQuest" uid="uid://js0pujpq4age" path="res://data/quests/904-muse-job-change-quest.tres" id="9_peivu"]
+[ext_resource type="RoseQuest" uid="uid://c5ndt2re5ho12" path="res://data/quests/951-hawker-job-change-quest.tres" id="10_07gso"]
+[ext_resource type="RoseQuest" uid="uid://cxbpjyrut81at" path="res://data/quests/952-hawker-job-change-quest.tres" id="11_340gv"]
+[ext_resource type="RoseQuest" uid="uid://n7ra3w6ii4xe" path="res://data/quests/953-hawker-job-change-quest.tres" id="12_ptami"]
+[ext_resource type="RoseQuest" uid="uid://c0idle3lxgufw" path="res://data/quests/1001-dealer-job-change-quest.tres" id="13_lxh3d"]
+[ext_resource type="RoseQuest" uid="uid://ckmc17bwap5bk" path="res://data/quests/1002-dealer-job-change-quest.tres" id="14_mcqg6"]
+[ext_resource type="RoseQuest" uid="uid://cigruferpayh0" path="res://data/quests/1003-dealer-job-change-quest.tres" id="15_hf24c"]
+[ext_resource type="RoseQuest" uid="uid://cf3m5g8nj4fv0" path="res://data/quests/1004-dealer-job-change-quest.tres" id="16_04ube"]
+[ext_resource type="RoseQuest" uid="uid://bd6ayujh1acvr" path="res://data/quests/802-secretly-learning-to-drive.tres" id="17_yrlfb"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dvlhdgqmbnct2" path="res://data/quest_triggers/qj000-01/801-01.tres" id="18_v3usj"]
+[ext_resource type="RoseQuestTrigger" uid="uid://beuk3pl5o0pdh" path="res://data/quest_triggers/tutorial/802-03.tres" id="19_imnfo"]
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_a7cx3"]
+operator = "<"
+value = 3
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_pj3ct"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_a7cx3")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_nftme"]
+value = 3
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_e8l7a"]
+ability = "Job"
+operator = ">"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_38nlo"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_nftme"), SubResource("RoseDialogIfAbility_e8l7a")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_06qwe"]
+value = 3
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_8rsfn"]
+ability = "Job"
+operator = "<="
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_5gx7s"]
+quest = ExtResource("1_o1cmi")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_y2ee4"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_06qwe"), SubResource("RoseDialogIfAbility_8rsfn"), SubResource("RoseDialogIfQuest_5gx7s")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_sfs87"]
+value = 3
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_ce6hs"]
+ability = "Job"
+operator = "<="
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_8tx4p"]
+quest = ExtResource("1_o1cmi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_f3n1r"]
+quest = ExtResource("2_pvs0n")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2os1r"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_sfs87"), SubResource("RoseDialogIfAbility_ce6hs"), SubResource("RoseDialogIfQuest_8tx4p"), SubResource("RoseDialogIfQuest_f3n1r")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_xee6g"]
+value = 3
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_vpqjs"]
+ability = "Job"
+operator = "<="
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_e31w4"]
+quest = ExtResource("1_o1cmi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_xbmna"]
+quest = ExtResource("2_pvs0n")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_yljer"]
+quest = ExtResource("3_6v8bg")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_y47yc"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_xee6g"), SubResource("RoseDialogIfAbility_vpqjs"), SubResource("RoseDialogIfQuest_e31w4"), SubResource("RoseDialogIfQuest_xbmna"), SubResource("RoseDialogIfQuest_yljer")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_utr25"]
+value = 3
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_yjsjn"]
+ability = "Job"
+operator = "<="
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_l1h4h"]
+quest = ExtResource("1_o1cmi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_xri58"]
+quest = ExtResource("2_pvs0n")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_juqx1"]
+quest = ExtResource("3_6v8bg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_04w6v"]
+quest = ExtResource("4_vdc77")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_4npg6"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_utr25"), SubResource("RoseDialogIfAbility_yjsjn"), SubResource("RoseDialogIfQuest_l1h4h"), SubResource("RoseDialogIfQuest_xri58"), SubResource("RoseDialogIfQuest_juqx1"), SubResource("RoseDialogIfQuest_04w6v")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_jgk6u"]
+value = 3
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_nxtib"]
+ability = "Job"
+operator = "<="
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_hcbkq"]
+quest = ExtResource("1_o1cmi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_4yddk"]
+quest = ExtResource("2_pvs0n")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ntvv0"]
+quest = ExtResource("3_6v8bg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_3covh"]
+quest = ExtResource("4_vdc77")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_wwhoj"]
+quest = ExtResource("5_ejfqw")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_thack"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_jgk6u"), SubResource("RoseDialogIfAbility_nxtib"), SubResource("RoseDialogIfQuest_hcbkq"), SubResource("RoseDialogIfQuest_4yddk"), SubResource("RoseDialogIfQuest_ntvv0"), SubResource("RoseDialogIfQuest_3covh"), SubResource("RoseDialogIfQuest_wwhoj")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_35h3s"]
+value = 3
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_gdhpr"]
+ability = "Job"
+operator = "<="
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_wgqck"]
+quest = ExtResource("1_o1cmi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_1mlmn"]
+quest = ExtResource("2_pvs0n")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_og67c"]
+quest = ExtResource("3_6v8bg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ug24f"]
+quest = ExtResource("4_vdc77")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_uf7s6"]
+quest = ExtResource("5_ejfqw")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_yncby"]
+quest = ExtResource("6_s2ffa")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2ic2t"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_35h3s"), SubResource("RoseDialogIfAbility_gdhpr"), SubResource("RoseDialogIfQuest_wgqck"), SubResource("RoseDialogIfQuest_1mlmn"), SubResource("RoseDialogIfQuest_og67c"), SubResource("RoseDialogIfQuest_ug24f"), SubResource("RoseDialogIfQuest_uf7s6"), SubResource("RoseDialogIfQuest_yncby")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_r6fgw"]
+value = 3
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_r4jjs"]
+ability = "Job"
+operator = "<="
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_5qm00"]
+quest = ExtResource("1_o1cmi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_5dyok"]
+quest = ExtResource("2_pvs0n")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_7p005"]
+quest = ExtResource("3_6v8bg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_7i2wf"]
+quest = ExtResource("4_vdc77")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_xl8pu"]
+quest = ExtResource("5_ejfqw")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ct4gq"]
+quest = ExtResource("6_s2ffa")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_13onx"]
+quest = ExtResource("7_pre0i")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_l4tus"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_r6fgw"), SubResource("RoseDialogIfAbility_r4jjs"), SubResource("RoseDialogIfQuest_5qm00"), SubResource("RoseDialogIfQuest_5dyok"), SubResource("RoseDialogIfQuest_7p005"), SubResource("RoseDialogIfQuest_7i2wf"), SubResource("RoseDialogIfQuest_xl8pu"), SubResource("RoseDialogIfQuest_ct4gq"), SubResource("RoseDialogIfQuest_13onx")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_788kp"]
+value = 3
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_poyv4"]
+ability = "Job"
+operator = "<="
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_5q5ma"]
+quest = ExtResource("1_o1cmi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_x0xaj"]
+quest = ExtResource("2_pvs0n")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_naf41"]
+quest = ExtResource("3_6v8bg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_y0ksx"]
+quest = ExtResource("4_vdc77")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_sshub"]
+quest = ExtResource("5_ejfqw")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_pbk2e"]
+quest = ExtResource("6_s2ffa")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_hktjk"]
+quest = ExtResource("7_pre0i")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_udspu"]
+quest = ExtResource("8_28nj7")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_d166f"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_788kp"), SubResource("RoseDialogIfAbility_poyv4"), SubResource("RoseDialogIfQuest_5q5ma"), SubResource("RoseDialogIfQuest_x0xaj"), SubResource("RoseDialogIfQuest_naf41"), SubResource("RoseDialogIfQuest_y0ksx"), SubResource("RoseDialogIfQuest_sshub"), SubResource("RoseDialogIfQuest_pbk2e"), SubResource("RoseDialogIfQuest_hktjk"), SubResource("RoseDialogIfQuest_udspu")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_s6151"]
+value = 3
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_ec13t"]
+ability = "Job"
+operator = "<="
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_bj1cv"]
+quest = ExtResource("1_o1cmi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_4lbk8"]
+quest = ExtResource("2_pvs0n")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_dyo2j"]
+quest = ExtResource("3_6v8bg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_8b0jw"]
+quest = ExtResource("4_vdc77")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_aqgnp"]
+quest = ExtResource("5_ejfqw")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_pvxpx"]
+quest = ExtResource("6_s2ffa")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_xswq0"]
+quest = ExtResource("7_pre0i")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_2xfps"]
+quest = ExtResource("8_28nj7")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_vw2lo"]
+quest = ExtResource("9_peivu")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_6e4dv"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_s6151"), SubResource("RoseDialogIfAbility_ec13t"), SubResource("RoseDialogIfQuest_bj1cv"), SubResource("RoseDialogIfQuest_4lbk8"), SubResource("RoseDialogIfQuest_dyo2j"), SubResource("RoseDialogIfQuest_8b0jw"), SubResource("RoseDialogIfQuest_aqgnp"), SubResource("RoseDialogIfQuest_pvxpx"), SubResource("RoseDialogIfQuest_xswq0"), SubResource("RoseDialogIfQuest_2xfps"), SubResource("RoseDialogIfQuest_vw2lo")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_12vmo"]
+value = 3
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_rtnwl"]
+ability = "Job"
+operator = "<="
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_k71b0"]
+quest = ExtResource("1_o1cmi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_n2ku5"]
+quest = ExtResource("2_pvs0n")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_xp6b4"]
+quest = ExtResource("3_6v8bg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_l4nor"]
+quest = ExtResource("4_vdc77")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_5j414"]
+quest = ExtResource("5_ejfqw")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_53rp1"]
+quest = ExtResource("6_s2ffa")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_8u6qu"]
+quest = ExtResource("7_pre0i")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_8xcv3"]
+quest = ExtResource("8_28nj7")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_px5sv"]
+quest = ExtResource("9_peivu")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_0nq5u"]
+quest = ExtResource("10_07gso")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_77820"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_12vmo"), SubResource("RoseDialogIfAbility_rtnwl"), SubResource("RoseDialogIfQuest_k71b0"), SubResource("RoseDialogIfQuest_n2ku5"), SubResource("RoseDialogIfQuest_xp6b4"), SubResource("RoseDialogIfQuest_l4nor"), SubResource("RoseDialogIfQuest_5j414"), SubResource("RoseDialogIfQuest_53rp1"), SubResource("RoseDialogIfQuest_8u6qu"), SubResource("RoseDialogIfQuest_8xcv3"), SubResource("RoseDialogIfQuest_px5sv"), SubResource("RoseDialogIfQuest_0nq5u")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_5jgs8"]
+value = 3
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_mrvx0"]
+ability = "Job"
+operator = "<="
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_iicqr"]
+quest = ExtResource("1_o1cmi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_olwbv"]
+quest = ExtResource("2_pvs0n")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_6volj"]
+quest = ExtResource("3_6v8bg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_hv1c3"]
+quest = ExtResource("4_vdc77")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_0kb1x"]
+quest = ExtResource("5_ejfqw")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_rjko4"]
+quest = ExtResource("6_s2ffa")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_y5115"]
+quest = ExtResource("7_pre0i")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_3oovx"]
+quest = ExtResource("8_28nj7")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_axwyy"]
+quest = ExtResource("9_peivu")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_r1ni2"]
+quest = ExtResource("10_07gso")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_v0bv7"]
+quest = ExtResource("11_340gv")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ie1mg"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_5jgs8"), SubResource("RoseDialogIfAbility_mrvx0"), SubResource("RoseDialogIfQuest_iicqr"), SubResource("RoseDialogIfQuest_olwbv"), SubResource("RoseDialogIfQuest_6volj"), SubResource("RoseDialogIfQuest_hv1c3"), SubResource("RoseDialogIfQuest_0kb1x"), SubResource("RoseDialogIfQuest_rjko4"), SubResource("RoseDialogIfQuest_y5115"), SubResource("RoseDialogIfQuest_3oovx"), SubResource("RoseDialogIfQuest_axwyy"), SubResource("RoseDialogIfQuest_r1ni2"), SubResource("RoseDialogIfQuest_v0bv7")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_fxhs3"]
+value = 3
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_dcml5"]
+ability = "Job"
+operator = "<="
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_bx7uk"]
+quest = ExtResource("1_o1cmi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_cufbv"]
+quest = ExtResource("2_pvs0n")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_x5p7s"]
+quest = ExtResource("3_6v8bg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_wu6oc"]
+quest = ExtResource("4_vdc77")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_gdjj4"]
+quest = ExtResource("5_ejfqw")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_xpoaw"]
+quest = ExtResource("6_s2ffa")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_x3q5h"]
+quest = ExtResource("7_pre0i")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_3fe5p"]
+quest = ExtResource("8_28nj7")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_a4gnh"]
+quest = ExtResource("9_peivu")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ihvd7"]
+quest = ExtResource("10_07gso")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_s0elt"]
+quest = ExtResource("11_340gv")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_lms4j"]
+quest = ExtResource("12_ptami")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_f5uab"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_fxhs3"), SubResource("RoseDialogIfAbility_dcml5"), SubResource("RoseDialogIfQuest_bx7uk"), SubResource("RoseDialogIfQuest_cufbv"), SubResource("RoseDialogIfQuest_x5p7s"), SubResource("RoseDialogIfQuest_wu6oc"), SubResource("RoseDialogIfQuest_gdjj4"), SubResource("RoseDialogIfQuest_xpoaw"), SubResource("RoseDialogIfQuest_x3q5h"), SubResource("RoseDialogIfQuest_3fe5p"), SubResource("RoseDialogIfQuest_a4gnh"), SubResource("RoseDialogIfQuest_ihvd7"), SubResource("RoseDialogIfQuest_s0elt"), SubResource("RoseDialogIfQuest_lms4j")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_dtk5q"]
+value = 3
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_8nl7x"]
+ability = "Job"
+operator = "<="
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ln7t4"]
+quest = ExtResource("1_o1cmi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_hnre2"]
+quest = ExtResource("2_pvs0n")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_0xmcu"]
+quest = ExtResource("3_6v8bg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_kxgo3"]
+quest = ExtResource("4_vdc77")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_kosys"]
+quest = ExtResource("5_ejfqw")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_n6336"]
+quest = ExtResource("6_s2ffa")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_lh5qh"]
+quest = ExtResource("7_pre0i")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_dbjek"]
+quest = ExtResource("8_28nj7")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_q5ytt"]
+quest = ExtResource("9_peivu")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_umkld"]
+quest = ExtResource("10_07gso")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_kjjhc"]
+quest = ExtResource("11_340gv")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_g8lfi"]
+quest = ExtResource("12_ptami")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_odo52"]
+quest = ExtResource("13_lxh3d")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_767kr"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_dtk5q"), SubResource("RoseDialogIfAbility_8nl7x"), SubResource("RoseDialogIfQuest_ln7t4"), SubResource("RoseDialogIfQuest_hnre2"), SubResource("RoseDialogIfQuest_0xmcu"), SubResource("RoseDialogIfQuest_kxgo3"), SubResource("RoseDialogIfQuest_kosys"), SubResource("RoseDialogIfQuest_n6336"), SubResource("RoseDialogIfQuest_lh5qh"), SubResource("RoseDialogIfQuest_dbjek"), SubResource("RoseDialogIfQuest_q5ytt"), SubResource("RoseDialogIfQuest_umkld"), SubResource("RoseDialogIfQuest_kjjhc"), SubResource("RoseDialogIfQuest_g8lfi"), SubResource("RoseDialogIfQuest_odo52")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_v4oov"]
+value = 3
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_gb76b"]
+ability = "Job"
+operator = "<="
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_06v6r"]
+quest = ExtResource("1_o1cmi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_6ybal"]
+quest = ExtResource("2_pvs0n")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_btbe2"]
+quest = ExtResource("3_6v8bg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_mfbam"]
+quest = ExtResource("4_vdc77")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_8s4wi"]
+quest = ExtResource("5_ejfqw")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_fdexl"]
+quest = ExtResource("6_s2ffa")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_y43t3"]
+quest = ExtResource("7_pre0i")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_7kgpn"]
+quest = ExtResource("8_28nj7")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_7ks6v"]
+quest = ExtResource("9_peivu")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_2suup"]
+quest = ExtResource("10_07gso")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_67yhy"]
+quest = ExtResource("11_340gv")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_b53jt"]
+quest = ExtResource("12_ptami")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_g71il"]
+quest = ExtResource("13_lxh3d")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_o71el"]
+quest = ExtResource("14_mcqg6")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_y543j"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_v4oov"), SubResource("RoseDialogIfAbility_gb76b"), SubResource("RoseDialogIfQuest_06v6r"), SubResource("RoseDialogIfQuest_6ybal"), SubResource("RoseDialogIfQuest_btbe2"), SubResource("RoseDialogIfQuest_mfbam"), SubResource("RoseDialogIfQuest_8s4wi"), SubResource("RoseDialogIfQuest_fdexl"), SubResource("RoseDialogIfQuest_y43t3"), SubResource("RoseDialogIfQuest_7kgpn"), SubResource("RoseDialogIfQuest_7ks6v"), SubResource("RoseDialogIfQuest_2suup"), SubResource("RoseDialogIfQuest_67yhy"), SubResource("RoseDialogIfQuest_b53jt"), SubResource("RoseDialogIfQuest_g71il"), SubResource("RoseDialogIfQuest_o71el")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_x4gkh"]
+value = 3
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_fq8o6"]
+ability = "Job"
+operator = "<="
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_kx7vn"]
+quest = ExtResource("1_o1cmi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_hc32r"]
+quest = ExtResource("2_pvs0n")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_f05nm"]
+quest = ExtResource("3_6v8bg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_0tyyt"]
+quest = ExtResource("4_vdc77")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_3d8nc"]
+quest = ExtResource("5_ejfqw")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_f82mo"]
+quest = ExtResource("6_s2ffa")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_y1xvm"]
+quest = ExtResource("7_pre0i")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_4gjtw"]
+quest = ExtResource("8_28nj7")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_slkgd"]
+quest = ExtResource("9_peivu")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_w8uwb"]
+quest = ExtResource("10_07gso")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_34wyh"]
+quest = ExtResource("11_340gv")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_mhcjx"]
+quest = ExtResource("12_ptami")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_xpfkl"]
+quest = ExtResource("13_lxh3d")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_6cb6b"]
+quest = ExtResource("14_mcqg6")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_enoxi"]
+quest = ExtResource("15_hf24c")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_tcroa"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_x4gkh"), SubResource("RoseDialogIfAbility_fq8o6"), SubResource("RoseDialogIfQuest_kx7vn"), SubResource("RoseDialogIfQuest_hc32r"), SubResource("RoseDialogIfQuest_f05nm"), SubResource("RoseDialogIfQuest_0tyyt"), SubResource("RoseDialogIfQuest_3d8nc"), SubResource("RoseDialogIfQuest_f82mo"), SubResource("RoseDialogIfQuest_y1xvm"), SubResource("RoseDialogIfQuest_4gjtw"), SubResource("RoseDialogIfQuest_slkgd"), SubResource("RoseDialogIfQuest_w8uwb"), SubResource("RoseDialogIfQuest_34wyh"), SubResource("RoseDialogIfQuest_mhcjx"), SubResource("RoseDialogIfQuest_xpfkl"), SubResource("RoseDialogIfQuest_6cb6b"), SubResource("RoseDialogIfQuest_enoxi")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_7kwq7"]
+value = 3
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_7ep0e"]
+ability = "Job"
+operator = "<="
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_x5j0o"]
+quest = ExtResource("1_o1cmi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_vpxpf"]
+quest = ExtResource("2_pvs0n")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ststi"]
+quest = ExtResource("3_6v8bg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_51i5i"]
+quest = ExtResource("4_vdc77")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_m6gmq"]
+quest = ExtResource("5_ejfqw")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_8g75w"]
+quest = ExtResource("6_s2ffa")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_wif83"]
+quest = ExtResource("7_pre0i")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_1teo7"]
+quest = ExtResource("8_28nj7")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ega7f"]
+quest = ExtResource("9_peivu")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_13u4o"]
+quest = ExtResource("10_07gso")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_n8gp3"]
+quest = ExtResource("11_340gv")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_p1hvj"]
+quest = ExtResource("12_ptami")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_gj4tv"]
+quest = ExtResource("13_lxh3d")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_3tfr5"]
+quest = ExtResource("14_mcqg6")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_cr5hh"]
+quest = ExtResource("15_hf24c")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_b2s56"]
+quest = ExtResource("16_04ube")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_wo77g"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_7kwq7"), SubResource("RoseDialogIfAbility_7ep0e"), SubResource("RoseDialogIfQuest_x5j0o"), SubResource("RoseDialogIfQuest_vpxpf"), SubResource("RoseDialogIfQuest_ststi"), SubResource("RoseDialogIfQuest_51i5i"), SubResource("RoseDialogIfQuest_m6gmq"), SubResource("RoseDialogIfQuest_8g75w"), SubResource("RoseDialogIfQuest_wif83"), SubResource("RoseDialogIfQuest_1teo7"), SubResource("RoseDialogIfQuest_ega7f"), SubResource("RoseDialogIfQuest_13u4o"), SubResource("RoseDialogIfQuest_n8gp3"), SubResource("RoseDialogIfQuest_p1hvj"), SubResource("RoseDialogIfQuest_gj4tv"), SubResource("RoseDialogIfQuest_3tfr5"), SubResource("RoseDialogIfQuest_cr5hh"), SubResource("RoseDialogIfQuest_b2s56")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_v4xxj"]
+value = 3
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_a2wwo"]
+ability = "Job"
+operator = "<="
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_u5d5n"]
+quest = ExtResource("1_o1cmi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_2wjgl"]
+quest = ExtResource("2_pvs0n")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_odf0y"]
+quest = ExtResource("3_6v8bg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_8j672"]
+quest = ExtResource("4_vdc77")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_f0f1h"]
+quest = ExtResource("5_ejfqw")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_4mr2k"]
+quest = ExtResource("6_s2ffa")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_wq7nl"]
+quest = ExtResource("7_pre0i")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_injbg"]
+quest = ExtResource("8_28nj7")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ysnke"]
+quest = ExtResource("9_peivu")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_d00rh"]
+quest = ExtResource("10_07gso")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_atfre"]
+quest = ExtResource("11_340gv")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_fnmxp"]
+quest = ExtResource("12_ptami")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_4sqg6"]
+quest = ExtResource("13_lxh3d")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_4bwhg"]
+quest = ExtResource("14_mcqg6")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_joe5x"]
+quest = ExtResource("15_hf24c")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_s277s"]
+quest = ExtResource("16_04ube")
+active = false
+
+[sub_resource type="RoseDialogIfVariable" id="RoseDialogIfVariable_wi7cj"]
+variable = "Job"
+operator = ">"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_guyta"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_v4xxj"), SubResource("RoseDialogIfAbility_a2wwo"), SubResource("RoseDialogIfQuest_u5d5n"), SubResource("RoseDialogIfQuest_2wjgl"), SubResource("RoseDialogIfQuest_odf0y"), SubResource("RoseDialogIfQuest_8j672"), SubResource("RoseDialogIfQuest_f0f1h"), SubResource("RoseDialogIfQuest_4mr2k"), SubResource("RoseDialogIfQuest_wq7nl"), SubResource("RoseDialogIfQuest_injbg"), SubResource("RoseDialogIfQuest_ysnke"), SubResource("RoseDialogIfQuest_d00rh"), SubResource("RoseDialogIfQuest_atfre"), SubResource("RoseDialogIfQuest_fnmxp"), SubResource("RoseDialogIfQuest_4sqg6"), SubResource("RoseDialogIfQuest_4bwhg"), SubResource("RoseDialogIfQuest_joe5x"), SubResource("RoseDialogIfQuest_s277s"), SubResource("RoseDialogIfVariable_wi7cj")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tc5vp"]
+text = "I am a minister of the Akram Kingdom. You can inform me of anything related to the Akram Kingdom administration."
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_pj3ct"), SubResource("RoseDialogCase_38nlo"), SubResource("RoseDialogCase_y2ee4"), SubResource("RoseDialogCase_2os1r"), SubResource("RoseDialogCase_y47yc"), SubResource("RoseDialogCase_4npg6"), SubResource("RoseDialogCase_thack"), SubResource("RoseDialogCase_2ic2t"), SubResource("RoseDialogCase_l4tus"), SubResource("RoseDialogCase_d166f"), SubResource("RoseDialogCase_6e4dv"), SubResource("RoseDialogCase_77820"), SubResource("RoseDialogCase_ie1mg"), SubResource("RoseDialogCase_f5uab"), SubResource("RoseDialogCase_767kr"), SubResource("RoseDialogCase_y543j"), SubResource("RoseDialogCase_tcroa"), SubResource("RoseDialogCase_wo77g"), SubResource("RoseDialogCase_guyta")])
+resource_name = "NPC: I am a minister of the Akram Kingdom. You can in…"
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_q4jhg"]
+value = 3
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_m5mmo"]
+ability = "Job"
+operator = "<"
+value = 1
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_1v3fc"]
+quest = ExtResource("1_o1cmi")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_twjdc"]
+quest = ExtResource("2_pvs0n")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_guehm"]
+quest = ExtResource("3_6v8bg")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_sj4qr"]
+quest = ExtResource("4_vdc77")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_emydx"]
+quest = ExtResource("5_ejfqw")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_rg5aw"]
+quest = ExtResource("6_s2ffa")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_oiwxu"]
+quest = ExtResource("7_pre0i")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_iun4d"]
+quest = ExtResource("8_28nj7")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_1m0v1"]
+quest = ExtResource("9_peivu")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_eex7m"]
+quest = ExtResource("10_07gso")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_oxkf4"]
+quest = ExtResource("11_340gv")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_r2iq4"]
+quest = ExtResource("12_ptami")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_7yi5u"]
+quest = ExtResource("13_lxh3d")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_jkb2k"]
+quest = ExtResource("14_mcqg6")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_lii04"]
+quest = ExtResource("15_hf24c")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_yfq7l"]
+quest = ExtResource("16_04ube")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_omg87"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_q4jhg"), SubResource("RoseDialogIfAbility_m5mmo"), SubResource("RoseDialogIfQuest_1v3fc"), SubResource("RoseDialogIfQuest_twjdc"), SubResource("RoseDialogIfQuest_guehm"), SubResource("RoseDialogIfQuest_sj4qr"), SubResource("RoseDialogIfQuest_emydx"), SubResource("RoseDialogIfQuest_rg5aw"), SubResource("RoseDialogIfQuest_oiwxu"), SubResource("RoseDialogIfQuest_iun4d"), SubResource("RoseDialogIfQuest_1m0v1"), SubResource("RoseDialogIfQuest_eex7m"), SubResource("RoseDialogIfQuest_oxkf4"), SubResource("RoseDialogIfQuest_r2iq4"), SubResource("RoseDialogIfQuest_7yi5u"), SubResource("RoseDialogIfQuest_jkb2k"), SubResource("RoseDialogIfQuest_lii04"), SubResource("RoseDialogIfQuest_yfq7l")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d1t21"]
+text = "You are new to Junon, yes? In order to travel through Junon, you must first obtain identification."
+next_menu = 16
+show_if = Array[Resource]([SubResource("RoseDialogCase_omg87")])
+resource_name = "NPC: You are new to Junon, yes? In order to travel th…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_axv12"]
+quest = ExtResource("1_o1cmi")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ontrq"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_axv12")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_knu3t"]
+text = "I am a minister of the Akram Kingdom. You can inform me of anything related to the Akram Kingdom administration."
+next_menu = 24
+show_if = Array[Resource]([SubResource("RoseDialogCase_ontrq")])
+resource_name = "NPC: I am a minister of the Akram Kingdom. You can in…"
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_80vmj"]
+ability = "Job"
+operator = ">"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_450as"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_80vmj")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3hmlk"]
+text = "I am a minister of the Akram Kingdom. You can inform me of anything related to the Akram Kingdom administration."
+next_menu = 23
+show_if = Array[Resource]([SubResource("RoseDialogCase_450as")])
+resource_name = "NPC: I am a minister of the Akram Kingdom. You can in…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_x2s1i"]
+quest = ExtResource("17_yrlfb")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_i4bqe"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_x2s1i")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ua0ru"]
+text = "Welcome, how may I help you?"
+next_menu = 27
+show_if = Array[Resource]([SubResource("RoseDialogCase_i4bqe")])
+resource_name = "NPC: Welcome, how may I help you?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vlyua"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tc5vp"), SubResource("RoseDialogLine_d1t21"), SubResource("RoseDialogLine_knu3t"), SubResource("RoseDialogLine_3hmlk"), SubResource("RoseDialogLine_ua0ru")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_g8i3s"]
+kind = "Answer"
+text = "I was told you're the one in charge of job classes."
+next_menu = 2
+resource_name = "You: I was told you're the one in charge of job class…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ofkns"]
+kind = "Answer"
+text = "Thank you, but I don't have anything to ask of you for now."
+resource_name = "You: Thank you, but I don't have anything to ask of y…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ux6t7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_g8i3s"), SubResource("RoseDialogLine_ofkns")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_14qa0"]
+text = "Yes, that is true. So what do you want to know?"
+next_menu = 3
+resource_name = "NPC: Yes, that is true. So what do you want to know?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4ulf0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_14qa0")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mjgdc"]
+kind = "Answer"
+text = "I wonder, what classes are available to me?"
+next_menu = 4
+resource_name = "You: I wonder, what classes are available to me?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_obw4j"]
+kind = "Answer"
+text = "Tell me how to change my job."
+next_menu = 14
+resource_name = "You: Tell me how to change my job."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hs612"]
+kind = "Answer"
+text = "Actually, there's nothing that I want to know."
+resource_name = "You: Actually, there's nothing that I want to know."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vyjb8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_mjgdc"), SubResource("RoseDialogLine_obw4j"), SubResource("RoseDialogLine_hs612")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ibjoi"]
+text = "For 1st classes, you can choose from Soldier, Muse, Hawker and Dealer. For 2nd and 3rd classes, I don't think you need to know at this time."
+next_menu = 5
+resource_name = "NPC: For 1st classes, you can choose from Soldier, Mu…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_y68nk"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ibjoi")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mjkah"]
+kind = "Answer"
+text = "What does a Soldier do?"
+next_menu = 6
+resource_name = "You: What does a Soldier do?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lxar7"]
+kind = "Answer"
+text = "What does a Muse do?"
+next_menu = 8
+resource_name = "You: What does a Muse do?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mgnsj"]
+kind = "Answer"
+text = "What does a Hawker do?"
+next_menu = 9
+resource_name = "You: What does a Hawker do?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jiqlq"]
+kind = "Answer"
+text = "What does a Dealer do?"
+next_menu = 10
+resource_name = "You: What does a Dealer do?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a88bl"]
+kind = "Answer"
+text = "Ah, alright. That's all I wanted to know."
+next_menu = 2
+resource_name = "You: Ah, alright. That's all I wanted to know."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_puqmj"]
+lines = Array[Resource]([SubResource("RoseDialogLine_mjkah"), SubResource("RoseDialogLine_lxar7"), SubResource("RoseDialogLine_mgnsj"), SubResource("RoseDialogLine_jiqlq"), SubResource("RoseDialogLine_a88bl")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_s7eo7"]
+text = "Soldier is a class that specializes in strong physical attacks. Soldiers usually fight with Swords and Blunt Weapons."
+next_menu = 7
+resource_name = "NPC: Soldier is a class that specializes in strong ph…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ej1f0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_s7eo7")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_umvot"]
+kind = "Answer"
+text = "I see."
+next_menu = 2
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_h1q4t"]
+lines = Array[Resource]([SubResource("RoseDialogLine_umvot")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0ncty"]
+text = "Muse is a class that uses magic based on holy power and the power of nature."
+next_menu = 11
+resource_name = "NPC: Muse is a class that uses magic based on holy po…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qh51e"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0ncty")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fypv4"]
+text = "Hawker is a class that specializes in swift attacks based on quick movement. They can also use Bows."
+next_menu = 12
+resource_name = "NPC: Hawker is a class that specializes in swift atta…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4pg23"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fypv4")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mfsjx"]
+text = "Dealer is an expert of trading and item crafting."
+next_menu = 13
+resource_name = "NPC: Dealer is an expert of trading and item crafting…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lb3qr"]
+lines = Array[Resource]([SubResource("RoseDialogLine_mfsjx")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5so5t"]
+kind = "Answer"
+text = "I see."
+next_menu = 2
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8538w"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5so5t")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_05kyv"]
+kind = "Answer"
+text = "Ah, I see."
+next_menu = 2
+resource_name = "You: Ah, I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_iki16"]
+lines = Array[Resource]([SubResource("RoseDialogLine_05kyv")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xcfq5"]
+kind = "Answer"
+text = "Oh, is that so?"
+next_menu = 2
+resource_name = "You: Oh, is that so?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_kx03j"]
+lines = Array[Resource]([SubResource("RoseDialogLine_xcfq5")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ktbi6"]
+text = "In order to change your job into one of the 1st classes, you must reach Level 10. Then, you must complete a quest as required by that job."
+next_menu = 15
+resource_name = "NPC: In order to change your job into one of the 1st …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_cvla0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ktbi6")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ifbnq"]
+kind = "Answer"
+text = "I see."
+next_menu = 2
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_f3cn7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ifbnq")])
+resource_name = "Menu 15"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_57pbj"]
+kind = "Answer"
+text = "What should I do to get my identification?"
+next_menu = 17
+resource_name = "You: What should I do to get my identification?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jkndb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_57pbj")])
+resource_name = "Menu 16"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ta5e3"]
+text = "I will issue your identification. It's my duty to assist Visitors in traveling safely through Junon."
+next_menu = 18
+resource_name = "NPC: I will issue your identification. It's my duty t…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5ksjh"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ta5e3")])
+resource_name = "Menu 17"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tnijk"]
+kind = "Answer"
+text = "Thank you."
+next_menu = 19
+resource_name = "You: Thank you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_r7acj"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tnijk")])
+resource_name = "Menu 18"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_w0o3x"]
+text = "Here is your identification. Please present this whenever a government official asks you for it and you should be fine. Ah, you'll also need this identification to change your job to the 1st class. So please take good care of it."
+next_menu = 20
+resource_name = "NPC: Here is your identification. Please present this…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rurdo"]
+lines = Array[Resource]([SubResource("RoseDialogLine_w0o3x")])
+resource_name = "Menu 19"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_eg46i"]
+step = ExtResource("18_v3usj")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_hybbo"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_eg46i")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_r3ldv"]
+kind = "Answer"
+text = "I will. I won't lose this for sure."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_hybbo")])
+resource_name = "You: I will. I won't lose this for sure."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_f4ux3"]
+kind = "Answer"
+text = "By the way, how can I change my job?"
+next_menu = 21
+resource_name = "You: By the way, how can I change my job?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_voh1p"]
+lines = Array[Resource]([SubResource("RoseDialogLine_r3ldv"), SubResource("RoseDialogLine_f4ux3")])
+resource_name = "Menu 20"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mv1oh"]
+text = "I will let you know that after you take this identification."
+next_menu = 22
+resource_name = "NPC: I will let you know that after you take this ide…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ln3wy"]
+lines = Array[Resource]([SubResource("RoseDialogLine_mv1oh")])
+resource_name = "Menu 21"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_opoj6"]
+step = ExtResource("18_v3usj")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_nvncd"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_opoj6")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_boxbw"]
+kind = "Answer"
+text = "I'm sorry if I'm a little impatient. Thank you anyway."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_nvncd")])
+resource_name = "You: I'm sorry if I'm a little impatient. Thank you a…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lvkyo"]
+lines = Array[Resource]([SubResource("RoseDialogLine_boxbw")])
+resource_name = "Menu 22"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hmgk4"]
+kind = "Answer"
+text = "Thank you, but I don't have anything to ask of you for now."
+resource_name = "You: Thank you, but I don't have anything to ask of y…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lwvqk"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hmgk4")])
+resource_name = "Menu 23"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nt2mo"]
+kind = "Answer"
+text = "I was told that you're the one in charge of all job classes."
+next_menu = 2
+resource_name = "You: I was told that you're the one in charge of all …"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qs548"]
+kind = "Answer"
+text = "Since I want to change my job, I need to know where in Zant I can find Warren."
+next_menu = 25
+resource_name = "You: Since I want to change my job, I need to know wh…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_87v0j"]
+lines = Array[Resource]([SubResource("RoseDialogLine_nt2mo"), SubResource("RoseDialogLine_qs548")])
+resource_name = "Menu 24"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ihvtq"]
+text = "Zant is located North of here past the Valley of Luxem Tower. Warren is standing in front of the Town Hall."
+next_menu = 26
+resource_name = "NPC: Zant is located North of here past the Valley of…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_o73pj"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ihvtq")])
+resource_name = "Menu 25"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_etgps"]
+kind = "Answer"
+text = "I see. Thank you."
+resource_name = "You: I see. Thank you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_nya24"]
+lines = Array[Resource]([SubResource("RoseDialogLine_etgps")])
+resource_name = "Menu 26"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_r4vje"]
+kind = "Answer"
+text = "Mildun told me that I can learn everything about Carts from you."
+next_menu = 28
+resource_name = "You: Mildun told me that I can learn everything about…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_cqe66"]
+lines = Array[Resource]([SubResource("RoseDialogLine_r4vje")])
+resource_name = "Menu 27"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tp7ta"]
+text = "Oh, aren't you <NAME>? It wasn't that long ago that I gave you your identification, and now it's time for you to ride a Cart! You've grown really fast."
+next_menu = 29
+resource_name = "NPC: Oh, aren't you <NAME>? It wasn't that long ago t…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_m847w"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tp7ta")])
+resource_name = "Menu 28"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d2dfl"]
+kind = "Answer"
+text = "Oh, I'm flattered. By the way, what am I supposed to know about Carts?"
+next_menu = 30
+resource_name = "You: Oh, I'm flattered. By the way, what am I suppose…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6jbka"]
+lines = Array[Resource]([SubResource("RoseDialogLine_d2dfl")])
+resource_name = "Menu 29"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c4tew"]
+text = "There are many things you should know about Carts, but let me first tell you about its origins. If the Mana Engine, which operates by Mana Oil, was not invented, we would not have Carts today. The Mana Engine was invented by Anthony Flight in the year 604 in the era of hearts. At first, it was inefficient and performed poorly, so people didn't pay attention to it. However, as more improvements were made to the Mana Engine, it finally became the driving force behind the Cart. That's basically how the Cart was created."
+next_menu = 31
+resource_name = "NPC: There are many things you should know about Cart…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1jcjk"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c4tew")])
+resource_name = "Menu 30"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_87nup"]
+kind = "Answer"
+text = "Is that so? Ah, now I understand."
+next_menu = 32
+resource_name = "You: Is that so? Ah, now I understand."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rwdea"]
+lines = Array[Resource]([SubResource("RoseDialogLine_87nup")])
+resource_name = "Menu 31"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_yh1i2"]
+text = "Okay, let me ask you one question. Who invented the Mana Engine?"
+next_menu = 33
+resource_name = "NPC: Okay, let me ask you one question. Who invented …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_nl2h0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_yh1i2")])
+resource_name = "Menu 32"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_g08mc"]
+kind = "Answer"
+text = "Johanson Planner."
+next_menu = 34
+resource_name = "You: Johanson Planner."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vp22c"]
+kind = "Answer"
+text = "Anthony Flight."
+next_menu = 36
+resource_name = "You: Anthony Flight."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8pa5s"]
+kind = "Answer"
+text = "Orgin Flouiro."
+next_menu = 38
+resource_name = "You: Orgin Flouiro."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lccsr"]
+lines = Array[Resource]([SubResource("RoseDialogLine_g08mc"), SubResource("RoseDialogLine_vp22c"), SubResource("RoseDialogLine_8pa5s")])
+resource_name = "Menu 33"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_avl5e"]
+text = "I'm sorry, but you're not qualified to possess a Cart. I hope you will listen more carefully next time."
+next_menu = 35
+resource_name = "NPC: I'm sorry, but you're not qualified to possess a…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6r8kn"]
+lines = Array[Resource]([SubResource("RoseDialogLine_avl5e")])
+resource_name = "Menu 34"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_sk0mv"]
+kind = "Answer"
+text = "Okay."
+resource_name = "You: Okay."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_y3csk"]
+lines = Array[Resource]([SubResource("RoseDialogLine_sk0mv")])
+resource_name = "Menu 35"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_76vxr"]
+text = "That's correct. You're as smart as I expected. Now, let me teach you about Cart functions."
+next_menu = 37
+resource_name = "NPC: That's correct. You're as smart as I expected. N…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_o1hdl"]
+lines = Array[Resource]([SubResource("RoseDialogLine_76vxr")])
+resource_name = "Menu 36"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_j2f0a"]
+step = ExtResource("19_imnfo")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_t1rrs"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_j2f0a")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_s666k"]
+kind = "Answer"
+text = "Okay."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_t1rrs")])
+resource_name = "You: Okay."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_88lj6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_s666k")])
+resource_name = "Menu 37"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_p2bn8"]
+text = "I'm sorry, but you're not qualified to possess a Cart. I hope you will listen more carefully next time."
+next_menu = 39
+resource_name = "NPC: I'm sorry, but you're not qualified to possess a…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_l84mo"]
+lines = Array[Resource]([SubResource("RoseDialogLine_p2bn8")])
+resource_name = "Menu 38"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_n03p1"]
+kind = "Answer"
+text = "Okay."
+resource_name = "You: Okay."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2sovc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_n03p1")])
+resource_name = "Menu 39"
+
+[resource]
+key = "EM22-002.con"
+name = "[Akram Minister] Mairard"
+menus = Array[Resource]([SubResource("RoseDialogMenu_vlyua"), SubResource("RoseDialogMenu_ux6t7"), SubResource("RoseDialogMenu_4ulf0"), SubResource("RoseDialogMenu_vyjb8"), SubResource("RoseDialogMenu_y68nk"), SubResource("RoseDialogMenu_puqmj"), SubResource("RoseDialogMenu_ej1f0"), SubResource("RoseDialogMenu_h1q4t"), SubResource("RoseDialogMenu_qh51e"), SubResource("RoseDialogMenu_4pg23"), SubResource("RoseDialogMenu_lb3qr"), SubResource("RoseDialogMenu_8538w"), SubResource("RoseDialogMenu_iki16"), SubResource("RoseDialogMenu_kx03j"), SubResource("RoseDialogMenu_cvla0"), SubResource("RoseDialogMenu_f3cn7"), SubResource("RoseDialogMenu_jkndb"), SubResource("RoseDialogMenu_5ksjh"), SubResource("RoseDialogMenu_r7acj"), SubResource("RoseDialogMenu_rurdo"), SubResource("RoseDialogMenu_voh1p"), SubResource("RoseDialogMenu_ln3wy"), SubResource("RoseDialogMenu_lvkyo"), SubResource("RoseDialogMenu_lwvqk"), SubResource("RoseDialogMenu_87v0j"), SubResource("RoseDialogMenu_o73pj"), SubResource("RoseDialogMenu_nya24"), SubResource("RoseDialogMenu_cqe66"), SubResource("RoseDialogMenu_m847w"), SubResource("RoseDialogMenu_6jbka"), SubResource("RoseDialogMenu_1jcjk"), SubResource("RoseDialogMenu_rwdea"), SubResource("RoseDialogMenu_nl2h0"), SubResource("RoseDialogMenu_lccsr"), SubResource("RoseDialogMenu_6r8kn"), SubResource("RoseDialogMenu_y3csk"), SubResource("RoseDialogMenu_o1hdl"), SubResource("RoseDialogMenu_88lj6"), SubResource("RoseDialogMenu_l84mo"), SubResource("RoseDialogMenu_2sovc")])

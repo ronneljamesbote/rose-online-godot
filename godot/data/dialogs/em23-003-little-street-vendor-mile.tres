@@ -1,0 +1,553 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://du3q2v4n2cuex"]
+
+[ext_resource type="RoseQuest" uid="uid://pasv8aqbvhe" path="res://data/quests/954-why-did-toddy-steal-the-jewels.tres" id="1_moieh"]
+[ext_resource type="RoseQuest" uid="uid://dtve2m6fq1tku" path="res://data/quests/955-why-did-toddy-steal-the-jewels.tres" id="2_k0c7p"]
+[ext_resource type="RoseQuestTrigger" uid="uid://mghdmox88hbh" path="res://data/quest_triggers/qj311-01/954-02.tres" id="3_1vhl8"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cj6cbitf1d6fb" path="res://data/quest_triggers/qj311-01/956-04.tres" id="4_vlpum"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dp5fh87epud2w" path="res://data/quest_triggers/qj311-01/956-05.tres" id="5_a8we5"]
+[ext_resource type="RoseQuestTrigger" uid="uid://uh2fogqb8m0q" path="res://data/quest_triggers/qj311-01/956-06.tres" id="6_d3euv"]
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_02n7e"]
+quest = ExtResource("1_moieh")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_y4l0f"]
+quest = ExtResource("2_k0c7p")
+active = false
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_n20qy"]
+ability = "Job"
+operator = "!="
+value = 311
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_8hekm"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_02n7e"), SubResource("RoseDialogIfQuest_y4l0f"), SubResource("RoseDialogIfAbility_n20qy")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_4t50i"]
+quest = ExtResource("1_moieh")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_toyhf"]
+quest = ExtResource("2_k0c7p")
+active = false
+
+[sub_resource type="RoseDialogIfVariable" id="RoseDialogIfVariable_caeym"]
+variable = "Job"
+operator = "!="
+value = 2
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_rf52v"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_4t50i"), SubResource("RoseDialogIfQuest_toyhf"), SubResource("RoseDialogIfVariable_caeym")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_00xed"]
+text = "Have you ever been in the big city? I'm gonna move out to the big city when I grow up."
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_8hekm"), SubResource("RoseDialogCase_rf52v")])
+resource_name = "NPC: Have you ever been in the big city? I'm gonna mo…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_2a3yh"]
+quest = ExtResource("1_moieh")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_w4y20"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_2a3yh")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3ejuj"]
+text = "Is it possible that you're looking for Toddy as well?"
+next_menu = 4
+show_if = Array[Resource]([SubResource("RoseDialogCase_w4y20")])
+resource_name = "NPC: Is it possible that you're looking for Toddy as …"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_lfbmc"]
+quest = ExtResource("2_k0c7p")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_h0fgr"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_lfbmc")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_51hxa"]
+text = "Haven't you found the jewels yet?"
+next_menu = 5
+show_if = Array[Resource]([SubResource("RoseDialogCase_h0fgr")])
+resource_name = "NPC: Haven't you found the jewels yet?"
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_onano"]
+ability = "Job"
+operator = "=="
+value = 311
+
+[sub_resource type="RoseDialogIfVariable" id="RoseDialogIfVariable_okrfi"]
+variable = "Job"
+value = 2
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_wg76v"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_onano"), SubResource("RoseDialogIfVariable_okrfi")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pbgvn"]
+text = "Do you remember Toddy, the guy who stole Mina's jewels?"
+next_menu = 18
+show_if = Array[Resource]([SubResource("RoseDialogCase_wg76v")])
+resource_name = "NPC: Do you remember Toddy, the guy who stole Mina's …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_kwgrm"]
+lines = Array[Resource]([SubResource("RoseDialogLine_00xed"), SubResource("RoseDialogLine_3ejuj"), SubResource("RoseDialogLine_51hxa"), SubResource("RoseDialogLine_pbgvn")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_mfw14"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_difpc"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_mfw14")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_r2ddq"]
+kind = "Answer"
+text = "Hey kid, do you have any freshly picked fruit?"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_difpc")])
+resource_name = "You: Hey kid, do you have any freshly picked fruit?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dkmjc"]
+kind = "Answer"
+text = "You're right. Ever since I was born, I've known that I gotta live in the big city."
+next_menu = 2
+resource_name = "You: You're right. Ever since I was born, I've known …"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dw7nn"]
+kind = "Answer"
+text = "Pretty brazen, aren't you?"
+resource_name = "You: Pretty brazen, aren't you?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8h8y2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_r2ddq"), SubResource("RoseDialogLine_dkmjc"), SubResource("RoseDialogLine_dw7nn")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_r8hot"]
+text = "<NAME>, have you ever been to the big city?"
+next_menu = 3
+resource_name = "NPC: <NAME>, have you ever been to the big city?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_108wm"]
+lines = Array[Resource]([SubResource("RoseDialogLine_r8hot")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2cdhj"]
+kind = "Answer"
+text = "No, I haven't actually."
+next_menu = 0
+resource_name = "You: No, I haven't actually."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7gwa4"]
+kind = "Answer"
+text = "Of course. There are many interesting things in a big city."
+next_menu = 0
+resource_name = "You: Of course. There are many interesting things in …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_cubk6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2cdhj"), SubResource("RoseDialogLine_7gwa4")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_q8dil"]
+kind = "Answer"
+text = "How do you know?"
+next_menu = 10
+resource_name = "You: How do you know?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0dy4v"]
+kind = "Answer"
+text = "Cut the crap, and tell me where Toddy is now."
+next_menu = 16
+resource_name = "You: Cut the crap, and tell me where Toddy is now."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_b4g6g"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_f0384"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_b4g6g")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_amwna"]
+kind = "Answer"
+text = "Right now, I want to buy some fresh fruits."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_f0384")])
+resource_name = "You: Right now, I want to buy some fresh fruits."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pn8op"]
+kind = "Answer"
+text = "Pretty brazen, aren't you?"
+resource_name = "You: Pretty brazen, aren't you?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6a37o"]
+lines = Array[Resource]([SubResource("RoseDialogLine_q8dil"), SubResource("RoseDialogLine_0dy4v"), SubResource("RoseDialogLine_amwna"), SubResource("RoseDialogLine_pn8op")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kbl3m"]
+kind = "Answer"
+text = "Yeah, I'm looking for him."
+resource_name = "You: Yeah, I'm looking for him."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7hjoe"]
+kind = "Answer"
+text = "Can you tell me where I can find Dalpings?"
+next_menu = 6
+resource_name = "You: Can you tell me where I can find Dalpings?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ycipn"]
+kind = "Answer"
+text = "What am I supposed to do after I find the jewels?"
+next_menu = 8
+resource_name = "You: What am I supposed to do after I find the jewels…"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_0kam4"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_vs4kf"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_0kam4")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_v03ek"]
+kind = "Answer"
+text = "Right now, I want to buy some fresh fruits."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_vs4kf")])
+resource_name = "You: Right now, I want to buy some fresh fruits."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1tlp2"]
+kind = "Answer"
+text = "Pretty brazen, aren't you?"
+resource_name = "You: Pretty brazen, aren't you?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_o7epb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_kbl3m"), SubResource("RoseDialogLine_7hjoe"), SubResource("RoseDialogLine_ycipn"), SubResource("RoseDialogLine_v03ek"), SubResource("RoseDialogLine_1tlp2")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rldac"]
+text = "Dalpings are scattered all around the {fc=2}Breezy Hills{/fc}. People also say there are many Dalpings to the Northeast."
+next_menu = 7
+resource_name = "NPC: Dalpings are scattered all around the {fc=2}Bree…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xd4e5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rldac")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0aghb"]
+kind = "Answer"
+text = "Thank you."
+resource_name = "You: Thank you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4ig31"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0aghb")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1a83t"]
+text = "Give them back to Mina. What kind of stupid question is that?"
+next_menu = 9
+resource_name = "NPC: Give them back to Mina. What kind of stupid ques…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_37h6j"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1a83t")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_til76"]
+kind = "Answer"
+text = "No, I mean…"
+resource_name = "You: No, I mean…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qxa78"]
+lines = Array[Resource]([SubResource("RoseDialogLine_til76")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6qiwo"]
+text = "I can tell just by looking at your face. But it's too late. Toddy is far from here by now."
+next_menu = 11
+resource_name = "NPC: I can tell just by looking at your face. But it'…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6fhpy"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6qiwo")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ex4wg"]
+kind = "Answer"
+text = "Oh well, I came too late. But thanks, see you later."
+next_menu = 12
+resource_name = "You: Oh well, I came too late. But thanks, see you la…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0jbrd"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ex4wg")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e06rm"]
+text = "Wait! I heard Toddy left the jewels somewhere in a field in his rush to escape. You might not be able to catch Toddy but it's highly possible that you can still retrieve the jewels."
+next_menu = 13
+resource_name = "NPC: Wait! I heard Toddy left the jewels somewhere in…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ggjmj"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e06rm")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hehr6"]
+kind = "Answer"
+text = "Do you know where he left the jewels then?"
+next_menu = 14
+resource_name = "You: Do you know where he left the jewels then?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hp55p"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hehr6")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_g6nd7"]
+text = "I'm not really sure, but people have been saying the Dalpings have been carrying jewels with them. Go investigate the {fc=12}Dalpings{/fc}, and you might be able to find the jewels you're looking for. Once you find them, please return them to {fc=1}Mina{/fc}."
+next_menu = 15
+resource_name = "NPC: I'm not really sure, but people have been saying…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_mldbj"]
+lines = Array[Resource]([SubResource("RoseDialogLine_g6nd7")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_tuu14"]
+step = ExtResource("3_1vhl8")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3t0ug"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_tuu14")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_85xek"]
+kind = "Answer"
+text = "Thanks, kid."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_3t0ug")])
+resource_name = "You: Thanks, kid."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_v7dgs"]
+kind = "Answer"
+text = "I don’t think I have the time to look around for jewels in some field."
+resource_name = "You: I don’t think I have the time to look around for…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0588n"]
+lines = Array[Resource]([SubResource("RoseDialogLine_85xek"), SubResource("RoseDialogLine_v7dgs")])
+resource_name = "Menu 15"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7v6ds"]
+text = "How would I know where Toddy is? By now, I'm sure he's far from here."
+next_menu = 17
+resource_name = "NPC: How would I know where Toddy is? By now, I'm sur…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_onvs0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7v6ds")])
+resource_name = "Menu 16"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wcb68"]
+kind = "Answer"
+text = "Oh well, I came too late. But thanks, see you later."
+next_menu = 12
+resource_name = "You: Oh well, I came too late. But thanks, see you la…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_txx17"]
+lines = Array[Resource]([SubResource("RoseDialogLine_wcb68")])
+resource_name = "Menu 17"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6sls3"]
+kind = "Answer"
+text = "Of course, I remember. I returned her jewels to her."
+next_menu = 19
+resource_name = "You: Of course, I remember. I returned her jewels to …"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kj77e"]
+kind = "Answer"
+text = "Sorry, I can't remember. Who's Toddy?"
+resource_name = "You: Sorry, I can't remember. Who's Toddy?"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_tb1n8"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_jlaoh"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_tb1n8")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_muy3r"]
+kind = "Answer"
+text = "Right now, I want to buy some fresh fruits."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_jlaoh")])
+resource_name = "You: Right now, I want to buy some fresh fruits."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mkbjs"]
+kind = "Answer"
+text = "Oh, I don't want to remember that."
+resource_name = "You: Oh, I don't want to remember that."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4bivg"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6sls3"), SubResource("RoseDialogLine_kj77e"), SubResource("RoseDialogLine_muy3r"), SubResource("RoseDialogLine_mkbjs")])
+resource_name = "Menu 18"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_px4tm"]
+text = "After you left, I got a letter from Toddy."
+next_menu = 20
+resource_name = "NPC: After you left, I got a letter from Toddy."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b4360"]
+lines = Array[Resource]([SubResource("RoseDialogLine_px4tm")])
+resource_name = "Menu 19"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7r238"]
+kind = "Answer"
+text = "Did you? What would a fugitive write in a letter? Anyway, what did he say?"
+next_menu = 21
+resource_name = "You: Did you? What would a fugitive write in a letter…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_np3i8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7r238")])
+resource_name = "Menu 20"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_aoy1l"]
+text = "I think there was a huge misunderstanding. Toddy didn't steal Mina's jewels."
+next_menu = 22
+resource_name = "NPC: I think there was a huge misunderstanding. Toddy…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_amby2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_aoy1l")])
+resource_name = "Menu 21"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_urnki"]
+kind = "Answer"
+text = "What are you talking about? I retrieved the jewels he stole from Mina, isn't that enough evidence?"
+next_menu = 23
+resource_name = "You: What are you talking about? I retrieved the jewe…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_tbu1r"]
+lines = Array[Resource]([SubResource("RoseDialogLine_urnki")])
+resource_name = "Menu 22"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_y4dvp"]
+text = "Toddy didn't steal the jewels. A while ago, a jeweler who was carrying his jewels got killed by monsters on the way home, and then those monsters just picked them up."
+next_menu = 24
+resource_name = "NPC: Toddy didn't steal the jewels. A while ago, a je…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_84fw8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_y4dvp")])
+resource_name = "Menu 23"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_v1ekf"]
+kind = "Answer"
+text = "Are you serious? Then what about the jewels stolen from Mina?"
+next_menu = 25
+resource_name = "You: Are you serious? Then what about the jewels stol…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ohmst"]
+lines = Array[Resource]([SubResource("RoseDialogLine_v1ekf")])
+resource_name = "Menu 24"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vtxn8"]
+text = "Basically, you've been tricked. Mina knew about that jeweler and took advantage of your good nature."
+next_menu = 26
+resource_name = "NPC: Basically, you've been tricked. Mina knew about …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_pp1w8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vtxn8")])
+resource_name = "Menu 25"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ftg8u"]
+kind = "Answer"
+text = "Then Toddy is just an innocent victim. I didn't know Mina could be that shady."
+next_menu = 27
+resource_name = "You: Then Toddy is just an innocent victim. I didn't …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hodpt"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ftg8u")])
+resource_name = "Menu 26"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4ptbs"]
+text = "That’s what I said. Please be careful around Mina from now on."
+next_menu = 28
+resource_name = "NPC: That’s what I said. Please be careful around Min…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2pb26"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4ptbs")])
+resource_name = "Menu 27"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ohm11"]
+kind = "Answer"
+text = "Alright, I'm going to ask Mina to explain this!"
+next_menu = 29
+resource_name = "You: Alright, I'm going to ask Mina to explain this!"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hqo44"]
+kind = "Answer"
+text = "Oh well, Mina did pay me pretty well, so it's alright. After all, those jewels technically didn't have an owner anymore."
+next_menu = 31
+resource_name = "You: Oh well, Mina did pay me pretty well, so it's al…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_q6bl5"]
+kind = "Answer"
+text = "By the way, you're the one who pointed out Toddy as the thief. You're no better than Mina."
+next_menu = 33
+resource_name = "You: By the way, you're the one who pointed out Toddy…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6ffch"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ohm11"), SubResource("RoseDialogLine_hqo44"), SubResource("RoseDialogLine_q6bl5")])
+resource_name = "Menu 28"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jkwud"]
+text = "Well, I don't think it's worth your time though. Mina'll probably just play innocent."
+next_menu = 30
+resource_name = "NPC: Well, I don't think it's worth your time though.…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5j5yx"]
+lines = Array[Resource]([SubResource("RoseDialogLine_jkwud")])
+resource_name = "Menu 29"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_th0nq"]
+step = ExtResource("4_vlpum")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_j6mtu"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_th0nq")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xg7ba"]
+kind = "Answer"
+text = "Let's see how he'll react. Thank you for such important information by the way."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_j6mtu")])
+resource_name = "You: Let's see how he'll react. Thank you for such im…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4m4eu"]
+lines = Array[Resource]([SubResource("RoseDialogLine_xg7ba")])
+resource_name = "Menu 30"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_y4uve"]
+text = "If you think so, I can't help it. But I still feel sorry for Toddy."
+next_menu = 32
+resource_name = "NPC: If you think so, I can't help it. But I still fe…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ba2cf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_y4uve")])
+resource_name = "Menu 31"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_togb5"]
+step = ExtResource("5_a8we5")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_kxpo4"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_togb5")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kvfc7"]
+kind = "Answer"
+text = "That's how the world works. Still, it's a pity though."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_kxpo4")])
+resource_name = "You: That's how the world works. Still, it's a pity t…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1ankf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_kvfc7")])
+resource_name = "Menu 32"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_sxkri"]
+text = "I'm also a victim! I was totally cheated by Mina. As a matter of fact, all the information I told you was from Mina."
+next_menu = 34
+resource_name = "NPC: I'm also a victim! I was totally cheated by Mina…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_pgsfl"]
+lines = Array[Resource]([SubResource("RoseDialogLine_sxkri")])
+resource_name = "Menu 33"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_bu0ie"]
+step = ExtResource("6_d3euv")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_0arij"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_bu0ie")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kgsu6"]
+kind = "Answer"
+text = "So that's how it went. Now I don't know who to believe!"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_0arij")])
+resource_name = "You: So that's how it went. Now I don't know who to b…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2dgb1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_kgsu6")])
+resource_name = "Menu 34"
+
+[resource]
+key = "EM23-003.con"
+name = "[Little Street Vendor] Mile"
+menus = Array[Resource]([SubResource("RoseDialogMenu_kwgrm"), SubResource("RoseDialogMenu_8h8y2"), SubResource("RoseDialogMenu_108wm"), SubResource("RoseDialogMenu_cubk6"), SubResource("RoseDialogMenu_6a37o"), SubResource("RoseDialogMenu_o7epb"), SubResource("RoseDialogMenu_xd4e5"), SubResource("RoseDialogMenu_4ig31"), SubResource("RoseDialogMenu_37h6j"), SubResource("RoseDialogMenu_qxa78"), SubResource("RoseDialogMenu_6fhpy"), SubResource("RoseDialogMenu_0jbrd"), SubResource("RoseDialogMenu_ggjmj"), SubResource("RoseDialogMenu_hp55p"), SubResource("RoseDialogMenu_mldbj"), SubResource("RoseDialogMenu_0588n"), SubResource("RoseDialogMenu_onvs0"), SubResource("RoseDialogMenu_txx17"), SubResource("RoseDialogMenu_4bivg"), SubResource("RoseDialogMenu_b4360"), SubResource("RoseDialogMenu_np3i8"), SubResource("RoseDialogMenu_amby2"), SubResource("RoseDialogMenu_tbu1r"), SubResource("RoseDialogMenu_84fw8"), SubResource("RoseDialogMenu_ohmst"), SubResource("RoseDialogMenu_pp1w8"), SubResource("RoseDialogMenu_hodpt"), SubResource("RoseDialogMenu_2pb26"), SubResource("RoseDialogMenu_6ffch"), SubResource("RoseDialogMenu_5j5yx"), SubResource("RoseDialogMenu_4m4eu"), SubResource("RoseDialogMenu_ba2cf"), SubResource("RoseDialogMenu_1ankf"), SubResource("RoseDialogMenu_pgsfl"), SubResource("RoseDialogMenu_2dgb1")])

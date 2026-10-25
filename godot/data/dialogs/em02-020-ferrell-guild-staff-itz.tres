@@ -1,0 +1,280 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://db1qrodkt4047"]
+
+[ext_resource type="RoseQuest" uid="uid://ctruddajgswlh" path="res://data/quests/5019-goblin-hunting-competition-fetch-quest.tres" id="1_8hkjt"]
+[ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_6wjkx"]
+[ext_resource type="RoseQuestTrigger" uid="uid://utav8pn8yvar" path="res://data/quest_triggers/qs12-002/5019-01.tres" id="3_6j3o3"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dugsp8l4ouql" path="res://data/quest_triggers/qs12-002/5019-03.tres" id="4_bsbyx"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dutyfp7xyv0c0" path="res://data/quest_triggers/qs12-002/5019-04.tres" id="5_ko8wi"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bnwytobbeunwu" path="res://data/quest_triggers/tutorial/move2_22.tres" id="6_a43sg"]
+[ext_resource type="RoseQuestTrigger" uid="uid://daqxnhkrphxfq" path="res://data/quest_triggers/tutorial/move2_27.tres" id="7_dljmx"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_21f8h"]
+text = "I assure you that my materials are the best on Junon. Trust me~ {br}However, please remember that your purchase can't be refunded."
+next_menu = 1
+resource_name = "NPC: I assure you that my materials are the best on J…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_q18r6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_21f8h")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4emi2"]
+kind = "Answer"
+text = "Yes, I want to buy materials."
+next_menu = 11
+resource_name = "You: Yes, I want to buy materials."
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_2jrpb"]
+quest = ExtResource("1_8hkjt")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2hrj3"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_2jrpb")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_k3jce"]
+kind = "Answer"
+text = "I hear you're fond of gambling."
+next_menu = 2
+show_if = Array[Resource]([SubResource("RoseDialogCase_2hrj3")])
+resource_name = "You: I hear you're fond of gambling."
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_f58ni"]
+quest = ExtResource("1_8hkjt")
+item = ExtResource("2_6wjkx")
+value = 55
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7jo4d"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_f58ni")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qsr68"]
+kind = "Answer"
+text = "I've returned from slaying Goblins."
+next_menu = 8
+show_if = Array[Resource]([SubResource("RoseDialogCase_7jo4d")])
+resource_name = "You: I've returned from slaying Goblins."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3arwd"]
+kind = "Answer"
+text = "I want to use the passenger ship."
+next_menu = 13
+resource_name = "You: I want to use the passenger ship."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fhnxv"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4emi2"), SubResource("RoseDialogLine_k3jce"), SubResource("RoseDialogLine_qsr68"), SubResource("RoseDialogLine_3arwd")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_h34bf"]
+value = 1
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_qui88"]
+operator = "<="
+value = 70
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_y4i21"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_h34bf"), SubResource("RoseDialogIfAbility_qui88")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_x0mv0"]
+text = "Huh, does news really go around that fast? Okay, you want to try this? Go defeat {fc=12}55 Goblins{/fc} in the {fc=1}2nd level of the Goblin Cave{/fc}. If you can come back within {fc=5}3 hours{/fc} from now, I will give you 30,000 Zulie if you are the first to come back."
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_y4i21")])
+resource_name = "NPC: Huh, does news really go around that fast? Okay,…"
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_oapqd"]
+operator = "!="
+value = 1
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_8edov"]
+operator = "<="
+value = 70
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_op1w2"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_oapqd"), SubResource("RoseDialogIfAbility_8edov")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ac4xc"]
+text = "Gambling, eh? Right now, I'm not in the mood."
+next_menu = 6
+show_if = Array[Resource]([SubResource("RoseDialogCase_op1w2")])
+resource_name = "NPC: Gambling, eh? Right now, I'm not in the mood."
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_6p3le"]
+operator = ">"
+value = 70
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_4ulye"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_6p3le")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_p4dhw"]
+text = "You're too strong for me to make a bet with you. I only let people lower than Level 70 answer my challenge."
+next_menu = 7
+show_if = Array[Resource]([SubResource("RoseDialogCase_4ulye")])
+resource_name = "NPC: You're too strong for me to make a bet with you.…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_sbtdq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_x0mv0"), SubResource("RoseDialogLine_ac4xc"), SubResource("RoseDialogLine_p4dhw")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_g7qoa"]
+kind = "Answer"
+text = "Sounds good. I accept the challenge!"
+next_menu = 4
+resource_name = "You: Sounds good. I accept the challenge!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_e2x6m"]
+lines = Array[Resource]([SubResource("RoseDialogLine_g7qoa")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kw8ja"]
+text = "Okay, let me give you more details. Go hunt {fc=12}Gold Mine Goblin Worker{/fc}, {fc=12}Gold Mine Goblin Server{/fc}, {fc=12}Goblin Guard{/fc} and {fc=12}Goblin Warrior{/fc} in the {fc=2}2nd level of Goblin Cave{/fc}. You have {fc=5}3 hours{/fc} from now. Now, go for it!"
+next_menu = 5
+resource_name = "NPC: Okay, let me give you more details. Go hunt {fc=…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b5yod"]
+lines = Array[Resource]([SubResource("RoseDialogLine_kw8ja")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_gdmhe"]
+step = ExtResource("3_6j3o3")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_hh7ox"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_gdmhe")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_k4nsb"]
+kind = "Answer"
+text = "Yes, I understand."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_hh7ox")])
+resource_name = "You: Yes, I understand."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wwvn0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_k4nsb")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_iut5s"]
+kind = "Answer"
+text = "Alright, got it."
+resource_name = "You: Alright, got it."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_s5mq6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_iut5s")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_u0w7n"]
+kind = "Answer"
+text = "Yes, understood."
+resource_name = "You: Yes, understood."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ky1xg"]
+lines = Array[Resource]([SubResource("RoseDialogLine_u0w7n")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_cbt3s"]
+step = ExtResource("4_bsbyx")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_u1g6i"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_cbt3s")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_raai7"]
+text = "Now, let's see. Your reward will be determined by your grade, so don't be so disappointed if you're paid less than you expected."
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_u1g6i")])
+resource_name = "NPC: Now, let's see. Your reward will be determined b…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_h8coy"]
+step = ExtResource("4_bsbyx")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_m1p5e"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_h8coy")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3mrgy"]
+text = "By the way, you came a little bit late. You won't get any reward if you don't make it back in time. Remember to make it within the time limit next time, got it?"
+next_menu = 10
+show_if = Array[Resource]([SubResource("RoseDialogCase_m1p5e")])
+resource_name = "NPC: By the way, you came a little bit late. You won'…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_trjfx"]
+lines = Array[Resource]([SubResource("RoseDialogLine_raai7"), SubResource("RoseDialogLine_3mrgy")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_3umh2"]
+step = ExtResource("5_ko8wi")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_im3fr"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_3umh2")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wngen"]
+kind = "Answer"
+text = "Alright."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_im3fr")])
+resource_name = "You: Alright."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_v38ef"]
+lines = Array[Resource]([SubResource("RoseDialogLine_wngen")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ml20b"]
+kind = "Answer"
+text = "Alright."
+resource_name = "You: Alright."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xxfk0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ml20b")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_talrk"]
+text = "I don't have any more materials for today. Please come back later."
+next_menu = 12
+resource_name = "NPC: I don't have any more materials for today. Pleas…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ojayr"]
+lines = Array[Resource]([SubResource("RoseDialogLine_talrk")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mb6cu"]
+kind = "Answer"
+text = "Is that so? Alright, I understand."
+resource_name = "You: Is that so? Alright, I understand."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_o13ud"]
+lines = Array[Resource]([SubResource("RoseDialogLine_mb6cu")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_di2qq"]
+text = "Of course. We provide this service to you at an affordable price. So where would you like to go?"
+next_menu = 14
+resource_name = "NPC: Of course. We provide this service to you at an …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_v8wf7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_di2qq")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_1ukan"]
+step = ExtResource("6_a43sg")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_6w67m"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_1ukan")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mnd1l"]
+kind = "Answer"
+text = "Adventurer's Plains : 1,500 Zulie"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_6w67m")])
+resource_name = "You: Adventurer's Plains : 1,500 Zulie"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_mdmg2"]
+step = ExtResource("7_dljmx")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_arj8n"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_mdmg2")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2ca0y"]
+kind = "Answer"
+text = "Kenji Beach : 1,500 Zulie"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_arj8n")])
+resource_name = "You: Kenji Beach : 1,500 Zulie"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jpp2x"]
+lines = Array[Resource]([SubResource("RoseDialogLine_mnd1l"), SubResource("RoseDialogLine_2ca0y")])
+resource_name = "Menu 14"
+
+[resource]
+key = "EM02-020.con"
+name = "[Ferrell Guild Staff] Itz"
+menus = Array[Resource]([SubResource("RoseDialogMenu_q18r6"), SubResource("RoseDialogMenu_fhnxv"), SubResource("RoseDialogMenu_sbtdq"), SubResource("RoseDialogMenu_e2x6m"), SubResource("RoseDialogMenu_b5yod"), SubResource("RoseDialogMenu_wwvn0"), SubResource("RoseDialogMenu_s5mq6"), SubResource("RoseDialogMenu_ky1xg"), SubResource("RoseDialogMenu_trjfx"), SubResource("RoseDialogMenu_v38ef"), SubResource("RoseDialogMenu_xxfk0"), SubResource("RoseDialogMenu_ojayr"), SubResource("RoseDialogMenu_o13ud"), SubResource("RoseDialogMenu_v8wf7"), SubResource("RoseDialogMenu_jpp2x")])

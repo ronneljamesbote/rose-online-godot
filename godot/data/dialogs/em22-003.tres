@@ -1,0 +1,48 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://btl8qjn3ksdwr"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_njw84"]
+text = "I am a heroic member of the Righteous Crusaders. What business brings you to me?"
+next_menu = 1
+resource_name = "NPC: I am a heroic member of the Righteous Crusaders.…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_of3pc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_njw84")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dyfq8"]
+kind = "Answer"
+text = "Tell me how to hunt monsters."
+next_menu = 2
+resource_name = "You: Tell me how to hunt monsters."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fjut5"]
+kind = "Answer"
+text = "I just dropped by to say hello. Well… Goodbye~"
+resource_name = "You: I just dropped by to say hello. Well… Goodbye~"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_j6erb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dyfq8"), SubResource("RoseDialogLine_fjut5")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_s735i"]
+text = "That's a simple question. When you bring your cursor up on a monster, you will see that the shape of cursor changes to a sword. Click the left button of your mouse to initiate battle. If you want to use a skill, activate the skill first and then left click on the monster. See, isn't it so easy?"
+next_menu = 3
+resource_name = "NPC: That's a simple question. When you bring your cu…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_o2xde"]
+lines = Array[Resource]([SubResource("RoseDialogLine_s735i")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_h5mss"]
+kind = "Answer"
+text = "Thank you."
+resource_name = "You: Thank you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_n0f7e"]
+lines = Array[Resource]([SubResource("RoseDialogLine_h5mss")])
+resource_name = "Menu 3"
+
+[resource]
+key = "EM22-003.con"
+name = "모험자초원-라이처스기사-포트"
+menus = Array[Resource]([SubResource("RoseDialogMenu_of3pc"), SubResource("RoseDialogMenu_j6erb"), SubResource("RoseDialogMenu_o2xde"), SubResource("RoseDialogMenu_n0f7e")])

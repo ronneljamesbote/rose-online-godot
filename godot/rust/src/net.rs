@@ -282,11 +282,7 @@ impl RoseNet {
             let member_count = c.db.party_member().iter().filter(|m| m.party_id == party.party_id).count();
             Some(rose_quest::QuestParty { is_leader: party.owner == me, level: 1, member_count })
         });
-        let save_zone_name = self.conn.as_ref().and_then(|c| {
-            let save = c.db.save_point().identity().find(&c.try_identity()?)?;
-            Some(c.db.zone_info().zone_id().find(&save.zone_id)?.name)
-        });
-        ClientWorld { t, zone_id, npcs, party, save_zone_name }
+        ClientWorld { t, zone_id, npcs, party }
     }
 
     /// Run `f` on the open conversation with a fresh script context, then carry out what
@@ -305,7 +301,8 @@ impl RoseNet {
         let mut conversation = self.conversation.take();
         let before = conversation.as_ref().and_then(|c| c.npc_entity);
         let result = {
-            let mut cx = ScriptContext { game, ch: &ch, world: &mut world, name: &name, actions: &mut actions };
+            let mut cx =
+                ScriptContext { game, ch: &ch, world: &mut world, name: &name, actions: &mut actions, npc_entity: before };
             f(&mut conversation, &mut cx)
         };
         // The NPC we are talking to, for windows the scripts open on it.
@@ -1338,13 +1335,12 @@ impl RoseNet {
     /// Talk to a town NPC: opens its conversation. False when it has nothing to say.
     #[func]
     fn open_conversation(&mut self, npc_entity_id: i64) -> bool {
-        let (Some(c), Some(game)) = (self.conn.as_ref(), crate::data::get()) else { return false };
+        let Some(c) = self.conn.as_ref() else { return false };
         let Some(npc) = c.db.npc().entity_id().find(&(npc_entity_id as u64)) else { return false };
-        let Some(path) = conversation::conversation_path(game, &npc.conversation) else { return false };
         let title = c.db.entity().entity_id().find(&npc.entity_id).map(|e| e.name).unwrap_or_default();
         let entity = npc.entity_id;
         self.with_conversation(|conv, cx| {
-            *conv = Conversation::open(&path, Some(entity), title, cx);
+            *conv = Conversation::open(&npc.conversation, Some(entity), title, cx);
             conv.is_some()
         })
         .unwrap_or(false)
@@ -1361,7 +1357,7 @@ impl RoseNet {
             d.set("message", conv.message.as_str());
             let mut responses = VarArray::new();
             for r in conv.responses.iter() {
-                responses.push(&GString::from(r.text.as_str()).to_variant());
+                responses.push(&GString::from(r.as_str()).to_variant());
             }
             d.set("responses", &responses);
         }

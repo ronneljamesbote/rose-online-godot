@@ -1,0 +1,271 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://d3dyvmqk33bmy"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://dbyoeag1xhblm" path="res://data/quest_triggers/qp103/155-07.tres" id="1_5c4xg"]
+[ext_resource type="RoseQuestTrigger" uid="uid://blpgv14sof78x" path="res://data/quest_triggers/qp103/155-08.tres" id="2_f0rqv"]
+[ext_resource type="RoseQuestTrigger" uid="uid://ycbntfmcxtom" path="res://data/quest_triggers/qp103/155-09.tres" id="3_n54qu"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bgggsaub5td5c" path="res://data/quest_triggers/qp103/155-10.tres" id="4_5ewf1"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_y1fj1"]
+text = "It looks like there's something underneath."
+next_menu = 1
+resource_name = "NPC: It looks like there's something underneath."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_k2kwt"]
+lines = Array[Resource]([SubResource("RoseDialogLine_y1fj1")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2ybsh"]
+kind = "Answer"
+text = "What is this?"
+next_menu = 2
+resource_name = "You: What is this?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_h4ljd"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2ybsh")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3tcuh"]
+text = "It's a purple box."
+next_menu = 3
+resource_name = "NPC: It's a purple box."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_esl3j"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3tcuh")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_fggdj"]
+step = ExtResource("1_5c4xg")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_1oos8"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_fggdj")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fvyfq"]
+kind = "Answer"
+text = "Is this the Mana Charger? Something seems to be written on it."
+next_menu = 4
+show_if = Array[Resource]([SubResource("RoseDialogCase_1oos8")])
+resource_name = "You: Is this the Mana Charger? Something seems to be …"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_iorlr"]
+step = ExtResource("2_f0rqv")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_vy0ud"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_iorlr")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hm7rw"]
+kind = "Answer"
+text = "Ah, here it is!"
+next_menu = 8
+show_if = Array[Resource]([SubResource("RoseDialogCase_vy0ud")])
+resource_name = "You: Ah, here it is!"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_yv17j"]
+step = ExtResource("3_n54qu")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_43erh"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_yv17j")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0ceww"]
+kind = "Answer"
+text = "Ah, so this is where it is."
+next_menu = 12
+show_if = Array[Resource]([SubResource("RoseDialogCase_43erh")])
+resource_name = "You: Ah, so this is where it is."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_rcv0x"]
+step = ExtResource("4_5ewf1")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_72vre"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_rcv0x")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nbel5"]
+kind = "Answer"
+text = "Ah, here it is!"
+next_menu = 16
+show_if = Array[Resource]([SubResource("RoseDialogCase_72vre")])
+resource_name = "You: Ah, here it is!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_f3wqe"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fvyfq"), SubResource("RoseDialogLine_hm7rw"), SubResource("RoseDialogLine_0ceww"), SubResource("RoseDialogLine_nbel5")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jb822"]
+text = "It's clear that someone left a message here, but because of the dirt, half of it can't be seen."
+next_menu = 5
+resource_name = "NPC: It's clear that someone left a message here, but…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ynajo"]
+lines = Array[Resource]([SubResource("RoseDialogLine_jb822")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1115e"]
+kind = "Answer"
+text = "Let's try to read it."
+next_menu = 6
+resource_name = "You: Let's try to read it."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_i1d1a"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1115e")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b0qqf"]
+text = "Huge… Purple… Ball."
+next_menu = 7
+resource_name = "NPC: Huge… Purple… Ball."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_duvnf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_b0qqf")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_xyxkn"]
+step = ExtResource("1_5c4xg")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3uc61"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_xyxkn")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4loyr"]
+kind = "Answer"
+text = "Huge purple ball? I guess I better look for something like that."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_3uc61")])
+resource_name = "You: Huge purple ball? I guess I better look for some…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vapsw"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4loyr")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_u72kv"]
+text = "There's a written message, but because of the dirt, half of it can't be seen."
+next_menu = 9
+resource_name = "NPC: There's a written message, but because of the di…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3ltcu"]
+lines = Array[Resource]([SubResource("RoseDialogLine_u72kv")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hqtgi"]
+kind = "Answer"
+text = "Let's try to read it."
+next_menu = 10
+resource_name = "You: Let's try to read it."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_sl3ya"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hqtgi")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_w8otx"]
+text = "Rolling… C-can."
+next_menu = 11
+resource_name = "NPC: Rolling… C-can."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dkiaw"]
+lines = Array[Resource]([SubResource("RoseDialogLine_w8otx")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_4oixv"]
+step = ExtResource("2_f0rqv")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ng60k"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_4oixv")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_sc5nk"]
+kind = "Answer"
+text = "Rolling can? I hope that's enough of a hint…"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_ng60k")])
+resource_name = "You: Rolling can? I hope that's enough of a hint…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0nwwl"]
+lines = Array[Resource]([SubResource("RoseDialogLine_sc5nk")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_uypul"]
+text = "There's a written message, but because of the dirt, half of it can't be seen."
+next_menu = 13
+resource_name = "NPC: There's a written message, but because of the di…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_keuxw"]
+lines = Array[Resource]([SubResource("RoseDialogLine_uypul")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7k8rp"]
+kind = "Answer"
+text = "Let's try to read it."
+next_menu = 14
+resource_name = "You: Let's try to read it."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_88mab"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7k8rp")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_okemw"]
+text = "Northern… Well?"
+next_menu = 15
+resource_name = "NPC: Northern… Well?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_pxvyw"]
+lines = Array[Resource]([SubResource("RoseDialogLine_okemw")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_sq1lu"]
+step = ExtResource("3_n54qu")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_t2ylt"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_sq1lu")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pig0q"]
+kind = "Answer"
+text = "Northern Well. I should go check my Map and head North to see what I can find."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_t2ylt")])
+resource_name = "You: Northern Well. I should go check my Map and head…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gngus"]
+lines = Array[Resource]([SubResource("RoseDialogLine_pig0q")])
+resource_name = "Menu 15"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_u5muq"]
+text = "There's a written message, but because of the dirt, half of it can't be seen."
+next_menu = 17
+resource_name = "NPC: There's a written message, but because of the di…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3l252"]
+lines = Array[Resource]([SubResource("RoseDialogLine_u5muq")])
+resource_name = "Menu 16"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_curqr"]
+kind = "Answer"
+text = "Hm? But I've already got all 4 Mana Chargers. Could there be more?"
+next_menu = 18
+resource_name = "You: Hm? But I've already got all 4 Mana Chargers. Co…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_j8dqi"]
+lines = Array[Resource]([SubResource("RoseDialogLine_curqr")])
+resource_name = "Menu 17"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_m13gb"]
+text = "For the glory of Ikaness."
+next_menu = 19
+resource_name = "NPC: For the glory of Ikaness."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2458k"]
+lines = Array[Resource]([SubResource("RoseDialogLine_m13gb")])
+resource_name = "Menu 18"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_7wlxe"]
+step = ExtResource("4_5ewf1")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_kcsix"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_7wlxe")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3i8wp"]
+kind = "Answer"
+text = "Ikaness?! Impossible, they're involved in all this? I thought the Arumics installed these Mana Chargers. In any case, I better take this equipment over to {fc=1}Med{/fc}."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_kcsix")])
+resource_name = "You: Ikaness?! Impossible, they're involved in all th…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_10ebc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3i8wp")])
+resource_name = "Menu 19"
+
+[resource]
+key = "Object008.con"
+name = "고요한 협곡 마나"
+menus = Array[Resource]([SubResource("RoseDialogMenu_k2kwt"), SubResource("RoseDialogMenu_h4ljd"), SubResource("RoseDialogMenu_esl3j"), SubResource("RoseDialogMenu_f3wqe"), SubResource("RoseDialogMenu_ynajo"), SubResource("RoseDialogMenu_i1d1a"), SubResource("RoseDialogMenu_duvnf"), SubResource("RoseDialogMenu_vapsw"), SubResource("RoseDialogMenu_3ltcu"), SubResource("RoseDialogMenu_sl3ya"), SubResource("RoseDialogMenu_dkiaw"), SubResource("RoseDialogMenu_0nwwl"), SubResource("RoseDialogMenu_keuxw"), SubResource("RoseDialogMenu_88mab"), SubResource("RoseDialogMenu_pxvyw"), SubResource("RoseDialogMenu_gngus"), SubResource("RoseDialogMenu_3l252"), SubResource("RoseDialogMenu_j8dqi"), SubResource("RoseDialogMenu_2458k"), SubResource("RoseDialogMenu_10ebc")])

@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use rose_file_readers::RoseFileReader;
+use crate::RoseFileReader;
 
 use crate::lua4::Lua4Instruction;
 

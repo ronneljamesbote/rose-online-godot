@@ -1,0 +1,52 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://cnlm8y38fk645"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://2e2mtg0dqf8s" path="res://data/quest_triggers/qp103/122-01.tres" id="1_ldukr"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_j47tw"]
+text = "There’s something shiny in the monster’s hands."
+next_menu = 1
+resource_name = "NPC: There’s something shiny in the monster’s hands."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_udf1e"]
+lines = Array[Resource]([SubResource("RoseDialogLine_j47tw")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xu80e"]
+kind = "Answer"
+text = "What is that?"
+next_menu = 2
+resource_name = "You: What is that?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_idf0g"]
+lines = Array[Resource]([SubResource("RoseDialogLine_xu80e")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_51tav"]
+text = "There's a small necklace in the left hand, and some sort of emblem in the right hand."
+next_menu = 3
+resource_name = "NPC: There's a small necklace in the left hand, and s…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_o6kd6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_51tav")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_lmsnv"]
+step = ExtResource("1_ldukr")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_4uj5o"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_lmsnv")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vy1mv"]
+kind = "Answer"
+text = "Hmm. I should bring these over to {fc=1}Harin{/fc}"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_4uj5o")])
+resource_name = "You: Hmm. I should bring these over to {fc=1}Harin{/f…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qbxmc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vy1mv")])
+resource_name = "Menu 3"
+
+[resource]
+key = "Object006.con"
+name = "낛나간 망자 퇴치"
+menus = Array[Resource]([SubResource("RoseDialogMenu_udf1e"), SubResource("RoseDialogMenu_idf0g"), SubResource("RoseDialogMenu_o6kd6"), SubResource("RoseDialogMenu_qbxmc")])

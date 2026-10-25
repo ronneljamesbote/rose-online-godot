@@ -9,9 +9,9 @@ mod conversation;
 mod cursor;
 mod data;
 mod data_resources;
+mod dialog_blocks;
 mod effect;
 mod items;
-mod lua4;
 mod material;
 mod mesh;
 #[allow(clippy::all, unused)]

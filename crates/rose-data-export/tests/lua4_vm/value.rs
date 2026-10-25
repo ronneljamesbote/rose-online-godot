@@ -2,7 +2,7 @@ use std::{any::Any, cmp::Ordering, sync::Arc};
 
 use num_traits::ToPrimitive;
 
-use crate::lua4::Lua4Function;
+use super::Lua4Function;
 
 #[derive(Clone, Debug)]
 pub enum Lua4Value {

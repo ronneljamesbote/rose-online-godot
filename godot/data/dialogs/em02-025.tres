@@ -1,0 +1,24 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://cn5usyew43q4f"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6q6pe"]
+text = "Junon Polis' charm comes from its liveliness. I feel that the vibe of this city will live on forever."
+next_menu = 1
+resource_name = "NPC: Junon Polis' charm comes from its liveliness. I …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gepcb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6q6pe")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c4rxw"]
+kind = "Answer"
+text = "[Come back later]"
+resource_name = "You: [Come back later]"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6jrxv"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c4rxw")])
+resource_name = "Menu 1"
+
+[resource]
+key = "EM02-025.con"
+name = "주논폴리스-주민-블루"
+menus = Array[Resource]([SubResource("RoseDialogMenu_gepcb"), SubResource("RoseDialogMenu_6jrxv")])

@@ -1,0 +1,96 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://tatama7fy4q7"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3di1k"]
+text = "Just like on Junon, Ferrell Guild wares are the best around. Please choose what you'd like."
+next_menu = 1
+resource_name = "NPC: Just like on Junon, Ferrell Guild wares are the …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ok65u"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3di1k")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_bhb1l"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_c2kft"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_bhb1l")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nm6w7"]
+kind = "Answer"
+text = "Hmm, let me take a look."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_c2kft")])
+resource_name = "You: Hmm, let me take a look."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_ex2j8"]
+window = "Disassembly"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_e86lr"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_ex2j8")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_iwhuc"]
+kind = "Answer"
+text = "I'd like to disassemble an item."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_e86lr")])
+resource_name = "You: I'd like to disassemble an item."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7bpv3"]
+kind = "Answer"
+text = "So, why have you come to Luna?"
+next_menu = 2
+resource_name = "You: So, why have you come to Luna?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_v4nlq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_nm6w7"), SubResource("RoseDialogLine_iwhuc"), SubResource("RoseDialogLine_7bpv3")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_k5tab"]
+text = "Oh, I've come here to run a business. It's a challenge, but you've got to take some risks to make a profit."
+next_menu = 3
+resource_name = "NPC: Oh, I've come here to run a business. It's a cha…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_p757k"]
+lines = Array[Resource]([SubResource("RoseDialogLine_k5tab")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pi5k6"]
+kind = "Answer"
+text = "Ah, hopefully your business is doing well."
+next_menu = 4
+resource_name = "You: Ah, hopefully your business is doing well."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xl3df"]
+lines = Array[Resource]([SubResource("RoseDialogLine_pi5k6")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bcy6x"]
+text = "It's not bad, but there's still a long way to go. Anyway, feel free to look around."
+next_menu = 5
+resource_name = "NPC: It's not bad, but there's still a long way to go…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6cr31"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bcy6x")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_q0do4"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_1pcni"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_q0do4")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wsgql"]
+kind = "Answer"
+text = "Alright. Let me see what you have to sell."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_1pcni")])
+resource_name = "You: Alright. Let me see what you have to sell."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_h8s0l"]
+kind = "Answer"
+text = "Hmm, perhaps next time."
+resource_name = "You: Hmm, perhaps next time."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_72bsw"]
+lines = Array[Resource]([SubResource("RoseDialogLine_wsgql"), SubResource("RoseDialogLine_h8s0l")])
+resource_name = "Menu 5"
+
+[resource]
+key = "EM51-014.con"
+name = "[Ferrell Trader] Sergei"
+menus = Array[Resource]([SubResource("RoseDialogMenu_ok65u"), SubResource("RoseDialogMenu_v4nlq"), SubResource("RoseDialogMenu_p757k"), SubResource("RoseDialogMenu_xl3df"), SubResource("RoseDialogMenu_6cr31"), SubResource("RoseDialogMenu_72bsw")])

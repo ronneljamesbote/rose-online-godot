@@ -1,0 +1,24 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://trxo2ixcfeqw"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_uyhk2"]
+text = "We're providing you with goods at cheaper prices than Junon Polis! Come and take a look!"
+next_menu = 1
+resource_name = "NPC: We're providing you with goods at cheaper prices…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_sr100"]
+lines = Array[Resource]([SubResource("RoseDialogLine_uyhk2")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_x7cvi"]
+kind = "Answer"
+text = "But can merchants really be trusted?"
+resource_name = "You: But can merchants really be trusted?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_x4xpw"]
+lines = Array[Resource]([SubResource("RoseDialogLine_x7cvi")])
+resource_name = "Menu 1"
+
+[resource]
+key = "EM25-003.con"
+name = "[Gypsy Seller] Edone"
+menus = Array[Resource]([SubResource("RoseDialogMenu_sr100"), SubResource("RoseDialogMenu_x4xpw")])

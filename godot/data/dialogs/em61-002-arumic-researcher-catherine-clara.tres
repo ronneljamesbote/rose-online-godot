@@ -1,0 +1,84 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://qmsaumrkituu"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_l0iit"]
+text = "If you happen to meet Redford, please give this to him."
+next_menu = 1
+resource_name = "NPC: If you happen to meet Redford, please give this …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_li0oi"]
+lines = Array[Resource]([SubResource("RoseDialogLine_l0iit")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_pbqxf"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_j6kyv"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_pbqxf")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1qqbj"]
+kind = "Answer"
+text = "For the time being, I need to take potion."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_j6kyv")])
+resource_name = "You: For the time being, I need to take potion."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_oqj5d"]
+kind = "Answer"
+text = "Who is Redford?"
+next_menu = 2
+resource_name = "You: Who is Redford?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qow0d"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1qqbj"), SubResource("RoseDialogLine_oqj5d")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_uedno"]
+text = "You don't know Redford, a head of the Arumic researchers? {br}He's the one who made all potions which you use everyday."
+next_menu = 3
+resource_name = "NPC: You don't know Redford, a head of the Arumic res…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hiilj"]
+lines = Array[Resource]([SubResource("RoseDialogLine_uedno")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8k8j2"]
+kind = "Answer"
+text = "I see. Anyway, what do you want me to deliver to him?"
+next_menu = 4
+resource_name = "You: I see. Anyway, what do you want me to deliver to…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_uduxb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8k8j2")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_28hmd"]
+text = "Well, just forget it! I don't think it's a good idea to ask a stranger like you."
+next_menu = 5
+resource_name = "NPC: Well, just forget it! I don't think it's a good …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hi7f1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_28hmd")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7flu2"]
+kind = "Answer"
+text = "Okay then."
+resource_name = "You: Okay then."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_gmj7n"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_86rhw"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_gmj7n")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_riwpn"]
+kind = "Answer"
+text = "For the time being, let me take a look at potions."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_86rhw")])
+resource_name = "You: For the time being, let me take a look at potion…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7ww0a"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7flu2"), SubResource("RoseDialogLine_riwpn")])
+resource_name = "Menu 5"
+
+[resource]
+key = "EM61-002.con"
+name = "[Arumic Researcher] Catherine Clara"
+menus = Array[Resource]([SubResource("RoseDialogMenu_li0oi"), SubResource("RoseDialogMenu_qow0d"), SubResource("RoseDialogMenu_hiilj"), SubResource("RoseDialogMenu_uduxb"), SubResource("RoseDialogMenu_hi7f1"), SubResource("RoseDialogMenu_7ww0a")])

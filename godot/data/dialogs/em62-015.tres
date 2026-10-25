@@ -1,0 +1,62 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://dkgcf7sfwqw04"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_eebhg"]
+text = "Have you ever heard about the name 'Pincer'?"
+next_menu = 1
+resource_name = "NPC: Have you ever heard about the name 'Pincer'?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_oy6hx"]
+lines = Array[Resource]([SubResource("RoseDialogLine_eebhg")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0aj37"]
+kind = "Answer"
+text = "Pincer? Do you mean the huge beetles?"
+next_menu = 2
+resource_name = "You: Pincer? Do you mean the huge beetles?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_my3r5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0aj37")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ya73h"]
+text = "Exactily! I'm trying to make a secret potion to get rid of them. Don't you wanna know about it?"
+next_menu = 3
+resource_name = "NPC: Exactily! I'm trying to make a secret potion to …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jb36e"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ya73h")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cbq6j"]
+kind = "Answer"
+text = "Yeah, I wonder how it is."
+next_menu = 4
+resource_name = "You: Yeah, I wonder how it is."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_aor07"]
+lines = Array[Resource]([SubResource("RoseDialogLine_cbq6j")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6bcea"]
+text = "That's it! You're the one who I was waiting for.{br}Please help us for this important research to save Eldeon."
+next_menu = 5
+resource_name = "NPC: That's it! You're the one who I was waiting for.…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bi83j"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6bcea")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ax0w5"]
+kind = "Answer"
+text = "Well, I'm sorry. I just remember I had an important meeting today."
+resource_name = "You: Well, I'm sorry. I just remember I had an import…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_clwaa"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ax0w5")])
+resource_name = "Menu 5"
+
+[resource]
+key = "EM62-015.con"
+name = "그림자정글-레드포드"
+menus = Array[Resource]([SubResource("RoseDialogMenu_oy6hx"), SubResource("RoseDialogMenu_my3r5"), SubResource("RoseDialogMenu_jb36e"), SubResource("RoseDialogMenu_aor07"), SubResource("RoseDialogMenu_bi83j"), SubResource("RoseDialogMenu_clwaa")])

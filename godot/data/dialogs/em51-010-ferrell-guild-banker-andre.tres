@@ -1,0 +1,55 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://borev4620jl4h"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_x22pq"]
+text = "Andre's Storage is the safest and most secure on the planet of Luna."
+next_menu = 1
+resource_name = "NPC: Andre's Storage is the safest and most secure on…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_mgmag"]
+lines = Array[Resource]([SubResource("RoseDialogLine_x22pq")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_ahfs4"]
+window = "Storage"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_tuy7g"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_ahfs4")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nt8s2"]
+kind = "Answer"
+text = "I'd like to use the Storage please."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_tuy7g")])
+resource_name = "You: I'd like to use the Storage please."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_u4wow"]
+kind = "Answer"
+text = "Hey, you're a member of the Ferrell Guild! I didn't know you've come all the way to Luna."
+next_menu = 2
+resource_name = "You: Hey, you're a member of the Ferrell Guild! I did…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_g0b3s"]
+lines = Array[Resource]([SubResource("RoseDialogLine_nt8s2"), SubResource("RoseDialogLine_u4wow")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rqd3a"]
+text = "Well, traveling to different markets is one of the fundamentals to earning profit."
+next_menu = 3
+resource_name = "NPC: Well, traveling to different markets is one of t…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hw6mk"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rqd3a")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_olrjr"]
+kind = "Answer"
+text = "Ah, that's an admirable attitude for a business person!"
+resource_name = "You: Ah, that's an admirable attitude for a business …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_yrrst"]
+lines = Array[Resource]([SubResource("RoseDialogLine_olrjr")])
+resource_name = "Menu 3"
+
+[resource]
+key = "EM51-010.con"
+name = "[Ferrell Guild Banker] Andre"
+menus = Array[Resource]([SubResource("RoseDialogMenu_mgmag"), SubResource("RoseDialogMenu_g0b3s"), SubResource("RoseDialogMenu_hw6mk"), SubResource("RoseDialogMenu_yrrst")])
