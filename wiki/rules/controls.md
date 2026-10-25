@@ -27,7 +27,7 @@ keys:
   - { key: "P", does: "party" }
   - { key: "F", does: "friends" }
   - { key: "M", does: "zone map" }
-  - { key: "O", does: "options (interface, world labels, gameplay, sound)" }
+  - { key: "O", does: "options (interface, world labels, gameplay, graphics, sound)" }
   - { key: "Esc", does: "close the top window, the dialog, or leave repair mode; with nothing open, drop the target" }
   - { key: "Delete", does: "drop the selected bag item" }
   - { key: "Alt", does: "hide ground item labels while held (or show them, as set in Options)" }
@@ -233,7 +233,7 @@ Esc or clicking outside the chat box stops typing.
   on the minimap, monsters in red. The map image is the zone's own picture, the same one
   each zone page shows, with 2.5 m per pixel; its top left corner is the zone page's map
   `left` and `top`.
-- **Options** (O) has four tabs:
+- **Options** (O) has five tabs:
   - **Interface**: the theme (four built-in themes, or your own theme files in the
     `themes` folder next to the game), interface size (75% to 150%), window opacity (40%
     to 100%), blur behind windows, the character portrait (Live or Static), Cursor Size
@@ -244,17 +244,26 @@ Esc or clicking outside the chat box stops typing.
     labels on the ground show always or only while Alt is held. Labels show for items
     within 30 m.
   - **Gameplay**: Sticky target (walking keeps your target; off by default).
+  - **Graphics**: Shadows: Off, Low (shadows drawn up to 80 m away), Medium (120 m, the
+    default) or High (200 m, softer edges). Off keeps the sun's shading without shadows.
   - **Sound**: music and sound effect volume.
 
 ## Playing offline
 
 Without signing in you can walk around: left-click to move, S to stop, Space swings the
-sword, O opens the sound volume window.
+sword, O opens the options (sound volume and shadows).
 
 ## Changed from iROSE
 
 - The interface is new: the themes, movable and resizable windows and the options above
   are not part of the iROSE client. So is the version line.
+- Light and shadows: iROSE draws shadows baked into the maps (lightmaps) and lights
+  everything from one fixed side. Here a real sun moves with the zone's time of day (the
+  moon at night) and casts shadows from buildings, trees, the ground's hills, players,
+  monsters, NPCs and carts; surfaces turned away from it are darker. The colours of each
+  time of day are iROSE's (from the zone's sky). Only things in your own 160 m block and
+  the 8 around it cast shadows, and small decorations (grass, flowers, small rocks) only
+  within 40 m of your block.
 - Sticky target is new; with it off, walking drops the target as in iROSE. Esc dropping
   the target is new too.
 - The cursors are iROSE's, chosen the same way, except: pushing the mouse against the left

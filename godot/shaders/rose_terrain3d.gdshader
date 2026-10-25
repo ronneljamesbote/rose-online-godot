@@ -3,10 +3,11 @@ shader_type spatial;
 // Terrain3D 1.0.2's own and must stay as it is; fragment() is a port of
 // rose_terrain.gdshader: each 10 m tile (4 x 4 vertices) draws texture layer 1 with layer 2
 // on top by layer 2's alpha (times the control blend, so Terrain3D's paint tools work),
-// layer 2 flipped or turned by the control's angle bits (ROSE rotation codes 0-6), all
-// times the block's lightmap. Zones with more than 32 ground textures keep the rest in
-// rose_extra_tiles.
-render_mode unshaded, fog_disabled, cull_back, depth_draw_opaque, skip_vertex_transform;
+// layer 2 flipped or turned by the control's angle bits (ROSE rotation codes 0-6), times
+// Terrain3D's colour map (the colour the ROSE lightmaps gave the ground, without their
+// shadows; paint it with Terrain3D's colour brush), lit by the sun. Zones with more than 32
+// ground textures keep the rest in rose_extra_tiles.
+render_mode fog_disabled, specular_disabled, ambient_light_disabled, cull_back, depth_draw_opaque, skip_vertex_transform;
 
 /* The terrain depends on this shader to function. Don't change most things in vertex() or 
  * terrain normal calculations in fragment(). You probably only want to customize the 
@@ -199,10 +200,6 @@ void vertex() {
 
 #include "res://shaders/rose_common.gdshaderinc"
 
-// The ROSE blocks' lightmaps (one 160 m block per layer) and, per block of the 64 x 64
-// grid, its layer + 1 (0: none). Set by RoseTerrainLook.
-uniform highp sampler2DArray rose_lightmaps : filter_linear, repeat_disable;
-uniform highp sampler2D rose_lightmap_index : filter_nearest, repeat_disable;
 // Ground textures past Terrain3D's 32: texture 32 + n is layer n here, marked by the base
 // (bit 3) or overlay (bit 4) extra bit of the control value. Set by RoseTerrainLook.
 uniform highp sampler2DArray rose_extra_tiles : filter_linear_mipmap_anisotropic, repeat_enable;
@@ -225,7 +222,6 @@ void fragment() {
 	vec2 world = v_vertex.xz;
 	// ROSE block grid: block x from world x, block y from world z (see zone.rs block_origin).
 	vec2 block_f = vec2(world.x / 160.0, 65.0 + world.y / 160.0);
-	ivec2 block = ivec2(floor(block_f));
 	vec2 local = fract(block_f) * 160.0;
 
 	// Each 10 m tile's textures come from the control map at a vertex inside the tile.
@@ -258,18 +254,35 @@ void fragment() {
 	vec4 color1 = rose_tile(layer1, (control & 0x8u) != 0u, tile_uv, uv_dx, uv_dy);
 	vec4 color2 = rose_tile(layer2, (control & 0x10u) != 0u, layer2_uv, dx2, dy2);
 
-	vec3 light = vec3(0.5);
-	bool in_grid = block.x >= 0 && block.y >= 0 && block.x < 64 && block.y < 64;
-	int lightmap = in_grid ? int(round(texelFetch(rose_lightmap_index, block, 0).r * 255.0)) : 0;
-	if (lightmap > 0) {
-		light = texture(rose_lightmaps, vec3(local / 160.0, float(lightmap - 1))).rgb;
-	}
-	vec3 rose_color = mix(color1, color2, color2.a * blend).rgb * light * 2.0;
-	rose_color *= rose_map_ambient;
+	// Colour map, as Terrain3D's own shaders read it.
+	vec3 region_uv = get_index_uv(uv2);
+	vec3 base_ddx = dFdxCoarse(v_vertex);
+	vec3 base_ddy = dFdyCoarse(v_vertex);
+	float region_mip = log2(max(length(base_ddx.xz), length(base_ddy.xz)) * _vertex_density);
+	vec4 color_map = region_uv.z > -1.0 ? textureLod(_color_maps, region_uv, region_mip) : COLOR_MAP_DEF;
 
+	// The ground's slope from the heights around (the vertex normals are flat).
+	vec2 c = v_vertex.xz * _vertex_density;
+	float h_left = texelFetch(_height_maps, get_index_coord(c - vec2(1.0, 0.0), FRAGMENT_PASS), 0).r;
+	float h_right = texelFetch(_height_maps, get_index_coord(c + vec2(1.0, 0.0), FRAGMENT_PASS), 0).r;
+	float h_back = texelFetch(_height_maps, get_index_coord(c - vec2(0.0, 1.0), FRAGMENT_PASS), 0).r;
+	float h_front = texelFetch(_height_maps, get_index_coord(c + vec2(0.0, 1.0), FRAGMENT_PASS), 0).r;
+	vec3 world_normal = normalize(vec3(h_left - h_right, 2.0 * _vertex_spacing, h_back - h_front));
+	NORMAL = normalize((VIEW_MATRIX * vec4(world_normal, 0.0)).xyz);
+
+	vec3 rose_color = mix(color1, color2, color2.a * blend).rgb;
 	float fog = rose_fog_amount(VERTEX.z);
 	if (rose_fog_alpha(fog) <= 0.0) {
 		discard;
 	}
-	ALBEDO = rose_to_linear(rose_color_fog(rose_color, fog));
+	float fog_mix = rose_fog_mix(fog);
+	vec3 base = rose_to_linear(rose_color) * color_map.rgb * (1.0 - fog_mix);
+	ALBEDO = base;
+	EMISSION = base * rose_map_shade() + rose_to_linear(rose_fog_color) * fog_mix;
+}
+
+void light() {
+	if (LIGHT_IS_DIRECTIONAL) {
+		DIFFUSE_LIGHT += rose_map_sun() * max(dot(NORMAL, LIGHT), 0.0) * ATTENUATION;
+	}
 }

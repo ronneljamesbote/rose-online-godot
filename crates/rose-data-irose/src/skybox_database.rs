@@ -39,6 +39,8 @@ fn convert_colors(data: &[u32; 4]) -> EnumMap<SkyboxState, Vec4> {
 }
 
 fn load_skybox(data: &StbSkybox, id: usize) -> Option<SkyboxData> {
+    let character_diffuse_color = convert_colors(&data.get_character_diffuse_color(id));
+    let (sun_color, sun_strength, shadow_darkness) = SkyboxData::default_sun(&character_diffuse_color);
     Some(SkyboxData {
         id: SkyboxId::new(id as u16),
         mesh: data.get_mesh(id)?.trim().to_string(),
@@ -46,7 +48,10 @@ fn load_skybox(data: &StbSkybox, id: usize) -> Option<SkyboxData> {
         texture_night: data.get_texture_night(id).unwrap_or_default().trim().to_string(),
         map_ambient_color: convert_colors(&data.get_map_ambient_color(id)),
         character_ambient_color: convert_colors(&data.get_character_ambient_color(id)),
-        character_diffuse_color: convert_colors(&data.get_character_diffuse_color(id)),
+        character_diffuse_color,
+        sun_color,
+        sun_strength,
+        shadow_darkness,
     })
 }
 

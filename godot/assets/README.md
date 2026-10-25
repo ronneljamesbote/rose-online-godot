@@ -145,7 +145,7 @@ Zone objects and ground textures are converted by the same import:
 
 | File | What it is |
 | --- | --- |
-| `3ddata/junon/list_deco_jg/12.tscn`, `list_cnst_jg/1.tscn` and so on (and the event objects a zone uses) | One scene per building, decoration or event object (`RoseZoneObject`): its mesh parts with their collision and its effects. Placed copies get their lightmap from the block. |
+| `3ddata/junon/list_deco_jg/12.tscn`, `list_cnst_jg/1.tscn` and so on (and the event objects a zone uses) | One scene per building, decoration or event object (`RoseZoneObject`): its mesh parts with their collision and its effects. Their materials take the sun and cast real-time shadows (see below). |
 | `terrain_textures/3ddata/terrain/tiles/junon/jg/t001_01.res` and so on | The ground textures of the zones that have scenes, as Terrain3D takes them (256 x 256 RGBA with mipmaps), named after the ROSE tile file, so zones using the same tile share one. |
 
 The zones themselves are scenes in `res://zones/`, one folder per zone (`1_canyon_city_of_zant/`, `20_birth_island/`, `21_valley_of_luxem_tower/`, `22_adventurer_s_plain/`, `23_breezy_hills/`),
@@ -158,7 +158,7 @@ godot --headless --path godot -- --import-zone=20,force --data-idx=...   # repla
 
 | File | What it is |
 | --- | --- |
-| `zone.tscn` | The whole zone. Its root is a `RoseZoneScene` (the zone number in the Inspector) with one `RoseBlock` per 160 m block (`Block_32_34`: its `block_x` and `block_y`, then `Water`, `Buildings`, `Decorations`, `EventObjects`, `Warps`, `Effects`, `Sounds`, `Spawns` and `Npcs`), the ground (`Terrain`, a Terrain3D node with a `RoseTerrainLook` child holding the block lightmaps) and the zone's events. Spawns and NPCs are marker nodes that show the monster or NPC in the editor. |
+| `zone.tscn` | The whole zone. Its root is a `RoseZoneScene` (the zone number in the Inspector) with one `RoseBlock` per 160 m block (`Block_32_34`: its `block_x` and `block_y`, then `Water`, `Buildings`, `Decorations`, `EventObjects`, `Warps`, `Effects`, `Sounds`, `Spawns` and `Npcs`), the ground (`Terrain`, a Terrain3D node with a `RoseTerrainLook` child holding any extra ground textures; its colour map holds the ground tint from the map files) and the zone's events. Spawns and NPCs are marker nodes that show the monster or NPC in the editor. |
 | `terrain/`, `terrain_assets.tres` | The Terrain3D heights, tile textures and holes (1280 m regions, 2.5 m between vertices like ROSE). |
 
 Zones converted before 2026-10-18 kept each block in its own `block_X_Y.tscn`. On a branch
@@ -167,6 +167,24 @@ node, name or position, so `--export-data=check` still passes):
 
 ```sh
 godot --headless --path godot -- --merge-zone-blocks=24      # or =all
+```
+
+### Light and shadows
+
+Zones are lit in real time: a sun (`RoseSun`) that moves with the time of day and casts
+shadows from the ground, buildings, decorations, characters and monsters, as set in the
+options' Graphics page. The light's colours come from the zone's sky (`godot/data/skies/`).
+The client's lightmaps are not used: the import skips them, and the only thing kept from
+them is a soft ground tint (the sea's blue, darker patches) in Terrain3D's colour map.
+`RoseZoneScene`'s **Preview time** (morning, day, evening, night; editor only, not saved)
+shows the zone in the editor with that time's sun.
+
+Zones converted before real-time shadows still have lightmaps in `zone.tscn`. Take them out
+once (after `--import-rose`; it also paints the ground tint, and `--export-data=check` still
+passes):
+
+```sh
+godot --headless --path godot -- --strip-lightmaps=24 --data-idx=...     # or =all
 ```
 
 Open `zone.tscn` in the editor to change the zone: move, add or delete objects and markers

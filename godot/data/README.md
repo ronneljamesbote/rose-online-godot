@@ -162,7 +162,8 @@ A zone's `sky` links a `RoseSky`: the dome drawn around the zone (`mesh`, a path
 models, so opening the sky draws no preview of it; `texture_day` and `texture_night`, which
 the game blends through the evening and back in the morning) and the colour of the light at
 each time of day (`map_ambient_*` on the ground and buildings, `character_ambient_*` and
-`character_diffuse_*` on characters and monsters). Several zones share one (sky 0 is every
+`character_diffuse_*` on characters and monsters) and the sun (`sun_color_*`, `sun_strength_*`
+and `shadow_darkness_*`, where 0 is no shadow and 0.4 makes shade 60 % as bright as sunlight). Several zones share one (sky 0 is every
 zone on Junon above ground). The numbers count from 0 as iROSE's LIST_SKY.STB rows do.
 
 `interface/interface.tres` (a `RoseInterface`) holds the interface's own pictures, the

@@ -303,7 +303,11 @@ pub fn object_meshes(zsc: &ZscFile, object: &rose_file_readers::ZscObject, impor
         let Some(zsc_material) = zsc.materials.get(part.material_id as usize) else { continue };
         let mut instance = MeshInstance3D::new_alloc();
         instance.set_mesh(&part_mesh);
-        instance.set_material_override(&material::object_material(zsc_material, None));
+        let part_material = material::object_material(zsc_material, material::Light::Character);
+        if !material::casts_shadow(&part_material) {
+            instance.set_cast_shadows_setting(godot::classes::geometry_instance_3d::ShadowCastingSetting::OFF);
+        }
+        instance.set_material_override(&part_material);
         instance.set_position(Vector3::new(part.position.x, part.position.z, -part.position.y) / 100.0);
         let q = Quaternion::new(part.rotation.x, part.rotation.z, -part.rotation.y, part.rotation.w);
         instance.set_quaternion(if q.length_squared() > 0.0 { q.normalized() } else { Quaternion::IDENTITY });

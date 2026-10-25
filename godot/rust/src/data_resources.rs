@@ -1747,6 +1747,49 @@ pub struct RoseSky {
     /// From the sun's side, at night.
     #[export]
     character_diffuse_night: Color,
+
+    /// The colour of the sun on the ground and buildings in the morning. The sun moves with
+    /// the zone's day (the moon at night) and casts real shadows; characters take the
+    /// character light from its side instead.
+    #[export_group(name = "Sun")]
+    #[export]
+    sun_color_morning: Color,
+    /// The sun's colour by day.
+    #[export]
+    sun_color_day: Color,
+    /// The sun's colour in the evening.
+    #[export]
+    sun_color_evening: Color,
+    /// The moon's colour at night.
+    #[export]
+    sun_color_night: Color,
+    /// How strongly the sun lights the ground and buildings that face it, in the morning:
+    /// 1 = as bright as the ground light, 1.5 = half again as bright where it shines
+    /// straight on, so slopes facing away look darker.
+    #[export(range = (0.0, 4.0, 0.05))]
+    sun_strength_morning: f32,
+    /// The sun's strength by day.
+    #[export(range = (0.0, 4.0, 0.05))]
+    sun_strength_day: f32,
+    /// The sun's strength in the evening.
+    #[export(range = (0.0, 4.0, 0.05))]
+    sun_strength_evening: f32,
+    /// The moon's strength at night.
+    #[export(range = (0.0, 4.0, 0.05))]
+    sun_strength_night: f32,
+    /// How dark shadows are in the morning: the share of the ground light that comes from
+    /// the sun. 0 = no shadows, 0.4 = shade is 60 % as bright as sunlight.
+    #[export(range = (0.0, 1.0, 0.01))]
+    shadow_darkness_morning: f32,
+    /// How dark shadows are by day.
+    #[export(range = (0.0, 1.0, 0.01))]
+    shadow_darkness_day: f32,
+    /// How dark shadows are in the evening.
+    #[export(range = (0.0, 1.0, 0.01))]
+    shadow_darkness_evening: f32,
+    /// How dark the moon's shadows are at night.
+    #[export(range = (0.0, 1.0, 0.01))]
+    shadow_darkness_night: f32,
     base: Base<Resource>,
 }
 
@@ -2243,6 +2286,11 @@ fn to_resource<T: Serialize>(class: &str, export: &T, links: &Links) -> Result<G
         .map_err(|_| format!("{class} is not a resource class"))?;
     set_from_json(&mut resource, &object, links)?;
     Ok(resource)
+}
+
+/// A sky resource (`RoseSky`) as the game reads it, for the editor's preview light.
+pub fn sky_data(resource: &Gd<Resource>) -> Option<rose_data::SkyboxData> {
+    serde_json::from_value::<SkyExport>(Value::Object(to_json(resource))).ok().map(|sky| sky.to_data())
 }
 
 fn from_resource<T: DeserializeOwned>(resource: &Gd<Resource>) -> Result<T, String> {

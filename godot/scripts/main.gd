@@ -44,6 +44,11 @@
 ##                              fails when a file is out of date. Run headless, after --import-rose
 ##   --merge-zone-blocks=ID|all  move a zone's block_X_Y.tscn files into its zone.tscn (zones
 ##                              converted before 2026-10-18) and quit (run headless, after --import-rose)
+##   --strip-lightmaps=ID|all   take the baked lightmaps out of a zone scene made before real-time
+##                              shadows (painting their colour into the ground's colour map) and quit
+##                              (run headless)
+##   --shadows=off|low|medium|high   shadow setting for this run (Options > Graphics saves one)
+##   --frame-time               with --screenshot: print the average frame time and draw calls
 extends Node3D
 
 const START := Vector3(5210.5, 0.0, -5136.7)  # the zone's start position
@@ -61,6 +66,7 @@ var world_ticks := 0.0  # one world tick is 10 seconds
 var loaded_zone := 0
 var loading: CanvasLayer  # loading_screen.gd
 var fx: Node  # fx.gd: music, sounds and effects
+var sun: RoseSun  # the sun (or moon), which casts the shadows
 var _loading_zone := 0
 
 
@@ -203,6 +209,22 @@ func _merge_zone_blocks(which: String) -> void:
 	get_tree().quit(0)
 
 
+## Takes the baked lightmaps out of one zone scene ("all": every zone) and quits.
+func _strip_lightmaps(which: String) -> void:
+	await get_tree().process_frame  # it adds a Terrain3D node to the tree for a moment
+	var result: Dictionary = RoseImport.strip_lightmaps(0 if which == "all" else int(which))
+	if result.has("error"):
+		push_error("rose: %s" % result.error)
+		get_tree().quit(1)
+		return
+	for zone in result.zones:
+		if zone.lines > 0:
+			print("rose: %s: %d lightmap lines taken out, ground colour painted for %d blocks" % [zone.folder, zone.lines, zone.blocks])
+		else:
+			print("rose: %s: no lightmaps (already done)" % zone.folder)
+	get_tree().quit(0)
+
+
 ## Writes the data resources (items, monsters, NPCs ...) from the iROSE tables, prints how
 ## many and quits.
 func _convert_data(force: bool) -> void:
@@ -260,6 +282,9 @@ func _start(data_idx: String) -> void:
 		var parts: PackedStringArray = str(options["import-zone"]).split(",")
 		_import_zone(int(parts[0]), parts.size() > 1 and parts[1] == "force")
 		return
+	if options.has("strip-lightmaps"):
+		_strip_lightmaps(options["strip-lightmaps"])
+		return
 
 	fx = preload("res://scripts/fx.gd").new()
 	fx.name = "Fx"
@@ -292,6 +317,14 @@ func _start(data_idx: String) -> void:
 	add_child(camera)
 	camera.make_current()
 	fx.camera = camera
+
+	sun = RoseSun.new()
+	sun.name = "Sun"
+	add_child(sun)
+	_apply_shadow_setting()
+	UI.settings_changed.connect(_apply_shadow_setting)
+	if zone:
+		sun.apply(zone.get_lighting_at(int(world_ticks), 0.0))
 
 	# Colours already match rose-offline-client without it, so glow (its bloom) is opt-in.
 	var environment := Environment.new()
@@ -481,17 +514,26 @@ func _start_demo(which: String, me: Node3D = null) -> void:
 
 
 func _apply_lighting(lighting: Dictionary) -> void:
-	RenderingServer.global_shader_parameter_set("rose_map_ambient", lighting["map_ambient"])
-	RenderingServer.global_shader_parameter_set("rose_character_ambient", lighting["character_ambient"])
-	RenderingServer.global_shader_parameter_set("rose_character_diffuse", lighting["character_diffuse"])
-	RenderingServer.global_shader_parameter_set("rose_light_direction", lighting["light_direction"])
-	RenderingServer.global_shader_parameter_set("rose_fog_color", lighting["fog_color"])
-	RenderingServer.global_shader_parameter_set("rose_fog_density", lighting["fog_density"])
-	RenderingServer.global_shader_parameter_set("rose_sky_day_weight", lighting["day_weight"])
+	if sun:
+		sun.apply(lighting)
+
+
+## Options > Graphics > Shadows (--shadows for one run).
+func _apply_shadow_setting() -> void:
+	if sun:
+		sun.set_quality(options.get("shadows", UI.settings.get("shadows", "medium")))
 
 
 func _process(delta: float) -> void:
-	if zone == null or options.has("screenshot"):
+	if zone == null:
+		return
+	# Only models near the player cast shadows; this does nothing until they change block.
+	var target = camera.get("target") if camera else null
+	if target is Node3D:
+		zone.update_shadows(target.global_position)
+	elif camera:
+		zone.update_shadows(camera.global_position)
+	if options.has("screenshot"):
 		return
 	_steer()
 	if online and options.has("net-log") and Engine.get_process_frames() % 60 == 0:
@@ -526,6 +568,16 @@ func _take_screenshot(path: String) -> void:
 		Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME),
 		Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME),
 		Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME)])
+	if options.has("frame-time"):
+		# --frame-time: the average frame over the next 30, and the shadow pass's share.
+		var viewport := get_viewport()
+		var started := Time.get_ticks_usec()
+		for i in 30:
+			await RenderingServer.frame_post_draw
+		print("rose: frame %.1f ms, draw calls %d, shadow draw calls %d" % [
+			(Time.get_ticks_usec() - started) / 30000.0,
+			viewport.get_render_info(Viewport.RENDER_INFO_TYPE_VISIBLE, Viewport.RENDER_INFO_DRAW_CALLS_IN_FRAME),
+			viewport.get_render_info(Viewport.RENDER_INFO_TYPE_SHADOW, Viewport.RENDER_INFO_DRAW_CALLS_IN_FRAME)])
 	get_tree().quit()
 
 
