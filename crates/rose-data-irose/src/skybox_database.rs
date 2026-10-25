@@ -52,6 +52,8 @@ fn load_skybox(data: &StbSkybox, id: usize) -> Option<SkyboxData> {
         sun_color,
         sun_strength,
         shadow_darkness,
+        sun_height: SkyboxData::DEFAULT_SUN_HEIGHT,
+        sun_azimuth: SkyboxData::DEFAULT_SUN_AZIMUTH,
     })
 }
 

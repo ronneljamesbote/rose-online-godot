@@ -1,9 +1,7 @@
-//! The sun: one `DirectionalLight3D` (`RoseSun`) that moves with the zone's day (the moon at
-//! night) and casts real-time shadows, and the zone light at a time of day, ported from
+//! The sun: one `DirectionalLight3D` (`RoseSun`) that stands still at the sky's sun height and
+//! direction (the moon at night stands in the same place) and casts real-time shadows, and the zone light at a time of day, ported from
 //! rose-offline-client's zone_time_system.rs. The ROSE shaders take the light as global
 //! shader values (see `shaders/rose_common.gdshaderinc`).
-
-use std::f32::consts::PI;
 
 use godot::{
     classes::{
@@ -15,20 +13,6 @@ use godot::{
     prelude::*,
 };
 use rose_data::{SkyboxData, SkyboxState};
-
-/// The sun's lowest height above the horizon. Lower suns cast much longer shadows, which pull
-/// many more models into the shadow map.
-const LOWEST_SUN: f32 = 20.0;
-/// The sun's height at midday (ROSE's fixed light was 45 degrees up).
-const HIGHEST_SUN: f32 = 55.0;
-/// Where the sun stands at midday, seen from above: ROSE's fixed light direction
-/// (east-north-east), so midday shadows fall where the baked ones did.
-const MIDDAY_AZIMUTH: f32 = 120.0;
-/// How far the sun turns from rising to setting.
-const SWING: f32 = 140.0;
-/// The share of the sun's (or moon's) arc at each end over which its shadows fade in and
-/// out, so they don't jump when the moon takes over.
-const FADE: f32 = 0.05;
 
 /// A zone's day, in world ticks (10 s each): its length and when each state starts.
 #[derive(Clone, Copy, Debug)]
@@ -50,23 +34,12 @@ fn fog(state: SkyboxState) -> (f32, f32) {
     }
 }
 
-/// Which way the sun (by day) or moon (by night) is, and how much its shadows show (0 at the
-/// ends of its arc, 1 between). `ticks` is the time of day in world ticks.
-pub fn sun_direction(times: &DayTimes, ticks: f32) -> (Vector3, f32) {
-    let cycle = times.day_cycle.max(1) as f32;
-    let t = ticks.rem_euclid(cycle);
-    let (morning, night) = (times.morning as f32, times.night as f32);
-    let by_night = t >= night || t < morning;
-    let (start, length) = if by_night { (night, morning + cycle - night) } else { (morning, night - morning) };
-    let p = ((t - start).rem_euclid(cycle) / length.max(1.0)).clamp(0.0, 1.0);
-    let elevation = (LOWEST_SUN + (HIGHEST_SUN - LOWEST_SUN) * (PI * p).sin()).to_radians();
-    let azimuth = (MIDDAY_AZIMUTH + (p - 0.5) * SWING).to_radians();
-    let direction = Vector3::new(elevation.cos() * azimuth.sin(), elevation.sin(), elevation.cos() * azimuth.cos());
-    let smooth = |x: f32| {
-        let x = (x / FADE).clamp(0.0, 1.0);
-        x * x * (3.0 - 2.0 * x)
-    };
-    (direction, smooth(p) * smooth(1.0 - p))
+/// Which way the sun (and the moon) is, from the ground: the same at every time of day, so
+/// shadows never move. `height` is degrees above the horizon, `azimuth` the compass direction
+/// seen from above (0 = north, which is -z, 90 = east, +x).
+pub fn sun_direction(height: f32, azimuth: f32) -> Vector3 {
+    let (height, azimuth) = (height.clamp(1.0, 90.0).to_radians(), azimuth.to_radians());
+    Vector3::new(height.cos() * azimuth.sin(), height.sin(), -height.cos() * azimuth.cos())
 }
 
 /// The zone light at `day_time` (world ticks, 0..day_cycle) plus `partial_tick`, from the
@@ -121,7 +94,10 @@ pub fn lighting(sky: Option<&SkyboxData>, times: &DayTimes, day_time: i64, parti
         SkyboxState::Evening => 1.0 - percent,
         SkyboxState::Night => 0.0,
     };
-    let (sun_direction, fade) = sun_direction(times, day_time as f32 + partial_tick);
+    let sun_direction = match sky {
+        Some(sky) => sun_direction(sky.sun_height, sky.sun_azimuth),
+        None => sun_direction(SkyboxData::DEFAULT_SUN_HEIGHT, SkyboxData::DEFAULT_SUN_AZIMUTH),
+    };
 
     out.set("state", format!("{state:?}").to_lowercase());
     out.set("state_percent", percent);
@@ -131,11 +107,11 @@ pub fn lighting(sky: Option<&SkyboxData>, times: &DayTimes, day_time: i64, parti
     out.set("character_diffuse", char_diffuse);
     out.set("sun_direction", sun_direction);
     out.set("sun_color", sun_color);
-    // Flat ground gets about as much sun when it stands low as at ROSE's 45 degrees (the sky
-    // colours already darken mornings and evenings); what faces a low sun gets a little more.
+    // Flat ground gets about as much sun from a sky with a low sun as at ROSE's 45 degrees;
+    // what faces a low sun gets a little more.
     let height_boost = (std::f32::consts::FRAC_1_SQRT_2 / sun_direction.y.max(0.01)).clamp(1.0, 1.4);
     out.set("sun_strength", sun_strength * height_boost);
-    out.set("shadow_darkness", darkness * fade);
+    out.set("shadow_darkness", darkness);
     out.set("fog_color", Vector3::splat(fog_from + (fog_to - fog_from) * t));
     out.set("fog_density", density_from + (density_to - density_from) * t);
     out
@@ -151,8 +127,8 @@ fn quality(name: &str) -> Option<(ShadowMode, f32, i32, f32, ShadowQuality)> {
     }
 }
 
-/// The sun (by night the moon): the zone's one light. It turns with the time of day and
-/// casts the shadows; the game makes it, and zone scenes add a preview one in the editor.
+/// The sun (by night the moon): the zone's one light. It stands still and casts the shadows,
+/// only its colour and strength change with the time of day; the game makes it, and zone scenes add a preview one in the editor.
 /// Shadows: `set_quality`.
 #[derive(GodotClass)]
 #[class(tool, base=DirectionalLight3D)]
@@ -160,7 +136,7 @@ pub struct RoseSun {
     base: Base<DirectionalLight3D>,
     /// "off", "low", "medium" or "high".
     quality: String,
-    /// Whether the sun gives any shadow now (none around sunrise and sunset).
+    /// Whether the sun gives any shadow now (none when the sky's shadow darkness is 0).
     has_shadow: bool,
 }
 
@@ -186,7 +162,7 @@ impl IDirectionalLight3D for RoseSun {
 
 #[godot_api]
 impl RoseSun {
-    /// Turns the sun and sets the zone light from `get_lighting_at`'s dictionary.
+    /// Points the sun and sets the zone light from `get_lighting_at`'s dictionary.
     #[func]
     pub fn apply(&mut self, lighting: VarDictionary) {
         let mut server = RenderingServer::singleton();

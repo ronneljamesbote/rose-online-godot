@@ -85,6 +85,20 @@ pub struct SkyExport {
     pub shadow_darkness_day: f32,
     pub shadow_darkness_evening: f32,
     pub shadow_darkness_night: f32,
+    /// Where the sun (and the moon) stands at every time of day: degrees above the horizon,
+    /// and its direction seen from above (0 = north, 90 = east).
+    #[serde(default = "default_sun_height")]
+    pub sun_height: f32,
+    #[serde(default = "default_sun_azimuth")]
+    pub sun_azimuth: f32,
+}
+
+fn default_sun_height() -> f32 {
+    SkyboxData::DEFAULT_SUN_HEIGHT
+}
+
+fn default_sun_azimuth() -> f32 {
+    SkyboxData::DEFAULT_SUN_AZIMUTH
 }
 
 impl SkyExport {
@@ -121,6 +135,8 @@ impl SkyExport {
             shadow_darkness_day: sky.shadow_darkness[Day],
             shadow_darkness_evening: sky.shadow_darkness[Evening],
             shadow_darkness_night: sky.shadow_darkness[Night],
+            sun_height: sky.sun_height,
+            sun_azimuth: sky.sun_azimuth,
         }
     }
 
@@ -166,6 +182,8 @@ impl SkyExport {
                 SkyboxState::Evening => self.shadow_darkness_evening,
                 SkyboxState::Night => self.shadow_darkness_night,
             },
+            sun_height: self.sun_height,
+            sun_azimuth: self.sun_azimuth,
         }
     }
 }

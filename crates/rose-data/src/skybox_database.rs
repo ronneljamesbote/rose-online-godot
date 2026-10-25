@@ -36,9 +36,19 @@ pub struct SkyboxData {
     /// How much of the ground light the sun gives, so how dark shadows are: 0 = no shadows,
     /// 0.4 = shade is 60 % as bright as sunlight.
     pub shadow_darkness: EnumMap<SkyboxState, f32>,
+    /// Where the sun (and the moon at night) stands, the same at every time of day so
+    /// shadows never move: its height above the horizon and its direction seen from above,
+    /// in degrees (0 = north, 90 = east).
+    pub sun_height: f32,
+    pub sun_azimuth: f32,
 }
 
 impl SkyboxData {
+    /// The sun's place in a sky that doesn't set one: ROSE's fixed light, 45 degrees up in the
+    /// east-north-east.
+    pub const DEFAULT_SUN_HEIGHT: f32 = 45.0;
+    pub const DEFAULT_SUN_AZIMUTH: f32 = 60.0;
+
     /// The sun of a sky that has none yet (iROSE's): the character diffuse colour, strength
     /// 1.5 and shadows a little lighter in the morning and evening and lightest at night.
     pub fn default_sun(character_diffuse_color: &EnumMap<SkyboxState, Vec4>) -> (EnumMap<SkyboxState, Vec4>, EnumMap<SkyboxState, f32>, EnumMap<SkyboxState, f32>) {
