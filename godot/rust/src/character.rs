@@ -410,7 +410,8 @@ fn attach_model(
 }
 
 /// The model path of an equipped item for a male or female character (empty when it has
-/// none).
+/// none). A number with no item, like 1 (bare body, hands and feet), is the client list's
+/// object of that number, as before items had models.
 fn item_model(part: Part, number: usize, male: bool) -> String {
     let Some(game_data) = data::get() else { return String::new() };
     let items = &game_data.items;
@@ -425,7 +426,11 @@ fn item_model(part: Part, number: usize, male: bool) -> String {
         Part::FaceItem => items.get_face_item(number).map(|i| &i.item_data),
         Part::Back => items.get_back_item(number).map(|i| &i.item_data),
     };
-    base.map_or(String::new(), |b| if male { b.model_male.clone() } else { b.model_female.clone() })
+    match base {
+        Some(b) if male => b.model_male.clone(),
+        Some(b) => b.model_female.clone(),
+        None => rose_data::art::client_part(part.list(male), number as u32),
+    }
 }
 
 fn add_player(node: &mut Gd<Node3D>, library: Gd<AnimationLibrary>) {
