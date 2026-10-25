@@ -12,6 +12,9 @@ uniform float alpha_value = 1.0;
 uniform bool specular = false;
 uniform sampler2D specular_texture : filter_linear;
 uniform bool map_light = false;
+// A placed zone model's colour per part: what its old ROSE lightmap gave it, times the
+// model's hand-set tint (RoseZoneObject part_tints and tint). White for everything else.
+instance uniform vec3 rose_tint = vec3(1.0);
 
 void fragment() {
 	vec4 color = texture(base_texture, UV);
@@ -28,6 +31,8 @@ void fragment() {
 		vec3 R = reflect(-V, world_normal);
 		color.rgb += color.a * texture(specular_texture, R.xy * 0.5 + vec2(0.5)).rgb;
 	}
+
+	color.rgb *= rose_tint;
 
 	float fog = rose_fog_amount(VERTEX.z);
 	float fog_alpha = rose_fog_alpha(fog);

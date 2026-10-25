@@ -451,6 +451,23 @@ impl RoseImport {
         result
     }
 
+    /// Paints again the colour the client's ground lightmaps gave zone `zone_id` (0: every
+    /// zone in `res://zones/`) into its Terrain3D colour map. Needs RoseData.open. Returns
+    /// {zones: [{folder, count}]} (count: blocks coloured) or {error}.
+    #[func]
+    fn paint_ground_tint(zone_id: i32) -> VarDictionary {
+        each_zone(zone_id, crate::zone_scene::paint_ground_tint)
+    }
+
+    /// Writes the colour each placed building and decoration of zone `zone_id` (0: every zone
+    /// in `res://zones/`) had from its client lightmap into its `part_tints`. Needs
+    /// RoseData.open and the import. Returns {zones: [{folder, count}]} (count: models
+    /// coloured) or {error}.
+    #[func]
+    fn paint_object_tints(zone_id: i32) -> VarDictionary {
+        each_zone(zone_id, crate::zone_scene::paint_object_tints)
+    }
+
     /// Moves the blocks of zone `zone_id` (0: every zone in `res://zones/`) from their own
     /// `block_X_Y.tscn` files into `zone.tscn` and deletes the block files. Needs the import
     /// (the blocks' models must load). Returns {zones: [{folder, blocks}]} or {error}.
@@ -539,4 +556,32 @@ pub fn save(resource: Gd<Resource>, path: &str) -> bool {
         godot_warn!("rose: could not save {path}: {error:?}");
     }
     error == Error::OK
+}
+
+/// Runs `run` on zone `zone_id` (0: every zone in `res://zones/`): {zones: [{folder, count}]},
+/// or {error} at the first zone that fails.
+fn each_zone(zone_id: i32, run: impl Fn(u16) -> Result<(String, usize), String>) -> VarDictionary {
+    let mut result = VarDictionary::new();
+    let ids: Vec<u16> = if zone_id <= 0 {
+        crate::zone_scene::zone_folders().into_iter().map(|(id, _)| id).collect()
+    } else {
+        vec![zone_id.clamp(0, u16::MAX as i32) as u16]
+    };
+    let mut zones = VarArray::new();
+    for id in ids {
+        match run(id) {
+            Ok((folder, count)) => {
+                let mut zone = VarDictionary::new();
+                zone.set("folder", folder.as_str());
+                zone.set("count", count as i64);
+                zones.push(&zone.to_variant());
+            }
+            Err(error) => {
+                result.set("error", error.as_str());
+                return result;
+            }
+        }
+    }
+    result.set("zones", &zones);
+    result
 }

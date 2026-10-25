@@ -13,7 +13,7 @@ use godot::{
     prelude::*,
 };
 use rose_data::ZoneId;
-use rose_file_readers::{HimFile, IfoFile, IfoObject, TilFile, ZonFile, ZonTileRotation, ZscCollisionFlags, ZscEffectType, ZscFile};
+use rose_file_readers::{HimFile, IfoFile, IfoObject, LitFile, TilFile, ZonFile, ZonTileRotation, ZscCollisionFlags, ZscEffectType, ZscFile};
 
 use crate::{data, effect::RoseEffect, material, mesh, sun, texture};
 
@@ -44,14 +44,29 @@ pub fn block_lightmap_path(zone_dir: &str, block_x: usize, block_y: usize) -> St
     format!("{zone_dir}/{block_x}_{block_y}/{block_x}_{block_y}_PLANELIGHTINGMAP.DDS")
 }
 
-/// Cells per side of a block's ground tint (10 m each).
-pub const TINT_CELLS: usize = 16;
+/// Cells per side of a block's ground tint (2.5 m each, one per ground point).
+pub const TINT_CELLS: usize = 64;
+
+/// How much of a lightmap's darkness the tint keeps: down to 85 % where the light has the
+/// block's usual colour (a plain shadow, which the sun casts now), down to 40 % where its
+/// colour differs from it (water, tinted spots).
+const TINT_FLOOR: f32 = 0.85;
+const TINT_FLOOR_COLOURED: f32 = 0.4;
+
+/// A light colour (ROSE's x2 lightmap value) without most of its brightness: kept down to
+/// `floor`, then scaled so its brightest channel is at most 1.
+pub fn tint_colour(light: [f32; 3], floor: f32) -> [f32; 3] {
+    let brightness = (light[0] * 0.299 + light[1] * 0.587 + light[2] * 0.114).max(0.05);
+    let colour = light.map(|v| v / brightness * brightness.clamp(floor, 1.0));
+    let brightest = colour.iter().copied().fold(1.0f32, f32::max);
+    colour.map(|v| v / brightest)
+}
 
 /// The colour a block's ROSE ground lightmap gave the ground, without its shadows: the
-/// lightmap averaged over 10 m cells, its brightness taken out (only a little of it is kept,
-/// down to 85 %) and scaled to fit 0..1. Birth Island's blue sea floor is a blue lightmap on
-/// sand. `TINT_CELLS` x `TINT_CELLS` colours, row by row from the north-west corner, in the
-/// ROSE (gamma) colour space; None without a lightmap.
+/// lightmap averaged over 2.5 m cells, its brightness mostly taken out (see `TINT_FLOOR`)
+/// and scaled to fit 0..1. Birth Island's blue sea floor and Zant's canal are a blue
+/// lightmap on sand. `TINT_CELLS` x `TINT_CELLS` colours, row by row from the north-west
+/// corner, in the ROSE (gamma) colour space; None without a lightmap.
 pub fn ground_tint(zone_dir: &str, block_x: usize, block_y: usize) -> Option<Vec<Color>> {
     let mut image = texture::load_rose_image(&block_lightmap_path(zone_dir, block_x, block_y))?;
     if image.is_compressed() {
@@ -61,6 +76,18 @@ pub fn ground_tint(zone_dir: &str, block_x: usize, block_y: usize) -> Option<Vec
     let (width, height) = (image.get_width().max(1) as usize, image.get_height().max(1) as usize);
     let bytes = image.get_data();
     let bytes = bytes.as_slice();
+    // The block's usual light colour, brightness taken out.
+    let usual = {
+        let mut sum = [0.0f64; 3];
+        for pixel in bytes.chunks_exact(3) {
+            for (total, value) in sum.iter_mut().zip(pixel) {
+                *total += *value as f64;
+            }
+        }
+        let sum = sum.map(|v| v as f32);
+        let brightness = (sum[0] * 0.299 + sum[1] * 0.587 + sum[2] * 0.114).max(1.0);
+        sum.map(|v| v / brightness)
+    };
     let mut tint = Vec::with_capacity(TINT_CELLS * TINT_CELLS);
     for cy in 0..TINT_CELLS {
         for cx in 0..TINT_CELLS {
@@ -79,9 +106,9 @@ pub fn ground_tint(zone_dir: &str, block_x: usize, block_y: usize) -> Option<Vec
             // ROSE draws the ground times twice the lightmap.
             let light = sum.map(|v| v / count / 255.0 * 2.0);
             let brightness = (light[0] * 0.299 + light[1] * 0.587 + light[2] * 0.114).max(0.05);
-            let mut colour = light.map(|v| v / brightness * brightness.clamp(0.85, 1.0));
-            let brightest = colour.iter().copied().fold(1.0f32, f32::max);
-            colour = colour.map(|v| v / brightest);
+            let difference = (0..3).map(|c| (light[c] / brightness - usual[c]).abs()).fold(0.0f32, f32::max);
+            let coloured = (difference * 2.5).clamp(0.0, 1.0);
+            let colour = tint_colour(light, TINT_FLOOR + (TINT_FLOOR_COLOURED - TINT_FLOOR) * coloured);
             tint.push(Color::from_rgb(colour[0], colour[1], colour[2]));
         }
     }
@@ -100,6 +127,107 @@ pub fn tint_at(tint: &[Color], x: f32, z: f32) -> Color {
     let top = at(i, j).lerp(at(i1, j), fu as f64);
     let bottom = at(i, j1).lerp(at(i1, j1), fu as f64);
     top.lerp(bottom, fv as f64)
+}
+
+/// A model part's lightmap, read once from the client data (RGB8).
+pub struct LightmapImage {
+    width: usize,
+    height: usize,
+    rgb: Vec<u8>,
+}
+
+fn load_lightmap_image(path: &str) -> Option<LightmapImage> {
+    let mut image = texture::load_rose_image(path)?;
+    if image.is_compressed() {
+        image.decompress();
+    }
+    image.clear_mipmaps();
+    image.convert(godot::classes::image::Format::RGB8);
+    let (width, height) = (image.get_width() as usize, image.get_height() as usize);
+    (width > 0 && height > 0).then(|| LightmapImage { width, height, rgb: image.get_data().to_vec() })
+}
+
+/// The colour a model part's old lightmap gave it, without its shadows: the lightmap at the
+/// part's vertices (its second UVs, in cell `cell` of a lightmap holding `per_row` x `per_row`
+/// parts), averaged, with most of its brightness taken out like the ground's. What ROSE's
+/// twice-the-lightmap did to a mid-bright texture is clipped first, so parts the lightmap
+/// washed out to near white stay light. White for a part in deep shadow (no colour to read)
+/// or without second UVs.
+fn part_tint(lightmap: &LightmapImage, mesh: &Gd<Mesh>, per_row: u32, cell: u32) -> Color {
+    let per_row = per_row.max(1);
+    let (offset_x, offset_y, scale) = ((cell % per_row) as f32, (cell / per_row) as f32, 1.0 / per_row as f32);
+    let mut sum = [0.0f32; 3];
+    let mut count = 0.0f32;
+    for surface in 0..mesh.get_surface_count() {
+        let arrays = mesh.surface_get_arrays(surface);
+        let Ok(uv2) = arrays.at(ArrayType::TEX_UV2.ord() as usize).try_to::<PackedVector2Array>() else { continue };
+        for uv in uv2.as_slice() {
+            let u = ((uv.x + offset_x) * scale).rem_euclid(1.0);
+            let v = ((uv.y + offset_y) * scale).rem_euclid(1.0);
+            let x = ((u * lightmap.width as f32) as usize).min(lightmap.width - 1);
+            let y = ((v * lightmap.height as f32) as usize).min(lightmap.height - 1);
+            let i = (y * lightmap.width + x) * 3;
+            for (c, total) in sum.iter_mut().enumerate() {
+                *total += lightmap.rgb.get(i + c).copied().unwrap_or(128) as f32 / 255.0 * 2.0;
+            }
+            count += 1.0;
+        }
+    }
+    let light = sum.map(|v| v / count.max(1.0));
+    if count == 0.0 || light[0] * 0.299 + light[1] * 0.587 + light[2] * 0.114 < 0.15 {
+        return Color::WHITE;
+    }
+    let clipped = light.map(|v| (v * 0.7).min(1.0) / 0.7);
+    let [r, g, b] = tint_colour(clipped, TINT_FLOOR);
+    // Three decimals are plenty for a colour, and keep the scene lines short.
+    let round = |v: f32| (v * 1000.0).round() / 1000.0;
+    Color::from_rgb(round(r), round(g), round(b))
+}
+
+/// The colours placed buildings and decorations had from their ROSE lightmaps (the warm light
+/// on walls and rocks), read from the client data: the LIT files say which lightmap and cell
+/// each part used. Each file is read once.
+#[derive(Default)]
+pub struct PartTints {
+    lits: HashMap<String, Option<LitFile>>,
+    lightmaps: HashMap<String, Option<LightmapImage>>,
+}
+
+impl PartTints {
+    /// One colour per part number of a placed model (building: `zsc_index` 0, decoration: 1;
+    /// `ifo_index` its place in the block's IFO list), from `parts` (part number, mesh). White
+    /// for a part without a lightmap; empty when no part has a colour.
+    pub fn object(&mut self, zone_dir: &str, block_x: usize, block_y: usize, zsc_index: usize, ifo_index: usize, parts: &[(usize, Gd<Mesh>)]) -> PackedColorArray {
+        let lit_name = match zsc_index {
+            0 => "BUILDINGLIGHTMAPDATA.LIT",
+            1 => "OBJECTLIGHTMAPDATA.LIT",
+            _ => return PackedColorArray::new(),
+        };
+        let lightmap_dir = format!("{zone_dir}/{block_x}_{block_y}/LIGHTMAP/");
+        let lit_path = format!("{lightmap_dir}{lit_name}");
+        let Some(lit) = self.lits.entry(lit_path.clone()).or_insert_with(|| data::read_file::<LitFile>(&lit_path)).as_ref() else {
+            return PackedColorArray::new();
+        };
+        let Some(lit_object) = lit.objects.iter().find(|o| o.id as usize == ifo_index + 1) else { return PackedColorArray::new() };
+        let mut tints = vec![Color::WHITE; parts.iter().map(|(n, _)| n + 1).max().unwrap_or(0)];
+        for (part_index, mesh) in parts {
+            let lit_part = lit_object.parts.iter().find(|p| p.object_part_index as usize == *part_index).or_else(|| lit_object.parts.get(*part_index));
+            let Some(lit_part) = lit_part else { continue };
+            let path = format!("{lightmap_dir}{}", lit_part.filename);
+            let Some(lightmap) = self.lightmaps.entry(path.clone()).or_insert_with(|| load_lightmap_image(&path)).as_ref() else { continue };
+            tints[*part_index] = part_tint(lightmap, mesh, lit_part.parts_per_row, lit_part.part_index);
+        }
+        if tints.iter().all(|c| *c == Color::WHITE) {
+            return PackedColorArray::new();
+        }
+        tints.into_iter().collect()
+    }
+}
+
+/// Sets the colour of a model part (`rose_tint` in `rose_object.gdshaderinc`, white = none).
+/// A per-instance value: the part keeps sharing its material.
+pub fn set_part_tint(part: &mut Gd<GeometryInstance3D>, colour: Color) {
+    part.set_instance_shader_parameter("rose_tint", &Vector3::new(colour.r, colour.g, colour.b).to_variant());
 }
 
 /// An IFO water plane's corners in zone space.
@@ -229,6 +357,8 @@ pub struct ObjectSpawner {
     pub objects: usize,
     /// What casts shadows, for the block rule (`RoseZone::update_shadows`).
     pub shadow_casters: Vec<ShadowCaster>,
+    /// The part colours from the client's lightmaps (old zone loader only).
+    pub tints: PartTints,
 }
 
 /// A model part or ground block that casts a shadow, and where it stands.
@@ -255,7 +385,9 @@ impl ObjectSpawner {
     }
 
     #[allow(clippy::too_many_arguments)]
-    fn spawn(&mut self, parent: &mut Gd<Node3D>, zsc: &ZscFile, zsc_index: usize, object_instance: &IfoObject, zsc_object_id: usize, name: &str) {
+    /// `place` is the zone folder, block x, block y and the model's place in the block's IFO
+    /// list, for its part colours.
+    fn spawn(&mut self, parent: &mut Gd<Node3D>, zsc: &ZscFile, zsc_index: usize, object_instance: &IfoObject, zsc_object_id: usize, name: &str, place: (&str, usize, usize, usize)) {
         let Some(object) = zsc.objects.get(zsc_object_id) else { return };
         let mut object_node = Node3D::new_alloc();
         object_node.set_name(name);
@@ -263,6 +395,7 @@ impl ObjectSpawner {
         object_node.set_transform(object_transform);
         let mut casters = Vec::new();
         let mut size: Option<Aabb> = None;
+        let mut tinted: Vec<(usize, Gd<Mesh>, Gd<GeometryInstance3D>)> = Vec::new();
 
         for (part_index, part) in object.parts.iter().enumerate() {
             let Some(mesh_path) = zsc.meshes.get(part.mesh_id as usize) else { continue };
@@ -310,8 +443,17 @@ impl ObjectSpawner {
                     _ => self.warps.push((object_instance.warp_id, aabb)),
                 }
             }
+            tinted.push((part_index, part_mesh.clone().upcast(), instance.clone().upcast()));
             object_node.add_child(&instance);
             self.parts += 1;
+        }
+        let (zone_dir, block_x, block_y, ifo_index) = place;
+        let meshes: Vec<(usize, Gd<Mesh>)> = tinted.iter().map(|(i, mesh, _)| (*i, mesh.clone())).collect();
+        let tints = self.tints.object(zone_dir, block_x, block_y, zsc_index, ifo_index, &meshes);
+        for (part_index, _, mut part) in tinted {
+            if let Some(colour) = tints.get(part_index) {
+                set_part_tint(&mut part, colour);
+            }
         }
 
         for effect in object.effects.iter() {
@@ -394,6 +536,7 @@ impl RoseZone {
             blocks: 0,
             objects: 0,
             shadow_casters: Vec::new(),
+            tints: PartTints::default(),
         };
 
         // A zone with scenes in res://zones/ loads from them; any other from the ROSE files.
@@ -689,7 +832,7 @@ impl RoseZone {
                     let mut spawn_list = |zsc: Option<&ZscFile>, zsc_index: usize, list: &[(usize, &IfoObject, usize)], kind: &str| {
                         let Some(zsc) = zsc else { return };
                         for &(ifo_id, object, zsc_id) in list {
-                            spawner.spawn(&mut block_node, zsc, zsc_index, object, zsc_id, &format!("{kind}_{ifo_id}"));
+                            spawner.spawn(&mut block_node, zsc, zsc_index, object, zsc_id, &format!("{kind}_{ifo_id}"), (zone_dir, block_x, block_y, ifo_id));
                             spawner.objects += 1;
                         }
                     };
