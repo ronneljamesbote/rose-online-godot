@@ -1748,9 +1748,9 @@ pub struct RoseSky {
     #[export]
     character_diffuse_night: Color,
 
-    /// The colour of the sun on the ground and buildings in the morning. The sun moves with
-    /// the zone's day (the moon at night) and casts real shadows; characters take the
-    /// character light from its side instead.
+    /// The colour of the sun on the ground and buildings in the morning. The sun (the moon at
+    /// night) stands still at `sun_height` and `sun_azimuth` and casts real shadows;
+    /// characters take the character light from its side instead.
     #[export_group(name = "Sun")]
     #[export]
     sun_color_morning: Color,
@@ -1790,6 +1790,17 @@ pub struct RoseSky {
     /// How dark the moon's shadows are at night.
     #[export(range = (0.0, 1.0, 0.01))]
     shadow_darkness_night: f32,
+    /// How high the sun (and the moon) stands above the horizon, in degrees, at every time of
+    /// day, so shadows never move. Lower = longer shadows (and more to draw in the shadow
+    /// map); 45 is ROSE's light.
+    #[export(range = (10.0, 90.0, 1.0))]
+    #[init(val = rose_data::SkyboxData::DEFAULT_SUN_HEIGHT)]
+    sun_height: f32,
+    /// Which way the sun (and the moon) stands, seen from above, in degrees: 0 = north,
+    /// 90 = east, 180 = south. Shadows fall the opposite way.
+    #[export(range = (0.0, 360.0, 1.0))]
+    #[init(val = rose_data::SkyboxData::DEFAULT_SUN_AZIMUTH)]
+    sun_azimuth: f32,
     base: Base<Resource>,
 }
 
