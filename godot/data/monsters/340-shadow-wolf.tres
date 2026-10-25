@@ -3,6 +3,7 @@
 [ext_resource type="RoseDropTable" uid="uid://ce11rsej4gn6q" path="res://data/drop_tables/359-shadow-wolf-wolf-keeper.tres" id="1_wraxg"]
 [ext_resource type="RoseAttackEffect" uid="uid://itv7oiaamu6n" path="res://data/attack_effects/453-attack-effect-453.tres" id="2_z2vf7"]
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="3_sbziw"]
+[ext_resource type="RoseAi" uid="uid://bkdymd61ytt1h" path="res://data/ai/123-da_wolf2.tres" id="ai_123"]
 
 [resource]
 id = 340
@@ -20,7 +21,7 @@ attack_speed = 125
 attack_range = 200
 walk_speed = 240
 run_speed = 590
-ai_file_index = 123
+ai = ExtResource("ai_123")
 npc_type_index = 4
 model = "res://assets/rose/3ddata/npc/list_npc/340.tscn"
 hit_sound_material_type = 1

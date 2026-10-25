@@ -1,0 +1,91 @@
+[gd_resource type="RoseAi" format=3 uid="uid://b38p5ufgkev8j"]
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_dyo6s"]
+variable = 1
+value = 10
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_lg073"]
+variable = 3
+
+[sub_resource type="RoseAiIfMonthDay" id="RoseAiIfMonthDay_5rj3u"]
+from_minute = 1190
+to_minute = 1191
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_o1tfd"]
+npc_id = 1001
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_k3880"]
+variable = 1
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_etsgx"]
+conditions = Array[Resource]([SubResource("RoseAiIfMonthDay_5rj3u"), SubResource("RoseAiIfSelectNpc_o1tfd"), SubResource("RoseAiIfVariable_k3880")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_dyo6s"), SubResource("RoseAiDoSetVariable_lg073")])
+resource_name = "If MonthDay, SelectNpc, Variable: SetVariable, SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_fklgg"]
+variable = 1
+value = 20
+
+[sub_resource type="RoseAiIfMonthDay" id="RoseAiIfMonthDay_oqb5a"]
+from_minute = 1437
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_vhbg3"]
+npc_id = 1001
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_6x77q"]
+variable = 1
+value = 11
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_yegmc"]
+conditions = Array[Resource]([SubResource("RoseAiIfMonthDay_oqb5a"), SubResource("RoseAiIfSelectNpc_vhbg3"), SubResource("RoseAiIfVariable_6x77q")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_fklgg")])
+resource_name = "If MonthDay, SelectNpc, Variable: SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_qt2tr"]
+value = 1
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_u36vq"]
+variable = 1
+value = 11
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_6hipa"]
+text = "Moldie's Strange Mineral has started."
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_ivrx2"]
+npc_id = 1001
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_5yfed"]
+variable = 1
+value = 10
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_2muv6"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_ivrx2"), SubResource("RoseAiIfVariable_5yfed")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_qt2tr"), SubResource("RoseAiDoSetVariable_u36vq"), SubResource("RoseAiDoMessage_6hipa")])
+resource_name = "If SelectNpc, Variable: SetVariable, SetVariable, Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_ndaf6"]
+value = 3
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_67bq4"]
+variable = 1
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_0ilk2"]
+variable = 2
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_23slm"]
+npc_id = 1001
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_bjj7m"]
+variable = 1
+value = 20
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_g55iv"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_23slm"), SubResource("RoseAiIfVariable_bjj7m")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_ndaf6"), SubResource("RoseAiDoSetVariable_67bq4"), SubResource("RoseAiDoSetVariable_0ilk2")])
+resource_name = "If SelectNpc, Variable: SetVariable, SetVariable, SetVariable"
+
+[resource]
+id = 204
+name = "npc_1001"
+idle_interval = 19
+on_idle = Array[Resource]([SubResource("RoseAiEvent_etsgx"), SubResource("RoseAiEvent_yegmc"), SubResource("RoseAiEvent_2muv6"), SubResource("RoseAiEvent_g55iv")])

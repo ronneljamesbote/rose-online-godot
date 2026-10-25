@@ -1,0 +1,219 @@
+[gd_resource type="RoseAi" format=3 uid="uid://bs61tlkc5qruc"]
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_ff582"]
+value = 1
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_e773d"]
+variable = 1
+value = 11
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_07adr"]
+message_type = "Announce"
+text = "The Faction War will soon begin. Arumic members who wish to join, come to me now."
+
+[sub_resource type="RoseAiIfServerChannel" id="RoseAiIfServerChannel_vt3bq"]
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_g68mo"]
+npc_id = 1088
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_25gvd"]
+variable = 1
+value = 10
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_3h30n"]
+conditions = Array[Resource]([SubResource("RoseAiIfServerChannel_vt3bq"), SubResource("RoseAiIfSelectNpc_g68mo"), SubResource("RoseAiIfVariable_25gvd")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_ff582"), SubResource("RoseAiDoSetVariable_e773d"), SubResource("RoseAiDoMessage_07adr")])
+resource_name = "If ServerChannel, SelectNpc, Variable: SetVariable, SetVariable, Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_w3u40"]
+value = 5
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_ua8np"]
+variable = 1
+value = 41
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_huxi3"]
+message_type = "Announce"
+text = "The Faction War will soon begin. Arumic members who wish to join, come to me now."
+
+[sub_resource type="RoseAiIfServerChannel" id="RoseAiIfServerChannel_qxg1s"]
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_8qmpo"]
+npc_id = 1088
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_a16p8"]
+variable = 1
+value = 40
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_ekvot"]
+conditions = Array[Resource]([SubResource("RoseAiIfServerChannel_qxg1s"), SubResource("RoseAiIfSelectNpc_8qmpo"), SubResource("RoseAiIfVariable_a16p8")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_w3u40"), SubResource("RoseAiDoSetVariable_ua8np"), SubResource("RoseAiDoMessage_huxi3")])
+resource_name = "If ServerChannel, SelectNpc, Variable: SetVariable, SetVariable, Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_aat7p"]
+value = 3
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_awp2j"]
+message_type = "Announce"
+text = "The Warp Gate will open soon. Members who applied for the Faction War, please enter the Warp Gate to go to Junon Cartel."
+
+[sub_resource type="RoseAiIfServerChannel" id="RoseAiIfServerChannel_qap18"]
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_x3of8"]
+npc_id = 1088
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_hr2o2"]
+variable = 1
+value = 21
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_578vk"]
+operator = ">="
+value = 1
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_08735"]
+operator = "<="
+value = 2
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_4esph"]
+conditions = Array[Resource]([SubResource("RoseAiIfServerChannel_qap18"), SubResource("RoseAiIfSelectNpc_x3of8"), SubResource("RoseAiIfVariable_hr2o2"), SubResource("RoseAiIfVariable_578vk"), SubResource("RoseAiIfVariable_08735")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_aat7p"), SubResource("RoseAiDoMessage_awp2j")])
+resource_name = "If ServerChannel, SelectNpc, Variable, Variable, Variable: SetVariable, …"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_hso3y"]
+value = 7
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_ajdwo"]
+message_type = "Announce"
+text = "The Warp Gate will open soon. Members who applied for the Faction War, please enter the Warp Gate to go to Junon Cartel."
+
+[sub_resource type="RoseAiIfServerChannel" id="RoseAiIfServerChannel_qlcwn"]
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_cf1yq"]
+npc_id = 1088
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_cslpc"]
+variable = 1
+value = 51
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_carc0"]
+operator = ">="
+value = 5
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_1hcxd"]
+operator = "<="
+value = 6
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_fvd0l"]
+conditions = Array[Resource]([SubResource("RoseAiIfServerChannel_qlcwn"), SubResource("RoseAiIfSelectNpc_cf1yq"), SubResource("RoseAiIfVariable_cslpc"), SubResource("RoseAiIfVariable_carc0"), SubResource("RoseAiIfVariable_1hcxd")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_hso3y"), SubResource("RoseAiDoMessage_ajdwo")])
+resource_name = "If ServerChannel, SelectNpc, Variable, Variable, Variable: SetVariable, …"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_2blpn"]
+value = 11
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_4ww00"]
+variable = 1
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_tvab0"]
+variable = 2
+
+[sub_resource type="RoseAiIfServerChannel" id="RoseAiIfServerChannel_fporp"]
+
+[sub_resource type="RoseAiIfMonthDay" id="RoseAiIfMonthDay_g46ao"]
+from_minute = 575
+to_minute = 576
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_0srod"]
+npc_id = 1088
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_37eca"]
+value = 4
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_kvmwm"]
+conditions = Array[Resource]([SubResource("RoseAiIfServerChannel_fporp"), SubResource("RoseAiIfMonthDay_g46ao"), SubResource("RoseAiIfSelectNpc_0srod"), SubResource("RoseAiIfVariable_37eca")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_2blpn"), SubResource("RoseAiDoSetVariable_4ww00"), SubResource("RoseAiDoSetVariable_tvab0")])
+resource_name = "If ServerChannel, MonthDay, SelectNpc, Variable: SetVariable, SetVariabl…"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_ncqqy"]
+value = 11
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_twt30"]
+variable = 1
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_8f47d"]
+variable = 2
+
+[sub_resource type="RoseAiIfServerChannel" id="RoseAiIfServerChannel_73r57"]
+
+[sub_resource type="RoseAiIfMonthDay" id="RoseAiIfMonthDay_bfh70"]
+from_minute = 1355
+to_minute = 1356
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_v6auk"]
+npc_id = 1088
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_2rb88"]
+value = 4
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_mhgsb"]
+conditions = Array[Resource]([SubResource("RoseAiIfServerChannel_73r57"), SubResource("RoseAiIfMonthDay_bfh70"), SubResource("RoseAiIfSelectNpc_v6auk"), SubResource("RoseAiIfVariable_2rb88")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_ncqqy"), SubResource("RoseAiDoSetVariable_twt30"), SubResource("RoseAiDoSetVariable_8f47d")])
+resource_name = "If ServerChannel, MonthDay, SelectNpc, Variable: SetVariable, SetVariabl…"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_7cfuf"]
+value = 12
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_lihcn"]
+variable = 1
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_e6cnc"]
+variable = 2
+
+[sub_resource type="RoseAiIfServerChannel" id="RoseAiIfServerChannel_vtyml"]
+
+[sub_resource type="RoseAiIfMonthDay" id="RoseAiIfMonthDay_tjyi4"]
+from_minute = 575
+to_minute = 576
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_j0aiw"]
+npc_id = 1088
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_vqbrj"]
+value = 8
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_vio2f"]
+conditions = Array[Resource]([SubResource("RoseAiIfServerChannel_vtyml"), SubResource("RoseAiIfMonthDay_tjyi4"), SubResource("RoseAiIfSelectNpc_j0aiw"), SubResource("RoseAiIfVariable_vqbrj")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_7cfuf"), SubResource("RoseAiDoSetVariable_lihcn"), SubResource("RoseAiDoSetVariable_e6cnc")])
+resource_name = "If ServerChannel, MonthDay, SelectNpc, Variable: SetVariable, SetVariabl…"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_y5x5s"]
+value = 12
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_jjaik"]
+variable = 1
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_52idk"]
+variable = 2
+
+[sub_resource type="RoseAiIfServerChannel" id="RoseAiIfServerChannel_oxdgy"]
+
+[sub_resource type="RoseAiIfMonthDay" id="RoseAiIfMonthDay_m01bk"]
+from_minute = 1355
+to_minute = 1356
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_p5n2i"]
+npc_id = 1088
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_2ecfy"]
+value = 8
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_txhwi"]
+conditions = Array[Resource]([SubResource("RoseAiIfServerChannel_oxdgy"), SubResource("RoseAiIfMonthDay_m01bk"), SubResource("RoseAiIfSelectNpc_p5n2i"), SubResource("RoseAiIfVariable_2ecfy")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_y5x5s"), SubResource("RoseAiDoSetVariable_jjaik"), SubResource("RoseAiDoSetVariable_52idk")])
+resource_name = "If ServerChannel, MonthDay, SelectNpc, Variable: SetVariable, SetVariabl…"
+
+[resource]
+id = 218
+name = "npc_1088"
+idle_interval = 10
+on_idle = Array[Resource]([SubResource("RoseAiEvent_3h30n"), SubResource("RoseAiEvent_ekvot"), SubResource("RoseAiEvent_4esph"), SubResource("RoseAiEvent_fvd0l"), SubResource("RoseAiEvent_kvmwm"), SubResource("RoseAiEvent_mhgsb"), SubResource("RoseAiEvent_vio2f"), SubResource("RoseAiEvent_txhwi")])

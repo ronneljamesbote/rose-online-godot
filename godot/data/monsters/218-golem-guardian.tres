@@ -5,6 +5,7 @@
 [ext_resource type="RoseSound" uid="uid://qg28past5wn0" path="res://data/sounds/mob/250-mob18-d.tres" id="3_erpjy"]
 [ext_resource type="RoseAttackEffect" uid="uid://jy8fkdl336xw" path="res://data/attack_effects/445-jewel-golem.tres" id="4_tcx5v"]
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="5_bt0hf"]
+[ext_resource type="RoseAi" uid="uid://6r8nxb3k85hd" path="res://data/ai/259-clan_boss4.tres" id="ai_259"]
 
 [resource]
 id = 218
@@ -22,7 +23,7 @@ attack_speed = 110
 attack_range = 250
 walk_speed = 320
 run_speed = 690
-ai_file_index = 259
+ai = ExtResource("ai_259")
 npc_type_index = 10
 model = "res://assets/rose/3ddata/npc/list_npc/218.tscn"
 hit_sound_material_type = 2

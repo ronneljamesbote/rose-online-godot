@@ -1,0 +1,207 @@
+[gd_resource type="RoseAi" format=3 uid="uid://b0vruj1bmcj64"]
+
+[sub_resource type="RoseAiDoKillSelf" id="RoseAiDoKillSelf_7vhby"]
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_y7j0t"]
+npc_id = 1113
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_epyqk"]
+variable = 1
+operator = ">="
+value = 30
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_rg1j4"]
+variable = 1
+operator = "<="
+value = 41
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_qulye"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_y7j0t"), SubResource("RoseAiIfVariable_epyqk"), SubResource("RoseAiIfVariable_rg1j4")])
+actions = Array[Resource]([SubResource("RoseAiDoKillSelf_7vhby")])
+resource_name = "If SelectNpc, Variable, Variable: KillSelf"
+
+[sub_resource type="RoseAiDoKillSelf" id="RoseAiDoKillSelf_oc8lj"]
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_hm1ai"]
+npc_id = 1113
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_ixa2c"]
+variable = 1
+operator = ">="
+value = 70
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_j3xhp"]
+variable = 1
+operator = "<="
+value = 81
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_nedr8"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_hm1ai"), SubResource("RoseAiIfVariable_ixa2c"), SubResource("RoseAiIfVariable_j3xhp")])
+actions = Array[Resource]([SubResource("RoseAiDoKillSelf_oc8lj")])
+resource_name = "If SelectNpc, Variable, Variable: KillSelf"
+
+[sub_resource type="RoseAiDoKillSelf" id="RoseAiDoKillSelf_i6iot"]
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_1mqub"]
+npc_id = 1113
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_1masu"]
+variable = 1
+operator = ">="
+value = 30
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_htxki"]
+variable = 1
+operator = "<="
+value = 41
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_poox4"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_1mqub"), SubResource("RoseAiIfVariable_1masu"), SubResource("RoseAiIfVariable_htxki")])
+actions = Array[Resource]([SubResource("RoseAiDoKillSelf_i6iot")])
+resource_name = "If SelectNpc, Variable, Variable: KillSelf"
+
+[sub_resource type="RoseAiDoKillSelf" id="RoseAiDoKillSelf_4sy7i"]
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_g31yp"]
+npc_id = 1113
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_6b1vy"]
+variable = 1
+operator = ">="
+value = 70
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_dmu0s"]
+variable = 1
+operator = "<="
+value = 81
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_s73qa"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_g31yp"), SubResource("RoseAiIfVariable_6b1vy"), SubResource("RoseAiIfVariable_dmu0s")])
+actions = Array[Resource]([SubResource("RoseAiDoKillSelf_4sy7i")])
+resource_name = "If SelectNpc, Variable, Variable: KillSelf"
+
+[sub_resource type="RoseAiDoKillSelf" id="RoseAiDoKillSelf_skytg"]
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_0askq"]
+npc_id = 1113
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_tsw5w"]
+variable = 3
+value = 12
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_cy0tl"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_0askq"), SubResource("RoseAiIfVariable_tsw5w")])
+actions = Array[Resource]([SubResource("RoseAiDoKillSelf_skytg")])
+resource_name = "If SelectNpc, Variable: KillSelf"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_pbwev"]
+variable = 3
+value = 12
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_04mjw"]
+message_type = "Announce"
+text = "The Righteous Crusaders and the Farrell Guild have destroyed the Sunset Crystal, and have won the Faction War."
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_hhm1b"]
+npc_id = 1113
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_sir0u"]
+variable = 1
+value = 21
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_dimhs"]
+variable = 3
+value = 11
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_t1gyd"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_hhm1b"), SubResource("RoseAiIfVariable_sir0u"), SubResource("RoseAiIfVariable_dimhs")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_pbwev"), SubResource("RoseAiDoMessage_04mjw")])
+resource_name = "If SelectNpc, Variable, Variable: SetVariable, Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_mi4yy"]
+variable = 3
+value = 12
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_ii2tm"]
+message_type = "Announce"
+text = "The Junon Order and the Arumics have destroyed the Sunset Crystal, and have won the Faction War."
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_1c1fk"]
+npc_id = 1113
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_oo5vq"]
+variable = 1
+value = 61
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_ofh7d"]
+variable = 3
+value = 11
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_8dfwn"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_1c1fk"), SubResource("RoseAiIfVariable_oo5vq"), SubResource("RoseAiIfVariable_ofh7d")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_mi4yy"), SubResource("RoseAiDoMessage_ii2tm")])
+resource_name = "If SelectNpc, Variable, Variable: SetVariable, Message"
+
+[sub_resource type="RoseAiDoKillSelf" id="RoseAiDoKillSelf_vwra5"]
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_pvxyr"]
+npc_id = 1113
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_ktqbc"]
+variable = 1
+operator = ">="
+value = 30
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_5r5no"]
+variable = 1
+operator = "<="
+value = 41
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_j85hc"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_pvxyr"), SubResource("RoseAiIfVariable_ktqbc"), SubResource("RoseAiIfVariable_5r5no")])
+actions = Array[Resource]([SubResource("RoseAiDoKillSelf_vwra5")])
+resource_name = "If SelectNpc, Variable, Variable: KillSelf"
+
+[sub_resource type="RoseAiDoKillSelf" id="RoseAiDoKillSelf_7p3vo"]
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_etbx2"]
+npc_id = 1113
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_rh5pb"]
+variable = 1
+operator = ">="
+value = 70
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_1qqy2"]
+variable = 1
+operator = "<="
+value = 81
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_ucl51"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_etbx2"), SubResource("RoseAiIfVariable_rh5pb"), SubResource("RoseAiIfVariable_1qqy2")])
+actions = Array[Resource]([SubResource("RoseAiDoKillSelf_7p3vo")])
+resource_name = "If SelectNpc, Variable, Variable: KillSelf"
+
+[sub_resource type="RoseAiDoKillSelf" id="RoseAiDoKillSelf_tt2ti"]
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_u7h8d"]
+npc_id = 1113
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_aom3j"]
+variable = 3
+value = 12
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_1d337"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_u7h8d"), SubResource("RoseAiIfVariable_aom3j")])
+actions = Array[Resource]([SubResource("RoseAiDoKillSelf_tt2ti")])
+resource_name = "If SelectNpc, Variable: KillSelf"
+
+[resource]
+id = 252
+name = "npc_352"
+idle_interval = 3
+new_target_chance = 20
+on_idle = Array[Resource]([SubResource("RoseAiEvent_j85hc"), SubResource("RoseAiEvent_ucl51"), SubResource("RoseAiEvent_1d337")])
+on_attack = Array[Resource]([SubResource("RoseAiEvent_qulye"), SubResource("RoseAiEvent_nedr8")])
+on_damaged = Array[Resource]([SubResource("RoseAiEvent_poox4"), SubResource("RoseAiEvent_s73qa"), SubResource("RoseAiEvent_cy0tl")])
+on_dead = Array[Resource]([SubResource("RoseAiEvent_t1gyd"), SubResource("RoseAiEvent_8dfwn")])

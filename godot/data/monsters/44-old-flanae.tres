@@ -3,6 +3,7 @@
 [ext_resource type="RoseDropTable" uid="uid://dfmex0kyxvwt1" path="res://data/drop_tables/119-old-flanae.tres" id="1_rx4e5"]
 [ext_resource type="RoseSound" uid="uid://b447v3sgafwq3" path="res://data/sounds/mob/198-mob05-d.tres" id="2_hib6q"]
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="3_8b2yu"]
+[ext_resource type="RoseAi" uid="uid://bcys36353k7ta" path="res://data/ai/18-at_cs.tres" id="ai_18"]
 
 [resource]
 id = 44
@@ -19,7 +20,7 @@ avoid = 39
 attack_speed = 95
 attack_range = 2500
 is_magic_damage = true
-ai_file_index = 18
+ai = ExtResource("ai_18")
 death_quest_trigger_name = "5007-32"
 npc_type_index = 8
 model = "res://assets/rose/3ddata/npc/list_npc/44.tscn"

@@ -1,0 +1,22 @@
+[gd_resource type="RoseAi" format=3 uid="uid://b0hhpswiq4csp"]
+
+[ext_resource type="RoseZoneSettings" uid="uid://nvmmxga077n5" path="res://data/zones/56-forgotten-temple-b1.tres" id="1_jrtpj"]
+[ext_resource type="RoseZoneSettings" uid="uid://n4k6neg038jm" path="res://data/zones/59-luna-clan-field.tres" id="2_8rswj"]
+
+[sub_resource type="RoseAiDoSetPvp" id="RoseAiDoSetPvp_tl6a7"]
+zone = ExtResource("1_jrtpj")
+on = true
+
+[sub_resource type="RoseAiDoSetPvp" id="RoseAiDoSetPvp_jxssv"]
+zone = ExtResource("2_8rswj")
+on = true
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_mo124"]
+actions = Array[Resource]([SubResource("RoseAiDoSetPvp_tl6a7"), SubResource("RoseAiDoSetPvp_jxssv")])
+resource_name = "Always: SetPvp, SetPvp"
+
+[resource]
+id = 236
+name = "npc_1191"
+idle_interval = 10
+on_idle = Array[Resource]([SubResource("RoseAiEvent_mo124")])

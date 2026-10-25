@@ -1,0 +1,40 @@
+[gd_resource type="RoseAi" format=3 uid="uid://dv8gbmgb1ck20"]
+
+[sub_resource type="RoseAiDoSpawn" id="RoseAiDoSpawn_r4hpv"]
+npc_id = 303
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_bpwo8"]
+actions = Array[Resource]([SubResource("RoseAiDoSpawn_r4hpv")])
+resource_name = "Always: Spawn"
+
+[sub_resource type="RoseAiDoMoveRandomly" id="RoseAiDoMoveRandomly_7oats"]
+mode = "Run"
+distance = 400
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_3cgo1"]
+distance = 10000
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_6ke01"]
+conditions = Array[Resource]([SubResource("RoseAiIfDistance_3cgo1")])
+actions = Array[Resource]([SubResource("RoseAiDoMoveRandomly_7oats")])
+resource_name = "If Distance: MoveRandomly"
+
+[sub_resource type="RoseAiDoMoveRandomly" id="RoseAiDoMoveRandomly_g0fji"]
+from = "Here"
+distance = 3000
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_hl4vn"]
+value = 30
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_ag7ex"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_hl4vn")])
+actions = Array[Resource]([SubResource("RoseAiDoMoveRandomly_g0fji")])
+resource_name = "If Random: MoveRandomly"
+
+[resource]
+id = 93
+name = "wander-sm"
+idle_interval = 70
+new_target_chance = 50
+on_idle = Array[Resource]([SubResource("RoseAiEvent_6ke01"), SubResource("RoseAiEvent_ag7ex")])
+on_dead = Array[Resource]([SubResource("RoseAiEvent_bpwo8")])

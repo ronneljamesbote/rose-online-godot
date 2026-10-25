@@ -1,0 +1,103 @@
+[gd_resource type="RoseAi" format=3 uid="uid://cobbak6s1y73"]
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_v8nl3"]
+variable = 12
+value = 1
+
+[sub_resource type="RoseAiIfMonthDay" id="RoseAiIfMonthDay_dygjk"]
+from_minute = 1250
+to_minute = 1252
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_w3wic"]
+npc_id = 1104
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_b8rj6"]
+variable = 12
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_qccee"]
+conditions = Array[Resource]([SubResource("RoseAiIfMonthDay_dygjk"), SubResource("RoseAiIfSelectNpc_w3wic"), SubResource("RoseAiIfVariable_b8rj6")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_v8nl3")])
+resource_name = "If MonthDay, SelectNpc, Variable: SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_xth36"]
+variable = 12
+
+[sub_resource type="RoseAiIfMonthDay" id="RoseAiIfMonthDay_2n3ol"]
+from_minute = 1380
+to_minute = 1382
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_csqp0"]
+npc_id = 1104
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_xb2ni"]
+variable = 12
+value = 1
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_s8ntb"]
+conditions = Array[Resource]([SubResource("RoseAiIfMonthDay_2n3ol"), SubResource("RoseAiIfSelectNpc_csqp0"), SubResource("RoseAiIfVariable_xb2ni")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_xth36")])
+resource_name = "If MonthDay, SelectNpc, Variable: SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_psx0u"]
+value = 1
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_uk1xg"]
+message_type = "Announce"
+text = "Soon, the great quest to clear the hordes of monsters that plague Junon will begin. Anyone brave enough to join should come to me."
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_vlj3x"]
+npc_id = 1104
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_mkdye"]
+variable = 12
+value = 1
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_kvcbl"]
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_c3nuu"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_vlj3x"), SubResource("RoseAiIfVariable_mkdye"), SubResource("RoseAiIfVariable_kvcbl")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_psx0u"), SubResource("RoseAiDoMessage_uk1xg")])
+resource_name = "If SelectNpc, Variable, Variable: SetVariable, Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_xfngu"]
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_ncaho"]
+variable = 13
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_n6jns"]
+npc_id = 1104
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_6hj1x"]
+variable = 12
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_hs4jf"]
+value = 1
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_nv0io"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_n6jns"), SubResource("RoseAiIfVariable_6hj1x"), SubResource("RoseAiIfVariable_hs4jf")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_xfngu"), SubResource("RoseAiDoSetVariable_ncaho")])
+resource_name = "If SelectNpc, Variable, Variable: SetVariable, SetVariable"
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_njdii"]
+message_type = "Announce"
+
+[sub_resource type="RoseAiIfMonthDay" id="RoseAiIfMonthDay_blq7a"]
+from_minute = 1260
+to_minute = 1260
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_mf3qr"]
+value = 30
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_24c4x"]
+npc_id = 1104
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_6gdeu"]
+conditions = Array[Resource]([SubResource("RoseAiIfMonthDay_blq7a"), SubResource("RoseAiIfRandom_mf3qr"), SubResource("RoseAiIfSelectNpc_24c4x")])
+actions = Array[Resource]([SubResource("RoseAiDoMessage_njdii")])
+resource_name = "If MonthDay, Random, SelectNpc: Message"
+
+[resource]
+id = 226
+name = "npc_1104"
+idle_interval = 9
+on_idle = Array[Resource]([SubResource("RoseAiEvent_qccee"), SubResource("RoseAiEvent_s8ntb"), SubResource("RoseAiEvent_c3nuu"), SubResource("RoseAiEvent_nv0io"), SubResource("RoseAiEvent_6gdeu")])

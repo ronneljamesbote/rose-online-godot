@@ -1,6 +1,7 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://b7hd14h48048s"]
 
 [ext_resource type="RoseDropTable" uid="uid://c50xpw8yysq18" path="res://data/drop_tables/406-seal-stone.tres" id="1_xa240"]
+[ext_resource type="RoseAi" uid="uid://bccnh72wx6s5f" path="res://data/ai/186-ge_sealstone6.tres" id="ai_186"]
 
 [resource]
 id = 456
@@ -17,7 +18,7 @@ avoid = 118
 attack_speed = 90
 attack_range = 10
 is_magic_damage = true
-ai_file_index = 186
+ai = ExtResource("ai_186")
 death_quest_trigger_name = "2053-32"
 model = "res://assets/rose/3ddata/npc/list_npc/456.tscn"
 glow_colour = Color(0.7058824, 0.3137255, 0.3137255, 1)

@@ -3,6 +3,7 @@
 [ext_resource type="RoseDropTable" uid="uid://bp14km1a8u83u" path="res://data/drop_tables/100-mini-jelly-bean-butterfly.tres" id="1_ahs2s"]
 [ext_resource type="RoseAttackEffect" uid="uid://cim6mhfjjf741" path="res://data/attack_effects/401-mini-jelly-bean.tres" id="2_sxbva"]
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="3_bh94n"]
+[ext_resource type="RoseAi" uid="uid://dyy4kqearnw1s" path="res://data/ai/91-ge_fly_s.tres" id="ai_91"]
 
 [resource]
 id = 10
@@ -21,7 +22,7 @@ attack_speed = 20
 attack_range = 160
 walk_speed = 130
 run_speed = 160
-ai_file_index = 91
+ai = ExtResource("ai_91")
 npc_type_index = 1
 model = "res://assets/rose/3ddata/npc/list_npc/10.tscn"
 hit_sound_material_type = 1

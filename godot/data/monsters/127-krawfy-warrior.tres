@@ -6,6 +6,7 @@
 [ext_resource type="RoseSound" uid="uid://c7i4josxn6vex" path="res://data/sounds/mob/234-mob14-d.tres" id="4_v2pq7"]
 [ext_resource type="RoseAttackEffect" uid="uid://ckm6voivcem6c" path="res://data/attack_effects/402-jelly-bean.tres" id="5_va63t"]
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="6_ykh3d"]
+[ext_resource type="RoseAi" uid="uid://b7xtgnwc6ahw4" path="res://data/ai/263-clan_mob2.tres" id="ai_263"]
 
 [resource]
 id = 127
@@ -23,7 +24,7 @@ attack_speed = 125
 attack_range = 240
 walk_speed = 200
 run_speed = 450
-ai_file_index = 263
+ai = ExtResource("ai_263")
 npc_type_index = 4
 model = "res://assets/rose/3ddata/npc/list_npc/127.tscn"
 normal_effect_sound = ExtResource("2_esq37")

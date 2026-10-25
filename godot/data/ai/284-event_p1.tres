@@ -1,0 +1,803 @@
+[gd_resource type="RoseAi" format=3 uid="uid://81yrgogkt8dn"]
+
+[ext_resource type="RoseItemConsumable" uid="uid://oppbsi4hlxea" path="res://data/items/consumable/142.tres" id="1_tgrrm"]
+[ext_resource type="RoseItemConsumable" uid="uid://7lbemb7bd432" path="res://data/items/consumable/10-vital-water-s.tres" id="2_4syrw"]
+[ext_resource type="RoseItemConsumable" uid="uid://dlqpi0tt6clil" path="res://data/items/consumable/29-spiritual-water-s.tres" id="3_j7bts"]
+[ext_resource type="RoseItemConsumable" uid="uid://ds3a61oikk67i" path="res://data/items/consumable/58-vital-jam-5.tres" id="4_go25p"]
+[ext_resource type="RoseItemConsumable" uid="uid://bqdvaxk8da3h3" path="res://data/items/consumable/11-vital-water-m.tres" id="5_sv38j"]
+[ext_resource type="RoseItemConsumable" uid="uid://bf3mh1w87s81w" path="res://data/items/consumable/30-spiritual-water-m.tres" id="6_11kyp"]
+[ext_resource type="RoseItemConsumable" uid="uid://bptw120sojhnp" path="res://data/items/consumable/59-vital-jam-10.tres" id="7_0drr7"]
+[ext_resource type="RoseItemConsumable" uid="uid://c1quj53bu6hw5" path="res://data/items/consumable/12-vital-water-l.tres" id="8_3yfs8"]
+[ext_resource type="RoseItemConsumable" uid="uid://ce5r3g0k1q3ea" path="res://data/items/consumable/31-spiritual-water-l.tres" id="9_3ayc1"]
+[ext_resource type="RoseItemConsumable" uid="uid://drq73dtlitay2" path="res://data/items/consumable/306-hp-scroll-solo.tres" id="10_c8lxt"]
+[ext_resource type="RoseItemMaterial" uid="uid://dgpveri2wa1k" path="res://data/items/material/161-green-crystal.tres" id="11_obhhd"]
+[ext_resource type="RoseItemConsumable" uid="uid://dvkugqyt8ek33" path="res://data/items/consumable/307-mp-scroll-solo.tres" id="12_5hidp"]
+[ext_resource type="RoseItemMaterial" uid="uid://ibd0ns88hhol" path="res://data/items/material/162-blue-crystal.tres" id="13_3u6hw"]
+[ext_resource type="RoseItemJewellery" uid="uid://bl0bvi0emrb8m" path="res://data/items/jewellery/16-critical-ring.tres" id="14_kiyjp"]
+[ext_resource type="RoseItemMaterial" uid="uid://c47rdjn742oxh" path="res://data/items/material/163-red-crystal.tres" id="15_11p4c"]
+[ext_resource type="RoseItemJewellery" uid="uid://ciiaagtywll1v" path="res://data/items/jewellery/96-evasion-necklace.tres" id="16_ybj0g"]
+[ext_resource type="RoseItemMaterial" uid="uid://dhj6nutujbvo6" path="res://data/items/material/164-white-crystal.tres" id="17_sfp2f"]
+[ext_resource type="RoseItemJewellery" uid="uid://4ie8q2f486ju" path="res://data/items/jewellery/166-critical-earring.tres" id="18_ty4w1"]
+[ext_resource type="RoseItemBack" uid="uid://c4tch54djtkuo" path="res://data/items/back/248-lizard-backshield.tres" id="19_nphok"]
+[ext_resource type="RoseItemGem" uid="uid://bku0pyw37s7m3" path="res://data/items/gem/301-garnet-1.tres" id="20_rl5fq"]
+[ext_resource type="RoseItemGem" uid="uid://cnifi8hvwdvg5" path="res://data/items/gem/311-ruby-1.tres" id="21_56x2l"]
+[ext_resource type="RoseItemGem" uid="uid://2aq4bcwnkja1" path="res://data/items/gem/321-sapphire-1.tres" id="22_31h0l"]
+[ext_resource type="RoseItemGem" uid="uid://dbemonc8qirua" path="res://data/items/gem/331-topaz-1.tres" id="23_0pwkb"]
+[ext_resource type="RoseItemGem" uid="uid://bsdw6s22q6ps3" path="res://data/items/gem/341-emerald-1.tres" id="24_rjxaj"]
+[ext_resource type="RoseItemGem" uid="uid://tdn7gebxxhqd" path="res://data/items/gem/351-peridot-1.tres" id="25_oin3n"]
+[ext_resource type="RoseItemGem" uid="uid://dpty0pa4xduk5" path="res://data/items/gem/361-diamond-1.tres" id="26_i8oek"]
+
+[sub_resource type="RoseAiDoKillSelf" id="RoseAiDoKillSelf_wyxwa"]
+
+[sub_resource type="RoseAiIfHasNoOwner" id="RoseAiIfHasNoOwner_e1qgt"]
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_d5jq8"]
+conditions = Array[Resource]([SubResource("RoseAiIfHasNoOwner_e1qgt")])
+actions = Array[Resource]([SubResource("RoseAiDoKillSelf_wyxwa")])
+resource_name = "If HasNoOwner: KillSelf"
+
+[sub_resource type="RoseAiDoMoveAway" id="RoseAiDoMoveAway_xtgiy"]
+mode = "Walk"
+distance = 200
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_v72q7"]
+value = 60
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_nicl8"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_v72q7")])
+actions = Array[Resource]([SubResource("RoseAiDoMoveAway_xtgiy")])
+resource_name = "If Random: MoveAway"
+
+[sub_resource type="RoseAiDoMoveNearOwner" id="RoseAiDoMoveNearOwner_uw25e"]
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_sf4js"]
+actions = Array[Resource]([SubResource("RoseAiDoMoveNearOwner_uw25e")])
+resource_name = "Always: MoveNearOwner"
+
+[sub_resource type="RoseAiDoKillSelf" id="RoseAiDoKillSelf_t1tt6"]
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_efaaj"]
+value = 20
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_4200s"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_efaaj")])
+actions = Array[Resource]([SubResource("RoseAiDoKillSelf_t1tt6")])
+resource_name = "If Random: KillSelf"
+
+[sub_resource type="RoseAiDoMoveRandomly" id="RoseAiDoMoveRandomly_h1gdy"]
+from = "Here"
+mode = "Run"
+distance = 600
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_274c4"]
+actions = Array[Resource]([SubResource("RoseAiDoMoveRandomly_h1gdy")])
+resource_name = "Always: MoveRandomly"
+
+[sub_resource type="RoseAiDoKillSelf" id="RoseAiDoKillSelf_lb6f0"]
+
+[sub_resource type="RoseAiIfHasNoOwner" id="RoseAiIfHasNoOwner_lhagp"]
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_icx8d"]
+conditions = Array[Resource]([SubResource("RoseAiIfHasNoOwner_lhagp")])
+actions = Array[Resource]([SubResource("RoseAiDoKillSelf_lb6f0")])
+resource_name = "If HasNoOwner: KillSelf"
+
+[sub_resource type="RoseAiDoKillSelf" id="RoseAiDoKillSelf_6srel"]
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_oi7n0"]
+variable_type = "Own"
+operator = ">="
+value = 7
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_gbjiv"]
+conditions = Array[Resource]([SubResource("RoseAiIfVariable_oi7n0")])
+actions = Array[Resource]([SubResource("RoseAiDoKillSelf_6srel")])
+resource_name = "If Variable: KillSelf"
+
+[sub_resource type="RoseAiDoMoveNearOwner" id="RoseAiDoMoveNearOwner_uxalo"]
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_l7ow5"]
+to = "Owner"
+operator = ">"
+distance = 600
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_yux3q"]
+conditions = Array[Resource]([SubResource("RoseAiIfDistance_l7ow5")])
+actions = Array[Resource]([SubResource("RoseAiDoMoveNearOwner_uxalo")])
+resource_name = "If Distance: MoveNearOwner"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_1kvaf"]
+variable_type = "Own"
+variable = 1
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseAiDoStop" id="RoseAiDoStop_kjgcy"]
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_5rlj7"]
+variable_type = "Own"
+variable = 1
+operator = "<="
+value = 1
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_pcug3"]
+conditions = Array[Resource]([SubResource("RoseAiIfVariable_5rlj7")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_1kvaf"), SubResource("RoseAiDoStop_kjgcy")])
+resource_name = "If Variable: SetVariable, Stop"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_vuufd"]
+item = ExtResource("1_tgrrm")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_eaige"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_sv7c2"]
+value = 25
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_cili7"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_t60rc"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_sv7c2"), SubResource("RoseAiIfVariable_cili7")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_vuufd"), SubResource("RoseAiDoSetVariable_eaige")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_jj6fw"]
+item = ExtResource("2_4syrw")
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_q2rco"]
+item = ExtResource("3_j7bts")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_jgn57"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_o4561"]
+value = 12
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_chwuf"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_o56ct"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_o4561"), SubResource("RoseAiIfVariable_chwuf")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_jj6fw"), SubResource("RoseAiDoGiveItemToOwner_q2rco"), SubResource("RoseAiDoSetVariable_jgn57")])
+resource_name = "If Random, Variable: GiveItemToOwner, GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_r3dno"]
+item = ExtResource("2_4syrw")
+count = 5
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_th18m"]
+item = ExtResource("3_j7bts")
+count = 5
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_7hnuy"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_hqson"]
+value = 10
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_vbwy5"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_vwe2o"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_hqson"), SubResource("RoseAiIfVariable_vbwy5")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_r3dno"), SubResource("RoseAiDoGiveItemToOwner_th18m"), SubResource("RoseAiDoSetVariable_7hnuy")])
+resource_name = "If Random, Variable: GiveItemToOwner, GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_d7q5u"]
+item = ExtResource("2_4syrw")
+count = 10
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_5muie"]
+item = ExtResource("3_j7bts")
+count = 10
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_5mwaw"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_p1448"]
+value = 8
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_w5m7w"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_lujf6"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_p1448"), SubResource("RoseAiIfVariable_w5m7w")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_d7q5u"), SubResource("RoseAiDoGiveItemToOwner_5muie"), SubResource("RoseAiDoSetVariable_5mwaw")])
+resource_name = "If Random, Variable: GiveItemToOwner, GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_qdpqg"]
+item = ExtResource("4_go25p")
+count = 3
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_vu7oo"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_62heg"]
+value = 4
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_i067g"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_hs272"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_62heg"), SubResource("RoseAiIfVariable_i067g")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_qdpqg"), SubResource("RoseAiDoSetVariable_vu7oo")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_biajl"]
+item = ExtResource("5_sv38j")
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_qh14e"]
+item = ExtResource("6_11kyp")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_3inn4"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_jv1hs"]
+value = 12
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_lkbyi"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_na6ka"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_jv1hs"), SubResource("RoseAiIfVariable_lkbyi")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_biajl"), SubResource("RoseAiDoGiveItemToOwner_qh14e"), SubResource("RoseAiDoSetVariable_3inn4")])
+resource_name = "If Random, Variable: GiveItemToOwner, GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_c55av"]
+item = ExtResource("5_sv38j")
+count = 3
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_cbe8u"]
+item = ExtResource("6_11kyp")
+count = 3
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_6adow"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_kjonc"]
+value = 12
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_4r3hi"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_d1gut"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_kjonc"), SubResource("RoseAiIfVariable_4r3hi")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_c55av"), SubResource("RoseAiDoGiveItemToOwner_cbe8u"), SubResource("RoseAiDoSetVariable_6adow")])
+resource_name = "If Random, Variable: GiveItemToOwner, GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_1svx4"]
+item = ExtResource("5_sv38j")
+count = 7
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_cf5nb"]
+item = ExtResource("6_11kyp")
+count = 7
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_ujvh6"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_oaptd"]
+value = 10
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_6wpmw"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_lj86l"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_oaptd"), SubResource("RoseAiIfVariable_6wpmw")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_1svx4"), SubResource("RoseAiDoGiveItemToOwner_cf5nb"), SubResource("RoseAiDoSetVariable_ujvh6")])
+resource_name = "If Random, Variable: GiveItemToOwner, GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_v36n7"]
+item = ExtResource("7_0drr7")
+count = 2
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_a1dni"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_refs6"]
+value = 4
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_5rv46"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_icpr6"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_refs6"), SubResource("RoseAiIfVariable_5rv46")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_v36n7"), SubResource("RoseAiDoSetVariable_a1dni")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_t3chx"]
+item = ExtResource("8_3yfs8")
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_i8clt"]
+item = ExtResource("9_3ayc1")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_xgd65"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_bej3r"]
+value = 16
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_4mq2s"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_p2bss"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_bej3r"), SubResource("RoseAiIfVariable_4mq2s")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_t3chx"), SubResource("RoseAiDoGiveItemToOwner_i8clt"), SubResource("RoseAiDoSetVariable_xgd65")])
+resource_name = "If Random, Variable: GiveItemToOwner, GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_54oim"]
+item = ExtResource("8_3yfs8")
+count = 3
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_35vye"]
+item = ExtResource("9_3ayc1")
+count = 3
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_8wsgf"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_m52bt"]
+value = 17
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_hogrc"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_vmyqg"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_m52bt"), SubResource("RoseAiIfVariable_hogrc")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_54oim"), SubResource("RoseAiDoGiveItemToOwner_35vye"), SubResource("RoseAiDoSetVariable_8wsgf")])
+resource_name = "If Random, Variable: GiveItemToOwner, GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_4nm6o"]
+item = ExtResource("8_3yfs8")
+count = 5
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_5drea"]
+item = ExtResource("9_3ayc1")
+count = 5
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_f15jo"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_sifgu"]
+value = 12
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_s75vm"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_bo4q1"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_sifgu"), SubResource("RoseAiIfVariable_s75vm")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_4nm6o"), SubResource("RoseAiDoGiveItemToOwner_5drea"), SubResource("RoseAiDoSetVariable_f15jo")])
+resource_name = "If Random, Variable: GiveItemToOwner, GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_pjjsc"]
+item = ExtResource("10_c8lxt")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_g433v"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_xts4a"]
+value = 15
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_dqmh7"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_i6eh2"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_xts4a"), SubResource("RoseAiIfVariable_dqmh7")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_pjjsc"), SubResource("RoseAiDoSetVariable_g433v")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_b65ix"]
+item = ExtResource("11_obhhd")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_bjfa6"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_s0n6d"]
+value = 20
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_rbk7q"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_fliik"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_s0n6d"), SubResource("RoseAiIfVariable_rbk7q")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_b65ix"), SubResource("RoseAiDoSetVariable_bjfa6")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_6db8b"]
+item = ExtResource("12_5hidp")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_wmtyk"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_w2hf1"]
+value = 20
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_f6j8b"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_6ilou"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_w2hf1"), SubResource("RoseAiIfVariable_f6j8b")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_6db8b"), SubResource("RoseAiDoSetVariable_wmtyk")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_rlhjt"]
+item = ExtResource("13_3u6hw")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_1fx7p"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_gswlm"]
+value = 25
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_wchu1"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_0jfa6"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_gswlm"), SubResource("RoseAiIfVariable_wchu1")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_rlhjt"), SubResource("RoseAiDoSetVariable_1fx7p")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_tb30g"]
+item = ExtResource("14_kiyjp")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_wrutc"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_8p4xl"]
+value = 8
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_wag1y"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_11cs7"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_8p4xl"), SubResource("RoseAiIfVariable_wag1y")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_tb30g"), SubResource("RoseAiDoSetVariable_wrutc")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_sclbn"]
+item = ExtResource("15_11p4c")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_8v2ll"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_1ijgj"]
+value = 30
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_bkceu"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_au87m"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_1ijgj"), SubResource("RoseAiIfVariable_bkceu")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_sclbn"), SubResource("RoseAiDoSetVariable_8v2ll")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_2y5fp"]
+item = ExtResource("16_ybj0g")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_r0vmm"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_6mwg4"]
+value = 8
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_ty73r"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_vo2nw"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_6mwg4"), SubResource("RoseAiIfVariable_ty73r")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_2y5fp"), SubResource("RoseAiDoSetVariable_r0vmm")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_oul0s"]
+item = ExtResource("17_sfp2f")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_ans4t"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_xisih"]
+value = 30
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_8mfha"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_jqy3w"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_xisih"), SubResource("RoseAiIfVariable_8mfha")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_oul0s"), SubResource("RoseAiDoSetVariable_ans4t")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_n1q43"]
+item = ExtResource("18_ty4w1")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_vg88w"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_82lg8"]
+value = 6
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_jxotq"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_didua"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_82lg8"), SubResource("RoseAiIfVariable_jxotq")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_n1q43"), SubResource("RoseAiDoSetVariable_vg88w")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_6rys8"]
+item = ExtResource("19_nphok")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_gvg76"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_fuq6a"]
+value = 3
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_ohwvi"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_ox2us"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_fuq6a"), SubResource("RoseAiIfVariable_ohwvi")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_6rys8"), SubResource("RoseAiDoSetVariable_gvg76")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_y0c6u"]
+item = ExtResource("20_rl5fq")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_gactf"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_ifgm5"]
+value = 10
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_r2qld"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_8hydu"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_ifgm5"), SubResource("RoseAiIfVariable_r2qld")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_y0c6u"), SubResource("RoseAiDoSetVariable_gactf")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_7l0mv"]
+item = ExtResource("21_56x2l")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_pffrk"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_i4f82"]
+value = 11
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_vjk4l"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_orneq"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_i4f82"), SubResource("RoseAiIfVariable_vjk4l")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_7l0mv"), SubResource("RoseAiDoSetVariable_pffrk")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_f447h"]
+item = ExtResource("22_31h0l")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_hansd"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_102g6"]
+value = 12
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_wi63i"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_j40eg"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_102g6"), SubResource("RoseAiIfVariable_wi63i")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_f447h"), SubResource("RoseAiDoSetVariable_hansd")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_v8lau"]
+item = ExtResource("23_0pwkb")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_76h1a"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_sc6s8"]
+value = 13
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_0w1qh"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_a1dgd"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_sc6s8"), SubResource("RoseAiIfVariable_0w1qh")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_v8lau"), SubResource("RoseAiDoSetVariable_76h1a")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_77esb"]
+item = ExtResource("24_rjxaj")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_obvhl"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_pp8qk"]
+value = 14
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_4gg57"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_0uulf"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_pp8qk"), SubResource("RoseAiIfVariable_4gg57")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_77esb"), SubResource("RoseAiDoSetVariable_obvhl")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_dspgy"]
+item = ExtResource("25_oin3n")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_7cb51"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_1prvn"]
+value = 15
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_u7d8l"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_t2udi"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_1prvn"), SubResource("RoseAiIfVariable_u7d8l")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_dspgy"), SubResource("RoseAiDoSetVariable_7cb51")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_wnc0d"]
+item = ExtResource("26_i8oek")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_vnlq4"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_yr2ii"]
+value = 15
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_15nd8"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_w3usd"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_yr2ii"), SubResource("RoseAiIfVariable_15nd8")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_wnc0d"), SubResource("RoseAiDoSetVariable_vnlq4")])
+resource_name = "If Random, Variable: GiveItemToOwner, SetVariable"
+
+[sub_resource type="RoseAiDoGiveItemToOwner" id="RoseAiDoGiveItemToOwner_srtfc"]
+item = ExtResource("2_4syrw")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_nap1f"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_2o4ud"]
+variable_type = "Own"
+operator = "<="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_8p1g7"]
+conditions = Array[Resource]([SubResource("RoseAiIfVariable_2o4ud")])
+actions = Array[Resource]([SubResource("RoseAiDoGiveItemToOwner_srtfc"), SubResource("RoseAiDoSetVariable_nap1f")])
+resource_name = "If Variable: GiveItemToOwner, SetVariable"
+
+[resource]
+id = 284
+name = "event_p1"
+idle_interval = 2
+new_target_chance = 30
+on_idle = Array[Resource]([SubResource("RoseAiEvent_icx8d"), SubResource("RoseAiEvent_gbjiv"), SubResource("RoseAiEvent_yux3q"), SubResource("RoseAiEvent_pcug3"), SubResource("RoseAiEvent_t60rc"), SubResource("RoseAiEvent_o56ct"), SubResource("RoseAiEvent_vwe2o"), SubResource("RoseAiEvent_lujf6"), SubResource("RoseAiEvent_hs272"), SubResource("RoseAiEvent_na6ka"), SubResource("RoseAiEvent_d1gut"), SubResource("RoseAiEvent_lj86l"), SubResource("RoseAiEvent_icpr6"), SubResource("RoseAiEvent_p2bss"), SubResource("RoseAiEvent_vmyqg"), SubResource("RoseAiEvent_bo4q1"), SubResource("RoseAiEvent_i6eh2"), SubResource("RoseAiEvent_fliik"), SubResource("RoseAiEvent_6ilou"), SubResource("RoseAiEvent_0jfa6"), SubResource("RoseAiEvent_11cs7"), SubResource("RoseAiEvent_au87m"), SubResource("RoseAiEvent_vo2nw"), SubResource("RoseAiEvent_jqy3w"), SubResource("RoseAiEvent_didua"), SubResource("RoseAiEvent_ox2us"), SubResource("RoseAiEvent_8hydu"), SubResource("RoseAiEvent_orneq"), SubResource("RoseAiEvent_j40eg"), SubResource("RoseAiEvent_a1dgd"), SubResource("RoseAiEvent_0uulf"), SubResource("RoseAiEvent_t2udi"), SubResource("RoseAiEvent_w3usd"), SubResource("RoseAiEvent_8p1g7")])
+on_attack = Array[Resource]([SubResource("RoseAiEvent_d5jq8"), SubResource("RoseAiEvent_nicl8"), SubResource("RoseAiEvent_sf4js")])
+on_damaged = Array[Resource]([SubResource("RoseAiEvent_4200s"), SubResource("RoseAiEvent_274c4")])

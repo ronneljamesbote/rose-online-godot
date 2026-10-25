@@ -484,7 +484,7 @@ func _text(value: Variant, column: Dictionary) -> String:
 	return var_to_str(value)
 
 
-## A linked resource: its id and name ("147 woopie"), or its file name.
+## A linked resource: its id and name ("147 woopie"), its label (an AI event) or its file name.
 func _link_text(res: Object) -> String:
 	if not res is Resource:
 		return str(res)
@@ -492,6 +492,9 @@ func _link_text(res: Object) -> String:
 	var title: Variant = res.get("name")
 	if key != null and title != null:
 		return "%s %s" % [key, title]
+	# A block inside a resource (an AI event) is named after what it does.
+	if key == null and not res.resource_name.is_empty():
+		return res.resource_name
 	if title != null:
 		return str(title)
 	return res.resource_path.get_file().get_basename()

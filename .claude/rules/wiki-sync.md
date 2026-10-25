@@ -36,6 +36,7 @@ log changes need no wiki change.
 | icon and model links (`icon`, `field_model`, `model`, `model_male`, `model_female`), `godot/assets/ours/` art | none: the wiki doesn't list art (a page that mentions how something looks, like `wiki/rules/refining.md`, says when it changes) |
 | `godot/data/quests/`, `godot/data/quest_triggers/`, `export/data/quests.toml`, `export/data/quest-triggers.toml` | the `wiki/quests/` page of every quest whose text, time limit, conditions or rewards changed; `wiki/rules/quests.md` for how blocks run |
 | `godot/data/dialogs/`, `export/data/dialogs.toml` | the **Dialog** section of the `wiki/npcs/` page of every NPC using a dialog whose lines, conditions or actions changed; `wiki/rules/npc-dialogs.md` for how dialogs run |
+| `godot/data/ai/`, `export/data/monster-ai.toml` (monster AI, and each monster's or NPC's `ai` link) | `wiki/rules/monster-behaviour.md` for how AI scripts run; the `wiki/monsters/` or `wiki/npcs/` page of every monster or NPC whose behaviour a page describes |
 | `godot/zones/` spawn, NPC and event markers, `export/zones/` (exported from them) | the `wiki/zones/` page of that zone (spawn points, NPCs) and the pages of monsters and NPCs it places |
 | `export/motions.toml` (exported from the hit markers of the Godot player, monster and NPC animations) | `wiki/rules/combat.md` (animation lengths and hit frames), the page of every monster whose attack moved and of every skill whose hit moved |
 

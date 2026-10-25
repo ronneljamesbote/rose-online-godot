@@ -28,7 +28,7 @@ use rose_data_export::world::{
 };
 use rose_data_export::{
     npcs::{item_name, DROP_ROW_COLUMNS},
-    Format, IroseCodes, ItemsExport, MotionTimings, NpcModels, NpcsExport, QuestsExport, SkillsExport, WorldExport,
+    AiExport, Format, IroseCodes, ItemCodes, ItemsExport, MotionTimings, NpcModels, NpcsExport, QuestsExport, SkillsExport, WorldExport,
     ZoneLayout,
 };
 use rose_file_readers::{stb_column, StbFile, VfsFile, VfsPathBuf, VirtualFilesystem};
@@ -85,7 +85,7 @@ pub fn load_game_data(vfs: &VirtualFilesystem) -> Result<GameData, anyhow::Error
         ability_value_calculator: get_ability_value_calculator(items.clone(), skills.clone(), npcs.clone()),
         data_decoder: get_data_decoder(),
         drop_table,
-        ai: Arc::new(get_ai_database(vfs).context("ai database")?),
+        ai: Arc::new(load_ai(vfs).context("ai database")?),
         job_class: Arc::new(job_class),
         motions: Arc::new(motions),
         quests: Arc::new(load_quests(vfs, string_database.clone()).context("quest database")?),
@@ -171,6 +171,58 @@ pub fn irose_codes() -> IroseCodes {
         decode_item_type: rose_data_irose::decode_item_type,
         encode_item_type: rose_data_irose::encode_item_type,
     }
+}
+
+/// iROSE's item numbers, which the monster AI's item blocks hold.
+pub fn ai_item_codes() -> ItemCodes {
+    ItemCodes { decode: decode_item_base1000, encode: encode_item_base1000 }
+}
+
+/// The monsters and NPCs, skills and quest steps of these databases, for the AI's
+/// `without_missing`.
+pub fn ai_known(npcs: &NpcDatabase, skills: &SkillDatabase, quests: &QuestDatabase) -> rose_data_export::AiKnown {
+    rose_data_export::AiKnown {
+        npcs: npcs.iter().map(|n| n.id.get()).collect(),
+        skills: skills.iter().map(|s| s.id.get()).collect(),
+        steps: quests.triggers.keys().cloned().collect(),
+    }
+}
+
+/// The monster AI export as the game files carry it (JSON from the upload, else TOML).
+pub fn read_ai_export(vfs: &VirtualFilesystem) -> Result<Option<AiExport>, anyhow::Error> {
+    for format in [Format::Json, Format::Toml] {
+        let export = AiExport::from_files_as(format, |name| {
+            read_export_file(vfs, &rose_data_export::data_file_as(name, format))
+        })?;
+        if export.is_some() {
+            return Ok(export);
+        }
+    }
+    Ok(None)
+}
+
+/// The monster AI exported from the Godot resources (`export/data/monster-ai.toml`), or
+/// without an export the iROSE files (FILE_AI.STB, the AIP files it lists and AI_S.STB).
+pub fn load_ai(vfs: &VirtualFilesystem) -> Result<AiDatabase, anyhow::Error> {
+    match read_ai_export(vfs)? {
+        Some(export) => export.to_database(&ai_item_codes()),
+        None => get_ai_database(vfs),
+    }
+}
+
+/// The name of each AI of FILE_AI.STB: its AIP file's (`3DDATA\AI\de_zs.aip` -> `de_zs`).
+pub fn ai_names(vfs: &VirtualFilesystem) -> Result<BTreeMap<u16, String>, anyhow::Error> {
+    let file_ai = vfs.read_file::<StbFile, _>("3DDATA/STB/FILE_AI.STB")?;
+    let mut names = BTreeMap::new();
+    for row in 0..file_ai.rows() {
+        let path = file_ai.get(row, 0);
+        let file = path.rsplit(['\\', '/']).next().unwrap_or(path);
+        let stem = file.rsplit_once('.').map_or(file, |(stem, _)| stem);
+        if !stem.is_empty() {
+            names.insert(row as u16, stem.to_lowercase());
+        }
+    }
+    Ok(names)
 }
 
 /// The quest export as the game files carry it (JSON from the upload, else TOML).

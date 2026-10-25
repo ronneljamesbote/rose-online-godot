@@ -8,8 +8,9 @@
 //! new characters (`RoseNewCharacter`) and sounds (`RoseSound`, `RoseHitSounds`,
 //! `RoseFootsteps`, linking the imported audio files), effects (`RoseEffectFile`,
 //! `RoseAttackEffect`), skies (`RoseSky`) and the interface's pictures and cursors
-//! (`RoseInterface`), and quests (`RoseQuest`, `RoseQuestTrigger` and its condition and reward
-//! blocks, in `quest_blocks.rs`).
+//! (`RoseInterface`), quests (`RoseQuest`, `RoseQuestTrigger` and its condition and reward
+//! blocks, in `quest_blocks.rs`), NPC dialogs (`RoseDialog`, `dialog_blocks.rs`) and the monster
+//! AI (`RoseAi`, its events and blocks, in `ai_blocks.rs`).
 //!
 //! The game itself never reads these files. `--export-data` writes them to
 //! `export/data/` as TOML (the layout is in `crates/rose-data-export`), and the server and
@@ -55,7 +56,8 @@ use rose_data_export::quests::{ConditionExport, QuestDataExport, QuestTriggerExp
 use rose_data_export::dialogs::{
     DialogActionExport, DialogCaseExport, DialogConditionExport, DialogExport, DialogLineExport, DialogMenuExport, LineKind,
 };
-use rose_data_export::{DialogsExport, EffectsExport, InterfaceExport, ItemsExport, NpcsExport, QuestsExport, SkillsExport, SoundsExport, WorldExport};
+use rose_data_export::ai::{AiActionExport, AiConditionExport, AiEventExport, AiFileExport, EVENT_LISTS};
+use rose_data_export::{AiExport, DialogsExport, EffectsExport, InterfaceExport, ItemsExport, NpcsExport, QuestsExport, SkillsExport, SoundsExport, WorldExport};
 use serde::{de::DeserializeOwned, Serialize};
 use serde_json::{Map, Value};
 
@@ -91,6 +93,8 @@ pub const QUESTS_DIR: &str = "res://data/quests/";
 pub const QUEST_TRIGGERS_DIR: &str = "res://data/quest_triggers/";
 /// Where the NPC dialog resources live.
 pub const DIALOGS_DIR: &str = "res://data/dialogs/";
+/// Where the monster AI resources live.
+pub const AI_DIR: &str = "res://data/ai/";
 
 /// Where to find a linked resource by what the export holds: `items/weapon/3`,
 /// `drop_table/147`, `shop_tab/12` -> its `res://` path.
@@ -702,11 +706,11 @@ macro_rules! character_resource {
             #[export]
             run_speed: i64,
 
-            /// Its AI script (a row of FILE_AI.STB, 0 = none): how it wanders, picks fights
-            /// and uses skills. Becomes a link when AI is made in Godot.
+            /// Its AI (empty = none): how it wanders, picks fights and uses skills. Drag a
+            /// `RoseAi` in from `res://data/ai/`; several can share one.
             #[export_group(name = "Behaviour")]
             #[export]
-            ai_file_index: i64,
+            ai: Option<Gd<crate::ai_blocks::RoseAi>>,
             /// The quest trigger run when it dies (a QSD trigger name, empty = none).
             #[export]
             death_quest_trigger_name: GString,
@@ -1844,7 +1848,13 @@ pub fn clear_cache() {
     if let Ok(mut files) = DIALOG_FILES.lock() {
         *files = None;
     }
+    if let Ok(mut files) = TRIGGER_FILES.lock() {
+        *files = None;
+    }
 }
+
+/// The quest step files, listed once for `find_quest_trigger`.
+static TRIGGER_FILES: std::sync::Mutex<Option<Vec<String>>> = std::sync::Mutex::new(None);
 
 /// The dialog files, listed once for `find_dialog`.
 static DIALOG_FILES: std::sync::Mutex<Option<Vec<String>>> = std::sync::Mutex::new(None);
@@ -2004,6 +2014,7 @@ fn class_link_kind(class: &str) -> Option<&'static str> {
         "RoseQuest" => Some("quest"),
         "RoseSkill" => Some("skill"),
         "RoseZoneSettings" => Some("zone"),
+        "RoseAi" => Some("ai"),
         _ => None,
     }
 }
@@ -2534,6 +2545,7 @@ fn index_links(dir: &str, links: &mut Links) -> Result<(), String> {
             "RoseEffectFile" => format!("effect_file/{id}"),
             "RoseAttackEffect" => format!("attack_effect/{id}"),
             "RoseSky" => format!("sky/{id}"),
+            "RoseAi" => format!("ai/{id}"),
             _ => match item_kind(&class) {
                 Some(kind) => format!("items/{kind}/{id}"),
                 None => continue,
@@ -2591,9 +2603,23 @@ pub fn convert_npcs(force: bool) -> Result<(usize, Vec<String>), String> {
     let item_exists = |item: rose_data::ItemReference| {
         links.contains_key(&format!("items/{}", rose_data_export::npcs::item_name(item)))
     };
-    let (export, skipped) =
+    let (mut export, mut skipped) =
         rose_game_data::npcs_export_from_irose(&data.vfs, strings, item_exists, &zones, scene_npcs)
             .map_err(|e| format!("{e:#}"))?;
+    // Their AI links a RoseAi (an AI number with no AIP file had none).
+    index_links(AI_DIR, &mut links)?;
+    let ais: Vec<(u16, &mut u32)> = export
+        .monsters
+        .iter_mut()
+        .map(|m| (m.id, &mut m.ai))
+        .chain(export.npcs.iter_mut().map(|n| (n.id, &mut n.ai)))
+        .collect();
+    for (id, ai) in ais {
+        if *ai != 0 && !links.contains_key(&format!("ai/{ai}")) {
+            skipped.push(format!("monster or NPC {id}: AI {ai} has no AIP file (left empty)"));
+            *ai = 0;
+        }
+    }
     let mut count = 0;
     for tab in &export.shop_tabs {
         let path = format!("{SHOP_TABS_DIR}{}.tres", file_stem(tab.id as u32, &tab.name));
@@ -3963,6 +3989,175 @@ pub fn find_dialog(key: &str) -> Option<String> {
     found
 }
 
+/// The quest step resource with this name (`124-01`), found by its file name (the name with
+/// anything but letters, digits, `-` and `_` made `_`), for the AI blocks. The folder is listed
+/// once, and again when the name isn't in the list (a step made since).
+pub fn find_quest_trigger(name: &str) -> Option<String> {
+    if name.is_empty() {
+        return None;
+    }
+    let file = format!("/{}.tres", trigger_stem(name)).to_lowercase();
+    let matches = |path: &&String| path.to_lowercase().ends_with(&file);
+    let mut files = TRIGGER_FILES.lock().ok()?;
+    if let Some(found) = files.as_ref().and_then(|f| f.iter().find(matches)) {
+        return Some(found.clone());
+    }
+    let mut list = Vec::new();
+    tres_files(QUEST_TRIGGERS_DIR, &mut list);
+    let found = list.iter().find(matches).cloned();
+    *files = Some(list);
+    found
+}
+
+/// An AI block as its resource (`RoseAiIf<kind>` / `RoseAiDo<kind>`). The monsters, NPCs,
+/// skills and quest steps it names are numbers and names, so only items and zones are links.
+fn ai_block_resource<T: Serialize>(prefix: &str, block: &T, links: &Links) -> Result<Gd<Resource>, String> {
+    block_resource(prefix, block, links)
+}
+
+/// The kind of a block (its class without the prefix).
+fn block_kind(block: &Gd<Resource>, prefix: &str) -> String {
+    block.get_class().to_string().strip_prefix(prefix).unwrap_or_default().to_string()
+}
+
+/// An AI as its resource (`RoseAi`), its events and their blocks inside it. An event's
+/// resource name says what it does (`If Random: UseSkill`), so the Inspector's lists show it.
+fn ai_resource(ai: &AiFileExport, links: &Links) -> Result<Gd<Resource>, String> {
+    use crate::ai_blocks::{ACTION_PREFIX, CONDITION_PREFIX};
+    let mut resource = new_resource("RoseAi")?;
+    resource.set("id", &(ai.id as i64).to_variant());
+    resource.set("name", &GString::from(ai.name.as_str()).to_variant());
+    resource.set("idle_interval", &(ai.idle_interval as i64).to_variant());
+    resource.set("new_target_chance", &(ai.new_target_chance as i64).to_variant());
+    for (list, events) in EVENT_LISTS.iter().zip(ai.lists()) {
+        let mut resources = Vec::with_capacity(events.len());
+        for (e, event) in events.iter().enumerate() {
+            let at = |error: String| format!("{list} event {e}: {error}");
+            let conditions =
+                event.condition.iter().map(|c| ai_block_resource(CONDITION_PREFIX, c, links)).collect::<Result<Vec<_>, _>>().map_err(at)?;
+            let actions =
+                event.action.iter().map(|a| ai_block_resource(ACTION_PREFIX, a, links)).collect::<Result<Vec<_>, _>>().map_err(at)?;
+            let mut event_resource = new_resource("RoseAiEvent")?;
+            event_resource.set("name", &GString::from(event.name.as_str()).to_variant());
+            let kinds = |blocks: &[Gd<Resource>], prefix| blocks.iter().map(|b| block_kind(b, prefix)).collect::<Vec<_>>();
+            event_resource.set_name(&crate::ai_blocks::event_label(
+                &event.name,
+                &kinds(&conditions, CONDITION_PREFIX),
+                &kinds(&actions, ACTION_PREFIX),
+            ));
+            set_resources(&mut event_resource, "conditions", &conditions);
+            set_resources(&mut event_resource, "actions", &actions);
+            resources.push(event_resource);
+        }
+        set_resources(&mut resource, list, &resources);
+    }
+    Ok(resource)
+}
+
+/// An AI resource as the export has it. An empty place in a list is left out.
+fn ai_export(resource: &Gd<Resource>) -> Result<AiFileExport, String> {
+    use crate::ai_blocks::{ACTION_PREFIX, CONDITION_PREFIX};
+    let mut ai = AiFileExport {
+        id: u16::try_from(resource.get("id").to::<i64>()).map_err(|_| "id: not a number from 1 to 65535".to_string())?,
+        name: resource.get("name").to::<GString>().to_string(),
+        idle_interval: u32::try_from(resource.get("idle_interval").to::<i64>()).map_err(|_| "idle_interval: below 0".to_string())?,
+        new_target_chance: u32::try_from(resource.get("new_target_chance").to::<i64>())
+            .map_err(|_| "new_target_chance: below 0".to_string())?,
+        ..Default::default()
+    };
+    for (list, events) in EVENT_LISTS.iter().zip(ai.lists_mut()) {
+        for (e, event) in get_resources(resource, list).iter().enumerate() {
+            let at = |error: String| format!("{list} event {e}: {error}");
+            if event.get_class().to_string() != "RoseAiEvent" {
+                return Err(at(format!("holds a {}, not a RoseAiEvent", event.get_class())));
+            }
+            events.push(AiEventExport {
+                name: event.get("name").to::<GString>().to_string(),
+                condition: get_resources(event, "conditions")
+                    .iter()
+                    .map(|b| block_export::<AiConditionExport>(b, CONDITION_PREFIX, "conditions"))
+                    .collect::<Result<_, _>>()
+                    .map_err(at)?,
+                action: get_resources(event, "actions")
+                    .iter()
+                    .map(|b| block_export::<AiActionExport>(b, ACTION_PREFIX, "actions"))
+                    .collect::<Result<_, _>>()
+                    .map_err(at)?,
+            });
+        }
+    }
+    Ok(ai)
+}
+
+/// An AI's file name: its number, then its AIP file's name (`23-at_sm`).
+fn ai_stem(id: u16, name: &str) -> String {
+    let name: String = name.to_lowercase().chars().map(|c| if c.is_ascii_alphanumeric() || c == '-' || c == '_' { c } else { '_' }).collect();
+    if name.is_empty() {
+        id.to_string()
+    } else {
+        format!("{id}-{name}")
+    }
+}
+
+/// `--convert-data` for the monster AI: one resource per AI (the AIP files FILE_AI.STB lists,
+/// with their text from AI_S.STB), linking the items and zones their blocks name (which must be
+/// there). Monsters, NPCs, skills and quest steps are kept as numbers and names; one that isn't
+/// in the game is left empty. Runs before the monsters and NPCs, which link the AI. Returns the
+/// count and what couldn't be kept.
+pub fn convert_ai(force: bool) -> Result<(usize, Vec<String>), String> {
+    let data = crate::data::get().ok_or("open the data first")?;
+    let mut existing = Vec::new();
+    tres_files(AI_DIR, &mut existing);
+    if !existing.is_empty() && !force {
+        return Err(format!(
+            "{AI_DIR} already has {} AI resources; they are the source now (use --convert-data=force to write them again from iROSE)",
+            existing.len()
+        ));
+    }
+    let ai = rose_data_irose::get_ai_database(&data.vfs).map_err(|e| format!("{e:#}"))?;
+    let names = rose_game_data::ai_names(&data.vfs).map_err(|e| format!("{e:#}"))?;
+    let mut export = AiExport::from_database(&ai, &names, &rose_game_data::ai_item_codes()).map_err(|e| format!("{e:#}"))?;
+    let mut links = Links::new();
+    for dir in [ITEMS_DIR, ZONES_DIR] {
+        index_links(dir, &mut links)?;
+    }
+    // What isn't in the game goes, with what the game did with it (nothing).
+    let lost = export.without_missing(&rose_game_data::ai_known(&data.npcs, &data.skills, &data.quests));
+    export.check().map_err(|e| format!("{e:#}"))?;
+    let mut count = 0;
+    for ai in &export.ai {
+        let path = format!("{AI_DIR}{}.tres", ai_stem(ai.id, &ai.name));
+        let resource = ai_resource(ai, &links).map_err(|e| format!("AI {} ({}): {e}", ai.id, ai.name))?;
+        save_resource(&resource, &path)?;
+        count += 1;
+    }
+    Ok((count, lost))
+}
+
+/// Reads every AI resource into the export. Two AIs with the same number are an error naming
+/// both files.
+pub fn read_ai() -> Result<(AiExport, usize), String> {
+    let mut export = AiExport::default();
+    let mut ids: std::collections::HashMap<u16, String> = std::collections::HashMap::new();
+    let mut loader = ResourceLoader::singleton();
+    let files = register_uids(AI_DIR);
+    for path in &files {
+        let resource = loader.load(path).ok_or(format!("could not load {path}"))?;
+        let class = resource.get_class().to_string();
+        if class != "RoseAi" {
+            return Err(format!("{path} is a {class}, not a RoseAi"));
+        }
+        let ai = ai_export(&resource).map_err(|e| format!("{path}: {e}"))?;
+        if let Some(other) = ids.insert(ai.id, path.clone()) {
+            return Err(format!("{path} and {other} are both AI {}", ai.id));
+        }
+        export.ai.push(ai);
+    }
+    export.ai.sort_by_key(|a| a.id);
+    export.check().map_err(|e| format!("{e:#}"))?;
+    Ok((export, files.len()))
+}
+
 /// `--export-data`: writes `export/` (in the repository) from the resources, the zone scenes
 /// and the animations, or with `check` only compares. Needs the data open (the motion list and
 /// the names in the zone files' comments come from it) and the imported animations. Returns
@@ -4046,6 +4241,34 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
             "no dialog resources in {DIALOGS_DIR}; run --convert-data first"
         ));
     }
+    let (ai, ai_resources) = read_ai()?;
+    if ai_resources == 0 {
+        return Err(format!(
+            "no AI resources in {AI_DIR}; run --convert-data first"
+        ));
+    }
+    // What the AI names must be there, and the AI the monsters and NPCs name.
+    {
+        let named = ai.named();
+        let characters: std::collections::HashSet<u16> =
+            npcs.monsters.iter().map(|m| m.id).chain(npcs.npcs.iter().map(|n| n.id)).collect();
+        if let Some(npc) = named.npcs.iter().find(|n| !characters.contains(*n)) {
+            return Err(format!("an AI names monster or NPC {npc}, which isn't there"));
+        }
+        let skill_ids: std::collections::HashSet<u16> = skills.skills.iter().map(|s| s.id).collect();
+        if let Some(skill) = named.skills.iter().find(|s| !skill_ids.contains(*s)) {
+            return Err(format!("an AI uses skill {skill}, which isn't there"));
+        }
+        let trigger_names: std::collections::HashSet<&str> = quests.triggers.iter().map(|t| t.name.as_str()).collect();
+        if let Some(step) = named.steps.iter().find(|s| !trigger_names.contains(*s)) {
+            return Err(format!("an AI runs quest step {step}, which isn't there"));
+        }
+        let ai_ids: std::collections::HashSet<u32> = ai.ai.iter().map(|a| a.id as u32).collect();
+        let users = npcs.monsters.iter().map(|m| (m.id, m.ai)).chain(npcs.npcs.iter().map(|n| (n.id, n.ai)));
+        if let Some((id, number)) = users.filter(|(_, a)| *a != 0).find(|(_, a)| !ai_ids.contains(a)) {
+            return Err(format!("monster or NPC {id} has AI {number}, which isn't there"));
+        }
+    }
     // What the dialogs name must be there.
     {
         let (steps, quest_ids) = dialogs.named();
@@ -4097,6 +4320,7 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
     data_files.extend(interface.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
     data_files.extend(quests.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
     data_files.extend(dialogs.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
+    data_files.extend(ai.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
     files.extend(data_files.into_iter().map(|(name, text)| (in_data(rose_data_export::data_file_as(name, toml)), text)));
     // The written files must read back (the server and the game load them the same way).
     let find = |path: String| Ok(files.iter().find(|(n, _)| *n == in_data(path.clone())).map(|(_, t)| t.clone()));
@@ -4142,6 +4366,13 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
         return Err("the dialog export reads back different".into());
     }
     dialogs_back.to_database().map_err(|e| format!("{e:#}"))?;
+    let ai_back = AiExport::from_files_as(toml, |name| find(rose_data_export::data_file_as(name, toml)))
+        .map_err(|e| format!("{e:#}"))?
+        .ok_or("the AI export doesn't read back")?;
+    if ai_back != ai {
+        return Err("the AI export reads back different".into());
+    }
+    ai_back.to_database(&rose_game_data::ai_item_codes()).map_err(|e| format!("{e:#}"))?;
 
     // The zones edited as scenes need their settings, and their layouts go to the server.
     // Their comments name the zone, monsters and NPCs as the resources do now.
@@ -4168,8 +4399,18 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
     files.push((rose_data_export::MOTIONS_FILE.to_string(), timings.to_toml()));
 
     let mut result = ExportResult {
-        resources: item_resources + npc_resources + skill_resources + world_resources + sound_resources + effect_resources + interface_resources + quest_resources + dialog_resources,
+        resources: item_resources
+            + npc_resources
+            + skill_resources
+            + world_resources
+            + sound_resources
+            + effect_resources
+            + interface_resources
+            + quest_resources
+            + dialog_resources
+            + ai_resources,
         dialogs: dialogs.dialogs.len(),
+        ai: ai.ai.len(),
         quests: quests.quests.len(),
         quest_triggers: quests.triggers.len(),
         skies: interface.skies.len(),
@@ -4228,6 +4469,7 @@ pub struct ExportResult {
     pub quests: usize,
     pub quest_triggers: usize,
     pub dialogs: usize,
+    pub ai: usize,
     pub zone_scenes: usize,
     pub motions: usize,
     pub read_ms: u128,
@@ -4246,11 +4488,12 @@ impl RoseDataExport {
     /// the iROSE tables: sounds first (they link the imported audio), then effect files and
     /// attack effects (they link the imported effect scenes and the sounds), then skies and the
     /// interface settings (they link imported meshes, textures and cursors), then items, then
-    /// monsters, NPCs, drop tables and shop tabs, which link the items, then skills, status
-    /// effects and job classes, which link the monsters, then zone settings, warp gates,
-    /// recipes and new characters, which link the skies, zones and items, then quests and
-    /// quest triggers, which link items, monsters, NPCs, skills and zones, then NPC dialogs,
-    /// which link quest steps, quests and items. Needs RoseData.open. Returns {resources, folder, skipped (kinds already there),
+    /// zone settings, warp gates, recipes and new characters, which link the skies, zones and
+    /// items, then the monster AI, which links items and zones, then monsters, NPCs, drop
+    /// tables and shop tabs, which link the items and the AI, then skills, status effects and
+    /// job classes, which link the monsters, then quests and quest triggers, which link items,
+    /// monsters, NPCs, skills and zones, then NPC dialogs, which link quest steps, quests and
+    /// items. Needs RoseData.open. Returns {resources, folder, skipped (kinds already there),
     /// lost (values that couldn't be kept)}, or {error}.
     #[func]
     fn convert(force: bool) -> VarDictionary {
@@ -4331,6 +4574,44 @@ impl RoseDataExport {
             kept.push(&"items".to_variant());
         }
         let mut others = Vec::new();
+        for (dir, _) in WORLD_DIRS {
+            tres_files(dir, &mut others);
+        }
+        if force || others.is_empty() {
+            match convert_world(force) {
+                Ok((n, not_kept)) => {
+                    count += n;
+                    for line in not_kept {
+                        lost.push(&line.to_variant());
+                    }
+                }
+                Err(error) => {
+                    result.set("error", error.as_str());
+                    return result;
+                }
+            }
+        } else {
+            kept.push(&"zones, warp gates, recipes and new characters".to_variant());
+        }
+        let mut others = Vec::new();
+        tres_files(AI_DIR, &mut others);
+        if force || others.is_empty() {
+            match convert_ai(force) {
+                Ok((n, not_kept)) => {
+                    count += n;
+                    for line in not_kept {
+                        lost.push(&line.to_variant());
+                    }
+                }
+                Err(error) => {
+                    result.set("error", error.as_str());
+                    return result;
+                }
+            }
+        } else {
+            kept.push(&"monster AI".to_variant());
+        }
+        let mut others = Vec::new();
         for (dir, _) in NPC_DIRS {
             tres_files(dir, &mut others);
         }
@@ -4364,26 +4645,6 @@ impl RoseDataExport {
             }
         } else {
             kept.push(&"skills, status effects and job classes".to_variant());
-        }
-        let mut others = Vec::new();
-        for (dir, _) in WORLD_DIRS {
-            tres_files(dir, &mut others);
-        }
-        if force || others.is_empty() {
-            match convert_world(force) {
-                Ok((n, not_kept)) => {
-                    count += n;
-                    for line in not_kept {
-                        lost.push(&line.to_variant());
-                    }
-                }
-                Err(error) => {
-                    result.set("error", error.as_str());
-                    return result;
-                }
-            }
-        } else {
-            kept.push(&"zones, warp gates, recipes and new characters".to_variant());
         }
         let mut others = Vec::new();
         for (dir, _) in QUEST_DIRS {
@@ -4434,7 +4695,7 @@ impl RoseDataExport {
     /// Writes (or with `check` compares) `export/` from the resources, the zone scenes and the
     /// animations. Needs RoseData.open and the import. Returns {files, changed, resources,
     /// items, monsters, npcs, skills, zones, sounds, effects, attack_effects, skies, quests,
-    /// quest_triggers, dialogs, zone_scenes,
+    /// quest_triggers, dialogs, ai, zone_scenes,
     /// motions, read_ms}, or {error}.
     #[func]
     fn export(check: bool) -> VarDictionary {
@@ -4457,6 +4718,7 @@ impl RoseDataExport {
                 result.set("quests", out.quests as i64);
                 result.set("quest_triggers", out.quest_triggers as i64);
                 result.set("dialogs", out.dialogs as i64);
+                result.set("ai", out.ai as i64);
                 result.set("zone_scenes", out.zone_scenes as i64);
                 result.set("motions", out.motions as i64);
                 result.set("read_ms", out.read_ms as i64);

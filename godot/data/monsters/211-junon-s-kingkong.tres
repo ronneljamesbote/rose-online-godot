@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://d20q7rg0vm5gw" path="res://data/sounds/mob/245-mob17-n.tres" id="2_m8l6f"]
 [ext_resource type="RoseSound" uid="uid://cbojdr8uyjvrt" path="res://data/sounds/mob/246-mob17-d.tres" id="3_4t4n5"]
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="4_860mn"]
+[ext_resource type="RoseAi" uid="uid://c062qjq5wsg30" path="res://data/ai/60-gorilla1_boss.tres" id="ai_60"]
 
 [resource]
 id = 211
@@ -21,7 +22,7 @@ attack_speed = 90
 attack_range = 250
 walk_speed = 340
 run_speed = 730
-ai_file_index = 60
+ai = ExtResource("ai_60")
 death_quest_trigger_name = "1062-31"
 npc_type_index = 10
 model = "res://assets/rose/3ddata/npc/list_npc/211.tscn"

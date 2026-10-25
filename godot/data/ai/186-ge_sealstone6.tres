@@ -1,0 +1,249 @@
+[gd_resource type="RoseAi" format=3 uid="uid://bccnh72wx6s5f"]
+
+[sub_resource type="RoseAiDoStop" id="RoseAiDoStop_tj34l"]
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_cf764"]
+actions = Array[Resource]([SubResource("RoseAiDoStop_tj34l")])
+resource_name = "Always: Stop"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_27ta7"]
+variable_type = "Own"
+operator = "Subtract"
+value = 1
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_w1g1u"]
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_t74ie"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_w1g1u")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_27ta7")])
+resource_name = "If Random: SetVariable"
+
+[sub_resource type="RoseAiDoCallAllies" id="RoseAiDoCallAllies_ffpcl"]
+distance = 20
+allies = "Any"
+count = 1
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_8utk5"]
+value = 40
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_f5kh8"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_8utk5")])
+actions = Array[Resource]([SubResource("RoseAiDoCallAllies_ffpcl")])
+resource_name = "If Random: CallAllies"
+
+[sub_resource type="RoseAiDoCallAllies" id="RoseAiDoCallAllies_bsijj"]
+distance = 25
+allies = "Any"
+count = 1
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_p4al0"]
+variable_type = "Own"
+operator = "Subtract"
+value = 1
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_8e8vk"]
+value = 40
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_atafr"]
+distance = 2000
+allied = true
+from_level_diff = -20
+to_level_diff = 20
+count_operator = ">="
+count = 7
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_gaxcp"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_8e8vk"), SubResource("RoseAiIfFindCharacter_atafr")])
+actions = Array[Resource]([SubResource("RoseAiDoCallAllies_bsijj"), SubResource("RoseAiDoSetVariable_p4al0")])
+resource_name = "If Random, FindCharacter: CallAllies, SetVariable"
+
+[sub_resource type="RoseAiDoSpawn" id="RoseAiDoSpawn_2imtt"]
+npc_id = 496
+distance = 15
+owner = true
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_kbv6e"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_2bxn6"]
+value = 30
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_hqgdp"]
+variable_type = "Own"
+operator = "<="
+value = 10
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_1uao2"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_2bxn6"), SubResource("RoseAiIfVariable_hqgdp")])
+actions = Array[Resource]([SubResource("RoseAiDoSpawn_2imtt"), SubResource("RoseAiDoSetVariable_kbv6e")])
+resource_name = "If Random, Variable: Spawn, SetVariable"
+
+[sub_resource type="RoseAiDoSpawn" id="RoseAiDoSpawn_7vdtg"]
+npc_id = 476
+distance = 14
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_rl283"]
+variable_type = "Own"
+operator = "Add"
+value = 12
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_qymjr"]
+value = 18
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_j33ps"]
+variable_type = "Own"
+operator = "<="
+value = 8
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_odhs4"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_qymjr"), SubResource("RoseAiIfVariable_j33ps")])
+actions = Array[Resource]([SubResource("RoseAiDoSpawn_7vdtg"), SubResource("RoseAiDoSetVariable_rl283")])
+resource_name = "If Random, Variable: Spawn, SetVariable"
+
+[sub_resource type="RoseAiDoSpawn" id="RoseAiDoSpawn_y7idj"]
+npc_id = 486
+distance = 13
+at = "Attacker"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_3u0r1"]
+variable_type = "Own"
+operator = "Add"
+value = 14
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_w26kd"]
+value = 20
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_e5hwc"]
+variable_type = "Own"
+operator = "<="
+value = 8
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_dm0ej"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_w26kd"), SubResource("RoseAiIfVariable_e5hwc")])
+actions = Array[Resource]([SubResource("RoseAiDoSpawn_y7idj"), SubResource("RoseAiDoSetVariable_3u0r1")])
+resource_name = "If Random, Variable: Spawn, SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_w3jbd"]
+variable_type = "Own"
+operator = "Subtract"
+value = 2
+
+[sub_resource type="RoseAiIfDamage" id="RoseAiIfDamage_8a6h6"]
+value = 199
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_m3sf8"]
+conditions = Array[Resource]([SubResource("RoseAiIfDamage_8a6h6")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_w3jbd")])
+resource_name = "If Damage: SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_y7rg1"]
+variable_type = "Own"
+operator = "Subtract"
+value = 1
+
+[sub_resource type="RoseAiIfDamage" id="RoseAiIfDamage_ltbw7"]
+value = 80
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_0qrot"]
+conditions = Array[Resource]([SubResource("RoseAiIfDamage_ltbw7")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_y7rg1")])
+resource_name = "If Damage: SetVariable"
+
+[sub_resource type="RoseAiDoSpawn" id="RoseAiDoSpawn_h7r3o"]
+npc_id = 486
+distance = 10
+
+[sub_resource type="RoseAiDoSpawn" id="RoseAiDoSpawn_rcu5j"]
+npc_id = 476
+distance = 6
+at = "Attacker"
+
+[sub_resource type="RoseAiDoSpawn" id="RoseAiDoSpawn_47bek"]
+npc_id = 476
+distance = 10
+at = "Attacker"
+
+[sub_resource type="RoseAiDoSpawn" id="RoseAiDoSpawn_nplxp"]
+npc_id = 476
+distance = 10
+at = "Attacker"
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_wsbtc"]
+value = 25
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_tdjbu"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_wsbtc")])
+actions = Array[Resource]([SubResource("RoseAiDoSpawn_h7r3o"), SubResource("RoseAiDoSpawn_rcu5j"), SubResource("RoseAiDoSpawn_47bek"), SubResource("RoseAiDoSpawn_nplxp")])
+resource_name = "If Random: Spawn, Spawn, Spawn, Spawn"
+
+[sub_resource type="RoseAiDoSpawn" id="RoseAiDoSpawn_2nlfq"]
+npc_id = 476
+distance = 6
+at = "Attacker"
+
+[sub_resource type="RoseAiDoSpawn" id="RoseAiDoSpawn_m8a7p"]
+npc_id = 476
+distance = 10
+at = "Attacker"
+
+[sub_resource type="RoseAiDoSpawn" id="RoseAiDoSpawn_4drk3"]
+npc_id = 486
+distance = 10
+at = "Attacker"
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_f6lq4"]
+value = 10
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_npray"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_f6lq4")])
+actions = Array[Resource]([SubResource("RoseAiDoSpawn_2nlfq"), SubResource("RoseAiDoSpawn_m8a7p"), SubResource("RoseAiDoSpawn_4drk3")])
+resource_name = "If Random: Spawn, Spawn, Spawn"
+
+[sub_resource type="RoseAiDoKillSelf" id="RoseAiDoKillSelf_m1yt1"]
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_5un7i"]
+value = 30
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_tubl5"]
+distance = 2000
+allied = true
+from_level_diff = 0
+to_level_diff = 0
+count_operator = ">="
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_6i6a6"]
+distance = 2500
+from_level_diff = -50
+to_level_diff = 50
+count_operator = "<="
+count = 0
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_cwnb7"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_5un7i"), SubResource("RoseAiIfFindCharacter_tubl5"), SubResource("RoseAiIfFindCharacter_6i6a6")])
+actions = Array[Resource]([SubResource("RoseAiDoKillSelf_m1yt1")])
+resource_name = "If Random, FindCharacter, FindCharacter: KillSelf"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_qu08d"]
+variable_type = "Own"
+operator = "Subtract"
+value = 1
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_s5roo"]
+value = 20
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_jlmci"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_s5roo")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_qu08d")])
+resource_name = "If Random: SetVariable"
+
+[resource]
+id = 186
+name = "ge_sealstone6"
+idle_interval = 10
+new_target_chance = 10
+on_idle = Array[Resource]([SubResource("RoseAiEvent_cwnb7"), SubResource("RoseAiEvent_jlmci")])
+on_attack = Array[Resource]([SubResource("RoseAiEvent_cf764")])
+on_damaged = Array[Resource]([SubResource("RoseAiEvent_t74ie"), SubResource("RoseAiEvent_f5kh8"), SubResource("RoseAiEvent_gaxcp"), SubResource("RoseAiEvent_1uao2"), SubResource("RoseAiEvent_odhs4"), SubResource("RoseAiEvent_dm0ej"), SubResource("RoseAiEvent_m3sf8"), SubResource("RoseAiEvent_0qrot")])
+on_dead = Array[Resource]([SubResource("RoseAiEvent_tdjbu"), SubResource("RoseAiEvent_npray")])

@@ -3,6 +3,7 @@
 [ext_resource type="RoseDropTable" uid="uid://ckm2o7ocdpjgc" path="res://data/drop_tables/310-junon-s-goblin-king.tres" id="1_ak75j"]
 [ext_resource type="RoseSound" uid="uid://c6ggq6ku22i7f" path="res://data/sounds/other/10448-sound-10448.tres" id="2_9mxdy"]
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="3_1nq6d"]
+[ext_resource type="RoseAi" uid="uid://cke4yu6kkvthh" path="res://data/ai/78-junon_goblin.tres" id="ai_78"]
 
 [resource]
 id = 410
@@ -20,7 +21,7 @@ attack_speed = 120
 attack_range = 300
 walk_speed = 300
 run_speed = 720
-ai_file_index = 78
+ai = ExtResource("ai_78")
 death_quest_trigger_name = "1980-69"
 npc_quest_type = 1
 npc_type_index = 10

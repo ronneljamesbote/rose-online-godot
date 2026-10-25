@@ -1,6 +1,7 @@
 [gd_resource type="RoseNpc" format=3 uid="uid://1o6t55pot3u"]
 
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="1_3m1dl"]
+[ext_resource type="RoseAi" uid="uid://b04wmilnm238c" path="res://data/ai/220-npc_1090.tres" id="ai_220"]
 
 [resource]
 id = 1090
@@ -15,7 +16,7 @@ resistance = 100
 avoid = 100
 attack_speed = 100
 attack_range = 200
-ai_file_index = 220
+ai = ExtResource("ai_220")
 npc_type_index = 999
 model = "res://assets/rose/3ddata/npc/list_npc/1090.tscn"
 die_effect = ExtResource("1_3m1dl")

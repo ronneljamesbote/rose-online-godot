@@ -1,0 +1,35 @@
+[gd_resource type="RoseAi" format=3 uid="uid://b0fd23dpvqear"]
+
+[sub_resource type="RoseAiDoSay" id="RoseAiDoSay_r2ccm"]
+text = "It might be a good idea to learn the basics before experiencing things on your own. Please come and learn the basic information from me."
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_62h32"]
+value = 30
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_2syni"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_62h32")])
+actions = Array[Resource]([SubResource("RoseAiDoSay_r2ccm")])
+resource_name = "If Random: Say"
+
+[sub_resource type="RoseAiDoSay" id="RoseAiDoSay_4x614"]
+text = "I am here to give you important information on fundamental skills and basic knowledge for adventuring. Please feel free to talk to me."
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_ahjpc"]
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_xsnpp"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_ahjpc")])
+actions = Array[Resource]([SubResource("RoseAiDoSay_4x614")])
+resource_name = "If Random: Say"
+
+[sub_resource type="RoseAiDoSay" id="RoseAiDoSay_m5uqm"]
+text = "Faction War will begin in a few minutes."
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_nmqxo"]
+actions = Array[Resource]([SubResource("RoseAiDoSay_m5uqm")])
+resource_name = "Always: Say"
+
+[resource]
+id = 202
+name = "npc_1031"
+idle_interval = 300
+on_idle = Array[Resource]([SubResource("RoseAiEvent_2syni"), SubResource("RoseAiEvent_xsnpp"), SubResource("RoseAiEvent_nmqxo")])

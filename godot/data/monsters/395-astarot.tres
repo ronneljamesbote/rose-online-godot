@@ -5,6 +5,7 @@
 [ext_resource type="RoseSound" uid="uid://j4oi4ekc5um1" path="res://data/sounds/mob/322-mob36-d.tres" id="3_bnbm5"]
 [ext_resource type="RoseAttackEffect" uid="uid://c5ekiv8d08ve8" path="res://data/attack_effects/454-vulcan.tres" id="4_z728g"]
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="5_e11ql"]
+[ext_resource type="RoseAi" uid="uid://qhfw3ovgrxhh" path="res://data/ai/270-clan_boss6.tres" id="ai_270"]
 
 [resource]
 id = 395
@@ -23,7 +24,7 @@ attack_speed = 110
 attack_range = 250
 walk_speed = 300
 run_speed = 710
-ai_file_index = 270
+ai = ExtResource("ai_270")
 npc_type_index = 10
 model = "res://assets/rose/3ddata/npc/list_npc/395.tscn"
 right_hand_part_index = 1055

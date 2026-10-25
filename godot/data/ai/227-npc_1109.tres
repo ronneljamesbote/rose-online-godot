@@ -1,0 +1,240 @@
+[gd_resource type="RoseAi" format=3 uid="uid://dg0olktlmj1gp"]
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_kewc7"]
+variable = 3
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_0s6m2"]
+variable = 7
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseAiIfZoneTime" id="RoseAiIfZoneTime_1yfly"]
+from = 1
+to = 2
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_2boo4"]
+npc_id = 1109
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_ik4jr"]
+variable = 1
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_iuwso"]
+conditions = Array[Resource]([SubResource("RoseAiIfZoneTime_1yfly"), SubResource("RoseAiIfSelectNpc_2boo4"), SubResource("RoseAiIfVariable_ik4jr")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_kewc7"), SubResource("RoseAiDoSetVariable_0s6m2")])
+resource_name = "If ZoneTime, SelectNpc, Variable: SetVariable, SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_mp06f"]
+variable = 1
+value = 10
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_rp552"]
+variable = 3
+
+[sub_resource type="RoseAiIfZoneTime" id="RoseAiIfZoneTime_kklqk"]
+from = 1
+to = 10
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_rjb04"]
+npc_id = 1109
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_5umqb"]
+variable = 3
+operator = ">="
+value = 4
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_5l4ai"]
+conditions = Array[Resource]([SubResource("RoseAiIfZoneTime_kklqk"), SubResource("RoseAiIfSelectNpc_rjb04"), SubResource("RoseAiIfVariable_5umqb")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_mp06f"), SubResource("RoseAiDoSetVariable_rp552")])
+resource_name = "If ZoneTime, SelectNpc, Variable: SetVariable, SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_d0t5k"]
+variable = 1
+value = 20
+
+[sub_resource type="RoseAiIfZoneTime" id="RoseAiIfZoneTime_y4dj4"]
+from = 38
+to = 40
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_lykay"]
+npc_id = 1109
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_tjcbb"]
+variable = 1
+value = 11
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_p3kbh"]
+conditions = Array[Resource]([SubResource("RoseAiIfZoneTime_y4dj4"), SubResource("RoseAiIfSelectNpc_lykay"), SubResource("RoseAiIfVariable_tjcbb")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_d0t5k")])
+resource_name = "If ZoneTime, SelectNpc, Variable: SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_byol8"]
+value = 1
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_au8go"]
+variable = 1
+value = 11
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_dyojl"]
+text = "Is there a member of the Junon Order who is willing to deliver our new doctrine to Kay? If so, please come and talk to me."
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_kjfre"]
+npc_id = 1109
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_27urj"]
+variable = 1
+value = 10
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_hqsho"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_kjfre"), SubResource("RoseAiIfVariable_27urj")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_byol8"), SubResource("RoseAiDoSetVariable_au8go"), SubResource("RoseAiDoMessage_dyojl")])
+resource_name = "If SelectNpc, Variable: SetVariable, SetVariable, Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_gq5tf"]
+value = 3
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_r76oh"]
+variable = 1
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_6ubl0"]
+variable = 2
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_5lmof"]
+npc_id = 1109
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_ceug4"]
+variable = 1
+value = 20
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_db0sf"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_5lmof"), SubResource("RoseAiIfVariable_ceug4")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_gq5tf"), SubResource("RoseAiDoSetVariable_r76oh"), SubResource("RoseAiDoSetVariable_6ubl0")])
+resource_name = "If SelectNpc, Variable: SetVariable, SetVariable, SetVariable"
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_kqnp7"]
+text = "Is there a member of the Junon Order who is willing to volunteer to help build a new sanctuary? If so, please come and talk to me."
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_fbyfx"]
+value = 20
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_t3si4"]
+npc_id = 1109
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_xsj7n"]
+value = 1
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_25vvu"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_fbyfx"), SubResource("RoseAiIfSelectNpc_t3si4"), SubResource("RoseAiIfVariable_xsj7n")])
+actions = Array[Resource]([SubResource("RoseAiDoMessage_kqnp7")])
+resource_name = "If Random, SelectNpc, Variable: Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_bhpf2"]
+variable = 1
+value = 50
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_8yevm"]
+variable = 7
+
+[sub_resource type="RoseAiIfZoneTime" id="RoseAiIfZoneTime_ik24i"]
+from = 81
+to = 90
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_ywj76"]
+npc_id = 1109
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_f5es5"]
+variable = 7
+operator = ">="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_f0nus"]
+conditions = Array[Resource]([SubResource("RoseAiIfZoneTime_ik24i"), SubResource("RoseAiIfSelectNpc_ywj76"), SubResource("RoseAiIfVariable_f5es5")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_bhpf2"), SubResource("RoseAiDoSetVariable_8yevm")])
+resource_name = "If ZoneTime, SelectNpc, Variable: SetVariable, SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_8krcu"]
+variable = 1
+value = 60
+
+[sub_resource type="RoseAiIfZoneTime" id="RoseAiIfZoneTime_vhifn"]
+from = 118
+to = 120
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_3qqyg"]
+npc_id = 1109
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_h7ll7"]
+variable = 1
+value = 51
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_b2j3w"]
+conditions = Array[Resource]([SubResource("RoseAiIfZoneTime_vhifn"), SubResource("RoseAiIfSelectNpc_3qqyg"), SubResource("RoseAiIfVariable_h7ll7")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_8krcu")])
+resource_name = "If ZoneTime, SelectNpc, Variable: SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_vuomx"]
+value = 7
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_bofvk"]
+variable = 1
+value = 51
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_b8rtb"]
+text = "Is there a member of the Junon Order who is willing to volunteer to help build a new sanctuary? If so, please come and talk to me."
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_fnngd"]
+npc_id = 1109
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_gieaw"]
+variable = 1
+value = 50
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_v3kei"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_fnngd"), SubResource("RoseAiIfVariable_gieaw")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_vuomx"), SubResource("RoseAiDoSetVariable_bofvk"), SubResource("RoseAiDoMessage_b8rtb")])
+resource_name = "If SelectNpc, Variable: SetVariable, SetVariable, Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_foyck"]
+value = 9
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_aud46"]
+variable = 1
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_2kknw"]
+variable = 6
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_w6yyh"]
+npc_id = 1109
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_r2y2r"]
+variable = 1
+value = 60
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_fi0ni"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_w6yyh"), SubResource("RoseAiIfVariable_r2y2r")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_foyck"), SubResource("RoseAiDoSetVariable_aud46"), SubResource("RoseAiDoSetVariable_2kknw")])
+resource_name = "If SelectNpc, Variable: SetVariable, SetVariable, SetVariable"
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_xfw7s"]
+text = "I am looking for a Ferrell Guildsman who is willing to go on a business trip to the Breezy Hills. If so, talk to me."
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_2k3wg"]
+value = 20
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_ufcim"]
+npc_id = 1109
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_u036g"]
+value = 7
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_4dhn3"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_2k3wg"), SubResource("RoseAiIfSelectNpc_ufcim"), SubResource("RoseAiIfVariable_u036g")])
+actions = Array[Resource]([SubResource("RoseAiDoMessage_xfw7s")])
+resource_name = "If Random, SelectNpc, Variable: Message"
+
+[resource]
+id = 227
+name = "npc_1109"
+idle_interval = 15
+on_idle = Array[Resource]([SubResource("RoseAiEvent_iuwso"), SubResource("RoseAiEvent_5l4ai"), SubResource("RoseAiEvent_p3kbh"), SubResource("RoseAiEvent_hqsho"), SubResource("RoseAiEvent_db0sf"), SubResource("RoseAiEvent_25vvu"), SubResource("RoseAiEvent_f0nus"), SubResource("RoseAiEvent_b2j3w"), SubResource("RoseAiEvent_v3kei"), SubResource("RoseAiEvent_fi0ni"), SubResource("RoseAiEvent_4dhn3")])

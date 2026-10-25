@@ -1,0 +1,25 @@
+[gd_resource type="RoseAi" format=3 uid="uid://c1p2dfnvvxlo1"]
+
+[ext_resource type="RoseZoneSettings" uid="uid://dudo2k2lp8q04" path="res://data/zones/6-crusader-training-camp.tres" id="1_xqeqc"]
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_xjidr"]
+npc_id = 1086
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_jstat"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_xjidr")])
+resource_name = "If SelectNpc: -"
+
+[sub_resource type="RoseAiDoSetPvp" id="RoseAiDoSetPvp_wo08v"]
+zone = ExtResource("1_xqeqc")
+on = true
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_0t004"]
+actions = Array[Resource]([SubResource("RoseAiDoSetPvp_wo08v")])
+resource_name = "Always: SetPvp"
+
+[resource]
+id = 215
+name = "npc_1084"
+idle_interval = 10
+on_created = Array[Resource]([SubResource("RoseAiEvent_jstat")])
+on_idle = Array[Resource]([SubResource("RoseAiEvent_0t004")])

@@ -3,6 +3,7 @@
 [ext_resource type="RoseDropTable" uid="uid://bv48q7mxmadxf" path="res://data/drop_tables/376-dreadnaught.tres" id="1_tajs6"]
 [ext_resource type="RoseAttackEffect" uid="uid://c5ekiv8d08ve8" path="res://data/attack_effects/454-vulcan.tres" id="2_4urcs"]
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="3_btyl0"]
+[ext_resource type="RoseAi" uid="uid://bkdymd61ytt1h" path="res://data/ai/123-da_wolf2.tres" id="ai_123"]
 
 [resource]
 id = 375
@@ -21,7 +22,7 @@ attack_speed = 105
 attack_range = 230
 walk_speed = 260
 run_speed = 630
-ai_file_index = 123
+ai = ExtResource("ai_123")
 npc_type_index = 4
 model = "res://assets/rose/3ddata/npc/list_npc/375.tscn"
 hit_sound_material_type = 2

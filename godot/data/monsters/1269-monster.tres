@@ -1,6 +1,7 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://c0scmxp72lbhx"]
 
 [ext_resource type="RoseDropTable" uid="uid://nfwrh16i641l" path="res://data/drop_tables/72-magic-scholar-ivanov-lunar-tower-girl-kiroro-rak.tres" id="1_w037l"]
+[ext_resource type="RoseAi" uid="uid://b0hhpswiq4csp" path="res://data/ai/236-npc_1191.tres" id="ai_236"]
 
 [resource]
 id = 1269
@@ -13,7 +14,7 @@ resistance = 100
 avoid = 100
 attack_speed = 100
 attack_range = 200
-ai_file_index = 236
+ai = ExtResource("ai_236")
 npc_type_index = 999
 drop_table = ExtResource("1_w037l")
 summon_monster_type = 44

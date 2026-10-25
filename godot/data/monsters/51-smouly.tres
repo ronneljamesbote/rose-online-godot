@@ -3,6 +3,7 @@
 [ext_resource type="RoseDropTable" uid="uid://yilkcfbidvs5" path="res://data/drop_tables/121-smouly.tres" id="1_ypk51"]
 [ext_resource type="RoseSound" uid="uid://b447v3sgafwq3" path="res://data/sounds/mob/198-mob05-d.tres" id="2_ly26l"]
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="3_qmzo5"]
+[ext_resource type="RoseAi" uid="uid://b1irv4swojgay" path="res://data/ai/26-rd_smg.tres" id="ai_26"]
 
 [resource]
 id = 51
@@ -21,7 +22,7 @@ attack_range = 1200
 is_magic_damage = true
 walk_speed = 220
 run_speed = 314
-ai_file_index = 26
+ai = ExtResource("ai_26")
 death_quest_trigger_name = "3003-31"
 npc_type_index = 1
 model = "res://assets/rose/3ddata/npc/list_npc/51.tscn"
