@@ -1,0 +1,202 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://b0qeigauxk2ig"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://cbbxc1ng27dii" path="res://data/quest_triggers/tutorial/gotoJunon.tres" id="1_2sa3h"]
+[ext_resource type="RoseQuestTrigger" uid="uid://chg4ph82kqfcm" path="res://data/quest_triggers/tutorial/travelmoney01.tres" id="2_vw5i2"]
+[ext_resource type="RoseQuestTrigger" uid="uid://b47poky8nyxx6" path="res://data/quest_triggers/tutorial/gotoEldeon-0.tres" id="3_x7524"]
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_vkg51"]
+switch = 3
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_hwic4"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_vkg51")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_i4ynh"]
+text = "Dondong kyahookyahoo clavaopsedori."
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_hwic4")])
+resource_name = "NPC: Dondong kyahookyahoo clavaopsedori."
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_5832c"]
+switch = 3
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_dldnu"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_5832c")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mjpxi"]
+text = "Greetings, I'm a guide that can serve your interplanetary travel needs. Shall we depart?"
+next_menu = 4
+show_if = Array[Resource]([SubResource("RoseDialogCase_dldnu")])
+resource_name = "NPC: Greetings, I'm a guide that can serve your inter…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_r78te"]
+lines = Array[Resource]([SubResource("RoseDialogLine_i4ynh"), SubResource("RoseDialogLine_mjpxi")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ql78a"]
+kind = "Answer"
+text = "What'd you say?"
+next_menu = 2
+resource_name = "You: What'd you say?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_yao1c"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ql78a")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_m54li"]
+text = "Kuruhupi dakunisdo chai ranaranirano."
+next_menu = 3
+resource_name = "NPC: Kuruhupi dakunisdo chai ranaranirano."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_c0fgl"]
+lines = Array[Resource]([SubResource("RoseDialogLine_m54li")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c5nof"]
+kind = "Answer"
+text = "(It… It sounds like total gibberish!)"
+resource_name = "You: (It… It sounds like total gibberish!)"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_sb8c7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c5nof")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1amxm"]
+kind = "Answer"
+text = "Yes, let's go to Junon."
+next_menu = 5
+resource_name = "You: Yes, let's go to Junon."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_no6dw"]
+kind = "Answer"
+text = "Yes, I'll go to Eldeon right now."
+next_menu = 7
+resource_name = "You: Yes, I'll go to Eldeon right now."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_tf75r"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1amxm"), SubResource("RoseDialogLine_no6dw")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ekylg"]
+text = "The usual transportation fee to Junon is 30,000 Zulie. However, since we're having a special price event, we are only charging 5,000 Zulie at this time. Are you ready to go?"
+next_menu = 6
+resource_name = "NPC: The usual transportation fee to Junon is 30,000 …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bqyhd"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ekylg")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ynyr0"]
+step = ExtResource("1_2sa3h")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_m0h0s"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_ynyr0")])
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_3vm74"]
+step = ExtResource("2_vw5i2")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_t3435"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_3vm74")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_adyue"]
+kind = "Answer"
+text = "Yes, let's depart."
+show_if = Array[Resource]([SubResource("RoseDialogCase_t3435")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_m0h0s")])
+resource_name = "You: Yes, let's depart."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_tkvbk"]
+step = ExtResource("2_vw5i2")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_xx7y5"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_tkvbk")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cmodd"]
+kind = "Answer"
+text = "I don't have enough Zulie. I'll come back again later."
+show_if = Array[Resource]([SubResource("RoseDialogCase_xx7y5")])
+resource_name = "You: I don't have enough Zulie. I'll come back again …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vsd08"]
+lines = Array[Resource]([SubResource("RoseDialogLine_adyue"), SubResource("RoseDialogLine_cmodd")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_7or3v"]
+value = 90
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5vond"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_7or3v")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8a6dj"]
+text = "A ticket to Eldeon is 13,000 Zulie. Would you like to go?"
+next_menu = 8
+show_if = Array[Resource]([SubResource("RoseDialogCase_5vond")])
+resource_name = "NPC: A ticket to Eldeon is 13,000 Zulie. Would you li…"
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_x6oip"]
+operator = "<"
+value = 90
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_nvtd5"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_x6oip")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lx63k"]
+text = "Unfortunately, you're not ready to travel to Eldeon at this time. Please come back after your character level is above 90."
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_nvtd5")])
+resource_name = "NPC: Unfortunately, you're not ready to travel to Eld…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_f4l64"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8a6dj"), SubResource("RoseDialogLine_lx63k")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_k52cb"]
+step = ExtResource("3_x7524")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_eicvs"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_k52cb")])
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_l86s3"]
+step = ExtResource("3_x7524")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2rsg0"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_l86s3")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4tk8a"]
+kind = "Answer"
+text = "Sure, I'll go right now."
+show_if = Array[Resource]([SubResource("RoseDialogCase_2rsg0")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_eicvs")])
+resource_name = "You: Sure, I'll go right now."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_5rh71"]
+step = ExtResource("3_x7524")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_6rliw"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_5rh71")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5htdk"]
+kind = "Answer"
+text = "Well, I don’t have enough Zulie. I'll come back again later."
+show_if = Array[Resource]([SubResource("RoseDialogCase_6rliw")])
+resource_name = "You: Well, I don’t have enough Zulie. I'll come back …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_od47t"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4tk8a"), SubResource("RoseDialogLine_5htdk")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ce5s4"]
+kind = "Answer"
+text = "Alright. I got it."
+resource_name = "You: Alright. I got it."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4vsxv"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ce5s4")])
+resource_name = "Menu 9"
+
+[resource]
+key = "EM51-018.con"
+name = "[Station Guide] Illiya"
+menus = Array[Resource]([SubResource("RoseDialogMenu_r78te"), SubResource("RoseDialogMenu_yao1c"), SubResource("RoseDialogMenu_c0fgl"), SubResource("RoseDialogMenu_sb8c7"), SubResource("RoseDialogMenu_tf75r"), SubResource("RoseDialogMenu_bqyhd"), SubResource("RoseDialogMenu_vsd08"), SubResource("RoseDialogMenu_f4l64"), SubResource("RoseDialogMenu_od47t"), SubResource("RoseDialogMenu_4vsxv")])

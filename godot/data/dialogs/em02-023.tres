@@ -1,0 +1,24 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://d1akjw5otkvtj"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_v7g4m"]
+text = "If you haven't made any good memories, you've failed to live life. So when you're young, make as many good memories as you can."
+next_menu = 1
+resource_name = "NPC: If you haven't made any good memories, you've fa…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_w851t"]
+lines = Array[Resource]([SubResource("RoseDialogLine_v7g4m")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_258tr"]
+kind = "Answer"
+text = "[Come back later]"
+resource_name = "You: [Come back later]"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ouj7h"]
+lines = Array[Resource]([SubResource("RoseDialogLine_258tr")])
+resource_name = "Menu 1"
+
+[resource]
+key = "EM02-023.con"
+name = "주논폴리스-시인-단테"
+menus = Array[Resource]([SubResource("RoseDialogMenu_w851t"), SubResource("RoseDialogMenu_ouj7h")])

@@ -1,0 +1,169 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://mtkr682mardn"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://bitsyp34x3ota" path="res://data/quest_triggers/qp103/107-02.tres" id="1_agcln"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xuut8"]
+text = "Don't look down on me just because of my age. I've got a good understanding of changes in the market."
+next_menu = 1
+resource_name = "NPC: Don't look down on me just because of my age. I'…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_52aor"]
+lines = Array[Resource]([SubResource("RoseDialogLine_xuut8")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_tnnw1"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_t17ym"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_tnnw1")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fbu0h"]
+kind = "Answer"
+text = "Okay, kiddo. Show me the fresh fruits you have today."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_t17ym")])
+resource_name = "You: Okay, kiddo. Show me the fresh fruits you have t…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hpvm0"]
+kind = "Answer"
+text = "Don't you worry. I'm not such a bad person."
+next_menu = 2
+resource_name = "You: Don't you worry. I'm not such a bad person."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qd72x"]
+kind = "Answer"
+text = "I see. I'll come back later."
+resource_name = "You: I see. I'll come back later."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_cnpcx"]
+step = ExtResource("1_agcln")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_51ori"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_cnpcx")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ki03b"]
+kind = "Answer"
+text = "Hurry and take the antidote!"
+next_menu = 8
+show_if = Array[Resource]([SubResource("RoseDialogCase_51ori")])
+resource_name = "You: Hurry and take the antidote!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bs3l6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fbu0h"), SubResource("RoseDialogLine_hpvm0"), SubResource("RoseDialogLine_qd72x"), SubResource("RoseDialogLine_ki03b")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4tti7"]
+text = "You seem like a nice person. Is there something that you need?"
+next_menu = 3
+resource_name = "NPC: You seem like a nice person. Is there something …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qibwe"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4tti7")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xmboy"]
+kind = "Answer"
+text = "I see that people around are eating, but what kinds of things can I eat around here?"
+next_menu = 4
+resource_name = "You: I see that people around are eating, but what ki…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qtuco"]
+kind = "Answer"
+text = "How am I supposed to eat?"
+next_menu = 6
+resource_name = "You: How am I supposed to eat?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_sqywy"]
+kind = "Answer"
+text = "Thanks, kid. But really, there's nothing I need for now."
+next_menu = 0
+resource_name = "You: Thanks, kid. But really, there's nothing I need …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_brx2d"]
+lines = Array[Resource]([SubResource("RoseDialogLine_xmboy"), SubResource("RoseDialogLine_qtuco"), SubResource("RoseDialogLine_sqywy")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_73ysk"]
+text = "People eat various fruits and meats. When you eat those, your HP and Mana will be restored. Well, that's what they say, anyway."
+next_menu = 5
+resource_name = "NPC: People eat various fruits and meats. When you ea…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_055kw"]
+lines = Array[Resource]([SubResource("RoseDialogLine_73ysk")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_m6jfe"]
+kind = "Answer"
+text = "I see. Then I should be eating fruits and meat, huh?"
+next_menu = 2
+resource_name = "You: I see. Then I should be eating fruits and meat, …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2lkle"]
+lines = Array[Resource]([SubResource("RoseDialogLine_m6jfe")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1hvly"]
+text = "Open your Inventory Window and double click on a food icon. Or you can move that icon into your Hot Key Window, so you can eat food quickly and more easily. It's a good idea to register some food to a Hot Key so that you can eat while in battle."
+next_menu = 7
+resource_name = "NPC: Open your Inventory Window and double click on a…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_msuo3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1hvly")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4esyr"]
+kind = "Answer"
+text = "Thanks a lot. Now I won't starve!"
+next_menu = 2
+resource_name = "You: Thanks a lot. Now I won't starve!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_eh7wr"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4esyr")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_v4qbn"]
+text = "Yuck! It's bitter! What is this crap?"
+next_menu = 9
+resource_name = "NPC: Yuck! It's bitter! What is this crap?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_78gjp"]
+lines = Array[Resource]([SubResource("RoseDialogLine_v4qbn")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jtpqm"]
+kind = "Answer"
+text = "Medicine that should cure your illness."
+next_menu = 10
+resource_name = "You: Medicine that should cure your illness."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1ybks"]
+lines = Array[Resource]([SubResource("RoseDialogLine_jtpqm")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bngyb"]
+text = "For real? Thanks. Uh, would you thank Myad for me?"
+next_menu = 11
+resource_name = "NPC: For real? Thanks. Uh, would you thank Myad for m…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ffj2m"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bngyb")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_dhc5e"]
+step = ExtResource("1_agcln")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_sm4y6"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_dhc5e")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_miilt"]
+kind = "Answer"
+text = "Sure, sure."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_sm4y6")])
+resource_name = "You: Sure, sure."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4pkea"]
+lines = Array[Resource]([SubResource("RoseDialogLine_miilt")])
+resource_name = "Menu 11"
+
+[resource]
+key = "EM22-005.con"
+name = "[Little Street Vendor] Pony"
+menus = Array[Resource]([SubResource("RoseDialogMenu_52aor"), SubResource("RoseDialogMenu_bs3l6"), SubResource("RoseDialogMenu_qibwe"), SubResource("RoseDialogMenu_brx2d"), SubResource("RoseDialogMenu_055kw"), SubResource("RoseDialogMenu_2lkle"), SubResource("RoseDialogMenu_msuo3"), SubResource("RoseDialogMenu_eh7wr"), SubResource("RoseDialogMenu_78gjp"), SubResource("RoseDialogMenu_1ybks"), SubResource("RoseDialogMenu_ffj2m"), SubResource("RoseDialogMenu_4pkea")])

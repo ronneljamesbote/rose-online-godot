@@ -1,0 +1,43 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://cl0sfaovbb6do"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_j0hha"]
+text = "Oh, what can I do right now?"
+next_menu = 1
+resource_name = "NPC: Oh, what can I do right now?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_33itq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_j0hha")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7eg7u"]
+kind = "Answer"
+text = "What's going on there?"
+next_menu = 2
+resource_name = "You: What's going on there?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ax1dw"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7eg7u")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_oxj1p"]
+text = "Oh, you are from other town. Well, it's nothing! Don't worry about it."
+next_menu = 3
+resource_name = "NPC: Oh, you are from other town. Well, it's nothing!…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_nfyj5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_oxj1p")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wviej"]
+kind = "Answer"
+text = "Please tell me about it. I wonder what happened."
+resource_name = "You: Please tell me about it. I wonder what happened."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_a4rnv"]
+lines = Array[Resource]([SubResource("RoseDialogLine_wviej")])
+resource_name = "Menu 3"
+
+[resource]
+key = "EM61-011.con"
+name = "[Raknu Warrior] Jaffrey Lloyd"
+menus = Array[Resource]([SubResource("RoseDialogMenu_33itq"), SubResource("RoseDialogMenu_ax1dw"), SubResource("RoseDialogMenu_nfyj5"), SubResource("RoseDialogMenu_a4rnv")])

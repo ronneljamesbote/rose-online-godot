@@ -24,6 +24,7 @@ pub trait RoseFile {
     }
 }
 
+pub mod lua4;
 pub mod types;
 
 mod aip;

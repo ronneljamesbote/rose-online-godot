@@ -1,0 +1,52 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://c4toqbyrneafa"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://c81lg4i73kg76" path="res://data/quest_triggers/qp103/114-01.tres" id="1_dxvgr"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4xy1j"]
+text = "Found a big keyhole."
+next_menu = 1
+resource_name = "NPC: Found a big keyhole."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_81yn6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4xy1j")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_i2ap0"]
+kind = "Answer"
+text = "(Put the Crystal Key in it.)"
+next_menu = 2
+resource_name = "You: (Put the Crystal Key in it.)"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_nd2cq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_i2ap0")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7ppw8"]
+text = "A thunderous rumbling spouts forth from inside as the hourglass slowly sputters back to life."
+next_menu = 3
+resource_name = "NPC: A thunderous rumbling spouts forth from inside a…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6kt5e"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7ppw8")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_66u4q"]
+step = ExtResource("1_dxvgr")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_371x5"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_66u4q")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_w4k3t"]
+kind = "Answer"
+text = "*Phew.* What a relief. Now I should go back to {fc=1}Lena{/fc}."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_371x5")])
+resource_name = "You: *Phew.* What a relief. Now I should go back to {…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ldip3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_w4k3t")])
+resource_name = "Menu 3"
+
+[resource]
+key = "Object003.con"
+name = "모래시계 이벤트"
+menus = Array[Resource]([SubResource("RoseDialogMenu_81yn6"), SubResource("RoseDialogMenu_nd2cq"), SubResource("RoseDialogMenu_6kt5e"), SubResource("RoseDialogMenu_ldip3")])

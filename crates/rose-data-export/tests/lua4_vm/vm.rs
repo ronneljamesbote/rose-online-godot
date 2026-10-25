@@ -1,7 +1,7 @@
 use std::{collections::HashMap, fmt::Write};
 use thiserror::Error;
 
-use crate::lua4::{Lua4Function, Lua4Instruction, Lua4Value};
+use super::{Lua4Function, Lua4Instruction, Lua4Value};
 
 #[derive(Debug, Clone, Error)]
 pub enum Lua4VMError {
@@ -26,9 +26,10 @@ pub trait Lua4VMRustClosures {
     ) -> Result<Vec<Lua4Value>, Lua4VMError>;
 }
 
-#[derive(Default)]
+#[derive(Clone, Default)]
 pub struct Lua4VM {
     pub globals: HashMap<String, Lua4Value>,
+    pub strict: bool,
 }
 
 impl Lua4VM {
@@ -156,10 +157,13 @@ impl Lua4VM {
                 }
                 Lua4Instruction::OP_GETGLOBAL(kstr) => {
                     let name = &function.constant_strings[kstr as usize];
-                    let value = self
-                        .get_global(name)
-                        .ok_or_else(|| Lua4VMError::GlobalNotFound(name.into()))?
-                        .clone();
+                    // Like Lua, an unset global is nil (`strict`: an error, as the game's VM had it).
+                    let strict = self.strict;
+                    let value = match self.globals.get(name.as_str()) {
+                        Some(value) => value.clone(),
+                        None if strict => return Err(Lua4VMError::GlobalNotFound(name.into()).into()),
+                        None => Lua4Value::Nil,
+                    };
                     stack.push(value);
                 }
                 // TODO: Lua4Instruction::OP_GETTABLE

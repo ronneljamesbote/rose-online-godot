@@ -1,0 +1,24 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://cgfswj73r6qqt"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hfv3p"]
+text = "Don't brush me off like some kid. Someday, I'm gonna be the greatest merchant in the world!"
+next_menu = 1
+resource_name = "NPC: Don't brush me off like some kid. Someday, I'm g…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wk284"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hfv3p")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cw7lw"]
+kind = "Answer"
+text = "[Come back later]"
+resource_name = "You: [Come back later]"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_etjo2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_cw7lw")])
+resource_name = "Menu 1"
+
+[resource]
+key = "EM02-021.con"
+name = "주논폴리스-상점꼬마-톰"
+menus = Array[Resource]([SubResource("RoseDialogMenu_wk284"), SubResource("RoseDialogMenu_etjo2")])

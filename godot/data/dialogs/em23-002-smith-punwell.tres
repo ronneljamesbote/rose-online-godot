@@ -1,0 +1,797 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://dw560u2vnthxu"]
+
+[ext_resource type="RoseQuest" uid="uid://c3p24q86n7kaw" path="res://data/quests/5001-wine-delivery-part-time-job.tres" id="1_lk1gw"]
+[ext_resource type="RoseQuest" uid="uid://bm61biuxm0rsk" path="res://data/quests/139-punwell-in-windmill-village.tres" id="2_tyrxy"]
+[ext_resource type="RoseQuest" uid="uid://dbpv3hsujjqep" path="res://data/quests/140-the-zeppastone-wind-gem.tres" id="3_ihg0s"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dcsaik4pgcdgp" path="res://data/quest_triggers/qs11-001/5001-04.tres" id="4_ff3vo"]
+[ext_resource type="RoseQuest" uid="uid://cinu8uuf0ga1e" path="res://data/quests/1981-zeppastone-wind-gem.tres" id="5_dro4m"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cy87lnlrhe7en" path="res://data/quest_triggers/qs11-001/5001-03.tres" id="6_iwm8f"]
+[ext_resource type="RoseItemQuest" uid="uid://3k1ronqfm1fe" path="res://data/items/quest/509-zeppastone-wind-gem.tres" id="7_l71nk"]
+[ext_resource type="RoseQuest" uid="uid://6nny813ghvym" path="res://data/quests/1006-an-eye-for-the-marketplace.tres" id="8_kctxx"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dnv6rtbmio4j3" path="res://data/quest_triggers/qp103/140-02.tres" id="9_ekjgi"]
+[ext_resource type="RoseQuestTrigger" uid="uid://jsmd15or7gfr" path="res://data/quest_triggers/qp103/139-02.tres" id="10_tb4ok"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bey3cl1rmyds8" path="res://data/quest_triggers/qj411-01/1006-01.tres" id="11_s8tb8"]
+[ext_resource type="RoseQuestTrigger" uid="uid://ejg6rxm0rcx8" path="res://data/quest_triggers/qs11-001/5001-02.tres" id="12_j2c1q"]
+[ext_resource type="RoseQuestTrigger" uid="uid://6ecos35ixror" path="res://data/quest_triggers/qp103/139-01.tres" id="13_hx0v2"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dnsndw4ng3882" path="res://data/quest_triggers/qp102/1981-02.tres" id="14_3l8n2"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dhuitj71b7613" path="res://data/quest_triggers/qp103/140-01.tres" id="15_lcugb"]
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_2gb35"]
+quest = ExtResource("1_lk1gw")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_dji55"]
+quest = ExtResource("2_tyrxy")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_6jdc6"]
+quest = ExtResource("3_ihg0s")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_twlhb"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_2gb35"), SubResource("RoseDialogIfQuest_dji55"), SubResource("RoseDialogIfQuest_6jdc6")])
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_baydj"]
+step = ExtResource("4_ff3vo")
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_d5tle"]
+quest = ExtResource("2_tyrxy")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_iysl6"]
+quest = ExtResource("3_ihg0s")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_njqip"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_baydj"), SubResource("RoseDialogIfQuest_d5tle"), SubResource("RoseDialogIfQuest_iysl6")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_k8g5a"]
+quest = ExtResource("5_dro4m")
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_3o02i"]
+quest = ExtResource("2_tyrxy")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_p8415"]
+quest = ExtResource("3_ihg0s")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_or8wa"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_k8g5a"), SubResource("RoseDialogIfQuest_3o02i"), SubResource("RoseDialogIfQuest_p8415")])
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_bpxni"]
+switch = 128
+value = 1
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_fjq14"]
+quest = ExtResource("2_tyrxy")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_e42i4"]
+quest = ExtResource("3_ihg0s")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_u1fmj"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_bpxni"), SubResource("RoseDialogIfQuest_fjq14"), SubResource("RoseDialogIfQuest_e42i4")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7haxk"]
+text = "This place used to be a big town. Everyone has left already, but I'll stay here until I die."
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_twlhb"), SubResource("RoseDialogCase_njqip"), SubResource("RoseDialogCase_or8wa"), SubResource("RoseDialogCase_u1fmj")])
+resource_name = "NPC: This place used to be a big town. Everyone has l…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_lnal8"]
+step = ExtResource("6_iwm8f")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_wxq3b"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_lnal8")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7e7ht"]
+text = "I was wondering why the wine hasn't come yet. But now I see it was because you were too lazy to deliver it. Sorry, but I already bought a bottle of wine from another shop."
+next_menu = 12
+show_if = Array[Resource]([SubResource("RoseDialogCase_wxq3b")])
+resource_name = "NPC: I was wondering why the wine hasn't come yet. Bu…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ln4ew"]
+quest = ExtResource("2_tyrxy")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_eidw6"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_ln4ew")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tevxu"]
+text = "Everyone says that people began to desert the Windmill Village since the Mana Engine was invented, but I disagree."
+next_menu = 13
+show_if = Array[Resource]([SubResource("RoseDialogCase_eidw6")])
+resource_name = "NPC: Everyone says that people began to desert the Wi…"
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_gvbb6"]
+quest = ExtResource("5_dro4m")
+item = ExtResource("7_l71nk")
+operator = "=="
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_wguag"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_gvbb6")])
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_co6pw"]
+quest = ExtResource("3_ihg0s")
+item = ExtResource("7_l71nk")
+operator = "=="
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7ao46"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_co6pw")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rr6d6"]
+text = "So what do you think? With that kind of evidence, it's almost useless. But almost everyone gives up at this point, so don't feel too bad."
+next_menu = 36
+show_if = Array[Resource]([SubResource("RoseDialogCase_wguag"), SubResource("RoseDialogCase_7ao46")])
+resource_name = "NPC: So what do you think? With that kind of evidence…"
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_1w0kq"]
+quest = ExtResource("5_dro4m")
+item = ExtResource("7_l71nk")
+operator = "=="
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_y7mkk"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_1w0kq")])
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_mhgoa"]
+quest = ExtResource("3_ihg0s")
+item = ExtResource("7_l71nk")
+operator = "=="
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_hrcp6"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_mhgoa")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5xj85"]
+text = "If we don't find the Zeppastone Wind Gem, there's no future for the Windmill Village."
+next_menu = 39
+show_if = Array[Resource]([SubResource("RoseDialogCase_y7mkk"), SubResource("RoseDialogCase_hrcp6")])
+resource_name = "NPC: If we don't find the Zeppastone Wind Gem, there'…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7eig3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7haxk"), SubResource("RoseDialogLine_7e7ht"), SubResource("RoseDialogLine_tevxu"), SubResource("RoseDialogLine_rr6d6"), SubResource("RoseDialogLine_5xj85")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bdcqk"]
+kind = "Answer"
+text = "Did you say this town used to be big?"
+next_menu = 2
+resource_name = "You: Did you say this town used to be big?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0j40e"]
+kind = "Answer"
+text = "Yes, but I'm leaving now."
+resource_name = "You: Yes, but I'm leaving now."
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_vr81v"]
+quest = ExtResource("8_kctxx")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5yld0"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_vr81v")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b0asb"]
+kind = "Answer"
+text = "By any chance, would you like to purchase some Cobra Leathers from me?"
+next_menu = 4
+show_if = Array[Resource]([SubResource("RoseDialogCase_5yld0")])
+resource_name = "You: By any chance, would you like to purchase some C…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_i8kec"]
+step = ExtResource("4_ff3vo")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_6a4kk"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_i8kec")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8xhjm"]
+kind = "Answer"
+text = "I brought your wine."
+next_menu = 10
+show_if = Array[Resource]([SubResource("RoseDialogCase_6a4kk")])
+resource_name = "You: I brought your wine."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_rtecx"]
+step = ExtResource("9_ekjgi")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_l4fsc"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_rtecx")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_r8u5s"]
+kind = "Answer"
+text = "Although I still haven't found him, I want to continue investigating the Prince's whereabouts."
+next_menu = 48
+show_if = Array[Resource]([SubResource("RoseDialogCase_l4fsc")])
+resource_name = "You: Although I still haven't found him, I want to co…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_b228i"]
+step = ExtResource("10_tb4ok")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_mfs0r"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_b228i")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_aamnb"]
+kind = "Answer"
+text = "I better start looking for the Zeppastone again."
+next_menu = 50
+show_if = Array[Resource]([SubResource("RoseDialogCase_mfs0r")])
+resource_name = "You: I better start looking for the Zeppastone again."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1i6df"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bdcqk"), SubResource("RoseDialogLine_0j40e"), SubResource("RoseDialogLine_b0asb"), SubResource("RoseDialogLine_8xhjm"), SubResource("RoseDialogLine_r8u5s"), SubResource("RoseDialogLine_aamnb")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_66lif"]
+text = "When people needed windmills to generate energy, a lot of people used to live here. However, since we now have more proficient energy sources, it's no longer necessary to operate the windmills. When windmills became obsolete, the town became deserted."
+next_menu = 3
+resource_name = "NPC: When people needed windmills to generate energy,…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bnswn"]
+lines = Array[Resource]([SubResource("RoseDialogLine_66lif")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xcng3"]
+kind = "Answer"
+text = "I see…"
+next_menu = 0
+resource_name = "You: I see…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_p07id"]
+lines = Array[Resource]([SubResource("RoseDialogLine_xcng3")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3kp16"]
+text = "Oh~ Are you carrying Cobra Leathers with you?"
+next_menu = 5
+resource_name = "NPC: Oh~ Are you carrying Cobra Leathers with you?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_oegmi"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3kp16")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qxl8p"]
+kind = "Answer"
+text = "Yes, I have very good Cobra Leathers."
+next_menu = 6
+resource_name = "You: Yes, I have very good Cobra Leathers."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2i0fi"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qxl8p")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qguvc"]
+text = "Ooh, those are nice. I will pay 50 Zulie for each one. Do we have a deal?"
+next_menu = 7
+resource_name = "NPC: Ooh, those are nice. I will pay 50 Zulie for eac…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_supib"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qguvc")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xe18y"]
+kind = "Answer"
+text = "That's a reasonable price."
+next_menu = 8
+resource_name = "You: That's a reasonable price."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_drahy"]
+kind = "Answer"
+text = "I can't sell these so cheaply!"
+resource_name = "You: I can't sell these so cheaply!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dmh5b"]
+lines = Array[Resource]([SubResource("RoseDialogLine_xe18y"), SubResource("RoseDialogLine_drahy")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_letc3"]
+text = "(Haha, I got a good deal!) You know trading. Thank you."
+next_menu = 9
+resource_name = "NPC: (Haha, I got a good deal!) You know trading. Tha…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_tkdww"]
+lines = Array[Resource]([SubResource("RoseDialogLine_letc3")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_lpay8"]
+step = ExtResource("11_s8tb8")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7210p"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_lpay8")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_w41w0"]
+kind = "Answer"
+text = "No, thank you."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_7210p")])
+resource_name = "You: No, thank you."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_32d45"]
+kind = "Answer"
+text = "You seem suspicious for some reason. Something tells me I better not trade with you."
+resource_name = "You: You seem suspicious for some reason. Something t…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jloph"]
+lines = Array[Resource]([SubResource("RoseDialogLine_w41w0"), SubResource("RoseDialogLine_32d45")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2olud"]
+text = "Ah, Sharlin sent you. Her wine is the best I've ever tasted! Thank you. Oh, and here's your delivery fee."
+next_menu = 11
+resource_name = "NPC: Ah, Sharlin sent you. Her wine is the best I've …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_46lio"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2olud")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_5crud"]
+step = ExtResource("12_j2c1q")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_l5b1v"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_5crud")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_saqqn"]
+kind = "Answer"
+text = "Thank you."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_l5b1v")])
+resource_name = "You: Thank you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8krkb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_saqqn")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_bljs8"]
+step = ExtResource("6_iwm8f")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_fup70"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_bljs8")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_w67s6"]
+kind = "Answer"
+text = "Oh well…"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_fup70")])
+resource_name = "You: Oh well…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_a32s0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_w67s6")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4nc5r"]
+kind = "Answer"
+text = "Now that there's no wind, there's no need for the Windmill Village, right?"
+next_menu = 14
+resource_name = "You: Now that there's no wind, there's no need for th…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nhplr"]
+kind = "Answer"
+text = "What are you thinking?"
+next_menu = 34
+resource_name = "You: What are you thinking?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_v6jfa"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4nc5r"), SubResource("RoseDialogLine_nhplr")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2dq4j"]
+text = "Of course. Even though Mana Engines are much more useful than Windmills these days, the Windmill Village should once again become a bustling area if we can just restore the power of the wind."
+next_menu = 15
+resource_name = "NPC: Of course. Even though Mana Engines are much mor…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jaxl1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2dq4j")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ip1kc"]
+kind = "Answer"
+text = "So you're blaming the weather for this?"
+next_menu = 16
+resource_name = "You: So you're blaming the weather for this?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_g0mvx"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ip1kc")])
+resource_name = "Menu 15"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kkakl"]
+text = "You don't know anything, do you? There's no wind in this village because the Zeppastone is gone!"
+next_menu = 17
+resource_name = "NPC: You don't know anything, do you? There's no wind…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ul8wj"]
+lines = Array[Resource]([SubResource("RoseDialogLine_kkakl")])
+resource_name = "Menu 16"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vw65m"]
+kind = "Answer"
+text = "Zeppastone?"
+next_menu = 18
+resource_name = "You: Zeppastone?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gg8mt"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vw65m")])
+resource_name = "Menu 17"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_o5gs2"]
+text = "Yes, the Windmill Village was once prosperous because of the strong winds in this area. Although this area is geographically ideal for wind, the Zeppastone was the source of the wind's power. But after the Mana Engine was invented, someone stole the Zeppastone and now the air in our village is still and lifeless."
+next_menu = 19
+resource_name = "NPC: Yes, the Windmill Village was once prosperous be…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_k1fg0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_o5gs2")])
+resource_name = "Menu 18"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qnvca"]
+kind = "Answer"
+text = "The Zeppastone could be anywhere on Junon! Any clue as to where I could find it?"
+next_menu = 20
+resource_name = "You: The Zeppastone could be anywhere on Junon! Any c…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1j4fm"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qnvca")])
+resource_name = "Menu 19"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6jgn7"]
+text = "If there were any clues about the Zeppastone's whereabouts, I'd search for it myself. Still, I can tell you about the Zeppastone's special traits."
+next_menu = 21
+resource_name = "NPC: If there were any clues about the Zeppastone's w…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wjlea"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6jgn7")])
+resource_name = "Menu 20"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ctred"]
+kind = "Answer"
+text = "Special traits?"
+next_menu = 22
+resource_name = "You: Special traits?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rci3x"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ctred")])
+resource_name = "Menu 21"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tgdle"]
+text = "Originally, Bardsrin, one of the Seven Knights, left the Zeppastone here. Although it looks like a normal gem, it has the power to summon powerful winds and storms. At first, our village was suffering from the horrible storms brought by the Zeppastone. Everyone feared Bardsrin and thought he was a demon!"
+next_menu = 23
+resource_name = "NPC: Originally, Bardsrin, one of the Seven Knights, …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_q8chb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tgdle")])
+resource_name = "Menu 22"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xe50s"]
+kind = "Answer"
+text = "Hmm, that's interesting."
+next_menu = 24
+resource_name = "You: Hmm, that's interesting."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5sdlu"]
+lines = Array[Resource]([SubResource("RoseDialogLine_xe50s")])
+resource_name = "Menu 23"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kdufr"]
+text = "But one morning after a big storm, the weather suddenly grew very calm. The sky was clear and a gentle breeze was blowing. When the villagers went to check on the Zeppastone, they found that it was gone."
+next_menu = 25
+resource_name = "NPC: But one morning after a big storm, the weather s…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ff8o3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_kdufr")])
+resource_name = "Menu 24"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c7ven"]
+kind = "Answer"
+text = "Wait, I thought this Zeppastone is supposed to be your village's treasure!"
+next_menu = 26
+resource_name = "You: Wait, I thought this Zeppastone is supposed to b…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qe5o2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c7ven")])
+resource_name = "Menu 25"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_o6jix"]
+text = "Listen, I haven't finished! Mairath, the craftsman, found the Zeppastone while sweeping his chimney. That was how we learned that the stone emits the appropriate power when it's kept in a dark, enclosed place. What's also amazing is that it can move of its own accord to find places where it can properly work."
+next_menu = 27
+resource_name = "NPC: Listen, I haven't finished! Mairath, the craftsm…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wlhjf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_o6jix")])
+resource_name = "Menu 26"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hg782"]
+kind = "Answer"
+text = "Amazing. So this Zeppastone sort of has a mind of its own."
+next_menu = 28
+resource_name = "You: Amazing. So this Zeppastone sort of has a mind o…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_k7tr4"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hg782")])
+resource_name = "Menu 27"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_onwgp"]
+text = "Now, since there haven't been any rumors about frightening storms on Junon, the Zeppastone must be in a dark, enclosed place right now."
+next_menu = 29
+resource_name = "NPC: Now, since there haven't been any rumors about f…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gfowr"]
+lines = Array[Resource]([SubResource("RoseDialogLine_onwgp")])
+resource_name = "Menu 28"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_452r7"]
+kind = "Answer"
+text = "So, what happened to the man who stole it?"
+next_menu = 30
+resource_name = "You: So, what happened to the man who stole it?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_nif2e"]
+lines = Array[Resource]([SubResource("RoseDialogLine_452r7")])
+resource_name = "Menu 29"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_eyqup"]
+text = "He was found dead near a waterfall in the Adventurer's Plains. He deserved it, but it's a shame that no one knows where the Zeppastone is."
+next_menu = 31
+resource_name = "NPC: He was found dead near a waterfall in the Advent…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7vdg8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_eyqup")])
+resource_name = "Menu 30"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ys31t"]
+kind = "Answer"
+text = "So that man died in the {fc=2}Adventurer's Plains{/fc} and the Zeppastone should be in an enclosed place in that area. That's good enough for a clue."
+next_menu = 32
+resource_name = "You: So that man died in the {fc=2}Adventurer's Plain…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7o57w"]
+kind = "Answer"
+text = "It's a shame that there are no clues to the Zeppastone's whereabouts. This looks like the end for the Windmill Village."
+resource_name = "You: It's a shame that there are no clues to the Zepp…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_u30tt"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ys31t"), SubResource("RoseDialogLine_7o57w")])
+resource_name = "Menu 31"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_o0yei"]
+text = "So… That's all we know about the Zeppastone Wind Gem?!"
+next_menu = 33
+resource_name = "NPC: So… That's all we know about the Zeppastone Wind…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_a2ql6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_o0yei")])
+resource_name = "Menu 32"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_vc7ur"]
+step = ExtResource("13_hx0v2")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_qdmop"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_vc7ur")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_th8er"]
+kind = "Answer"
+text = "Eh, don't worry and just wait for me. I'll bring it soon."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_qdmop")])
+resource_name = "You: Eh, don't worry and just wait for me. I'll bring…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_kqmb6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_th8er")])
+resource_name = "Menu 33"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ftlum"]
+text = "That's because the Zeppastone which summons the winds is gone."
+next_menu = 35
+resource_name = "NPC: That's because the Zeppastone which summons the …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ric6a"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ftlum")])
+resource_name = "Menu 34"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5rpkt"]
+kind = "Answer"
+text = "Zeppastone?"
+next_menu = 18
+resource_name = "You: Zeppastone?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fepsg"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5rpkt")])
+resource_name = "Menu 35"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nd7ts"]
+kind = "Answer"
+text = "Um, I'm still looking for it."
+resource_name = "You: Um, I'm still looking for it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ohjmj"]
+kind = "Answer"
+text = "Aren't there any other clues."
+next_menu = 37
+resource_name = "You: Aren't there any other clues."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3tqlb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_nd7ts"), SubResource("RoseDialogLine_ohjmj")])
+resource_name = "Menu 36"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3b8so"]
+text = "Hmm, I've already told you everything I know about the Zeppastone Wind Gem."
+next_menu = 38
+resource_name = "NPC: Hmm, I've already told you everything I know abo…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5fuc2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3b8so")])
+resource_name = "Menu 37"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_sl0w4"]
+kind = "Answer"
+text = "Alright, I'll go see if I can find more clues then."
+resource_name = "You: Alright, I'll go see if I can find more clues th…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_iupsb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_sl0w4")])
+resource_name = "Menu 38"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_le8k3"]
+kind = "Answer"
+text = "Don't worry any longer. I've brought the Zeppastone!"
+next_menu = 40
+resource_name = "You: Don't worry any longer. I've brought the Zeppast…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xka4x"]
+lines = Array[Resource]([SubResource("RoseDialogLine_le8k3")])
+resource_name = "Menu 39"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3ifb8"]
+text = "Really! I really thought you'd fail. After all, if the Prince of Akram couldn't do it…"
+next_menu = 41
+resource_name = "NPC: Really! I really thought you'd fail. After all, …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_uqvky"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3ifb8")])
+resource_name = "Menu 40"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lrib1"]
+kind = "Answer"
+text = "The Prince of Akram was searching for the Zeppastone?"
+next_menu = 42
+resource_name = "You: The Prince of Akram was searching for the Zeppas…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_esfsa"]
+lines = Array[Resource]([SubResource("RoseDialogLine_lrib1")])
+resource_name = "Menu 41"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6i71d"]
+text = "That's right. Didn’t you hear that he ran away from home to look for the Zeppastone?"
+next_menu = 43
+resource_name = "NPC: That's right. Didn’t you hear that he ran away f…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_107io"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6i71d")])
+resource_name = "Menu 42"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nkxw3"]
+kind = "Answer"
+text = "This is the first I've heard about this. So what happened?"
+next_menu = 44
+resource_name = "You: This is the first I've heard about this. So what…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_mr3it"]
+lines = Array[Resource]([SubResource("RoseDialogLine_nkxw3")])
+resource_name = "Menu 43"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hqc4y"]
+text = "There's a Soldier in {fc=2}Junon Polis{/fc} named {fc=1}Odelo{/fc} who would know more about it. He searched all over the planet of Junon to find the Prince."
+next_menu = 45
+resource_name = "NPC: There's a Soldier in {fc=2}Junon Polis{/fc} name…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1uwq5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hqc4y")])
+resource_name = "Menu 44"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hknfa"]
+kind = "Answer"
+text = "Well, I guess I better meet this Soldier to find out more."
+next_menu = 46
+resource_name = "You: Well, I guess I better meet this Soldier to find…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_pdk72"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hknfa")])
+resource_name = "Menu 45"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_aas6b"]
+text = "Oh, and please leave the Zeppastone here! For generations, we'll never forget how you saved our village."
+next_menu = 47
+resource_name = "NPC: Oh, and please leave the Zeppastone here! For ge…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lmhwh"]
+lines = Array[Resource]([SubResource("RoseDialogLine_aas6b")])
+resource_name = "Menu 46"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_d08m4"]
+step = ExtResource("14_3l8n2")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_nj3vc"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_d08m4")])
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_kelrr"]
+step = ExtResource("14_3l8n2")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5go7o"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_kelrr")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cubcv"]
+kind = "Answer"
+text = "Oh, it’s nothing. I also hope that the Windmill Village will prosper."
+show_if = Array[Resource]([SubResource("RoseDialogCase_5go7o")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_nj3vc")])
+resource_name = "You: Oh, it’s nothing. I also hope that the Windmill …"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_shbpb"]
+step = ExtResource("15_lcugb")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_6mti0"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_shbpb")])
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_fhhte"]
+step = ExtResource("15_lcugb")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_g5lla"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_fhhte")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6750h"]
+kind = "Answer"
+text = "It’s nothing. Well then, I hope a bright future awaits the Windmill Village."
+show_if = Array[Resource]([SubResource("RoseDialogCase_g5lla")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_6mti0")])
+resource_name = "You: It’s nothing. Well then, I hope a bright future …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_remh8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_cubcv"), SubResource("RoseDialogLine_6750h")])
+resource_name = "Menu 47"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4bats"]
+text = "That's good. That should be an interesting search."
+next_menu = 49
+resource_name = "NPC: That's good. That should be an interesting searc…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_yueat"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4bats")])
+resource_name = "Menu 48"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_lqmvp"]
+step = ExtResource("9_ekjgi")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2viqi"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_lqmvp")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8eqf3"]
+kind = "Answer"
+text = "Right, I understand."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_2viqi")])
+resource_name = "You: Right, I understand."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_j7ufi"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8eqf3")])
+resource_name = "Menu 49"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wpf40"]
+text = "The fortune of our village depends on the Zeppastone Wind Gem. I have faith that you will be able to find it."
+next_menu = 51
+resource_name = "NPC: The fortune of our village depends on the Zeppas…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_abhqj"]
+lines = Array[Resource]([SubResource("RoseDialogLine_wpf40")])
+resource_name = "Menu 50"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_cjdjc"]
+step = ExtResource("10_tb4ok")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_yermv"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_cjdjc")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tm42x"]
+kind = "Answer"
+text = "Right, please don't worry about it."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_yermv")])
+resource_name = "You: Right, please don't worry about it."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ms2ne"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tm42x")])
+resource_name = "Menu 51"
+
+[resource]
+key = "EM23-002.con"
+name = "[Smith] Punwell"
+menus = Array[Resource]([SubResource("RoseDialogMenu_7eig3"), SubResource("RoseDialogMenu_1i6df"), SubResource("RoseDialogMenu_bnswn"), SubResource("RoseDialogMenu_p07id"), SubResource("RoseDialogMenu_oegmi"), SubResource("RoseDialogMenu_2i0fi"), SubResource("RoseDialogMenu_supib"), SubResource("RoseDialogMenu_dmh5b"), SubResource("RoseDialogMenu_tkdww"), SubResource("RoseDialogMenu_jloph"), SubResource("RoseDialogMenu_46lio"), SubResource("RoseDialogMenu_8krkb"), SubResource("RoseDialogMenu_a32s0"), SubResource("RoseDialogMenu_v6jfa"), SubResource("RoseDialogMenu_jaxl1"), SubResource("RoseDialogMenu_g0mvx"), SubResource("RoseDialogMenu_ul8wj"), SubResource("RoseDialogMenu_gg8mt"), SubResource("RoseDialogMenu_k1fg0"), SubResource("RoseDialogMenu_1j4fm"), SubResource("RoseDialogMenu_wjlea"), SubResource("RoseDialogMenu_rci3x"), SubResource("RoseDialogMenu_q8chb"), SubResource("RoseDialogMenu_5sdlu"), SubResource("RoseDialogMenu_ff8o3"), SubResource("RoseDialogMenu_qe5o2"), SubResource("RoseDialogMenu_wlhjf"), SubResource("RoseDialogMenu_k7tr4"), SubResource("RoseDialogMenu_gfowr"), SubResource("RoseDialogMenu_nif2e"), SubResource("RoseDialogMenu_7vdg8"), SubResource("RoseDialogMenu_u30tt"), SubResource("RoseDialogMenu_a2ql6"), SubResource("RoseDialogMenu_kqmb6"), SubResource("RoseDialogMenu_ric6a"), SubResource("RoseDialogMenu_fepsg"), SubResource("RoseDialogMenu_3tqlb"), SubResource("RoseDialogMenu_5fuc2"), SubResource("RoseDialogMenu_iupsb"), SubResource("RoseDialogMenu_xka4x"), SubResource("RoseDialogMenu_uqvky"), SubResource("RoseDialogMenu_esfsa"), SubResource("RoseDialogMenu_107io"), SubResource("RoseDialogMenu_mr3it"), SubResource("RoseDialogMenu_1uwq5"), SubResource("RoseDialogMenu_pdk72"), SubResource("RoseDialogMenu_lmhwh"), SubResource("RoseDialogMenu_remh8"), SubResource("RoseDialogMenu_yueat"), SubResource("RoseDialogMenu_j7ufi"), SubResource("RoseDialogMenu_abhqj"), SubResource("RoseDialogMenu_ms2ne")])

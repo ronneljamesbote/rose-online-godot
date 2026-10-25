@@ -1,0 +1,217 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://bqjlirctrwfct"]
+
+[ext_resource type="RoseQuest" uid="uid://c1nrqa0j7qipg" path="res://data/quests/803-secretly-learning-to-drive.tres" id="1_fnjva"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bwxdo1y37bv0w" path="res://data/quest_triggers/tutorial/803-01.tres" id="2_jslar"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_r537w"]
+text = "Do not complain that the royal palace of the Akram Kingdom is far from here. Here, I can take care of some of the business you may need to do."
+next_menu = 1
+resource_name = "NPC: Do not complain that the royal palace of the Akr…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_1ebcr"]
+quest = ExtResource("1_fnjva")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_cw2vw"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_1ebcr")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_r2wva"]
+text = "Welcome. Just by glancing at you I can tell why you're here. You want to know about Carts, don't you?"
+next_menu = 2
+show_if = Array[Resource]([SubResource("RoseDialogCase_cw2vw")])
+resource_name = "NPC: Welcome. Just by glancing at you I can tell why …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fokne"]
+lines = Array[Resource]([SubResource("RoseDialogLine_r537w"), SubResource("RoseDialogLine_r2wva")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kchp2"]
+kind = "Answer"
+text = "For some reason, I cannot trust you."
+resource_name = "You: For some reason, I cannot trust you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ajv2p"]
+lines = Array[Resource]([SubResource("RoseDialogLine_kchp2")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pt34x"]
+kind = "Answer"
+text = "Yes, that's correct."
+next_menu = 3
+resource_name = "You: Yes, that's correct."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_q6ggh"]
+lines = Array[Resource]([SubResource("RoseDialogLine_pt34x")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_owpdm"]
+text = "Although the Akram Kingdom sent me to Kenji Beach to discourage me from being involved in Cart related work, it doesn't mean that I've lost any of my passion for Carts. So, have you already learned about the origin of Carts?"
+next_menu = 4
+resource_name = "NPC: Although the Akram Kingdom sent me to Kenji Beac…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4j8pp"]
+lines = Array[Resource]([SubResource("RoseDialogLine_owpdm")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ddnmb"]
+kind = "Answer"
+text = "Yes, Mairard explained all of that to me."
+next_menu = 5
+resource_name = "You: Yes, Mairard explained all of that to me."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fsrj5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ddnmb")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_78oub"]
+text = "Good, then let me teach you about the Cart's technical aspects. Carts consist of a Cart Body, Cart Engine and Cart Wheels. When you obtain each part, they will be stored in your Tuning Window instead of the Inventory Window. When you combine those three parts in the Tuning Window, you can finally operate the Cart you've just assembled."
+next_menu = 6
+resource_name = "NPC: Good, then let me teach you about the Cart's tec…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jfdk1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_78oub")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hg085"]
+kind = "Answer"
+text = "Where can I obtain the parts for a Cart?"
+next_menu = 7
+resource_name = "You: Where can I obtain the parts for a Cart?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fkyma"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hg085")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7m71i"]
+text = "Well, I'm not sure whether or not you can buy them from normal NPC shops. However, Dealers do have a unique skill which allows them to create Cart parts. If you have a Dealer friend, it'd be smart to ask him."
+next_menu = 8
+resource_name = "NPC: Well, I'm not sure whether or not you can buy th…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_oy4cm"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7m71i")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e0wn1"]
+kind = "Answer"
+text = "I hear that I can tune up a Cart with various functions and into different shapes."
+next_menu = 9
+resource_name = "You: I hear that I can tune up a Cart with various fu…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3r3lv"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e0wn1")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d85r0"]
+text = "You're right. If you have parts with better options you can create a better Cart."
+next_menu = 10
+resource_name = "NPC: You're right. If you have parts with better opti…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_h4p7l"]
+lines = Array[Resource]([SubResource("RoseDialogLine_d85r0")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qht68"]
+kind = "Answer"
+text = "Ah~ I wish I could ride a Cart as soon as possible."
+next_menu = 11
+resource_name = "You: Ah~ I wish I could ride a Cart as soon as possib…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_51wuv"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qht68")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5114m"]
+text = "Good. Let me ask you one question. When you combine each part of a Cart, which part must you start with?"
+next_menu = 12
+resource_name = "NPC: Good. Let me ask you one question. When you comb…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hv44b"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5114m")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ds55s"]
+kind = "Answer"
+text = "Cart Body"
+next_menu = 13
+resource_name = "You: Cart Body"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2yo71"]
+kind = "Answer"
+text = "Cart Engine"
+next_menu = 15
+resource_name = "You: Cart Engine"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0qbnk"]
+kind = "Answer"
+text = "Cart Wheels"
+next_menu = 17
+resource_name = "You: Cart Wheels"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_o3qr5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ds55s"), SubResource("RoseDialogLine_2yo71"), SubResource("RoseDialogLine_0qbnk")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_n4j77"]
+text = "That's correct! Good, now you can go back to Mildun and learn the Drive Cart skill."
+next_menu = 14
+resource_name = "NPC: That's correct! Good, now you can go back to Mil…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_g3iu5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_n4j77")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_gtrug"]
+step = ExtResource("2_jslar")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_b7w85"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_gtrug")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_q175l"]
+kind = "Answer"
+text = "Thank you."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_b7w85")])
+resource_name = "You: Thank you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_754p3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_q175l")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kkmyx"]
+text = "You're wrong. I think you need to study more about Carts."
+next_menu = 16
+resource_name = "NPC: You're wrong. I think you need to study more abo…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xce56"]
+lines = Array[Resource]([SubResource("RoseDialogLine_kkmyx")])
+resource_name = "Menu 15"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_l08dm"]
+kind = "Answer"
+text = "I see."
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_cllp4"]
+lines = Array[Resource]([SubResource("RoseDialogLine_l08dm")])
+resource_name = "Menu 16"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_w83uj"]
+text = "You're wrong. I think you need to study more about Carts."
+next_menu = 18
+resource_name = "NPC: You're wrong. I think you need to study more abo…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_w4mmm"]
+lines = Array[Resource]([SubResource("RoseDialogLine_w83uj")])
+resource_name = "Menu 17"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7mp8y"]
+kind = "Answer"
+text = "I see."
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xvx40"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7mp8y")])
+resource_name = "Menu 18"
+
+[resource]
+key = "EM27-002.con"
+name = "[Akram Minister] Luce"
+menus = Array[Resource]([SubResource("RoseDialogMenu_fokne"), SubResource("RoseDialogMenu_ajv2p"), SubResource("RoseDialogMenu_q6ggh"), SubResource("RoseDialogMenu_4j8pp"), SubResource("RoseDialogMenu_fsrj5"), SubResource("RoseDialogMenu_jfdk1"), SubResource("RoseDialogMenu_fkyma"), SubResource("RoseDialogMenu_oy4cm"), SubResource("RoseDialogMenu_3r3lv"), SubResource("RoseDialogMenu_h4p7l"), SubResource("RoseDialogMenu_51wuv"), SubResource("RoseDialogMenu_hv44b"), SubResource("RoseDialogMenu_o3qr5"), SubResource("RoseDialogMenu_g3iu5"), SubResource("RoseDialogMenu_754p3"), SubResource("RoseDialogMenu_xce56"), SubResource("RoseDialogMenu_cllp4"), SubResource("RoseDialogMenu_w4mmm"), SubResource("RoseDialogMenu_xvx40")])

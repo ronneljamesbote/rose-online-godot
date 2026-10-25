@@ -1,0 +1,341 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://le2g4lqgw58s"]
+
+[ext_resource type="RoseQuest" uid="uid://8pm1oyiwcx88" path="res://data/quests/1953-quest.tres" id="1_8iopn"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bouxdjqxprmd4" path="res://data/quest_triggers/qp10-003/1953-04.tres" id="2_7rf1o"]
+[ext_resource type="RoseQuestTrigger" uid="uid://nbbiphmecp7v" path="res://data/quest_triggers/qp10-003/1953-01.tres" id="3_27cl5"]
+[ext_resource type="RoseQuestTrigger" uid="uid://y7qhgywjanv1" path="res://data/quest_triggers/qp10-003/1953-02.tres" id="4_dv7q6"]
+[ext_resource type="RoseQuestTrigger" uid="uid://0160xsss88t5" path="res://data/quest_triggers/qp10-003/1953-03.tres" id="5_2hgs6"]
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_fsl21"]
+quest = ExtResource("1_8iopn")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_uc6gn"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_fsl21")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xeumw"]
+text = "Those ruthless Golems! They refuse to negotiate and live in peace!"
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_uc6gn")])
+resource_name = "NPC: Those ruthless Golems! They refuse to negotiate …"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_bhepp"]
+quest = ExtResource("1_8iopn")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_810on"]
+step = ExtResource("2_7rf1o")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_14y7q"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_bhepp"), SubResource("RoseDialogIfQuestStep_810on")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ur2mf"]
+text = "Haven't you found it yet? Oh well, yes, if it was that simple, we would do it ourselves. Even if you did it already, I can't recognize your efforts without your party members coming back with you."
+next_menu = 16
+show_if = Array[Resource]([SubResource("RoseDialogCase_14y7q")])
+resource_name = "NPC: Haven't you found it yet? Oh well, yes, if it wa…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_ssgrv"]
+step = ExtResource("2_7rf1o")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_yu42t"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_ssgrv")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wshpb"]
+text = "Oh~ You finally brought me the heart. Thank you, I admire your courage. Let me pay you as promised. Ah, and would you return the Red Sword? It's a treasure for our people, after all."
+next_menu = 21
+show_if = Array[Resource]([SubResource("RoseDialogCase_yu42t")])
+resource_name = "NPC: Oh~ You finally brought me the heart. Thank you,…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1ihq4"]
+lines = Array[Resource]([SubResource("RoseDialogLine_xeumw"), SubResource("RoseDialogLine_ur2mf"), SubResource("RoseDialogLine_wshpb")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e076c"]
+kind = "Answer"
+text = "What's that supposed to mean?"
+next_menu = 2
+resource_name = "You: What's that supposed to mean?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_nkerd"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e076c")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_v0pfg"]
+text = "Since Golems started to appear in Kenji Beach and the Gorge of Silence, they've taken our territories and killed us without mercy. They refuse to negotiate peacefully with us or consider our proposals to share the land. I was also held hostage by them, but I managed to escape. Now, I've come to Junon Polis seeking help. Will no one save us?"
+next_menu = 3
+resource_name = "NPC: Since Golems started to appear in Kenji Beach an…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3m1ml"]
+lines = Array[Resource]([SubResource("RoseDialogLine_v0pfg")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_166tl"]
+kind = "Answer"
+text = "Yes, I'll do it. I can't close my eyes to the oppression of the weak!"
+next_menu = 4
+resource_name = "You: Yes, I'll do it. I can't close my eyes to the op…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bnreq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_166tl")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_dpvc1"]
+operator = "<"
+value = 55
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_f4oem"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_dpvc1")])
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_1bx0g"]
+step = ExtResource("3_27cl5")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_j76ad"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_1bx0g")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cs1qa"]
+text = "Thank you, but I don't think you can handle my request. You must be at least Level 55, and be in a party. Otherwise you'll be no match for them."
+next_menu = 5
+show_if = Array[Resource]([SubResource("RoseDialogCase_f4oem"), SubResource("RoseDialogCase_j76ad")])
+resource_name = "NPC: Thank you, but I don't think you can handle my r…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_w0jj2"]
+step = ExtResource("4_dv7q6")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_w0g5j"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_w0jj2")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xc74h"]
+text = "Thank you for offering to save my people. But my body is exhausted and my spirited weakened, I can barely speak. Please buy me a Mysterious Fruit so that my strength can return…"
+next_menu = 6
+show_if = Array[Resource]([SubResource("RoseDialogCase_w0g5j")])
+resource_name = "NPC: Thank you for offering to save my people. But my…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_b30hk"]
+step = ExtResource("5_2hgs6")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7ghba"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_b30hk")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nbcee"]
+text = "Golems have special traits. They obey their master, Grandmaster Stone. No matter how many golems you kill, you will not be able to eliminate them all unless you kill their master first."
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_7ghba")])
+resource_name = "NPC: Golems have special traits. They obey their mast…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_iulyh"]
+lines = Array[Resource]([SubResource("RoseDialogLine_cs1qa"), SubResource("RoseDialogLine_xc74h"), SubResource("RoseDialogLine_nbcee")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xliqa"]
+kind = "Answer"
+text = "Ahh, I see. I'll come back later."
+resource_name = "You: Ahh, I see. I'll come back later."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_pjvqi"]
+lines = Array[Resource]([SubResource("RoseDialogLine_xliqa")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ry0qq"]
+kind = "Answer"
+text = "Where do they sell it?"
+next_menu = 7
+resource_name = "You: Where do they sell it?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jkaol"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ry0qq")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8a73i"]
+text = "Go talk to Chester, the Arumic merchant. Hurry, time is of the essence…!"
+next_menu = 8
+resource_name = "NPC: Go talk to Chester, the Arumic merchant. Hurry, …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ydogu"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8a73i")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8ltkm"]
+kind = "Answer"
+text = "Alright."
+resource_name = "You: Alright."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b0unr"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8ltkm")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3p623"]
+kind = "Answer"
+text = "Then I shall slay this Grandmaster Stone first. Where can I find these Golems?"
+next_menu = 10
+resource_name = "You: Then I shall slay this Grandmaster Stone first. …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_x2p46"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3p623")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_540wh"]
+text = "Yes, yes. Grandmaster Stone must be killed. However, he is very rarely seen. You may want to start hunting {fc=12}Master Golems{/fc}, and then {fc=12}Grandmaster Stone{/fc} will appear to protect them."
+next_menu = 11
+resource_name = "NPC: Yes, yes. Grandmaster Stone must be killed. Howe…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_h6irq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_540wh")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0gqkm"]
+kind = "Answer"
+text = "Leave it to me and my party members. We'll bring you their hearts."
+next_menu = 12
+resource_name = "You: Leave it to me and my party members. We'll bring…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xxsjb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0gqkm")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2eoml"]
+text = "Ah, don't be in such a rush. It's not easy to kill Grandmaster Stone. I will give you this Red Sword so that you may cut his heart out of his chest. Remember, only the one with this Red Sword must end its life. Otherwise you will not be able to cut out his heart."
+next_menu = 13
+resource_name = "NPC: Ah, don't be in such a rush. It's not easy to ki…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_avhsn"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2eoml")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_f5rsu"]
+kind = "Answer"
+text = "I see."
+next_menu = 14
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_q4gu0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_f5rsu")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8uktn"]
+text = "Thank you. If you bring me {fc=14}3 of Grandmaster Stone's Hearts{/fc}, I will greatly reward you. And don't forget to come back with your party members. Good luck!"
+next_menu = 15
+resource_name = "NPC: Thank you. If you bring me {fc=14}3 of Grandmast…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_x6dxw"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8uktn")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_8e801"]
+step = ExtResource("5_2hgs6")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_gwyhb"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_8e801")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vhn58"]
+kind = "Answer"
+text = "Don't worry. I'm the right person for the job."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_gwyhb")])
+resource_name = "You: Don't worry. I'm the right person for the job."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dqnhe"]
+kind = "Answer"
+text = "It sounds too hard now that I think about it. I can't do this!"
+resource_name = "You: It sounds too hard now that I think about it. I …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jcwd2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vhn58"), SubResource("RoseDialogLine_dqnhe")])
+resource_name = "Menu 15"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hu6o7"]
+kind = "Answer"
+text = "Please explain how I can defeat them one more time."
+next_menu = 17
+resource_name = "You: Please explain how I can defeat them one more ti…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7ndsc"]
+kind = "Answer"
+text = "Please tell me once more where I can find Grandmaster Stone."
+next_menu = 19
+resource_name = "You: Please tell me once more where I can find Grandm…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fowvp"]
+kind = "Answer"
+text = "Don't worry, me and my party will be bring you their hearts soon enough."
+resource_name = "You: Don't worry, me and my party will be bring you t…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0t2te"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hu6o7"), SubResource("RoseDialogLine_7ndsc"), SubResource("RoseDialogLine_fowvp")])
+resource_name = "Menu 16"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_yf576"]
+text = "While you're battling with a Grandmaster Stone, the one with the Red Sword must deliver the killing blow. Otherwise you will not be able to cut out his heart."
+next_menu = 18
+resource_name = "NPC: While you're battling with a Grandmaster Stone, …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fr00x"]
+lines = Array[Resource]([SubResource("RoseDialogLine_yf576")])
+resource_name = "Menu 17"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0q5j7"]
+kind = "Answer"
+text = "I see. I'll keep that in mind."
+resource_name = "You: I see. I'll keep that in mind."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_d3cbg"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0q5j7")])
+resource_name = "Menu 18"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rnkhm"]
+text = "Grandmaster Stone rarely appears. First, go hunt Master Golems in Kenji Beach and the Gorge of Silence. Grandmaster Stone will then appear to protect the Master Golems."
+next_menu = 20
+resource_name = "NPC: Grandmaster Stone rarely appears. First, go hunt…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dxww3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rnkhm")])
+resource_name = "Menu 19"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c8cvc"]
+kind = "Answer"
+text = "Yes, I see."
+resource_name = "You: Yes, I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_j3t0n"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c8cvc")])
+resource_name = "Menu 20"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1coar"]
+kind = "Answer"
+text = "Of course. My life goal is to protect the weak from the forces of evil."
+next_menu = 22
+resource_name = "You: Of course. My life goal is to protect the weak f…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_f4vqg"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1coar")])
+resource_name = "Menu 21"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6rkip"]
+text = "Good. I hope you will do your best to maintain the peace and prosperity of Junon. And please take this as a token of my gratitude."
+next_menu = 23
+resource_name = "NPC: Good. I hope you will do your best to maintain t…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xjrlt"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6rkip")])
+resource_name = "Menu 22"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_yatj4"]
+step = ExtResource("2_7rf1o")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ytxd0"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_yatj4")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kvxhj"]
+kind = "Answer"
+text = "Really? Thank you very much."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_ytxd0")])
+resource_name = "You: Really? Thank you very much."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_t1bmw"]
+lines = Array[Resource]([SubResource("RoseDialogLine_kvxhj")])
+resource_name = "Menu 23"
+
+[resource]
+key = "EM02-028.con"
+name = "주논폴리스-주논의 킹콩-포로가 된 킹콩"
+menus = Array[Resource]([SubResource("RoseDialogMenu_1ihq4"), SubResource("RoseDialogMenu_nkerd"), SubResource("RoseDialogMenu_3m1ml"), SubResource("RoseDialogMenu_bnreq"), SubResource("RoseDialogMenu_iulyh"), SubResource("RoseDialogMenu_pjvqi"), SubResource("RoseDialogMenu_jkaol"), SubResource("RoseDialogMenu_ydogu"), SubResource("RoseDialogMenu_b0unr"), SubResource("RoseDialogMenu_x2p46"), SubResource("RoseDialogMenu_h6irq"), SubResource("RoseDialogMenu_xxsjb"), SubResource("RoseDialogMenu_avhsn"), SubResource("RoseDialogMenu_q4gu0"), SubResource("RoseDialogMenu_x6dxw"), SubResource("RoseDialogMenu_jcwd2"), SubResource("RoseDialogMenu_0t2te"), SubResource("RoseDialogMenu_fr00x"), SubResource("RoseDialogMenu_d3cbg"), SubResource("RoseDialogMenu_dxww3"), SubResource("RoseDialogMenu_j3t0n"), SubResource("RoseDialogMenu_f4vqg"), SubResource("RoseDialogMenu_xjrlt"), SubResource("RoseDialogMenu_t1bmw")])

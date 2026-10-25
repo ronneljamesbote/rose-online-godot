@@ -1,0 +1,54 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://ca24nmsswafq7"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jjwq8"]
+text = "It's so hot! Isn't it hot? Isn't it hot for you at all?"
+next_menu = 1
+resource_name = "NPC: It's so hot! Isn't it hot? Isn't it hot for you …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_q255j"]
+lines = Array[Resource]([SubResource("RoseDialogLine_jjwq8")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_x2kmb"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_l68kr"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_x2kmb")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mv72l"]
+kind = "Answer"
+text = "Stop! Just show me the bullets and arrows."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_l68kr")])
+resource_name = "You: Stop! Just show me the bullets and arrows."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_t35n1"]
+kind = "Answer"
+text = "Yes, it's pretty hot here."
+next_menu = 2
+resource_name = "You: Yes, it's pretty hot here."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xrl2a"]
+lines = Array[Resource]([SubResource("RoseDialogLine_mv72l"), SubResource("RoseDialogLine_t35n1")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1l5yd"]
+text = "What a pity. If you were a true Artisan, you would make an electric fan with Aqua's scales for Eldeon people."
+next_menu = 3
+resource_name = "NPC: What a pity. If you were a true Artisan, you wou…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hoc3u"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1l5yd")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_23ykd"]
+kind = "Answer"
+text = "I see. But you know what? I don't think I'm the right one for it."
+resource_name = "You: I see. But you know what? I don't think I'm the …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_omn85"]
+lines = Array[Resource]([SubResource("RoseDialogLine_23ykd")])
+resource_name = "Menu 3"
+
+[resource]
+key = "EM61-003.con"
+name = "[Ferrell Guild Staff] Gilbert"
+menus = Array[Resource]([SubResource("RoseDialogMenu_q255j"), SubResource("RoseDialogMenu_xrl2a"), SubResource("RoseDialogMenu_hoc3u"), SubResource("RoseDialogMenu_omn85")])

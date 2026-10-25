@@ -1,0 +1,51 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://bulf2fe25obm0"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://cor0syeng6hws" path="res://data/quest_triggers/tutorial/move3_27.tres" id="1_67ja6"]
+[ext_resource type="RoseQuestTrigger" uid="uid://blr4dgp4stj0c" path="res://data/quest_triggers/tutorial/move3_22.tres" id="2_vgnwk"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_y6two"]
+text = "Good day. This passenger ship is being operated by the Ferrell Guild. Please select your destination and pay the charge. Then we will take you to the place you want to go. Well, where would you like to go?"
+next_menu = 1
+resource_name = "NPC: Good day. This passenger ship is being operated …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dhboc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_y6two")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_divdh"]
+step = ExtResource("1_67ja6")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_mc4up"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_divdh")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_t7ft6"]
+kind = "Answer"
+text = "Kenji Beach"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_mc4up")])
+resource_name = "You: Kenji Beach"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_4hga8"]
+step = ExtResource("2_vgnwk")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_52e6d"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_4hga8")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_v8u0s"]
+kind = "Answer"
+text = "Adventurer's Plains"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_52e6d")])
+resource_name = "You: Adventurer's Plains"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_w3dh0"]
+kind = "Answer"
+text = "I want to stay here a little bit longer."
+resource_name = "You: I want to stay here a little bit longer."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3tygb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_t7ft6"), SubResource("RoseDialogLine_v8u0s"), SubResource("RoseDialogLine_w3dh0")])
+resource_name = "Menu 1"
+
+[resource]
+key = "EM98-003.con"
+name = "[Ferrell Guild Staff] Rooen"
+menus = Array[Resource]([SubResource("RoseDialogMenu_dhboc"), SubResource("RoseDialogMenu_3tygb")])

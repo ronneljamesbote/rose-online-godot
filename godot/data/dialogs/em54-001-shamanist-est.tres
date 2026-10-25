@@ -1,0 +1,317 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://it3cjl52tjcg"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://bpvkg3im0pn8j" path="res://data/quest_triggers/qp201/2051-09.tres" id="1_1uxj0"]
+[ext_resource type="RoseQuestTrigger" uid="uid://ctee88yd4rgm7" path="res://data/quest_triggers/qp201/2051-16.tres" id="2_b7iq7"]
+[ext_resource type="RoseQuestTrigger" uid="uid://b2q2wlu585m37" path="res://data/quest_triggers/qc001/Clan-warp05.tres" id="3_ihvy8"]
+[ext_resource type="RoseQuestTrigger" uid="uid://buob2llp1icaw" path="res://data/quest_triggers/qp201/2051-17.tres" id="4_gckqe"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dr2p0270js0gg" path="res://data/quest_triggers/qp201/2051-18.tres" id="5_unl5o"]
+[ext_resource type="RoseQuestTrigger" uid="uid://ct1hpcv221gsk" path="res://data/quest_triggers/qp201/2051-19.tres" id="6_oinej"]
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_6q0e6"]
+switch = 3
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_hgsu0"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_6q0e6")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_s4s3a"]
+text = "Oup ou oup, kutanka rajil suomi ne."
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_hgsu0")])
+resource_name = "NPC: Oup ou oup, kutanka rajil suomi ne."
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_p3uwp"]
+switch = 3
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_1svy5"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_p3uwp")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2ieln"]
+text = "Although this world may controlled by the Arumics, I will always keep my pride as a shamanist."
+next_menu = 4
+show_if = Array[Resource]([SubResource("RoseDialogCase_1svy5")])
+resource_name = "NPC: Although this world may controlled by the Arumic…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bdqu1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_s4s3a"), SubResource("RoseDialogLine_2ieln")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jt1xl"]
+kind = "Answer"
+text = "So what are you doing in this cold place?"
+next_menu = 2
+resource_name = "You: So what are you doing in this cold place?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ox84e"]
+lines = Array[Resource]([SubResource("RoseDialogLine_jt1xl")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a85mm"]
+text = "Sanoina… kakkinitsunahanocomoredate tsuud."
+next_menu = 3
+resource_name = "NPC: Sanoina… kakkinitsunahanocomoredate tsuud."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_scpi0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a85mm")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ebi24"]
+kind = "Answer"
+text = "Wh-what are you saying? I can't understand you!"
+resource_name = "You: Wh-what are you saying? I can't understand you!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bk314"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ebi24")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_aydbf"]
+kind = "Answer"
+text = "You're a shamanist?"
+next_menu = 5
+resource_name = "You: You're a shamanist?"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_6bw4u"]
+step = ExtResource("1_1uxj0")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_gdyxh"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_6bw4u")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pkl6v"]
+kind = "Answer"
+text = "Ishtal sent me here to explore the Forgotten Temple."
+next_menu = 7
+show_if = Array[Resource]([SubResource("RoseDialogCase_gdyxh")])
+resource_name = "You: Ishtal sent me here to explore the Forgotten Tem…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_0pexj"]
+step = ExtResource("2_b7iq7")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_i1n2q"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_0pexj")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0xx7a"]
+kind = "Answer"
+text = "I'd like to enter the Forgotten Temple again."
+next_menu = 13
+show_if = Array[Resource]([SubResource("RoseDialogCase_i1n2q")])
+resource_name = "You: I'd like to enter the Forgotten Temple again."
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_rtfr6"]
+step = ExtResource("3_ihvy8")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_rl3hi"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_rtfr6")])
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_q43ow"]
+step = ExtResource("3_ihvy8")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_rwhil"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_q43ow")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_f1eqr"]
+kind = "Answer"
+text = "I'd like to transfer to Lunar Clan Field."
+show_if = Array[Resource]([SubResource("RoseDialogCase_rwhil")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_rl3hi")])
+resource_name = "You: I'd like to transfer to Lunar Clan Field."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_v7no8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_aydbf"), SubResource("RoseDialogLine_pkl6v"), SubResource("RoseDialogLine_0xx7a"), SubResource("RoseDialogLine_f1eqr")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hg28s"]
+text = "Of course. Although there are only a few of us, our existence cannot be denied. Somehow, we'll bring back our former glory."
+next_menu = 6
+resource_name = "NPC: Of course. Although there are only a few of us, …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ge37y"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hg28s")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_q4pxu"]
+kind = "Answer"
+text = "Beautifully said! Well, good luck to you."
+resource_name = "You: Beautifully said! Well, good luck to you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_war4c"]
+lines = Array[Resource]([SubResource("RoseDialogLine_q4pxu")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fwgja"]
+text = "Oh! You've got a lot of courage to come to such a dangerous place. Powerful monsters and now cutthroat thieves roam the {fc=2}Forgotten Temple{/fc}."
+next_menu = 8
+resource_name = "NPC: Oh! You've got a lot of courage to come to such …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ruhyi"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fwgja")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_l2i40"]
+kind = "Answer"
+text = "Well, I guess that's why I, the great <name>, have come."
+next_menu = 9
+resource_name = "You: Well, I guess that's why I, the great <name>, ha…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_yvm4a"]
+lines = Array[Resource]([SubResource("RoseDialogLine_l2i40")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lvpr1"]
+text = "I'd especially like to thank you for volunteering on our behalf. In gratitude, let me give you {fc=14}3 Resurrection Spellbooks{/fc}. {br}If you are defeated in battle, you will resurrect inside of the Forgotten Temple. However, once you run out of Resurrection Spellbooks, you will be sent outside of the temple and won't be able to come back inside."
+next_menu = 10
+resource_name = "NPC: I'd especially like to thank you for volunteerin…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qt7xu"]
+lines = Array[Resource]([SubResource("RoseDialogLine_lvpr1")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_j6rmy"]
+kind = "Answer"
+text = "Well. I'll just have to not die, then."
+next_menu = 11
+resource_name = "You: Well. I'll just have to not die, then."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_cm1bu"]
+lines = Array[Resource]([SubResource("RoseDialogLine_j6rmy")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4u5en"]
+text = "I shall remain here, praying for your good fortune. The next time you see Ishtal, let him know that we'll always be indebted to him."
+next_menu = 12
+resource_name = "NPC: I shall remain here, praying for your good fortu…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_iwdie"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4u5en")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_cq37f"]
+step = ExtResource("1_1uxj0")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_qcplv"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_cq37f")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fwhlq"]
+kind = "Answer"
+text = "Okay! Then, let me go into the {fc=2}Forgotten Temple{/fc}."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_qcplv")])
+resource_name = "You: Okay! Then, let me go into the {fc=2}Forgotten T…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_s1mqy"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fwhlq")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_rlis4"]
+step = ExtResource("4_gckqe")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_xr707"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_rlis4")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4eot2"]
+text = "I've told you that if you use all the {fc=14}Resurrection Spellbooks{/fc}, you can't enter the Forgotten Temple. Why don't you ask Ishtal to let you try searching for Shamanic Artifacts again?"
+next_menu = 14
+show_if = Array[Resource]([SubResource("RoseDialogCase_xr707")])
+resource_name = "NPC: I've told you that if you use all the {fc=14}Res…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_kbhrt"]
+step = ExtResource("5_unl5o")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_jgdkd"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_kbhrt")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7e88w"]
+text = "I shall pray for your good fortune."
+next_menu = 15
+show_if = Array[Resource]([SubResource("RoseDialogCase_jgdkd")])
+resource_name = "NPC: I shall pray for your good fortune."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_i17db"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4eot2"), SubResource("RoseDialogLine_7e88w")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6i3we"]
+kind = "Answer"
+text = "Really? I guess I have no other choice."
+next_menu = 16
+resource_name = "You: Really? I guess I have no other choice."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_yta5s"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6i3we")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_fnf4i"]
+step = ExtResource("5_unl5o")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ytih1"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_fnf4i")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cl37t"]
+kind = "Answer"
+text = "Thank you."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_ytih1")])
+resource_name = "You: Thank you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_l2jwo"]
+lines = Array[Resource]([SubResource("RoseDialogLine_cl37t")])
+resource_name = "Menu 15"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_o2op3"]
+text = "Well, it's not necessarily impossible. Bring me {fc=14}10 Ice Key Fragments{/fc}, and in exchange, I will give you 3 Resurrection Spellbooks."
+next_menu = 17
+resource_name = "NPC: Well, it's not necessarily impossible. Bring me …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_v5mer"]
+lines = Array[Resource]([SubResource("RoseDialogLine_o2op3")])
+resource_name = "Menu 16"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_d0v3c"]
+step = ExtResource("6_oinej")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_0qbch"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_d0v3c")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_22tn8"]
+kind = "Answer"
+text = "I don’t have enough Ice Key Fragments, so I'll come back again."
+show_if = Array[Resource]([SubResource("RoseDialogCase_0qbch")])
+resource_name = "You: I don’t have enough Ice Key Fragments, so I'll c…"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_x1qwa"]
+step = ExtResource("6_oinej")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_voi6i"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_x1qwa")])
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_cqois"]
+step = ExtResource("6_oinej")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_fp1jv"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_cqois")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rexpr"]
+kind = "Answer"
+text = "Alright, would you please trade me some Resurrection Spellbooks for the Ice Key Fragments?"
+show_if = Array[Resource]([SubResource("RoseDialogCase_fp1jv")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_voi6i")])
+resource_name = "You: Alright, would you please trade me some Resurrec…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_4865y"]
+step = ExtResource("6_oinej")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_txfrd"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_4865y")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8uu6q"]
+kind = "Answer"
+text = "Isn't that price too high for Resurrection Spellbooks?"
+show_if = Array[Resource]([SubResource("RoseDialogCase_txfrd")])
+resource_name = "You: Isn't that price too high for Resurrection Spell…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_n5to2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_22tn8"), SubResource("RoseDialogLine_rexpr"), SubResource("RoseDialogLine_8uu6q")])
+resource_name = "Menu 17"
+
+[resource]
+key = "EM54-001.con"
+name = "[Shamanist] Est"
+menus = Array[Resource]([SubResource("RoseDialogMenu_bdqu1"), SubResource("RoseDialogMenu_ox84e"), SubResource("RoseDialogMenu_scpi0"), SubResource("RoseDialogMenu_bk314"), SubResource("RoseDialogMenu_v7no8"), SubResource("RoseDialogMenu_ge37y"), SubResource("RoseDialogMenu_war4c"), SubResource("RoseDialogMenu_ruhyi"), SubResource("RoseDialogMenu_yvm4a"), SubResource("RoseDialogMenu_qt7xu"), SubResource("RoseDialogMenu_cm1bu"), SubResource("RoseDialogMenu_iwdie"), SubResource("RoseDialogMenu_s1mqy"), SubResource("RoseDialogMenu_i17db"), SubResource("RoseDialogMenu_yta5s"), SubResource("RoseDialogMenu_l2jwo"), SubResource("RoseDialogMenu_v5mer"), SubResource("RoseDialogMenu_n5to2")])

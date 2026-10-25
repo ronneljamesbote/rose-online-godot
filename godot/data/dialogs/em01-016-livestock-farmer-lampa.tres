@@ -1,0 +1,130 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://cqrf1jdho5krw"]
+
+[ext_resource type="RoseQuest" uid="uid://ckmc17bwap5bk" path="res://data/quests/1002-dealer-job-change-quest.tres" id="1_gq37a"]
+[ext_resource type="RoseItemQuest" uid="uid://bbh8t87ixdgb3" path="res://data/items/quest/112-fleece.tres" id="2_ra5lc"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dwjq2pucw1gm4" path="res://data/quest_triggers/qj000-01/1002-02.tres" id="3_1jgnl"]
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_c6hrw"]
+quest = ExtResource("1_gq37a")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_q2br6"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_c6hrw")])
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_b3sh6"]
+quest = ExtResource("1_gq37a")
+item = ExtResource("2_ra5lc")
+operator = "=="
+value = 5
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_pr0j3"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_b3sh6")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_oi1xp"]
+text = "Holy~! You freaked out my precious animals! What's with you?"
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_q2br6"), SubResource("RoseDialogCase_pr0j3")])
+resource_name = "NPC: Holy~! You freaked out my precious animals! What…"
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_b4ekg"]
+quest = ExtResource("1_gq37a")
+item = ExtResource("2_ra5lc")
+operator = "=="
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_0nj5w"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_b4ekg")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_sc0qp"]
+text = "Goodness, you've scared my precious animals! What's with you?!"
+next_menu = 4
+show_if = Array[Resource]([SubResource("RoseDialogCase_0nj5w")])
+resource_name = "NPC: Goodness, you've scared my precious animals! Wha…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ivmes"]
+lines = Array[Resource]([SubResource("RoseDialogLine_oi1xp"), SubResource("RoseDialogLine_sc0qp")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wv5g5"]
+kind = "Answer"
+text = "Precious animals?"
+next_menu = 2
+resource_name = "You: Precious animals?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qdipj"]
+kind = "Answer"
+text = "I'm sorry if I surprised you. I'll come back later."
+resource_name = "You: I'm sorry if I surprised you. I'll come back lat…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_kuijb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_wv5g5"), SubResource("RoseDialogLine_qdipj")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qcrsb"]
+text = "I raise these darlings and sell them to people. When these young animals grow up, I'll let you keep one."
+next_menu = 3
+resource_name = "NPC: I raise these darlings and sell them to people. …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_yui1r"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qcrsb")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8hv1v"]
+kind = "Answer"
+text = "Really? Thank you so much."
+next_menu = 0
+resource_name = "You: Really? Thank you so much."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_85rp1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8hv1v")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hcysd"]
+kind = "Answer"
+text = "I'd like to have some Fleece."
+next_menu = 5
+resource_name = "You: I'd like to have some Fleece."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hmf02"]
+kind = "Answer"
+text = "Precious animals?"
+next_menu = 2
+resource_name = "You: Precious animals?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dytg8"]
+kind = "Answer"
+text = "I'm sorry if I surprised you. I'll come back later."
+resource_name = "You: I'm sorry if I surprised you. I'll come back lat…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_o2lj2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hcysd"), SubResource("RoseDialogLine_hmf02"), SubResource("RoseDialogLine_dytg8")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_i3wpf"]
+text = "You must have heard that my Fleece is the best that you can get. Okay, I see no problem in letting you have some."
+next_menu = 6
+resource_name = "NPC: You must have heard that my Fleece is the best t…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_cofq4"]
+lines = Array[Resource]([SubResource("RoseDialogLine_i3wpf")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_uw0ai"]
+step = ExtResource("3_1jgnl")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_nfnos"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_uw0ai")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dx885"]
+kind = "Answer"
+text = "You're so kind. Thank you."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_nfnos")])
+resource_name = "You: You're so kind. Thank you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jm710"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dx885")])
+resource_name = "Menu 6"
+
+[resource]
+key = "EM01-016.con"
+name = "[Livestock Farmer]  Lampa"
+menus = Array[Resource]([SubResource("RoseDialogMenu_ivmes"), SubResource("RoseDialogMenu_kuijb"), SubResource("RoseDialogMenu_yui1r"), SubResource("RoseDialogMenu_85rp1"), SubResource("RoseDialogMenu_o2lj2"), SubResource("RoseDialogMenu_cofq4"), SubResource("RoseDialogMenu_jm710")])

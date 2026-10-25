@@ -1,0 +1,99 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://cy3cgmrnqci6o"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://c786axfu6mpaw" path="res://data/quest_triggers/qp103/107-01.tres" id="1_qjri6"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_p8d82"]
+text = "My happiest moments are when I'm busy creating something. Don't you feel the same way?"
+next_menu = 1
+resource_name = "NPC: My happiest moments are when I'm busy creating s…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dph0m"]
+lines = Array[Resource]([SubResource("RoseDialogLine_p8d82")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_g7a7q"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_m7aew"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_g7a7q")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wxcxo"]
+kind = "Answer"
+text = "Well, I don't really feel that way, but for some reason, I want to trade with you."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_m7aew")])
+resource_name = "You: Well, I don't really feel that way, but for some…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5i335"]
+kind = "Answer"
+text = "That sort of happiness seems strange to me."
+resource_name = "You: That sort of happiness seems strange to me."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_twmwj"]
+step = ExtResource("1_qjri6")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_mrt4g"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_twmwj")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pb3cn"]
+kind = "Answer"
+text = "Hurry and take the antidote!"
+next_menu = 2
+show_if = Array[Resource]([SubResource("RoseDialogCase_mrt4g")])
+resource_name = "You: Hurry and take the antidote!"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_y0x8x"]
+window = "Appraisal"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_gx08t"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_y0x8x")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cpc7j"]
+kind = "Answer"
+text = "I'd like to have my item appraised."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_gx08t")])
+resource_name = "You: I'd like to have my item appraised."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_sewxs"]
+window = "Repair"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_sy1tt"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_sewxs")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6c3b5"]
+kind = "Answer"
+text = "I'd like to have my item repaired."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_sy1tt")])
+resource_name = "You: I'd like to have my item repaired."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_osmkk"]
+lines = Array[Resource]([SubResource("RoseDialogLine_wxcxo"), SubResource("RoseDialogLine_5i335"), SubResource("RoseDialogLine_pb3cn"), SubResource("RoseDialogLine_cpc7j"), SubResource("RoseDialogLine_6c3b5")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_brqpp"]
+text = "Oh, thank you! I really thought I was going to die! Please, give Myad my thanks."
+next_menu = 3
+resource_name = "NPC: Oh, thank you! I really thought I was going to d…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0gtva"]
+lines = Array[Resource]([SubResource("RoseDialogLine_brqpp")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_37xue"]
+step = ExtResource("1_qjri6")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_v8yqm"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_37xue")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7pxga"]
+kind = "Answer"
+text = "Alright, I will."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_v8yqm")])
+resource_name = "You: Alright, I will."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3kn8i"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7pxga")])
+resource_name = "Menu 3"
+
+[resource]
+key = "EM22-004.con"
+name = "[Smith] Ronk"
+menus = Array[Resource]([SubResource("RoseDialogMenu_dph0m"), SubResource("RoseDialogMenu_osmkk"), SubResource("RoseDialogMenu_0gtva"), SubResource("RoseDialogMenu_3kn8i")])

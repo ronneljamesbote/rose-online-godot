@@ -28,7 +28,7 @@ together. Read `AGENTS.md` and `wiki/README.md` first if you haven't.
      (`items/`, `monsters/`, `npcs/`, `drop_tables/`, `shop_tabs/`, `skills/<skill>/` (one
      file per level), `status_effects/`, `job_classes/`, `zones/`, `warp_gates/`,
      `craft_recipes/`, `new_characters/`, `effect_files/`, `attack_effects/`, `quests/`,
-     `quest_triggers/`; the page's `source:` names the file or folder),
+     `quest_triggers/`, `dialogs/`; the page's `source:` names the file or folder),
      then `godot --headless --path godot -- --export-data` and commit both. See
      `godot/data/README.md`. A spawn, NPC or named spot of a zone edited in Godot → its
      scene in `godot/zones/`, exported the same way. A value of a kind not made in Godot yet

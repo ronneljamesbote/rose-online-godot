@@ -1,0 +1,275 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://dwceeixbcjxd0"]
+
+[ext_resource type="RoseQuest" uid="uid://j34xatmqhkpr" path="res://data/quests/5041-the-lost-engagement-ring.tres" id="1_h2fdt"]
+[ext_resource type="RoseItemQuest" uid="uid://3bnlao2unpsc" path="res://data/items/quest/508-methio-s-engagement-ring.tres" id="2_folm8"]
+[ext_resource type="RoseQuestTrigger" uid="uid://c1al0v8mlppg2" path="res://data/quest_triggers/qs10-001/5041-02.tres" id="3_5nvik"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dfakcgpxm53ll" path="res://data/quest_triggers/qs10-001/5041-01.tres" id="4_usffv"]
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_yhcqa"]
+operator = "<"
+value = 23
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_idxgo"]
+value = 15
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_ux4sb"]
+switch = 32
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ccfpo"]
+quest = ExtResource("1_h2fdt")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2ccgr"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_yhcqa"), SubResource("RoseDialogIfAbility_idxgo"), SubResource("RoseDialogIfQuestSwitch_ux4sb"), SubResource("RoseDialogIfQuest_ccfpo")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lrfrw"]
+text = "Excuse me, but something's really bothering me. Won't you help me?"
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_2ccgr")])
+resource_name = "NPC: Excuse me, but something's really bothering me. …"
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_ibr1g"]
+quest = ExtResource("1_h2fdt")
+item = ExtResource("2_folm8")
+operator = "=="
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_g27tb"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_ibr1g")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rt3ol"]
+text = "Haven't you found the ring yet? Huh, you're no better than the others."
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_g27tb")])
+resource_name = "NPC: Haven't you found the ring yet? Huh, you're no b…"
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_og0qs"]
+quest = ExtResource("1_h2fdt")
+item = ExtResource("2_folm8")
+operator = "=="
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_a2mcm"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_og0qs")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jv7pc"]
+text = "Oh! You finally found the ring. Thank you, thank you so much!"
+next_menu = 6
+show_if = Array[Resource]([SubResource("RoseDialogCase_a2mcm")])
+resource_name = "NPC: Oh! You finally found the ring. Thank you, thank…"
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_44i1t"]
+value = 23
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_oxq5v"]
+quest = ExtResource("1_h2fdt")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ircaw"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_44i1t"), SubResource("RoseDialogIfQuest_oxq5v")])
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_bg816"]
+operator = "<"
+value = 15
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_s2ioq"]
+quest = ExtResource("1_h2fdt")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5cu1j"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_bg816"), SubResource("RoseDialogIfQuest_s2ioq")])
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_5gnjj"]
+switch = 32
+value = 1
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_quf78"]
+quest = ExtResource("1_h2fdt")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_bs20h"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_5gnjj"), SubResource("RoseDialogIfQuest_quf78")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_olpk6"]
+text = "There's never enough water in this place, so taking a shower here is like dream come true. Please understand if I smell a little rank."
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_ircaw"), SubResource("RoseDialogCase_5cu1j"), SubResource("RoseDialogCase_bs20h")])
+resource_name = "NPC: There's never enough water in this place, so tak…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8ektf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_lrfrw"), SubResource("RoseDialogLine_rt3ol"), SubResource("RoseDialogLine_jv7pc"), SubResource("RoseDialogLine_olpk6")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fsl20"]
+kind = "Answer"
+text = "Eh? How can I help you?"
+next_menu = 2
+resource_name = "You: Eh? How can I help you?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ks3b7"]
+kind = "Answer"
+text = "I'm already busy, so don't think of asking me any favors."
+resource_name = "You: I'm already busy, so don't think of asking me an…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5j7eo"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fsl20"), SubResource("RoseDialogLine_ks3b7")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mv56x"]
+text = "I'm from Kenji Beach where my fiancee and parents are waiting for me. I came out here to earn some money so I can marry my fiancee and go back to my hometown. Then I can live happily ever after with all the people I love."
+next_menu = 10
+resource_name = "NPC: I'm from Kenji Beach where my fiancee and parent…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_peku5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_mv56x")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_l50gx"]
+kind = "Answer"
+text = "Can you tell me where I can find Red Flanaes?"
+next_menu = 4
+resource_name = "You: Can you tell me where I can find Red Flanaes?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dqaah"]
+kind = "Answer"
+text = "Don't judge me from just this one incident!"
+resource_name = "You: Don't judge me from just this one incident!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_pedoq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_l50gx"), SubResource("RoseDialogLine_dqaah")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_22q0t"]
+text = "Red Flanaes live in the Breezy Hills."
+next_menu = 5
+resource_name = "NPC: Red Flanaes live in the Breezy Hills."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hvefb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_22q0t")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_q2hv6"]
+kind = "Answer"
+text = "I see."
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_uwnma"]
+lines = Array[Resource]([SubResource("RoseDialogLine_q2hv6")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ydyyx"]
+kind = "Answer"
+text = "Yes, I had a hard time finding this."
+next_menu = 7
+resource_name = "You: Yes, I had a hard time finding this."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_guflf"]
+kind = "Answer"
+text = "I got the ring and I don’t plan to give it back to you. Haha!"
+resource_name = "You: I got the ring and I don’t plan to give it back …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bqlsw"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ydyyx"), SubResource("RoseDialogLine_guflf")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1rlfq"]
+text = "Thank you so much. Now I can meet my fiancee. And… Please take this."
+next_menu = 8
+resource_name = "NPC: Thank you so much. Now I can meet my fiancee. An…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_x638l"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1rlfq")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_0nv8b"]
+step = ExtResource("3_5nvik")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_dlkn6"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_0nv8b")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7sni7"]
+kind = "Answer"
+text = "Wow! Thank you very much!"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_dlkn6")])
+resource_name = "You: Wow! Thank you very much!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ejwab"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7sni7")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_q5o8m"]
+kind = "Answer"
+text = "Holy--! I thought something died! That smell is you?! I'll come back later."
+resource_name = "You: Holy--! I thought something died! That smell is …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_m47b2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_q5o8m")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_sexoh"]
+kind = "Answer"
+text = "You look happy to me… What's your problem?"
+next_menu = 11
+resource_name = "You: You look happy to me… What's your problem?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_t5o3k"]
+lines = Array[Resource]([SubResource("RoseDialogLine_sexoh")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_k5qcp"]
+text = "The problem is that I lost my {fc=14}Engagement Ring{/fc} in the {fc=2}Breezy Hills{/fc} when I went on a picnic. I can't remember where I dropped my ring, but I'm sure it was near some {fc=12}Red Flanaes{/fc}. Would you please help me find it?"
+next_menu = 12
+resource_name = "NPC: The problem is that I lost my {fc=14}Engagement …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5rsjt"]
+lines = Array[Resource]([SubResource("RoseDialogLine_k5qcp")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tqxjh"]
+kind = "Answer"
+text = "Don't you worry. I'll find that ring."
+next_menu = 13
+resource_name = "You: Don't you worry. I'll find that ring."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ba2hy"]
+kind = "Answer"
+text = "I'm already busy, it's no use to ask a favor of me."
+resource_name = "You: I'm already busy, it's no use to ask a favor of …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5fdk8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tqxjh"), SubResource("RoseDialogLine_ba2hy")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dpl6a"]
+text = "Thank you so much. There are many Red Flanaes in the Breezy Hills."
+next_menu = 14
+resource_name = "NPC: Thank you so much. There are many Red Flanaes in…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_file4"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dpl6a")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_a10ff"]
+step = ExtResource("4_usffv")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_unna0"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_a10ff")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7tgv0"]
+kind = "Answer"
+text = "I see."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_unna0")])
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_t5fll"]
+kind = "Answer"
+text = "So you're distrustful of other people, eh? If that's the case, go find it yourself."
+resource_name = "You: So you're distrustful of other people, eh? If th…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fccq6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7tgv0"), SubResource("RoseDialogLine_t5fll")])
+resource_name = "Menu 14"
+
+[resource]
+key = "EM24-002.con"
+name = "[Gypsy Merchant] Methio"
+menus = Array[Resource]([SubResource("RoseDialogMenu_8ektf"), SubResource("RoseDialogMenu_5j7eo"), SubResource("RoseDialogMenu_peku5"), SubResource("RoseDialogMenu_pedoq"), SubResource("RoseDialogMenu_hvefb"), SubResource("RoseDialogMenu_uwnma"), SubResource("RoseDialogMenu_bqlsw"), SubResource("RoseDialogMenu_x638l"), SubResource("RoseDialogMenu_ejwab"), SubResource("RoseDialogMenu_m47b2"), SubResource("RoseDialogMenu_t5o3k"), SubResource("RoseDialogMenu_5rsjt"), SubResource("RoseDialogMenu_5fdk8"), SubResource("RoseDialogMenu_file4"), SubResource("RoseDialogMenu_fccq6")])

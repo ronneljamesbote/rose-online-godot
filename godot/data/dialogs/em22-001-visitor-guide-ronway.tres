@@ -1,0 +1,301 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://cmtose2bjhsy0"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rgrab"]
+text = "Welcome to the Adventurer's Plains. I am Ronway, a guide for Visitors. Please ask me if you have any questions."
+next_menu = 1
+resource_name = "NPC: Welcome to the Adventurer's Plains. I am Ronway,…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_k66gu"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rgrab")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_25bji"]
+kind = "Answer"
+text = "I want to know about job classes."
+next_menu = 2
+resource_name = "You: I want to know about job classes."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cmxjy"]
+kind = "Answer"
+text = "I want to know more about this area."
+next_menu = 16
+resource_name = "You: I want to know more about this area."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6qboq"]
+kind = "Answer"
+text = "I want some information that'd be useful in an adventure."
+next_menu = 20
+resource_name = "You: I want some information that'd be useful in an a…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gxk48"]
+kind = "Answer"
+text = "Is there anything I can do if I don't like my stats?"
+next_menu = 24
+resource_name = "You: Is there anything I can do if I don't like my st…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5t4v5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_25bji"), SubResource("RoseDialogLine_cmxjy"), SubResource("RoseDialogLine_6qboq"), SubResource("RoseDialogLine_gxk48")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rwsgt"]
+text = "There are four available 1st classes: Soldier, Muse, Hawker and Dealer. For now, you don't really need to know about the 2nd or 3rd job classes yet."
+next_menu = 3
+resource_name = "NPC: There are four available 1st classes: Soldier, M…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_yor5n"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rwsgt")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_si4qe"]
+kind = "Answer"
+text = "What do Soldiers do?"
+next_menu = 4
+resource_name = "You: What do Soldiers do?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_f5whk"]
+kind = "Answer"
+text = "What do Muses do?"
+next_menu = 6
+resource_name = "You: What do Muses do?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fx4q5"]
+kind = "Answer"
+text = "What do Hawkers do?"
+next_menu = 8
+resource_name = "You: What do Hawkers do?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xeicc"]
+kind = "Answer"
+text = "What do Dealers do?"
+next_menu = 10
+resource_name = "You: What do Dealers do?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wdcxa"]
+kind = "Answer"
+text = "I want to know how to become an advanced class character."
+next_menu = 12
+resource_name = "You: I want to know how to become an advanced class c…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xv615"]
+lines = Array[Resource]([SubResource("RoseDialogLine_si4qe"), SubResource("RoseDialogLine_f5whk"), SubResource("RoseDialogLine_fx4q5"), SubResource("RoseDialogLine_xeicc"), SubResource("RoseDialogLine_wdcxa")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e4rjg"]
+text = "Soldiers specialize in using physical strength in battle. They mainly use Swords and Maces for weapons."
+next_menu = 5
+resource_name = "NPC: Soldiers specialize in using physical strength i…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lk6dr"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e4rjg")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tmkdj"]
+kind = "Answer"
+text = "I see."
+next_menu = 0
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_drask"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tmkdj")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nctx3"]
+text = "Muses can manipulate the forces of nature and holiness. They can defeat opponents with powerful magic spells, summon spirits, or use holy spells to cure other people."
+next_menu = 7
+resource_name = "NPC: Muses can manipulate the forces of nature and ho…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_g8mgy"]
+lines = Array[Resource]([SubResource("RoseDialogLine_nctx3")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_glk8i"]
+kind = "Answer"
+text = "I see."
+next_menu = 0
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2htlu"]
+lines = Array[Resource]([SubResource("RoseDialogLine_glk8i")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ay8ku"]
+text = "Hawkers rely on their dexterity to move quickly, perform quick attacks and evade enemy assault. They can also handle Bow weapons."
+next_menu = 9
+resource_name = "NPC: Hawkers rely on their dexterity to move quickly,…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_64xna"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ay8ku")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bv7ot"]
+kind = "Answer"
+text = "I see."
+next_menu = 0
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jwuk6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bv7ot")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vt1cm"]
+text = "Dealers are experts in creating and trading items. They can construct rare items, hire mercenary soldiers for battles, and have access to impeccable Gun skills."
+next_menu = 11
+resource_name = "NPC: Dealers are experts in creating and trading item…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_kcw21"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vt1cm")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_81vad"]
+kind = "Answer"
+text = "I see."
+next_menu = 0
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jqiea"]
+lines = Array[Resource]([SubResource("RoseDialogLine_81vad")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ku1e2"]
+text = "When you moved here from Birth Island, you were probably given identification. Open your Quest Window to check if you have it. If you don't, please speak to Mairard so that he can give you one."
+next_menu = 13
+resource_name = "NPC: When you moved here from Birth Island, you were …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qoo33"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ku1e2")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1dgt3"]
+kind = "Answer"
+text = "What am I supposed to do after that?"
+next_menu = 14
+resource_name = "You: What am I supposed to do after that?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5h8pt"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1dgt3")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hnh7w"]
+text = "Once you reach Level 10, please go talk to Warren in Zant. Choose the class to which you want to be promoted, and he will give you a job change quest. When you complete the quest, you'll be eligible for the job change."
+next_menu = 15
+resource_name = "NPC: Once you reach Level 10, please go talk to Warre…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6capt"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hnh7w")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_i6fgg"]
+kind = "Answer"
+text = "Alright, I understand."
+next_menu = 0
+resource_name = "You: Alright, I understand."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_d12l0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_i6fgg")])
+resource_name = "Menu 15"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vsxk1"]
+text = "These plains are a good place to practice basic battle skills. When you think you're too strong for this area, you can try fighting in the Valley of Luxem Tower to the North where you can find slightly stronger monsters."
+next_menu = 17
+resource_name = "NPC: These plains are a good place to practice basic …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gnq8t"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vsxk1")])
+resource_name = "Menu 16"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a83wu"]
+kind = "Answer"
+text = "What kind of place is Zant?"
+next_menu = 18
+resource_name = "You: What kind of place is Zant?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rtivh"]
+kind = "Answer"
+text = "So what exactly can I do in this place?"
+next_menu = 22
+resource_name = "You: So what exactly can I do in this place?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_cl0x7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a83wu"), SubResource("RoseDialogLine_rtivh")])
+resource_name = "Menu 17"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_eqv3c"]
+text = "Ministers from the Akram Kingdom have been dispatched to Zant so that they may handle 1st class job changes for Visitors. There are many goods and people gathered in this town, as well as necessities that are essential for exploring the land. Zant seems to be the true starting point for the adventures of the Visitors."
+next_menu = 19
+resource_name = "NPC: Ministers from the Akram Kingdom have been dispa…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qdrr0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_eqv3c")])
+resource_name = "Menu 18"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1na52"]
+kind = "Answer"
+text = "Really? Then, I'd like to go there as soon as I can."
+next_menu = 0
+resource_name = "You: Really? Then, I'd like to go there as soon as I …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_805av"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1na52")])
+resource_name = "Menu 19"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hhe8m"]
+text = "Why don't you talk to other people in Zant? You can learn all kinds of information and maybe even land a part time job. You can also buy things from shops that you might need later. When you get a chance, you might want to talk to Myad, the old man by the sea, since he's been helping out Visitors as well."
+next_menu = 21
+resource_name = "NPC: Why don't you talk to other people in Zant? You …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_kg2nn"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hhe8m")])
+resource_name = "Menu 20"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dwg1g"]
+kind = "Answer"
+text = "I see."
+next_menu = 0
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_aus2d"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dwg1g")])
+resource_name = "Menu 21"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cu48u"]
+text = "Here in the Adventurer's Village, you can buy weapons and clothes for Visitors, as well as food, such as fresh fruit. While you're here, why don't you try talking to the other people here in the village? I'm sure that you can learn a lot from them."
+next_menu = 23
+resource_name = "NPC: Here in the Adventurer's Village, you can buy we…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5guxg"]
+lines = Array[Resource]([SubResource("RoseDialogLine_cu48u")])
+resource_name = "Menu 22"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fkd4w"]
+kind = "Answer"
+text = "Ah, I see."
+next_menu = 0
+resource_name = "You: Ah, I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_kxyig"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fkd4w")])
+resource_name = "Menu 23"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wry4q"]
+text = "The chief of Zant, Cornell, can reset your stats just once, and only if you're under Level 16."
+next_menu = 25
+resource_name = "NPC: The chief of Zant, Cornell, can reset your stats…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qt5rx"]
+lines = Array[Resource]([SubResource("RoseDialogLine_wry4q")])
+resource_name = "Menu 24"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_y1gfp"]
+kind = "Answer"
+text = "I see."
+next_menu = 0
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ugxta"]
+lines = Array[Resource]([SubResource("RoseDialogLine_y1gfp")])
+resource_name = "Menu 25"
+
+[resource]
+key = "EM22-001.con"
+name = "[Visitor Guide] Ronway"
+menus = Array[Resource]([SubResource("RoseDialogMenu_k66gu"), SubResource("RoseDialogMenu_5t4v5"), SubResource("RoseDialogMenu_yor5n"), SubResource("RoseDialogMenu_xv615"), SubResource("RoseDialogMenu_lk6dr"), SubResource("RoseDialogMenu_drask"), SubResource("RoseDialogMenu_g8mgy"), SubResource("RoseDialogMenu_2htlu"), SubResource("RoseDialogMenu_64xna"), SubResource("RoseDialogMenu_jwuk6"), SubResource("RoseDialogMenu_kcw21"), SubResource("RoseDialogMenu_jqiea"), SubResource("RoseDialogMenu_qoo33"), SubResource("RoseDialogMenu_5h8pt"), SubResource("RoseDialogMenu_6capt"), SubResource("RoseDialogMenu_d12l0"), SubResource("RoseDialogMenu_gnq8t"), SubResource("RoseDialogMenu_cl0x7"), SubResource("RoseDialogMenu_qdrr0"), SubResource("RoseDialogMenu_805av"), SubResource("RoseDialogMenu_kg2nn"), SubResource("RoseDialogMenu_aus2d"), SubResource("RoseDialogMenu_5guxg"), SubResource("RoseDialogMenu_kxyig"), SubResource("RoseDialogMenu_qt5rx"), SubResource("RoseDialogMenu_ugxta")])

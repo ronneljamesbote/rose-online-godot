@@ -1,0 +1,52 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://hb18n58ao1f3"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://dv8k4c111iqg8" path="res://data/quest_triggers/qp103/143-04.tres" id="1_anerb"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dyypf"]
+text = "There's a huge, dark statue."
+next_menu = 1
+resource_name = "NPC: There's a huge, dark statue."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_62ydb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dyypf")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rmns2"]
+kind = "Answer"
+text = "*Gasp!* This is the Kenji Stone? But what's this smell?!"
+next_menu = 2
+resource_name = "You: *Gasp!* This is the Kenji Stone? But what's this…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_iq54w"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rmns2")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_t46i6"]
+text = "The ground around the Kenji Stone is stained with the color of blood."
+next_menu = 3
+resource_name = "NPC: The ground around the Kenji Stone is stained wit…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_uq2g2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_t46i6")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_f2hs2"]
+step = ExtResource("1_anerb")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7w0t3"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_f2hs2")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_14yt2"]
+kind = "Answer"
+text = "I… I'm getting a bad feeling! I better go back!"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_7w0t3")])
+resource_name = "You: I… I'm getting a bad feeling! I better go back!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fupds"]
+lines = Array[Resource]([SubResource("RoseDialogLine_14yt2")])
+resource_name = "Menu 3"
+
+[resource]
+key = "Object009.con"
+name = "겐지스톤"
+menus = Array[Resource]([SubResource("RoseDialogMenu_62ydb"), SubResource("RoseDialogMenu_iq54w"), SubResource("RoseDialogMenu_uq2g2"), SubResource("RoseDialogMenu_fupds")])

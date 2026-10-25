@@ -1,0 +1,35 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://b66ua1lfjb7f0"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0p3nf"]
+text = "Sell your useless items to me. I'll pay you a good price!"
+next_menu = 1
+resource_name = "NPC: Sell your useless items to me. I'll pay you a go…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_nh5sx"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0p3nf")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_nsjba"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_k81td"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_nsjba")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wesuo"]
+kind = "Answer"
+text = "Let's see how much I can be paid."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_k81td")])
+resource_name = "You: Let's see how much I can be paid."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lgqcp"]
+kind = "Answer"
+text = "Useless items? Now, why would I have those?"
+resource_name = "You: Useless items? Now, why would I have those?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0bxs5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_wesuo"), SubResource("RoseDialogLine_lgqcp")])
+resource_name = "Menu 1"
+
+[resource]
+key = "EM24-001.con"
+name = "[Ferrell Guild Merchant] Lina"
+menus = Array[Resource]([SubResource("RoseDialogMenu_nh5sx"), SubResource("RoseDialogMenu_0bxs5")])

@@ -6,11 +6,11 @@ use std::{
 };
 
 use rose_data::{
-    AnimationEventFlags, CharacterMotionDatabase, CharacterMotionDatabaseOptions, DataDecoder, EffectDatabase, ItemDatabase,
+    AnimationEventFlags, CharacterMotionDatabase, CharacterMotionDatabaseOptions, DataDecoder, DialogDatabase, EffectDatabase, ItemDatabase,
     JobClassDatabase, NpcDatabase, NpcDatabaseOptions, QuestDatabase, SkillDatabase, SkyboxDatabase, SoundDatabase,
     StatusEffectDatabase, StringDatabase, ZoneList,
 };
-use rose_file_readers::{ChrFile, HostFilesystemDevice, LtbFile, RoseFile, VfsFile, VfsIndex, VirtualFilesystem};
+use rose_file_readers::{ChrFile, HostFilesystemDevice, RoseFile, VfsFile, VfsIndex, VirtualFilesystem};
 
 pub struct GameData {
     pub vfs: VirtualFilesystem,
@@ -26,8 +26,8 @@ pub struct GameData {
     pub npc_chr: ChrFile,
     pub quests: QuestDatabase,
     pub decoder: Box<dyn DataDecoder + Send + Sync>,
-    /// NPC conversation text (ULNGTB_CON.LTB).
-    pub ltb_event: LtbFile,
+    /// What town NPCs say when you talk to them.
+    pub dialogs: DialogDatabase,
     /// Crafting recipes, by an item's craft_material.
     pub craft_recipes: Vec<Option<rose_game_data::CraftRecipe>>,
     /// What a new character starts with (the look on the character creation screen).
@@ -205,6 +205,32 @@ fn load_quests(vfs: &VirtualFilesystem, strings: Arc<StringDatabase>) -> Result<
     rose_data_irose::get_quest_database(vfs, strings)
 }
 
+/// The NPC dialogs from the export, or without one from the iROSE CON files. Only the game
+/// reads them (the server's upload doesn't send them).
+fn load_dialogs(vfs: &VirtualFilesystem) -> Result<DialogDatabase, anyhow::Error> {
+    if let Some(dir) = find_export() {
+        let toml = rose_data_export::Format::Toml;
+        let export = rose_data_export::DialogsExport::from_files_as(toml, |name| {
+            let path = dir.join(rose_data_export::data_file_as(name, toml));
+            match std::fs::read_to_string(&path) {
+                Ok(text) => Ok(Some(text)),
+                Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(None),
+                Err(e) => Err(anyhow::Error::new(e).context(path.display().to_string())),
+            }
+        })?;
+        if let Some(export) = export {
+            godot::global::godot_print!("rose: {} NPC dialogs from {}", export.dialogs.len(), dir.display());
+            return export.to_database();
+        }
+    }
+    godot::global::godot_warn!("rose: no dialog export (export/data/dialogs.toml), the NPC dialogs come from the iROSE files");
+    let (dialogs, notes) = rose_data_irose::get_dialog_database(vfs)?;
+    for note in notes {
+        godot::global::godot_warn!("rose: {note}");
+    }
+    Ok(dialogs)
+}
+
 /// The sounds, hit sounds and footsteps from the export, or without one from the iROSE
 /// tables. Only the game reads them (the server's upload doesn't send them).
 fn load_sounds(vfs: &VirtualFilesystem) -> Result<Arc<SoundDatabase>, anyhow::Error> {
@@ -302,7 +328,7 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
     let (skills, status_effects, job_classes) = load_skills(&vfs, strings.clone())?;
     let quests = load_quests(&vfs, strings.clone())?;
     let npcs = load_npcs(&vfs, strings)?;
-    let ltb_event = vfs.read_file::<LtbFile, _>("3DDATA/EVENT/ULNGTB_CON.LTB")?;
+    let dialogs = load_dialogs(&vfs)?;
     let npc_chr = vfs.read_file::<ChrFile, _>("3DDATA/NPC/LIST_NPC.CHR")?;
     let motions = rose_data_irose::get_character_motion_database(
         &vfs,
@@ -325,7 +351,7 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
         npc_chr,
         quests,
         decoder,
-        ltb_event,
+        dialogs,
         craft_recipes: world.craft_recipes,
         character_creator: world.character_creator,
         sounds,

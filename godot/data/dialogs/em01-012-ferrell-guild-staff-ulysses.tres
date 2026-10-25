@@ -1,0 +1,1185 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://dbf8odjwmrei2"]
+
+[ext_resource type="RoseQuest" uid="uid://dmwboo2vj67s3" path="res://data/quests/1005-an-eye-for-the-marketplace.tres" id="1_tjq2v"]
+[ext_resource type="RoseQuest" uid="uid://6nny813ghvym" path="res://data/quests/1006-an-eye-for-the-marketplace.tres" id="2_h5t84"]
+[ext_resource type="RoseQuest" uid="uid://cnha4r1ett11l" path="res://data/quests/1007-an-eye-for-the-marketplace.tres" id="3_ptv40"]
+[ext_resource type="RoseItemQuest" uid="uid://6jjhp3lytap5" path="res://data/items/quest/132-beetle-shell.tres" id="4_1wfes"]
+[ext_resource type="RoseQuest" uid="uid://bhvp11ehgx75w" path="res://data/quests/5031-seyon-s-price-checklist-delivery.tres" id="5_nukoc"]
+[ext_resource type="RoseQuest" uid="uid://bp53cf48f0jkb" path="res://data/quests/5004-ulysses-price-chart-delivery.tres" id="6_pbawx"]
+[ext_resource type="RoseQuestTrigger" uid="uid://i5b5nefgmj4k" path="res://data/quest_triggers/qj411-01/1005-01.tres" id="7_wxpqk"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cgnvyla747w3p" path="res://data/quest_triggers/qj411-01/1005-04.tres" id="8_t34a2"]
+[ext_resource type="RoseQuestTrigger" uid="uid://ccabqorw05bwu" path="res://data/quest_triggers/qj411-01/1005-02.tres" id="9_cc43c"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dbnp7oydgdbo4" path="res://data/quest_triggers/qj411-01/1005-03.tres" id="10_6r6ts"]
+[ext_resource type="RoseQuestTrigger" uid="uid://drfcovxsbgqwg" path="res://data/quest_triggers/qs10-001/5031-02.tres" id="11_3u67j"]
+[ext_resource type="RoseQuestTrigger" uid="uid://453hhkashq8f" path="res://data/quest_triggers/qs10-001/5031-03.tres" id="12_am2lo"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cijdwfmss4x1j" path="res://data/quest_triggers/qs10-001/5004-01.tres" id="13_0w8v1"]
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_6fvp4"]
+quest = ExtResource("1_tjq2v")
+active = false
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_5naw4"]
+ability = "Job"
+operator = "!="
+value = 411
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ajk40"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_6fvp4"), SubResource("RoseDialogIfAbility_5naw4")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_4cfvy"]
+quest = ExtResource("1_tjq2v")
+active = false
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_cbglp"]
+operator = "<"
+value = 20
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_myppw"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_4cfvy"), SubResource("RoseDialogIfAbility_cbglp")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_qpps0"]
+quest = ExtResource("1_tjq2v")
+active = false
+
+[sub_resource type="RoseDialogIfVariable" id="RoseDialogIfVariable_ad0dv"]
+variable = "Job"
+operator = "!="
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_lorlg"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_qpps0"), SubResource("RoseDialogIfVariable_ad0dv")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ntqsw"]
+quest = ExtResource("1_tjq2v")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_vhd7e"]
+quest = ExtResource("2_h5t84")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_rrsxl"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_ntqsw"), SubResource("RoseDialogIfQuest_vhd7e")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_7l086"]
+quest = ExtResource("1_tjq2v")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_g4n48"]
+quest = ExtResource("3_ptv40")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_bos5s"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_7l086"), SubResource("RoseDialogIfQuest_g4n48")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_j33j1"]
+text = "The Ferrell Guild always purchases products at the most expensive price and sells them back cheaper. I swear!"
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_ajk40"), SubResource("RoseDialogCase_myppw"), SubResource("RoseDialogCase_lorlg"), SubResource("RoseDialogCase_rrsxl"), SubResource("RoseDialogCase_bos5s")])
+resource_name = "NPC: The Ferrell Guild always purchases products at t…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_c81kb"]
+quest = ExtResource("1_tjq2v")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_s3rbn"]
+quest = ExtResource("2_h5t84")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_qc4lm"]
+quest = ExtResource("3_ptv40")
+active = false
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_pibih"]
+ability = "Job"
+operator = "=="
+value = 411
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_d46yw"]
+value = 20
+
+[sub_resource type="RoseDialogIfVariable" id="RoseDialogIfVariable_wfhu6"]
+variable = "Job"
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_bjles"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_c81kb"), SubResource("RoseDialogIfQuest_s3rbn"), SubResource("RoseDialogIfQuest_qc4lm"), SubResource("RoseDialogIfAbility_pibih"), SubResource("RoseDialogIfAbility_d46yw"), SubResource("RoseDialogIfVariable_wfhu6")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nj5t1"]
+text = "Hey, you look like an experienced Dealer. Don’t' you think it's time to get some full fledged Dealer training?"
+next_menu = 10
+show_if = Array[Resource]([SubResource("RoseDialogCase_bjles")])
+resource_name = "NPC: Hey, you look like an experienced Dealer. Don’t'…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_38pdy"]
+quest = ExtResource("1_tjq2v")
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_rxvji"]
+quest = ExtResource("1_tjq2v")
+item = ExtResource("4_1wfes")
+operator = "<"
+value = 15
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_512og"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_38pdy"), SubResource("RoseDialogIfQuestItem_rxvji")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_sjnsg"]
+text = "You must be aware of price changes all the time. While you're wasting your time like this, the price of Beetle Shells has been decreasing. Did you know that?"
+next_menu = 23
+show_if = Array[Resource]([SubResource("RoseDialogCase_512og")])
+resource_name = "NPC: You must be aware of price changes all the time.…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_nxq3l"]
+quest = ExtResource("1_tjq2v")
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_c2grk"]
+quest = ExtResource("1_tjq2v")
+item = ExtResource("4_1wfes")
+value = 15
+
+[sub_resource type="RoseDialogIfQuestValue" id="RoseDialogIfQuestValue_5ofgw"]
+quest = ExtResource("1_tjq2v")
+index = 2
+
+[sub_resource type="RoseDialogIfQuestValue" id="RoseDialogIfQuestValue_lifq3"]
+quest = ExtResource("1_tjq2v")
+index = 3
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_pcv0f"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_nxq3l"), SubResource("RoseDialogIfQuestItem_c2grk"), SubResource("RoseDialogIfQuestValue_5ofgw"), SubResource("RoseDialogIfQuestValue_lifq3")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xnex0"]
+text = "Did you say you gathered Beetle Shells? Oh well, it's too late. That item's price hit rock bottom. I can't buy them from you since there's no way I can sell them back."
+next_menu = 26
+show_if = Array[Resource]([SubResource("RoseDialogCase_pcv0f")])
+resource_name = "NPC: Did you say you gathered Beetle Shells? Oh well,…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_bigm6"]
+quest = ExtResource("1_tjq2v")
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_1tv14"]
+quest = ExtResource("1_tjq2v")
+item = ExtResource("4_1wfes")
+value = 15
+
+[sub_resource type="RoseDialogIfQuestValue" id="RoseDialogIfQuestValue_lv4sq"]
+quest = ExtResource("1_tjq2v")
+index = 2
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_aerwx"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_bigm6"), SubResource("RoseDialogIfQuestItem_1tv14"), SubResource("RoseDialogIfQuestValue_lv4sq")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4f3if"]
+text = "Didn't you say you didn't want to do business with me? So why are you here again?"
+next_menu = 35
+show_if = Array[Resource]([SubResource("RoseDialogCase_aerwx")])
+resource_name = "NPC: Didn't you say you didn't want to do business wi…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_84x00"]
+quest = ExtResource("1_tjq2v")
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_o6ks1"]
+quest = ExtResource("1_tjq2v")
+item = ExtResource("4_1wfes")
+value = 15
+
+[sub_resource type="RoseDialogIfQuestValue" id="RoseDialogIfQuestValue_mk4hs"]
+quest = ExtResource("1_tjq2v")
+index = 3
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_flr1y"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_84x00"), SubResource("RoseDialogIfQuestItem_o6ks1"), SubResource("RoseDialogIfQuestValue_mk4hs")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e0k4l"]
+text = "Stop bugging me, I'm not going to buy the shells from you anyhow."
+next_menu = 40
+show_if = Array[Resource]([SubResource("RoseDialogCase_flr1y")])
+resource_name = "NPC: Stop bugging me, I'm not going to buy the shells…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1xadq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_j33j1"), SubResource("RoseDialogLine_nj5t1"), SubResource("RoseDialogLine_sjnsg"), SubResource("RoseDialogLine_xnex0"), SubResource("RoseDialogLine_4f3if"), SubResource("RoseDialogLine_e0k4l")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_0sitk"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_xai5l"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_0sitk")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mpnsi"]
+kind = "Answer"
+text = "I want to do business with you."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_xai5l")])
+resource_name = "You: I want to do business with you."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jvoxk"]
+kind = "Answer"
+text = "Merchants can't be trusted."
+next_menu = 2
+resource_name = "You: Merchants can't be trusted."
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_rk7hc"]
+quest = ExtResource("5_nukoc")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_8nwcf"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_rk7hc")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_x36j5"]
+kind = "Answer"
+text = "I brought a Daily Price Checklist for you."
+next_menu = 45
+show_if = Array[Resource]([SubResource("RoseDialogCase_8nwcf")])
+resource_name = "You: I brought a Daily Price Checklist for you."
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_b2tkk"]
+quest = ExtResource("6_pbawx")
+active = false
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_hj0hr"]
+operator = "<="
+value = 20
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5vu0g"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_b2tkk"), SubResource("RoseDialogIfAbility_hj0hr")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_q3dje"]
+kind = "Answer"
+text = "I was told that you need my help."
+next_menu = 50
+show_if = Array[Resource]([SubResource("RoseDialogCase_5vu0g")])
+resource_name = "You: I was told that you need my help."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wl11y"]
+kind = "Answer"
+text = "When I can really trust you, I'll be back."
+resource_name = "You: When I can really trust you, I'll be back."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_qx0xw"]
+window = "Disassembly"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_8jfw5"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_qx0xw")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wb2xb"]
+kind = "Answer"
+text = "I'd like to disassemble my item."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_8jfw5")])
+resource_name = "You: I'd like to disassemble my item."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_h4sd6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_mpnsi"), SubResource("RoseDialogLine_jvoxk"), SubResource("RoseDialogLine_x36j5"), SubResource("RoseDialogLine_q3dje"), SubResource("RoseDialogLine_wl11y"), SubResource("RoseDialogLine_wb2xb")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lucf0"]
+text = "The Ferrell Guild cares about doing good, honest business with its customers. How may I help you?"
+next_menu = 3
+resource_name = "NPC: The Ferrell Guild cares about doing good, honest…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_cws36"]
+lines = Array[Resource]([SubResource("RoseDialogLine_lucf0")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5mf8d"]
+kind = "Answer"
+text = "What kinds of goods do you primarily deal with?"
+next_menu = 4
+resource_name = "You: What kinds of goods do you primarily deal with?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wb4xu"]
+kind = "Answer"
+text = "I would like to know about item crafting."
+next_menu = 6
+resource_name = "You: I would like to know about item crafting."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5qsfs"]
+kind = "Answer"
+text = "I don't talk to merchants. You can't trust them!"
+next_menu = 0
+resource_name = "You: I don't talk to merchants. You can't trust them!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_mawcg"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5mf8d"), SubResource("RoseDialogLine_wb4xu"), SubResource("RoseDialogLine_5qsfs")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_levhm"]
+text = "I deal with all kinds of materials necessary for item crafting, as well as skill books for the Dealer class. Would you like to take a look?"
+next_menu = 5
+resource_name = "NPC: I deal with all kinds of materials necessary for…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_g2dxn"]
+lines = Array[Resource]([SubResource("RoseDialogLine_levhm")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_bnaab"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_tmmll"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_bnaab")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_15vk5"]
+kind = "Answer"
+text = "Yes, please."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_tmmll")])
+resource_name = "You: Yes, please."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ocjd3"]
+kind = "Answer"
+text = "No, thanks. I was just wondering."
+next_menu = 2
+resource_name = "You: No, thanks. I was just wondering."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_h3jmr"]
+lines = Array[Resource]([SubResource("RoseDialogLine_15vk5"), SubResource("RoseDialogLine_ocjd3")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_x4i1h"]
+text = "In order to create items, you must learn the Item Craft skill. If you've already learned it, you can create items with the materials required by the item you wish to create."
+next_menu = 7
+resource_name = "NPC: In order to create items, you must learn the Ite…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ol4yy"]
+lines = Array[Resource]([SubResource("RoseDialogLine_x4i1h")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_x6knl"]
+kind = "Answer"
+text = "Can anybody create items?"
+next_menu = 8
+resource_name = "You: Can anybody create items?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rj67x"]
+lines = Array[Resource]([SubResource("RoseDialogLine_x6knl")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_swpue"]
+text = "Sure, why not? However, if you want to create valuable items, the Dealer class will be better for the job."
+next_menu = 9
+resource_name = "NPC: Sure, why not? However, if you want to create va…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_eur5h"]
+lines = Array[Resource]([SubResource("RoseDialogLine_swpue")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_y753e"]
+kind = "Answer"
+text = "I understand. Thank you."
+next_menu = 2
+resource_name = "You: I understand. Thank you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_h60dw"]
+lines = Array[Resource]([SubResource("RoseDialogLine_y753e")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2h6g8"]
+kind = "Answer"
+text = "Dealer training? I didn't know that."
+next_menu = 11
+resource_name = "You: Dealer training? I didn't know that."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_cfi0i"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_i1ip1"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_cfi0i")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gujfa"]
+kind = "Answer"
+text = "I want to trade first."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_i1ip1")])
+resource_name = "You: I want to trade first."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0kbxb"]
+kind = "Answer"
+text = "Most of the time, only filthy lies come out of Merchant lips."
+next_menu = 2
+resource_name = "You: Most of the time, only filthy lies come out of M…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_8k1jq"]
+quest = ExtResource("5_nukoc")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_s1buo"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_8k1jq")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1qhms"]
+kind = "Answer"
+text = "I brought a Daily Price Checklist for you."
+next_menu = 45
+show_if = Array[Resource]([SubResource("RoseDialogCase_s1buo")])
+resource_name = "You: I brought a Daily Price Checklist for you."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3tymv"]
+kind = "Answer"
+text = "I was told that you need my help."
+next_menu = 50
+resource_name = "You: I was told that you need my help."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c2a6p"]
+kind = "Answer"
+text = "When I can trust you, I'll be back."
+resource_name = "You: When I can trust you, I'll be back."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_n0qj6"]
+window = "Disassembly"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_yh3dt"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_n0qj6")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3p17q"]
+kind = "Answer"
+text = "I'd like to disassemble my item."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_yh3dt")])
+resource_name = "You: I'd like to disassemble my item."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_no6fv"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2h6g8"), SubResource("RoseDialogLine_gujfa"), SubResource("RoseDialogLine_0kbxb"), SubResource("RoseDialogLine_1qhms"), SubResource("RoseDialogLine_3tymv"), SubResource("RoseDialogLine_c2a6p"), SubResource("RoseDialogLine_3p17q")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e5cvw"]
+text = "Of course! Our number one policy is to buy cheap and sell high. To do that, you must be aware of price changes all the time."
+next_menu = 12
+resource_name = "NPC: Of course! Our number one policy is to buy cheap…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_i3vf1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e5cvw")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_88nh4"]
+kind = "Answer"
+text = "I don't think I'm aware of the price changes at this moment."
+next_menu = 13
+resource_name = "You: I don't think I'm aware of the price changes at …"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nq4bk"]
+kind = "Answer"
+text = "I know about Beetle Shells."
+next_menu = 21
+resource_name = "You: I know about Beetle Shells."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kdfr8"]
+kind = "Answer"
+text = "I don't know much about the price changes, but I think I'll be okay."
+resource_name = "You: I don't know much about the price changes, but I…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bp0a0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_88nh4"), SubResource("RoseDialogLine_nq4bk"), SubResource("RoseDialogLine_kdfr8")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_yg4nt"]
+text = "You're not a Dealer if you're not aware of the price changes. Pay attention to the market and buy expensive items to sell them at more expensive prices. Also, you must stock the cheapest items in order to sell them when their prices rise to make a profit."
+next_menu = 14
+resource_name = "NPC: You're not a Dealer if you're not aware of the p…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_naduu"]
+lines = Array[Resource]([SubResource("RoseDialogLine_yg4nt")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tf5fq"]
+kind = "Answer"
+text = "I see, I'll keep that in mind."
+next_menu = 15
+resource_name = "You: I see, I'll keep that in mind."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_uj7t6"]
+kind = "Answer"
+text = "If so, what is the most expensive item in the market nowadays?"
+next_menu = 19
+resource_name = "You: If so, what is the most expensive item in the ma…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hoyxi"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tf5fq"), SubResource("RoseDialogLine_uj7t6")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gr8l3"]
+text = "I hope you'll try harder to understand the market from now on. Currently, Beetle Shells are the most expensive items in Zant. If you can gather some {fc=14}Beetle Shells{/fc}, you will be able to sell them at the highest price. Would you like to try?"
+next_menu = 16
+resource_name = "NPC: I hope you'll try harder to understand the marke…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_syiyx"]
+lines = Array[Resource]([SubResource("RoseDialogLine_gr8l3")])
+resource_name = "Menu 15"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_scykd"]
+kind = "Answer"
+text = "Why not, let me go gather some."
+next_menu = 17
+resource_name = "You: Why not, let me go gather some."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ghmgh"]
+kind = "Answer"
+text = "Whoa! That sounds like… work. I just want to make easy money."
+resource_name = "You: Whoa! That sounds like… work. I just want to mak…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5wj2f"]
+lines = Array[Resource]([SubResource("RoseDialogLine_scykd"), SubResource("RoseDialogLine_ghmgh")])
+resource_name = "Menu 16"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ijd8h"]
+text = "Excellent! I can't buy them individually, but if you can bring me at least 15 of them, I'll pay you a high price."
+next_menu = 18
+resource_name = "NPC: Excellent! I can't buy them individually, but if…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3c0is"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ijd8h")])
+resource_name = "Menu 17"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_sesw1"]
+step = ExtResource("7_wxpqk")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_tpg3t"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_sesw1")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gltcm"]
+kind = "Answer"
+text = "Good, let me go get them."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_tpg3t")])
+resource_name = "You: Good, let me go get them."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_p5x82"]
+lines = Array[Resource]([SubResource("RoseDialogLine_gltcm")])
+resource_name = "Menu 18"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_u7vx7"]
+text = "Currently, Beetle Shells are the most expensive items in Zant. If you can gather some {fc=14}Beetle Shells{/fc}, you will be able to sell them at the highest price. Would you like to try?"
+next_menu = 20
+resource_name = "NPC: Currently, Beetle Shells are the most expensive …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ylrbi"]
+lines = Array[Resource]([SubResource("RoseDialogLine_u7vx7")])
+resource_name = "Menu 19"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_h5dxc"]
+kind = "Answer"
+text = "Why not? Let me go gather some."
+next_menu = 17
+resource_name = "You: Why not? Let me go gather some."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0wph5"]
+kind = "Answer"
+text = "Wha--? That's way too much trouble!"
+resource_name = "You: Wha--? That's way too much trouble!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_cbthf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_h5dxc"), SubResource("RoseDialogLine_0wph5")])
+resource_name = "Menu 20"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bmim4"]
+text = "I think you need to be more aware of price changes in the market. If I were you, I would have already left to find some Beetle Shells, the most expensive item right now."
+next_menu = 22
+resource_name = "NPC: I think you need to be more aware of price chang…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_eji3q"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bmim4")])
+resource_name = "Menu 21"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5b3kl"]
+kind = "Answer"
+text = "I promise I'll do my best, so can you tell me what I should do?"
+next_menu = 17
+resource_name = "You: I promise I'll do my best, so can you tell me wh…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_uit1k"]
+kind = "Answer"
+text = "I don't care. I'll do whatever I want."
+resource_name = "You: I don't care. I'll do whatever I want."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hvqxk"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5b3kl"), SubResource("RoseDialogLine_uit1k")])
+resource_name = "Menu 22"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_l2yhu"]
+kind = "Answer"
+text = "I know, I know."
+resource_name = "You: I know, I know."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2b4x8"]
+kind = "Answer"
+text = "I would like to have more information about Beetle Shells."
+next_menu = 24
+resource_name = "You: I would like to have more information about Beet…"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_brfj0"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ahev4"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_brfj0")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6xolr"]
+kind = "Answer"
+text = "I want to trade first."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_ahev4")])
+resource_name = "You: I want to trade first."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lvr1t"]
+kind = "Answer"
+text = "Merchants are just silver-tongued liars!"
+next_menu = 2
+resource_name = "You: Merchants are just silver-tongued liars!"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5kk4r"]
+kind = "Answer"
+text = "I brought a Daily Price Checklist for you."
+next_menu = 45
+resource_name = "You: I brought a Daily Price Checklist for you."
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ybuhe"]
+quest = ExtResource("6_pbawx")
+active = false
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_sxa7e"]
+operator = "<="
+value = 20
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_vwuwm"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_ybuhe"), SubResource("RoseDialogIfAbility_sxa7e")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4hndc"]
+kind = "Answer"
+text = "I was told that you need my help."
+next_menu = 50
+show_if = Array[Resource]([SubResource("RoseDialogCase_vwuwm")])
+resource_name = "You: I was told that you need my help."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3kwf0"]
+kind = "Answer"
+text = "When I can really trust you, I'll be back."
+resource_name = "You: When I can really trust you, I'll be back."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_g8pgb"]
+window = "Disassembly"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_dqhhb"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_g8pgb")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5ci4w"]
+kind = "Answer"
+text = "I'd like to disassemble my item."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_dqhhb")])
+resource_name = "You: I'd like to disassemble my item."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_yb744"]
+lines = Array[Resource]([SubResource("RoseDialogLine_l2yhu"), SubResource("RoseDialogLine_2b4x8"), SubResource("RoseDialogLine_6xolr"), SubResource("RoseDialogLine_lvr1t"), SubResource("RoseDialogLine_5kk4r"), SubResource("RoseDialogLine_4hndc"), SubResource("RoseDialogLine_3kwf0"), SubResource("RoseDialogLine_5ci4w")])
+resource_name = "Menu 23"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vkkjv"]
+text = "You can find Beetle Shells from {fc=12}Beetles{/fc} and {fc=12}Beetle Fighters{/fc}. Those monsters can be found in the Breezy Hills. So is there anything more you wish to know?"
+next_menu = 25
+resource_name = "NPC: You can find Beetle Shells from {fc=12}Beetles{/…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ejohq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vkkjv")])
+resource_name = "Menu 24"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_febht"]
+kind = "Answer"
+text = "No, that's all I wanted. Thank you."
+resource_name = "You: No, that's all I wanted. Thank you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dtxe5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_febht")])
+resource_name = "Menu 25"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gxtdf"]
+kind = "Answer"
+text = "What?! After all the trouble I went through to get them?!"
+next_menu = 27
+resource_name = "You: What?! After all the trouble I went through to g…"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_yay4j"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_kle87"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_yay4j")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jbs3d"]
+kind = "Answer"
+text = "I want to trade first."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_kle87")])
+resource_name = "You: I want to trade first."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vcnri"]
+kind = "Answer"
+text = "Merchants and falsehoods go hand in hand!"
+next_menu = 2
+resource_name = "You: Merchants and falsehoods go hand in hand!"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dwaid"]
+kind = "Answer"
+text = "I'll be back when I can trust you a little more."
+resource_name = "You: I'll be back when I can trust you a little more."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_nbmbo"]
+window = "Disassembly"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_e138t"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_nbmbo")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_u0jvo"]
+kind = "Answer"
+text = "I'd like to disassemble my item."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_e138t")])
+resource_name = "You: I'd like to disassemble my item."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fbcav"]
+lines = Array[Resource]([SubResource("RoseDialogLine_gxtdf"), SubResource("RoseDialogLine_jbs3d"), SubResource("RoseDialogLine_vcnri"), SubResource("RoseDialogLine_dwaid"), SubResource("RoseDialogLine_u0jvo")])
+resource_name = "Menu 26"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_oqc3m"]
+text = "Okay, then. Since I suggested that you gather them, I don't think I have a choice. But remember this. Our number two policy is that price changes can affect your business, just like right now. This time, I'll compensate you with 5 Cobra Leather. How does that sound?"
+next_menu = 28
+resource_name = "NPC: Okay, then. Since I suggested that you gather th…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_iqlc2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_oqc3m")])
+resource_name = "Menu 27"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1cejq"]
+kind = "Answer"
+text = "I don't think I have a choice either. I'll take them."
+next_menu = 29
+resource_name = "You: I don't think I have a choice either. I'll take …"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_yq3id"]
+kind = "Answer"
+text = "No, thanks. I don't want that useless stuff."
+next_menu = 33
+resource_name = "You: No, thanks. I don't want that useless stuff."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5efmq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1cejq"), SubResource("RoseDialogLine_yq3id")])
+resource_name = "Menu 28"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_i77yw"]
+text = "Although Cobra Leathers are not expensive here, you might be able to sell them at a pretty decent price in Breezy Hills. I'm sorry for the trouble."
+next_menu = 30
+resource_name = "NPC: Although Cobra Leathers are not expensive here, …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hbqfd"]
+lines = Array[Resource]([SubResource("RoseDialogLine_i77yw")])
+resource_name = "Menu 29"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_8lgeq"]
+step = ExtResource("8_t34a2")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_cpsx0"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_8lgeq")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dixh7"]
+kind = "Answer"
+text = "Alright."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_cpsx0")])
+resource_name = "You: Alright."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3q7ln"]
+kind = "Answer"
+text = "Why don't you go sell them and give me the money?"
+next_menu = 31
+resource_name = "You: Why don't you go sell them and give me the money…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_h08m5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dixh7"), SubResource("RoseDialogLine_3q7ln")])
+resource_name = "Menu 30"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rxbvw"]
+text = "I can't leave my store. I'm being overly generous with you, <NAME>. Don't take it too personal, just go sell them. That will be best for you."
+next_menu = 32
+resource_name = "NPC: I can't leave my store. I'm being overly generou…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_h0eqk"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rxbvw")])
+resource_name = "Menu 31"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_qe70m"]
+step = ExtResource("8_t34a2")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_oc8dm"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_qe70m")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_o6u01"]
+kind = "Answer"
+text = "Alright, but remember I don't like the way you do your business."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_oc8dm")])
+resource_name = "You: Alright, but remember I don't like the way you d…"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_p3nh6"]
+step = ExtResource("9_cc43c")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_lqy6k"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_p3nh6")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_12nuw"]
+kind = "Answer"
+text = "I feel cheated. I don't think I can make this trade with you."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_lqy6k")])
+resource_name = "You: I feel cheated. I don't think I can make this tr…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qvhua"]
+lines = Array[Resource]([SubResource("RoseDialogLine_o6u01"), SubResource("RoseDialogLine_12nuw")])
+resource_name = "Menu 32"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nuqfp"]
+text = "Consider this. I'm being overly generous with you, <NAME>. Cobra Leathers may look useless but they are being sold at a pretty high price in Breezy Hills. You might not realize this now, but it's a pretty good deal."
+next_menu = 34
+resource_name = "NPC: Consider this. I'm being overly generous with yo…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vukbm"]
+lines = Array[Resource]([SubResource("RoseDialogLine_nuqfp")])
+resource_name = "Menu 33"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_0nsia"]
+step = ExtResource("8_t34a2")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_eoxo6"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_0nsia")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b3rhq"]
+kind = "Answer"
+text = "Alright, but remember! I don't like the way you do your business."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_eoxo6")])
+resource_name = "You: Alright, but remember! I don't like the way you …"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_yne5p"]
+step = ExtResource("9_cc43c")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5ieax"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_yne5p")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3q016"]
+kind = "Answer"
+text = "I feel cheated. I don't think I can make this trade with you."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_5ieax")])
+resource_name = "You: I feel cheated. I don't think I can make this tr…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2lxqm"]
+lines = Array[Resource]([SubResource("RoseDialogLine_b3rhq"), SubResource("RoseDialogLine_3q016")])
+resource_name = "Menu 34"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b8t67"]
+kind = "Answer"
+text = "When I think about it, I don’t think I can get rid of these Beetle Shells other than by trading them to you. I'll take your offer."
+next_menu = 36
+resource_name = "You: When I think about it, I don’t think I can get r…"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_1adwh"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_81mbq"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_1adwh")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_chclj"]
+kind = "Answer"
+text = "I want to trade first."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_81mbq")])
+resource_name = "You: I want to trade first."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xlkvy"]
+kind = "Answer"
+text = "Merchants are dirty liars!"
+next_menu = 2
+resource_name = "You: Merchants are dirty liars!"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_sh31t"]
+kind = "Answer"
+text = "When I can really trust you, I'll be back."
+resource_name = "You: When I can really trust you, I'll be back."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_ijglf"]
+window = "Disassembly"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_n6pke"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_ijglf")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vqx6j"]
+kind = "Answer"
+text = "I'd like to disassemble my item."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_n6pke")])
+resource_name = "You: I'd like to disassemble my item."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7kf2p"]
+lines = Array[Resource]([SubResource("RoseDialogLine_b8t67"), SubResource("RoseDialogLine_chclj"), SubResource("RoseDialogLine_xlkvy"), SubResource("RoseDialogLine_sh31t"), SubResource("RoseDialogLine_vqx6j")])
+resource_name = "Menu 35"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0x1rx"]
+text = "Oh, I'm sorry. I changed my mind! I'll give you 4 Cobra Leathers."
+next_menu = 37
+resource_name = "NPC: Oh, I'm sorry. I changed my mind! I'll give you …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ipok3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0x1rx")])
+resource_name = "Menu 36"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_eyx6n"]
+kind = "Answer"
+text = "What?! You said you would give me 5 of them!"
+next_menu = 38
+resource_name = "You: What?! You said you would give me 5 of them!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3f0pl"]
+lines = Array[Resource]([SubResource("RoseDialogLine_eyx6n")])
+resource_name = "Menu 37"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0ctvw"]
+text = "I told you, the price went down just now! This is all I can do."
+next_menu = 39
+resource_name = "NPC: I told you, the price went down just now! This i…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_m8myr"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0ctvw")])
+resource_name = "Menu 38"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_d1k40"]
+step = ExtResource("8_t34a2")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_w8qhk"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_d1k40")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_w5dwj"]
+kind = "Answer"
+text = "Bah! Okay."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_w8qhk")])
+resource_name = "You: Bah! Okay."
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_jlw0h"]
+step = ExtResource("10_6r6ts")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_1688k"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_jlw0h")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ej8y8"]
+kind = "Answer"
+text = "What a cheapskate! I won't do business with you!"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_1688k")])
+resource_name = "You: What a cheapskate! I won't do business with you!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_j677l"]
+lines = Array[Resource]([SubResource("RoseDialogLine_w5dwj"), SubResource("RoseDialogLine_ej8y8")])
+resource_name = "Menu 39"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1yo87"]
+kind = "Answer"
+text = "I don't think I have a choice. You are the only one who will buy Beetle Shells from me."
+next_menu = 41
+resource_name = "You: I don't think I have a choice. You are the only …"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_ia0m6"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ethkj"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_ia0m6")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1y2jm"]
+kind = "Answer"
+text = "I want to trade first."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_ethkj")])
+resource_name = "You: I want to trade first."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4tleq"]
+kind = "Answer"
+text = "Merchants are lying conmen… in disguise!"
+next_menu = 2
+resource_name = "You: Merchants are lying conmen… in disguise!"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_p88t4"]
+kind = "Answer"
+text = "I think I'll only come back when I can trust you."
+resource_name = "You: I think I'll only come back when I can trust you…"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_k4oy4"]
+window = "Disassembly"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_d2a5m"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_k4oy4")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vcnq4"]
+kind = "Answer"
+text = "I'd like to disassemble my item."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_d2a5m")])
+resource_name = "You: I'd like to disassemble my item."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wrrtu"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1yo87"), SubResource("RoseDialogLine_1y2jm"), SubResource("RoseDialogLine_4tleq"), SubResource("RoseDialogLine_p88t4"), SubResource("RoseDialogLine_vcnq4")])
+resource_name = "Menu 40"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_15e74"]
+text = "Hah, did you just realize that now? Stop bugging me, or I'll only give you 3 Cobra Leather."
+next_menu = 42
+resource_name = "NPC: Hah, did you just realize that now? Stop bugging…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_twp0p"]
+lines = Array[Resource]([SubResource("RoseDialogLine_15e74")])
+resource_name = "Menu 41"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_w36vb"]
+kind = "Answer"
+text = "What the…!! Are you really gonna give me only 3 of them?"
+next_menu = 43
+resource_name = "You: What the…!! Are you really gonna give me only 3 …"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vnuho"]
+kind = "Answer"
+text = "I was rude. I'm sorry, so will you give me a little bit more than that?"
+next_menu = 43
+resource_name = "You: I was rude. I'm sorry, so will you give me a lit…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_kk3we"]
+lines = Array[Resource]([SubResource("RoseDialogLine_w36vb"), SubResource("RoseDialogLine_vnuho")])
+resource_name = "Menu 42"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_n4x1p"]
+text = "I'm the one who controls this deal. I can't give you more than that. Take it or leave it."
+next_menu = 44
+resource_name = "NPC: I'm the one who controls this deal. I can't give…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0j3l3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_n4x1p")])
+resource_name = "Menu 43"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ppdc6"]
+step = ExtResource("8_t34a2")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_retft"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_ppdc6")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qdwrd"]
+kind = "Answer"
+text = "Okay, I'll take it."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_retft")])
+resource_name = "You: Okay, I'll take it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ngul1"]
+kind = "Answer"
+text = "Hah! Fine, then I'll leave it!"
+resource_name = "You: Hah! Fine, then I'll leave it!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_yb4v5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qdwrd"), SubResource("RoseDialogLine_ngul1")])
+resource_name = "Menu 44"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hevpi"]
+text = "Ah, you're the one sent by Seyon from the Adventurer's Plains. Thank you for your trouble."
+next_menu = 46
+resource_name = "NPC: Ah, you're the one sent by Seyon from the Advent…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8366d"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hevpi")])
+resource_name = "Menu 45"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_w45b2"]
+kind = "Answer"
+text = "No problem, I just carried it with me on the way."
+next_menu = 47
+resource_name = "You: No problem, I just carried it with me on the way…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3cs8w"]
+lines = Array[Resource]([SubResource("RoseDialogLine_w45b2")])
+resource_name = "Menu 46"
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_r0cum"]
+operator = ">"
+value = 20
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_qd211"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_r0cum")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_dbmpo"]
+quest = ExtResource("6_pbawx")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_k0h3x"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_dbmpo")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mqv6r"]
+text = "I hope you will continue to help out the Ferrell Guild."
+next_menu = 48
+show_if = Array[Resource]([SubResource("RoseDialogCase_qd211"), SubResource("RoseDialogCase_k0h3x")])
+resource_name = "NPC: I hope you will continue to help out the Ferrell…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_rrts6"]
+quest = ExtResource("6_pbawx")
+active = false
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_p1mtr"]
+operator = "<="
+value = 20
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_i4gw7"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_rrts6"), SubResource("RoseDialogIfAbility_p1mtr")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0dyqu"]
+text = "By any chance, is there anything you need delivered to the Adventurer's Plains again? I'm going to the Adventurer's Plains to deliver the Daily Price Checklist of Zant."
+next_menu = 49
+show_if = Array[Resource]([SubResource("RoseDialogCase_i4gw7")])
+resource_name = "NPC: By any chance, is there anything you need delive…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ujadq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_mqv6r"), SubResource("RoseDialogLine_0dyqu")])
+resource_name = "Menu 47"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_k53jx"]
+step = ExtResource("11_3u67j")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_hg3nn"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_k53jx")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3mjvf"]
+kind = "Answer"
+text = "Okay."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_hg3nn")])
+resource_name = "You: Okay."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dwwec"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3mjvf")])
+resource_name = "Menu 48"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_6vbms"]
+step = ExtResource("11_3u67j")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_wgjr7"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_6vbms")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_o5q7e"]
+kind = "Answer"
+text = "Sorry, but I'm really busy."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_wgjr7")])
+resource_name = "You: Sorry, but I'm really busy."
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_bx013"]
+step = ExtResource("12_am2lo")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3lk0d"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_bx013")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_s58of"]
+kind = "Answer"
+text = "Okay, I will do it for you."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_3lk0d")])
+resource_name = "You: Okay, I will do it for you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1euhi"]
+lines = Array[Resource]([SubResource("RoseDialogLine_o5q7e"), SubResource("RoseDialogLine_s58of")])
+resource_name = "Menu 49"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8sc3f"]
+text = "Welcome! We, the Ferrell Guild, always check item prices in town to balance them out. We have to send the Daily Price Checklist of Zant to {fc=1}Seyon{/fc} in the {fc=2}Adventurer's Plains{/fc}. Would you help us?"
+next_menu = 51
+resource_name = "NPC: Welcome! We, the Ferrell Guild, always check ite…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_x8x2f"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8sc3f")])
+resource_name = "Menu 50"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_3ea4m"]
+step = ExtResource("13_0w8v1")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_fq7v4"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_3ea4m")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_m2rul"]
+kind = "Answer"
+text = "Sure, why not."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_fq7v4")])
+resource_name = "You: Sure, why not."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_egj6r"]
+kind = "Answer"
+text = "Oh, I'm sorry. I'm sort of busy right now."
+resource_name = "You: Oh, I'm sorry. I'm sort of busy right now."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_mrhw2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_m2rul"), SubResource("RoseDialogLine_egj6r")])
+resource_name = "Menu 51"
+
+[resource]
+key = "EM01-012.con"
+name = "[Ferrell Guild Staff] Ulysses"
+menus = Array[Resource]([SubResource("RoseDialogMenu_1xadq"), SubResource("RoseDialogMenu_h4sd6"), SubResource("RoseDialogMenu_cws36"), SubResource("RoseDialogMenu_mawcg"), SubResource("RoseDialogMenu_g2dxn"), SubResource("RoseDialogMenu_h3jmr"), SubResource("RoseDialogMenu_ol4yy"), SubResource("RoseDialogMenu_rj67x"), SubResource("RoseDialogMenu_eur5h"), SubResource("RoseDialogMenu_h60dw"), SubResource("RoseDialogMenu_no6fv"), SubResource("RoseDialogMenu_i3vf1"), SubResource("RoseDialogMenu_bp0a0"), SubResource("RoseDialogMenu_naduu"), SubResource("RoseDialogMenu_hoyxi"), SubResource("RoseDialogMenu_syiyx"), SubResource("RoseDialogMenu_5wj2f"), SubResource("RoseDialogMenu_3c0is"), SubResource("RoseDialogMenu_p5x82"), SubResource("RoseDialogMenu_ylrbi"), SubResource("RoseDialogMenu_cbthf"), SubResource("RoseDialogMenu_eji3q"), SubResource("RoseDialogMenu_hvqxk"), SubResource("RoseDialogMenu_yb744"), SubResource("RoseDialogMenu_ejohq"), SubResource("RoseDialogMenu_dtxe5"), SubResource("RoseDialogMenu_fbcav"), SubResource("RoseDialogMenu_iqlc2"), SubResource("RoseDialogMenu_5efmq"), SubResource("RoseDialogMenu_hbqfd"), SubResource("RoseDialogMenu_h08m5"), SubResource("RoseDialogMenu_h0eqk"), SubResource("RoseDialogMenu_qvhua"), SubResource("RoseDialogMenu_vukbm"), SubResource("RoseDialogMenu_2lxqm"), SubResource("RoseDialogMenu_7kf2p"), SubResource("RoseDialogMenu_ipok3"), SubResource("RoseDialogMenu_3f0pl"), SubResource("RoseDialogMenu_m8myr"), SubResource("RoseDialogMenu_j677l"), SubResource("RoseDialogMenu_wrrtu"), SubResource("RoseDialogMenu_twp0p"), SubResource("RoseDialogMenu_kk3we"), SubResource("RoseDialogMenu_0j3l3"), SubResource("RoseDialogMenu_yb4v5"), SubResource("RoseDialogMenu_8366d"), SubResource("RoseDialogMenu_3cs8w"), SubResource("RoseDialogMenu_ujadq"), SubResource("RoseDialogMenu_dwwec"), SubResource("RoseDialogMenu_1euhi"), SubResource("RoseDialogMenu_x8x2f"), SubResource("RoseDialogMenu_mrhw2")])

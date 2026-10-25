@@ -1,0 +1,169 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://ci0siw7575ejm"]
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_yjb22"]
+switch = 3
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_033fm"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_yjb22")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6kch1"]
+text = "Cangom Dulhihewhi thalaino thalaino huohuohuo?"
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_033fm")])
+resource_name = "NPC: Cangom Dulhihewhi thalaino thalaino huohuohuo?"
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_plkw7"]
+switch = 3
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ug2na"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_plkw7")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qu4ju"]
+text = "The planet of Luna has weathered many crises, thanks to our magnificent judge, Ishtal."
+next_menu = 4
+show_if = Array[Resource]([SubResource("RoseDialogCase_ug2na")])
+resource_name = "NPC: The planet of Luna has weathered many crises, th…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_h6c2p"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6kch1"), SubResource("RoseDialogLine_qu4ju")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4wbsv"]
+kind = "Answer"
+text = "What? What did you say?"
+next_menu = 2
+resource_name = "You: What? What did you say?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vnjy3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4wbsv")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vobah"]
+text = "Paneueg cclinjee donedone mibkubijee hapohapo nihtnihttanie."
+next_menu = 3
+resource_name = "NPC: Paneueg cclinjee donedone mibkubijee hapohapo ni…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xaisn"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vobah")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fbyxj"]
+kind = "Answer"
+text = "(I don’t get it. What are you talking about?)"
+resource_name = "You: (I don’t get it. What are you talking about?)"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rxwy7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fbyxj")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_slpmu"]
+kind = "Answer"
+text = "I'd like to save my respawn point."
+next_menu = 5
+resource_name = "You: I'd like to save my respawn point."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tonwd"]
+kind = "Answer"
+text = "Although Ishtal still seems young, he's an amazing person."
+next_menu = 11
+resource_name = "You: Although Ishtal still seems young, he's an amazi…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_w4yvf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_slpmu"), SubResource("RoseDialogLine_tonwd")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4xuno"]
+text = "If you specify your respawn point, you can respawn in the map where your spawn point was saved after being defeated in battle. Would you like to save your respawn point on this map?"
+next_menu = 6
+resource_name = "NPC: If you specify your respawn point, you can respa…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jowd0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4xuno")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hup7a"]
+kind = "Answer"
+text = "Yes, I would like to."
+next_menu = 7
+resource_name = "You: Yes, I would like to."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1w1qe"]
+kind = "Answer"
+text = "I'd like to know my current respawn point."
+next_menu = 9
+resource_name = "You: I'd like to know my current respawn point."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cvl00"]
+kind = "Answer"
+text = "No thanks, I'm fine for now."
+resource_name = "You: No thanks, I'm fine for now."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ojwsq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hup7a"), SubResource("RoseDialogLine_1w1qe"), SubResource("RoseDialogLine_cvl00")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vumst"]
+text = "Well then, I will now change your respawn point."
+next_menu = 8
+resource_name = "NPC: Well then, I will now change your respawn point."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bhg22"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vumst")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogDoSetSavePoint" id="RoseDialogDoSetSavePoint_edajn"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_lbhw6"]
+actions = Array[Resource]([SubResource("RoseDialogDoSetSavePoint_edajn")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_s4rgd"]
+kind = "Answer"
+text = "Thank you very much."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_lbhw6")])
+resource_name = "You: Thank you very much."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_som3y"]
+lines = Array[Resource]([SubResource("RoseDialogLine_s4rgd")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_l0eth"]
+text = "Your current respawn point is <REVIVE_ZONE>"
+next_menu = 10
+resource_name = "NPC: Your current respawn point is <REVIVE_ZONE>"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_j7oyh"]
+lines = Array[Resource]([SubResource("RoseDialogLine_l0eth")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lgiip"]
+kind = "Answer"
+text = "Right, I understand."
+resource_name = "You: Right, I understand."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7g3rm"]
+lines = Array[Resource]([SubResource("RoseDialogLine_lgiip")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_f18b7"]
+text = "There's only one thing about him I'd oppose. He's approved of those foolish shamanists living in this sacred city of the Eucar! Someday, he'll know that's going to be a grave mistake."
+next_menu = 12
+resource_name = "NPC: There's only one thing about him I'd oppose. He'…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_igekf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_f18b7")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ddd1t"]
+kind = "Answer"
+text = "Well, I can't see how that would be a mistake."
+resource_name = "You: Well, I can't see how that would be a mistake."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_l1fqm"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ddd1t")])
+resource_name = "Menu 12"
+
+[resource]
+key = "EM51-003.con"
+name = "[Arumic Prophet] Olleck Basilasi"
+menus = Array[Resource]([SubResource("RoseDialogMenu_h6c2p"), SubResource("RoseDialogMenu_vnjy3"), SubResource("RoseDialogMenu_xaisn"), SubResource("RoseDialogMenu_rxwy7"), SubResource("RoseDialogMenu_w4yvf"), SubResource("RoseDialogMenu_jowd0"), SubResource("RoseDialogMenu_ojwsq"), SubResource("RoseDialogMenu_bhg22"), SubResource("RoseDialogMenu_som3y"), SubResource("RoseDialogMenu_j7oyh"), SubResource("RoseDialogMenu_7g3rm"), SubResource("RoseDialogMenu_igekf"), SubResource("RoseDialogMenu_l1fqm")])

@@ -1,0 +1,288 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://bwivtc5q6c4lm"]
+
+[ext_resource type="RoseQuest" uid="uid://cpwi2pk76hlwq" path="res://data/quests/147-pavrick-the-craftsman-on-lunar.tres" id="1_bj5cp"]
+[ext_resource type="RoseQuest" uid="uid://du0wv01busneu" path="res://data/quests/1988-pavrick-the-craftsman-on-lunar.tres" id="2_yo6ub"]
+[ext_resource type="RoseQuestTrigger" uid="uid://b2v8s1yo8akaq" path="res://data/quest_triggers/qp102/1988-02.tres" id="3_uqbde"]
+[ext_resource type="RoseQuestTrigger" uid="uid://chmh6pqha0s26" path="res://data/quest_triggers/qp102/1988-05.tres" id="4_n364f"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cgwjo1qmkso7c" path="res://data/quest_triggers/qp103/147-04.tres" id="5_klei0"]
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_qjsu1"]
+switch = 3
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_qefdv"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_qjsu1")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_eg21p"]
+text = "Kororokiriri Putanpukirushika!"
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_qefdv")])
+resource_name = "NPC: Kororokiriri Putanpukirushika!"
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_kdj50"]
+switch = 3
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_sikn2"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_kdj50")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_owh5i"]
+text = "To endure the cold in Luna, it's essential to drink alcohol. Frequently, I might add."
+next_menu = 4
+show_if = Array[Resource]([SubResource("RoseDialogCase_sikn2")])
+resource_name = "NPC: To endure the cold in Luna, it's essential to dr…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gyydi"]
+lines = Array[Resource]([SubResource("RoseDialogLine_eg21p"), SubResource("RoseDialogLine_owh5i")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rj3oh"]
+kind = "Answer"
+text = "What'd you say?"
+next_menu = 2
+resource_name = "You: What'd you say?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_a8t7j"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rj3oh")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_yneao"]
+text = "Nakanoru kawachimokino doiname covitohe kananode."
+next_menu = 3
+resource_name = "NPC: Nakanoru kawachimokino doiname covitohe kananode…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3opmi"]
+lines = Array[Resource]([SubResource("RoseDialogLine_yneao")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lr2gw"]
+kind = "Answer"
+text = "(What, I can't understand!)"
+resource_name = "You: (What, I can't understand!)"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wcrl7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_lr2gw")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_55nkc"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5eqqh"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_55nkc")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_65pc6"]
+kind = "Answer"
+text = "Rather than alcohol, do you have anything good to eat?"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_5eqqh")])
+resource_name = "You: Rather than alcohol, do you have anything good t…"
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_rekvb"]
+switch = 3
+value = 1
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_jnoes"]
+quest = ExtResource("1_bj5cp")
+
+[sub_resource type="RoseDialogIfQuestValue" id="RoseDialogIfQuestValue_2s5w5"]
+quest = ExtResource("1_bj5cp")
+value_type = "Variable"
+index = 1
+value = 10
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ec47p"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_rekvb"), SubResource("RoseDialogIfQuest_jnoes"), SubResource("RoseDialogIfQuestValue_2s5w5")])
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_uosf5"]
+switch = 3
+value = 1
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_cvy17"]
+quest = ExtResource("2_yo6ub")
+
+[sub_resource type="RoseDialogIfQuestValue" id="RoseDialogIfQuestValue_wg2ca"]
+quest = ExtResource("2_yo6ub")
+value_type = "Variable"
+index = 1
+value = 10
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ko7bx"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_uosf5"), SubResource("RoseDialogIfQuest_cvy17"), SubResource("RoseDialogIfQuestValue_wg2ca")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_51ayb"]
+kind = "Answer"
+text = "I've come to get Pavrick some Whiskey."
+next_menu = 5
+show_if = Array[Resource]([SubResource("RoseDialogCase_ec47p"), SubResource("RoseDialogCase_ko7bx")])
+resource_name = "You: I've come to get Pavrick some Whiskey."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wlesa"]
+lines = Array[Resource]([SubResource("RoseDialogLine_65pc6"), SubResource("RoseDialogLine_51ayb")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_isttv"]
+text = "This is the Whiskey that Pavrick likes so much. Will this do?"
+next_menu = 6
+resource_name = "NPC: This is the Whiskey that Pavrick likes so much. …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_r6bis"]
+lines = Array[Resource]([SubResource("RoseDialogLine_isttv")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3hrq6"]
+kind = "Answer"
+text = "Yes, just 1 bottle please."
+next_menu = 7
+resource_name = "You: Yes, just 1 bottle please."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_g5gxy"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3hrq6")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_twscq"]
+text = "Alright, it's 500 Zulie."
+next_menu = 8
+resource_name = "NPC: Alright, it's 500 Zulie."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jqwpj"]
+lines = Array[Resource]([SubResource("RoseDialogLine_twscq")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_1l3oh"]
+step = ExtResource("3_uqbde")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_bleck"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_1l3oh")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_nwjvh"]
+quest = ExtResource("2_yo6ub")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_f7jb6"]
+step = ExtResource("4_n364f")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_xt5bs"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_nwjvh"), SubResource("RoseDialogIfQuestStep_f7jb6")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_uxsqg"]
+kind = "Answer"
+text = "Okay, here you go."
+show_if = Array[Resource]([SubResource("RoseDialogCase_xt5bs")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_bleck")])
+resource_name = "You: Okay, here you go."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_sotkm"]
+step = ExtResource("4_n364f")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7bgon"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_sotkm")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ov6kp"]
+kind = "Answer"
+text = "I don't have enough Zulie, but I'll be right back."
+show_if = Array[Resource]([SubResource("RoseDialogCase_7bgon")])
+resource_name = "You: I don't have enough Zulie, but I'll be right bac…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lv8ik"]
+kind = "Answer"
+text = "Um, since I'm getting this for Pavrick, would it be alright if he pays you later?"
+next_menu = 9
+resource_name = "You: Um, since I'm getting this for Pavrick, would it…"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_00emi"]
+step = ExtResource("5_klei0")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_pb87q"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_00emi")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_nwqso"]
+quest = ExtResource("1_bj5cp")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_qlj5t"]
+step = ExtResource("4_n364f")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_o5x1t"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_nwqso"), SubResource("RoseDialogIfQuestStep_qlj5t")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ndrq7"]
+kind = "Answer"
+text = "Right, I've gathered everything you asked for."
+show_if = Array[Resource]([SubResource("RoseDialogCase_o5x1t")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_pb87q")])
+resource_name = "You: Right, I've gathered everything you asked for."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8k7qa"]
+lines = Array[Resource]([SubResource("RoseDialogLine_uxsqg"), SubResource("RoseDialogLine_ov6kp"), SubResource("RoseDialogLine_lv8ik"), SubResource("RoseDialogLine_ndrq7")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_s6aff"]
+text = "Sorry. If you don't have any Zulie on hand, we don't sell anything to you."
+next_menu = 10
+resource_name = "NPC: Sorry. If you don't have any Zulie on hand, we d…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fi87g"]
+lines = Array[Resource]([SubResource("RoseDialogLine_s6aff")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ubcl4"]
+step = ExtResource("3_uqbde")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_tpu8o"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_ubcl4")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_yexh6"]
+quest = ExtResource("2_yo6ub")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_kqlyt"]
+step = ExtResource("4_n364f")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_p3wi2"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_yexh6"), SubResource("RoseDialogIfQuestStep_kqlyt")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_42tp0"]
+kind = "Answer"
+text = "I feel like Pavrick tricked me! Oh well, it can't be helped."
+show_if = Array[Resource]([SubResource("RoseDialogCase_p3wi2")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_tpu8o")])
+resource_name = "You: I feel like Pavrick tricked me! Oh well, it can'…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_fx36h"]
+step = ExtResource("4_n364f")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_qrbxx"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_fx36h")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_32pca"]
+kind = "Answer"
+text = "I don't have enough Zulie, but I'll be right back."
+show_if = Array[Resource]([SubResource("RoseDialogCase_qrbxx")])
+resource_name = "You: I don't have enough Zulie, but I'll be right bac…"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_t5n1f"]
+step = ExtResource("5_klei0")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_elwfo"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_t5n1f")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_botu6"]
+quest = ExtResource("1_bj5cp")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_rq6yp"]
+step = ExtResource("4_n364f")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_r4q86"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_botu6"), SubResource("RoseDialogIfQuestStep_rq6yp")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tyglf"]
+kind = "Answer"
+text = "I'm sorry I couldn't bring everything, but it can't be helped."
+show_if = Array[Resource]([SubResource("RoseDialogCase_r4q86")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_elwfo")])
+resource_name = "You: I'm sorry I couldn't bring everything, but it ca…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7yjbb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_42tp0"), SubResource("RoseDialogLine_32pca"), SubResource("RoseDialogLine_tyglf")])
+resource_name = "Menu 10"
+
+[resource]
+key = "EM51-016.con"
+name = "[Tavern Owner] Anzhelika"
+menus = Array[Resource]([SubResource("RoseDialogMenu_gyydi"), SubResource("RoseDialogMenu_a8t7j"), SubResource("RoseDialogMenu_3opmi"), SubResource("RoseDialogMenu_wcrl7"), SubResource("RoseDialogMenu_wlesa"), SubResource("RoseDialogMenu_r6bis"), SubResource("RoseDialogMenu_g5gxy"), SubResource("RoseDialogMenu_jqwpj"), SubResource("RoseDialogMenu_8k7qa"), SubResource("RoseDialogMenu_fi87g"), SubResource("RoseDialogMenu_7yjbb")])

@@ -1,0 +1,43 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://bjalh5s8qnyxp"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_i4inj"]
+text = "Good! We've got another company to help the Raknu."
+next_menu = 1
+resource_name = "NPC: Good! We've got another company to help the Rakn…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gqpyl"]
+lines = Array[Resource]([SubResource("RoseDialogLine_i4inj")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d1gxn"]
+kind = "Answer"
+text = "Are you talking to me?"
+next_menu = 2
+resource_name = "You: Are you talking to me?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_f30c2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_d1gxn")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_aac6u"]
+text = "We don't have much time. Go and get down that insane Sikuku tribes."
+next_menu = 3
+resource_name = "NPC: We don't have much time. Go and get down that in…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_i2wcu"]
+lines = Array[Resource]([SubResource("RoseDialogLine_aac6u")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6xb63"]
+kind = "Answer"
+text = "Well, let me think about it."
+resource_name = "You: Well, let me think about it."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_kr0c2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6xb63")])
+resource_name = "Menu 3"
+
+[resource]
+key = "EM61-010.con"
+name = "[Raknu Patriarch] Darka Khan"
+menus = Array[Resource]([SubResource("RoseDialogMenu_gqpyl"), SubResource("RoseDialogMenu_f30c2"), SubResource("RoseDialogMenu_i2wcu"), SubResource("RoseDialogMenu_kr0c2")])

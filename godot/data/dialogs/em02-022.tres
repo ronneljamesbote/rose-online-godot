@@ -1,0 +1,24 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://ce5l4q0jswqee"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cy4ar"]
+text = "Don't bother carrying everything! Sell your stuff to me and I'll pay you more than anyone else!"
+next_menu = 1
+resource_name = "NPC: Don't bother carrying everything! Sell your stuf…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bvcmd"]
+lines = Array[Resource]([SubResource("RoseDialogLine_cy4ar")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_n1rl4"]
+kind = "Answer"
+text = "[Come back later]"
+resource_name = "You: [Come back later]"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qlbv1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_n1rl4")])
+resource_name = "Menu 1"
+
+[resource]
+key = "EM02-022.con"
+name = "주논폴리스-노점꼬마-제리"
+menus = Array[Resource]([SubResource("RoseDialogMenu_bvcmd"), SubResource("RoseDialogMenu_qlbv1")])

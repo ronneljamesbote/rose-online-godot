@@ -1,0 +1,27 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://cv53f5yn7il7m"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ve4wb"]
+text = "What business brings you here?"
+next_menu = 1
+resource_name = "NPC: What business brings you here?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0kvla"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ve4wb")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_mhchc"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_by5ig"]
+kind = "Answer"
+text = "This place is too eerie! I'm going back to town."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_mhchc")])
+resource_name = "You: This place is too eerie! I'm going back to town."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dnntg"]
+lines = Array[Resource]([SubResource("RoseDialogLine_by5ig")])
+resource_name = "Menu 1"
+
+[resource]
+key = "EM02-007.con"
+name = "[Akram Minister] Mel"
+menus = Array[Resource]([SubResource("RoseDialogMenu_0kvla"), SubResource("RoseDialogMenu_dnntg")])

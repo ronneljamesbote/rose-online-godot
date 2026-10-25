@@ -5,7 +5,7 @@ the Inspector. It replaces the iROSE tables one kind at a time
 (plan: `TODO/own-game-data.md` in the project files). So far: **items**, **monsters**, **NPCs**, **drop tables**, **shop tabs**, **skills**,
 **status effects**, **job classes**, **zone settings**, **warp gates**, **crafting recipes**,
 **new characters**, **sounds**, **effects**, **skies**, the **interface**'s pictures and
-cursors, and **quests**.
+cursors, **quests** and **NPC dialogs**.
 
 | Folder | Class | What |
 | --- | --- | --- |
@@ -43,6 +43,7 @@ cursors, and **quests**.
 | `skies/` | `RoseSky` | A sky: the dome around a zone (mesh, day and night picture) and its light at each time of day |
 | `quests/` | `RoseQuest` | A quest: its name, text (description, start and end messages) and time limit |
 | `quest_triggers/<qsd file>/` | `RoseQuestTrigger` | A quest step: its conditions, its rewards and the step tried when it fails (a folder per iROSE QSD file) |
+| `dialogs/` | `RoseDialog` | What a town NPC says when you talk to it: its menus, lines, answers and what they check and do |
 | `interface/interface.tres` | `RoseInterface` | The interface's own pictures (loading screen, character creation) and the mouse cursors with the pixel each clicks at (one resource) |
 
 Monsters and NPCs share one id space (an NPC and a monster never have the same id), because
@@ -202,6 +203,40 @@ doesn't run yet (clans, teams, Lua, monster spawn switches, delayed and zone-tea
 The blocks are saved inside the step's file, so 1,177 steps are 1,177 small files and
 opening one loads only the quests, items and steps it links.
 
+## NPC dialogs
+
+A dialog (`dialogs/<key>-<name>.tres`, a `RoseDialog`) is what a town NPC says. An NPC marker
+in a zone scene (`RoseNpcSpot`) names it by its `key` (iROSE's CON file name, `EM01-003.con`),
+which its `dialog` field shows as the resource (drag a dialog onto it to change the NPC's
+dialog). `name` is only a note of who it is for. A dialog holds:
+
+- `menus`: numbered from 0 (`RoseDialogMenu`). Menu 0 is what you see first.
+- each menu's `lines` (`RoseDialogLine`, listed by how they start: "NPC: Welcome ...", "You:
+  Yes ..."): `kind` Npc (something the NPC says) or Answer (a choice), the `text` (`<NAME>`
+  and `<LEVEL>` are filled in, `{br}` breaks the line, `{b}` bold, `{fc=N}` a colour) and
+  `next_menu`, the menu it leads to (-1: none; for an NPC line, the menu holding its
+  answers).
+- a line's `show_if` and an answer's `on_choose`: lists of cases (`RoseDialogCase`). The first
+  case whose `conditions` all pass counts: it runs its `actions` and, in `show_if`, shows the
+  line when its `show` is on. No case passing hides the line. An empty `show_if` always
+  shows. The dialog's own `open_if` decides the same way whether the NPC talks at all.
+
+Of the lines of a menu that show, the **last** NPC line is what the NPC says (put the plain
+greeting first and the quest lines after it); the answers are the lines of the menu it leads
+to. Conditions are `RoseDialogIf...` blocks (9 kinds: a quest step passes, you have a quest,
+quest items you carry, your level or another value, the NPC's quest switch, a quest switch,
+an episode, job or planet variable, a quest's switch or variable, how many quests you have);
+actions are `RoseDialogDo...` blocks (5 kinds: run a quest step, open a window such as the
+shop or storage, set the save point, and the clan ones that do nothing yet). A quest step
+block links a `RoseQuestTrigger`, so the step it names is checked when you export. See
+`wiki/rules/npc-dialogs.md` for how they run.
+
+The iROSE dialogs were CON files with a Lua script deciding all this; `--convert-data`
+turned each script into these cases, checked against the old scripts on every path
+(`crates/rose-data-export/tests/dialogs_round_trip.rs`). Dialogs are only read by the game:
+the export writes `dialogs.toml` and the server upload leaves it out (the server checks a
+quest step again when the game asks to run it).
+
 ## Changing something
 
 1. Open the resource, change the field in the Inspector, save. (Or change many in the
@@ -226,9 +261,10 @@ The export writes `export/data/items/<class>.toml` and `export/data/monsters.tom
 `npcs.toml`, `drop-tables.toml`, `shop-tabs.toml`, `skills.toml`, `status-effects.toml`,
 `job-classes.toml`, `zones.toml`, `warp-gates.toml`, `craft-recipes.toml`,
 `new-characters.toml`, `sounds.toml`, `hit-sounds.toml`, `footsteps.toml`,
-`effect-files.toml` and `attack-effects.toml` (layout in
-`crates/rose-data-export/src/items.rs`, `npcs.rs`, `skills.rs`, `world.rs`, `sounds.rs` and
-`effects.rs`), and in the same run the zone scenes' spawns and NPCs
+`effect-files.toml`, `attack-effects.toml`, `quests.toml`, `quest-triggers.toml` and
+`dialogs.toml` (layout in
+`crates/rose-data-export/src/items.rs`, `npcs.rs`, `skills.rs`, `world.rs`, `sounds.rs`,
+`effects.rs`, `quests.rs` and `dialogs.rs`), and in the same run the zone scenes' spawns and NPCs
 (`export/zones/`) and the animations' hit markers (`export/motions.toml`), see
 `../../export/README.md`. A link is written as the linked resource's kind and id (`"weapon/3"`,
 `drop_table = 147`, `required_skill_1 = 821`, `attack_start_sound = 38`, `attack_effect = 111`),

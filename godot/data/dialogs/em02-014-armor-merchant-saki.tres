@@ -1,0 +1,555 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://c6b5borgc4ld8"]
+
+[ext_resource type="RoseQuest" uid="uid://73d0830cwu2p" path="res://data/quests/1053-road-to-second-job-change.tres" id="1_4kosn"]
+[ext_resource type="RoseQuest" uid="uid://dojejuifxx867" path="res://data/quests/1068-kirnale-s-journals-second-job-change.tres" id="2_lv02y"]
+[ext_resource type="RoseItemQuest" uid="uid://bovqo3ont24mj" path="res://data/items/quest/220-kirnale-s-compass.tres" id="3_tngq8"]
+[ext_resource type="RoseItemQuest" uid="uid://btulo7xta8vp5" path="res://data/items/quest/221-portable-sundial.tres" id="4_mq7uo"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cjy58gvjk5su6" path="res://data/quest_triggers/qj311-06/1053-02.tres" id="5_yw5nh"]
+[ext_resource type="RoseQuestTrigger" uid="uid://cgjqgwlfr4qr7" path="res://data/quest_triggers/qj311-06/1068-01.tres" id="6_h2x8m"]
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_0ud46"]
+quest = ExtResource("1_4kosn")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_hoyni"]
+quest = ExtResource("2_lv02y")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_j6xu7"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_0ud46"), SubResource("RoseDialogIfQuest_hoyni")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_n75e7"]
+text = "You should wear clothing suited to your class since it can improve your efficiency in battle."
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_j6xu7")])
+resource_name = "NPC: You should wear clothing suited to your class si…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_q4xjy"]
+quest = ExtResource("1_4kosn")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_o2vaw"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_q4xjy")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3eoc6"]
+text = "Did you say that you wanted to be promoted to the 2nd class? You must be getting ready to have even more daring adventures."
+next_menu = 2
+show_if = Array[Resource]([SubResource("RoseDialogCase_o2vaw")])
+resource_name = "NPC: Did you say that you wanted to be promoted to th…"
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_j5864"]
+quest = ExtResource("2_lv02y")
+item = ExtResource("3_tngq8")
+operator = "=="
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_d7qbj"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_j5864")])
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_yl81k"]
+quest = ExtResource("2_lv02y")
+item = ExtResource("4_mq7uo")
+operator = "=="
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_b4pg4"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_yl81k")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mw88y"]
+text = "So…? How did it go?"
+next_menu = 27
+show_if = Array[Resource]([SubResource("RoseDialogCase_d7qbj"), SubResource("RoseDialogCase_b4pg4")])
+resource_name = "NPC: So…? How did it go?"
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_g68bl"]
+quest = ExtResource("2_lv02y")
+item = ExtResource("3_tngq8")
+operator = "=="
+value = 1
+
+[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_hqab3"]
+quest = ExtResource("2_lv02y")
+item = ExtResource("4_mq7uo")
+operator = "=="
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_uc041"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_g68bl"), SubResource("RoseDialogIfQuestItem_hqab3")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qgaib"]
+text = "From that look on your face, it seems that you've found Kirnale's Compass and Portable Sundial."
+next_menu = 30
+show_if = Array[Resource]([SubResource("RoseDialogCase_uc041")])
+resource_name = "NPC: From that look on your face, it seems that you'v…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_aukd4"]
+lines = Array[Resource]([SubResource("RoseDialogLine_n75e7"), SubResource("RoseDialogLine_3eoc6"), SubResource("RoseDialogLine_mw88y"), SubResource("RoseDialogLine_qgaib")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_d07u3"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_fhrue"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_d07u3")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qvlk6"]
+kind = "Answer"
+text = "Really? In that case, please show me some clothing so I can find something that matches my job."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_fhrue")])
+resource_name = "You: Really? In that case, please show me some clothi…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_v2tke"]
+kind = "Answer"
+text = "I'm okay for now."
+resource_name = "You: I'm okay for now."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_x50na"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qvlk6"), SubResource("RoseDialogLine_v2tke")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_n6n7g"]
+kind = "Answer"
+text = "Yes, but I'm also a little nervous about it."
+next_menu = 3
+resource_name = "You: Yes, but I'm also a little nervous about it."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_01pfi"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_64lmf"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_01pfi")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xnaif"]
+kind = "Answer"
+text = "I'd like to see what kinds of goods you have in your shop."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_64lmf")])
+resource_name = "You: I'd like to see what kinds of goods you have in …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qdwdq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_n6n7g"), SubResource("RoseDialogLine_xnaif")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rt8ay"]
+text = "There's no need to be nervous about adventuring. You've got to relish adventure the way Kirnale did."
+next_menu = 4
+resource_name = "NPC: There's no need to be nervous about adventuring.…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_va7f4"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rt8ay")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_agvob"]
+kind = "Answer"
+text = "Kirnale…?"
+next_menu = 5
+resource_name = "You: Kirnale…?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_yfecm"]
+lines = Array[Resource]([SubResource("RoseDialogLine_agvob")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_h105l"]
+text = "Haven't you heard of Kirnale, the explorer who was one of the Seven Knights?"
+next_menu = 6
+resource_name = "NPC: Haven't you heard of Kirnale, the explorer who w…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_y67t4"]
+lines = Array[Resource]([SubResource("RoseDialogLine_h105l")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dblbh"]
+kind = "Answer"
+text = "No, this is the first time I've ever heard of his name."
+next_menu = 7
+resource_name = "You: No, this is the first time I've ever heard of hi…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_m7d80"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dblbh")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fn6kr"]
+text = "As the Devil Pest spread throughout the world, and monsters grew more violent, the Seven Knights gathered for the first time. They could not eliminate all the monsters, but they were able to bring peace to the people, at least for a while. The Seven Knights were Lucid, his wife Namielle, Kirnale the Adventurer, Lillith, who was the daughter of a millionaire, Seyrun the Sage, Night Shade the Assassinator, and Bardsrin the Bard."
+next_menu = 8
+resource_name = "NPC: As the Devil Pest spread throughout the world, a…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ot7lh"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fn6kr")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_38jl2"]
+kind = "Answer"
+text = "One of the Seven Knights, eh? What kind of person was Kirnale?"
+next_menu = 9
+resource_name = "You: One of the Seven Knights, eh? What kind of perso…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3v4v3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_38jl2")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4m2dx"]
+text = "He was a genius, an expert in scouting and exploration, as well as a prolific inventor. He was always exploring uncharted areas, and invented many tools that helped him in his reconnaissance."
+next_menu = 10
+resource_name = "NPC: He was a genius, an expert in scouting and explo…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_p1m73"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4m2dx")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ha444"]
+kind = "Answer"
+text = "So what kind of things did he invent?"
+next_menu = 11
+resource_name = "You: So what kind of things did he invent?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_axwph"]
+kind = "Answer"
+text = "What kind of personality did Kirnale have?"
+next_menu = 19
+resource_name = "You: What kind of personality did Kirnale have?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_c1rau"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ha444"), SubResource("RoseDialogLine_axwph")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0unuk"]
+text = "There are far too many to mention, but a few of his most important ones were the compass and the sundial. The ones that we use nowadays are based off Kirnale's original designs."
+next_menu = 12
+resource_name = "NPC: There are far too many to mention, but a few of …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6i1e7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0unuk")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_73w6j"]
+kind = "Answer"
+text = "Wow, that's incredible! Do you know if anyone has the first compass and sundial that Kirnale created?"
+next_menu = 13
+resource_name = "You: Wow, that's incredible! Do you know if anyone ha…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xkc7j"]
+lines = Array[Resource]([SubResource("RoseDialogLine_73w6j")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wlju2"]
+text = "I don't think so. Kirnale's only weakness was his atrocious forgetfulness. It is said that he lost his compass and portable sundial somewhere around Kenji Beach."
+next_menu = 14
+resource_name = "NPC: I don't think so. Kirnale's only weakness was hi…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vmkei"]
+lines = Array[Resource]([SubResource("RoseDialogLine_wlju2")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lp3r7"]
+kind = "Answer"
+text = "Interesting. So he was really forgetful. But still, it doesn't look like those relics can be recovered."
+next_menu = 15
+resource_name = "You: Interesting. So he was really forgetful. But sti…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fqalc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_lp3r7")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_65p6l"]
+text = "That might not be the case. I've heard that {fc=12}Krawfy King{/fc} might have the {fc=14}Portable Sundial{/fc} and {fc=14}Kirnale's Compass{/fc}."
+next_menu = 16
+resource_name = "NPC: That might not be the case. I've heard that {fc=…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8o3ml"]
+lines = Array[Resource]([SubResource("RoseDialogLine_65p6l")])
+resource_name = "Menu 15"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dysmy"]
+kind = "Answer"
+text = "Seriously? Well then, I guess I'll go and try to take them back!"
+next_menu = 17
+resource_name = "You: Seriously? Well then, I guess I'll go and try to…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vcb5j"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dysmy")])
+resource_name = "Menu 16"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pcs2o"]
+text = "Be careful! Krawfy King is nothing to sniff at."
+next_menu = 18
+resource_name = "NPC: Be careful! Krawfy King is nothing to sniff at."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3nofq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_pcs2o")])
+resource_name = "Menu 17"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_i0p2u"]
+step = ExtResource("5_yw5nh")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_j53hy"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_i0p2u")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qjqrh"]
+kind = "Answer"
+text = "Alright, I'll keep that in mind."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_j53hy")])
+resource_name = "You: Alright, I'll keep that in mind."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dvli5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qjqrh")])
+resource_name = "Menu 18"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_v4bx5"]
+text = "Although Kirnale was a man of very few words, he was actually a very kind person. However, he was extremely forgetful and often lost his things."
+next_menu = 20
+resource_name = "NPC: Although Kirnale was a man of very few words, he…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xfyo2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_v4bx5")])
+resource_name = "Menu 19"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rxtib"]
+kind = "Answer"
+text = "Well, no one in this world can be perfect."
+next_menu = 21
+resource_name = "You: Well, no one in this world can be perfect."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_un5qh"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rxtib")])
+resource_name = "Menu 20"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_re6ea"]
+text = "In any case, many of his original inventions are still around, but his especially important compass and sundial were lost because of his forgetfulness."
+next_menu = 22
+resource_name = "NPC: In any case, many of his original inventions are…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xfr35"]
+lines = Array[Resource]([SubResource("RoseDialogLine_re6ea")])
+resource_name = "Menu 21"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dt3ds"]
+kind = "Answer"
+text = "What a shame! But aren't we using compasses and sundials today?"
+next_menu = 23
+resource_name = "You: What a shame! But aren't we using compasses and …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_trr3g"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dt3ds")])
+resource_name = "Menu 22"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_u3bb2"]
+text = "Yes, because the technology has been handed down. Still, the original compass and sundial that Kirnale invented have been lost."
+next_menu = 24
+resource_name = "NPC: Yes, because the technology has been handed down…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_in1o2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_u3bb2")])
+resource_name = "Menu 23"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c3olx"]
+kind = "Answer"
+text = "Do you know where Kirnale lost them?"
+next_menu = 25
+resource_name = "You: Do you know where Kirnale lost them?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vwjeb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c3olx")])
+resource_name = "Menu 24"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5pxfc"]
+text = "I've heard that he lost them somewhere in {fc=2}Kenji Beach{/fc}. According to rumor, he either forgot them or lost them to {fc=12}Krawfy King{/fc} in battle."
+next_menu = 26
+resource_name = "NPC: I've heard that he lost them somewhere in {fc=2}…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_57e13"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5pxfc")])
+resource_name = "Menu 25"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1iknf"]
+kind = "Answer"
+text = "I guess I'll be able to find something if I investigate Krawfy King. That sounds simple enough."
+next_menu = 17
+resource_name = "You: I guess I'll be able to find something if I inve…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qagkl"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1iknf")])
+resource_name = "Menu 26"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gn6xk"]
+kind = "Answer"
+text = "Please wait a little longer, I'll bring them to you soon."
+resource_name = "You: Please wait a little longer, I'll bring them to …"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wxfs3"]
+kind = "Answer"
+text = "Not yet. It doesn't seem like Krawfy King has them…"
+next_menu = 28
+resource_name = "You: Not yet. It doesn't seem like Krawfy King has th…"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_7si3s"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_h7b2q"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_7si3s")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pvsvu"]
+kind = "Answer"
+text = "I'd like to see what kinds of goods you have in your shop."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_h7b2q")])
+resource_name = "You: I'd like to see what kinds of goods you have in …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rnko6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_gn6xk"), SubResource("RoseDialogLine_wxfs3"), SubResource("RoseDialogLine_pvsvu")])
+resource_name = "Menu 27"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tvr13"]
+text = "Really? But if Krawfy King doesn't have them, it's hopeless. I'm sure if you keep checking Krawfy King, you'll find them eventually."
+next_menu = 29
+resource_name = "NPC: Really? But if Krawfy King doesn't have them, it…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_q81ne"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tvr13")])
+resource_name = "Menu 28"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nar5t"]
+kind = "Answer"
+text = "Alright, I understand."
+resource_name = "You: Alright, I understand."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5se2g"]
+lines = Array[Resource]([SubResource("RoseDialogLine_nar5t")])
+resource_name = "Menu 29"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wt15n"]
+kind = "Answer"
+text = "Haha, it was pretty easy! Because of Kirnale's forgetfulness, I had a pretty fun adventure."
+next_menu = 31
+resource_name = "You: Haha, it was pretty easy! Because of Kirnale's f…"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_q0cih"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_t205i"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_q0cih")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0m804"]
+kind = "Answer"
+text = "I'd like to see what kinds of goods you have in your shop."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_t205i")])
+resource_name = "You: I'd like to see what kinds of goods you have in …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_sxawm"]
+lines = Array[Resource]([SubResource("RoseDialogLine_wt15n"), SubResource("RoseDialogLine_0m804")])
+resource_name = "Menu 30"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rcc21"]
+text = "Something else occurred because of Kirnale's forgetfulness. You might find it quite interesting."
+next_menu = 32
+resource_name = "NPC: Something else occurred because of Kirnale's for…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_pfuq4"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rcc21")])
+resource_name = "Menu 31"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ua8bd"]
+kind = "Answer"
+text = "Really? And what would that be?"
+next_menu = 33
+resource_name = "You: Really? And what would that be?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qtufy"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ua8bd")])
+resource_name = "Menu 32"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_klbhg"]
+text = "Kirnale's forgetfulness was so bad that he'd return from an adventure and forget where he had gone and what he did. Since information is vital to explorers, Kirnale decided to write down notes for everything he had learned and discovered."
+next_menu = 34
+resource_name = "NPC: Kirnale's forgetfulness was so bad that he'd ret…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_q6fhc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_klbhg")])
+resource_name = "Menu 33"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gqkij"]
+kind = "Answer"
+text = "Hahah! But wouldn't he forget to take down notes, or lose the notes altogether?"
+next_menu = 35
+resource_name = "You: Hahah! But wouldn't he forget to take down notes…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hhmnu"]
+lines = Array[Resource]([SubResource("RoseDialogLine_gqkij")])
+resource_name = "Menu 34"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ye53k"]
+text = "Fortunately for us, that didn't happen. Although he was that forgetful…"
+next_menu = 36
+resource_name = "NPC: Fortunately for us, that didn't happen. Although…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fhnhd"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ye53k")])
+resource_name = "Menu 35"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_l87gc"]
+kind = "Answer"
+text = "In that case, he must have taken a huge amount of notes."
+next_menu = 37
+resource_name = "You: In that case, he must have taken a huge amount o…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bh7mf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_l87gc")])
+resource_name = "Menu 36"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_g3irj"]
+text = "Yes. When he returned from the First Monster Expedition, he compiled his notes into 5 volumes which detail region information, monster attributes, and solutions for dangerous situations. Kirnale's Journals should be in the custody of Jones, the historian in Junon Polis."
+next_menu = 38
+resource_name = "NPC: Yes. When he returned from the First Monster Exp…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_epc1x"]
+lines = Array[Resource]([SubResource("RoseDialogLine_g3irj")])
+resource_name = "Menu 37"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_h4c7d"]
+kind = "Answer"
+text = "Kirnale's Journals… Do you think Jones would let me read them?"
+next_menu = 39
+resource_name = "You: Kirnale's Journals… Do you think Jones would let…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qatjk"]
+lines = Array[Resource]([SubResource("RoseDialogLine_h4c7d")])
+resource_name = "Menu 38"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_k7e6m"]
+text = "You should be able to read them as much as you like. They're considered public property after all."
+next_menu = 40
+resource_name = "NPC: You should be able to read them as much as you l…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_npxfo"]
+lines = Array[Resource]([SubResource("RoseDialogLine_k7e6m")])
+resource_name = "Menu 39"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_88ohg"]
+kind = "Answer"
+text = "Great! Then I'll go and visit Jones so that I can take a look at those journals."
+next_menu = 41
+resource_name = "You: Great! Then I'll go and visit Jones so that I ca…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_boslq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_88ohg")])
+resource_name = "Menu 40"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wmtku"]
+text = "{fc=1}Jones{/fc} should be around the lighthouse in {fc=2}Junon Polis{/fc}. While you're there, please give Kirnale's Compass and Portable Sundial to Jones. It's best if the relics of Junon's history are placed in his care."
+next_menu = 42
+resource_name = "NPC: {fc=1}Jones{/fc} should be around the lighthouse…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_odb40"]
+lines = Array[Resource]([SubResource("RoseDialogLine_wmtku")])
+resource_name = "Menu 41"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_weyd4"]
+step = ExtResource("6_h2x8m")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_wao1d"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_weyd4")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kiil3"]
+kind = "Answer"
+text = "Right, I was thinking the same thing."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_wao1d")])
+resource_name = "You: Right, I was thinking the same thing."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0eh7x"]
+lines = Array[Resource]([SubResource("RoseDialogLine_kiil3")])
+resource_name = "Menu 42"
+
+[resource]
+key = "EM02-014.con"
+name = "[Armor Merchant] Saki"
+menus = Array[Resource]([SubResource("RoseDialogMenu_aukd4"), SubResource("RoseDialogMenu_x50na"), SubResource("RoseDialogMenu_qdwdq"), SubResource("RoseDialogMenu_va7f4"), SubResource("RoseDialogMenu_yfecm"), SubResource("RoseDialogMenu_y67t4"), SubResource("RoseDialogMenu_m7d80"), SubResource("RoseDialogMenu_ot7lh"), SubResource("RoseDialogMenu_3v4v3"), SubResource("RoseDialogMenu_p1m73"), SubResource("RoseDialogMenu_c1rau"), SubResource("RoseDialogMenu_6i1e7"), SubResource("RoseDialogMenu_xkc7j"), SubResource("RoseDialogMenu_vmkei"), SubResource("RoseDialogMenu_fqalc"), SubResource("RoseDialogMenu_8o3ml"), SubResource("RoseDialogMenu_vcb5j"), SubResource("RoseDialogMenu_3nofq"), SubResource("RoseDialogMenu_dvli5"), SubResource("RoseDialogMenu_xfyo2"), SubResource("RoseDialogMenu_un5qh"), SubResource("RoseDialogMenu_xfr35"), SubResource("RoseDialogMenu_trr3g"), SubResource("RoseDialogMenu_in1o2"), SubResource("RoseDialogMenu_vwjeb"), SubResource("RoseDialogMenu_57e13"), SubResource("RoseDialogMenu_qagkl"), SubResource("RoseDialogMenu_rnko6"), SubResource("RoseDialogMenu_q81ne"), SubResource("RoseDialogMenu_5se2g"), SubResource("RoseDialogMenu_sxawm"), SubResource("RoseDialogMenu_pfuq4"), SubResource("RoseDialogMenu_qtufy"), SubResource("RoseDialogMenu_q6fhc"), SubResource("RoseDialogMenu_hhmnu"), SubResource("RoseDialogMenu_fhnhd"), SubResource("RoseDialogMenu_bh7mf"), SubResource("RoseDialogMenu_epc1x"), SubResource("RoseDialogMenu_qatjk"), SubResource("RoseDialogMenu_npxfo"), SubResource("RoseDialogMenu_boslq"), SubResource("RoseDialogMenu_odb40"), SubResource("RoseDialogMenu_0eh7x")])

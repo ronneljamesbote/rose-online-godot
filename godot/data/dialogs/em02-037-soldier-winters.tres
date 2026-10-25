@@ -1,0 +1,286 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://djnpn2p21ot5f"]
+
+[ext_resource type="RoseQuest" uid="uid://b01tquyrhmeol" path="res://data/quests/1986-information-on-lunar.tres" id="1_hmacn"]
+[ext_resource type="RoseQuest" uid="uid://byojjqylmv5p2" path="res://data/quests/1987-the-truth-of-the-golden-dagger-2.tres" id="2_pghp7"]
+[ext_resource type="RoseQuest" uid="uid://du0wv01busneu" path="res://data/quests/1988-pavrick-the-craftsman-on-lunar.tres" id="3_h5rke"]
+[ext_resource type="RoseQuest" uid="uid://cpwi2pk76hlwq" path="res://data/quests/147-pavrick-the-craftsman-on-lunar.tres" id="4_e3uof"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dhceeamtp53xw" path="res://data/quest_triggers/qp103/145-02.tres" id="5_8imo0"]
+[ext_resource type="RoseQuest" uid="uid://ygrsulyqu8ol" path="res://data/quests/145-information-on-lunar.tres" id="6_xeavu"]
+[ext_resource type="RoseQuestTrigger" uid="uid://c8jrvm6ab4peo" path="res://data/quest_triggers/qp102/1986-01.tres" id="7_76onw"]
+[ext_resource type="RoseQuestTrigger" uid="uid://drdsr2mtxjf85" path="res://data/quest_triggers/qp103/145-01.tres" id="8_de5vo"]
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ay38j"]
+quest = ExtResource("1_hmacn")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_s3l8w"]
+quest = ExtResource("2_pghp7")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_aob5s"]
+quest = ExtResource("3_h5rke")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_87l4i"]
+quest = ExtResource("4_e3uof")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_1hpa8"]
+step = ExtResource("5_8imo0")
+passes = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_qcrby"]
+quest = ExtResource("6_xeavu")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_io0k5"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_ay38j"), SubResource("RoseDialogIfQuest_s3l8w"), SubResource("RoseDialogIfQuest_aob5s"), SubResource("RoseDialogIfQuest_87l4i"), SubResource("RoseDialogIfQuestStep_1hpa8"), SubResource("RoseDialogIfQuest_qcrby")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_eb4bq"]
+text = "I heard that some people in this area run their personal shops and cheat Visitors. Once I get my hands on them…!"
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_io0k5")])
+resource_name = "NPC: I heard that some people in this area run their …"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_us0mk"]
+quest = ExtResource("1_hmacn")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_4mjh3"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_us0mk")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_jo1qx"]
+quest = ExtResource("2_pghp7")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_44d12"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_jo1qx")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_28w5w"]
+quest = ExtResource("6_xeavu")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_24204"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_28w5w")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_i50g6"]
+text = "I don't know too much about this world, but I can look into a merchant's eyes and tell if he's cheating me."
+next_menu = 2
+show_if = Array[Resource]([SubResource("RoseDialogCase_4mjh3"), SubResource("RoseDialogCase_44d12"), SubResource("RoseDialogCase_24204")])
+resource_name = "NPC: I don't know too much about this world, but I ca…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_e4s3g"]
+quest = ExtResource("3_h5rke")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_1xovm"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_e4s3g")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_nugwb"]
+quest = ExtResource("4_e3uof")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_4hmju"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_nugwb")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_k1pkb"]
+text = "Just a bit of advice: You'll never find anyone on Junon who can judge the authenticity of this dagger. It's best that you find Pavrick on Luna."
+next_menu = 11
+show_if = Array[Resource]([SubResource("RoseDialogCase_1xovm"), SubResource("RoseDialogCase_4hmju")])
+resource_name = "NPC: Just a bit of advice: You'll never find anyone o…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_i2e52"]
+quest = ExtResource("4_e3uof")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_gcyrx"]
+step = ExtResource("5_8imo0")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_uvlp0"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_i2e52"), SubResource("RoseDialogIfQuestStep_gcyrx")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bgjeb"]
+text = "You forgot something, didn't you? You left your Golden Dagger here!"
+next_menu = 14
+show_if = Array[Resource]([SubResource("RoseDialogCase_uvlp0")])
+resource_name = "NPC: You forgot something, didn't you? You left your …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_s64xv"]
+lines = Array[Resource]([SubResource("RoseDialogLine_eb4bq"), SubResource("RoseDialogLine_i50g6"), SubResource("RoseDialogLine_k1pkb"), SubResource("RoseDialogLine_bgjeb")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fd1q0"]
+kind = "Answer"
+text = "Wah! Scary!"
+resource_name = "You: Wah! Scary!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qq8ek"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fd1q0")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_adlan"]
+kind = "Answer"
+text = "Yes, I've heard about you."
+next_menu = 3
+resource_name = "You: Yes, I've heard about you."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_k3f3m"]
+lines = Array[Resource]([SubResource("RoseDialogLine_adlan")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2tt1q"]
+text = "Hahaha. Well then, what do you need?"
+next_menu = 4
+resource_name = "NPC: Hahaha. Well then, what do you need?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_j826t"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2tt1q")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4k7wr"]
+kind = "Answer"
+text = "Yes, I've come here to ask you about this Golden Dagger. Lutis told me that you should be able to tell whether it's authentic or not."
+next_menu = 5
+resource_name = "You: Yes, I've come here to ask you about this Golden…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qnxda"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4k7wr")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3wxeh"]
+text = "Let me see. I've never seen anything like this dagger before. It feels like it's overflowing with elegance. If it were something from this area, I'd know right away but I don't think I'm qualified to judge this dagger's authenticity. I don't think anyone on Junon can, actually."
+next_menu = 6
+resource_name = "NPC: Let me see. I've never seen anything like this d…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hsco8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3wxeh")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gboaf"]
+kind = "Answer"
+text = "No way! Are you saying nobody can tell whether or not this dagger belongs to the royal family?"
+next_menu = 7
+resource_name = "You: No way! Are you saying nobody can tell whether o…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_krws5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_gboaf")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8xbqc"]
+text = "There's one last chance. Go to {fc=2}Luna{/fc} and seek out {fc=2}Pavrick{/fc}, who is a famous smith over there. It's difficult to travel to Luna, but you must go there to learn the truth about this dagger."
+next_menu = 8
+resource_name = "NPC: There's one last chance. Go to {fc=2}Luna{/fc} a…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_587mh"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8xbqc")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ibhxp"]
+kind = "Answer"
+text = "Luna? Did you just say I have to go to another planet?"
+next_menu = 9
+resource_name = "You: Luna? Did you just say I have to go to another p…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4davl"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ibhxp")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_if2my"]
+text = "It's not as hard as it sounds. Go talk to {fc=1}Alphonso{/fc}, the Flying Ship Guide in {fc=2}Junon Polis{/fc}, if you want to travel to Luna. I think traveling to another planet might actually be a very good opportunity for you."
+next_menu = 10
+resource_name = "NPC: It's not as hard as it sounds. Go talk to {fc=1}…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ph4sk"]
+lines = Array[Resource]([SubResource("RoseDialogLine_if2my")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_0nfka"]
+step = ExtResource("7_76onw")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_cn5b7"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_0nfka")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_l5n2u"]
+quest = ExtResource("1_hmacn")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5l3wj"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_l5n2u")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2lm2g"]
+kind = "Answer"
+text = "Well, alright."
+show_if = Array[Resource]([SubResource("RoseDialogCase_5l3wj")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_cn5b7")])
+resource_name = "You: Well, alright."
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_73y2h"]
+step = ExtResource("8_de5vo")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_tm4yc"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_73y2h")])
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_4l3ad"]
+quest = ExtResource("6_xeavu")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_rmew5"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_4l3ad")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_da7vl"]
+kind = "Answer"
+text = "Right, I understand."
+show_if = Array[Resource]([SubResource("RoseDialogCase_rmew5")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_tm4yc")])
+resource_name = "You: Right, I understand."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_q48or"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2lm2g"), SubResource("RoseDialogLine_da7vl")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7nhpl"]
+kind = "Answer"
+text = "Alright, I understand."
+resource_name = "You: Alright, I understand."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_k2pfg"]
+kind = "Answer"
+text = "Can you explain how I can get to Luna again?"
+next_menu = 12
+resource_name = "You: Can you explain how I can get to Luna again?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_pe463"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7nhpl"), SubResource("RoseDialogLine_k2pfg")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qdtid"]
+text = "In front of the Flying Ship in Junon Polis, you'll find Alphonso the Guide. Speak to Alphonso if you want to travel to Luna."
+next_menu = 13
+resource_name = "NPC: In front of the Flying Ship in Junon Polis, you'…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gjexs"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qdtid")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vplyp"]
+kind = "Answer"
+text = "Alright, got it."
+resource_name = "You: Alright, got it."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_64rkx"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vplyp")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_k7ea0"]
+step = ExtResource("5_8imo0")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_yyyiv"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_k7ea0")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ehq1p"]
+kind = "Answer"
+text = "Yes, that's why I've hurried back here. Thanks for taking care of it for me."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_yyyiv")])
+resource_name = "You: Yes, that's why I've hurried back here. Thanks f…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vywjp"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ehq1p")])
+resource_name = "Menu 14"
+
+[resource]
+key = "EM02-037.con"
+name = "[Soldier] Winters"
+menus = Array[Resource]([SubResource("RoseDialogMenu_s64xv"), SubResource("RoseDialogMenu_qq8ek"), SubResource("RoseDialogMenu_k3f3m"), SubResource("RoseDialogMenu_j826t"), SubResource("RoseDialogMenu_qnxda"), SubResource("RoseDialogMenu_hsco8"), SubResource("RoseDialogMenu_krws5"), SubResource("RoseDialogMenu_587mh"), SubResource("RoseDialogMenu_4davl"), SubResource("RoseDialogMenu_ph4sk"), SubResource("RoseDialogMenu_q48or"), SubResource("RoseDialogMenu_pe463"), SubResource("RoseDialogMenu_gjexs"), SubResource("RoseDialogMenu_64rkx"), SubResource("RoseDialogMenu_vywjp")])

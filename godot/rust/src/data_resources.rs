@@ -52,7 +52,10 @@ use rose_data_export::effects::{AttackEffectExport, EffectFileExport};
 use rose_data_export::world::{CraftRecipeExport, NewCharacterExport, WarpGateExport, ZoneExport};
 use rose_data_export::interface::{InterfaceSettingsExport, SkyExport};
 use rose_data_export::quests::{ConditionExport, QuestDataExport, QuestTriggerExport, RewardExport};
-use rose_data_export::{EffectsExport, InterfaceExport, ItemsExport, NpcsExport, QuestsExport, SkillsExport, SoundsExport, WorldExport};
+use rose_data_export::dialogs::{
+    DialogActionExport, DialogCaseExport, DialogConditionExport, DialogExport, DialogLineExport, DialogMenuExport, LineKind,
+};
+use rose_data_export::{DialogsExport, EffectsExport, InterfaceExport, ItemsExport, NpcsExport, QuestsExport, SkillsExport, SoundsExport, WorldExport};
 use serde::{de::DeserializeOwned, Serialize};
 use serde_json::{Map, Value};
 
@@ -86,6 +89,8 @@ pub const INTERFACE_FILE: &str = "res://data/interface/interface.tres";
 /// Where the quest and quest trigger resources live.
 pub const QUESTS_DIR: &str = "res://data/quests/";
 pub const QUEST_TRIGGERS_DIR: &str = "res://data/quest_triggers/";
+/// Where the NPC dialog resources live.
+pub const DIALOGS_DIR: &str = "res://data/dialogs/";
 
 /// Where to find a linked resource by what the export holds: `items/weapon/3`,
 /// `drop_table/147`, `shop_tab/12` -> its `res://` path.
@@ -1836,7 +1841,13 @@ thread_local! {
 /// freed with the thread's locals, after the engine has gone, aborts the program).
 pub fn clear_cache() {
     KEPT.with_borrow_mut(|kept| kept.clear());
+    if let Ok(mut files) = DIALOG_FILES.lock() {
+        *files = None;
+    }
 }
+
+/// The dialog files, listed once for `find_dialog`.
+static DIALOG_FILES: std::sync::Mutex<Option<Vec<String>>> = std::sync::Mutex::new(None);
 
 /// The number and name in a data resource's text, read without loading it (and everything
 /// it links): the `id = ` and `name = "..."` lines of its `[resource]` section.
@@ -2011,6 +2022,10 @@ fn link_value(resource: &Gd<Resource>) -> Value {
     if resource.is_class("AudioStream") || resource.is_class("PackedScene") || resource.is_class("Texture2D") {
         return Value::from(resource.get_path().to_string());
     }
+    // A quest step by its name.
+    if resource.is_class("RoseQuestTrigger") {
+        return Value::from(resource.get("name").to::<GString>().to_string());
+    }
     let id = resource.get("id").try_to::<i64>().unwrap_or(0);
     match item_kind(&resource.get_class().to_string()) {
         Some(kind) => Value::from(format!("{kind}/{id}")),
@@ -2124,6 +2139,7 @@ fn resolve(key: &str, value: &Value, links: &Links, class: &str) -> Result<Optio
                 .map(Some)
                 .ok_or(format!("{key}: could not load {s} (run --import-rose first)"));
         }
+        Value::String(s) if class == "RoseQuestTrigger" => format!("quest_trigger/{s}"),
         Value::String(s) => format!("items/{s}"),
         // Skies count from 0 (LIST_SKY's rows), so for them only -1 is none.
         Value::Number(n) if n.as_i64() == Some(-1) => return Ok(None),
@@ -3678,6 +3694,275 @@ pub fn read_quests() -> Result<(QuestsExport, usize), String> {
     Ok((export, files.len()))
 }
 
+/// A dialog's file name: its key without `.con`, then who it is for (`em20-001-judy`).
+fn dialog_stem(key: &str, name: &str) -> String {
+    let key = key.strip_suffix(".con").or_else(|| key.strip_suffix(".CON")).unwrap_or(key);
+    let stem = trigger_stem(key).to_lowercase();
+    let mut slug = String::new();
+    for c in name.to_lowercase().chars() {
+        if c.is_ascii_alphanumeric() {
+            slug.push(c);
+        } else if !slug.ends_with('-') && !slug.is_empty() {
+            slug.push('-');
+        }
+    }
+    let slug: String = slug.trim_end_matches('-').chars().take(40).collect();
+    let slug = slug.trim_end_matches('-');
+    if slug.is_empty() {
+        stem
+    } else {
+        format!("{stem}-{slug}")
+    }
+}
+
+fn new_resource(class: &str) -> Result<Gd<Resource>, String> {
+    ClassDb::singleton()
+        .instantiate(class)
+        .try_to::<Gd<Resource>>()
+        .map_err(|_| format!("{class} is not a resource class"))
+}
+
+/// Puts `items` into a resource's (typed) array property.
+fn set_resources(resource: &mut Gd<Resource>, property: &str, items: &[Gd<Resource>]) {
+    let list: VarArray = items.iter().map(|b| b.to_variant()).collect();
+    let array = resource.get(property);
+    array.call("assign", &[list.to_variant()]);
+    resource.set(property, &array);
+}
+
+/// The resources in an array property, an empty place left out.
+fn get_resources(resource: &Gd<Resource>, property: &str) -> Vec<Gd<Resource>> {
+    resource
+        .get(property)
+        .try_to::<AnyArray>()
+        .map(|array| array.iter_shared().filter_map(|v| v.try_to::<Option<Gd<Resource>>>().ok().flatten()).collect())
+        .unwrap_or_default()
+}
+
+/// A dialog case as its resource (`RoseDialogCase`), its blocks inside it.
+fn dialog_case_resource(case: &DialogCaseExport, links: &Links) -> Result<Gd<Resource>, String> {
+    let mut resource = new_resource("RoseDialogCase")?;
+    let conditions = case
+        .condition
+        .iter()
+        .map(|c| block_resource(crate::dialog_blocks::CONDITION_PREFIX, c, links))
+        .collect::<Result<Vec<_>, _>>()?;
+    let actions = case
+        .action
+        .iter()
+        .map(|a| block_resource(crate::dialog_blocks::ACTION_PREFIX, a, links))
+        .collect::<Result<Vec<_>, _>>()?;
+    set_resources(&mut resource, "conditions", &conditions);
+    set_resources(&mut resource, "actions", &actions);
+    resource.set("show", &case.show.to_variant());
+    Ok(resource)
+}
+
+fn dialog_cases(cases: &[DialogCaseExport], links: &Links) -> Result<Vec<Gd<Resource>>, String> {
+    cases.iter().map(|c| dialog_case_resource(c, links)).collect()
+}
+
+/// A dialog as its resource (`RoseDialog`), with its menus, lines and cases inside it. A
+/// line's resource name is how it starts (`NPC: Welcome ...`), so the Inspector's lists
+/// show it.
+fn dialog_resource(dialog: &DialogExport, links: &Links) -> Result<Gd<Resource>, String> {
+    let mut resource = new_resource("RoseDialog")?;
+    resource.set("key", &GString::from(dialog.key.as_str()).to_variant());
+    resource.set("name", &GString::from(dialog.name.as_str()).to_variant());
+    let open_if = dialog_cases(&dialog.open_if, links)?;
+    set_resources(&mut resource, "open_if", &open_if);
+    let mut menus = Vec::with_capacity(dialog.menu.len());
+    for (m, menu) in dialog.menu.iter().enumerate() {
+        let mut menu_resource = new_resource("RoseDialogMenu")?;
+        menu_resource.set_name(&format!("Menu {m}"));
+        let mut lines = Vec::with_capacity(menu.line.len());
+        for (l, line) in menu.line.iter().enumerate() {
+            let kind = match line.kind {
+                LineKind::Npc => "Npc",
+                LineKind::Answer => "Answer",
+            };
+            let mut line_resource = new_resource("RoseDialogLine")?;
+            line_resource.set("kind", &GString::from(kind).to_variant());
+            line_resource.set("text", &GString::from(line.text.as_str()).to_variant());
+            line_resource.set("next_menu", &(line.next_menu as i64).to_variant());
+            let show_if = dialog_cases(&line.show_if, links).map_err(|e| format!("menu {m} line {l}: {e}"))?;
+            let on_choose = dialog_cases(&line.on_choose, links).map_err(|e| format!("menu {m} line {l}: {e}"))?;
+            set_resources(&mut line_resource, "show_if", &show_if);
+            set_resources(&mut line_resource, "on_choose", &on_choose);
+            lines.push(line_resource);
+        }
+        set_resources(&mut menu_resource, "lines", &lines);
+        menus.push(menu_resource);
+    }
+    set_resources(&mut resource, "menus", &menus);
+    Ok(resource)
+}
+
+fn dialog_case_export(case: &Gd<Resource>) -> Result<DialogCaseExport, String> {
+    if case.get_class().to_string() != "RoseDialogCase" {
+        return Err(format!("holds a {}, not a RoseDialogCase", case.get_class()));
+    }
+    Ok(DialogCaseExport {
+        condition: get_resources(case, "conditions")
+            .iter()
+            .map(|b| block_export::<DialogConditionExport>(b, crate::dialog_blocks::CONDITION_PREFIX, "conditions"))
+            .collect::<Result<_, _>>()?,
+        action: get_resources(case, "actions")
+            .iter()
+            .map(|b| block_export::<DialogActionExport>(b, crate::dialog_blocks::ACTION_PREFIX, "actions"))
+            .collect::<Result<_, _>>()?,
+        show: case.get("show").to::<bool>(),
+    })
+}
+
+fn dialog_case_exports(resource: &Gd<Resource>, property: &str) -> Result<Vec<DialogCaseExport>, String> {
+    get_resources(resource, property).iter().map(dialog_case_export).collect::<Result<_, _>>().map_err(|e| format!("{property}: {e}"))
+}
+
+/// A dialog resource as the export has it. An empty place in a list is left out.
+fn dialog_export(resource: &Gd<Resource>) -> Result<DialogExport, String> {
+    let mut menus = Vec::new();
+    for (m, menu) in get_resources(resource, "menus").iter().enumerate() {
+        if menu.get_class().to_string() != "RoseDialogMenu" {
+            return Err(format!("menus: holds a {}, not a RoseDialogMenu", menu.get_class()));
+        }
+        let mut lines = Vec::new();
+        for (l, line) in get_resources(menu, "lines").iter().enumerate() {
+            if line.get_class().to_string() != "RoseDialogLine" {
+                return Err(format!("menu {m}: holds a {}, not a RoseDialogLine", line.get_class()));
+            }
+            let at = |e: String| format!("menu {m} line {l}: {e}");
+            let kind = match line.get("kind").to::<GString>().to_string().as_str() {
+                "Npc" => LineKind::Npc,
+                "Answer" => LineKind::Answer,
+                other => return Err(at(format!("kind {other:?} is not Npc or Answer"))),
+            };
+            lines.push(DialogLineExport {
+                kind,
+                text: line.get("text").to::<GString>().to_string(),
+                next_menu: line.get("next_menu").to::<i64>() as i32,
+                show_if: dialog_case_exports(line, "show_if").map_err(at)?,
+                on_choose: dialog_case_exports(line, "on_choose").map_err(at)?,
+            });
+        }
+        menus.push(DialogMenuExport { line: lines });
+    }
+    Ok(DialogExport {
+        key: resource.get("key").to::<GString>().to_string(),
+        name: resource.get("name").to::<GString>().to_string(),
+        open_if: dialog_case_exports(resource, "open_if")?,
+        menu: menus,
+    })
+}
+
+/// `--convert-data` for NPC dialogs: one resource per dialog (the CON files LIST_EVENT.STB
+/// lists, with their text from ULNGTB_CON.LTB and their Lua scripts turned into cases),
+/// linking the quest steps, quests and items their blocks name (which must be there). Returns
+/// the count and what couldn't be kept.
+pub fn convert_dialogs(force: bool) -> Result<(usize, Vec<String>), String> {
+    let data = crate::data::get().ok_or("open the data first")?;
+    let mut existing = Vec::new();
+    tres_files(DIALOGS_DIR, &mut existing);
+    if !existing.is_empty() && !force {
+        return Err(format!(
+            "{DIALOGS_DIR} already has {} dialog resources; they are the source now (use --convert-data=force to write them again from iROSE)",
+            existing.len()
+        ));
+    }
+    let (dialogs, mut lost) = rose_data_irose::get_dialog_database(&data.vfs).map_err(|e| format!("{e:#}"))?;
+    let mut export = DialogsExport::from_database(&dialogs);
+    let mut links = Links::new();
+    for dir in [ITEMS_DIR, QUESTS_DIR, QUEST_TRIGGERS_DIR] {
+        index_links(dir, &mut links)?;
+    }
+    // A line without text was skipped by the game: one note for them all.
+    let skipped = lost.iter().filter(|n| n.contains("no text left out")).count();
+    lost.retain(|n| !n.contains("no text left out"));
+    if skipped > 0 {
+        lost.push(format!("{skipped} dialog lines with no text left out (the game skipped them)"));
+    }
+    // Steps and quests that aren't there never passed or were never had: what needs them goes.
+    lost.extend(export.without_missing(
+        |step| links.contains_key(&format!("quest_trigger/{step}")),
+        |quest| links.contains_key(&format!("quest/{quest}")),
+    ));
+    export.check().map_err(|e| format!("{e:#}"))?;
+    // Named after the NPC the zones give it to (LIST_EVENT names them in Korean only).
+    let strings = rose_data_irose::get_string_database(&data.vfs, 1).map_err(|e| format!("{e:#}"))?;
+    let zones = rose_data_irose::get_zone_database(&data.vfs, strings).map_err(|e| format!("{e:#}"))?;
+    let mut users: std::collections::BTreeMap<String, u16> = std::collections::BTreeMap::new();
+    for zone in zones.iter() {
+        for npc in &zone.npcs {
+            users.entry(npc.conversation.get().to_lowercase()).or_insert(npc.npc_id.get());
+        }
+    }
+    for dialog in &mut export.dialogs {
+        let npc = users.get(&dialog.key.to_lowercase()).and_then(|id| data.npcs.get_npc(rose_data::NpcId::new(*id)?));
+        if let Some(npc) = npc.filter(|n| !n.name.trim().is_empty()) {
+            dialog.name = npc.name.trim().to_string();
+        }
+    }
+    let mut paths = std::collections::HashSet::new();
+    let mut count = 0;
+    for dialog in &export.dialogs {
+        let path = format!("{DIALOGS_DIR}{}.tres", dialog_stem(&dialog.key, &dialog.name));
+        if !paths.insert(path.to_lowercase()) {
+            return Err(format!("two dialogs would both be {path}"));
+        }
+        let resource = dialog_resource(dialog, &links).map_err(|e| format!("dialog {}: {e}", dialog.key))?;
+        save_resource(&resource, &path)?;
+        count += 1;
+    }
+    Ok((count, lost))
+}
+
+/// Reads every dialog resource into the export. Two dialogs with the same key are an error
+/// naming both files. `held` keeps what they link (quest steps, quests, items) loaded.
+pub fn read_dialogs() -> Result<(DialogsExport, usize), String> {
+    let mut export = DialogsExport::default();
+    let mut keys: std::collections::HashMap<String, String> = std::collections::HashMap::new();
+    let mut loader = ResourceLoader::singleton();
+    let files = register_uids(DIALOGS_DIR);
+    for path in &files {
+        let resource = loader.load(path).ok_or(format!("could not load {path}"))?;
+        let class = resource.get_class().to_string();
+        if class != "RoseDialog" {
+            return Err(format!("{path} is a {class}, not a RoseDialog"));
+        }
+        let dialog = dialog_export(&resource).map_err(|e| format!("{path}: {e}"))?;
+        if let Some(other) = keys.insert(dialog.key.to_lowercase(), path.clone()) {
+            return Err(format!("{path} and {other} are both dialog {}", dialog.key));
+        }
+        export.dialogs.push(dialog);
+    }
+    export.dialogs.sort_by(|a, b| a.key.cmp(&b.key));
+    export.check().map_err(|e| format!("{e:#}"))?;
+    Ok((export, files.len()))
+}
+
+/// The dialog resource with this key (`EM20-001.con`), found by its file name (which starts
+/// with the key, `em20-001-judy.tres`), for the zone NPC markers. The folder is listed once,
+/// and again when the key isn't in the list (a dialog made since).
+pub fn find_dialog(key: &str) -> Option<String> {
+    let stem = dialog_stem(key, "");
+    if stem.is_empty() {
+        return None;
+    }
+    let matches = |path: &&String| {
+        let file = path.rsplit('/').next().unwrap_or(path).trim_end_matches(".tres");
+        file == stem || file.strip_prefix(stem.as_str()).is_some_and(|rest| rest.starts_with('-'))
+    };
+    let mut files = DIALOG_FILES.lock().ok()?;
+    if let Some(found) = files.as_ref().and_then(|f| f.iter().find(matches)) {
+        return Some(found.clone());
+    }
+    let mut list = Vec::new();
+    tres_files(DIALOGS_DIR, &mut list);
+    let found = list.iter().find(matches).cloned();
+    *files = Some(list);
+    found
+}
+
 /// `--export-data`: writes `export/` (in the repository) from the resources, the zone scenes
 /// and the animations, or with `check` only compares. Needs the data open (the motion list and
 /// the names in the zone files' comments come from it) and the imported animations. Returns
@@ -3755,6 +4040,24 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
             "no quest resources in {QUESTS_DIR}; run --convert-data first"
         ));
     }
+    let (dialogs, dialog_resources) = read_dialogs()?;
+    if dialog_resources == 0 {
+        return Err(format!(
+            "no dialog resources in {DIALOGS_DIR}; run --convert-data first"
+        ));
+    }
+    // What the dialogs name must be there.
+    {
+        let (steps, quest_ids) = dialogs.named();
+        let trigger_names: std::collections::HashSet<&str> = quests.triggers.iter().map(|t| t.name.as_str()).collect();
+        if let Some(step) = steps.iter().find(|s| !trigger_names.contains(*s)) {
+            return Err(format!("a dialog runs or checks quest step {step}, which isn't there"));
+        }
+        let quest_numbers: std::collections::HashSet<u16> = quests.quests.iter().map(|q| q.id).collect();
+        if let Some(quest) = quest_ids.iter().find(|q| !quest_numbers.contains(*q)) {
+            return Err(format!("a dialog checks quest {quest}, which isn't there"));
+        }
+    }
     if let Some(zone) = world.zones.iter().find(|z| !interface.has_sky(z.sky)) {
         return Err(format!("zone {} has sky {}, which isn't there", zone.id, zone.sky));
     }
@@ -3793,6 +4096,7 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
     data_files.extend(effects.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
     data_files.extend(interface.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
     data_files.extend(quests.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
+    data_files.extend(dialogs.to_files_as(toml).map_err(|e| format!("{e:#}"))?);
     files.extend(data_files.into_iter().map(|(name, text)| (in_data(rose_data_export::data_file_as(name, toml)), text)));
     // The written files must read back (the server and the game load them the same way).
     let find = |path: String| Ok(files.iter().find(|(n, _)| *n == in_data(path.clone())).map(|(_, t)| t.clone()));
@@ -3831,6 +4135,13 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
         .ok_or("the quest export doesn't read back")?
         .check()
         .map_err(|e| format!("{e:#}"))?;
+    let dialogs_back = DialogsExport::from_files_as(toml, |name| find(rose_data_export::data_file_as(name, toml)))
+        .map_err(|e| format!("{e:#}"))?
+        .ok_or("the dialog export doesn't read back")?;
+    if dialogs_back != dialogs {
+        return Err("the dialog export reads back different".into());
+    }
+    dialogs_back.to_database().map_err(|e| format!("{e:#}"))?;
 
     // The zones edited as scenes need their settings, and their layouts go to the server.
     // Their comments name the zone, monsters and NPCs as the resources do now.
@@ -3857,7 +4168,8 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
     files.push((rose_data_export::MOTIONS_FILE.to_string(), timings.to_toml()));
 
     let mut result = ExportResult {
-        resources: item_resources + npc_resources + skill_resources + world_resources + sound_resources + effect_resources + interface_resources + quest_resources,
+        resources: item_resources + npc_resources + skill_resources + world_resources + sound_resources + effect_resources + interface_resources + quest_resources + dialog_resources,
+        dialogs: dialogs.dialogs.len(),
         quests: quests.quests.len(),
         quest_triggers: quests.triggers.len(),
         skies: interface.skies.len(),
@@ -3915,6 +4227,7 @@ pub struct ExportResult {
     pub skies: usize,
     pub quests: usize,
     pub quest_triggers: usize,
+    pub dialogs: usize,
     pub zone_scenes: usize,
     pub motions: usize,
     pub read_ms: u128,
@@ -3936,7 +4249,8 @@ impl RoseDataExport {
     /// monsters, NPCs, drop tables and shop tabs, which link the items, then skills, status
     /// effects and job classes, which link the monsters, then zone settings, warp gates,
     /// recipes and new characters, which link the skies, zones and items, then quests and
-    /// quest triggers, which link items, monsters, NPCs, skills and zones. Needs RoseData.open. Returns {resources, folder, skipped (kinds already there),
+    /// quest triggers, which link items, monsters, NPCs, skills and zones, then NPC dialogs,
+    /// which link quest steps, quests and items. Needs RoseData.open. Returns {resources, folder, skipped (kinds already there),
     /// lost (values that couldn't be kept)}, or {error}.
     #[func]
     fn convert(force: bool) -> VarDictionary {
@@ -4091,6 +4405,24 @@ impl RoseDataExport {
         } else {
             kept.push(&"quests and quest triggers".to_variant());
         }
+        let mut others = Vec::new();
+        tres_files(DIALOGS_DIR, &mut others);
+        if force || others.is_empty() {
+            match convert_dialogs(force) {
+                Ok((n, not_kept)) => {
+                    count += n;
+                    for line in not_kept {
+                        lost.push(&line.to_variant());
+                    }
+                }
+                Err(error) => {
+                    result.set("error", error.as_str());
+                    return result;
+                }
+            }
+        } else {
+            kept.push(&"NPC dialogs".to_variant());
+        }
         let folder = ProjectSettings::singleton().globalize_path("res://data/").to_string();
         result.set("resources", count as i64);
         result.set("folder", folder.as_str());
@@ -4102,7 +4434,7 @@ impl RoseDataExport {
     /// Writes (or with `check` compares) `export/` from the resources, the zone scenes and the
     /// animations. Needs RoseData.open and the import. Returns {files, changed, resources,
     /// items, monsters, npcs, skills, zones, sounds, effects, attack_effects, skies, quests,
-    /// quest_triggers, zone_scenes,
+    /// quest_triggers, dialogs, zone_scenes,
     /// motions, read_ms}, or {error}.
     #[func]
     fn export(check: bool) -> VarDictionary {
@@ -4124,6 +4456,7 @@ impl RoseDataExport {
                 result.set("skies", out.skies as i64);
                 result.set("quests", out.quests as i64);
                 result.set("quest_triggers", out.quest_triggers as i64);
+                result.set("dialogs", out.dialogs as i64);
                 result.set("zone_scenes", out.zone_scenes as i64);
                 result.set("motions", out.motions as i64);
                 result.set("read_ms", out.read_ms as i64);

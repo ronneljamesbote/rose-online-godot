@@ -1,0 +1,24 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://d3txtu7gfsxe"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_udej1"]
+text = "It's good to have great success in life, but it's not bad to live normally like I do."
+next_menu = 1
+resource_name = "NPC: It's good to have great success in life, but it'…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_nco4w"]
+lines = Array[Resource]([SubResource("RoseDialogLine_udej1")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_654sd"]
+kind = "Answer"
+text = "[Come back later]"
+resource_name = "You: [Come back later]"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lm1s1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_654sd")])
+resource_name = "Menu 1"
+
+[resource]
+key = "EM02-026.con"
+name = "주논폴리스-주민-민트"
+menus = Array[Resource]([SubResource("RoseDialogMenu_nco4w"), SubResource("RoseDialogMenu_lm1s1")])

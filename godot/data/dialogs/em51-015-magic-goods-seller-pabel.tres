@@ -1,0 +1,133 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://dcodtbjrrjf1x"]
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_so6c4"]
+switch = 3
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_pwfy4"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_so6c4")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_suohv"]
+text = "Ulamriram pushashano ki kusaten gulhongong."
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_pwfy4")])
+resource_name = "NPC: Ulamriram pushashano ki kusaten gulhongong."
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_3r43k"]
+switch = 3
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_fld5t"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_3r43k")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rb7pk"]
+text = "When I was very young, I lost my parents. But I never cried and tried my best to be the ideal child for them."
+next_menu = 4
+show_if = Array[Resource]([SubResource("RoseDialogCase_fld5t")])
+resource_name = "NPC: When I was very young, I lost my parents. But I …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_htiq7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_suohv"), SubResource("RoseDialogLine_rb7pk")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ef5rm"]
+kind = "Answer"
+text = "What are you saying?"
+next_menu = 2
+resource_name = "You: What are you saying?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lkyhj"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ef5rm")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5i8oo"]
+text = "Kirikiri tochii nolka kongpangsar meme."
+next_menu = 3
+resource_name = "NPC: Kirikiri tochii nolka kongpangsar meme."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5rdxe"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5i8oo")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ita7b"]
+kind = "Answer"
+text = "(It sounds important, but there's no way I can understand.)"
+resource_name = "You: (It sounds important, but there's no way I can u…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_yawpo"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ita7b")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_uklxe"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_daxud"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_uklxe")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ui3mi"]
+kind = "Answer"
+text = "So what kind of items does this ideal child have to sell?"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_daxud")])
+resource_name = "You: So what kind of items does this ideal child have…"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_eetrq"]
+window = "Appraisal"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_1f867"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_eetrq")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_oaa2e"]
+kind = "Answer"
+text = "Would you appraise my item?"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_1f867")])
+resource_name = "You: Would you appraise my item?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_swt84"]
+kind = "Answer"
+text = "You lost your parents…?"
+next_menu = 5
+resource_name = "You: You lost your parents…?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_o8gy8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ui3mi"), SubResource("RoseDialogLine_oaa2e"), SubResource("RoseDialogLine_swt84")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_svjqx"]
+text = "Yes, a long time ago. Tragically, they were taken by monsters. "
+next_menu = 6
+resource_name = "NPC: Yes, a long time ago. Tragically, they were take…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dx0iq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_svjqx")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_omgf2"]
+kind = "Answer"
+text = "And up until now you've been living on your own?"
+next_menu = 7
+resource_name = "You: And up until now you've been living on your own?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gfkgf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_omgf2")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nnxli"]
+text = "Oh, I was taken in by some shamanist who raised me to become the ideal kid."
+next_menu = 8
+resource_name = "NPC: Oh, I was taken in by some shamanist who raised …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_06l8o"]
+lines = Array[Resource]([SubResource("RoseDialogLine_nnxli")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_h1j3d"]
+kind = "Answer"
+text = "You really are a wonderful boy."
+resource_name = "You: You really are a wonderful boy."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_c4yvt"]
+lines = Array[Resource]([SubResource("RoseDialogLine_h1j3d")])
+resource_name = "Menu 8"
+
+[resource]
+key = "EM51-015.con"
+name = "[Magic Goods Seller] Pabel"
+menus = Array[Resource]([SubResource("RoseDialogMenu_htiq7"), SubResource("RoseDialogMenu_lkyhj"), SubResource("RoseDialogMenu_5rdxe"), SubResource("RoseDialogMenu_yawpo"), SubResource("RoseDialogMenu_o8gy8"), SubResource("RoseDialogMenu_dx0iq"), SubResource("RoseDialogMenu_gfkgf"), SubResource("RoseDialogMenu_06l8o"), SubResource("RoseDialogMenu_c4yvt")])

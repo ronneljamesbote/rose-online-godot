@@ -1,0 +1,43 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://dda6uly36hab3"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_eu7h2"]
+text = "You are a from other town. If you want to us to trust you, prove yourself are innocent."
+next_menu = 1
+resource_name = "NPC: You are a from other town. If you want to us to …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wyi3p"]
+lines = Array[Resource]([SubResource("RoseDialogLine_eu7h2")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_yxnae"]
+kind = "Answer"
+text = "I'm just an adventurer."
+next_menu = 2
+resource_name = "You: I'm just an adventurer."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jrvoh"]
+lines = Array[Resource]([SubResource("RoseDialogLine_yxnae")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_yd5ls"]
+text = "It's not enough."
+next_menu = 3
+resource_name = "NPC: It's not enough."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6qres"]
+lines = Array[Resource]([SubResource("RoseDialogLine_yd5ls")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dkujr"]
+kind = "Answer"
+text = "But…"
+resource_name = "You: But…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_l81o7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dkujr")])
+resource_name = "Menu 3"
+
+[resource]
+key = "EM62-002.con"
+name = "그림자정글-나미엘 차"
+menus = Array[Resource]([SubResource("RoseDialogMenu_wyi3p"), SubResource("RoseDialogMenu_jrvoh"), SubResource("RoseDialogMenu_6qres"), SubResource("RoseDialogMenu_l81o7")])

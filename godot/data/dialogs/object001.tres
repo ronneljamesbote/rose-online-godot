@@ -1,0 +1,111 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://h1ewbyqmf0xj"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://bxbsm12engcgr" path="res://data/quest_triggers/tutorial/move51_52s.tres" id="1_jgk4p"]
+[ext_resource type="RoseQuestTrigger" uid="uid://eh4ppmmmi67b" path="res://data/quest_triggers/tutorial/move51_52n.tres" id="2_q7lc2"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bu487aoh3vyw5" path="res://data/quest_triggers/tutorial/move51_53s.tres" id="3_7pmxk"]
+[ext_resource type="RoseQuestTrigger" uid="uid://b7hmx1nl48ac1" path="res://data/quest_triggers/tutorial/move51_53w.tres" id="4_7wmst"]
+[ext_resource type="RoseQuestTrigger" uid="uid://b6pxmeu00gie8" path="res://data/quest_triggers/tutorial/move51_54n.tres" id="5_f3stf"]
+[ext_resource type="RoseQuestTrigger" uid="uid://byljdphbg3nk2" path="res://data/quest_triggers/tutorial/move51_54s.tres" id="6_ja3v0"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bmuty2modeg5y" path="res://data/quest_triggers/tutorial/move51_55c.tres" id="7_kydyh"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1fbnt"]
+text = "Field Warp"
+next_menu = 1
+resource_name = "NPC: Field Warp"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_njd50"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1fbnt")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_fp5gp"]
+step = ExtResource("1_jgk4p")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_6rkw3"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_fp5gp")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_j7eb8"]
+kind = "Answer"
+text = "Field of Mana (Southwest)"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_6rkw3")])
+resource_name = "You: Field of Mana (Southwest)"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_arpso"]
+step = ExtResource("2_q7lc2")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_st482"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_arpso")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wyrd4"]
+kind = "Answer"
+text = "Field of Mana (Northwest)"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_st482")])
+resource_name = "You: Field of Mana (Northwest)"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_yomc8"]
+step = ExtResource("3_7pmxk")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_c5lpk"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_yomc8")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tito1"]
+kind = "Answer"
+text = "Arumic Valley (South)"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_c5lpk")])
+resource_name = "You: Arumic Valley (South)"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_71vk0"]
+step = ExtResource("4_7wmst")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3emqs"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_71vk0")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ny1rs"]
+kind = "Answer"
+text = "Arumic Valley (Southwest)"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_3emqs")])
+resource_name = "You: Arumic Valley (Southwest)"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_i3cxb"]
+step = ExtResource("5_f3stf")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5ugf0"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_i3cxb")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_r8uxw"]
+kind = "Answer"
+text = "Crystal Snowfields (North)"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_5ugf0")])
+resource_name = "You: Crystal Snowfields (North)"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_s7rer"]
+step = ExtResource("6_ja3v0")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_6hsdh"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_s7rer")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tq2ji"]
+kind = "Answer"
+text = "Crystal Snowfields (South - Front Door of Temple)"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_6hsdh")])
+resource_name = "You: Crystal Snowfields (South - Front Door of Temple…"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_s0o2h"]
+step = ExtResource("7_kydyh")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_rkqxw"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_s0o2h")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gpjvj"]
+kind = "Answer"
+text = "Freezing Plateau (Center)"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_rkqxw")])
+resource_name = "You: Freezing Plateau (Center)"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7pry5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_j7eb8"), SubResource("RoseDialogLine_wyrd4"), SubResource("RoseDialogLine_tito1"), SubResource("RoseDialogLine_ny1rs"), SubResource("RoseDialogLine_r8uxw"), SubResource("RoseDialogLine_tq2ji"), SubResource("RoseDialogLine_gpjvj")])
+resource_name = "Menu 1"
+
+[resource]
+key = "Object001.con"
+name = "루나행성 워프게이트"
+menus = Array[Resource]([SubResource("RoseDialogMenu_njd50"), SubResource("RoseDialogMenu_7pry5")])

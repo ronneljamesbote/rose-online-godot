@@ -1,0 +1,27 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://0rd1rt71t5ct"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rvr0q"]
+text = "So… What is it that you want?"
+next_menu = 1
+resource_name = "NPC: So… What is it that you want?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_60kpv"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rvr0q")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_4t6ew"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ggvnl"]
+kind = "Answer"
+text = "This place is too eerie! I'm going back to town."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_4t6ew")])
+resource_name = "You: This place is too eerie! I'm going back to town."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_i17dm"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ggvnl")])
+resource_name = "Menu 1"
+
+[resource]
+key = "EM02-006.con"
+name = "[Akram Minister] Rodath"
+menus = Array[Resource]([SubResource("RoseDialogMenu_60kpv"), SubResource("RoseDialogMenu_i17dm")])

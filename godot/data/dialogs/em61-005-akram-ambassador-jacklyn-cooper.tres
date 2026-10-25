@@ -1,0 +1,43 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://bbypw2kybywso"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7apc1"]
+text = "Isn't it hot for you? I mean, it's so hot and I can't even breathe well."
+next_menu = 1
+resource_name = "NPC: Isn't it hot for you? I mean, it's so hot and I …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hsb8k"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7apc1")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_u22kc"]
+kind = "Answer"
+text = "No, not at all."
+next_menu = 2
+resource_name = "You: No, not at all."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_c71kh"]
+lines = Array[Resource]([SubResource("RoseDialogLine_u22kc")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3keu0"]
+text = "What a strange man you are."
+next_menu = 3
+resource_name = "NPC: What a strange man you are."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wfa7a"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3keu0")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jfjbr"]
+kind = "Answer"
+text = "I think you're more strange than me."
+resource_name = "You: I think you're more strange than me."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1oxwl"]
+lines = Array[Resource]([SubResource("RoseDialogLine_jfjbr")])
+resource_name = "Menu 3"
+
+[resource]
+key = "EM61-005.con"
+name = "[Akram Ambassador] Jacklyn Cooper"
+menus = Array[Resource]([SubResource("RoseDialogMenu_hsb8k"), SubResource("RoseDialogMenu_c71kh"), SubResource("RoseDialogMenu_wfa7a"), SubResource("RoseDialogMenu_1oxwl")])

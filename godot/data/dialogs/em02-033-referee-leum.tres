@@ -1,0 +1,27 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://rwj4oyr7gcaf"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wvoqr"]
+text = "What business brings you here?"
+next_menu = 1
+resource_name = "NPC: What business brings you here?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_d6jwd"]
+lines = Array[Resource]([SubResource("RoseDialogLine_wvoqr")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ov3m1"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bkydk"]
+kind = "Answer"
+text = "This place is too eerie! I'm going back to town."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_ov3m1")])
+resource_name = "You: This place is too eerie! I'm going back to town."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ffl8b"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bkydk")])
+resource_name = "Menu 1"
+
+[resource]
+key = "EM02-033.con"
+name = "[Referee] Leum"
+menus = Array[Resource]([SubResource("RoseDialogMenu_d6jwd"), SubResource("RoseDialogMenu_ffl8b")])

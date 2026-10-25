@@ -7,7 +7,6 @@
 
 mod images;
 mod items;
-mod lua4;
 mod npcs;
 mod page;
 mod quests;

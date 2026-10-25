@@ -1,0 +1,59 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://cpvecu4sx2akf"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://bbku46kkwp6ui" path="res://data/quest_triggers/tutorial/move22_27.tres" id="1_atgad"]
+[ext_resource type="RoseQuestTrigger" uid="uid://c228fg5easj25" path="res://data/quest_triggers/tutorial/move22_3.tres" id="2_cc3xa"]
+[ext_resource type="RoseQuestTrigger" uid="uid://b0mglyu1kuyeq" path="res://data/quest_triggers/tutorial/move22_2.tres" id="3_f572c"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_857ip"]
+text = "Good day. This passenger ship is being operated by the Ferrell Guild. Please select your destination and pay the charge. Then we will take you to the place you want to go. Well, where would you like to go?"
+next_menu = 1
+resource_name = "NPC: Good day. This passenger ship is being operated …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_iuq6h"]
+lines = Array[Resource]([SubResource("RoseDialogLine_857ip")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_bog2a"]
+step = ExtResource("1_atgad")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_qaoxq"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_bog2a")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jhjkd"]
+kind = "Answer"
+text = "Kenji Beach : 1,500 Zulie"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_qaoxq")])
+resource_name = "You: Kenji Beach : 1,500 Zulie"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ahfh6"]
+step = ExtResource("2_cc3xa")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_vgu2j"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_ahfh6")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2cbpe"]
+kind = "Answer"
+text = "Dolphin Island (Cart Racing Track) : 1,500 Zulie"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_vgu2j")])
+resource_name = "You: Dolphin Island (Cart Racing Track) : 1,500 Zulie"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_dji11"]
+step = ExtResource("3_f572c")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3ihm1"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_dji11")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_iuc5q"]
+kind = "Answer"
+text = "Junon Polis : 1,500 Zulie"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_3ihm1")])
+resource_name = "You: Junon Polis : 1,500 Zulie"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_t3483"]
+lines = Array[Resource]([SubResource("RoseDialogLine_jhjkd"), SubResource("RoseDialogLine_2cbpe"), SubResource("RoseDialogLine_iuc5q")])
+resource_name = "Menu 1"
+
+[resource]
+key = "EM98-001.con"
+name = "[Ferrell Guild Staff] Peron"
+menus = Array[Resource]([SubResource("RoseDialogMenu_iuq6h"), SubResource("RoseDialogMenu_t3483")])

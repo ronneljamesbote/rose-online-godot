@@ -81,7 +81,7 @@ fn encode_variable_type(value: QsdVariableType) -> u16 {
     }
 }
 
-#[derive(Copy, Clone, Debug, JsonSchema, Serialize, Deserialize)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, JsonSchema, Serialize, Deserialize)]
 pub enum QsdConditionOperator {
     #[serde(rename = "==")]
     Equals,

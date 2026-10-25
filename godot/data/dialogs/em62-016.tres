@@ -1,0 +1,62 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://b1bu58y41hf6p"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dcin3"]
+text = "I feel dizzy. My head rushes."
+next_menu = 1
+resource_name = "NPC: I feel dizzy. My head rushes."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3qwxx"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dcin3")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_depsw"]
+kind = "Answer"
+text = "You look terriblely sick. Are you alright?"
+next_menu = 2
+resource_name = "You: You look terriblely sick. Are you alright?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5v4mk"]
+lines = Array[Resource]([SubResource("RoseDialogLine_depsw")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0e81u"]
+text = "I got a spider bite. I feel my body is getting stiffen. Oh, I feel dizzy. I'm afraid I'm going to lose my consciousness."
+next_menu = 3
+resource_name = "NPC: I got a spider bite. I feel my body is getting s…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_k1mxl"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0e81u")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4v033"]
+kind = "Answer"
+text = "Gee! Is there anything I can do for you?"
+next_menu = 4
+resource_name = "You: Gee! Is there anything I can do for you?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lex6q"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4v033")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vq7hi"]
+text = "It's too late. Please go back to Raknu village and do something for me. Like, feeding Charlie and saying goodbye to sir Namiel. {br}And please tell Jeffrey that it was me who stole the spider cake before."
+next_menu = 5
+resource_name = "NPC: It's too late. Please go back to Raknu village a…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7715n"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vq7hi")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_heduj"]
+kind = "Answer"
+text = "Hey, hold on! I'll call doctor for you. Please don't give up."
+resource_name = "You: Hey, hold on! I'll call doctor for you. Please d…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hxhex"]
+lines = Array[Resource]([SubResource("RoseDialogLine_heduj")])
+resource_name = "Menu 5"
+
+[resource]
+key = "EM62-016.con"
+name = "그림자정글-누키"
+menus = Array[Resource]([SubResource("RoseDialogMenu_3qwxx"), SubResource("RoseDialogMenu_5v4mk"), SubResource("RoseDialogMenu_k1mxl"), SubResource("RoseDialogMenu_lex6q"), SubResource("RoseDialogMenu_7715n"), SubResource("RoseDialogMenu_hxhex")])

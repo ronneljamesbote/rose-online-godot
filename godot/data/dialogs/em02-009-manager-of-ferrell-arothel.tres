@@ -1,0 +1,1219 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://b6if8agxne1yx"]
+
+[ext_resource type="RoseQuest" uid="uid://dal40ib06c7qw" path="res://data/quests/2857-taking-back-ferrell-road.tres" id="1_0vi46"]
+[ext_resource type="RoseQuest" uid="uid://cws8frk46eop5" path="res://data/quests/2858-justification-of-wealth.tres" id="2_tkcq7"]
+[ext_resource type="RoseQuestTrigger" uid="uid://o32ytvid311k" path="res://data/quest_triggers/qu05-001/PR01.tres" id="3_mma4i"]
+[ext_resource type="RoseQuestTrigger" uid="uid://0hl2ou8kgtkn" path="res://data/quest_triggers/qu05-001/PR02.tres" id="4_075gk"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dodo1hcxwy7da" path="res://data/quest_triggers/qu05-001/PR03.tres" id="5_nyja1"]
+[ext_resource type="RoseQuestTrigger" uid="uid://ygodgb6flgtl" path="res://data/quest_triggers/qu05-100/QU05-cart1-all.tres" id="6_lmecg"]
+[ext_resource type="RoseQuestTrigger" uid="uid://mhjt2k2lhga5" path="res://data/quest_triggers/qu05-100/QU05-cart1-1.tres" id="7_l32yp"]
+[ext_resource type="RoseQuestTrigger" uid="uid://c5a3k6bksngh3" path="res://data/quest_triggers/qu05-100/QU05-cart1-2.tres" id="8_nk223"]
+[ext_resource type="RoseQuestTrigger" uid="uid://d0o3aqi4fyxfd" path="res://data/quest_triggers/qu05-100/QU05-cart1-3.tres" id="9_wh23a"]
+[ext_resource type="RoseQuestTrigger" uid="uid://xwv7n7f5odfb" path="res://data/quest_triggers/qu05-100/QU05-item1004.tres" id="10_qe2ih"]
+[ext_resource type="RoseQuestTrigger" uid="uid://dttx7kduu8q7v" path="res://data/quest_triggers/qu05-100/QU05-item1032.tres" id="11_bmlcm"]
+[ext_resource type="RoseQuestTrigger" uid="uid://bk6kotqt4n7v6" path="res://data/quest_triggers/qu05-100/QU05-item1064.tres" id="12_n5obp"]
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_28lw7"]
+ability = "Union"
+operator = "!="
+value = 5
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3y0bx"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_28lw7")])
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_k7nsj"]
+value = 1
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_o4hul"]
+quest = ExtResource("1_0vi46")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_8kyg8"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_k7nsj"), SubResource("RoseDialogIfQuest_o4hul")])
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_abs57"]
+operator = "!="
+value = 1
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_jahpd"]
+operator = "!="
+value = 5
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_eolxw"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_abs57"), SubResource("RoseDialogIfNpcSwitch_jahpd")])
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_wefmq"]
+value = 5
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ti17f"]
+quest = ExtResource("2_tkcq7")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7pyv1"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_wefmq"), SubResource("RoseDialogIfQuest_ti17f")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tfypp"]
+text = "Ah, you must already know that this is the most secure bank and Storage, right?"
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_3y0bx"), SubResource("RoseDialogCase_8kyg8"), SubResource("RoseDialogCase_eolxw"), SubResource("RoseDialogCase_7pyv1")])
+resource_name = "NPC: Ah, you must already know that this is the most …"
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_cqfro"]
+value = 1
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_ridgp"]
+ability = "Union"
+operator = "=="
+value = 5
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_2a75t"]
+quest = ExtResource("1_0vi46")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_08n1u"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_cqfro"), SubResource("RoseDialogIfAbility_ridgp"), SubResource("RoseDialogIfQuest_2a75t")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6lvtl"]
+text = "The Junon Order and the Arumics blocked Ferrell Road in order to expand their territories. They obviously don't understand commerce, much less respect us as a guild."
+next_menu = 50
+show_if = Array[Resource]([SubResource("RoseDialogCase_08n1u")])
+resource_name = "NPC: The Junon Order and the Arumics blocked Ferrell …"
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_qoqn7"]
+value = 5
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_jb02d"]
+ability = "Union"
+operator = "=="
+value = 5
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_k3arr"]
+quest = ExtResource("2_tkcq7")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_mwn6s"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_qoqn7"), SubResource("RoseDialogIfAbility_jb02d"), SubResource("RoseDialogIfQuest_k3arr")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_h1i54"]
+text = "That Junon Order and the Arumics can do nothing in the face of our wealth! Let us punish them for disrespecting us!"
+next_menu = 57
+show_if = Array[Resource]([SubResource("RoseDialogCase_mwn6s")])
+resource_name = "NPC: That Junon Order and the Arumics can do nothing …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_362ot"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tfypp"), SubResource("RoseDialogLine_6lvtl"), SubResource("RoseDialogLine_h1i54")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_rrb2o"]
+window = "Storage"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_avrjm"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_rrb2o")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fntms"]
+kind = "Answer"
+text = "Yes, let me use the Storage."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_avrjm")])
+resource_name = "You: Yes, let me use the Storage."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_yof42"]
+kind = "Answer"
+text = "I am interested in the Ferrell Guild."
+next_menu = 2
+resource_name = "You: I am interested in the Ferrell Guild."
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_i8nnq"]
+operator = ">="
+value = 1
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_fst1s"]
+ability = "Union"
+operator = "=="
+value = 5
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5hgf4"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_i8nnq"), SubResource("RoseDialogIfAbility_fst1s")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ummer"]
+kind = "Answer"
+text = "Would you explain Faction War again?"
+next_menu = 26
+show_if = Array[Resource]([SubResource("RoseDialogCase_5hgf4")])
+resource_name = "You: Would you explain Faction War again?"
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_6b66v"]
+ability = "Union"
+operator = "!="
+value = 5
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_cjt3a"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_6b66v")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qmi7y"]
+kind = "Answer"
+text = "Would you tell me how to proceed with the Faction War?"
+next_menu = 65
+show_if = Array[Resource]([SubResource("RoseDialogCase_cjt3a")])
+resource_name = "You: Would you tell me how to proceed with the Factio…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_mt7on"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fntms"), SubResource("RoseDialogLine_yof42"), SubResource("RoseDialogLine_ummer"), SubResource("RoseDialogLine_qmi7y")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7jq3e"]
+text = "I must say, <NAME>, not only are you attractive, you also have good taste."
+next_menu = 3
+resource_name = "NPC: I must say, <NAME>, not only are you attractive,…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_mk8x7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7jq3e")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_210po"]
+kind = "Answer"
+text = "What does the Ferrell Guild do?"
+next_menu = 4
+resource_name = "You: What does the Ferrell Guild do?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_inh5y"]
+kind = "Answer"
+text = "I want to know the relationship of the Ferrell Guild with other Factions."
+next_menu = 10
+resource_name = "You: I want to know the relationship of the Ferrell G…"
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_r7h13"]
+ability = "Union"
+operator = "!="
+value = 5
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_bqs6x"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_r7h13")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kad1e"]
+kind = "Answer"
+text = "I want to join the Ferrell Guild."
+next_menu = 12
+show_if = Array[Resource]([SubResource("RoseDialogCase_bqs6x")])
+resource_name = "You: I want to join the Ferrell Guild."
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_rkl46"]
+ability = "Union"
+operator = "=="
+value = 5
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_v2pja"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_rkl46")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ytn5i"]
+kind = "Answer"
+text = "I want to leave the Ferrell Guild."
+next_menu = 18
+show_if = Array[Resource]([SubResource("RoseDialogCase_v2pja")])
+resource_name = "You: I want to leave the Ferrell Guild."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_f40ui"]
+kind = "Answer"
+text = "I would like to use my Faction Points."
+next_menu = 20
+resource_name = "You: I would like to use my Faction Points."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vfb30"]
+lines = Array[Resource]([SubResource("RoseDialogLine_210po"), SubResource("RoseDialogLine_inh5y"), SubResource("RoseDialogLine_kad1e"), SubResource("RoseDialogLine_ytn5i"), SubResource("RoseDialogLine_f40ui")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_v2jvi"]
+text = "The Ferrell Guild is endeavoring to take control of Junon Planet's market. Because of the scope of our goal, we can always use more manpower. Your labor will never be in vain, so work hard for us and you'll be financially compensated."
+next_menu = 5
+resource_name = "NPC: The Ferrell Guild is endeavoring to take control…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_omeih"]
+lines = Array[Resource]([SubResource("RoseDialogLine_v2jvi")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ncd0s"]
+kind = "Answer"
+text = "Can I also be a part of the Ferrell Guild?"
+next_menu = 6
+resource_name = "You: Can I also be a part of the Ferrell Guild?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xc8rm"]
+kind = "Answer"
+text = "I am wondering what kinds of activities you do for your Faction."
+next_menu = 8
+resource_name = "You: I am wondering what kinds of activities you do f…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_kkyrj"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ncd0s"), SubResource("RoseDialogLine_xc8rm")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2mhdq"]
+text = "Of course! If you haven't joined a Faction and already reached character Level 30, you'll always be welcome. There's only one condition: we're accepting 30,000 Zulie as part of the development fund from our new members."
+next_menu = 7
+resource_name = "NPC: Of course! If you haven't joined a Faction and a…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_kfqwx"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2mhdq")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_n5js1"]
+kind = "Answer"
+text = "I see."
+next_menu = 2
+resource_name = "You: I see."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_62usd"]
+lines = Array[Resource]([SubResource("RoseDialogLine_n5js1")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_v8axg"]
+text = "First of all, you must work really hard for our goal of taking control of Junon Planet's market. You'll have to adventure to every single deserted place to find materials and goods. Sometimes you'll have to travel through rough terrain to deliver important products to our customers. You should also know that we are allied with the Righteous Crusaders, especially since they protect us from threats."
+next_menu = 9
+resource_name = "NPC: First of all, you must work really hard for our …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_q2i0a"]
+lines = Array[Resource]([SubResource("RoseDialogLine_v8axg")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_n2tuq"]
+kind = "Answer"
+text = "I see, I look forward to joining you guys."
+next_menu = 2
+resource_name = "You: I see, I look forward to joining you guys."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vvtxc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_n2tuq")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_y1kob"]
+text = "The Ferrell Guild supports the Righteous Crusaders. They protect us from thieves who target our money and goods. Because of this relationship, the Junon Order and the Ikaness may not be friendly to us, but they haven't directly harmed us yet."
+next_menu = 11
+resource_name = "NPC: The Ferrell Guild supports the Righteous Crusade…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_pbh7c"]
+lines = Array[Resource]([SubResource("RoseDialogLine_y1kob")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e3a8n"]
+kind = "Answer"
+text = "I see, but you'd better be careful with them, then."
+next_menu = 2
+resource_name = "You: I see, but you'd better be careful with them, th…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5vbei"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e3a8n")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_kh3hr"]
+value = 30
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_jmg44"]
+ability = "Union"
+operator = "=="
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_0qycq"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_kh3hr"), SubResource("RoseDialogIfAbility_jmg44")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_v8kpr"]
+text = "Excellent choice! If you join the Ferrell Guild, you'll get to know all about real trading. In order to join the Ferrell Guild, you're required to donate a 30,000 Zulie fee as part of the development fund. Would you like to join us?"
+next_menu = 13
+show_if = Array[Resource]([SubResource("RoseDialogCase_0qycq")])
+resource_name = "NPC: Excellent choice! If you join the Ferrell Guild,…"
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_i0nih"]
+operator = "<"
+value = 30
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_442ou"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_i0nih")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rdvb3"]
+text = "You're required to train yourself a little longer in order to be granted membership into the Ferrell Guild. I'm sorry, but we can only accept people who have fulfilled our requirements."
+next_menu = 17
+show_if = Array[Resource]([SubResource("RoseDialogCase_442ou")])
+resource_name = "NPC: You're required to train yourself a little longe…"
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_38q2k"]
+ability = "Union"
+operator = ">"
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_eef8k"]
+ability = "Union"
+operator = "!="
+value = 5
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3rk11"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_38q2k"), SubResource("RoseDialogIfAbility_eef8k")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_acyhq"]
+text = "Oh, but you're already in a Faction. Unfortunately, you can't be a member of more than one Faction at a time. If you wish to join us, you'll have to leave your previous Faction first."
+next_menu = 16
+show_if = Array[Resource]([SubResource("RoseDialogCase_3rk11")])
+resource_name = "NPC: Oh, but you're already in a Faction. Unfortunate…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_80lg3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_v8kpr"), SubResource("RoseDialogLine_rdvb3"), SubResource("RoseDialogLine_acyhq")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_rgf00"]
+step = ExtResource("3_mma4i")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_25aoo"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_rgf00")])
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_1tjfs"]
+step = ExtResource("3_mma4i")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7hwqe"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_1tjfs")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8larm"]
+kind = "Answer"
+text = "Yes, I would like to join."
+show_if = Array[Resource]([SubResource("RoseDialogCase_7hwqe")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_25aoo")])
+resource_name = "You: Yes, I would like to join."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_72t6m"]
+step = ExtResource("3_mma4i")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_lqjml"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_72t6m")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vangm"]
+kind = "Answer"
+text = "That's quite a lot of money."
+next_menu = 14
+show_if = Array[Resource]([SubResource("RoseDialogCase_lqjml")])
+resource_name = "You: That's quite a lot of money."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_8levd"]
+step = ExtResource("4_075gk")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_n1efq"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_8levd")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_duwqx"]
+kind = "Answer"
+text = "I don't have that much money. I'll come back later."
+show_if = Array[Resource]([SubResource("RoseDialogCase_n1efq")])
+resource_name = "You: I don't have that much money. I'll come back lat…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_eakta"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8larm"), SubResource("RoseDialogLine_vangm"), SubResource("RoseDialogLine_duwqx")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vl4h2"]
+text = "That's not expensive at all! The benefits of being a member of the Ferrell Guild will be worth far more than that. You won't regret being a member of our guild."
+next_menu = 15
+resource_name = "NPC: That's not expensive at all! The benefits of bei…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ha58a"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vl4h2")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_0fb3g"]
+step = ExtResource("3_mma4i")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_wo8h5"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_0fb3g")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tg7qv"]
+kind = "Answer"
+text = "Okay, let me join."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_wo8h5")])
+resource_name = "You: Okay, let me join."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ki5vn"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tg7qv")])
+resource_name = "Menu 15"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vyuy7"]
+kind = "Answer"
+text = "Okay."
+resource_name = "You: Okay."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rpyl3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vyuy7")])
+resource_name = "Menu 16"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vchjs"]
+kind = "Answer"
+text = "Okay."
+resource_name = "You: Okay."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b2wwg"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vchjs")])
+resource_name = "Menu 17"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xjgvw"]
+text = "You're leaving the Ferrell Guild? Well, if you leave us, the Faction Points you’ve earned will still remain. However, you have to donate another 30,000 Zulie for the development fund if you wish to join us again."
+next_menu = 19
+resource_name = "NPC: You're leaving the Ferrell Guild? Well, if you l…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_y7qcc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_xjgvw")])
+resource_name = "Menu 18"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_7ly2y"]
+step = ExtResource("5_nyja1")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_46rpt"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_7ly2y")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_25lal"]
+kind = "Answer"
+text = "Okay, I'll keep that in mind. Now, let me leave."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_46rpt")])
+resource_name = "You: Okay, I'll keep that in mind. Now, let me leave."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_uvrbg"]
+kind = "Answer"
+text = "I think I need to think about it again."
+resource_name = "You: I think I need to think about it again."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fa812"]
+lines = Array[Resource]([SubResource("RoseDialogLine_25lal"), SubResource("RoseDialogLine_uvrbg")])
+resource_name = "Menu 19"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_sm341"]
+text = "If you can save more of your Faction Points, you can exchange them for a nicer reward later. But if you want, you may use them now. How would you like to use them?"
+next_menu = 21
+resource_name = "NPC: If you can save more of your Faction Points, you…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ft6hx"]
+lines = Array[Resource]([SubResource("RoseDialogLine_sm341")])
+resource_name = "Menu 20"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_64gvb"]
+kind = "Answer"
+text = "I would like to exchange them for a Cart part."
+next_menu = 22
+resource_name = "You: I would like to exchange them for a Cart part."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tx25t"]
+kind = "Answer"
+text = "I would like to exchange them for a Mask."
+next_menu = 24
+resource_name = "You: I would like to exchange them for a Mask."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fcenm"]
+kind = "Answer"
+text = "I'll come back later."
+resource_name = "You: I'll come back later."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5jpiy"]
+lines = Array[Resource]([SubResource("RoseDialogLine_64gvb"), SubResource("RoseDialogLine_tx25t"), SubResource("RoseDialogLine_fcenm")])
+resource_name = "Menu 21"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_74obd"]
+text = "Well then, please choose one from the following."
+next_menu = 23
+resource_name = "NPC: Well then, please choose one from the following."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ruccb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_74obd")])
+resource_name = "Menu 22"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_vy37b"]
+step = ExtResource("6_lmecg")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_6bvyf"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_vy37b")])
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_7vxj1"]
+switch = 100
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_tajem"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_7vxj1")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0muxb"]
+kind = "Answer"
+text = "160 Faction Points - 3 Basic Cart Set (Wooden Frame, First Engine, Wooden Wheels)"
+show_if = Array[Resource]([SubResource("RoseDialogCase_tajem")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_6bvyf")])
+resource_name = "You: 160 Faction Points - 3 Basic Cart Set (Wooden Fr…"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_8ikun"]
+step = ExtResource("7_l32yp")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_l7ekc"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_8ikun")])
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_xa1fb"]
+switch = 101
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_p2r1p"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_xa1fb")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_htt4r"]
+kind = "Answer"
+text = "80 Faction Points - Wooden Frame"
+show_if = Array[Resource]([SubResource("RoseDialogCase_p2r1p")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_l7ekc")])
+resource_name = "You: 80 Faction Points - Wooden Frame"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_pnile"]
+step = ExtResource("8_nk223")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_suuse"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_pnile")])
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_l7dut"]
+switch = 102
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_46jiw"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_l7dut")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cfc4q"]
+kind = "Answer"
+text = "50 Faction Points - First Engine"
+show_if = Array[Resource]([SubResource("RoseDialogCase_46jiw")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_suuse")])
+resource_name = "You: 50 Faction Points - First Engine"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_mvtv7"]
+step = ExtResource("9_wh23a")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_6tq8l"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_mvtv7")])
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_gp8sy"]
+switch = 103
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_r8xc3"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestSwitch_gp8sy")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vk87a"]
+kind = "Answer"
+text = "50 Faction Points - Wooden Wheels"
+show_if = Array[Resource]([SubResource("RoseDialogCase_r8xc3")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_6tq8l")])
+resource_name = "You: 50 Faction Points - Wooden Wheels"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xiris"]
+kind = "Answer"
+text = "I'll come back later."
+resource_name = "You: I'll come back later."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8su8i"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0muxb"), SubResource("RoseDialogLine_htt4r"), SubResource("RoseDialogLine_cfc4q"), SubResource("RoseDialogLine_vk87a"), SubResource("RoseDialogLine_xiris")])
+resource_name = "Menu 23"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jxbex"]
+text = "Now, choose one from following."
+next_menu = 25
+resource_name = "NPC: Now, choose one from following."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dqeeu"]
+lines = Array[Resource]([SubResource("RoseDialogLine_jxbex")])
+resource_name = "Menu 24"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ktyqr"]
+step = ExtResource("10_qe2ih")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_myiof"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_ktyqr")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lfcvx"]
+kind = "Answer"
+text = "20 Faction Points - Zorro Mask (DEF + 5)"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_myiof")])
+resource_name = "You: 20 Faction Points - Zorro Mask (DEF + 5)"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_h1pjy"]
+step = ExtResource("11_bmlcm")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_rsami"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_h1pjy")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ky2gm"]
+kind = "Answer"
+text = "20 Faction Points - Dork Glasses (Accuracy + 5)"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_rsami")])
+resource_name = "You: 20 Faction Points - Dork Glasses (Accuracy + 5)"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_iijan"]
+step = ExtResource("12_n5obp")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_nokdl"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_iijan")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2c2u2"]
+kind = "Answer"
+text = "18 Faction Points - Pinocchio Nose (ATK + 3)"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_nokdl")])
+resource_name = "You: 18 Faction Points - Pinocchio Nose (ATK + 3)"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a8lpp"]
+kind = "Answer"
+text = "I'll come back later."
+resource_name = "You: I'll come back later."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_q0726"]
+lines = Array[Resource]([SubResource("RoseDialogLine_lfcvx"), SubResource("RoseDialogLine_ky2gm"), SubResource("RoseDialogLine_2c2u2"), SubResource("RoseDialogLine_a8lpp")])
+resource_name = "Menu 25"
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_1mnpm"]
+operator = ">="
+value = 5
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_75252"]
+operator = "<="
+value = 6
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_g0hnc"]
+quest = ExtResource("2_tkcq7")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5wiv0"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_1mnpm"), SubResource("RoseDialogIfNpcSwitch_75252"), SubResource("RoseDialogIfQuest_g0hnc")])
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_s5gck"]
+operator = ">="
+value = 1
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_fadou"]
+operator = "<="
+value = 2
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_v5fdc"]
+quest = ExtResource("1_0vi46")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_jld0f"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_s5gck"), SubResource("RoseDialogIfNpcSwitch_fadou"), SubResource("RoseDialogIfQuest_v5fdc")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_k05k0"]
+text = "Soon, the Faction War will begin. Since there are now a sufficient number of participants, please participate in the next Faction War."
+next_menu = 35
+show_if = Array[Resource]([SubResource("RoseDialogCase_5wiv0"), SubResource("RoseDialogCase_jld0f")])
+resource_name = "NPC: Soon, the Faction War will begin. Since there ar…"
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_oy1fr"]
+value = 7
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_dpib7"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_oy1fr")])
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_anmaq"]
+value = 3
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_u02en"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_anmaq")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5wm8g"]
+text = "The Faction War at the Junon Cartel is now underway. Pray for our victory!"
+next_menu = 44
+show_if = Array[Resource]([SubResource("RoseDialogCase_dpib7"), SubResource("RoseDialogCase_u02en")])
+resource_name = "NPC: The Faction War at the Junon Cartel is now under…"
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_28sk5"]
+value = 4
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_mg0c2"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_28sk5")])
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_aj2tf"]
+value = 8
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_0yc3i"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_aj2tf")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qto42"]
+text = "Today's Faction War has been cancelled."
+next_menu = 45
+show_if = Array[Resource]([SubResource("RoseDialogCase_mg0c2"), SubResource("RoseDialogCase_0yc3i")])
+resource_name = "NPC: Today's Faction War has been cancelled."
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_wey12"]
+value = 11
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7uo55"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_wey12")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_oobj3"]
+text = "We've won the last battle, so this time we're on the defending side."
+next_menu = 48
+show_if = Array[Resource]([SubResource("RoseDialogCase_7uo55")])
+resource_name = "NPC: We've won the last battle, so this time we're on…"
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_s4bs4"]
+value = 12
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_whi8m"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_s4bs4")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gn8d2"]
+text = "We've lost the last battle, so this time we'll be attacking."
+next_menu = 49
+show_if = Array[Resource]([SubResource("RoseDialogCase_whi8m")])
+resource_name = "NPC: We've lost the last battle, so this time we'll b…"
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_ii1hn"]
+value = 5
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_l5ics"]
+quest = ExtResource("2_tkcq7")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3u6nw"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_ii1hn"), SubResource("RoseDialogIfQuest_l5ics")])
+
+[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_b7d53"]
+value = 1
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_abmn4"]
+quest = ExtResource("1_0vi46")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_a30ey"]
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_b7d53"), SubResource("RoseDialogIfQuest_abmn4")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xv0hw"]
+text = "Please cancel the quest for the previous Faction War."
+next_menu = 64
+show_if = Array[Resource]([SubResource("RoseDialogCase_3u6nw"), SubResource("RoseDialogCase_a30ey")])
+resource_name = "NPC: Please cancel the quest for the previous Faction…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jnxtm"]
+lines = Array[Resource]([SubResource("RoseDialogLine_k05k0"), SubResource("RoseDialogLine_5wm8g"), SubResource("RoseDialogLine_qto42"), SubResource("RoseDialogLine_oobj3"), SubResource("RoseDialogLine_gn8d2"), SubResource("RoseDialogLine_xv0hw")])
+resource_name = "Menu 26"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_t7kxa"]
+kind = "Answer"
+text = "Right, understood."
+resource_name = "You: Right, understood."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2yce8"]
+kind = "Answer"
+text = "Would you explain about participating in battle again?"
+next_menu = 28
+resource_name = "You: Would you explain about participating in battle …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xcvv2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_t7kxa"), SubResource("RoseDialogLine_2yce8")])
+resource_name = "Menu 27"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_yvv2d"]
+resource_name = "Menu 28"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_r8fxb"]
+kind = "Answer"
+text = "What should I do so that we win?"
+next_menu = 30
+resource_name = "You: What should I do so that we win?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rljg5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_r8fxb")])
+resource_name = "Menu 29"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dkp12"]
+text = "There will be 2 Sunrise Crystals near the center of Junon Cartel. If one of those is destroyed, the Sunset Crystal will appear. If our opponents destroy the Sunset Crystal, we lose. Our priority is to protect the Sunset Crystal. If we destroy the enemy's Dusk Crystal, we'll send them to their respawn point in the Cartel. It might be a good idea to have some of us focus on destroying the Dusk Crystal to deter our enemies. If we, the defending side, can withstand the enemy's attack for over 30 minutes, we'll win."
+next_menu = 31
+resource_name = "NPC: There will be 2 Sunrise Crystals near the center…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jlpa0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dkp12")])
+resource_name = "Menu 30"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_i7hos"]
+kind = "Answer"
+text = "Alright, I understand."
+resource_name = "You: Alright, I understand."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7pghb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_i7hos")])
+resource_name = "Menu 31"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8fa83"]
+kind = "Answer"
+text = "What should I do so that we win?"
+next_menu = 33
+resource_name = "You: What should I do so that we win?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qai4t"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8fa83")])
+resource_name = "Menu 32"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_epnwj"]
+text = "There will be 2 Sunrise Crystals near the center of Junon Cartel. If one of those is destroyed, the Sunset Crystal will appear. If we destroy the Sunset Crystal, we'll win. The Junon Order and Arumics will desperately fight us to prevent this from happening. We must destroy the Sunset Crystal within 30 minutes."
+next_menu = 34
+resource_name = "NPC: There will be 2 Sunrise Crystals near the center…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ocmh7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_epnwj")])
+resource_name = "Menu 33"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b715o"]
+kind = "Answer"
+text = "Alright, I got it. "
+resource_name = "You: Alright, I got it."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2re0l"]
+lines = Array[Resource]([SubResource("RoseDialogLine_b715o")])
+resource_name = "Menu 34"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e7i0n"]
+kind = "Answer"
+text = "Yes, I got it. "
+resource_name = "You: Yes, I got it."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4mqba"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e7i0n")])
+resource_name = "Menu 35"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4v1pm"]
+kind = "Answer"
+text = "Okay, I'll go right now."
+resource_name = "You: Okay, I'll go right now."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_naokw"]
+kind = "Answer"
+text = "Would you explain Faction War to me once again?"
+next_menu = 37
+resource_name = "You: Would you explain Faction War to me once again?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_alikn"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4v1pm"), SubResource("RoseDialogLine_naokw")])
+resource_name = "Menu 36"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_enuae"]
+resource_name = "Menu 37"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_huw0x"]
+kind = "Answer"
+text = "What should I do so that we win?"
+next_menu = 39
+resource_name = "You: What should I do so that we win?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_byhcn"]
+lines = Array[Resource]([SubResource("RoseDialogLine_huw0x")])
+resource_name = "Menu 38"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qsvjs"]
+text = "There will be 2 Sunrise Crystals near the center of Junon Cartel. If one of those is destroyed, the Sunset Crystal will appear. If our opponents destroy the Sunset Crystal, we lose. Our priority is to protect the Sunset Crystal. If we destroy the enemy's Dusk Crystal, we'll send them to their respawn point in the Cartel. It might be a good idea to have some of us focus on destroying the Dusk Crystal to deter our enemies. If we, the defending side, can withstand the enemy's attack for over 30 minutes, we'll win."
+next_menu = 40
+resource_name = "NPC: There will be 2 Sunrise Crystals near the center…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2q2p3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qsvjs")])
+resource_name = "Menu 39"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_yr6g0"]
+kind = "Answer"
+text = "Yes, I got it. "
+resource_name = "You: Yes, I got it."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_mm2ek"]
+lines = Array[Resource]([SubResource("RoseDialogLine_yr6g0")])
+resource_name = "Menu 40"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_memx3"]
+kind = "Answer"
+text = "What should I do so that we win?"
+next_menu = 42
+resource_name = "You: What should I do so that we win?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7an0k"]
+lines = Array[Resource]([SubResource("RoseDialogLine_memx3")])
+resource_name = "Menu 41"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_eafx6"]
+text = "There will be 2 Sunrise Crystals near the center of Junon Cartel. If one of those is destroyed, the Sunset Crystal will appear. If we destroy the Sunset Crystal, we'll win. The Junon Order and Arumics will desperately fight us to prevent this from happening. We must destroy the Sunset Crystal within 30 minutes."
+next_menu = 43
+resource_name = "NPC: There will be 2 Sunrise Crystals near the center…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8qx7n"]
+lines = Array[Resource]([SubResource("RoseDialogLine_eafx6")])
+resource_name = "Menu 42"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ypjsr"]
+kind = "Answer"
+text = "Yes, I got it. "
+resource_name = "You: Yes, I got it."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7f7if"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ypjsr")])
+resource_name = "Menu 43"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_20tqy"]
+kind = "Answer"
+text = "Yes, I will. I hope we win!"
+resource_name = "You: Yes, I will. I hope we win!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gcm6b"]
+lines = Array[Resource]([SubResource("RoseDialogLine_20tqy")])
+resource_name = "Menu 44"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bl8dg"]
+kind = "Answer"
+text = "Oh, what a shame. I wanted to participate…"
+next_menu = 46
+resource_name = "You: Oh, what a shame. I wanted to participate…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_04gtf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bl8dg")])
+resource_name = "Menu 45"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_065w3"]
+text = "There must be at least 30 to 35 members in order to participate in the Faction War. Next time, please gather more members."
+next_menu = 47
+resource_name = "NPC: There must be at least 30 to 35 members in order…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_nm7iv"]
+lines = Array[Resource]([SubResource("RoseDialogLine_065w3")])
+resource_name = "Menu 46"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7tmbh"]
+kind = "Answer"
+text = "Right. I'll do that next time."
+resource_name = "You: Right. I'll do that next time."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4trch"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7tmbh")])
+resource_name = "Menu 47"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4ssnf"]
+kind = "Answer"
+text = "Wow, that's good news."
+resource_name = "You: Wow, that's good news."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1t6hd"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4ssnf")])
+resource_name = "Menu 48"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_s3vpl"]
+kind = "Answer"
+text = "We have to fight even harder!"
+resource_name = "You: We have to fight even harder!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_foci3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_s3vpl")])
+resource_name = "Menu 49"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_buqt6"]
+kind = "Answer"
+text = "Do they think we're merely merchants?!"
+next_menu = 51
+resource_name = "You: Do they think we're merely merchants?!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xv8yq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_buqt6")])
+resource_name = "Menu 50"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6xdci"]
+text = "Good, the Faction War will begin soon. <NAME>, will you join us in battle?"
+next_menu = 52
+resource_name = "NPC: Good, the Faction War will begin soon. <NAME>, w…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_kpqf1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6xdci")])
+resource_name = "Menu 51"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_181bt"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2vg8l"]
+kind = "Answer"
+text = "Yes, of course."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_181bt")])
+resource_name = "You: Yes, of course."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qno0f"]
+kind = "Answer"
+text = "How can I join the battle?"
+next_menu = 53
+resource_name = "You: How can I join the battle?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ubq6m"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2vg8l"), SubResource("RoseDialogLine_qno0f")])
+resource_name = "Menu 52"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6xyiu"]
+text = "If you say 'Yes,' to participating in the Faction War, the Warp Gate at the Fountain of Junon Polis will open. Enter the Warp Gate to be transported to Junon Cartel."
+next_menu = 54
+resource_name = "NPC: If you say 'Yes,' to participating in the Factio…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_x8d1q"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6xyiu")])
+resource_name = "Menu 53"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0p5ql"]
+kind = "Answer"
+text = "What should I do so that we win?"
+next_menu = 55
+resource_name = "You: What should I do so that we win?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_w0216"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0p5ql")])
+resource_name = "Menu 54"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fks75"]
+text = "There will be 2 Sunrise Crystals near the center of Junon Cartel. If one of those is destroyed, the Sunset Crystal will appear. If we destroy the Sunset Crystal, we'll win. The Junon Order and Arumics will desperately fight us to prevent this from happening. We must destroy the Sunset Crystal within 30 minutes."
+next_menu = 56
+resource_name = "NPC: There will be 2 Sunrise Crystals near the center…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_kpv1s"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fks75")])
+resource_name = "Menu 55"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_aevpl"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jvs1c"]
+kind = "Answer"
+text = "I see. Then, I shall join this battle."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_aevpl")])
+resource_name = "You: I see. Then, I shall join this battle."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8uyp2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_jvs1c")])
+resource_name = "Menu 56"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3n3cx"]
+kind = "Answer"
+text = "The time has come for us to show them our true power!"
+next_menu = 58
+resource_name = "You: The time has come for us to show them our true p…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_nc85v"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3n3cx")])
+resource_name = "Menu 57"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_u4i4t"]
+text = "Good, the Faction War will begin soon. Would you like to join?"
+next_menu = 59
+resource_name = "NPC: Good, the Faction War will begin soon. Would you…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_74i38"]
+lines = Array[Resource]([SubResource("RoseDialogLine_u4i4t")])
+resource_name = "Menu 58"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_dinpj"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_g60aw"]
+kind = "Answer"
+text = "Yes, of course."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_dinpj")])
+resource_name = "You: Yes, of course."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6mrd8"]
+kind = "Answer"
+text = "How can I join the battle?"
+next_menu = 60
+resource_name = "You: How can I join the battle?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qbfw6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_g60aw"), SubResource("RoseDialogLine_6mrd8")])
+resource_name = "Menu 59"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d4xxr"]
+text = "If you say 'Yes,' to participating in the Faction War, the Warp Gate at the Fountain of Junon Polis will open. Enter the Warp Gate to be transported to Junon Cartel."
+next_menu = 61
+resource_name = "NPC: If you say 'Yes,' to participating in the Factio…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_yxlq1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_d4xxr")])
+resource_name = "Menu 60"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4jopr"]
+kind = "Answer"
+text = "What should I do so that we win?"
+next_menu = 62
+resource_name = "You: What should I do so that we win?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8liyx"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4jopr")])
+resource_name = "Menu 61"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4uda5"]
+text = "There will be 2 Sunrise Crystals near the center of Junon Cartel. If one of those is destroyed, the Sunset Crystal will appear. If our opponents destroy the Sunset Crystal, we lose. Our priority is to protect the Sunset Crystal. If we destroy the enemy's Dusk Crystal, we'll send them to their respawn point in the Cartel. It might be a good idea to have some of us focus on destroying the Dusk Crystal to deter our enemies. If we, the defending side, can withstand the enemy's attack for over 30 minutes, we'll win."
+next_menu = 63
+resource_name = "NPC: There will be 2 Sunrise Crystals near the center…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8fqik"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4uda5")])
+resource_name = "Menu 62"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_eskc3"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rs6e3"]
+kind = "Answer"
+text = "I see. Then, I shall join this battle."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_eskc3")])
+resource_name = "You: I see. Then, I shall join this battle."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6x62j"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rs6e3")])
+resource_name = "Menu 63"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ef4cg"]
+kind = "Answer"
+text = "Alright, I understand."
+resource_name = "You: Alright, I understand."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_j4y0h"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ef4cg")])
+resource_name = "Menu 64"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_abvfm"]
+text = "To participate in Faction War, you must first join our Faction. Will you fight for our honor?"
+next_menu = 66
+resource_name = "NPC: To participate in Faction War, you must first jo…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ps2oc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_abvfm")])
+resource_name = "Menu 65"
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_bqf4a"]
+ability = "Union"
+operator = "=="
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2v6n6"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_bqf4a")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_03ikk"]
+kind = "Answer"
+text = "Um, let me think about it."
+show_if = Array[Resource]([SubResource("RoseDialogCase_2v6n6")])
+resource_name = "You: Um, let me think about it."
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_ort1k"]
+ability = "Union"
+operator = "!="
+value = 5
+
+[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_cbrgr"]
+ability = "Union"
+operator = "!="
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_bapev"]
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_ort1k"), SubResource("RoseDialogIfAbility_cbrgr")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8fy25"]
+kind = "Answer"
+text = "I already belong to another Faction."
+next_menu = 67
+show_if = Array[Resource]([SubResource("RoseDialogCase_bapev")])
+resource_name = "You: I already belong to another Faction."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_stgvm"]
+lines = Array[Resource]([SubResource("RoseDialogLine_03ikk"), SubResource("RoseDialogLine_8fy25")])
+resource_name = "Menu 66"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_uh1vj"]
+text = "Ah, why don't you leave your current Faction and join up with the Ferrell Guild?"
+next_menu = 68
+resource_name = "NPC: Ah, why don't you leave your current Faction and…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rleco"]
+lines = Array[Resource]([SubResource("RoseDialogLine_uh1vj")])
+resource_name = "Menu 67"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a2ttm"]
+kind = "Answer"
+text = "Hmm, I'll think about it."
+resource_name = "You: Hmm, I'll think about it."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vhmu5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a2ttm")])
+resource_name = "Menu 68"
+
+[resource]
+key = "EM02-009.con"
+name = "[Manager of Ferrell] Arothel"
+menus = Array[Resource]([SubResource("RoseDialogMenu_362ot"), SubResource("RoseDialogMenu_mt7on"), SubResource("RoseDialogMenu_mk8x7"), SubResource("RoseDialogMenu_vfb30"), SubResource("RoseDialogMenu_omeih"), SubResource("RoseDialogMenu_kkyrj"), SubResource("RoseDialogMenu_kfqwx"), SubResource("RoseDialogMenu_62usd"), SubResource("RoseDialogMenu_q2i0a"), SubResource("RoseDialogMenu_vvtxc"), SubResource("RoseDialogMenu_pbh7c"), SubResource("RoseDialogMenu_5vbei"), SubResource("RoseDialogMenu_80lg3"), SubResource("RoseDialogMenu_eakta"), SubResource("RoseDialogMenu_ha58a"), SubResource("RoseDialogMenu_ki5vn"), SubResource("RoseDialogMenu_rpyl3"), SubResource("RoseDialogMenu_b2wwg"), SubResource("RoseDialogMenu_y7qcc"), SubResource("RoseDialogMenu_fa812"), SubResource("RoseDialogMenu_ft6hx"), SubResource("RoseDialogMenu_5jpiy"), SubResource("RoseDialogMenu_ruccb"), SubResource("RoseDialogMenu_8su8i"), SubResource("RoseDialogMenu_dqeeu"), SubResource("RoseDialogMenu_q0726"), SubResource("RoseDialogMenu_jnxtm"), SubResource("RoseDialogMenu_xcvv2"), SubResource("RoseDialogMenu_yvv2d"), SubResource("RoseDialogMenu_rljg5"), SubResource("RoseDialogMenu_jlpa0"), SubResource("RoseDialogMenu_7pghb"), SubResource("RoseDialogMenu_qai4t"), SubResource("RoseDialogMenu_ocmh7"), SubResource("RoseDialogMenu_2re0l"), SubResource("RoseDialogMenu_4mqba"), SubResource("RoseDialogMenu_alikn"), SubResource("RoseDialogMenu_enuae"), SubResource("RoseDialogMenu_byhcn"), SubResource("RoseDialogMenu_2q2p3"), SubResource("RoseDialogMenu_mm2ek"), SubResource("RoseDialogMenu_7an0k"), SubResource("RoseDialogMenu_8qx7n"), SubResource("RoseDialogMenu_7f7if"), SubResource("RoseDialogMenu_gcm6b"), SubResource("RoseDialogMenu_04gtf"), SubResource("RoseDialogMenu_nm7iv"), SubResource("RoseDialogMenu_4trch"), SubResource("RoseDialogMenu_1t6hd"), SubResource("RoseDialogMenu_foci3"), SubResource("RoseDialogMenu_xv8yq"), SubResource("RoseDialogMenu_kpqf1"), SubResource("RoseDialogMenu_ubq6m"), SubResource("RoseDialogMenu_x8d1q"), SubResource("RoseDialogMenu_w0216"), SubResource("RoseDialogMenu_kpv1s"), SubResource("RoseDialogMenu_8uyp2"), SubResource("RoseDialogMenu_nc85v"), SubResource("RoseDialogMenu_74i38"), SubResource("RoseDialogMenu_qbfw6"), SubResource("RoseDialogMenu_yxlq1"), SubResource("RoseDialogMenu_8liyx"), SubResource("RoseDialogMenu_8fqik"), SubResource("RoseDialogMenu_6x62j"), SubResource("RoseDialogMenu_j4y0h"), SubResource("RoseDialogMenu_ps2oc"), SubResource("RoseDialogMenu_stgvm"), SubResource("RoseDialogMenu_rleco"), SubResource("RoseDialogMenu_vhmu5")])

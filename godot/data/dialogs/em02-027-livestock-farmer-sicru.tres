@@ -1,0 +1,67 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://cvfrrf1ln7hch"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gewyu"]
+text = "I'm raising very healthy pets. If you want, I can give you one."
+next_menu = 1
+resource_name = "NPC: I'm raising very healthy pets. If you want, I ca…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dc285"]
+lines = Array[Resource]([SubResource("RoseDialogLine_gewyu")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6tjoh"]
+kind = "Answer"
+text = "Really? Let me have one now."
+next_menu = 2
+resource_name = "You: Really? Let me have one now."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_pmbf2"]
+kind = "Answer"
+text = "Pets? Er, I don't like animals."
+resource_name = "You: Pets? Er, I don't like animals."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1hcho"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6tjoh"), SubResource("RoseDialogLine_pmbf2")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1coae"]
+text = "I'm sorry, <NAME>, but I actually don't have any pets to give you. Please come back later."
+next_menu = 3
+resource_name = "NPC: I'm sorry, <NAME>, but I actually don't have any…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bbkr6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1coae")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mfi3s"]
+kind = "Answer"
+text = "Aw, were you just lying?"
+next_menu = 4
+resource_name = "You: Aw, were you just lying?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6bpxs"]
+lines = Array[Resource]([SubResource("RoseDialogLine_mfi3s")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_w6a1f"]
+text = "Huh? But you just said…?"
+next_menu = 5
+resource_name = "NPC: Huh? But you just said…?"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_tg56q"]
+lines = Array[Resource]([SubResource("RoseDialogLine_w6a1f")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4gke0"]
+kind = "Answer"
+text = "It's nothing. I'll come back later."
+resource_name = "You: It's nothing. I'll come back later."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1pjge"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4gke0")])
+resource_name = "Menu 5"
+
+[resource]
+key = "EM02-027.con"
+name = "[Livestock Farmer] Sicru"
+menus = Array[Resource]([SubResource("RoseDialogMenu_dc285"), SubResource("RoseDialogMenu_1hcho"), SubResource("RoseDialogMenu_bbkr6"), SubResource("RoseDialogMenu_6bpxs"), SubResource("RoseDialogMenu_tg56q"), SubResource("RoseDialogMenu_1pjge")])

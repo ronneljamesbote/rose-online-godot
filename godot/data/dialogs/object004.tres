@@ -1,0 +1,71 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://dhn776kmvb21c"]
+
+[ext_resource type="RoseQuestTrigger" uid="uid://b5p2vjlrv6chc" path="res://data/quest_triggers/qp103/120-03.tres" id="1_5iqvj"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kdy7e"]
+text = "(That's a lot of books to look through.)"
+next_menu = 1
+resource_name = "NPC: (That's a lot of books to look through.)"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_mq1ox"]
+lines = Array[Resource]([SubResource("RoseDialogLine_kdy7e")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rubk1"]
+kind = "Answer"
+text = "Let’s see…"
+next_menu = 2
+resource_name = "You: Let’s see…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_r8bw0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rubk1")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_buu2u"]
+text = "The {fc=14}Dreadful Book{/fc} is at the end of the bookshelf."
+next_menu = 3
+resource_name = "NPC: The {fc=14}Dreadful Book{/fc} is at the end of t…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fysau"]
+lines = Array[Resource]([SubResource("RoseDialogLine_buu2u")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xicj1"]
+kind = "Answer"
+text = "I think I found the Dreadful Book. I better take this back to {fc=1}Harin{/fc}."
+next_menu = 4
+resource_name = "You: I think I found the Dreadful Book. I better take…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_obg1i"]
+lines = Array[Resource]([SubResource("RoseDialogLine_xicj1")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_avuri"]
+text = "Uh? Is somebody there? I heard a noise…"
+next_menu = 5
+resource_name = "NPC: Uh? Is somebody there? I heard a noise…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_uo7xr"]
+lines = Array[Resource]([SubResource("RoseDialogLine_avuri")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_xr4lj"]
+step = ExtResource("1_5iqvj")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_00gil"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_xr4lj")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tnxkr"]
+kind = "Answer"
+text = "This is bad! I better get out of here!"
+on_choose = Array[Resource]([SubResource("RoseDialogCase_00gil")])
+resource_name = "You: This is bad! I better get out of here!"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_r1clw"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tnxkr")])
+resource_name = "Menu 5"
+
+[resource]
+key = "Object004.con"
+name = "밸리아의 집 뒤"
+menus = Array[Resource]([SubResource("RoseDialogMenu_mq1ox"), SubResource("RoseDialogMenu_r8bw0"), SubResource("RoseDialogMenu_fysau"), SubResource("RoseDialogMenu_obg1i"), SubResource("RoseDialogMenu_uo7xr"), SubResource("RoseDialogMenu_r1clw")])

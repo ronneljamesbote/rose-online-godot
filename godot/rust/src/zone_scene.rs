@@ -39,6 +39,7 @@ use rose_file_readers::{
 
 use crate::{
     assets, data, data_resources::{self, RoseMonster, RoseNpc, RoseWarpGate, RoseZoneSettings}, material, texture,
+    dialog_blocks::RoseDialog,
     zone::{self, Ground, ObjectSpawner},
 };
 
@@ -1056,8 +1057,12 @@ marker_class!(
         /// AI comes from its LIST_NPC.STB row.
         #[export]
         ai: i32,
-        /// The NPC's conversation file (a CON file name such as `EM20-001.con`, looked up in
-        /// the quest data): what it says and offers when clicked.
+        /// What the NPC says and offers when clicked: drag a `RoseDialog` in from
+        /// `res://data/dialogs/`. Sets `quest_file` to its key.
+        #[var(get = get_dialog, set = set_dialog, usage_flags = [EDITOR], hint = RESOURCE_TYPE, hint_string = "RoseDialog")]
+        dialog: PhantomVar<Option<Gd<RoseDialog>>>,
+        /// The NPC's dialog by its key (iROSE's CON file name, such as `EM20-001.con`), as
+        /// the scene stores it (`dialog` shows it as the resource). Empty: it says nothing.
         #[export]
         quest_file: GString,
     }, |this| (
@@ -1082,6 +1087,22 @@ impl RoseNpcSpot {
             // Cleared in the Inspector: keep a number that has no resource (not made in Godot).
             None if self.get_npc().is_none() => {}
             None => self.npc_id = 0,
+        }
+    }
+
+    #[func]
+    fn get_dialog(&self) -> Option<Gd<RoseDialog>> {
+        let path = data_resources::find_dialog(&self.quest_file.to_string())?;
+        godot::classes::ResourceLoader::singleton().load(&path)?.try_cast::<RoseDialog>().ok()
+    }
+
+    #[func]
+    fn set_dialog(&mut self, dialog: Option<Gd<RoseDialog>>) {
+        match dialog {
+            Some(dialog) => self.quest_file = dialog.upcast::<godot::classes::Resource>().get("key").to::<GString>(),
+            // Cleared in the Inspector: keep a key that has no resource.
+            None if self.get_dialog().is_none() => {}
+            None => self.quest_file = GString::new(),
         }
     }
 }

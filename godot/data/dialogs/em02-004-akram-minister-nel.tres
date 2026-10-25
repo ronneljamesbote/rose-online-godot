@@ -1,0 +1,27 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://dds65d1os57u7"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_jyeox"]
+text = "Okay."
+next_menu = 1
+resource_name = "NPC: Okay."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gh5gb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_jyeox")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3af6l"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2mh46"]
+kind = "Answer"
+text = "It's too dangerous here. I would like to go back to the village."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_3af6l")])
+resource_name = "You: It's too dangerous here. I would like to go back…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0yl85"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2mh46")])
+resource_name = "Menu 1"
+
+[resource]
+key = "EM02-004.con"
+name = "[Akram Minister] Nel"
+menus = Array[Resource]([SubResource("RoseDialogMenu_gh5gb"), SubResource("RoseDialogMenu_0yl85")])

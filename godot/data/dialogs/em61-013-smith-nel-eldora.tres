@@ -1,0 +1,78 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://dj7vhthhmc168"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7w7o7"]
+text = "Sword and shield are good friends for your dangerous trip. Did he ask you anything?"
+next_menu = 1
+resource_name = "NPC: Sword and shield are good friends for your dange…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_uus38"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7w7o7")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_fl2rn"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_4k8kr"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_fl2rn")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_afrpx"]
+kind = "Answer"
+text = "I'd like to sell my item."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_4k8kr")])
+resource_name = "You: I'd like to sell my item."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_441ch"]
+window = "Refining"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_es73v"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_441ch")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ibw87"]
+kind = "Answer"
+text = "I'd like to upgrade my item."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_es73v")])
+resource_name = "You: I'd like to upgrade my item."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_mipg5"]
+window = "Repair"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_sb85a"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_mipg5")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lm717"]
+kind = "Answer"
+text = "I'd like to repair my item."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_sb85a")])
+resource_name = "You: I'd like to repair my item."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_3tqt0"]
+window = "Disassembly"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3pqoq"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_3tqt0")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gp4xw"]
+kind = "Answer"
+text = "I'd like to disassemble my item."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_3pqoq")])
+resource_name = "You: I'd like to disassemble my item."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_bxgio"]
+window = "Appraisal"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_fael5"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_bxgio")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bprya"]
+kind = "Answer"
+text = "I'd like to appraise my item."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_fael5")])
+resource_name = "You: I'd like to appraise my item."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_t8ko1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_afrpx"), SubResource("RoseDialogLine_ibw87"), SubResource("RoseDialogLine_lm717"), SubResource("RoseDialogLine_gp4xw"), SubResource("RoseDialogLine_bprya")])
+resource_name = "Menu 1"
+
+[resource]
+key = "EM61-013.con"
+name = "[Smith] Nel Eldora"
+menus = Array[Resource]([SubResource("RoseDialogMenu_uus38"), SubResource("RoseDialogMenu_t8ko1")])

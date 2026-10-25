@@ -1,0 +1,35 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://yxlpdixgqtyg"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bkdcy"]
+text = "As a warrior, could you make a great job for us? So that people can remember you later?"
+next_menu = 1
+resource_name = "NPC: As a warrior, could you make a great job for us?…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_k43v4"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bkdcy")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_adhao"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_iayle"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_adhao")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0i00m"]
+kind = "Answer"
+text = "For the time being, let me take a look at faction store."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_iayle")])
+resource_name = "You: For the time being, let me take a look at factio…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_eqvsf"]
+kind = "Answer"
+text = "I'd like to. But I'm not sure if I can make it."
+resource_name = "You: I'd like to. But I'm not sure if I can make it."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8lohu"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0i00m"), SubResource("RoseDialogLine_eqvsf")])
+resource_name = "Menu 1"
+
+[resource]
+key = "EM61-001.con"
+name = "[Righteous Crusader] Harold Evan"
+menus = Array[Resource]([SubResource("RoseDialogMenu_k43v4"), SubResource("RoseDialogMenu_8lohu")])
