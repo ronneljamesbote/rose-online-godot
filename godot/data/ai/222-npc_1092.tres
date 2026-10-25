@@ -1,0 +1,134 @@
+[gd_resource type="RoseAi" format=3 uid="uid://cs2fr2xvj8eah"]
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_y6efr"]
+variable = 3
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseAiIfZoneTime" id="RoseAiIfZoneTime_4nfj0"]
+from = 77
+to = 79
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_0t41h"]
+npc_id = 1092
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_7qk3d"]
+variable = 1
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_45xyp"]
+conditions = Array[Resource]([SubResource("RoseAiIfZoneTime_4nfj0"), SubResource("RoseAiIfSelectNpc_0t41h"), SubResource("RoseAiIfVariable_7qk3d")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_y6efr")])
+resource_name = "If ZoneTime, SelectNpc, Variable: SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_8iwh0"]
+variable = 1
+value = 10
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_aa8mo"]
+variable = 3
+
+[sub_resource type="RoseAiIfZoneTime" id="RoseAiIfZoneTime_0hytm"]
+from = 80
+to = 100
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_o4ubw"]
+npc_id = 1092
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_ep75y"]
+variable = 1
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_wdh18"]
+variable = 3
+operator = ">="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_8ek5u"]
+conditions = Array[Resource]([SubResource("RoseAiIfZoneTime_0hytm"), SubResource("RoseAiIfSelectNpc_o4ubw"), SubResource("RoseAiIfVariable_ep75y"), SubResource("RoseAiIfVariable_wdh18")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_8iwh0"), SubResource("RoseAiDoSetVariable_aa8mo")])
+resource_name = "If ZoneTime, SelectNpc, Variable, Variable: SetVariable, SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_muo66"]
+variable = 1
+value = 20
+
+[sub_resource type="RoseAiIfZoneTime" id="RoseAiIfZoneTime_5a8g4"]
+from = 158
+to = 160
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_aemmq"]
+npc_id = 1092
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_kbfnh"]
+variable = 1
+value = 11
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_smt2n"]
+conditions = Array[Resource]([SubResource("RoseAiIfZoneTime_5a8g4"), SubResource("RoseAiIfSelectNpc_aemmq"), SubResource("RoseAiIfVariable_kbfnh")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_muo66")])
+resource_name = "If ZoneTime, SelectNpc, Variable: SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_f2vx6"]
+value = 1
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_745sg"]
+variable = 1
+value = 11
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_8a17y"]
+text = "Recruitment for the Goblin Cave Expedition has begun."
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_ery74"]
+npc_id = 1092
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_uktkg"]
+variable = 1
+value = 10
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_tpx50"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_ery74"), SubResource("RoseAiIfVariable_uktkg")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_f2vx6"), SubResource("RoseAiDoSetVariable_745sg"), SubResource("RoseAiDoMessage_8a17y")])
+resource_name = "If SelectNpc, Variable: SetVariable, SetVariable, Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_uj4ny"]
+value = 3
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_m4h27"]
+variable = 1
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_aet6i"]
+variable = 2
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_wffrl"]
+npc_id = 1092
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_we2vh"]
+variable = 1
+value = 20
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_bqyfj"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_wffrl"), SubResource("RoseAiIfVariable_we2vh")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_uj4ny"), SubResource("RoseAiDoSetVariable_m4h27"), SubResource("RoseAiDoSetVariable_aet6i")])
+resource_name = "If SelectNpc, Variable: SetVariable, SetVariable, SetVariable"
+
+[sub_resource type="RoseAiDoSay" id="RoseAiDoSay_lsi0y"]
+text = "Moldie's Strange Mineral will start in a few seconds. Only characters lower than Level 43 are allowed to participate."
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_qpuhy"]
+value = 15
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_k6y7s"]
+npc_id = 1092
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_87y4v"]
+value = 1
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_aqn8j"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_qpuhy"), SubResource("RoseAiIfSelectNpc_k6y7s"), SubResource("RoseAiIfVariable_87y4v")])
+actions = Array[Resource]([SubResource("RoseAiDoSay_lsi0y")])
+resource_name = "If Random, SelectNpc, Variable: Say"
+
+[resource]
+id = 222
+name = "npc_1092"
+idle_interval = 19
+on_idle = Array[Resource]([SubResource("RoseAiEvent_45xyp"), SubResource("RoseAiEvent_8ek5u"), SubResource("RoseAiEvent_smt2n"), SubResource("RoseAiEvent_tpx50"), SubResource("RoseAiEvent_bqyfj"), SubResource("RoseAiEvent_aqn8j")])

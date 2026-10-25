@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseShopTab" uid="uid://brxc6xev5ybsb" path="res://data/shop_tabs/559-long-distance-weapon.tres" id="1_8uhyg"]
 [ext_resource type="RoseShopTab" uid="uid://b02q4ajrwdsw" path="res://data/shop_tabs/560-guns.tres" id="2_gkgt5"]
+[ext_resource type="RoseAi" uid="uid://b0hhpswiq4csp" path="res://data/ai/236-npc_1191.tres" id="ai_236"]
 
 [resource]
 id = 1213
@@ -16,7 +17,7 @@ resistance = 100
 avoid = 100
 attack_speed = 100
 attack_range = 200
-ai_file_index = 236
+ai = ExtResource("ai_236")
 npc_type_index = 999
 model = "res://assets/rose/3ddata/npc/list_npc/1213.tscn"
 shop_tab_1 = ExtResource("1_8uhyg")

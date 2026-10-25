@@ -1,0 +1,194 @@
+[gd_resource type="RoseAi" format=3 uid="uid://wljc0vyihdl"]
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_jyq4d"]
+variable = 2
+value = 1
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_dyeaf"]
+npc_id = 1114
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_bk7r0"]
+variable = 1
+value = 1
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_xhd4o"]
+variable = 2
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_hd0h4"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_dyeaf"), SubResource("RoseAiIfVariable_bk7r0"), SubResource("RoseAiIfVariable_xhd4o")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_jyq4d")])
+resource_name = "If SelectNpc, Variable, Variable: SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_ombwm"]
+variable = 2
+value = 2
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_7dx65"]
+message_type = "Announce"
+text = "20 minutes have passed. 10 more minutes until the Faction War begins."
+
+[sub_resource type="RoseAiIfMonthDay" id="RoseAiIfMonthDay_dlper"]
+from_minute = 550
+to_minute = 551
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_te7hk"]
+npc_id = 1114
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_071nx"]
+variable = 1
+value = 1
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_2652g"]
+variable = 2
+value = 1
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_7utne"]
+conditions = Array[Resource]([SubResource("RoseAiIfMonthDay_dlper"), SubResource("RoseAiIfSelectNpc_te7hk"), SubResource("RoseAiIfVariable_071nx"), SubResource("RoseAiIfVariable_2652g")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_ombwm"), SubResource("RoseAiDoMessage_7dx65")])
+resource_name = "If MonthDay, SelectNpc, Variable, Variable: SetVariable, Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_8dvly"]
+variable = 2
+value = 2
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_vxomr"]
+message_type = "Announce"
+text = "20 minutes have passed. 10 more minutes until the Faction War begins."
+
+[sub_resource type="RoseAiIfMonthDay" id="RoseAiIfMonthDay_o4yjv"]
+from_minute = 1330
+to_minute = 1331
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_5bvvp"]
+npc_id = 1114
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_fglr1"]
+variable = 1
+value = 1
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_xb1dq"]
+variable = 2
+value = 1
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_5vcu3"]
+conditions = Array[Resource]([SubResource("RoseAiIfMonthDay_o4yjv"), SubResource("RoseAiIfSelectNpc_5bvvp"), SubResource("RoseAiIfVariable_fglr1"), SubResource("RoseAiIfVariable_xb1dq")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_8dvly"), SubResource("RoseAiDoMessage_vxomr")])
+resource_name = "If MonthDay, SelectNpc, Variable, Variable: SetVariable, Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_3dv83"]
+variable = 2
+value = 3
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_2604f"]
+message_type = "Announce"
+text = "25 minutes have passed. 5 more minutes until the Faction War begins."
+
+[sub_resource type="RoseAiIfMonthDay" id="RoseAiIfMonthDay_ae04p"]
+from_minute = 560
+to_minute = 561
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_0bpij"]
+npc_id = 1114
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_0kwre"]
+variable = 1
+value = 1
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_qpqkk"]
+variable = 2
+value = 2
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_0xrrh"]
+conditions = Array[Resource]([SubResource("RoseAiIfMonthDay_ae04p"), SubResource("RoseAiIfSelectNpc_0bpij"), SubResource("RoseAiIfVariable_0kwre"), SubResource("RoseAiIfVariable_qpqkk")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_3dv83"), SubResource("RoseAiDoMessage_2604f")])
+resource_name = "If MonthDay, SelectNpc, Variable, Variable: SetVariable, Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_fq66k"]
+variable = 2
+value = 3
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_7k2ih"]
+message_type = "Announce"
+text = "25 minutes have passed. 5 more minutes until the Faction War begins."
+
+[sub_resource type="RoseAiIfMonthDay" id="RoseAiIfMonthDay_a7tx1"]
+from_minute = 1340
+to_minute = 1341
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_n5m8y"]
+npc_id = 1114
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_ppkhx"]
+variable = 1
+value = 1
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_lk6x2"]
+variable = 2
+value = 2
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_tsn5q"]
+conditions = Array[Resource]([SubResource("RoseAiIfMonthDay_a7tx1"), SubResource("RoseAiIfSelectNpc_n5m8y"), SubResource("RoseAiIfVariable_ppkhx"), SubResource("RoseAiIfVariable_lk6x2")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_fq66k"), SubResource("RoseAiDoMessage_7k2ih")])
+resource_name = "If MonthDay, SelectNpc, Variable, Variable: SetVariable, Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_rnluy"]
+variable = 2
+value = 4
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_jqp51"]
+message_type = "Announce"
+text = "The offensive side's Dusk Crystal been destroyed. Everyone on offense will be warped to their base camp now."
+
+[sub_resource type="RoseAiIfMonthDay" id="RoseAiIfMonthDay_7ef0v"]
+from_minute = 565
+to_minute = 566
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_mgtee"]
+npc_id = 1114
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_1q3e1"]
+variable = 1
+value = 1
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_7jy6f"]
+variable = 2
+value = 3
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_e87e5"]
+conditions = Array[Resource]([SubResource("RoseAiIfMonthDay_7ef0v"), SubResource("RoseAiIfSelectNpc_mgtee"), SubResource("RoseAiIfVariable_1q3e1"), SubResource("RoseAiIfVariable_7jy6f")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_rnluy"), SubResource("RoseAiDoMessage_jqp51")])
+resource_name = "If MonthDay, SelectNpc, Variable, Variable: SetVariable, Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_ujsdf"]
+variable = 2
+value = 4
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_co7h6"]
+message_type = "Announce"
+text = "The offensive side's Dusk Crystal been destroyed. Everyone on offense will be warped to their base camp now."
+
+[sub_resource type="RoseAiIfMonthDay" id="RoseAiIfMonthDay_wd5ux"]
+from_minute = 1345
+to_minute = 1346
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_o786w"]
+npc_id = 1114
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_lbeeq"]
+variable = 1
+value = 1
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_mw4es"]
+variable = 2
+value = 3
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_ex4o4"]
+conditions = Array[Resource]([SubResource("RoseAiIfMonthDay_wd5ux"), SubResource("RoseAiIfSelectNpc_o786w"), SubResource("RoseAiIfVariable_lbeeq"), SubResource("RoseAiIfVariable_mw4es")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_ujsdf"), SubResource("RoseAiDoMessage_co7h6")])
+resource_name = "If MonthDay, SelectNpc, Variable, Variable: SetVariable, Message"
+
+[resource]
+id = 232
+name = "npc_1114"
+idle_interval = 10
+on_idle = Array[Resource]([SubResource("RoseAiEvent_hd0h4"), SubResource("RoseAiEvent_7utne"), SubResource("RoseAiEvent_5vcu3"), SubResource("RoseAiEvent_0xrrh"), SubResource("RoseAiEvent_tsn5q"), SubResource("RoseAiEvent_e87e5"), SubResource("RoseAiEvent_ex4o4")])

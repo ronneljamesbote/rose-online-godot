@@ -1,6 +1,7 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://hgok3v6fkwna"]
 
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="1_gk1hl"]
+[ext_resource type="RoseAi" uid="uid://btpqtublh51dw" path="res://data/ai/38-ghost_at_s2.tres" id="ai_38"]
 
 [resource]
 id = 723
@@ -20,7 +21,7 @@ attack_range = 1360
 is_magic_damage = true
 walk_speed = 138
 run_speed = 464
-ai_file_index = 38
+ai = ExtResource("ai_38")
 death_quest_trigger_name = "5009-43"
 model = "res://assets/rose/3ddata/npc/list_npc/723.tscn"
 right_hand_part_index = 1076

@@ -28,11 +28,11 @@ together. Read `AGENTS.md` and `wiki/README.md` first if you haven't.
      (`items/`, `monsters/`, `npcs/`, `drop_tables/`, `shop_tabs/`, `skills/<skill>/` (one
      file per level), `status_effects/`, `job_classes/`, `zones/`, `warp_gates/`,
      `craft_recipes/`, `new_characters/`, `effect_files/`, `attack_effects/`, `quests/`,
-     `quest_triggers/`, `dialogs/`; the page's `source:` names the file or folder),
+     `quest_triggers/`, `dialogs/`, `ai/`; the page's `source:` names the file or folder),
      then `godot --headless --path godot -- --export-data` and commit both. See
      `godot/data/README.md`. A spawn, NPC or named spot of a zone edited in Godot → its
-     scene in `godot/zones/`, exported the same way. A value of a kind not made in Godot yet
-     (dialogs, monster AI) can't be changed as data yet: say so on
+     scene in `godot/zones/`, exported the same way. A value still read from the iROSE
+     files (a zone not converted to a scene yet) can't be changed as data yet: say so on
      the pull request, or change it in code if the page asks for a rule.
    - A **rule or formula** (damage, hit chance, XP, death penalty, how a skill behaves) →
      code in `crates/rose-game-irose/` or `module/src/`, and the client in `godot/` when

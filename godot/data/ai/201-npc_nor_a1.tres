@@ -1,0 +1,83 @@
+[gd_resource type="RoseAi" format=3 uid="uid://b821xmvyd07nb"]
+
+[sub_resource type="RoseAiDoMoveRandomly" id="RoseAiDoMoveRandomly_taf3v"]
+mode = "Run"
+distance = 3
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_0w3u5"]
+actions = Array[Resource]([SubResource("RoseAiDoMoveRandomly_taf3v")])
+resource_name = "Always: MoveRandomly"
+
+[sub_resource type="RoseAiDoMoveRandomly" id="RoseAiDoMoveRandomly_7j1lo"]
+mode = "Run"
+distance = 300
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_ijukm"]
+value = 30
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_rsh4n"]
+distance = 3000
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_fk13s"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_ijukm"), SubResource("RoseAiIfDistance_rsh4n")])
+actions = Array[Resource]([SubResource("RoseAiDoMoveRandomly_7j1lo")])
+resource_name = "If Random, Distance: MoveRandomly"
+
+[sub_resource type="RoseAiDoSay" id="RoseAiDoSay_oi0px"]
+text = "Oops, I'm running out of supplies for magic spells! Is there an Arumic member who can help me find some materials?"
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_ipste"]
+value = 40
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_ke8ev"]
+distance = 800
+allied = true
+from_level_diff = 0
+to_level_diff = 10
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_6sfqe"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_ipste"), SubResource("RoseAiIfFindCharacter_ke8ev")])
+actions = Array[Resource]([SubResource("RoseAiDoSay_oi0px")])
+resource_name = "If Random, FindCharacter: Say"
+
+[sub_resource type="RoseAiDoSay" id="RoseAiDoSay_8bmy0"]
+text = "10 seconds have passed, run QS00-001-2-031"
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_ahsuk"]
+value = 40
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_of6vr"]
+distance = 800
+allied = true
+from_level_diff = 10
+to_level_diff = 20
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_cjfpr"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_ahsuk"), SubResource("RoseAiIfFindCharacter_of6vr")])
+actions = Array[Resource]([SubResource("RoseAiDoSay_8bmy0")])
+resource_name = "If Random, FindCharacter: Say"
+
+[sub_resource type="RoseAiDoSay" id="RoseAiDoSay_4c05f"]
+text = "Have you lost your mind? You're not supposed to attack townspeople!"
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_knnq0"]
+value = 40
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_3b7rf"]
+distance = 800
+allied = true
+from_level_diff = 21
+to_level_diff = 50
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_nfbfn"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_knnq0"), SubResource("RoseAiIfFindCharacter_3b7rf")])
+actions = Array[Resource]([SubResource("RoseAiDoSay_4c05f")])
+resource_name = "If Random, FindCharacter: Say"
+
+[resource]
+id = 201
+name = "npc_nor_a1"
+idle_interval = 10
+new_target_chance = 30
+on_idle = Array[Resource]([SubResource("RoseAiEvent_fk13s"), SubResource("RoseAiEvent_6sfqe"), SubResource("RoseAiEvent_cjfpr"), SubResource("RoseAiEvent_nfbfn")])
+on_attack = Array[Resource]([SubResource("RoseAiEvent_0w3u5")])

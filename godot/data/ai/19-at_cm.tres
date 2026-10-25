@@ -1,0 +1,95 @@
+[gd_resource type="RoseAi" format=3 uid="uid://bhqx4iavao5cs"]
+
+[sub_resource type="RoseAiDoAttackNearest" id="RoseAiDoAttackNearest_q47k3"]
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_bc155"]
+value = 30
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_ngifp"]
+distance = 1600
+from_level_diff = -15
+to_level_diff = 20
+count = 2
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_wpkvp"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_bc155"), SubResource("RoseAiIfFindCharacter_ngifp")])
+actions = Array[Resource]([SubResource("RoseAiDoAttackNearest_q47k3")])
+resource_name = "If Random, FindCharacter: AttackNearest"
+
+[sub_resource type="RoseAiDoStop" id="RoseAiDoStop_6yesv"]
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_cx6i3"]
+value = 30
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_vm8my"]
+to = "Target"
+distance = 2000
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_6h3hl"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_cx6i3"), SubResource("RoseAiIfDistance_vm8my")])
+actions = Array[Resource]([SubResource("RoseAiDoStop_6yesv")])
+resource_name = "If Random, Distance: Stop"
+
+[sub_resource type="RoseAiDoAttackAttacker" id="RoseAiDoAttackAttacker_tow54"]
+
+[sub_resource type="RoseAiIfNoTargetAttackerValue" id="RoseAiIfNoTargetAttackerValue_kbgnr"]
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_4ocqi"]
+conditions = Array[Resource]([SubResource("RoseAiIfNoTargetAttackerValue_kbgnr")])
+actions = Array[Resource]([SubResource("RoseAiDoAttackAttacker_tow54")])
+resource_name = "If NoTargetAttackerValue: AttackAttacker"
+
+[sub_resource type="RoseAiDoCallAllies" id="RoseAiDoCallAllies_2v107"]
+distance = 25
+allies = "Any"
+count = 1
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_52a6v"]
+value = 30
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_1v2it"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_52a6v")])
+actions = Array[Resource]([SubResource("RoseAiDoCallAllies_2v107")])
+resource_name = "If Random: CallAllies"
+
+[sub_resource type="RoseAiDoCallAllies" id="RoseAiDoCallAllies_54fxe"]
+distance = 35
+allies = "Any"
+count = 1
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_yshth"]
+to = "Target"
+distance = 1700
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_md68n"]
+to = "Target"
+operator = "<="
+distance = 3000
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_uarmw"]
+conditions = Array[Resource]([SubResource("RoseAiIfDistance_yshth"), SubResource("RoseAiIfDistance_md68n")])
+actions = Array[Resource]([SubResource("RoseAiDoCallAllies_54fxe")])
+resource_name = "If Distance, Distance: CallAllies"
+
+[sub_resource type="RoseAiDoAttackFound" id="RoseAiDoAttackFound_mbia4"]
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_8vwr6"]
+value = 30
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_qev1r"]
+distance = 1800
+from_level_diff = -14
+to_level_diff = 70
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_sqk4o"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_8vwr6"), SubResource("RoseAiIfFindCharacter_qev1r")])
+actions = Array[Resource]([SubResource("RoseAiDoAttackFound_mbia4")])
+resource_name = "If Random, FindCharacter: AttackFound"
+
+[resource]
+id = 19
+name = "at_cm"
+new_target_chance = 50
+on_idle = Array[Resource]([SubResource("RoseAiEvent_sqk4o")])
+on_attack = Array[Resource]([SubResource("RoseAiEvent_wpkvp"), SubResource("RoseAiEvent_6h3hl")])
+on_damaged = Array[Resource]([SubResource("RoseAiEvent_4ocqi"), SubResource("RoseAiEvent_1v2it"), SubResource("RoseAiEvent_uarmw")])

@@ -1,0 +1,65 @@
+[gd_resource type="RoseAi" format=3 uid="uid://5b01mrvu4dkx"]
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_mvlg4"]
+value = 12
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_20hp0"]
+variable = 1
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_yq66x"]
+npc_id = 1013
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_nqquo"]
+variable = 1
+operator = ">="
+value = 14
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_uwwso"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_yq66x"), SubResource("RoseAiIfVariable_nqquo")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_mvlg4"), SubResource("RoseAiDoSetVariable_20hp0")])
+resource_name = "If SelectNpc, Variable: SetVariable, SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_vu5bt"]
+value = 1
+
+[sub_resource type="RoseAiDoQuestStep" id="RoseAiDoQuestStep_e5db0"]
+trigger_name = "5001-05"
+
+[sub_resource type="RoseAiIfDaytime" id="RoseAiIfDaytime_7ajbo"]
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_d4yjh"]
+value = 5
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_i7v2u"]
+npc_id = 1013
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_gaf52"]
+operator = "<"
+value = 12
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_d610h"]
+name = "1013-01"
+conditions = Array[Resource]([SubResource("RoseAiIfDaytime_7ajbo"), SubResource("RoseAiIfRandom_d4yjh"), SubResource("RoseAiIfSelectNpc_i7v2u"), SubResource("RoseAiIfVariable_gaf52")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_vu5bt"), SubResource("RoseAiDoQuestStep_e5db0")])
+resource_name = "1013-01 (If Daytime, Random, SelectNpc, Variable: SetVariable, QuestStep)"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_5ujro"]
+value = 11
+
+[sub_resource type="RoseAiIfDaytime" id="RoseAiIfDaytime_gpiwi"]
+day = false
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_m1l30"]
+npc_id = 1013
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_xum04"]
+name = "1013-02"
+conditions = Array[Resource]([SubResource("RoseAiIfDaytime_gpiwi"), SubResource("RoseAiIfSelectNpc_m1l30")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_5ujro")])
+resource_name = "1013-02 (If Daytime, SelectNpc: SetVariable)"
+
+[resource]
+id = 208
+name = "npc_1013"
+idle_interval = 60
+on_idle = Array[Resource]([SubResource("RoseAiEvent_uwwso"), SubResource("RoseAiEvent_d610h"), SubResource("RoseAiEvent_xum04")])

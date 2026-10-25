@@ -5,7 +5,7 @@ the Inspector. It replaces the iROSE tables one kind at a time
 (plan: `TODO/own-game-data.md` in the project files). So far: **items**, **monsters**, **NPCs**, **drop tables**, **shop tabs**, **skills**,
 **status effects**, **job classes**, **zone settings**, **warp gates**, **crafting recipes**,
 **new characters**, **sounds**, **effects**, **skies**, the **interface**'s pictures and
-cursors, **quests** and **NPC dialogs**.
+cursors, **quests**, **NPC dialogs** and the **monster AI**.
 
 | Folder | Class | What |
 | --- | --- | --- |
@@ -44,6 +44,7 @@ cursors, **quests** and **NPC dialogs**.
 | `quests/` | `RoseQuest` | A quest: its name, text (description, start and end messages) and time limit |
 | `quest_triggers/<qsd file>/` | `RoseQuestTrigger` | A quest step: its conditions, its rewards and the step tried when it fails (a folder per iROSE QSD file) |
 | `dialogs/` | `RoseDialog` | What a town NPC says when you talk to it: its menus, lines, answers and what they check and do |
+| `ai/` | `RoseAi` | How a kind of monster (or town NPC) behaves: its events and what they check and do |
 | `interface/interface.tres` | `RoseInterface` | The interface's own pictures (loading screen, character creation) and the mouse cursors with the pixel each clicks at (one resource) |
 
 Monsters and NPCs share one id space (an NPC and a monster never have the same id), because
@@ -237,6 +238,38 @@ turned each script into these cases, checked against the old scripts on every pa
 the export writes `dialogs.toml` and the server upload leaves it out (the server checks a
 quest step again when the game asks to run it).
 
+## Monster AI
+
+An AI (`ai/<id>-<name>.tres`, a `RoseAi`, named after iROSE's AIP file: `23-at_sm.tres`) is how a
+kind of monster behaves; a monster or NPC links it as its `ai` (several share one; empty: it
+only fights back). It holds `idle_interval` (seconds between two runs of `on_idle`),
+`new_target_chance` (the percent chance that a monster already fighting reacts to someone
+new hitting it) and six lists of events (`RoseAiEvent`): `on_created`, `on_idle`,
+`on_attack`, `on_damaged`, `on_kill` and `on_dead`. When the server runs a list, the
+**first** event whose `conditions` all pass runs its `actions`, from the top. The Inspector
+and the Game data table list each event by its blocks (`If FindCharacter, Random: AttackFound`,
+`Always: MoveRandomly` without conditions), after its `name` if it has one, and rename it as
+its blocks change.
+
+Conditions are `RoseAiIf...` blocks (23 kinds: find a character nearby, the damage just
+taken, a distance, health percent, a random roll, its own, its target's or its attacker's
+values, status effects, day or night, the zone's or the world's time, and for town NPCs
+another NPC's variables and the real date); actions are `RoseAiDo...` blocks (25 kinds: move,
+attack, call allies, use a skill, and for town NPCs set a variable, say something in the chat
+or run a quest step on itself). Distances are centimetres, except `CallAllies` (metres, as in
+iROSE). Each block's class help says what it does and which ones the server doesn't run yet
+(spawning, transforming, dropping items, clans, owners, `on_created`, `on_kill`, `on_dead`).
+
+A block names a monster or NPC (`npc`), a skill (`skill`) or a quest step (`trigger`) as the
+resource in the Inspector (drag one in), but stores its number or name (`npc_id`, `skill_id`,
+`trigger_name`): a link there would let an AI link back to its own monster through a skill or
+quest step that summons it, which Godot can't load. Items and zones are plain links. The
+export checks that every number and name it stores is there. See
+`wiki/rules/monster-behaviour.md` for how the server runs them.
+
+The AI is only read by the server: the export writes `monster-ai.toml`, the upload sends it in
+place of FILE_AI.STB, the AIP files and AI_S.STB, and the game client doesn't load it.
+
 ## Changing something
 
 1. Open the resource, change the field in the Inspector, save. (Or change many in the
@@ -261,10 +294,10 @@ The export writes `export/data/items/<class>.toml` and `export/data/monsters.tom
 `npcs.toml`, `drop-tables.toml`, `shop-tabs.toml`, `skills.toml`, `status-effects.toml`,
 `job-classes.toml`, `zones.toml`, `warp-gates.toml`, `craft-recipes.toml`,
 `new-characters.toml`, `sounds.toml`, `hit-sounds.toml`, `footsteps.toml`,
-`effect-files.toml`, `attack-effects.toml`, `quests.toml`, `quest-triggers.toml` and
-`dialogs.toml` (layout in
+`effect-files.toml`, `attack-effects.toml`, `quests.toml`, `quest-triggers.toml`,
+`dialogs.toml` and `monster-ai.toml` (layout in
 `crates/rose-data-export/src/items.rs`, `npcs.rs`, `skills.rs`, `world.rs`, `sounds.rs`,
-`effects.rs`, `quests.rs` and `dialogs.rs`), and in the same run the zone scenes' spawns and NPCs
+`effects.rs`, `quests.rs`, `dialogs.rs` and `ai.rs`), and in the same run the zone scenes' spawns and NPCs
 (`export/zones/`) and the animations' hit markers (`export/motions.toml`), see
 `../../export/README.md`. A link is written as the linked resource's kind and id (`"weapon/3"`,
 `drop_table = 147`, `required_skill_1 = 821`, `attack_start_sound = 38`, `attack_effect = 111`),
@@ -272,7 +305,8 @@ and an audio file, an effect scene, an icon or a model as its path
 (`res://assets/rose/sound/attack/sword_001.res`). The server's upload sends it (as JSON) in
 place of the iROSE item, NPC (`LIST_NPC`), drop (`ITEM_DROP`), shop (`LIST_SELL`), skill
 (`LIST_SKILL`), status effect (`LIST_STATUS`), job class (`LIST_CLASS`), zone (`LIST_ZONE`),
-warp (`WARP`), recipe (`LIST_PRODUCT`) and new character (`INIT_AVATAR`) tables, and the game
+warp (`WARP`), recipe (`LIST_PRODUCT`), new character (`INIT_AVATAR`), quest (`LIST_QUEST`
+and the QSD files) and AI (`FILE_AI`, the AIP files) tables, and the game
 reads it from the repository (or from `export/data/` next to `ROSE.exe` in the Windows
 build). Both build scripts refuse to build when it is out
 of date. To list what differs from iROSE:

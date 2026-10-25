@@ -15,7 +15,8 @@
 //!   `attack-effects.toml`, see [`effects`]; only the game reads them too), and the skies
 //!   and interface (`skies.toml`, `interface.toml`, see [`interface`]; the game's only),
 //!   and the quests (`quests.toml`, `quest-triggers.toml`, see [`quests`]), and the NPC
-//!   dialogs (`dialogs.toml`, see [`dialogs`]; the game's only).
+//!   dialogs (`dialogs.toml`, see [`dialogs`]; the game's only), and the monster AI
+//!   (`monster-ai.toml`, see [`ai`]; the server's only).
 //!   Icons and models are Godot paths of the imported (or our own) art; [`rose_data::art`]
 //!   matches them with the iROSE lists.
 //! - `export/zones/`: the spawns, NPCs and named spots of the zones edited as Godot scenes
@@ -25,6 +26,7 @@
 //!
 //! Server and client both load the export, so they always see the same values.
 
+pub mod ai;
 pub mod dialogs;
 pub mod effects;
 pub mod interface;
@@ -37,6 +39,7 @@ pub mod sounds;
 pub mod world;
 pub mod zone_layouts;
 
+pub use ai::{compare_ai_databases, AiExport, AiKnown, ItemCodes};
 pub use dialogs::{compare_dialog_databases, DialogsExport};
 pub use effects::{compare_effect_databases, effect_stem, EffectsExport};
 pub use interface::{compare_interface, compare_sky_databases, InterfaceExport};

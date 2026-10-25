@@ -11,7 +11,8 @@
 //!                                          lengths and hit frames against the ZMO files,
 //!                                          sounds, hit sounds and footsteps, effect files
 //!                                          and attack effects, skies and the interface's
-//!                                          pictures and cursors, quests and quest triggers)
+//!                                          pictures and cursors, quests and quest triggers,
+//!                                          monster AI)
 //!
 //! `pack` writes upload-NNN.json files, each the JSON argument list of the module's
 //! `upload_game_files` reducer (well under the server's request size limit), plus manifest.json.
@@ -248,6 +249,8 @@ fn read_export(dir: &Path) -> BTreeMap<PathBuf, Vec<u8>> {
         .unwrap_or_else(|e| fail(e));
     let quests = rose_data_export::QuestsExport::from_files_as(toml, |name| read(rose_data_export::data_file_as(name, toml)))
         .unwrap_or_else(|e| fail(e));
+    let ai = rose_data_export::AiExport::from_files_as(toml, |name| read(rose_data_export::data_file_as(name, toml)))
+        .unwrap_or_else(|e| fail(e));
     let mut files = BTreeMap::new();
     let format = rose_data_export::Format::Json;
     let mut add = |path: String, text: String| {
@@ -280,6 +283,12 @@ fn read_export(dir: &Path) -> BTreeMap<PathBuf, Vec<u8>> {
     if let Some(quests) = quests {
         quests.check().unwrap_or_else(|e| fail(e));
         for (name, text) in quests.to_files_as(format).expect("write the quests as JSON") {
+            add(rose_data_export::data_file_as(name, format), text);
+        }
+    }
+    if let Some(ai) = ai {
+        ai.check().unwrap_or_else(|e| fail(e));
+        for (name, text) in ai.to_files_as(format).expect("write the monster AI as JSON") {
             add(rose_data_export::data_file_as(name, format), text);
         }
     }
@@ -322,7 +331,20 @@ fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool, root: &Pat
         None => println!("monsters and NPCs: no export (monsters.toml ...), skipped"),
         Some(rows) => {
             let export = rose_game_data::read_npcs_export(vfs).unwrap().unwrap();
-            differences.extend(rose_data_export::compare_npc_databases(&irose_npcs, &npcs));
+            // An AI number without an AI file did nothing; the converter made it 0.
+            let irose_ai = rose_data_irose::get_ai_database(vfs).expect("iROSE monster AI");
+            let no_ai_file = |line: &String| {
+                line.ends_with("-> ai_file_index: 0,")
+                    && line
+                        .split_once(": ai_file_index: ")
+                        .and_then(|(_, rest)| rest.split(',').next()?.parse::<usize>().ok())
+                        .is_some_and(|index| irose_ai.get_ai(index).is_none())
+            };
+            differences.extend(
+                rose_data_export::compare_npc_databases(&irose_npcs, &npcs)
+                    .into_iter()
+                    .filter(|line| !no_ai_file(line)),
+            );
             differences.extend(rose_data_export::compare_drop_rows(&irose_rows, &rows));
             println!(
                 "monsters and NPCs: {} monsters, {} NPCs, {} shop tabs, {} drop tables; iROSE tables {irose_ms} ms, export {export_ms} ms",
@@ -399,6 +421,26 @@ fn compare(vfs: &VirtualFilesystem, data_dir: &Path, no_export: bool, root: &Pat
                 export.quests.len(),
                 export.triggers.len(),
             );
+        }
+    }
+    let started = Instant::now();
+    let irose_ai = rose_data_irose::get_ai_database(vfs).expect("iROSE monster AI");
+    let irose_ms = started.elapsed().as_millis();
+    match rose_game_data::read_ai_export(vfs).expect("read the monster AI export") {
+        None => println!("monster AI: no export (monster-ai.toml), skipped"),
+        Some(export) => {
+            let started = Instant::now();
+            let ai = rose_game_data::load_ai(vfs).expect("exported monster AI");
+            let export_ms = started.elapsed().as_millis();
+            // What isn't in the game did nothing: the converter left it out.
+            let game = rose_game_data::load_game_data(vfs).expect("the game data");
+            let known = rose_game_data::ai_known(&game.npcs, &game.skills, &game.quests);
+            differences.extend(
+                rose_data_export::compare_ai_databases(&irose_ai, &ai, &rose_game_data::ai_item_codes(), &known)
+                    .expect("compare the monster AI"),
+            );
+            let events: usize = export.ai.iter().map(|a| a.events().count()).sum();
+            println!("monster AI: {} AIs, {events} events; iROSE files {irose_ms} ms, export {export_ms} ms", export.ai.len());
         }
     }
     match rose_game_data::MotionSource::from_game_files(vfs).expect("read the motion export") {

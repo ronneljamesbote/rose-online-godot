@@ -1,5 +1,7 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://b08iwh8o1q08v"]
 
+[ext_resource type="RoseAi" uid="uid://boscb0pcc606m" path="res://data/ai/31-ghost_m1.tres" id="ai_31"]
+
 [resource]
 id = 707
 name = "GhostSeed"
@@ -14,7 +16,7 @@ avoid = 300
 attack_speed = 98
 walk_speed = 160
 run_speed = 250
-ai_file_index = 31
+ai = ExtResource("ai_31")
 model = "res://assets/rose/3ddata/npc/list_npc/707.tscn"
 hit_sound_material_type = 1
 summon_monster_type = 41

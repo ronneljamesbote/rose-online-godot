@@ -1,0 +1,58 @@
+[gd_resource type="RoseAi" format=3 uid="uid://dv3g4gd2cdbbb"]
+
+[sub_resource type="RoseAiDoKillSelf" id="RoseAiDoKillSelf_his8f"]
+
+[sub_resource type="RoseAiIfHasNoOwner" id="RoseAiIfHasNoOwner_mkyxf"]
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_7jrfm"]
+conditions = Array[Resource]([SubResource("RoseAiIfHasNoOwner_mkyxf")])
+actions = Array[Resource]([SubResource("RoseAiDoKillSelf_his8f")])
+resource_name = "If HasNoOwner: KillSelf"
+
+[sub_resource type="RoseAiDoUseSkill" id="RoseAiDoUseSkill_8d3ww"]
+skill_id = 2971
+target = "Me"
+motion = 6
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_5srt2"]
+distance = 1200
+allied = true
+to_level_diff = 250
+count = 7
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_6qtpo"]
+conditions = Array[Resource]([SubResource("RoseAiIfFindCharacter_5srt2")])
+actions = Array[Resource]([SubResource("RoseAiDoUseSkill_8d3ww")])
+resource_name = "If FindCharacter: UseSkill"
+
+[sub_resource type="RoseAiDoUseSkill" id="RoseAiDoUseSkill_lw7h4"]
+skill_id = 2972
+target = "Me"
+motion = 6
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_clxqm"]
+distance = 1200
+allied = true
+to_level_diff = 250
+count = 3
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_h5rwr"]
+conditions = Array[Resource]([SubResource("RoseAiIfFindCharacter_clxqm")])
+actions = Array[Resource]([SubResource("RoseAiDoUseSkill_lw7h4")])
+resource_name = "If FindCharacter: UseSkill"
+
+[sub_resource type="RoseAiDoUseSkill" id="RoseAiDoUseSkill_upx2x"]
+skill_id = 2973
+target = "Me"
+motion = 6
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_xv1k7"]
+actions = Array[Resource]([SubResource("RoseAiDoUseSkill_upx2x")])
+resource_name = "Always: UseSkill"
+
+[resource]
+id = 154
+name = "sur_fire4"
+idle_interval = 8
+new_target_chance = 50
+on_idle = Array[Resource]([SubResource("RoseAiEvent_7jrfm"), SubResource("RoseAiEvent_6qtpo"), SubResource("RoseAiEvent_h5rwr"), SubResource("RoseAiEvent_xv1k7")])

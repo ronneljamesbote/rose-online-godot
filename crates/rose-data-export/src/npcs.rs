@@ -150,8 +150,9 @@ macro_rules! character_export {
             pub reward_xp: u32,
             #[serde(skip_serializing_if = "is_default")]
             pub is_untargetable: bool,
+            /// Its AI (`monster-ai.toml`), 0 = none.
             #[serde(skip_serializing_if = "is_default")]
-            pub ai_file_index: u32,
+            pub ai: u32,
             #[serde(skip_serializing_if = "is_default")]
             pub death_quest_trigger_name: String,
             #[serde(skip_serializing_if = "is_default")]
@@ -219,7 +220,7 @@ macro_rules! character_export {
                 self.run_speed = npc.run_speed;
                 self.reward_xp = npc.reward_xp;
                 self.is_untargetable = npc.is_untargetable;
-                self.ai_file_index = npc.ai_file_index;
+                self.ai = npc.ai_file_index;
                 self.death_quest_trigger_name = npc.death_quest_trigger_name.clone();
                 self.npc_quest_type = npc.npc_quest_type;
                 self.npc_type_index = npc.npc_type_index.map_or(0, NonZeroU16::get);
@@ -266,7 +267,7 @@ macro_rules! character_export {
                     avoid: self.avoid,
                     attack_speed: self.attack_speed,
                     is_attack_magic_damage: self.is_magic_damage,
-                    ai_file_index: self.ai_file_index,
+                    ai_file_index: self.ai,
                     reward_xp: self.reward_xp,
                     drop_table_index: 0,
                     drop_money_rate: 0,

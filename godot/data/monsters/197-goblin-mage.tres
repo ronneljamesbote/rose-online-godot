@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://cg31oxkhcf5rm" path="res://data/sounds/mob/265-mob22-n.tres" id="2_y1f6o"]
 [ext_resource type="RoseSound" uid="uid://bsy5g0g7d2bvs" path="res://data/sounds/mob/266-mob22-d.tres" id="3_mmcsv"]
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="4_1pfvv"]
+[ext_resource type="RoseAi" uid="uid://btod3t4qkcoqr" path="res://data/ai/265-clan_mob4.tres" id="ai_265"]
 
 [resource]
 id = 197
@@ -22,7 +23,7 @@ attack_range = 1400
 is_magic_damage = true
 walk_speed = 200
 run_speed = 510
-ai_file_index = 265
+ai = ExtResource("ai_265")
 npc_type_index = 7
 model = "res://assets/rose/3ddata/npc/list_npc/197.tscn"
 right_hand_part_index = 337

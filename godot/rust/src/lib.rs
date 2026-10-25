@@ -2,6 +2,7 @@
 
 use godot::prelude::*;
 
+mod ai_blocks;
 mod assets;
 mod audio;
 mod character;

@@ -27,7 +27,7 @@ Page format, folders and how to edit: `wiki/README.md`.
   editor, one `.tres` per thing, replacing the iROSE tables one kind at a time (items,
   monsters, town NPCs, drop tables, shop tabs, skills, status effects, job classes, zone
   settings, warp gates, crafting recipes, new characters, sounds, effects, quests, NPC
-  dialogs, and the icons and models they link so far). `--export-data` writes
+  dialogs, monster AI, and the icons and models they link so far). `--export-data` writes
   them to `export/data/`, which server and client both load instead of those iROSE tables.
   There is no file of changes on top of the iROSE tables any more: a value not made in Godot
   yet keeps its iROSE value until its kind is converted.
@@ -47,7 +47,8 @@ settings: `godot/data/zones/`; a warp gate: `godot/data/warp_gates/`; a recipe:
 `godot/data/craft_recipes/`; what a new character starts with: `godot/data/new_characters/`;
 an effect: `godot/data/effect_files/` or `godot/data/attack_effects/`; a quest's text or time
 limit: `godot/data/quests/`; a quest step's conditions and rewards: `godot/data/quest_triggers/`;
-what an NPC says and what its answers do: `godot/data/dialogs/`; an icon or model: the
+what an NPC says and what its answers do: `godot/data/dialogs/`; how a monster or NPC behaves:
+its AI in `godot/data/ai/`; an icon or model: the
 thing's `icon` or `model` field, new art in `godot/assets/ours/`; then `--export-data`). A rule change goes into code.
 
 ## Repository rules

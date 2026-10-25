@@ -26,22 +26,24 @@ source:
     - module/src/lib.rs (combat_tick, deal_damage, set_aggro_range, clear_damage_sources)
     - module/src/skills.rs (npc_cast, taunter, taunt_tick, is_invisible, summon_tick)
     - module/src/world.rs (spawn_monster)
-    - crates/rose-file-readers/src/aip.rs
-  data: the monster resources in godot/data/monsters/ (ai_file_index), FILE_AI.STB, 3DDATA/AI/*.AIP
+    - crates/rose-data-export/src/ai.rs (the export and its loader)
+  data: "the AI resources in godot/data/ai/ (RoseAi, exported to export/data/monster-ai.toml; made from iROSE's FILE_AI.STB, the 3DDATA/AI/*.AIP files and AI_S.STB), the monster resources in godot/data/monsters/ (each monster's ai)"
 ---
 # Monster behaviour
 
-Every monster type has an **AI script** (an AIP file from the iROSE data, named by the
-monster's `ai_file_index`). The script decides whether the monster wanders, attacks players on sight,
-fights back, calls friends for help, runs away or uses skills. The server runs the same
-scripts the original game used, so each monster behaves as its data says. On top of the
-scripts, the server has a few fixed rules: chasing, giving up and walking home.
+Every monster type has an **AI script**: a `RoseAi` resource in `godot/data/ai/` that the
+monster links as its `ai` (several monsters share one). The script decides whether the
+monster wanders, attacks players on sight, fights back, calls friends for help, runs away or
+uses skills. The scripts were converted once from iROSE's AIP files, so each monster behaves
+as the original game's data says, and they are edited in the Godot editor now. On top of
+the scripts, the server has a few fixed rules: chasing, giving up and walking home.
 
 ## How a script works
 
-A script has **triggers**. Each trigger is a list of **events**, and each event is a list of
-conditions and a list of actions. When a trigger runs, the **first event whose conditions
-all pass** does its actions; the rest are skipped.
+A script has **triggers**: six lists of **events** (`on_created`, `on_idle`, `on_attack`,
+`on_damaged`, `on_kill`, `on_dead`). Each event is a list of conditions (`RoseAiIf...`
+blocks) and a list of actions (`RoseAiDo...` blocks). When a trigger runs, the **first
+event whose conditions all pass** does its actions, from the top; the rest are skipped.
 
 Triggers the game runs are in `aip_triggers` above:
 
@@ -54,7 +56,8 @@ Triggers the game runs are in `aip_triggers` above:
 - **Damaged.** When the monster is hit and lives, it runs its damaged trigger: usually fight
   back, sometimes call friends or run from strong players. If it is already fighting
   someone, it only reacts to a new attacker with the chance its script gives (the "new
-  target chance"). A monster without a damaged trigger just fights back if it has no target.
+  target chance"). A monster without a script just fights back if it has no target; one
+  whose script has no damaged events doesn't react.
   A stunned or asleep monster doesn't react (a hit wakes a sleeper first, so a sleeper does
   react).
 - **Attack.** After each of its swings that doesn't kill, the monster runs the events of its

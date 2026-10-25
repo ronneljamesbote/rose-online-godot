@@ -2,6 +2,7 @@
 
 [ext_resource type="RoseShopTab" uid="uid://c0e4w8ldwug5c" path="res://data/shop_tabs/460-faction.tres" id="1_c41bt"]
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="2_c29nn"]
+[ext_resource type="RoseAi" uid="uid://co2n6pi7eo804" path="res://data/ai/228-npc_1110.tres" id="ai_228"]
 
 [resource]
 id = 1110
@@ -16,7 +17,7 @@ resistance = 100
 avoid = 100
 attack_speed = 100
 attack_range = 200
-ai_file_index = 228
+ai = ExtResource("ai_228")
 npc_type_index = 999
 model = "res://assets/rose/3ddata/npc/list_npc/1110.tscn"
 die_effect = ExtResource("2_c29nn")

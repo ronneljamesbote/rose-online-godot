@@ -5,6 +5,7 @@
 [ext_resource type="RoseSound" uid="uid://ddmgmm5w4axod" path="res://data/sounds/mob/219-mob10-h.tres" id="3_0qgzf"]
 [ext_resource type="RoseSound" uid="uid://b0g6mj715bjk8" path="res://data/sounds/mob/218-mob10-d.tres" id="4_3an8j"]
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="5_2seq7"]
+[ext_resource type="RoseAi" uid="uid://1qs51myw6r8o" path="res://data/ai/105-bomb1.tres" id="ai_105"]
 
 [resource]
 id = 88
@@ -22,7 +23,7 @@ attack_speed = 105
 attack_range = 230
 walk_speed = 130
 run_speed = 320
-ai_file_index = 105
+ai = ExtResource("ai_105")
 npc_type_index = 3
 model = "res://assets/rose/3ddata/npc/list_npc/88.tscn"
 hit_sound_material_type = 2

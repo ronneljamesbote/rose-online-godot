@@ -32,7 +32,7 @@ source:
     - module/src/npcs.rs (Npc, spawn_npcs, NPC_VARIABLES)
     - module/src/npc_ai.rs (npc_ai_tick, run_trigger, run_npc_trigger, zone_time, is_daytime, npc_message)
     - crates/rose-quest/src/lib.rs (check_trigger, world_ticks)
-  data: "the dialog resources in godot/data/dialogs/ (RoseDialog, exported to export/data/dialogs.toml; made from iROSE's 3Ddata\\Event\\*.con menus, their Lua 4 scripts and the EVENT string table), the NPC resources in godot/data/npcs/ (each NPC's ai_file_index), NPC AI files (*.AIP), zone files (where NPCs stand and which dialog they use)"
+  data: "the dialog resources in godot/data/dialogs/ (RoseDialog, exported to export/data/dialogs.toml; made from iROSE's 3Ddata\\Event\\*.con menus, their Lua 4 scripts and the EVENT string table), the NPC resources in godot/data/npcs/ (each NPC's ai), the AI resources in godot/data/ai/ (RoseAi, exported to export/data/monster-ai.toml; made from iROSE's *.AIP files), zone files (where NPCs stand and which dialog they use)"
 ---
 # NPC dialogs
 

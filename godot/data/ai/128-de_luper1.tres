@@ -1,0 +1,604 @@
+[gd_resource type="RoseAi" format=3 uid="uid://bo2wegoeah8wq"]
+
+[sub_resource type="RoseAiDoMoveRandomly" id="RoseAiDoMoveRandomly_ewbv3"]
+mode = "Run"
+distance = 5
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_46dqk"]
+value = 5
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_5lscy"]
+distance = 2500
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_qc5ag"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_46dqk"), SubResource("RoseAiIfDistance_5lscy")])
+actions = Array[Resource]([SubResource("RoseAiDoMoveRandomly_ewbv3")])
+resource_name = "If Random, Distance: MoveRandomly"
+
+[sub_resource type="RoseAiDoMoveRandomly" id="RoseAiDoMoveRandomly_1tkat"]
+from = "Here"
+mode = "Run"
+distance = 300
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_qjmjd"]
+value = 25
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_ipe50"]
+distance = 800
+allied = true
+from_level_diff = -10
+to_level_diff = 15
+count = 3
+
+[sub_resource type="RoseAiIfHealthPercent" id="RoseAiIfHealthPercent_47sgw"]
+operator = ">="
+value = 60
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_x7o2w"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_qjmjd"), SubResource("RoseAiIfFindCharacter_ipe50"), SubResource("RoseAiIfHealthPercent_47sgw")])
+actions = Array[Resource]([SubResource("RoseAiDoMoveRandomly_1tkat")])
+resource_name = "If Random, FindCharacter, HealthPercent: MoveRandomly"
+
+[sub_resource type="RoseAiDoUseSkill" id="RoseAiDoUseSkill_ched4"]
+skill_id = 3026
+motion = 8
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_a3wvr"]
+variable_type = "Own"
+operator = "Add"
+value = 40
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_8hffd"]
+value = 10
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_wuitm"]
+variable_type = "Own"
+operator = "<="
+value = 7
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_p66o2"]
+to = "Target"
+operator = "<="
+distance = 2000
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_00hcr"]
+to = "Target"
+distance = 600
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_j15aa"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_8hffd"), SubResource("RoseAiIfVariable_wuitm"), SubResource("RoseAiIfDistance_p66o2"), SubResource("RoseAiIfDistance_00hcr")])
+actions = Array[Resource]([SubResource("RoseAiDoUseSkill_ched4"), SubResource("RoseAiDoSetVariable_a3wvr")])
+resource_name = "If Random, Variable, Distance, Distance: UseSkill, SetVariable"
+
+[sub_resource type="RoseAiDoCallAllies" id="RoseAiDoCallAllies_lpi7q"]
+allies = "Any"
+count = 1
+
+[sub_resource type="RoseAiDoMoveRandomly" id="RoseAiDoMoveRandomly_aat0a"]
+mode = "Run"
+distance = 5
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_1tpbi"]
+value = 3
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_6ovq8"]
+distance = 3000
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_4kyqk"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_1tpbi"), SubResource("RoseAiIfDistance_6ovq8")])
+actions = Array[Resource]([SubResource("RoseAiDoCallAllies_lpi7q"), SubResource("RoseAiDoMoveRandomly_aat0a")])
+resource_name = "If Random, Distance: CallAllies, MoveRandomly"
+
+[sub_resource type="RoseAiDoSpawn" id="RoseAiDoSpawn_vv40a"]
+npc_id = 337
+distance = 5
+at = "Target"
+
+[sub_resource type="RoseAiDoMoveRandomly" id="RoseAiDoMoveRandomly_i21y8"]
+mode = "Run"
+distance = 5
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_buekk"]
+value = 12
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_qrtrw"]
+to = "Target"
+distance = 2500
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_sr714"]
+distance = 2500
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_bx83x"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_buekk"), SubResource("RoseAiIfDistance_qrtrw"), SubResource("RoseAiIfDistance_sr714")])
+actions = Array[Resource]([SubResource("RoseAiDoSpawn_vv40a"), SubResource("RoseAiDoMoveRandomly_i21y8")])
+resource_name = "If Random, Distance, Distance: Spawn, MoveRandomly"
+
+[sub_resource type="RoseAiDoMoveRandomly" id="RoseAiDoMoveRandomly_sofoi"]
+mode = "Run"
+distance = 5
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_uw0s2"]
+value = 12
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_c7qaa"]
+to = "Target"
+distance = 3400
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_ovlqb"]
+distance = 4000
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_h8x1f"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_uw0s2"), SubResource("RoseAiIfDistance_c7qaa"), SubResource("RoseAiIfDistance_ovlqb")])
+actions = Array[Resource]([SubResource("RoseAiDoMoveRandomly_sofoi")])
+resource_name = "If Random, Distance, Distance: MoveRandomly"
+
+[sub_resource type="RoseAiDoMoveAway" id="RoseAiDoMoveAway_ujf0k"]
+distance = 200
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_4jqy3"]
+distance = 6000
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_qn70w"]
+value = 10
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_q6643"]
+conditions = Array[Resource]([SubResource("RoseAiIfDistance_4jqy3"), SubResource("RoseAiIfRandom_qn70w")])
+actions = Array[Resource]([SubResource("RoseAiDoMoveAway_ujf0k")])
+resource_name = "If Distance, Random: MoveAway"
+
+[sub_resource type="RoseAiDoMoveRandomly" id="RoseAiDoMoveRandomly_djelk"]
+from = "Here"
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_qiqwa"]
+actions = Array[Resource]([SubResource("RoseAiDoMoveRandomly_djelk")])
+resource_name = "Always: MoveRandomly"
+
+[sub_resource type="RoseAiDoAttackAttacker" id="RoseAiDoAttackAttacker_i2ej4"]
+
+[sub_resource type="RoseAiIfNoTargetAttackerValue" id="RoseAiIfNoTargetAttackerValue_fim6v"]
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_nxunk"]
+conditions = Array[Resource]([SubResource("RoseAiIfNoTargetAttackerValue_fim6v")])
+actions = Array[Resource]([SubResource("RoseAiDoAttackAttacker_i2ej4")])
+resource_name = "If NoTargetAttackerValue: AttackAttacker"
+
+[sub_resource type="RoseAiDoTransform" id="RoseAiDoTransform_t2j4k"]
+npc_id = 703
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_h7fgq"]
+value = 20
+
+[sub_resource type="RoseAiIfHealthPercent" id="RoseAiIfHealthPercent_4nl75"]
+operator = ">="
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_0crj3"]
+distance = 1200
+allied = true
+from_level_diff = -10
+to_level_diff = -10
+count = 4
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_wbebj"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_h7fgq"), SubResource("RoseAiIfHealthPercent_4nl75"), SubResource("RoseAiIfFindCharacter_0crj3")])
+actions = Array[Resource]([SubResource("RoseAiDoTransform_t2j4k")])
+resource_name = "If Random, HealthPercent, FindCharacter: Transform"
+
+[sub_resource type="RoseAiDoAttackAttacker" id="RoseAiDoAttackAttacker_ikrf2"]
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_tx76b"]
+value = 20
+
+[sub_resource type="RoseAiIfAttackerVsTarget" id="RoseAiIfAttackerVsTarget_vice1"]
+operator = "<"
+ability = "Charm"
+
+[sub_resource type="RoseAiIfHealthPercent" id="RoseAiIfHealthPercent_tsmv1"]
+operator = ">="
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_boe4h"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_tx76b"), SubResource("RoseAiIfAttackerVsTarget_vice1"), SubResource("RoseAiIfHealthPercent_tsmv1")])
+actions = Array[Resource]([SubResource("RoseAiDoAttackAttacker_ikrf2")])
+resource_name = "If Random, AttackerVsTarget, HealthPercent: AttackAttacker"
+
+[sub_resource type="RoseAiDoUseSkill" id="RoseAiDoUseSkill_62h1l"]
+skill_id = 3015
+motion = 8
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_dmhj6"]
+variable_type = "Own"
+operator = "Add"
+value = 25
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_3oywj"]
+value = 30
+
+[sub_resource type="RoseAiIfHealthPercent" id="RoseAiIfHealthPercent_dw8yl"]
+operator = ">="
+value = 10
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_e2b17"]
+variable_type = "Own"
+operator = "<="
+value = 10
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_xv1em"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_3oywj"), SubResource("RoseAiIfHealthPercent_dw8yl"), SubResource("RoseAiIfVariable_e2b17")])
+actions = Array[Resource]([SubResource("RoseAiDoUseSkill_62h1l"), SubResource("RoseAiDoSetVariable_dmhj6")])
+resource_name = "If Random, HealthPercent, Variable: UseSkill, SetVariable"
+
+[sub_resource type="RoseAiDoUseSkill" id="RoseAiDoUseSkill_mrmef"]
+skill_id = 3027
+motion = 8
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_v18gx"]
+variable_type = "Own"
+operator = "Add"
+value = 20
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_giek7"]
+value = 30
+
+[sub_resource type="RoseAiIfHealthPercent" id="RoseAiIfHealthPercent_p4teg"]
+operator = ">="
+value = 10
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_0be8j"]
+variable_type = "Own"
+operator = "<="
+value = 10
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_x13di"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_giek7"), SubResource("RoseAiIfHealthPercent_p4teg"), SubResource("RoseAiIfVariable_0be8j")])
+actions = Array[Resource]([SubResource("RoseAiDoUseSkill_mrmef"), SubResource("RoseAiDoSetVariable_v18gx")])
+resource_name = "If Random, HealthPercent, Variable: UseSkill, SetVariable"
+
+[sub_resource type="RoseAiDoUseSkill" id="RoseAiDoUseSkill_4m3xb"]
+skill_id = 3026
+motion = 8
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_ja54t"]
+variable_type = "Own"
+operator = "Add"
+value = 20
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_bio22"]
+value = 30
+
+[sub_resource type="RoseAiIfHealthPercent" id="RoseAiIfHealthPercent_883qu"]
+operator = ">="
+value = 10
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_yrk2y"]
+variable_type = "Own"
+operator = "<="
+value = 10
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_s6vn0"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_bio22"), SubResource("RoseAiIfHealthPercent_883qu"), SubResource("RoseAiIfVariable_yrk2y")])
+actions = Array[Resource]([SubResource("RoseAiDoUseSkill_4m3xb"), SubResource("RoseAiDoSetVariable_ja54t")])
+resource_name = "If Random, HealthPercent, Variable: UseSkill, SetVariable"
+
+[sub_resource type="RoseAiDoUseSkill" id="RoseAiDoUseSkill_3r0bc"]
+skill_id = 3015
+motion = 8
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_fg7uy"]
+variable_type = "Own"
+operator = "Add"
+value = 10
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_raunp"]
+value = 13
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_3djbp"]
+variable_type = "Own"
+operator = "<="
+value = 15
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_igbfa"]
+distance = 2000
+from_level_diff = -30
+to_level_diff = 30
+count = 3
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_3cu51"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_raunp"), SubResource("RoseAiIfVariable_3djbp"), SubResource("RoseAiIfFindCharacter_igbfa")])
+actions = Array[Resource]([SubResource("RoseAiDoUseSkill_3r0bc"), SubResource("RoseAiDoSetVariable_fg7uy")])
+resource_name = "If Random, Variable, FindCharacter: UseSkill, SetVariable"
+
+[sub_resource type="RoseAiDoUseSkill" id="RoseAiDoUseSkill_yc4b1"]
+skill_id = 2915
+target = "Me"
+motion = 6
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_dy8ig"]
+value = 5
+
+[sub_resource type="RoseAiIfHealthPercent" id="RoseAiIfHealthPercent_x1adb"]
+operator = ">="
+value = 40
+
+[sub_resource type="RoseAiIfHasStatusEffect" id="RoseAiIfHasStatusEffect_v2w36"]
+status = "Bad"
+has = false
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_mvhfm"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_dy8ig"), SubResource("RoseAiIfHealthPercent_x1adb"), SubResource("RoseAiIfHasStatusEffect_v2w36")])
+actions = Array[Resource]([SubResource("RoseAiDoUseSkill_yc4b1")])
+resource_name = "If Random, HealthPercent, HasStatusEffect: UseSkill"
+
+[sub_resource type="RoseAiDoMoveRandomly" id="RoseAiDoMoveRandomly_u5tp5"]
+from = "FoundCharacter"
+mode = "Run"
+distance = 200
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_7tr50"]
+value = 20
+
+[sub_resource type="RoseAiIfHealthPercent" id="RoseAiIfHealthPercent_6rgqa"]
+value = 30
+
+[sub_resource type="RoseAiIfHealthPercent" id="RoseAiIfHealthPercent_n3oiw"]
+operator = ">="
+value = 15
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_5kaj8"]
+distance = 2000
+allied = true
+from_level_diff = -40
+to_level_diff = -5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_6l6e0"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_7tr50"), SubResource("RoseAiIfHealthPercent_6rgqa"), SubResource("RoseAiIfHealthPercent_n3oiw"), SubResource("RoseAiIfFindCharacter_5kaj8")])
+actions = Array[Resource]([SubResource("RoseAiDoMoveRandomly_u5tp5")])
+resource_name = "If Random, HealthPercent, HealthPercent, FindCharacter: MoveRandomly"
+
+[sub_resource type="RoseAiDoCallAllies" id="RoseAiDoCallAllies_ej2l2"]
+distance = 20
+allies = "Any"
+count = 1
+
+[sub_resource type="RoseAiDoMoveAway" id="RoseAiDoMoveAway_373u5"]
+distance = 1000
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_1ubrm"]
+value = 10
+
+[sub_resource type="RoseAiIfHealthPercent" id="RoseAiIfHealthPercent_6wej3"]
+value = 75
+
+[sub_resource type="RoseAiIfHealthPercent" id="RoseAiIfHealthPercent_k4xfy"]
+operator = ">="
+value = 10
+
+[sub_resource type="RoseAiIfDamage" id="RoseAiIfDamage_3csg8"]
+value = 120
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_hannl"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_1ubrm"), SubResource("RoseAiIfHealthPercent_6wej3"), SubResource("RoseAiIfHealthPercent_k4xfy"), SubResource("RoseAiIfDamage_3csg8")])
+actions = Array[Resource]([SubResource("RoseAiDoCallAllies_ej2l2"), SubResource("RoseAiDoMoveAway_373u5")])
+resource_name = "If Random, HealthPercent, HealthPercent, Damage: CallAllies, MoveAway"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_h1jeh"]
+variable_type = "Own"
+operator = "Subtract"
+value = 10
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_kwsw5"]
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_h1jeh")])
+resource_name = "Always: SetVariable"
+
+[sub_resource type="RoseAiDoCallAllies" id="RoseAiDoCallAllies_ey2j2"]
+distance = 20
+allies = "Any"
+count = 1
+
+[sub_resource type="RoseAiDoSpawn" id="RoseAiDoSpawn_55g8l"]
+npc_id = 703
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_iylqd"]
+value = 20
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_de36q"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_iylqd")])
+actions = Array[Resource]([SubResource("RoseAiDoCallAllies_ey2j2"), SubResource("RoseAiDoSpawn_55g8l")])
+resource_name = "If Random: CallAllies, Spawn"
+
+[sub_resource type="RoseAiDoSpawn" id="RoseAiDoSpawn_n1b2y"]
+npc_id = 703
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_knvuo"]
+value = 40
+
+[sub_resource type="RoseAiIfDaytime" id="RoseAiIfDaytime_4y2y3"]
+day = false
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_bhpl0"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_knvuo"), SubResource("RoseAiIfDaytime_4y2y3")])
+actions = Array[Resource]([SubResource("RoseAiDoSpawn_n1b2y")])
+resource_name = "If Random, Daytime: Spawn"
+
+[sub_resource type="RoseAiDoCallAllies" id="RoseAiDoCallAllies_tnhau"]
+distance = 4
+allies = "Any"
+count = 1
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_xvdj3"]
+value = 90
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_12yfh"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_xvdj3")])
+actions = Array[Resource]([SubResource("RoseAiDoCallAllies_tnhau")])
+resource_name = "If Random: CallAllies"
+
+[sub_resource type="RoseAiDoSpawn" id="RoseAiDoSpawn_n20o0"]
+npc_id = 393
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_hihwv"]
+value = 2
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_8i5uq"]
+distance = 2500
+to_level_diff = -4
+count_operator = "<="
+count = 0
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_s2sik"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_hihwv"), SubResource("RoseAiIfFindCharacter_8i5uq")])
+actions = Array[Resource]([SubResource("RoseAiDoSpawn_n20o0")])
+resource_name = "If Random, FindCharacter: Spawn"
+
+[sub_resource type="RoseAiDoSpawn" id="RoseAiDoSpawn_7becb"]
+npc_id = 391
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_u0wsg"]
+value = 1
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_pum1i"]
+distance = 2500
+to_level_diff = -7
+count_operator = "<="
+count = 0
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_xp68x"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_u0wsg"), SubResource("RoseAiIfFindCharacter_pum1i")])
+actions = Array[Resource]([SubResource("RoseAiDoSpawn_7becb")])
+resource_name = "If Random, FindCharacter: Spawn"
+
+[sub_resource type="RoseAiDoMoveRandomly" id="RoseAiDoMoveRandomly_tb4cn"]
+mode = "Run"
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_r6ngt"]
+distance = 4000
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_oghe4"]
+conditions = Array[Resource]([SubResource("RoseAiIfDistance_r6ngt")])
+actions = Array[Resource]([SubResource("RoseAiDoMoveRandomly_tb4cn")])
+resource_name = "If Distance: MoveRandomly"
+
+[sub_resource type="RoseAiDoMoveRandomly" id="RoseAiDoMoveRandomly_2744p"]
+mode = "Run"
+distance = 800
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_q0f7x"]
+value = 20
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_hllkw"]
+distance = 2000
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_u2dxt"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_q0f7x"), SubResource("RoseAiIfDistance_hllkw")])
+actions = Array[Resource]([SubResource("RoseAiDoMoveRandomly_2744p")])
+resource_name = "If Random, Distance: MoveRandomly"
+
+[sub_resource type="RoseAiDoCallAllies" id="RoseAiDoCallAllies_6bwbh"]
+distance = 16
+allies = "Any"
+count = 1
+
+[sub_resource type="RoseAiDoMoveRandomly" id="RoseAiDoMoveRandomly_5t2rp"]
+from = "Here"
+mode = "Run"
+distance = 1000
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_ou7ko"]
+value = 80
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_gwy2p"]
+distance = 1400
+from_level_diff = -10
+to_level_diff = 10
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_jaxkp"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_ou7ko"), SubResource("RoseAiIfFindCharacter_gwy2p")])
+actions = Array[Resource]([SubResource("RoseAiDoCallAllies_6bwbh"), SubResource("RoseAiDoMoveRandomly_5t2rp")])
+resource_name = "If Random, FindCharacter: CallAllies, MoveRandomly"
+
+[sub_resource type="RoseAiDoUseSkill" id="RoseAiDoUseSkill_x4dnr"]
+skill_id = 3015
+target = "FoundCharacter"
+motion = 8
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_dsp7w"]
+value = 20
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_vs4mu"]
+distance = 2000
+from_level_diff = -40
+to_level_diff = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_ol11e"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_dsp7w"), SubResource("RoseAiIfFindCharacter_vs4mu")])
+actions = Array[Resource]([SubResource("RoseAiDoUseSkill_x4dnr")])
+resource_name = "If Random, FindCharacter: UseSkill"
+
+[sub_resource type="RoseAiDoUseSkill" id="RoseAiDoUseSkill_wfkce"]
+skill_id = 3012
+target = "Me"
+motion = 8
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_2jkwr"]
+value = 25
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_wwj7l"]
+distance = 1200
+from_level_diff = -40
+to_level_diff = 5
+count = 2
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_jhqvv"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_2jkwr"), SubResource("RoseAiIfFindCharacter_wwj7l")])
+actions = Array[Resource]([SubResource("RoseAiDoUseSkill_wfkce")])
+resource_name = "If Random, FindCharacter: UseSkill"
+
+[sub_resource type="RoseAiDoTransform" id="RoseAiDoTransform_31ekb"]
+npc_id = 703
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_l2s67"]
+value = 5
+
+[sub_resource type="RoseAiIfHealthPercent" id="RoseAiIfHealthPercent_5ev7g"]
+operator = ">="
+
+[sub_resource type="RoseAiIfDaytime" id="RoseAiIfDaytime_iwd1h"]
+day = false
+
+[sub_resource type="RoseAiIfFindCharacter" id="RoseAiIfFindCharacter_1sygm"]
+distance = 1200
+allied = true
+from_level_diff = -20
+to_level_diff = 4
+count = 2
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_ttr1k"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_l2s67"), SubResource("RoseAiIfHealthPercent_5ev7g"), SubResource("RoseAiIfDaytime_iwd1h"), SubResource("RoseAiIfFindCharacter_1sygm")])
+actions = Array[Resource]([SubResource("RoseAiDoTransform_31ekb")])
+resource_name = "If Random, HealthPercent, Daytime, FindCharacter: Transform"
+
+[sub_resource type="RoseAiDoMoveRandomly" id="RoseAiDoMoveRandomly_xkhl4"]
+from = "Here"
+distance = 600
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_nqgd7"]
+variable_type = "Own"
+operator = "Subtract"
+value = 2
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_n0udh"]
+value = 30
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_uy8ql"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_n0udh")])
+actions = Array[Resource]([SubResource("RoseAiDoMoveRandomly_xkhl4"), SubResource("RoseAiDoSetVariable_nqgd7")])
+resource_name = "If Random: MoveRandomly, SetVariable"
+
+[resource]
+id = 128
+name = "de_luper1"
+idle_interval = 6
+new_target_chance = 40
+on_created = Array[Resource]([SubResource("RoseAiEvent_qiqwa")])
+on_idle = Array[Resource]([SubResource("RoseAiEvent_oghe4"), SubResource("RoseAiEvent_u2dxt"), SubResource("RoseAiEvent_jaxkp"), SubResource("RoseAiEvent_ol11e"), SubResource("RoseAiEvent_jhqvv"), SubResource("RoseAiEvent_ttr1k"), SubResource("RoseAiEvent_uy8ql")])
+on_attack = Array[Resource]([SubResource("RoseAiEvent_qc5ag"), SubResource("RoseAiEvent_x7o2w"), SubResource("RoseAiEvent_j15aa"), SubResource("RoseAiEvent_4kyqk"), SubResource("RoseAiEvent_bx83x"), SubResource("RoseAiEvent_h8x1f"), SubResource("RoseAiEvent_q6643")])
+on_damaged = Array[Resource]([SubResource("RoseAiEvent_nxunk"), SubResource("RoseAiEvent_wbebj"), SubResource("RoseAiEvent_boe4h"), SubResource("RoseAiEvent_xv1em"), SubResource("RoseAiEvent_x13di"), SubResource("RoseAiEvent_s6vn0"), SubResource("RoseAiEvent_3cu51"), SubResource("RoseAiEvent_mvhfm"), SubResource("RoseAiEvent_6l6e0"), SubResource("RoseAiEvent_hannl"), SubResource("RoseAiEvent_kwsw5")])
+on_dead = Array[Resource]([SubResource("RoseAiEvent_de36q"), SubResource("RoseAiEvent_bhpl0"), SubResource("RoseAiEvent_12yfh"), SubResource("RoseAiEvent_s2sik"), SubResource("RoseAiEvent_xp68x")])

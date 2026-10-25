@@ -5,6 +5,7 @@
 [ext_resource type="RoseShopTab" uid="uid://b7yv5sk7af3y2" path="res://data/shop_tabs/231-bows.tres" id="3_pa787"]
 [ext_resource type="RoseShopTab" uid="uid://28rreiw6fgp5" path="res://data/shop_tabs/232-combat-weapons.tres" id="4_fra13"]
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="5_xpj3a"]
+[ext_resource type="RoseAi" uid="uid://bjdeub8m8g6e1" path="res://data/ai/205-npc_1008.tres" id="ai_205"]
 
 [resource]
 id = 1008
@@ -20,7 +21,7 @@ resistance = 100
 avoid = 100
 attack_speed = 100
 attack_range = 200
-ai_file_index = 205
+ai = ExtResource("ai_205")
 npc_type_index = 999
 model = "res://assets/rose/3ddata/npc/list_npc/1008.tscn"
 die_effect = ExtResource("5_xpj3a")

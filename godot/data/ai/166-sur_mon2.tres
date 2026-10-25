@@ -1,0 +1,190 @@
+[gd_resource type="RoseAi" format=3 uid="uid://h3kmg4nq0x5f"]
+
+[sub_resource type="RoseAiDoKillSelf" id="RoseAiDoKillSelf_n3k78"]
+
+[sub_resource type="RoseAiIfHasNoOwner" id="RoseAiIfHasNoOwner_vettn"]
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_8eosg"]
+conditions = Array[Resource]([SubResource("RoseAiIfHasNoOwner_vettn")])
+actions = Array[Resource]([SubResource("RoseAiDoKillSelf_n3k78")])
+resource_name = "If HasNoOwner: KillSelf"
+
+[sub_resource type="RoseAiDoAttackOwnerTarget" id="RoseAiDoAttackOwnerTarget_x0f1g"]
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_2uis2"]
+value = 35
+
+[sub_resource type="RoseAiIfOwnerHasTarget" id="RoseAiIfOwnerHasTarget_r731s"]
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_ymj0o"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_2uis2"), SubResource("RoseAiIfOwnerHasTarget_r731s")])
+actions = Array[Resource]([SubResource("RoseAiDoAttackOwnerTarget_x0f1g")])
+resource_name = "If Random, OwnerHasTarget: AttackOwnerTarget"
+
+[sub_resource type="RoseAiDoMoveNearOwner" id="RoseAiDoMoveNearOwner_8xf14"]
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_4vwpp"]
+value = 20
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_h2ygm"]
+to = "Owner"
+operator = ">"
+distance = 3000
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_pijff"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_4vwpp"), SubResource("RoseAiIfDistance_h2ygm")])
+actions = Array[Resource]([SubResource("RoseAiDoMoveNearOwner_8xf14")])
+resource_name = "If Random, Distance: MoveNearOwner"
+
+[sub_resource type="RoseAiDoMoveRandomly" id="RoseAiDoMoveRandomly_7sxbm"]
+from = "Here"
+distance = 300
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_bhtv3"]
+actions = Array[Resource]([SubResource("RoseAiDoMoveRandomly_7sxbm")])
+resource_name = "Always: MoveRandomly"
+
+[sub_resource type="RoseAiDoAttackAttacker" id="RoseAiDoAttackAttacker_1hkrn"]
+
+[sub_resource type="RoseAiIfNoTargetAttackerValue" id="RoseAiIfNoTargetAttackerValue_nhobv"]
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_8v824"]
+conditions = Array[Resource]([SubResource("RoseAiIfNoTargetAttackerValue_nhobv")])
+actions = Array[Resource]([SubResource("RoseAiDoAttackAttacker_1hkrn")])
+resource_name = "If NoTargetAttackerValue: AttackAttacker"
+
+[sub_resource type="RoseAiDoKillSelf" id="RoseAiDoKillSelf_8hx22"]
+
+[sub_resource type="RoseAiIfHasNoOwner" id="RoseAiIfHasNoOwner_onewc"]
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_sbfpb"]
+conditions = Array[Resource]([SubResource("RoseAiIfHasNoOwner_onewc")])
+actions = Array[Resource]([SubResource("RoseAiDoKillSelf_8hx22")])
+resource_name = "If HasNoOwner: KillSelf"
+
+[sub_resource type="RoseAiDoAttackOwnerTarget" id="RoseAiDoAttackOwnerTarget_au68p"]
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_nsb6c"]
+value = 30
+
+[sub_resource type="RoseAiIfOwnerHasTarget" id="RoseAiIfOwnerHasTarget_o7hon"]
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_xg3wy"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_nsb6c"), SubResource("RoseAiIfOwnerHasTarget_o7hon")])
+actions = Array[Resource]([SubResource("RoseAiDoAttackOwnerTarget_au68p")])
+resource_name = "If Random, OwnerHasTarget: AttackOwnerTarget"
+
+[sub_resource type="RoseAiDoAttackAttacker" id="RoseAiDoAttackAttacker_kt23v"]
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_e8kcu"]
+
+[sub_resource type="RoseAiIfAttackerVsTarget" id="RoseAiIfAttackerVsTarget_07kg7"]
+operator = "<"
+
+[sub_resource type="RoseAiIfHealthPercent" id="RoseAiIfHealthPercent_so08x"]
+operator = ">="
+value = 60
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_ypv5m"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_e8kcu"), SubResource("RoseAiIfAttackerVsTarget_07kg7"), SubResource("RoseAiIfHealthPercent_so08x")])
+actions = Array[Resource]([SubResource("RoseAiDoAttackAttacker_kt23v")])
+resource_name = "If Random, AttackerVsTarget, HealthPercent: AttackAttacker"
+
+[sub_resource type="RoseAiDoMoveNearOwner" id="RoseAiDoMoveNearOwner_a4bhn"]
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_rjodf"]
+value = 30
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_b5rim"]
+to = "Owner"
+operator = ">"
+distance = 3000
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_lw2s5"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_rjodf"), SubResource("RoseAiIfDistance_b5rim")])
+actions = Array[Resource]([SubResource("RoseAiDoMoveNearOwner_a4bhn")])
+resource_name = "If Random, Distance: MoveNearOwner"
+
+[sub_resource type="RoseAiDoKillSelf" id="RoseAiDoKillSelf_2e50w"]
+
+[sub_resource type="RoseAiIfHasNoOwner" id="RoseAiIfHasNoOwner_eq57o"]
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_poahh"]
+conditions = Array[Resource]([SubResource("RoseAiIfHasNoOwner_eq57o")])
+actions = Array[Resource]([SubResource("RoseAiDoKillSelf_2e50w")])
+resource_name = "If HasNoOwner: KillSelf"
+
+[sub_resource type="RoseAiDoMoveNearOwner" id="RoseAiDoMoveNearOwner_r52k6"]
+
+[sub_resource type="RoseAiDoSay" id="RoseAiDoSay_82pix"]
+text = "I shall carry out your orders immediately."
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_kyguf"]
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_lls38"]
+to = "Owner"
+operator = ">"
+distance = 1800
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_cgtr7"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_kyguf"), SubResource("RoseAiIfDistance_lls38")])
+actions = Array[Resource]([SubResource("RoseAiDoMoveNearOwner_r52k6"), SubResource("RoseAiDoSay_82pix")])
+resource_name = "If Random, Distance: MoveNearOwner, Say"
+
+[sub_resource type="RoseAiDoSay" id="RoseAiDoSay_nx54w"]
+text = "Let me guard you, my master."
+
+[sub_resource type="RoseAiDoAttackOwnerTarget" id="RoseAiDoAttackOwnerTarget_r86me"]
+
+[sub_resource type="RoseAiIfOwnerHasTarget" id="RoseAiIfOwnerHasTarget_d0p8o"]
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_smis6"]
+conditions = Array[Resource]([SubResource("RoseAiIfOwnerHasTarget_d0p8o")])
+actions = Array[Resource]([SubResource("RoseAiDoSay_nx54w"), SubResource("RoseAiDoAttackOwnerTarget_r86me")])
+resource_name = "If OwnerHasTarget: Say, AttackOwnerTarget"
+
+[sub_resource type="RoseAiDoMoveNearOwner" id="RoseAiDoMoveNearOwner_4fdx0"]
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_xrgma"]
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_xpn0n"]
+to = "Owner"
+operator = ">"
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_2j7xt"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_xrgma"), SubResource("RoseAiIfDistance_xpn0n")])
+actions = Array[Resource]([SubResource("RoseAiDoMoveNearOwner_4fdx0")])
+resource_name = "If Random, Distance: MoveNearOwner"
+
+[sub_resource type="RoseAiDoMoveRandomly" id="RoseAiDoMoveRandomly_ofraw"]
+from = "Here"
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_5444c"]
+value = 10
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_ouy6x"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_5444c")])
+actions = Array[Resource]([SubResource("RoseAiDoMoveRandomly_ofraw")])
+resource_name = "If Random: MoveRandomly"
+
+[sub_resource type="RoseAiDoMoveNearOwner" id="RoseAiDoMoveNearOwner_v0m2w"]
+
+[sub_resource type="RoseAiIfDistance" id="RoseAiIfDistance_b7lo4"]
+to = "Owner"
+operator = ">"
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_7akne"]
+conditions = Array[Resource]([SubResource("RoseAiIfDistance_b7lo4")])
+actions = Array[Resource]([SubResource("RoseAiDoMoveNearOwner_v0m2w")])
+resource_name = "If Distance: MoveNearOwner"
+
+[resource]
+id = 166
+name = "sur_mon2"
+idle_interval = 1
+new_target_chance = 30
+on_created = Array[Resource]([SubResource("RoseAiEvent_bhtv3")])
+on_idle = Array[Resource]([SubResource("RoseAiEvent_poahh"), SubResource("RoseAiEvent_cgtr7"), SubResource("RoseAiEvent_smis6"), SubResource("RoseAiEvent_2j7xt"), SubResource("RoseAiEvent_ouy6x")])
+on_attack = Array[Resource]([SubResource("RoseAiEvent_8eosg"), SubResource("RoseAiEvent_ymj0o"), SubResource("RoseAiEvent_pijff")])
+on_damaged = Array[Resource]([SubResource("RoseAiEvent_8v824"), SubResource("RoseAiEvent_sbfpb"), SubResource("RoseAiEvent_xg3wy"), SubResource("RoseAiEvent_ypv5m"), SubResource("RoseAiEvent_lw2s5")])
+on_kill = Array[Resource]([SubResource("RoseAiEvent_7akne")])

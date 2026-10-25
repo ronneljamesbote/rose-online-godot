@@ -1,6 +1,7 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://mgbvw1jrccnn"]
 
 [ext_resource type="RoseDropTable" uid="uid://t1w7qd451rwu" path="res://data/drop_tables/407-seal-stone.tres" id="1_os7vi"]
+[ext_resource type="RoseAi" uid="uid://bccnh72wx6s5f" path="res://data/ai/186-ge_sealstone6.tres" id="ai_186"]
 
 [resource]
 id = 457
@@ -17,7 +18,7 @@ avoid = 132
 attack_speed = 90
 attack_range = 10
 is_magic_damage = true
-ai_file_index = 186
+ai = ExtResource("ai_186")
 model = "res://assets/rose/3ddata/npc/list_npc/457.tscn"
 glow_colour = Color(0.7058824, 0.3137255, 0.3137255, 1)
 hit_sound_material_type = 2

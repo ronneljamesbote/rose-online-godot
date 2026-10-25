@@ -34,16 +34,18 @@ how attacks look), the skies (`data/skies.toml`: each sky's mesh, day and night 
 light at each time of day) and the interface (`data/interface.toml`: the loading and
 character creation pictures, each mouse cursor and the pixel it clicks at), the quests
 (`data/quests.toml`: each quest's name, text and time limit; `data/quest-triggers.toml`:
-every step with its conditions, rewards and next step) and the NPC dialogs
+every step with its conditions, rewards and next step), the NPC dialogs
 (`data/dialogs.toml`: each dialog's menus and lines, and the cases deciding what shows and
-what an answer does).
+what an answer does) and the monster AI (`data/monster-ai.toml`: each AI's events, their
+conditions and actions).
 
 The server's upload sends it in place of the iROSE tables it replaces (the item tables,
 LIST_NPC.STB, ITEM_DROP.STB, LIST_SELL.STB, LIST_SKILL.STB, LIST_STATUS.STB, LIST_CLASS.STB,
-LIST_ZONE.STB, WARP.STB, LIST_PRODUCT.STB, INIT_AVATAR.STB, LIST_QUEST.STB and the QSD files; as JSON, which the module
-reads faster; `ROSE_DATA` names another folder; the sounds, effects, skies, interface and
-dialogs stay out, the server plays and shows none, and checks a quest step again when the
-game asks to run one), and the game reads it from here (from
+LIST_ZONE.STB, WARP.STB, LIST_PRODUCT.STB, INIT_AVATAR.STB, LIST_QUEST.STB and the QSD files,
+FILE_AI.STB, the AIP files and AI_S.STB; as JSON, which the module reads faster; `ROSE_DATA`
+names another folder; the sounds, effects, skies, interface and dialogs stay out, the server
+plays and shows none, and checks a quest step again when the game asks to run one; the game
+doesn't read the monster AI), and the game reads it from here (from
 `export/data/` next to `ROSE.exe` in the Windows build, or where `ROSE_DATA` points). Without
 it both fall back to the iROSE tables (FILE_SOUND.STB, LIST_HITSOUND.STB and
 LIST_STEPSOUND.STB for the sounds, FILE_EFFECT.STB and LIST_EFFECT.STB for the effects,

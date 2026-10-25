@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://cg31oxkhcf5rm" path="res://data/sounds/mob/265-mob22-n.tres" id="2_mm3sb"]
 [ext_resource type="RoseSound" uid="uid://bsy5g0g7d2bvs" path="res://data/sounds/mob/266-mob22-d.tres" id="3_84f6g"]
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="4_i63nt"]
+[ext_resource type="RoseAi" uid="uid://y07apjq10gjf" path="res://data/ai/69-goblin1_boss.tres" id="ai_69"]
 
 [resource]
 id = 286
@@ -21,7 +22,7 @@ attack_speed = 105
 attack_range = 250
 walk_speed = 310
 run_speed = 730
-ai_file_index = 69
+ai = ExtResource("ai_69")
 npc_type_index = 10
 model = "res://assets/rose/3ddata/npc/list_npc/286.tscn"
 right_hand_part_index = 173

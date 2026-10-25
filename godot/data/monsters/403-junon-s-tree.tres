@@ -3,6 +3,7 @@
 [ext_resource type="RoseDropTable" uid="uid://2ye36us2256y" path="res://data/drop_tables/303-junon-s-tree.tres" id="1_2i05e"]
 [ext_resource type="RoseSound" uid="uid://o26d2fbbxbh8" path="res://data/sounds/other/3060-sound-3060.tres" id="2_qscq2"]
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="3_erxx3"]
+[ext_resource type="RoseAi" uid="uid://gpivggpyb2e4" path="res://data/ai/73-junon_tree.tres" id="ai_73"]
 
 [resource]
 id = 403
@@ -22,7 +23,7 @@ attack_range = 1500
 is_magic_damage = true
 walk_speed = 240
 run_speed = 450
-ai_file_index = 73
+ai = ExtResource("ai_73")
 death_quest_trigger_name = "1980-45"
 npc_quest_type = 1
 npc_type_index = 10

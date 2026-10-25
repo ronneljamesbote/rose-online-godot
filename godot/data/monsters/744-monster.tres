@@ -1,6 +1,7 @@
 [gd_resource type="RoseMonster" format=3 uid="uid://x6dnf1jfu7te"]
 
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="1_hytau"]
+[ext_resource type="RoseAi" uid="uid://dt58sbhybpuvc" path="res://data/ai/7-at_zs.tres" id="ai_7"]
 
 [resource]
 id = 744
@@ -18,7 +19,7 @@ attack_range = 1390
 is_magic_damage = true
 walk_speed = 142
 run_speed = 334
-ai_file_index = 7
+ai = ExtResource("ai_7")
 model = "res://assets/rose/3ddata/npc/list_npc/744.tscn"
 hit_sound_material_type = 1
 die_effect = ExtResource("1_hytau")

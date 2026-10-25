@@ -1,0 +1,17 @@
+[gd_resource type="RoseAi" format=3 uid="uid://br6rcyidrv4fr"]
+
+[ext_resource type="RoseZoneSettings" uid="uid://bwl37lt4wmjj0" path="res://data/zones/11-junon-clan-field.tres" id="1_jn48n"]
+
+[sub_resource type="RoseAiDoSetPvp" id="RoseAiDoSetPvp_4nj7c"]
+zone = ExtResource("1_jn48n")
+on = true
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_tyuqm"]
+actions = Array[Resource]([SubResource("RoseAiDoSetPvp_4nj7c")])
+resource_name = "Always: SetPvp"
+
+[resource]
+id = 216
+name = "npc_1085"
+idle_interval = 10
+on_idle = Array[Resource]([SubResource("RoseAiEvent_tyuqm")])

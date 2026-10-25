@@ -4,6 +4,7 @@
 [ext_resource type="RoseSound" uid="uid://js7qhkoxid3m" path="res://data/sounds/mob/182-mob01-d.tres" id="2_cv4z1"]
 [ext_resource type="RoseAttackEffect" uid="uid://ckm6voivcem6c" path="res://data/attack_effects/402-jelly-bean.tres" id="3_0841y"]
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="4_jb8fz"]
+[ext_resource type="RoseAi" uid="uid://dcd8v7svely30" path="res://data/ai/102-jelly2.tres" id="ai_102"]
 
 [resource]
 id = 2
@@ -21,7 +22,7 @@ attack_speed = 90
 attack_range = 210
 walk_speed = 170
 run_speed = 390
-ai_file_index = 102
+ai = ExtResource("ai_102")
 death_quest_trigger_name = "5051-31"
 npc_type_index = 1
 model = "res://assets/rose/3ddata/npc/list_npc/2.tscn"

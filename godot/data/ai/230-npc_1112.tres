@@ -1,0 +1,240 @@
+[gd_resource type="RoseAi" format=3 uid="uid://c8hsqlx6n50lr"]
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_oa3xc"]
+variable = 5
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_hdc5w"]
+variable = 9
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseAiIfZoneTime" id="RoseAiIfZoneTime_xyveo"]
+from = 1
+to = 2
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_ujdhc"]
+npc_id = 1112
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_570h4"]
+variable = 1
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_77gef"]
+conditions = Array[Resource]([SubResource("RoseAiIfZoneTime_xyveo"), SubResource("RoseAiIfSelectNpc_ujdhc"), SubResource("RoseAiIfVariable_570h4")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_oa3xc"), SubResource("RoseAiDoSetVariable_hdc5w")])
+resource_name = "If ZoneTime, SelectNpc, Variable: SetVariable, SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_kvmom"]
+variable = 1
+value = 30
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_m1q83"]
+variable = 5
+
+[sub_resource type="RoseAiIfZoneTime" id="RoseAiIfZoneTime_3x1so"]
+from = 41
+to = 50
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_l7jky"]
+npc_id = 1112
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_4xg6x"]
+variable = 5
+operator = ">="
+value = 4
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_x437w"]
+conditions = Array[Resource]([SubResource("RoseAiIfZoneTime_3x1so"), SubResource("RoseAiIfSelectNpc_l7jky"), SubResource("RoseAiIfVariable_4xg6x")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_kvmom"), SubResource("RoseAiDoSetVariable_m1q83")])
+resource_name = "If ZoneTime, SelectNpc, Variable: SetVariable, SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_kfurh"]
+variable = 1
+value = 40
+
+[sub_resource type="RoseAiIfZoneTime" id="RoseAiIfZoneTime_45erl"]
+from = 78
+to = 80
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_etg04"]
+npc_id = 1112
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_xqidi"]
+variable = 1
+value = 31
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_q0o00"]
+conditions = Array[Resource]([SubResource("RoseAiIfZoneTime_45erl"), SubResource("RoseAiIfSelectNpc_etg04"), SubResource("RoseAiIfVariable_xqidi")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_kfurh")])
+resource_name = "If ZoneTime, SelectNpc, Variable: SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_g38nh"]
+value = 4
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_mkyug"]
+variable = 1
+value = 31
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_7506p"]
+text = "Lutis of Luxem Tower asks for help. Is there an Arumic member who can provide assistance?"
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_wr37c"]
+npc_id = 1112
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_uyprn"]
+variable = 1
+value = 30
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_mbl17"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_wr37c"), SubResource("RoseAiIfVariable_uyprn")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_g38nh"), SubResource("RoseAiDoSetVariable_mkyug"), SubResource("RoseAiDoMessage_7506p")])
+resource_name = "If SelectNpc, Variable: SetVariable, SetVariable, Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_wppdh"]
+value = 6
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_gb80y"]
+variable = 1
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_jyyr4"]
+variable = 4
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_cray0"]
+npc_id = 1112
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_4djd8"]
+variable = 1
+value = 40
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_cchnd"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_cray0"), SubResource("RoseAiIfVariable_4djd8")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_wppdh"), SubResource("RoseAiDoSetVariable_gb80y"), SubResource("RoseAiDoSetVariable_jyyr4")])
+resource_name = "If SelectNpc, Variable: SetVariable, SetVariable, SetVariable"
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_2u0yf"]
+text = "Oops, I'm running out of supplies for magic spells! Is there an Arumic member who can help me find some materials?"
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_7iedl"]
+value = 20
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_envpo"]
+npc_id = 1112
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_x3hth"]
+value = 4
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_2i55c"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_7iedl"), SubResource("RoseAiIfSelectNpc_envpo"), SubResource("RoseAiIfVariable_x3hth")])
+actions = Array[Resource]([SubResource("RoseAiDoMessage_2u0yf")])
+resource_name = "If Random, SelectNpc, Variable: Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_qw0ox"]
+variable = 1
+value = 70
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_buj35"]
+variable = 9
+
+[sub_resource type="RoseAiIfZoneTime" id="RoseAiIfZoneTime_w154n"]
+from = 121
+to = 130
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_my2mt"]
+npc_id = 1112
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_5bkgv"]
+variable = 9
+operator = ">="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_7vhxb"]
+conditions = Array[Resource]([SubResource("RoseAiIfZoneTime_w154n"), SubResource("RoseAiIfSelectNpc_my2mt"), SubResource("RoseAiIfVariable_5bkgv")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_qw0ox"), SubResource("RoseAiDoSetVariable_buj35")])
+resource_name = "If ZoneTime, SelectNpc, Variable: SetVariable, SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_e4mbb"]
+variable = 1
+value = 80
+
+[sub_resource type="RoseAiIfZoneTime" id="RoseAiIfZoneTime_0mlv2"]
+from = 158
+to = 160
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_7dxio"]
+npc_id = 1112
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_wpgrr"]
+variable = 1
+value = 71
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_aw01j"]
+conditions = Array[Resource]([SubResource("RoseAiIfZoneTime_0mlv2"), SubResource("RoseAiIfSelectNpc_7dxio"), SubResource("RoseAiIfVariable_wpgrr")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_e4mbb")])
+resource_name = "If ZoneTime, SelectNpc, Variable: SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_mmax2"]
+value = 10
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_o0f1u"]
+variable = 1
+value = 71
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_cqjjh"]
+text = "Oops, I'm running out of supplies for magic spells! Is there an Arumic member who can help me find some materials?"
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_4tkss"]
+npc_id = 1112
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_ha2ma"]
+variable = 1
+value = 70
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_2mgqp"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_4tkss"), SubResource("RoseAiIfVariable_ha2ma")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_mmax2"), SubResource("RoseAiDoSetVariable_o0f1u"), SubResource("RoseAiDoMessage_cqjjh")])
+resource_name = "If SelectNpc, Variable: SetVariable, SetVariable, Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_ba6t3"]
+value = 12
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_fi1w2"]
+variable = 1
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_w2w6d"]
+variable = 8
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_bbpan"]
+npc_id = 1112
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_spuju"]
+variable = 1
+value = 80
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_62v6m"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_bbpan"), SubResource("RoseAiIfVariable_spuju")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_ba6t3"), SubResource("RoseAiDoSetVariable_fi1w2"), SubResource("RoseAiDoSetVariable_w2w6d")])
+resource_name = "If SelectNpc, Variable: SetVariable, SetVariable, SetVariable"
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_1uv6t"]
+text = "Lutis of Luxem Tower asks for help. Is there an Arumic member who can provide assistance?"
+
+[sub_resource type="RoseAiIfRandom" id="RoseAiIfRandom_nh2yb"]
+value = 20
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_bro6k"]
+npc_id = 1112
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_gq8bc"]
+value = 10
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_111pw"]
+conditions = Array[Resource]([SubResource("RoseAiIfRandom_nh2yb"), SubResource("RoseAiIfSelectNpc_bro6k"), SubResource("RoseAiIfVariable_gq8bc")])
+actions = Array[Resource]([SubResource("RoseAiDoMessage_1uv6t")])
+resource_name = "If Random, SelectNpc, Variable: Message"
+
+[resource]
+id = 230
+name = "npc_1112"
+idle_interval = 15
+on_idle = Array[Resource]([SubResource("RoseAiEvent_77gef"), SubResource("RoseAiEvent_x437w"), SubResource("RoseAiEvent_q0o00"), SubResource("RoseAiEvent_mbl17"), SubResource("RoseAiEvent_cchnd"), SubResource("RoseAiEvent_2i55c"), SubResource("RoseAiEvent_7vhxb"), SubResource("RoseAiEvent_aw01j"), SubResource("RoseAiEvent_2mgqp"), SubResource("RoseAiEvent_62v6m"), SubResource("RoseAiEvent_111pw")])

@@ -1,0 +1,182 @@
+[gd_resource type="RoseAi" format=3 uid="uid://cnr5u627vf5bt"]
+
+[ext_resource type="RoseZoneSettings" uid="uid://cp0r2dacxvpfb" path="res://data/zones/5-junon-cartel.tres" id="1_gwsmh"]
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_fv7kp"]
+variable = 3
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_fv3cd"]
+npc_id = 1086
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_i2j6r"]
+variable = 3
+value = 1
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_74w22"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_fv3cd"), SubResource("RoseAiIfVariable_i2j6r")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_fv7kp")])
+resource_name = "If SelectNpc, Variable: SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_rhgm3"]
+variable = 2
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_oii2w"]
+text = "Faction War has begun."
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_0xw38"]
+npc_id = 1086
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_8f7sx"]
+variable = 1
+value = 10
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_mtpdh"]
+variable = 2
+operator = "<"
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_vbd1q"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_0xw38"), SubResource("RoseAiIfVariable_8f7sx"), SubResource("RoseAiIfVariable_mtpdh")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_rhgm3"), SubResource("RoseAiDoMessage_oii2w")])
+resource_name = "If SelectNpc, Variable, Variable: SetVariable, Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_2m3bs"]
+variable = 1
+value = 20
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_hp2bn"]
+variable = 2
+
+[sub_resource type="RoseAiDoSetPvp" id="RoseAiDoSetPvp_2dvyt"]
+zone = ExtResource("1_gwsmh")
+on = true
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_i7vxb"]
+text = "Faction War has ended. Everyone will be automatically teleported to Junon Polis."
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_anvhn"]
+npc_id = 1086
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_2lqfe"]
+variable = 2
+operator = ">="
+value = 5
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_6qi1q"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_anvhn"), SubResource("RoseAiIfVariable_2lqfe")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_2m3bs"), SubResource("RoseAiDoSetVariable_hp2bn"), SubResource("RoseAiDoSetPvp_2dvyt"), SubResource("RoseAiDoMessage_i7vxb")])
+resource_name = "If SelectNpc, Variable: SetVariable, SetVariable, SetPvp, Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_cmin4"]
+variable = 1
+operator = "Add"
+value = 2
+
+[sub_resource type="RoseAiDoSetPvp" id="RoseAiDoSetPvp_utix8"]
+zone = ExtResource("1_gwsmh")
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_l7jcm"]
+text = "Faction War has ended. Everyone will be automatically teleported to Junon Polis."
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_711pc"]
+npc_id = 1086
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_lnfjy"]
+variable = 1
+operator = ">="
+value = 21
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_er13e"]
+variable = 1
+operator = "<"
+value = 25
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_1ppjk"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_711pc"), SubResource("RoseAiIfVariable_lnfjy"), SubResource("RoseAiIfVariable_er13e")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_cmin4"), SubResource("RoseAiDoSetPvp_utix8"), SubResource("RoseAiDoMessage_l7jcm")])
+resource_name = "If SelectNpc, Variable, Variable: SetVariable, SetPvp, Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_gl0ou"]
+variable = 3
+value = 1
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_5is8l"]
+npc_id = 1086
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_webxh"]
+variable = 1
+value = 25
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_fsxxb"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_5is8l"), SubResource("RoseAiIfVariable_webxh")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_gl0ou")])
+resource_name = "If SelectNpc, Variable: SetVariable"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_18v7a"]
+variable = 3
+value = 1
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_fib5k"]
+npc_id = 1086
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_jmnnt"]
+variable = 1
+value = 26
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_gtkht"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_fib5k"), SubResource("RoseAiIfVariable_jmnnt")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_18v7a")])
+resource_name = "If SelectNpc, Variable: SetVariable"
+
+[sub_resource type="RoseAiDoSetPvp" id="RoseAiDoSetPvp_qg3f1"]
+zone = ExtResource("1_gwsmh")
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_4cba7"]
+variable = 1
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseAiDoMessage" id="RoseAiDoMessage_acyyc"]
+text = "A crisis has befallen the Junon Order! Members of the Junon Order, please gather in front of me immediately."
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_nhurn"]
+npc_id = 1086
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_r7jib"]
+variable = 1
+operator = ">="
+value = 30
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_mhcjd"]
+variable = 1
+operator = "<"
+value = 32
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_o4v33"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_nhurn"), SubResource("RoseAiIfVariable_r7jib"), SubResource("RoseAiIfVariable_mhcjd")])
+actions = Array[Resource]([SubResource("RoseAiDoSetPvp_qg3f1"), SubResource("RoseAiDoSetVariable_4cba7"), SubResource("RoseAiDoMessage_acyyc")])
+resource_name = "If SelectNpc, Variable, Variable: SetPvp, SetVariable, Message"
+
+[sub_resource type="RoseAiDoSetVariable" id="RoseAiDoSetVariable_jywry"]
+variable = 3
+value = 1
+
+[sub_resource type="RoseAiIfSelectNpc" id="RoseAiIfSelectNpc_tf3eb"]
+npc_id = 1086
+
+[sub_resource type="RoseAiIfVariable" id="RoseAiIfVariable_e5n1n"]
+variable = 1
+value = 32
+
+[sub_resource type="RoseAiEvent" id="RoseAiEvent_aiis0"]
+conditions = Array[Resource]([SubResource("RoseAiIfSelectNpc_tf3eb"), SubResource("RoseAiIfVariable_e5n1n")])
+actions = Array[Resource]([SubResource("RoseAiDoSetVariable_jywry")])
+resource_name = "If SelectNpc, Variable: SetVariable"
+
+[resource]
+id = 217
+name = "npc_1086"
+idle_interval = 30
+on_idle = Array[Resource]([SubResource("RoseAiEvent_74w22"), SubResource("RoseAiEvent_vbd1q"), SubResource("RoseAiEvent_6qi1q"), SubResource("RoseAiEvent_1ppjk"), SubResource("RoseAiEvent_fsxxb"), SubResource("RoseAiEvent_gtkht"), SubResource("RoseAiEvent_o4v33"), SubResource("RoseAiEvent_aiis0")])

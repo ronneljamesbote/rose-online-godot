@@ -3,6 +3,7 @@
 [ext_resource type="RoseDropTable" uid="uid://bxhd2ijql4e45" path="res://data/drop_tables/3-bonfire-butterfly-phantomsword-and-others.tres" id="1_j8sp4"]
 [ext_resource type="RoseAttackEffect" uid="uid://ckm6voivcem6c" path="res://data/attack_effects/402-jelly-bean.tres" id="2_ywkxd"]
 [ext_resource type="RoseEffectFile" uid="uid://jlaygt54dht8" path="res://data/effect_files/1401-gost-01.tres" id="3_x2e32"]
+[ext_resource type="RoseAi" uid="uid://ds731cyo0x3si" path="res://data/ai/156-sur_sword1.tres" id="ai_156"]
 
 [resource]
 id = 828
@@ -20,7 +21,7 @@ attack_speed = 107
 attack_range = 250
 walk_speed = 168
 run_speed = 770
-ai_file_index = 156
+ai = ExtResource("ai_156")
 model = "res://assets/rose/3ddata/npc/list_npc/828.tscn"
 hit_sound_material_type = 2
 hand_hit_effect = ExtResource("2_ywkxd")
