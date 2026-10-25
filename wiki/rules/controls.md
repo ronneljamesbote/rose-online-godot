@@ -263,7 +263,9 @@ sword, O opens the options (sound volume and shadows).
   monsters, NPCs and carts; surfaces turned away from it are darker. The colours of each
   time of day are iROSE's (from the zone's sky). Only things in your own 160 m block and
   the 8 around it cast shadows, and small decorations (grass, flowers, small rocks) only
-  within 40 m of your block.
+  within 40 m of your block. The colours the lightmaps gave the world are kept without the
+  lightmaps' shadows: the ground's colour (Zant's blue canal, Birth Island's sea floor) and
+  one warm colour per part of each building and decoration.
 - Sticky target is new; with it off, walking drops the target as in iROSE. Esc dropping
   the target is new too.
 - The cursors are iROSE's, chosen the same way, except: pushing the mouse against the left

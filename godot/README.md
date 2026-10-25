@@ -110,7 +110,9 @@ Other options (after `--`):
 - `--shadows=off|low|medium|high` sets the shadow quality for this run (the options'
   Graphics page keeps it otherwise), `--frame-time` prints the frame time and shadow draw
   calls with `--screenshot`, and `--strip-lightmaps=ZONE|all` takes the lightmaps out of zone
-  scenes converted before real-time shadows.
+  scenes converted before real-time shadows. `--paint-ground-tint=ZONE|all` and
+  `--paint-object-tints=ZONE|all` write the colours those lightmaps gave the ground and the
+  placed models into the zone scenes again, from the client data.
 - `--zone-files` builds zones from the client's map files even when they have scenes in
   `zones/`; `--import-zone=ID[,force]` writes a zone's scene and `--merge-zone-blocks=ID|all`
   moves the `block_X_Y.tscn` files of zones converted before 2026-10-18 into it (see

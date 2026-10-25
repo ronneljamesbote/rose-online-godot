@@ -45,8 +45,14 @@
 ##   --merge-zone-blocks=ID|all  move a zone's block_X_Y.tscn files into its zone.tscn (zones
 ##                              converted before 2026-10-18) and quit (run headless, after --import-rose)
 ##   --strip-lightmaps=ID|all   take the baked lightmaps out of a zone scene made before real-time
-##                              shadows (painting their colour into the ground's colour map) and quit
+##                              shadows (painting their colour into the ground's colour map and the models' part_tints) and quit
 ##                              (run headless)
+##   --paint-ground-tint=ID|all  paint the colour the client's ground lightmaps gave a zone scene
+##                              into its ground's colour map again (replaces colour painted by
+##                              hand) and quit (run headless)
+##   --paint-object-tints=ID|all  write the colour each placed building and decoration had from its
+##                              client lightmap into its part_tints and quit (run headless, after
+##                              --import-rose)
 ##   --shadows=off|low|medium|high   shadow setting for this run (Options > Graphics saves one)
 ##   --frame-time               with --screenshot: print the average frame time and draw calls
 extends Node3D
@@ -225,6 +231,21 @@ func _strip_lightmaps(which: String) -> void:
 	get_tree().quit(0)
 
 
+## Paints the lightmap colours of one zone scene ("all": every zone) and quits: the ground's
+## ("ground") or the placed models' ("objects").
+func _paint(what: String, which: String) -> void:
+	await get_tree().process_frame  # the ground adds a Terrain3D node to the tree for a moment
+	var id := 0 if which == "all" else int(which)
+	var result: Dictionary = RoseImport.paint_ground_tint(id) if what == "ground" else RoseImport.paint_object_tints(id)
+	if result.has("error"):
+		push_error("rose: %s" % result.error)
+		get_tree().quit(1)
+		return
+	for zone in result.zones:
+		print("rose: %s: %s coloured" % [zone.folder, ("%d blocks" if what == "ground" else "%d models") % zone.count])
+	get_tree().quit(0)
+
+
 ## Writes the data resources (items, monsters, NPCs ...) from the iROSE tables, prints how
 ## many and quits.
 func _convert_data(force: bool) -> void:
@@ -284,6 +305,12 @@ func _start(data_idx: String) -> void:
 		return
 	if options.has("strip-lightmaps"):
 		_strip_lightmaps(options["strip-lightmaps"])
+		return
+	if options.has("paint-ground-tint"):
+		_paint("ground", options["paint-ground-tint"])
+		return
+	if options.has("paint-object-tints"):
+		_paint("objects", options["paint-object-tints"])
 		return
 
 	fx = preload("res://scripts/fx.gd").new()

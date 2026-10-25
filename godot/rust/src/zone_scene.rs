@@ -743,8 +743,9 @@ pub fn clear_cache() {
 /// model list), so move, turn, scale, copy or delete it like any scene. Its parts are the
 /// `PartN` mesh children; `EffectN` children are the model's own effects (smoke, fire). Parts
 /// marked in the model block the player (walls) or can be stood on (floors). Solid parts cast
-/// real-time shadows wherever the model stands (see-through ones don't). Drawn and collided
-/// by the game only; the server doesn't read models.
+/// real-time shadows wherever the model stands (see-through ones don't). `part_tints` keeps
+/// the colour its old ROSE lightmap gave each part, and `tint` recolours the whole model.
+/// Drawn and collided by the game only; the server doesn't read models.
 #[derive(GodotClass)]
 #[class(tool, base=Node3D, init)]
 pub struct RoseZoneObject {
@@ -774,10 +775,65 @@ pub struct RoseZoneObject {
     /// game doesn't use it yet.
     #[export]
     pub script_function: GString,
+    /// The colour of each part, by part number (the first is `Part0`'s): the light the model's
+    /// old ROSE lightmap gave it here (mostly warm on walls and rocks), without its shadows,
+    /// which the sun casts now. Multiplied into the part's texture; white, or a part past the
+    /// end of the list, leaves it as it is. Written from the client's lightmaps by
+    /// `--import-zone` and `--paint-object-tints` (which replaces edits made here); change a
+    /// colour to recolour one part. A copy of the model keeps the colours.
+    #[export]
+    #[var(set = set_part_tints)]
+    pub part_tints: PackedColorArray,
+    /// A colour over the whole model, multiplied with `part_tints`: white leaves it as it is.
+    /// Set it to recolour this building, rock or tree by hand; `--paint-object-tints` keeps it.
+    #[export]
+    #[var(set = set_tint)]
+    #[init(val = Color::WHITE)]
+    pub tint: Color,
+}
+
+#[godot_api]
+impl INode3D for RoseZoneObject {
+    fn ready(&mut self) {
+        // Most models have no colour; they need no per-instance values at all.
+        if !self.part_tints.is_empty() || self.tint != Color::WHITE {
+            self.apply_tints();
+        }
+    }
+}
+
+impl RoseZoneObject {
+    /// Gives each `PartN` child its colour (`part_tints[N]` times `tint`).
+    fn apply_tints(&mut self) {
+        let tints = self.part_tints.as_slice().to_vec();
+        let tint = self.tint;
+        for child in self.base().get_children().iter_shared() {
+            let Ok(mut part) = child.try_cast::<GeometryInstance3D>() else { continue };
+            let Some(index) = part.get_name().to_string().strip_prefix("Part").and_then(|n| n.parse::<usize>().ok()) else { continue };
+            let colour = tints.get(index).copied().unwrap_or(Color::WHITE);
+            zone::set_part_tint(&mut part, Color::from_rgb(colour.r * tint.r, colour.g * tint.g, colour.b * tint.b));
+        }
+    }
 }
 
 #[godot_api]
 impl RoseZoneObject {
+    #[func]
+    fn set_part_tints(&mut self, tints: PackedColorArray) {
+        self.part_tints = tints;
+        if self.base().is_inside_tree() {
+            self.apply_tints();
+        }
+    }
+
+    #[func]
+    fn set_tint(&mut self, tint: Color) {
+        self.tint = tint;
+        if self.base().is_inside_tree() {
+            self.apply_tints();
+        }
+    }
+
     #[func]
     fn get_warp_gate(&self) -> Option<Gd<RoseWarpGate>> {
         data_resources::find(data_resources::WARP_GATES_DIR, self.warp_id as i64).and_then(|(r, _)| r.try_cast::<RoseWarpGate>().ok())
@@ -1797,8 +1853,8 @@ pub fn merge_zone_blocks(zone_id: u16) -> Result<(String, usize), String> {
 /// Takes the baked ROSE lightmaps out of a zone scene made before real-time shadows: the
 /// `lightmaps` and `lightmap_cells` of its models and ground, and the textures only they
 /// used. First it paints the colour those lightmaps gave the ground into Terrain3D's colour
-/// map (`zone::ground_tint`, from the client's lightmaps). Nothing else in the scene changes:
-/// same nodes, names and positions. Returns (folder, lines taken out, blocks coloured); 0
+/// map (`zone::ground_tint`, from the client's lightmaps), and after it the models' colours
+/// (`paint_object_tints`). Nothing else in the scene changes: same nodes, names and positions. Returns (folder, lines taken out, blocks coloured); 0
 /// lines when the scene has no lightmaps (it is left alone).
 pub fn strip_lightmaps(zone_id: u16) -> Result<(String, usize, usize), String> {
     let folder = zone_folder(zone_id).ok_or(format!("zone {zone_id} has no folder in {ZONES}"))?;
@@ -1832,17 +1888,144 @@ pub fn strip_lightmaps(zone_id: u16) -> Result<(String, usize, usize), String> {
         .collect();
 
     // The ground's colour, into the regions the scene's Terrain3D node loads.
-    let value_of = |key: &str| kept.iter().find_map(|line| line.strip_prefix(key)).map(|v| v.trim().to_string());
-    let directory = value_of("data_directory = ").map(|v| v.trim_matches('"').to_string()).ok_or(format!("{path} has no Terrain3D data_directory"))?;
-    let blocks: Vec<i32> = value_of("blocks = PackedInt32Array(")
-        .map(|v| v.trim_end_matches(')').split(',').filter_map(|n| n.trim().parse().ok()).collect())
-        .unwrap_or_default();
+    let (directory, blocks) = scene_ground(&kept, &path)?;
     let files = zone_files(zone_id).ok_or(format!("zone {zone_id} is not in the zone list; is --data-idx right?"))?;
     let coloured = paint_ground_tints(&directory, &files.zone_dir, &blocks)?;
 
     let Some(mut file) = FileAccess::open(path.as_str(), ModeFlags::WRITE) else { return Err(format!("could not write {path}")) };
     file.store_string(&(kept.join("\n") + "\n"));
+    drop(file);
+    // And the models' colours, which the lightmaps gave them too.
+    paint_object_tints(zone_id)?;
     Ok((folder, removed, coloured))
+}
+
+/// The Terrain3D data folder and the block list (pairs of block x, block y) a zone scene's text names.
+fn scene_ground(lines: &[&str], path: &str) -> Result<(String, Vec<i32>), String> {
+    let value_of = |key: &str| lines.iter().find_map(|line| line.strip_prefix(key)).map(|v| v.trim().to_string());
+    let directory = value_of("data_directory = ").map(|v| v.trim_matches('"').to_string()).ok_or(format!("{path} has no Terrain3D data_directory"))?;
+    let blocks: Vec<i32> = value_of("blocks = PackedInt32Array(")
+        .map(|v| v.trim_end_matches(')').split(',').filter_map(|n| n.trim().parse().ok()).collect())
+        .unwrap_or_default();
+    Ok((directory, blocks))
+}
+
+/// Paints again the colour the ROSE ground lightmaps gave a zone scene's ground
+/// (`zone::ground_tint`) into its Terrain3D colour map, replacing what is there (colour
+/// painted with Terrain3D's brush included). The scene itself doesn't change. Returns
+/// (folder, blocks coloured).
+pub fn paint_ground_tint(zone_id: u16) -> Result<(String, usize), String> {
+    let folder = zone_folder(zone_id).ok_or(format!("zone {zone_id} has no folder in {ZONES}"))?;
+    let path = format!("{folder}/zone.tscn");
+    let text = FileAccess::get_file_as_string(path.as_str()).to_string();
+    if text.is_empty() {
+        return Err(format!("could not read {path}"));
+    }
+    let (directory, blocks) = scene_ground(&text.lines().collect::<Vec<_>>(), &path)?;
+    let files = zone_files(zone_id).ok_or(format!("zone {zone_id} is not in the zone list; is --data-idx right?"))?;
+    Ok((folder, paint_ground_tints(&directory, &files.zone_dir, &blocks)?))
+}
+
+/// A placed model's part meshes, by part number (its `PartN` children).
+fn part_meshes(object: &Gd<Node>) -> Vec<(usize, Gd<Mesh>)> {
+    object
+        .get_children()
+        .iter_shared()
+        .filter_map(|child| {
+            let part = child.try_cast::<MeshInstance3D>().ok()?;
+            let index = part.get_name().to_string().strip_prefix("Part")?.parse().ok()?;
+            Some((index, part.get_mesh()?))
+        })
+        .collect()
+}
+
+/// A `part_tints` line of a scene file (Godot's own number format), or None for no colours.
+fn part_tints_line(tints: &PackedColorArray) -> Option<String> {
+    if tints.is_empty() {
+        return None;
+    }
+    let values: Vec<String> = tints.as_slice().iter().flat_map(|c| [c.r, c.g, c.b, c.a]).map(|v| format!("{v}")).collect();
+    Some(format!("part_tints = PackedColorArray({})", values.join(", ")))
+}
+
+/// Writes the colour each placed building and decoration had from its ROSE lightmap into
+/// its `part_tints` (`zone::PartTints`), from the client data. A model only gets colours
+/// while it is still the IFO model its name points at (`Cnst_4` is the block's fifth
+/// building); copies and new models keep theirs. Hand-set `tint`s are kept. Only the
+/// `part_tints` lines of the scene change. Returns (folder, models coloured).
+pub fn paint_object_tints(zone_id: u16) -> Result<(String, usize), String> {
+    let folder = zone_folder(zone_id).ok_or(format!("zone {zone_id} has no folder in {ZONES}"))?;
+    let path = format!("{folder}/zone.tscn");
+    let files = zone_files(zone_id).ok_or(format!("zone {zone_id} is not in the zone list; is --data-idx right?"))?;
+    let scene = godot::tools::try_load::<PackedScene>(&path).map_err(|_| format!("could not open {path}"))?;
+    let root = scene.instantiate_ex().edit_state(GenEditState::MAIN).done().ok_or(format!("could not open {path}"))?;
+
+    // Each placed model's colours, by node path.
+    let mut lines: std::collections::HashMap<String, Option<String>> = std::collections::HashMap::new();
+    let mut painter = zone::PartTints::default();
+    for block in root.get_children().iter_shared() {
+        let Some((block_x, block_y)) = block_of(&block) else { continue };
+        let (block_x, block_y) = (block_x as usize, block_y as usize);
+        let Some(ifo) = data::read_file::<IfoFile>(&format!("{}/{block_x}_{block_y}.IFO", files.zone_dir)) else { continue };
+        let groups: [(&str, &str, usize, Vec<usize>); 2] = [
+            ("Buildings", "Cnst_", 0, ifo.cnst_objects.iter().map(|o| o.object_id as usize).collect()),
+            ("Decorations", "Deco_", 1, ifo.deco_objects.iter().map(|o| o.object_id as usize).collect()),
+        ];
+        for (group, prefix, zsc_index, models) in groups {
+            let Some(group) = block.get_node_or_null(group) else { continue };
+            for object in group.get_children().iter_shared() {
+                if object.clone().try_cast::<RoseZoneObject>().is_err() {
+                    continue;
+                }
+                let Some(ifo_index) = object.get_name().to_string().strip_prefix(prefix).and_then(|n| n.parse::<usize>().ok()) else { continue };
+                let model = models.get(ifo_index).and_then(|id| assets::find_stem(&object_stem(&files.lists[zsc_index].0, *id), &["tscn"]));
+                if model.is_none_or(|model| object.get_scene_file_path().to_string() != model) {
+                    continue;
+                }
+                let tints = painter.object(&files.zone_dir, block_x, block_y, zsc_index, ifo_index, &part_meshes(&object));
+                lines.insert(root.get_path_to(&object).to_string(), part_tints_line(&tints));
+            }
+        }
+    }
+    root.free();
+
+    let text = FileAccess::get_file_as_string(path.as_str()).to_string();
+    if text.is_empty() {
+        return Err(format!("could not read {path}"));
+    }
+    let mut out: Vec<String> = Vec::new();
+    let mut current: Option<Option<String>> = None;
+    let mut coloured = 0;
+    // Adds the finished section's line before its trailing blank lines.
+    let mut finish = |out: &mut Vec<String>, current: &mut Option<Option<String>>| {
+        if let Some(Some(line)) = current.take() {
+            let at = out.iter().rposition(|l| !l.is_empty()).map_or(out.len(), |i| i + 1);
+            out.insert(at, line);
+            coloured += 1;
+        }
+    };
+    for line in text.lines() {
+        if line.starts_with('[') {
+            finish(&mut out, &mut current);
+            if let Some(header) = line.strip_prefix("[node ") {
+                let attribute = |key: &str| header.find(&format!("{key}=\"")).and_then(|at| {
+                    let rest = &header[at + key.len() + 2..];
+                    rest.find('"').map(|end| rest[..end].to_string())
+                });
+                if let (Some(name), Some(parent)) = (attribute("name"), attribute("parent")) {
+                    let node_path = if parent == "." { name } else { format!("{parent}/{name}") };
+                    current = lines.remove(&node_path);
+                }
+            }
+        } else if current.is_some() && line.starts_with("part_tints = ") {
+            continue;
+        }
+        out.push(line.to_string());
+    }
+    finish(&mut out, &mut current);
+    let Some(mut file) = FileAccess::open(path.as_str(), ModeFlags::WRITE) else { return Err(format!("could not write {path}")) };
+    file.store_string(&(out.join("\n") + "\n"));
+    Ok((folder, coloured))
 }
 
 /// Paints the ground tint of `blocks` (pairs of block x, block y) into the colour maps of
@@ -1953,6 +2136,7 @@ pub fn write_zone_scenes(zone_id: u16, force: bool) -> Result<(String, usize, us
     zone_root.bind_mut().zone_id = zone_id as i32;
     let mut zone_root = zone_root.upcast::<Node3D>();
     let block_list = blocks(&files);
+    let mut part_tints = zone::PartTints::default();
     for &(block_x, block_y) in &block_list {
         let dir = &files.zone_dir;
         let Some(him) = data::read_file::<HimFile>(&format!("{dir}/{block_x}_{block_y}.HIM")) else { continue };
@@ -2020,10 +2204,12 @@ pub fn write_zone_scenes(zone_id: u16, force: bool) -> Result<(String, usize, us
                     };
                     placed.set_name(&format!("{}_{ifo_index}", names[zsc_index]));
                     placed.set_transform(zone::ifo_transform(object));
+                    let tints = part_tints.object(dir, block_x, block_y, zsc_index, ifo_index, &part_meshes(&placed.clone().upcast()));
                     {
                         let mut p = placed.bind_mut();
                         p.warp_id = object.warp_id as i32;
                         p.event_id = object.event_id as i32;
+                        p.part_tints = tints;
                     }
                     if zsc_index == 2 {
                         if let Some(event) = ifo.event_objects.get(ifo_index) {

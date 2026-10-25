@@ -174,14 +174,25 @@ godot --headless --path godot -- --merge-zone-blocks=24      # or =all
 Zones are lit in real time: a sun (`RoseSun`) that moves with the time of day and casts
 shadows from the ground, buildings, decorations, characters and monsters, as set in the
 options' Graphics page. The light's colours come from the zone's sky (`godot/data/skies/`).
-The client's lightmaps are not used: the import skips them, and the only thing kept from
-them is a soft ground tint (the sea's blue, darker patches) in Terrain3D's colour map.
+The client's lightmaps are not used: the import skips them. Only their colours are kept,
+without their shadows: the ground's (the sea's and canals' blue, coloured patches; one colour
+per 2.5 m ground point) in Terrain3D's colour map, and one colour per part of each placed
+building and decoration in its `RoseZoneObject`'s **Part tints**. **Tint** on a placed model
+recolours the whole model by hand. `--import-zone` writes both colours; to write them again
+from the client data (this replaces ground colour painted with Terrain3D's brush and edited
+part tints, but keeps hand-set tints):
+
+```sh
+godot --headless --path godot -- --paint-ground-tint=24 --data-idx=...    # or =all
+godot --headless --path godot -- --paint-object-tints=24 --data-idx=...   # after --import-rose
+```
+
 `RoseZoneScene`'s **Preview time** (morning, day, evening, night; editor only, not saved)
 shows the zone in the editor with that time's sun.
 
 Zones converted before real-time shadows still have lightmaps in `zone.tscn`. Take them out
-once (after `--import-rose`; it also paints the ground tint, and `--export-data=check` still
-passes):
+once (after `--import-rose`; it also paints the ground and part colours, and
+`--export-data=check` still passes):
 
 ```sh
 godot --headless --path godot -- --strip-lightmaps=24 --data-idx=...     # or =all
