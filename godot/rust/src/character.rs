@@ -319,7 +319,11 @@ fn part_meshes(
         let Some(part_mesh) = part_mesh else { continue };
         let mut instance = MeshInstance3D::new_alloc();
         instance.set_mesh(&part_mesh);
-        instance.set_material_override(&material::object_material(zsc_material, None));
+        let part_material = material::object_material(zsc_material, material::Light::Character);
+        if !material::casts_shadow(&part_material) {
+            instance.set_cast_shadows_setting(godot::classes::geometry_instance_3d::ShadowCastingSetting::OFF);
+        }
+        instance.set_material_override(&part_material);
         let link_bone = object_part
             .bone_index
             .map(|b| b as usize)

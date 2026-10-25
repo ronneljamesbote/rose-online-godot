@@ -36,11 +36,19 @@ use rose_file_readers::{VfsIndex, ZmsFile};
 pub const OURS: &str = "res://assets/ours/";
 pub const ROSE: &str = "res://assets/rose/";
 /// Bumped when the converted output changes, so the next import redoes every file.
-const IMPORT_VERSION: i64 = 4;
+const IMPORT_VERSION: i64 = 5;
 const STAMP: &str = "res://assets/rose/import.cfg";
 
 /// Folders that stay in data.idx for now: the interface.
 const SKIPPED: [&str; 1] = ["3DDATA/CONTROL/"];
+
+/// The maps' baked lightmaps, which the game doesn't draw (it has real-time shadows; the
+/// ground's colour is read from the client's lightmaps once, by `--import-zone` and
+/// `--strip-lightmaps`).
+fn is_lightmap(rose_path: &str) -> bool {
+    let upper = rose_path.to_ascii_uppercase().replace('\\', "/");
+    upper.contains("/LIGHTMAP/") || upper.ends_with("_PLANELIGHTINGMAP.DDS")
+}
 
 /// Where the client keeps its sounds: loose files next to data.idx, outside the VFS.
 const SOUND_FOLDER: &str = "Sound";
@@ -281,7 +289,7 @@ impl RoseImport {
         let mut files: Vec<(Kind, String)> = index
             .file_paths()
             .map(|p| p.to_string_lossy().to_string())
-            .filter(|p| !SKIPPED.iter().any(|skip| p.starts_with(skip)))
+            .filter(|p| !SKIPPED.iter().any(|skip| p.starts_with(skip)) && !is_lightmap(p))
             .filter_map(|p| Kind::of(&p).map(|kind| (kind, p)))
             .collect();
         files.extend(client_sound_files(&game_data.root).into_iter().map(|p| (Kind::Sound, p)));
@@ -408,6 +416,38 @@ impl RoseImport {
             }
             Err(error) => result.set("error", error.as_str()),
         }
+        result
+    }
+
+    /// Takes the baked lightmaps out of the scene of zone `zone_id` (0: every zone in
+    /// `res://zones/`), painting the colour they gave the ground into its colour map. Needs
+    /// RoseData.open (the colour comes from the client's lightmaps). Returns
+    /// {zones: [{folder, lines, blocks}]} or {error}.
+    #[func]
+    fn strip_lightmaps(zone_id: i32) -> VarDictionary {
+        let mut result = VarDictionary::new();
+        let ids: Vec<u16> = if zone_id <= 0 {
+            crate::zone_scene::zone_folders().into_iter().map(|(id, _)| id).collect()
+        } else {
+            vec![zone_id.clamp(0, u16::MAX as i32) as u16]
+        };
+        let mut zones = VarArray::new();
+        for id in ids {
+            match crate::zone_scene::strip_lightmaps(id) {
+                Ok((folder, lines, blocks)) => {
+                    let mut zone = VarDictionary::new();
+                    zone.set("folder", folder.as_str());
+                    zone.set("lines", lines as i64);
+                    zone.set("blocks", blocks as i64);
+                    zones.push(&zone.to_variant());
+                }
+                Err(error) => {
+                    result.set("error", error.as_str());
+                    return result;
+                }
+            }
+        }
+        result.set("zones", &zones);
         result
     }
 

@@ -70,6 +70,21 @@ pub struct SkyExport {
     pub character_diffuse_day: Rgb,
     pub character_diffuse_evening: Rgb,
     pub character_diffuse_night: Rgb,
+    /// The sun's colour on the ground and buildings.
+    pub sun_color_morning: Rgb,
+    pub sun_color_day: Rgb,
+    pub sun_color_evening: Rgb,
+    pub sun_color_night: Rgb,
+    /// How strongly the sun lights what faces it (1 = as bright as the ground light).
+    pub sun_strength_morning: f32,
+    pub sun_strength_day: f32,
+    pub sun_strength_evening: f32,
+    pub sun_strength_night: f32,
+    /// How much of the ground light the sun gives: 0 = no shadows, 0.4 = shade is 60 % as bright.
+    pub shadow_darkness_morning: f32,
+    pub shadow_darkness_day: f32,
+    pub shadow_darkness_evening: f32,
+    pub shadow_darkness_night: f32,
 }
 
 impl SkyExport {
@@ -94,6 +109,18 @@ impl SkyExport {
             character_diffuse_day: c(&sky.character_diffuse_color, Day),
             character_diffuse_evening: c(&sky.character_diffuse_color, Evening),
             character_diffuse_night: c(&sky.character_diffuse_color, Night),
+            sun_color_morning: c(&sky.sun_color, Morning),
+            sun_color_day: c(&sky.sun_color, Day),
+            sun_color_evening: c(&sky.sun_color, Evening),
+            sun_color_night: c(&sky.sun_color, Night),
+            sun_strength_morning: sky.sun_strength[Morning],
+            sun_strength_day: sky.sun_strength[Day],
+            sun_strength_evening: sky.sun_strength[Evening],
+            sun_strength_night: sky.sun_strength[Night],
+            shadow_darkness_morning: sky.shadow_darkness[Morning],
+            shadow_darkness_day: sky.shadow_darkness[Day],
+            shadow_darkness_evening: sky.shadow_darkness[Evening],
+            shadow_darkness_night: sky.shadow_darkness[Night],
         }
     }
 
@@ -120,6 +147,24 @@ impl SkyExport {
                 SkyboxState::Day => from_rgb(self.character_diffuse_day),
                 SkyboxState::Evening => from_rgb(self.character_diffuse_evening),
                 SkyboxState::Night => from_rgb(self.character_diffuse_night),
+            },
+            sun_color: enum_map! {
+                SkyboxState::Morning => from_rgb(self.sun_color_morning),
+                SkyboxState::Day => from_rgb(self.sun_color_day),
+                SkyboxState::Evening => from_rgb(self.sun_color_evening),
+                SkyboxState::Night => from_rgb(self.sun_color_night),
+            },
+            sun_strength: enum_map! {
+                SkyboxState::Morning => self.sun_strength_morning,
+                SkyboxState::Day => self.sun_strength_day,
+                SkyboxState::Evening => self.sun_strength_evening,
+                SkyboxState::Night => self.sun_strength_night,
+            },
+            shadow_darkness: enum_map! {
+                SkyboxState::Morning => self.shadow_darkness_morning,
+                SkyboxState::Day => self.shadow_darkness_day,
+                SkyboxState::Evening => self.shadow_darkness_evening,
+                SkyboxState::Night => self.shadow_darkness_night,
             },
         }
     }

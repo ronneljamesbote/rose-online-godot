@@ -1,6 +1,6 @@
 ## Options (O): the interface theme (Arumic by default; every file in the themes folder is
 ## a card), interface size, window look, mouse cursor, layout, labels over the world,
-## gameplay (sticky target) and sound.
+## gameplay (sticky target), graphics (shadows) and sound.
 extends PanelContainer
 
 const Fx := preload("res://scripts/fx.gd")
@@ -20,13 +20,14 @@ func _ready() -> void:
 	add_child(column)
 	tabs = TabBar.new()
 	tabs.focus_mode = Control.FOCUS_NONE
-	for name in ["Interface", "World labels", "Gameplay", "Sound"]:
+	for name in ["Interface", "World labels", "Gameplay", "Graphics", "Sound"]:
 		tabs.add_tab(name)
 	tabs.tab_changed.connect(_show_page)
 	column.add_child(tabs)
 	pages.append(_interface_page())
 	pages.append(_labels_page())
 	pages.append(_gameplay_page())
+	pages.append(_graphics_page())
 	pages.append(_sound_page())
 	for page in pages:
 		column.add_child(page)
@@ -163,6 +164,27 @@ func _gameplay_page() -> Control:
 	tip.text = "Walking (a click or holding the button on the ground) keeps your target selected, so skills still go to it. Esc drops it."
 	tip.theme_type_variation = "MutedLabel"
 	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	box.add_child(tip)
+	return box
+
+
+func _graphics_page() -> Control:
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 8)
+	_section(box, "Shadows")
+	var levels := ["off", "low", "medium", "high"]
+	var shadows := OptionButton.new()
+	shadows.focus_mode = Control.FOCUS_NONE
+	for name in ["Off", "Low (80 m)", "Medium (120 m)", "High (200 m, softer)"]:
+		shadows.add_item(name)
+	shadows.selected = maxi(0, levels.find(UI.settings.get("shadows", "medium")))
+	shadows.item_selected.connect(func(i): UI.set_setting("shadows", levels[i]))
+	box.add_child(shadows)
+	var tip := Label.new()
+	tip.text = "The sun moves with the time of day and casts shadows from buildings, trees, players and monsters near you. Lower settings draw them less far and cost less; Off keeps the sun's shading without shadows."
+	tip.theme_type_variation = "MutedLabel"
+	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	tip.custom_minimum_size.x = 520
 	box.add_child(tip)
 	return box
 

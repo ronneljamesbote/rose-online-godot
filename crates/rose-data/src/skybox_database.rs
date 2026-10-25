@@ -28,6 +28,31 @@ pub struct SkyboxData {
     pub map_ambient_color: EnumMap<SkyboxState, Vec4>,
     pub character_ambient_color: EnumMap<SkyboxState, Vec4>,
     pub character_diffuse_color: EnumMap<SkyboxState, Vec4>,
+    /// The sun's colour on the ground and buildings (iROSE has no sun: it starts as the
+    /// character diffuse colour, see `default_sun`).
+    pub sun_color: EnumMap<SkyboxState, Vec4>,
+    /// How strongly the sun lights surfaces facing it (1 = as bright as the ground light).
+    pub sun_strength: EnumMap<SkyboxState, f32>,
+    /// How much of the ground light the sun gives, so how dark shadows are: 0 = no shadows,
+    /// 0.4 = shade is 60 % as bright as sunlight.
+    pub shadow_darkness: EnumMap<SkyboxState, f32>,
+}
+
+impl SkyboxData {
+    /// The sun of a sky that has none yet (iROSE's): the character diffuse colour, strength
+    /// 1.5 and shadows a little lighter in the morning and evening and lightest at night.
+    pub fn default_sun(character_diffuse_color: &EnumMap<SkyboxState, Vec4>) -> (EnumMap<SkyboxState, Vec4>, EnumMap<SkyboxState, f32>, EnumMap<SkyboxState, f32>) {
+        (
+            *character_diffuse_color,
+            enum_map::enum_map! { _ => 1.5 },
+            enum_map::enum_map! {
+                SkyboxState::Morning => 0.35,
+                SkyboxState::Day => 0.4,
+                SkyboxState::Evening => 0.35,
+                SkyboxState::Night => 0.3,
+            },
+        )
+    }
 }
 
 pub struct SkyboxDatabase {

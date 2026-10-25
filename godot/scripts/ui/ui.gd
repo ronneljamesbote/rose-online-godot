@@ -37,6 +37,7 @@ var settings := {
 	"game_cursor": true,  # ROSE's own mouse cursors instead of the system arrow
 	"cursor_size": "large",  # normal, large or huge (1, 2 or 3 times the original 32 pixels)
 	"sticky_target": false,  # walking keeps the selected target instead of dropping it
+	"shadows": "medium",  # off, low, medium or high (RoseSun.set_quality)
 }
 
 ## id -> {"id", "name", "description", "file", "tokens", "errors"}

@@ -107,6 +107,10 @@ Other options (after `--`):
   process and `... --name=Bob --profile=bob --weapon=bow --net-demo=line --net-log` in
   another.
 - `--time=morning|day|evening|night|TICKS` fixes the start time (one tick is 10 s).
+- `--shadows=off|low|medium|high` sets the shadow quality for this run (the options'
+  Graphics page keeps it otherwise), `--frame-time` prints the frame time and shadow draw
+  calls with `--screenshot`, and `--strip-lightmaps=ZONE|all` takes the lightmaps out of zone
+  scenes converted before real-time shadows.
 - `--zone-files` builds zones from the client's map files even when they have scenes in
   `zones/`; `--import-zone=ID[,force]` writes a zone's scene and `--merge-zone-blocks=ID|all`
   moves the `block_X_Y.tscn` files of zones converted before 2026-10-18 into it (see

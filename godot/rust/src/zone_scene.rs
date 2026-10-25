@@ -4,18 +4,21 @@
 //! of the ROSE map files. `zone.tscn` is the whole zone: its root is a `RoseZoneScene`, with
 //! one `RoseBlock` node per 160 m block and the zone's event points (start and revive spots).
 //! The ground is the zone's Terrain3D node (its regions in `terrain/`), drawn by
-//! `shaders/rose_terrain3d.gdshader` so it looks as before; `RoseTerrainLook` beside it gives
-//! that shader the block lightmaps. Zones converted before 2026-10-18 kept each block in its
-//! own `block_X_Y.tscn`; `--merge-zone-blocks` moves them into `zone.tscn`. A block holds:
+//! `shaders/rose_terrain3d.gdshader` so it looks as before, with the colour the ROSE
+//! lightmaps gave it in Terrain3D's colour map; `RoseTerrainLook` beside it says which ROSE
+//! texture each ground texture is. Everything is lit by the sun (`sun.rs`), with real-time
+//! shadows. Zones converted before 2026-10-18 kept each block in its own `block_X_Y.tscn`;
+//! `--merge-zone-blocks` moves them into `zone.tscn`, and scenes from before real-time
+//! shadows still hold the old baked lightmaps, which `--strip-lightmaps` takes out. A block holds:
 //! - its water planes (`RoseWater`);
 //! - its buildings, decorations, event objects and warp gates, each an instance of a model
-//!   scene in `assets/rose/` (`RoseZoneObject`) with the lightmap of that placement;
+//!   scene in `assets/rose/` (`RoseZoneObject`);
 //! - markers for monster spawns, NPCs, ambient sounds and effects, which show a label and
 //!   their range (and the NPC or monster) only in the editor.
 //!
 //! `--import-zone=<id>` writes the scenes once from the ROSE files. After that the scenes
-//! are the source and are committed; the model scenes, tile textures and lightmaps they use
-//! are made by `--import-rose` like every other converted asset.
+//! are the source and are committed; the model scenes and tile textures they use are made by
+//! `--import-rose` like every other converted asset.
 
 use std::collections::{BTreeMap, BTreeSet, HashSet};
 
@@ -27,25 +30,24 @@ use godot::{
         mesh::PrimitiveType,
         node::InternalMode,
         packed_scene::GenEditState,
-        AudioStream, DirAccess, Engine, FileAccess, INode3D, ImmediateMesh, Label3D, Mesh, MeshInstance3D, Node, Node3D, PackedScene,
-        ResourceLoader, ResourceSaver, ShaderMaterial, StandardMaterial3D, Texture2D, Texture2DArray,
+        geometry_instance_3d::ShadowCastingSetting,
+        AudioStream, DirAccess, Engine, FileAccess, GeometryInstance3D, INode3D, ImmediateMesh, Label3D, Mesh, MeshInstance3D, Node, Node3D,
+        PackedScene, ResourceLoader, ResourceSaver, ShaderMaterial, StandardMaterial3D, Texture2D, Texture2DArray,
     },
     global::Error,
     prelude::*,
 };
-use rose_file_readers::{
-    HimFile, IfoFile, IfoMonsterSpawn, LitFile, TilFile, ZonFile, ZscEffectType, ZscFile,
-};
+use rose_file_readers::{HimFile, IfoFile, IfoMonsterSpawn, TilFile, ZonFile, ZscEffectType, ZscFile};
 
 use crate::{
-    assets, data, data_resources::{self, RoseMonster, RoseNpc, RoseWarpGate, RoseZoneSettings}, material, texture,
+    assets, data, data_resources::{self, RoseMonster, RoseNpc, RoseWarpGate, RoseZoneSettings}, material, sun::{self, RoseSun}, texture,
     dialog_blocks::RoseDialog,
     zone::{self, Ground, ObjectSpawner},
 };
 
 pub const ZONES: &str = "res://zones/";
 /// Bumped when the model scenes or texture arrays made for zone scenes change.
-pub const ZONE_IMPORT_VERSION: i64 = 1;
+pub const ZONE_IMPORT_VERSION: i64 = 2;
 
 /// The model lists a zone's objects come from, with the zsc index `zone.rs` uses for them.
 const LISTS: [(&str, usize); 4] = [("cnst", 0), ("deco", 1), ("event", 2), ("warp", 3)];
@@ -113,12 +115,19 @@ pub fn gather(map: &Gd<Node>, to_zone: Transform3D, spawner: &mut ObjectSpawner,
             let is_warp = object.bind().list == "warp";
             let warp_id = object.bind().warp_id;
             let mut warp_box: Option<Aabb> = None;
+            let mut casters = Vec::new();
+            let mut size: Option<Aabb> = None;
             for child in object.get_children().iter_shared() {
                 if let Ok(part) = child.clone().try_cast::<MeshInstance3D>() {
                     let Some(mesh) = part.get_mesh() else { continue };
                     spawner.parts += 1;
                     if let Some(material) = part.get_material_override() {
                         materials.insert(material.instance_id());
+                    }
+                    let part_box = part.get_transform() * mesh.get_aabb();
+                    size = Some(size.map_or(part_box, |s| s.merge(part_box)));
+                    if part.get_cast_shadows_setting() != ShadowCastingSetting::OFF {
+                        casters.push(part.clone().upcast::<GeometryInstance3D>());
                     }
                     let to_zone_part = object_transform * part.get_transform();
                     let walls = part.get_meta_ex("walls").default(&false.to_variant()).done().try_to::<bool>().unwrap_or(false);
@@ -145,6 +154,9 @@ pub fn gather(map: &Gd<Node>, to_zone: Transform3D, spawner: &mut ObjectSpawner,
             }
             if let Some(aabb) = warp_box {
                 spawner.warps.push((warp_id.clamp(0, u16::MAX as i32) as u16, aabb));
+            }
+            if let Some(size) = size {
+                spawner.add_casters(casters, object_transform, size);
             }
         } else if let Ok(effect) = node.clone().try_cast::<RoseEffectSpot>() {
             let transform = to_zone * effect.get_global_transform();
@@ -195,6 +207,22 @@ pub struct RoseZoneScene {
     /// in that resource, not in the scene.
     #[var(get = get_settings, no_set, usage_flags = [EDITOR], hint = RESOURCE_TYPE, hint_string = "RoseZoneSettings")]
     settings: PhantomVar<Option<Gd<RoseZoneSettings>>>,
+    /// Editor only: the time of day the zone is lit for while you edit it, with the sun and
+    /// shadows of the zone's sky at that time, as in the game. Not saved in the scene.
+    #[var(get = get_preview_time, set = set_preview_time, usage_flags = [EDITOR], hint = ENUM, hint_string = "Morning,Day,Evening,Night")]
+    preview_time: PhantomVar<i32>,
+    time: i32,
+    sun: Option<Gd<RoseSun>>,
+}
+
+#[godot_api]
+impl INode3D for RoseZoneScene {
+    fn enter_tree(&mut self) {
+        // The editor takes inactive scene tabs out of the tree: light the zone again on return.
+        if is_editor() {
+            self.light_preview();
+        }
+    }
 }
 
 #[godot_api]
@@ -202,6 +230,53 @@ impl RoseZoneScene {
     #[func]
     fn get_settings(&self) -> Option<Gd<RoseZoneSettings>> {
         data_resources::find(data_resources::ZONES_DIR, self.zone_id as i64).and_then(|(r, _)| r.try_cast::<RoseZoneSettings>().ok())
+    }
+
+    #[func]
+    fn get_preview_time(&self) -> i32 {
+        self.time
+    }
+
+    #[func]
+    fn set_preview_time(&mut self, time: i32) {
+        self.time = time.clamp(0, 3);
+        if is_editor() && self.base().is_inside_tree() {
+            self.light_preview();
+        }
+    }
+}
+
+impl RoseZoneScene {
+    /// The editor's preview sun (not saved: an internal child), lit for `time`.
+    fn light_preview(&mut self) {
+        let mut sun = match self.sun.as_ref().filter(|s| s.is_instance_valid()) {
+            Some(sun) => sun.clone(),
+            None => {
+                let mut sun = RoseSun::new_alloc();
+                sun.set_name("PreviewSun");
+                self.base_mut().add_child_ex(&sun).internal(InternalMode::BACK).done();
+                sun.bind_mut().set_quality("medium".into());
+                self.sun = Some(sun.clone());
+                sun
+            }
+        };
+        let settings = self.get_settings().map(|s| s.upcast::<godot::classes::Resource>());
+        let number = |key: &str| settings.as_ref().and_then(|s| s.get(key).try_to::<i64>().ok()).unwrap_or(0).max(0) as u32;
+        let times = sun::DayTimes { day_cycle: number("day_cycle"), morning: number("morning_time"), day: number("day_time"), evening: number("evening_time"), night: number("night_time") };
+        let sky = settings
+            .as_ref()
+            .and_then(|s| s.get("sky").try_to::<Gd<godot::classes::Resource>>().ok())
+            .and_then(|sky| data_resources::sky_data(&sky));
+        // A moment well inside each state, so its own colours show.
+        let (start, end) = match self.time {
+            0 => (times.morning, times.day),
+            1 => (times.day, times.evening),
+            2 => (times.evening, times.night),
+            _ => (times.night, times.morning + times.day_cycle),
+        };
+        let at = start as f32 + (end.saturating_sub(start)) as f32 * if self.time == 0 { 0.7 } else if self.time == 2 { 0.3 } else { 0.5 };
+        let lighting = sun::lighting(sky.as_ref(), &times, at.floor() as i64, at.fract());
+        sun.bind_mut().apply(lighting);
     }
 }
 
@@ -471,24 +546,20 @@ fn overlay_id(control: u32) -> usize {
 
 /// The ROSE look of the zone's ground. Sits under the zone's Terrain3D node.
 ///
-/// Gives the ROSE terrain shader each block's lightmap (the baked shadows on the ground),
-/// points Terrain3D at the game camera, and says which ROSE texture each Terrain3D texture
+/// Points Terrain3D at the game camera, and says which ROSE texture each Terrain3D texture
 /// is, so the game knows the footstep sound of each tile. The game also reads the ground
-/// heights of the blocks listed here. Made by `--import-zone`; normally left alone.
+/// heights of the blocks listed here. Made by `--import-zone`; normally left alone. The
+/// ground's colour (blue sea floors, tinted areas) is Terrain3D's colour map: paint it with
+/// Terrain3D's colour brush.
 #[derive(GodotClass)]
 #[class(tool, base=Node, init)]
 pub struct RoseTerrainLook {
     base: Base<Node>,
     /// The blocks that have ground, as pairs of numbers: block x, block y, block x, block y,
     /// ... (so `33, 31, 34, 31` is blocks 33_31 and 34_31). The game reads ground heights and
-    /// footstep tiles only for these blocks. A new block needs its pair added here, and a
-    /// lightmap at the same place in `lightmaps`.
+    /// footstep tiles only for these blocks. A new block needs its pair added here.
     #[export]
     pub blocks: PackedInt32Array,
-    /// One lightmap texture per block, in the same order as the pairs in `blocks`. An empty
-    /// entry draws that block without baked shadows.
-    #[export]
-    pub lightmaps: VarArray,
     /// For each Terrain3D ground texture (0, 1, 2, ...), then each texture in
     /// `extra_textures`: its texture number in the zone's ROSE ZON file. Picks the footstep
     /// sound of each tile.
@@ -498,9 +569,7 @@ pub struct RoseTerrainLook {
     /// one here is ground texture 32.
     #[export]
     pub extra_textures: VarArray,
-    lightmap_array: Option<Gd<Texture2DArray>>,
     extra_array: Option<Gd<Texture2DArray>>,
-    lightmap_index: Option<Gd<Texture2D>>,
     applied_to: Option<Rid>,
 }
 
@@ -521,48 +590,23 @@ impl INode for RoseTerrainLook {
                 }
             }
         }
-        // The material can be remade (the editor does on shader changes): give the new one the lightmaps.
+        // The material can be remade (the editor does on shader changes): give the new one the extra textures.
+        if self.extra_textures.is_empty() {
+            return;
+        }
         let Ok(material) = terrain.get("material").try_to::<Gd<godot::classes::Object>>() else { return };
         let Ok(rid) = material.clone().call("get_material_rid", &[]).try_to::<Rid>() else { return };
         if !rid.is_valid() || self.applied_to == Some(rid) {
             return;
         }
-        let (array, index) = self.lightmap_textures();
         let mut server = godot::classes::RenderingServer::singleton();
-        // The server takes textures by their RIDs.
-        server.material_set_param(rid, "rose_lightmaps", &array.get_rid().to_variant());
-        server.material_set_param(rid, "rose_lightmap_index", &index.get_rid().to_variant());
-        if !self.extra_textures.is_empty() {
+        {
             let extra = self.extra_array.get_or_insert_with(|| {
                 texture::texture_array(self.extra_textures.iter_shared().map(|t| t.try_to::<Gd<Texture2D>>().ok().and_then(|t| t.get_image())).collect())
             });
             server.material_set_param(rid, "rose_extra_tiles", &extra.get_rid().to_variant());
         }
         self.applied_to = Some(rid);
-    }
-}
-
-impl RoseTerrainLook {
-    fn lightmap_textures(&mut self) -> (Gd<Texture2DArray>, Gd<Texture2D>) {
-        if let (Some(array), Some(index)) = (&self.lightmap_array, &self.lightmap_index) {
-            return (array.clone(), index.clone());
-        }
-        let images = self.lightmaps.iter_shared().map(|t| t.try_to::<Gd<Texture2D>>().ok().and_then(|t| t.get_image())).collect();
-        let array = texture::texture_array(images);
-        let mut grid = vec![0u8; 64 * 64];
-        for (i, pair) in self.blocks.as_slice().chunks(2).enumerate() {
-            if let [x, y] = pair {
-                if (0..64).contains(x) && (0..64).contains(y) && i < 255 {
-                    grid[(*x + *y * 64) as usize] = i as u8 + 1;
-                }
-            }
-        }
-        let image = godot::classes::Image::create_from_data(64, 64, false, godot::classes::image::Format::R8, &PackedByteArray::from(grid.as_slice()))
-            .expect("64 x 64 R8 image");
-        let index = godot::classes::ImageTexture::create_from_image(&image).expect("lightmap index texture").upcast::<Texture2D>();
-        self.lightmap_array = Some(array.clone());
-        self.lightmap_index = Some(index.clone());
-        (array, index)
     }
 }
 
@@ -676,6 +720,7 @@ impl INode3D for RoseWater {
         mesh.set_name("Mesh");
         mesh.set_mesh(&zone::build_water_mesh(self.start, self.end, self.tile_size.max(0.01)));
         mesh.set_material_override(&material);
+        mesh.set_cast_shadows_setting(ShadowCastingSetting::OFF);
         // The corners are in zone space; undo this node's own placement.
         let inverse = self.base().get_transform().affine_inverse();
         mesh.set_transform(inverse);
@@ -697,8 +742,9 @@ pub fn clear_cache() {
 /// Each one is an instance of a model scene in `assets/rose/` (one per model of a ROSE ZSC
 /// model list), so move, turn, scale, copy or delete it like any scene. Its parts are the
 /// `PartN` mesh children; `EffectN` children are the model's own effects (smoke, fire). Parts
-/// marked in the model block the player (walls) or can be stood on (floors). Drawn and
-/// collided by the game only; the server doesn't read models.
+/// marked in the model block the player (walls) or can be stood on (floors). Solid parts cast
+/// real-time shadows wherever the model stands (see-through ones don't). Drawn and collided
+/// by the game only; the server doesn't read models.
 #[derive(GodotClass)]
 #[class(tool, base=Node3D, init)]
 pub struct RoseZoneObject {
@@ -707,15 +753,6 @@ pub struct RoseZoneObject {
     /// `event` (event objects) or `warp` (warp gates). Set by the model scene; don't change it.
     #[export]
     pub list: GString,
-    /// The baked shadow texture of each part at this spot, by part number (`Part0` first;
-    /// empty for none). Made by the import from the ROSE lightmaps; a moved model keeps the
-    /// shadows it had where it stood before.
-    #[export]
-    pub lightmaps: VarArray,
-    /// Where each part's lightmap sits inside its lightmap texture, by part number:
-    /// (column, row, 1 / parts per row). Made by the import; don't change it.
-    #[export]
-    pub lightmap_cells: PackedVector3Array,
     /// Warp gates only: where the gate takes you. Drag a `RoseWarpGate` in from
     /// `res://data/warp_gates/` (it names the zone and named spot you land on). Walking into
     /// the gate asks the server to warp you through it. Unused for other models.
@@ -753,24 +790,6 @@ impl RoseZoneObject {
             // Cleared in the Inspector: keep a number that has no resource.
             None if self.get_warp_gate().is_none() => {}
             None => self.warp_id = 0,
-        }
-    }
-}
-
-#[godot_api]
-impl INode3D for RoseZoneObject {
-    fn ready(&mut self) {
-        let cells = self.lightmap_cells.as_slice().to_vec();
-        for (i, lightmap) in self.lightmaps.iter_shared().enumerate() {
-            let Ok(lightmap) = lightmap.try_to::<Gd<Texture2D>>() else { continue };
-            let Some(mut part) = self.base().get_node_or_null(&format!("Part{i}")).and_then(|n| n.try_cast::<MeshInstance3D>().ok()) else {
-                continue;
-            };
-            let Some(base_material) = part.get_material_override().and_then(|m| m.try_cast::<ShaderMaterial>().ok()) else { continue };
-            part.set_material_override(&material::with_lightmap(&base_material, &lightmap));
-            let cell = cells.get(i).copied().unwrap_or(Vector3::new(0.0, 0.0, 1.0));
-            part.set_instance_shader_parameter("lightmap_uv_offset", &Vector2::new(cell.x, cell.y).to_variant());
-            part.set_instance_shader_parameter("lightmap_uv_scale", &cell.z.to_variant());
         }
     }
 }
@@ -1282,11 +1301,14 @@ fn object_scene(zsc: &ZscFile, zsc_index: usize, list: &str, object_id: usize) -
             continue;
         };
         let mesh = crate::mesh::rigid(&mesh);
-        let material = materials.entry(part.material_id).or_insert_with(|| material::object_material(zsc_material, None)).clone();
+        let material = materials.entry(part.material_id).or_insert_with(|| material::object_material(zsc_material, material::Light::Map)).clone();
         let mut instance = MeshInstance3D::new_alloc();
         instance.set_name(&format!("Part{part_index}"));
         instance.set_mesh(&mesh);
         instance.set_material_override(&material);
+        if !material::casts_shadow(&material) {
+            instance.set_cast_shadows_setting(ShadowCastingSetting::OFF);
+        }
         instance.set_transform(zone::part_transform(&part.position, &part.rotation, &part.scale));
         let (walls, floors) = zone::part_collision(zsc_index, part);
         if walls {
@@ -1319,7 +1341,7 @@ fn object_scene(zsc: &ZscFile, zsc_index: usize, list: &str, object_id: usize) -
 
 /// Makes the converted assets a zone's scenes use: a model scene for every model in the
 /// zone's own lists and for the event objects and warp gate it places, and its ground
-/// textures in the form Terrain3D takes. Lightmaps are converted by the texture import.
+/// textures in the form Terrain3D takes.
 pub fn import_zone_assets(zone_id: u16, redo: bool, out: &mut ZoneImport) {
     let Some(files) = zone_files(zone_id) else {
         out.failed += 1;
@@ -1425,13 +1447,45 @@ fn terrain_texture(path: &str) -> Option<Gd<godot::classes::Resource>> {
 /// A region's heights, control values, and which vertices belong to a block.
 type RegionData = (Vec<f32>, Vec<u32>, Vec<bool>);
 
+/// Terrain3D's colour map value for no colour: white, and its default roughness (0.5).
+const NO_TINT: [u8; 4] = [255, 255, 255, 128];
+
 /// Collects the blocks' heights and tiles into Terrain3D regions.
 #[derive(Default)]
 struct GroundBuilder {
     regions: BTreeMap<(i64, i64), RegionData>,
+    /// Colour map pixels (RGBA8) of the regions that have a tinted block.
+    tints: BTreeMap<(i64, i64), Vec<[u8; 4]>>,
+}
+
+/// The colour map pixel of a block's ground tint at vertex (i, j) of the block.
+fn tint_pixel(tint: &[Color], i: i64, j: i64) -> [u8; 4] {
+    let colour = zone::tint_at(tint, i as f32 * VERTEX_SPACING, j as f32 * VERTEX_SPACING);
+    let byte = |v: f32| (v.clamp(0.0, 1.0) * 255.0).round() as u8;
+    [byte(colour.r), byte(colour.g), byte(colour.b), NO_TINT[3]]
+}
+
+/// Paints a block's ground tint (`zone::ground_tint`): `set` takes each vertex (gx, gz) of
+/// the block, its far edge included, and its colour map pixel.
+fn paint_tint(block_x: usize, block_y: usize, tint: &[Color], mut set: impl FnMut(i64, i64, [u8; 4])) {
+    let (gx0, gz0) = (BLOCK_VERTICES * block_x as i64, BLOCK_VERTICES * (block_y as i64 - 65));
+    for j in 0..=BLOCK_VERTICES {
+        for i in 0..=BLOCK_VERTICES {
+            set(gx0 + i, gz0 + j, tint_pixel(tint, i, j));
+        }
+    }
 }
 
 impl GroundBuilder {
+    fn add_tint(&mut self, block_x: usize, block_y: usize, tint: &[Color]) {
+        let size = REGION_SIZE;
+        let tints = &mut self.tints;
+        paint_tint(block_x, block_y, tint, |gx, gz, pixel| {
+            let map = tints.entry((gx.div_euclid(size), gz.div_euclid(size))).or_insert_with(|| vec![NO_TINT; (size * size) as usize]);
+            map[(gz.rem_euclid(size) * size + gx.rem_euclid(size)) as usize] = pixel;
+        });
+    }
+
     fn vertex(&mut self, gx: i64, gz: i64) -> (&mut f32, &mut u32, &mut bool) {
         let size = REGION_SIZE;
         let area = (size * size) as usize;
@@ -1500,6 +1554,9 @@ impl GroundBuilder {
             region.set("location", &Vector2i::new(rx as i32, rz as i32).to_variant());
             region.call("set_height_map", &[height_map.to_variant()]);
             region.call("set_control_map", &[control_map.to_variant()]);
+            if let Some(tint) = self.tints.get(&(rx, rz)) {
+                region.call("set_color_map", &[color_map(tint).ok_or("color map")?.to_variant()]);
+            }
             region.call("sanitize_maps", &[]);
             region.call("calc_height_range", &[]);
             region.set("modified", &true.to_variant());
@@ -1539,6 +1596,18 @@ impl GroundBuilder {
         terrain.set("assets", &assets.to_variant());
         Ok(terrain.upcast())
     }
+}
+
+/// A Terrain3D colour map from its RGBA8 pixels (with mipmaps, which Terrain3D draws it with).
+fn color_map(pixels: &[[u8; 4]]) -> Option<Gd<godot::classes::Image>> {
+    let bytes: Vec<u8> = pixels.iter().flatten().copied().collect();
+    let size = (pixels.len() as f64).sqrt() as i32;
+    let mut image = godot::classes::Image::create_from_data(size, size, false, godot::classes::image::Format::RGBA8, &PackedByteArray::from(bytes.as_slice()))?;
+    if image.is_empty() {
+        return None;
+    }
+    image.generate_mipmaps();
+    Some(image)
 }
 
 fn slug(name: &str) -> String {
@@ -1725,8 +1794,118 @@ pub fn merge_zone_blocks(zone_id: u16) -> Result<(String, usize), String> {
     Ok((folder, merged))
 }
 
-/// A model placed in a block: its number in the list, the IFO entry and its lightmaps.
-type Placement<'a> = (usize, &'a rose_file_readers::IfoObject, Option<&'a rose_file_readers::LitObject>);
+/// Takes the baked ROSE lightmaps out of a zone scene made before real-time shadows: the
+/// `lightmaps` and `lightmap_cells` of its models and ground, and the textures only they
+/// used. First it paints the colour those lightmaps gave the ground into Terrain3D's colour
+/// map (`zone::ground_tint`, from the client's lightmaps). Nothing else in the scene changes:
+/// same nodes, names and positions. Returns (folder, lines taken out, blocks coloured); 0
+/// lines when the scene has no lightmaps (it is left alone).
+pub fn strip_lightmaps(zone_id: u16) -> Result<(String, usize, usize), String> {
+    let folder = zone_folder(zone_id).ok_or(format!("zone {zone_id} has no folder in {ZONES}"))?;
+    let path = format!("{folder}/zone.tscn");
+    let text = FileAccess::get_file_as_string(path.as_str()).to_string();
+    if text.is_empty() {
+        return Err(format!("could not read {path}"));
+    }
+    let is_lightmap_line = |line: &str| line.starts_with("lightmaps = ") || line.starts_with("lightmap_cells = ");
+    let removed = text.lines().filter(|line| is_lightmap_line(line)).count();
+    if removed == 0 {
+        return Ok((folder, 0, 0));
+    }
+    let kept: Vec<&str> = text.lines().filter(|line| !is_lightmap_line(line)).collect();
+    // The textures nothing links any more.
+    let mut used = HashSet::new();
+    for line in kept.iter().filter(|l| !l.starts_with("[ext_resource")) {
+        let mut rest = *line;
+        while let Some(at) = rest.find("ExtResource(\"") {
+            rest = &rest[at + 13..];
+            if let Some(end) = rest.find('"') {
+                used.insert(rest[..end].to_string());
+                rest = &rest[end..];
+            }
+        }
+    }
+    let id_of = |line: &str| line.find(" id=\"").and_then(|at| line[at + 5..].find('"').map(|end| line[at + 5..at + 5 + end].to_string()));
+    let kept: Vec<&str> = kept
+        .into_iter()
+        .filter(|line| !(line.starts_with("[ext_resource type=\"Texture2D\"") && id_of(line).is_some_and(|id| !used.contains(&id))))
+        .collect();
+
+    // The ground's colour, into the regions the scene's Terrain3D node loads.
+    let value_of = |key: &str| kept.iter().find_map(|line| line.strip_prefix(key)).map(|v| v.trim().to_string());
+    let directory = value_of("data_directory = ").map(|v| v.trim_matches('"').to_string()).ok_or(format!("{path} has no Terrain3D data_directory"))?;
+    let blocks: Vec<i32> = value_of("blocks = PackedInt32Array(")
+        .map(|v| v.trim_end_matches(')').split(',').filter_map(|n| n.trim().parse().ok()).collect())
+        .unwrap_or_default();
+    let files = zone_files(zone_id).ok_or(format!("zone {zone_id} is not in the zone list; is --data-idx right?"))?;
+    let coloured = paint_ground_tints(&directory, &files.zone_dir, &blocks)?;
+
+    let Some(mut file) = FileAccess::open(path.as_str(), ModeFlags::WRITE) else { return Err(format!("could not write {path}")) };
+    file.store_string(&(kept.join("\n") + "\n"));
+    Ok((folder, removed, coloured))
+}
+
+/// Paints the ground tint of `blocks` (pairs of block x, block y) into the colour maps of
+/// the Terrain3D regions saved in `directory`. Returns how many blocks had a lightmap.
+fn paint_ground_tints(directory: &str, zone_dir: &str, blocks: &[i32]) -> Result<usize, String> {
+    let mut terrain = godot::classes::ClassDb::singleton()
+        .instantiate("Terrain3D")
+        .try_to::<Gd<Node3D>>()
+        .map_err(|_| "Terrain3D is missing; is the Terrain3D addon in addons/terrain_3d?".to_string())?;
+    terrain.set("vertex_spacing", &VERTEX_SPACING.to_variant());
+    terrain.set("data_directory", &directory.to_variant());
+    let mut root = Engine::singleton()
+        .get_main_loop()
+        .and_then(|l| l.try_cast::<godot::classes::SceneTree>().ok())
+        .map(|t| t.get_root())
+        .ok_or("no scene tree")?;
+    root.add_child(&terrain);
+    let result = (|| {
+        let mut data = terrain.get("data").try_to::<Gd<godot::classes::Object>>().map_err(|_| "Terrain3D has no data".to_string())?;
+        let region_size = terrain.get("region_size").try_to::<i64>().unwrap_or(REGION_SIZE);
+        let mut maps: BTreeMap<(i64, i64), Vec<[u8; 4]>> = BTreeMap::new();
+        let mut coloured = 0;
+        for pair in blocks.chunks(2) {
+            let [block_x, block_y] = pair else { continue };
+            let Some(tint) = zone::ground_tint(zone_dir, *block_x as usize, *block_y as usize) else { continue };
+            coloured += 1;
+            paint_tint(*block_x as usize, *block_y as usize, &tint, |gx, gz, pixel| {
+                let location = (gx.div_euclid(region_size), gz.div_euclid(region_size));
+                let map = maps.entry(location).or_insert_with(|| {
+                    // The region's colour map as it is (Terrain3D's default where there is none).
+                    let region = data.call("get_region", &[Vector2i::new(location.0 as i32, location.1 as i32).to_variant()]);
+                    let image = region.try_to::<Gd<godot::classes::Object>>().ok().and_then(|r| r.get("color_map").try_to::<Gd<godot::classes::Image>>().ok());
+                    match image {
+                        Some(mut image) if image.get_width() as i64 == region_size => {
+                            image.clear_mipmaps();
+                            image.convert(godot::classes::image::Format::RGBA8);
+                            image.get_data().as_slice().chunks_exact(4).map(|c| [c[0], c[1], c[2], c[3]]).collect()
+                        }
+                        _ => vec![NO_TINT; (region_size * region_size) as usize],
+                    }
+                });
+                if let Some(p) = map.get_mut((gz.rem_euclid(region_size) * region_size + gx.rem_euclid(region_size)) as usize) {
+                    *p = pixel;
+                }
+            });
+        }
+        for ((rx, rz), pixels) in maps {
+            let Ok(mut region) = data.call("get_region", &[Vector2i::new(rx as i32, rz as i32).to_variant()]).try_to::<Gd<godot::classes::Object>>() else {
+                continue;
+            };
+            region.call("set_color_map", &[color_map(&pixels).ok_or("color map")?.to_variant()]);
+            region.set("modified", &true.to_variant());
+        }
+        data.call("save_directory", &[directory.to_variant()]);
+        Ok(coloured)
+    })();
+    root.remove_child(&terrain);
+    terrain.free();
+    result
+}
+
+/// A model placed in a block: its number in the list and the IFO entry.
+type Placement<'a> = (usize, &'a rose_file_readers::IfoObject);
 
 fn spawn_lists(spawns: &[IfoMonsterSpawn]) -> (PackedInt32Array, PackedInt32Array) {
     (spawns.iter().map(|s| s.id as i32).collect(), spawns.iter().map(|s| s.count as i32).collect())
@@ -1779,9 +1958,6 @@ pub fn write_zone_scenes(zone_id: u16, force: bool) -> Result<(String, usize, us
         let Some(him) = data::read_file::<HimFile>(&format!("{dir}/{block_x}_{block_y}.HIM")) else { continue };
         let til = data::read_file::<TilFile>(&format!("{dir}/{block_x}_{block_y}.TIL"));
         let ifo = data::read_file::<IfoFile>(&format!("{dir}/{block_x}_{block_y}.IFO"));
-        let lightmap_dir = format!("{dir}/{block_x}_{block_y}/LIGHTMAP/");
-        let lit_cnst = data::read_file::<LitFile>(&format!("{lightmap_dir}BUILDINGLIGHTMAPDATA.LIT"));
-        let lit_deco = data::read_file::<LitFile>(&format!("{lightmap_dir}OBJECTLIGHTMAPDATA.LIT"));
 
         let mut block = RoseBlock::new_alloc();
         block.set_name(&format!("Block_{block_x}_{block_y}"));
@@ -1797,12 +1973,13 @@ pub fn write_zone_scenes(zone_id: u16, force: bool) -> Result<(String, usize, us
             let id = |number: u8| numbers.iter().position(|n| *n == number as usize).unwrap_or(0) as u32;
             control_bits(id(layer1), id(layer2), rotation as u32, 255)
         });
+        if let Some(tint) = zone::ground_tint(dir, block_x, block_y) {
+            ground.add_tint(block_x, block_y, &tint);
+        }
         {
             let mut l = look.bind_mut();
             l.blocks.push(block_x as i32);
             l.blocks.push(block_y as i32);
-            let lightmap = texture::load_texture(&zone::block_lightmap_path(dir, block_x, block_y)).filter(|t| t.get_path().begins_with("res://"));
-            l.lightmaps.push(&lightmap.map_or(Variant::nil(), |t| t.to_variant()));
         }
 
         if let Some(ifo) = ifo.as_ref() {
@@ -1822,19 +1999,19 @@ pub fn write_zone_scenes(zone_id: u16, force: bool) -> Result<(String, usize, us
 
             // Buildings, decorations, event objects and warps, as instances of the model scenes.
             let placements: [(&str, usize, Vec<Placement>); 4] = [
-                ("Buildings", 0, ifo.cnst_objects.iter().enumerate().map(|(i, o)| (o.object_id as usize, o, zone::find_lit(lit_cnst.as_ref(), i))).collect()),
-                ("Decorations", 1, ifo.deco_objects.iter().enumerate().map(|(i, o)| (o.object_id as usize, o, zone::find_lit(lit_deco.as_ref(), i))).collect()),
-                ("EventObjects", 2, ifo.event_objects.iter().map(|o| (o.object.object_id as usize, &o.object, None)).collect()),
-                ("Warps", 3, ifo.warps.iter().map(|o| (1, o, None)).collect()),
+                ("Buildings", 0, ifo.cnst_objects.iter().map(|o| (o.object_id as usize, o)).collect()),
+                ("Decorations", 1, ifo.deco_objects.iter().map(|o| (o.object_id as usize, o)).collect()),
+                ("EventObjects", 2, ifo.event_objects.iter().map(|o| (o.object.object_id as usize, &o.object)).collect()),
+                ("Warps", 3, ifo.warps.iter().map(|o| (1, o)).collect()),
             ];
             let names = ["Cnst", "Deco", "Event", "Warp"];
             for (group_name, zsc_index, list) in placements {
                 if list.is_empty() {
                     continue;
                 }
-                let (list_path, Some(zsc)) = (&files.lists[zsc_index].0, files.lists[zsc_index].1.as_ref()) else { continue };
+                let (list_path, Some(_)) = (&files.lists[zsc_index].0, files.lists[zsc_index].1.as_ref()) else { continue };
                 let mut parent = group(&mut root, group_name);
-                for (ifo_index, (object_id, object, lit)) in list.into_iter().enumerate() {
+                for (ifo_index, (object_id, object)) in list.into_iter().enumerate() {
                     let Some(path) = assets::find_stem(&object_stem(list_path, object_id), &["tscn"]) else { continue };
                     let Some(node) = instance(&path) else { continue };
                     let Ok(mut placed) = node.clone().try_cast::<RoseZoneObject>() else {
@@ -1843,30 +2020,8 @@ pub fn write_zone_scenes(zone_id: u16, force: bool) -> Result<(String, usize, us
                     };
                     placed.set_name(&format!("{}_{ifo_index}", names[zsc_index]));
                     placed.set_transform(zone::ifo_transform(object));
-                    let mut lightmaps = VarArray::new();
-                    let mut cells = PackedVector3Array::new();
-                    if let (Some(lit_object), Some(zsc_object)) = (lit, zsc.objects.get(object_id)) {
-                        for part_index in 0..zsc_object.parts.len() {
-                            let lit_part = lit_object
-                                .parts
-                                .iter()
-                                .find(|p| p.object_part_index as usize == part_index)
-                                .or_else(|| lit_object.parts.get(part_index));
-                            let texture = lit_part
-                                .and_then(|p| texture::load_texture(&format!("{lightmap_dir}{}", p.filename)))
-                                .filter(|t| t.get_path().begins_with("res://"));
-                            let cell = lit_part.map_or(Vector3::new(0.0, 0.0, 1.0), |p| {
-                                let per_row = p.parts_per_row.max(1);
-                                Vector3::new((p.part_index % per_row) as f32, (p.part_index / per_row) as f32, 1.0 / per_row as f32)
-                            });
-                            lightmaps.push(&texture.map_or(Variant::nil(), |t| t.to_variant()));
-                            cells.push(cell);
-                        }
-                    }
                     {
                         let mut p = placed.bind_mut();
-                        p.lightmaps = lightmaps;
-                        p.lightmap_cells = cells;
                         p.warp_id = object.warp_id as i32;
                         p.event_id = object.event_id as i32;
                     }

@@ -9,7 +9,11 @@
 global uniform vec3 rose_map_ambient;
 global uniform vec3 rose_character_ambient;
 global uniform vec3 rose_character_diffuse;
-global uniform vec3 rose_light_direction;
+// The sun (a DirectionalLight3D, RoseSun): its colour and strength, and how much of the
+// ground light it gives (0 = none, no shadows; 0.4 = shade is 60 % as bright). See rose_map_shade().
+global uniform vec3 rose_sun_color;
+global uniform float rose_sun_strength;
+global uniform float rose_shadow_darkness;
 global uniform vec3 rose_fog_color;
 global uniform float rose_fog_density;
 
@@ -42,6 +46,27 @@ float rose_fog_alpha(float fog_amount) {
 	return 1.0;
 }
 
-vec3 rose_character_light(vec3 world_normal) {
-	return clamp(rose_character_ambient + rose_character_diffuse * clamp(dot(world_normal, rose_light_direction), 0.0, 1.0), vec3(0.0), vec3(1.0));
+// Real-time light (linear). The lit shaders put the light that reaches everywhere in
+// EMISSION and add the sun's share in light(), where Godot gives the shadow (ATTENUATION).
+// Lit fully by the sun and facing it, they look as the unlit ROSE ground light did.
+
+// Ground and buildings out of the sun: the ground light minus the sun's share.
+vec3 rose_map_shade() {
+	return rose_to_linear(rose_map_ambient * (1.0 - rose_shadow_darkness));
+}
+
+// What the sun adds to ground and buildings facing it straight on.
+vec3 rose_map_sun() {
+	return max(rose_to_linear(rose_map_ambient) - rose_map_shade(), vec3(0.0)) * rose_to_linear(rose_sun_color) * rose_sun_strength;
+}
+
+// What the sun adds to characters facing it straight on: ROSE lit them by
+// ambient + diffuse * facing, capped at 1.
+vec3 rose_character_sun() {
+	return max(rose_to_linear(min(rose_character_ambient + rose_character_diffuse, vec3(1.0))) - rose_to_linear(rose_character_ambient), vec3(0.0));
+}
+
+// The fog's share of a pixel, and the colour it adds (linear).
+float rose_fog_mix(float fog_amount) {
+	return clamp(fog_amount, ROSE_FOG_MIN_DENSITY, ROSE_FOG_MAX_DENSITY);
 }

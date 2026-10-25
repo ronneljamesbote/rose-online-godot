@@ -20,6 +20,7 @@ mod module_bindings;
 mod net;
 mod quest_blocks;
 mod skills;
+mod sun;
 mod texture;
 mod zone;
 mod zone_scene;

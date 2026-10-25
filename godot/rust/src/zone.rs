@@ -6,18 +6,16 @@ use std::{collections::HashMap, path::Path, time::Instant};
 use godot::{
     classes::{
         mesh::{ArrayCustomFormat, ArrayFormat, ArrayType, PrimitiveType},
-        ArrayMesh, CollisionShape3D, ConcavePolygonShape3D, Mesh, MeshInstance3D, Node3D, Shader, ShaderMaterial,
-        StaticBody3D, Texture2D,
+        geometry_instance_3d::ShadowCastingSetting,
+        ArrayMesh, CollisionShape3D, ConcavePolygonShape3D, GeometryInstance3D, Image, ImageTexture, Mesh, MeshInstance3D, Node3D,
+        Shader, ShaderMaterial, StaticBody3D,
     },
     prelude::*,
 };
-use rose_data::{SkyboxState, ZoneId};
-use rose_file_readers::{
-    HimFile, IfoFile, IfoObject, LitFile, LitObject, TilFile, ZonFile, ZonTileRotation, ZscCollisionFlags, ZscEffectType,
-    ZscFile,
-};
+use rose_data::ZoneId;
+use rose_file_readers::{HimFile, IfoFile, IfoObject, TilFile, ZonFile, ZonTileRotation, ZscCollisionFlags, ZscEffectType, ZscFile};
 
-use crate::{data, effect::RoseEffect, material, mesh, texture};
+use crate::{data, effect::RoseEffect, material, mesh, sun, texture};
 
 const BLOCK_SIZE: f32 = 160.0;
 /// Zone objects are stored relative to the centre of the 64x64 block grid.
@@ -46,6 +44,64 @@ pub fn block_lightmap_path(zone_dir: &str, block_x: usize, block_y: usize) -> St
     format!("{zone_dir}/{block_x}_{block_y}/{block_x}_{block_y}_PLANELIGHTINGMAP.DDS")
 }
 
+/// Cells per side of a block's ground tint (10 m each).
+pub const TINT_CELLS: usize = 16;
+
+/// The colour a block's ROSE ground lightmap gave the ground, without its shadows: the
+/// lightmap averaged over 10 m cells, its brightness taken out (only a little of it is kept,
+/// down to 85 %) and scaled to fit 0..1. Birth Island's blue sea floor is a blue lightmap on
+/// sand. `TINT_CELLS` x `TINT_CELLS` colours, row by row from the north-west corner, in the
+/// ROSE (gamma) colour space; None without a lightmap.
+pub fn ground_tint(zone_dir: &str, block_x: usize, block_y: usize) -> Option<Vec<Color>> {
+    let mut image = texture::load_rose_image(&block_lightmap_path(zone_dir, block_x, block_y))?;
+    if image.is_compressed() {
+        image.decompress();
+    }
+    image.convert(godot::classes::image::Format::RGB8);
+    let (width, height) = (image.get_width().max(1) as usize, image.get_height().max(1) as usize);
+    let bytes = image.get_data();
+    let bytes = bytes.as_slice();
+    let mut tint = Vec::with_capacity(TINT_CELLS * TINT_CELLS);
+    for cy in 0..TINT_CELLS {
+        for cx in 0..TINT_CELLS {
+            let (x0, x1) = (cx * width / TINT_CELLS, ((cx + 1) * width / TINT_CELLS).max(cx * width / TINT_CELLS + 1));
+            let (y0, y1) = (cy * height / TINT_CELLS, ((cy + 1) * height / TINT_CELLS).max(cy * height / TINT_CELLS + 1));
+            let mut sum = [0.0f32; 3];
+            for y in y0..y1.min(height) {
+                for x in x0..x1.min(width) {
+                    let i = (y * width + x) * 3;
+                    for (c, total) in sum.iter_mut().enumerate() {
+                        *total += bytes.get(i + c).copied().unwrap_or(128) as f32;
+                    }
+                }
+            }
+            let count = ((y1.min(height) - y0) * (x1.min(width) - x0)).max(1) as f32;
+            // ROSE draws the ground times twice the lightmap.
+            let light = sum.map(|v| v / count / 255.0 * 2.0);
+            let brightness = (light[0] * 0.299 + light[1] * 0.587 + light[2] * 0.114).max(0.05);
+            let mut colour = light.map(|v| v / brightness * brightness.clamp(0.85, 1.0));
+            let brightest = colour.iter().copied().fold(1.0f32, f32::max);
+            colour = colour.map(|v| v / brightest);
+            tint.push(Color::from_rgb(colour[0], colour[1], colour[2]));
+        }
+    }
+    Some(tint)
+}
+
+/// The tint at a point of the block (metres from its north-west corner), between the cell centres.
+pub fn tint_at(tint: &[Color], x: f32, z: f32) -> Color {
+    let cell = 160.0 / TINT_CELLS as f32;
+    let last = (TINT_CELLS - 1) as f32;
+    let (u, v) = ((x / cell - 0.5).clamp(0.0, last), (z / cell - 0.5).clamp(0.0, last));
+    let (i, j) = (u.floor() as usize, v.floor() as usize);
+    let (i1, j1) = ((i + 1).min(TINT_CELLS - 1), (j + 1).min(TINT_CELLS - 1));
+    let (fu, fv) = (u.fract(), v.fract());
+    let at = |i: usize, j: usize| tint.get(j * TINT_CELLS + i).copied().unwrap_or(Color::WHITE);
+    let top = at(i, j).lerp(at(i1, j), fu as f64);
+    let bottom = at(i, j1).lerp(at(i1, j1), fu as f64);
+    top.lerp(bottom, fv as f64)
+}
+
 /// An IFO water plane's corners in zone space.
 pub fn water_corners(start: &rose_file_readers::types::Vec3<f32>, end: &rose_file_readers::types::Vec3<f32>) -> (Vector3, Vector3) {
     (rose_position(start.x, start.z, start.y), rose_position(end.x, end.z, start.y))
@@ -69,7 +125,14 @@ pub struct RoseZone {
     /// Build from the ROSE map files even when the zone has scenes (for comparing the two).
     #[var]
     files_only: bool,
+    /// What casts shadows, switched by `update_shadows`.
+    shadow_casters: Vec<ShadowCaster>,
+    /// The block (x, z in 160 m steps) `update_shadows` last set the shadows for.
+    shadow_block: Option<(i32, i32)>,
 }
+
+/// How far from the player's block small decorations still cast shadows, in metres.
+const SMALL_SHADOW_REACH: f32 = 40.0;
 
 /// One block's ground, for height and footstep lookups.
 pub struct Ground {
@@ -154,8 +217,7 @@ pub fn load_shader(path: &str) -> Gd<Shader> {
 
 /// Shared per-zone state while spawning objects.
 pub struct ObjectSpawner {
-    materials: HashMap<(usize, u16, String), Gd<ShaderMaterial>>,
-    lightmaps: HashMap<String, Option<Gd<Texture2D>>>,
+    materials: HashMap<(usize, u16), Gd<ShaderMaterial>>,
     pub parts: usize,
     /// Collision triangles in zone space, three vertices each (zone_loader.rs's collision groups).
     pub walls: Vec<Vector3>,
@@ -165,50 +227,52 @@ pub struct ObjectSpawner {
     pub ambient_sounds: Vec<(Vector3, String, f32)>,
     pub blocks: usize,
     pub objects: usize,
+    /// What casts shadows, for the block rule (`RoseZone::update_shadows`).
+    pub shadow_casters: Vec<ShadowCaster>,
 }
 
+/// A model part or ground block that casts a shadow, and where it stands.
+pub struct ShadowCaster {
+    pub node: Gd<GeometryInstance3D>,
+    /// Its place in zone space (the model's origin).
+    pub position: Vector3,
+    /// Small decorations (grass, flowers, small rocks) cast shadows only near the player.
+    pub small: bool,
+    pub on: bool,
+}
+
+/// Models smaller than this (metres, the longest side) count as small for shadows.
+pub const SMALL_MODEL: f32 = 4.0;
+
 impl ObjectSpawner {
-    fn lightmap(&mut self, path: String) -> Option<Gd<Texture2D>> {
-        self.lightmaps.entry(path.clone()).or_insert_with(|| texture::load_texture(&path)).clone()
+    /// Adds the model parts in `parts` (one placed model at `transform`) to the shadow casters.
+    pub fn add_casters(&mut self, parts: Vec<Gd<GeometryInstance3D>>, transform: Transform3D, size: Aabb) {
+        let longest = (transform * size).size;
+        let small = longest.x.max(longest.y).max(longest.z) < SMALL_MODEL;
+        for node in parts {
+            self.shadow_casters.push(ShadowCaster { node, position: transform.origin, small, on: true });
+        }
     }
 
     #[allow(clippy::too_many_arguments)]
-    fn spawn(
-        &mut self,
-        parent: &mut Gd<Node3D>,
-        zsc: &ZscFile,
-        zsc_index: usize,
-        lightmap_dir: &str,
-        lit_object: Option<&LitObject>,
-        object_instance: &IfoObject,
-        zsc_object_id: usize,
-        name: &str,
-    ) {
+    fn spawn(&mut self, parent: &mut Gd<Node3D>, zsc: &ZscFile, zsc_index: usize, object_instance: &IfoObject, zsc_object_id: usize, name: &str) {
         let Some(object) = zsc.objects.get(zsc_object_id) else { return };
         let mut object_node = Node3D::new_alloc();
         object_node.set_name(name);
         let object_transform = ifo_transform(object_instance);
         object_node.set_transform(object_transform);
+        let mut casters = Vec::new();
+        let mut size: Option<Aabb> = None;
 
         for (part_index, part) in object.parts.iter().enumerate() {
             let Some(mesh_path) = zsc.meshes.get(part.mesh_id as usize) else { continue };
             let Some(part_mesh) = mesh::load_mesh(&mesh_path.path().to_string_lossy(), false) else { continue };
             let Some(zsc_material) = zsc.materials.get(part.material_id as usize) else { continue };
 
-            let lit_part = lit_object.and_then(|lit_object| {
-                lit_object
-                    .parts
-                    .iter()
-                    .find(|lit_part| lit_part.object_part_index as usize == part_index)
-                    .or_else(|| lit_object.parts.get(part_index))
-            });
-            let lightmap_path = lit_part.map(|lit_part| format!("{lightmap_dir}{}", lit_part.filename));
-            let lightmap = lightmap_path.clone().and_then(|path| self.lightmap(path));
-            let cache_key = (zsc_index, part.material_id, if lightmap.is_some() { lightmap_path.unwrap() } else { String::new() });
             let part_material = self
                 .materials
-                .entry(cache_key)
-                .or_insert_with(|| material::object_material(zsc_material, lightmap.clone()))
+                .entry((zsc_index, part.material_id))
+                .or_insert_with(|| material::object_material(zsc_material, material::Light::Map))
                 .clone();
 
             let mut instance = MeshInstance3D::new_alloc();
@@ -216,6 +280,13 @@ impl ObjectSpawner {
             instance.set_material_override(&part_material);
             let part_transform = part_transform(&part.position, &part.rotation, &part.scale);
             instance.set_transform(part_transform);
+            let part_box = part_transform * part_mesh.get_aabb();
+            size = Some(size.map_or(part_box, |s| s.merge(part_box)));
+            if material::casts_shadow(&part_material) {
+                casters.push(instance.clone().upcast::<GeometryInstance3D>());
+            } else {
+                instance.set_cast_shadows_setting(ShadowCastingSetting::OFF);
+            }
 
             let (blocks, walkable) = part_collision(zsc_index, part);
             if blocks || walkable {
@@ -230,14 +301,6 @@ impl ObjectSpawner {
                         self.floors.extend(faces);
                     }
                 }
-            }
-            if let (Some(lit_part), true) = (lit_part, lightmap.is_some()) {
-                let per_row = lit_part.parts_per_row.max(1);
-                instance.set_instance_shader_parameter(
-                    "lightmap_uv_offset",
-                    &Vector2::new((lit_part.part_index % per_row) as f32, (lit_part.part_index / per_row) as f32).to_variant(),
-                );
-                instance.set_instance_shader_parameter("lightmap_uv_scale", &(1.0 / per_row as f32).to_variant());
             }
             if zsc_index == 3 {
                 let to_zone = object_transform * part_transform;
@@ -256,6 +319,9 @@ impl ObjectSpawner {
             let effect_transform = part_transform(&effect.position, &effect.rotation, &effect.scale);
             let night_only = matches!(effect.effect_type, ZscEffectType::DayNight);
             self.effect_spots.push((object_transform * effect_transform, path.path().to_string_lossy().to_string(), night_only));
+        }
+        if let Some(size) = size {
+            self.add_casters(casters, object_transform, size);
         }
 
         parent.add_child(&object_node);
@@ -298,10 +364,6 @@ fn collision_body(name: &str, layer: u32, faces: &[Vector3]) -> Gd<StaticBody3D>
     body
 }
 
-pub fn find_lit<'a>(lit: Option<&'a LitFile>, ifo_object_id: usize) -> Option<&'a LitObject> {
-    lit.and_then(|lit| lit.objects.iter().find(|lit_object| lit_object.id as usize == ifo_object_id + 1))
-}
-
 #[godot_api]
 impl RoseZone {
     /// Loads and spawns a zone. Returns false if the zone or the game data is missing.
@@ -323,7 +385,6 @@ impl RoseZone {
         self.ambient_sounds.clear();
         let mut spawner = ObjectSpawner {
             materials: HashMap::new(),
-            lightmaps: HashMap::new(),
             parts: 0,
             walls: Vec::new(),
             floors: Vec::new(),
@@ -332,6 +393,7 @@ impl RoseZone {
             ambient_sounds: Vec::new(),
             blocks: 0,
             objects: 0,
+            shadow_casters: Vec::new(),
         };
 
         // A zone with scenes in res://zones/ loads from them; any other from the ROSE files.
@@ -381,6 +443,7 @@ impl RoseZone {
                 sky_node.set_scale(Vector3::splat(10.0));
                 // The sky follows the camera in the shader, so it must never be culled.
                 sky_node.set_custom_aabb(Aabb::new(Vector3::splat(-1.0e6), Vector3::splat(2.0e6)));
+                sky_node.set_cast_shadows_setting(ShadowCastingSetting::OFF);
                 self.base_mut().add_child(&sky_node);
             }
         }
@@ -389,6 +452,8 @@ impl RoseZone {
         self.warps = std::mem::take(&mut spawner.warps);
         self.effect_spots = std::mem::take(&mut spawner.effect_spots);
         self.ambient_sounds = std::mem::take(&mut spawner.ambient_sounds);
+        self.shadow_casters = std::mem::take(&mut spawner.shadow_casters);
+        self.shadow_block = None;
         // Zone effects (torches, fountains, glows). Night-only ones start hidden.
         let mut effects = 0;
         for (name, night) in [("Effects", false), ("NightEffects", true)] {
@@ -509,76 +574,43 @@ impl RoseZone {
             .map_or(0, |zone| zone.day_cycle as i64)
     }
 
-    /// Zone lighting at a time of day, ported from zone_time_system.rs. `day_time` is in world
-    /// ticks (0..day_cycle) and `partial_tick` is the fraction of the current tick.
+    /// Zone lighting at a time of day (see `sun::lighting`): what `RoseSun.apply` takes.
+    /// `day_time` is in world ticks (0..day_cycle) and `partial_tick` is the fraction of the
+    /// current tick.
     #[func]
     fn get_lighting_at(&self, day_time: i64, partial_tick: f32) -> VarDictionary {
-        let mut out = VarDictionary::new();
-        let Some(game_data) = data::get() else { return out };
-        let Some(zone) = ZoneId::new(self.zone_id).and_then(|id| game_data.zone_list.get_zone(id)) else { return out };
+        let Some(game_data) = data::get() else { return VarDictionary::new() };
+        let Some(zone) = ZoneId::new(self.zone_id).and_then(|id| game_data.zone_list.get_zone(id)) else { return VarDictionary::new() };
         let sky = zone.skybox_id.and_then(|id| game_data.skybox.get_skybox_data(id));
+        let times = sun::DayTimes { day_cycle: zone.day_cycle, morning: zone.morning_time, day: zone.day_time, evening: zone.evening_time, night: zone.night_time };
+        sun::lighting(sky, &times, day_time, partial_tick)
+    }
 
-        let day_time = (day_time.max(0) as u32) % zone.day_cycle.max(1);
-        let (state, ticks, length) = if day_time >= zone.night_time || day_time < zone.morning_time {
-            let length = zone.morning_time + (zone.day_cycle - zone.night_time);
-            let ticks = if day_time >= zone.night_time { day_time - zone.night_time } else { day_time + zone.day_cycle - zone.night_time };
-            (SkyboxState::Night, ticks, length)
-        } else if day_time >= zone.evening_time {
-            (SkyboxState::Evening, day_time - zone.evening_time, zone.night_time - zone.evening_time)
-        } else if day_time >= zone.day_time {
-            (SkyboxState::Day, day_time - zone.day_time, zone.evening_time - zone.day_time)
-        } else {
-            (SkyboxState::Morning, day_time - zone.morning_time, zone.day_time - zone.morning_time)
-        };
-        let percent = ((ticks as f32 + partial_tick) / length.max(1) as f32).clamp(0.0, 1.0);
-
-        // Each state blends from the previous state into itself over its first half and into
-        // the next over its second half, except day and night, which hold.
-        let fog = |s: SkyboxState| match s {
-            SkyboxState::Morning => (100.0 / 255.0, 0.0022),
-            SkyboxState::Day => (200.0 / 255.0, 0.0018),
-            SkyboxState::Evening => (100.0 / 255.0, 0.0022),
-            SkyboxState::Night => (10.0 / 255.0, 0.0020),
-        };
-        let (from, to, t) = match state {
-            SkyboxState::Morning if percent < 0.5 => (SkyboxState::Night, SkyboxState::Morning, percent * 2.0),
-            SkyboxState::Morning => (SkyboxState::Morning, SkyboxState::Day, (percent - 0.5) * 2.0),
-            SkyboxState::Evening if percent < 0.5 => (SkyboxState::Day, SkyboxState::Evening, percent * 2.0),
-            SkyboxState::Evening => (SkyboxState::Evening, SkyboxState::Night, (percent - 0.5) * 2.0),
-            s => (s, s, 0.0),
-        };
-        let mix3 = |a: Vector3, b: Vector3| a + (b - a) * t;
-        let (map_ambient, char_ambient, char_diffuse) = if let Some(sky) = sky {
-            macro_rules! v {
-                ($c:expr) => {{ let c = $c; Vector3::new(c.x, c.y, c.z) }};
+    /// Lets only what stands near `position` (zone space, usually the player) cast shadows:
+    /// the models and ground of the player's block and the 8 around it, and of those the
+    /// small decorations only within 40 m of the player's block. Does nothing until the
+    /// player enters another 160 m block, so it costs nothing per frame.
+    #[func]
+    fn update_shadows(&mut self, position: Vector3) {
+        let block = ((position.x / BLOCK_SIZE).floor() as i32, (position.z / BLOCK_SIZE).floor() as i32);
+        if self.shadow_block == Some(block) {
+            return;
+        }
+        self.shadow_block = Some(block);
+        let (x0, z0) = (block.0 as f32 * BLOCK_SIZE, block.1 as f32 * BLOCK_SIZE);
+        for caster in self.shadow_casters.iter_mut() {
+            let p = caster.position;
+            let near = ((p.x / BLOCK_SIZE).floor() as i32 - block.0).abs() <= 1 && ((p.z / BLOCK_SIZE).floor() as i32 - block.1).abs() <= 1;
+            let on = near && (!caster.small || {
+                let dx = (x0 - p.x).max(p.x - (x0 + BLOCK_SIZE)).max(0.0);
+                let dz = (z0 - p.z).max(p.z - (z0 + BLOCK_SIZE)).max(0.0);
+                dx * dx + dz * dz <= SMALL_SHADOW_REACH * SMALL_SHADOW_REACH
+            });
+            if on != caster.on && caster.node.is_instance_valid() {
+                caster.on = on;
+                caster.node.set_cast_shadows_setting(if on { ShadowCastingSetting::ON } else { ShadowCastingSetting::OFF });
             }
-            (
-                mix3(v!(sky.map_ambient_color[from]), v!(sky.map_ambient_color[to])),
-                mix3(v!(sky.character_ambient_color[from]), v!(sky.character_ambient_color[to])),
-                mix3(v!(sky.character_diffuse_color[from]), v!(sky.character_diffuse_color[to])),
-            )
-        } else {
-            (Vector3::ONE, Vector3::ONE, Vector3::ONE)
-        };
-        let ((fog_from, density_from), (fog_to, density_to)) = (fog(from), fog(to));
-        let day_weight = match state {
-            SkyboxState::Morning => percent,
-            SkyboxState::Day => 1.0,
-            SkyboxState::Evening => 1.0 - percent,
-            SkyboxState::Night => 0.0,
-        };
-
-        out.set("state", format!("{state:?}").to_lowercase());
-        out.set("state_percent", percent);
-        out.set("day_weight", day_weight);
-        out.set("map_ambient", map_ambient);
-        out.set("character_ambient", char_ambient);
-        out.set("character_diffuse", char_diffuse);
-        // default_light_transform().back() in zone_lighting.rs
-        out.set("light_direction", Vector3::new(0.612_372_4, 0.707_106_8, -0.353_553_4));
-        out.set("fog_color", Vector3::splat(fog_from + (fog_to - fog_from) * t));
-        out.set("fog_density", density_from + (density_to - density_from) * t);
-        out
+        }
     }
 
     /// Start of the zone's day state, in world ticks.
@@ -596,7 +628,8 @@ impl RoseZone {
 }
 
 impl RoseZone {
-    /// Builds the zone's blocks from the ROSE map files (ZON, HIM, TIL, IFO, LIT).
+    /// Builds the zone's blocks from the ROSE map files (ZON, HIM, TIL, IFO, and the ground
+    /// lightmaps for the ground's colour).
     fn build_from_files(&mut self, zone_entry: &rose_data::ZoneListEntry, zon: &ZonFile, zone_dir: &str, spawner: &mut ObjectSpawner) {
         let zsc_cnst = data::read_file::<ZscFile>(&zone_entry.zsc_cnst_path.path().to_string_lossy());
         let zsc_deco = data::read_file::<ZscFile>(&zone_entry.zsc_deco_path.path().to_string_lossy());
@@ -615,9 +648,6 @@ impl RoseZone {
                 let Some(him) = data::read_file::<HimFile>(&format!("{zone_dir}/{block_x}_{block_y}.HIM")) else { continue };
                 let til = data::read_file::<TilFile>(&format!("{zone_dir}/{block_x}_{block_y}.TIL"));
                 let ifo = data::read_file::<IfoFile>(&format!("{zone_dir}/{block_x}_{block_y}.IFO"));
-                let lightmap_dir = format!("{zone_dir}/{block_x}_{block_y}/LIGHTMAP/");
-                let lit_cnst = data::read_file::<LitFile>(&format!("{lightmap_dir}BUILDINGLIGHTMAPDATA.LIT"));
-                let lit_deco = data::read_file::<LitFile>(&format!("{lightmap_dir}OBJECTLIGHTMAPDATA.LIT"));
 
                 let mut block_node = Node3D::new_alloc();
                 block_node.set_name(&format!("Block_{block_x}_{block_y}"));
@@ -625,8 +655,14 @@ impl RoseZone {
                 let mut terrain_material = ShaderMaterial::new_gd();
                 terrain_material.set_shader(&terrain_shader);
                 terrain_material.set_shader_parameter("tile_textures", &tile_array.to_variant());
-                if let Some(lightmap) = texture::load_texture(&block_lightmap_path(zone_dir, block_x, block_y)) {
-                    terrain_material.set_shader_parameter("lightmap_texture", &lightmap.to_variant());
+                if let Some(tint) = ground_tint(zone_dir, block_x, block_y) {
+                    let bytes: Vec<u8> = tint.iter().flat_map(|c| [c.r, c.g, c.b].map(|v| (v * 255.0).round() as u8)).collect();
+                    let size = TINT_CELLS as i32;
+                    if let Some(texture) = Image::create_from_data(size, size, false, godot::classes::image::Format::RGB8, &PackedByteArray::from(bytes.as_slice()))
+                        .and_then(|image| ImageTexture::create_from_image(&image))
+                    {
+                        terrain_material.set_shader_parameter("tint_texture", &texture.to_variant());
+                    }
                 }
                 let ground = Ground::from_files(zon, &him, til.as_ref());
                 let mut terrain = MeshInstance3D::new_alloc();
@@ -635,6 +671,8 @@ impl RoseZone {
                 terrain.set_material_override(&terrain_material);
                 terrain.set_position(block_origin(block_x, block_y));
                 block_node.add_child(&terrain);
+                let centre = block_origin(block_x, block_y) + Vector3::new(BLOCK_SIZE / 2.0, 0.0, BLOCK_SIZE / 2.0);
+                spawner.shadow_casters.push(ShadowCaster { node: terrain.clone().upcast(), position: centre, small: false, on: true });
                 spawner.blocks += 1;
 
                 if let Some(ifo) = ifo.as_ref() {
@@ -644,27 +682,25 @@ impl RoseZone {
                         let (start, end) = water_corners(start, end);
                         water.set_mesh(&build_water_mesh(start, end, ifo.water_size / 100.0));
                         water.set_material_override(&water_material);
+                        water.set_cast_shadows_setting(ShadowCastingSetting::OFF);
                         block_node.add_child(&water);
                     }
 
-                    let mut spawn_list = |zsc: Option<&ZscFile>, zsc_index: usize, list: &[(usize, &IfoObject, usize, Option<&LitObject>)], kind: &str| {
+                    let mut spawn_list = |zsc: Option<&ZscFile>, zsc_index: usize, list: &[(usize, &IfoObject, usize)], kind: &str| {
                         let Some(zsc) = zsc else { return };
-                        for &(ifo_id, object, zsc_id, lit) in list {
-                            spawner.spawn(&mut block_node, zsc, zsc_index, &lightmap_dir, lit, object, zsc_id, &format!("{kind}_{ifo_id}"));
+                        for &(ifo_id, object, zsc_id) in list {
+                            spawner.spawn(&mut block_node, zsc, zsc_index, object, zsc_id, &format!("{kind}_{ifo_id}"));
                             spawner.objects += 1;
                         }
                     };
 
-                    let cnst: Vec<_> = ifo.cnst_objects.iter().enumerate()
-                        .map(|(i, o)| (i, o, o.object_id as usize, find_lit(lit_cnst.as_ref(), i))).collect();
+                    let cnst: Vec<_> = ifo.cnst_objects.iter().enumerate().map(|(i, o)| (i, o, o.object_id as usize)).collect();
                     spawn_list(zsc_cnst.as_ref(), 0, &cnst, "Cnst");
-                    let deco: Vec<_> = ifo.deco_objects.iter().enumerate()
-                        .map(|(i, o)| (i, o, o.object_id as usize, find_lit(lit_deco.as_ref(), i))).collect();
+                    let deco: Vec<_> = ifo.deco_objects.iter().enumerate().map(|(i, o)| (i, o, o.object_id as usize)).collect();
                     spawn_list(zsc_deco.as_ref(), 1, &deco, "Deco");
-                    let events: Vec<_> = ifo.event_objects.iter().enumerate()
-                        .map(|(i, o)| (i, &o.object, o.object.object_id as usize, None)).collect();
+                    let events: Vec<_> = ifo.event_objects.iter().enumerate().map(|(i, o)| (i, &o.object, o.object.object_id as usize)).collect();
                     spawn_list(zsc_event.as_ref(), 2, &events, "Event");
-                    let warps: Vec<_> = ifo.warps.iter().enumerate().map(|(i, o)| (i, o, 1, None)).collect();
+                    let warps: Vec<_> = ifo.warps.iter().enumerate().map(|(i, o)| (i, o, 1)).collect();
                     spawn_list(zsc_special.as_ref(), 3, &warps, "Warp");
 
                     for effect in ifo.effect_objects.iter() {
@@ -691,7 +727,7 @@ impl RoseZone {
 pub fn build_terrain_mesh(height: &dyn Fn(i32, i32) -> f32, tile: &dyn Fn(usize, usize) -> [u8; 3]) -> Gd<ArrayMesh> {
     let mut positions = Vec::with_capacity(16 * 16 * 25);
     let mut normals = Vec::with_capacity(16 * 16 * 25);
-    let mut uv_lightmap = Vec::with_capacity(16 * 16 * 25);
+    let mut uv_block = Vec::with_capacity(16 * 16 * 25);
     let mut uv_tile = Vec::with_capacity(16 * 16 * 25);
     let mut tile_info: Vec<u8> = Vec::with_capacity(16 * 16 * 25 * 4);
     let mut indices: Vec<u16> = Vec::with_capacity(16 * 16 * 16 * 6);
@@ -715,7 +751,7 @@ pub fn build_terrain_mesh(height: &dyn Fn(i32, i32) -> f32, tile: &dyn Fn(usize,
                     positions.push(Vector3::new(offset_x + x as f32 * 2.5, h, offset_y + y as f32 * 2.5));
                     normals.push(Vector3::new((l - r) / 2.0, 1.0, (t - b) / 2.0).normalized());
                     uv_tile.push(Vector2::new(x as f32 / 4.0, y as f32 / 4.0));
-                    uv_lightmap.push(Vector2::new(
+                    uv_block.push(Vector2::new(
                         (tile_x as f32 * 4.0 + x as f32) / 64.0,
                         (tile_y as f32 * 4.0 + y as f32) / 64.0,
                     ));
@@ -736,7 +772,7 @@ pub fn build_terrain_mesh(height: &dyn Fn(i32, i32) -> f32, tile: &dyn Fn(usize,
     arrays.resize(ArrayType::MAX.ord() as usize, &Variant::nil());
     arrays.set(ArrayType::VERTEX.ord() as usize, &PackedVector3Array::from(positions.as_slice()).to_variant());
     arrays.set(ArrayType::NORMAL.ord() as usize, &PackedVector3Array::from(normals.as_slice()).to_variant());
-    arrays.set(ArrayType::TEX_UV.ord() as usize, &PackedVector2Array::from(uv_lightmap.as_slice()).to_variant());
+    arrays.set(ArrayType::TEX_UV.ord() as usize, &PackedVector2Array::from(uv_block.as_slice()).to_variant());
     arrays.set(ArrayType::TEX_UV2.ord() as usize, &PackedVector2Array::from(uv_tile.as_slice()).to_variant());
     arrays.set(ArrayType::CUSTOM0.ord() as usize, &PackedByteArray::from(tile_info.as_slice()).to_variant());
     arrays.set(ArrayType::INDEX.ord() as usize, &mesh::flip_winding(&indices).to_variant());

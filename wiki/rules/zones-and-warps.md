@@ -192,6 +192,16 @@ time of day: on the ground and buildings, and on characters and monsters from al
 from the sun's side. Zones share skies: every zone on Junon above ground uses sky 0, the
 Goblin Cave floors sky 1, Eucar and its snowfields sky 2.
 
+The **sun** crosses the sky during the day: it rises in the east at about 20° above the
+ground at the start of morning, is highest (about 55°, in the south-east) in the middle of
+the day and sets in the west at about 20° at the end of evening; at night the moon takes the
+same path. Its light and shadows fade out over the last 5 % of evening and back in over the
+first 5 % of morning, so the light doesn't jump when the sun turns into the moon. The sky
+gives the sun's colour, strength and how dark shadows are at each time of day (by default:
+the characters' sun-side colour, strength 1.5, shadow darkness 0.35 in the morning and
+evening, 0.4 by day and 0.3 at night). The ground, buildings, decorations, characters and
+monsters cast shadows; see [[rules/controls|Controls]] for the Shadows setting.
+
 ```math
 \text{day length (seconds)} = \text{ticks per day} \times 10
 ```
