@@ -14,8 +14,8 @@ extends VBoxContainer
 
 const SETTINGS := "rose_data_tools"
 const DATA_DIR := "res://data"
-## Resource fields that aren't game data.
-const SKIP := ["resource_local_to_scene", "resource_name", "resource_path", "resource_scene_unique_id", "script"]
+## Resource fields that aren't game data (graph_position: where the Graphs screen shows a box).
+const SKIP := ["resource_local_to_scene", "resource_name", "resource_path", "resource_scene_unique_id", "script", "graph_position"]
 ## Kinds that number their resources together: a monster and an NPC never have the same id.
 const SHARED_IDS := {"RoseMonster": ["RoseNpc"], "RoseNpc": ["RoseMonster"]}
 const ALL_GROUPS := "All fields"
