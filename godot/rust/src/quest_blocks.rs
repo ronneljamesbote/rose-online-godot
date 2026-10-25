@@ -121,6 +121,10 @@ pub struct RoseQuestTrigger {
     /// The trigger tried when a condition fails (empty = none): the next way the step can go.
     #[export]
     next_trigger: Option<Gd<RoseQuestTrigger>>,
+    /// Where its box sits in the Graphs screen, once you have moved it there ((0, 0): the
+    /// graph places it). Only for the editor; the game and `--export-data` don't use it.
+    #[export]
+    graph_position: Vector2,
     base: Base<Resource>,
 }
 

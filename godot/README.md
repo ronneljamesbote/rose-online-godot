@@ -125,7 +125,8 @@ Other options (after `--`):
   Windows build.
 - `addons/rose_data_tools/` is the editor plugin for the game data resources: the "Game
   data" screen, a table of every resource of one kind to sort, filter and change many at
-  once (see `data/README.md`). Not in the Windows build either.
+  once, and (`graphs/`) the "Graphs" screen, NPC dialogs and quest steps as boxes and wires
+  (see `data/README.md`). Not in the Windows build either.
 - `rust/src/character.rs` builds the skeleton, parts and animations (port of
   `model_loader.rs` and `zmo_asset_loader.rs`).
 - `rust/src/material.rs`, `mesh.rs`, `texture.rs` convert ZSC materials, ZMS meshes and DDS

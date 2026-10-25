@@ -273,7 +273,7 @@ place of FILE_AI.STB, the AIP files and AI_S.STB, and the game client doesn't lo
 ## Changing something
 
 1. Open the resource, change the field in the Inspector, save. (Or change many in the
-   Game data table, below.)
+   Game data table, or a dialog or quest steps in the Graphs screen, below.)
 2. Export, so the server and the game get it:
 
    ```sh
@@ -343,6 +343,41 @@ as columns, like a spreadsheet:
 - Selecting a row shows the resource in the Inspector, and a change made there shows in the
   table. Every change can be undone (Ctrl+Z). Changed rows have an orange id until saved:
   `Save` or Ctrl+S writes them. Then export as below.
+
+## Dialogs and quest steps as a graph: the Graphs screen
+
+The **Graphs** screen at the top of the editor (next to Game data; the plugin
+`addons/rose_data_tools/graphs/`) draws one NPC dialog, or the quest steps of one folder of
+`quest_triggers/`, as boxes and wires. Pick it from the two dropdowns, double-click a dialog
+or step file in the FileSystem dock, or press **Open in Graphs** at the top of its
+Inspector. Only that dialog or folder is loaded, a few dozen boxes a frame.
+
+- **A dialog**: one box per menu, its lines as rows ("NPC: ...", "You: ..."). Each line's
+  port on the right is wired to its `next_menu`; an answer that ends the talk is wired to
+  **End**. Amber ports and wires are lines with a `show_if` (they only show when it passes).
+  Under a line, chips say what its cases check and do: "If Job >= 111", "Do step 1051-01",
+  "Do open Shop" (the first two cases, then "+N").
+- **Quest steps**: one box per step, its conditions ("If ...") and rewards ("Then ...") as
+  rows. "If it fails, try" is wired to `next_trigger`, a "run step" reward to the step it
+  names. Steps of other folders are grey boxes; double-click one to open its folder.
+- **Editing**: click a row or chip to edit it in the Inspector (conditions and actions are
+  edited there); the box redraws when you change it. Double-click a dialog line to change
+  its words. Drag a wire from a port to another box to change where it leads (drop it on
+  empty space: nowhere). Right-click a line to move it up or down, add a line below, make
+  it an answer or an NPC line, or delete it; right-click the background to add a menu or a
+  step (a step gets a new file in the folder). Select a menu and press Delete to delete it:
+  the menus after it move up a number and every line pointing at them follows; lines that
+  led to the deleted menu end the talk. Menu 0 stays.
+- **Find**: selects the boxes whose words, chips or names contain the text; Enter goes to
+  the next. **Used by** (quest steps) lists the dialogs, steps, AIs, monsters and zone
+  scenes that run the selected step, by searching the files' text (nothing is loaded);
+  double-click one to open it.
+- **Where boxes sit**: the graph places them in columns, in the order the talk (or the
+  steps) goes. A box you drag keeps its place: it is saved as `graph_position` in that menu
+  or step (only once moved; **Auto layout** forgets it). The game and `--export-data` don't
+  use it, so moving boxes never changes the export.
+- Every change can be undone (Ctrl+Z); `Save` or Ctrl+S writes the changed files. Then
+  export as below.
 
 ## Where it came from
 

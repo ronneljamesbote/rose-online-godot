@@ -136,6 +136,10 @@ pub struct RoseDialogMenu {
     /// From the top (`RoseDialogLine`).
     #[export]
     lines: Array<Option<Gd<Resource>>>,
+    /// Where its box sits in the Graphs screen, once you have moved it there ((0, 0): the
+    /// graph places it). Only for the editor; the game and `--export-data` don't use it.
+    #[export]
+    graph_position: Vector2,
     base: Base<Resource>,
 }
 
