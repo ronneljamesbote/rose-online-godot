@@ -61,27 +61,8 @@ drops:
   slots_of_30: 0.2
 quests:
 - '[[quests/5006-stockpiling-bronze-fragments|Stockpiling Bronze Fragments]]'
+- '[[quests/2110-words-in-stone|Words in Stone]]'
 spawns:
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5195.4
-  y: 5441.8
-  count: 1
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5275.6
-  y: 5454.8
-  count: 1
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5446.5
-  y: 5347.2
-  count: 2
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5396.5
-  y: 5258.3
-  count: 1
-  group: reinforcements
 - zone: '[[zones/23-breezy-hills|Breezy Hills]]'
   x: 5068.3
   y: 5300.7
@@ -267,6 +248,56 @@ spawns:
   y: 4910.5
   count: 1
   group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5218
+  y: 5450
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5218
+  y: 5450
+  count: 2
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5218
+  y: 5450
+  count: 1
+  group: reinforcements
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5312
+  y: 5472
+  count: 2
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5312
+  y: 5472
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5312
+  y: 5472
+  count: 1
+  group: reinforcements
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5190
+  y: 5408
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5190
+  y: 5408
+  count: 1
+  group: reinforcements
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5392
+  y: 5424
+  count: 2
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5392
+  y: 5424
+  count: 1
+  group: reinforcements
 source:
   data: godot/data/monsters/74-pomic-soldier.tres, drop table godot/data/drop_tables/134-pomic-soldier.tres
   code:

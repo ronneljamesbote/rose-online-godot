@@ -75,18 +75,23 @@ spawns:
   count: 1
   group: reinforcements
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5275.6
-  y: 5454.8
+  x: 5465
+  y: 5448
   count: 1
-  group: reinforcements
+  group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5189.8
-  y: 5391.3
+  x: 5572
+  y: 5450
   count: 1
-  group: reinforcements
+  group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5133.7
-  y: 5303.3
+  x: 5572
+  y: 5450
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5572
+  y: 5450
   count: 1
   group: reinforcements
 source:

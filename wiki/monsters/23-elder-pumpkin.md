@@ -67,105 +67,45 @@ quests:
 - '[[quests/853-solider-job-change-quest|Solider Job Change Quest]]'
 spawns:
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5275.6
-  y: 5454.8
-  count: 2
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5118
-  y: 5298.5
-  count: 2
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5118
-  y: 5298.5
-  count: 2
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5163.8
-  y: 5329
-  count: 2
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5189.8
-  y: 5391.3
+  x: 5205
+  y: 5318
   count: 1
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5133.7
-  y: 5303.3
+  x: 5205
+  y: 5318
   count: 1
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5406.9
-  y: 5322.7
-  count: 2
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5109.5
-  y: 5211.2
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5109.5
-  y: 5211.2
-  count: 2
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5115.3
-  y: 5143.7
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5115.3
-  y: 5143.7
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5133.9
-  y: 5125.1
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5275.6
-  y: 5208.7
+  x: 5205
+  y: 5318
   count: 1
   group: reinforcements
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5120.6
-  y: 5274.2
+  x: 5260
+  y: 5388
   count: 1
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5120.6
-  y: 5274.2
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5396.5
-  y: 5258.3
-  count: 2
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5282
-  y: 5138.2
+  x: 5260
+  y: 5388
   count: 1
   group: reinforcements
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5295.8
-  y: 5106.9
+  x: 5188
+  y: 5208
   count: 1
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5295.8
-  y: 5106.9
+  x: 5188
+  y: 5208
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5188
+  y: 5208
   count: 1
   group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5340.9
-  y: 5112.8
-  count: 2
-  group: basic
 source:
   data: godot/data/monsters/23-elder-pumpkin.tres, drop table godot/data/drop_tables/110-elder-pumpkin.tres
   code:

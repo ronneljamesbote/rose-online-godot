@@ -80,3 +80,10 @@ Then:
 
 - works on [[quests/852-solider-job-change-quest|Solider Job Change Quest]]
 - you get 1 × [[items/quest/103-honeybee-stinger|HoneyBee Stinger]]
+- then runs step `2103-32` ([[quests/2103-glowing-stingers|Glowing Stingers]])
+
+If the checks fail, step `2103-32` ([[quests/2103-glowing-stingers|Glowing Stingers]]) is tried instead.
+
+## Changed from iROSE
+
+The Valley of Luxem Tower redesign made this quest's kill steps also run the matching steps of the valley's new quests, so one kill counts for both.
