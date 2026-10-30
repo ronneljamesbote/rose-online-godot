@@ -83,7 +83,7 @@ source:
 ---
 # Sandscar
 
-A Pomic Fighter grown huge on mana from the failing tower. It roams alone on the high ground north of the ruins, west of the tower mesa, and comes back about every 10 minutes after it falls.
+A Pomic Fighter grown huge on mana from the failing tower. It roams alone on the high ground north of the ruins, west of the tower mesa, and comes back about every 3 minutes after it falls.
 
 Speeds are in centimetres per second, attack range in metres. Spawn positions are in metres.
 HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
