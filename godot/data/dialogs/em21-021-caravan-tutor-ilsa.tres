@@ -1,0 +1,67 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://de0d1qu16wqla"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_84iot"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_oet5j"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="3_ahr1t"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="4_2owiv"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="5_t3eu0"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="6_93sly"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="7_8lxez"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="8_n2u63"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="9_fcwe3"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="10_26bpr"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="11_gq8jw"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="12_x8h1l"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kjq3y"]
+text = "Fighting is more than swinging a blade. I teach caravan guards their craft. Once you have a job, I can teach you too."
+next_menu = 1
+resource_name = "NPC: Fighting is more than swinging a blade. I teach …"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_xxur4"]
+window = "Shop"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_u8kvp"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_xxur4")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4zu9n"]
+kind = "Answer"
+text = "Let me see your goods."
+next_menu = -1
+on_choose = Array[Resource]([SubResource("RoseDialogCase_u8kvp")])
+resource_name = "You: Let me see your goods."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_9klhw"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4pfx0"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_k5cym"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0lpxa"]
+lines = Array[Resource]([SubResource("RoseDialogLine_kjq3y")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qulsm"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4zu9n"), SubResource("RoseDialogLine_9klhw")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ad997"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4pfx0"), SubResource("RoseDialogLine_k5cym")])
+resource_name = "Menu 2"
+
+[resource]
+key = "EM21-021.con"
+name = "[Caravan Tutor] Ilsa"
+menus = Array[Resource]([SubResource("RoseDialogMenu_0lpxa"), SubResource("RoseDialogMenu_qulsm"), SubResource("RoseDialogMenu_ad997")])

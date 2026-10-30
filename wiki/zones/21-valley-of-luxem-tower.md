@@ -316,6 +316,9 @@ npcs:
 - npc: '[[npcs/1077-expedition-tailor-yselle|Expedition Tailor Yselle]]'
   x: 5448
   y: 5308
+- npc: '[[npcs/1079-expedition-instructor-corwin|Expedition Instructor Corwin]]'
+  x: 5478
+  y: 5295
 - npc: '[[npcs/1069-wagon-driver-oskar|Wagon Driver Oskar]]'
   x: 5405
   y: 5144
@@ -340,6 +343,9 @@ npcs:
 - npc: '[[npcs/1075-caravan-outfitter-nessa|Caravan Outfitter Nessa]]'
   x: 5217
   y: 5062
+- npc: '[[npcs/1078-caravan-tutor-ilsa|Caravan Tutor Ilsa]]'
+  x: 5181
+  y: 5053
 warp_gates:
 - to: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
   x: 5135.8
@@ -416,6 +422,8 @@ ground north of the ruins and comes back about every 10 minutes, and the
   [[npcs/1077-expedition-tailor-yselle|Yselle]] (armour and clothes) and
   [[npcs/1065-quartermaster-hask|Hask]] (potions, return scrolls, repair tools, magic weapons).
   Their goods are a step up from the caravan's.
+- Skill books for the four first jobs: [[npcs/1078-caravan-tutor-ilsa|Ilsa]] at the caravan camp and
+  [[npcs/1079-expedition-instructor-corwin|Corwin]] at the expedition camp.
 
 ## Getting around
 
@@ -476,5 +484,5 @@ The whole valley is redesigned. The size, the four gates and their arrival spots
 same as in iROSE; everything else is new: the ground's shape and textures, the tower moved
 to the north-east corner and made bigger, the river, oasis and wadi, the trees along the water, the two camps, the
 ruins, the spawn points (levels 9–22 instead of 9–20), the two elite monsters, the sealed
-vault, seventeen new NPCs and the quest chain. The minimap is redrawn to match, and its frame says Breezy Hills and Adventurer's Plain
+vault, nineteen new NPCs and the quest chain. The minimap is redrawn to match, and its frame says Breezy Hills and Adventurer's Plain
 (iROSE's minimap said "Hill of wind" and "Adventure Plane").

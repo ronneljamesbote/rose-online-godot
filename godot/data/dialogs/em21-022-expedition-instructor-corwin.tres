@@ -1,0 +1,67 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://c7wfy3jl5ic6d"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_el9yg"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_fiv4n"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="3_c6yoj"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="4_mycxf"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="5_ch6ri"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="6_z2al6"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="7_vnpl0"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="8_luy41"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="9_q76x4"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="10_rza1v"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="11_af8kx"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="12_k2rry"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5rktd"]
+text = "The ruins test everyone. I keep the expedition's fighters sharp, and I'll teach any trained adventurer who asks."
+next_menu = 1
+resource_name = "NPC: The ruins test everyone. I keep the expedition's…"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_f6tfg"]
+window = "Shop"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_sagl3"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_f6tfg")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7emjr"]
+kind = "Answer"
+text = "Let me see your goods."
+next_menu = -1
+on_choose = Array[Resource]([SubResource("RoseDialogCase_sagl3")])
+resource_name = "You: Let me see your goods."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_zewcw"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_s0mdo"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mtfpj"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_t7vx3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5rktd")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_onm92"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7emjr"), SubResource("RoseDialogLine_zewcw")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dg87t"]
+lines = Array[Resource]([SubResource("RoseDialogLine_s0mdo"), SubResource("RoseDialogLine_mtfpj")])
+resource_name = "Menu 2"
+
+[resource]
+key = "EM21-022.con"
+name = "[Expedition Instructor] Corwin"
+menus = Array[Resource]([SubResource("RoseDialogMenu_t7vx3"), SubResource("RoseDialogMenu_onm92"), SubResource("RoseDialogMenu_dg87t")])
