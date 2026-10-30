@@ -14,7 +14,6 @@ dropped_in_zones:
 - '[[zones/25-anima-lake|Anima Lake]]'
 sold_by:
 - '[[npcs/1013-tavern-owner-sharlin|Tavern Owner Sharlin]]'
-- '[[npcs/1030-visitor-guide-fairy-of-arua|Visitor Guide Fairy of Arua]]'
 - '[[npcs/1035-little-street-vendor-pony|Little Street Vendor Pony]]'
 - '[[npcs/1063-little-street-vendor-mile|Little Street Vendor Mile]]'
 - '[[npcs/1097-tavern-owner-harin|Tavern Owner Harin]]'

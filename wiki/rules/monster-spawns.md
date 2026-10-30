@@ -28,7 +28,7 @@ source:
 # Monster spawns
 
 Monsters come from **spawn points** placed on each zone's map. Every zone page shows its
-spawn points (see for example [[zones/20-birth-island|Birth Island]]). A spawn point keeps
+spawn points (see for example [[zones/22-adventurer-s-plain|Adventurer's Plain]]). A spawn point keeps
 a few monsters around itself and brings more, and stronger "reinforcements", the more it is
 fought over.
 
@@ -89,7 +89,8 @@ it over (for example from 16 to 20 with a limit of 17).
 
 ## Worked example
 
-The first spawn point on [[zones/20-birth-island|Birth Island]] has max alive 17,
+Take a spawn point with max alive 17 (iROSE's first spawn point on
+[[zones/20-birth-island|Birth Island]], which our game removed),
 respawn every 5 seconds, radius 40 m and tactic points 100. Its basic groups are
 [[monsters/1-mini-jelly-bean|Mini-Jelly Bean]] ×2, [[monsters/8-butterfly|ButterFly]] ×1,
 [[monsters/11-mini-choropy|Mini-Choropy]] ×2, [[monsters/9-butterfly|ButterFly]] ×2 and

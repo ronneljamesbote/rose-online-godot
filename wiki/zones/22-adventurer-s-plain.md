@@ -2,7 +2,7 @@
 kind: zone
 id: 22
 name: Adventurer's Plain
-status: in-game
+status: changed-from-irose
 planet: Junon
 pvp: no
 monster_levels: 2–13
@@ -393,6 +393,11 @@ source:
 ---
 # Adventurer's Plain
 
+**Every new character starts here**, at the zone's start spot (5779.88 m, 5155.80 m) next to
+[[npcs/1031-visitor-guide-ronway|Visitor Guide Ronway]] (see [[rules/accounts|Accounts]]).
+Moving the "start" marker in the zone's scene moves where new characters start. In iROSE they
+start on [[zones/20-birth-island|Birth Island]] and come here when they leave it.
+
 Positions are in metres. Each spawn point keeps up to "max alive" monsters; the
 reinforcements show up once a point has been refilled many times (see
 [[rules/monster-spawns|Monster spawns]]). Zone drops can come from any monster here (see
@@ -402,3 +407,7 @@ Adventurer's Plain is edited in Godot: its spawn points, NPCs and start and revi
 markers in the zone's scenes, and the server reads them from
 `export/zones/22-adventurer-s-plain.toml`, which is exported from those scenes. They are
 the same as in iROSE's map files.
+
+## Changed from iROSE
+
+- New characters start here instead of on Birth Island.

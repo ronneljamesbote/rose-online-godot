@@ -20,7 +20,7 @@ revive_spread_m: 5
 sector_size_min_m: 50
 sector_size_max_m: 120
 view_sectors: 3 by 3 (your sector and the eight around it)
-start_zone: "[[zones/20-birth-island|Birth Island]]"
+start_zone: "[[zones/22-adventurer-s-plain|Adventurer's Plain]]"
 planets:
   - { planet: 1, name: Junon }
   - { planet: 2, name: Luna }
@@ -144,7 +144,8 @@ the NPCs and your party members among them. Your party members' HP bars work in 
 
 **Worked example.** [[zones/20-birth-island|Birth Island]] is 7 by 7 map blocks
 (1,120 m) with 50 m sectors. Standing anywhere, you see 50 to 100 m around you: a square of
-150 m. With 866 monsters on the island, about 120 of them are in that square.
+150 m. With the 866 monsters iROSE places on the island (ours has none, it is for testing
+only), about 120 of them would be in that square.
 
 ## Warp gates
 
@@ -206,8 +207,10 @@ Details are on [[rules/death|Death]].
 ## Signing in
 
 You come back in the zone and at the spot where you logged out, with the HP and MP you had.
-A new character starts on [[zones/20-birth-island|Birth Island]] (see
-[[rules/accounts|Accounts]]).
+A new character starts in [[zones/22-adventurer-s-plain|Adventurer's Plain]], at its start
+spot (see [[rules/accounts|Accounts]]). [[zones/20-birth-island|Birth Island]], where iROSE
+starts them, is kept for testing only: no warp gate or quest leads there, only the GM command
+`/tp 20`.
 
 ## Day and night
 
@@ -265,3 +268,5 @@ day) counts ticks of 10 seconds of real time, the same for everyone.
   here (see "Far away decorations").
 - Zones load in the background behind the loading screen, and the zone behind a nearby
   warp gate is read ahead.
+- New characters start in Adventurer's Plain instead of Birth Island, which has no monsters or
+  NPCs and is for testing only.

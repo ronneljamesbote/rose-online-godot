@@ -101,7 +101,8 @@ of what you bought; those bonuses count everywhere a stat is used below.
 
 ## New characters
 
-A new character is a level 1 **Visitor** (job 0) on Birth Island with these stats, the same
+A new character is a level 1 **Visitor** (job 0) in Adventurer's Plain (see
+[[rules/accounts|Accounts]]) with these stats, the same
 for men and women:
 
 | STR | DEX | INT | CON | CHA | SEN |
