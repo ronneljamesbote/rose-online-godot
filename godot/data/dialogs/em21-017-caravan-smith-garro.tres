@@ -1,0 +1,67 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://n42kp2jisai5"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_xqvdq"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_b9tha"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="3_d2j2y"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="4_pkie3"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="5_fklyk"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="6_zdq2h"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="7_2odvj"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="8_1ipuu"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="9_gkt37"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="10_7hhl9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="11_5tdpt"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="12_3e3bl"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_t7w6q"]
+text = "Every wagon needs a blade or two on board. Have a look, they're all sharp."
+next_menu = 1
+resource_name = "NPC: Every wagon needs a blade or two on board. Have …"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_a0lxa"]
+window = "Shop"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_1lf9a"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_a0lxa")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7abb5"]
+kind = "Answer"
+text = "Let me see your goods."
+next_menu = -1
+on_choose = Array[Resource]([SubResource("RoseDialogCase_1lf9a")])
+resource_name = "You: Let me see your goods."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_03iii"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_t62o0"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6bupm"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_66i4p"]
+lines = Array[Resource]([SubResource("RoseDialogLine_t7w6q")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_i8i4n"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7abb5"), SubResource("RoseDialogLine_03iii")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_zlm7s"]
+lines = Array[Resource]([SubResource("RoseDialogLine_t62o0"), SubResource("RoseDialogLine_6bupm")])
+resource_name = "Menu 2"
+
+[resource]
+key = "EM21-017.con"
+name = "[Caravan Smith] Garro"
+menus = Array[Resource]([SubResource("RoseDialogMenu_66i4p"), SubResource("RoseDialogMenu_i8i4n"), SubResource("RoseDialogMenu_zlm7s")])

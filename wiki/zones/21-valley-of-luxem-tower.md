@@ -310,6 +310,12 @@ npcs:
 - npc: '[[npcs/1065-quartermaster-hask|Quartermaster Hask]]'
   x: 5453
   y: 5300
+- npc: '[[npcs/1076-expedition-armorer-brannoc|Expedition Armorer Brannoc]]'
+  x: 5483
+  y: 5314
+- npc: '[[npcs/1077-expedition-tailor-yselle|Expedition Tailor Yselle]]'
+  x: 5448
+  y: 5308
 - npc: '[[npcs/1069-wagon-driver-oskar|Wagon Driver Oskar]]'
   x: 5405
   y: 5144
@@ -328,6 +334,12 @@ npcs:
 - npc: '[[npcs/1057-caravan-trader-sella|Caravan Trader Sella]]'
   x: 5207
   y: 5067
+- npc: '[[npcs/1074-caravan-smith-garro|Caravan Smith Garro]]'
+  x: 5189
+  y: 5070
+- npc: '[[npcs/1075-caravan-outfitter-nessa|Caravan Outfitter Nessa]]'
+  x: 5217
+  y: 5062
 warp_gates:
 - to: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
   x: 5135.8
@@ -395,6 +407,16 @@ Two elite monsters live here: [[monsters/76-sandscar|Sandscar]] (level 21) roams
 ground north of the ruins and comes back about every 10 minutes, and the
 [[monsters/77-ruin-warden|Ruin Warden]] (level 22) guards the sealed vault.
 
+## Shops
+
+- Sandwind Caravan Camp: [[npcs/1074-caravan-smith-garro|Garro]] (weapons),
+  [[npcs/1075-caravan-outfitter-nessa|Nessa]] (armour and clothes) and
+  [[npcs/1057-caravan-trader-sella|Sella]] (medicines, return scrolls, materials, magic weapons).
+- Arumic Expedition Camp: [[npcs/1076-expedition-armorer-brannoc|Brannoc]] (weapons),
+  [[npcs/1077-expedition-tailor-yselle|Yselle]] (armour and clothes) and
+  [[npcs/1065-quartermaster-hask|Hask]] (potions, return scrolls, repair tools, magic weapons).
+  Their goods are a step up from the caravan's.
+
 ## Getting around
 
 - Four gates, at the same places as in iROSE: to [[zones/1-canyon-city-of-zant|Zant]] in
@@ -454,4 +476,4 @@ The whole valley is redesigned. The size, the four gates and their arrival spots
 same as in iROSE; everything else is new: the ground's shape and textures, the tower moved
 to the north-east corner and made bigger, the river, oasis and wadi, the two camps, the
 ruins, the spawn points (levels 9–22 instead of 9–20), the two elite monsters, the sealed
-vault, thirteen new NPCs and the quest chain. The minimap is redrawn to match.
+vault, seventeen new NPCs and the quest chain. The minimap is redrawn to match.

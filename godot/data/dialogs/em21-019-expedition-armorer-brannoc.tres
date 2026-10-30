@@ -1,0 +1,67 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://cw6rmfd7x4ikn"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_xba22"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_7uzug"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="3_9sac5"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="4_1ct8j"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="5_vmda6"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="6_yi3eb"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="7_t4f7m"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="8_vcjw9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="9_u5r90"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="10_7q6x4"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="11_me3x9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="12_nav2u"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rxzne"]
+text = "The expedition can't afford to lose people to the ruins. Take something that hits hard."
+next_menu = 1
+resource_name = "NPC: The expedition can't afford to lose people to th…"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_l3e28"]
+window = "Shop"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_spftd"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_l3e28")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_efz32"]
+kind = "Answer"
+text = "Let me see your goods."
+next_menu = -1
+on_choose = Array[Resource]([SubResource("RoseDialogCase_spftd")])
+resource_name = "You: Let me see your goods."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tp3ag"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c2vh7"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_osilo"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qbjkm"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rxzne")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qxg5o"]
+lines = Array[Resource]([SubResource("RoseDialogLine_efz32"), SubResource("RoseDialogLine_tp3ag")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_p0viz"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c2vh7"), SubResource("RoseDialogLine_osilo")])
+resource_name = "Menu 2"
+
+[resource]
+key = "EM21-019.con"
+name = "[Expedition Armorer] Brannoc"
+menus = Array[Resource]([SubResource("RoseDialogMenu_qbjkm"), SubResource("RoseDialogMenu_qxg5o"), SubResource("RoseDialogMenu_p0viz")])

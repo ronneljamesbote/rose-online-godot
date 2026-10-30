@@ -1,0 +1,67 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://qylv1khkn20v"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_v90am"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_obfmd"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="3_wgy9w"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="4_y15dr"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="5_tek1y"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="6_nf8a1"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="7_u7llx"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="8_svljv"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="9_froyh"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="10_0nfw6"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="11_9f02j"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="12_k9tg2"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_gacye"]
+text = "Ruin work wears clothes out in a week. I mend them, and I sell new ones."
+next_menu = 1
+resource_name = "NPC: Ruin work wears clothes out in a week. I mend th…"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_mano9"]
+window = "Shop"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_r3o7d"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_mano9")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_iwj8h"]
+kind = "Answer"
+text = "Let me see your goods."
+next_menu = -1
+on_choose = Array[Resource]([SubResource("RoseDialogCase_r3o7d")])
+resource_name = "You: Let me see your goods."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ewdgy"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dcizc"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ywl09"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5hso0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_gacye")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_20hl8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_iwj8h"), SubResource("RoseDialogLine_ewdgy")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_tq50z"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dcizc"), SubResource("RoseDialogLine_ywl09")])
+resource_name = "Menu 2"
+
+[resource]
+key = "EM21-020.con"
+name = "[Expedition Tailor] Yselle"
+menus = Array[Resource]([SubResource("RoseDialogMenu_5hso0"), SubResource("RoseDialogMenu_20hl8"), SubResource("RoseDialogMenu_tq50z")])
