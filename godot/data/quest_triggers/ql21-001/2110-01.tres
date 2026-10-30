@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dqgrtswmilreg"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="1_q6yfw"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_lbrpq"]
+ability = "Level"
+operator = ">="
+value = 16
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_ep2nl"]
+switch = 608
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_b6uex"]
+switch = 609
+value = false
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_owkwg"]
+quest = ExtResource("1_q6yfw")
+
+[resource]
+name = "2110-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_lbrpq"), SubResource("RoseConditionQuestSwitch_ep2nl"), SubResource("RoseConditionQuestSwitch_b6uex")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_owkwg")])

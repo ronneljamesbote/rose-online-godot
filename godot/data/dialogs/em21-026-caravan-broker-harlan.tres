@@ -1,0 +1,239 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://ddpucyp4kg6ex"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="x_f59917"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="x_995c41"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="x_0a8b6c"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="x_7c9cc9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="x_9cec5d"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="x_a18b49"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="x_31c725"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="x_53dfc6"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="x_eb4f80"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="x_6166ba"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="x_da8593"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="x_700907"]
+[ext_resource type="RoseQuest" path="res://data/quests/2113-the-sergeant-s-trial.tres" id="x_4a5e32"]
+[ext_resource type="RoseQuest" path="res://data/quests/2114-the-sage-s-trial.tres" id="x_dc0cf2"]
+[ext_resource type="RoseQuest" path="res://data/quests/2115-the-outrider-s-trial.tres" id="x_bc40e9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2116-the-broker-s-trial.tres" id="x_41e0fa"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2116-01.tres" id="x_9b73d8"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2116-02.tres" id="x_4ff33a"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2116-21.tres" id="x_6b7161"]
+[ext_resource type="RoseQuest" path="res://data/quests/2117-on-to-zant.tres" id="x_d1180a"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_476b34"]
+text = "Everything has a price, friend. Even advice. Mine's cheap today."
+next_menu = 1
+resource_name = "NPC: Everything has a price, friend. Even advice. Min…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_72f732"]
+quest = ExtResource("x_41e0fa")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_310493"]
+step = ExtResource("x_9b73d8")
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_1d1099"]
+quest = ExtResource("x_4a5e32")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_d41891"]
+quest = ExtResource("x_dc0cf2")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_86900f"]
+quest = ExtResource("x_bc40e9")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_963559"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_72f732"), SubResource("RoseDialogIfQuestStep_310493"), SubResource("RoseDialogIfQuest_1d1099"), SubResource("RoseDialogIfQuest_d41891"), SubResource("RoseDialogIfQuest_86900f")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ac8686"]
+kind = "Answer"
+text = "About \"The Broker's Trial\""
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_963559")])
+resource_name = "You: About \"The Broker's Trial\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fec041"]
+text = "Anyone can swing a sword. A Dealer knows what everything is worth. The Big Pumpkins on the flats carry seeds that sell well in Zant. Bring me 6, and ask Sella and Garro what they'd pay for them. Learn the market, and I'll make you a Dealer."
+next_menu = 4
+resource_name = "NPC: Anyone can swing a sword. A Dealer knows what ev…"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_457a8e"]
+step = ExtResource("x_9b73d8")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_198cd9"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_457a8e")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_924abf"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+on_choose = Array[Resource]([SubResource("RoseDialogCase_198cd9")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7bf1a0"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_349561"]
+text = "Big Pumpkins are all over the flats and the road. Sella sells supplies, Garro sells blades. Both are here in the camp."
+next_menu = 2
+resource_name = "NPC: Big Pumpkins are all over the flats and the road…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_3bcd69"]
+quest = ExtResource("x_41e0fa")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_3a44c5"]
+step = ExtResource("x_4ff33a")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_e38259"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_3bcd69"), SubResource("RoseDialogIfQuestStep_3a44c5")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_878815"]
+kind = "Answer"
+text = "About \"The Broker's Trial\""
+next_menu = 6
+show_if = Array[Resource]([SubResource("RoseDialogCase_e38259")])
+resource_name = "You: About \"The Broker's Trial\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d24489"]
+text = "Six seeds, and the prices from Sella and Garro. A Dealer never sells without asking around."
+next_menu = 2
+resource_name = "NPC: Six seeds, and the prices from Sella and Garro. …"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_3bd713"]
+step = ExtResource("x_4ff33a")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_312cde"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_3bd713")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_078bd9"]
+kind = "Answer"
+text = "\"The Broker's Trial\": it's done."
+next_menu = 7
+show_if = Array[Resource]([SubResource("RoseDialogCase_312cde")])
+resource_name = "You: \"The Broker's Trial\": it's done."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e25be1"]
+text = "Six seeds, and you know Sella pays more than Garro. You'll do well. From today you're a Dealer. Every Dealer needs something to protect the goods. A pistol, or a launcher?"
+next_menu = 8
+resource_name = "NPC: Six seeds, and you know Sella pays more than Gar…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_3bd7132"]
+step = ExtResource("x_4ff33a")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_55e662"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_3bd7132")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_875751"]
+step = ExtResource("x_4ff33a")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_788542"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_875751")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c3dc1b"]
+kind = "Answer"
+text = "I'll take the Broker's Pistol."
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_55e662")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_788542")])
+resource_name = "You: I'll take the Broker's Pistol."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_831fe0"]
+step = ExtResource("x_6b7161")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2c5bb0"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_831fe0")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_adc5d6"]
+step = ExtResource("x_6b7161")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_84ab3a"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_adc5d6")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5cdee2"]
+kind = "Answer"
+text = "I'll take the Broker's Launcher."
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_2c5bb0")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_84ab3a")])
+resource_name = "You: I'll take the Broker's Launcher."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8f0d35"]
+kind = "Answer"
+text = "Let me think about it."
+next_menu = -1
+resource_name = "You: Let me think about it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c8cd4b"]
+text = "Use it well, <NAME>."
+next_menu = 2
+resource_name = "NPC: Use it well, <NAME>."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a67633"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c2"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_e5586c"]
+lines = Array[Resource]([SubResource("RoseDialogLine_476b34")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_e8da7c"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ac8686"), SubResource("RoseDialogLine_878815"), SubResource("RoseDialogLine_078bd9"), SubResource("RoseDialogLine_4d129c")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6c4396"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a67633"), SubResource("RoseDialogLine_4d129c2")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_325bf3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fec041")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b28db5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_924abf"), SubResource("RoseDialogLine_7bf1a0")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bc2427"]
+lines = Array[Resource]([SubResource("RoseDialogLine_349561")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_80e671"]
+lines = Array[Resource]([SubResource("RoseDialogLine_d24489")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2a009b"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e25be1")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2883a5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c3dc1b"), SubResource("RoseDialogLine_5cdee2"), SubResource("RoseDialogLine_8f0d35")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_e08a0f"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c8cd4b")])
+resource_name = "Menu 9"
+
+[resource]
+key = "EM21-026.con"
+name = "[Caravan Broker] Harlan"
+menus = Array[Resource]([SubResource("RoseDialogMenu_e5586c"), SubResource("RoseDialogMenu_e8da7c"), SubResource("RoseDialogMenu_6c4396"), SubResource("RoseDialogMenu_325bf3"), SubResource("RoseDialogMenu_b28db5"), SubResource("RoseDialogMenu_bc2427"), SubResource("RoseDialogMenu_80e671"), SubResource("RoseDialogMenu_2a009b"), SubResource("RoseDialogMenu_2883a5"), SubResource("RoseDialogMenu_e08a0f")])

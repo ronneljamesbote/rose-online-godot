@@ -49,6 +49,7 @@ drops:
   slots_of_30: 0.2
 quests:
 - '[[quests/852-solider-job-change-quest|Solider Job Change Quest]]'
+- '[[quests/2103-glowing-stingers|Glowing Stingers]]'
 spawns:
 - zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
   x: 5441.3
@@ -111,118 +112,58 @@ spawns:
   count: 1
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5195.4
-  y: 5441.8
+  x: 5294
+  y: 5338
   count: 1
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5232.5
-  y: 5473.1
+  x: 5294
+  y: 5338
+  count: 2
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5294
+  y: 5338
   count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5149.1
-  y: 5450.9
-  count: 2
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5149.1
-  y: 5450.9
-  count: 2
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5358.5
-  y: 5461.5
-  count: 2
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5193.9
-  y: 5367.9
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5193.9
-  y: 5367.9
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5193.9
-  y: 5367.9
-  count: 2
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5163.8
-  y: 5329
-  count: 2
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5163.8
-  y: 5329
-  count: 2
   group: reinforcements
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5189.8
-  y: 5391.3
-  count: 2
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5133.7
-  y: 5303.3
-  count: 2
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5282.9
-  y: 5435.5
+  x: 5038
+  y: 5216
   count: 1
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5282.9
-  y: 5435.5
+  x: 5038
+  y: 5216
   count: 2
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5373.6
-  y: 5280.5
+  x: 5038
+  y: 5216
   count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5373.6
-  y: 5280.5
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5373.6
-  y: 5280.5
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5104.5
-  y: 5167.8
-  count: 2
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5222.2
-  y: 5272.9
-  count: 2
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5120.6
-  y: 5274.2
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5120.6
-  y: 5274.2
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5295.8
-  y: 5106.9
-  count: 2
   group: reinforcements
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5340.9
-  y: 5112.8
+  x: 5222
+  y: 5172
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5222
+  y: 5172
+  count: 2
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5222
+  y: 5172
+  count: 1
+  group: reinforcements
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5146
+  y: 5148
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5146
+  y: 5148
   count: 1
   group: reinforcements
 source:

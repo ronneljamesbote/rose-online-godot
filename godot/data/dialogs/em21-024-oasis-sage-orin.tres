@@ -1,0 +1,239 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://dc10gdx83kyi3"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="x_f59917"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="x_995c41"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="x_0a8b6c"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="x_7c9cc9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="x_9cec5d"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="x_a18b49"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="x_31c725"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="x_53dfc6"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="x_eb4f80"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="x_6166ba"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="x_da8593"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="x_700907"]
+[ext_resource type="RoseQuest" path="res://data/quests/2113-the-sergeant-s-trial.tres" id="x_4a5e32"]
+[ext_resource type="RoseQuest" path="res://data/quests/2114-the-sage-s-trial.tres" id="x_dc0cf2"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2114-01.tres" id="x_09ca47"]
+[ext_resource type="RoseQuest" path="res://data/quests/2115-the-outrider-s-trial.tres" id="x_bc40e9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2116-the-broker-s-trial.tres" id="x_41e0fa"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2114-02.tres" id="x_f47bfa"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2114-21.tres" id="x_1248b0"]
+[ext_resource type="RoseQuest" path="res://data/quests/2117-on-to-zant.tres" id="x_d1180a"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_133db4"]
+text = "The water here remembers the tower. Sit, if you want. Listen."
+next_menu = 1
+resource_name = "NPC: The water here remembers the tower. Sit, if you …"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_d41891"]
+quest = ExtResource("x_dc0cf2")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_c6aa83"]
+step = ExtResource("x_09ca47")
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_1d1099"]
+quest = ExtResource("x_4a5e32")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_86900f"]
+quest = ExtResource("x_bc40e9")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_72f732"]
+quest = ExtResource("x_41e0fa")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_4fd172"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_d41891"), SubResource("RoseDialogIfQuestStep_c6aa83"), SubResource("RoseDialogIfQuest_1d1099"), SubResource("RoseDialogIfQuest_86900f"), SubResource("RoseDialogIfQuest_72f732")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4ba0d1"]
+kind = "Answer"
+text = "About \"The Sage's Trial\""
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_4fd172")])
+resource_name = "You: About \"The Sage's Trial\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5f34ce"]
+text = "Close your eyes. Can you feel it? The valley is full of mana right now, more than it should be, and the Pomics soak it up like sponges. A Muse must learn to find mana and to take it. Bring me 6 handfuls of the dust that hums. Then I will teach you to use what you found."
+next_menu = 4
+resource_name = "NPC: Close your eyes. Can you feel it? The valley is …"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_881791"]
+step = ExtResource("x_09ca47")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_d6b306"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_881791")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c9a126"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+on_choose = Array[Resource]([SubResource("RoseDialogCase_d6b306")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7bf1a0"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_018072"]
+text = "The Pomics gather at the Fallen Watch on the Caravan Road, and by the oasis. Listen for the humming."
+next_menu = 2
+resource_name = "NPC: The Pomics gather at the Fallen Watch on the Car…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_e921b1"]
+quest = ExtResource("x_dc0cf2")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_55d045"]
+step = ExtResource("x_f47bfa")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_6e0bb5"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_e921b1"), SubResource("RoseDialogIfQuestStep_55d045")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0e056b"]
+kind = "Answer"
+text = "About \"The Sage's Trial\""
+next_menu = 6
+show_if = Array[Resource]([SubResource("RoseDialogCase_6e0bb5")])
+resource_name = "You: About \"The Sage's Trial\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6106ac"]
+text = "Six handfuls. Listen for the hum; not every Pomic carries it."
+next_menu = 2
+resource_name = "NPC: Six handfuls. Listen for the hum; not every Pomi…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_52687b"]
+step = ExtResource("x_f47bfa")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_9b721d"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_52687b")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dc3543"]
+kind = "Answer"
+text = "\"The Sage's Trial\": it's done."
+next_menu = 7
+show_if = Array[Resource]([SubResource("RoseDialogCase_9b721d")])
+resource_name = "You: \"The Sage's Trial\": it's done."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bdaede"]
+text = "Hear how it sings in your hands? You found it. That is the first lesson, and the hardest. From today you are a Muse. Let me give you something to carry the mana with. A staff, or a wand?"
+next_menu = 8
+resource_name = "NPC: Hear how it sings in your hands? You found it. T…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_52687b2"]
+step = ExtResource("x_f47bfa")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_11ce60"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_52687b2")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_67eb52"]
+step = ExtResource("x_f47bfa")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5751b6"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_67eb52")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6bf48c"]
+kind = "Answer"
+text = "I'll take the Oasis Staff."
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_11ce60")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_5751b6")])
+resource_name = "You: I'll take the Oasis Staff."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_8ff947"]
+step = ExtResource("x_1248b0")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_10413c"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_8ff947")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_1866b3"]
+step = ExtResource("x_1248b0")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7db496"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_1866b3")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_039760"]
+kind = "Answer"
+text = "I'll take the Oasis Wand."
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_10413c")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_7db496")])
+resource_name = "You: I'll take the Oasis Wand."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8f0d35"]
+kind = "Answer"
+text = "Let me think about it."
+next_menu = -1
+resource_name = "You: Let me think about it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c8cd4b"]
+text = "Use it well, <NAME>."
+next_menu = 2
+resource_name = "NPC: Use it well, <NAME>."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a67633"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c2"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5635a9"]
+lines = Array[Resource]([SubResource("RoseDialogLine_133db4")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2b505d"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4ba0d1"), SubResource("RoseDialogLine_0e056b"), SubResource("RoseDialogLine_dc3543"), SubResource("RoseDialogLine_4d129c")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6c4396"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a67633"), SubResource("RoseDialogLine_4d129c2")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_f44946"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5f34ce")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_d30ae7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c9a126"), SubResource("RoseDialogLine_7bf1a0")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_89dce8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_018072")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_20322b"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6106ac")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_f62204"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bdaede")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_976e82"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6bf48c"), SubResource("RoseDialogLine_039760"), SubResource("RoseDialogLine_8f0d35")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_e08a0f"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c8cd4b")])
+resource_name = "Menu 9"
+
+[resource]
+key = "EM21-024.con"
+name = "[Oasis Sage] Orin"
+menus = Array[Resource]([SubResource("RoseDialogMenu_5635a9"), SubResource("RoseDialogMenu_2b505d"), SubResource("RoseDialogMenu_6c4396"), SubResource("RoseDialogMenu_f44946"), SubResource("RoseDialogMenu_d30ae7"), SubResource("RoseDialogMenu_89dce8"), SubResource("RoseDialogMenu_20322b"), SubResource("RoseDialogMenu_f62204"), SubResource("RoseDialogMenu_976e82"), SubResource("RoseDialogMenu_e08a0f")])

@@ -19,7 +19,7 @@ run_speed: 380
 xp: 24
 drop_item_rate: 65
 drop_money_rate: 35
-zones: 1
+zones: 2
 drops:
 - item: '[[items/material/175-insect-feeler|Insect Feeler]]'
   slots_of_30: 6
@@ -258,6 +258,41 @@ spawns:
   y: 4881.9
   count: 1
   group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5385
+  y: 5500
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5385
+  y: 5500
+  count: 2
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5385
+  y: 5500
+  count: 1
+  group: reinforcements
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5438
+  y: 5570
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5465
+  y: 5448
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5465
+  y: 5448
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5465
+  y: 5448
+  count: 1
+  group: reinforcements
 source:
   data: godot/data/monsters/75-pomic-fighter.tres, drop table godot/data/drop_tables/135-pomic-fighter.tres
   code:

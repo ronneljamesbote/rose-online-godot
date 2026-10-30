@@ -1,0 +1,62 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://douceqvp7eggv"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2113-the-sergeant-s-trial.tres" id="x_4a5e32"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/708-thorned-vine.tres" id="x_e1f606"]
+[ext_resource type="RoseItemWeapon" path="res://data/items/weapon/1121-sandwind-blade.tres" id="x_14bfd3"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_fa824e"]
+quest = ExtResource("x_4a5e32")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_26a6fb"]
+ability = "Job"
+operator = "=="
+value = 0
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_6a7612"]
+item = ExtResource("x_e1f606")
+equipment_index = 13
+count = 8
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_01d4cc"]
+quest = ExtResource("x_4a5e32")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_5ec850"]
+item = ExtResource("x_14bfd3")
+quantity = 1
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_023ed2"]
+item = ExtResource("x_e1f606")
+quantity = 8
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_9447f9"]
+ability = "Job"
+value = 111
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_bbf3a9"]
+variable_type = "Job"
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardSetHealthManaPercent" id="RoseRewardSetHealthManaPercent_9c5f58"]
+health_percent = 100
+mana_percent = 100
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_13806d"]
+equation = 0
+value = 800
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_153ea8"]
+equation = 0
+value = 500
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_c6e322"]
+switch = 613
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_bd06b1"]
+
+[resource]
+name = "2113-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_fa824e"), SubResource("RoseConditionAbilityValue_26a6fb"), SubResource("RoseConditionQuestItem_6a7612")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_01d4cc"), SubResource("RoseRewardAddItem_5ec850"), SubResource("RoseRewardRemoveItem_023ed2"), SubResource("RoseRewardAbilityValue_9447f9"), SubResource("RoseRewardQuestVariable_bbf3a9"), SubResource("RoseRewardSetHealthManaPercent_9c5f58"), SubResource("RoseRewardCalculatedExperiencePoints_13806d"), SubResource("RoseRewardCalculatedMoney_153ea8"), SubResource("RoseRewardSetQuestSwitch_c6e322"), SubResource("RoseRewardRemoveSelectedQuest_bd06b1")])

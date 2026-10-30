@@ -59,6 +59,8 @@ drops:
   slots_of_30: 0.2
 - item: '[[items/subweapon/2-tarz|Tarz]]'
   slots_of_30: 0.2
+quests:
+- '[[quests/2108-hornets-in-the-dig|Hornets in the Dig]]'
 spawns:
 - zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
   x: 5245.2
@@ -165,81 +167,6 @@ spawns:
   y: 5046.1
   count: 1
   group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5195.4
-  y: 5441.8
-  count: 1
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5232.5
-  y: 5473.1
-  count: 1
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5149.1
-  y: 5450.9
-  count: 1
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5358.5
-  y: 5461.5
-  count: 1
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5118
-  y: 5298.5
-  count: 1
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5193.9
-  y: 5367.9
-  count: 1
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5163.8
-  y: 5329
-  count: 1
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5242.1
-  y: 5303.8
-  count: 1
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5259.9
-  y: 5336.6
-  count: 1
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5133.7
-  y: 5303.3
-  count: 1
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5282.9
-  y: 5435.5
-  count: 1
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5382.3
-  y: 5300.6
-  count: 2
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5373.6
-  y: 5280.5
-  count: 1
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5109.5
-  y: 5211.2
-  count: 1
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5176.4
-  y: 5202.3
-  count: 1
-  group: reinforcements
 - zone: '[[zones/24-el-verloon-desert|El Verloon Desert]]'
   x: 5084.7
   y: 5379.9
@@ -325,6 +252,36 @@ spawns:
   y: 5119
   count: 2
   group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5380
+  y: 5542
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5290
+  y: 5562
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5432
+  y: 5255
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5460
+  y: 5208
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5460
+  y: 5208
+  count: 2
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5460
+  y: 5208
+  count: 1
+  group: reinforcements
 source:
   data: godot/data/monsters/63-needle-hornet.tres, drop table godot/data/drop_tables/126-needle-hornet.tres
   code:

@@ -1,0 +1,26 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cr8styu1dxc8d"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="1_90yb9"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_6dpfm"]
+quest = ExtResource("1_90yb9")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_hqbf9"]
+variable_type = "Variable"
+variable = 2
+operator = "=="
+value = 0
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_gdbd1"]
+quest = ExtResource("1_90yb9")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_5ru11"]
+variable_type = "Variable"
+variable = 2
+operator = "Set"
+value = 1
+
+[resource]
+name = "2109-05"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_6dpfm"), SubResource("RoseConditionQuestVariable_hqbf9")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_gdbd1"), SubResource("RoseRewardQuestVariable_5ru11")])

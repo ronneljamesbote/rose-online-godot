@@ -45,86 +45,57 @@ drops:
   slots_of_30: 0.4
 quests:
 - '[[quests/105-healing-hands|Healing Hands]]'
+- '[[quests/2102-pumpkins-on-the-road|Pumpkins on the Road]]'
 spawns:
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5118
-  y: 5298.5
+  x: 5022
+  y: 5300
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5110
+  y: 5100
   count: 2
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5163.8
-  y: 5329
+  x: 5110
+  y: 5100
   count: 1
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5104.5
-  y: 5167.8
+  x: 5110
+  y: 5100
   count: 2
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5104.5
-  y: 5167.8
+  x: 5022
+  y: 5108
   count: 1
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5109.5
-  y: 5211.2
+  x: 5278
+  y: 5118
   count: 2
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5133.9
-  y: 5125.1
+  x: 5278
+  y: 5118
   count: 2
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5133.9
-  y: 5125.1
+  x: 5278
+  y: 5118
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5358
+  y: 5088
   count: 2
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5183.3
-  y: 5173.9
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5183.3
-  y: 5173.9
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5183.3
-  y: 5173.9
+  x: 5358
+  y: 5088
   count: 2
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5275.6
-  y: 5208.7
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5275.6
-  y: 5208.7
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5282
-  y: 5138.2
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5295.8
-  y: 5106.9
-  count: 2
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5340.9
-  y: 5112.8
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5340.9
-  y: 5112.8
-  count: 1
   group: basic
 source:
   data: godot/data/monsters/21-pumpkin.tres, drop table godot/data/drop_tables/108-pumpkin.tres

@@ -1,0 +1,44 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cb3jdn0rfo2d2"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="x_53dfc6"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/705-hornet-wing.tres" id="x_c5e033"]
+[ext_resource type="RoseItemFeet" path="res://data/items/feet/652-luxem-acolyte-shoes.tres" id="x_97dacd"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_aed0f8"]
+quest = ExtResource("x_53dfc6")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_99333f"]
+item = ExtResource("x_c5e033")
+equipment_index = 13
+count = 8
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_dc0262"]
+quest = ExtResource("x_53dfc6")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_fd89f0"]
+item = ExtResource("x_97dacd")
+quantity = 1
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_1750c7"]
+item = ExtResource("x_c5e033")
+quantity = 8
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_2111fa"]
+equation = 0
+value = 2200
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_254bae"]
+equation = 0
+value = 2000
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_5d2aa4"]
+switch = 607
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_bd06b1"]
+
+[resource]
+name = "2108-21"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_aed0f8"), SubResource("RoseConditionQuestItem_99333f")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_dc0262"), SubResource("RoseRewardAddItem_fd89f0"), SubResource("RoseRewardRemoveItem_1750c7"), SubResource("RoseRewardCalculatedExperiencePoints_2111fa"), SubResource("RoseRewardCalculatedMoney_254bae"), SubResource("RoseRewardSetQuestSwitch_5d2aa4"), SubResource("RoseRewardRemoveSelectedQuest_bd06b1")])

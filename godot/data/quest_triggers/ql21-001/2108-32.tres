@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://fx2nd1alwyjt"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="1_jnzk7"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/705-hornet-wing.tres" id="2_3pcsf"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_2r5bh"]
+quest = ExtResource("1_jnzk7")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_f0u4l"]
+to = 70
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_2d14w"]
+item = ExtResource("2_3pcsf")
+equipment_index = 13
+count = 8
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_s8olu"]
+quest = ExtResource("1_jnzk7")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_9batt"]
+item = ExtResource("2_3pcsf")
+quantity = 1
+
+[resource]
+name = "2108-32"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_2r5bh"), SubResource("RoseConditionRandomPercent_f0u4l"), SubResource("RoseConditionQuestItem_2d14w")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_s8olu"), SubResource("RoseRewardAddItem_9batt")])

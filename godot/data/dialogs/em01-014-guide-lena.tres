@@ -31,6 +31,98 @@
 [ext_resource type="RoseQuestTrigger" uid="uid://bktyhej4o270i" path="res://data/quest_triggers/qs10-001/5007-02.tres" id="29_qy3es"]
 [ext_resource type="RoseQuestTrigger" uid="uid://chdunyo4twkqo" path="res://data/quest_triggers/qs10-001/5008-02.tres" id="30_qq8ar"]
 
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2117-02.tres" id="lv_x_45f066"]
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="lv_x_f59917"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="lv_x_995c41"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="lv_x_0a8b6c"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="lv_x_7c9cc9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="lv_x_9cec5d"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="lv_x_a18b49"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="lv_x_31c725"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="lv_x_53dfc6"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="lv_x_eb4f80"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="lv_x_6166ba"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="lv_x_da8593"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="lv_x_700907"]
+[ext_resource type="RoseQuest" path="res://data/quests/2113-the-sergeant-s-trial.tres" id="lv_x_4a5e32"]
+[ext_resource type="RoseQuest" path="res://data/quests/2114-the-sage-s-trial.tres" id="lv_x_dc0cf2"]
+[ext_resource type="RoseQuest" path="res://data/quests/2115-the-outrider-s-trial.tres" id="lv_x_bc40e9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2116-the-broker-s-trial.tres" id="lv_x_41e0fa"]
+[ext_resource type="RoseQuest" path="res://data/quests/2117-on-to-zant.tres" id="lv_x_d1180a"]
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_77904b"]
+step = ExtResource("lv_x_45f066")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5e2f33"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_77904b")])
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_77904b2"]
+step = ExtResource("lv_x_45f066")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_db7aa1"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_77904b2")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_b11f6d"]
+step = ExtResource("lv_x_45f066")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_381c2a"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_b11f6d")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7ef147"]
+kind = "Answer"
+text = "\"On to Zant\": here I am."
+next_menu = 79
+show_if = Array[Resource]([SubResource("RoseDialogCase_db7aa1")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_381c2a")])
+resource_name = "You: \"On to Zant\": here I am."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_50d2c9"]
+text = "You came from the Valley of Luxem Tower? Then you're the one who lit the tower again! The caravans talk of nothing else. Welcome to Zant, the Canyon City. The Akram Kingdom Minister and the Junon Order are always looking for people like you. Come and ask me if you get lost."
+next_menu = 78
+resource_name = "NPC: You came from the Valley of Luxem Tower? Then yo…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e2f3bf"]
+kind = "Answer"
+text = "Something else."
+next_menu = 1
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e2f3bf2"]
+kind = "Answer"
+text = "Something else."
+next_menu = 1
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c2"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2e5738"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7ef147"), SubResource("RoseDialogLine_e2f3bf"), SubResource("RoseDialogLine_4d129c")])
+resource_name = "Menu 77"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_19b616"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e2f3bf2"), SubResource("RoseDialogLine_4d129c2")])
+resource_name = "Menu 78"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_326885"]
+lines = Array[Resource]([SubResource("RoseDialogLine_50d2c9")])
+resource_name = "Menu 79"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_f0614a"]
+text = "You look like you've come a long way. From the valley, maybe?"
+next_menu = 77
+show_if = Array[Resource]([SubResource("RoseDialogCase_5e2f33")])
+resource_name = "NPC: You look like you've come a long way. From the v…"
+
 [sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_fqt5r"]
 quest = ExtResource("1_efo6s")
 active = false
@@ -174,7 +266,7 @@ show_if = Array[Resource]([SubResource("RoseDialogCase_vx7ty")])
 resource_name = "NPC: Did you also give my apologies to Lady {fc=1}Kar…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4hbux"]
-lines = Array[Resource]([SubResource("RoseDialogLine_e8624"), SubResource("RoseDialogLine_sk5fx"), SubResource("RoseDialogLine_nqov4"), SubResource("RoseDialogLine_5u7uk"), SubResource("RoseDialogLine_3lbe8"), SubResource("RoseDialogLine_i5aj4"), SubResource("RoseDialogLine_4xwug"), SubResource("RoseDialogLine_twnqy"), SubResource("RoseDialogLine_380s1")])
+lines = Array[Resource]([SubResource("RoseDialogLine_e8624"), SubResource("RoseDialogLine_sk5fx"), SubResource("RoseDialogLine_nqov4"), SubResource("RoseDialogLine_5u7uk"), SubResource("RoseDialogLine_3lbe8"), SubResource("RoseDialogLine_i5aj4"), SubResource("RoseDialogLine_4xwug"), SubResource("RoseDialogLine_twnqy"), SubResource("RoseDialogLine_380s1"), SubResource("RoseDialogLine_f0614a")])
 resource_name = "Menu 0"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_ltwcc"]
@@ -1599,4 +1691,4 @@ resource_name = "Menu 76"
 [resource]
 key = "EM01-014.con"
 name = "[Guide] Lena"
-menus = Array[Resource]([SubResource("RoseDialogMenu_4hbux"), SubResource("RoseDialogMenu_f1k1x"), SubResource("RoseDialogMenu_er34k"), SubResource("RoseDialogMenu_vj25y"), SubResource("RoseDialogMenu_4u62f"), SubResource("RoseDialogMenu_i38lr"), SubResource("RoseDialogMenu_n71nm"), SubResource("RoseDialogMenu_g5fjn"), SubResource("RoseDialogMenu_w771v"), SubResource("RoseDialogMenu_yfcsx"), SubResource("RoseDialogMenu_gdehe"), SubResource("RoseDialogMenu_nx1b3"), SubResource("RoseDialogMenu_qcoe1"), SubResource("RoseDialogMenu_c5uiq"), SubResource("RoseDialogMenu_mfsi0"), SubResource("RoseDialogMenu_0ohjf"), SubResource("RoseDialogMenu_24kn8"), SubResource("RoseDialogMenu_mxebf"), SubResource("RoseDialogMenu_vjewv"), SubResource("RoseDialogMenu_val6d"), SubResource("RoseDialogMenu_djrku"), SubResource("RoseDialogMenu_hyseu"), SubResource("RoseDialogMenu_rxj6i"), SubResource("RoseDialogMenu_22y8a"), SubResource("RoseDialogMenu_j0uht"), SubResource("RoseDialogMenu_l6gcr"), SubResource("RoseDialogMenu_h2327"), SubResource("RoseDialogMenu_2o835"), SubResource("RoseDialogMenu_6ujcm"), SubResource("RoseDialogMenu_7c8ki"), SubResource("RoseDialogMenu_wn0mc"), SubResource("RoseDialogMenu_oqlqp"), SubResource("RoseDialogMenu_ytsmb"), SubResource("RoseDialogMenu_ldd5i"), SubResource("RoseDialogMenu_aup00"), SubResource("RoseDialogMenu_8pdna"), SubResource("RoseDialogMenu_bovb0"), SubResource("RoseDialogMenu_5qqwg"), SubResource("RoseDialogMenu_1m0dd"), SubResource("RoseDialogMenu_523ca"), SubResource("RoseDialogMenu_gke46"), SubResource("RoseDialogMenu_uh2fb"), SubResource("RoseDialogMenu_6ph5x"), SubResource("RoseDialogMenu_2d2jc"), SubResource("RoseDialogMenu_caw8i"), SubResource("RoseDialogMenu_c50j1"), SubResource("RoseDialogMenu_tbiak"), SubResource("RoseDialogMenu_fvgpw"), SubResource("RoseDialogMenu_x35n5"), SubResource("RoseDialogMenu_4l43u"), SubResource("RoseDialogMenu_fgtnr"), SubResource("RoseDialogMenu_co2qc"), SubResource("RoseDialogMenu_5761o"), SubResource("RoseDialogMenu_m7ueu"), SubResource("RoseDialogMenu_nyutk"), SubResource("RoseDialogMenu_4ahc5"), SubResource("RoseDialogMenu_o4irs"), SubResource("RoseDialogMenu_7ybmg"), SubResource("RoseDialogMenu_0dajo"), SubResource("RoseDialogMenu_ocgv4"), SubResource("RoseDialogMenu_52ogp"), SubResource("RoseDialogMenu_ncfk4"), SubResource("RoseDialogMenu_kb1xh"), SubResource("RoseDialogMenu_8yja3"), SubResource("RoseDialogMenu_q4lpb"), SubResource("RoseDialogMenu_e0xyt"), SubResource("RoseDialogMenu_fxow0"), SubResource("RoseDialogMenu_njvie"), SubResource("RoseDialogMenu_2kmeo"), SubResource("RoseDialogMenu_b7inn"), SubResource("RoseDialogMenu_ehs0m"), SubResource("RoseDialogMenu_fi08m"), SubResource("RoseDialogMenu_88sli"), SubResource("RoseDialogMenu_tycu1"), SubResource("RoseDialogMenu_wut2f"), SubResource("RoseDialogMenu_xehna"), SubResource("RoseDialogMenu_jrjcr")])
+menus = Array[Resource]([SubResource("RoseDialogMenu_4hbux"), SubResource("RoseDialogMenu_f1k1x"), SubResource("RoseDialogMenu_er34k"), SubResource("RoseDialogMenu_vj25y"), SubResource("RoseDialogMenu_4u62f"), SubResource("RoseDialogMenu_i38lr"), SubResource("RoseDialogMenu_n71nm"), SubResource("RoseDialogMenu_g5fjn"), SubResource("RoseDialogMenu_w771v"), SubResource("RoseDialogMenu_yfcsx"), SubResource("RoseDialogMenu_gdehe"), SubResource("RoseDialogMenu_nx1b3"), SubResource("RoseDialogMenu_qcoe1"), SubResource("RoseDialogMenu_c5uiq"), SubResource("RoseDialogMenu_mfsi0"), SubResource("RoseDialogMenu_0ohjf"), SubResource("RoseDialogMenu_24kn8"), SubResource("RoseDialogMenu_mxebf"), SubResource("RoseDialogMenu_vjewv"), SubResource("RoseDialogMenu_val6d"), SubResource("RoseDialogMenu_djrku"), SubResource("RoseDialogMenu_hyseu"), SubResource("RoseDialogMenu_rxj6i"), SubResource("RoseDialogMenu_22y8a"), SubResource("RoseDialogMenu_j0uht"), SubResource("RoseDialogMenu_l6gcr"), SubResource("RoseDialogMenu_h2327"), SubResource("RoseDialogMenu_2o835"), SubResource("RoseDialogMenu_6ujcm"), SubResource("RoseDialogMenu_7c8ki"), SubResource("RoseDialogMenu_wn0mc"), SubResource("RoseDialogMenu_oqlqp"), SubResource("RoseDialogMenu_ytsmb"), SubResource("RoseDialogMenu_ldd5i"), SubResource("RoseDialogMenu_aup00"), SubResource("RoseDialogMenu_8pdna"), SubResource("RoseDialogMenu_bovb0"), SubResource("RoseDialogMenu_5qqwg"), SubResource("RoseDialogMenu_1m0dd"), SubResource("RoseDialogMenu_523ca"), SubResource("RoseDialogMenu_gke46"), SubResource("RoseDialogMenu_uh2fb"), SubResource("RoseDialogMenu_6ph5x"), SubResource("RoseDialogMenu_2d2jc"), SubResource("RoseDialogMenu_caw8i"), SubResource("RoseDialogMenu_c50j1"), SubResource("RoseDialogMenu_tbiak"), SubResource("RoseDialogMenu_fvgpw"), SubResource("RoseDialogMenu_x35n5"), SubResource("RoseDialogMenu_4l43u"), SubResource("RoseDialogMenu_fgtnr"), SubResource("RoseDialogMenu_co2qc"), SubResource("RoseDialogMenu_5761o"), SubResource("RoseDialogMenu_m7ueu"), SubResource("RoseDialogMenu_nyutk"), SubResource("RoseDialogMenu_4ahc5"), SubResource("RoseDialogMenu_o4irs"), SubResource("RoseDialogMenu_7ybmg"), SubResource("RoseDialogMenu_0dajo"), SubResource("RoseDialogMenu_ocgv4"), SubResource("RoseDialogMenu_52ogp"), SubResource("RoseDialogMenu_ncfk4"), SubResource("RoseDialogMenu_kb1xh"), SubResource("RoseDialogMenu_8yja3"), SubResource("RoseDialogMenu_q4lpb"), SubResource("RoseDialogMenu_e0xyt"), SubResource("RoseDialogMenu_fxow0"), SubResource("RoseDialogMenu_njvie"), SubResource("RoseDialogMenu_2kmeo"), SubResource("RoseDialogMenu_b7inn"), SubResource("RoseDialogMenu_ehs0m"), SubResource("RoseDialogMenu_fi08m"), SubResource("RoseDialogMenu_88sli"), SubResource("RoseDialogMenu_tycu1"), SubResource("RoseDialogMenu_wut2f"), SubResource("RoseDialogMenu_xehna"), SubResource("RoseDialogMenu_jrjcr"), SubResource("RoseDialogMenu_2e5738"), SubResource("RoseDialogMenu_19b616"), SubResource("RoseDialogMenu_326885")])

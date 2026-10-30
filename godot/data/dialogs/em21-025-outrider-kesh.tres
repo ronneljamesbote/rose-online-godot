@@ -1,0 +1,239 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://dakkckaoml63a"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="x_f59917"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="x_995c41"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="x_0a8b6c"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="x_7c9cc9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="x_9cec5d"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="x_a18b49"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="x_31c725"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="x_53dfc6"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="x_eb4f80"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="x_6166ba"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="x_da8593"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="x_700907"]
+[ext_resource type="RoseQuest" path="res://data/quests/2113-the-sergeant-s-trial.tres" id="x_4a5e32"]
+[ext_resource type="RoseQuest" path="res://data/quests/2114-the-sage-s-trial.tres" id="x_dc0cf2"]
+[ext_resource type="RoseQuest" path="res://data/quests/2115-the-outrider-s-trial.tres" id="x_bc40e9"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2115-01.tres" id="x_2beec0"]
+[ext_resource type="RoseQuest" path="res://data/quests/2116-the-broker-s-trial.tres" id="x_41e0fa"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2115-02.tres" id="x_24afc4"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2115-21.tres" id="x_14b86a"]
+[ext_resource type="RoseQuest" path="res://data/quests/2117-on-to-zant.tres" id="x_d1180a"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8f55af"]
+text = "Looking for the outriders? You found one. The fast one."
+next_menu = 1
+resource_name = "NPC: Looking for the outriders? You found one. The fa…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_86900f"]
+quest = ExtResource("x_bc40e9")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_d70d21"]
+step = ExtResource("x_2beec0")
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_1d1099"]
+quest = ExtResource("x_4a5e32")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_d41891"]
+quest = ExtResource("x_dc0cf2")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_72f732"]
+quest = ExtResource("x_41e0fa")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_1a33c1"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_86900f"), SubResource("RoseDialogIfQuestStep_d70d21"), SubResource("RoseDialogIfQuest_1d1099"), SubResource("RoseDialogIfQuest_d41891"), SubResource("RoseDialogIfQuest_72f732")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dccc7d"]
+kind = "Answer"
+text = "About \"The Outrider's Trial\""
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_1a33c1")])
+resource_name = "You: About \"The Outrider's Trial\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_558255"]
+text = "A Hawker hits first and is gone before the other side knows. Honeybees are the fastest things in this valley. Bring me 10 of their wings, in one piece. Do it and you'll ride out with me as a Hawker."
+next_menu = 4
+resource_name = "NPC: A Hawker hits first and is gone before the other…"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_eea330"]
+step = ExtResource("x_2beec0")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2cbba1"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_eea330")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fa7703"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+on_choose = Array[Resource]([SubResource("RoseDialogCase_2cbba1")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7bf1a0"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ed76c8"]
+text = "The bees swarm around the dead trees with hives, on the flats and by the road. Be quicker than them."
+next_menu = 2
+resource_name = "NPC: The bees swarm around the dead trees with hives,…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_c41081"]
+quest = ExtResource("x_bc40e9")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_7fb64f"]
+step = ExtResource("x_24afc4")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_d88be8"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_c41081"), SubResource("RoseDialogIfQuestStep_7fb64f")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d93684"]
+kind = "Answer"
+text = "About \"The Outrider's Trial\""
+next_menu = 6
+show_if = Array[Resource]([SubResource("RoseDialogCase_d88be8")])
+resource_name = "You: About \"The Outrider's Trial\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_422c46"]
+text = "Ten wings, whole ones. Torn wings don't count."
+next_menu = 2
+resource_name = "NPC: Ten wings, whole ones. Torn wings don't count."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_6ee030"]
+step = ExtResource("x_24afc4")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_474f47"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_6ee030")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_482733"]
+kind = "Answer"
+text = "\"The Outrider's Trial\": it's done."
+next_menu = 7
+show_if = Array[Resource]([SubResource("RoseDialogCase_474f47")])
+resource_name = "You: \"The Outrider's Trial\": it's done."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6b4bc0"]
+text = "Ten, and barely a scratch on you. You're quick. From today you're a Hawker, and you ride with the outriders. Take a weapon from me: a bow to hit them from far away, or a katar to hit them up close?"
+next_menu = 8
+resource_name = "NPC: Ten, and barely a scratch on you. You're quick. …"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_6ee0302"]
+step = ExtResource("x_24afc4")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_168eb6"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_6ee0302")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_7010e5"]
+step = ExtResource("x_24afc4")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3c3b79"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_7010e5")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_9742d9"]
+kind = "Answer"
+text = "I'll take the Outrider Bow."
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_168eb6")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_3c3b79")])
+resource_name = "You: I'll take the Outrider Bow."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_ce90e5"]
+step = ExtResource("x_14b86a")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_9941e4"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_ce90e5")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_4b8571"]
+step = ExtResource("x_14b86a")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5115f4"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_4b8571")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1e8d7a"]
+kind = "Answer"
+text = "I'll take the Outrider Katar."
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_9941e4")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_5115f4")])
+resource_name = "You: I'll take the Outrider Katar."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8f0d35"]
+kind = "Answer"
+text = "Let me think about it."
+next_menu = -1
+resource_name = "You: Let me think about it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c8cd4b"]
+text = "Use it well, <NAME>."
+next_menu = 2
+resource_name = "NPC: Use it well, <NAME>."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a67633"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c2"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1571e3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8f55af")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_53e7e4"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dccc7d"), SubResource("RoseDialogLine_d93684"), SubResource("RoseDialogLine_482733"), SubResource("RoseDialogLine_4d129c")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6c4396"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a67633"), SubResource("RoseDialogLine_4d129c2")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_630c3f"]
+lines = Array[Resource]([SubResource("RoseDialogLine_558255")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5b7e4e"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fa7703"), SubResource("RoseDialogLine_7bf1a0")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_32b392"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ed76c8")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_e2cc7f"]
+lines = Array[Resource]([SubResource("RoseDialogLine_422c46")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fb56f6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6b4bc0")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_91d706"]
+lines = Array[Resource]([SubResource("RoseDialogLine_9742d9"), SubResource("RoseDialogLine_1e8d7a"), SubResource("RoseDialogLine_8f0d35")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_e08a0f"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c8cd4b")])
+resource_name = "Menu 9"
+
+[resource]
+key = "EM21-025.con"
+name = "[Outrider] Kesh"
+menus = Array[Resource]([SubResource("RoseDialogMenu_1571e3"), SubResource("RoseDialogMenu_53e7e4"), SubResource("RoseDialogMenu_6c4396"), SubResource("RoseDialogMenu_630c3f"), SubResource("RoseDialogMenu_5b7e4e"), SubResource("RoseDialogMenu_32b392"), SubResource("RoseDialogMenu_e2cc7f"), SubResource("RoseDialogMenu_fb56f6"), SubResource("RoseDialogMenu_91d706"), SubResource("RoseDialogMenu_e08a0f")])

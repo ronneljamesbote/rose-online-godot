@@ -3,6 +3,8 @@
 [ext_resource type="RoseQuest" uid="uid://06voatxfbyda" path="res://data/quests/5006-stockpiling-bronze-fragments.tres" id="1_icv7c"]
 [ext_resource type="RoseItemQuest" uid="uid://18xxjnvc1fjm" path="res://data/items/quest/21-bronze-fragment.tres" id="2_2w4ta"]
 
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2106-32.tres" id="lv_next"]
+
 [sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_owrlx"]
 quest = ExtResource("1_icv7c")
 
@@ -31,7 +33,11 @@ variable = 9
 operator = "Add"
 value = 1
 
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_lv210632"]
+trigger = "2106-32"
+
 [resource]
 name = "5006-32"
 conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_owrlx"), SubResource("RoseConditionRandomPercent_rbbt4"), SubResource("RoseConditionAbilityValue_u0gve"), SubResource("RoseConditionQuestItem_u6cok")])
-rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_4q3ub"), SubResource("RoseRewardAddItem_hulr7"), SubResource("RoseRewardQuestVariable_o7l7q")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_4q3ub"), SubResource("RoseRewardAddItem_hulr7"), SubResource("RoseRewardQuestVariable_o7l7q"), SubResource("RoseRewardTrigger_lv210632")])
+next_trigger = ExtResource("lv_next")

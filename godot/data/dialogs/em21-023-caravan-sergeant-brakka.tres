@@ -1,0 +1,239 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://bg30farfm0pop"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="x_f59917"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="x_995c41"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="x_0a8b6c"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="x_7c9cc9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="x_9cec5d"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="x_a18b49"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="x_31c725"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="x_53dfc6"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="x_eb4f80"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="x_6166ba"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="x_da8593"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="x_700907"]
+[ext_resource type="RoseQuest" path="res://data/quests/2113-the-sergeant-s-trial.tres" id="x_4a5e32"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2113-01.tres" id="x_2b6753"]
+[ext_resource type="RoseQuest" path="res://data/quests/2114-the-sage-s-trial.tres" id="x_dc0cf2"]
+[ext_resource type="RoseQuest" path="res://data/quests/2115-the-outrider-s-trial.tres" id="x_bc40e9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2116-the-broker-s-trial.tres" id="x_41e0fa"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2113-02.tres" id="x_9083d2"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2113-21.tres" id="x_fdbd51"]
+[ext_resource type="RoseQuest" path="res://data/quests/2117-on-to-zant.tres" id="x_d1180a"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_90b038"]
+text = "Stand up straight. The caravan's guards are trained by me, and I don't train cowards."
+next_menu = 1
+resource_name = "NPC: Stand up straight. The caravan's guards are trai…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_1d1099"]
+quest = ExtResource("x_4a5e32")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_fc82e5"]
+step = ExtResource("x_2b6753")
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_d41891"]
+quest = ExtResource("x_dc0cf2")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_86900f"]
+quest = ExtResource("x_bc40e9")
+active = false
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_72f732"]
+quest = ExtResource("x_41e0fa")
+active = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_f7a06a"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_1d1099"), SubResource("RoseDialogIfQuestStep_fc82e5"), SubResource("RoseDialogIfQuest_d41891"), SubResource("RoseDialogIfQuest_86900f"), SubResource("RoseDialogIfQuest_72f732")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d6977d"]
+kind = "Answer"
+text = "About \"The Sergeant's Trial\""
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_f7a06a")])
+resource_name = "You: About \"The Sergeant's Trial\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bc5877"]
+text = "You want to be a Soldier? Then show me you can stand in front of something and not run. The Elder Pumpkins in the Withered Fields hit hard and don't give up. Bring me 8 of their thorned vines. Come back alive and I'll make you a Soldier, here and now."
+next_menu = 4
+resource_name = "NPC: You want to be a Soldier? Then show me you can s…"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_4a7d28"]
+step = ExtResource("x_2b6753")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_31f99f"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_4a7d28")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e5c260"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+on_choose = Array[Resource]([SubResource("RoseDialogCase_31f99f")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7bf1a0"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0490a7"]
+text = "North of the camp, past the road. The fields with the dead crops. Don't come back with fewer than eight."
+next_menu = 2
+resource_name = "NPC: North of the camp, past the road. The fields wit…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_d54324"]
+quest = ExtResource("x_4a5e32")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_16f4ae"]
+step = ExtResource("x_9083d2")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5f12c9"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_d54324"), SubResource("RoseDialogIfQuestStep_16f4ae")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ce6ac1"]
+kind = "Answer"
+text = "About \"The Sergeant's Trial\""
+next_menu = 6
+show_if = Array[Resource]([SubResource("RoseDialogCase_5f12c9")])
+resource_name = "You: About \"The Sergeant's Trial\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1f990f"]
+text = "Eight vines. If you're hurt, rest, then go again. That's the job."
+next_menu = 2
+resource_name = "NPC: Eight vines. If you're hurt, rest, then go again…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_ae77d7"]
+step = ExtResource("x_9083d2")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_d460a6"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_ae77d7")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a11aff"]
+kind = "Answer"
+text = "\"The Sergeant's Trial\": it's done."
+next_menu = 7
+show_if = Array[Resource]([SubResource("RoseDialogCase_d460a6")])
+resource_name = "You: \"The Sergeant's Trial\": it's done."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a65001"]
+text = "Eight. You stood your ground, and that's all a Soldier really is. From today you're one of us. Every Soldier of the caravan gets a blade from me. Which kind?"
+next_menu = 8
+resource_name = "NPC: Eight. You stood your ground, and that's all a S…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_ae77d72"]
+step = ExtResource("x_9083d2")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_9c7d02"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_ae77d72")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_fb0604"]
+step = ExtResource("x_9083d2")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_e955c7"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_fb0604")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_615c41"]
+kind = "Answer"
+text = "I'll take the Sandwind Blade."
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_9c7d02")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_e955c7")])
+resource_name = "You: I'll take the Sandwind Blade."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_9c0751"]
+step = ExtResource("x_fdbd51")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_1edc48"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_9c0751")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_be2841"]
+step = ExtResource("x_fdbd51")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_b948fe"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_be2841")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bcbb2e"]
+kind = "Answer"
+text = "I'll take the Sandwind Greatsword."
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_1edc48")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_b948fe")])
+resource_name = "You: I'll take the Sandwind Greatsword."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8f0d35"]
+kind = "Answer"
+text = "Let me think about it."
+next_menu = -1
+resource_name = "You: Let me think about it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c8cd4b"]
+text = "Use it well, <NAME>."
+next_menu = 2
+resource_name = "NPC: Use it well, <NAME>."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a67633"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c2"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7aeeca"]
+lines = Array[Resource]([SubResource("RoseDialogLine_90b038")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1bf818"]
+lines = Array[Resource]([SubResource("RoseDialogLine_d6977d"), SubResource("RoseDialogLine_ce6ac1"), SubResource("RoseDialogLine_a11aff"), SubResource("RoseDialogLine_4d129c")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6c4396"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a67633"), SubResource("RoseDialogLine_4d129c2")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fbce63"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bc5877")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bb2f55"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e5c260"), SubResource("RoseDialogLine_7bf1a0")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0337c6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0490a7")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_398c3e"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1f990f")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_af73ec"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a65001")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_c077f7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_615c41"), SubResource("RoseDialogLine_bcbb2e"), SubResource("RoseDialogLine_8f0d35")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_e08a0f"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c8cd4b")])
+resource_name = "Menu 9"
+
+[resource]
+key = "EM21-023.con"
+name = "[Caravan Sergeant] Brakka"
+menus = Array[Resource]([SubResource("RoseDialogMenu_7aeeca"), SubResource("RoseDialogMenu_1bf818"), SubResource("RoseDialogMenu_6c4396"), SubResource("RoseDialogMenu_fbce63"), SubResource("RoseDialogMenu_bb2f55"), SubResource("RoseDialogMenu_0337c6"), SubResource("RoseDialogMenu_398c3e"), SubResource("RoseDialogMenu_af73ec"), SubResource("RoseDialogMenu_c077f7"), SubResource("RoseDialogMenu_e08a0f")])

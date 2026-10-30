@@ -3,6 +3,8 @@
 [ext_resource type="RoseQuest" uid="uid://blcrlxajbdr2d" path="res://data/quests/852-solider-job-change-quest.tres" id="1_suacv"]
 [ext_resource type="RoseItemQuest" uid="uid://cdoj3xf4k1hje" path="res://data/items/quest/103-honeybee-stinger.tres" id="2_20i6c"]
 
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2103-32.tres" id="lv_next"]
+
 [sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_kkrj3"]
 quest = ExtResource("1_suacv")
 
@@ -22,7 +24,11 @@ quest = ExtResource("1_suacv")
 item = ExtResource("2_20i6c")
 quantity = 1
 
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_lv210332"]
+trigger = "2103-32"
+
 [resource]
 name = "852-31"
 conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_kkrj3"), SubResource("RoseConditionRandomPercent_wtarh"), SubResource("RoseConditionQuestItem_d5okf")])
-rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_gvwvy"), SubResource("RoseRewardAddItem_3wrm7")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_gvwvy"), SubResource("RoseRewardAddItem_3wrm7"), SubResource("RoseRewardTrigger_lv210332")])
+next_trigger = ExtResource("lv_next")

@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cy6b37qh0weca"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2113-the-sergeant-s-trial.tres" id="x_4a5e32"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/708-thorned-vine.tres" id="x_e1f606"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_fa824e"]
+quest = ExtResource("x_4a5e32")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_b4573e"]
+to = 50
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_42c395"]
+item = ExtResource("x_e1f606")
+equipment_index = 13
+count = 8
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_01d4cc"]
+quest = ExtResource("x_4a5e32")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_42bf20"]
+item = ExtResource("x_e1f606")
+quantity = 1
+
+[resource]
+name = "2113-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_fa824e"), SubResource("RoseConditionRandomPercent_b4573e"), SubResource("RoseConditionQuestItem_42c395")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_01d4cc"), SubResource("RoseRewardAddItem_42bf20")])

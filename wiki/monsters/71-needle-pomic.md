@@ -57,166 +57,42 @@ drops:
   slots_of_30: 0.2
 quests:
 - '[[quests/5006-stockpiling-bronze-fragments|Stockpiling Bronze Fragments]]'
+- '[[quests/2106-restless-stones|Restless Stones]]'
 spawns:
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5195.4
-  y: 5441.8
+  x: 5072
+  y: 5394
   count: 2
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5275.6
-  y: 5454.8
+  x: 5072
+  y: 5394
   count: 1
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5275.6
-  y: 5454.8
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5232.5
-  y: 5473.1
+  x: 5072
+  y: 5394
   count: 2
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5149.1
-  y: 5450.9
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5358.5
-  y: 5461.5
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5358.5
-  y: 5461.5
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5242.1
-  y: 5303.8
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5242.1
-  y: 5303.8
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5259.9
-  y: 5336.6
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5259.9
-  y: 5336.6
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5299
-  y: 5398.1
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5299
-  y: 5398.1
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5299
-  y: 5398.1
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5406.9
-  y: 5322.7
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5406.9
-  y: 5322.7
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5382.3
-  y: 5300.6
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5382.3
-  y: 5300.6
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5222.2
-  y: 5272.9
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5222.2
-  y: 5272.9
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5183.3
-  y: 5173.9
-  count: 1
+  x: 5072
+  y: 5394
+  count: 2
   group: reinforcements
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5197.2
-  y: 5242.3
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5275.6
-  y: 5208.7
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5275.6
-  y: 5208.7
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5176.4
-  y: 5202.3
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5176.4
-  y: 5202.3
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5396.5
-  y: 5258.3
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5396.5
-  y: 5258.3
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5282
-  y: 5138.2
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5282
-  y: 5138.2
+  x: 5260
+  y: 5308
   count: 2
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5295.8
-  y: 5106.9
+  x: 5260
+  y: 5308
   count: 1
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5340.9
-  y: 5112.8
-  count: 1
+  x: 5326
+  y: 5300
+  count: 2
   group: basic
 source:
   data: godot/data/monsters/71-needle-pomic.tres, drop table godot/data/drop_tables/131-needle-pomic.tres

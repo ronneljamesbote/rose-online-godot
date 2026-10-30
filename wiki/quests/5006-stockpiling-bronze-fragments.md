@@ -70,6 +70,9 @@ Then:
 - works on [[quests/5006-stockpiling-bronze-fragments|Stockpiling Bronze Fragments]]
 - you get 1 × [[items/quest/21-bronze-fragment|Bronze Fragment]]
 - add 1 to quest variable 0
+- then runs step `2106-31` ([[quests/2106-restless-stones|Restless Stones]])
+
+If the checks fail, step `2106-31` ([[quests/2106-restless-stones|Restless Stones]]) is tried instead.
 
 ### `5006-32`
 
@@ -85,6 +88,9 @@ Then:
 - works on [[quests/5006-stockpiling-bronze-fragments|Stockpiling Bronze Fragments]]
 - you get 1 × [[items/quest/21-bronze-fragment|Bronze Fragment]]
 - add 1 to quest variable 9
+- then runs step `2106-32` ([[quests/2106-restless-stones|Restless Stones]])
+
+If the checks fail, step `2106-32` ([[quests/2106-restless-stones|Restless Stones]]) is tried instead.
 
 ### `5006-33`
 
@@ -102,6 +108,9 @@ Then:
 - works on [[quests/5006-stockpiling-bronze-fragments|Stockpiling Bronze Fragments]]
 - you get 1 × [[items/quest/21-bronze-fragment|Bronze Fragment]]
 - add 1 to quest variable 9
+- then runs step `2106-33` ([[quests/2106-restless-stones|Restless Stones]])
+
+If the checks fail, step `2106-33` ([[quests/2106-restless-stones|Restless Stones]]) is tried instead.
 
 ### `5006-34`
 
@@ -119,6 +128,9 @@ Then:
 - works on [[quests/5006-stockpiling-bronze-fragments|Stockpiling Bronze Fragments]]
 - you get 1 × [[items/quest/21-bronze-fragment|Bronze Fragment]]
 - add 1 to quest variable 9
+- then runs step `2110-31` ([[quests/2110-words-in-stone|Words in Stone]])
+
+If the checks fail, step `2110-31` ([[quests/2110-words-in-stone|Words in Stone]]) is tried instead.
 
 ### `5006-35`
 
@@ -136,3 +148,7 @@ Then:
 - works on [[quests/5006-stockpiling-bronze-fragments|Stockpiling Bronze Fragments]]
 - you get 1 × [[items/quest/21-bronze-fragment|Bronze Fragment]]
 - add 1 to quest variable 9
+
+## Changed from iROSE
+
+The Valley of Luxem Tower redesign made this quest's kill steps also run the matching steps of the valley's new quests, so one kill counts for both.

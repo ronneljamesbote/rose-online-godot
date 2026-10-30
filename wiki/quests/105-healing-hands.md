@@ -79,6 +79,9 @@ Then:
 
 - works on [[quests/105-healing-hands|Healing Hands]]
 - you get 1 × [[items/quest/129-pumpkin-seed|Pumpkin Seed]]
+- then runs step `2102-31` ([[quests/2102-pumpkins-on-the-road|Pumpkins on the Road]])
+
+If the checks fail, step `2102-31` ([[quests/2102-pumpkins-on-the-road|Pumpkins on the Road]]) is tried instead.
 
 ### `106-02`
 
@@ -93,3 +96,7 @@ Then:
 
 - works on [[quests/106-healing-hands|Healing Hands]]
 - the quest becomes [[quests/105-healing-hands|Healing Hands]]
+
+## Changed from iROSE
+
+The Valley of Luxem Tower redesign made this quest's kill steps also run the matching steps of the valley's new quests, so one kill counts for both.

@@ -1,0 +1,22 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d1t54w2er2xt4"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_9o8kk"]
+switch = 611
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_kfl0k"]
+switch = 612
+value = false
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_qhm1o"]
+equation = 0
+value = 500
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_pa877"]
+switch = 612
+value = true
+
+[resource]
+name = "2112-03"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_9o8kk"), SubResource("RoseConditionQuestSwitch_kfl0k")])
+rewards = Array[Resource]([SubResource("RoseRewardCalculatedExperiencePoints_qhm1o"), SubResource("RoseRewardSetQuestSwitch_pa877")])

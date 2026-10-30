@@ -117,5 +117,10 @@ Then:
 
 - works on [[quests/5002-pomic-hunt-fetch-quest|Pomic Hunt (Fetch Quest)]]
 - you get 1 × [[items/quest/110-pomic-skin|Pomic Skin]]
+- then runs step `2106-32` ([[quests/2106-restless-stones|Restless Stones]])
 
 If the checks fail, step `5006-32` is tried instead.
+
+## Changed from iROSE
+
+The Valley of Luxem Tower redesign made this quest's kill steps also run the matching steps of the valley's new quests, so one kill counts for both.

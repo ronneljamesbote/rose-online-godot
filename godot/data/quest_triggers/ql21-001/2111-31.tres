@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://y1d6bmyadxc5"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="1_dv4q5"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/707-lens-core.tres" id="2_vnuvv"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_lbd67"]
+quest = ExtResource("1_dv4q5")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_qhss5"]
+item = ExtResource("2_vnuvv")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_lw6fp"]
+quest = ExtResource("1_dv4q5")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_t8r8h"]
+item = ExtResource("2_vnuvv")
+quantity = 1
+
+[resource]
+name = "2111-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_lbd67"), SubResource("RoseConditionQuestItem_qhss5")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_lw6fp"), SubResource("RoseRewardAddItem_t8r8h")])

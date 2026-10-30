@@ -1,0 +1,89 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://bhhjhv333ne5m"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="x_f59917"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="x_995c41"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="x_0a8b6c"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="x_7c9cc9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="x_9cec5d"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="x_a18b49"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="x_31c725"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="x_53dfc6"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="x_eb4f80"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2109-04.tres" id="x_158cc7"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="x_6166ba"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="x_da8593"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="x_700907"]
+[ext_resource type="RoseQuest" path="res://data/quests/2113-the-sergeant-s-trial.tres" id="x_4a5e32"]
+[ext_resource type="RoseQuest" path="res://data/quests/2114-the-sage-s-trial.tres" id="x_dc0cf2"]
+[ext_resource type="RoseQuest" path="res://data/quests/2115-the-outrider-s-trial.tres" id="x_bc40e9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2116-the-broker-s-trial.tres" id="x_41e0fa"]
+[ext_resource type="RoseQuest" path="res://data/quests/2117-on-to-zant.tres" id="x_d1180a"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_669a13"]
+text = "Don't touch the monument, please. It's been standing for a thousand years."
+next_menu = 1
+resource_name = "NPC: Don't touch the monument, please. It's been stan…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_3441f8"]
+step = ExtResource("x_158cc7")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_174af7"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_3441f8")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_3a4082"]
+step = ExtResource("x_158cc7")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7914f1"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_3a4082")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_96cbf4"]
+kind = "Answer"
+text = "Wren? Pell sent me to find you."
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_174af7")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_7914f1")])
+resource_name = "You: Wren? Pell sent me to find you."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_99bd65"]
+text = "I couldn't leave. Look at this monument: a tower, a beam of light, and something chained under the ground. I'll be back before dark."
+next_menu = 2
+resource_name = "NPC: I couldn't leave. Look at this monument: a tower…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a67633"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c2"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_81be7f"]
+lines = Array[Resource]([SubResource("RoseDialogLine_669a13")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_16530d"]
+lines = Array[Resource]([SubResource("RoseDialogLine_96cbf4"), SubResource("RoseDialogLine_4d129c")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6c4396"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a67633"), SubResource("RoseDialogLine_4d129c2")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_189a50"]
+lines = Array[Resource]([SubResource("RoseDialogLine_99bd65")])
+resource_name = "Menu 3"
+
+[resource]
+key = "EM21-013.con"
+name = "[Digger] Wren"
+menus = Array[Resource]([SubResource("RoseDialogMenu_81be7f"), SubResource("RoseDialogMenu_16530d"), SubResource("RoseDialogMenu_6c4396"), SubResource("RoseDialogMenu_189a50")])

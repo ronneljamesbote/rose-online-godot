@@ -1,0 +1,62 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c63nnpdj6se5d"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2115-the-outrider-s-trial.tres" id="x_bc40e9"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/710-honeybee-wing.tres" id="x_aec031"]
+[ext_resource type="RoseItemWeapon" path="res://data/items/weapon/1126-outrider-katar.tres" id="x_74aa72"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_cfb2f0"]
+quest = ExtResource("x_bc40e9")
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_26a6fb"]
+ability = "Job"
+operator = "=="
+value = 0
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_1f1882"]
+item = ExtResource("x_aec031")
+equipment_index = 13
+count = 10
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_2312b9"]
+quest = ExtResource("x_bc40e9")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_8c95c7"]
+item = ExtResource("x_74aa72")
+quantity = 1
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_931e0c"]
+item = ExtResource("x_aec031")
+quantity = 10
+
+[sub_resource type="RoseRewardAbilityValue" id="RoseRewardAbilityValue_b8b117"]
+ability = "Job"
+value = 311
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_bbf3a9"]
+variable_type = "Job"
+operator = "Add"
+value = 1
+
+[sub_resource type="RoseRewardSetHealthManaPercent" id="RoseRewardSetHealthManaPercent_9c5f58"]
+health_percent = 100
+mana_percent = 100
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_13806d"]
+equation = 0
+value = 800
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_153ea8"]
+equation = 0
+value = 500
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_7cff55"]
+switch = 615
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_bd06b1"]
+
+[resource]
+name = "2115-21"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_cfb2f0"), SubResource("RoseConditionAbilityValue_26a6fb"), SubResource("RoseConditionQuestItem_1f1882")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_2312b9"), SubResource("RoseRewardAddItem_8c95c7"), SubResource("RoseRewardRemoveItem_931e0c"), SubResource("RoseRewardAbilityValue_b8b117"), SubResource("RoseRewardQuestVariable_bbf3a9"), SubResource("RoseRewardSetHealthManaPercent_9c5f58"), SubResource("RoseRewardCalculatedExperiencePoints_13806d"), SubResource("RoseRewardCalculatedMoney_153ea8"), SubResource("RoseRewardSetQuestSwitch_7cff55"), SubResource("RoseRewardRemoveSelectedQuest_bd06b1")])

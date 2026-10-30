@@ -1,0 +1,251 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://b5qfd4e0b1x8e"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="x_f59917"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2101-02.tres" id="x_2789f0"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="x_995c41"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="x_0a8b6c"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2103-01.tres" id="x_942ffb"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2103-02.tres" id="x_ed3ab8"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="x_7c9cc9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="x_9cec5d"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="x_a18b49"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="x_31c725"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="x_53dfc6"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="x_eb4f80"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="x_6166ba"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="x_da8593"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="x_700907"]
+[ext_resource type="RoseQuest" path="res://data/quests/2113-the-sergeant-s-trial.tres" id="x_4a5e32"]
+[ext_resource type="RoseQuest" path="res://data/quests/2114-the-sage-s-trial.tres" id="x_dc0cf2"]
+[ext_resource type="RoseQuest" path="res://data/quests/2115-the-outrider-s-trial.tres" id="x_bc40e9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2116-the-broker-s-trial.tres" id="x_41e0fa"]
+[ext_resource type="RoseQuest" path="res://data/quests/2117-on-to-zant.tres" id="x_d1180a"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_29ae10"]
+text = "From up here I can see the whole valley. Most days I wish I couldn't."
+next_menu = 1
+resource_name = "NPC: From up here I can see the whole valley. Most da…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_7d0c72"]
+quest = ExtResource("x_f59917")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_be0b21"]
+step = ExtResource("x_2789f0")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_faac25"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_7d0c72"), SubResource("RoseDialogIfQuestStep_be0b21")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8f995e"]
+kind = "Answer"
+text = "About \"Dust on the Road\""
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_faac25")])
+resource_name = "You: About \"Dust on the Road\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b5cadd"]
+text = "Mira is on the rock just north-east of the camp. You can't miss her."
+next_menu = 2
+resource_name = "NPC: Mira is on the rock just north-east of the camp.…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_638d31"]
+step = ExtResource("x_2789f0")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_4d7537"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_638d31")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_05cf12"]
+step = ExtResource("x_2789f0")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_8372d3"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_05cf12")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4b2418"]
+kind = "Answer"
+text = "\"Dust on the Road\": here I am."
+next_menu = 4
+show_if = Array[Resource]([SubResource("RoseDialogCase_4d7537")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_8372d3")])
+resource_name = "You: \"Dust on the Road\": here I am."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8ff96e"]
+text = "So Dorran sent you up here. Good. From this rock I can see the whole valley, and the dust on the road gets thicker every day. Stay close to the camp at first. If you fall out there, our medic will patch you up here."
+next_menu = 2
+resource_name = "NPC: So Dorran sent you up here. Good. From this rock…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_247f29"]
+quest = ExtResource("x_0a8b6c")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_1b6d1e"]
+step = ExtResource("x_942ffb")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_abd063"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_247f29"), SubResource("RoseDialogIfQuestStep_1b6d1e")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_44cb25"]
+kind = "Answer"
+text = "About \"Glowing Stingers\""
+next_menu = 5
+show_if = Array[Resource]([SubResource("RoseDialogCase_abd063")])
+resource_name = "You: About \"Glowing Stingers\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b15258"]
+text = "Have you seen the Honeybees at the dead trees? At dusk their stingers glow. Bees don't glow. Bring me 8 of those stingers and I'll find out why."
+next_menu = 6
+resource_name = "NPC: Have you seen the Honeybees at the dead trees? A…"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_80b47e"]
+step = ExtResource("x_942ffb")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_58c7ea"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_80b47e")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_31e101"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 7
+on_choose = Array[Resource]([SubResource("RoseDialogCase_58c7ea")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7bf1a0"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6d7bb0"]
+text = "They swarm around the dead trees with hives, by the road and in the fields."
+next_menu = 2
+resource_name = "NPC: They swarm around the dead trees with hives, by …"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_77a3de"]
+quest = ExtResource("x_0a8b6c")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_cc0d3f"]
+step = ExtResource("x_ed3ab8")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_6f9a2f"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_77a3de"), SubResource("RoseDialogIfQuestStep_cc0d3f")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d7f46c"]
+kind = "Answer"
+text = "About \"Glowing Stingers\""
+next_menu = 8
+show_if = Array[Resource]([SubResource("RoseDialogCase_6f9a2f")])
+resource_name = "You: About \"Glowing Stingers\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1e180f"]
+text = "Eight stingers. Watch the Needle Honeybees, they sting harder."
+next_menu = 2
+resource_name = "NPC: Eight stingers. Watch the Needle Honeybees, they…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_ab3f61"]
+step = ExtResource("x_ed3ab8")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_308863"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_ab3f61")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_18e2b0"]
+step = ExtResource("x_ed3ab8")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2e4985"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_18e2b0")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5b749b"]
+kind = "Answer"
+text = "\"Glowing Stingers\": it's done."
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_308863")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_2e4985")])
+resource_name = "You: \"Glowing Stingers\": it's done."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_41b4ec"]
+text = "Look at them shine. That's mana, and a lot of it. The bees drink from the oasis, and the oasis is fed by the spring under the tower. Something is leaking out of that tower."
+next_menu = 2
+resource_name = "NPC: Look at them shine. That's mana, and a lot of it…"
+
+[sub_resource type="RoseDialogDoSetSavePoint" id="RoseDialogDoSetSavePoint_ad9883"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_b7c24a"]
+actions = Array[Resource]([SubResource("RoseDialogDoSetSavePoint_ad9883")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_69b521"]
+kind = "Answer"
+text = "Make this camp my save point."
+next_menu = 10
+on_choose = Array[Resource]([SubResource("RoseDialogCase_b7c24a")])
+resource_name = "You: Make this camp my save point."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b0e37d"]
+text = "Done. If you fall out there, you will wake up here at the camp."
+next_menu = 2
+resource_name = "NPC: Done. If you fall out there, you will wake up he…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a67633"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c2"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_92964f"]
+lines = Array[Resource]([SubResource("RoseDialogLine_29ae10")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_9cda7e"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8f995e"), SubResource("RoseDialogLine_4b2418"), SubResource("RoseDialogLine_44cb25"), SubResource("RoseDialogLine_d7f46c"), SubResource("RoseDialogLine_5b749b"), SubResource("RoseDialogLine_69b521"), SubResource("RoseDialogLine_4d129c")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6c4396"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a67633"), SubResource("RoseDialogLine_4d129c2")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_519da6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_b5cadd")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ad9053"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8ff96e")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3a3113"]
+lines = Array[Resource]([SubResource("RoseDialogLine_b15258")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3e87bb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_31e101"), SubResource("RoseDialogLine_7bf1a0")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b515a3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6d7bb0")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4c9784"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1e180f")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_79f44d"]
+lines = Array[Resource]([SubResource("RoseDialogLine_41b4ec")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b2a67a"]
+lines = Array[Resource]([SubResource("RoseDialogLine_b0e37d")])
+resource_name = "Menu 10"
+
+[resource]
+key = "EM21-005.con"
+name = "[Scout] Mira"
+menus = Array[Resource]([SubResource("RoseDialogMenu_92964f"), SubResource("RoseDialogMenu_9cda7e"), SubResource("RoseDialogMenu_6c4396"), SubResource("RoseDialogMenu_519da6"), SubResource("RoseDialogMenu_ad9053"), SubResource("RoseDialogMenu_3a3113"), SubResource("RoseDialogMenu_3e87bb"), SubResource("RoseDialogMenu_b515a3"), SubResource("RoseDialogMenu_4c9784"), SubResource("RoseDialogMenu_79f44d"), SubResource("RoseDialogMenu_b2a67a")])

@@ -65,47 +65,69 @@ drops:
   slots_of_30: 0.2
 - item: '[[items/weapon/331-baobab-wand|Baobab Wand]]'
   slots_of_30: 0.2
+quests:
+- '[[quests/2105-stolen-supplies|Stolen Supplies]]'
 spawns:
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5118
-  y: 5298.5
-  count: 1
-  group: basic
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5189.8
-  y: 5391.3
-  count: 2
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5406.9
-  y: 5322.7
-  count: 1
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5382.3
-  y: 5300.6
-  count: 1
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5104.5
-  y: 5167.8
-  count: 2
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5133.9
-  y: 5125.1
-  count: 1
-  group: reinforcements
-- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5396.5
-  y: 5258.3
+  x: 5558
+  y: 5122
   count: 2
   group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
-  x: 5340.9
-  y: 5112.8
+  x: 5558
+  y: 5122
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5558
+  y: 5122
   count: 1
   group: reinforcements
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5430
+  y: 5034
+  count: 2
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5430
+  y: 5034
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5430
+  y: 5034
+  count: 1
+  group: reinforcements
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5492
+  y: 5072
+  count: 2
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5492
+  y: 5072
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5492
+  y: 5072
+  count: 2
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5492
+  y: 5072
+  count: 1
+  group: basic
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5492
+  y: 5072
+  count: 2
+  group: reinforcements
+- zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
+  x: 5525
+  y: 5000
+  count: 1
+  group: basic
 source:
   data: godot/data/monsters/24-cowboy-pumpkin.tres, drop table godot/data/drop_tables/111-cowboy-pumpkin.tres
   code:

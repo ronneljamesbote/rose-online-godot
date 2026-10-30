@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bt5ljxmmk1kkf"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="1_u8q2i"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_res9x"]
+ability = "Level"
+operator = ">="
+value = 13
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_mfgek"]
+switch = 603
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_yaiic"]
+switch = 604
+value = false
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_9xuys"]
+quest = ExtResource("1_u8q2i")
+
+[resource]
+name = "2105-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_res9x"), SubResource("RoseConditionQuestSwitch_mfgek"), SubResource("RoseConditionQuestSwitch_yaiic")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_9xuys")])

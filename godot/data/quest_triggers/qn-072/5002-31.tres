@@ -23,8 +23,11 @@ quest = ExtResource("1_h1cec")
 item = ExtResource("2_ximc5")
 quantity = 1
 
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_lv210632"]
+trigger = "2106-32"
+
 [resource]
 name = "5002-31"
 conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_35sgq"), SubResource("RoseConditionRandomPercent_3wdnx"), SubResource("RoseConditionQuestItem_68e1i")])
-rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_lyini"), SubResource("RoseRewardAddItem_epd6y")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_lyini"), SubResource("RoseRewardAddItem_epd6y"), SubResource("RoseRewardTrigger_lv210632")])
 next_trigger = ExtResource("3_cgc4r")

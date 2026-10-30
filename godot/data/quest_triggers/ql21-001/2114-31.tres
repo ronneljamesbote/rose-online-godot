@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bc6x0k7d4j7xs"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2114-the-sage-s-trial.tres" id="x_dc0cf2"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/709-humming-pomic-dust.tres" id="x_d09af9"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_57cd46"]
+quest = ExtResource("x_dc0cf2")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_b4573e"]
+to = 50
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_d03276"]
+item = ExtResource("x_d09af9")
+equipment_index = 13
+count = 6
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_e32321"]
+quest = ExtResource("x_dc0cf2")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_50bc8d"]
+item = ExtResource("x_d09af9")
+quantity = 1
+
+[resource]
+name = "2114-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_57cd46"), SubResource("RoseConditionRandomPercent_b4573e"), SubResource("RoseConditionQuestItem_d03276")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_e32321"), SubResource("RoseRewardAddItem_50bc8d")])

@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://fmbec5chefg4"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="1_o8dwe"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/703-caravan-crate.tres" id="2_n411q"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_wm2tf"]
+quest = ExtResource("1_o8dwe")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_d1vys"]
+to = 50
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_mok2k"]
+item = ExtResource("2_n411q")
+equipment_index = 13
+count = 6
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_15g1r"]
+quest = ExtResource("1_o8dwe")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_6bf0i"]
+item = ExtResource("2_n411q")
+quantity = 1
+
+[resource]
+name = "2105-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_wm2tf"), SubResource("RoseConditionRandomPercent_d1vys"), SubResource("RoseConditionQuestItem_mok2k")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_15g1r"), SubResource("RoseRewardAddItem_6bf0i")])

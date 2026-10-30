@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://iec502o5qtnw"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="1_02rrb"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_nsyhc"]
+ability = "Level"
+operator = ">="
+value = 15
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_tp6tb"]
+switch = 606
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_0ecfu"]
+switch = 608
+value = false
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_q3e3j"]
+quest = ExtResource("1_02rrb")
+
+[resource]
+name = "2109-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_nsyhc"), SubResource("RoseConditionQuestSwitch_tp6tb"), SubResource("RoseConditionQuestSwitch_0ecfu")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_q3e3j")])

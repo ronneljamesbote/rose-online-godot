@@ -1,0 +1,26 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cb0okbdlbrjip"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="1_pjafm"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_f0pkd"]
+quest = ExtResource("1_pjafm")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_82euv"]
+variable_type = "Variable"
+variable = 0
+operator = "=="
+value = 0
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_bw24s"]
+quest = ExtResource("1_pjafm")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_i4a1l"]
+variable_type = "Variable"
+variable = 0
+operator = "Set"
+value = 1
+
+[resource]
+name = "2104-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_f0pkd"), SubResource("RoseConditionQuestVariable_82euv")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_bw24s"), SubResource("RoseRewardQuestVariable_i4a1l")])

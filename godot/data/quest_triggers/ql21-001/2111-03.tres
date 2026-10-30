@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cxjeh6fow5c4f"]
+
+[ext_resource type="RoseZoneSettings" path="res://data/zones/21-valley-of-luxem-tower.tres" id="1_cixec"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_nz788"]
+ability = "Level"
+operator = ">="
+value = 16
+
+[sub_resource type="RoseRewardTeleport" id="RoseRewardTeleport_zr974"]
+zone = ExtResource("1_cixec")
+x = 521800
+y = 554400
+
+[resource]
+name = "2111-03"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_nz788")])
+rewards = Array[Resource]([SubResource("RoseRewardTeleport_zr974")])
