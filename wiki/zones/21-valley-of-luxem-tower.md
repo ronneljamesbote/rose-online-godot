@@ -393,8 +393,8 @@ dimming, and the monsters are changing.
 | --- | --- | --- | --- |
 | Sandgate Flats | south-west, by the two gates from the Adventurer's Plain | 9–11 | Pumpkin and Honeybee patches; the Sandwind Caravan Camp (Hub 1) with a lookout rock |
 | Caravan Road | west side, from the Sandgate north to the Zant gate | 9–12 | the road to Zant, Big Pumpkins, hive snags, the ruined Fallen Watch |
-| The Fields | middle-west | 10–13 | old farmland: Pumpkins, Honeybees, fences, a well |
-| Oasis | middle | 11–14 | the oasis pond, palms and reeds; Pomic herds come to drink |
+| The Fields | middle-west | 10–13 | old farmland: Pumpkins, Honeybees, fences, a well, a few clumps of hardy trees on the grass |
+| Oasis | middle | 11–14 | the oasis pond ringed by palms, willows and shade trees, with reeds at the water; Pomic herds come to drink |
 | Dry Wadi | south-east of the oasis | 12–15 | the dry riverbed and a wrecked caravan wagon |
 | Redrock Canyons | south-east | 13–17 | a red-rock plateau cut by passes; Cowboy Pumpkin raiders at Raider's Perch |
 | East Terrace | east, by the Breezy Hills gate | 13–16 | the Arumic Expedition Camp (Hub 2) |
@@ -474,6 +474,7 @@ are markers in the zone's scene, and the server reads them from
 
 The whole valley is redesigned. The size, the four gates and their arrival spots are the
 same as in iROSE; everything else is new: the ground's shape and textures, the tower moved
-to the north-east corner and made bigger, the river, oasis and wadi, the two camps, the
+to the north-east corner and made bigger, the river, oasis and wadi, the trees along the water, the two camps, the
 ruins, the spawn points (levels 9–22 instead of 9–20), the two elite monsters, the sealed
-vault, seventeen new NPCs and the quest chain. The minimap is redrawn to match.
+vault, seventeen new NPCs and the quest chain. The minimap is redrawn to match, and its frame says Breezy Hills and Adventurer's Plain
+(iROSE's minimap said "Hill of wind" and "Adventure Plane").
