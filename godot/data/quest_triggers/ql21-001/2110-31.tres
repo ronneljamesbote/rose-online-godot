@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dscod4m6ym42t"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="1_d2rzw"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/706-inscribed-fragment.tres" id="2_hjjq3"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_v0ac3"]
+quest = ExtResource("1_d2rzw")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_mqg6a"]
+to = 40
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_sbhbj"]
+item = ExtResource("2_hjjq3")
+equipment_index = 13
+count = 4
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ye95m"]
+quest = ExtResource("1_d2rzw")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_dyoy8"]
+item = ExtResource("2_hjjq3")
+quantity = 1
+
+[resource]
+name = "2110-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_v0ac3"), SubResource("RoseConditionRandomPercent_mqg6a"), SubResource("RoseConditionQuestItem_sbhbj")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ye95m"), SubResource("RoseRewardAddItem_dyoy8")])

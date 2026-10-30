@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://coypappuim1af"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="1_exksd"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_mnsik"]
+ability = "Level"
+operator = ">="
+value = 13
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_hiasi"]
+switch = 604
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_46v1m"]
+switch = 605
+value = false
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_umf8r"]
+quest = ExtResource("1_exksd")
+
+[resource]
+name = "2106-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_mnsik"), SubResource("RoseConditionQuestSwitch_hiasi"), SubResource("RoseConditionQuestSwitch_46v1m")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_umf8r")])

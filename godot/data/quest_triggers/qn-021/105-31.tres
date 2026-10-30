@@ -3,6 +3,8 @@
 [ext_resource type="RoseQuest" uid="uid://c13m8vcmi4n78" path="res://data/quests/105-healing-hands.tres" id="1_bowfx"]
 [ext_resource type="RoseItemQuest" uid="uid://xfkek3e4t4gq" path="res://data/items/quest/129-pumpkin-seed.tres" id="2_m1ufx"]
 
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2102-31.tres" id="lv_next"]
+
 [sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ayogt"]
 quest = ExtResource("1_bowfx")
 
@@ -19,7 +21,11 @@ quest = ExtResource("1_bowfx")
 item = ExtResource("2_m1ufx")
 quantity = 1
 
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_lv210231"]
+trigger = "2102-31"
+
 [resource]
 name = "105-31"
 conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ayogt"), SubResource("RoseConditionQuestItem_6dtbg")])
-rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_s1vcm"), SubResource("RoseRewardAddItem_wmali")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_s1vcm"), SubResource("RoseRewardAddItem_wmali"), SubResource("RoseRewardTrigger_lv210231")])
+next_trigger = ExtResource("lv_next")

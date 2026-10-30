@@ -1,0 +1,84 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://bhhjhv333ne5m"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_oncmd"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_bugy0"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="3_uhr5k"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="4_hfhkq"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="5_xx1ji"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="6_y7bf1"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="7_aks2p"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="8_vcae0"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="9_wna0u"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2109-04.tres" id="10_g284g"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="11_2mf8g"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="12_fyk9x"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="13_ekb7w"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rfnj4"]
+text = "Don't touch the monument, please. It's been standing for a thousand years."
+next_menu = 1
+resource_name = "NPC: Don't touch the monument, please. It's been stan…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_f6ukw"]
+step = ExtResource("10_g284g")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_dag7p"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_f6ukw")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ewqm7"]
+step = ExtResource("10_g284g")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_fmrrl"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_ewqm7")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1sfyo"]
+kind = "Answer"
+text = "Wren? Pell sent me to find you."
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_dag7p")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_fmrrl")])
+resource_name = "You: Wren? Pell sent me to find you."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qt057"]
+text = "I couldn't leave. Look at this monument: a tower, a beam of light, and something chained under the ground. I'll be back before dark."
+next_menu = 2
+resource_name = "NPC: I couldn't leave. Look at this monument: a tower…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6s60f"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_q62dc"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0w9wx"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_oc6ic"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rfnj4")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6iig8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1sfyo"), SubResource("RoseDialogLine_6s60f")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rt2xy"]
+lines = Array[Resource]([SubResource("RoseDialogLine_q62dc"), SubResource("RoseDialogLine_0w9wx")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dzkg1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qt057")])
+resource_name = "Menu 3"
+
+[resource]
+key = "EM21-013.con"
+name = "[Digger] Wren"
+menus = Array[Resource]([SubResource("RoseDialogMenu_oc6ic"), SubResource("RoseDialogMenu_6iig8"), SubResource("RoseDialogMenu_rt2xy"), SubResource("RoseDialogMenu_dzkg1")])

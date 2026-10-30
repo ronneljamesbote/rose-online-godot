@@ -1,0 +1,84 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://2slcio24372v"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_h51fd"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_r4pde"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="3_gaa47"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="4_182zk"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="5_yg1h5"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="6_stng2"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="7_3axc9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="8_dgo4b"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="9_uhmnr"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2109-03.tres" id="10_xmqiy"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="11_rh0b5"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="12_bcwcz"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="13_jf8y5"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_iqz1w"]
+text = "So much carving, so little light."
+next_menu = 1
+resource_name = "NPC: So much carving, so little light."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_0q8om"]
+step = ExtResource("10_xmqiy")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7xl6v"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_0q8om")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_kdbz7"]
+step = ExtResource("10_xmqiy")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_8za3q"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_kdbz7")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_t62bw"]
+kind = "Answer"
+text = "Hob? Pell is worried about you."
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_7xl6v")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_8za3q")])
+resource_name = "You: Hob? Pell is worried about you."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_j3lsx"]
+text = "Worried? I've found a doorway under the pyramid! Tell Pell I'm fine. Tell her the stone over the door shows the tower."
+next_menu = 2
+resource_name = "NPC: Worried? I've found a doorway under the pyramid!…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_uizap"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e677s"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6zalx"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xa40l"]
+lines = Array[Resource]([SubResource("RoseDialogLine_iqz1w")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rsepe"]
+lines = Array[Resource]([SubResource("RoseDialogLine_t62bw"), SubResource("RoseDialogLine_uizap")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ch9wc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e677s"), SubResource("RoseDialogLine_6zalx")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ire2p"]
+lines = Array[Resource]([SubResource("RoseDialogLine_j3lsx")])
+resource_name = "Menu 3"
+
+[resource]
+key = "EM21-012.con"
+name = "[Digger] Hob"
+menus = Array[Resource]([SubResource("RoseDialogMenu_xa40l"), SubResource("RoseDialogMenu_rsepe"), SubResource("RoseDialogMenu_ch9wc"), SubResource("RoseDialogMenu_ire2p")])

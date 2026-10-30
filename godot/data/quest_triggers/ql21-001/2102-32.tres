@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c0fub6g1eu1ow"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="1_5f4uh"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/701-pumpkin-stalk.tres" id="2_44zdg"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_zpzbi"]
+quest = ExtResource("1_5f4uh")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_fimao"]
+to = 60
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_8ruz9"]
+item = ExtResource("2_44zdg")
+equipment_index = 13
+count = 10
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_72r9u"]
+quest = ExtResource("1_5f4uh")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_l8v97"]
+item = ExtResource("2_44zdg")
+quantity = 1
+
+[resource]
+name = "2102-32"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_zpzbi"), SubResource("RoseConditionRandomPercent_fimao"), SubResource("RoseConditionQuestItem_8ruz9")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_72r9u"), SubResource("RoseRewardAddItem_l8v97")])

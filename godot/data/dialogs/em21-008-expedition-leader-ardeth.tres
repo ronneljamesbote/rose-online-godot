@@ -1,0 +1,224 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://cy3t3qt7d2lof"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_rjns9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_hv1d2"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="3_vsb9b"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="4_909a4"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="5_mo7ll"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="6_gsg6k"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="7_u7qdy"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2107-02.tres" id="8_7pwyw"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="9_kfkvw"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="10_7sfcn"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="11_wr3h2"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="12_t2rob"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2111-01.tres" id="13_z1mu7"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2111-02.tres" id="14_dujam"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="15_cjbae"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2111-03.tres" id="16_tggsb"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hfw9t"]
+text = "Welcome to the Arumic Expedition Camp. Mind the crates, some of them are older than Zant."
+next_menu = 1
+resource_name = "NPC: Welcome to the Arumic Expedition Camp. Mind the …"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_x93rs"]
+step = ExtResource("8_7pwyw")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_yo78g"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_x93rs")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_m88ag"]
+step = ExtResource("8_7pwyw")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_jpmyf"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_m88ag")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mfyjx"]
+kind = "Answer"
+text = "\"A Shard for the Expedition\": it's done."
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_yo78g")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_jpmyf")])
+resource_name = "You: \"A Shard for the Expedition\": it's done."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ynkpx"]
+text = "A Pomic shard, soaked in mana. Shannon was right to send you. This is what we came for: the tower is failing, and the valley pays for it. My people could use someone like you."
+next_menu = 2
+resource_name = "NPC: A Pomic shard, soaked in mana. Shannon was right…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_oovgs"]
+quest = ExtResource("12_t2rob")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_oxrrk"]
+step = ExtResource("13_z1mu7")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_49fr3"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_oovgs"), SubResource("RoseDialogIfQuestStep_oxrrk")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dvpxj"]
+kind = "Answer"
+text = "About \"The Warden Below\""
+next_menu = 4
+show_if = Array[Resource]([SubResource("RoseDialogCase_49fr3")])
+resource_name = "You: About \"The Warden Below\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_w7vkx"]
+text = "Pell's reading matches what we found. Under the dig there is a sealed vault, and something in it is waking. My crane can lower you inside. Defeat the Ruin Warden and bring me the Lens Core it guards. Take friends if you have them."
+next_menu = 5
+resource_name = "NPC: Pell's reading matches what we found. Under the …"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_f5rsd"]
+step = ExtResource("13_z1mu7")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_a6lbb"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_f5rsd")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_yrwml"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 6
+on_choose = Array[Resource]([SubResource("RoseDialogCase_a6lbb")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_lm1fi"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rh7z1"]
+text = "When you're ready, ask me to ride the crane down. Gus runs the lift in the vault; he'll bring you back up."
+next_menu = 2
+resource_name = "NPC: When you're ready, ask me to ride the crane down…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_pve06"]
+quest = ExtResource("12_t2rob")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_badn7"]
+step = ExtResource("14_dujam")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_s88g8"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_pve06"), SubResource("RoseDialogIfQuestStep_badn7")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_umz5x"]
+kind = "Answer"
+text = "About \"The Warden Below\""
+next_menu = 7
+show_if = Array[Resource]([SubResource("RoseDialogCase_s88g8")])
+resource_name = "You: About \"The Warden Below\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_9mxif"]
+text = "The Ruin Warden holds the Lens Core. Ask me when you want to go down."
+next_menu = 2
+resource_name = "NPC: The Ruin Warden holds the Lens Core. Ask me when…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_uc3pf"]
+step = ExtResource("14_dujam")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_y83nm"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_uc3pf")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_jeu5l"]
+step = ExtResource("14_dujam")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_g699d"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_jeu5l")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_34qyw"]
+kind = "Answer"
+text = "\"The Warden Below\": it's done."
+next_menu = 8
+show_if = Array[Resource]([SubResource("RoseDialogCase_y83nm")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_g699d")])
+resource_name = "You: \"The Warden Below\": it's done."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_115t6"]
+text = "The Lens Core. Feel how warm it is. It belongs at the top of Luxem Tower. Take this, and then take the core to Lutis at the tower."
+next_menu = 2
+resource_name = "NPC: The Lens Core. Feel how warm it is. It belongs a…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_u85cz"]
+step = ExtResource("16_tggsb")
+
+[sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_w7it3"]
+switch = 609
+value = 1
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_0vhjh"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_u85cz"), SubResource("RoseDialogIfQuestSwitch_w7it3")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_l4zx7"]
+step = ExtResource("16_tggsb")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_bvycr"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_l4zx7")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_r5yqs"]
+kind = "Answer"
+text = "Lower me into the vault with the crane."
+next_menu = -1
+show_if = Array[Resource]([SubResource("RoseDialogCase_0vhjh")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_bvycr")])
+resource_name = "You: Lower me into the vault with the crane."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_zvbyf"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_58p2w"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_f3elb"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qspud"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hfw9t")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_67839"]
+lines = Array[Resource]([SubResource("RoseDialogLine_mfyjx"), SubResource("RoseDialogLine_dvpxj"), SubResource("RoseDialogLine_umz5x"), SubResource("RoseDialogLine_34qyw"), SubResource("RoseDialogLine_r5yqs"), SubResource("RoseDialogLine_zvbyf")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_eehys"]
+lines = Array[Resource]([SubResource("RoseDialogLine_58p2w"), SubResource("RoseDialogLine_f3elb")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_70g3q"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ynkpx")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_sznwe"]
+lines = Array[Resource]([SubResource("RoseDialogLine_w7vkx")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3rh9u"]
+lines = Array[Resource]([SubResource("RoseDialogLine_yrwml"), SubResource("RoseDialogLine_lm1fi")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2ri0p"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rh7z1")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_tj1dp"]
+lines = Array[Resource]([SubResource("RoseDialogLine_9mxif")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_p6yla"]
+lines = Array[Resource]([SubResource("RoseDialogLine_115t6")])
+resource_name = "Menu 8"
+
+[resource]
+key = "EM21-008.con"
+name = "[Expedition Leader] Ardeth"
+menus = Array[Resource]([SubResource("RoseDialogMenu_qspud"), SubResource("RoseDialogMenu_67839"), SubResource("RoseDialogMenu_eehys"), SubResource("RoseDialogMenu_70g3q"), SubResource("RoseDialogMenu_sznwe"), SubResource("RoseDialogMenu_3rh9u"), SubResource("RoseDialogMenu_2ri0p"), SubResource("RoseDialogMenu_tj1dp"), SubResource("RoseDialogMenu_p6yla")])

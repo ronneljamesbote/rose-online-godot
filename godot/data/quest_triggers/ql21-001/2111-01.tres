@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://jph0naqbp5nq"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="1_fmby4"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_t5guk"]
+ability = "Level"
+operator = ">="
+value = 18
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_ihbhj"]
+switch = 607
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_f4wj6"]
+switch = 609
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_2kh1r"]
+switch = 610
+value = false
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_0oxz6"]
+quest = ExtResource("1_fmby4")
+
+[resource]
+name = "2111-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_t5guk"), SubResource("RoseConditionQuestSwitch_ihbhj"), SubResource("RoseConditionQuestSwitch_f4wj6"), SubResource("RoseConditionQuestSwitch_2kh1r")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_0oxz6")])

@@ -1,0 +1,44 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://c8srsg6af6gt8"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="1_3u3qk"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/707-lens-core.tres" id="2_99vsi"]
+[ext_resource type="RoseItemHead" path="res://data/items/head/8-rodeo-hat.tres" id="3_upbq2"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_mdyho"]
+quest = ExtResource("1_3u3qk")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_ns7k3"]
+item = ExtResource("2_99vsi")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_skl60"]
+quest = ExtResource("1_3u3qk")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_u326y"]
+item = ExtResource("2_99vsi")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_qqi82"]
+equation = 0
+value = 5000
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_btxgt"]
+equation = 0
+value = 5000
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_5u88r"]
+item = ExtResource("3_upbq2")
+quantity = 1
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_tns1o"]
+switch = 611
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_nj3f2"]
+
+[resource]
+name = "2112-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_mdyho"), SubResource("RoseConditionQuestItem_ns7k3")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_skl60"), SubResource("RoseRewardRemoveItem_u326y"), SubResource("RoseRewardCalculatedExperiencePoints_qqi82"), SubResource("RoseRewardCalculatedMoney_btxgt"), SubResource("RoseRewardAddItem_5u88r"), SubResource("RoseRewardSetQuestSwitch_tns1o"), SubResource("RoseRewardRemoveSelectedQuest_nj3f2")])

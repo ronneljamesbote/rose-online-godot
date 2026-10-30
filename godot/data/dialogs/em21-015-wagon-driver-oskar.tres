@@ -1,0 +1,84 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://grgcn20pejn4"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_ijo6c"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_lky6g"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="3_0hec9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="4_i9zlh"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2104-03.tres" id="5_f79h9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="6_7rbdx"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="7_27mlz"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="8_iv948"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="9_d3syz"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="10_37tgk"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="11_xjpsd"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="12_3br6s"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="13_fyh1c"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nrhjp"]
+text = "Water... is there any water left?"
+next_menu = 1
+resource_name = "NPC: Water... is there any water left?"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_pfnxt"]
+step = ExtResource("5_f79h9")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_gshh7"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_pfnxt")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ww1ho"]
+step = ExtResource("5_f79h9")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3vy4s"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_ww1ho")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_g8nbt"]
+kind = "Answer"
+text = "Oskar? Dorran sent me."
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_gshh7")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_3vy4s")])
+resource_name = "You: Oskar? Dorran sent me."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b0tv5"]
+text = "Dorran... thank the stars. Cowboy Pumpkins jumped us in the wadi. They took every crate up to their perch in the red rocks. And the river, it was dry, all of it. It was full last month."
+next_menu = 2
+resource_name = "NPC: Dorran... thank the stars. Cowboy Pumpkins jumpe…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ez2je"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_eomhu"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wyxku"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_86772"]
+lines = Array[Resource]([SubResource("RoseDialogLine_nrhjp")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_66p42"]
+lines = Array[Resource]([SubResource("RoseDialogLine_g8nbt"), SubResource("RoseDialogLine_ez2je")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_o5dgx"]
+lines = Array[Resource]([SubResource("RoseDialogLine_eomhu"), SubResource("RoseDialogLine_wyxku")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_u7l8q"]
+lines = Array[Resource]([SubResource("RoseDialogLine_b0tv5")])
+resource_name = "Menu 3"
+
+[resource]
+key = "EM21-015.con"
+name = "[Wagon Driver] Oskar"
+menus = Array[Resource]([SubResource("RoseDialogMenu_86772"), SubResource("RoseDialogMenu_66p42"), SubResource("RoseDialogMenu_o5dgx"), SubResource("RoseDialogMenu_u7l8q")])

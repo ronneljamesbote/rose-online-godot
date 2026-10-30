@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://b6d02jhu38pcr"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="1_i9a8p"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_nkxjf"]
+ability = "Level"
+operator = ">="
+value = 9
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_j03o6"]
+switch = 600
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_4rlg1"]
+switch = 601
+value = false
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_22f3q"]
+quest = ExtResource("1_i9a8p")
+
+[resource]
+name = "2102-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_nkxjf"), SubResource("RoseConditionQuestSwitch_j03o6"), SubResource("RoseConditionQuestSwitch_4rlg1")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_22f3q")])

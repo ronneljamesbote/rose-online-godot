@@ -1,0 +1,20 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dl2bec5jst0jd"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_j60f8"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_8wt4j"]
+ability = "Level"
+operator = ">="
+value = 9
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_2zbxq"]
+switch = 600
+value = false
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_7vbh9"]
+quest = ExtResource("1_j60f8")
+
+[resource]
+name = "2101-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_8wt4j"), SubResource("RoseConditionQuestSwitch_2zbxq")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_7vbh9")])

@@ -1,0 +1,67 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://w20uwxh7r0q3"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_gpdc1"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_xpyv0"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="3_49zcv"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="4_dpjc9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="5_leb95"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="6_p3csj"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="7_wva8g"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="8_m9niq"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="9_ic9le"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="10_zl6od"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="11_8pz72"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="12_tbg08"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rqiee"]
+text = "Potions, arrows, a return scroll for when it all goes wrong. What do you need?"
+next_menu = 1
+resource_name = "NPC: Potions, arrows, a return scroll for when it all…"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_2tuzg"]
+window = "Shop"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_uma5q"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_2tuzg")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_p95gv"]
+kind = "Answer"
+text = "Let me see your goods."
+next_menu = -1
+on_choose = Array[Resource]([SubResource("RoseDialogCase_uma5q")])
+resource_name = "You: Let me see your goods."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fg4yz"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_kckia"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_u01j5"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rncd0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_rqiee")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3fo94"]
+lines = Array[Resource]([SubResource("RoseDialogLine_p95gv"), SubResource("RoseDialogLine_fg4yz")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_e7dh5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_kckia"), SubResource("RoseDialogLine_u01j5")])
+resource_name = "Menu 2"
+
+[resource]
+key = "EM21-007.con"
+name = "[Caravan Trader] Sella"
+menus = Array[Resource]([SubResource("RoseDialogMenu_rncd0"), SubResource("RoseDialogMenu_3fo94"), SubResource("RoseDialogMenu_e7dh5")])

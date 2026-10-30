@@ -1,0 +1,39 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cog2016va5h30"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="1_k836j"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/706-inscribed-fragment.tres" id="2_dg0yt"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_e4aqi"]
+quest = ExtResource("1_k836j")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_r6lce"]
+item = ExtResource("2_dg0yt")
+equipment_index = 13
+count = 4
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_wr25k"]
+quest = ExtResource("1_k836j")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_8y64w"]
+item = ExtResource("2_dg0yt")
+quantity = 4
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_yrjhf"]
+equation = 0
+value = 3000
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_rjg49"]
+equation = 0
+value = 2500
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_x3cyo"]
+switch = 609
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_vbw0h"]
+
+[resource]
+name = "2110-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_e4aqi"), SubResource("RoseConditionQuestItem_r6lce")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_wr25k"), SubResource("RoseRewardRemoveItem_8y64w"), SubResource("RoseRewardCalculatedExperiencePoints_yrjhf"), SubResource("RoseRewardCalculatedMoney_rjg49"), SubResource("RoseRewardSetQuestSwitch_x3cyo"), SubResource("RoseRewardRemoveSelectedQuest_vbw0h")])

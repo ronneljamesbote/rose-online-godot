@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bfbqaklyotynv"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="1_hp308"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_5d34l"]
+ability = "Level"
+operator = ">="
+value = 10
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_2nxgr"]
+switch = 600
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_ublwb"]
+switch = 602
+value = false
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_2j0oj"]
+quest = ExtResource("1_hp308")
+
+[resource]
+name = "2103-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_5d34l"), SubResource("RoseConditionQuestSwitch_2nxgr"), SubResource("RoseConditionQuestSwitch_ublwb")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_2j0oj")])

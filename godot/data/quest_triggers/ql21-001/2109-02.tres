@@ -1,0 +1,46 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dbgbo1odidu8q"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="1_orfit"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_kigeg"]
+quest = ExtResource("1_orfit")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_gfari"]
+variable_type = "Variable"
+variable = 0
+operator = "=="
+value = 1
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_hnos4"]
+variable_type = "Variable"
+variable = 1
+operator = "=="
+value = 1
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_tha5m"]
+variable_type = "Variable"
+variable = 2
+operator = "=="
+value = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_jap74"]
+quest = ExtResource("1_orfit")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_jem34"]
+equation = 0
+value = 2600
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_todkl"]
+equation = 0
+value = 2200
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_psjiy"]
+switch = 608
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_ohw4d"]
+
+[resource]
+name = "2109-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_kigeg"), SubResource("RoseConditionQuestVariable_gfari"), SubResource("RoseConditionQuestVariable_hnos4"), SubResource("RoseConditionQuestVariable_tha5m")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_jap74"), SubResource("RoseRewardCalculatedExperiencePoints_jem34"), SubResource("RoseRewardCalculatedMoney_todkl"), SubResource("RoseRewardSetQuestSwitch_psjiy"), SubResource("RoseRewardRemoveSelectedQuest_ohw4d")])

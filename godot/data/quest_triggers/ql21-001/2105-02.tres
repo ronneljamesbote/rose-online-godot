@@ -1,0 +1,44 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bwy2le6t2ssv3"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="1_22x54"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/703-caravan-crate.tres" id="2_msncl"]
+[ext_resource type="RoseItemBody" path="res://data/items/body/7-yellow-denim-look.tres" id="3_3aim8"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_p5q7r"]
+quest = ExtResource("1_22x54")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_6eq0b"]
+item = ExtResource("2_msncl")
+equipment_index = 13
+count = 6
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_6owmb"]
+quest = ExtResource("1_22x54")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_kdzgh"]
+item = ExtResource("2_msncl")
+quantity = 6
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_ybm4f"]
+equation = 0
+value = 1400
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_8hqli"]
+equation = 0
+value = 1500
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_kefzz"]
+item = ExtResource("3_3aim8")
+quantity = 1
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_rl5du"]
+switch = 604
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_wkhqg"]
+
+[resource]
+name = "2105-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_p5q7r"), SubResource("RoseConditionQuestItem_6eq0b")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_6owmb"), SubResource("RoseRewardRemoveItem_kdzgh"), SubResource("RoseRewardCalculatedExperiencePoints_ybm4f"), SubResource("RoseRewardCalculatedMoney_8hqli"), SubResource("RoseRewardAddItem_kefzz"), SubResource("RoseRewardSetQuestSwitch_rl5du"), SubResource("RoseRewardRemoveSelectedQuest_wkhqg")])

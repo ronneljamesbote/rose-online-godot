@@ -1,0 +1,68 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://bu1f2wlv5xeyx"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_v6xyg"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_qiylz"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="3_689ec"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="4_eg4s5"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="5_tvo62"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="6_24gl1"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="7_rp385"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="8_e2o08"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="9_f8rag"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="10_wgoqt"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="11_9n244"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="12_g6rdv"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2111-04.tres" id="13_i06zn"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_l9e2w"]
+text = "This is as deep as the lift goes. Say the word and I'll take you up."
+next_menu = 1
+resource_name = "NPC: This is as deep as the lift goes. Say the word a…"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_phhi9"]
+step = ExtResource("13_i06zn")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_v3k2d"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_phhi9")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_93gwv"]
+kind = "Answer"
+text = "Take me back up."
+next_menu = -1
+on_choose = Array[Resource]([SubResource("RoseDialogCase_v3k2d")])
+resource_name = "You: Take me back up."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_h5ll3"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dd6fw"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ryq4g"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4gkai"]
+lines = Array[Resource]([SubResource("RoseDialogLine_l9e2w")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_o1lpl"]
+lines = Array[Resource]([SubResource("RoseDialogLine_93gwv"), SubResource("RoseDialogLine_h5ll3")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dd3u8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dd6fw"), SubResource("RoseDialogLine_ryq4g")])
+resource_name = "Menu 2"
+
+[resource]
+key = "EM21-016.con"
+name = "[Lift Keeper] Gus"
+menus = Array[Resource]([SubResource("RoseDialogMenu_4gkai"), SubResource("RoseDialogMenu_o1lpl"), SubResource("RoseDialogMenu_dd3u8")])

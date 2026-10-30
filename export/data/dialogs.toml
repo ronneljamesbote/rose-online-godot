@@ -40172,6 +40172,17 @@ item = "quest/212"
 operator = ">="
 value = 5
 
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Is that... warmth? What are you carrying, <NAME>?"
+next_menu = 56
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2112-02"
+
 [[dialog.menu]]
 
 [[dialog.menu.line]]
@@ -40663,6 +40674,52 @@ quest = 144
 kind = "QuestStep"
 step = "144-01"
 
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"Light for Luxem": it's done."""
+next_menu = 58
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2112-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2112-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 1
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 1
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The Lens Core! Hold on... there. Look at the crystal. It's shining again, and I can hear the spring below us running stronger. The valley will heal. Thank you, <NAME>. Karitte wants to speak with you too."
+next_menu = 57
+
 [[dialog]]
 key = "EM21-002.con"
 name = "[Mountain Guide] Shannon"
@@ -40773,6 +40830,58 @@ value_type = "Variable"
 index = 0
 operator = "=="
 value = 10
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The camp is safe enough. It's the stones out there that worry me."
+next_menu = 27
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 951
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 952
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 3001
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2106
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2106-01"
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 951
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 952
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 3001
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2106
 
 [[dialog.menu]]
 
@@ -41041,6 +41150,122 @@ text = "Thank you."
 kind = "QuestStep"
 step = "3001-02"
 
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Restless Stones"'
+next_menu = 29
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2106
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2106-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Restless Stones"'
+next_menu = 32
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2106
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2106-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"Restless Stones": it's done."""
+next_menu = 33
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2106-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2106-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 1
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 1
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The Pomics used to sleep in the rocks. Now they crowd the oasis and the riverbed as if they were thirsty, and stones don't drink. Bring me a shard from one of them. I want to see what's inside."
+next_menu = 30
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 31
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2106-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Needle Pomics, Pomics, Red Pomics, any of them. Most of them are by the oasis and in the wadi."
+next_menu = 28
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Just one shard. You'll know it when you see it: it's blue."
+next_menu = 28
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Blue all the way through. That's mana, and it's from the tower. I can't read this. The Arumic researchers camped on the East Terrace, by the gate to Breezy Hills, can. Take it to their leader, Ardeth."
+next_menu = 28
+
 [[dialog]]
 key = "EM21-003.con"
 name = "[Cleric] Karitte"
@@ -41279,6 +41504,27 @@ next_menu = 47
 [[dialog.menu.line.show_if.condition]]
 kind = "Quest"
 quest = 115
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "<NAME>, Lutis told me what you did. May I say something?"
+next_menu = 62
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 115
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 116
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2112-03"
 
 [[dialog.menu]]
 
@@ -41809,6 +42055,1445 @@ text = "Ah, thanks very much."
 [[dialog.menu.line.on_choose.action]]
 kind = "QuestStep"
 step = "115-01"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Of course."
+next_menu = 64
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2112-03"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 1
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 1
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The spring sings again. I have prayed at this tower for years, and today it answered. Walk in the light of Luxem, friend. You will always be welcome here."
+next_menu = 63
+
+[[dialog]]
+key = "EM21-004.con"
+name = "[Caravan Master] Dorran"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Welcome to the Sandwind Caravan Camp. We trade between the Adventurer's Plain and Zant, when the road lets us."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Dust on the Road"'
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2101
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2101-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "The Wagon That Never Came"'
+next_menu = 6
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2104
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2104-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "The Wagon That Never Came"'
+next_menu = 9
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2104
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2104-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"The Wagon That Never Came": it's done."""
+next_menu = 10
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2104-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2104-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Stolen Supplies"'
+next_menu = 11
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2105
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2105-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Stolen Supplies"'
+next_menu = 14
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2105
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2105-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"Stolen Supplies": it's done."""
+next_menu = 15
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2105-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2105-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Another traveller through the Sandgate! The road to Zant is longer than it looks, and the valley has turned strange. Before you go on, see Mira on the rock over there. She has the best eyes in the camp."
+next_menu = 4
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2101-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Good. Mira will tell you what she has seen from up there."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Oskar left the oasis with a full wagon three days ago and never arrived. The river used to run past the oasis, and the wagons followed it. Now it's a dry wadi. Find him, please."
+next_menu = 7
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 8
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2104-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Follow the dry riverbed south-east from the oasis. Bring me news."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The wadi starts at the oasis and runs south-east. Oskar's wagon has a red cover."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Raiders? Cowboy Pumpkins, taking crates? And the river dry when he crossed... I'll send a cart for Oskar. Thank you for finding him."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Those crates are half our stock. The Cowboy Pumpkins carried them up to Raider's Perch, the plateau in the Redrock Canyons. Bring back six and I'll make it worth your while."
+next_menu = 12
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 13
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2105-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Take the pass south of the wreck. The ramp up to the perch is steep, and they won't be alone."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Six crates. The Cowboy Pumpkins carry them around their camps."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Six crates, and the seals unbroken. Take this jacket from our stock. It's made for desert work."
+next_menu = 2
+
+[[dialog]]
+key = "EM21-005.con"
+name = "[Scout] Mira"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "From up here I can see the whole valley. Most days I wish I couldn't."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Dust on the Road"'
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2101
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2101-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = '"Dust on the Road": here I am.'
+next_menu = 4
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2101-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2101-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Glowing Stingers"'
+next_menu = 5
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2103
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2103-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Glowing Stingers"'
+next_menu = 8
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2103
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2103-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"Glowing Stingers": it's done."""
+next_menu = 9
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2103-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2103-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Make this camp my save point."
+next_menu = 10
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "SetSavePoint"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Mira is on the rock just north-east of the camp. You can't miss her."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "So Dorran sent you up here. Good. From this rock I can see the whole valley, and the dust on the road gets thicker every day. Stay close to the camp at first. If you fall out there, our medic will patch you up here."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Have you seen the Honeybees at the dead trees? At dusk their stingers glow. Bees don't glow. Bring me 8 of those stingers and I'll find out why."
+next_menu = 6
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 7
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2103-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "They swarm around the dead trees with hives, by the road and in the fields."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Eight stingers. Watch the Needle Honeybees, they sting harder."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Look at them shine. That's mana, and a lot of it. The bees drink from the oasis, and the oasis is fed by the spring under the tower. Something is leaking out of that tower."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Done. If you fall out there, you will wake up here at the camp."
+next_menu = 2
+
+[[dialog]]
+key = "EM21-006.con"
+name = "[Hunter] Bekk"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Watch your step out there. The road isn't as safe as it was."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Pumpkins on the Road"'
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2102
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2102-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Pumpkins on the Road"'
+next_menu = 6
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2102
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2102-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"Pumpkins on the Road": it's done."""
+next_menu = 7
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2102-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2102-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The Pumpkins have moved out of the fields and onto the road. Wagons can't pass when they block it. Thin them out and bring me 10 of their stalks, so I know it's done."
+next_menu = 4
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2102-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Pumpkins and Big Pumpkins, both. The patches are all around the flats and along the road."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Ten stalks. The Pumpkins won't move off the road by themselves."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Ten. That will keep the road open for a few days. Here, you earned this."
+next_menu = 2
+
+[[dialog]]
+key = "EM21-007.con"
+name = "[Caravan Trader] Sella"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Potions, arrows, a return scroll for when it all goes wrong. What do you need?"
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Let me see your goods."
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "Open"
+window = "Shop"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog]]
+key = "EM21-008.con"
+name = "[Expedition Leader] Ardeth"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Welcome to the Arumic Expedition Camp. Mind the crates, some of them are older than Zant."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"A Shard for the Expedition": it's done."""
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2107-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2107-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "The Warden Below"'
+next_menu = 4
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2111
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2111-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "The Warden Below"'
+next_menu = 7
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2111
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2111-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"The Warden Below": it's done."""
+next_menu = 8
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2111-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2111-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Lower me into the vault with the crane."
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2111-03"
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestSwitch"
+switch = 609
+operator = "=="
+value = 1
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2111-03"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "A Pomic shard, soaked in mana. Shannon was right to send you. This is what we came for: the tower is failing, and the valley pays for it. My people could use someone like you."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Pell's reading matches what we found. Under the dig there is a sealed vault, and something in it is waking. My crane can lower you inside. Defeat the Ruin Warden and bring me the Lens Core it guards. Take friends if you have them."
+next_menu = 5
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 6
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2111-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "When you're ready, ask me to ride the crane down. Gus runs the lift in the vault; he'll bring you back up."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The Ruin Warden holds the Lens Core. Ask me when you want to go down."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The Lens Core. Feel how warm it is. It belongs at the top of Luxem Tower. Take this, and then take the core to Lutis at the tower."
+next_menu = 2
+
+[[dialog]]
+key = "EM21-009.con"
+name = "[Archaeologist] Pell"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Every stone in these ruins has something written on it. Most of it is complaints about the weather."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Lost Diggers"'
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2109
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2109-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Lost Diggers"'
+next_menu = 6
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2109
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2109-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"Lost Diggers": it's done."""
+next_menu = 7
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2109-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2109-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Words in Stone"'
+next_menu = 8
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2110
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2110-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Words in Stone"'
+next_menu = 11
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2110
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2110-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"Words in Stone": it's done."""
+next_menu = 12
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2110-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2110-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Hob, Wren and Fenn went into the ruins with their notes and haven't come back. Hob was at the pyramid, Wren at the shattered monument and Fenn on the road up to the tower. Find them for me."
+next_menu = 4
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2109-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The pyramid first, it's the closest. Then the monument, east of it, and the Processional Way."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Hob at the pyramid, Wren at the shattered monument, Fenn on the Processional Way."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "All three alive, and with their notes. The carvings they copied all say the same thing: the tower is a lens. It holds something down under the valley."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The Pomic Soldiers carry stones from the ruin walls in their bodies. Some of those stones are carved. Bring me four inscribed fragments and I can read the rest of the story."
+next_menu = 9
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 10
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2110-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The Pomic Soldiers stand guard at the pyramid and the ruin gates."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Four fragments. They are heavy, but don't drop them."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Here it is. 'The lens burns, the warden sleeps. When the lens dims, the warden wakes.' The tower's crystal is dimming, and there is a vault under the dig. Tell Ardeth."
+next_menu = 2
+
+[[dialog]]
+key = "EM21-010.con"
+name = "[Guard Captain] Torvin"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Stay inside the camp if you can't fight. The ruins are no place for sightseeing."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Hornets in the Dig"'
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2108
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2108-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Hornets in the Dig"'
+next_menu = 6
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2108
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2108-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"Hornets in the Dig": it's done."""
+next_menu = 7
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2108-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2108-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "My diggers won't go near the pyramid. Hornets nest in the old walls and drive them off. I can't spare a guard. Clear them out and bring me 8 wings as proof."
+next_menu = 4
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2108-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Cross the upper bridge and head for the pyramid. The nests are in the high walls."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Eight wings. Needle Hornets or Hornets, I don't mind which."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Good work. My diggers can go back. Here, this beret will keep the sun off your head."
+next_menu = 2
+
+[[dialog]]
+key = "EM21-011.con"
+name = "[Quartermaster] Hask"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Supplies for the expedition. If you're working for Ardeth, I'll sell you some."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Let me see your goods."
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "Open"
+window = "Shop"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog]]
+key = "EM21-012.con"
+name = "[Digger] Hob"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "So much carving, so little light."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Hob? Pell is worried about you."
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2109-03"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2109-03"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Worried? I've found a doorway under the pyramid! Tell Pell I'm fine. Tell her the stone over the door shows the tower."
+next_menu = 2
+
+[[dialog]]
+key = "EM21-013.con"
+name = "[Digger] Wren"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Don't touch the monument, please. It's been standing for a thousand years."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Wren? Pell sent me to find you."
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2109-04"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2109-04"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "I couldn't leave. Look at this monument: a tower, a beam of light, and something chained under the ground. I'll be back before dark."
+next_menu = 2
+
+[[dialog]]
+key = "EM21-014.con"
+name = "[Digger] Fenn"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Are they gone? The Pomic Fighters?"
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Fenn? Are you hurt?"
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2109-05"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2109-05"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Just my pride. The Pomic Fighters chased me up the road and I've been hiding behind these pillars. Tell Pell the road is the old pilgrims' way to the tower."
+next_menu = 2
+
+[[dialog]]
+key = "EM21-015.con"
+name = "[Wagon Driver] Oskar"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Water... is there any water left?"
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Oskar? Dorran sent me."
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2104-03"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2104-03"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Dorran... thank the stars. Cowboy Pumpkins jumped us in the wadi. They took every crate up to their perch in the red rocks. And the river, it was dry, all of it. It was full last month."
+next_menu = 2
+
+[[dialog]]
+key = "EM21-016.con"
+name = "[Lift Keeper] Gus"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "This is as deep as the lift goes. Say the word and I'll take you up."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Take me back up."
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2111-04"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
 
 [[dialog]]
 key = "EM22-001.con"

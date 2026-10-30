@@ -1,0 +1,284 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://glnk2a0lhv85"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_zgihw"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_l3cwi"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="3_i1g2t"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="4_uklm9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="5_cycvq"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="6_g7qed"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="7_wzv23"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="8_nyczu"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="9_0745v"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2109-01.tres" id="10_gcbhu"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2109-02.tres" id="11_ron91"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="12_p426s"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2110-01.tres" id="13_0jtho"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2110-02.tres" id="14_9h2i4"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="15_eusye"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="16_ij3uj"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3slxs"]
+text = "Every stone in these ruins has something written on it. Most of it is complaints about the weather."
+next_menu = 1
+resource_name = "NPC: Every stone in these ruins has something written…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_t3p4b"]
+quest = ExtResource("9_0745v")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_mqrvg"]
+step = ExtResource("10_gcbhu")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_b9faj"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_t3p4b"), SubResource("RoseDialogIfQuestStep_mqrvg")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c43lf"]
+kind = "Answer"
+text = "About \"Lost Diggers\""
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_b9faj")])
+resource_name = "You: About \"Lost Diggers\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_49o5w"]
+text = "Hob, Wren and Fenn went into the ruins with their notes and haven't come back. Hob was at the pyramid, Wren at the shattered monument and Fenn on the road up to the tower. Find them for me."
+next_menu = 4
+resource_name = "NPC: Hob, Wren and Fenn went into the ruins with thei…"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_wmzhv"]
+step = ExtResource("10_gcbhu")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5hir9"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_wmzhv")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_nft99"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+on_choose = Array[Resource]([SubResource("RoseDialogCase_5hir9")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0b2mt"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_yeca3"]
+text = "The pyramid first, it's the closest. Then the monument, east of it, and the Processional Way."
+next_menu = 2
+resource_name = "NPC: The pyramid first, it's the closest. Then the mo…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_scu95"]
+quest = ExtResource("9_0745v")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_04kxg"]
+step = ExtResource("11_ron91")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_9klc7"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_scu95"), SubResource("RoseDialogIfQuestStep_04kxg")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_m8hpm"]
+kind = "Answer"
+text = "About \"Lost Diggers\""
+next_menu = 6
+show_if = Array[Resource]([SubResource("RoseDialogCase_9klc7")])
+resource_name = "You: About \"Lost Diggers\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_oqq0y"]
+text = "Hob at the pyramid, Wren at the shattered monument, Fenn on the Processional Way."
+next_menu = 2
+resource_name = "NPC: Hob at the pyramid, Wren at the shattered monume…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_nsmt6"]
+step = ExtResource("11_ron91")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_y1uqu"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_nsmt6")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_wxja6"]
+step = ExtResource("11_ron91")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_xr24w"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_wxja6")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rqnl0"]
+kind = "Answer"
+text = "\"Lost Diggers\": it's done."
+next_menu = 7
+show_if = Array[Resource]([SubResource("RoseDialogCase_y1uqu")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_xr24w")])
+resource_name = "You: \"Lost Diggers\": it's done."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_q5sil"]
+text = "All three alive, and with their notes. The carvings they copied all say the same thing: the tower is a lens. It holds something down under the valley."
+next_menu = 2
+resource_name = "NPC: All three alive, and with their notes. The carvi…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_xhtaq"]
+quest = ExtResource("12_p426s")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_w9uc9"]
+step = ExtResource("13_0jtho")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_71axt"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_xhtaq"), SubResource("RoseDialogIfQuestStep_w9uc9")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ap18r"]
+kind = "Answer"
+text = "About \"Words in Stone\""
+next_menu = 8
+show_if = Array[Resource]([SubResource("RoseDialogCase_71axt")])
+resource_name = "You: About \"Words in Stone\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_318ol"]
+text = "The Pomic Soldiers carry stones from the ruin walls in their bodies. Some of those stones are carved. Bring me four inscribed fragments and I can read the rest of the story."
+next_menu = 9
+resource_name = "NPC: The Pomic Soldiers carry stones from the ruin wa…"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_mgtpa"]
+step = ExtResource("13_0jtho")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3mcp8"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_mgtpa")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_984a2"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 10
+on_choose = Array[Resource]([SubResource("RoseDialogCase_3mcp8")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_63wps"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5nelj"]
+text = "The Pomic Soldiers stand guard at the pyramid and the ruin gates."
+next_menu = 2
+resource_name = "NPC: The Pomic Soldiers stand guard at the pyramid an…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_tmhwh"]
+quest = ExtResource("12_p426s")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_i1uo2"]
+step = ExtResource("14_9h2i4")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_gjpnk"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_tmhwh"), SubResource("RoseDialogIfQuestStep_i1uo2")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_089o2"]
+kind = "Answer"
+text = "About \"Words in Stone\""
+next_menu = 11
+show_if = Array[Resource]([SubResource("RoseDialogCase_gjpnk")])
+resource_name = "You: About \"Words in Stone\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_prpsp"]
+text = "Four fragments. They are heavy, but don't drop them."
+next_menu = 2
+resource_name = "NPC: Four fragments. They are heavy, but don't drop t…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_op7rp"]
+step = ExtResource("14_9h2i4")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_4fjzx"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_op7rp")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_yj37f"]
+step = ExtResource("14_9h2i4")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_yu0do"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_yj37f")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bp1gv"]
+kind = "Answer"
+text = "\"Words in Stone\": it's done."
+next_menu = 12
+show_if = Array[Resource]([SubResource("RoseDialogCase_4fjzx")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_yu0do")])
+resource_name = "You: \"Words in Stone\": it's done."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_yeqi7"]
+text = "Here it is. 'The lens burns, the warden sleeps. When the lens dims, the warden wakes.' The tower's crystal is dimming, and there is a vault under the dig. Tell Ardeth."
+next_menu = 2
+resource_name = "NPC: Here it is. 'The lens burns, the warden sleeps. …"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_34y63"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3n93p"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ef2qc"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_urq19"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3slxs")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hhatu"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c43lf"), SubResource("RoseDialogLine_m8hpm"), SubResource("RoseDialogLine_rqnl0"), SubResource("RoseDialogLine_ap18r"), SubResource("RoseDialogLine_089o2"), SubResource("RoseDialogLine_bp1gv"), SubResource("RoseDialogLine_34y63")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_g5t4a"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3n93p"), SubResource("RoseDialogLine_ef2qc")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8pzp0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_49o5w")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wea0t"]
+lines = Array[Resource]([SubResource("RoseDialogLine_nft99"), SubResource("RoseDialogLine_0b2mt")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dv7rp"]
+lines = Array[Resource]([SubResource("RoseDialogLine_yeca3")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3hhqp"]
+lines = Array[Resource]([SubResource("RoseDialogLine_oqq0y")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_x0nb1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_q5sil")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4fnej"]
+lines = Array[Resource]([SubResource("RoseDialogLine_318ol")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_nk7z7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_984a2"), SubResource("RoseDialogLine_63wps")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5jvtz"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5nelj")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dx6ik"]
+lines = Array[Resource]([SubResource("RoseDialogLine_prpsp")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6oofd"]
+lines = Array[Resource]([SubResource("RoseDialogLine_yeqi7")])
+resource_name = "Menu 12"
+
+[resource]
+key = "EM21-009.con"
+name = "[Archaeologist] Pell"
+menus = Array[Resource]([SubResource("RoseDialogMenu_urq19"), SubResource("RoseDialogMenu_hhatu"), SubResource("RoseDialogMenu_g5t4a"), SubResource("RoseDialogMenu_8pzp0"), SubResource("RoseDialogMenu_wea0t"), SubResource("RoseDialogMenu_dv7rp"), SubResource("RoseDialogMenu_3hhqp"), SubResource("RoseDialogMenu_x0nb1"), SubResource("RoseDialogMenu_4fnej"), SubResource("RoseDialogMenu_nk7z7"), SubResource("RoseDialogMenu_5jvtz"), SubResource("RoseDialogMenu_dx6ik"), SubResource("RoseDialogMenu_6oofd")])

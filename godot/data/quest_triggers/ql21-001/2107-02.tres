@@ -1,0 +1,39 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ddo2sxp683isk"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="1_ic0s2"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/704-mana-stained-pomic-shard.tres" id="2_nbywd"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_zhwqf"]
+quest = ExtResource("1_ic0s2")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_dup1y"]
+item = ExtResource("2_nbywd")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_597cx"]
+quest = ExtResource("1_ic0s2")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_ssu05"]
+item = ExtResource("2_nbywd")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_017cp"]
+equation = 0
+value = 1500
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_wki86"]
+equation = 0
+value = 1200
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_blg7y"]
+switch = 606
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_9s5dg"]
+
+[resource]
+name = "2107-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_zhwqf"), SubResource("RoseConditionQuestItem_dup1y")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_597cx"), SubResource("RoseRewardRemoveItem_ssu05"), SubResource("RoseRewardCalculatedExperiencePoints_017cp"), SubResource("RoseRewardCalculatedMoney_wki86"), SubResource("RoseRewardSetQuestSwitch_blg7y"), SubResource("RoseRewardRemoveSelectedQuest_9s5dg")])

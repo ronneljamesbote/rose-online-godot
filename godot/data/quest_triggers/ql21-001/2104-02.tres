@@ -1,0 +1,34 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://dix74b0fk8dww"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="1_p7gx8"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_dqksg"]
+quest = ExtResource("1_p7gx8")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_rl6tr"]
+variable_type = "Variable"
+variable = 0
+operator = "=="
+value = 1
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_73a4e"]
+quest = ExtResource("1_p7gx8")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_1879g"]
+equation = 0
+value = 900
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_9t9ex"]
+equation = 0
+value = 900
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_t4acr"]
+switch = 603
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_lxz5s"]
+
+[resource]
+name = "2104-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_dqksg"), SubResource("RoseConditionQuestVariable_rl6tr")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_73a4e"), SubResource("RoseRewardCalculatedExperiencePoints_1879g"), SubResource("RoseRewardCalculatedMoney_9t9ex"), SubResource("RoseRewardSetQuestSwitch_t4acr"), SubResource("RoseRewardRemoveSelectedQuest_lxz5s")])

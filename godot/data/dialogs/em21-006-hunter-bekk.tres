@@ -1,0 +1,169 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://dqgol3jyxt45l"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_918rg"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_vtabu"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2102-01.tres" id="3_2ucr4"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2102-02.tres" id="4_1inik"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="5_8zfvd"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="6_7rjyt"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="7_i29to"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="8_iscs2"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="9_inw6v"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="10_ut9mx"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="11_fn0vo"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="12_76727"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="13_kpemg"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="14_l271q"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_evono"]
+text = "Watch your step out there. The road isn't as safe as it was."
+next_menu = 1
+resource_name = "NPC: Watch your step out there. The road isn't as saf…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_0hkob"]
+quest = ExtResource("2_vtabu")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_hkfqj"]
+step = ExtResource("3_2ucr4")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_6p0ps"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_0hkob"), SubResource("RoseDialogIfQuestStep_hkfqj")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5j7vc"]
+kind = "Answer"
+text = "About \"Pumpkins on the Road\""
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_6p0ps")])
+resource_name = "You: About \"Pumpkins on the Road\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_tm9og"]
+text = "The Pumpkins have moved out of the fields and onto the road. Wagons can't pass when they block it. Thin them out and bring me 10 of their stalks, so I know it's done."
+next_menu = 4
+resource_name = "NPC: The Pumpkins have moved out of the fields and on…"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_n4l7g"]
+step = ExtResource("3_2ucr4")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_r7bot"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_n4l7g")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7o2sb"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+on_choose = Array[Resource]([SubResource("RoseDialogCase_r7bot")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ct0zg"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dp5gb"]
+text = "Pumpkins and Big Pumpkins, both. The patches are all around the flats and along the road."
+next_menu = 2
+resource_name = "NPC: Pumpkins and Big Pumpkins, both. The patches are…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_4xhg5"]
+quest = ExtResource("2_vtabu")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_twmga"]
+step = ExtResource("4_1inik")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_pvgd0"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_4xhg5"), SubResource("RoseDialogIfQuestStep_twmga")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bh3l5"]
+kind = "Answer"
+text = "About \"Pumpkins on the Road\""
+next_menu = 6
+show_if = Array[Resource]([SubResource("RoseDialogCase_pvgd0")])
+resource_name = "You: About \"Pumpkins on the Road\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fcc5y"]
+text = "Ten stalks. The Pumpkins won't move off the road by themselves."
+next_menu = 2
+resource_name = "NPC: Ten stalks. The Pumpkins won't move off the road…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_kt24p"]
+step = ExtResource("4_1inik")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_1dydt"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_kt24p")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_n31i2"]
+step = ExtResource("4_1inik")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_guisv"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_n31i2")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_t9bhm"]
+kind = "Answer"
+text = "\"Pumpkins on the Road\": it's done."
+next_menu = 7
+show_if = Array[Resource]([SubResource("RoseDialogCase_1dydt")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_guisv")])
+resource_name = "You: \"Pumpkins on the Road\": it's done."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_qmau8"]
+text = "Ten. That will keep the road open for a few days. Here, you earned this."
+next_menu = 2
+resource_name = "NPC: Ten. That will keep the road open for a few days…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_xz9b8"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_hf0us"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_magyh"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xrl67"]
+lines = Array[Resource]([SubResource("RoseDialogLine_evono")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ziut1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5j7vc"), SubResource("RoseDialogLine_bh3l5"), SubResource("RoseDialogLine_t9bhm"), SubResource("RoseDialogLine_xz9b8")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5j8lc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_hf0us"), SubResource("RoseDialogLine_magyh")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2vpk1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_tm9og")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_n36l0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7o2sb"), SubResource("RoseDialogLine_ct0zg")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1q1op"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dp5gb")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_geuds"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fcc5y")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7ul10"]
+lines = Array[Resource]([SubResource("RoseDialogLine_qmau8")])
+resource_name = "Menu 7"
+
+[resource]
+key = "EM21-006.con"
+name = "[Hunter] Bekk"
+menus = Array[Resource]([SubResource("RoseDialogMenu_xrl67"), SubResource("RoseDialogMenu_ziut1"), SubResource("RoseDialogMenu_5j8lc"), SubResource("RoseDialogMenu_2vpk1"), SubResource("RoseDialogMenu_n36l0"), SubResource("RoseDialogMenu_1q1op"), SubResource("RoseDialogMenu_geuds"), SubResource("RoseDialogMenu_7ul10")])

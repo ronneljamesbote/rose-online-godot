@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d0anhu7c1lnxm"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="1_arh9s"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_par9v"]
+ability = "Level"
+operator = ">="
+value = 15
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_9dbtp"]
+switch = 606
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_tkki8"]
+switch = 607
+value = false
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_htpva"]
+quest = ExtResource("1_arh9s")
+
+[resource]
+name = "2108-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_par9v"), SubResource("RoseConditionQuestSwitch_9dbtp"), SubResource("RoseConditionQuestSwitch_tkki8")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_htpva")])

@@ -1,0 +1,84 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://bevd4ldma7m4b"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_dqa42"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_alula"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="3_uyty2"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="4_ib07w"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="5_wo0e4"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="6_zrld1"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="7_3rjvl"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="8_nurl2"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="9_oiuzc"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2109-05.tres" id="10_f2h44"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="11_8nvis"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="12_03590"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="13_6m3se"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_zslx4"]
+text = "Are they gone? The Pomic Fighters?"
+next_menu = 1
+resource_name = "NPC: Are they gone? The Pomic Fighters?"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_1mdkd"]
+step = ExtResource("10_f2h44")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2g5mq"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_1mdkd")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_wz73b"]
+step = ExtResource("10_f2h44")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_era72"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_wz73b")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bldh2"]
+kind = "Answer"
+text = "Fenn? Are you hurt?"
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_2g5mq")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_era72")])
+resource_name = "You: Fenn? Are you hurt?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_odak3"]
+text = "Just my pride. The Pomic Fighters chased me up the road and I've been hiding behind these pillars. Tell Pell the road is the old pilgrims' way to the tower."
+next_menu = 2
+resource_name = "NPC: Just my pride. The Pomic Fighters chased me up t…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cjqxm"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_go0r4"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bzsi9"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bs6bt"]
+lines = Array[Resource]([SubResource("RoseDialogLine_zslx4")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_s8rnz"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bldh2"), SubResource("RoseDialogLine_cjqxm")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_43yr1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_go0r4"), SubResource("RoseDialogLine_bzsi9")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7me3m"]
+lines = Array[Resource]([SubResource("RoseDialogLine_odak3")])
+resource_name = "Menu 3"
+
+[resource]
+key = "EM21-014.con"
+name = "[Digger] Fenn"
+menus = Array[Resource]([SubResource("RoseDialogMenu_bs6bt"), SubResource("RoseDialogMenu_s8rnz"), SubResource("RoseDialogMenu_43yr1"), SubResource("RoseDialogMenu_7me3m")])

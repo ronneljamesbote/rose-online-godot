@@ -1,0 +1,343 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://xdijue15do8b"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_6hksu"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2101-01.tres" id="2_nh4xc"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="3_eksai"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="4_qek9h"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="5_3zjg3"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2104-01.tres" id="6_7gyqw"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2104-02.tres" id="7_lnj12"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="8_qul2j"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2105-01.tres" id="9_gxyfn"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2105-02.tres" id="10_w57m3"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="11_p8zog"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="12_lv7j8"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="13_36528"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="14_stydk"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="15_n5upv"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="16_v6tbh"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="17_6yxma"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_p6pae"]
+text = "Welcome to the Sandwind Caravan Camp. We trade between the Adventurer's Plain and Zant, when the road lets us."
+next_menu = 1
+resource_name = "NPC: Welcome to the Sandwind Caravan Camp. We trade b…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ygo5j"]
+quest = ExtResource("1_6hksu")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_u5gsu"]
+step = ExtResource("2_nh4xc")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_eunee"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_ygo5j"), SubResource("RoseDialogIfQuestStep_u5gsu")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_an7v2"]
+kind = "Answer"
+text = "About \"Dust on the Road\""
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_eunee")])
+resource_name = "You: About \"Dust on the Road\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6gjet"]
+text = "Another traveller through the Sandgate! The road to Zant is longer than it looks, and the valley has turned strange. Before you go on, see Mira on the rock over there. She has the best eyes in the camp."
+next_menu = 4
+resource_name = "NPC: Another traveller through the Sandgate! The road…"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_67wun"]
+step = ExtResource("2_nh4xc")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_1ex2t"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_67wun")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_oq0r7"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+on_choose = Array[Resource]([SubResource("RoseDialogCase_1ex2t")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mhaha"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_u3nq3"]
+text = "Good. Mira will tell you what she has seen from up there."
+next_menu = 2
+resource_name = "NPC: Good. Mira will tell you what she has seen from …"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_3g6uc"]
+quest = ExtResource("5_3zjg3")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_yu1gy"]
+step = ExtResource("6_7gyqw")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_955d7"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_3g6uc"), SubResource("RoseDialogIfQuestStep_yu1gy")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_f4l8h"]
+kind = "Answer"
+text = "About \"The Wagon That Never Came\""
+next_menu = 6
+show_if = Array[Resource]([SubResource("RoseDialogCase_955d7")])
+resource_name = "You: About \"The Wagon That Never Came\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_l93at"]
+text = "Oskar left the oasis with a full wagon three days ago and never arrived. The river used to run past the oasis, and the wagons followed it. Now it's a dry wadi. Find him, please."
+next_menu = 7
+resource_name = "NPC: Oskar left the oasis with a full wagon three day…"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_6v3tf"]
+step = ExtResource("6_7gyqw")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_kcq6j"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_6v3tf")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5sdch"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 8
+on_choose = Array[Resource]([SubResource("RoseDialogCase_kcq6j")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2orh3"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_daner"]
+text = "Follow the dry riverbed south-east from the oasis. Bring me news."
+next_menu = 2
+resource_name = "NPC: Follow the dry riverbed south-east from the oasi…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_pgm1m"]
+quest = ExtResource("5_3zjg3")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_wswgt"]
+step = ExtResource("7_lnj12")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_q1i3g"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_pgm1m"), SubResource("RoseDialogIfQuestStep_wswgt")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fs4u6"]
+kind = "Answer"
+text = "About \"The Wagon That Never Came\""
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_q1i3g")])
+resource_name = "You: About \"The Wagon That Never Came\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5bwjm"]
+text = "The wadi starts at the oasis and runs south-east. Oskar's wagon has a red cover."
+next_menu = 2
+resource_name = "NPC: The wadi starts at the oasis and runs south-east…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_s4gz8"]
+step = ExtResource("7_lnj12")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_x01gm"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_s4gz8")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_unwz5"]
+step = ExtResource("7_lnj12")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_t2wdd"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_unwz5")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_142oh"]
+kind = "Answer"
+text = "\"The Wagon That Never Came\": it's done."
+next_menu = 10
+show_if = Array[Resource]([SubResource("RoseDialogCase_x01gm")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_t2wdd")])
+resource_name = "You: \"The Wagon That Never Came\": it's done."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_vd03z"]
+text = "Raiders? Cowboy Pumpkins, taking crates? And the river dry when he crossed... I'll send a cart for Oskar. Thank you for finding him."
+next_menu = 2
+resource_name = "NPC: Raiders? Cowboy Pumpkins, taking crates? And the…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_qyu2y"]
+quest = ExtResource("8_qul2j")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_83xnj"]
+step = ExtResource("9_gxyfn")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_pl17i"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_qyu2y"), SubResource("RoseDialogIfQuestStep_83xnj")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_rb91h"]
+kind = "Answer"
+text = "About \"Stolen Supplies\""
+next_menu = 11
+show_if = Array[Resource]([SubResource("RoseDialogCase_pl17i")])
+resource_name = "You: About \"Stolen Supplies\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_s47am"]
+text = "Those crates are half our stock. The Cowboy Pumpkins carried them up to Raider's Perch, the plateau in the Redrock Canyons. Bring back six and I'll make it worth your while."
+next_menu = 12
+resource_name = "NPC: Those crates are half our stock. The Cowboy Pump…"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ls7q3"]
+step = ExtResource("9_gxyfn")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_i2hbq"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_ls7q3")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ongxj"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 13
+on_choose = Array[Resource]([SubResource("RoseDialogCase_i2hbq")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cpu7n"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_whleq"]
+text = "Take the pass south of the wreck. The ramp up to the perch is steep, and they won't be alone."
+next_menu = 2
+resource_name = "NPC: Take the pass south of the wreck. The ramp up to…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_wwnkb"]
+quest = ExtResource("8_qul2j")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_qfeja"]
+step = ExtResource("10_w57m3")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_9gt0r"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_wwnkb"), SubResource("RoseDialogIfQuestStep_qfeja")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_394xr"]
+kind = "Answer"
+text = "About \"Stolen Supplies\""
+next_menu = 14
+show_if = Array[Resource]([SubResource("RoseDialogCase_9gt0r")])
+resource_name = "You: About \"Stolen Supplies\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_94oij"]
+text = "Six crates. The Cowboy Pumpkins carry them around their camps."
+next_menu = 2
+resource_name = "NPC: Six crates. The Cowboy Pumpkins carry them aroun…"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_uaswe"]
+step = ExtResource("10_w57m3")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_8plqn"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_uaswe")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_uo5a8"]
+step = ExtResource("10_w57m3")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_hmo37"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_uo5a8")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_wqti1"]
+kind = "Answer"
+text = "\"Stolen Supplies\": it's done."
+next_menu = 15
+show_if = Array[Resource]([SubResource("RoseDialogCase_8plqn")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_hmo37")])
+resource_name = "You: \"Stolen Supplies\": it's done."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5e1k5"]
+text = "Six crates, and the seals unbroken. Take this jacket from our stock. It's made for desert work."
+next_menu = 2
+resource_name = "NPC: Six crates, and the seals unbroken. Take this ja…"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mevxh"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4z75q"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_mehed"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_eisdy"]
+lines = Array[Resource]([SubResource("RoseDialogLine_p6pae")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qri4o"]
+lines = Array[Resource]([SubResource("RoseDialogLine_an7v2"), SubResource("RoseDialogLine_f4l8h"), SubResource("RoseDialogLine_fs4u6"), SubResource("RoseDialogLine_142oh"), SubResource("RoseDialogLine_rb91h"), SubResource("RoseDialogLine_394xr"), SubResource("RoseDialogLine_wqti1"), SubResource("RoseDialogLine_mevxh")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fyf0x"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4z75q"), SubResource("RoseDialogLine_mehed")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_h89zr"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6gjet")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_364wj"]
+lines = Array[Resource]([SubResource("RoseDialogLine_oq0r7"), SubResource("RoseDialogLine_mhaha")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_46mq5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_u3nq3")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_m38e4"]
+lines = Array[Resource]([SubResource("RoseDialogLine_l93at")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6gxkq"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5sdch"), SubResource("RoseDialogLine_2orh3")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4mlc2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_daner")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1u1z6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5bwjm")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1y355"]
+lines = Array[Resource]([SubResource("RoseDialogLine_vd03z")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2l83k"]
+lines = Array[Resource]([SubResource("RoseDialogLine_s47am")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_y9g04"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ongxj"), SubResource("RoseDialogLine_cpu7n")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0tglf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_whleq")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qvv1m"]
+lines = Array[Resource]([SubResource("RoseDialogLine_94oij")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_19um0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5e1k5")])
+resource_name = "Menu 15"
+
+[resource]
+key = "EM21-004.con"
+name = "[Caravan Master] Dorran"
+menus = Array[Resource]([SubResource("RoseDialogMenu_eisdy"), SubResource("RoseDialogMenu_qri4o"), SubResource("RoseDialogMenu_fyf0x"), SubResource("RoseDialogMenu_h89zr"), SubResource("RoseDialogMenu_364wj"), SubResource("RoseDialogMenu_46mq5"), SubResource("RoseDialogMenu_m38e4"), SubResource("RoseDialogMenu_6gxkq"), SubResource("RoseDialogMenu_4mlc2"), SubResource("RoseDialogMenu_1u1z6"), SubResource("RoseDialogMenu_1y355"), SubResource("RoseDialogMenu_2l83k"), SubResource("RoseDialogMenu_y9g04"), SubResource("RoseDialogMenu_0tglf"), SubResource("RoseDialogMenu_qvv1m"), SubResource("RoseDialogMenu_19um0")])

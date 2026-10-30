@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://d2qukehntp11i"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="1_r7ifd"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/704-mana-stained-pomic-shard.tres" id="2_ahjl0"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ospa5"]
+quest = ExtResource("1_r7ifd")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_vefim"]
+to = 20
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_mktmy"]
+item = ExtResource("2_ahjl0")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_6u4vh"]
+quest = ExtResource("1_r7ifd")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_79wi0"]
+item = ExtResource("2_ahjl0")
+quantity = 1
+
+[resource]
+name = "2106-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ospa5"), SubResource("RoseConditionRandomPercent_vefim"), SubResource("RoseConditionQuestItem_mktmy")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_6u4vh"), SubResource("RoseRewardAddItem_79wi0")])
