@@ -15642,6 +15642,10 @@ value = true
 [[trigger.reward]]
 kind = "RemoveSelectedQuest"
 
+[[trigger.reward]]
+kind = "Trigger"
+trigger = "801-mentor"
+
 [[trigger]]
 name = "2113-21"
 
@@ -15711,6 +15715,10 @@ value = true
 
 [[trigger.reward]]
 kind = "RemoveSelectedQuest"
+
+[[trigger.reward]]
+kind = "Trigger"
+trigger = "801-mentor"
 
 [[trigger]]
 name = "2113-31"
@@ -15839,6 +15847,10 @@ value = true
 [[trigger.reward]]
 kind = "RemoveSelectedQuest"
 
+[[trigger.reward]]
+kind = "Trigger"
+trigger = "801-mentor"
+
 [[trigger]]
 name = "2114-21"
 
@@ -15908,6 +15920,10 @@ value = true
 
 [[trigger.reward]]
 kind = "RemoveSelectedQuest"
+
+[[trigger.reward]]
+kind = "Trigger"
+trigger = "801-mentor"
 
 [[trigger]]
 name = "2114-31"
@@ -16064,6 +16080,10 @@ value = true
 [[trigger.reward]]
 kind = "RemoveSelectedQuest"
 
+[[trigger.reward]]
+kind = "Trigger"
+trigger = "801-mentor"
+
 [[trigger]]
 name = "2115-21"
 
@@ -16133,6 +16153,10 @@ value = true
 
 [[trigger.reward]]
 kind = "RemoveSelectedQuest"
+
+[[trigger.reward]]
+kind = "Trigger"
+trigger = "801-mentor"
 
 [[trigger]]
 name = "2115-31"
@@ -16303,6 +16327,10 @@ value = true
 [[trigger.reward]]
 kind = "RemoveSelectedQuest"
 
+[[trigger.reward]]
+kind = "Trigger"
+trigger = "801-mentor"
+
 [[trigger]]
 name = "2116-03"
 
@@ -16436,6 +16464,10 @@ value = true
 
 [[trigger.reward]]
 kind = "RemoveSelectedQuest"
+
+[[trigger.reward]]
+kind = "Trigger"
+trigger = "801-mentor"
 
 [[trigger]]
 name = "2116-31"
@@ -30782,6 +30814,25 @@ variable_type = "Switch"
 variable = 0
 operator = "SetOne"
 value = 1
+
+[[trigger]]
+name = "801-mentor"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 801
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 801
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/101"
+quantity = 1
 
 [[trigger]]
 name = "802-01"

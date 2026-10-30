@@ -2,7 +2,7 @@
 kind: quest
 id: 1001
 name: Dealer Job Change Quest
-status: in-game
+status: changed-from-irose
 npcs:
 - '[[npcs/1002-akram-kingdom-minister-warren|Akram Kingdom Minister Warren]]'
 - '[[npcs/1004-ferrell-guild-staff-crow|Ferrell Guild Staff Crow]]'
@@ -14,6 +14,13 @@ source:
   - crates/rose-quest/src/lib.rs
 ---
 # Dealer Job Change Quest
+
+**Can't be started any more.** In iROSE Warren in Zant starts this quest when you hand him your
+identification papers. In our game first jobs come from the job mentors at the Sandwind Caravan
+Camp in the [[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]], and Warren sends you
+there instead (see [[quests/801-junon-planet-identification|Junon Planet Identification]]). A
+character already on this quest can still finish it. The steps below are iROSE's and are kept
+in the game data.
 
 Warren suggested that you meet Crow to learn about the basics of trading.  
 

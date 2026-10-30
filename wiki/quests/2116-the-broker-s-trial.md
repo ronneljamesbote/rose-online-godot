@@ -75,6 +75,7 @@ Then:
 - Zuly, base 500 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - set quest switch 616 to 1
 - the quest ends (removed from your list)
+- then runs step `801-mentor` ([[quests/801-junon-planet-identification|Junon Planet Identification]]): if you have that quest, it ends and your Identification papers are taken
 
 ### `2116-21`
 
@@ -100,6 +101,7 @@ Then:
 - Zuly, base 500 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - set quest switch 616 to 1
 - the quest ends (removed from your list)
+- then runs step `801-mentor` ([[quests/801-junon-planet-identification|Junon Planet Identification]]): if you have that quest, it ends and your Identification papers are taken
 
 ### `2116-03`
 
