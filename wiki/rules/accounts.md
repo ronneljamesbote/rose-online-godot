@@ -15,8 +15,9 @@ name_characters: letters (A-Z, a-z) and digits, starting with a letter
 genders: male, female
 faces: [1, 8, 15, 22, 29, 36, 43]
 hair_styles: [0, 5, 10, 15, 20]
-start_zone: "[[zones/20-birth-island|Birth Island]]"
-start_position_m: "(5305, 5395)"
+start_zone: "[[zones/22-adventurer-s-plain|Adventurer's Plain]]"
+start_position_m: "(5760.45, 5166.60), the zone's start spot"
+start_quest: "[[quests/801-junon-planet-identification|Junon Planet Identification]]"
 start_level: 1
 start_job: Visitor
 start_zuly: 0
@@ -39,7 +40,9 @@ start_skills:
   - "[[skills/12-pick-up|Pick Up]]"
   - "[[skills/13-jump|Jump]]"
   - "[[skills/16-normal-attack|Normal Attack]]"
+  - "[[skills/19-party|Party]]"
   - "[[skills/20-trade|Trade]]"
+  - "[[skills/21-vending|Vending]]"
   - "[[skills/25-ride-request|Ride Request]]"
   - "[[skills/41-hi|Hi]]"
   - "[[skills/42-grateful-bow|Grateful Bow]]"
@@ -56,7 +59,7 @@ source:
     - module/src/account.rs (check_connection, name_problem, create_character, assign_character, set_auth_issuer)
     - module/src/character.rs (new_player)
     - crates/rose-game-data/src/lib.rs (CharacterCreator)
-    - module/src/lib.rs (START_ZONE, START_POSITION, client_connected, spawn_player_entity, set_name)
+    - module/src/lib.rs (START_ZONE, START_QUEST_TRIGGER, start_place, new_character, client_connected, spawn_player_entity, set_name)
     - crates/rose-game-data/src/lib.rs (CharacterCreator)
     - godot/scripts/character_create.gd
     - godot/scripts/connect_panel.gd
@@ -111,7 +114,12 @@ The screen shows a turning preview of the character.
 
 ## What a new character starts with
 
-- **Where**: [[zones/20-birth-island|Birth Island]], at 5305 m, 5395 m.
+- **Where**: [[zones/22-adventurer-s-plain|Adventurer's Plain]], at the zone's start spot
+  (5760.45 m, 5166.60 m), 4 m in front of [[npcs/1031-visitor-guide-ronway|Visitor Guide Ronway]]
+  and the [[npcs/1030-visitor-guide-fairy-of-arua|Fairy of Arua]], who face it.
+  The start spot is the "start" marker in the zone's Godot scene, so moving the marker
+  moves where new characters start. Dying before choosing a save point gets you up at the
+  zone's nearest revive point (see [[rules/death|Death]]).
 - **Level** 1, 0 experience, job Visitor, no stat points or skill points, 0 Zuly, full HP
   and MP.
 - **Stats**: STR 15, DEX 15, INT 15, CON 15, CHA 10, SEN 10 (the same
@@ -123,7 +131,10 @@ The screen shows a turning preview of the character.
   [[items/head/222-peacock-feather|Peacock Feather]] for men or the
   [[items/head/221-tulip-ribbon|Tulip Ribbon]] for women.
 - **Skills**: the basic actions and emotes listed in the data block (sit, pick up, jump,
-  attack, trade, ride request and ten emotes).
+  attack, party, trade, vending, ride request and ten emotes).
+- **Quest**: [[quests/801-junon-planet-identification|Junon Planet Identification]], with its
+  [[items/quest/101-identification|Identification]] papers in the bag (quest step `801-01`,
+  run once when the character is made).
 
 See [[rules/stats|Stats]] for what the stats do and [[rules/zones-and-warps|Zones and warps]]
 for getting around.
@@ -135,5 +146,10 @@ for getting around.
 - iROSE (INIT_AVATAR.STB) gives a [[items/weapon/1-wooden-sword|Wooden Sword]]; we give a
   Short Sword instead, plus the Short Bow and arrows to try ranged combat.
 - Accounts live on our website (email and password) instead of the iROSE login server.
+- iROSE starts new characters on [[zones/20-birth-island|Birth Island]], where the Fairy of
+  Arua gives the Party and Vending skills, the Junon Planet Identification quest and its
+  papers when you leave for Adventurer's Plain. We start them in
+  [[zones/22-adventurer-s-plain|Adventurer's Plain]] with all of that already, keep Birth
+  Island for testing only, and place one Fairy of Arua next to Ronway in Adventurer's Plain.
 
-> Open question: the Party and Add Friend actions are not on a new character's skill list; players use the right-click menu on another player instead.
+> Open question: the Add Friend action is not on a new character's skill list; players use the right-click menu on another player instead.

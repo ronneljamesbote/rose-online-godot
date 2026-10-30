@@ -1,0 +1,21 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" uid="uid://dl8vklhs4tsk3" path="res://data/quests/801-junon-planet-identification.tres" id="1_q801"]
+[ext_resource type="RoseItemQuest" uid="uid://dfju2opauegk0" path="res://data/items/quest/101-identification.tres" id="2_papers"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_q801"]
+quest = ExtResource("1_q801")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_q801"]
+quest = ExtResource("1_q801")
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_q801"]
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_papers"]
+item = ExtResource("2_papers")
+quantity = 1
+
+[resource]
+name = "801-mentor"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_q801")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_q801"), SubResource("RoseRewardRemoveSelectedQuest_q801"), SubResource("RoseRewardRemoveItem_papers")])

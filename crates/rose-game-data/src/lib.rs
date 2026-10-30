@@ -904,7 +904,11 @@ fn starting_skills() -> Vec<SkillId> {
         SkillIds::Sit,
         SkillIds::PickUp,
         SkillIds::Attack,
+        // Party and Vending came with leaving Birth Island (quest trigger T-warp); new
+        // characters now start in Adventurer's Plain with them.
+        SkillIds::Party,
         SkillIds::Trade,
+        SkillIds::Vending,
         SkillIds::RideRequest,
         SkillIds::Jump,
         SkillIds::Hi,

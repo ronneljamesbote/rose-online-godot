@@ -2,7 +2,7 @@
 kind: zone
 id: 22
 name: Adventurer's Plain
-status: in-game
+status: changed-from-irose
 planet: Junon
 pvp: no
 monster_levels: 2–13
@@ -358,6 +358,9 @@ npcs:
 - npc: '[[npcs/1031-visitor-guide-ronway|Visitor Guide Ronway]]'
   x: 5763.3
   y: 5169.4
+- npc: '[[npcs/1030-visitor-guide-fairy-of-arua|Visitor Guide Fairy of Arua]]'
+  x: 5765.4
+  y: 5167.3
 - npc: '[[npcs/1038-village-chief-gray|Village Chief Gray]]'
   x: 5879.1
   y: 5105.1
@@ -393,6 +396,12 @@ source:
 ---
 # Adventurer's Plain
 
+**Every new character starts here**, at the zone's start spot (5760.45 m, 5166.60 m) on the
+beach, 4 m in front of [[npcs/1031-visitor-guide-ronway|Visitor Guide Ronway]] and the
+[[npcs/1030-visitor-guide-fairy-of-arua|Fairy of Arua]] (see [[rules/accounts|Accounts]]).
+Moving the "start" marker in the zone's scene moves where new characters start. In iROSE they
+start on [[zones/20-birth-island|Birth Island]] and come here when they leave it.
+
 Positions are in metres. Each spawn point keeps up to "max alive" monsters; the
 reinforcements show up once a point has been refilled many times (see
 [[rules/monster-spawns|Monster spawns]]). Zone drops can come from any monster here (see
@@ -402,3 +411,8 @@ Adventurer's Plain is edited in Godot: its spawn points, NPCs and start and revi
 markers in the zone's scenes, and the server reads them from
 `export/zones/22-adventurer-s-plain.toml`, which is exported from those scenes. They are
 the same as in iROSE's map files.
+
+## Changed from iROSE
+
+- New characters start here instead of on Birth Island, and one Fairy of Arua (iROSE has
+  her only on Birth Island) stands next to Ronway at the start.

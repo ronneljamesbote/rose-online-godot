@@ -56,7 +56,10 @@ value = true
 
 [sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_bd06b1"]
 
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_801"]
+trigger = "801-mentor"
+
 [resource]
 name = "2115-02"
 conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_cfb2f0"), SubResource("RoseConditionAbilityValue_26a6fb"), SubResource("RoseConditionQuestItem_1f1882")])
-rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_2312b9"), SubResource("RoseRewardAddItem_dcd46c"), SubResource("RoseRewardRemoveItem_931e0c"), SubResource("RoseRewardAbilityValue_b8b117"), SubResource("RoseRewardQuestVariable_bbf3a9"), SubResource("RoseRewardSetHealthManaPercent_9c5f58"), SubResource("RoseRewardCalculatedExperiencePoints_13806d"), SubResource("RoseRewardCalculatedMoney_153ea8"), SubResource("RoseRewardSetQuestSwitch_7cff55"), SubResource("RoseRewardRemoveSelectedQuest_bd06b1")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_2312b9"), SubResource("RoseRewardAddItem_dcd46c"), SubResource("RoseRewardRemoveItem_931e0c"), SubResource("RoseRewardAbilityValue_b8b117"), SubResource("RoseRewardQuestVariable_bbf3a9"), SubResource("RoseRewardSetHealthManaPercent_9c5f58"), SubResource("RoseRewardCalculatedExperiencePoints_13806d"), SubResource("RoseRewardCalculatedMoney_153ea8"), SubResource("RoseRewardSetQuestSwitch_7cff55"), SubResource("RoseRewardRemoveSelectedQuest_bd06b1"), SubResource("RoseRewardTrigger_801")])

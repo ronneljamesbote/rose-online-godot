@@ -54,9 +54,13 @@ const MONSTER_FIGHTING_US: i64 = 5_000_000;
 const CHASE_REPATH_CM: f32 = 100.0;
 /// Extra reach so an entity that stopped exactly at range still swings.
 const RANGE_SLACK_CM: f32 = 50.0;
-/// New characters start where rose-offline starts them, on Birth Island.
-const START_ZONE: u16 = 20;
-const START_POSITION: (f32, f32) = (530500.0, 539500.0);
+/// New characters start in Adventurer's Plain, at its start spot (the "start" marker in the
+/// zone's scene). Birth Island (zone 20), where iROSE starts them, is kept for testing only:
+/// nothing leads there but the GM command `/tp 20`.
+const START_ZONE: u16 = 22;
+/// What Birth Island's fairy hands over when a character leaves the island (quest trigger
+/// T-warp): quest 801 and the identification papers for it. A new character gets it at once.
+const START_QUEST_TRIGGER: &str = "801-01";
 /// Damage older than this earns no experience (rose-offline's DAMAGE_REWARD_EXPIRE_TIME).
 const DAMAGE_REWARD_EXPIRE_US: i64 = 5 * 60 * 1_000_000;
 /// Passive HP and MP recovery interval (rose-offline's passive_recovery_system).
@@ -491,6 +495,20 @@ fn clear_damage_sources(ctx: &ReducerContext, defender: u64) {
     }
 }
 
+/// Where a new character starts: START_ZONE's start spot.
+fn start_place(game: &GameData) -> Option<(u16, f32, f32)> {
+    let zone = rose_data::ZoneId::new(START_ZONE).and_then(|z| game.zones.get_zone(z))?;
+    Some((START_ZONE, zone.start_position.x, zone.start_position.y))
+}
+
+/// Make a new character (without its entity yet) and give it what it starts with. None when the
+/// start zone is missing from the game data.
+pub(crate) fn new_character(ctx: &ReducerContext, game: &GameData, name: String, gender: u8) -> Option<Player> {
+    let player = ctx.db.player().insert(character::new_player(game, ctx.sender(), name, gender, start_place(game)?));
+    quests::run_trigger(ctx, game, player.identity, START_QUEST_TRIGGER);
+    ctx.db.player().identity().find(player.identity)
+}
+
 pub(crate) fn spawn_player_entity(ctx: &ReducerContext, game: &GameData, player: &mut Player) {
     let entity = ctx.db.entity().insert(Entity {
         entity_id: 0,
@@ -603,12 +621,15 @@ pub fn client_connected(ctx: &ReducerContext) -> Result<(), String> {
     if existing.is_none() && account::accounts_required(ctx) {
         return Ok(());
     }
-    let mut player = existing.unwrap_or_else(|| {
-        let hex = ctx.sender().to_hex().to_string();
-        let name = format!("Tester{}", &hex[hex.len() - 4..]);
-        let (x, y) = START_POSITION;
-        ctx.db.player().insert(character::new_player(&game, ctx.sender(), name, 0, (START_ZONE, x, y)))
-    });
+    let mut player = match existing {
+        Some(p) => p,
+        None => {
+            let hex = ctx.sender().to_hex().to_string();
+            let name = format!("Tester{}", &hex[hex.len() - 4..]);
+            let Some(p) = new_character(ctx, &game, name, 0) else { return Ok(()) };
+            p
+        }
+    };
     if !player.online {
         friends::announce(ctx, &player, true);
     }

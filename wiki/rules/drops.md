@@ -84,7 +84,7 @@ table are not listed on the monster page.
 
 A level 5 player with no Drop Rate bonus kills a
 [[monsters/1-mini-jelly-bean|Mini-Jelly Bean]] (level 2, drop item rate 70, drop money rate
-6) on [[zones/20-birth-island|Birth Island]]. The level difference is 3.
+6) on [[zones/22-adventurer-s-plain|Adventurer's Plain]]. The level difference is 3.
 
 - Drop roll, with a roll of 50:
   $\lfloor (300 + 70 - 50 - 3.5 \times 19 - 10) \times 0.38 \rfloor = \lfloor 92.53 \rfloor = 92$.

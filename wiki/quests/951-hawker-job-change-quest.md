@@ -2,7 +2,7 @@
 kind: quest
 id: 951
 name: Hawker Job Change Quest
-status: in-game
+status: changed-from-irose
 npcs:
 - '[[npcs/1002-akram-kingdom-minister-warren|Akram Kingdom Minister Warren]]'
 - '[[npcs/1052-mountain-guide-shannon|Mountain Guide Shannon]]'
@@ -14,6 +14,13 @@ source:
   - crates/rose-quest/src/lib.rs
 ---
 # Hawker Job Change Quest
+
+**Can't be started any more.** In iROSE Warren in Zant starts this quest when you hand him your
+identification papers. In our game first jobs come from the job mentors at the Sandwind Caravan
+Camp in the [[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]], and Warren sends you
+there instead (see [[quests/801-junon-planet-identification|Junon Planet Identification]]). A
+character already on this quest can still finish it. The steps below are iROSE's and are kept
+in the game data.
 
 Reasoning that speed is essential for Hawkers, Warren has asked you to bring him a Tarren Earring from Shannon. You better head straight to the Tower of Luxem Valley.  
 

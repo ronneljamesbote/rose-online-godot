@@ -9,7 +9,7 @@
 use spacetimedb::{Identity, ReducerContext, Table};
 
 use crate::bank::bank;
-use crate::{character, game_data, party, player, require_admin, spawn_player_entity, START_POSITION, START_ZONE};
+use crate::{game_data, new_character, party, player, require_admin, spawn_player_entity};
 
 /// Faces and hair styles the character creation screen offers (rose-offline-client's
 /// CREATE_CHARACTER_FACE_LIST and CREATE_CHARACTER_HAIR_LIST).
@@ -105,14 +105,13 @@ pub fn create_character(ctx: &ReducerContext, name: String, gender: u8, face: u8
         return Err("pick a face and hair style from the list".into());
     }
     let game = game_data::game(ctx)?;
-    let (x, y) = START_POSITION;
-    let mut player = character::new_player(&game, ctx.sender(), name, gender, (START_ZONE, x, y));
+    let mut player = new_character(ctx, &game, name, gender).ok_or("the start zone is missing")?;
     player.face = face;
     player.hair = hair;
     player.online = true;
     player.connection = ctx.connection_id();
     spawn_player_entity(ctx, &game, &mut player);
-    ctx.db.player().insert(player);
+    ctx.db.player().identity().update(player);
     Ok(())
 }
 
