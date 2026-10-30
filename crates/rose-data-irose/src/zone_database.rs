@@ -177,6 +177,7 @@ fn zone_settings(data: &StbZone, string_database: &StringDatabase, id: usize) ->
         footstep_type: data.get_zone_footstep_type(id),
         sector_size: data.get_zone_sector_size(id).unwrap_or(0).clamp(MIN_SECTOR_SIZE, MAX_SECTOR_SIZE),
         vehicle_use_flags: data.get_zone_vehicle_use_flags(id).unwrap_or(0),
+        decoration_fade_distance: rose_data::DEFAULT_DECORATION_FADE_DISTANCE,
     })
 }
 
@@ -419,6 +420,7 @@ fn zone_list_entry(settings: &ZoneSettings, text: &mut Vec<String>) -> ZoneListE
         background_music_day: (!settings.music_day.is_empty()).then(|| settings.music_day.clone()),
         background_music_night: (!settings.music_night.is_empty()).then(|| settings.music_night.clone()),
         footstep_type: settings.footstep_type,
+        decoration_fade_distance: settings.decoration_fade_distance,
     }
 }
 

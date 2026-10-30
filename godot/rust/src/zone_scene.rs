@@ -31,7 +31,8 @@ use godot::{
         node::InternalMode,
         packed_scene::GenEditState,
         geometry_instance_3d::ShadowCastingSetting,
-        AudioStream, DirAccess, Engine, FileAccess, GeometryInstance3D, INode3D, ImmediateMesh, Label3D, Mesh, MeshInstance3D, Node, Node3D,
+        resource_saver::SaverFlags,
+        AudioStream, CollisionShape3D, ConcavePolygonShape3D, DirAccess, Engine, FileAccess, GeometryInstance3D, ProjectSettings, INode3D, ImmediateMesh, Label3D, Mesh, MeshInstance3D, Node, Node3D,
         PackedScene, ResourceLoader, ResourceSaver, ShaderMaterial, StandardMaterial3D, Texture2D, Texture2DArray,
     },
     global::Error,
@@ -75,12 +76,15 @@ pub fn zone_folders() -> Vec<(u16, String)> {
 }
 
 
-/// The zone's scene, when it has one and the converted assets it uses are there (they are
-/// not committed; `--import-rose` makes them). Without them the zone loads from the ROSE
-/// files: the error is `None` for a zone with no scene, or why its scene was not used.
-pub fn zone_scene(zone_id: u16, zone_dir: &str) -> Result<Gd<PackedScene>, Option<&'static str>> {
-    let path = format!("{}/zone.tscn", zone_folder(zone_id).ok_or(None)?);
-    if !ResourceLoader::singleton().exists(&path) {
+/// The zone's scene file and its baked collision (`COLLISION_FILE`, when `--export-data` made
+/// one), when it has a scene and the converted assets it uses are there (they are not
+/// committed; `--import-rose` makes them). Without them the zone loads from the ROSE files:
+/// the error is `None` for a zone with no scene, or why its scene was not used.
+pub fn zone_scene_path(zone_id: u16, zone_dir: &str) -> Result<(String, Option<String>), Option<&'static str>> {
+    let folder = zone_folder(zone_id).ok_or(None)?;
+    let path = format!("{folder}/zone.tscn");
+    let mut loader = ResourceLoader::singleton();
+    if !loader.exists(&path) {
         return Err(None);
     }
     let first_tile = data::read_file::<ZonFile>(&format!("{zone_dir}/{}.ZON", zone_dir.rsplit('/').next().unwrap_or("")))
@@ -89,8 +93,15 @@ pub fn zone_scene(zone_id: u16, zone_dir: &str) -> Result<Gd<PackedScene>, Optio
         godot_warn!("rose: {path} needs the converted assets; run --import-rose. Loading the zone from the client data.");
         return Err(Some("assets missing"));
     }
-    godot::tools::try_load::<PackedScene>(&path).map_err(|_| Some("scene did not load"))
+    let collision = format!("{folder}/{COLLISION_FILE}");
+    Ok((path, loader.exists(&collision).then_some(collision)))
 }
+
+/// The zone's collision, baked by `--export-data` next to its `zone.tscn`: a scene with a
+/// `Walls` and a `Floors` body holding every wall and floor triangle of its placed models,
+/// so the game doesn't copy them out of each model while loading.
+pub const COLLISION_FILE: &str = "collision.scn";
+
 
 fn walk(node: &Gd<Node>, visit: &mut impl FnMut(&Gd<Node>)) {
     visit(node);
@@ -116,6 +127,7 @@ pub fn gather(map: &Gd<Node>, to_zone: Transform3D, spawner: &mut ObjectSpawner,
             let warp_id = object.bind().warp_id;
             let mut warp_box: Option<Aabb> = None;
             let mut casters = Vec::new();
+            let mut parts = Vec::new();
             let mut size: Option<Aabb> = None;
             for child in object.get_children().iter_shared() {
                 if let Ok(part) = child.clone().try_cast::<MeshInstance3D>() {
@@ -129,9 +141,9 @@ pub fn gather(map: &Gd<Node>, to_zone: Transform3D, spawner: &mut ObjectSpawner,
                     if part.get_cast_shadows_setting() != ShadowCastingSetting::OFF {
                         casters.push(part.clone().upcast::<GeometryInstance3D>());
                     }
+                    parts.push(part.clone().upcast::<GeometryInstance3D>());
                     let to_zone_part = object_transform * part.get_transform();
-                    let walls = part.get_meta_ex("walls").default(&false.to_variant()).done().try_to::<bool>().unwrap_or(false);
-                    let floors = part.get_meta_ex("floors").default(&false.to_variant()).done().try_to::<bool>().unwrap_or(false);
+                    let (walls, floors) = if spawner.collect_faces { part_collision(&part) } else { (false, false) };
                     if walls || floors {
                         let faces: Vec<Vector3> = mesh.get_faces().as_slice().iter().map(|v| to_zone_part * *v).collect();
                         if walls {
@@ -157,6 +169,9 @@ pub fn gather(map: &Gd<Node>, to_zone: Transform3D, spawner: &mut ObjectSpawner,
             }
             if let Some(size) = size {
                 spawner.add_casters(casters, object_transform, size);
+                if object.bind().list == "deco" {
+                    spawner.fade_if_small(&parts, object_transform, size);
+                }
             }
         } else if let Ok(effect) = node.clone().try_cast::<RoseEffectSpot>() {
             let transform = to_zone * effect.get_global_transform();
@@ -173,6 +188,135 @@ pub fn gather(map: &Gd<Node>, to_zone: Transform3D, spawner: &mut ObjectSpawner,
         }
     });
     materials.len()
+}
+
+/// Whether a model part blocks walking (walls) and can be stood on (floors), as its model
+/// scene marks it.
+fn part_collision(part: &Gd<MeshInstance3D>) -> (bool, bool) {
+    let flag = |name: &str| part.get_meta_ex(name).default(&false.to_variant()).done().try_to::<bool>().unwrap_or(false);
+    (flag("walls"), flag("floors"))
+}
+
+/// Visits every wall or floor part of the placed models under `node` (at `transform` in the
+/// zone's space): where it stands in the zone, its mesh, and whether it is a wall and a floor.
+/// The transforms are multiplied out here (not read from the engine), so the export and the
+/// game get the very same numbers.
+fn collision_parts(node: &Gd<Node>, transform: Transform3D, visit: &mut impl FnMut(Transform3D, &Gd<Mesh>, bool, bool)) {
+    if node.clone().try_cast::<RoseZoneObject>().is_ok() {
+        for child in node.get_children().iter_shared() {
+            let Ok(part) = child.try_cast::<MeshInstance3D>() else { continue };
+            let Some(mesh) = part.get_mesh() else { continue };
+            let (wall, floor) = part_collision(&part);
+            if wall || floor {
+                visit(transform * part.get_transform(), &mesh, wall, floor);
+            }
+        }
+        return;
+    }
+    for child in node.get_children().iter_shared() {
+        collision_parts(&child, transform * transform_of(&child), visit);
+    }
+}
+
+/// Every wall and floor triangle of the placed models in a zone scene (`root`, its
+/// `RoseZoneScene`), in the zone's space.
+pub fn collect_collision(root: &Gd<Node>) -> (Vec<Vector3>, Vec<Vector3>) {
+    let (mut walls, mut floors) = (Vec::new(), Vec::new());
+    collision_parts(root, transform_of(root), &mut |to_zone, mesh, wall, floor| {
+        let faces: Vec<Vector3> = mesh.get_faces().as_slice().iter().map(|v| to_zone * *v).collect();
+        if wall {
+            walls.extend_from_slice(&faces);
+        }
+        if floor {
+            floors.extend(faces);
+        }
+    });
+    (walls, floors)
+}
+
+/// What a zone's collision is made of: a hash of every wall and floor part of its placed
+/// models (its mesh, where it stands, wall or floor). The baked collision keeps the one it
+/// was made from; the game builds the collision itself when the scene gives another (a
+/// scene edited since the last `--export-data`).
+pub fn collision_key(root: &Gd<Node>) -> String {
+    let mut hash: u64 = 0xcbf29ce484222325;
+    let mut add = |bytes: &[u8]| {
+        for byte in bytes {
+            hash ^= *byte as u64;
+            hash = hash.wrapping_mul(0x100000001b3);
+        }
+    };
+    add(&ZONE_IMPORT_VERSION.to_le_bytes());
+    collision_parts(root, transform_of(root), &mut |to_zone, mesh, wall, floor| {
+        add(mesh.get_path().to_string().as_bytes());
+        let b = to_zone.basis;
+        for v in [b.rows[0], b.rows[1], b.rows[2], to_zone.origin] {
+            for c in [v.x, v.y, v.z] {
+                add(&c.to_bits().to_le_bytes());
+            }
+        }
+        add(&[wall as u8, floor as u8]);
+    });
+    format!("{hash:016x}")
+}
+
+/// `--export-data`'s collision of a zone scene (`COLLISION_FILE`, next to `zone.tscn`) from
+/// its instanced `root`: written when the triangles or the scene changed (only compared with
+/// `check`). Returns the file's path, and whether it was out of date.
+fn export_collision(folder: &str, root: &Gd<Node>, check: bool) -> Result<(String, bool), String> {
+    let hash = collision_key(root);
+    let (walls, floors) = collect_collision(root);
+    let path = format!("{folder}/{COLLISION_FILE}");
+    let same = |old: &[Vector3], new: &[Vector3]| old.len() == new.len() && old.iter().zip(new).all(|(a, b)| (*a - *b).length() < 1.0e-3);
+    let mut loader = ResourceLoader::singleton();
+    let current = loader
+        .exists(&path)
+        .then(|| loader.load_ex(&path).cache_mode(godot::classes::resource_loader::CacheMode::IGNORE).done())
+        .flatten()
+        .and_then(|r| r.try_cast::<PackedScene>().ok())
+        .and_then(|scene| scene.instantiate());
+    let up_to_date = current.as_ref().is_some_and(|old| {
+        let faces = |name: &str| {
+            old.get_node_or_null(&format!("{name}/Shape"))
+                .and_then(|n| n.try_cast::<CollisionShape3D>().ok())
+                .and_then(|c| c.get_shape())
+                .and_then(|s| s.try_cast::<ConcavePolygonShape3D>().ok())
+                .map(|s| s.get_faces().to_vec())
+                .unwrap_or_default()
+        };
+old.get_meta_ex("collision_key").default(&"".to_variant()).done().to::<GString>().to_string() == hash
+            && same(&faces("Walls"), &walls)
+            && same(&faces("Floors"), &floors)
+    });
+    if let Some(old) = current {
+        old.free();
+    }
+    let global = ProjectSettings::singleton().globalize_path(&path).to_string();
+    if up_to_date || check {
+        return Ok((global, !up_to_date));
+    }
+    let mut collision = Node3D::new_alloc();
+    collision.set_name("Collision");
+    collision.set_meta("collision_key", &hash.to_variant());
+    for (name, layer, faces) in [("Walls", zone::LAYER_WALLS, &walls), ("Floors", zone::LAYER_FLOORS, &floors)] {
+        let body = zone::collision_body(name, layer, faces);
+        collision.add_child(&body);
+        body.clone().upcast::<Node>().set_owner(&collision);
+        for mut child in body.get_children().iter_shared() {
+            child.set_owner(&collision);
+        }
+    }
+    let mut scene = PackedScene::new_gd();
+    let packed = scene.pack(&collision);
+    collision.free();
+    if packed != godot::global::Error::OK {
+        return Err(format!("could not make {path}: {packed:?}"));
+    }
+    let saved = ResourceSaver::singleton().save_ex(&scene).path(&path).flags(SaverFlags::COMPRESS).done();
+    if saved != godot::global::Error::OK {
+        return Err(format!("could not write {path}: {saved:?}"));
+    }
+    Ok((global, true))
 }
 
 // ---------------------------------------------------------------------------------------
@@ -2329,7 +2473,10 @@ pub fn write_zone_scenes(zone_id: u16, force: bool) -> Result<(String, usize, us
 /// spawn points, town NPCs and named spots, with positions in metres in the server's frame
 /// (x east, y north, z up). Blocks come in the order the server reads IFO files (north to
 /// south rows, west to east), the markers of a block in scene order.
-pub fn zone_layout(zone_id: u16) -> Result<rose_data_export::ZoneLayout, String> {
+///
+/// With `collision` (Some(check)) it bakes the zone's collision too (`export_collision`):
+/// its path and whether it was out of date.
+pub fn zone_export(zone_id: u16, collision: Option<bool>) -> Result<(rose_data_export::ZoneLayout, Option<(String, bool)>), String> {
     let folder = zone_folder(zone_id).ok_or(format!("zone {zone_id} has no folder in {ZONES}"))?;
     let path = format!("{folder}/zone.tscn");
     let scene = ResourceLoader::singleton()
@@ -2349,8 +2496,12 @@ pub fn zone_layout(zone_id: u16) -> Result<rose_data_export::ZoneLayout, String>
     for (_, block) in &blocks {
         collect_markers(block, transform_of(block), &block.get_name().to_string(), &mut layout);
     }
+    let baked = match collision {
+        Some(check) => Some(export_collision(&folder, &root, check)),
+        None => None,
+    };
     root.free();
-    Ok(layout)
+    Ok((layout, baked.transpose()?))
 }
 
 fn transform_of(node: &Gd<Node>) -> Transform3D {

@@ -58,10 +58,13 @@ func show_zone(zone_name: String) -> void:
 	_title.text = "Loading %s..." % zone_name if zone_name != "" else "Loading..."
 	_root.modulate.a = 1.0
 	_root.visible = true
-	_bar.value = 0.15
-	_tween = create_tween()
-	# The load itself blocks, so the bar only moves before and after it.
-	_tween.tween_property(_bar, "value", 0.6, 0.25)
+	_bar.value = 0.05
+
+
+## How far the zone has loaded (0 to 1). The zone loads a little each frame, so the bar
+## follows it as it goes.
+func set_progress(progress: float) -> void:
+	_bar.value = maxf(_bar.value, lerpf(0.05, 0.95, clampf(progress, 0.0, 1.0)))
 
 
 func hide_screen() -> void:

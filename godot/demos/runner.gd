@@ -29,6 +29,7 @@ const NET_DEMOS := {
 const OFFLINE_DEMOS := {
 	"camera": "camera.gd",
 	"interface": "interface.gd",
+	"zones": "zones.gd",
 }
 
 

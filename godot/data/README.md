@@ -31,7 +31,7 @@ cursors, **quests**, **NPC dialogs** and the **monster AI**.
 | `skills/<id>-<name>/` | `RoseSkill` | One skill: a resource per level (each level has its own id) |
 | `status_effects/` | `RoseStatusEffect` | Buffs, debuffs, recovery and poison over time, stuns ... |
 | `job_classes/` | `RoseJobClass` | Sets of jobs a skill or item can require ("Soldier Job") |
-| `zones/` | `RoseZoneSettings` | A zone's settings: name, map file, start and revive spots, music, sky, minimap, time of day, PvP, planet, carts |
+| `zones/` | `RoseZoneSettings` | A zone's settings: name, map file, start and revive spots, music, sky, minimap, how far away small decorations fade, time of day, PvP, planet, carts |
 | `warp_gates/` | `RoseWarpGate` | Where a warp gate sends you: zone and named spot |
 | `craft_recipes/` | `RoseCraftRecipe` | A crafting or refining recipe: up to 4 materials (recipes 1-20 refine) |
 | `new_characters/` | `RoseNewCharacter` | What a new male or female character starts with: stats, clothes, bag |

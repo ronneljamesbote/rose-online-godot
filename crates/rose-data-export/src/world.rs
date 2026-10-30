@@ -98,6 +98,18 @@ pub struct ZoneExport {
     pub sector_size: u32,
     #[serde(skip_serializing_if = "is_default")]
     pub vehicle_use_flags: u32,
+    /// Metres from the camera at which the game fades out small decorations (0 = never);
+    /// left out when it is the usual 250.
+    #[serde(default = "default_fade", skip_serializing_if = "is_default_fade")]
+    pub decoration_fade_distance: u32,
+}
+
+fn default_fade() -> u32 {
+    rose_data::DEFAULT_DECORATION_FADE_DISTANCE
+}
+
+fn is_default_fade(value: &u32) -> bool {
+    *value == rose_data::DEFAULT_DECORATION_FADE_DISTANCE
 }
 
 impl ZoneExport {
@@ -127,6 +139,7 @@ impl ZoneExport {
             footsteps: zone.footstep_type.unwrap_or(0),
             sector_size: zone.sector_size,
             vehicle_use_flags: zone.vehicle_use_flags,
+            decoration_fade_distance: zone.decoration_fade_distance,
         }
     }
 
@@ -166,6 +179,7 @@ impl ZoneExport {
             footstep_type: (self.footsteps != 0).then_some(self.footsteps),
             sector_size: self.sector_size,
             vehicle_use_flags: self.vehicle_use_flags,
+            decoration_fade_distance: self.decoration_fade_distance,
         })
     }
 }

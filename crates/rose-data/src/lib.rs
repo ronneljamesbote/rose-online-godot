@@ -138,5 +138,6 @@ pub use world::{
 };
 pub use zone_database::{
     ZoneData, ZoneDatabase, ZoneEventObject, ZoneId, ZoneMonsterSpawnPoint, ZoneNpcSpawn, ZoneSettings,
+    DEFAULT_DECORATION_FADE_DISTANCE,
 };
 pub use zone_list::{ZoneList, ZoneListEntry};

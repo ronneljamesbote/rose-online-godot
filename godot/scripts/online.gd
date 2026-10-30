@@ -4,6 +4,7 @@ extends Node3D
 
 signal joined(me: Node3D)
 signal zone_needed(zone_id: int)
+signal warp_gate_near(zone_id: int)  # the zone behind a gate we stand near, 0 when none
 ## The server turned the connection down or closed it.
 signal connection_failed(reason: String)
 
@@ -120,6 +121,7 @@ var _warps: Array = []  # this zone's warp gates: id, position, size
 var _warps_zone: Node = null
 var _next_warp_ms := 0
 var _warp_armed := false  # false until we stand outside every gate (we may arrive inside one)
+var _near_gate_zone := 0  # the zone behind the warp gate we stand near (warp_gate_near)
 var _level := 0
 var _zone_requested := 0
 var log_damage := false
@@ -1112,7 +1114,9 @@ func _check_warps() -> void:
 		_warps_zone = zone
 		_warps = zone.get_warps()
 		_warp_armed = false
+		_near_gate_zone = 0
 		print("rose net: %d warp gates in this zone" % _warps.size())
+	_check_near_gate()
 	if Time.get_ticks_msec() < _next_warp_ms:
 		return
 	var inside := -1
@@ -1131,6 +1135,35 @@ func _check_warps() -> void:
 		_next_warp_ms = Time.get_ticks_msec() + 5000
 		print("rose net: entering warp gate ", inside)
 		net.use_warp_gate(inside)
+
+
+## Within GATE_NEAR metres of a warp gate the zone behind it is read ahead (main.gd's
+## zone_preload); further than GATE_FAR from every gate it is let go again. The gap keeps
+## walking along the edge from starting and stopping it.
+const GATE_NEAR := 40.0
+const GATE_FAR := 60.0
+
+func _check_near_gate() -> void:
+	var nearest_id := -1
+	var nearest := INF
+	for warp in _warps:
+		var box := AABB(warp["position"], warp["size"])
+		var feet: Vector3 = me.position
+		var closest := Vector3(clampf(feet.x, box.position.x, box.end.x), feet.y, clampf(feet.z, box.position.z, box.end.z))
+		var distance := Vector2(feet.x - closest.x, feet.z - closest.z).length()
+		if distance < nearest:
+			nearest = distance
+			nearest_id = warp["id"]
+	var target := _near_gate_zone
+	if nearest <= GATE_NEAR:
+		target = RoseZone.warp_target_zone(nearest_id)
+		if target == zone.get_meta("zone_id", 0):
+			target = 0
+	elif nearest > GATE_FAR:
+		target = 0
+	if target != _near_gate_zone:
+		_near_gate_zone = target
+		warp_gate_near.emit(target)
 
 
 ## Our buffs and debuffs as icons at the top of the screen, with what they are and how long they last.

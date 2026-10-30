@@ -23,7 +23,8 @@
 ##   --net-demo[=NAME], --demo, --effect=PATH|ID,...   scripted runs for tests and recordings,
 ##                              see demos/README.md (not in the Windows build)
 ##   --net-log                  online: print every player's position once a second
-##   --perf-log                 online: print frame rate, entities drawn and frame times every 2 seconds
+##   --perf-log                 print how long each zone load took, part by part; online also the
+##                              frame rate, entities drawn and frame times every 2 seconds
 ##   --open=inventory,character,skills,quests   online: open these windows at the start (for screenshots)
 ##   --mute                     no music or sound (or --music=0..1 --effects=0..1 for this run;
 ##                              the O key opens the sound window, which saves them)
@@ -74,6 +75,7 @@ var loading: CanvasLayer  # loading_screen.gd
 var fx: Node  # fx.gd: music, sounds and effects
 var sun: RoseSun  # the sun (or moon), which casts the shadows
 var _loading_zone := 0
+var zone_preload: Node  # zone_preload.gd: reads the zone behind a nearby warp gate ahead
 
 
 var _joined_before := false
@@ -386,7 +388,10 @@ func _start(data_idx: String) -> void:
 		_take_screenshot(options["screenshot"])
 
 
-## Loads a zone in place of the current one, with its lighting at the current time of day.
+## Milliseconds of zone building per frame while the loading screen shows.
+const LOAD_STEP_MS := 8.0
+
+## Loads a zone in place of the current one in one go (the first zone, screenshots).
 func _load_zone(zone_id: int) -> bool:
 	if zone:
 		zone.queue_free()
@@ -398,11 +403,67 @@ func _load_zone(zone_id: int) -> bool:
 	move_child(zone, 0)
 	if not zone.load_zone(zone_id):
 		return false
+	_use_zone(zone_id, 0.0)
+	return true
+
+
+## Loads a zone without stopping the game, so the loading screen keeps moving: its files are
+## read on background threads and its nodes made a few milliseconds a frame, beside the old
+## zone, which goes once the new one is ready. Effects near `focus` (our character's spot
+## in the new zone, when known) are made first.
+func _load_zone_in_steps(zone_id: int, focus: Dictionary) -> bool:
+	var next := RoseZone.new()
+	next.name = "NextZone"
+	next.files_only = options.has("zone-files")
+	add_child(next)
+	move_child(next, 0)
+	if focus.has("x"):
+		next.set_focus(focus["x"], focus["z"])
+	if not next.begin_load(zone_id):
+		next.queue_free()
+		return false
+	# The loading screen covers the world, so the world isn't drawn meanwhile: the frames
+	# stay short and the background threads get the time.
+	var covered: bool = loading != null and loading.is_showing()
+	get_viewport().disable_3d = covered
+	var longest_frame := 0.0
+	var last := Time.get_ticks_usec()
+	while true:
+		var progress := next.step_load(LOAD_STEP_MS)
+		if loading:
+			loading.set_progress(progress)
+		if progress >= 1.0:
+			break
+		await get_tree().process_frame
+		var now := Time.get_ticks_usec()
+		longest_frame = maxf(longest_frame, (now - last) / 1000.0)
+		last = now
+	get_viewport().disable_3d = false
+	if next.get_stats().is_empty():
+		next.queue_free()
+		return false
+	if zone:
+		zone.queue_free()
+		remove_child(zone)
+	zone = next
+	zone.name = "Zone"
+	zone.activate()
+	_use_zone(zone_id, longest_frame)
+	return true
+
+
+## After a zone loaded: the camera, version line, lighting and sounds follow it.
+## `longest_frame` is the longest frame while it loaded in steps (ms, 0 for one go).
+func _use_zone(zone_id: int, longest_frame: float) -> void:
 	loaded_zone = zone_id
+	if zone_preload:
+		zone_preload.let_go()
 	if camera and "zone" in camera:
 		camera.zone = zone
 	zone.set_meta("zone_id", zone_id)
 	VersionLine.zone = VersionLine.zone_line(zone_id, RoseData.zone_name(zone_id), zone.get_stats())
+	if options.has("perf-log"):
+		print(_load_times(zone_id, zone.get_stats(), longest_frame))
 	print("rose: zone ", zone_id, " loaded ", zone.get_stats(), " day cycle ", zone.get_day_cycle(), " morning/day/evening/night start ", [zone.get_state_start("morning"), zone.get_state_start("day"), zone.get_state_start("evening"), zone.get_state_start("night")])
 	if world_ticks == 0.0:
 		var time: String = options.get("time", "day")
@@ -411,13 +472,27 @@ func _load_zone(zone_id: int) -> bool:
 	_apply_lighting(lighting)
 	fx.use_zone(zone, zone_id)
 	fx.set_time_state(lighting.get("state", "day"))
-	return true
+
+
+## The --perf-log line of a zone load: how long each part took.
+func _load_times(zone_id: int, stats: Dictionary, longest_frame: float) -> String:
+	var line := "rose perf: zone %d ready in %d ms: files read %d ms (background), instancing %.1f ms, adding models %.1f ms" % [
+		zone_id, stats.get("load_ms", 0), stats.get("read_ms", 0), stats.get("instance_ms", 0.0), stats.get("attach_ms", 0.0)]
+	line += ", reading nodes %.1f ms, collision %.1f ms (%s), sky %.1f ms, effects %.1f ms (%d of %d after the zone shows)" % [
+		stats.get("gather_ms", 0.0), stats.get("collision_ms", 0.0), stats.get("collision", ""), stats.get("sky_ms", 0.0),
+		stats.get("effects_ms", 0.0), stats.get("effects_later", 0), stats.get("effects", 0)]
+	line += "; %d steps, longest step %.1f ms" % [stats.get("steps", 0), stats.get("longest_step_ms", 0.0)]
+	if longest_frame > 0.0:
+		line += ", longest frame %.1f ms" % longest_frame
+	line += "; %d model parts fade at %d m" % [stats.get("faded_parts", 0), stats.get("fade_distance", 0)]
+	return line
 
 
 ## The server has our character in another zone: load it behind the loading screen and
 ## show that zone's entities. The screen goes once our character stands in the new zone.
 func _on_zone_needed(zone_id: int) -> void:
-	if zone_id == loaded_zone or _loading_zone == zone_id:
+	# One load at a time: when the server moved us on meanwhile, online.gd asks again after.
+	if zone_id == loaded_zone or _loading_zone != 0:
 		return
 	_loading_zone = zone_id
 	if loading == null:
@@ -425,8 +500,7 @@ func _on_zone_needed(zone_id: int) -> void:
 		add_child(loading)
 	loading.show_zone(RoseData.zone_name(zone_id))
 	await get_tree().process_frame
-	await get_tree().process_frame
-	if _load_zone(zone_id):
+	if await _load_zone_in_steps(zone_id, online.net.get_character()):
 		online.use_zone(zone)
 	_loading_zone = 0
 	# In case our character never shows up (the server moved us again).
@@ -492,6 +566,11 @@ func _go_online(uri: String, name_text: String, use_bow: bool, token := "") -> v
 	fx.online = online
 	online.joined.connect(_on_joined)
 	online.zone_needed.connect(_on_zone_needed)
+	if zone_preload == null:
+		zone_preload = preload("res://scripts/zone_preload.gd").new()
+		zone_preload.name = "ZonePreload"
+		add_child(zone_preload)
+	online.warp_gate_near.connect(zone_preload.want)
 	online.connection_failed.connect(_on_connection_failed)
 	online.create_preset = options.get("create", "")
 	online.create_after = float(options.get("create-after", "-1"))

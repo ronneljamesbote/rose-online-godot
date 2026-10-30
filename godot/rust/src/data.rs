@@ -32,6 +32,8 @@ pub struct GameData {
     pub craft_recipes: Vec<Option<rose_game_data::CraftRecipe>>,
     /// What a new character starts with (the look on the character creation screen).
     pub character_creator: rose_game_data::CharacterCreator,
+    /// Where each warp gate leads (the game reads the zone ahead near a gate).
+    pub warp_gates: rose_data::WarpGateDatabase,
     pub sounds: Arc<SoundDatabase>,
     pub effects: Arc<EffectDatabase>,
     /// The loading and character creation pictures and the mouse cursors.
@@ -354,6 +356,7 @@ pub fn open(data_idx: &Path) -> Result<(), anyhow::Error> {
         dialogs,
         craft_recipes: world.craft_recipes,
         character_creator: world.character_creator,
+        warp_gates: world.warp_gates,
         sounds,
         effects,
         interface,

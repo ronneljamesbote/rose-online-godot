@@ -26,6 +26,8 @@ pub struct ZoneListEntry {
     pub background_music_day: Option<String>,
     pub background_music_night: Option<String>,
     pub footstep_type: Option<u32>,
+    /// As ZoneSettings::decoration_fade_distance.
+    pub decoration_fade_distance: u32,
 }
 
 pub struct ZoneList {
