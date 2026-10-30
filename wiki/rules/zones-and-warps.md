@@ -9,6 +9,13 @@ world_tick_s: 10
 warp_gate_margin_m: 3
 warp_gate_cooldown_s: 5
 loading_screen_timeout_s: 10
+warp_read_ahead_near_m: 40
+warp_read_ahead_far_m: 60
+effects_before_showing_m: 300
+decoration_fade_m: 250
+decoration_fade_band_m: 30
+fading_decoration_height_m: 4
+fading_decoration_width_m: 16
 revive_spread_m: 5
 sector_size_min_m: 50
 sector_size_max_m: 120
@@ -64,14 +71,18 @@ source:
     - crates/rose-quest/src/lib.rs (world_ticks)
     - godot/scripts/online.gd (_check_warps)
     - godot/rust/src/net.rs (update_interest, Area, get_entities)
-    - godot/scripts/main.gd (_load_zone, _on_zone_needed, world_ticks)
+    - godot/scripts/main.gd (_load_zone, _load_zone_in_steps, _on_zone_needed, world_ticks)
     - godot/scripts/loading_screen.gd
+    - godot/scripts/zone_preload.gd
+    - godot/scripts/online.gd (_check_near_gate)
+    - godot/rust/src/zone.rs (begin_load, step_load, activate, fade_if_small)
+    - godot/rust/src/zone_scene.rs (export_collision, collision_key)
     - godot/data/skies/ (each zone's sky), godot/data/interface/interface.tres (loading_picture)
     - godot/rust/src/zone.rs (get_warps, get_lighting_at)
     - godot/scripts/ui/hud/minimap.gd
     - godot/scripts/ui/zone_map.gd
     - tools/wiki-gen/src/zones.rs (map)
-  data: the zone settings resources in godot/data/zones/ (RoseZoneSettings; map_file, start_spot, revive_spot, minimap and its start block, day_cycle and the times of day, pvp_state, planet, sector_size), the warp gate resources in godot/data/warp_gates/ (RoseWarpGate; target_zone, target_spot), the zone scenes in godot/zones/ or else the zones' ZON and IFO files
+  data: the zone settings resources in godot/data/zones/ (RoseZoneSettings; map_file, start_spot, revive_spot, minimap and its start block, decoration_fade_distance, day_cycle and the times of day, pvp_state, planet, sector_size), the warp gate resources in godot/data/warp_gates/ (RoseWarpGate; target_zone, target_spot), the zone scenes in godot/zones/ or else the zones' ZON and IFO files
 ---
 # Zones and warps
 
@@ -160,6 +171,25 @@ shows the loading picture (the interface settings' `loading_picture`, iROSE's LO
 with the zone's name while it loads the zone. It goes away when
 your character stands in the new zone, or after **10 seconds** at most.
 
+The game keeps running while a zone loads, so the screen and its bar keep moving: the
+zone's files are read in the background and the zone is put together a little each frame,
+beside the old zone, which goes once the new one is complete. Every building and
+decoration is in before the screen goes, so nothing appears in front of you afterwards.
+The effects (torches, fountains, glows) within **300 m** of where you arrive are in too;
+further ones follow in the first moments, nearest first.
+
+Standing within **40 m** of a warp gate, the game already reads the zone behind it in the
+background, so walking through only has to put it together. Walking more than **60 m**
+from every gate lets it go again.
+
+## Far away decorations
+
+Small decorations (grass, flowers, small rocks, fences: decoration models under **4 m**
+high and **16 m** across) fade out with distance: from about **250 m** they dissolve over
+**30 m**, as the haze thickens, instead of being drawn to the horizon. Buildings, trees,
+big rocks and warp gates are always drawn. The distance is a zone setting
+(`decoration_fade_distance`, 0 never fades); every zone uses 250 m.
+
 ## Save points and getting up after death
 
 - Every zone has a **start point** and one or more **revive points** (named in the zone's settings).
@@ -228,3 +258,10 @@ day) counts ticks of 10 seconds of real time, the same for everyone.
   only accepts a stop on your current path, never ahead of where it has you.
 
 > Open question: the server does not check that you are near a warp gate when you use it, so a changed client could use any gate from anywhere (the server has no zone geometry to check the gate's position).
+
+## Changed from iROSE
+
+- iROSE draws every decoration as far as the view reaches; small ones fade out at 250 m
+  here (see "Far away decorations").
+- Zones load in the background behind the loading screen, and the zone behind a nearby
+  warp gate is read ahead.

@@ -77,6 +77,11 @@ zone without a file keeps its client data. The upload stops with an error naming
 when a file names a monster or NPC that doesn't exist. A zone scene needs settings
 (`godot/data/zones/`) with its number, or the export stops.
 
+The same export bakes each zone scene's collision into `godot/zones/<folder>/collision.scn`
+(every wall and floor triangle of its placed models, for the game only; the server has no
+geometry). It is a binary scene, written only when the triangles or the models they come
+from changed, and `--export-data=check` fails when it is out of date like the files here.
+
 ## motions.toml
 
 The length and hit frames of every player, monster and NPC motion, from the hit markers of

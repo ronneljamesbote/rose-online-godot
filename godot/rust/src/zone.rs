@@ -6,7 +6,9 @@ use std::{collections::HashMap, path::Path, time::Instant};
 use godot::{
     classes::{
         mesh::{ArrayCustomFormat, ArrayFormat, ArrayType, PrimitiveType},
-        geometry_instance_3d::ShadowCastingSetting,
+        resource_loader::ThreadLoadStatus,
+        PackedScene, ResourceLoader,
+        geometry_instance_3d::{ShadowCastingSetting, VisibilityRangeFadeMode},
         ArrayMesh, CollisionShape3D, ConcavePolygonShape3D, GeometryInstance3D, Image, ImageTexture, Mesh, MeshInstance3D, Node3D,
         Shader, ShaderMaterial, StaticBody3D,
     },
@@ -257,6 +259,20 @@ pub struct RoseZone {
     shadow_casters: Vec<ShadowCaster>,
     /// The block (x, z in 160 m steps) `update_shadows` last set the shadows for.
     shadow_block: Option<(i32, i32)>,
+    /// The load in progress (`begin_load`, `step_load`).
+    loading: Option<Box<Loading>>,
+    /// The collision bodies, put in by `activate`.
+    pending_collision: Vec<Gd<Node>>,
+    /// Where the player will stand (x, z), for building the effects around it first.
+    focus: Option<Vector2>,
+    /// `effect_spots` in the order they are built (nearest the focus first), how many are
+    /// built, how many before the zone shows, and how many loaded.
+    effect_order: Vec<usize>,
+    effects_built: usize,
+    effects_now: usize,
+    effects_shown: usize,
+    /// The day and night-only effect groups.
+    effect_groups: Vec<Gd<Node3D>>,
 }
 
 /// How far from the player's block small decorations still cast shadows, in metres.
@@ -359,6 +375,13 @@ pub struct ObjectSpawner {
     pub shadow_casters: Vec<ShadowCaster>,
     /// The part colours from the client's lightmaps (old zone loader only).
     pub tints: PartTints,
+    /// Metres from the camera at which small decorations fade out (0 = never; the zone's
+    /// `decoration_fade_distance`), and how many model parts got the fade.
+    pub fade_distance: f32,
+    pub faded: usize,
+    /// Copy every wall and floor triangle into `walls` and `floors` (not needed when the
+    /// zone's collision was baked by `--export-data`).
+    pub collect_faces: bool,
 }
 
 /// A model part or ground block that casts a shadow, and where it stands.
@@ -374,7 +397,55 @@ pub struct ShadowCaster {
 /// Models smaller than this (metres, the longest side) count as small for shadows.
 pub const SMALL_MODEL: f32 = 4.0;
 
+/// Decorations lower than this and narrower than `FADE_MODEL_WIDTH` (metres) fade out with
+/// distance (grass, flowers, small rocks, fences); taller or wider ones (trees, big rocks)
+/// are always drawn.
+pub const FADE_MODEL_HEIGHT: f32 = 4.0;
+pub const FADE_MODEL_WIDTH: f32 = 16.0;
+/// The metres over which a decoration dithers out at its fade distance.
+pub const FADE_MARGIN: f32 = 30.0;
+
 impl ObjectSpawner {
+    pub fn new(fade_distance: f32) -> Self {
+        ObjectSpawner {
+            materials: HashMap::new(),
+            parts: 0,
+            walls: Vec::new(),
+            floors: Vec::new(),
+            warps: Vec::new(),
+            effect_spots: Vec::new(),
+            ambient_sounds: Vec::new(),
+            blocks: 0,
+            objects: 0,
+            shadow_casters: Vec::new(),
+            tints: PartTints::default(),
+            fade_distance,
+            faded: 0,
+            collect_faces: true,
+        }
+    }
+
+    /// Lets the parts of a decoration (`zsc_index` 1, `list` "deco" in a scene) at `transform`
+    /// fade out with distance when it is small (`FADE_MODEL_HEIGHT`, `FADE_MODEL_WIDTH`): a
+    /// dither over `FADE_MARGIN` metres ending at the zone's fade distance (Godot's visibility
+    /// range, fade mode Self), so it never pops.
+    pub fn fade_if_small(&mut self, parts: &[Gd<GeometryInstance3D>], transform: Transform3D, size: Aabb) {
+        if self.fade_distance <= 0.0 {
+            return;
+        }
+        let extent = (transform * size).size;
+        if extent.y >= FADE_MODEL_HEIGHT || extent.x.max(extent.z) >= FADE_MODEL_WIDTH {
+            return;
+        }
+        for part in parts {
+            let mut part = part.clone();
+            part.set_visibility_range_end(self.fade_distance);
+            part.set_visibility_range_end_margin(FADE_MARGIN);
+            part.set_visibility_range_fade_mode(VisibilityRangeFadeMode::SELF);
+            self.faded += 1;
+        }
+    }
+
     /// Adds the model parts in `parts` (one placed model at `transform`) to the shadow casters.
     pub fn add_casters(&mut self, parts: Vec<Gd<GeometryInstance3D>>, transform: Transform3D, size: Aabb) {
         let longest = (transform * size).size;
@@ -396,6 +467,7 @@ impl ObjectSpawner {
         let mut casters = Vec::new();
         let mut size: Option<Aabb> = None;
         let mut tinted: Vec<(usize, Gd<Mesh>, Gd<GeometryInstance3D>)> = Vec::new();
+        let mut all_parts: Vec<Gd<GeometryInstance3D>> = Vec::new();
 
         for (part_index, part) in object.parts.iter().enumerate() {
             let Some(mesh_path) = zsc.meshes.get(part.mesh_id as usize) else { continue };
@@ -444,6 +516,7 @@ impl ObjectSpawner {
                 }
             }
             tinted.push((part_index, part_mesh.clone().upcast(), instance.clone().upcast()));
+            all_parts.push(instance.clone().upcast());
             object_node.add_child(&instance);
             self.parts += 1;
         }
@@ -464,6 +537,9 @@ impl ObjectSpawner {
         }
         if let Some(size) = size {
             self.add_casters(casters, object_transform, size);
+            if zsc_index == 1 {
+                self.fade_if_small(&all_parts, object_transform, size);
+            }
         }
 
         parent.add_child(&object_node);
@@ -491,12 +567,13 @@ pub fn part_transform(position: &rose_file_readers::types::Vec3<f32>, rotation: 
 }
 
 /// One static body holding every triangle of a collision layer.
-fn collision_body(name: &str, layer: u32, faces: &[Vector3]) -> Gd<StaticBody3D> {
+pub fn collision_body(name: &str, layer: u32, faces: &[Vector3]) -> Gd<StaticBody3D> {
     let mut shape = ConcavePolygonShape3D::new_gd();
     shape.set_faces(&PackedVector3Array::from(faces));
     // Index buffers are flipped for Godot's winding, so let rays hit both sides.
     shape.set_backface_collision_enabled(true);
     let mut collision = CollisionShape3D::new_alloc();
+    collision.set_name("Shape");
     collision.set_shape(&shape);
     let mut body = StaticBody3D::new_alloc();
     body.set_name(name);
@@ -508,9 +585,30 @@ fn collision_body(name: &str, layer: u32, faces: &[Vector3]) -> Gd<StaticBody3D>
 
 #[godot_api]
 impl RoseZone {
-    /// Loads and spawns a zone. Returns false if the zone or the game data is missing.
+    /// Loads and spawns a zone in one go (the game's first zone, screenshots, tools); the
+    /// game's zone changes use `begin_load` and `step_load` instead. Returns false if the
+    /// zone or the game data is missing.
     #[func]
     fn load_zone(&mut self, zone_id: i32) -> bool {
+        if !self.begin_load(zone_id) {
+            return false;
+        }
+        while self.step_load(f64::INFINITY) < 1.0 {
+            if self.loading.is_none() {
+                return false;
+            }
+        }
+        self.activate();
+        true
+    }
+
+    /// Starts loading a zone without stopping the game: the zone's scene, the models it
+    /// places and its baked collision are read on background threads (Godot's threaded
+    /// resource loading), and `step_load` builds the nodes on the main thread a little each
+    /// frame. A zone without a scene is built from the ROSE map files a block per step.
+    /// Returns false if the zone or the game data is missing.
+    #[func]
+    fn begin_load(&mut self, zone_id: i32) -> bool {
         let Some(game_data) = data::get() else {
             godot_error!("rose: call RoseData.open() first");
             return false;
@@ -519,120 +617,222 @@ impl RoseZone {
             godot_error!("rose: unknown zone {zone_id}");
             return false;
         };
-        let started = Instant::now();
-
         let zon_path = zone_entry.zon_file_path.path().to_string_lossy().to_string();
         let zone_dir = Path::new(&zon_path).parent().map(|p| p.to_string_lossy().replace('\\', "/")).unwrap_or_default();
         self.grounds = (0..64 * 64).map(|_| None).collect();
         self.ambient_sounds.clear();
-        let mut spawner = ObjectSpawner {
-            materials: HashMap::new(),
-            parts: 0,
-            walls: Vec::new(),
-            floors: Vec::new(),
-            warps: Vec::new(),
-            effect_spots: Vec::new(),
-            ambient_sounds: Vec::new(),
-            blocks: 0,
-            objects: 0,
-            shadow_casters: Vec::new(),
-            tints: PartTints::default(),
+        self.zone_id = zone_id as u16;
+        let mut loading = Loading {
+            started: Instant::now(),
+            zone_dir: zone_dir.clone(),
+            spawner: ObjectSpawner::new(zone_entry.decoration_fade_distance as f32),
+            stage: Stage::Files,
+            scene_path: None,
+            collision_path: None,
+            collision: CollisionSource::Built,
+            baked: None,
+            fallback: "",
+            queue: Vec::new(),
+            next: 0,
+            files: None,
+            materials: 0,
+            times: LoadTimes::default(),
         };
 
         // A zone with scenes in res://zones/ loads from them; any other from the ROSE files.
         let scene = if self.files_only {
             crate::zone_scene::zone_folder(zone_id as u16).map_or(Err(None), |_| Err(Some("--zone-files")))
         } else {
-            crate::zone_scene::zone_scene(zone_id as u16, &zone_dir)
+            crate::zone_scene::zone_scene_path(zone_id as u16, &zone_dir)
         };
-        let fallback = scene.as_ref().err().copied().flatten().unwrap_or("");
-        let from_scene = match scene {
-            Ok(scene) => {
-                let Some(map) = scene.instantiate() else {
-                    godot_error!("rose: could not open the scene of zone {zone_id}");
-                    return false;
-                };
-                self.base_mut().add_child(&map);
-                let to_zone = self.base().get_global_transform().affine_inverse();
-                let materials = crate::zone_scene::gather(&map, to_zone, &mut spawner, &mut self.grounds);
-                spawner.materials.clear();
-                Some(materials)
+        match scene {
+            Ok((scene_path, collision_path)) => {
+                let mut loader = ResourceLoader::singleton();
+                for path in std::iter::once(&scene_path).chain(collision_path.iter()) {
+                    loader.load_threaded_request_ex(path).use_sub_threads(true).done();
+                }
+                loading.scene_path = Some(scene_path);
+                loading.collision_path = collision_path;
+                loading.stage = Stage::Reading;
             }
-            Err(_) => {
+            Err(why) => {
+                loading.fallback = why.unwrap_or("");
                 let Some(zon) = data::read_file::<ZonFile>(&zon_path) else { return false };
-                self.build_from_files(zone_entry, &zon, &zone_dir, &mut spawner);
-                None
-            }
-        };
-
-        for (name, layer, faces) in [("Walls", LAYER_WALLS, &spawner.walls), ("Floors", LAYER_FLOORS, &spawner.floors)] {
-            self.base_mut().add_child(&collision_body(name, layer, faces));
-        }
-
-        if let Some(sky) = zone_entry.skybox_id.and_then(|id| game_data.skybox.get_skybox_data(id)) {
-            if let Some(sky_mesh) = mesh::load_mesh(&sky.mesh, false) {
-                let mut sky_material = ShaderMaterial::new_gd();
-                sky_material.set_shader(&load_shader("res://shaders/rose_sky.gdshader"));
-                if let Some(day) = texture::load_texture(&sky.texture_day) {
-                    sky_material.set_shader_parameter("texture_day", &day.to_variant());
-                }
-                if let Some(night) = texture::load_texture(&sky.texture_night) {
-                    sky_material.set_shader_parameter("texture_night", &night.to_variant());
-                }
-                let mut sky_node = MeshInstance3D::new_alloc();
-                sky_node.set_name("Sky");
-                sky_node.set_mesh(&sky_mesh);
-                sky_node.set_material_override(&sky_material);
-                sky_node.set_scale(Vector3::splat(10.0));
-                // The sky follows the camera in the shader, so it must never be culled.
-                sky_node.set_custom_aabb(Aabb::new(Vector3::splat(-1.0e6), Vector3::splat(2.0e6)));
-                sky_node.set_cast_shadows_setting(ShadowCastingSetting::OFF);
-                self.base_mut().add_child(&sky_node);
+                loading.files = Some(Box::new(FilesLoad::new(zone_entry, zon)));
             }
         }
-
-        self.zone_id = zone_id as u16;
-        self.warps = std::mem::take(&mut spawner.warps);
-        self.effect_spots = std::mem::take(&mut spawner.effect_spots);
-        self.ambient_sounds = std::mem::take(&mut spawner.ambient_sounds);
-        self.shadow_casters = std::mem::take(&mut spawner.shadow_casters);
-        self.shadow_block = None;
-        // Zone effects (torches, fountains, glows). Night-only ones start hidden.
-        let mut effects = 0;
-        for (name, night) in [("Effects", false), ("NightEffects", true)] {
-            let mut group = Node3D::new_alloc();
-            group.set_name(name);
-            group.set_visible(!night);
-            for (transform, path, night_only) in self.effect_spots.iter() {
-                if *night_only != night {
-                    continue;
-                }
-                let mut effect = RoseEffect::new_alloc();
-                if effect.bind_mut().load_path(path) {
-                    effect.set_transform(*transform);
-                    group.add_child(&effect);
-                    effects += 1;
-                } else {
-                    effect.free();
-                }
-            }
-            self.base_mut().add_child(&group);
-        }
-        let mut stats = VarDictionary::new();
-        stats.set("source", if from_scene.is_some() { "scene" } else { "client data" });
-        // Why a zone that has a scene loaded from the client data instead ("" when it didn't).
-        stats.set("fallback", fallback);
-        stats.set("blocks", spawner.blocks as i64);
-        stats.set("objects", spawner.objects as i64);
-        stats.set("mesh_parts", spawner.parts as i64);
-        stats.set("materials", from_scene.unwrap_or(spawner.materials.len()) as i64);
-        stats.set("wall_triangles", (spawner.walls.len() / 3) as i64);
-        stats.set("floor_triangles", (spawner.floors.len() / 3) as i64);
-        stats.set("effects", effects as i64);
-        stats.set("ambient_sounds", self.ambient_sounds.len() as i64);
-        stats.set("load_ms", started.elapsed().as_millis() as i64);
-        self.stats = stats;
+        self.loading = Some(Box::new(loading));
         true
+    }
+
+    /// Does up to `budget_ms` milliseconds of the load started by `begin_load` (at least one
+    /// piece of work) and returns how far it is, from 0 to 1. At 1 the zone is ready to show:
+    /// every model is in, and the effects near `set_focus`'s point (all of them without one);
+    /// the further effects are built over the next frames, nearest first. Call `activate`
+    /// then. Returns 1 when nothing is loading.
+    #[func]
+    fn step_load(&mut self, budget_ms: f64) -> f32 {
+        let Some(mut loading) = self.loading.take() else { return 1.0 };
+        let step_started = Instant::now();
+        let over = |started: &Instant| started.elapsed().as_secs_f64() * 1000.0 >= budget_ms;
+        let blocking = budget_ms.is_infinite();
+        let mut progress;
+        loop {
+            progress = match loading.stage {
+                Stage::Reading => {
+                    let mut loader = ResourceLoader::singleton();
+                    let scene_path = loading.scene_path.clone().unwrap_or_default();
+                    let paths: Vec<String> = std::iter::once(scene_path.clone()).chain(loading.collision_path.clone()).collect();
+                    let mut done = true;
+                    let mut fraction = 0.0;
+                    for path in &paths {
+                        let progress = VarArray::new();
+                        let status = if blocking {
+                            ThreadLoadStatus::LOADED
+                        } else {
+                            loader.load_threaded_get_status_ex(path).progress(&progress).done()
+                        };
+                        fraction += progress.get(0).and_then(|p| p.try_to::<f32>().ok()).unwrap_or(1.0) / paths.len() as f32;
+                        if status == ThreadLoadStatus::IN_PROGRESS {
+                            done = false;
+                        }
+                    }
+                    if !done {
+                        // Nothing to do on this thread yet.
+                        self.loading = Some(loading);
+                        return 0.4 * fraction;
+                    }
+                    loading.times.read_ms = loading.started.elapsed().as_secs_f64() * 1000.0;
+                    let scene = loader.load_threaded_get(&scene_path).and_then(|r| r.try_cast::<PackedScene>().ok());
+                    let collision = loading.collision_path.clone().and_then(|path| loader.load_threaded_get(&path)).and_then(|r| r.try_cast::<PackedScene>().ok());
+                    let Some(scene) = scene else {
+                        godot_error!("rose: could not open the scene of zone {}", self.zone_id);
+                        return 1.0;
+                    };
+                    let started = Instant::now();
+                    let Some(map) = scene.instantiate() else {
+                        godot_error!("rose: could not open the scene of zone {}", self.zone_id);
+                        return 1.0;
+                    };
+                    // The placed models are taken out and put back a batch per step, so a big
+                    // zone never stops the game for long; everything else goes in at once.
+                    loading.queue = detach_models(&map);
+                    self.base_mut().add_child(&map);
+                    loading.times.instance_ms = started.elapsed().as_secs_f64() * 1000.0;
+                    loading.baked = collision.and_then(|c| c.instantiate());
+                    loading.stage = Stage::Attaching;
+                    0.4
+                }
+                Stage::Attaching => {
+                    let started = Instant::now();
+                    while loading.next < loading.queue.len() {
+                        let (parent, child) = &loading.queue[loading.next];
+                        let mut parent = parent.clone();
+                        parent.add_child(child);
+                        loading.next += 1;
+                        if loading.next % 16 == 0 && over(&step_started) {
+                            break;
+                        }
+                    }
+                    loading.times.attach_ms += started.elapsed().as_secs_f64() * 1000.0;
+                    let fraction = loading.next as f32 / loading.queue.len().max(1) as f32;
+                    if loading.next >= loading.queue.len() {
+                        loading.queue.clear();
+                        loading.stage = Stage::Finishing;
+                    }
+                    0.4 + 0.45 * fraction.min(1.0)
+                }
+                Stage::Files => {
+                    let started = Instant::now();
+                    let mut files = loading.files.take().expect("a files load");
+                    while files.next < 64 * 64 {
+                        let (block_x, block_y) = (files.next % 64, files.next / 64);
+                        files.next += 1;
+                        if self.build_block(&files, &loading.zone_dir, block_x, block_y, &mut loading.spawner) && over(&step_started) {
+                            break;
+                        }
+                    }
+                    loading.times.instance_ms += started.elapsed().as_secs_f64() * 1000.0;
+                    let fraction = files.next as f32 / (64 * 64) as f32;
+                    if files.next >= 64 * 64 {
+                        loading.stage = Stage::Finishing;
+                    } else {
+                        loading.files = Some(files);
+                    }
+                    0.85 * fraction
+                }
+                Stage::Finishing => {
+                    self.finish(&mut loading);
+                    loading.stage = Stage::Effects;
+                    0.9
+                }
+                Stage::Effects => {
+                    let started = Instant::now();
+                    while self.effects_built < self.effects_now && !(self.effects_built % 4 == 0 && over(&step_started)) {
+                        self.build_next_effect();
+                    }
+                    loading.times.effects_ms += started.elapsed().as_secs_f64() * 1000.0;
+                    if self.effects_built >= self.effects_now {
+                        loading.stage = Stage::Ready;
+                        1.0
+                    } else {
+                        0.9 + 0.1 * self.effects_built as f32 / self.effects_now.max(1) as f32
+                    }
+                }
+                Stage::Ready => 1.0,
+            };
+            if progress >= 1.0 || over(&step_started) {
+                break;
+            }
+        }
+        let step_ms = step_started.elapsed().as_secs_f64() * 1000.0;
+        loading.times.steps += 1;
+        loading.times.longest_step_ms = loading.times.longest_step_ms.max(step_ms);
+        if progress >= 1.0 {
+            self.stats = loading.stats(self);
+            self.loading = None;
+        } else {
+            self.loading = Some(loading);
+        }
+        progress
+    }
+
+    /// Where the player will stand (zone space, x and z), so the effects around it are built
+    /// before the zone shows. Without it every effect is built first.
+    #[func]
+    fn set_focus(&mut self, x: f32, z: f32) {
+        self.focus = Some(Vector2::new(x, z));
+    }
+
+    /// Puts the loaded zone's collision in (it stays out while the zone loads beside the old
+    /// one, so the old zone's characters don't bump into it) and starts building the far
+    /// effects, a few per frame.
+    #[func]
+    fn activate(&mut self) {
+        for node in std::mem::take(&mut self.pending_collision) {
+            self.base_mut().add_child(&node);
+        }
+        let more = self.effects_built < self.effect_order.len();
+        self.base_mut().set_process(more);
+    }
+
+    /// The scene and baked collision files of a zone edited as Godot scenes, for reading
+    /// ahead (the warp gate preload); empty for a zone loaded from the ROSE map files.
+    #[func]
+    fn zone_files(zone_id: i32) -> PackedStringArray {
+        let Some(folder) = crate::zone_scene::zone_folder(zone_id.clamp(0, u16::MAX as i32) as u16) else { return PackedStringArray::new() };
+        let scene = format!("{folder}/zone.tscn");
+        let collision = format!("{folder}/{}", crate::zone_scene::COLLISION_FILE);
+        let mut loader = ResourceLoader::singleton();
+        [scene, collision].into_iter().filter(|path| loader.exists(path)).map(|path| GString::from(path.as_str())).collect()
+    }
+
+    /// The zone a warp gate (WARP.STB row) leads to, 0 for an unknown gate.
+    #[func]
+    fn warp_target_zone(warp_id: i32) -> i32 {
+        data::get()
+            .and_then(|game_data| game_data.warp_gates.get_warp_gate(rose_data::WarpGateId::new(warp_id.clamp(0, u16::MAX as i32) as u16)))
+            .map_or(0, |gate| gate.target_zone.get() as i32)
     }
 
     #[func]
@@ -771,96 +971,390 @@ impl RoseZone {
 }
 
 impl RoseZone {
-    /// Builds the zone's blocks from the ROSE map files (ZON, HIM, TIL, IFO, and the ground
-    /// lightmaps for the ground's colour).
-    fn build_from_files(&mut self, zone_entry: &rose_data::ZoneListEntry, zon: &ZonFile, zone_dir: &str, spawner: &mut ObjectSpawner) {
-        let zsc_cnst = data::read_file::<ZscFile>(&zone_entry.zsc_cnst_path.path().to_string_lossy());
-        let zsc_deco = data::read_file::<ZscFile>(&zone_entry.zsc_deco_path.path().to_string_lossy());
-        let zsc_event = data::read_file::<ZscFile>(EVENT_ZSC);
-        let zsc_special = data::read_file::<ZscFile>(SPECIAL_ZSC);
+    /// Reads what the game needs from the loaded nodes (ground, warp gates, effects, sounds,
+    /// shadow casters, fades), makes the collision unless it was baked, the sky, and the order
+    /// the effects are built in.
+    fn finish(&mut self, loading: &mut Loading) {
+        let map = self.base().get_children().iter_shared().find(|n| n.clone().try_cast::<crate::zone_scene::RoseZoneScene>().is_ok());
+        // The baked collision is used when it was made from the models as they stand now;
+        // otherwise (a scene edited in the editor since the last export) it is built here.
+        let started = Instant::now();
+        if let (Some(map), Some(baked)) = (map.as_ref(), loading.baked.take()) {
+            let baked_from = baked.get_meta_ex("collision_key").default(&"".to_variant()).done().to::<GString>().to_string();
+            if crate::zone_scene::collision_key(map) == baked_from {
+                let triangles = |name: &str| {
+                    baked
+                        .get_node_or_null(&format!("{name}/Shape"))
+                        .and_then(|n| n.try_cast::<CollisionShape3D>().ok())
+                        .and_then(|c| c.get_shape())
+                        .and_then(|s| s.try_cast::<ConcavePolygonShape3D>().ok())
+                        .map_or(0, |s| s.get_faces().len() / 3)
+                };
+                loading.collision = CollisionSource::Baked(triangles("Walls"), triangles("Floors"));
+                self.pending_collision.push(baked);
+            } else {
+                godot_warn!("rose: zone {} changed since its collision was baked; building it from the models (run --export-data)", self.zone_id);
+                loading.collision = CollisionSource::Stale;
+                baked.free();
+            }
+        }
+        loading.times.collision_ms = started.elapsed().as_secs_f64() * 1000.0;
 
+        let started = Instant::now();
+        loading.spawner.collect_faces = !matches!(loading.collision, CollisionSource::Baked(..));
+        if loading.scene_path.is_some() {
+            if let Some(map) = map {
+                let to_zone = self.base().get_global_transform().affine_inverse();
+                loading.materials = crate::zone_scene::gather(&map, to_zone, &mut loading.spawner, &mut self.grounds);
+                loading.spawner.materials.clear();
+            }
+        } else {
+            loading.materials = loading.spawner.materials.len();
+        }
+        loading.times.gather_ms = started.elapsed().as_secs_f64() * 1000.0;
+
+        let started = Instant::now();
+        if loading.spawner.collect_faces {
+            for (name, layer, faces) in [("Walls", LAYER_WALLS, &loading.spawner.walls), ("Floors", LAYER_FLOORS, &loading.spawner.floors)] {
+                self.pending_collision.push(collision_body(name, layer, faces).upcast());
+            }
+        }
+        loading.times.collision_ms += started.elapsed().as_secs_f64() * 1000.0;
+
+        let started = Instant::now();
+        self.add_sky();
+        loading.times.sky_ms = started.elapsed().as_secs_f64() * 1000.0;
+
+        self.warps = std::mem::take(&mut loading.spawner.warps);
+        self.effect_spots = std::mem::take(&mut loading.spawner.effect_spots);
+        self.ambient_sounds = std::mem::take(&mut loading.spawner.ambient_sounds);
+        self.shadow_casters = std::mem::take(&mut loading.spawner.shadow_casters);
+        self.shadow_block = None;
+
+        // Zone effects (torches, fountains, glows). Night-only ones start hidden. The ones
+        // near the player are built before the zone shows, nearest first; the rest after.
+        for (name, night) in [("Effects", false), ("NightEffects", true)] {
+            let mut group = Node3D::new_alloc();
+            group.set_name(name);
+            group.set_visible(!night);
+            self.base_mut().add_child(&group);
+            self.effect_groups.push(group);
+        }
+        let distance = |t: &Transform3D| self.focus.map_or(0.0, |f| Vector2::new(t.origin.x, t.origin.z).distance_to(f));
+        let mut order: Vec<(f32, usize)> = self.effect_spots.iter().enumerate().map(|(i, (t, _, _))| (distance(t), i)).collect();
+        order.sort_by(|a, b| a.0.total_cmp(&b.0));
+        self.effects_now = if self.focus.is_some() { order.iter().filter(|(d, _)| *d <= NEAR_EFFECTS).count() } else { order.len() };
+        self.effect_order = order.into_iter().map(|(_, i)| i).collect();
+        self.effects_built = 0;
+    }
+
+    /// Builds the next effect in `effect_order`.
+    fn build_next_effect(&mut self) {
+        let Some(&index) = self.effect_order.get(self.effects_built) else { return };
+        self.effects_built += 1;
+        let (transform, path, night_only) = self.effect_spots[index].clone();
+        let mut effect = RoseEffect::new_alloc();
+        if effect.bind_mut().load_path(&path) {
+            effect.set_transform(transform);
+            self.effect_groups[night_only as usize].add_child(&effect);
+            self.effects_shown += 1;
+        } else {
+            effect.free();
+        }
+    }
+
+    fn add_sky(&mut self) {
+        let Some(game_data) = data::get() else { return };
+        let Some(zone_entry) = ZoneId::new(self.zone_id).and_then(|id| game_data.zone_list.get_zone(id)) else { return };
+        let Some(sky) = zone_entry.skybox_id.and_then(|id| game_data.skybox.get_skybox_data(id)) else { return };
+        let Some(sky_mesh) = mesh::load_mesh(&sky.mesh, false) else { return };
+        let mut sky_material = ShaderMaterial::new_gd();
+        sky_material.set_shader(&load_shader("res://shaders/rose_sky.gdshader"));
+        if let Some(day) = texture::load_texture(&sky.texture_day) {
+            sky_material.set_shader_parameter("texture_day", &day.to_variant());
+        }
+        if let Some(night) = texture::load_texture(&sky.texture_night) {
+            sky_material.set_shader_parameter("texture_night", &night.to_variant());
+        }
+        let mut sky_node = MeshInstance3D::new_alloc();
+        sky_node.set_name("Sky");
+        sky_node.set_mesh(&sky_mesh);
+        sky_node.set_material_override(&sky_material);
+        sky_node.set_scale(Vector3::splat(10.0));
+        // The sky follows the camera in the shader, so it must never be culled.
+        sky_node.set_custom_aabb(Aabb::new(Vector3::splat(-1.0e6), Vector3::splat(2.0e6)));
+        sky_node.set_cast_shadows_setting(ShadowCastingSetting::OFF);
+        self.base_mut().add_child(&sky_node);
+    }
+
+    /// Builds one block from the ROSE map files (HIM, TIL, IFO, and the ground lightmap for
+    /// the ground's colour). Returns false when the zone has no such block.
+    fn build_block(&mut self, files: &FilesLoad, zone_dir: &str, block_x: usize, block_y: usize, spawner: &mut ObjectSpawner) -> bool {
+        let zon = &files.zon;
+        let Some(him) = data::read_file::<HimFile>(&format!("{zone_dir}/{block_x}_{block_y}.HIM")) else { return false };
+        let til = data::read_file::<TilFile>(&format!("{zone_dir}/{block_x}_{block_y}.TIL"));
+        let ifo = data::read_file::<IfoFile>(&format!("{zone_dir}/{block_x}_{block_y}.IFO"));
+
+        let mut block_node = Node3D::new_alloc();
+        block_node.set_name(&format!("Block_{block_x}_{block_y}"));
+
+        let mut terrain_material = ShaderMaterial::new_gd();
+        terrain_material.set_shader(&files.terrain_shader);
+        terrain_material.set_shader_parameter("tile_textures", &files.tile_array.to_variant());
+        if let Some(tint) = ground_tint(zone_dir, block_x, block_y) {
+            let bytes: Vec<u8> = tint.iter().flat_map(|c| [c.r, c.g, c.b].map(|v| (v * 255.0).round() as u8)).collect();
+            let size = TINT_CELLS as i32;
+            if let Some(texture) = Image::create_from_data(size, size, false, godot::classes::image::Format::RGB8, &PackedByteArray::from(bytes.as_slice()))
+                .and_then(|image| ImageTexture::create_from_image(&image))
+            {
+                terrain_material.set_shader_parameter("tint_texture", &texture.to_variant());
+            }
+        }
+        let ground = Ground::from_files(zon, &him, til.as_ref());
+        let mut terrain = MeshInstance3D::new_alloc();
+        terrain.set_name("Terrain");
+        terrain.set_mesh(&build_terrain_mesh(&|x, y| ground.height(x, y), &|x, y| tile_layers(zon, til.as_ref(), x, y)));
+        terrain.set_material_override(&terrain_material);
+        terrain.set_position(block_origin(block_x, block_y));
+        block_node.add_child(&terrain);
+        let centre = block_origin(block_x, block_y) + Vector3::new(BLOCK_SIZE / 2.0, 0.0, BLOCK_SIZE / 2.0);
+        spawner.shadow_casters.push(ShadowCaster { node: terrain.clone().upcast(), position: centre, small: false, on: true });
+        spawner.blocks += 1;
+
+        if let Some(ifo) = ifo.as_ref() {
+            for (start, end) in ifo.water_planes.iter() {
+                let mut water = MeshInstance3D::new_alloc();
+                water.set_name("Water");
+                let (start, end) = water_corners(start, end);
+                water.set_mesh(&build_water_mesh(start, end, ifo.water_size / 100.0));
+                water.set_material_override(&files.water_material);
+                water.set_cast_shadows_setting(ShadowCastingSetting::OFF);
+                block_node.add_child(&water);
+            }
+
+            let mut spawn_list = |zsc: Option<&ZscFile>, zsc_index: usize, list: &[(usize, &IfoObject, usize)], kind: &str| {
+                let Some(zsc) = zsc else { return };
+                for &(ifo_id, object, zsc_id) in list {
+                    spawner.spawn(&mut block_node, zsc, zsc_index, object, zsc_id, &format!("{kind}_{ifo_id}"), (zone_dir, block_x, block_y, ifo_id));
+                    spawner.objects += 1;
+                }
+            };
+
+            let cnst: Vec<_> = ifo.cnst_objects.iter().enumerate().map(|(i, o)| (i, o, o.object_id as usize)).collect();
+            spawn_list(files.zsc[0].as_ref(), 0, &cnst, "Cnst");
+            let deco: Vec<_> = ifo.deco_objects.iter().enumerate().map(|(i, o)| (i, o, o.object_id as usize)).collect();
+            spawn_list(files.zsc[1].as_ref(), 1, &deco, "Deco");
+            let events: Vec<_> = ifo.event_objects.iter().enumerate().map(|(i, o)| (i, &o.object, o.object.object_id as usize)).collect();
+            spawn_list(files.zsc[2].as_ref(), 2, &events, "Event");
+            let warps: Vec<_> = ifo.warps.iter().enumerate().map(|(i, o)| (i, o, 1)).collect();
+            spawn_list(files.zsc[3].as_ref(), 3, &warps, "Warp");
+
+            for effect in ifo.effect_objects.iter() {
+                let path = effect.effect_path.path().to_string_lossy().to_string();
+                spawner.effect_spots.push((ifo_transform(&effect.object), path, false));
+            }
+            for sound in ifo.sound_objects.iter() {
+                let position = ifo_transform(&sound.object).origin;
+                let path = sound.sound_path.path().to_string_lossy().to_string();
+                spawner.ambient_sounds.push((position, path, sound.range as f32 / 10.0));
+            }
+        }
+
+        self.grounds[block_x + block_y * 64] = Some(ground);
+        self.base_mut().add_child(&block_node);
+        true
+    }
+}
+
+#[godot_api]
+impl INode3D for RoseZone {
+    /// After the zone shows: builds the effects further from the player, nearest first,
+    /// a couple of milliseconds a frame, then stops.
+    fn process(&mut self, _delta: f64) {
+        let started = Instant::now();
+        while self.effects_built < self.effect_order.len() && started.elapsed().as_secs_f64() * 1000.0 < LATE_EFFECTS_MS {
+            self.build_next_effect();
+        }
+        if self.effects_built >= self.effect_order.len() {
+            self.base_mut().set_process(false);
+        }
+    }
+}
+
+/// Effects within this many metres of the player are built before the zone shows.
+const NEAR_EFFECTS: f32 = 300.0;
+/// Milliseconds a frame spent on the further effects after the zone shows.
+const LATE_EFFECTS_MS: f64 = 2.0;
+
+/// Takes a zone scene's placed models (the children of each block's groups: buildings,
+/// decorations, events, warps, water and markers) out of it, so they can go back a batch per
+/// step: each with the group it goes back into, in the scene's order.
+fn detach_models(map: &Gd<Node>) -> Vec<(Gd<Node>, Gd<Node>)> {
+    let mut queue = Vec::new();
+    for block in map.get_children().iter_shared() {
+        if block.clone().try_cast::<crate::zone_scene::RoseBlock>().is_err() {
+            continue;
+        }
+        for mut group in block.get_children().iter_shared() {
+            let children: Vec<Gd<Node>> = group.get_children().iter_shared().collect();
+            // From the last, so each removal is cheap.
+            for child in children.iter().rev() {
+                group.remove_child(child);
+            }
+            queue.extend(children.into_iter().map(|child| (group.clone(), child)));
+        }
+    }
+    queue
+}
+
+/// Where a zone's collision came from.
+enum CollisionSource {
+    /// Baked by `--export-data` (wall and floor triangles).
+    Baked(usize, usize),
+    /// Built from the models' triangles while loading.
+    Built,
+    /// Built, because the scene changed after its collision was baked.
+    Stale,
+}
+
+/// The steps of a load (`RoseZone::step_load`).
+enum Stage {
+    /// The zone's files are being read on background threads.
+    Reading,
+    /// The scene's placed models go into the tree, a batch per step.
+    Attaching,
+    /// The zone is built from the ROSE map files, some blocks per step.
+    Files,
+    /// Reading the nodes, collision and sky.
+    Finishing,
+    /// Building the effects near the player.
+    Effects,
+    Ready,
+}
+
+/// The ROSE map files of a zone without a scene, while it is built a block at a time.
+struct FilesLoad {
+    zon: ZonFile,
+    /// Buildings, decorations, event objects, warp gates.
+    zsc: [Option<ZscFile>; 4],
+    tile_array: Gd<godot::classes::Texture2DArray>,
+    terrain_shader: Gd<Shader>,
+    water_material: Gd<ShaderMaterial>,
+    /// The next block (x + y * 64).
+    next: usize,
+}
+
+impl FilesLoad {
+    fn new(zone_entry: &rose_data::ZoneListEntry, zon: ZonFile) -> Self {
         // Terrain tile textures: one array for the whole zone, indexed per vertex.
-        let tile_array = texture::load_texture_array(&tile_texture_paths(zon));
-        let terrain_shader = load_shader(TERRAIN_SHADER);
+        let tile_array = texture::load_texture_array(&tile_texture_paths(&zon));
         let mut water_material = ShaderMaterial::new_gd();
         water_material.set_shader(&load_shader(WATER_SHADER));
         water_material.set_shader_parameter("water_textures", &texture::load_texture_array(&water_texture_paths()).to_variant());
+        FilesLoad {
+            zsc: [
+                data::read_file::<ZscFile>(&zone_entry.zsc_cnst_path.path().to_string_lossy()),
+                data::read_file::<ZscFile>(&zone_entry.zsc_deco_path.path().to_string_lossy()),
+                data::read_file::<ZscFile>(EVENT_ZSC),
+                data::read_file::<ZscFile>(SPECIAL_ZSC),
+            ],
+            zon,
+            tile_array,
+            terrain_shader: load_shader(TERRAIN_SHADER),
+            water_material,
+            next: 0,
+        }
+    }
+}
 
-        for block_y in 0..64usize {
-            for block_x in 0..64usize {
-                let Some(him) = data::read_file::<HimFile>(&format!("{zone_dir}/{block_x}_{block_y}.HIM")) else { continue };
-                let til = data::read_file::<TilFile>(&format!("{zone_dir}/{block_x}_{block_y}.TIL"));
-                let ifo = data::read_file::<IfoFile>(&format!("{zone_dir}/{block_x}_{block_y}.IFO"));
+/// Milliseconds spent on each part of a load (`--perf-log` prints them).
+#[derive(Default)]
+struct LoadTimes {
+    /// From the start until the background threads had read every file (wall clock; the
+    /// game keeps running meanwhile).
+    read_ms: f64,
+    /// Instancing the scene (or building the blocks from the ROSE files).
+    instance_ms: f64,
+    /// Putting the placed models into the tree.
+    attach_ms: f64,
+    gather_ms: f64,
+    collision_ms: f64,
+    sky_ms: f64,
+    effects_ms: f64,
+    steps: u32,
+    longest_step_ms: f64,
+}
 
-                let mut block_node = Node3D::new_alloc();
-                block_node.set_name(&format!("Block_{block_x}_{block_y}"));
+/// A load in progress.
+struct Loading {
+    started: Instant,
+    zone_dir: String,
+    spawner: ObjectSpawner,
+    stage: Stage,
+    scene_path: Option<String>,
+    collision_path: Option<String>,
+    collision: CollisionSource,
+    /// The collision baked by `--export-data`, until `finish` checks it still fits.
+    baked: Option<Gd<Node>>,
+    /// Why a zone that has a scene loads from the client data instead ("" when it doesn't).
+    fallback: &'static str,
+    queue: Vec<(Gd<Node>, Gd<Node>)>,
+    next: usize,
+    files: Option<Box<FilesLoad>>,
+    materials: usize,
+    times: LoadTimes,
+}
 
-                let mut terrain_material = ShaderMaterial::new_gd();
-                terrain_material.set_shader(&terrain_shader);
-                terrain_material.set_shader_parameter("tile_textures", &tile_array.to_variant());
-                if let Some(tint) = ground_tint(zone_dir, block_x, block_y) {
-                    let bytes: Vec<u8> = tint.iter().flat_map(|c| [c.r, c.g, c.b].map(|v| (v * 255.0).round() as u8)).collect();
-                    let size = TINT_CELLS as i32;
-                    if let Some(texture) = Image::create_from_data(size, size, false, godot::classes::image::Format::RGB8, &PackedByteArray::from(bytes.as_slice()))
-                        .and_then(|image| ImageTexture::create_from_image(&image))
-                    {
-                        terrain_material.set_shader_parameter("tint_texture", &texture.to_variant());
-                    }
-                }
-                let ground = Ground::from_files(zon, &him, til.as_ref());
-                let mut terrain = MeshInstance3D::new_alloc();
-                terrain.set_name("Terrain");
-                terrain.set_mesh(&build_terrain_mesh(&|x, y| ground.height(x, y), &|x, y| tile_layers(zon, til.as_ref(), x, y)));
-                terrain.set_material_override(&terrain_material);
-                terrain.set_position(block_origin(block_x, block_y));
-                block_node.add_child(&terrain);
-                let centre = block_origin(block_x, block_y) + Vector3::new(BLOCK_SIZE / 2.0, 0.0, BLOCK_SIZE / 2.0);
-                spawner.shadow_casters.push(ShadowCaster { node: terrain.clone().upcast(), position: centre, small: false, on: true });
-                spawner.blocks += 1;
-
-                if let Some(ifo) = ifo.as_ref() {
-                    for (start, end) in ifo.water_planes.iter() {
-                        let mut water = MeshInstance3D::new_alloc();
-                        water.set_name("Water");
-                        let (start, end) = water_corners(start, end);
-                        water.set_mesh(&build_water_mesh(start, end, ifo.water_size / 100.0));
-                        water.set_material_override(&water_material);
-                        water.set_cast_shadows_setting(ShadowCastingSetting::OFF);
-                        block_node.add_child(&water);
-                    }
-
-                    let mut spawn_list = |zsc: Option<&ZscFile>, zsc_index: usize, list: &[(usize, &IfoObject, usize)], kind: &str| {
-                        let Some(zsc) = zsc else { return };
-                        for &(ifo_id, object, zsc_id) in list {
-                            spawner.spawn(&mut block_node, zsc, zsc_index, object, zsc_id, &format!("{kind}_{ifo_id}"), (zone_dir, block_x, block_y, ifo_id));
-                            spawner.objects += 1;
-                        }
-                    };
-
-                    let cnst: Vec<_> = ifo.cnst_objects.iter().enumerate().map(|(i, o)| (i, o, o.object_id as usize)).collect();
-                    spawn_list(zsc_cnst.as_ref(), 0, &cnst, "Cnst");
-                    let deco: Vec<_> = ifo.deco_objects.iter().enumerate().map(|(i, o)| (i, o, o.object_id as usize)).collect();
-                    spawn_list(zsc_deco.as_ref(), 1, &deco, "Deco");
-                    let events: Vec<_> = ifo.event_objects.iter().enumerate().map(|(i, o)| (i, &o.object, o.object.object_id as usize)).collect();
-                    spawn_list(zsc_event.as_ref(), 2, &events, "Event");
-                    let warps: Vec<_> = ifo.warps.iter().enumerate().map(|(i, o)| (i, o, 1)).collect();
-                    spawn_list(zsc_special.as_ref(), 3, &warps, "Warp");
-
-                    for effect in ifo.effect_objects.iter() {
-                        let path = effect.effect_path.path().to_string_lossy().to_string();
-                        spawner.effect_spots.push((ifo_transform(&effect.object), path, false));
-                    }
-                    for sound in ifo.sound_objects.iter() {
-                        let position = ifo_transform(&sound.object).origin;
-                        let path = sound.sound_path.path().to_string_lossy().to_string();
-                        spawner.ambient_sounds.push((position, path, sound.range as f32 / 10.0));
-                    }
-                }
-
-                self.grounds[block_x + block_y * 64] = Some(ground);
-                self.base_mut().add_child(&block_node);
+impl Drop for Loading {
+    /// A load given up halfway (the zone freed first) frees what isn't in the tree yet.
+    fn drop(&mut self) {
+        for (_, child) in self.queue.drain(..).skip(self.next) {
+            if child.is_instance_valid() && child.get_parent().is_none() {
+                child.free();
             }
         }
+        if let Some(baked) = self.baked.take() {
+            baked.free();
+        }
+    }
+}
+
+impl Loading {
+    fn stats(&self, zone: &RoseZone) -> VarDictionary {
+        let spawner = &self.spawner;
+        let times = &self.times;
+        let mut stats = VarDictionary::new();
+        stats.set("source", if self.scene_path.is_some() { "scene" } else { "client data" });
+        stats.set("fallback", self.fallback);
+        stats.set("blocks", spawner.blocks as i64);
+        stats.set("objects", spawner.objects as i64);
+        stats.set("mesh_parts", spawner.parts as i64);
+        stats.set("materials", self.materials as i64);
+        let (walls, floors, collision) = match self.collision {
+            CollisionSource::Baked(walls, floors) => (walls, floors, "baked"),
+            CollisionSource::Built => (spawner.walls.len() / 3, spawner.floors.len() / 3, "built"),
+            CollisionSource::Stale => (spawner.walls.len() / 3, spawner.floors.len() / 3, "built (baked file out of date)"),
+        };
+        stats.set("collision", collision);
+        stats.set("wall_triangles", walls as i64);
+        stats.set("floor_triangles", floors as i64);
+        stats.set("faded_parts", spawner.faded as i64);
+        stats.set("fade_distance", spawner.fade_distance as i64);
+        stats.set("effects", zone.effect_spots.len() as i64);
+        stats.set("effects_later", (zone.effect_order.len() - zone.effects_now) as i64);
+        stats.set("ambient_sounds", zone.ambient_sounds.len() as i64);
+        let ms = |v: f64| (v * 10.0).round() / 10.0;
+        stats.set("load_ms", self.started.elapsed().as_millis() as i64);
+        stats.set("read_ms", ms(times.read_ms));
+        stats.set("instance_ms", ms(times.instance_ms));
+        stats.set("attach_ms", ms(times.attach_ms));
+        stats.set("gather_ms", ms(times.gather_ms));
+        stats.set("collision_ms", ms(times.collision_ms));
+        stats.set("sky_ms", ms(times.sky_ms));
+        stats.set("effects_ms", ms(times.effects_ms));
+        stats.set("steps", times.steps as i64);
+        stats.set("longest_step_ms", ms(times.longest_step_ms));
+        stats
     }
 }
 

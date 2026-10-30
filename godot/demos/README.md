@@ -60,5 +60,11 @@ another.
   screen, the character creation backdrop, then every mouse cursor three times its size
   with a red dot where it clicks; `--shots=DIR` saves `loading.png`, `character-create.png`
   and `cursors.png`. Then quits.
+- `--demo=zones` (`zones.gd`): loads the zones of `--zones=ID,ID,...` one after another the
+  way a warp gate does (loading screen, the zone built in steps beside the old one) and
+  prints each load's times and the longest frame meanwhile. `--preload=SECONDS` first reads
+  each zone ahead for that long (as standing near its gate does), `--focus=X,Z` builds the
+  effects around that spot first, `--shots=DIR` saves `zone-ID.png` once each zone shows.
+  Then quits.
 - `--effect=PATH,PATH...` (`effect.gd`): plays these EFT effects in a row in front of the
   camera, each again once it ends. `--screenshot-after=SECONDS` waits before `--screenshot`.

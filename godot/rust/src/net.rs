@@ -747,7 +747,8 @@ impl RoseNet {
         }
     }
 
-    /// Our character: name, zone, level, xp, xp_needed, stat_points, skill_points, money, the six
+    /// Our character: name, zone, x and z (where it stands in that zone, once the server placed
+    /// it there), level, xp, xp_needed, stat_points, skill_points, money, the six
     /// basic stats (str, dex, int, con, cha, sen) with their raise costs (str_cost, ...; -1 at
     /// the maximum), and the ability values attack, defence, hit, avoid, critical, resistance,
     /// attack_speed, move_speed, range. Empty until the character is in the world.
@@ -758,6 +759,17 @@ impl RoseNet {
         let Some(p) = c.try_identity().and_then(|i| c.db.player().identity().find(&i)) else { return d };
         d.set("name", p.name.as_str());
         d.set("zone", p.zone_id as i64);
+        // Where our character stands in that zone (Godot x and z), once the server placed it.
+        if let Some(m) = p
+            .entity_id
+            .filter(|id| c.db.entity().entity_id().find(id).is_some_and(|e| e.zone_id == p.zone_id))
+            .and_then(|id| c.db.motion().entity_id().find(&id))
+        {
+            let (x, y) = motion_position(&m, self.server_now_us());
+            let (gx, gz) = to_godot(x, y);
+            d.set("x", gx);
+            d.set("z", gz);
+        }
         d.set("level", p.level as i64);
         d.set("job", p.job as i64);
         d.set("xp", p.xp as i64);

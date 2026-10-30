@@ -129,6 +129,14 @@ Other options (after `--`):
   `shaders/rose_terrain3d.gdshader`. `addons/rose_zone_tools/` is the editor plugin for
   zone scenes (Go to, ROSE coordinates, block outlines, Drop to ground); it is not in the
   Windows build.
+- Zone changes load in steps (`RoseZone.begin_load`, `step_load`): the zone's files are read
+  on background threads (`ResourceLoader.load_threaded_request`), the nodes are made on the
+  main thread a few milliseconds a frame behind the loading screen, beside the old zone,
+  which goes once the new one is ready; the world isn't drawn while the loading screen
+  covers it. `scripts/zone_preload.gd` reads the zone behind a warp gate ahead while you
+  stand within 40 m of it (let go past 60 m). Small decorations fade out at the zone's
+  `decoration_fade_distance` (250 m). `--perf-log` prints each load's times part by part,
+  and `--demo=zones` loads zones one after another (`demos/README.md`).
 - `addons/rose_data_tools/` is the editor plugin for the game data resources: the "Game
   data" screen, a table of every resource of one kind to sort, filter and change many at
   once, and (`graphs/`) the "Graphs" screen, NPC dialogs and quest steps as boxes and wires
@@ -166,7 +174,10 @@ Other options (after `--`):
   TOML (Arumic is the default); the Windows build also reads a `themes` folder next to
   `ROSE.exe`.
 - `zones/` holds the zone scenes, one folder per zone, edited in Godot. Their spawns, NPCs
-  and warps are exported to `../export/zones/` for the server (`--export-data`).
+  and warps are exported to `../export/zones/` for the server (`--export-data`), which also
+  bakes each zone's wall and floor triangles into `collision.scn` next to its `zone.tscn`
+  (the game reads it instead of copying them out of every model; a scene edited since is
+  noticed and its collision built while loading, as before).
 - `assets/` holds the converted models, textures and animations (see `assets/README.md`).
 - `gm/` is the GM command chat for dev servers, left out of the production export.
 - `tools/` holds the Windows build scripts and the readme that goes in the zip.

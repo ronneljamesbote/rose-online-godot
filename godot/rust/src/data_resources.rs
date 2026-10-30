@@ -1354,6 +1354,13 @@ pub struct RoseZoneSettings {
     /// (empty = the same step everywhere).
     #[export]
     footsteps: Option<Gd<RoseFootsteps>>,
+    /// How far from the camera small decorations (grass, flowers, small rocks, fences: models
+    /// from the decoration list under 4 m high and 16 m across) fade out, in metres; they fade
+    /// with a dither over the last 30 m. 0 = never. Buildings, trees, big rocks and warp gates
+    /// are always drawn. The game only; the editor draws everything.
+    #[export(range = (0.0, 1000.0, 10.0, suffix = "m"))]
+    #[init(val = 250)]
+    decoration_fade_distance: i64,
 
     /// The length of a day here in world ticks (one tick is 10 seconds).
     #[export_group(name = "Time of day")]
@@ -4440,13 +4447,21 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
         .chain(npcs.npcs.iter().map(|n| (n.id as u32, n.name.clone())))
         .collect();
     let mut zone_scenes = 0;
+    let (mut collision_files, mut collision_changed) = (Vec::new(), Vec::new());
     for (zone_id, folder) in crate::zone_scene::zone_folders() {
         let Some(zone_name) = zone_names.get(&zone_id) else {
             return Err(format!("{folder} is zone {zone_id}, which has no settings in {ZONES_DIR}"));
         };
-        let layout = crate::zone_scene::zone_layout(zone_id)?;
+        let (layout, collision) = crate::zone_scene::zone_export(zone_id, Some(check))?;
         let name = format!("{}/{}", rose_data_export::ZONES_DIR, crate::zone_scene::layout_file_name(&folder));
         files.push((name, crate::zone_scene::layout_text(&layout, zone_name, &npc_names)));
+        // The collision baked next to the scene (a binary scene, compared by its triangles).
+        if let Some((path, changed)) = collision {
+            if changed {
+                collision_changed.push(path.clone());
+            }
+            collision_files.push(path);
+        }
         zone_scenes += 1;
     }
     // The motion timings, from the hit markers of the animations.
@@ -4486,6 +4501,8 @@ pub fn export(check: bool) -> Result<ExportResult, String> {
         read_ms,
         ..Default::default()
     };
+    result.files.extend(collision_files);
+    result.changed.extend(collision_changed);
     for (name, text) in files {
         let path = dir.join(name);
         if std::fs::read_to_string(&path)

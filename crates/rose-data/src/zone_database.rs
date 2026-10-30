@@ -70,7 +70,13 @@ pub struct ZoneSettings {
     pub sector_size: u32,
     /// As ZoneData::vehicle_use_flags.
     pub vehicle_use_flags: u32,
+    /// Metres from the camera at which the game client fades out the zone's small decorations
+    /// (0 = never). Not in iROSE: [`DEFAULT_DECORATION_FADE_DISTANCE`] for every zone.
+    pub decoration_fade_distance: u32,
 }
+
+/// The decoration fade distance of a zone that doesn't set one (`ZoneSettings`).
+pub const DEFAULT_DECORATION_FADE_DISTANCE: u32 = 250;
 
 pub struct ZoneData {
     pub id: ZoneId,
