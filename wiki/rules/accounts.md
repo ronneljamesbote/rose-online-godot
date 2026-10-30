@@ -16,7 +16,7 @@ genders: male, female
 faces: [1, 8, 15, 22, 29, 36, 43]
 hair_styles: [0, 5, 10, 15, 20]
 start_zone: "[[zones/22-adventurer-s-plain|Adventurer's Plain]]"
-start_position_m: "(5779.88, 5155.80), the zone's start spot"
+start_position_m: "(5760.45, 5166.60), the zone's start spot"
 start_quest: "[[quests/801-junon-planet-identification|Junon Planet Identification]]"
 start_level: 1
 start_job: Visitor
@@ -115,7 +115,8 @@ The screen shows a turning preview of the character.
 ## What a new character starts with
 
 - **Where**: [[zones/22-adventurer-s-plain|Adventurer's Plain]], at the zone's start spot
-  (5779.88 m, 5155.80 m), next to [[npcs/1031-visitor-guide-ronway|Visitor Guide Ronway]].
+  (5760.45 m, 5166.60 m), 4 m in front of [[npcs/1031-visitor-guide-ronway|Visitor Guide Ronway]]
+  and the [[npcs/1030-visitor-guide-fairy-of-arua|Fairy of Arua]], who face it.
   The start spot is the "start" marker in the zone's Godot scene, so moving the marker
   moves where new characters start. Dying before choosing a save point gets you up at the
   zone's nearest revive point (see [[rules/death|Death]]).
@@ -148,7 +149,7 @@ for getting around.
 - iROSE starts new characters on [[zones/20-birth-island|Birth Island]], where the Fairy of
   Arua gives the Party and Vending skills, the Junon Planet Identification quest and its
   papers when you leave for Adventurer's Plain. We start them in
-  [[zones/22-adventurer-s-plain|Adventurer's Plain]] with all of that already, and keep Birth
-  Island for testing only.
+  [[zones/22-adventurer-s-plain|Adventurer's Plain]] with all of that already, keep Birth
+  Island for testing only, and place one Fairy of Arua next to Ronway in Adventurer's Plain.
 
 > Open question: the Add Friend action is not on a new character's skill list; players use the right-click menu on another player instead.

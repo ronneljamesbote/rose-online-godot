@@ -358,6 +358,9 @@ npcs:
 - npc: '[[npcs/1031-visitor-guide-ronway|Visitor Guide Ronway]]'
   x: 5763.3
   y: 5169.4
+- npc: '[[npcs/1030-visitor-guide-fairy-of-arua|Visitor Guide Fairy of Arua]]'
+  x: 5765.4
+  y: 5167.3
 - npc: '[[npcs/1038-village-chief-gray|Village Chief Gray]]'
   x: 5879.1
   y: 5105.1
@@ -393,8 +396,9 @@ source:
 ---
 # Adventurer's Plain
 
-**Every new character starts here**, at the zone's start spot (5779.88 m, 5155.80 m) next to
-[[npcs/1031-visitor-guide-ronway|Visitor Guide Ronway]] (see [[rules/accounts|Accounts]]).
+**Every new character starts here**, at the zone's start spot (5760.45 m, 5166.60 m) on the
+beach, 4 m in front of [[npcs/1031-visitor-guide-ronway|Visitor Guide Ronway]] and the
+[[npcs/1030-visitor-guide-fairy-of-arua|Fairy of Arua]] (see [[rules/accounts|Accounts]]).
 Moving the "start" marker in the zone's scene moves where new characters start. In iROSE they
 start on [[zones/20-birth-island|Birth Island]] and come here when they leave it.
 
@@ -410,4 +414,5 @@ the same as in iROSE's map files.
 
 ## Changed from iROSE
 
-- New characters start here instead of on Birth Island.
+- New characters start here instead of on Birth Island, and one Fairy of Arua (iROSE has
+  her only on Birth Island) stands next to Ronway at the start.

@@ -23,6 +23,7 @@ dropped_in_zones:
 - '[[zones/20-birth-island|Birth Island]]'
 sold_by:
 - '[[npcs/1013-tavern-owner-sharlin|Tavern Owner Sharlin]]'
+- '[[npcs/1030-visitor-guide-fairy-of-arua|Visitor Guide Fairy of Arua]]'
 - '[[npcs/1035-little-street-vendor-pony|Little Street Vendor Pony]]'
 - '[[npcs/1063-little-street-vendor-mile|Little Street Vendor Mile]]'
 source:

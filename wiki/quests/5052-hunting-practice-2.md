@@ -2,7 +2,7 @@
 kind: quest
 id: 5052
 name: Hunting Practice (2)
-status: changed-from-irose
+status: in-game
 given_by:
 - '[[npcs/1030-visitor-guide-fairy-of-arua|Visitor Guide Fairy of Arua]]'
 monsters:
@@ -15,11 +15,6 @@ source:
   - crates/rose-quest/src/lib.rs
 ---
 # Hunting Practice (2)
-
-**Can't be got any more.** The quest is given by the
-[[npcs/1030-visitor-guide-fairy-of-arua|Fairy of Arua]], who in our game isn't placed anywhere
-(Birth Island is for testing only and has no NPCs or monsters). The steps below are iROSE's
-and are kept in the game data.
 
 The Fairy of Arua suggested that you defeat 4 Mini-Choropies in preparation for your real adventures. Complete this task and you'll receive a small reward.  
 

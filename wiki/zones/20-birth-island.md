@@ -49,7 +49,8 @@ exported from those scenes.
 In iROSE every new character starts here, among 81 spawn points of Jelly Beans, Choropies
 and ButterFlies (levels 1 to 6), with ten Fairies of Arua (NPC 1030) who give the Hunting
 Practice quests and send you to Adventurer's Plain when you are ready. In our game the spawn
-points and the fairies are gone (removed from the zone's scene on 2026-10-30) and new
+points and the fairies are gone (removed from the zone's scene on 2026-10-30; one fairy
+now stands next to Ronway in Adventurer's Plain) and new
 characters start in Adventurer's Plain with what the fairy handed over on leaving: the
 [[skills/19-party|Party]] and [[skills/21-vending|Vending]] skills and the
 [[quests/801-junon-planet-identification|Junon Planet Identification]] quest with its
