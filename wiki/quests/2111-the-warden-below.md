@@ -8,9 +8,9 @@ given_by:
 npcs:
 - '[[npcs/1070-lift-keeper-gus|Lift Keeper Gus]]'
 level: 18
-steps: 5
+steps: 8
 source:
-  data: 'godot/data/quests/2111-the-warden-below.tres; quest triggers in godot/data/quest_triggers/: ql21-001/2111-01, ql21-001/2111-02, ql21-001/2111-31, ql21-001/2111-03, ql21-001/2111-04'
+  data: 'godot/data/quests/2111-the-warden-below.tres; quest triggers in godot/data/quest_triggers/: ql21-001/2111-01, ql21-001/2111-02, ql21-001/2111-21, ql21-001/2111-22, ql21-001/2111-23, ql21-001/2111-31, ql21-001/2111-03, ql21-001/2111-04'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs
@@ -25,6 +25,10 @@ Part of the [[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]] story; see 
 
 - **Start:** Ride Ardeth's crane into the sealed vault, defeat the Ruin Warden and bring back the Lens Core.
 - **End:** Ardeth holds the Lens Core.
+
+When you hand it in you pick one reward: [[items/head/831-luxem-guard-helm|Luxem Guard Helm]], [[items/head/832-luxem-acolyte-beret|Luxem Acolyte Beret]], [[items/head/833-luxem-stalker-hat|Luxem Stalker Hat]], [[items/head/834-luxem-broker-turban|Luxem Broker Turban]]. Each pick is its own step below; the steps are the same apart from the item.
+
+The pieces are the Luxem armour set, one piece for each quest of the chain (see the zone page). You pick the job version you want; it doesn't have to be your job, so a Visitor can choose before changing job. Each piece can only be worn by its job.
 
 ## Steps
 
@@ -48,7 +52,7 @@ Then:
 
 ### `2111-02`
 
-Happens by talking to [[npcs/1058-expedition-leader-ardeth|Expedition Leader Ardeth]].
+Happens by talking to [[npcs/1058-expedition-leader-ardeth|Expedition Leader Ardeth]] and picking the Luxem Guard Helm.
 
 Checks:
 
@@ -58,10 +62,76 @@ Checks:
 Then:
 
 - works on [[quests/2111-the-warden-below|The Warden Below]]
+- you get 1 × [[items/head/831-luxem-guard-helm|Luxem Guard Helm]]
 - 1 × [[items/quest/707-lens-core|Lens Core]] is taken
 - experience, base 4500 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - Zuly, base 4000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
-- you get 1 × [[items/body/8-blue-denim-look|Blue Denim Look]]
+- set quest switch 610 to 1
+- the quest ends (removed from your list)
+- you get the quest [[quests/2112-light-for-luxem|Light for Luxem]]
+- works on [[quests/2112-light-for-luxem|Light for Luxem]]
+- you get 1 × [[items/quest/707-lens-core|Lens Core]]
+
+### `2111-21`
+
+Happens by talking to [[npcs/1058-expedition-leader-ardeth|Expedition Leader Ardeth]] and picking the Luxem Acolyte Beret.
+
+Checks:
+
+- you have [[quests/2111-the-warden-below|The Warden Below]]
+- you carry ≥ 1 × [[items/quest/707-lens-core|Lens Core]]
+
+Then:
+
+- works on [[quests/2111-the-warden-below|The Warden Below]]
+- you get 1 × [[items/head/832-luxem-acolyte-beret|Luxem Acolyte Beret]]
+- 1 × [[items/quest/707-lens-core|Lens Core]] is taken
+- experience, base 4500 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- Zuly, base 4000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- set quest switch 610 to 1
+- the quest ends (removed from your list)
+- you get the quest [[quests/2112-light-for-luxem|Light for Luxem]]
+- works on [[quests/2112-light-for-luxem|Light for Luxem]]
+- you get 1 × [[items/quest/707-lens-core|Lens Core]]
+
+### `2111-22`
+
+Happens by talking to [[npcs/1058-expedition-leader-ardeth|Expedition Leader Ardeth]] and picking the Luxem Stalker Hat.
+
+Checks:
+
+- you have [[quests/2111-the-warden-below|The Warden Below]]
+- you carry ≥ 1 × [[items/quest/707-lens-core|Lens Core]]
+
+Then:
+
+- works on [[quests/2111-the-warden-below|The Warden Below]]
+- you get 1 × [[items/head/833-luxem-stalker-hat|Luxem Stalker Hat]]
+- 1 × [[items/quest/707-lens-core|Lens Core]] is taken
+- experience, base 4500 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- Zuly, base 4000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- set quest switch 610 to 1
+- the quest ends (removed from your list)
+- you get the quest [[quests/2112-light-for-luxem|Light for Luxem]]
+- works on [[quests/2112-light-for-luxem|Light for Luxem]]
+- you get 1 × [[items/quest/707-lens-core|Lens Core]]
+
+### `2111-23`
+
+Happens by talking to [[npcs/1058-expedition-leader-ardeth|Expedition Leader Ardeth]] and picking the Luxem Broker Turban.
+
+Checks:
+
+- you have [[quests/2111-the-warden-below|The Warden Below]]
+- you carry ≥ 1 × [[items/quest/707-lens-core|Lens Core]]
+
+Then:
+
+- works on [[quests/2111-the-warden-below|The Warden Below]]
+- you get 1 × [[items/head/834-luxem-broker-turban|Luxem Broker Turban]]
+- 1 × [[items/quest/707-lens-core|Lens Core]] is taken
+- experience, base 4500 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- Zuly, base 4000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - set quest switch 610 to 1
 - the quest ends (removed from your list)
 - you get the quest [[quests/2112-light-for-luxem|Light for Luxem]]

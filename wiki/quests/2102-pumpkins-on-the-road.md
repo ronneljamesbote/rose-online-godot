@@ -92,6 +92,8 @@ Then:
 - works on [[quests/2102-pumpkins-on-the-road|Pumpkins on the Road]]
 - you get 1 × [[items/quest/701-pumpkin-stalk|Pumpkin Stalk]]
 
+Whether or not it passes, step `2116-31` runs next.
+
 ## Changed from iROSE
 
 This quest is new: iROSE has no such quest. It was added with the Valley of Luxem Tower redesign.

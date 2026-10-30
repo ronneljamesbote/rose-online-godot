@@ -1,0 +1,29 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bm8r1d0usn0cu"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2116-the-broker-s-trial.tres" id="x_41e0fa"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_2141ce"]
+ability = "Level"
+operator = ">="
+value = 10
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_7cc112"]
+switch = 600
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_ba8135"]
+switch = 616
+value = false
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_26a6fb"]
+ability = "Job"
+operator = "=="
+value = 0
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_b2f599"]
+quest = ExtResource("x_41e0fa")
+
+[resource]
+name = "2116-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_2141ce"), SubResource("RoseConditionQuestSwitch_7cc112"), SubResource("RoseConditionQuestSwitch_ba8135"), SubResource("RoseConditionAbilityValue_26a6fb")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_b2f599")])

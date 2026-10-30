@@ -1,0 +1,32 @@
+[gd_resource type="RoseItemWeapon" format=3 uid="uid://bmgm3vil06xtp"]
+
+[ext_resource type="RoseSound" uid="uid://bjdly3xikd2h4" path="res://data/sounds/item/576-item-weapon.tres" id="1_j3aqv"]
+[ext_resource type="RoseSound" uid="uid://7jcsa7xbtv6k" path="res://data/sounds/attack/39-sword-003.tres" id="2_icj0x"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_rr2e7"]
+[ext_resource type="RoseAttackEffect" uid="uid://b45erl4hp3f0b" path="res://data/attack_effects/131-haedong-sword.tres" id="4_2h2kj"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1041.tres" id="5_bn8jp"]
+
+[resource]
+id = 1122
+name = "Sandwind Greatsword"
+description = "A heavy two-handed sword that has kept the Caravan Road open for years. Brakka gives it to the soldiers of the Sandwind Caravan."
+item_class = "TwoHandedSword"
+base_price = 2820
+weight = 20
+quality = 40
+icon = ExtResource("5_bn8jp")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/402.tscn"
+equip_sound = ExtResource("1_j3aqv")
+equip_job_class = 41
+equip_stat_1 = "Level"
+equip_stat_1_value = 10
+durability = 40
+model = "res://assets/rose/3ddata/weapon/list_weapon/102.tscn"
+attack_range = 250
+attack_power = 35
+attack_speed = 11
+motion_type = 5
+attack_effect = ExtResource("4_2h2kj")
+attack_start_sound = ExtResource("2_icj0x")
+hit_sounds = ExtResource("3_rr2e7")
+gem_position = 2

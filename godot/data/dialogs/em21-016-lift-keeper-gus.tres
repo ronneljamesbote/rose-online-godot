@@ -1,68 +1,73 @@
 [gd_resource type="RoseDialog" format=3 uid="uid://bu1f2wlv5xeyx"]
 
-[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_v6xyg"]
-[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_qiylz"]
-[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="3_689ec"]
-[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="4_eg4s5"]
-[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="5_tvo62"]
-[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="6_24gl1"]
-[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="7_rp385"]
-[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="8_e2o08"]
-[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="9_f8rag"]
-[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="10_wgoqt"]
-[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="11_9n244"]
-[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="12_g6rdv"]
-[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2111-04.tres" id="13_i06zn"]
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="x_f59917"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="x_995c41"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="x_0a8b6c"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="x_7c9cc9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="x_9cec5d"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="x_a18b49"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="x_31c725"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="x_53dfc6"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="x_eb4f80"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="x_6166ba"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="x_da8593"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="x_700907"]
+[ext_resource type="RoseQuest" path="res://data/quests/2113-the-sergeant-s-trial.tres" id="x_4a5e32"]
+[ext_resource type="RoseQuest" path="res://data/quests/2114-the-sage-s-trial.tres" id="x_dc0cf2"]
+[ext_resource type="RoseQuest" path="res://data/quests/2115-the-outrider-s-trial.tres" id="x_bc40e9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2116-the-broker-s-trial.tres" id="x_41e0fa"]
+[ext_resource type="RoseQuest" path="res://data/quests/2117-on-to-zant.tres" id="x_d1180a"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2111-04.tres" id="x_9430b7"]
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_l9e2w"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5d8be1"]
 text = "This is as deep as the lift goes. Say the word and I'll take you up."
 next_menu = 1
 resource_name = "NPC: This is as deep as the lift goes. Say the word a…"
 
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_phhi9"]
-step = ExtResource("13_i06zn")
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_2d0c42"]
+step = ExtResource("x_9430b7")
 
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_v3k2d"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_phhi9")])
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_cc7b09"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_2d0c42")])
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_93gwv"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e7f5a3"]
 kind = "Answer"
 text = "Take me back up."
 next_menu = -1
-on_choose = Array[Resource]([SubResource("RoseDialogCase_v3k2d")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_cc7b09")])
 resource_name = "You: Take me back up."
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_h5ll3"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c"]
 kind = "Answer"
 text = "Goodbye."
 next_menu = -1
 resource_name = "You: Goodbye."
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_dd6fw"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a67633"]
 kind = "Answer"
 text = "Something else."
 next_menu = 0
 resource_name = "You: Something else."
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_ryq4g"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c2"]
 kind = "Answer"
 text = "Goodbye."
 next_menu = -1
 resource_name = "You: Goodbye."
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4gkai"]
-lines = Array[Resource]([SubResource("RoseDialogLine_l9e2w")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1a25e3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5d8be1")])
 resource_name = "Menu 0"
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_o1lpl"]
-lines = Array[Resource]([SubResource("RoseDialogLine_93gwv"), SubResource("RoseDialogLine_h5ll3")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fd6656"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e7f5a3"), SubResource("RoseDialogLine_4d129c")])
 resource_name = "Menu 1"
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dd3u8"]
-lines = Array[Resource]([SubResource("RoseDialogLine_dd6fw"), SubResource("RoseDialogLine_ryq4g")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6c4396"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a67633"), SubResource("RoseDialogLine_4d129c2")])
 resource_name = "Menu 2"
 
 [resource]
 key = "EM21-016.con"
 name = "[Lift Keeper] Gus"
-menus = Array[Resource]([SubResource("RoseDialogMenu_4gkai"), SubResource("RoseDialogMenu_o1lpl"), SubResource("RoseDialogMenu_dd3u8")])
+menus = Array[Resource]([SubResource("RoseDialogMenu_1a25e3"), SubResource("RoseDialogMenu_fd6656"), SubResource("RoseDialogMenu_6c4396")])

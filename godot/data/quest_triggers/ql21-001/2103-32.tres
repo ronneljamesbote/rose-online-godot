@@ -1,28 +1,30 @@
 [gd_resource type="RoseQuestTrigger" format=3 uid="uid://by6qn8u0vsj7j"]
 
-[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="1_ek263"]
-[ext_resource type="RoseItemQuest" path="res://data/items/quest/702-glowing-stinger.tres" id="2_596pi"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="x_0a8b6c"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/702-glowing-stinger.tres" id="x_11a983"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2115-32.tres" id="x_863d1c"]
 
-[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_028an"]
-quest = ExtResource("1_ek263")
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_9f3b22"]
+quest = ExtResource("x_0a8b6c")
 
-[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_8yi5s"]
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_7800b9"]
 to = 60
 
-[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_gaod3"]
-item = ExtResource("2_596pi")
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_a6c71a"]
+item = ExtResource("x_11a983")
 equipment_index = 13
 count = 8
 operator = "<"
 
-[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_hxptx"]
-quest = ExtResource("1_ek263")
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_05e3d6"]
+quest = ExtResource("x_0a8b6c")
 
-[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_ktp51"]
-item = ExtResource("2_596pi")
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_0b01f9"]
+item = ExtResource("x_11a983")
 quantity = 1
 
 [resource]
 name = "2103-32"
-conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_028an"), SubResource("RoseConditionRandomPercent_8yi5s"), SubResource("RoseConditionQuestItem_gaod3")])
-rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_hxptx"), SubResource("RoseRewardAddItem_ktp51")])
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_9f3b22"), SubResource("RoseConditionRandomPercent_7800b9"), SubResource("RoseConditionQuestItem_a6c71a")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_05e3d6"), SubResource("RoseRewardAddItem_0b01f9")])
+next_trigger = ExtResource("x_863d1c")

@@ -1,0 +1,26 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cfpbycuk7yq5g"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2116-the-broker-s-trial.tres" id="x_41e0fa"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_251206"]
+quest = ExtResource("x_41e0fa")
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_19bf17"]
+variable_type = "Variable"
+variable = 0
+operator = "=="
+value = 0
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_9607a6"]
+quest = ExtResource("x_41e0fa")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_4ffc94"]
+variable_type = "Variable"
+variable = 0
+operator = "Set"
+value = 1
+
+[resource]
+name = "2116-03"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_251206"), SubResource("RoseConditionQuestVariable_19bf17")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_9607a6"), SubResource("RoseRewardQuestVariable_4ffc94")])

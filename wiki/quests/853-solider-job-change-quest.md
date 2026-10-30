@@ -69,3 +69,11 @@ Then:
 
 - works on [[quests/853-solider-job-change-quest|Solider Job Change Quest]]
 - you get 1 × [[items/quest/129-pumpkin-seed|Pumpkin Seed]]
+- then runs step `2113-31` ([[quests/2113-the-sergeant-s-trial|The Sergeant's Trial]])
+
+
+If the checks fail, step `2113-31` ([[quests/2113-the-sergeant-s-trial|The Sergeant's Trial]]) is tried instead.
+
+## Changed from iROSE
+
+The Valley of Luxem Tower redesign made this quest's kill steps go on to its own quests' steps, so one kill counts for both.

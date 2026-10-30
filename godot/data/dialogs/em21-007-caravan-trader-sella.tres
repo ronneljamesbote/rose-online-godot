@@ -1,67 +1,102 @@
 [gd_resource type="RoseDialog" format=3 uid="uid://w20uwxh7r0q3"]
 
-[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_gpdc1"]
-[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_xpyv0"]
-[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="3_49zcv"]
-[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="4_dpjc9"]
-[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="5_leb95"]
-[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="6_p3csj"]
-[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="7_wva8g"]
-[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="8_m9niq"]
-[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="9_ic9le"]
-[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="10_zl6od"]
-[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="11_8pz72"]
-[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="12_tbg08"]
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="x_f59917"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="x_995c41"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="x_0a8b6c"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="x_7c9cc9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="x_9cec5d"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="x_a18b49"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="x_31c725"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="x_53dfc6"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="x_eb4f80"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="x_6166ba"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="x_da8593"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="x_700907"]
+[ext_resource type="RoseQuest" path="res://data/quests/2113-the-sergeant-s-trial.tres" id="x_4a5e32"]
+[ext_resource type="RoseQuest" path="res://data/quests/2114-the-sage-s-trial.tres" id="x_dc0cf2"]
+[ext_resource type="RoseQuest" path="res://data/quests/2115-the-outrider-s-trial.tres" id="x_bc40e9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2116-the-broker-s-trial.tres" id="x_41e0fa"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2116-03.tres" id="x_96f4b7"]
+[ext_resource type="RoseQuest" path="res://data/quests/2117-on-to-zant.tres" id="x_d1180a"]
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_rqiee"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6bf3e3"]
 text = "Potions, arrows, a return scroll for when it all goes wrong. What do you need?"
 next_menu = 1
 resource_name = "NPC: Potions, arrows, a return scroll for when it all…"
 
-[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_2tuzg"]
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_bd6185"]
+step = ExtResource("x_96f4b7")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_0164b1"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_bd6185")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_0df6a5"]
+step = ExtResource("x_96f4b7")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_8d15a7"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_0df6a5")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_16072e"]
+kind = "Answer"
+text = "Harlan asks what you'd pay for pumpkin seeds."
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_0164b1")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_8d15a7")])
+resource_name = "You: Harlan asks what you'd pay for pumpkin seeds."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_00b588"]
+text = "Pumpkin seeds? Twelve Zuly a sack, and that's generous. Tell Harlan he still owes me for the last ones."
+next_menu = 2
+resource_name = "NPC: Pumpkin seeds? Twelve Zuly a sack, and that's ge…"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_f4aa03"]
 window = "Shop"
 
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_uma5q"]
-actions = Array[Resource]([SubResource("RoseDialogDoOpen_2tuzg")])
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_9a3464"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_f4aa03")])
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_p95gv"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0f94db"]
 kind = "Answer"
 text = "Let me see your goods."
 next_menu = -1
-on_choose = Array[Resource]([SubResource("RoseDialogCase_uma5q")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_9a3464")])
 resource_name = "You: Let me see your goods."
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_fg4yz"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c"]
 kind = "Answer"
 text = "Goodbye."
 next_menu = -1
 resource_name = "You: Goodbye."
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_kckia"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a67633"]
 kind = "Answer"
 text = "Something else."
 next_menu = 0
 resource_name = "You: Something else."
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_u01j5"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c2"]
 kind = "Answer"
 text = "Goodbye."
 next_menu = -1
 resource_name = "You: Goodbye."
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_rncd0"]
-lines = Array[Resource]([SubResource("RoseDialogLine_rqiee")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bf2fcf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6bf3e3")])
 resource_name = "Menu 0"
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3fo94"]
-lines = Array[Resource]([SubResource("RoseDialogLine_p95gv"), SubResource("RoseDialogLine_fg4yz")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_739a49"]
+lines = Array[Resource]([SubResource("RoseDialogLine_16072e"), SubResource("RoseDialogLine_0f94db"), SubResource("RoseDialogLine_4d129c")])
 resource_name = "Menu 1"
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_e7dh5"]
-lines = Array[Resource]([SubResource("RoseDialogLine_kckia"), SubResource("RoseDialogLine_u01j5")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6c4396"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a67633"), SubResource("RoseDialogLine_4d129c2")])
 resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_adca43"]
+lines = Array[Resource]([SubResource("RoseDialogLine_00b588")])
+resource_name = "Menu 3"
 
 [resource]
 key = "EM21-007.con"
 name = "[Caravan Trader] Sella"
-menus = Array[Resource]([SubResource("RoseDialogMenu_rncd0"), SubResource("RoseDialogMenu_3fo94"), SubResource("RoseDialogMenu_e7dh5")])
+menus = Array[Resource]([SubResource("RoseDialogMenu_bf2fcf"), SubResource("RoseDialogMenu_739a49"), SubResource("RoseDialogMenu_6c4396"), SubResource("RoseDialogMenu_adca43")])

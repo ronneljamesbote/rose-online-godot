@@ -1,0 +1,32 @@
+[gd_resource type="RoseItemWeapon" format=3 uid="uid://dpbo3xsttntf4"]
+
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_wyt51"]
+[ext_resource type="RoseSound" uid="uid://b8d8k6psw0js4" path="res://data/sounds/attack/38-sword-002.tres" id="2_881ob"]
+[ext_resource type="RoseHitSounds" uid="uid://c0iq3aliaua53" path="res://data/hit_sounds/5-sword-hits.tres" id="3_jdfd6"]
+[ext_resource type="RoseAttackEffect" uid="uid://djmlc6hbabswu" path="res://data/attack_effects/111-wooden-sword.tres" id="4_vwdff"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/913.tres" id="5_1ug34"]
+
+[resource]
+id = 1121
+name = "Sandwind Blade"
+description = "A curved caravan-guard sword, light enough to swing all day. Brakka gives it to the soldiers of the Sandwind Caravan."
+item_class = "OneHandedSword"
+base_price = 1890
+weight = 5
+quality = 36
+icon = ExtResource("5_1ug34")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/304.tscn"
+equip_sound = ExtResource("1_wyt51")
+equip_job_class = 41
+equip_stat_1 = "Level"
+equip_stat_1_value = 10
+durability = 40
+model = "res://assets/rose/3ddata/weapon/list_weapon/4.tscn"
+attack_range = 200
+attack_power = 23
+attack_speed = 10
+motion_type = 1
+attack_effect = ExtResource("4_vwdff")
+attack_start_sound = ExtResource("2_881ob")
+hit_sounds = ExtResource("3_jdfd6")
+gem_position = 2

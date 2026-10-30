@@ -9962,6 +9962,17 @@ next_menu = 50
 kind = "Quest"
 quest = 115
 
+[[dialog.menu.line]]
+kind = "Npc"
+text = "You look like you've come a long way. From the valley, maybe?"
+next_menu = 77
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2117-02"
+
 [[dialog.menu]]
 
 [[dialog.menu.line]]
@@ -11216,6 +11227,52 @@ text = "Alright, I understand."
 [[dialog.menu.line.on_choose.action]]
 kind = "QuestStep"
 step = "114-02"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = '"On to Zant": here I am.'
+next_menu = 79
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2117-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2117-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 1
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 1
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "You came from the Valley of Luxem Tower? Then you're the one who lit the tower again! The caravans talk of nothing else. Welcome to Zant, the Canyon City. The Akram Kingdom Minister and the Junon Order are always looking for people like you. Come and ask me if you get lost."
+next_menu = 78
 
 [[dialog]]
 key = "EM01-015.con"
@@ -40687,12 +40744,6 @@ next_menu = 58
 kind = "QuestStep"
 step = "2112-02"
 
-[[dialog.menu.line.on_choose]]
-
-[[dialog.menu.line.on_choose.action]]
-kind = "QuestStep"
-step = "2112-02"
-
 [[dialog.menu.line]]
 kind = "Answer"
 text = "Something else."
@@ -40717,7 +40768,88 @@ text = "Goodbye."
 
 [[dialog.menu.line]]
 kind = "Npc"
-text = "The Lens Core! Hold on... there. Look at the crystal. It's shining again, and I can hear the spring below us running stronger. The valley will heal. Thank you, <NAME>. Karitte wants to speak with you too."
+text = "The Lens Core! Hold on... there. Look at the crystal. It's shining again, and I can hear the spring below us running stronger. The valley will heal. Thank you, <NAME>. This last piece completes your set. Karitte wants to speak with you too, and then your road goes on: through the north-west gate to Zant, the Canyon City. Ask for Lena, the guide. She knows everyone there."
+next_menu = 59
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Luxem Guard Armor."
+next_menu = 60
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2112-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2112-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Luxem Acolyte Vest."
+next_menu = 60
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2112-21"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2112-21"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Luxem Stalker Chest."
+next_menu = 60
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2112-22"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2112-22"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Luxem Broker Vest."
+next_menu = 60
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2112-23"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2112-23"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Let me think about it."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Wear it well, <NAME>."
 next_menu = 57
 
 [[dialog]]
@@ -42217,12 +42349,6 @@ next_menu = 15
 kind = "QuestStep"
 step = "2105-02"
 
-[[dialog.menu.line.on_choose]]
-
-[[dialog.menu.line.on_choose.action]]
-kind = "QuestStep"
-step = "2105-02"
-
 [[dialog.menu.line]]
 kind = "Answer"
 text = "Goodbye."
@@ -42356,7 +42482,88 @@ next_menu = 2
 
 [[dialog.menu.line]]
 kind = "Npc"
-text = "Six crates, and the seals unbroken. Take this jacket from our stock. It's made for desert work."
+text = "Six crates, and the seals unbroken. Take a pair of gloves from our stock. Pick the ones that suit how you fight."
+next_menu = 16
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Luxem Guard Gloves."
+next_menu = 17
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2105-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2105-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Luxem Acolyte Gloves."
+next_menu = 17
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2105-21"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2105-21"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Luxem Stalker Gloves."
+next_menu = 17
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2105-22"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2105-22"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Luxem Broker Gloves."
+next_menu = 17
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2105-23"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2105-23"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Let me think about it."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Wear it well, <NAME>."
 next_menu = 2
 
 [[dialog]]
@@ -42682,6 +42889,23 @@ next_menu = 1
 
 [[dialog.menu.line]]
 kind = "Answer"
+text = "Harlan asks what you'd pay for pumpkin seeds."
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2116-03"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2116-03"
+
+[[dialog.menu.line]]
+kind = "Answer"
 text = "Let me see your goods."
 
 [[dialog.menu.line.on_choose]]
@@ -42704,6 +42928,13 @@ next_menu = 0
 [[dialog.menu.line]]
 kind = "Answer"
 text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Pumpkin seeds? Twelve Zuly a sack, and that's generous. Tell Harlan he still owes me for the last ones."
+next_menu = 2
 
 [[dialog]]
 key = "EM21-008.con"
@@ -42775,12 +43006,6 @@ next_menu = 8
 [[dialog.menu.line.show_if]]
 
 [[dialog.menu.line.show_if.condition]]
-kind = "QuestStep"
-step = "2111-02"
-
-[[dialog.menu.line.on_choose]]
-
-[[dialog.menu.line.on_choose.action]]
 kind = "QuestStep"
 step = "2111-02"
 
@@ -42870,7 +43095,88 @@ next_menu = 2
 
 [[dialog.menu.line]]
 kind = "Npc"
-text = "The Lens Core. Feel how warm it is. It belongs at the top of Luxem Tower. Take this, and then take the core to Lutis at the tower."
+text = "The Lens Core. Feel how warm it is. It belongs at the top of Luxem Tower. Choose a helm from our stores, and then take the core to Lutis at the tower."
+next_menu = 9
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Luxem Guard Helm."
+next_menu = 10
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2111-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2111-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Luxem Acolyte Beret."
+next_menu = 10
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2111-21"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2111-21"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Luxem Stalker Hat."
+next_menu = 10
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2111-22"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2111-22"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Luxem Broker Turban."
+next_menu = 10
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2111-23"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2111-23"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Let me think about it."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Wear it well, <NAME>."
 next_menu = 2
 
 [[dialog]]
@@ -43145,12 +43451,6 @@ next_menu = 7
 kind = "QuestStep"
 step = "2108-02"
 
-[[dialog.menu.line.on_choose]]
-
-[[dialog.menu.line.on_choose.action]]
-kind = "QuestStep"
-step = "2108-02"
-
 [[dialog.menu.line]]
 kind = "Answer"
 text = "Goodbye."
@@ -43208,7 +43508,88 @@ next_menu = 2
 
 [[dialog.menu.line]]
 kind = "Npc"
-text = "Good work. My diggers can go back. Here, this beret will keep the sun off your head."
+text = "Good work. My diggers can go back. Here, the expedition keeps boots for people who earn them. Pick a pair."
+next_menu = 8
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Luxem Guard Boots."
+next_menu = 9
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2108-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2108-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Luxem Acolyte Shoes."
+next_menu = 9
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2108-21"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2108-21"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Luxem Stalker Boots."
+next_menu = 9
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2108-22"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2108-22"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Luxem Broker Shoes."
+next_menu = 9
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2108-23"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2108-23"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Let me think about it."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Wear it well, <NAME>."
 next_menu = 2
 
 [[dialog]]
@@ -43510,6 +43891,23 @@ next_menu = 1
 
 [[dialog.menu.line]]
 kind = "Answer"
+text = "Harlan asks what you'd pay for pumpkin seeds."
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2116-04"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2116-04"
+
+[[dialog.menu.line]]
+kind = "Answer"
 text = "Let me see your goods."
 
 [[dialog.menu.line.on_choose]]
@@ -43532,6 +43930,13 @@ next_menu = 0
 [[dialog.menu.line]]
 kind = "Answer"
 text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Seeds? I'm a smith, not a cook. Eight Zuly, and only because I like Harlan."
+next_menu = 2
 
 [[dialog]]
 key = "EM21-018.con"
@@ -43722,6 +44127,718 @@ next_menu = 0
 [[dialog.menu.line]]
 kind = "Answer"
 text = "Goodbye."
+
+[[dialog]]
+key = "EM21-023.con"
+name = "[Caravan Sergeant] Brakka"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Stand up straight. The caravan's guards are trained by me, and I don't train cowards."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """About "The Sergeant's Trial""""
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2113
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2113-01"
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2114
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2115
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2116
+active = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """About "The Sergeant's Trial""""
+next_menu = 6
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2113
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2113-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"The Sergeant's Trial": it's done."""
+next_menu = 7
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2113-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "You want to be a Soldier? Then show me you can stand in front of something and not run. The Elder Pumpkins in the Withered Fields hit hard and don't give up. Bring me 8 of their thorned vines. Come back alive and I'll make you a Soldier, here and now."
+next_menu = 4
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2113-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "North of the camp, past the road. The fields with the dead crops. Don't come back with fewer than eight."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Eight vines. If you're hurt, rest, then go again. That's the job."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Eight. You stood your ground, and that's all a Soldier really is. From today you're one of us. Every Soldier of the caravan gets a blade from me. Which kind?"
+next_menu = 8
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Sandwind Blade."
+next_menu = 9
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2113-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2113-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Sandwind Greatsword."
+next_menu = 9
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2113-21"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2113-21"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Let me think about it."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Use it well, <NAME>."
+next_menu = 2
+
+[[dialog]]
+key = "EM21-024.con"
+name = "[Oasis Sage] Orin"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The water here remembers the tower. Sit, if you want. Listen."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """About "The Sage's Trial""""
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2114
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2114-01"
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2113
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2115
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2116
+active = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """About "The Sage's Trial""""
+next_menu = 6
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2114
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2114-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"The Sage's Trial": it's done."""
+next_menu = 7
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2114-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Close your eyes. Can you feel it? The valley is full of mana right now, more than it should be, and the Pomics soak it up like sponges. A Muse must learn to find mana and to take it. Bring me 6 handfuls of the dust that hums. Then I will teach you to use what you found."
+next_menu = 4
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2114-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The Pomics gather at the Fallen Watch on the Caravan Road, and by the oasis. Listen for the humming."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Six handfuls. Listen for the hum; not every Pomic carries it."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Hear how it sings in your hands? You found it. That is the first lesson, and the hardest. From today you are a Muse. Let me give you something to carry the mana with. A staff, or a wand?"
+next_menu = 8
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Oasis Staff."
+next_menu = 9
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2114-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2114-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Oasis Wand."
+next_menu = 9
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2114-21"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2114-21"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Let me think about it."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Use it well, <NAME>."
+next_menu = 2
+
+[[dialog]]
+key = "EM21-025.con"
+name = "[Outrider] Kesh"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Looking for the outriders? You found one. The fast one."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """About "The Outrider's Trial""""
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2115
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2115-01"
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2113
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2114
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2116
+active = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """About "The Outrider's Trial""""
+next_menu = 6
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2115
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2115-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"The Outrider's Trial": it's done."""
+next_menu = 7
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2115-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "A Hawker hits first and is gone before the other side knows. Honeybees are the fastest things in this valley. Bring me 10 of their wings, in one piece. Do it and you'll ride out with me as a Hawker."
+next_menu = 4
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2115-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The bees swarm around the dead trees with hives, on the flats and by the road. Be quicker than them."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Ten wings, whole ones. Torn wings don't count."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Ten, and barely a scratch on you. You're quick. From today you're a Hawker, and you ride with the outriders. Take a weapon from me: a bow to hit them from far away, or a katar to hit them up close?"
+next_menu = 8
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Outrider Bow."
+next_menu = 9
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2115-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2115-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Outrider Katar."
+next_menu = 9
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2115-21"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2115-21"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Let me think about it."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Use it well, <NAME>."
+next_menu = 2
+
+[[dialog]]
+key = "EM21-026.con"
+name = "[Caravan Broker] Harlan"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Everything has a price, friend. Even advice. Mine's cheap today."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """About "The Broker's Trial""""
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2116
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2116-01"
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2113
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2114
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2115
+active = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """About "The Broker's Trial""""
+next_menu = 6
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2116
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2116-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"The Broker's Trial": it's done."""
+next_menu = 7
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2116-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Anyone can swing a sword. A Dealer knows what everything is worth. The Big Pumpkins on the flats carry seeds that sell well in Zant. Bring me 6, and ask Sella and Garro what they'd pay for them. Learn the market, and I'll make you a Dealer."
+next_menu = 4
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2116-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Big Pumpkins are all over the flats and the road. Sella sells supplies, Garro sells blades. Both are here in the camp."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Six seeds, and the prices from Sella and Garro. A Dealer never sells without asking around."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Six seeds, and you know Sella pays more than Garro. You'll do well. From today you're a Dealer. Every Dealer needs something to protect the goods. A pistol, or a launcher?"
+next_menu = 8
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Broker's Pistol."
+next_menu = 9
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2116-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2116-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Broker's Launcher."
+next_menu = 9
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2116-21"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2116-21"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Let me think about it."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Use it well, <NAME>."
+next_menu = 2
 
 [[dialog]]
 key = "EM22-001.con"

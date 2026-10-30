@@ -77,6 +77,8 @@ Then:
 - works on [[quests/2103-glowing-stingers|Glowing Stingers]]
 - you get 1 × [[items/quest/702-glowing-stinger|Glowing Stinger]]
 
+Whether or not it passes, step `2115-31` runs next.
+
 ### `2103-32`
 
 Happens by killing [[monsters/62-honeybee|HoneyBee]].
@@ -91,6 +93,8 @@ Then:
 
 - works on [[quests/2103-glowing-stingers|Glowing Stingers]]
 - you get 1 × [[items/quest/702-glowing-stinger|Glowing Stinger]]
+
+Whether or not it passes, step `2115-32` runs next.
 
 ## Changed from iROSE
 

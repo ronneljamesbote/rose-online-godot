@@ -79,6 +79,8 @@ Then:
 - works on [[quests/2106-restless-stones|Restless Stones]]
 - you get 1 × [[items/quest/704-mana-stained-pomic-shard|Mana-stained Pomic Shard]]
 
+Whether or not it passes, step `2114-31` runs next.
+
 ### `2106-32`
 
 Happens by killing [[monsters/72-pomic|Pomic]].
@@ -93,6 +95,8 @@ Then:
 
 - works on [[quests/2106-restless-stones|Restless Stones]]
 - you get 1 × [[items/quest/704-mana-stained-pomic-shard|Mana-stained Pomic Shard]]
+
+Whether or not it passes, step `2114-32` runs next.
 
 ### `2106-33`
 

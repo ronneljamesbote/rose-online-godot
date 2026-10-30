@@ -49,8 +49,14 @@ it are your choices. See [[rules/npc-dialogs|NPC dialogs]].
       - **You:** Not now.
   - **You:** About "Stolen Supplies"  *(if you have [[quests/2105-stolen-supplies|Stolen Supplies]]; quest step `2105-02` doesn't pass)*
     - **NPC:** Six crates. The Cowboy Pumpkins carry them around their camps.
-  - **You:** "Stolen Supplies": it's done.  *(if quest step `2105-02` passes)*  → runs quest step `2105-02` ([[quests/2105-stolen-supplies|Stolen Supplies]])
-    - **NPC:** Six crates, and the seals unbroken. Take this jacket from our stock. It's made for desert work.
+  - **You:** "Stolen Supplies": it's done.  *(if quest step `2105-02` passes)*
+    - **NPC:** Six crates, and the seals unbroken. Take a pair of gloves from our stock. Pick the ones that suit how you fight.
+      - **You:** I'll take the Luxem Guard Gloves.  *(if quest step `2105-02` passes)*  → runs quest step `2105-02` ([[quests/2105-stolen-supplies|Stolen Supplies]])
+      - **You:** I'll take the Luxem Acolyte Gloves.  *(if quest step `2105-21` passes)*  → runs quest step `2105-21` ([[quests/2105-stolen-supplies|Stolen Supplies]])
+      - **You:** I'll take the Luxem Stalker Gloves.  *(if quest step `2105-22` passes)*  → runs quest step `2105-22` ([[quests/2105-stolen-supplies|Stolen Supplies]])
+      - **You:** I'll take the Luxem Broker Gloves.  *(if quest step `2105-23` passes)*  → runs quest step `2105-23` ([[quests/2105-stolen-supplies|Stolen Supplies]])
+        - **NPC:** Wear it well, <NAME>.
+      - **You:** Let me think about it.
   - **You:** Goodbye.
 
 After an answer the NPC offers "Something else." (back to the first list) and "Goodbye."

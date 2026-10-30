@@ -1,67 +1,72 @@
 [gd_resource type="RoseDialog" format=3 uid="uid://qylv1khkn20v"]
 
-[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_v90am"]
-[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_obfmd"]
-[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="3_wgy9w"]
-[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="4_y15dr"]
-[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="5_tek1y"]
-[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="6_nf8a1"]
-[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="7_u7llx"]
-[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="8_svljv"]
-[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="9_froyh"]
-[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="10_0nfw6"]
-[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="11_9f02j"]
-[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="12_k9tg2"]
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="x_f59917"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="x_995c41"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="x_0a8b6c"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="x_7c9cc9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="x_9cec5d"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="x_a18b49"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="x_31c725"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="x_53dfc6"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="x_eb4f80"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="x_6166ba"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="x_da8593"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="x_700907"]
+[ext_resource type="RoseQuest" path="res://data/quests/2113-the-sergeant-s-trial.tres" id="x_4a5e32"]
+[ext_resource type="RoseQuest" path="res://data/quests/2114-the-sage-s-trial.tres" id="x_dc0cf2"]
+[ext_resource type="RoseQuest" path="res://data/quests/2115-the-outrider-s-trial.tres" id="x_bc40e9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2116-the-broker-s-trial.tres" id="x_41e0fa"]
+[ext_resource type="RoseQuest" path="res://data/quests/2117-on-to-zant.tres" id="x_d1180a"]
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_gacye"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a9976a"]
 text = "Ruin work wears clothes out in a week. I mend them, and I sell new ones."
 next_menu = 1
 resource_name = "NPC: Ruin work wears clothes out in a week. I mend th…"
 
-[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_mano9"]
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_f4aa03"]
 window = "Shop"
 
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_r3o7d"]
-actions = Array[Resource]([SubResource("RoseDialogDoOpen_mano9")])
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_9a3464"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_f4aa03")])
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_iwj8h"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0f94db"]
 kind = "Answer"
 text = "Let me see your goods."
 next_menu = -1
-on_choose = Array[Resource]([SubResource("RoseDialogCase_r3o7d")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_9a3464")])
 resource_name = "You: Let me see your goods."
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_ewdgy"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c"]
 kind = "Answer"
 text = "Goodbye."
 next_menu = -1
 resource_name = "You: Goodbye."
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_dcizc"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a67633"]
 kind = "Answer"
 text = "Something else."
 next_menu = 0
 resource_name = "You: Something else."
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_ywl09"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c2"]
 kind = "Answer"
 text = "Goodbye."
 next_menu = -1
 resource_name = "You: Goodbye."
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5hso0"]
-lines = Array[Resource]([SubResource("RoseDialogLine_gacye")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b19457"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a9976a")])
 resource_name = "Menu 0"
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_20hl8"]
-lines = Array[Resource]([SubResource("RoseDialogLine_iwj8h"), SubResource("RoseDialogLine_ewdgy")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ddd72e"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0f94db"), SubResource("RoseDialogLine_4d129c")])
 resource_name = "Menu 1"
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_tq50z"]
-lines = Array[Resource]([SubResource("RoseDialogLine_dcizc"), SubResource("RoseDialogLine_ywl09")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6c4396"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a67633"), SubResource("RoseDialogLine_4d129c2")])
 resource_name = "Menu 2"
 
 [resource]
 key = "EM21-020.con"
 name = "[Expedition Tailor] Yselle"
-menus = Array[Resource]([SubResource("RoseDialogMenu_5hso0"), SubResource("RoseDialogMenu_20hl8"), SubResource("RoseDialogMenu_tq50z")])
+menus = Array[Resource]([SubResource("RoseDialogMenu_b19457"), SubResource("RoseDialogMenu_ddd72e"), SubResource("RoseDialogMenu_6c4396")])

@@ -1,84 +1,89 @@
 [gd_resource type="RoseDialog" format=3 uid="uid://bevd4ldma7m4b"]
 
-[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_dqa42"]
-[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_alula"]
-[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="3_uyty2"]
-[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="4_ib07w"]
-[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="5_wo0e4"]
-[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="6_zrld1"]
-[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="7_3rjvl"]
-[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="8_nurl2"]
-[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="9_oiuzc"]
-[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2109-05.tres" id="10_f2h44"]
-[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="11_8nvis"]
-[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="12_03590"]
-[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="13_6m3se"]
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="x_f59917"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="x_995c41"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="x_0a8b6c"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="x_7c9cc9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="x_9cec5d"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="x_a18b49"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="x_31c725"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="x_53dfc6"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="x_eb4f80"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2109-05.tres" id="x_48fcb1"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="x_6166ba"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="x_da8593"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="x_700907"]
+[ext_resource type="RoseQuest" path="res://data/quests/2113-the-sergeant-s-trial.tres" id="x_4a5e32"]
+[ext_resource type="RoseQuest" path="res://data/quests/2114-the-sage-s-trial.tres" id="x_dc0cf2"]
+[ext_resource type="RoseQuest" path="res://data/quests/2115-the-outrider-s-trial.tres" id="x_bc40e9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2116-the-broker-s-trial.tres" id="x_41e0fa"]
+[ext_resource type="RoseQuest" path="res://data/quests/2117-on-to-zant.tres" id="x_d1180a"]
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_zslx4"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2d58e3"]
 text = "Are they gone? The Pomic Fighters?"
 next_menu = 1
 resource_name = "NPC: Are they gone? The Pomic Fighters?"
 
-[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_1mdkd"]
-step = ExtResource("10_f2h44")
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_6e7d3e"]
+step = ExtResource("x_48fcb1")
 
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_2g5mq"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_1mdkd")])
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_f038ff"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_6e7d3e")])
 
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_wz73b"]
-step = ExtResource("10_f2h44")
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_18beb2"]
+step = ExtResource("x_48fcb1")
 
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_era72"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_wz73b")])
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_9d09c9"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_18beb2")])
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_bldh2"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ae8870"]
 kind = "Answer"
 text = "Fenn? Are you hurt?"
 next_menu = 3
-show_if = Array[Resource]([SubResource("RoseDialogCase_2g5mq")])
-on_choose = Array[Resource]([SubResource("RoseDialogCase_era72")])
+show_if = Array[Resource]([SubResource("RoseDialogCase_f038ff")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_9d09c9")])
 resource_name = "You: Fenn? Are you hurt?"
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_odak3"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7fd371"]
 text = "Just my pride. The Pomic Fighters chased me up the road and I've been hiding behind these pillars. Tell Pell the road is the old pilgrims' way to the tower."
 next_menu = 2
 resource_name = "NPC: Just my pride. The Pomic Fighters chased me up t…"
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_cjqxm"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c"]
 kind = "Answer"
 text = "Goodbye."
 next_menu = -1
 resource_name = "You: Goodbye."
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_go0r4"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a67633"]
 kind = "Answer"
 text = "Something else."
 next_menu = 0
 resource_name = "You: Something else."
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_bzsi9"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c2"]
 kind = "Answer"
 text = "Goodbye."
 next_menu = -1
 resource_name = "You: Goodbye."
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bs6bt"]
-lines = Array[Resource]([SubResource("RoseDialogLine_zslx4")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_caf198"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2d58e3")])
 resource_name = "Menu 0"
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_s8rnz"]
-lines = Array[Resource]([SubResource("RoseDialogLine_bldh2"), SubResource("RoseDialogLine_cjqxm")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_693e69"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ae8870"), SubResource("RoseDialogLine_4d129c")])
 resource_name = "Menu 1"
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_43yr1"]
-lines = Array[Resource]([SubResource("RoseDialogLine_go0r4"), SubResource("RoseDialogLine_bzsi9")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6c4396"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a67633"), SubResource("RoseDialogLine_4d129c2")])
 resource_name = "Menu 2"
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7me3m"]
-lines = Array[Resource]([SubResource("RoseDialogLine_odak3")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7c0598"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7fd371")])
 resource_name = "Menu 3"
 
 [resource]
 key = "EM21-014.con"
 name = "[Digger] Fenn"
-menus = Array[Resource]([SubResource("RoseDialogMenu_bs6bt"), SubResource("RoseDialogMenu_s8rnz"), SubResource("RoseDialogMenu_43yr1"), SubResource("RoseDialogMenu_7me3m")])
+menus = Array[Resource]([SubResource("RoseDialogMenu_caf198"), SubResource("RoseDialogMenu_693e69"), SubResource("RoseDialogMenu_6c4396"), SubResource("RoseDialogMenu_7c0598")])

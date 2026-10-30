@@ -1,169 +1,269 @@
 [gd_resource type="RoseDialog" format=3 uid="uid://bqmd8v4qqrco8"]
 
-[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_7oji7"]
-[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_0sdun"]
-[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="3_cex1u"]
-[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="4_mwpe5"]
-[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="5_caq19"]
-[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="6_i7y0c"]
-[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="7_pcm2n"]
-[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="8_mektq"]
-[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2108-01.tres" id="9_qzl77"]
-[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2108-02.tres" id="10_57qfq"]
-[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="11_e65p4"]
-[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="12_au5os"]
-[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="13_ukrlu"]
-[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="14_7p89i"]
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="x_f59917"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="x_995c41"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="x_0a8b6c"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="x_7c9cc9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="x_9cec5d"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="x_a18b49"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="x_31c725"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="x_53dfc6"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2108-01.tres" id="x_873574"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2108-02.tres" id="x_2bae73"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2108-21.tres" id="x_472bec"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2108-22.tres" id="x_c4b5aa"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/ql21-001/2108-23.tres" id="x_776f68"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="x_eb4f80"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="x_6166ba"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="x_da8593"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="x_700907"]
+[ext_resource type="RoseQuest" path="res://data/quests/2113-the-sergeant-s-trial.tres" id="x_4a5e32"]
+[ext_resource type="RoseQuest" path="res://data/quests/2114-the-sage-s-trial.tres" id="x_dc0cf2"]
+[ext_resource type="RoseQuest" path="res://data/quests/2115-the-outrider-s-trial.tres" id="x_bc40e9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2116-the-broker-s-trial.tres" id="x_41e0fa"]
+[ext_resource type="RoseQuest" path="res://data/quests/2117-on-to-zant.tres" id="x_d1180a"]
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_0i51m"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a6c7d7"]
 text = "Stay inside the camp if you can't fight. The ruins are no place for sightseeing."
 next_menu = 1
 resource_name = "NPC: Stay inside the camp if you can't fight. The rui…"
 
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_iq2k7"]
-quest = ExtResource("8_mektq")
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_44bdcc"]
+quest = ExtResource("x_53dfc6")
 active = false
 
-[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_uweib"]
-step = ExtResource("9_qzl77")
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_c140f3"]
+step = ExtResource("x_873574")
 
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_57o9f"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_iq2k7"), SubResource("RoseDialogIfQuestStep_uweib")])
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_395c6b"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_44bdcc"), SubResource("RoseDialogIfQuestStep_c140f3")])
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_e99rs"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_88f081"]
 kind = "Answer"
 text = "About \"Hornets in the Dig\""
 next_menu = 3
-show_if = Array[Resource]([SubResource("RoseDialogCase_57o9f")])
+show_if = Array[Resource]([SubResource("RoseDialogCase_395c6b")])
 resource_name = "You: About \"Hornets in the Dig\""
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_btvdx"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ea2a34"]
 text = "My diggers won't go near the pyramid. Hornets nest in the old walls and drive them off. I can't spare a guard. Clear them out and bring me 8 wings as proof."
 next_menu = 4
 resource_name = "NPC: My diggers won't go near the pyramid. Hornets ne…"
 
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_fbkn6"]
-step = ExtResource("9_qzl77")
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_356686"]
+step = ExtResource("x_873574")
 
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_tdw3p"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_fbkn6")])
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_689b9f"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_356686")])
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_xtwii"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_24fc50"]
 kind = "Answer"
 text = "I'll do it."
 next_menu = 5
-on_choose = Array[Resource]([SubResource("RoseDialogCase_tdw3p")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_689b9f")])
 resource_name = "You: I'll do it."
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_hdexo"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7bf1a0"]
 kind = "Answer"
 text = "Not now."
 next_menu = -1
 resource_name = "You: Not now."
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_w111b"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_59d2f7"]
 text = "Cross the upper bridge and head for the pyramid. The nests are in the high walls."
 next_menu = 2
 resource_name = "NPC: Cross the upper bridge and head for the pyramid.…"
 
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_2dcfj"]
-quest = ExtResource("8_mektq")
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_e3b37e"]
+quest = ExtResource("x_53dfc6")
 
-[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_yttc0"]
-step = ExtResource("10_57qfq")
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_cad3f9"]
+step = ExtResource("x_2bae73")
 passes = false
 
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_cqw9t"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_2dcfj"), SubResource("RoseDialogIfQuestStep_yttc0")])
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_9334d4"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_e3b37e"), SubResource("RoseDialogIfQuestStep_cad3f9")])
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_vzgb7"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_119b70"]
 kind = "Answer"
 text = "About \"Hornets in the Dig\""
 next_menu = 6
-show_if = Array[Resource]([SubResource("RoseDialogCase_cqw9t")])
+show_if = Array[Resource]([SubResource("RoseDialogCase_9334d4")])
 resource_name = "You: About \"Hornets in the Dig\""
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_w020b"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_414f3b"]
 text = "Eight wings. Needle Hornets or Hornets, I don't mind which."
 next_menu = 2
 resource_name = "NPC: Eight wings. Needle Hornets or Hornets, I don't …"
 
-[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_t465x"]
-step = ExtResource("10_57qfq")
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_846196"]
+step = ExtResource("x_2bae73")
 
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_waujh"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_t465x")])
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_6fa468"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_846196")])
 
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_80e04"]
-step = ExtResource("10_57qfq")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_0jhoc"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_80e04")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_gwn1l"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_79c342"]
 kind = "Answer"
 text = "\"Hornets in the Dig\": it's done."
 next_menu = 7
-show_if = Array[Resource]([SubResource("RoseDialogCase_waujh")])
-on_choose = Array[Resource]([SubResource("RoseDialogCase_0jhoc")])
+show_if = Array[Resource]([SubResource("RoseDialogCase_6fa468")])
 resource_name = "You: \"Hornets in the Dig\": it's done."
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_2ueoa"]
-text = "Good work. My diggers can go back. Here, this beret will keep the sun off your head."
-next_menu = 2
-resource_name = "NPC: Good work. My diggers can go back. Here, this be…"
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a3198a"]
+text = "Good work. My diggers can go back. Here, the expedition keeps boots for people who earn them. Pick a pair."
+next_menu = 8
+resource_name = "NPC: Good work. My diggers can go back. Here, the exp…"
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_8jht0"]
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_8461962"]
+step = ExtResource("x_2bae73")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_a008e9"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_8461962")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_c85d9e"]
+step = ExtResource("x_2bae73")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_5863e1"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_c85d9e")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_521283"]
+kind = "Answer"
+text = "I'll take the Luxem Guard Boots."
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_a008e9")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_5863e1")])
+resource_name = "You: I'll take the Luxem Guard Boots."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_1ec7ed"]
+step = ExtResource("x_472bec")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_506a9f"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_1ec7ed")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_703cc0"]
+step = ExtResource("x_472bec")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ea40d0"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_703cc0")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cc672a"]
+kind = "Answer"
+text = "I'll take the Luxem Acolyte Shoes."
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_506a9f")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_ea40d0")])
+resource_name = "You: I'll take the Luxem Acolyte Shoes."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_214352"]
+step = ExtResource("x_c4b5aa")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_d64013"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_214352")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_9d2408"]
+step = ExtResource("x_c4b5aa")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_84f522"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_9d2408")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a68411"]
+kind = "Answer"
+text = "I'll take the Luxem Stalker Boots."
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_d64013")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_84f522")])
+resource_name = "You: I'll take the Luxem Stalker Boots."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_ddfd73"]
+step = ExtResource("x_776f68")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_90cb02"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_ddfd73")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_2763f6"]
+step = ExtResource("x_776f68")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_b3fb92"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_2763f6")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d087d"]
+kind = "Answer"
+text = "I'll take the Luxem Broker Shoes."
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_90cb02")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_b3fb92")])
+resource_name = "You: I'll take the Luxem Broker Shoes."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8f0d35"]
+kind = "Answer"
+text = "Let me think about it."
+next_menu = -1
+resource_name = "You: Let me think about it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a03d91"]
+text = "Wear it well, <NAME>."
+next_menu = 2
+resource_name = "NPC: Wear it well, <NAME>."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c"]
 kind = "Answer"
 text = "Goodbye."
 next_menu = -1
 resource_name = "You: Goodbye."
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_2azvh"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a67633"]
 kind = "Answer"
 text = "Something else."
 next_menu = 0
 resource_name = "You: Something else."
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_i1b6n"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c2"]
 kind = "Answer"
 text = "Goodbye."
 next_menu = -1
 resource_name = "You: Goodbye."
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_blj5h"]
-lines = Array[Resource]([SubResource("RoseDialogLine_0i51m")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_f49ddd"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a6c7d7")])
 resource_name = "Menu 0"
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lznfb"]
-lines = Array[Resource]([SubResource("RoseDialogLine_e99rs"), SubResource("RoseDialogLine_vzgb7"), SubResource("RoseDialogLine_gwn1l"), SubResource("RoseDialogLine_8jht0")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_78f2f2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_88f081"), SubResource("RoseDialogLine_119b70"), SubResource("RoseDialogLine_79c342"), SubResource("RoseDialogLine_4d129c")])
 resource_name = "Menu 1"
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_quvsl"]
-lines = Array[Resource]([SubResource("RoseDialogLine_2azvh"), SubResource("RoseDialogLine_i1b6n")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6c4396"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a67633"), SubResource("RoseDialogLine_4d129c2")])
 resource_name = "Menu 2"
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_mydt8"]
-lines = Array[Resource]([SubResource("RoseDialogLine_btvdx")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_edd604"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ea2a34")])
 resource_name = "Menu 3"
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5czci"]
-lines = Array[Resource]([SubResource("RoseDialogLine_xtwii"), SubResource("RoseDialogLine_hdexo")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_309668"]
+lines = Array[Resource]([SubResource("RoseDialogLine_24fc50"), SubResource("RoseDialogLine_7bf1a0")])
 resource_name = "Menu 4"
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8x6dc"]
-lines = Array[Resource]([SubResource("RoseDialogLine_w111b")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_f3d91d"]
+lines = Array[Resource]([SubResource("RoseDialogLine_59d2f7")])
 resource_name = "Menu 5"
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_101se"]
-lines = Array[Resource]([SubResource("RoseDialogLine_w020b")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6bb1c8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_414f3b")])
 resource_name = "Menu 6"
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ox9ug"]
-lines = Array[Resource]([SubResource("RoseDialogLine_2ueoa")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_9ff490"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a3198a")])
 resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_60ba86"]
+lines = Array[Resource]([SubResource("RoseDialogLine_521283"), SubResource("RoseDialogLine_cc672a"), SubResource("RoseDialogLine_a68411"), SubResource("RoseDialogLine_4d087d"), SubResource("RoseDialogLine_8f0d35")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fe68fc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a03d91")])
+resource_name = "Menu 9"
 
 [resource]
 key = "EM21-010.con"
 name = "[Guard Captain] Torvin"
-menus = Array[Resource]([SubResource("RoseDialogMenu_blj5h"), SubResource("RoseDialogMenu_lznfb"), SubResource("RoseDialogMenu_quvsl"), SubResource("RoseDialogMenu_mydt8"), SubResource("RoseDialogMenu_5czci"), SubResource("RoseDialogMenu_8x6dc"), SubResource("RoseDialogMenu_101se"), SubResource("RoseDialogMenu_ox9ug")])
+menus = Array[Resource]([SubResource("RoseDialogMenu_f49ddd"), SubResource("RoseDialogMenu_78f2f2"), SubResource("RoseDialogMenu_6c4396"), SubResource("RoseDialogMenu_edd604"), SubResource("RoseDialogMenu_309668"), SubResource("RoseDialogMenu_f3d91d"), SubResource("RoseDialogMenu_6bb1c8"), SubResource("RoseDialogMenu_9ff490"), SubResource("RoseDialogMenu_60ba86"), SubResource("RoseDialogMenu_fe68fc")])

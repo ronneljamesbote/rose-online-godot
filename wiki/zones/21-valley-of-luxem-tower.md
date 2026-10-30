@@ -346,6 +346,18 @@ npcs:
 - npc: '[[npcs/1078-caravan-tutor-ilsa|Caravan Tutor Ilsa]]'
   x: 5181
   y: 5053
+- npc: '[[npcs/1080-caravan-sergeant-brakka|Caravan Sergeant Brakka]]'
+  x: 5220
+  y: 5056
+- npc: '[[npcs/1119-oasis-sage-orin|Oasis Sage Orin]]'
+  x: 5191
+  y: 5038
+- npc: '[[npcs/1120-outrider-kesh|Outrider Kesh]]'
+  x: 5207
+  y: 5038
+- npc: '[[npcs/1124-caravan-broker-harlan|Caravan Broker Harlan]]'
+  x: 5184
+  y: 5046
 warp_gates:
 - to: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
   x: 5135.8
@@ -424,6 +436,9 @@ ground north of the ruins and comes back about every 10 minutes, and the
   Their goods are a step up from the caravan's.
 - Skill books for the four first jobs: [[npcs/1078-caravan-tutor-ilsa|Ilsa]] at the caravan camp and
   [[npcs/1079-expedition-instructor-corwin|Corwin]] at the expedition camp.
+- Job mentors at the caravan camp: [[npcs/1080-caravan-sergeant-brakka|Brakka]] (Soldier),
+  [[npcs/1119-oasis-sage-orin|Orin]] (Muse), [[npcs/1120-outrider-kesh|Kesh]] (Hawker) and
+  [[npcs/1124-caravan-broker-harlan|Harlan]] (Dealer); see "Job trials" below.
 
 ## Getting around
 
@@ -454,7 +469,7 @@ Camp and the dig spots are new.
 
 ## Quests
 
-A story chain of twelve quests, from level 9 to 18:
+A story chain of twelve quests, from level 9 to 18, and a last one that sends you on to Zant:
 
 | Quest | From | Level | What to do |
 | --- | --- | --- | --- |
@@ -470,6 +485,33 @@ A story chain of twelve quests, from level 9 to 18:
 | [[quests/2110-words-in-stone|Words in Stone]] | [[npcs/1059-archaeologist-pell|Archaeologist Pell]] | 16 | Bring Pell 4 Inscribed Fragments from the Pomic Soldiers in the ruins. |
 | [[quests/2111-the-warden-below|The Warden Below]] | [[npcs/1058-expedition-leader-ardeth|Expedition Leader Ardeth]] | 18 | Ride Ardeth's crane into the sealed vault, defeat the Ruin Warden and bring back the Lens Core. |
 | [[quests/2112-light-for-luxem|Light for Luxem]] | follows on | 18 | Take the Lens Core to Lutis at the top of Luxem Tower. |
+| [[quests/2117-on-to-zant|On to Zant]] | follows on | 18 | Go through the north-west gate to Zant, the Canyon City, and find Lena the guide. |
+
+Four quests of the chain give a piece of the Luxem armour set, and you pick which job's
+version you get: gloves from [[quests/2105-stolen-supplies|Stolen Supplies]], boots from
+[[quests/2108-hornets-in-the-dig|Hornets in the Dig]], a helmet from
+[[quests/2111-the-warden-below|The Warden Below]] and the body armour, the last piece, from
+[[quests/2112-light-for-luxem|Light for Luxem]]. The pick doesn't have to match your job,
+so you can choose before your job change; each piece can only be worn by its job.
+
+After [[quests/2112-light-for-luxem|Light for Luxem]], Lutis sends you through the
+north-west gate to [[npcs/1014-guide-lena|Lena]] in [[zones/1-canyon-city-of-zant|Zant]]
+([[quests/2117-on-to-zant|On to Zant]]), so you don't miss the city.
+
+### Job trials
+
+Four mentors at the Sandwind Caravan Camp change a Visitor's job right there, from level 10
+once you have finished [[quests/2101-dust-on-the-road|Dust on the Road]]. You can take one
+trial at a time. Finishing it gives the job, as the job change quests in Zant do, and you
+pick one of two weapons for that job. The job change quests in Zant still work as before
+for players who go there first.
+
+| Quest | From | Level | What to do |
+| --- | --- | --- | --- |
+| [[quests/2113-the-sergeant-s-trial|The Sergeant's Trial]] | [[npcs/1080-caravan-sergeant-brakka|Caravan Sergeant Brakka]] | 10 | Bring Brakka 8 Thorned Vines from the Elder Pumpkins in the Withered Fields. |
+| [[quests/2114-the-sage-s-trial|The Sage's Trial]] | [[npcs/1119-oasis-sage-orin|Oasis Sage Orin]] | 10 | Bring Orin 6 Humming Pomic Dust from the Pomics and Needle Pomics. |
+| [[quests/2115-the-outrider-s-trial|The Outrider's Trial]] | [[npcs/1120-outrider-kesh|Outrider Kesh]] | 10 | Bring Kesh 10 Honeybee Wings from the Honeybees and Needle Honeybees. |
+| [[quests/2116-the-broker-s-trial|The Broker's Trial]] | [[npcs/1124-caravan-broker-harlan|Caravan Broker Harlan]] | 10 | Bring Harlan 6 Plump Pumpkin Seeds from the Big Pumpkins, and ask Sella and Garro in the camp what they'd pay. |
 
 The kill quests share their monsters with the job-change quests in this valley: a kill
 counts for both.
@@ -484,5 +526,5 @@ The whole valley is redesigned. The size, the four gates and their arrival spots
 same as in iROSE; everything else is new: the ground's shape and textures, the tower moved
 to the north-east corner and made bigger, the river, oasis and wadi, the trees along the water, the two camps, the
 ruins, the spawn points (levels 9–22 instead of 9–20), the two elite monsters, the sealed
-vault, nineteen new NPCs and the quest chain. The minimap is redrawn to match, and its frame says Breezy Hills and Adventurer's Plain
+vault, twenty-three new NPCs, the quest chain with its Luxem armour set, and the job trials at the caravan camp with their job weapons. The minimap is redrawn to match, and its frame says Breezy Hills and Adventurer's Plain
 (iROSE's minimap said "Hill of wind" and "Adventure Plane").

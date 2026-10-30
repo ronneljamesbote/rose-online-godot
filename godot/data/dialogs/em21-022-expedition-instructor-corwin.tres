@@ -1,67 +1,72 @@
 [gd_resource type="RoseDialog" format=3 uid="uid://c7wfy3jl5ic6d"]
 
-[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="1_el9yg"]
-[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="2_fiv4n"]
-[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="3_c6yoj"]
-[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="4_mycxf"]
-[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="5_ch6ri"]
-[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="6_z2al6"]
-[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="7_vnpl0"]
-[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="8_luy41"]
-[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="9_q76x4"]
-[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="10_rza1v"]
-[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="11_af8kx"]
-[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="12_k2rry"]
+[ext_resource type="RoseQuest" path="res://data/quests/2101-dust-on-the-road.tres" id="x_f59917"]
+[ext_resource type="RoseQuest" path="res://data/quests/2102-pumpkins-on-the-road.tres" id="x_995c41"]
+[ext_resource type="RoseQuest" path="res://data/quests/2103-glowing-stingers.tres" id="x_0a8b6c"]
+[ext_resource type="RoseQuest" path="res://data/quests/2104-the-wagon-that-never-came.tres" id="x_7c9cc9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="x_9cec5d"]
+[ext_resource type="RoseQuest" path="res://data/quests/2106-restless-stones.tres" id="x_a18b49"]
+[ext_resource type="RoseQuest" path="res://data/quests/2107-a-shard-for-the-expedition.tres" id="x_31c725"]
+[ext_resource type="RoseQuest" path="res://data/quests/2108-hornets-in-the-dig.tres" id="x_53dfc6"]
+[ext_resource type="RoseQuest" path="res://data/quests/2109-lost-diggers.tres" id="x_eb4f80"]
+[ext_resource type="RoseQuest" path="res://data/quests/2110-words-in-stone.tres" id="x_6166ba"]
+[ext_resource type="RoseQuest" path="res://data/quests/2111-the-warden-below.tres" id="x_da8593"]
+[ext_resource type="RoseQuest" path="res://data/quests/2112-light-for-luxem.tres" id="x_700907"]
+[ext_resource type="RoseQuest" path="res://data/quests/2113-the-sergeant-s-trial.tres" id="x_4a5e32"]
+[ext_resource type="RoseQuest" path="res://data/quests/2114-the-sage-s-trial.tres" id="x_dc0cf2"]
+[ext_resource type="RoseQuest" path="res://data/quests/2115-the-outrider-s-trial.tres" id="x_bc40e9"]
+[ext_resource type="RoseQuest" path="res://data/quests/2116-the-broker-s-trial.tres" id="x_41e0fa"]
+[ext_resource type="RoseQuest" path="res://data/quests/2117-on-to-zant.tres" id="x_d1180a"]
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_5rktd"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_86a1f4"]
 text = "The ruins test everyone. I keep the expedition's fighters sharp, and I'll teach any trained adventurer who asks."
 next_menu = 1
 resource_name = "NPC: The ruins test everyone. I keep the expedition's…"
 
-[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_f6tfg"]
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_f4aa03"]
 window = "Shop"
 
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_sagl3"]
-actions = Array[Resource]([SubResource("RoseDialogDoOpen_f6tfg")])
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_9a3464"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_f4aa03")])
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_7emjr"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0f94db"]
 kind = "Answer"
 text = "Let me see your goods."
 next_menu = -1
-on_choose = Array[Resource]([SubResource("RoseDialogCase_sagl3")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_9a3464")])
 resource_name = "You: Let me see your goods."
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_zewcw"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c"]
 kind = "Answer"
 text = "Goodbye."
 next_menu = -1
 resource_name = "You: Goodbye."
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_s0mdo"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a67633"]
 kind = "Answer"
 text = "Something else."
 next_menu = 0
 resource_name = "You: Something else."
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_mtfpj"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d129c2"]
 kind = "Answer"
 text = "Goodbye."
 next_menu = -1
 resource_name = "You: Goodbye."
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_t7vx3"]
-lines = Array[Resource]([SubResource("RoseDialogLine_5rktd")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5a83a8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_86a1f4")])
 resource_name = "Menu 0"
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_onm92"]
-lines = Array[Resource]([SubResource("RoseDialogLine_7emjr"), SubResource("RoseDialogLine_zewcw")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ddd72e"]
+lines = Array[Resource]([SubResource("RoseDialogLine_0f94db"), SubResource("RoseDialogLine_4d129c")])
 resource_name = "Menu 1"
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dg87t"]
-lines = Array[Resource]([SubResource("RoseDialogLine_s0mdo"), SubResource("RoseDialogLine_mtfpj")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6c4396"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a67633"), SubResource("RoseDialogLine_4d129c2")])
 resource_name = "Menu 2"
 
 [resource]
 key = "EM21-022.con"
 name = "[Expedition Instructor] Corwin"
-menus = Array[Resource]([SubResource("RoseDialogMenu_t7vx3"), SubResource("RoseDialogMenu_onm92"), SubResource("RoseDialogMenu_dg87t")])
+menus = Array[Resource]([SubResource("RoseDialogMenu_5a83a8"), SubResource("RoseDialogMenu_ddd72e"), SubResource("RoseDialogMenu_6c4396")])

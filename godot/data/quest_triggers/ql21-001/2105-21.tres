@@ -1,0 +1,44 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://cufa8x7l1lwif"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2105-stolen-supplies.tres" id="x_9cec5d"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/703-caravan-crate.tres" id="x_418f67"]
+[ext_resource type="RoseItemHands" path="res://data/items/hands/652-luxem-acolyte-gloves.tres" id="x_332341"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_386913"]
+quest = ExtResource("x_9cec5d")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_d0342f"]
+item = ExtResource("x_418f67")
+equipment_index = 13
+count = 6
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_4e25be"]
+quest = ExtResource("x_9cec5d")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_612440"]
+item = ExtResource("x_332341")
+quantity = 1
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_6118f4"]
+item = ExtResource("x_418f67")
+quantity = 6
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_73b910"]
+equation = 0
+value = 1400
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_067258"]
+equation = 0
+value = 1500
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_f68ecf"]
+switch = 604
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_bd06b1"]
+
+[resource]
+name = "2105-21"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_386913"), SubResource("RoseConditionQuestItem_d0342f")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_4e25be"), SubResource("RoseRewardAddItem_612440"), SubResource("RoseRewardRemoveItem_6118f4"), SubResource("RoseRewardCalculatedExperiencePoints_73b910"), SubResource("RoseRewardCalculatedMoney_067258"), SubResource("RoseRewardSetQuestSwitch_f68ecf"), SubResource("RoseRewardRemoveSelectedQuest_bd06b1")])

@@ -33,8 +33,14 @@ it are your choices. See [[rules/npc-dialogs|NPC dialogs]].
       - **You:** Not now.
   - **You:** About "Hornets in the Dig"  *(if you have [[quests/2108-hornets-in-the-dig|Hornets in the Dig]]; quest step `2108-02` doesn't pass)*
     - **NPC:** Eight wings. Needle Hornets or Hornets, I don't mind which.
-  - **You:** "Hornets in the Dig": it's done.  *(if quest step `2108-02` passes)*  → runs quest step `2108-02` ([[quests/2108-hornets-in-the-dig|Hornets in the Dig]])
-    - **NPC:** Good work. My diggers can go back. Here, this beret will keep the sun off your head.
+  - **You:** "Hornets in the Dig": it's done.  *(if quest step `2108-02` passes)*
+    - **NPC:** Good work. My diggers can go back. Here, the expedition keeps boots for people who earn them. Pick a pair.
+      - **You:** I'll take the Luxem Guard Boots.  *(if quest step `2108-02` passes)*  → runs quest step `2108-02` ([[quests/2108-hornets-in-the-dig|Hornets in the Dig]])
+      - **You:** I'll take the Luxem Acolyte Shoes.  *(if quest step `2108-21` passes)*  → runs quest step `2108-21` ([[quests/2108-hornets-in-the-dig|Hornets in the Dig]])
+      - **You:** I'll take the Luxem Stalker Boots.  *(if quest step `2108-22` passes)*  → runs quest step `2108-22` ([[quests/2108-hornets-in-the-dig|Hornets in the Dig]])
+      - **You:** I'll take the Luxem Broker Shoes.  *(if quest step `2108-23` passes)*  → runs quest step `2108-23` ([[quests/2108-hornets-in-the-dig|Hornets in the Dig]])
+        - **NPC:** Wear it well, <NAME>.
+      - **You:** Let me think about it.
   - **You:** Goodbye.
 
 After an answer the NPC offers "Something else." (back to the first list) and "Goodbye."

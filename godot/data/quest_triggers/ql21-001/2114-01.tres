@@ -1,0 +1,29 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://ble3frrqm2twv"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2114-the-sage-s-trial.tres" id="x_dc0cf2"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_2141ce"]
+ability = "Level"
+operator = ">="
+value = 10
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_7cc112"]
+switch = 600
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_549c37"]
+switch = 614
+value = false
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_26a6fb"]
+ability = "Job"
+operator = "=="
+value = 0
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_ae285d"]
+quest = ExtResource("x_dc0cf2")
+
+[resource]
+name = "2114-01"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_2141ce"), SubResource("RoseConditionQuestSwitch_7cc112"), SubResource("RoseConditionQuestSwitch_549c37"), SubResource("RoseConditionAbilityValue_26a6fb")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_ae285d")])

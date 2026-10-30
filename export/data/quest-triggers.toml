@@ -13813,6 +13813,7 @@ quantity = 1
 
 [[trigger]]
 name = "2102-32"
+next_trigger = "2116-31"
 
 [[trigger.condition]]
 kind = "SelectQuest"
@@ -13910,6 +13911,7 @@ kind = "RemoveSelectedQuest"
 
 [[trigger]]
 name = "2103-31"
+next_trigger = "2115-31"
 
 [[trigger.condition]]
 kind = "SelectQuest"
@@ -13938,6 +13940,7 @@ quantity = 1
 
 [[trigger]]
 name = "2103-32"
+next_trigger = "2115-32"
 
 [[trigger.condition]]
 kind = "SelectQuest"
@@ -14090,6 +14093,11 @@ kind = "SelectQuest"
 quest = 2105
 
 [[trigger.reward]]
+kind = "AddItem"
+item = "hands/651"
+quantity = 1
+
+[[trigger.reward]]
 kind = "RemoveItem"
 item = "quest/703"
 quantity = 6
@@ -14105,9 +14113,142 @@ equation = 0
 value = 1500
 
 [[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 604
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger]]
+name = "2105-21"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2105
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/703"
+equipment_index = 13
+count = 6
+operator = ">="
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2105
+
+[[trigger.reward]]
 kind = "AddItem"
-item = "body/7"
+item = "hands/652"
 quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/703"
+quantity = 6
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 1400
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 1500
+
+[[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 604
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger]]
+name = "2105-22"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2105
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/703"
+equipment_index = 13
+count = 6
+operator = ">="
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2105
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "hands/653"
+quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/703"
+quantity = 6
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 1400
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 1500
+
+[[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 604
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger]]
+name = "2105-23"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2105
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/703"
+equipment_index = 13
+count = 6
+operator = ">="
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2105
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "hands/654"
+quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/703"
+quantity = 6
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 1400
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 1500
 
 [[trigger.reward]]
 kind = "SetQuestSwitch"
@@ -14224,6 +14365,7 @@ quantity = 1
 
 [[trigger]]
 name = "2106-31"
+next_trigger = "2114-31"
 
 [[trigger.condition]]
 kind = "SelectQuest"
@@ -14252,6 +14394,7 @@ quantity = 1
 
 [[trigger]]
 name = "2106-32"
+next_trigger = "2114-32"
 
 [[trigger.condition]]
 kind = "SelectQuest"
@@ -14389,6 +14532,11 @@ kind = "SelectQuest"
 quest = 2108
 
 [[trigger.reward]]
+kind = "AddItem"
+item = "feet/651"
+quantity = 1
+
+[[trigger.reward]]
 kind = "RemoveItem"
 item = "quest/705"
 quantity = 8
@@ -14404,9 +14552,142 @@ equation = 0
 value = 2000
 
 [[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 607
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger]]
+name = "2108-21"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2108
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/705"
+equipment_index = 13
+count = 8
+operator = ">="
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2108
+
+[[trigger.reward]]
 kind = "AddItem"
-item = "head/306"
+item = "feet/652"
 quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/705"
+quantity = 8
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 2200
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 2000
+
+[[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 607
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger]]
+name = "2108-22"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2108
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/705"
+equipment_index = 13
+count = 8
+operator = ">="
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2108
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "feet/653"
+quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/705"
+quantity = 8
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 2200
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 2000
+
+[[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 607
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger]]
+name = "2108-23"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2108
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/705"
+equipment_index = 13
+count = 8
+operator = ">="
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2108
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "feet/654"
+quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/705"
+quantity = 8
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 2200
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 2000
 
 [[trigger.reward]]
 kind = "SetQuestSwitch"
@@ -14759,6 +15040,11 @@ kind = "SelectQuest"
 quest = 2111
 
 [[trigger.reward]]
+kind = "AddItem"
+item = "head/831"
+quantity = 1
+
+[[trigger.reward]]
 kind = "RemoveItem"
 item = "quest/707"
 quantity = 1
@@ -14772,11 +15058,6 @@ value = 4500
 kind = "CalculatedMoney"
 equation = 0
 value = 4000
-
-[[trigger.reward]]
-kind = "AddItem"
-item = "body/8"
-quantity = 1
 
 [[trigger.reward]]
 kind = "SetQuestSwitch"
@@ -14824,6 +15105,183 @@ x = 524800
 y = 545000
 
 [[trigger]]
+name = "2111-21"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2111
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/707"
+equipment_index = 13
+count = 1
+operator = ">="
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2111
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "head/832"
+quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/707"
+quantity = 1
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 4500
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 4000
+
+[[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 610
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger.reward]]
+kind = "AddQuest"
+quest = 2112
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2112
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "quest/707"
+quantity = 1
+
+[[trigger]]
+name = "2111-22"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2111
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/707"
+equipment_index = 13
+count = 1
+operator = ">="
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2111
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "head/833"
+quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/707"
+quantity = 1
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 4500
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 4000
+
+[[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 610
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger.reward]]
+kind = "AddQuest"
+quest = 2112
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2112
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "quest/707"
+quantity = 1
+
+[[trigger]]
+name = "2111-23"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2111
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/707"
+equipment_index = 13
+count = 1
+operator = ">="
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2111
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "head/834"
+quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/707"
+quantity = 1
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 4500
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 4000
+
+[[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 610
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger.reward]]
+kind = "AddQuest"
+quest = 2112
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2112
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "quest/707"
+quantity = 1
+
+[[trigger]]
 name = "2111-31"
 
 [[trigger.condition]]
@@ -14865,6 +15323,11 @@ kind = "SelectQuest"
 quest = 2112
 
 [[trigger.reward]]
+kind = "AddItem"
+item = "body/651"
+quantity = 1
+
+[[trigger.reward]]
 kind = "RemoveItem"
 item = "quest/707"
 quantity = 1
@@ -14880,17 +15343,20 @@ equation = 0
 value = 5000
 
 [[trigger.reward]]
-kind = "AddItem"
-item = "head/8"
-quantity = 1
-
-[[trigger.reward]]
 kind = "SetQuestSwitch"
 switch = 611
 value = true
 
 [[trigger.reward]]
 kind = "RemoveSelectedQuest"
+
+[[trigger.reward]]
+kind = "AddQuest"
+quest = 2117
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2117
 
 [[trigger]]
 name = "2112-03"
@@ -14914,6 +15380,1119 @@ value = 500
 kind = "SetQuestSwitch"
 switch = 612
 value = true
+
+[[trigger]]
+name = "2112-21"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2112
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/707"
+equipment_index = 13
+count = 1
+operator = ">="
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2112
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "body/652"
+quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/707"
+quantity = 1
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 5000
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 5000
+
+[[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 611
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger.reward]]
+kind = "AddQuest"
+quest = 2117
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2117
+
+[[trigger]]
+name = "2112-22"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2112
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/707"
+equipment_index = 13
+count = 1
+operator = ">="
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2112
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "body/653"
+quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/707"
+quantity = 1
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 5000
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 5000
+
+[[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 611
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger.reward]]
+kind = "AddQuest"
+quest = 2117
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2117
+
+[[trigger]]
+name = "2112-23"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2112
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/707"
+equipment_index = 13
+count = 1
+operator = ">="
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2112
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "body/654"
+quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/707"
+quantity = 1
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 5000
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 5000
+
+[[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 611
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger.reward]]
+kind = "AddQuest"
+quest = 2117
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2117
+
+[[trigger]]
+name = "2113-01"
+
+[[trigger.condition]]
+kind = "AbilityValue"
+ability = "Level"
+operator = ">="
+value = 10
+
+[[trigger.condition]]
+kind = "QuestSwitch"
+switch = 600
+value = true
+
+[[trigger.condition]]
+kind = "QuestSwitch"
+switch = 613
+value = false
+
+[[trigger.condition]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "=="
+value = 0
+
+[[trigger.reward]]
+kind = "AddQuest"
+quest = 2113
+
+[[trigger]]
+name = "2113-02"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2113
+
+[[trigger.condition]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "=="
+value = 0
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/708"
+equipment_index = 13
+count = 8
+operator = ">="
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2113
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "weapon/1121"
+quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/708"
+quantity = 8
+
+[[trigger.reward]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "Set"
+value = 111
+
+[[trigger.reward]]
+kind = "QuestVariable"
+variable_type = "Job"
+variable = 0
+operator = "Add"
+value = 1
+
+[[trigger.reward]]
+kind = "SetHealthManaPercent"
+health_percent = 100
+mana_percent = 100
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 800
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 500
+
+[[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 613
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger]]
+name = "2113-21"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2113
+
+[[trigger.condition]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "=="
+value = 0
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/708"
+equipment_index = 13
+count = 8
+operator = ">="
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2113
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "weapon/1122"
+quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/708"
+quantity = 8
+
+[[trigger.reward]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "Set"
+value = 111
+
+[[trigger.reward]]
+kind = "QuestVariable"
+variable_type = "Job"
+variable = 0
+operator = "Add"
+value = 1
+
+[[trigger.reward]]
+kind = "SetHealthManaPercent"
+health_percent = 100
+mana_percent = 100
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 800
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 500
+
+[[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 613
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger]]
+name = "2113-31"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2113
+
+[[trigger.condition]]
+kind = "RandomPercent"
+from = 0
+to = 50
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/708"
+equipment_index = 13
+count = 8
+operator = "<"
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2113
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "quest/708"
+quantity = 1
+
+[[trigger]]
+name = "2114-01"
+
+[[trigger.condition]]
+kind = "AbilityValue"
+ability = "Level"
+operator = ">="
+value = 10
+
+[[trigger.condition]]
+kind = "QuestSwitch"
+switch = 600
+value = true
+
+[[trigger.condition]]
+kind = "QuestSwitch"
+switch = 614
+value = false
+
+[[trigger.condition]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "=="
+value = 0
+
+[[trigger.reward]]
+kind = "AddQuest"
+quest = 2114
+
+[[trigger]]
+name = "2114-02"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2114
+
+[[trigger.condition]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "=="
+value = 0
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/709"
+equipment_index = 13
+count = 6
+operator = ">="
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2114
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "weapon/1123"
+quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/709"
+quantity = 6
+
+[[trigger.reward]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "Set"
+value = 211
+
+[[trigger.reward]]
+kind = "QuestVariable"
+variable_type = "Job"
+variable = 0
+operator = "Add"
+value = 1
+
+[[trigger.reward]]
+kind = "SetHealthManaPercent"
+health_percent = 100
+mana_percent = 100
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 800
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 500
+
+[[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 614
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger]]
+name = "2114-21"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2114
+
+[[trigger.condition]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "=="
+value = 0
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/709"
+equipment_index = 13
+count = 6
+operator = ">="
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2114
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "weapon/1124"
+quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/709"
+quantity = 6
+
+[[trigger.reward]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "Set"
+value = 211
+
+[[trigger.reward]]
+kind = "QuestVariable"
+variable_type = "Job"
+variable = 0
+operator = "Add"
+value = 1
+
+[[trigger.reward]]
+kind = "SetHealthManaPercent"
+health_percent = 100
+mana_percent = 100
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 800
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 500
+
+[[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 614
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger]]
+name = "2114-31"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2114
+
+[[trigger.condition]]
+kind = "RandomPercent"
+from = 0
+to = 50
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/709"
+equipment_index = 13
+count = 6
+operator = "<"
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2114
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "quest/709"
+quantity = 1
+
+[[trigger]]
+name = "2114-32"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2114
+
+[[trigger.condition]]
+kind = "RandomPercent"
+from = 0
+to = 50
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/709"
+equipment_index = 13
+count = 6
+operator = "<"
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2114
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "quest/709"
+quantity = 1
+
+[[trigger]]
+name = "2115-01"
+
+[[trigger.condition]]
+kind = "AbilityValue"
+ability = "Level"
+operator = ">="
+value = 10
+
+[[trigger.condition]]
+kind = "QuestSwitch"
+switch = 600
+value = true
+
+[[trigger.condition]]
+kind = "QuestSwitch"
+switch = 615
+value = false
+
+[[trigger.condition]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "=="
+value = 0
+
+[[trigger.reward]]
+kind = "AddQuest"
+quest = 2115
+
+[[trigger]]
+name = "2115-02"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2115
+
+[[trigger.condition]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "=="
+value = 0
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/710"
+equipment_index = 13
+count = 10
+operator = ">="
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2115
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "weapon/1125"
+quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/710"
+quantity = 10
+
+[[trigger.reward]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "Set"
+value = 311
+
+[[trigger.reward]]
+kind = "QuestVariable"
+variable_type = "Job"
+variable = 0
+operator = "Add"
+value = 1
+
+[[trigger.reward]]
+kind = "SetHealthManaPercent"
+health_percent = 100
+mana_percent = 100
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 800
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 500
+
+[[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 615
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger]]
+name = "2115-21"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2115
+
+[[trigger.condition]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "=="
+value = 0
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/710"
+equipment_index = 13
+count = 10
+operator = ">="
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2115
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "weapon/1126"
+quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/710"
+quantity = 10
+
+[[trigger.reward]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "Set"
+value = 311
+
+[[trigger.reward]]
+kind = "QuestVariable"
+variable_type = "Job"
+variable = 0
+operator = "Add"
+value = 1
+
+[[trigger.reward]]
+kind = "SetHealthManaPercent"
+health_percent = 100
+mana_percent = 100
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 800
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 500
+
+[[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 615
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger]]
+name = "2115-31"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2115
+
+[[trigger.condition]]
+kind = "RandomPercent"
+from = 0
+to = 50
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/710"
+equipment_index = 13
+count = 10
+operator = "<"
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2115
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "quest/710"
+quantity = 1
+
+[[trigger]]
+name = "2115-32"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2115
+
+[[trigger.condition]]
+kind = "RandomPercent"
+from = 0
+to = 50
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/710"
+equipment_index = 13
+count = 10
+operator = "<"
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2115
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "quest/710"
+quantity = 1
+
+[[trigger]]
+name = "2116-01"
+
+[[trigger.condition]]
+kind = "AbilityValue"
+ability = "Level"
+operator = ">="
+value = 10
+
+[[trigger.condition]]
+kind = "QuestSwitch"
+switch = 600
+value = true
+
+[[trigger.condition]]
+kind = "QuestSwitch"
+switch = 616
+value = false
+
+[[trigger.condition]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "=="
+value = 0
+
+[[trigger.reward]]
+kind = "AddQuest"
+quest = 2116
+
+[[trigger]]
+name = "2116-02"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2116
+
+[[trigger.condition]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "=="
+value = 0
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/711"
+equipment_index = 13
+count = 6
+operator = ">="
+
+[[trigger.condition]]
+kind = "QuestVariable"
+variable_type = "Variable"
+variable = 0
+operator = "=="
+value = 1
+
+[[trigger.condition]]
+kind = "QuestVariable"
+variable_type = "Variable"
+variable = 1
+operator = "=="
+value = 1
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2116
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "weapon/1127"
+quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/711"
+quantity = 6
+
+[[trigger.reward]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "Set"
+value = 411
+
+[[trigger.reward]]
+kind = "QuestVariable"
+variable_type = "Job"
+variable = 0
+operator = "Add"
+value = 1
+
+[[trigger.reward]]
+kind = "SetHealthManaPercent"
+health_percent = 100
+mana_percent = 100
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 800
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 500
+
+[[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 616
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger]]
+name = "2116-03"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2116
+
+[[trigger.condition]]
+kind = "QuestVariable"
+variable_type = "Variable"
+variable = 0
+operator = "=="
+value = 0
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2116
+
+[[trigger.reward]]
+kind = "QuestVariable"
+variable_type = "Variable"
+variable = 0
+operator = "Set"
+value = 1
+
+[[trigger]]
+name = "2116-04"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2116
+
+[[trigger.condition]]
+kind = "QuestVariable"
+variable_type = "Variable"
+variable = 1
+operator = "=="
+value = 0
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2116
+
+[[trigger.reward]]
+kind = "QuestVariable"
+variable_type = "Variable"
+variable = 1
+operator = "Set"
+value = 1
+
+[[trigger]]
+name = "2116-21"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2116
+
+[[trigger.condition]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "=="
+value = 0
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/711"
+equipment_index = 13
+count = 6
+operator = ">="
+
+[[trigger.condition]]
+kind = "QuestVariable"
+variable_type = "Variable"
+variable = 0
+operator = "=="
+value = 1
+
+[[trigger.condition]]
+kind = "QuestVariable"
+variable_type = "Variable"
+variable = 1
+operator = "=="
+value = 1
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2116
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "weapon/1128"
+quantity = 1
+
+[[trigger.reward]]
+kind = "RemoveItem"
+item = "quest/711"
+quantity = 6
+
+[[trigger.reward]]
+kind = "AbilityValue"
+ability = "Job"
+operator = "Set"
+value = 411
+
+[[trigger.reward]]
+kind = "QuestVariable"
+variable_type = "Job"
+variable = 0
+operator = "Add"
+value = 1
+
+[[trigger.reward]]
+kind = "SetHealthManaPercent"
+health_percent = 100
+mana_percent = 100
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 800
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 500
+
+[[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 616
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
+
+[[trigger]]
+name = "2116-31"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2116
+
+[[trigger.condition]]
+kind = "RandomPercent"
+from = 0
+to = 50
+
+[[trigger.condition]]
+kind = "QuestItem"
+item = "quest/711"
+equipment_index = 13
+count = 6
+operator = "<"
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2116
+
+[[trigger.reward]]
+kind = "AddItem"
+item = "quest/711"
+quantity = 1
+
+[[trigger]]
+name = "2117-02"
+
+[[trigger.condition]]
+kind = "SelectQuest"
+quest = 2117
+
+[[trigger.reward]]
+kind = "SelectQuest"
+quest = 2117
+
+[[trigger.reward]]
+kind = "CalculatedExperiencePoints"
+equation = 0
+value = 1000
+
+[[trigger.reward]]
+kind = "CalculatedMoney"
+equation = 0
+value = 1000
+
+[[trigger.reward]]
+kind = "SetQuestSwitch"
+switch = 617
+value = true
+
+[[trigger.reward]]
+kind = "RemoveSelectedQuest"
 
 [[trigger]]
 name = "2751-01"
@@ -29706,6 +31285,7 @@ keep_data = true
 
 [[trigger]]
 name = "853-31"
+next_trigger = "2113-31"
 
 [[trigger.condition]]
 kind = "SelectQuest"
@@ -29731,6 +31311,10 @@ quest = 853
 kind = "AddItem"
 item = "quest/129"
 quantity = 1
+
+[[trigger.reward]]
+kind = "Trigger"
+trigger = "2113-31"
 
 [[trigger]]
 name = "854-01"

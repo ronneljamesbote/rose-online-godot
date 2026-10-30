@@ -6,9 +6,9 @@ status: in-game
 given_by:
 - '[[npcs/1060-guard-captain-torvin|Guard Captain Torvin]]'
 level: 15
-steps: 4
+steps: 7
 source:
-  data: 'godot/data/quests/2108-hornets-in-the-dig.tres; quest triggers in godot/data/quest_triggers/: ql21-001/2108-01, ql21-001/2108-02, ql21-001/2108-31, ql21-001/2108-32'
+  data: 'godot/data/quests/2108-hornets-in-the-dig.tres; quest triggers in godot/data/quest_triggers/: ql21-001/2108-01, ql21-001/2108-02, ql21-001/2108-21, ql21-001/2108-22, ql21-001/2108-23, ql21-001/2108-31, ql21-001/2108-32'
   code:
   - module/src/quests.rs
   - crates/rose-quest/src/lib.rs
@@ -23,6 +23,10 @@ Part of the [[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]] story; see 
 
 - **Start:** Clear the Hornets from the sunken ruins and bring Torvin 8 Hornet Wings.
 - **End:** Torvin's diggers can work again.
+
+When you hand it in you pick one reward: [[items/feet/651-luxem-guard-boots|Luxem Guard Boots]], [[items/feet/652-luxem-acolyte-shoes|Luxem Acolyte Shoes]], [[items/feet/653-luxem-stalker-boots|Luxem Stalker Boots]], [[items/feet/654-luxem-broker-shoes|Luxem Broker Shoes]]. Each pick is its own step below; the steps are the same apart from the item.
+
+The pieces are the Luxem armour set, one piece for each quest of the chain (see the zone page). You pick the job version you want; it doesn't have to be your job, so a Visitor can choose before changing job. Each piece can only be worn by its job.
 
 ## Steps
 
@@ -45,7 +49,7 @@ Then:
 
 ### `2108-02`
 
-Happens by talking to [[npcs/1060-guard-captain-torvin|Guard Captain Torvin]].
+Happens by talking to [[npcs/1060-guard-captain-torvin|Guard Captain Torvin]] and picking the Luxem Guard Boots.
 
 Checks:
 
@@ -55,10 +59,67 @@ Checks:
 Then:
 
 - works on [[quests/2108-hornets-in-the-dig|Hornets in the Dig]]
+- you get 1 × [[items/feet/651-luxem-guard-boots|Luxem Guard Boots]]
 - 8 × [[items/quest/705-hornet-wing|Hornet Wing]] is taken
 - experience, base 2200 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - Zuly, base 2000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
-- you get 1 × [[items/head/306-red-leather-beret|Red Leather Beret]]
+- set quest switch 607 to 1
+- the quest ends (removed from your list)
+
+### `2108-21`
+
+Happens by talking to [[npcs/1060-guard-captain-torvin|Guard Captain Torvin]] and picking the Luxem Acolyte Shoes.
+
+Checks:
+
+- you have [[quests/2108-hornets-in-the-dig|Hornets in the Dig]]
+- you carry ≥ 8 × [[items/quest/705-hornet-wing|Hornet Wing]]
+
+Then:
+
+- works on [[quests/2108-hornets-in-the-dig|Hornets in the Dig]]
+- you get 1 × [[items/feet/652-luxem-acolyte-shoes|Luxem Acolyte Shoes]]
+- 8 × [[items/quest/705-hornet-wing|Hornet Wing]] is taken
+- experience, base 2200 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- Zuly, base 2000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- set quest switch 607 to 1
+- the quest ends (removed from your list)
+
+### `2108-22`
+
+Happens by talking to [[npcs/1060-guard-captain-torvin|Guard Captain Torvin]] and picking the Luxem Stalker Boots.
+
+Checks:
+
+- you have [[quests/2108-hornets-in-the-dig|Hornets in the Dig]]
+- you carry ≥ 8 × [[items/quest/705-hornet-wing|Hornet Wing]]
+
+Then:
+
+- works on [[quests/2108-hornets-in-the-dig|Hornets in the Dig]]
+- you get 1 × [[items/feet/653-luxem-stalker-boots|Luxem Stalker Boots]]
+- 8 × [[items/quest/705-hornet-wing|Hornet Wing]] is taken
+- experience, base 2200 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- Zuly, base 2000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- set quest switch 607 to 1
+- the quest ends (removed from your list)
+
+### `2108-23`
+
+Happens by talking to [[npcs/1060-guard-captain-torvin|Guard Captain Torvin]] and picking the Luxem Broker Shoes.
+
+Checks:
+
+- you have [[quests/2108-hornets-in-the-dig|Hornets in the Dig]]
+- you carry ≥ 8 × [[items/quest/705-hornet-wing|Hornet Wing]]
+
+Then:
+
+- works on [[quests/2108-hornets-in-the-dig|Hornets in the Dig]]
+- you get 1 × [[items/feet/654-luxem-broker-shoes|Luxem Broker Shoes]]
+- 8 × [[items/quest/705-hornet-wing|Hornet Wing]] is taken
+- experience, base 2200 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
+- Zuly, base 2000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - set quest switch 607 to 1
 - the quest ends (removed from your list)
 

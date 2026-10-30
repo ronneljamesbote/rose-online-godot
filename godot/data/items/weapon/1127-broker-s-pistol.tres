@@ -1,0 +1,32 @@
+[gd_resource type="RoseItemWeapon" format=3 uid="uid://trkbavmoiub4"]
+
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_tkndx"]
+[ext_resource type="RoseSound" uid="uid://coa6mw77434ix" path="res://data/sounds/attack/84-gun-003.tres" id="2_na47c"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_z2z6o"]
+[ext_resource type="RoseAttackEffect" uid="uid://bq0gk8fmds36k" path="res://data/attack_effects/172-air-gun.tres" id="4_hcgp6"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1210.tres" id="5_hsl0g"]
+
+[resource]
+id = 1127
+name = "Broker's Pistol"
+description = "A well-kept gun from the caravan's own stock. Harlan gives it to new dealers."
+item_class = "Gun"
+base_price = 3120
+weight = 10
+quality = 42
+icon = ExtResource("5_hsl0g")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/532.tscn"
+equip_sound = ExtResource("1_tkndx")
+equip_job_class = 44
+equip_stat_1 = "Level"
+equip_stat_1_value = 10
+durability = 40
+model = "res://assets/rose/3ddata/weapon/list_weapon/232.tscn"
+attack_range = 2200
+attack_power = 34
+attack_speed = 11
+motion_type = 12
+bullet_effect = ExtResource("4_hcgp6")
+attack_start_sound = ExtResource("2_na47c")
+attack_fire_sound = ExtResource("3_z2z6o")
+gem_position = 1

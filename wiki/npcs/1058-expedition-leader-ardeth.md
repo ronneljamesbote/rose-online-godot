@@ -36,8 +36,14 @@ it are your choices. See [[rules/npc-dialogs|NPC dialogs]].
       - **You:** Not now.
   - **You:** About "The Warden Below"  *(if you have [[quests/2111-the-warden-below|The Warden Below]]; quest step `2111-02` doesn't pass)*
     - **NPC:** The Ruin Warden holds the Lens Core. Ask me when you want to go down.
-  - **You:** "The Warden Below": it's done.  *(if quest step `2111-02` passes)*  → runs quest step `2111-02` ([[quests/2111-the-warden-below|The Warden Below]])
-    - **NPC:** The Lens Core. Feel how warm it is. It belongs at the top of Luxem Tower. Take this, and then take the core to Lutis at the tower.
+  - **You:** "The Warden Below": it's done.  *(if quest step `2111-02` passes)*
+    - **NPC:** The Lens Core. Feel how warm it is. It belongs at the top of Luxem Tower. Choose a helm from our stores, and then take the core to Lutis at the tower.
+      - **You:** I'll take the Luxem Guard Helm.  *(if quest step `2111-02` passes)*  → runs quest step `2111-02` ([[quests/2111-the-warden-below|The Warden Below]])
+      - **You:** I'll take the Luxem Acolyte Beret.  *(if quest step `2111-21` passes)*  → runs quest step `2111-21` ([[quests/2111-the-warden-below|The Warden Below]])
+      - **You:** I'll take the Luxem Stalker Hat.  *(if quest step `2111-22` passes)*  → runs quest step `2111-22` ([[quests/2111-the-warden-below|The Warden Below]])
+      - **You:** I'll take the Luxem Broker Turban.  *(if quest step `2111-23` passes)*  → runs quest step `2111-23` ([[quests/2111-the-warden-below|The Warden Below]])
+        - **NPC:** Wear it well, <NAME>.
+      - **You:** Let me think about it.
   - **You:** Lower me into the vault with the crane.  *(if quest step `2111-03` passes; quest switch 609 = 1)*  → runs quest step `2111-03` ([[quests/2111-the-warden-below|The Warden Below]])
   - **You:** Goodbye.
 
