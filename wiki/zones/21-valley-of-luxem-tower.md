@@ -75,7 +75,7 @@ monster_spawns:
   y: 5555
   radius: 6
   max_alive: 1
-  respawn_seconds: 600
+  respawn_seconds: 180
 - monsters: '[[monsters/75-pomic-fighter|Pomic Fighter]] ×1, [[monsters/75-pomic-fighter|Pomic Fighter]] ×1, [[monsters/204-wandering-rackie|Wandering Rackie]] ×1'
   reinforcements: '[[monsters/75-pomic-fighter|Pomic Fighter]] ×1'
   x: 5465
@@ -422,7 +422,7 @@ dimming, and the monsters are changing.
 | Sealed Vault | under the dig (reached only by the expedition's crane) | 22 | the Ruin Warden |
 
 Two elite monsters live here: [[monsters/76-sandscar|Sandscar]] (level 21) roams the high
-ground north of the ruins and comes back about every 10 minutes, and the
+ground north of the ruins and comes back about every 3 minutes, and the
 [[monsters/77-ruin-warden|Ruin Warden]] (level 22) guards the sealed vault.
 
 ## Shops
