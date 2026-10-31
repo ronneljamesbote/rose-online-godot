@@ -11,7 +11,7 @@ use rose_data::{
 };
 use rose_game_common::components::{AbilityValues, ActiveStatusEffect, ItemSlot, Money, SkillSlot, StatusEffects};
 use rose_game_data::GameData;
-use spacetimedb::{ReducerContext, Table};
+use spacetimedb::{Identity, ReducerContext, Table};
 
 use crate::{
     ability, character, combat, distance, entity, game_data::game, items, items::ground_item, motion, my_player, now_us, player, position,
@@ -124,8 +124,9 @@ pub struct NpcCastMotion {
     pub action_motion: i32,
 }
 
-/// A monster summoned by a player's skill: it fights for its owner, follows them, and
-/// leaves when they die, leave or change zone.
+/// A monster summoned by a player's skill: it fights for its owner and follows them, also
+/// into another zone. It leaves when it or its owner dies, or when its time is up; when the
+/// owner leaves the world it is kept (SavedSummon) and comes back with them.
 #[spacetimedb::table(accessor = summon, public)]
 #[derive(Clone)]
 pub struct Summon {
@@ -137,6 +138,28 @@ pub struct Summon {
     pub skill_level: i32,
     /// Summon points it takes from the owner's capacity (LIST_NPC.STB).
     pub points: u32,
+    /// When it leaves on its own (0: never). Public, so the game can show the time left.
+    #[default(0i64)]
+    pub expires_us: i64,
+}
+
+/// A summon whose owner left the world: it comes back next to them when they return, with
+/// the HP, MP and time it had left (the time only runs while the owner is in the world).
+#[spacetimedb::table(accessor = saved_summon)]
+#[derive(Clone)]
+pub struct SavedSummon {
+    #[primary_key]
+    #[auto_inc]
+    pub id: u64,
+    #[index(btree)]
+    pub owner: Identity,
+    pub npc_id: u16,
+    pub skill_level: i32,
+    pub points: u32,
+    pub hp: i32,
+    pub mp: i32,
+    /// Time it had left (0: no limit).
+    pub remaining_us: i64,
 }
 
 /// Summon capacity before passive skills (iROSE's 50 + AT_PSV_SUMMON_MOB_CNT).
@@ -144,6 +167,8 @@ const BASE_SUMMON_POINTS: i32 = 50;
 /// A summon farther than this from its owner runs back to within SUMMON_FOLLOW_TO_CM.
 const SUMMON_FOLLOW_CM: f32 = 550.0;
 const SUMMON_FOLLOW_TO_CM: f32 = 350.0;
+/// How long a summon stays (time in the world only).
+pub const SUMMON_LIFE_US: i64 = 30 * 60 * 1_000_000;
 /// Resurrection brings a player back with this share of their maximum HP (iROSE).
 const RESURRECT_HP_PERCENT: i32 = 30;
 
@@ -1407,6 +1432,31 @@ fn summon(ctx: &ReducerContext, game: &GameData, caster: u64, skill: &SkillData,
     }
     let zone_id = ctx.db.entity().entity_id().find(caster).ok_or("no character")?.zone_id;
     let at = position(ctx, caster, t).ok_or("no position")?;
+    let row = Summon {
+        entity_id: 0,
+        owner: caster,
+        owner_level: p.level as i32,
+        skill_level: skill.level as i32,
+        points,
+        expires_us: t + SUMMON_LIFE_US,
+    };
+    spawn_summon(ctx, game, npc_id.get(), zone_id, at, row, None, t).ok_or("nothing to summon")?;
+    Ok(())
+}
+
+/// A summon's monster appears near `at`, with full HP and MP or `hp_mp`.
+#[allow(clippy::too_many_arguments)]
+fn spawn_summon(
+    ctx: &ReducerContext,
+    game: &GameData,
+    npc_id: u16,
+    zone_id: u16,
+    at: (f32, f32),
+    mut row: Summon,
+    hp_mp: Option<(i32, i32)>,
+    t: i64,
+) -> Option<u64> {
+    let npc = rose_data::NpcId::new(npc_id).and_then(|id| game.npcs.get_npc(id))?;
     let mut rng = ctx.rng();
     let angle: f32 = rng.gen_range(0.0..std::f32::consts::TAU);
     let r: f32 = rng.gen_range(50.0..150.0);
@@ -1414,17 +1464,16 @@ fn summon(ctx: &ReducerContext, game: &GameData, caster: u64, skill: &SkillData,
     let entity = ctx.db.entity().insert(crate::Entity {
         entity_id: 0,
         kind: EntityKind::Monster,
-        npc_id: npc_id.get(),
+        npc_id,
         zone_id,
         name: npc.name.to_string(),
     });
     let id = entity.entity_id;
-    let (owner_level, skill_level) = (p.level as i32, skill.level as i32);
     let Some(stats) =
-        world::npc_stats_for(game, id, npc_id.get(), &StatusEffects::default(), Some((owner_level, skill_level)))
+        world::npc_stats_for(game, id, npc_id, &StatusEffects::default(), Some((row.owner_level, row.skill_level)))
     else {
         ctx.db.entity().entity_id().delete(id);
-        return Err("nothing to summon".into());
+        return None;
     };
     ctx.db.motion().insert(crate::Motion {
         entity_id: id,
@@ -1436,11 +1485,12 @@ fn summon(ctx: &ReducerContext, game: &GameData, caster: u64, skill: &SkillData,
         speed: stats.move_speed,
         chase_target: None,
     });
+    let (hp, mp) = hp_mp.map_or((stats.max_hp, stats.max_mp), |(hp, mp)| (hp.clamp(1, stats.max_hp), mp.clamp(0, stats.max_mp)));
     ctx.db.combat().insert(Combat {
         entity_id: id,
-        hp: stats.max_hp,
+        hp,
         max_hp: stats.max_hp,
-        mp: stats.max_mp,
+        mp,
         max_mp: stats.max_mp,
         attack_target: None,
         next_attack_at_us: t,
@@ -1448,19 +1498,95 @@ fn summon(ctx: &ReducerContext, game: &GameData, caster: u64, skill: &SkillData,
         dead_until_us: None,
     });
     ctx.db.stats().insert(stats);
-    ctx.db.summon().insert(Summon { entity_id: id, owner: caster, owner_level, skill_level, points });
-    Ok(())
+    row.entity_id = id;
+    ctx.db.summon().insert(row);
+    Some(id)
+}
+
+/// The owner changed zone (or moved within one): their summons come along and appear next
+/// to them there.
+pub fn move_summons(ctx: &ReducerContext, owner: u64, zone_id: u16, at: (f32, f32), t: i64) {
+    let rows: Vec<Summon> = ctx.db.summon().owner().filter(owner).collect();
+    let mut rng = ctx.rng();
+    for s in rows {
+        let id = s.entity_id;
+        cancel_cast(ctx, id);
+        crate::cancel_attack(ctx, id, t);
+        crate::forget_entity(ctx, id);
+        crate::clear_damage_sources(ctx, id);
+        if let Some(mut e) = ctx.db.entity().entity_id().find(id) {
+            e.zone_id = zone_id;
+            ctx.db.entity().entity_id().update(e);
+        }
+        let angle: f32 = rng.gen_range(0.0..std::f32::consts::TAU);
+        let r: f32 = rng.gen_range(50.0..150.0);
+        let (x, y) = (at.0 + angle.cos() * r, at.1 + angle.sin() * r);
+        if let Some(mut m) = ctx.db.motion().entity_id().find(id) {
+            m.from_x = x;
+            m.from_y = y;
+            m.to_x = x;
+            m.to_y = y;
+            m.started_at_us = t;
+            m.chase_target = None;
+            ctx.db.motion().entity_id().update(m);
+        }
+    }
+}
+
+/// The owner leaves the world: their living summons are kept for when they come back.
+pub fn save_summons(ctx: &ReducerContext, identity: Identity, owner: u64, t: i64) {
+    let rows: Vec<Summon> = ctx.db.summon().owner().filter(owner).collect();
+    for s in rows {
+        let id = s.entity_id;
+        let combat = ctx.db.combat().entity_id().find(id);
+        let alive = combat.as_ref().is_some_and(|c| c.hp > 0 && c.dead_until_us.is_none());
+        let npc_id = ctx.db.entity().entity_id().find(id).map(|e| e.npc_id);
+        let remaining_us = if s.expires_us > 0 { s.expires_us - t } else { 0 };
+        if let (true, Some(c), Some(npc_id), true) = (alive, combat, npc_id, s.expires_us == 0 || remaining_us > 0) {
+            ctx.db.saved_summon().insert(SavedSummon {
+                id: 0,
+                owner: identity,
+                npc_id,
+                skill_level: s.skill_level,
+                points: s.points,
+                hp: c.hp,
+                mp: c.mp,
+                remaining_us,
+            });
+        }
+        crate::despawn(ctx, id);
+    }
+}
+
+/// The owner is back in the world: their kept summons appear next to them again.
+pub fn restore_summons(ctx: &ReducerContext, game: &GameData, p: &Player, t: i64) {
+    let Some(owner) = p.entity_id else { return };
+    let rows: Vec<SavedSummon> = ctx.db.saved_summon().owner().filter(p.identity).collect();
+    for s in rows {
+        ctx.db.saved_summon().id().delete(s.id);
+        let row = Summon {
+            entity_id: 0,
+            owner,
+            owner_level: p.level as i32,
+            skill_level: s.skill_level,
+            points: s.points,
+            expires_us: if s.remaining_us > 0 { t + s.remaining_us } else { 0 },
+        };
+        spawn_summon(ctx, game, s.npc_id, p.zone_id, (p.last_x, p.last_y), row, Some((s.hp, s.mp)), t);
+    }
 }
 
 /// Summons follow their owner and fight what the owner fights or what attacks either of
 /// them (iROSE's summon AI: MoveNearOwner, AttackOwnerTarget). They leave when the owner
-/// dies, logs out or changes zone. Every combat tick.
+/// dies or their time is up (a change of zone takes them along, see move_summons; leaving
+/// the world keeps them, see save_summons). Every combat tick.
 pub fn summon_tick(ctx: &ReducerContext, game: &GameData, t: i64) {
     let summons: Vec<Summon> = ctx.db.summon().iter().collect();
     for s in summons {
         let id = s.entity_id;
         let zone = |id| ctx.db.entity().entity_id().find(id).map(|e| e.zone_id);
-        if zone(s.owner).is_none() || zone(s.owner) != zone(id) || !crate::is_alive(ctx, s.owner) {
+        let expired = s.expires_us > 0 && t >= s.expires_us;
+        if expired || zone(s.owner).is_none() || zone(s.owner) != zone(id) || !crate::is_alive(ctx, s.owner) {
             crate::despawn(ctx, id);
             continue;
         }

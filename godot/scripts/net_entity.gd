@@ -77,6 +77,8 @@ var _event_anim := ""  # animation whose frame events we last sent to fx
 var _event_frame := -1  # last frame of it whose events were sent
 var _died_sound := false
 var is_summon := false  # a player's summon: fights on the players' side
+var summon_owner := -1  # whose summon it is
+var summon_ends_in := -1.0  # seconds until a summon leaves on its own (-1: no time limit)
 var hidden := false  # under Stealth or a disguise: drawn faded
 var _conditions: Label3D  # stunned, asleep, silenced, taunted
 
@@ -237,6 +239,8 @@ func update_state(state: Dictionary, target_position) -> void:
 	mp = state.get("mp", 0)
 	max_mp = state.get("max_mp", 0)
 	level = state.get("level", 0)
+	summon_owner = state.get("summon_owner", -1)
+	summon_ends_in = state.get("summon_ends_in", -1.0)
 	target_id = state.get("target", -1)
 	if target_id >= 0 and (target_id != _last_target_id or last_target_node == null):
 		var fx := preload("res://scripts/fx.gd").find(self)

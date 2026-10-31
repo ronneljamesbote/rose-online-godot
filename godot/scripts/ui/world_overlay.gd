@@ -129,7 +129,8 @@ func _draw_tags(camera: Camera3D, font: Font, s: float) -> void:
 		elif e.is_monster:
 			var hurt: bool = e.hp < e.max_hp
 			show = id == online.my_target or (d < MONSTER_NAME_RANGE)
-			bar = (hurt or id == online.my_target) and not e.is_summon
+			# Summons always show their life bar; the summoner's own also the time left.
+			bar = hurt or id == online.my_target or e.is_summon
 			colour = UI.color("tags.monster")
 			if e.level > 0 and not e.is_summon:
 				level_text = "Lv %d " % e.level
@@ -169,10 +170,17 @@ func _draw_tags(camera: Camera3D, font: Font, s: float) -> void:
 			_canvas.draw_rect(rect.grow(1.0), Color(0, 0, 0, 0.6 * alpha))
 			var part := clampf(float(e.hp) / float(e.max_hp), 0.0, 1.0)
 			var hp_colour := UI.color("bars.hp")
-			if e == me or party.has(id):
+			if e == me or party.has(id) or (e.is_summon and e.summon_owner == me.entity_id):
 				hp_colour = Color(0.36, 0.86, 0.48) if part > 0.3 else hp_colour
 			_canvas.draw_rect(Rect2(rect.position, Vector2(w * part, h)), Color(hp_colour, alpha))
 			_canvas.draw_rect(Rect2(rect.position, Vector2(w * part, h * 0.45)), Color(1, 1, 1, 0.25 * alpha))
+			if e.is_summon and e.summon_ends_in >= 0.0 and e.summon_owner == me.entity_id:
+				var left := int(ceil(e.summon_ends_in))
+				var timer := "%d:%02d" % [floori(left / 60.0), left % 60]
+				var tfs := fs - 3
+				var tw := font.get_string_size(timer, HORIZONTAL_ALIGNMENT_LEFT, -1, tfs).x
+				var ty := rect.position.y + h + 3.0 * s + tfs
+				_text(font, Vector2(p.x - tw * 0.5, ty), timer, tfs, Color(UI.color("tags.player"), alpha), Color(tag_outline, alpha), 4)
 
 
 func _text(font: Font, at: Vector2, text: String, size: int, colour: Color, outline: Color, outline_size: int) -> void:

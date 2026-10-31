@@ -608,8 +608,9 @@ impl RoseNet {
     /// until the swing's hit frame), dead, for players look (see player_look), for NPCs
     /// direction (degrees) and store, and while casting a skill cast_skill, cast_started (a
     /// server time, to tell casts apart), cast_motion and action_motion (motion ids, -1 for
-    /// none), cast_effect_in and cast_ends_in (seconds), cast_locked and cast_target; summon_owner for
-    /// summons, hidden under Stealth, conditions ("Asleep", "Stunned" and so on).
+    /// none), cast_effect_in and cast_ends_in (seconds), cast_locked and cast_target; summon_owner
+    /// and summon_ends_in (seconds, when it has a time limit) for summons, hidden under Stealth,
+    /// conditions ("Asleep", "Stunned" and so on).
     #[func]
     fn get_entities(&self) -> VarArray {
         let mut out = VarArray::new();
@@ -683,6 +684,9 @@ impl RoseNet {
             }
             if let Some(summon) = c.db.summon().entity_id().find(&e.entity_id) {
                 d.set("summon_owner", summon.owner as i64);
+                if summon.expires_us > 0 {
+                    d.set("summon_ends_in", ((summon.expires_us - t) as f64 / 1e6).max(0.0));
+                }
             }
             // Stealth or a disguise: drawn faded. Stun, sleep, silence and taunt: named
             // under the name tag ("conditions").

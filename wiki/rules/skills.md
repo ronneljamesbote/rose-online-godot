@@ -22,6 +22,7 @@ summon_spawn_distance_m: 0.5 to 1.5
 summon_follow_distance_m: 5.5
 summon_follow_to_m: 3.5
 summon_stops_fighting_m: 22
+summon_life_minutes: 30 (time in the world only)
 resurrection_hp: 30% of max HP
 skill_damage_types:
   - { type: weapon attack, hit_check: "the plain attack hit chance (Combat, Hit or miss)", on_miss: "0 damage, no effects" }
@@ -37,10 +38,12 @@ cost_types:
   - { cost: Fuel, rule: "taken from your cart or castle gear" }
 source:
   code:
-    - module/src/skills.rs (learn_skill, level_up_skill, check_requirements, cast_skill, start_cast, advance_cast, cast_locked, queue_if_locked, run_queued, pay_locked_cast, check_can_use, pay_costs, use_cost, motion_us, cast_tick, take_effect, targets, target_allowed, damage, weapon_wear, apply_effects, target_value, summon, summon_capacity, summon_tick, resurrect, npc_cast, use_scroll, consume_scroll)
+    - module/src/skills.rs (learn_skill, level_up_skill, check_requirements, cast_skill, start_cast, advance_cast, cast_locked, queue_if_locked, run_queued, pay_locked_cast, check_can_use, pay_costs, use_cost, motion_us, cast_tick, take_effect, targets, target_allowed, damage, weapon_wear, apply_effects, target_value, summon, summon_capacity, spawn_summon, move_summons, save_summons, restore_summons, summon_tick, resurrect, npc_cast, use_scroll, consume_scroll)
     - module/src/items.rs (use_item, skill books and scrolls)
     - module/src/character.rs (reward_xp, skill points on level up)
-    - module/src/lib.rs (deal_damage, combat_tick, move_to, attack, stop, sit)
+    - module/src/lib.rs (deal_damage, combat_tick, move_to, attack, stop, sit, spawn_player_entity, leave_world)
+    - module/src/world.rs (teleport)
+    - godot/scripts/ui/world_overlay.gd (summon life bar and time left)
     - crates/rose-game-irose/src/data/ability_values.rs (calculate_skill_damage, roll_damage, hit_damage, magic_attack, calculate_skill_adjust_value, calculate_npc, calculate_levelup_reward_skill_points)
     - crates/rose-data-irose/src/skill_database.rs (get_cooldown, load_skill)
   data: the skill resources in godot/data/skills/ (a folder per skill, a file per level), the status effects in godot/data/status_effects/, the job classes in godot/data/job_classes/, the monster resources in godot/data/monsters/ (summons)
@@ -293,7 +296,14 @@ you, on your side.
   than **22 m** from you it stops fighting and comes back.
 - **Its kills count as yours** (experience, drops and quests). A summon that is killed
   just disappears: no experience or drops.
-- **It leaves** when you die, log out or change zone.
+- **It lasts 30 minutes.** The time only runs while you are in the world. Every summon
+  shows its life bar over its head; under the bar of your own summons you also see the
+  time it has left.
+- **It comes with you.** Changing zone (a warp gate, a teleport, a revive at another
+  zone's point) takes it along: it appears next to you there. Logging out, or leaving after
+  a dropped connection, keeps it: it comes back next to you when you play again, with the
+  HP, MP and time it had left.
+- **It leaves** when it dies, when you die, or when its 30 minutes are up.
 
 ## Resurrection
 
@@ -362,8 +372,9 @@ How to read `changes`:
 - **Global cooldown.** rose-offline counts its 0.25 s from the start of the casting, so
   with our 0.3 s grace window it would always be over before the skill is paid for. Here
   it counts from when the skill takes effect.
-- **Summons** stay until their owner dies, logs out or changes zone. Their lifetime
-  status effect (summons slowly losing HP) is not applied.
+- **Summons** in iROSE leave when their owner logs out or changes zone, and slowly lose HP
+  (status effect 43, 5 HP per second) instead of having a timer. Here they follow their
+  owner into other zones, come back after a logout and last 30 minutes of play.
 - **Skill hits.** iROSE gives each damage type its own hit roll, with a weak hit between a
   miss and a full hit, and a miss still dealt the minimum 5 damage with its status effects.
   Here weapon skills share the plain attack hit chance (a miss does 0 damage and no
@@ -372,5 +383,3 @@ How to read `changes`:
   weapon formula and can miss.
 
 > Open question: a skill's casting and action motion speeds (`casting_motion_speed` and `action_motion_speed` in the skill resources, iROSE's LIST_SKILL.STB columns 53 and 69) multiply the motion's length, so a speed of 200% makes the cast take twice as long instead of half. Check against iROSE.
-
-> Open question: summons in iROSE lose HP over time (status effect 43, 5 HP per second) and so have a limited life. Our summons don't. Decide whether to add it.
