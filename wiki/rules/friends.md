@@ -9,7 +9,7 @@ window_key: F
 source:
   code:
     - module/src/friends.rs (friend_ask, friend_ask_entity, ask, friend_answer, answer, friend_remove, announce, expire_requests, my_friends, my_friend_requests, rekey)
-    - module/src/lib.rs (client_connected, client_disconnected)
+    - module/src/lib.rs (client_connected, client_disconnected, leave_world)
     - module/src/skills.rs (basic command Add Friend)
     - godot/scripts/friends_window.gd
 ---
@@ -44,7 +44,8 @@ full, and a request can't be accepted when either list is full.
 
 For each friend: their name, whether they are online, their level and job, and the zone
 they are in (only while they are online). When a friend logs in or out you see
-"*name* is online" or "*name* went offline".
+"*name* is online" or "*name* went offline". After a dropped connection a friend counts as online until
+their character leaves the world 60 seconds later (see [[rules/logging-out|Logging out]]).
 
 Only you can see your list and the requests sent to you.
 

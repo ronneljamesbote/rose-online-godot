@@ -28,6 +28,7 @@ keys:
   - { key: "F", does: "friends" }
   - { key: "M", does: "zone map" }
   - { key: "O", does: "options (interface, world labels, gameplay, graphics, sound)" }
+  - { key: "Log out button (menu bar)", does: "log out after 15 seconds; not during a fight" }
   - { key: "Esc", does: "close the top window, the dialog, or leave repair mode; with nothing open, drop the target" }
   - { key: "Delete", does: "drop the selected bag item" }
   - { key: "Alt", does: "hide ground item labels while held (or show them, as set in Options)" }
@@ -62,6 +63,7 @@ source:
     - godot/scripts/bank_window.gd
     - godot/scripts/chat_window.gd
     - godot/scripts/ui/options_window.gd
+    - godot/scripts/ui/hud/menu_bar.gd
     - godot/scripts/ui/ui_window.gd
     - godot/scripts/ui/theme_builder.gd (tooltips)
     - godot/scripts/ui/hud/hover_tooltip.gd
@@ -161,6 +163,7 @@ system cursor stays.
 | F | friends (see [[rules/friends\|Friends]]) |
 | M | zone map |
 | O | options |
+| Log out (menu bar) | log out after 15 seconds, not during a fight (see [[rules/logging-out\|Logging out]]) |
 | Esc | close the top window; with none open, drop the target |
 | Delete | drop the selected bag item on the ground |
 | Alt | item labels on the ground: held, it hides them (or shows them, if Options says "Only while Alt is held") |

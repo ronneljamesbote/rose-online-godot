@@ -1044,6 +1044,42 @@ impl RoseNet {
         }
     }
 
+    /// Start logging out: the character leaves after the server's countdown (see
+    /// logout_state). Refused during a fight; the reason comes as a notice.
+    #[func]
+    fn request_logout(&self) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.request_logout_then(move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    /// Stop logging out.
+    #[func]
+    fn cancel_logout(&self) {
+        let s = self.shared.clone();
+        if let Some(c) = self.conn.as_ref() {
+            c.reducers.cancel_logout_then(move |_, r| report(&s, r)).ok();
+        }
+    }
+
+    /// Our logout: pending (counting down) with seconds left, and left (the character has
+    /// left the world: the logout is done).
+    #[func]
+    fn logout_state(&self) -> VarDictionary {
+        let mut d = VarDictionary::new();
+        let Some(c) = self.conn.as_ref() else { return d };
+        let Some(i) = c.try_identity() else { return d };
+        if let Some(l) = c.db.logout().identity().find(&i) {
+            d.set("pending", true);
+            d.set("seconds", ((l.ends_us - self.server_now_us()) as f64 / 1_000_000.0).max(0.0));
+        }
+        if let Some(p) = c.db.player().identity().find(&i) {
+            d.set("left", p.entity_id.is_none() && !p.online);
+        }
+        d
+    }
+
     /// Messages since the last call (picked up items, refused actions).
     #[func]
     fn poll_notices(&self) -> PackedStringArray {

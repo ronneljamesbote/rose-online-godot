@@ -16,7 +16,7 @@ source:
   code:
     - module/src/trade.rs (trade_ask, trade_answer, check_offer, trade_offer, trade_lock, trade_accept, take_offer, give, exchange, trade_cancel, cancel_for, expire_requests)
     - module/src/shop.rs (exchangeable)
-    - module/src/lib.rs (client_disconnected)
+    - module/src/lib.rs (client_disconnected, leave_world)
     - godot/scripts/trade_window.gd
   data: LIST_*.STB item column 3 (trade restriction, bit 2 = can't be traded)
 ---
@@ -66,7 +66,7 @@ The trade ends with nothing exchanged when:
 
 - either player presses **Cancel** (the other sees "*name* stopped trading"),
 - either player walks more than 15 m away (the game client cancels it),
-- either player logs out.
+- either player logs out or loses the connection.
 
 While trading you can't open a personal shop, buy from or sell to a shop, or get on
 someone's cart.
