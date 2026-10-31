@@ -731,7 +731,14 @@ impl AbilityValueCalculator for AbilityValuesData {
         item_rate: i32,
         town_rate: i32,
     ) -> Option<i32> {
-        npc_store_sell_price(item_database, item, sell_skill_value, world_rate, item_rate, town_rate)
+        npc_store_sell_price(
+            item_database,
+            item,
+            sell_skill_value,
+            world_rate,
+            item_rate,
+            town_rate,
+        )
     }
 
     fn calculate_passive_recover_hp(
@@ -1034,7 +1041,8 @@ pub fn level_gap_multiplier(attacker_level: i32, defender_level: i32) -> f32 {
 
 /// The attack magic skills use: attack × 0.8 + INT × 1.2.
 pub fn magic_attack(attacker: &AbilityValues) -> f32 {
-    attacker.get_attack_power().max(0) as f32 * 0.8 + attacker.get_intelligence().max(0) as f32 * 1.2
+    attacker.get_attack_power().max(0) as f32 * 0.8
+        + attacker.get_intelligence().max(0) as f32 * 1.2
 }
 
 fn raw_scale(attacker: &AbilityValues) -> f32 {
@@ -1663,15 +1671,30 @@ fn calculate_attack_power(
     let flat_attack = match weapon_type {
         Some(ItemWeaponType::Bow) | Some(ItemWeaponType::Crossbow) => {
             let ammo_quality = get_ammo_quality(item_database, equipment, AmmoIndex::Arrow);
-            dexterity * 0.62 + strength * 0.2 + level * 0.2 + ammo_quality * 1.5 + weapon_attack + 8.0
+            dexterity * 0.62
+                + strength * 0.2
+                + level * 0.2
+                + ammo_quality * 1.5
+                + weapon_attack
+                + 8.0
         }
         Some(ItemWeaponType::Gun) => {
             let ammo_quality = get_ammo_quality(item_database, equipment, AmmoIndex::Bullet);
-            dexterity * 0.4 + concentration * 0.5 + level * 0.2 + ammo_quality * 1.6 + weapon_attack + 8.0
+            dexterity * 0.4
+                + concentration * 0.5
+                + level * 0.2
+                + ammo_quality * 1.6
+                + weapon_attack
+                + 8.0
         }
         Some(ItemWeaponType::Launcher) => {
             let ammo_quality = get_ammo_quality(item_database, equipment, AmmoIndex::Throw);
-            strength * 0.52 + concentration * 0.5 + level * 0.2 + ammo_quality * 2.0 + weapon_attack + 12.0
+            strength * 0.52
+                + concentration * 0.5
+                + level * 0.2
+                + ammo_quality * 2.0
+                + weapon_attack
+                + 12.0
         }
         Some(ItemWeaponType::OneHanded) | Some(ItemWeaponType::TwoHanded) => {
             strength * 0.75 + level * 0.2 + weapon_attack
@@ -1690,7 +1713,8 @@ fn calculate_attack_power(
     } + equipment_ability_values.attack as f32
         + passive_ability_values.get_passive_weapon_attack_power_value(weapon_type) as f32;
 
-    let increased_percent = weapon_stat(weapon_type, basic_stats) as f32 * INCREASED_ATTACK_PER_POINT
+    let increased_percent = weapon_stat(weapon_type, basic_stats) as f32
+        * INCREASED_ATTACK_PER_POINT
         + passive_ability_values.get_passive_weapon_attack_power_rate(weapon_type) as f32;
 
     (flat_attack * (1.0 + increased_percent / 100.0)) as i32
@@ -1735,7 +1759,10 @@ pub fn attack_speed_stat(weapon_type: Option<ItemWeaponType>, basic_stats: &Basi
 }
 
 /// Percent attack speed the stat adds with this weapon (for the character window).
-pub fn attack_speed_stat_percent(weapon_type: Option<ItemWeaponType>, basic_stats: &BasicStats) -> f32 {
+pub fn attack_speed_stat_percent(
+    weapon_type: Option<ItemWeaponType>,
+    basic_stats: &BasicStats,
+) -> f32 {
     attack_speed_stat(weapon_type, basic_stats).max(0) as f32 * ATTACK_SPEED_PER_POINT
 }
 
@@ -2386,7 +2413,10 @@ mod damage_tests {
         let thick = monster(60, 220, 1000, 120);
         let thin = monster(60, 220, 0, 120);
         let h = hit_of(&a, 0, true);
-        assert_eq!(hit_damage(&a, &thick, &h, 1.0, false), hit_damage(&a, &thin, &h, 1.0, false));
+        assert_eq!(
+            hit_damage(&a, &thick, &h, 1.0, false),
+            hit_damage(&a, &thin, &h, 1.0, false)
+        );
     }
 
     #[test]
@@ -2460,9 +2490,15 @@ mod damage_tests {
     fn damage_is_kept_between_1_and_2047() {
         let weak = player(1, 1, 0, 0);
         let d = monster(1, 1, 100_000, 0);
-        assert_eq!(hit_damage(&weak, &d, &hit_of(&weak, 0, false), 1.0, false), 1.0);
+        assert_eq!(
+            hit_damage(&weak, &d, &hit_of(&weak, 0, false), 1.0, false),
+            1.0
+        );
         let strong = player(200, 100_000, 0, 0);
-        assert_eq!(hit_damage(&strong, &d, &hit_of(&strong, 0, false), 1.0, false), 2047.0);
+        assert_eq!(
+            hit_damage(&strong, &d, &hit_of(&strong, 0, false), 1.0, false),
+            2047.0
+        );
     }
 
     /// Basic stats a level buys when its stat points go in these shares (STR, DEX, CON, SEN).
@@ -2497,7 +2533,8 @@ mod damage_tests {
         let per_hit: f32 = [0.9, 0.95, 1.0, 1.05, 1.1]
             .iter()
             .map(|&s| {
-                hit_damage(&a, &d, &h, s, false) * (1.0 - chance) + hit_damage(&a, &d, &h, s, true) * chance
+                hit_damage(&a, &d, &h, s, false) * (1.0 - chance)
+                    + hit_damage(&a, &d, &h, s, true) * chance
             })
             .sum::<f32>()
             / 5.0;
@@ -2517,9 +2554,12 @@ mod damage_tests {
     #[test]
     fn swings_to_kill_stay_in_a_band() {
         // Median monsters (HP, defence) and a typical sword user's attack, from the game data.
-        for (level, hp, defence, attack) in
-            [(10, 250.0, 45, 41), (30, 765.0, 83, 87), (60, 2160.0, 162, 184), (100, 4100.0, 303, 343)]
-        {
+        for (level, hp, defence, attack) in [
+            (10, 250.0, 45, 41),
+            (30, 765.0, 83, 87),
+            (60, 2160.0, 162, 184),
+            (100, 4100.0, 303, 343),
+        ] {
             let a = player(level, attack, 0, 0);
             let d = monster(level, 0, defence, 0);
             let per_hit = hit_damage(&a, &d, &hit_of(&a, 0, false), 1.0, false);
