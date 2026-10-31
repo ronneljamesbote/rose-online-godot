@@ -12,7 +12,18 @@ min_damage_normal: 5
 min_damage_critical: 10
 pvp_damage_cap_normal: "25% of the target's max HP"
 pvp_damage_cap_critical: "35% of the target's max HP"
-lucky_hit_roll: 94
+hit_chance: "100 x hit / (hit + avoid x 0.3) + 1.5 x level difference"
+hit_avoid_weight: 0.3
+hit_percent_per_level: 1.5
+hit_level_difference_cap: 10
+hit_chance_min: "5%"
+hit_chance_max: "95%"
+hit_chances:
+  - { attacker: "level 30, hit 129", defender: "level 30, avoid 60", chance: "87%" }
+  - { attacker: "level 30, hit 129", defender: "level 40, avoid 74", chance: "70%" }
+  - { attacker: "level 30, hit 129", defender: "level 50, avoid 87", chance: "68%" }
+  - { attacker: "level 30, hit 129", defender: "level 20, avoid 47", chance: "95%" }
+  - { attacker: "level 1, hit 63", defender: "level 4, avoid 7", chance: "92%" }
 critical_roll: 20
 attack_motions:
   - { weapon: "No weapon", motion: "1.000 s", hit_frame: "0.400 s" }
@@ -28,7 +39,7 @@ critical_chances:
 source:
   code:
     - module/src/lib.rs (combat_tick, attack, move_to, stop, sit, cancel_attack, attack_interval_us, attack_windup_us, deal_damage, kill, COMBAT_TICK_MS, RANGE_SLACK_CM, CHASE_REPATH_CM)
-    - crates/rose-game-irose/src/data/ability_values.rs (calculate_damage, calculate_damage_success_rate, calculate_attack_damage_physical, calculate_attack_damage_magic, calculate_npc)
+    - crates/rose-game-irose/src/data/ability_values.rs (calculate_damage, hit_chance, hit_chance_from, roll_hit, calculate_damage_success_rate, calculate_attack_damage_physical, calculate_attack_damage_magic, calculate_npc)
     - crates/rose-game-common/src/components/ability_values.rs (AbilityValues getters)
     - module/src/character.rs (player_stats)
     - module/src/world.rs (npc_stats_for)
@@ -127,43 +138,48 @@ swing that lands can wear down your weapon, and every hit you take can wear down
 
 ## Hit or miss
 
-Each swing first rolls a **success** value. Against a monster, or for a monster attacking
-you:
+Each swing rolls once against a **hit chance**, the same for players, monsters and fights
+between players:
+
+```math
+\text{chance} = \frac{100 \times \text{hit}_a}{\text{hit}_a + \text{avoid}_d \times 0.3} + 1.5 \times \text{clamp}(L_a - L_d, -10, 10)
+```
+
+`L_a` and `L_d` are the attacker's and defender's levels. The chance is then kept between
+**5%** and **95%**, so every swing can hit and every swing can miss. The swing hits when
+rand(0..100) is below the chance.
+
+- Hit against avoid decides most of it: doubling the target's avoid takes a same-level
+  chance from about 88% to about 78%.
+- Each level the target is above you takes 1.5% off, each level below adds 1.5%, counting
+  at most 10 levels either way (±15%).
+
+Table `hit_chances` lists some chances. A typical level 30 character (hit 129) hits a level
+30 monster (avoid 60) **87%** of the time, a level 40 one 70%, a level 50 one 68%, and a
+level 20 one 95%.
+
+**Worked example:** a level 1 character (hit 63) attacks a
+[[monsters/2-jelly-bean|Jelly Bean]] (level 4, avoid 7):
+100 × 63 / (63 + 2.1) = 96.8, minus 1.5 × 3 = 4.5, so **92%** of swings hit.
+
+A hit then rolls a **success** value `S` that only scales the damage below (a ±10% effect).
+Against a monster, or for a monster attacking you:
 
 ```math
 v = (L_a + 10) - \lfloor L_d \times 1.1 \rfloor + \text{rand}(1..50)
 ```
 
 ```math
-\text{success} = \left\lfloor v \times \frac{\text{hit}_a \times 1.1 - \text{avoid}_d \times 0.93 + \text{rand}(1..60) + 5 + L_a \times 0.2}{80} \right\rfloor
+S = \left\lfloor v \times \frac{\text{hit}_a \times 1.1 - \text{avoid}_d \times 0.93 + \text{rand}(1..60) + 5 + L_a \times 0.2}{80} \right\rfloor
 ```
 
-`L_a` and `L_d` are the attacker's and defender's levels. If `v` is 0 or less, success is 0.
-
-If success is **below 20**, the swing misses, unless a lucky roll saves it:
+(`S` is 0 if `v` is 0 or less.) Between two players:
 
 ```math
-\text{rand}(1..100) + \lfloor 0.6 \times (L_a - L_d) \rfloor \ge 94
+S = 40 - 60 \times \left\lfloor \frac{\text{hit}_a + \text{avoid}_d}{\max(\text{avoid}_a, 1)} \right\rfloor + \text{rand}(1..100)
 ```
 
-A lucky hit then does damage with its low success value.
-
-**Worked example:** a level 1 character (hit 63) attacks a
-[[monsters/2-jelly-bean|Jelly Bean]] (level 4, avoid 7). `v` = 11 - 4 + rand(1..50), so
-8 to 57. The multiplier is (69.3 - 6.51 + 5.2 + rand(1..60)) / 80, so 0.86 to 1.60. Success
-lands between 6 and 91, below 20 about 19% of the time. The lucky roll needs
-rand(1..100) - 1 ≥ 94, a 6% chance. In all, about **83%** of swings hit.
-
-Between two players the success roll is different:
-
-```math
-\text{success} = 40 - 60 \times \left\lfloor \frac{\text{hit}_a + \text{avoid}_d}{\text{avoid}_a} \right\rfloor + \text{rand}(1..100)
-```
-
-> Open question: this player against player roll divides by the attacker's own avoid. With
-> similar stats the result is almost always below 20, so about 93% of plain attacks between
-> players miss, and an attacker with 0 avoid would make the server fail. It looks like it
-> was meant to divide by the attacker's hit. Not changed yet.
+On a hit `S` is raised to at least **20**.
 
 A miss shows "Miss" over the target.
 
@@ -279,5 +295,11 @@ Killing a monster shows "+N XP" over you (see [[rules/experience|Experience]]).
 
 - The server resolves fights on a 100 ms tick, with the timing rules above. Cancelling a
   swing before its hit frame gives the time back.
+- Hit or miss is our own formula (hit against avoid, ±1.5% per level, 5% to 95%). iROSE
+  rolled the success value above and missed below 20 unless a lucky roll (rand(1..100) +
+  0.6 × level difference ≥ 94) saved it, so each level the target was above you cost about
+  2% and 10+ levels above often meant a sure miss, while targets below you could never dodge.
+  Between players iROSE divided by the attacker's own avoid, so about 93% of plain attacks
+  missed. In our game the success value only scales damage.
 - iROSE makes a hard hit interrupt the target (hit stun). Our server works out the same
   check but does not apply it yet, so being hit never interrupts you.

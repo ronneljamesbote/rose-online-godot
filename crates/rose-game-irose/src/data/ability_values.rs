@@ -511,18 +511,15 @@ impl AbilityValueCalculator for AbilityValuesData {
         hit_count: i32,
     ) -> Damage {
         let mut rng = crate::rng::SharedRng;
-        let success_rate = calculate_damage_success_rate(&mut rng, attacker, defender);
-        if success_rate < 20
-            && (rng.gen_range(1..=100)
-                + (0.6 * (attacker.get_level() - defender.get_level()) as f32) as i32)
-                < 94
-        {
+        if !roll_hit(&mut rng, attacker, defender) {
             Damage {
                 amount: 0,
                 apply_hit_stun: false,
                 is_critical: false,
             }
         } else {
+            // The success value only scales the damage now; a hit never takes the missed path.
+            let success_rate = calculate_damage_success_rate(&mut rng, attacker, defender).max(20);
             match attacker.get_attack_damage_type() {
                 DamageType::Magic => calculate_attack_damage_magic(
                     &mut rng,
@@ -563,26 +560,15 @@ impl AbilityValueCalculator for AbilityValuesData {
         let mut rng = crate::rng::SharedRng;
         let mut damage = match skill_data.damage_type {
             SkillDamageType::WeaponAttack => {
-                let success = ((attacker.get_level() + 20) - defender.get_level()
-                    + rng.gen_range(1..=60)) as f32
-                    * (attacker.get_hit() as f32 - defender.get_avoid() as f32 * 0.6
-                        + rng.gen_range(1..=70) as f32
-                        + 10.0)
-                    / 110.0;
-
-                if success < 10.0 {
-                    0.0
-                } else if success < 20.0 {
-                    (skill_data.power as f32
-                        * 0.4
-                        * (attacker.get_attack_power() as f32 + 50.0)
-                        * (rng.gen_range(1..=30) as f32
-                            + attacker.get_sense() as f32 * 1.2
-                            + 340.0))
-                        / (defender.get_defence() + defender.get_resistance() + 20) as f32
-                        / (250 + defender.get_level() - attacker.get_level()) as f32
-                        + 20.0
-                } else if matches!(attacker.damage_category, DamageCategory::Character)
+                // Weapon skills share the plain-attack hit chance; on a hit, normal damage.
+                if !roll_hit(&mut rng, attacker, defender) {
+                    return Damage {
+                        amount: 0,
+                        is_critical: false,
+                        apply_hit_stun: false,
+                    };
+                }
+                if matches!(attacker.damage_category, DamageCategory::Character)
                     && matches!(defender.damage_category, DamageCategory::Character)
                 {
                     ((skill_data.power as f32 + attacker.get_attack_power() as f32 * 0.2)
@@ -615,30 +601,8 @@ impl AbilityValueCalculator for AbilityValuesData {
                 }
             }
             SkillDamageType::MagicAttack => {
-                let success = ((attacker.get_level() + 30) - defender.get_level()
-                    + rng.gen_range(1..=50)) as f32
-                    * (attacker.get_hit() as f32 - defender.get_avoid() as f32 * 0.56
-                        + rng.gen_range(1..=70) as f32
-                        + 10.0)
-                    / 110.0;
-
-                if success < 8.0 {
-                    0.0
-                } else if success < 20.0 {
-                    (skill_data.power as f32
-                        * (attacker.get_attack_power() as f32 * 0.8
-                            + attacker.get_intelligence() as f32
-                            + 80.0)
-                        * (rng.gen_range(1..=30) as f32
-                            + attacker.get_sense() as f32 * 1.3
-                            + 280.0)
-                        * 0.2)
-                        / (defender.get_defence() as f32 * 0.3
-                            + defender.get_resistance() as f32
-                            + 30.0)
-                        / (250 + defender.get_level() - attacker.get_level()) as f32
-                        + 20.0
-                } else if matches!(attacker.damage_category, DamageCategory::Character)
+                // Magic never misses: always the normal damage tier.
+                if matches!(attacker.damage_category, DamageCategory::Character)
                     && matches!(defender.damage_category, DamageCategory::Character)
                 {
                     ((skill_data.power as f32 + 50.0)
@@ -675,25 +639,8 @@ impl AbilityValueCalculator for AbilityValuesData {
                 }
             }
             SkillDamageType::NaturalMagic => {
-                let success = ((attacker.get_level() + 10) - defender.get_level()
-                    + rng.gen_range(1..=80)) as f32
-                    * (attacker.get_hit() as f32 - defender.get_avoid() as f32 * 0.5
-                        + rng.gen_range(1..=50) as f32
-                        + 50.0)
-                    / 90.0;
-                if success < 6.0 {
-                    0.0
-                } else if success < 20.0 {
-                    (skill_data.power as f32
-                        * (skill_data.power as f32 + attacker.get_intelligence() as f32 + 80.0)
-                        * (rng.gen_range(1..=30) + attacker.get_sense() * 2 + 290) as f32
-                        * 0.2)
-                        / (defender.get_defence() as f32 * 0.2
-                            + defender.get_resistance() as f32
-                            + 30.0)
-                        / (250 + defender.get_level() - attacker.get_level()) as f32
-                        + 20.0
-                } else if matches!(attacker.damage_category, DamageCategory::Character)
+                // Magic never misses: always the normal damage tier.
+                if matches!(attacker.damage_category, DamageCategory::Character)
                     && matches!(defender.damage_category, DamageCategory::Character)
                 {
                     ((skill_data.power as f32 + 35.0)
@@ -1114,6 +1061,47 @@ impl AbilityValueCalculator for AbilityValuesData {
     }
 }
 
+/// Hit chance tuning (wiki/rules/combat.md "Hit or miss"): how much the defender's avoid
+/// weighs against the attacker's hit.
+pub const HIT_AVOID_WEIGHT: f32 = 0.3;
+/// Percent added per level the attacker is above the defender (taken off per level below).
+pub const HIT_PERCENT_PER_LEVEL: f32 = 1.5;
+/// Level difference counted at most, either way.
+pub const HIT_LEVEL_DIFFERENCE_CAP: i32 = 10;
+/// Lowest and highest hit chance in percent: every swing can hit and every swing can miss.
+pub const HIT_CHANCE_MIN: f32 = 5.0;
+pub const HIT_CHANCE_MAX: f32 = 95.0;
+
+/// Percent chance that a plain attack or weapon skill lands, the same for players, monsters
+/// and PvP: `100 * hit / (hit + avoid * 0.3) + 1.5 * clamp(level difference, -10, 10)`,
+/// clamped to 5..95.
+pub fn hit_chance(attacker: &AbilityValues, defender: &AbilityValues) -> f32 {
+    hit_chance_from(
+        attacker.get_hit(),
+        defender.get_avoid(),
+        attacker.get_level() - defender.get_level(),
+    )
+}
+
+/// `hit_chance` from the raw numbers.
+pub fn hit_chance_from(hit: i32, avoid: i32, level_difference: i32) -> f32 {
+    let hit = hit.max(0) as f32;
+    let avoid = avoid.max(0) as f32 * HIT_AVOID_WEIGHT;
+    let base = if hit + avoid > 0.0 {
+        100.0 * hit / (hit + avoid)
+    } else {
+        100.0
+    };
+    let level = level_difference.clamp(-HIT_LEVEL_DIFFERENCE_CAP, HIT_LEVEL_DIFFERENCE_CAP) as f32
+        * HIT_PERCENT_PER_LEVEL;
+    (base + level).clamp(HIT_CHANCE_MIN, HIT_CHANCE_MAX)
+}
+
+/// One roll against `hit_chance`.
+fn roll_hit(rng: &mut impl Rng, attacker: &AbilityValues, defender: &AbilityValues) -> bool {
+    rng.gen_range(0.0f32..100.0) < hit_chance(attacker, defender)
+}
+
 fn calculate_damage_success_rate(
     rng: &mut impl Rng,
     attacker: &AbilityValues,
@@ -1122,7 +1110,8 @@ fn calculate_damage_success_rate(
     if attacker.get_damage_category() == DamageCategory::Character
         && defender.get_damage_category() == DamageCategory::Character
     {
-        40 - 60 * ((attacker.get_hit() + defender.get_avoid()) / attacker.get_avoid())
+        // Only scales PvP damage now (the hit roll is `roll_hit`); avoid 0 no longer divides by 0.
+        40 - 60 * ((attacker.get_hit() + defender.get_avoid()) / attacker.get_avoid().max(1))
             + rng.gen_range(1..=100)
     } else {
         let value = (attacker.get_level() + 10) - (defender.get_level() as f32 * 1.1) as i32
@@ -2360,4 +2349,53 @@ fn calculate_max_weight(
     }
 
     max_weight
+}
+
+#[cfg(test)]
+mod hit_chance_tests {
+    use super::hit_chance_from;
+
+    /// Typical player (hit 63 + 2.2L) against a median monster (avoid 20 + 1.35L).
+    fn typical(level: i32, monster_above: i32) -> f32 {
+        let monster = level + monster_above;
+        let hit = (63.0 + 2.2 * level as f32) as i32;
+        let avoid = (20.0 + 1.35 * monster as f32) as i32;
+        hit_chance_from(hit, avoid, -monster_above)
+    }
+
+    #[test]
+    fn same_level_is_about_87_percent() {
+        let c = typical(30, 0);
+        assert!((86.0..=89.0).contains(&c), "{c}");
+    }
+
+    #[test]
+    fn twenty_levels_above_is_about_69_percent() {
+        let c = typical(30, 20);
+        assert!((66.0..=72.0).contains(&c), "{c}");
+    }
+
+    #[test]
+    fn level_difference_counts_ten_levels_at_most() {
+        assert_eq!(hit_chance_from(100, 100, 10), hit_chance_from(100, 100, 50));
+        assert_eq!(
+            hit_chance_from(100, 100, -10),
+            hit_chance_from(100, 100, -50)
+        );
+        assert!(
+            (hit_chance_from(100, 100, 0) - hit_chance_from(100, 100, -10) - 15.0).abs() < 0.01
+        );
+    }
+
+    #[test]
+    fn clamped_to_5_and_95() {
+        assert_eq!(hit_chance_from(1000, 0, 10), 95.0);
+        assert_eq!(hit_chance_from(0, 1000, -10), 5.0);
+        assert_eq!(hit_chance_from(0, 0, 0), 95.0);
+    }
+
+    #[test]
+    fn avoid_matters() {
+        assert!(hit_chance_from(100, 200, 0) < hit_chance_from(100, 100, 0) - 5.0);
+    }
 }

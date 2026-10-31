@@ -22,9 +22,9 @@ summon_follow_to_m: 3.5
 summon_stops_fighting_m: 22
 resurrection_hp: 30% of max HP
 skill_damage_types:
-  - { type: weapon attack, hit_check: "(L_a + 20 - L_d + 1..60) x (Hit - 0.6 Avoid + 1..70 + 10) / 110", miss_below: 10, weak_below: 20 }
-  - { type: magic attack, hit_check: "(L_a + 30 - L_d + 1..50) x (Hit - 0.56 Avoid + 1..70 + 10) / 110", miss_below: 8, weak_below: 20 }
-  - { type: natural magic, hit_check: "(L_a + 10 - L_d + 1..80) x (Hit - 0.5 Avoid + 1..50 + 50) / 90", miss_below: 6, weak_below: 20 }
+  - { type: weapon attack, hit_check: "the plain attack hit chance (Combat, Hit or miss)", on_miss: "0 damage, no effects" }
+  - { type: magic attack, hit_check: "never misses" }
+  - { type: natural magic, hit_check: "never misses" }
   - { type: continuous attack, hit_check: "(L_a + 8 - L_d + 1..80) x (Hit - 0.6 Avoid + 1..50 + 50) / 90", miss_below: 10, weak_below: 20 }
 cost_types:
   - { cost: MP, rule: "lowered by the caster's Save Mana %, rounded down" }
@@ -187,19 +187,17 @@ $A$ the attacker's attack power, $I$ its INT, $S$ its Sense, $C$ its critical, a
 $V$ the defender's defence, magic resistance and avoid. $r$ is a random whole number from 1
 to 30, and "1..n" is a random whole number from 1 to n.
 
-**Hit check.** Each damage type has its own (see `skill_damage_types` above). Below the
-"miss" value the skill misses; between "miss" and 20 it is a weak hit; 20 or more is a
-full hit. For a magic attack:
+**Hit check.** It depends on the damage type (see `skill_damage_types` above):
 
-```math
-\text{hit} = \frac{(L_a + 30 - L_d + \text{1..50}) \times (\text{Hit}_a - 0.56\,V + \text{1..70} + 10)}{110}
-```
+- **Weapon attack** skills roll the same hit chance as a plain attack (hit against avoid,
+  ±1.5% per level, 5% to 95%, on [[rules/combat|Combat]] "Hit or miss"). A miss shows
+  "Miss", does no damage and gives no status effects. A hit uses the full formula.
+- **Magic attack** and **natural magic** skills never miss and always use the full formula.
+- **Continuous attack** (no skill uses it) keeps the iROSE check
+  $(L_a + 8 - L_d + \text{1..80}) \times (\text{Hit}_a - 0.6\,V + \text{1..50} + 50) / 90$: below
+  10 it misses, from 10 to 20 it is a weak hit, 20 or more a full hit.
 
 **Weapon attack.**
-
-```math
-\text{weak} = \frac{0.4\,P\,(A + 50)(r + 1.2\,S + 340)}{(D + R + 20)(250 + L_d - L_a)} + 20
-```
 
 ```math
 \text{full} = \frac{(P + 0.2\,A)(A + 60)(r + 0.7\,S + 370) \times 0.01 \times (120 - L_d + L_a)}{(D + 0.8\,R + 0.4\,V + 20) \times 270} + 20
@@ -208,18 +206,10 @@ full hit. For a magic attack:
 **Magic attack.**
 
 ```math
-\text{weak} = \frac{0.2\,P\,(0.8\,A + I + 80)(r + 1.3\,S + 280)}{(0.3\,D + R + 30)(250 + L_d - L_a)} + 20
-```
-
-```math
 \text{full} = \frac{P\,(0.8\,A + 1.2\,I + 100)(r + 0.7\,S + 350) \times 0.01 \times (150 - L_d + L_a)}{(0.3\,D + R + 0.3\,V + 60) \times 350} + 20
 ```
 
 **Natural magic.**
-
-```math
-\text{weak} = \frac{0.2\,P\,(P + I + 80)(r + 2\,S + 290)}{(0.2\,D + R + 30)(250 + L_d - L_a)} + 20
-```
 
 ```math
 \text{full} = \frac{(P + 35)(P + I + 140)(r + S + 380) \times 0.01 \times (150 - L_d + L_a)}{(0.35\,D + 1.2\,R + 0.4\,V + 10) \times 730} + 20
@@ -249,7 +239,7 @@ different numbers:
 
 1. An **Additional Damage** buff adds its percentage
    ([[skills/1211-damage-support|Damage Support]]).
-2. The damage is at least **5** (a miss counts as 0 here, so it still deals 5).
+2. A hit does at least **5** damage (a missed weapon skill does 0).
 3. Between two players it is at most **45%** of the defender's max HP.
 4. It is at most **2047**.
 5. It is rounded down to a whole number. Skill hits are never critical.
@@ -264,10 +254,9 @@ magic. Damage from skills counts like any other damage for experience and drops 
 A level 15 Muse with attack power 50, INT 45, Sense 20 and Hit 60 casts
 [[skills/981-ice-bolt|Ice Bolt]] level 1 (magic attack, power 60) at a
 [[monsters/62-honeybee|HoneyBee]] (level 12, defence 45, magic resistance 24, avoid 29).
-Say the random numbers come out as 25 (of 1..50), 35 (of 1..70) and $r = 15$.
+Say the random number comes out as $r = 15$.
 
-Hit check: $(15 + 30 - 12 + 25) \times (60 - 0.56 \times 29 + 35 + 10) / 110 = 58 \times 88.76 / 110 = 46.8$.
-That is 20 or more, so it is a full hit against a monster:
+Ice Bolt is a magic attack, so it never misses and uses the full formula against a monster:
 
 ```math
 \frac{60 \times (0.8 \times 50 + 1.2 \times 45 + 100) \times (15 + 0.7 \times 20 + 350) \times 0.01 \times (150 - 12 + 15)}{(0.3 \times 45 + 24 + 0.3 \times 29 + 60) \times 350} + 20
@@ -282,7 +271,7 @@ The HoneyBee has $12 \times 25 = 300$ HP, so two Ice Bolts kill it.
 A skill can carry up to two status effects (the `effects` column), each with a `duration`
 and a `success` chance. How they land, stack and end is on
 [[rules/status-effects|Status effects]]. Damaging skills try their effects on every target
-they hit.
+they hit (not on a miss).
 
 Instant heals: a skill whose `changes` column adds HP heals each target at once by
 
@@ -390,9 +379,13 @@ How to read `changes`:
   it counts from when the skill takes effect.
 - **Summons** stay until their owner dies, logs out or changes zone. Their lifetime
   status effect (summons slowly losing HP) is not applied.
+- **Skill hits.** iROSE gives each damage type its own hit roll, with a weak hit between a
+  miss and a full hit, and a miss still dealt the minimum 5 damage with its status effects.
+  Here weapon skills share the plain attack hit chance (a miss does 0 damage and no
+  effects), and magic and natural magic skills never miss. Spin Attack, Spiral Kick,
+  Poison Knife and Magic Knife are weapon skills here (magic in iROSE), so they use the
+  weapon formula and can miss.
 
 > Open question: a skill's casting and action motion speeds (`casting_motion_speed` and `action_motion_speed` in the skill resources, iROSE's LIST_SKILL.STB columns 53 and 69) multiply the motion's length, so a speed of 200% makes the cast take twice as long instead of half. Check against iROSE.
-
-> Open question: a missed skill hit still deals the minimum 5 damage, and damaging skills try their status effects on a target even when the hit missed. iROSE may deal no damage and give no effects on a miss.
 
 > Open question: summons in iROSE lose HP over time (status effect 43, 5 HP per second) and so have a limited life. Our summons don't. Decide whether to add it.

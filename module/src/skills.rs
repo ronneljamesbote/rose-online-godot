@@ -1076,7 +1076,8 @@ fn take_effect(ctx: &ReducerContext, game: &GameData, cast: &SkillCast, t: i64) 
         | SkillType::AreaTarget
         | SkillType::SelfDamage => {
             for target in targets(ctx, cast, skill, t) {
-                if damage(ctx, game, caster, target, skill, t).is_some() {
+                // A missed hit (0 damage) gives no status effects either.
+                if damage(ctx, game, caster, target, skill, t).is_some_and(|amount| amount > 0) {
                     apply_effects(ctx, game, caster, target, skill, t);
                 }
             }

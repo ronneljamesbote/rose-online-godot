@@ -2,13 +2,13 @@
 kind: skill
 id: 1871
 name: Magic Knife
-status: in-game
+status: changed-from-irose
 icon: skill/218
 type: Magic Spell
 job: Raider Job
 max_level: 10
 target: Hostile Character
-damage_type: magic attack
+damage_type: weapon attack
 skill_books:
 - '[[items/consumable/792-magic-knife|Magic Knife]]'
 levels:
@@ -138,3 +138,11 @@ Throw a shuriken at a target to decrease its Magic Resistance.
 
 Range and area are in metres, cooldown and duration in seconds, success in percent.
 How power turns into damage is on [[rules/skills|Skills (rules)]].
+
+## Changed from iROSE
+
+iROSE files this skill as a magic attack. Here it is a weapon attack: it rolls the same hit
+chance as a plain attack, so it can miss (no damage, no status effects), and on a hit it uses
+the weapon attack formula on [[rules/skills|Skills (rules)]]. Against a same-level monster
+that is a few percent less damage at high skill levels and more at low skill levels or high
+attack power.
