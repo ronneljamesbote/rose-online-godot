@@ -1,0 +1,22 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://44l4jvo6cigiq"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/104-mysterious-emblem.tres" id="x_9a7335"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_d6afd6"]
+quest = ExtResource("x_9a7335")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_62611a"]
+quest = ExtResource("x_9a7335")
+
+[sub_resource type="RoseRewardQuestVariable" id="RoseRewardQuestVariable_ad2080"]
+variable_type = "Episode"
+variable = 0
+operator = "Set"
+value = 3
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_76c53e"]
+
+[resource]
+name = "104-21"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_d6afd6")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_62611a"), SubResource("RoseRewardQuestVariable_ad2080"), SubResource("RoseRewardRemoveSelectedQuest_76c53e")])

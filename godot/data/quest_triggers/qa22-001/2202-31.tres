@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://3sv2n9aqtuvde"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2202-jelly-on-the-jetty.tres" id="x_b7cf68"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/712-jelly-goo.tres" id="x_4de7d7"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_d0ebe2"]
+quest = ExtResource("x_b7cf68")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_56b3c4"]
+to = 70
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_a28f25"]
+item = ExtResource("x_4de7d7")
+equipment_index = 13
+count = 6
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_2dfbc7"]
+quest = ExtResource("x_b7cf68")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_1be9ec"]
+item = ExtResource("x_4de7d7")
+quantity = 1
+
+[resource]
+name = "2202-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_d0ebe2"), SubResource("RoseConditionRandomPercent_56b3c4"), SubResource("RoseConditionQuestItem_a28f25")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_2dfbc7"), SubResource("RoseRewardAddItem_1be9ec")])

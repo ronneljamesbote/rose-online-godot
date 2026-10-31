@@ -67,6 +67,7 @@ Then:
 
 - works on [[quests/5051-hunting-practice-1|Hunting Practice (1)]]
 - you get 1 × [[items/quest/500-proof-of-monster-extermination|Proof of Monster Extermination]]
+- then runs step `2202-31` ([[quests/2202-jelly-on-the-jetty|Jelly on the Jetty]])
 
 If the checks fail, step `5051-34` is tried instead.
 
@@ -84,6 +85,9 @@ Then:
 - Zuly, base 200 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - quest switch 77 on
 - the quest ends (removed from your list)
+- then runs step `2202-31` ([[quests/2202-jelly-on-the-jetty|Jelly on the Jetty]])
+
+If the checks fail, step `2202-31` ([[quests/2202-jelly-on-the-jetty|Jelly on the Jetty]]) is tried instead.
 
 ### `T77`
 
@@ -97,3 +101,7 @@ Then:
 
 - you get the quest [[quests/5051-hunting-practice-1|Hunting Practice (1)]]
 - client script `Tutorial07button`
+
+## Changed from iROSE
+
+The Adventurer's Plain redesign made this quest's kill steps also run the matching steps of the plain's new quests, so one kill counts for both.

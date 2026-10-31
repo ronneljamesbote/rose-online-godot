@@ -1,0 +1,44 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://w2cjj03wf0xw6"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2206-tibbs-farm.tres" id="x_db01bf"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/716-farm-flanae-petal.tres" id="x_fe1ca3"]
+[ext_resource type="RoseItemConsumable" path="res://data/items/consumable/102-banana.tres" id="x_add91c"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_23b550"]
+quest = ExtResource("x_db01bf")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_f926df"]
+item = ExtResource("x_fe1ca3")
+equipment_index = 13
+count = 10
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_a7c8a1"]
+quest = ExtResource("x_db01bf")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_27207a"]
+item = ExtResource("x_fe1ca3")
+quantity = 10
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_e87561"]
+equation = 0
+value = 200
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_92ea44"]
+equation = 0
+value = 250
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_248fe3"]
+item = ExtResource("x_add91c")
+quantity = 10
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_bb387e"]
+switch = 628
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_4d7583"]
+
+[resource]
+name = "2206-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_23b550"), SubResource("RoseConditionQuestItem_f926df")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_a7c8a1"), SubResource("RoseRewardRemoveItem_27207a"), SubResource("RoseRewardCalculatedExperiencePoints_e87561"), SubResource("RoseRewardCalculatedMoney_92ea44"), SubResource("RoseRewardAddItem_248fe3"), SubResource("RoseRewardSetQuestSwitch_bb387e"), SubResource("RoseRewardRemoveSelectedQuest_4d7583")])

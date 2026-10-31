@@ -32,8 +32,11 @@ variable = 9
 operator = "Add"
 value = 1
 
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_ap08e831"]
+trigger = "2202-31"
+
 [resource]
 name = "5033-32"
 conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_5uear"), SubResource("RoseConditionRandomPercent_2uo8b"), SubResource("RoseConditionQuestItem_mrhh6"), SubResource("RoseConditionAbilityValue_ihako")])
-rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_jrq3f"), SubResource("RoseRewardAddItem_1g63u"), SubResource("RoseRewardQuestVariable_s44h2")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_jrq3f"), SubResource("RoseRewardAddItem_1g63u"), SubResource("RoseRewardQuestVariable_s44h2"), SubResource("RoseRewardTrigger_ap08e831")])
 next_trigger = ExtResource("3_2h8hv")

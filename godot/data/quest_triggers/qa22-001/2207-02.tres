@@ -1,0 +1,33 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bvcs8yd326ya3"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2207-tracks-to-the-ford.tres" id="x_225e03"]
+[ext_resource type="RoseItemHead" path="res://data/items/head/835-riverford-hat.tres" id="x_330449"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_77a190"]
+quest = ExtResource("x_225e03")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_8fef16"]
+quest = ExtResource("x_225e03")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_471430"]
+equation = 0
+value = 220
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_9211c7"]
+equation = 0
+value = 250
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_bf4380"]
+item = ExtResource("x_330449")
+quantity = 1
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_c0bb45"]
+switch = 629
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_ca7f43"]
+
+[resource]
+name = "2207-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_77a190")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_8fef16"), SubResource("RoseRewardCalculatedExperiencePoints_471430"), SubResource("RoseRewardCalculatedMoney_9211c7"), SubResource("RoseRewardAddItem_bf4380"), SubResource("RoseRewardSetQuestSwitch_c0bb45"), SubResource("RoseRewardRemoveSelectedQuest_ca7f43")])

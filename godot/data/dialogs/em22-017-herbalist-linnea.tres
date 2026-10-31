@@ -1,0 +1,116 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://e549d367w3olg"]
+
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qp103/102-01.tres" id="x_ec7421"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_12f180"]
+text = "Careful where you step. The mushrooms of this ring were healthy a month ago. Now look at them."
+next_menu = 1
+resource_name = "NPC: Careful where you step. The mushrooms of this ri…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_93e01f"]
+lines = Array[Resource]([SubResource("RoseDialogLine_12f180")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_c6c3b7"]
+step = ExtResource("x_ec7421")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_f4abfe"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_c6c3b7")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1888fa"]
+kind = "Answer"
+text = "I'm looking for clues about the epidemic."
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_f4abfe")])
+resource_name = "You: I'm looking for clues about the epidemic."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fcc8c0"]
+kind = "Answer"
+text = "What made them rot?"
+next_menu = 7
+resource_name = "You: What made them rot?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2804c1"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_a3556e"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1888fa"), SubResource("RoseDialogLine_fcc8c0"), SubResource("RoseDialogLine_2804c1")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4ef95b"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8fae28"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_cf3b4a"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4ef95b"), SubResource("RoseDialogLine_8fae28")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_af9691"]
+text = "Seyon sent you too? Then look here, at the edge of the ring. Something is half buried in the rot."
+next_menu = 4
+resource_name = "NPC: Seyon sent you too? Then look here, at the edge …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b19e49"]
+lines = Array[Resource]([SubResource("RoseDialogLine_af9691")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2b3a5a"]
+kind = "Answer"
+text = "Dig it up with your hands."
+next_menu = 5
+resource_name = "You: Dig it up with your hands."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6e66a4"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2b3a5a")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7a644e"]
+text = "You pull out an emblem decorated with strange patterns."
+next_menu = 6
+resource_name = "NPC: You pull out an emblem decorated with strange pa…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_69e816"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7a644e")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_b3ab17"]
+step = ExtResource("x_ec7421")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_a68a0c"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_b3ab17")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fdcb2e"]
+kind = "Answer"
+text = "I'd better show this to Myad."
+next_menu = -1
+on_choose = Array[Resource]([SubResource("RoseDialogCase_a68a0c")])
+resource_name = "You: I'd better show this to Myad."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8d05de"]
+lines = Array[Resource]([SubResource("RoseDialogLine_fdcb2e")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c32279"]
+text = "People in red camped here, I saw their fire from the wood. They left, and the ring started to die. Whatever they carried, they took it south-west, towards the ford."
+next_menu = 2
+resource_name = "NPC: People in red camped here, I saw their fire from…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4c9750"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c32279")])
+resource_name = "Menu 7"
+
+[resource]
+key = "EM22-017.con"
+name = "[Herbalist] Linnea"
+menus = Array[Resource]([SubResource("RoseDialogMenu_93e01f"), SubResource("RoseDialogMenu_a3556e"), SubResource("RoseDialogMenu_cf3b4a"), SubResource("RoseDialogMenu_b19e49"), SubResource("RoseDialogMenu_6e66a4"), SubResource("RoseDialogMenu_69e816"), SubResource("RoseDialogMenu_8d05de"), SubResource("RoseDialogMenu_4c9750")])

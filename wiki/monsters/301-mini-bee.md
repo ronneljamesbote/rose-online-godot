@@ -19,8 +19,23 @@ run_speed: 400
 xp: 18
 drop_item_rate: 15
 drop_money_rate: 1
-zones: 2
+zones: 3
 spawns:
+- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
+  x: 5179.2
+  y: 5556.55
+  count: 3
+  group: basic
+- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
+  x: 5255
+  y: 5545
+  count: 3
+  group: basic
+- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
+  x: 5410
+  y: 5470
+  count: 3
+  group: basic
 - zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
   x: 5238.4
   y: 5171.1
@@ -58,3 +73,7 @@ Speeds are in centimetres per second, attack range in metres. Spawn positions ar
 HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].
+
+## Changed from iROSE
+
+The Adventurer's Plain redesign moved its spawn points there (see [[zones/22-adventurer-s-plain|Adventurer's Plain]]).

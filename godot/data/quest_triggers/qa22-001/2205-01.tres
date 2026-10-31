@@ -1,0 +1,26 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://l4mr0mxxf2yrw"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2205-ford-watch.tres" id="x_abde18"]
+
+[sub_resource type="RoseConditionQuestVariable" id="RoseConditionQuestVariable_5fe99a"]
+variable_type = "Episode"
+variable = 0
+operator = ">="
+value = 3
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_4e79e1"]
+ability = "Level"
+operator = ">="
+value = 5
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_c62fcc"]
+switch = 627
+value = false
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_0272ad"]
+quest = ExtResource("x_abde18")
+
+[resource]
+name = "2205-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestVariable_5fe99a"), SubResource("RoseConditionAbilityValue_4e79e1"), SubResource("RoseConditionQuestSwitch_c62fcc")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_0272ad")])

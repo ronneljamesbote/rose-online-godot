@@ -1,0 +1,289 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://9kt5ogi852fgp"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2202-jelly-on-the-jetty.tres" id="x_b7cf68"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2202-01.tres" id="x_ca1b68"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2202-02.tres" id="x_8e60e5"]
+[ext_resource type="RoseQuest" path="res://data/quests/2203-bones-on-the-beach.tres" id="x_2032e5"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2203-01.tres" id="x_da8370"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2203-02.tres" id="x_4c772a"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_df7f34"]
+text = "Mind the planks, they're slick. I'm Wade, I keep the jetties of Arua's Landing in one piece. Mostly."
+next_menu = 1
+resource_name = "NPC: Mind the planks, they're slick. I'm Wade, I keep…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_19f968"]
+lines = Array[Resource]([SubResource("RoseDialogLine_df7f34")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_25d59c"]
+quest = ExtResource("x_b7cf68")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_d6701a"]
+step = ExtResource("x_ca1b68")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ef02a2"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_25d59c"), SubResource("RoseDialogIfQuestStep_d6701a")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c284cf"]
+kind = "Answer"
+text = "About \"Jelly on the Jetty\""
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_ef02a2")])
+resource_name = "You: About \"Jelly on the Jetty\""
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_259a36"]
+quest = ExtResource("x_b7cf68")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_389873"]
+step = ExtResource("x_8e60e5")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_c5f050"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_259a36"), SubResource("RoseDialogIfQuestStep_389873")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8bb8f6"]
+kind = "Answer"
+text = "About \"Jelly on the Jetty\""
+next_menu = 6
+show_if = Array[Resource]([SubResource("RoseDialogCase_c5f050")])
+resource_name = "You: About \"Jelly on the Jetty\""
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_04e1a9"]
+step = ExtResource("x_8e60e5")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ef3415"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_04e1a9")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_25e033"]
+step = ExtResource("x_8e60e5")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ef4d6d"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_25e033")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_9ebfb1"]
+kind = "Answer"
+text = "\"Jelly on the Jetty\": it's done."
+next_menu = 7
+show_if = Array[Resource]([SubResource("RoseDialogCase_ef3415")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_ef4d6d")])
+resource_name = "You: \"Jelly on the Jetty\": it's done."
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_0332a7"]
+quest = ExtResource("x_2032e5")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_a18565"]
+step = ExtResource("x_da8370")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_01397f"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_0332a7"), SubResource("RoseDialogIfQuestStep_a18565")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_466928"]
+kind = "Answer"
+text = "About \"Bones on the Beach\""
+next_menu = 8
+show_if = Array[Resource]([SubResource("RoseDialogCase_01397f")])
+resource_name = "You: About \"Bones on the Beach\""
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_203ea8"]
+quest = ExtResource("x_2032e5")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_975337"]
+step = ExtResource("x_4c772a")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7eb89b"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_203ea8"), SubResource("RoseDialogIfQuestStep_975337")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7ee733"]
+kind = "Answer"
+text = "About \"Bones on the Beach\""
+next_menu = 11
+show_if = Array[Resource]([SubResource("RoseDialogCase_7eb89b")])
+resource_name = "You: About \"Bones on the Beach\""
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_d20c2e"]
+step = ExtResource("x_4c772a")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_28ff2c"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_d20c2e")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ce9ce1"]
+step = ExtResource("x_4c772a")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_66dea7"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_ce9ce1")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fee48d"]
+kind = "Answer"
+text = "\"Bones on the Beach\": it's done."
+next_menu = 12
+show_if = Array[Resource]([SubResource("RoseDialogCase_28ff2c")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_66dea7")])
+resource_name = "You: \"Bones on the Beach\": it's done."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a8c368"]
+kind = "Answer"
+text = "What is there to see on the plain?"
+next_menu = 13
+resource_name = "You: What is there to see on the plain?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_66f231"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2ab9b6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c284cf"), SubResource("RoseDialogLine_8bb8f6"), SubResource("RoseDialogLine_9ebfb1"), SubResource("RoseDialogLine_466928"), SubResource("RoseDialogLine_7ee733"), SubResource("RoseDialogLine_fee48d"), SubResource("RoseDialogLine_a8c368"), SubResource("RoseDialogLine_66f231")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1b11b7"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bb94b9"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ee5de9"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1b11b7"), SubResource("RoseDialogLine_bb94b9")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d0b89e"]
+text = "The Mini-Jelly Beans on the beach leave a goo that sets hard as tar. Bring me six blobs of Jelly Goo and I can seal these planks before the tide gets under them."
+next_menu = 4
+resource_name = "NPC: The Mini-Jelly Beans on the beach leave a goo th…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b27fda"]
+lines = Array[Resource]([SubResource("RoseDialogLine_d0b89e")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_c5e610"]
+step = ExtResource("x_ca1b68")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_4b79ee"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_c5e610")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d89750"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+on_choose = Array[Resource]([SubResource("RoseDialogCase_4b79ee")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_26a4fc"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b9e385"]
+lines = Array[Resource]([SubResource("RoseDialogLine_d89750"), SubResource("RoseDialogLine_26a4fc")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a61b68"]
+text = "Mini-Jelly Beans are all along the sand, north and south of the village. Easy work for a new arrival."
+next_menu = 2
+resource_name = "NPC: Mini-Jelly Beans are all along the sand, north a…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_c05b30"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a61b68")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_53c721"]
+text = "Six blobs of Jelly Goo. The Mini-Jelly Beans on the beach drop it."
+next_menu = 2
+resource_name = "NPC: Six blobs of Jelly Goo. The Mini-Jelly Beans on …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_13d21c"]
+lines = Array[Resource]([SubResource("RoseDialogLine_53c721")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_058df7"]
+text = "That'll do nicely. Here, some grapes from the ship's stores. Don't tell the captain."
+next_menu = 2
+resource_name = "NPC: That'll do nicely. Here, some grapes from the sh…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bb7420"]
+lines = Array[Resource]([SubResource("RoseDialogLine_058df7")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_237fdb"]
+text = "Every Visitor should walk the whole shore once. Up north there are the bones of an old whale, and Old Tam, who combs the beach there. Bring me something from him so I know you went."
+next_menu = 9
+resource_name = "NPC: Every Visitor should walk the whole shore once. …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_430273"]
+lines = Array[Resource]([SubResource("RoseDialogLine_237fdb")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_0d1cb6"]
+step = ExtResource("x_da8370")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_06cb13"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_0d1cb6")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_97c68f"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 10
+on_choose = Array[Resource]([SubResource("RoseDialogCase_06cb13")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cd745e"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5cb0a2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_97c68f"), SubResource("RoseDialogLine_cd745e")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_82ebc0"]
+text = "Follow the sand north past the standing stones' hill. You can't miss the bones."
+next_menu = 2
+resource_name = "NPC: Follow the sand north past the standing stones' …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_a62b78"]
+lines = Array[Resource]([SubResource("RoseDialogLine_82ebc0")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_951b87"]
+text = "Old Tam is at the whale bones, up the beach to the north."
+next_menu = 2
+resource_name = "NPC: Old Tam is at the whale bones, up the beach to t…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_c08888"]
+lines = Array[Resource]([SubResource("RoseDialogLine_951b87")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d0254d"]
+text = "A carved tooth! Tam only gives those to people he likes. Take these gloves, Riverford made, better than anything Ronk has for Visitors."
+next_menu = 2
+resource_name = "NPC: A carved tooth! Tam only gives those to people h…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4e4829"]
+lines = Array[Resource]([SubResource("RoseDialogLine_d0254d")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d8fd40"]
+text = "East is the sea, west is everything else. The road runs west over two rivers to Riverford Post, then up to the gates of the Valley of Luxem Tower. The further you go from the sea, the meaner the monsters."
+next_menu = 2
+resource_name = "NPC: East is the sea, west is everything else. The ro…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_cc05e0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_d8fd40")])
+resource_name = "Menu 13"
+
+[resource]
+key = "EM22-009.con"
+name = "[Dockmaster] Wade"
+menus = Array[Resource]([SubResource("RoseDialogMenu_19f968"), SubResource("RoseDialogMenu_2ab9b6"), SubResource("RoseDialogMenu_ee5de9"), SubResource("RoseDialogMenu_b27fda"), SubResource("RoseDialogMenu_b9e385"), SubResource("RoseDialogMenu_c05b30"), SubResource("RoseDialogMenu_13d21c"), SubResource("RoseDialogMenu_bb7420"), SubResource("RoseDialogMenu_430273"), SubResource("RoseDialogMenu_5cb0a2"), SubResource("RoseDialogMenu_a62b78"), SubResource("RoseDialogMenu_c08888"), SubResource("RoseDialogMenu_4e4829"), SubResource("RoseDialogMenu_cc05e0")])

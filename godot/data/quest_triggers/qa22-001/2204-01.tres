@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://2kpk5xfdi0t2r"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2204-the-humming-stones.tres" id="x_f77b58"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_67f912"]
+switch = 625
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_8ea73b"]
+switch = 626
+value = false
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_a862a3"]
+quest = ExtResource("x_f77b58")
+
+[resource]
+name = "2204-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_67f912"), SubResource("RoseConditionQuestSwitch_8ea73b")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_a862a3")])

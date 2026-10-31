@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://opw2ulx4lx04i"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2203-bones-on-the-beach.tres" id="x_2032e5"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_473905"]
+switch = 624
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_8c1c2a"]
+switch = 625
+value = false
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_9e2449"]
+quest = ExtResource("x_2032e5")
+
+[resource]
+name = "2203-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_473905"), SubResource("RoseConditionQuestSwitch_8c1c2a")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_9e2449")])

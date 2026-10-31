@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://3616wwr3568p9"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2209-the-jelly-king.tres" id="x_a2c3c4"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_c2b4a5"]
+switch = 630
+value = true
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_2114ba"]
+ability = "Level"
+operator = ">="
+value = 9
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_e4fa2d"]
+switch = 631
+value = false
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_02e76d"]
+quest = ExtResource("x_a2c3c4")
+
+[resource]
+name = "2209-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_c2b4a5"), SubResource("RoseConditionAbilityValue_2114ba"), SubResource("RoseConditionQuestSwitch_e4fa2d")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_02e76d")])

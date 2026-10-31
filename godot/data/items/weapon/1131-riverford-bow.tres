@@ -1,0 +1,28 @@
+[gd_resource type="RoseItemWeapon" format=3 uid="uid://2l6vnxyi5gefk"]
+
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_gn75h"]
+[ext_resource type="RoseSound" uid="uid://c4yvg7ttbtvxg" path="res://data/sounds/attack/71-bow-001.tres" id="2_24h6v"]
+[ext_resource type="RoseAttackEffect" uid="uid://dcbf7ymp65kcd" path="res://data/attack_effects/151-simple-bow-gun.tres" id="3_whugy"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1158.tres" id="4_uvb4a"]
+
+[resource]
+id = 1131
+name = "Riverford Bow"
+description = "A reed-wrapped short bow. Corvel gives a quiver of Wooden Arrows with it. A Riverford Visitor weapon from Warden Corvel's armoury. Any job can use it."
+item_class = "Bow"
+base_price = 1250
+weight = 5
+quality = 33
+icon = ExtResource("4_uvb4a")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/502.tscn"
+equip_sound = ExtResource("1_gn75h")
+equip_stat_1 = "Level"
+equip_stat_1_value = 6
+durability = 42
+model = "res://assets/rose/3ddata/weapon/list_weapon/202.tscn"
+attack_range = 2100
+attack_power = 25
+attack_speed = 10
+motion_type = 10
+bullet_effect = ExtResource("3_whugy")
+attack_fire_sound = ExtResource("2_24h6v")

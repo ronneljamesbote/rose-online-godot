@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://rfn7bnfwgrkxk"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2206-tibbs-farm.tres" id="x_db01bf"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_283c2d"]
+switch = 627
+value = true
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_dd2744"]
+ability = "Level"
+operator = ">="
+value = 6
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_a9f321"]
+switch = 628
+value = false
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_37588f"]
+quest = ExtResource("x_db01bf")
+
+[resource]
+name = "2206-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_283c2d"), SubResource("RoseConditionAbilityValue_dd2744"), SubResource("RoseConditionQuestSwitch_a9f321")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_37588f")])

@@ -1,0 +1,54 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://weovewo64v6po"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2205-ford-watch.tres" id="x_abde18"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/715-red-jelly-drop.tres" id="x_c5283f"]
+[ext_resource type="RoseItemConsumable" path="res://data/items/consumable/21-mana-vial-s.tres" id="x_0d3323"]
+[ext_resource type="RoseItemWeapon" path="res://data/items/weapon/1131-riverford-bow.tres" id="x_10059d"]
+[ext_resource type="RoseItemMaterial" path="res://data/items/material/301-wooden-arrow.tres" id="x_6aff89"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_2a6c49"]
+quest = ExtResource("x_abde18")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_3cec24"]
+item = ExtResource("x_c5283f")
+equipment_index = 13
+count = 8
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_b7e86c"]
+quest = ExtResource("x_abde18")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_0729f5"]
+item = ExtResource("x_c5283f")
+quantity = 8
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_df26f3"]
+equation = 0
+value = 160
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_cd743c"]
+equation = 0
+value = 200
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_73f521"]
+item = ExtResource("x_0d3323")
+quantity = 5
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_c33938"]
+item = ExtResource("x_10059d")
+quantity = 1
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_03e4df"]
+item = ExtResource("x_6aff89")
+quantity = 300
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_a27617"]
+switch = 627
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_ae7269"]
+
+[resource]
+name = "2205-22"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_2a6c49"), SubResource("RoseConditionQuestItem_3cec24")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_b7e86c"), SubResource("RoseRewardRemoveItem_0729f5"), SubResource("RoseRewardCalculatedExperiencePoints_df26f3"), SubResource("RoseRewardCalculatedMoney_cd743c"), SubResource("RoseRewardAddItem_73f521"), SubResource("RoseRewardAddItem_c33938"), SubResource("RoseRewardAddItem_03e4df"), SubResource("RoseRewardSetQuestSwitch_a27617"), SubResource("RoseRewardRemoveSelectedQuest_ae7269")])

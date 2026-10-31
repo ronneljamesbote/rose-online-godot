@@ -1,0 +1,44 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bc4ssrqg8mk73"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2204-the-humming-stones.tres" id="x_f77b58"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/714-jelly-core.tres" id="x_dcd6f3"]
+[ext_resource type="RoseItemConsumable" path="res://data/items/consumable/1-health-vial-s.tres" id="x_95cade"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_a74c3e"]
+quest = ExtResource("x_f77b58")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_c7ee53"]
+item = ExtResource("x_dcd6f3")
+equipment_index = 13
+count = 8
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_fef43f"]
+quest = ExtResource("x_f77b58")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_cc90d9"]
+item = ExtResource("x_dcd6f3")
+quantity = 8
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_2fecff"]
+equation = 0
+value = 120
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_252cb1"]
+equation = 0
+value = 150
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_02bd56"]
+item = ExtResource("x_95cade")
+quantity = 5
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_332e29"]
+switch = 626
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_9f0032"]
+
+[resource]
+name = "2204-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_a74c3e"), SubResource("RoseConditionQuestItem_c7ee53")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_fef43f"), SubResource("RoseRewardRemoveItem_cc90d9"), SubResource("RoseRewardCalculatedExperiencePoints_2fecff"), SubResource("RoseRewardCalculatedMoney_252cb1"), SubResource("RoseRewardAddItem_02bd56"), SubResource("RoseRewardSetQuestSwitch_332e29"), SubResource("RoseRewardRemoveSelectedQuest_9f0032")])

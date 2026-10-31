@@ -5,6 +5,8 @@ name: Dreadful Epidemic
 status: in-game
 given_by:
 - '[[npcs/1036-ferrell-guild-staff-seyon|Ferrell Guild Staff Seyon]]'
+npcs:
+- '[[npcs/1047-herbalist-linnea|Herbalist Linnea]]'
 steps: 4
 source:
   data: 'godot/data/quests/102-dreadful-epidemic.tres; quest triggers in godot/data/quest_triggers/: qp103/101-02, qp103/102-01, qp103/102-03, qp103/102-04'
@@ -15,6 +17,8 @@ source:
 # Dreadful Epidemic
 
 Seyon said that the mushrooms started to rot after a group of suspicious people garbed in red were camping near them. Let's search the area around the mushrooms for clues.  
+
+The rotten mushroom ring is south-west of Arua's Landing, in Whisperwood. [[npcs/1047-herbalist-linnea|Herbalist Linnea]] stands at the ring: tell her you are looking for clues and dig up the emblem (step `102-01`).
 
 ## Steps
 
@@ -36,6 +40,8 @@ Then:
 - set episode variable 0 to 1
 
 ### `102-01`
+
+Happens by talking to [[npcs/1047-herbalist-linnea|Herbalist Linnea]] at the mushroom ring.
 
 Checks:
 
@@ -72,3 +78,11 @@ Then:
 - client script `mushroom`
 
 If the checks fail, step `102-05` is tried instead.
+
+## Changed from iROSE
+
+In iROSE you find the emblem by clicking the mushroom clue in the ring, and step `102-04`
+plays a client script. Our game doesn't use clickable event objects yet, so
+[[npcs/1047-herbalist-linnea|Herbalist Linnea]], new with the Adventurer's Plain redesign,
+stands at the ring and runs step `102-01` when you talk to her. Step `102-04` is kept but
+nothing runs it.

@@ -1,0 +1,22 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://grww9b8y1qvbk"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2210-over-the-ridge.tres" id="x_027ce0"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_d4a6b3"]
+switch = 631
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_12eff0"]
+switch = 632
+value = false
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_a96f10"]
+quest = ExtResource("x_027ce0")
+
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_898870"]
+trigger = "2210-04"
+
+[resource]
+name = "2210-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_d4a6b3"), SubResource("RoseConditionQuestSwitch_12eff0")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_a96f10"), SubResource("RoseRewardTrigger_898870")])

@@ -1,0 +1,31 @@
+[gd_resource type="RoseItemWeapon" format=3 uid="uid://9riqeoi4vpdqb"]
+
+[ext_resource type="RoseSound" uid="uid://drjii46uraojh" path="res://data/sounds/item/577-item-weapon2.tres" id="1_ftdy9"]
+[ext_resource type="RoseSound" uid="uid://bey2khuqu7mu1" path="res://data/sounds/attack/55-spear-001.tres" id="2_r4bfu"]
+[ext_resource type="RoseHitSounds" uid="uid://d4huxc3qetp2i" path="res://data/hit_sounds/25-spear-hits.tres" id="3_lx9ic"]
+[ext_resource type="RoseAttackEffect" uid="uid://b45erl4hp3f0b" path="res://data/attack_effects/131-haedong-sword.tres" id="4_xocp6"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1080.tres" id="5_gogij"]
+
+[resource]
+id = 1130
+name = "Riverford Spear"
+description = "A ferry pole with an iron head, long enough to keep a Choropy at bay. A Riverford Visitor weapon from Warden Corvel's armoury. Any job can use it."
+item_class = "Spear"
+base_price = 1450
+weight = 15
+quality = 33
+icon = ExtResource("5_gogij")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/462.tscn"
+equip_sound = ExtResource("1_ftdy9")
+equip_stat_1 = "Level"
+equip_stat_1_value = 6
+durability = 42
+model = "res://assets/rose/3ddata/weapon/list_weapon/162.tscn"
+attack_range = 350
+attack_power = 26
+attack_speed = 10
+motion_type = 6
+attack_effect = ExtResource("4_xocp6")
+attack_start_sound = ExtResource("2_r4bfu")
+hit_sounds = ExtResource("3_lx9ic")
+gem_position = 2

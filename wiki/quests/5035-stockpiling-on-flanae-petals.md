@@ -76,6 +76,9 @@ Then:
 - works on [[quests/5035-stockpiling-on-flanae-petals|Stockpiling on Flanae Petals]]
 - you get 1 × [[items/quest/806-flanae-petal|Flanae Petal]]
 - add 1 to quest variable 9
+- then runs step `2206-31` ([[quests/2206-tibbs-farm|Tibbs' Farm]])
+
+If the checks fail, step `2206-31` ([[quests/2206-tibbs-farm|Tibbs' Farm]]) is tried instead.
 
 ### `5035-32`
 
@@ -91,3 +94,10 @@ Then:
 - works on [[quests/5035-stockpiling-on-flanae-petals|Stockpiling on Flanae Petals]]
 - you get 1 × [[items/quest/806-flanae-petal|Flanae Petal]]
 - add 1 to quest variable 9
+- then runs step `2206-31` ([[quests/2206-tibbs-farm|Tibbs' Farm]])
+
+If the checks fail, step `2206-31` ([[quests/2206-tibbs-farm|Tibbs' Farm]]) is tried instead.
+
+## Changed from iROSE
+
+The Adventurer's Plain redesign made this quest's kill steps also run the matching steps of the plain's new quests, so one kill counts for both.

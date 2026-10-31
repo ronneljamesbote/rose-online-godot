@@ -1,0 +1,24 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://r7cs30n8cdeo6"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2207-tracks-to-the-ford.tres" id="x_225e03"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_bf53b7"]
+switch = 628
+value = true
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_f90fc5"]
+ability = "Level"
+operator = ">="
+value = 7
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_9d62f3"]
+switch = 629
+value = false
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_dad5ed"]
+quest = ExtResource("x_225e03")
+
+[resource]
+name = "2207-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_bf53b7"), SubResource("RoseConditionAbilityValue_f90fc5"), SubResource("RoseConditionQuestSwitch_9d62f3")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_dad5ed")])

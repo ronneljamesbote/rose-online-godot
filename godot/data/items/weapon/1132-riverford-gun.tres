@@ -1,0 +1,31 @@
+[gd_resource type="RoseItemWeapon" format=3 uid="uid://e061buq6ca5rk"]
+
+[ext_resource type="RoseSound" uid="uid://cpp356f3vpr4x" path="res://data/sounds/item/578-item-weapon3.tres" id="1_5psol"]
+[ext_resource type="RoseSound" uid="uid://du04g0rrduxg7" path="res://data/sounds/attack/82-gun-001.tres" id="2_zqtl5"]
+[ext_resource type="RoseSound" uid="uid://cro5gpaqtmmmt" path="res://data/sounds/attack/78-bowgun-d01.tres" id="3_cyx0g"]
+[ext_resource type="RoseAttackEffect" uid="uid://blpsfnckcpm5b" path="res://data/attack_effects/175-bubble-gun.tres" id="4_7e1jd"]
+[ext_resource type="AtlasTexture" path="res://assets/rose/3ddata/control/res/item1/1209.tres" id="5_hvz4x"]
+
+[resource]
+id = 1132
+name = "Riverford Gun"
+description = "A sturdy little gun, oiled against the river damp. Corvel gives a pouch of Bean Bullets with it. A Riverford Visitor weapon from Warden Corvel's armoury. Any job can use it."
+item_class = "Gun"
+base_price = 1450
+weight = 10
+quality = 34
+icon = ExtResource("5_hvz4x")
+field_model = "res://assets/rose/3ddata/item/list_fielditem/531.tscn"
+equip_sound = ExtResource("1_5psol")
+equip_stat_1 = "Level"
+equip_stat_1_value = 6
+durability = 42
+model = "res://assets/rose/3ddata/weapon/list_weapon/231.tscn"
+attack_range = 2200
+attack_power = 25
+attack_speed = 11
+motion_type = 12
+bullet_effect = ExtResource("4_7e1jd")
+attack_start_sound = ExtResource("2_zqtl5")
+attack_fire_sound = ExtResource("3_cyx0g")
+gem_position = 1

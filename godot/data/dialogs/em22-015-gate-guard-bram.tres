@@ -1,0 +1,71 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://jex9y0w7urid2"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_da618e"]
+text = "Halt, Visitor! That gate leads down into the Goblin Cave. The goblins there would eat a newcomer alive."
+next_menu = 1
+resource_name = "NPC: Halt, Visitor! That gate leads down into the Gob…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6cb8a6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_da618e")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_9aff3f"]
+kind = "Answer"
+text = "How strong are they?"
+next_menu = 3
+resource_name = "You: How strong are they?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c6ee15"]
+kind = "Answer"
+text = "Can I go in anyway?"
+next_menu = 4
+resource_name = "You: Can I go in anyway?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3b974c"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b61df4"]
+lines = Array[Resource]([SubResource("RoseDialogLine_9aff3f"), SubResource("RoseDialogLine_c6ee15"), SubResource("RoseDialogLine_3b974c")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d89ee1"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c2ca2a"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_16e582"]
+lines = Array[Resource]([SubResource("RoseDialogLine_d89ee1"), SubResource("RoseDialogLine_c2ca2a")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8ec1aa"]
+text = "Level 45 and up, and they come in packs. Come back when you've made a name for yourself far from here. The road to Luxem is north, up on Gatehill."
+next_menu = 2
+resource_name = "NPC: Level 45 and up, and they come in packs. Come ba…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6e3a70"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8ec1aa")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_578d7d"]
+text = "I can't stop you. I can only tell you that nobody your size has walked back out."
+next_menu = 2
+resource_name = "NPC: I can't stop you. I can only tell you that nobod…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_134dfc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_578d7d")])
+resource_name = "Menu 4"
+
+[resource]
+key = "EM22-015.con"
+name = "[Gate Guard] Bram"
+menus = Array[Resource]([SubResource("RoseDialogMenu_6cb8a6"), SubResource("RoseDialogMenu_b61df4"), SubResource("RoseDialogMenu_16e582"), SubResource("RoseDialogMenu_6e3a70"), SubResource("RoseDialogMenu_134dfc")])

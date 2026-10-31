@@ -1,5 +1,122 @@
 [gd_resource type="RoseDialog" format=3 uid="uid://cmtose2bjhsy0"]
 
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2201-01.tres" id="ap_2d5e49"]
+[ext_resource type="RoseQuest" path="res://data/quests/2201-first-steps.tres" id="ap_a057ab"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2201-02.tres" id="ap_7675a6"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ap192f57"]
+text = "Before you set off, meet the people who look after Visitors here: the Fairy of Arua beside me, Ronk the smith and Pony who sells fruit, up on the piers. Come back to me when you've met all three."
+next_menu = 27
+resource_name = "NPC: Before you set off, meet the people who look aft…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ap5bf75c"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ap192f57")])
+resource_name = "Menu 26"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ap63b97d"]
+step = ExtResource("ap_2d5e49")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ap5ba4a9"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_ap63b97d")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ap3824f5"]
+kind = "Answer"
+text = "I'll go and meet them."
+next_menu = 28
+on_choose = Array[Resource]([SubResource("RoseDialogCase_ap5ba4a9")])
+resource_name = "You: I'll go and meet them."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ap2a261c"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_apcb873b"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ap3824f5"), SubResource("RoseDialogLine_ap2a261c")])
+resource_name = "Menu 27"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_apace62b"]
+text = "Off you go. They're all within a few steps of here."
+next_menu = 1
+resource_name = "NPC: Off you go. They're all within a few steps of he…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ap92dd60"]
+lines = Array[Resource]([SubResource("RoseDialogLine_apace62b")])
+resource_name = "Menu 28"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_apd2f355"]
+text = "Have you met the Fairy of Arua, Ronk and Pony yet? All three, then come back."
+next_menu = 1
+resource_name = "NPC: Have you met the Fairy of Arua, Ronk and Pony ye…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ap77c095"]
+lines = Array[Resource]([SubResource("RoseDialogLine_apd2f355")])
+resource_name = "Menu 29"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_apa4c839"]
+text = "Now you know the Landing. Here, some potions for the road. When you're ready, Dockmaster Wade on the north jetty has work for a Visitor, and the road west leads to Riverford Post and on to the Valley of Luxem Tower."
+next_menu = 1
+resource_name = "NPC: Now you know the Landing. Here, some potions for…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_apebd339"]
+lines = Array[Resource]([SubResource("RoseDialogLine_apa4c839")])
+resource_name = "Menu 30"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_apcd7b45"]
+quest = ExtResource("ap_a057ab")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_ap34cd41"]
+step = ExtResource("ap_2d5e49")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_apc9db95"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_apcd7b45"), SubResource("RoseDialogIfQuestStep_ap34cd41")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ap1d177a"]
+kind = "Answer"
+text = "About \"First Steps\""
+next_menu = 26
+show_if = Array[Resource]([SubResource("RoseDialogCase_apc9db95")])
+resource_name = "You: About \"First Steps\""
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ap40adf1"]
+quest = ExtResource("ap_a057ab")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_ap559330"]
+step = ExtResource("ap_7675a6")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ap9c11c4"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_ap40adf1"), SubResource("RoseDialogIfQuestStep_ap559330")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_apfc01d6"]
+kind = "Answer"
+text = "About \"First Steps\""
+next_menu = 29
+show_if = Array[Resource]([SubResource("RoseDialogCase_ap9c11c4")])
+resource_name = "You: About \"First Steps\""
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_ap2916ef"]
+step = ExtResource("ap_7675a6")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ap52c8c4"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_ap2916ef")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_apcb8f81"]
+step = ExtResource("ap_7675a6")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ap42d2e2"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_apcb8f81")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ap72e735"]
+kind = "Answer"
+text = "\"First Steps\": I've met them all."
+next_menu = 30
+show_if = Array[Resource]([SubResource("RoseDialogCase_ap52c8c4")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_ap42d2e2")])
+resource_name = "You: \"First Steps\": I've met them all."
+
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_rgrab"]
 text = "Welcome to the Adventurer's Plains. I am Ronway, a guide for Visitors. Please ask me if you have any questions."
 next_menu = 1
@@ -34,7 +151,7 @@ next_menu = 24
 resource_name = "You: Is there anything I can do if I don't like my st…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5t4v5"]
-lines = Array[Resource]([SubResource("RoseDialogLine_25bji"), SubResource("RoseDialogLine_cmxjy"), SubResource("RoseDialogLine_6qboq"), SubResource("RoseDialogLine_gxk48")])
+lines = Array[Resource]([SubResource("RoseDialogLine_ap1d177a"), SubResource("RoseDialogLine_apfc01d6"), SubResource("RoseDialogLine_ap72e735"), SubResource("RoseDialogLine_25bji"), SubResource("RoseDialogLine_cmxjy"), SubResource("RoseDialogLine_6qboq"), SubResource("RoseDialogLine_gxk48")])
 resource_name = "Menu 1"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_rwsgt"]
@@ -157,9 +274,9 @@ lines = Array[Resource]([SubResource("RoseDialogLine_81vad")])
 resource_name = "Menu 11"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_ku1e2"]
-text = "When you moved here from Birth Island, you were probably given identification. Open your Quest Window to check if you have it. If you don't, please speak to Mairard so that he can give you one."
+text = "When you arrived here, you were given identification papers. Open your Quest Window to check if you have them. If you don't, please speak to Mairard so that he can give you one."
 next_menu = 13
-resource_name = "NPC: When you moved here from Birth Island, you were …"
+resource_name = "NPC: When you arrived here, you were given identifica…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qoo33"]
 lines = Array[Resource]([SubResource("RoseDialogLine_ku1e2")])
@@ -176,9 +293,9 @@ lines = Array[Resource]([SubResource("RoseDialogLine_1dgt3")])
 resource_name = "Menu 13"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_hnh7w"]
-text = "Once you reach Level 10, please go talk to Warren in Zant. Choose the class to which you want to be promoted, and he will give you a job change quest. When you complete the quest, you'll be eligible for the job change."
+text = "Once you reach Level 10, go to the Sandwind Caravan Camp in the Valley of Luxem Tower, past the gates on Gatehill. Four job mentors wait there, one for each class. Pass a mentor's trial and they change your job right at the camp."
 next_menu = 15
-resource_name = "NPC: Once you reach Level 10, please go talk to Warre…"
+resource_name = "NPC: Once you reach Level 10, go to the Sandwind Cara…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6capt"]
 lines = Array[Resource]([SubResource("RoseDialogLine_hnh7w")])
@@ -298,4 +415,4 @@ resource_name = "Menu 25"
 [resource]
 key = "EM22-001.con"
 name = "[Visitor Guide] Ronway"
-menus = Array[Resource]([SubResource("RoseDialogMenu_k66gu"), SubResource("RoseDialogMenu_5t4v5"), SubResource("RoseDialogMenu_yor5n"), SubResource("RoseDialogMenu_xv615"), SubResource("RoseDialogMenu_lk6dr"), SubResource("RoseDialogMenu_drask"), SubResource("RoseDialogMenu_g8mgy"), SubResource("RoseDialogMenu_2htlu"), SubResource("RoseDialogMenu_64xna"), SubResource("RoseDialogMenu_jwuk6"), SubResource("RoseDialogMenu_kcw21"), SubResource("RoseDialogMenu_jqiea"), SubResource("RoseDialogMenu_qoo33"), SubResource("RoseDialogMenu_5h8pt"), SubResource("RoseDialogMenu_6capt"), SubResource("RoseDialogMenu_d12l0"), SubResource("RoseDialogMenu_gnq8t"), SubResource("RoseDialogMenu_cl0x7"), SubResource("RoseDialogMenu_qdrr0"), SubResource("RoseDialogMenu_805av"), SubResource("RoseDialogMenu_kg2nn"), SubResource("RoseDialogMenu_aus2d"), SubResource("RoseDialogMenu_5guxg"), SubResource("RoseDialogMenu_kxyig"), SubResource("RoseDialogMenu_qt5rx"), SubResource("RoseDialogMenu_ugxta")])
+menus = Array[Resource]([SubResource("RoseDialogMenu_k66gu"), SubResource("RoseDialogMenu_5t4v5"), SubResource("RoseDialogMenu_yor5n"), SubResource("RoseDialogMenu_xv615"), SubResource("RoseDialogMenu_lk6dr"), SubResource("RoseDialogMenu_drask"), SubResource("RoseDialogMenu_g8mgy"), SubResource("RoseDialogMenu_2htlu"), SubResource("RoseDialogMenu_64xna"), SubResource("RoseDialogMenu_jwuk6"), SubResource("RoseDialogMenu_kcw21"), SubResource("RoseDialogMenu_jqiea"), SubResource("RoseDialogMenu_qoo33"), SubResource("RoseDialogMenu_5h8pt"), SubResource("RoseDialogMenu_6capt"), SubResource("RoseDialogMenu_d12l0"), SubResource("RoseDialogMenu_gnq8t"), SubResource("RoseDialogMenu_cl0x7"), SubResource("RoseDialogMenu_qdrr0"), SubResource("RoseDialogMenu_805av"), SubResource("RoseDialogMenu_kg2nn"), SubResource("RoseDialogMenu_aus2d"), SubResource("RoseDialogMenu_5guxg"), SubResource("RoseDialogMenu_kxyig"), SubResource("RoseDialogMenu_qt5rx"), SubResource("RoseDialogMenu_ugxta"), SubResource("RoseDialogMenu_ap5bf75c"), SubResource("RoseDialogMenu_apcb873b"), SubResource("RoseDialogMenu_ap92dd60"), SubResource("RoseDialogMenu_ap77c095"), SubResource("RoseDialogMenu_apebd339")])

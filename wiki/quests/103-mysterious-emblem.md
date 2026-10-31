@@ -24,6 +24,8 @@ everything under "Then". See [[rules/quests|Quests]].
 
 ### `102-01`
 
+Happens by talking to [[npcs/1047-herbalist-linnea|Herbalist Linnea]] at the mushroom ring.
+
 Checks:
 
 - you have [[quests/102-dreadful-epidemic|Dreadful Epidemic]]
@@ -50,3 +52,8 @@ Then:
 - experience, base 200 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest becomes [[quests/104-mysterious-emblem|Mysterious Emblem]] (progress kept)
 - set episode variable 0 to 2
+- you get 1 × [[items/feet/655-riverford-boots|Riverford Boots]]
+
+## Changed from iROSE
+
+Step `103-01` also gives [[items/feet/655-riverford-boots|Riverford Boots]], a piece of the Riverford Visitor set.

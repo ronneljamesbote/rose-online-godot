@@ -1,0 +1,39 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://bbkkn96gt91qm"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2210-over-the-ridge.tres" id="x_027ce0"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/601-enigmatic-emblem.tres" id="x_2b09a3"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_58c619"]
+quest = ExtResource("x_027ce0")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_922311"]
+item = ExtResource("x_2b09a3")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_21df66"]
+quest = ExtResource("x_027ce0")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_fe7417"]
+item = ExtResource("x_2b09a3")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_a51991"]
+equation = 0
+value = 200
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_8bfbbb"]
+equation = 0
+value = 300
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_a0b195"]
+switch = 632
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_eae932"]
+
+[resource]
+name = "2210-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_58c619"), SubResource("RoseConditionQuestItem_922311")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_21df66"), SubResource("RoseRewardRemoveItem_fe7417"), SubResource("RoseRewardCalculatedExperiencePoints_a51991"), SubResource("RoseRewardCalculatedMoney_8bfbbb"), SubResource("RoseRewardSetQuestSwitch_a0b195"), SubResource("RoseRewardRemoveSelectedQuest_eae932")])

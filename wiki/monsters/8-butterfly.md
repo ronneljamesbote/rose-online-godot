@@ -19,7 +19,7 @@ run_speed: 150
 xp: 6
 drop_item_rate: 40
 drop_money_rate: 1
-zones: 1
+zones: 2
 drops:
 - item: '[[items/material/171-thin-insect-shell|Thin Insect Shell]]'
   slots_of_30: 5
@@ -50,6 +50,11 @@ drops:
 - item: '[[items/feet/3-waterproof-shoes|Waterproof Shoes]]'
   slots_of_30: 0.6
 spawns:
+- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
+  x: 5600
+  y: 5260
+  count: 2
+  group: basic
 - zone: '[[zones/61-refuge-xita|Refuge Xita]]'
   x: 5216.3
   y: 4428.8
@@ -72,3 +77,7 @@ Speeds are in centimetres per second, attack range in metres. Spawn positions ar
 HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].
+
+## Changed from iROSE
+
+The Adventurer's Plain redesign moved its spawn points there (see [[zones/22-adventurer-s-plain|Adventurer's Plain]]).
