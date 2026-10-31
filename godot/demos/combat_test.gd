@@ -1,7 +1,8 @@
 extends "res://demos/demo.gd"
 
 ## Combat balance test (dev server): says the GM lines of --say, equips --equip, prints the
-## character values, then fights --kills monsters with /heal before each, every hit logged.
+## character values, then fights --kills monsters with /heal (and the GM line of --each, such
+## as "/spawn 258 1") before each, every hit logged.
 func run() -> void:
 	online.log_damage = true
 	await get_tree().create_timer(2.0).timeout
@@ -17,12 +18,19 @@ func run() -> void:
 			print("rose net demo: equip ", want)
 		await get_tree().create_timer(2.0).timeout
 	var c: Dictionary = online.net.get_character()
-	print("rose net demo: stats level %s STR %s DEX %s CON %s SEN %s attack %s defence %s hit %s avoid %s critical %s (%.1f%%) crit damage %s%% speed %s (+%s%%)" % [
-		c.get("level"), c.get("str"), c.get("dex"), c.get("con"), c.get("sen"), c.get("attack"), c.get("defence"),
+	for e in online.net.get_entities():
+		if int(e.get("id", -1)) == online.my_id:
+			c["max_hp"] = e.get("max_hp")
+	print("rose net demo: stats level %s HP %s STR %s DEX %s CON %s SEN %s attack %s defence %s hit %s avoid %s critical %s (%.1f%%) crit damage %s%% speed %s (+%s%%)" % [
+		c.get("level"), c.get("max_hp"), c.get("str"), c.get("dex"), c.get("con"), c.get("sen"), c.get("attack"), c.get("defence"),
 		c.get("hit"), c.get("avoid"), c.get("critical"), c.get("critical_chance", -1.0), c.get("critical_damage", -1), c.get("attack_speed"), c.get("attack_speed_bonus", -1)])
 	var kills := int(options.get("kills", "5"))
 	for k in kills:
 		online.chat_window.say("/heal")
+		var each := String(options.get("each", ""))
+		if each != "":
+			await get_tree().create_timer(1.0).timeout
+			online.chat_window.say(each)
 		await get_tree().create_timer(1.0).timeout
 		var target: int = online.nearest_monster()
 		var waited := 0.0
@@ -34,9 +42,11 @@ func run() -> void:
 			break
 		print("rose net demo: fight ", k + 1, " ", online.entities[target].label.text, " (entity ", target, ")")
 		online.attack(target)
+		var start := Time.get_ticks_msec()
 		var t := 0.0
 		while online.entities.has(target) and not online.entities[target].dying and online.me and not online.me.dead and t < 120.0:
 			await get_tree().create_timer(0.25).timeout
-			t += 0.25
+			t = (Time.get_ticks_msec() - start) / 1000.0
 		print("rose net demo: fight ", k + 1, " over after %.1f s, dead %s" % [t, online.me.dead if online.me else true])
 	print("rose net demo: combat test done")
+	get_tree().quit()

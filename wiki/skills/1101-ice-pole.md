@@ -18,7 +18,7 @@ levels:
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 20, [[skills/981-ice-bolt|Ice Bolt]] level 8'
   learn_points: 40
   cost: MP 120
-  power: 342
+  power: 328
   range: 25
   area: 12
   cooldown: 14
@@ -30,7 +30,7 @@ levels:
   id: 1102
   learn_points: 45
   cost: MP 126
-  power: 367
+  power: 352
   range: 25
   area: 12.1
   cooldown: 14.2
@@ -42,7 +42,7 @@ levels:
   id: 1103
   learn_points: 51
   cost: MP 132
-  power: 392
+  power: 376
   range: 25
   area: 12.2
   cooldown: 14.4
@@ -54,7 +54,7 @@ levels:
   id: 1104
   learn_points: 57
   cost: MP 138
-  power: 416
+  power: 399
   range: 25
   area: 12.3
   cooldown: 14.6
@@ -66,7 +66,7 @@ levels:
   id: 1105
   learn_points: 64
   cost: MP 144
-  power: 441
+  power: 423
   range: 25
   area: 12.4
   cooldown: 14.8
@@ -78,7 +78,7 @@ levels:
   id: 1106
   learn_points: 71
   cost: MP 150
-  power: 466
+  power: 446
   range: 25
   area: 12.5
   cooldown: 15
@@ -90,7 +90,7 @@ levels:
   id: 1107
   learn_points: 79
   cost: MP 156
-  power: 491
+  power: 470
   range: 25
   area: 12.6
   cooldown: 15.2
@@ -102,7 +102,7 @@ levels:
   id: 1108
   learn_points: 88
   cost: MP 162
-  power: 515
+  power: 493
   range: 25
   area: 12.7
   cooldown: 15.4
@@ -114,7 +114,7 @@ levels:
   id: 1109
   learn_points: 98
   cost: MP 168
-  power: 539
+  power: 516
   range: 25
   area: 12.8
   cooldown: 15.6
@@ -126,7 +126,7 @@ levels:
   id: 1110
   learn_points: 109
   cost: MP 174
-  power: 564
+  power: 540
   range: 25
   area: 13
   cooldown: 15.8

@@ -8,9 +8,9 @@ range_slack_m: 0.5
 chase_repath_m: 1
 min_attack_speed: 30
 max_damage: 2047
-min_damage: 1
-player_raw_scale: 1.2
-monster_raw_scale: 0.5
+min_damage: 5
+player_raw_scale: 1.0
+monster_raw_scale: 0.55
 damage_spread: "90% to 110%"
 damage_reduction: "DEF / (DEF + 0.75 x raw + 80), at most 75%"
 max_damage_reduction: "75%"
@@ -45,8 +45,8 @@ critical_chances:
   - { level: 60, rating: 200, chance: "30.7%" }
   - { level: 100, rating: 150, chance: "23.8%" }
 damage_examples:
-  - { attack: 22, defence: "29 (level 4)", level: 1, damage: 19, critical: 31 }
-  - { attack: 180, defence: 160, level: "60 vs 60", damage: 130, critical: "273 (SEN 50)" }
+  - { attack: 22, defence: "29 (level 4)", level: 1, damage: 15, critical: 25 }
+  - { attack: 180, defence: 160, level: "60 vs 60", damage: 103, critical: "216 (SEN 50)" }
 source:
   code:
     - module/src/lib.rs (combat_tick, attack, move_to, stop, sit, cancel_attack, attack_interval_us, attack_windup_us, deal_damage, kill, COMBAT_TICK_MS, RANGE_SLACK_CM, CHASE_REPATH_CM)
@@ -202,7 +202,7 @@ Monsters and summons have no rating: they crit a flat **5%** of the time, for 15
 `ATK` is the attacker's attack, `DEF` the defender's defence (its magic resistance `RES`
 for magic), `L_a` and `L_d` the levels. A hit that lands goes through these steps:
 
-1. **Raw damage.** Players: ATK × **1.2**; monsters and summons: ATK × **0.5**. Then a
+1. **Raw damage.** Players: ATK × **1.0**; monsters and summons: ATK × **0.55**. Then a
    random roll from **90% to 110%**.
 2. **Defence.** Defence takes off a share of the raw damage:
 
@@ -222,19 +222,19 @@ for magic), `L_a` and `L_d` the levels. A hit that lands goes through these step
 7. **Hits.** Times the number of hits in the attack animation (1 for most weapons).
 8. **Between players** the damage is halved, then kept to at most **25%** of the target's
    max HP (a critical at most **35%**). A summon counts as a monster here.
-9. At least **1**, at most **2047**, rounded down.
+9. At least **5**, at most **2047**, rounded down.
 
 Table `damage_examples` lists the examples below.
 
 **Worked example:** the level 1 character from [[rules/stats|Stats]] (attack 22) hits a
 [[monsters/2-jelly-bean|Jelly Bean]] (level 4, defence 29) with a middle roll (100%):
-raw 22 × 1.2 = 26.4; defence takes off 29 / (29 + 19.8 + 80) = 22.5%, leaving 20.46;
-3 levels below is −6%: 20.46 × 0.94 = 19.2, so **19** damage. A critical:
-19.2 × 1.62 = **31**. A Jelly Bean has 4 × 30 = 120 HP, so it takes about six hits.
+raw 22; defence takes off 29 / (29 + 16.5 + 80) = 23.1%, leaving 16.92;
+3 levels below is −6%: 16.92 × 0.94 = 15.9, so **15** damage. A critical:
+15.9 × 1.62 = **25**. A Jelly Bean has 4 × 30 = 120 HP, so it takes about eight hits.
 
 **Worked example:** a level 60 player with attack 180 hits a level 60 monster with
-defence 160: raw 216, defence takes off 160 / (160 + 162 + 80) = 39.8%, so **130** damage.
-With SEN 50 a critical does 130 × 2.1 = **273**.
+defence 160: raw 180, defence takes off 160 / (160 + 135 + 80) = 42.7%, so **103** damage.
+With SEN 50 a critical does 103.2 × 2.1 = **216**.
 
 ## Monster attacks
 
@@ -242,17 +242,17 @@ Monsters use the same rules. Their values come from the monster data (see
 [[monsters|Monsters]]):
 
 - Max HP is the monster's level × its HP per level (`hp_per_level` on the monster page; the page's `hp` already shows the result).
-- Raw damage is their attack × 0.5, and they crit a flat 5% for 150% (above).
+- Raw damage is their attack × 0.55, and they crit a flat 5% for 150% (above).
 - Range and attack speed are the numbers in the data, with nothing added.
 - Each monster type has its own attack animation and hit frame, from `export/motions.toml`
   like the player's. Several monsters can share one animation (Mini-Jelly Bean and Jelly
   Bean do), so moving its hit marker moves all of their hits.
 
 **Worked example:** a Jelly Bean (attack 4, level 4) hits the level 1 character (defence
-30): raw 4 × 0.5 = 2; defence takes off 30 / (30 + 1.5 + 80) = 26.9%, leaving 1.46; it is 3
-levels above: × 1.06 = 1.55, so **1** damage. A level 60 monster with attack 221 against a
-level 60 player with defence 140: raw 110.5, defence takes off 140 / (140 + 82.9 + 80) =
-46.2%, so **59**.
+30): raw 4 × 0.55 = 2.2; defence takes off 30 / (30 + 1.65 + 80) = 26.9%, leaving 1.61; it
+is 3 levels above: × 1.06 = 1.71, which is under the minimum, so **5** damage. A level 60
+monster with attack 221 against a level 60 player with defence 140: raw 121.6, defence takes
+off 140 / (140 + 91.2 + 80) = 45.0%, so **66**.
 
 A monster that is hit fights back, or runs its own reaction (calling friends, using a
 skill). A monster dragged more than 30 m from where its fight began (and no longer
@@ -283,7 +283,9 @@ Killing a monster shows "+N XP" over you (see [[rules/experience|Experience]]).
   divided by defence plus avoid, so defence counted twice and fights got much slower with
   level (a same-level monster took about 4 swings at level 1, 50 at level 60 and 130 past
   level 80). Ours takes a share off for defence (at most 75%), so a same-level monster takes
-  about 6 to 23 swings at every level. Avoid only changes the hit chance, magic meets only
+  about 9 to 23 swings from level 10 up, and costs a typical player
+  about 20% to 65% of their HP (a middle ground: challenging, not unfair).
+  A hit does at least 5, as in iROSE. Avoid only changes the hit chance, magic meets only
   magic resistance, hits roll 90% to 110%, and the level gap counts ±2% per level, at most
   10 levels.
 - Critical hits: iROSE rolled 16 × (3 × rand(1..100) + level + 30) / (critical + 70) below

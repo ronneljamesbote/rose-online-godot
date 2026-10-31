@@ -46,7 +46,7 @@ levels:
   id: 344
   learn_points: 16
   cost: HP 45
-  power: 230
+  power: 229
   cooldown: 9.2
   duration: 5
   success: 33
@@ -56,7 +56,7 @@ levels:
   needs: '[[skills/201-melee-weapon-mastery|Melee Weapon Mastery]] level 7'
   learn_points: 18
   cost: HP 50
-  power: 256
+  power: 255
   cooldown: 9.4
   duration: 5
   success: 34
@@ -65,7 +65,7 @@ levels:
   id: 346
   learn_points: 20
   cost: HP 55
-  power: 282
+  power: 281
   cooldown: 9.4
   duration: 5
   success: 35
@@ -75,7 +75,7 @@ levels:
   needs: '[[skills/201-melee-weapon-mastery|Melee Weapon Mastery]] level 8'
   learn_points: 23
   cost: HP 60
-  power: 307
+  power: 306
   cooldown: 9.6
   duration: 5
   success: 36
@@ -84,7 +84,7 @@ levels:
   id: 348
   learn_points: 26
   cost: HP 65
-  power: 333
+  power: 331
   cooldown: 9.6
   duration: 5
   success: 37
@@ -94,7 +94,7 @@ levels:
   needs: '[[skills/201-melee-weapon-mastery|Melee Weapon Mastery]] level 9'
   learn_points: 29
   cost: HP 70
-  power: 359
+  power: 356
   cooldown: 9.8
   duration: 5
   success: 38
@@ -104,7 +104,7 @@ levels:
   needs: '[[skills/201-melee-weapon-mastery|Melee Weapon Mastery]] level 10'
   learn_points: 32
   cost: HP 80
-  power: 410
+  power: 406
   cooldown: 9.8
   duration: 5
   success: 40

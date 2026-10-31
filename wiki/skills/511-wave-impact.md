@@ -18,70 +18,70 @@ levels:
   needs: '[[skills/341-leap-attack|Leap Attack]] level 10'
   learn_points: 35
   cost: MP 70
-  power: 294
+  power: 286
   area: 7
   cooldown: 14
 - level: 2
   id: 512
   learn_points: 41
   cost: MP 75
-  power: 316
+  power: 307
   area: 7
   cooldown: 14.6
 - level: 3
   id: 513
   learn_points: 48
   cost: MP 80
-  power: 338
+  power: 328
   area: 7
   cooldown: 15.2
 - level: 4
   id: 514
   learn_points: 56
   cost: MP 85
-  power: 360
+  power: 349
   area: 7
   cooldown: 15.8
 - level: 5
   id: 515
   learn_points: 65
   cost: MP 90
-  power: 382
+  power: 371
   area: 7
   cooldown: 16.4
 - level: 6
   id: 516
   learn_points: 75
   cost: MP 95
-  power: 405
+  power: 392
   area: 7
   cooldown: 17
 - level: 7
   id: 517
   learn_points: 87
   cost: MP 100
-  power: 426
+  power: 413
   area: 7
   cooldown: 17.6
 - level: 8
   id: 518
   learn_points: 100
   cost: MP 105
-  power: 448
+  power: 434
   area: 7
   cooldown: 18.2
 - level: 9
   id: 519
   learn_points: 115
   cost: MP 110
-  power: 470
+  power: 454
   area: 7
   cooldown: 18.8
 - level: 10
   id: 520
   learn_points: 132
   cost: MP 120
-  power: 514
+  power: 496
   area: 8
   cooldown: 19.4
 source:

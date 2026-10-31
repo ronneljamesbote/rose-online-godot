@@ -12,7 +12,7 @@ minimum_cast_time_s: 0.3
 cast_grace_window_s: 0.3
 range_slack_m: 0.5
 default_cast_range: the caster's attack range (when the skill has no range)
-skill_damage_minimum: 1
+skill_damage_minimum: 5
 skill_damage: "(attack, or magic attack for magic) x (1 + power / 100), then the Combat damage steps"
 magic_attack: "attack x 0.8 + INT x 1.2"
 skill_damage_maximum: 2047
@@ -212,12 +212,12 @@ and adds its power as a percent:
 \text{skill attack} = \text{attack} \times \left(1 + \frac{P}{100}\right)
 ```
 
-Then every step of a plain attack follows: × 1.2 for players (× 0.5 for monsters), the
+Then every step of a plain attack follows: × 1.0 for players (× 0.55 for monsters), the
 90% to 110% roll, the share defence takes off (magic skills: magic resistance only), a
 critical roll with your critical chance and damage, ±2% per level of difference (at most 10
 levels), Additional Damage buffs ([[skills/1211-damage-support|Damage Support]]), and
 between two players half damage, at most **45%** of the defender's max HP. A hit does at
-least **1** and at most **2047**, rounded down. A skill with power 0 hits like a plain
+least **5** and at most **2047**, rounded down. A skill with power 0 hits like a plain
 swing.
 
 Each skill's power was set once (2026-10-31) so that, at the level its skill book needs
@@ -238,11 +238,11 @@ A level 15 Muse with attack 50, INT 45 and SEN 20 casts
 no critical:
 
 - magic attack: 50 × 0.8 + 45 × 1.2 = 94; with the power: 94 × 2.2 = 206.8;
-- raw: 206.8 × 1.2 = 248.2;
-- magic resistance takes off 24 / (24 + 186.1 + 80) = 8.3%, leaving 227.7;
-- 3 levels above the HoneyBee: × 1.06 = 241.3, shown as **241**.
+- raw: 206.8 (players × 1.0);
+- magic resistance takes off 24 / (24 + 155.1 + 80) = 9.3%, leaving 187.6;
+- 3 levels above the HoneyBee: × 1.06 = 198.9, shown as **198**.
 
-The roll makes it 215 to 266. The HoneyBee has $12 \times 25 = 300$ HP, so two Ice Bolts
+The roll makes it 178 to 220. The HoneyBee has $12 \times 25 = 300$ HP, so two Ice Bolts
 kill it.
 
 ## Buffs, debuffs and heals

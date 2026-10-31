@@ -18,21 +18,21 @@ levels:
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 1'
   learn_points: 8
   cost: MP 10
-  power: 115
+  power: 116
   cooldown: 5.6
 - level: 2
   id: 1502
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 2'
   learn_points: 10
   cost: MP 12
-  power: 143
+  power: 144
   cooldown: 5.6
 - level: 3
   id: 1503
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 3'
   learn_points: 12
   cost: MP 14
-  power: 171
+  power: 172
   cooldown: 5.6
 - level: 4
   id: 1504
@@ -53,7 +53,7 @@ levels:
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 6'
   learn_points: 20
   cost: MP 20
-  power: 252
+  power: 253
   cooldown: 5.8
 - level: 7
   id: 1507

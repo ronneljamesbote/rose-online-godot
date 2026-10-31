@@ -18,70 +18,70 @@ levels:
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 1'
   learn_points: 10
   cost: MP 20
-  power: 140
+  power: 138
   cooldown: 8
 - level: 2
   id: 482
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 2'
   learn_points: 13
   cost: MP 24
-  power: 159
+  power: 157
   cooldown: 8.2
 - level: 3
   id: 483
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 3'
   learn_points: 16
   cost: MP 28
-  power: 178
+  power: 176
   cooldown: 8.4
 - level: 4
   id: 484
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 4'
   learn_points: 20
   cost: MP 32
-  power: 198
+  power: 195
   cooldown: 8.6
 - level: 5
   id: 485
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 5'
   learn_points: 25
   cost: MP 36
-  power: 217
+  power: 213
   cooldown: 8.8
 - level: 6
   id: 486
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 6'
   learn_points: 31
   cost: MP 40
-  power: 236
+  power: 232
   cooldown: 9
 - level: 7
   id: 487
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 7'
   learn_points: 38
   cost: MP 44
-  power: 255
+  power: 250
   cooldown: 9.2
 - level: 8
   id: 488
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 8'
   learn_points: 46
   cost: MP 48
-  power: 274
+  power: 269
   cooldown: 9.4
 - level: 9
   id: 489
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 9'
   learn_points: 55
   cost: MP 52
-  power: 292
+  power: 287
   cooldown: 9.6
 - level: 10
   id: 490
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 10'
   learn_points: 66
   cost: MP 60
-  power: 330
+  power: 323
   cooldown: 9.8
 source:
   data: godot/data/skills/481-heavy-bow-shot/ (levels 481, 482, 483, 484, 485, 486, 487, 488, 489, 490)

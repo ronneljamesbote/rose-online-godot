@@ -17,7 +17,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 10, [[skills/2311-zulie-bolt|Zulie Bolt]] level 5'
   learn_points: 40
   cost: Money 100, MP 20
-  power: 346
+  power: 333
   area: 13
   cooldown: 16
 - level: 2
@@ -25,7 +25,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 11'
   learn_points: 45
   cost: Money 120, MP 22
-  power: 391
+  power: 377
   area: 13.3
   cooldown: 16.4
 - level: 3
@@ -33,7 +33,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 12'
   learn_points: 51
   cost: Money 140, MP 24
-  power: 437
+  power: 420
   area: 13.6
   cooldown: 16.8
 - level: 4
@@ -41,7 +41,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 13'
   learn_points: 57
   cost: Money 160, MP 26
-  power: 482
+  power: 463
   area: 13.9
   cooldown: 17.2
 - level: 5
@@ -49,7 +49,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 14'
   learn_points: 64
   cost: Money 180, MP 28
-  power: 528
+  power: 506
   area: 14.2
   cooldown: 17.6
 - level: 6
@@ -57,7 +57,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 15'
   learn_points: 71
   cost: Money 200, MP 30
-  power: 572
+  power: 549
   area: 14.5
   cooldown: 18
 - level: 7
@@ -65,7 +65,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 16'
   learn_points: 79
   cost: Money 220, MP 32
-  power: 617
+  power: 592
   area: 14.8
   cooldown: 18.4
 - level: 8
@@ -73,7 +73,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 17'
   learn_points: 88
   cost: Money 240, MP 34
-  power: 663
+  power: 635
   area: 15.1
   cooldown: 18.8
 - level: 9
@@ -81,7 +81,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 18'
   learn_points: 98
   cost: Money 260, MP 36
-  power: 707
+  power: 677
   area: 15.4
   cooldown: 19.2
 - level: 10
@@ -89,7 +89,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 19'
   learn_points: 109
   cost: Money 300, MP 40
-  power: 775
+  power: 741
   area: 15.7
   cooldown: 19.6
 source:

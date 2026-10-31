@@ -34,7 +34,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 5'
   learn_points: 12
   cost: MP 28
-  power: 171
+  power: 172
   range: 26
   cooldown: 4.6
 - level: 4
@@ -107,7 +107,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 18'
   learn_points: 74
   cost: MP 60
-  power: 450
+  power: 449
   range: 28
   cooldown: 6.8
   duration: 20

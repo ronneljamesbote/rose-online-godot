@@ -18,70 +18,70 @@ levels:
   needs: '[[skills/1591-screw-attack|Screw Attack]] level 10'
   learn_points: 40
   cost: MP 70
-  power: 416
+  power: 401
   range: 4
   cooldown: 14
 - level: 2
   id: 1612
   learn_points: 46
   cost: MP 75
-  power: 450
+  power: 433
   range: 4.2
   cooldown: 14.4
 - level: 3
   id: 1613
   learn_points: 53
   cost: MP 80
-  power: 483
+  power: 464
   range: 4.4
   cooldown: 14.8
 - level: 4
   id: 1614
   learn_points: 61
   cost: MP 85
-  power: 517
+  power: 496
   range: 4.6
   cooldown: 15.2
 - level: 5
   id: 1615
   learn_points: 70
   cost: MP 90
-  power: 554
+  power: 531
   range: 4.8
   cooldown: 15.6
 - level: 6
   id: 1616
   learn_points: 80
   cost: MP 95
-  power: 590
+  power: 565
   range: 5
   cooldown: 16
 - level: 7
   id: 1617
   learn_points: 91
   cost: MP 100
-  power: 626
+  power: 599
   range: 5.2
   cooldown: 16.4
 - level: 8
   id: 1618
   learn_points: 104
   cost: MP 106
-  power: 662
+  power: 634
   range: 5.4
   cooldown: 16.8
 - level: 9
   id: 1619
   learn_points: 119
   cost: MP 112
-  power: 698
+  power: 668
   range: 5.6
   cooldown: 17.2
 - level: 10
   id: 1620
   learn_points: 135
   cost: MP 120
-  power: 750
+  power: 716
   range: 5.8
   cooldown: 17.6
 source:

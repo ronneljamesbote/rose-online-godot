@@ -18,70 +18,70 @@ levels:
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 11, [[skills/1501-power-attack|Power Attack]] level 10'
   learn_points: 30
   cost: MP 50
-  power: 286
+  power: 279
   cooldown: 8
 - level: 2
   id: 1512
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 12'
   learn_points: 35
   cost: MP 55
-  power: 323
+  power: 314
   cooldown: 8.4
 - level: 3
   id: 1513
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 13'
   learn_points: 41
   cost: MP 60
-  power: 360
+  power: 350
   cooldown: 8.8
 - level: 4
   id: 1514
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 14'
   learn_points: 48
   cost: MP 65
-  power: 397
+  power: 385
   cooldown: 9.2
 - level: 5
   id: 1515
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 15'
   learn_points: 56
   cost: MP 70
-  power: 433
+  power: 420
   cooldown: 9.6
 - level: 6
   id: 1516
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 16'
   learn_points: 65
   cost: MP 75
-  power: 469
+  power: 454
   cooldown: 10
 - level: 7
   id: 1517
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 17'
   learn_points: 75
   cost: MP 80
-  power: 505
+  power: 489
   cooldown: 10.4
 - level: 8
   id: 1518
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 18'
   learn_points: 87
   cost: MP 85
-  power: 542
+  power: 524
   cooldown: 10.8
 - level: 9
   id: 1519
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 19'
   learn_points: 100
   cost: MP 90
-  power: 577
+  power: 557
   cooldown: 11.2
 - level: 10
   id: 1520
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 20'
   learn_points: 115
   cost: MP 100
-  power: 632
+  power: 610
   cooldown: 11.6
 source:
   data: godot/data/skills/1511-power-burst/ (levels 1511, 1512, 1513, 1514, 1515, 1516, 1517, 1518, 1519, 1520)

@@ -962,9 +962,9 @@ fn roll_hit(rng: &mut impl Rng, attacker: &AbilityValues, defender: &AbilityValu
 // ---------------------------------------------------------------------------------------------
 
 /// Raw damage is attack × this for players (and anything a player drives).
-pub const PLAYER_RAW_SCALE: f32 = 1.2;
+pub const PLAYER_RAW_SCALE: f32 = 1.0;
 /// Raw damage is attack × this for monsters and summons.
-pub const MONSTER_RAW_SCALE: f32 = 0.5;
+pub const MONSTER_RAW_SCALE: f32 = 0.55;
 /// Defence (or magic resistance) takes off `DEF / (DEF + 0.75 × raw + 80)` of a hit.
 pub const DEFENCE_RAW_WEIGHT: f32 = 0.75;
 pub const DEFENCE_CONSTANT: f32 = 80.0;
@@ -994,7 +994,8 @@ pub const PVP_DAMAGE_SCALE: f32 = 0.5;
 pub const PVP_CAP_NORMAL: f32 = 0.25;
 pub const PVP_CAP_CRITICAL: f32 = 0.35;
 pub const PVP_CAP_SKILL: f32 = 0.45;
-pub const MIN_DAMAGE: f32 = 1.0;
+/// Every hit does at least this much (the old game's minimum too) and at most 2047.
+pub const MIN_DAMAGE: f32 = 5.0;
 pub const MAX_DAMAGE: f32 = 2047.0;
 
 /// Share of a hit (0 to 0.75) that defence or magic resistance takes off:
@@ -2387,16 +2388,16 @@ mod damage_tests {
 
     #[test]
     fn worked_example_level_60() {
-        // wiki/rules/combat.md: attack 180 against defence 160: raw 216,
-        // 160 / (160 + 162 + 80) = 39.8% off, 130 damage.
+        // wiki/rules/combat.md: attack 180 against defence 160: raw 180,
+        // 160 / (160 + 135 + 80) = 42.7% off, 103 damage.
         let a = player(60, 180, 0, 0);
         let d = monster(60, 220, 160, 120);
         let damage = hit_damage(&a, &d, &hit_of(&a, 0, false), 1.0, false);
-        assert_eq!(damage as u32, 130, "{damage}");
-        // Critical with SEN 50: 130.0 × 2.1 = 273.
+        assert_eq!(damage as u32, 103, "{damage}");
+        // Critical with SEN 50: 103.2 × 2.1 = 216.
         let a = player(60, 180, 0, 50);
         let crit = hit_damage(&a, &d, &hit_of(&a, 0, false), 1.0, true);
-        assert_eq!(crit as u32, 273, "{crit}");
+        assert_eq!(crit as u32, 216, "{crit}");
     }
 
     #[test]
@@ -2487,12 +2488,12 @@ mod damage_tests {
     }
 
     #[test]
-    fn damage_is_kept_between_1_and_2047() {
+    fn damage_is_kept_between_5_and_2047() {
         let weak = player(1, 1, 0, 0);
         let d = monster(1, 1, 100_000, 0);
         assert_eq!(
             hit_damage(&weak, &d, &hit_of(&weak, 0, false), 1.0, false),
-            1.0
+            5.0
         );
         let strong = player(200, 100_000, 0, 0);
         assert_eq!(
@@ -2554,6 +2555,7 @@ mod damage_tests {
     #[test]
     fn swings_to_kill_stay_in_a_band() {
         // Median monsters (HP, defence) and a typical sword user's attack, from the game data.
+        // The "middle ground" Ronnel picked: about 9 swings at level 10, 14 at 30, 20-23 at 60-100.
         for (level, hp, defence, attack) in [
             (10, 250.0, 45, 41),
             (30, 765.0, 83, 87),
@@ -2564,7 +2566,7 @@ mod damage_tests {
             let d = monster(level, 0, defence, 0);
             let per_hit = hit_damage(&a, &d, &hit_of(&a, 0, false), 1.0, false);
             let swings = hp / per_hit;
-            assert!((5.0..=22.0).contains(&swings), "level {level}: {swings}");
+            assert!((8.0..=25.0).contains(&swings), "level {level}: {swings}");
         }
     }
 }

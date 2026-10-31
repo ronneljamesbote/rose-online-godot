@@ -117,7 +117,7 @@ levels:
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 15'
   learn_points: 55
   cost: MP 48
-  power: 36
+  power: 37
   cooldown: 6.6
 - level: 16
   id: 2236

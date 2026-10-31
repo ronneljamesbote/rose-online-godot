@@ -23,7 +23,7 @@ levels:
   needs: '[[skills/291-spiritual-training|Spiritual Training]] level 6'
   learn_points: 15
   cost: MP 40
-  power: 223
+  power: 219
   range: 20
   cooldown: 10
   duration: 15
@@ -35,7 +35,7 @@ levels:
   needs: '[[skills/291-spiritual-training|Spiritual Training]] level 7'
   learn_points: 19
   cost: MP 42
-  power: 252
+  power: 246
   range: 20.5
   cooldown: 10.2
   duration: 15
@@ -47,7 +47,7 @@ levels:
   needs: '[[skills/291-spiritual-training|Spiritual Training]] level 8'
   learn_points: 24
   cost: MP 44
-  power: 279
+  power: 273
   range: 21
   cooldown: 10.4
   duration: 15
@@ -59,7 +59,7 @@ levels:
   needs: '[[skills/291-spiritual-training|Spiritual Training]] level 9'
   learn_points: 30
   cost: MP 46
-  power: 307
+  power: 300
   range: 21.5
   cooldown: 10.6
   duration: 15
@@ -71,7 +71,7 @@ levels:
   needs: '[[skills/291-spiritual-training|Spiritual Training]] level 10'
   learn_points: 37
   cost: MP 48
-  power: 334
+  power: 327
   range: 22
   cooldown: 10.8
   duration: 15
@@ -82,7 +82,7 @@ levels:
   id: 396
   learn_points: 46
   cost: MP 51
-  power: 362
+  power: 353
   range: 22.5
   area: 4
   cooldown: 11
@@ -94,7 +94,7 @@ levels:
   id: 397
   learn_points: 57
   cost: MP 54
-  power: 389
+  power: 380
   range: 23
   area: 4.5
   cooldown: 11.2
@@ -106,7 +106,7 @@ levels:
   id: 398
   learn_points: 70
   cost: MP 57
-  power: 417
+  power: 406
   range: 23.5
   area: 5
   cooldown: 11.4
@@ -118,7 +118,7 @@ levels:
   id: 399
   learn_points: 86
   cost: MP 60
-  power: 444
+  power: 432
   range: 24
   area: 6
   cooldown: 11.6
@@ -130,7 +130,7 @@ levels:
   id: 400
   learn_points: 105
   cost: MP 65
-  power: 485
+  power: 473
   range: 25
   area: 8
   cooldown: 11.8

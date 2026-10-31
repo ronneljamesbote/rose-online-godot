@@ -74,14 +74,14 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 9'
   learn_points: 26
   cost: MP 26
-  power: 230
+  power: 229
   cooldown: 6.8
 - level: 10
   id: 1490
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 10'
   learn_points: 29
   cost: MP 30
-  power: 262
+  power: 261
   cooldown: 6.8
 source:
   data: godot/data/skills/1481-aim-shot/ (levels 1481, 1482, 1483, 1484, 1485, 1486, 1487, 1488, 1489, 1490)

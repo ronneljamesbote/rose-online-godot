@@ -18,7 +18,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 10, [[skills/1481-aim-shot|Aim Shot]] level 10'
   learn_points: 35
   cost: MP 40
-  power: 205
+  power: 199
   range: 36
   cooldown: 9.2
 - level: 2
@@ -26,7 +26,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 11'
   learn_points: 41
   cost: MP 45
-  power: 235
+  power: 229
   range: 36.5
   cooldown: 9.8
 - level: 3
@@ -34,7 +34,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 12'
   learn_points: 48
   cost: MP 50
-  power: 266
+  power: 258
   range: 37
   cooldown: 10.4
 - level: 4
@@ -42,7 +42,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 13'
   learn_points: 56
   cost: MP 55
-  power: 296
+  power: 287
   range: 37.5
   cooldown: 11
 - level: 5
@@ -50,7 +50,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 14'
   learn_points: 65
   cost: MP 60
-  power: 326
+  power: 315
   range: 38
   cooldown: 11.6
 - level: 6
@@ -58,7 +58,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 15'
   learn_points: 75
   cost: MP 70
-  power: 355
+  power: 344
   range: 38.2
   cooldown: 13
   duration: 6
@@ -69,7 +69,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 16'
   learn_points: 87
   cost: MP 75
-  power: 386
+  power: 373
   range: 38.4
   cooldown: 13.6
   duration: 7
@@ -80,7 +80,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 17'
   learn_points: 100
   cost: MP 80
-  power: 416
+  power: 401
   range: 38.6
   cooldown: 14.2
   duration: 8
@@ -91,7 +91,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 18'
   learn_points: 115
   cost: MP 85
-  power: 445
+  power: 430
   range: 38.8
   cooldown: 14.8
   duration: 9
@@ -102,7 +102,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 20'
   learn_points: 132
   cost: MP 90
-  power: 505
+  power: 486
   range: 40
   cooldown: 15.4
   duration: 10

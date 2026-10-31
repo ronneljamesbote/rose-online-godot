@@ -109,7 +109,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 14'
   learn_points: 44
   cost: MP 46
-  power: 28
+  power: 29
   cooldown: 6.8
 - level: 15
   id: 1535

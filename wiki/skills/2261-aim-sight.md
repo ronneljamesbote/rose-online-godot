@@ -19,7 +19,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 10, [[skills/2241-intensify-weapon|Intensify Weapon]] level 5'
   learn_points: 35
   cost: MP 40
-  power: 240
+  power: 235
   range: 37
   cooldown: 13
 - level: 2
@@ -27,7 +27,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 11'
   learn_points: 40
   cost: MP 44
-  power: 267
+  power: 261
   range: 37.5
   cooldown: 12.6
 - level: 3
@@ -35,7 +35,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 12'
   learn_points: 46
   cost: MP 48
-  power: 294
+  power: 287
   range: 38
   cooldown: 12.2
 - level: 4
@@ -43,7 +43,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 13'
   learn_points: 53
   cost: MP 52
-  power: 321
+  power: 312
   range: 38.5
   cooldown: 11.8
 - level: 5
@@ -51,7 +51,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 14'
   learn_points: 60
   cost: MP 56
-  power: 347
+  power: 338
   range: 39
   cooldown: 11.4
 - level: 6
@@ -59,7 +59,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 15'
   learn_points: 68
   cost: MP 60
-  power: 374
+  power: 363
   range: 39.5
   cooldown: 11
 - level: 7
@@ -67,7 +67,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 16'
   learn_points: 77
   cost: MP 64
-  power: 400
+  power: 388
   range: 40
   cooldown: 10.6
 - level: 8
@@ -75,7 +75,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 17'
   learn_points: 87
   cost: MP 68
-  power: 426
+  power: 414
   range: 40.5
   cooldown: 10.2
 - level: 9
@@ -83,7 +83,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 18'
   learn_points: 98
   cost: MP 72
-  power: 453
+  power: 439
   range: 41
   cooldown: 9.8
 - level: 10
@@ -91,7 +91,7 @@ levels:
   needs: '[[skills/2141-arms-mastery|Arms Mastery]] level 19'
   learn_points: 111
   cost: MP 80
-  power: 487
+  power: 472
   range: 42
   cooldown: 9.4
 source:

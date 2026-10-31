@@ -53,7 +53,7 @@ levels:
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 6'
   learn_points: 19
   cost: MP 26
-  power: 50
+  power: 51
   cooldown: 4.4
 - level: 7
   id: 1547
@@ -154,7 +154,7 @@ levels:
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 20'
   learn_points: 80
   cost: MP 55
-  power: 83
+  power: 84
   cooldown: 4.8
   duration: 6
   success: 20
