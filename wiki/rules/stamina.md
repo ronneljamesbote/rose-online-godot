@@ -24,7 +24,7 @@ stamina_costs:
   - { item: "[[items/consumable/319-advanced-damage-scroll-solo|Advanced Damage Scroll]]", stamina: 1300 }
   - { item: "[[items/consumable/321-blue-icicle|Blue Icicle]], [[items/consumable/322-green-icicle|Green Icicle]], [[items/consumable/323-white-icicle|White Icicle]]", stamina: 50 }
   - { item: "[[items/consumable/381-ice-charm|Ice Charm]], [[items/consumable/382-spark-charm|Spark Charm]], [[items/consumable/383-blood-charm|Blood Charm]]", stamina: 5000 }
-  - { item: "Monster summon scrolls (e.g. [[items/consumable/401-jelly-bean|Jelly Bean]])", stamina: 100 }
+  - { item: "Monster capsules, per summon (all 38, [[items/consumable/401-jelly-bean|Jelly Bean]] to [[items/consumable/438-cherry-smouly|Cherry Smouly]])", stamina: 2000 }
 source:
   code:
     - module/src/stamina.rs (add, reward, set_stamina)
@@ -68,5 +68,9 @@ Stamina never goes above 5000; anything over is lost.
 
 Using one of the items in the cost table above runs a skill that costs stamina. If you have
 less than it costs, the item isn't used and you see "Needs 500 Stamina (you have N)".
+
+**Monster capsules** (items 401 to 438) still cost Zuly to buy; each use, which summons the
+monster inside to fight for you, costs **2000** Stamina. With the 5000 cap that is at most two
+summons from a full pool. How long a summon stays and what it does is on [[rules/skills|Skills]].
 
 > Open question: quest conditions that check Stamina always read it as 0, and quest actions that set Stamina (rather than add to it) do nothing.

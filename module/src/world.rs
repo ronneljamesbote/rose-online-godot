@@ -289,6 +289,7 @@ pub fn teleport(ctx: &ReducerContext, p: &mut Player, zone_id: u16, at: (f32, f3
             m.chase_target = None;
             ctx.db.motion().entity_id().update(m);
         }
+        crate::skills::move_summons(ctx, id, zone_id, at, t);
     }
     p.zone_id = zone_id;
     p.last_x = at.0;

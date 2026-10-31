@@ -16,7 +16,7 @@ source:
   code:
     - module/src/logout.rs (request_logout, cancel_logout, in_fight, mark_fight, cancel_for, start_linger, end_linger, tick)
     - module/src/lib.rs (client_connected, client_disconnected, leave_world, deal_damage, move_to_as, attack_as)
-    - module/src/skills.rs (cast_skill)
+    - module/src/skills.rs (cast_skill, save_summons, restore_summons)
     - godot/scripts/online.gd (logout panel, logged_out)
     - godot/scripts/main.gd (_on_logged_out)
     - godot/scripts/ui/hud/menu_bar.gd
@@ -68,7 +68,9 @@ cancels it, the character leaves when it ends, before the 60 seconds are up.
 
 Where it stands, its HP and MP are kept for the next time. A character that leaves while
 fallen first gets up at the zone's revive point (see [[rules/death|Death]]). A trade in
-progress is cancelled, and friends see you go offline.
+progress is cancelled, and friends see you go offline. Your summons leave with you and come
+back next to you when you play again, with the HP, MP and time they had left (see
+[[rules/skills|Skills]]).
 
 ## Changed from iROSE
 

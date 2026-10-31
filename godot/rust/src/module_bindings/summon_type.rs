@@ -12,6 +12,7 @@ pub struct Summon {
     pub owner_level: i32,
     pub skill_level: i32,
     pub points: u32,
+    pub expires_us: i64,
 }
 
 impl __sdk::InModule for Summon {
@@ -27,6 +28,7 @@ pub struct SummonCols {
     pub owner_level: __sdk::__query_builder::Col<Summon, i32>,
     pub skill_level: __sdk::__query_builder::Col<Summon, i32>,
     pub points: __sdk::__query_builder::Col<Summon, u32>,
+    pub expires_us: __sdk::__query_builder::Col<Summon, i64>,
 }
 
 impl __sdk::__query_builder::HasCols for Summon {
@@ -38,6 +40,7 @@ impl __sdk::__query_builder::HasCols for Summon {
             owner_level: __sdk::__query_builder::Col::new(table_name, "owner_level"),
             skill_level: __sdk::__query_builder::Col::new(table_name, "skill_level"),
             points: __sdk::__query_builder::Col::new(table_name, "points"),
+            expires_us: __sdk::__query_builder::Col::new(table_name, "expires_us"),
         }
     }
 }

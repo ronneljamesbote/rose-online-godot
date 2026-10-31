@@ -545,6 +545,7 @@ pub(crate) fn spawn_player_entity(ctx: &ReducerContext, game: &GameData, player:
         dead_until_us: None,
     });
     player.entity_id = Some(id);
+    skills::restore_summons(ctx, game, player, t);
 }
 
 fn my_player(ctx: &ReducerContext) -> Result<(Player, u64), String> {
@@ -688,6 +689,7 @@ fn leave_world(ctx: &ReducerContext, player: &mut Player) {
             player.last_hp = c.hp;
             player.last_mp = c.mp;
         }
+        skills::save_summons(ctx, player.identity, id, t);
         despawn(ctx, id);
         logout::forget(ctx, player.identity, id);
     }

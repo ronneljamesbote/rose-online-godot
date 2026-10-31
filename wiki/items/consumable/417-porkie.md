@@ -26,3 +26,6 @@ source:
 # Porkie
 
 A capsule containing a monster that will fight for you once summoned.
+
+Using it summons the monster and costs **2000** [[rules/stamina|Stamina]]. If you have less, the
+capsule isn't used.
