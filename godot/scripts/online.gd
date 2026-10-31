@@ -42,6 +42,7 @@ const HoverTooltip := preload("res://scripts/ui/hud/hover_tooltip.gd")
 const ZoneMap := preload("res://scripts/ui/zone_map.gd")
 const OptionsWindow := preload("res://scripts/ui/options_window.gd")
 const WorldOverlay := preload("res://scripts/ui/world_overlay.gd")
+const TargetMarker := preload("res://scripts/target_marker.gd")
 const PICK_RADIUS_PX := 60.0
 const ITEM_PICK_RADIUS_PX := 30.0
 const PICKUP_RANGE := 2.5  # metres; the server allows 4
@@ -120,6 +121,7 @@ var ground := {}  # drop id -> Node3D
 var _pickup := -1  # drop we are walking to
 var _talk := -1  # NPC we are walking to
 var _click_marker: Node3D  # the marker where we last clicked the ground
+var target_marker: Decal  # the ring under the selected target
 var _chasing := false  # heading for my_target (attacking it, casting at it, or selecting it)
 var _steer_target = null  # Vector3: where the held left button last sent us, or null
 var _warps: Array = []  # this zone's warp gates: id, position, size
@@ -157,6 +159,8 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 	world_overlay = WorldOverlay.new()
 	world_overlay.online = self
 	add_child(world_overlay)
+	target_marker = TargetMarker.new()
+	add_child(target_marker)
 	ui_root = UiRoot.new()
 	ui_root.name = "UiRoot"
 	layer.add_child(ui_root)
@@ -1131,9 +1135,12 @@ func _process(_delta: float) -> void:
 		_level = level
 	if my_target >= 0 and my_target != my_id:
 		var target: Node3D = entities[my_target]
-		target_frame.refresh(target, target.is_monster or (pvp and net.is_enemy_player(my_target)))
+		var enemy_player: bool = pvp and net.is_enemy_player(my_target)
+		target_frame.refresh(target, target.is_monster or enemy_player)
+		target_marker.follow(target, enemy_player)
 	else:
 		target_frame.refresh(null, false)
+		target_marker.follow(null, false)
 
 
 ## Walking into a warp gate's model asks the server to send us through (as the Bevy client
