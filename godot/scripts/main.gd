@@ -537,12 +537,30 @@ func _on_connection_failed(reason: String) -> void:
 	print("rose net: connection failed: ", reason)
 	if options.has("server") and not options.has("email"):
 		return
+	_leave_online()
+	_show_connect_panel("The server closed the connection: %s" % reason)
+
+
+## Our logout finished: close the connection and go back to the start screen.
+func _on_logged_out() -> void:
+	online.net.disconnect_from()
+	_leave_online()
+	_show_connect_panel("")
+
+
+## Drops the online game: the camera stays where our character was.
+func _leave_online() -> void:
 	if loading:
 		loading.hide_screen()
+	if camera and camera.get("target") != null and camera.target != camera_anchor:
+		if is_instance_valid(camera.target):
+			camera_anchor.global_position = camera.target.global_position
+		camera.target = camera_anchor
+	fx.online = null
 	online.queue_free()
 	online = null
+	VersionLine.net = null
 	_joined_before = false
-	_show_connect_panel("The server closed the connection: %s" % reason)
 
 
 func _go_offline() -> void:
@@ -572,6 +590,7 @@ func _go_online(uri: String, name_text: String, use_bow: bool, token := "") -> v
 		add_child(zone_preload)
 	online.warp_gate_near.connect(zone_preload.want)
 	online.connection_failed.connect(_on_connection_failed)
+	online.logged_out.connect(_on_logged_out)
 	online.create_preset = options.get("create", "")
 	online.create_after = float(options.get("create-after", "-1"))
 	online.log_positions = options.has("net-log")

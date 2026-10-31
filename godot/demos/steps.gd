@@ -14,7 +14,10 @@ extends "res://demos/demo.gd"
 ## in the chat box, for screenshots of the GM suggestions), "sheet" (prints job, level,
 ## points, stats, skill count, hotbar slots and worn weapon), "hotbarskill SLOT ID",
 ## "hotbaritem SLOT PAGE INDEX" (a bag item on hotbar key SLOT + 1), "key SLOT" (presses
-## hotbar key SLOT + 1) and "cooldowns" (prints the cooldown left on each hotbar item).
+## hotbar key SLOT + 1), "cooldowns" (prints the cooldown left on each hotbar item),
+## "logout" (presses Log out), "cancellogout", "logoutstate" (prints the countdown),
+## "waitloggedout" (waits for the start screen and ends the steps) and "shot PATH" (saves
+## a picture).
 func run() -> void:
 	var steps := String(options.get("steps", ""))
 	await get_tree().create_timer(3.0).timeout
@@ -240,6 +243,24 @@ func run() -> void:
 				var theirs: Array = online.net.get_status_effects(online.my_target) if online.my_target >= 0 else []
 				var names := func(e): return "%s %.0f s" % [e["name"], e["seconds"]]
 				print("rose net demo: my effects ", mine.map(names), ", target's ", theirs.map(names))
+			"logout":
+				online._on_menu("logout")
+				print("rose net demo: pressed Log out")
+			"cancellogout":
+				online.net.cancel_logout()
+				print("rose net demo: cancelled the logout")
+			"logoutstate":
+				print("rose net demo: logout ", online.net.logout_state())
+			"waitloggedout":
+				# The game goes back to the start screen and frees online: stop here.
+				for i in 40 * 30:
+					if not is_instance_valid(online) or online._logged_out:
+						print("rose net demo: logged out")
+						return
+					await get_tree().create_timer(0.025).timeout
+			"shot":
+				main.get_viewport().get_texture().get_image().save_png(arg)
+				print("rose net demo: saved ", arg)
 
 
 func _steps_target(which: String) -> void:

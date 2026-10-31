@@ -56,7 +56,7 @@ The owner can't move, attack, use skills (except sitting), trade or get on a car
 game says "close your shop first". The shop closes when the owner:
 
 - stands up (X, the Sit action, or the Close button);
-- dies, leaves the game or changes zone;
+- dies, leaves the game (a dropped connection closes it straight away) or changes zone;
 - has nothing left to sell or buy ("Your shop sold out" or "Your shop has nothing left to
   sell or buy").
 

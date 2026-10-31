@@ -21,6 +21,7 @@ mod shop;
 mod vehicle;
 mod game_data;
 mod items;
+mod logout;
 mod monster_brain;
 mod npcs;
 use npcs::npc;
@@ -635,6 +636,8 @@ pub fn client_connected(ctx: &ReducerContext) -> Result<(), String> {
     }
     player.online = true;
     player.connection = ctx.connection_id();
+    // Back before the character left after a dropped connection: take it over again.
+    logout::end_linger(ctx, player.identity);
     if player.entity_id.is_none() {
         spawn_player_entity(ctx, &game, &mut player);
     }
@@ -642,6 +645,9 @@ pub fn client_connected(ctx: &ReducerContext) -> Result<(), String> {
     Ok(())
 }
 
+/// The connection dropped (a crash, a lost connection, or closing the game without logging
+/// out): the character stays in the world for logout::LINGER_US before it leaves. After a
+/// finished logout it has left already.
 #[spacetimedb::reducer(client_disconnected)]
 pub fn client_disconnected(ctx: &ReducerContext) {
     let Some(mut player) = ctx.db.player().identity().find(ctx.sender()) else { return };
@@ -650,11 +656,26 @@ pub fn client_disconnected(ctx: &ReducerContext) {
     }
     player.connection = None;
     trade::cancel_for(ctx, player.identity);
+    match player.entity_id {
+        Some(id) => logout::start_linger(ctx, &player, id),
+        None if player.online => {
+            player.online = false;
+            friends::announce(ctx, &player, false);
+        }
+        None => {}
+    }
+    ctx.db.player().identity().update(player);
+}
+
+/// The character leaves the world (a finished logout, or the end of its stay after a
+/// dropped connection): where it stands, its HP and MP are kept for the next time.
+fn leave_world(ctx: &ReducerContext, player: &mut Player) {
+    trade::cancel_for(ctx, player.identity);
     // Leaving while fallen gets up at the zone's revive point first (iROSE saves the
     // character there), so logging out isn't a way back up on the spot with full HP.
     if let (Some(id), Ok(game)) = (player.entity_id, game_data::game(ctx)) {
         if ctx.db.combat().entity_id().find(id).is_some_and(|c| c.dead_until_us.is_some()) {
-            death::revive(ctx, &game, &mut player, id, false, now_us(ctx));
+            death::revive(ctx, &game, player, id, false, now_us(ctx));
         }
     }
     if let Some(id) = player.entity_id.take() {
@@ -668,10 +689,12 @@ pub fn client_disconnected(ctx: &ReducerContext) {
             player.last_mp = c.mp;
         }
         despawn(ctx, id);
+        logout::forget(ctx, player.identity, id);
     }
-    player.online = false;
-    friends::announce(ctx, &player, false);
-    ctx.db.player().identity().update(player);
+    if player.online {
+        player.online = false;
+        friends::announce(ctx, player, false);
+    }
 }
 
 // ---------------------------------------------------------------- player reducers
@@ -736,7 +759,8 @@ pub(crate) fn move_to_as(ctx: &ReducerContext, player: Player, id: u64, x: f32, 
             return Err("outside the zone".into());
         }
     }
-    // It also cancels a swing or a cast in progress.
+    // It also cancels a swing or a cast in progress, and a logout.
+    logout::cancel_for(ctx, id, "Logout cancelled: you moved");
     stand_up(ctx, id);
     cancel_attack(ctx, id, now_us(ctx));
     skills::cancel_cast(ctx, id);
@@ -789,6 +813,7 @@ pub(crate) fn attack_as(ctx: &ReducerContext, id: u64, target: u64) -> Result<()
     if current != Some(target) && skills::is_invisible(ctx, target) {
         return Err("you can't see them".into());
     }
+    logout::cancel_for(ctx, id, "Logout cancelled: you attacked");
     stand_up(ctx, id);
     skills::cancel_cast(ctx, id);
     skills::break_disguise(ctx, &game, id);
@@ -1043,6 +1068,7 @@ pub fn combat_tick(ctx: &ReducerContext, _timer: CombatTickTimer) -> Result<(), 
     let t = now_us(ctx);
     rose_game_irose::rng::reseed(ctx.rng().gen());
     area::refresh(ctx, &game, t);
+    logout::tick(ctx, t);
 
     // Monster AI first: aggro, leash, chase.
     for ai in ctx.db.monster_ai().iter() {
@@ -1338,6 +1364,8 @@ fn deal_damage(ctx: &ReducerContext, game: &GameData, attacker: u64, defender: u
         ctx.db.damage_event().insert(DamageEvent { attacker, defender, amount: 0, is_critical: false, killed: false, at_us: t });
         return false;
     }
+    // Players who hit or get hit are in a fight: no logging out for a while.
+    logout::mark_fight(ctx, [skills::controller(ctx, attacker), defender], t);
     // Trading blows holds off a monster's leash.
     for id in [attacker, defender] {
         if let Some(mut chase) = ctx.db.monster_chase().entity_id().find(id) {

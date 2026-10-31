@@ -866,6 +866,9 @@ pub fn cast_skill(ctx: &ReducerContext, page: u8, index: u16, target: Option<u64
     // During a locked-in cast the next skill waits until this one takes effect. Basic
     // actions (attack, sit) wait in their own reducers.
     let queues = skill.is_some_and(|skill| !matches!(skill.skill_type, SkillType::Passive | SkillType::BasicAction | SkillType::Emote | SkillType::CreateWindow));
+    if queues {
+        crate::logout::cancel_for(ctx, id, "Logout cancelled: you used a skill");
+    }
     if queues && queue_if_locked(ctx, id, QueuedCommand::Skill { page, index, target, x, y }) {
         return Ok(());
     }

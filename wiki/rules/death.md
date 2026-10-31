@@ -29,7 +29,7 @@ resurrection_xp_back:
 source:
   code:
     - module/src/death.rs (player_died, refund, revive, revive_point, tick, revive_player, set_save_point)
-    - module/src/lib.rs (deal_damage, kill, reward_kill, client_disconnected)
+    - module/src/lib.rs (deal_damage, kill, reward_kill, client_disconnected, leave_world)
     - module/src/character.rs (reward_xp)
     - module/src/skills.rs (resurrect, Resurrection cast)
     - crates/rose-game-irose/src/data/ability_values.rs (levelup_require_xp)
@@ -81,8 +81,10 @@ All buffs and other effects on you end when you get up.
 If you get up in a PvP zone, you can't be hurt for 30 seconds.
 
 If you don't choose within **10 minutes**, you get up at the zone's revive point by
-yourself. If you leave the game while fallen, you are first got up at the zone's revive
-point the same way, so logging out is not a way to get up where you fell.
+yourself. If your character leaves the world while fallen (a finished
+[[rules/logging-out|logout]], or 60 seconds after the connection dropped), it is first got
+up at the zone's revive point the same way, so logging out is not a way to get up where you
+fell.
 
 ## Resurrection
 
