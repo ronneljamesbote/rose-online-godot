@@ -18,7 +18,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 10, [[skills/1581-trap-shot|Trap Shot]] level 5'
   learn_points: 30
   cost: MP 30
-  power: 60
+  power: 151
   cooldown: 6
   duration: 12
   success: 70
@@ -28,7 +28,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 11'
   learn_points: 33
   cost: MP 32
-  power: 65
+  power: 159
   cooldown: 6.2
   duration: 13
   success: 72
@@ -38,7 +38,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 12'
   learn_points: 37
   cost: MP 34
-  power: 70
+  power: 167
   cooldown: 6.4
   duration: 14
   success: 74
@@ -48,7 +48,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 13'
   learn_points: 41
   cost: MP 36
-  power: 75
+  power: 176
   cooldown: 6.6
   duration: 15
   success: 76
@@ -58,7 +58,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 14'
   learn_points: 45
   cost: MP 38
-  power: 80
+  power: 184
   cooldown: 6.8
   duration: 16
   success: 78
@@ -68,7 +68,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 15'
   learn_points: 50
   cost: MP 40
-  power: 85
+  power: 192
   cooldown: 7
   duration: 17
   success: 80
@@ -78,7 +78,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 16'
   learn_points: 55
   cost: MP 42
-  power: 90
+  power: 200
   cooldown: 7.2
   duration: 18
   success: 82
@@ -88,7 +88,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 17'
   learn_points: 60
   cost: MP 44
-  power: 95
+  power: 208
   cooldown: 7.4
   duration: 19
   success: 84
@@ -98,7 +98,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 18'
   learn_points: 66
   cost: MP 46
-  power: 100
+  power: 216
   cooldown: 7.6
   duration: 20
   success: 86
@@ -108,7 +108,7 @@ levels:
   needs: '[[skills/1401-bow-mastery|Bow Mastery]] level 19'
   learn_points: 72
   cost: MP 50
-  power: 110
+  power: 233
   cooldown: 7.8
   duration: 21
   success: 90

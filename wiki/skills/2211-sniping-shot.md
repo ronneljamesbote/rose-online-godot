@@ -19,70 +19,70 @@ levels:
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 10, [[skills/2201-mighty-shot|Mighty Shot]] level 10'
   learn_points: 35
   cost: MP 45
-  power: 130
+  power: 292
   cooldown: 9.2
 - level: 2
   id: 2212
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 11'
   learn_points: 41
   cost: MP 51
-  power: 150
+  power: 327
   cooldown: 9.6
 - level: 3
   id: 2213
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 12'
   learn_points: 48
   cost: MP 57
-  power: 170
+  power: 361
   cooldown: 10
 - level: 4
   id: 2214
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 13'
   learn_points: 56
   cost: MP 63
-  power: 190
+  power: 395
   cooldown: 10.4
 - level: 5
   id: 2215
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 14'
   learn_points: 65
   cost: MP 69
-  power: 210
+  power: 430
   cooldown: 10.8
 - level: 6
   id: 2216
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 15'
   learn_points: 75
   cost: MP 75
-  power: 230
+  power: 463
   cooldown: 11.2
 - level: 7
   id: 2217
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 16'
   learn_points: 87
   cost: MP 81
-  power: 250
+  power: 497
   cooldown: 11.6
 - level: 8
   id: 2218
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 17'
   learn_points: 100
   cost: MP 87
-  power: 270
+  power: 532
   cooldown: 12
 - level: 9
   id: 2219
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 18'
   learn_points: 115
   cost: MP 93
-  power: 290
+  power: 565
   cooldown: 12.4
 - level: 10
   id: 2220
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 19'
   learn_points: 132
   cost: MP 105
-  power: 330
+  power: 633
   cooldown: 12.8
 source:
   data: godot/data/skills/2211-sniping-shot/ (levels 2211, 2212, 2213, 2214, 2215, 2216, 2217, 2218, 2219, 2220)

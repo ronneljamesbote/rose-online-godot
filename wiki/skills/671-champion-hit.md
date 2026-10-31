@@ -18,61 +18,61 @@ levels:
   needs: '[[skills/341-leap-attack|Leap Attack]] level 10'
   learn_points: 35
   cost: MP 70
-  power: 160
+  power: 312
   cooldown: 12
 - level: 2
   id: 672
   learn_points: 41
   cost: MP 74
-  power: 177
+  power: 339
   cooldown: 12.4
 - level: 3
   id: 673
   learn_points: 48
   cost: MP 78
-  power: 194
+  power: 366
   cooldown: 12.8
 - level: 4
   id: 674
   learn_points: 56
   cost: MP 82
-  power: 211
+  power: 393
   cooldown: 13.2
 - level: 5
   id: 675
   learn_points: 65
   cost: MP 86
-  power: 228
+  power: 419
   cooldown: 13.6
 - level: 6
   id: 676
   learn_points: 75
   cost: MP 90
-  power: 245
+  power: 445
   cooldown: 14
 - level: 7
   id: 677
   learn_points: 87
   cost: MP 94
-  power: 262
+  power: 472
   cooldown: 14.4
 - level: 8
   id: 678
   learn_points: 100
   cost: MP 98
-  power: 279
+  power: 499
   cooldown: 14.8
 - level: 9
   id: 679
   learn_points: 115
   cost: MP 102
-  power: 296
+  power: 525
   cooldown: 15.2
 - level: 10
   id: 680
   learn_points: 132
   cost: MP 110
-  power: 330
+  power: 578
   cooldown: 15.6
 source:
   data: godot/data/skills/671-champion-hit/ (levels 671, 672, 673, 674, 675, 676, 677, 678, 679, 680)

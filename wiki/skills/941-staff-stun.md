@@ -18,7 +18,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 4'
   learn_points: 8
   cost: MP 30
-  power: 30
+  power: 63
   cooldown: 10
   duration: 5
   success: 40
@@ -28,7 +28,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 5'
   learn_points: 11
   cost: MP 32
-  power: 34
+  power: 66
   cooldown: 9.6
   duration: 5
   success: 43
@@ -38,7 +38,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 6'
   learn_points: 14
   cost: MP 34
-  power: 38
+  power: 71
   cooldown: 9.2
   duration: 5
   success: 46
@@ -48,7 +48,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 7'
   learn_points: 18
   cost: MP 36
-  power: 42
+  power: 76
   cooldown: 8.8
   duration: 6
   success: 49
@@ -58,7 +58,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 8'
   learn_points: 23
   cost: MP 38
-  power: 46
+  power: 81
   cooldown: 8.4
   duration: 6
   success: 52
@@ -68,7 +68,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 10'
   learn_points: 29
   cost: MP 40
-  power: 50
+  power: 84
   cooldown: 8
   duration: 6
   success: 55
@@ -78,7 +78,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 12'
   learn_points: 36
   cost: MP 42
-  power: 54
+  power: 89
   cooldown: 7.6
   duration: 7
   success: 58
@@ -88,7 +88,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 14'
   learn_points: 44
   cost: MP 44
-  power: 58
+  power: 93
   cooldown: 7.2
   duration: 7
   success: 61
@@ -98,7 +98,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 16'
   learn_points: 54
   cost: MP 46
-  power: 62
+  power: 98
   cooldown: 6.8
   duration: 7
   success: 64
@@ -108,7 +108,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 18'
   learn_points: 66
   cost: MP 50
-  power: 70
+  power: 106
   cooldown: 6
   duration: 8
   success: 67

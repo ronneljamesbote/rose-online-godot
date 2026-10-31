@@ -17,14 +17,14 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 8, [[skills/1561-sprint|Sprint]] level 5'
   learn_points: 15
   cost: MP 40
-  power: 50
+  power: 116
   area: 6
   cooldown: 14
 - level: 2
   id: 1572
   learn_points: 19
   cost: MP 44
-  power: 58
+  power: 131
   area: 6.1
   cooldown: 14.6
 - level: 3
@@ -32,14 +32,14 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 9'
   learn_points: 24
   cost: MP 48
-  power: 66
+  power: 147
   area: 6.2
   cooldown: 15.2
 - level: 4
   id: 1574
   learn_points: 30
   cost: MP 52
-  power: 74
+  power: 162
   area: 6.3
   cooldown: 15.8
 - level: 5
@@ -47,7 +47,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 10'
   learn_points: 37
   cost: MP 56
-  power: 82
+  power: 178
   area: 6.4
   cooldown: 16.4
 - level: 6
@@ -55,7 +55,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 11'
   learn_points: 45
   cost: MP 60
-  power: 90
+  power: 193
   area: 6.5
   cooldown: 17
 - level: 7
@@ -63,7 +63,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 12'
   learn_points: 55
   cost: MP 64
-  power: 98
+  power: 208
   area: 6.6
   cooldown: 17.6
 - level: 8
@@ -71,7 +71,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 13'
   learn_points: 67
   cost: MP 68
-  power: 106
+  power: 223
   area: 6.7
   cooldown: 18.2
 - level: 9
@@ -79,7 +79,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 14'
   learn_points: 81
   cost: MP 72
-  power: 114
+  power: 238
   area: 6.8
   cooldown: 18.8
 - level: 10
@@ -87,7 +87,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 15'
   learn_points: 98
   cost: MP 80
-  power: 130
+  power: 268
   area: 7
   cooldown: 19.4
 source:

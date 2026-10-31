@@ -5,7 +5,8 @@ extends PanelContainer
 const STATS := [["str", "Strength"], ["dex", "Dexterity"], ["int", "Intelligence"],
 	["con", "Concentration"], ["cha", "Charm"], ["sen", "Sense"]]
 const VALUES := [["attack", "Attack"], ["defence", "Defence"], ["hit", "Hit"], ["avoid", "Avoid"],
-	["critical", "Critical"], ["resistance", "Magic resist"], ["attack_speed", "Attack speed"],
+	["critical", "Critical"], ["critical_damage", "Critical damage"], ["resistance", "Magic resist"],
+	["attack_speed", "Attack speed"],
 	["stamina", "Stamina (of 5000)"]]
 
 const HintLabel := preload("res://scripts/ui/hint_label.gd")
@@ -13,19 +14,20 @@ const HintLabel := preload("res://scripts/ui/hint_label.gd")
 ## What each basic stat and value does, shown when pointing at it. The numbers follow the
 ## server's formulas (crates/rose-game-irose/src/data/ability_values.rs; wiki/rules/stats.md).
 const HINTS := {
-	"str": "Raises attack with melee weapons, max HP, defence and how much you can carry.\nEach point: +0.75 attack with one- and two-handed melee weapons (a little more with a strong weapon), +2 max HP, +0.35 defence and +6 max weight.",
-	"dex": "Raises attack with bows, crossbows, dual swords and katars, avoid and run speed.\nEach point: +0.62 attack with bows and crossbows, +0.45 with dual swords, +0.55 with katars and +0.76 avoid. Every 5 points make you run about 1% faster.",
-	"int": "Raises max MP, magic resistance, attack with staffs and wands, magic skill damage and healing.\nEach point: +4 max MP, +0.6 magic resistance, +0.6 attack with wands, +0.4 with staffs, and heals you cast get about 0.3% stronger.",
-	"con": "Raises hit, critical, attack with guns and launchers, and how fast HP and MP come back.\nEach point: +0.8 hit (+0.5 with no weapon), +0.2 critical and +0.5 attack with guns and launchers. Every 10 points give about 3 more HP and 3 more MP every 4 seconds while sitting.",
+	"str": "Raises attack with melee weapons, launchers and no weapon, max HP, defence and how much you can carry; with bows, crossbows, katars and dual swords it raises attack speed.\nEach point: +0.75 attack with one- and two-handed melee weapons and +0.2% increased attack with them, +2 max HP, +0.35 defence, +6 max weight. With a DEX weapon: +0.3% attack speed.",
+	"dex": "Raises attack with bows, crossbows, dual swords and katars, attack speed with every other weapon, avoid and run speed.\nEach point: +0.62 attack with bows and crossbows (+0.45 dual swords, +0.55 katars) and +0.2% increased attack with them, or +0.3% attack speed with other weapons, +0.76 avoid. Every 5 points make you run about 1% faster.",
+	"int": "Raises max MP, magic resistance, attack with staffs and wands, magic skill damage and healing.\nEach point: +4 max MP, +0.6 magic resistance, +0.6 attack with wands (+0.4 with staffs) and +0.2% increased attack with them, +1.2 magic attack for magic skills, and heals you cast get about 0.3% stronger.",
+	"con": "Raises hit, critical chance, attack with guns and launchers, and how fast HP and MP come back.\nEach point: +0.8 hit (+0.5 with no weapon), +1 critical, +0.5 attack with guns and launchers, and +0.2% increased attack with guns. Every 10 points give about 3 more HP and 3 more MP every 4 seconds while sitting.",
 	"cha": "Raises quest rewards and what monsters drop for you. No combat value uses it.\nMany quest rewards of experience and Zuly grow with Charm, and equipment you get from kills is more likely to have a higher grade or an extra option.",
-	"sen": "Raises critical, attack with bows, guns, launchers and wands, and the damage of skills.\nEach point: +1 critical. Ranged weapons and wands also hit harder with more Sense, the more so the stronger the weapon, and attack and magic skills do more damage.",
-	"attack": "How hard your normal attacks hit. It comes from your weapon, your level and your stats: STR for melee weapons, DEX for bows, INT for staffs and wands.\nDamage weighs it against the target's defence, or its magic resistance for staffs and wands.",
-	"defence": "Lowers the damage you take from physical attacks.\nIt comes from your armour and shield, STR and level.",
+	"sen": "Raises critical chance and critical damage.\nEach point: +1 critical and +1.2% critical damage (a critical hit does 150% of a normal hit, plus 1.2% per point).",
+	"attack": "How hard your attacks hit. It comes from your weapon, your level and your stats, and your weapon's stat adds 0.2% per point on top: STR for melee weapons, DEX for bows, crossbows, katars and dual swords, INT for staffs and wands, CON for guns.\nA hit does attack x 1.2 (90% to 110%), less what the target's defence takes off: defence / (defence + 0.75 x hit + 80), at most 75%. Staffs and wands meet magic resistance instead.",
+	"defence": "Lowers the damage you take from physical attacks: it takes off defence / (defence + 0.75 x hit + 80) of each hit, at most 75%.\nIt comes from your armour and shield, STR and level.",
 	"hit": "How likely your attacks are to land. It is weighed against the target's avoid.\nIt comes from CON and your weapon's quality and durability.",
-	"avoid": "How likely you are to dodge an attack. It also takes a little off the damage of attacks that land.\nIt comes from DEX, level and the durability and grade of what you wear.",
-	"critical": "How likely a hit is to be critical, for much more damage.\nIt comes from SEN and CON. At level 1, 17 critical is about a 25% chance, 50 about 39%.",
-	"resistance": "Lowers the damage you take from magic: staffs, wands, magic monsters and spells.\nIt comes from your armour, INT and level.",
-	"attack_speed": "How fast you swing. At 100 an attack plays at its normal speed; higher is faster, so 200 swings twice as often.\nIt comes from your weapon (lower weapon speed is faster) and some passive skills.",
+	"avoid": "How likely you are to dodge an attack. It is weighed against the attacker's hit.\nIt comes from DEX, level and the durability and grade of what you wear.",
+	"critical": "Your critical rating, and in brackets the chance that a hit is critical. The chance is 5% + 45% x rating / (rating + 1.5 x level + 60), at most 50%, so the same rating counts for less as you level up.\nIt comes from CON and SEN (one each per point) and some items and passive skills.",
+	"critical_damage": "How hard a critical hit is, compared with a normal one: 150% plus 1.2% per point of SEN.",
+	"resistance": "Lowers the damage you take from magic (staffs, wands, magic monsters and magic skills): it takes off resistance / (resistance + 0.75 x hit + 80) of each hit, at most 75%.\nIt comes from your armour, INT and level.",
+	"attack_speed": "How fast you swing. At 100 an attack plays at its normal speed; higher is faster, so 200 swings twice as often. In brackets what your stats add.\nIt comes from your weapon (lower weapon speed is faster), some passive skills and +0.3% per point of DEX (STR with bows, crossbows, katars and dual swords).",
 	"stamina": "Some scrolls and charms spend stamina instead of MP.\nYou earn it from monster kills (much more at low levels) and from Vital Jam and Stamina items. It stops at 5000.",
 	"stat_points": "You get stat points every level. Press + next to a stat to spend them.\nRaising a stat by 1 costs its current value divided by 5, so higher stats cost more.",
 	"skill_points": "You get skill points as you level up. Spend them in the skill window (K) to learn skills and raise their level.",
@@ -128,3 +130,7 @@ func _process(_delta: float) -> void:
 		button.tooltip_text = "Costs %d stat points" % cost if cost >= 0 else "At the maximum"
 	for key in value_labels:
 		value_labels[key].text = str(c.get(key, ""))
+	if c.has("critical_chance"):
+		value_labels["critical"].text = "%d (%.1f%%)" % [c["critical"], c["critical_chance"]]
+		value_labels["critical_damage"].text = "%d%%" % int(c["critical_damage"])
+		value_labels["attack_speed"].text = "%d (+%.0f%%)" % [c["attack_speed"], c["attack_speed_bonus"]]

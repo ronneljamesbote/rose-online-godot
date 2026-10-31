@@ -66,7 +66,26 @@ pub fn skill_dict(skill: &SkillData) -> VarDictionary {
         lines.push(format!("Area {:.1} m", skill.scope as f32 / 100.0));
     }
     if skill.power > 0 && !matches!(skill.skill_type, SkillType::Passive) {
-        lines.push(format!("Power {}", skill.power));
+        // Damaging skills hit for attack (magic attack for magic) + power percent.
+        let damaging = matches!(
+            skill.skill_type,
+            SkillType::Immediate
+                | SkillType::EnforceWeapon
+                | SkillType::EnforceBullet
+                | SkillType::FireBullet
+                | SkillType::AreaTarget
+                | SkillType::SelfDamage
+                | SkillType::SelfAndTarget
+        );
+        if damaging {
+            let base = match skill.damage_type {
+                rose_data::SkillDamageType::MagicAttack | rose_data::SkillDamageType::NaturalMagic => "magic attack",
+                _ => "attack",
+            };
+            lines.push(format!("Damage {base} +{}%", skill.power));
+        } else {
+            lines.push(format!("Power {}", skill.power));
+        }
     }
     let seconds = skill.status_effect_duration.as_secs();
     if seconds > 0 {

@@ -21,10 +21,15 @@ pvp_zones:
 revive_shield_s: 30
 xp_lost_when_killed_by_player: 0
 xp_for_killing_a_player: 0
+pvp_damage_scale: 0.5
+pvp_damage_cap_normal: "25% of the target's max HP"
+pvp_damage_cap_critical: "35% of the target's max HP"
+pvp_damage_cap_skill: "45% of the target's max HP"
 source:
   code:
     - module/src/pvp.rs (zone_pvp, players_hostile, can_attack)
     - module/src/lib.rs (attack, combat tick, deal_damage, kill)
+    - crates/rose-game-irose/src/data/ability_values.rs (hit_damage, PVP_DAMAGE_SCALE, PVP_CAP_NORMAL, PVP_CAP_CRITICAL, PVP_CAP_SKILL)
     - module/src/skills.rs (target checks, controller)
     - module/src/death.rs (player_died, revive, is_shielded)
     - module/src/shop.rs (open_shop)
@@ -57,7 +62,8 @@ the name tags of players you may attack turn red.
 ## Fighting other players
 
 - Attacks and skills against a player use the same [[rules/combat|combat]] formulas as
-  against a monster. There is no PvP damage reduction.
+  against a monster, then the damage is **halved**. One hit takes at most **25%** of the
+  target's max HP (a critical hit **35%**, a skill **45%**).
 - Your summons count as you: they can attack the players you can attack, and players can
   attack your summons where they could attack you.
 - Skills that only work on allies (heals, buffs) can't be used on a player who is your
@@ -85,6 +91,8 @@ the name tags of players you may attack turn red.
 
 ## Changed from iROSE
 
+- Damage between players (2026-10-31) is the normal damage halved, with the 25%, 35% and 45%
+  caps; iROSE used separate player-against-player formulas.
 - Clans don't exist yet, so "except your clan" zones let everyone fight, and the clan war
   zone has no fighting.
 

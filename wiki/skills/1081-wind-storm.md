@@ -18,7 +18,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 8'
   learn_points: 25
   cost: MP 50
-  power: 60
+  power: 103
   area: 10
   cooldown: 14
 - level: 2
@@ -26,7 +26,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 9'
   learn_points: 30
   cost: MP 57
-  power: 75
+  power: 143
   area: 10.1
   cooldown: 14.4
 - level: 3
@@ -34,7 +34,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 10'
   learn_points: 36
   cost: MP 64
-  power: 90
+  power: 183
   area: 10.2
   cooldown: 14.8
 - level: 4
@@ -42,7 +42,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 11'
   learn_points: 43
   cost: MP 71
-  power: 105
+  power: 222
   area: 10.3
   cooldown: 15.2
 - level: 5
@@ -50,7 +50,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 12'
   learn_points: 51
   cost: MP 78
-  power: 120
+  power: 261
   area: 10.4
   cooldown: 15.6
 - level: 6
@@ -58,7 +58,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 13'
   learn_points: 60
   cost: MP 85
-  power: 135
+  power: 300
   area: 13
   cooldown: 16
 - level: 7
@@ -66,7 +66,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 14'
   learn_points: 71
   cost: MP 92
-  power: 150
+  power: 338
   area: 13.1
   cooldown: 16.4
 - level: 8
@@ -74,7 +74,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 16'
   learn_points: 83
   cost: MP 99
-  power: 165
+  power: 378
   area: 13.2
   cooldown: 16.8
 - level: 9
@@ -82,7 +82,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 18'
   learn_points: 97
   cost: MP 106
-  power: 180
+  power: 417
   area: 13.3
   cooldown: 17.2
 - level: 10
@@ -90,7 +90,7 @@ levels:
   needs: '[[skills/801-staff-mastery|Staff Mastery]] level 20'
   learn_points: 114
   cost: MP 120
-  power: 200
+  power: 468
   area: 14
   cooldown: 17.6
 source:

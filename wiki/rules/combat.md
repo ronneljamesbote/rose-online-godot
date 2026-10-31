@@ -8,8 +8,14 @@ range_slack_m: 0.5
 chase_repath_m: 1
 min_attack_speed: 30
 max_damage: 2047
-min_damage_normal: 5
-min_damage_critical: 10
+min_damage: 1
+player_raw_scale: 1.2
+monster_raw_scale: 0.5
+damage_spread: "90% to 110%"
+damage_reduction: "DEF / (DEF + 0.75 x raw + 80), at most 75%"
+max_damage_reduction: "75%"
+level_gap: "2% per level, at most 10 levels"
+pvp_damage_scale: 0.5
 pvp_damage_cap_normal: "25% of the target's max HP"
 pvp_damage_cap_critical: "35% of the target's max HP"
 hit_chance: "100 x hit / (hit + avoid x 0.3) + 1.5 x level difference"
@@ -24,22 +30,27 @@ hit_chances:
   - { attacker: "level 30, hit 129", defender: "level 50, avoid 87", chance: "68%" }
   - { attacker: "level 30, hit 129", defender: "level 20, avoid 47", chance: "95%" }
   - { attacker: "level 1, hit 63", defender: "level 4, avoid 7", chance: "92%" }
-critical_roll: 20
 attack_motions:
   - { weapon: "No weapon", motion: "1.000 s", hit_frame: "0.400 s" }
   - { weapon: "One-handed sword", motion: "1.233 s", hit_frame: "0.566 s" }
   - { weapon: "Two-handed sword", motion: "1.233 s", hit_frame: "0.600 s" }
+critical_chance: "5% + 45% x rating / (rating + 1.5 x level + 60), at most 50%"
+critical_damage: "150% + 1.2% per point of SEN"
+monster_critical: "5% chance, 150% damage"
 critical_chances:
-  - { level: 1, critical: 17, chance: "25%" }
-  - { level: 1, critical: 50, chance: "39%" }
-  - { level: 10, critical: 30, chance: "28%" }
-  - { level: 30, critical: 60, chance: "34%" }
-  - { level: 50, critical: 100, chance: "44%" }
-  - { level: 100, critical: 150, chance: "48%" }
+  - { level: 1, rating: 25, chance: "18.0%" }
+  - { level: 10, rating: 50, chance: "23.0%" }
+  - { level: 30, rating: 80, chance: "24.5%" }
+  - { level: 60, rating: 100, chance: "23.0%" }
+  - { level: 60, rating: 200, chance: "30.7%" }
+  - { level: 100, rating: 150, chance: "23.8%" }
+damage_examples:
+  - { attack: 22, defence: "29 (level 4)", level: 1, damage: 19, critical: 31 }
+  - { attack: 180, defence: 160, level: "60 vs 60", damage: 130, critical: "273 (SEN 50)" }
 source:
   code:
     - module/src/lib.rs (combat_tick, attack, move_to, stop, sit, cancel_attack, attack_interval_us, attack_windup_us, deal_damage, kill, COMBAT_TICK_MS, RANGE_SLACK_CM, CHASE_REPATH_CM)
-    - crates/rose-game-irose/src/data/ability_values.rs (calculate_damage, hit_chance, hit_chance_from, roll_hit, calculate_damage_success_rate, calculate_attack_damage_physical, calculate_attack_damage_magic, calculate_npc)
+    - crates/rose-game-irose/src/data/ability_values.rs (calculate_damage, hit_chance, hit_chance_from, roll_hit, roll_damage, hit_damage, damage_reduction, critical_chance, critical_chance_of, critical_damage_percent, level_gap_multiplier, calculate_npc; the constants above them)
     - crates/rose-game-common/src/components/ability_values.rs (AbilityValues getters)
     - module/src/character.rs (player_stats)
     - module/src/world.rs (npc_stats_for)
@@ -54,11 +65,11 @@ source:
 Click a monster to attack it. If it is too far away your character runs to it, stops when
 it is in reach and swings again and again until it dies, you click somewhere else or you
 press S (stop). Space attacks the nearest monster. Each swing can **miss**, **hit** or hit
-**critically**, and the damage depends on your attack against the target's defence (or
-magic resistance for magic). Monsters fight the same way, with the same formulas.
+**critically**, and the damage is your attack, less a share that the target's defence (or
+magic resistance for magic) takes off. Monsters fight the same way, with the same formulas.
 
 Where attack, hit, defence and the other values come from is on [[rules/stats|Stats]].
-Skills use their own damage formulas, on [[rules/skills|Skills]]. Fighting other players is
+Skills use the same damage steps with their power added, on [[rules/skills|Skills]]. Fighting other players is
 on [[rules/pvp|PvP]], and what happens when you fall is on [[rules/death|Death]].
 
 ## How a fight runs
@@ -98,10 +109,11 @@ lengthens both:
 \text{time to the hit} = \text{hit frame time} \times \frac{100}{\max(\text{attack speed}, 30)}
 ```
 
-**Worked example:** a Short Sword (attack speed 107) uses the one-handed sword animation,
-1.233 s long with its hit frame at 0.566 s. A swing takes 1.233 × 100 / 107 = **1.152 s**
-and the damage lands 0.566 × 100 / 107 = **0.529 s** after it starts. With no weapon
-(speed 115): 1.000 × 100 / 115 = 0.870 s per swing, hit after 0.348 s.
+**Worked example:** a new character's Short Sword (attack speed 111 with 15 DEX, see
+[[rules/stats|Stats]]) uses the one-handed sword animation, 1.233 s long with its hit frame
+at 0.566 s. A swing takes 1.233 × 100 / 111 = **1.111 s** and the damage lands
+0.566 × 100 / 111 = **0.510 s** after it starts. With no weapon (speed 120):
+1.000 × 100 / 120 = 0.833 s per swing, hit after 0.333 s.
 
 The player, monster and NPC animations' lengths and hit frames come from `export/motions.toml`, which is
 exported from the hit markers of the Godot animations (`godot/assets/README.md`), so the
@@ -162,103 +174,67 @@ level 20 one 95%.
 [[monsters/2-jelly-bean|Jelly Bean]] (level 4, avoid 7):
 100 × 63 / (63 + 2.1) = 96.8, minus 1.5 × 3 = 4.5, so **92%** of swings hit.
 
-A hit then rolls a **success** value `S` that only scales the damage below (a ±10% effect).
-Against a monster, or for a monster attacking you:
-
-```math
-v = (L_a + 10) - \lfloor L_d \times 1.1 \rfloor + \text{rand}(1..50)
-```
-
-```math
-S = \left\lfloor v \times \frac{\text{hit}_a \times 1.1 - \text{avoid}_d \times 0.93 + \text{rand}(1..60) + 5 + L_a \times 0.2}{80} \right\rfloor
-```
-
-(`S` is 0 if `v` is 0 or less.) Between two players:
-
-```math
-S = 40 - 60 \times \left\lfloor \frac{\text{hit}_a + \text{avoid}_d}{\max(\text{avoid}_a, 1)} \right\rfloor + \text{rand}(1..100)
-```
-
-On a hit `S` is raised to at least **20**.
-
 A miss shows "Miss" over the target.
 
 ## Critical hits
 
-Each swing that doesn't miss rolls for a critical hit:
+Each swing that hits rolls for a critical hit. Your **critical rating** is your CON plus
+your SEN (plus critical from items, passive skills and buffs, see [[rules/stats|Stats]]).
+The chance is
 
 ```math
-c = \left\lfloor \frac{16 \times (3 \times \text{rand}(1..100) + L_a + 30)}{\text{critical}_a + 70} \right\rfloor
+\text{chance} = 5\% + 45\% \times \frac{\text{rating}}{\text{rating} + 1.5 \times L_a + 60}
 ```
 
-It is critical when `c` is **below 20**. Higher critical makes it more likely; higher level
-makes it slightly less likely. Table `critical_chances` lists some exact chances.
+at most **50%**. With no rating it is 5%. The same rating counts for less as you level up,
+so it has to keep growing: rating 100 is a 23% chance at level 60 and 19% at level 100.
+Table `critical_chances` lists some chances.
 
-**Worked example:** level 1, critical 17: 16 × (3r + 31) / 87 is below 20 for r up to 25,
-so the chance is **25%**. A Jelly Bean (level 4, critical 4 × 2.5 = 10) has 21%.
+A critical hit does **150%** of a normal hit, plus **1.2%** per point of SEN (SEN 50: 210%).
+
+Monsters and summons have no rating: they crit a flat **5%** of the time, for 150%.
+
+**Worked example:** a new character (level 1, CON 15, SEN 10) has rating 25:
+5 + 45 × 25 / (25 + 1.5 + 60) = 5 + 13.0 = **18.0%**, and a critical does 150 + 12 = 162%.
 
 ## Damage
 
-`ATK` is the attacker's attack, `S` the success value, `DEF` the defender's defence, `RES`
-its magic resistance and `AVO` its avoid.
+`ATK` is the attacker's attack, `DEF` the defender's defence (its magic resistance `RES`
+for magic), `L_a` and `L_d` the levels. A hit that lands goes through these steps:
 
-### Physical damage
+1. **Raw damage.** Players: ATK × **1.2**; monsters and summons: ATK × **0.5**. Then a
+   random roll from **90% to 110%**.
+2. **Defence.** Defence takes off a share of the raw damage:
 
-Normal hit:
+   ```math
+   \text{damage} = \text{raw} \times \left(1 - \frac{\text{DEF}}{\text{DEF} + 0.75 \times \text{raw} + 80}\right)
+   ```
 
-```math
-\text{damage} = \text{ATK} \times (S \times 0.03 + 26) \times \frac{\text{ATK} - \text{DEF} + 250}{145 \times (\text{DEF} + \text{AVO} \times 0.4 + 5)}
-```
+   at most **75%** is taken off. A bigger hit loses a smaller share, so defence matters
+   most against weak hits and never makes a strong hit useless. Avoid does not lower damage;
+   it only lowers the hit chance above.
+3. **Magic.** Weapons marked as magic (staffs and wands) and monsters with magic attacks
+   use the target's magic resistance instead of defence, and nothing else.
+4. **Critical.** A critical hit multiplies it by the critical damage above.
+5. **Level gap.** **+2%** for each level the attacker is above the defender, **−2%** for
+   each level below, counting at most 10 levels (so 80% to 120%).
+6. **Buffs.** Damage-up buffs add their percent (see [[rules/status-effects|Status effects]]).
+7. **Hits.** Times the number of hits in the attack animation (1 for most weapons).
+8. **Between players** the damage is halved, then kept to at most **25%** of the target's
+   max HP (a critical at most **35%**). A summon counts as a monster here.
+9. At least **1**, at most **2047**, rounded down.
 
-Critical hit:
+Table `damage_examples` lists the examples below.
 
-```math
-\text{damage} = \text{ATK} \times (S \times 0.05 + 29) \times \frac{\text{ATK} - \text{DEF} + 230}{100 \times (\text{DEF} + \text{AVO} \times 0.3 + 5)}
-```
+**Worked example:** the level 1 character from [[rules/stats|Stats]] (attack 22) hits a
+[[monsters/2-jelly-bean|Jelly Bean]] (level 4, defence 29) with a middle roll (100%):
+raw 22 × 1.2 = 26.4; defence takes off 29 / (29 + 19.8 + 80) = 22.5%, leaving 20.46;
+3 levels below is −6%: 20.46 × 0.94 = 19.2, so **19** damage. A critical:
+19.2 × 1.62 = **31**. A Jelly Bean has 4 × 30 = 120 HP, so it takes about six hits.
 
-### Magic damage
-
-Weapons marked as magic (staffs and wands) and monsters with magic attacks use magic
-resistance instead of defence. Normal hit:
-
-```math
-\text{damage} = \text{ATK} \times (S \times 0.03 + 30) \times \frac{\text{ATK} - \text{DEF} \times 0.8 + 280}{280 \times (\text{RES} + \text{AVO} \times 0.3 + 5)}
-```
-
-Critical hit:
-
-```math
-\text{damage} = \text{ATK} \times (S \times 0.05 + 33) \times \frac{\text{ATK} - \text{DEF} \times 0.8 + 310}{200 \times (\text{RES} + \text{AVO} \times 0.3 + 5)}
-```
-
-### Between players
-
-When a player hits another player, other numbers are used (a summon counts as a monster
-here):
-
-| Hit | Formula |
-| --- | --- |
-| Physical | ATK × (S × 0.05 + 25) × (ATK - DEF + 400) / (420 × (DEF + AVO × 0.4 + 5)) + 20 |
-| Physical critical | ATK × (S × 0.05 + 35) × (ATK - DEF + 430) / (300 × (DEF + AVO × 0.4 + 10)) + 25 |
-| Magic | ATK × (S × 0.06 + 29) × (ATK - DEF × 0.8 + 350) / (640 × (RES + AVO × 0.3 + 5)) + 20 |
-| Magic critical | ATK × (S × 0.05 + 33) × (ATK - DEF + 340) / (360 × (RES + AVO × 0.3 + 20)) + 25 |
-
-A hit between players does at most 25% of the target's max HP, a critical at most 35%.
-
-### Final steps
-
-1. Damage-up buffs add their percent (see [[rules/status-effects|Status effects]]).
-2. The damage is multiplied by the number of hits in the attack animation (1 for most
-   weapons), then raised to at least **5** (normal) or **10** (critical).
-3. The player against player cap above, then a cap of **2047** for everyone.
-4. Rounded down.
-
-**Worked example:** the level 1 character above (attack 21) hits a Jelly Bean (defence 29,
-avoid 7) with success 40:
-21 × (40 × 0.03 + 26) × (21 - 29 + 250) / (145 × (29 + 2.8 + 5)) = 21 × 27.2 × 242 / 5336
-= 25.9, so **25** damage. A critical with the same roll:
-21 × 31 × 222 / (100 × 36.1) = 40.0, so **40**. A Jelly Bean has 4 × 30 = 120 HP, so it
-takes about five hits.
+**Worked example:** a level 60 player with attack 180 hits a level 60 monster with
+defence 160: raw 216, defence takes off 160 / (160 + 162 + 80) = 39.8%, so **130** damage.
+With SEN 50 a critical does 130 × 2.1 = **273**.
 
 ## Monster attacks
 
@@ -266,15 +242,17 @@ Monsters use the same rules. Their values come from the monster data (see
 [[monsters|Monsters]]):
 
 - Max HP is the monster's level × its HP per level (`hp_per_level` on the monster page; the page's `hp` already shows the result).
-- Critical is level × 2.5, rounded down.
+- Raw damage is their attack × 0.5, and they crit a flat 5% for 150% (above).
 - Range and attack speed are the numbers in the data, with nothing added.
 - Each monster type has its own attack animation and hit frame, from `export/motions.toml`
   like the player's. Several monsters can share one animation (Mini-Jelly Bean and Jelly
   Bean do), so moving its hit marker moves all of their hits.
 
-**Worked example:** a Jelly Bean (attack 4, level 4) hits the level 1 character (defence 30,
-avoid 25): 4 × 27.2 × 224 / (145 × 45) = 3.7, raised to the minimum of **5**. Its
-critical hits do 10.
+**Worked example:** a Jelly Bean (attack 4, level 4) hits the level 1 character (defence
+30): raw 4 × 0.5 = 2; defence takes off 30 / (30 + 1.5 + 80) = 26.9%, leaving 1.46; it is 3
+levels above: × 1.06 = 1.55, so **1** damage. A level 60 monster with attack 221 against a
+level 60 player with defence 140: raw 110.5, defence takes off 140 / (140 + 82.9 + 80) =
+46.2%, so **59**.
 
 A monster that is hit fights back, or runs its own reaction (calling friends, using a
 skill). A monster dragged more than 30 m from where its fight began (and no longer
@@ -296,10 +274,23 @@ Killing a monster shows "+N XP" over you (see [[rules/experience|Experience]]).
 - The server resolves fights on a 100 ms tick, with the timing rules above. Cancelling a
   swing before its hit frame gives the time back.
 - Hit or miss is our own formula (hit against avoid, ±1.5% per level, 5% to 95%). iROSE
-  rolled the success value above and missed below 20 unless a lucky roll (rand(1..100) +
+  rolled a success value and missed below 20 unless a lucky roll (rand(1..100) +
   0.6 × level difference ≥ 94) saved it, so each level the target was above you cost about
   2% and 10+ levels above often meant a sure miss, while targets below you could never dodge.
   Between players iROSE divided by the attacker's own avoid, so about 93% of plain attacks
-  missed. In our game the success value only scales damage.
+  missed.
+- Damage is our own formula (2026-10-31). iROSE multiplied attack by a success roll and
+  divided by defence plus avoid, so defence counted twice and fights got much slower with
+  level (a same-level monster took about 4 swings at level 1, 50 at level 60 and 130 past
+  level 80). Ours takes a share off for defence (at most 75%), so a same-level monster takes
+  about 6 to 23 swings at every level. Avoid only changes the hit chance, magic meets only
+  magic resistance, hits roll 90% to 110%, and the level gap counts ±2% per level, at most
+  10 levels.
+- Critical hits: iROSE rolled 16 × (3 × rand(1..100) + level + 30) / (critical + 70) below
+  20, and monsters had critical = level × 2.5, so monsters crit 40% of the time at level 30
+  and always from level 120. Ours: the chance formula above for players (at most 50%), a
+  flat 5% for monsters, and critical damage from SEN.
+- Between players iROSE used separate formulas; ours is the same damage halved, with the
+  same 25% and 35% caps.
 - iROSE makes a hard hit interrupt the target (hit stun). Our server works out the same
   check but does not apply it yet, so being hit never interrupts you.

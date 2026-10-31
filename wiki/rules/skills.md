@@ -12,7 +12,9 @@ minimum_cast_time_s: 0.3
 cast_grace_window_s: 0.3
 range_slack_m: 0.5
 default_cast_range: the caster's attack range (when the skill has no range)
-skill_damage_minimum: 5
+skill_damage_minimum: 1
+skill_damage: "(attack, or magic attack for magic) x (1 + power / 100), then the Combat damage steps"
+magic_attack: "attack x 0.8 + INT x 1.2"
 skill_damage_maximum: 2047
 pvp_skill_damage_cap: 45% of the target's max HP
 base_summon_points: 50
@@ -25,7 +27,7 @@ skill_damage_types:
   - { type: weapon attack, hit_check: "the plain attack hit chance (Combat, Hit or miss)", on_miss: "0 damage, no effects" }
   - { type: magic attack, hit_check: "never misses" }
   - { type: natural magic, hit_check: "never misses" }
-  - { type: continuous attack, hit_check: "(L_a + 8 - L_d + 1..80) x (Hit - 0.6 Avoid + 1..50 + 50) / 90", miss_below: 10, weak_below: 20 }
+  - { type: continuous attack, hit_check: "(L_a + 8 - L_d + 1..80) x (Hit - 0.6 Avoid + 1..50 + 50) / 90", miss_below: 10 }
 cost_types:
   - { cost: MP, rule: "lowered by the caster's Save Mana %, rounded down" }
   - { cost: HP, rule: "can't take you below 1 HP" }
@@ -39,7 +41,7 @@ source:
     - module/src/items.rs (use_item, skill books and scrolls)
     - module/src/character.rs (reward_xp, skill points on level up)
     - module/src/lib.rs (deal_damage, combat_tick, move_to, attack, stop, sit)
-    - crates/rose-game-irose/src/data/ability_values.rs (calculate_skill_damage, calculate_skill_adjust_value, calculate_npc, calculate_levelup_reward_skill_points)
+    - crates/rose-game-irose/src/data/ability_values.rs (calculate_skill_damage, roll_damage, hit_damage, magic_attack, calculate_skill_adjust_value, calculate_npc, calculate_levelup_reward_skill_points)
     - crates/rose-data-irose/src/skill_database.rs (get_cooldown, load_skill)
   data: the skill resources in godot/data/skills/ (a folder per skill, a file per level), the status effects in godot/data/status_effects/, the job classes in godot/data/job_classes/, the monster resources in godot/data/monsters/ (summons)
 ---
@@ -181,68 +183,47 @@ Return scrolls are warp skills: they move you to the zone and spot in the skill'
 ## Skill damage
 
 Damaging skills (the ones with a `power` column) hit each target once. First a hit check
-decides how well the skill lands, then the damage formula for the skill's `damage_type`
-runs. $L_a$ and $L_d$ are the attacker's and defender's levels, $P$ is the skill's power,
-$A$ the attacker's attack power, $I$ its INT, $S$ its Sense, $C$ its critical, and $D$, $R$,
-$V$ the defender's defence, magic resistance and avoid. $r$ is a random whole number from 1
-to 30, and "1..n" is a random whole number from 1 to n.
+decides whether the skill lands, then the skill does the same damage as a plain attack
+([[rules/combat|Combat]] "Damage") with its power added.
 
 **Hit check.** It depends on the damage type (see `skill_damage_types` above):
 
 - **Weapon attack** skills roll the same hit chance as a plain attack (hit against avoid,
   ±1.5% per level, 5% to 95%, on [[rules/combat|Combat]] "Hit or miss"). A miss shows
-  "Miss", does no damage and gives no status effects. A hit uses the full formula.
-- **Magic attack** and **natural magic** skills never miss and always use the full formula.
-- **Continuous attack** (no skill uses it) keeps the iROSE check
-  $(L_a + 8 - L_d + \text{1..80}) \times (\text{Hit}_a - 0.6\,V + \text{1..50} + 50) / 90$: below
-  10 it misses, from 10 to 20 it is a weak hit, 20 or more a full hit.
+  "Miss", does no damage and gives no status effects.
+- **Magic attack** and **natural magic** skills never miss.
+- **Continuous attack** skills (the double hits:
+  [[skills/321-double-attack|Double Attack]], [[skills/1521-double-shot|Double Shot]],
+  [[skills/1541-double-slash|Double Slash]], [[skills/2221-twin-bullets|Twin Bullets]],
+  [[skills/941-staff-stun|Staff Stun]]) keep the iROSE check
+  $(L_a + 8 - L_d + \text{1..80}) \times (\text{Hit}_a - 0.6\,\text{Avoid}_d + \text{1..50} + 50) / 90$:
+  below 10 they miss, otherwise they hit in full.
 
-**Weapon attack.**
-
-```math
-\text{full} = \frac{(P + 0.2\,A)(A + 60)(r + 0.7\,S + 370) \times 0.01 \times (120 - L_d + L_a)}{(D + 0.8\,R + 0.4\,V + 20) \times 270} + 20
-```
-
-**Magic attack.**
+**Damage.** A skill starts from your attack (weapon attack and continuous attack skills)
+or your **magic attack** (magic attack and natural magic skills):
 
 ```math
-\text{full} = \frac{P\,(0.8\,A + 1.2\,I + 100)(r + 0.7\,S + 350) \times 0.01 \times (150 - L_d + L_a)}{(0.3\,D + R + 0.3\,V + 60) \times 350} + 20
+\text{magic attack} = \text{attack} \times 0.8 + \text{INT} \times 1.2
 ```
 
-**Natural magic.**
+and adds its power as a percent:
 
 ```math
-\text{full} = \frac{(P + 35)(P + I + 140)(r + S + 380) \times 0.01 \times (150 - L_d + L_a)}{(0.35\,D + 1.2\,R + 0.4\,V + 10) \times 730} + 20
+\text{skill attack} = \text{attack} \times \left(1 + \frac{P}{100}\right)
 ```
 
-**Continuous attack.**
+Then every step of a plain attack follows: × 1.2 for players (× 0.5 for monsters), the
+90% to 110% roll, the share defence takes off (magic skills: magic resistance only), a
+critical roll with your critical chance and damage, ±2% per level of difference (at most 10
+levels), Additional Damage buffs ([[skills/1211-damage-support|Damage Support]]), and
+between two players half damage, at most **45%** of the defender's max HP. A hit does at
+least **1** and at most **2047**, rounded down. A skill with power 0 hits like a plain
+swing.
 
-```math
-\text{weak} = \frac{0.4\,(P + 40)(A + 40)(r + 0.2\,C + 40)}{(D + 0.3\,R + 0.4\,V + 10) \times 80} + 5
-```
-
-```math
-\text{full} = \frac{(P + 0.15\,C + 40)\,A\,(r + 0.32\,C + 35) \times 0.01 \times (120 - L_d + L_a)}{(D + 0.3\,R + 0.4\,V + 10) \times 100} + 20
-```
-
-**Player against player.** When both sides are player characters, the full hit uses
-different numbers:
-
-| Type | Full hit between players |
-| --- | --- |
-| weapon attack | $(P + 0.2A)(A + 60)(r + 0.7S + 370) \times 0.01 \times (320 - L_d + L_a) / (D + 0.8R + 0.4V + 40) / 1600 + 60$ |
-| magic attack | $(P + 50)(0.8A + 1.2I + 100)(r + 0.7S + 350) \times 0.01 \times (380 - L_d + L_a) / (0.4D + R + 0.3V + 60) / 2500 + 60$ |
-| natural magic | $(P + 35)(P + I + 140)(r + S + 380) \times 0.01 \times (400 - L_d + L_a) / (0.5D + 1.2R + 0.4V + 20) / 3400 + 40$ |
-| continuous attack | $(P + 0.15C + 40)\,A\,(r + 0.32C + 35) \times 0.01 \times (350 - L_d + L_a) / (D + 0.3R + 0.4V + 35) / 400 + 20$ |
-
-**Then, for every type:**
-
-1. An **Additional Damage** buff adds its percentage
-   ([[skills/1211-damage-support|Damage Support]]).
-2. A hit does at least **5** damage (a missed weapon skill does 0).
-3. Between two players it is at most **45%** of the defender's max HP.
-4. It is at most **2047**.
-5. It is rounded down to a whole number. Skill hits are never critical.
+Each skill's power was set once (2026-10-31) so that, at the level its skill book needs
+(for monster skills: the level of the monsters that use it), the skill does the same
+multiple of a plain swing as it did before. A skill that hit about four times as hard as a
+swing still does.
 
 A damaging skill wears your weapon (see [[rules/durability|Durability]]), except natural
 magic. Damage from skills counts like any other damage for experience and drops (see
@@ -251,20 +232,18 @@ magic. Damage from skills counts like any other damage for experience and drops 
 
 ### Worked example
 
-A level 15 Muse with attack power 50, INT 45, Sense 20 and Hit 60 casts
-[[skills/981-ice-bolt|Ice Bolt]] level 1 (magic attack, power 60) at a
-[[monsters/62-honeybee|HoneyBee]] (level 12, defence 45, magic resistance 24, avoid 29).
-Say the random number comes out as $r = 15$.
+A level 15 Muse with attack 50, INT 45 and SEN 20 casts
+[[skills/981-ice-bolt|Ice Bolt]] level 1 (magic attack, power 120) at a
+[[monsters/62-honeybee|HoneyBee]] (level 12, magic resistance 24), with a middle roll and
+no critical:
 
-Ice Bolt is a magic attack, so it never misses and uses the full formula against a monster:
+- magic attack: 50 × 0.8 + 45 × 1.2 = 94; with the power: 94 × 2.2 = 206.8;
+- raw: 206.8 × 1.2 = 248.2;
+- magic resistance takes off 24 / (24 + 186.1 + 80) = 8.3%, leaving 227.7;
+- 3 levels above the HoneyBee: × 1.06 = 241.3, shown as **241**.
 
-```math
-\frac{60 \times (0.8 \times 50 + 1.2 \times 45 + 100) \times (15 + 0.7 \times 20 + 350) \times 0.01 \times (150 - 12 + 15)}{(0.3 \times 45 + 24 + 0.3 \times 29 + 60) \times 350} + 20
-```
-
-$= 60 \times 194 \times 379 \times 0.01 \times 153 / (106.2 \times 350) + 20 = 181.59 + 20 = 201.59$,
-which is shown as **201**. With $r$ from 1 to 30 the full hit ranges from 194 to 208.
-The HoneyBee has $12 \times 25 = 300$ HP, so two Ice Bolts kill it.
+The roll makes it 215 to 266. The HoneyBee has $12 \times 25 = 300$ HP, so two Ice Bolts
+kill it.
 
 ## Buffs, debuffs and heals
 
@@ -365,6 +344,12 @@ How to read `changes`:
 
 ## Changed from iROSE
 
+- **Skill damage** (2026-10-31): iROSE had four formulas of its own (and four more between
+  players) built on power, attack, Sense and level, divided by defence plus avoid. Ours is
+  the plain attack's damage with the power added as a percent, so skills can crit, defence
+  works the same way, magic meets only magic resistance and players take half. Every
+  damaging skill's power was rescaled to keep its multiple of a plain swing. Continuous
+  attacks no longer have a weak tier.
 - **Party skills** reach every party member in the area; **clan skills** reach only the
   caster, because there are no clans yet.
 - **Cancelling a cast.** In iROSE you can't call off your own cast once it starts. Here

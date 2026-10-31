@@ -17,7 +17,7 @@ levels:
   needs: '[[skills/1831-mana-blood|Mana Blood]] level 5'
   learn_points: 30
   cost: MP 30
-  power: 80
+  power: 189
   range: 25
   cooldown: 10
   duration: 12
@@ -29,7 +29,7 @@ levels:
   needs: '[[skills/1831-mana-blood|Mana Blood]] level 6'
   learn_points: 33
   cost: MP 32
-  power: 86
+  power: 198
   range: 25.5
   cooldown: 9.8
   duration: 14
@@ -41,7 +41,7 @@ levels:
   needs: '[[skills/1831-mana-blood|Mana Blood]] level 7'
   learn_points: 36
   cost: MP 34
-  power: 92
+  power: 208
   range: 26
   cooldown: 9.6
   duration: 16
@@ -53,7 +53,7 @@ levels:
   needs: '[[skills/1831-mana-blood|Mana Blood]] level 8'
   learn_points: 40
   cost: MP 36
-  power: 98
+  power: 217
   range: 26.5
   cooldown: 9.4
   duration: 18
@@ -65,7 +65,7 @@ levels:
   needs: '[[skills/1831-mana-blood|Mana Blood]] level 9'
   learn_points: 44
   cost: MP 38
-  power: 104
+  power: 227
   range: 27
   cooldown: 9.2
   duration: 20
@@ -77,7 +77,7 @@ levels:
   needs: '[[skills/1831-mana-blood|Mana Blood]] level 10'
   learn_points: 48
   cost: MP 40
-  power: 110
+  power: 236
   range: 27.5
   cooldown: 9
   duration: 22
@@ -88,7 +88,7 @@ levels:
   id: 1877
   learn_points: 52
   cost: MP 42
-  power: 116
+  power: 246
   range: 28
   cooldown: 8.8
   duration: 24
@@ -99,7 +99,7 @@ levels:
   id: 1878
   learn_points: 57
   cost: MP 44
-  power: 122
+  power: 255
   range: 28.5
   cooldown: 8.6
   duration: 26
@@ -110,7 +110,7 @@ levels:
   id: 1879
   learn_points: 62
   cost: MP 46
-  power: 128
+  power: 264
   range: 29
   cooldown: 8.4
   duration: 28
@@ -121,7 +121,7 @@ levels:
   id: 1880
   learn_points: 67
   cost: MP 50
-  power: 140
+  power: 283
   range: 30
   cooldown: 8.2
   duration: 30

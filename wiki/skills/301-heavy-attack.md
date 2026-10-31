@@ -18,70 +18,70 @@ levels:
   needs: '[[skills/201-melee-weapon-mastery|Melee Weapon Mastery]] level 1'
   learn_points: 8
   cost: MP 10
-  power: 30
+  power: 141
   cooldown: 6
 - level: 2
   id: 302
   needs: '[[skills/201-melee-weapon-mastery|Melee Weapon Mastery]] level 2'
   learn_points: 10
   cost: MP 12
-  power: 37
+  power: 172
   cooldown: 6
 - level: 3
   id: 303
   needs: '[[skills/201-melee-weapon-mastery|Melee Weapon Mastery]] level 3'
   learn_points: 12
   cost: MP 14
-  power: 44
+  power: 203
   cooldown: 6
 - level: 4
   id: 304
   needs: '[[skills/201-melee-weapon-mastery|Melee Weapon Mastery]] level 4'
   learn_points: 14
   cost: MP 16
-  power: 51
+  power: 233
   cooldown: 6.2
 - level: 5
   id: 305
   needs: '[[skills/201-melee-weapon-mastery|Melee Weapon Mastery]] level 5'
   learn_points: 16
   cost: MP 18
-  power: 58
+  power: 263
   cooldown: 6.2
 - level: 6
   id: 306
   needs: '[[skills/201-melee-weapon-mastery|Melee Weapon Mastery]] level 6'
   learn_points: 18
   cost: MP 20
-  power: 65
+  power: 292
   cooldown: 6.2
 - level: 7
   id: 307
   needs: '[[skills/201-melee-weapon-mastery|Melee Weapon Mastery]] level 7'
   learn_points: 20
   cost: MP 22
-  power: 72
+  power: 322
   cooldown: 6.4
 - level: 8
   id: 308
   needs: '[[skills/201-melee-weapon-mastery|Melee Weapon Mastery]] level 8'
   learn_points: 23
   cost: MP 24
-  power: 80
+  power: 355
   cooldown: 6.4
 - level: 9
   id: 309
   needs: '[[skills/201-melee-weapon-mastery|Melee Weapon Mastery]] level 9'
   learn_points: 26
   cost: MP 26
-  power: 88
+  power: 389
   cooldown: 6.4
 - level: 10
   id: 310
   needs: '[[skills/201-melee-weapon-mastery|Melee Weapon Mastery]] level 10'
   learn_points: 29
   cost: MP 30
-  power: 100
+  power: 439
   cooldown: 6.6
 source:
   data: godot/data/skills/301-heavy-attack/ (levels 301, 302, 303, 304, 305, 306, 307, 308, 309, 310)

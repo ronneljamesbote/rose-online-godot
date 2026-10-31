@@ -18,70 +18,70 @@ levels:
   needs: '[[skills/301-heavy-attack|Heavy Attack]] level 10'
   learn_points: 30
   cost: MP 40
-  power: 100
+  power: 267
   range: 20
   cooldown: 7
 - level: 2
   id: 662
   learn_points: 35
   cost: MP 43
-  power: 110
+  power: 285
   range: 20
   cooldown: 7.2
 - level: 3
   id: 663
   learn_points: 41
   cost: MP 46
-  power: 120
+  power: 303
   range: 20
   cooldown: 7.4
 - level: 4
   id: 664
   learn_points: 48
   cost: MP 49
-  power: 130
+  power: 321
   range: 20
   cooldown: 7.6
 - level: 5
   id: 665
   learn_points: 56
   cost: MP 52
-  power: 140
+  power: 339
   range: 20
   cooldown: 7.8
 - level: 6
   id: 666
   learn_points: 65
   cost: MP 55
-  power: 150
+  power: 357
   range: 20
   cooldown: 8
 - level: 7
   id: 667
   learn_points: 75
   cost: MP 58
-  power: 160
+  power: 375
   range: 20
   cooldown: 8.2
 - level: 8
   id: 668
   learn_points: 87
   cost: MP 61
-  power: 170
+  power: 392
   range: 20
   cooldown: 8.4
 - level: 9
   id: 669
   learn_points: 100
   cost: MP 64
-  power: 180
+  power: 411
   range: 20
   cooldown: 8.6
 - level: 10
   id: 670
   learn_points: 115
   cost: MP 70
-  power: 200
+  power: 445
   range: 20
   cooldown: 8.8
 source:
