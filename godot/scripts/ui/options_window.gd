@@ -1,6 +1,6 @@
 ## Options (O): the interface theme (Arumic by default; every file in the themes folder is
 ## a card), interface size, window look, mouse cursor, layout, labels over the world,
-## gameplay (sticky target), graphics (shadows) and sound.
+## gameplay (click or double-click to attack, sticky target), graphics (shadows) and sound.
 extends PanelContainer
 
 const Fx := preload("res://scripts/fx.gd")
@@ -174,6 +174,18 @@ func _gameplay_page() -> Control:
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 8)
 	_section(box, "Targeting")
+	var attack := OptionButton.new()
+	attack.focus_mode = Control.FOCUS_NONE
+	attack.add_item("Click to attack")
+	attack.add_item("Double-click to attack")
+	attack.selected = 1 if UI.settings.get("attack_click", "single") == "double" else 0
+	attack.item_selected.connect(func(i): UI.set_setting("attack_click", "double" if i == 1 else "single"))
+	box.add_child(attack)
+	var attack_tip := Label.new()
+	attack_tip.text = "Double-click: one click on a monster only selects it, so you can look at it or use a skill on it; double-click it, or click it again, to attack."
+	attack_tip.theme_type_variation = "MutedLabel"
+	attack_tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	box.add_child(attack_tip)
 	_check(box, "Sticky target", "sticky_target")
 	var tip := Label.new()
 	tip.text = "Walking (a click or holding the button on the ground) keeps your target selected, so skills still go to it. Esc drops it."

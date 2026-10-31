@@ -38,6 +38,7 @@ var settings := {
 	"cursor_size": "large",  # small, normal, large or huge (32, 40, 48 or 64 pixels wide)
 	"cursor_style": "new",  # new (our painted cursors) or classic (the client's pixel cursors)
 	"sticky_target": false,  # walking keeps the selected target instead of dropping it
+	"attack_click": "single",  # single (a click attacks) or double (a click selects, a second click attacks)
 	"shadows": "medium",  # off, low, medium or high (RoseSun.set_quality)
 }
 

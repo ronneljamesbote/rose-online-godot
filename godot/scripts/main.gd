@@ -717,7 +717,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			var under: Dictionary = online.under_mouse(camera, event.position)
 			match under.get("kind", ""):
 				"monster", "enemy":
-					online.attack(under["id"])
+					# Options > Gameplay: with "Double-click to attack" the first click only
+					# selects; a double click, or clicking the selected one again, attacks.
+					if UI.settings.get("attack_click", "single") == "double" and online.my_target != under["id"]:
+						online.select(under["id"])
+					else:
+						online.attack(under["id"])
 					return
 				"npc":
 					online.talk_to(under["id"])
