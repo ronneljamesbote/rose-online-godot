@@ -47,12 +47,20 @@ cursors:
 cursor_size_px: { small: 32, normal: 40, large: 48, huge: 64, default: large }
 cursor_styles: [New, Classic]
 sticky_target_default: false
+target_ring:
+  monster: red
+  npc: green
+  player: blue (other players, party members, summons)
+  pvp_enemy_player: red
+  size: the target's model width
+  motion: turns slowly and pulses
 item_label_range_m: 30
 source:
   code:
     - godot/scripts/main.gd (_unhandled_input, _steer)
     - godot/scripts/orbit_camera.gd
     - godot/scripts/online.gd (move_to, click_ground, steer_to, talk_to, select, clear_target, pickup, open_player_menu)
+    - godot/scripts/target_marker.gd
     - godot/scripts/conversation_window.gd
     - godot/scripts/inventory_window.gd (Slot._gui_input, Slot._notification, activate, _drop_selected)
     - godot/scripts/hotbar.gd (dropped, dragged_off)
@@ -100,6 +108,11 @@ is in the `keys` table above.
   off by default) walking keeps it: the attack stops, but the target stays selected, its
   frame stays up and skills still go to it. Clicking another monster or player changes it,
   and Esc with no window open drops it.
+- **A glowing ring on the ground** marks your target, sized to it and lying on the ground
+  under it (on slopes, stairs and bridges too). Its colour says what it is: red a monster
+  (or a player you may fight in a PvP zone), green an NPC, blue another player or a party
+  member. It turns slowly and pulses gently, and goes when the target is dropped, dies or
+  leaves.
 - **Left-click a monster** to attack it. In a PvP zone, clicking a player you may fight
   attacks them too (see [[rules/pvp|PvP]]).
 - **Left-click a town NPC** to walk over (you talk from within 3 m) and open its dialog
@@ -275,6 +288,7 @@ sword, O opens the options (sound volume and shadows).
   within 40 m of your block. The colours the lightmaps gave the world are kept without the
   lightmaps' shadows: the ground's colour (Zant's blue canal, Birth Island's sea floor) and
   one warm colour per part of each building and decoration.
+- The ring under the target is new.
 - Sticky target is new; with it off, walking drops the target as in iROSE. Esc dropping
   the target is new too.
 - The cursors are new pictures in iROSE's shapes (iROSE's own are the Classic style),

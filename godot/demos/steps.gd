@@ -46,7 +46,7 @@ func run() -> void:
 				if online.my_target >= 0:
 					online.attack(online.my_target)
 			"select":
-				_steps_target(arg)
+				_steps_target(" ".join(words.slice(1)))  # names may have spaces
 			"leaveparty":
 				online.net.party_leave()
 			"move":

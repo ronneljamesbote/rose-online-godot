@@ -19,6 +19,8 @@ const STEP_HEIGHT := 1.35  # highest step up onto a floor object
 const BLOCKED_TIMEOUT_MS := 1500
 const SPEECH_SECONDS := 6.0
 
+const TargetMarker := preload("res://scripts/target_marker.gd")
+
 signal collided(at: Vector3)
 
 var zone: Node
@@ -42,6 +44,7 @@ var dying := false  # the server removed it after a killing blow; playing the de
 var was_swinging := false
 var attack_index := 0
 var height := 2.0
+var radius := 0.6  # half the model's width, for the target ring under it (target_marker.gd)
 var hp := 0
 var max_hp := 0
 var mp := 0
@@ -149,7 +152,7 @@ func _build() -> void:
 	anim = model.get_node_or_null("AnimationPlayer")
 	if anim:
 		anim.animation_finished.connect(_on_animation_finished)
-	height = _model_height()
+	_measure_model()
 	_play(_idle)
 	_apply_fade()
 
@@ -179,15 +182,22 @@ func _apply_fade() -> void:
 		(node as GeometryInstance3D).transparency = 0.65 if hidden else 0.0
 
 
-## Height of the model's bounds in its rest pose, for the name tag.
-func _model_height() -> float:
+## Height of the model's bounds in its rest pose, for the name tag, and half its width, for
+## the target ring. Its meshes draw on render layer 2, which the target ring skips.
+func _measure_model() -> void:
 	var top := 0.0
+	var wide := 0.0
+	for node in model.find_children("*", "GeometryInstance3D", true, false):
+		(node as GeometryInstance3D).layers = TargetMarker.ENTITY_LAYER
 	for node in model.find_children("*", "MeshInstance3D", true, false):
 		var mesh_instance := node as MeshInstance3D
 		var box := mesh_instance.get_aabb()
 		var to_model := model.global_transform.affine_inverse() * mesh_instance.global_transform
-		top = maxf(top, (to_model * box).end.y)
-	return clampf(top * model.scale.y, 1.0, 12.0) if top > 0.0 else 2.0
+		var in_model := to_model * box
+		top = maxf(top, in_model.end.y)
+		wide = maxf(wide, maxf(maxf(-in_model.position.x, in_model.end.x), maxf(-in_model.position.z, in_model.end.z)))
+	height = clampf(top * model.scale.y, 1.0, 12.0) if top > 0.0 else 2.0
+	radius = clampf(wide * model.scale.x, 0.5, 6.0) if wide > 0.0 else 0.6
 
 
 ## Starts running toward a Godot position before the server confirms the move.
