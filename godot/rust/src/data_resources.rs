@@ -1832,12 +1832,14 @@ pub struct RoseInterface {
     #[export]
     character_create_picture: Option<Gd<Texture2D>>,
 
-    /// The normal cursor (also over windows). The cursors are drawn 1, 2 or 3 times their size
-    /// (the Cursor size setting), so small pixel art stays sharp.
+    /// The normal cursor (also over windows). The game scales each picture smoothly to the
+    /// Cursor Size setting (32, 40, 48 or 64 pixels wide), so paint them large (ours are
+    /// 128 pixels). The Classic cursor style uses the client's own cursor files instead.
     #[export_group(name = "Cursors")]
     #[export]
     cursor_default: Option<Gd<Texture2D>>,
-    /// The pixel the normal cursor clicks at, from its top-left corner, at normal size.
+    /// The pixel the normal cursor clicks at, from the picture's top-left corner, in the
+    /// picture's own pixels (the game scales it with the picture).
     #[export]
     cursor_default_click: Vector2i,
     /// Over a monster or an enemy player.

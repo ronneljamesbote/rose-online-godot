@@ -103,14 +103,29 @@ func _interface_page() -> Control:
 	var cursor_size := OptionButton.new()
 	cursor_size.focus_mode = Control.FOCUS_NONE
 	cursor_size.tooltip_text = "Cursor size"
-	var sizes := ["normal", "large", "huge"]
-	for name in ["Normal size", "Large", "Huge"]:
+	var sizes := ["small", "normal", "large", "huge"]
+	for name in ["Small", "Normal size", "Large", "Huge"]:
 		cursor_size.add_item(name)
 	cursor_size.selected = maxi(0, sizes.find(UI.settings.get("cursor_size", "large")))
 	cursor_size.disabled = not UI.settings.get("game_cursor", true)
 	cursor_size.item_selected.connect(func(i): UI.set_setting("cursor_size", sizes[i]))
 	UI.settings_changed.connect(func(): cursor_size.disabled = not UI.settings.get("game_cursor", true))
 	cursor_row.add_child(cursor_size)
+	var style_row := HBoxContainer.new()
+	style_row.add_theme_constant_override("separation", 16)
+	box.add_child(style_row)
+	var style_label := Label.new()
+	style_label.text = "Cursor Style"
+	style_row.add_child(style_label)
+	var cursor_style := OptionButton.new()
+	cursor_style.focus_mode = Control.FOCUS_NONE
+	cursor_style.add_item("New")
+	cursor_style.add_item("Classic (the original pixel cursors)")
+	cursor_style.selected = 1 if UI.settings.get("cursor_style", "new") == "classic" else 0
+	cursor_style.disabled = not UI.settings.get("game_cursor", true)
+	cursor_style.item_selected.connect(func(i): UI.set_setting("cursor_style", "classic" if i == 1 else "new"))
+	UI.settings_changed.connect(func(): cursor_style.disabled = not UI.settings.get("game_cursor", true))
+	style_row.add_child(cursor_style)
 	box.add_child(HSeparator.new())
 
 	_section(box, "Layout")

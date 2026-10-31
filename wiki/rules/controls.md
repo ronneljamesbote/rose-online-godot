@@ -35,16 +35,17 @@ camera_zoom_m: { min: 2, max: 45, start: 12 }
 window_size_percent: { min: 75, max: 150 }
 window_opacity_percent: { min: 40, max: 100 }
 cursors:
-  - { over: "the ground, buildings, a window", cursor: "sword (RES/DEFAULT.CUR)" }
-  - { over: "a monster, or a player you may fight in PvP", cursor: "crossed blades (RES/ATTACK.CUR)" }
-  - { over: "a town NPC", cursor: "speech bubble (RES/NPC.CUR)" }
-  - { over: "another player", cursor: "sword with a gold ring (RES/USER.CUR)" }
-  - { over: "an item on the ground or its label", cursor: "open hand (RES/ITEM_PICK.CUR)" }
-  - { over: "a bag, storage, skill or hotbar slot with something in it", cursor: "pointing gold hand (RES/ITEM_INVEN.CUR)" }
-  - { over: "anywhere while dragging an item or a skill", cursor: "pointing blue hand (RES/ITEM_INVEM.CUR)" }
-  - { over: "anywhere while repairing", cursor: "hammer (RES/REPAIR.CUR)" }
-  - { over: "the world while the right button is held", cursor: "four-way arrows (RES/WHEEL.CUR)" }
-cursor_size_times: [1, 2, 3]
+  - { over: "the ground, buildings, a window", cursor: "blade with a blue gem (classic RES/DEFAULT.CUR)" }
+  - { over: "a monster, or a player you may fight in PvP", cursor: "crossed blades with a red-gem crest (classic RES/ATTACK.CUR)" }
+  - { over: "a town NPC", cursor: "speech bubble (classic RES/NPC.CUR)" }
+  - { over: "another player", cursor: "blade with a gold ring (classic RES/USER.CUR)" }
+  - { over: "an item on the ground or its label", cursor: "open gold gauntlet (classic RES/ITEM_PICK.CUR)" }
+  - { over: "a bag, storage, skill or hotbar slot with something in it", cursor: "pointing gold gauntlet (classic RES/ITEM_INVEN.CUR)" }
+  - { over: "anywhere while dragging an item or a skill", cursor: "glowing blue pointing hand (classic RES/ITEM_INVEM.CUR)" }
+  - { over: "anywhere while repairing", cursor: "hammer (classic RES/REPAIR.CUR)" }
+  - { over: "the world while the right button is held", cursor: "four-way arrows with a blue gem (classic RES/WHEEL.CUR)" }
+cursor_size_px: { small: 32, normal: 40, large: 48, huge: 64, default: large }
+cursor_styles: [New, Classic]
 sticky_target_default: false
 item_label_range_m: 30
 source:
@@ -75,6 +76,7 @@ source:
     - godot/scripts/ui/game_cursor.gd
     - godot/rust/src/cursor.rs
     - godot/data/interface/interface.tres (the cursors and their click points)
+    - godot/assets/ours/cursors/ (the painted cursor pictures)
     - godot/scripts/ui/version_line.gd
     - godot/scripts/build_info.gd
   data: ""
@@ -115,24 +117,31 @@ is in the `keys` table above.
 
 ### The mouse cursor
 
-The game uses ROSE's own cursors (the client's cursor files, imported; the interface
-settings in `godot/data/interface/interface.tres` link each one and set the pixel it clicks
-at), and the cursor shows what a left click will do (the `cursors` table above):
+The game has its own painted cursors, in the same shapes as ROSE's (the pictures are in
+`godot/assets/ours/cursors/`, 128 pixels; the interface settings in
+`godot/data/interface/interface.tres` link each one and set the pixel it clicks at), and
+the cursor shows what a left click will do (the `cursors` table above):
 
-- the **sword** over the ground, buildings and windows;
+- the **blade with a blue gem** over the ground, buildings and windows;
 - **crossed blades** over a monster, or a player you may fight in a PvP zone;
 - a **speech bubble** over a town NPC;
-- the **sword with a gold ring** over another player;
-- an **open hand** over an item on the ground or its label;
-- the **pointing gold hand** over a bag, storage, skill or hotbar slot that holds
-  something you can drag, and the **blue hand** while you drag it;
+- the **blade with a gold ring** over another player;
+- an **open gold gauntlet** over an item on the ground or its label;
+- the **pointing gold gauntlet** over a bag, storage, skill or hotbar slot that holds
+  something you can drag, and the **glowing blue hand** while you drag it;
 - a **hammer** everywhere while repairing (an NPC's repair menu or a hammer in use);
 - **four-way arrows** while the right button is held to turn the camera.
 
+The blades click at their tip, the hands at the fingertip, the hammer at its head's face,
+the bubble at its smallest bubble and the arrows at their centre.
+
 Window title bars and corner grips keep the system's move and resize arrows. Options
-(**Cursor Size**) can turn the ROSE cursor off and set its size: Normal (the original 32
-pixels), Large (twice that, the default) or Huge (three times). Without the cursor
-pictures the system cursor stays.
+(**Cursor Size**) can turn the game cursor off and set how wide it is drawn: Small (32
+pixels), Normal (40), Large (48, the default) or Huge (64); the pictures are scaled
+smoothly. **Cursor Style** picks New (the painted cursors) or Classic (the client's own
+32 pixel cursor files, as iROSE drew them, enlarged in whole steps so they stay sharp:
+once at Small and Normal, twice at Large and Huge). Without the cursor pictures the
+system cursor stays.
 
 ## Keys
 
@@ -237,7 +246,7 @@ Esc or clicking outside the chat box stops typing.
   - **Interface**: the theme (four built-in themes, or your own theme files in the
     `themes` folder next to the game), interface size (75% to 150%), window opacity (40%
     to 100%), blur behind windows, the character portrait (Live or Static), Cursor Size
-    (the ROSE mouse cursor on or off, and its size), lock windows in place, and reset
+    (the game's mouse cursor on or off, and its size), Cursor Style (New or Classic), lock windows in place, and reset
     layout. Window opacity fades tooltips and menus too, along with the windows and HUD
     panels (their drop shadow and the light line along their top edge fade with them).
   - **World labels**: your own name tag, chat bubbles, damage numbers, and whether item
@@ -268,7 +277,8 @@ sword, O opens the options (sound volume and shadows).
   one warm colour per part of each building and decoration.
 - Sticky target is new; with it off, walking drops the target as in iROSE. Esc dropping
   the target is new too.
-- The cursors are iROSE's, chosen the same way, except: pushing the mouse against the left
+- The cursors are new pictures in iROSE's shapes (iROSE's own are the Classic style),
+  chosen the same way, except: pushing the mouse against the left
   or right screen edge does not turn the camera (so the edge arrows `LEFT.CUR` and
   `RIGHT.CUR` are not used); the gold and blue hands show over items you can drag and
   while dragging (iROSE never used them); the cursor can be enlarged and turned off; and the hands and the bubble click

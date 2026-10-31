@@ -189,8 +189,9 @@ impl SkyExport {
 }
 
 /// The mouse cursors, in the order the resource lists them: (name, the client's file in its
-/// RES folder, where it clicks at normal size). The original cursors all click at the
-/// top-left corner; ours click at the hands' fingertips and the speech bubble's tail.
+/// RES folder, where it clicks in that 32 pixel picture). These are also the Classic cursor
+/// style. The original cursors all click at the top-left corner; here the hands click at
+/// their fingertips and the speech bubble at its tail.
 pub const CURSORS: [(&str, &str, [i32; 2]); 9] = [
     ("default", "RES/DEFAULT.CUR", [0, 0]),
     ("attack", "RES/ATTACK.CUR", [0, 0]),
@@ -207,7 +208,8 @@ pub const CURSORS: [(&str, &str, [i32; 2]); 9] = [
 pub const LOADING_PICTURE: &str = "3DDATA/CONTROL/RES/LOADING.DDS";
 
 /// The interface's pictures and mouse cursors. Each cursor is a picture (`cursor_<name>`) and
-/// the pixel it clicks at, at normal size (`cursor_<name>_click`, [x, y] from the top left).
+/// the pixel it clicks at, in the picture's own pixels (`cursor_<name>_click`, [x, y] from the
+/// top left).
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(default, deny_unknown_fields)]
 pub struct InterfaceSettingsExport {
