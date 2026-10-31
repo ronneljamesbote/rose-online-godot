@@ -16,6 +16,8 @@ dropped_by:
 - monster: '[[monsters/135-grunter-fighter|Grunter Fighter]]'
   level: 44
   slots_of_30: 1
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/418-grunter.tres
   code: module/src/items.rs

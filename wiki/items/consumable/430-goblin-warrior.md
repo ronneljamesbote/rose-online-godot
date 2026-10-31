@@ -16,6 +16,8 @@ dropped_by:
 - monster: '[[monsters/279-gem-goblin-warrior|Gem Goblin Warrior]]'
   level: 89
   slots_of_30: 1
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/430-goblin-warrior.tres
   code: module/src/items.rs

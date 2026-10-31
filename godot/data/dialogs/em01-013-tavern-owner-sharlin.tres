@@ -1,18 +1,10 @@
 [gd_resource type="RoseDialog" format=3 uid="uid://dtniiyqc2l7yg"]
 
-[ext_resource type="RoseQuest" uid="uid://c3p24q86n7kaw" path="res://data/quests/5001-wine-delivery-part-time-job.tres" id="1_a3byi"]
 [ext_resource type="RoseQuest" uid="uid://f7y4g3g7n7rd" path="res://data/quests/1071-kirnale-s-journals-second-job-change.tres" id="2_cb2ml"]
 [ext_resource type="RoseQuest" uid="uid://bw0crxy8csax5" path="res://data/quests/1072-kirnale-s-journals-second-job-change.tres" id="3_qfom4"]
-[ext_resource type="RoseQuestTrigger" uid="uid://dcsaik4pgcdgp" path="res://data/quest_triggers/qs11-001/5001-04.tres" id="4_u7iwp"]
-[ext_resource type="RoseQuestTrigger" uid="uid://cy87lnlrhe7en" path="res://data/quest_triggers/qs11-001/5001-03.tres" id="5_x3xf6"]
 [ext_resource type="RoseItemQuest" uid="uid://b01dfoqnqtgfe" path="res://data/items/quest/219-phoenix-writing-quill.tres" id="6_skcxe"]
-[ext_resource type="RoseQuestTrigger" uid="uid://cxb704oac0x2b" path="res://data/quest_triggers/qs11-001/5001-01.tres" id="7_qj7gn"]
 [ext_resource type="RoseQuestTrigger" uid="uid://bnle1wytdxlyl" path="res://data/quest_triggers/qj311-06/1071-01.tres" id="8_2w8jp"]
 [ext_resource type="RoseQuestTrigger" uid="uid://bh32hxllvpwn0" path="res://data/quest_triggers/qj311-06/1072-01.tres" id="9_sjnfb"]
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_arvky"]
-quest = ExtResource("1_a3byi")
-active = false
 
 [sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_n7qxc"]
 quest = ExtResource("2_cb2ml")
@@ -23,47 +15,13 @@ quest = ExtResource("3_qfom4")
 active = false
 
 [sub_resource type="RoseDialogCase" id="RoseDialogCase_5gost"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_arvky"), SubResource("RoseDialogIfQuest_n7qxc"), SubResource("RoseDialogIfQuest_txbso")])
-
-[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_k0g6q"]
-step = ExtResource("4_u7iwp")
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_62uak"]
-quest = ExtResource("2_cb2ml")
-active = false
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_bnsqi"]
-quest = ExtResource("3_qfom4")
-active = false
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_qarta"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_k0g6q"), SubResource("RoseDialogIfQuest_62uak"), SubResource("RoseDialogIfQuest_bnsqi")])
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_n7qxc"), SubResource("RoseDialogIfQuest_txbso")])
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_ideat"]
 text = "Ahh~ This deep scent and robust flavor… Wine is truly the best! Would you like a drink?"
 next_menu = 1
-show_if = Array[Resource]([SubResource("RoseDialogCase_5gost"), SubResource("RoseDialogCase_qarta")])
+show_if = Array[Resource]([SubResource("RoseDialogCase_5gost")])
 resource_name = "NPC: Ahh~ This deep scent and robust flavor… Wine is …"
-
-[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_iu27c"]
-step = ExtResource("5_x3xf6")
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_e63a7"]
-quest = ExtResource("2_cb2ml")
-active = false
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_qs6bp"]
-quest = ExtResource("3_qfom4")
-active = false
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_4a5iv"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_iu27c"), SubResource("RoseDialogIfQuest_e63a7"), SubResource("RoseDialogIfQuest_qs6bp")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_q0nr2"]
-text = "Didn't you deliver the wine yet? <NAME>, I trusted you but this is very disappointing."
-next_menu = 7
-show_if = Array[Resource]([SubResource("RoseDialogCase_4a5iv")])
-resource_name = "NPC: Didn't you deliver the wine yet? <NAME>, I trust…"
 
 [sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_57pk5"]
 quest = ExtResource("2_cb2ml")
@@ -73,7 +31,7 @@ conditions = Array[Resource]([SubResource("RoseDialogIfQuest_57pk5")])
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_s8r3e"]
 text = "How would you like a glass of Tequila, flavored with salt and lemon?"
-next_menu = 10
+next_menu = 6
 show_if = Array[Resource]([SubResource("RoseDialogCase_ft348")])
 resource_name = "NPC: How would you like a glass of Tequila, flavored …"
 
@@ -87,7 +45,7 @@ conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_gq2s1")])
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_hb8uf"]
 text = "Oh, if I only had the {fc=14}Phoenix Writing Quill{/fc}! Then it'd be like Kirnale was right by my side! *Sigh* Oh, Kirnale..."
-next_menu = 41
+next_menu = 37
 show_if = Array[Resource]([SubResource("RoseDialogCase_m3py3")])
 resource_name = "NPC: Oh, if I only had the {fc=14}Phoenix Writing Qui…"
 
@@ -102,12 +60,12 @@ conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_xbpxl")])
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_1qofl"]
 text = "Welcome back. Would you like something cool to drink?"
-next_menu = 44
+next_menu = 40
 show_if = Array[Resource]([SubResource("RoseDialogCase_n6t01")])
 resource_name = "NPC: Welcome back. Would you like something cool to d…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fdio7"]
-lines = Array[Resource]([SubResource("RoseDialogLine_ideat"), SubResource("RoseDialogLine_q0nr2"), SubResource("RoseDialogLine_s8r3e"), SubResource("RoseDialogLine_hb8uf"), SubResource("RoseDialogLine_1qofl")])
+lines = Array[Resource]([SubResource("RoseDialogLine_ideat"), SubResource("RoseDialogLine_s8r3e"), SubResource("RoseDialogLine_hb8uf"), SubResource("RoseDialogLine_1qofl")])
 resource_name = "Menu 0"
 
 [sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_b6ge0"]
@@ -139,44 +97,9 @@ kind = "Answer"
 text = "No thanks. I don't drink."
 resource_name = "You: No thanks. I don't drink."
 
-[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_q2e6p"]
-step = ExtResource("4_u7iwp")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_j5m0r"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_q2e6p")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_6vgj4"]
-kind = "Answer"
-text = "Where can I find Punwell?"
-next_menu = 5
-show_if = Array[Resource]([SubResource("RoseDialogCase_j5m0r")])
-resource_name = "You: Where can I find Punwell?"
-
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_su07l"]
-lines = Array[Resource]([SubResource("RoseDialogLine_ljr6c"), SubResource("RoseDialogLine_a7e5b"), SubResource("RoseDialogLine_pbgd0"), SubResource("RoseDialogLine_6vgj4")])
+lines = Array[Resource]([SubResource("RoseDialogLine_ljr6c"), SubResource("RoseDialogLine_a7e5b"), SubResource("RoseDialogLine_pbgd0")])
 resource_name = "Menu 1"
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_5uel2"]
-quest = ExtResource("1_a3byi")
-active = false
-
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_bwbmx"]
-value = 1
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_weuqt"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_5uel2"), SubResource("RoseDialogIfNpcSwitch_bwbmx")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_11men"]
-text = "Ah, is that so? I need to deliver 2 bottles of Wine to {fc=1}Punwell{/fc}. Will you do that for me?"
-next_menu = 3
-show_if = Array[Resource]([SubResource("RoseDialogCase_weuqt")])
-resource_name = "NPC: Ah, is that so? I need to deliver 2 bottles of W…"
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_oyh23"]
-quest = ExtResource("1_a3byi")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_bsu05"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_oyh23")])
 
 [sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_8dh3p"]
 value = 11
@@ -186,8 +109,8 @@ conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_8dh3p")])
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_71gh4"]
 text = "Right now, there are no openings, but I'll shout out if I need someone to help me."
-next_menu = 4
-show_if = Array[Resource]([SubResource("RoseDialogCase_bsu05"), SubResource("RoseDialogCase_mp404")])
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_mp404")])
 resource_name = "NPC: Right now, there are no openings, but I'll shout…"
 
 [sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_avk34"]
@@ -199,7 +122,7 @@ conditions = Array[Resource]([SubResource("RoseDialogIfAbility_avk34")])
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_foo7m"]
 text = "You're overqualified for this wine delivery. I hope you find a job better suited to your experience."
-next_menu = 8
+next_menu = 4
 show_if = Array[Resource]([SubResource("RoseDialogCase_144ot")])
 resource_name = "NPC: You're overqualified for this wine delivery. I h…"
 
@@ -211,29 +134,13 @@ conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_t34ti")])
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_mr3wh"]
 text = "You're late. Next time, make sure that you hurry when you deliver something."
-next_menu = 9
+next_menu = 5
 show_if = Array[Resource]([SubResource("RoseDialogCase_52s0c")])
 resource_name = "NPC: You're late. Next time, make sure that you hurry…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_c0dhk"]
-lines = Array[Resource]([SubResource("RoseDialogLine_11men"), SubResource("RoseDialogLine_71gh4"), SubResource("RoseDialogLine_foo7m"), SubResource("RoseDialogLine_mr3wh")])
+lines = Array[Resource]([SubResource("RoseDialogLine_71gh4"), SubResource("RoseDialogLine_foo7m"), SubResource("RoseDialogLine_mr3wh")])
 resource_name = "Menu 2"
-
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_k1sap"]
-step = ExtResource("7_qj7gn")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_04rc2"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_k1sap")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_s7r0i"]
-kind = "Answer"
-text = "Of course. I will do that."
-on_choose = Array[Resource]([SubResource("RoseDialogCase_04rc2")])
-resource_name = "You: Of course. I will do that."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_h1hb8"]
-lines = Array[Resource]([SubResource("RoseDialogLine_s7r0i")])
-resource_name = "Menu 3"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_oytja"]
 kind = "Answer"
@@ -242,41 +149,7 @@ resource_name = "You: I got it."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_mtn8l"]
 lines = Array[Resource]([SubResource("RoseDialogLine_oytja")])
-resource_name = "Menu 4"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_lfvnb"]
-text = "Punwell is living in the Windmill Village in the Breezy Hills. Go outside of Zant and head East."
-next_menu = 6
-resource_name = "NPC: Punwell is living in the Windmill Village in the…"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_klopt"]
-lines = Array[Resource]([SubResource("RoseDialogLine_lfvnb")])
-resource_name = "Menu 5"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_pdjfp"]
-kind = "Answer"
-text = "Thank you."
-resource_name = "You: Thank you."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jv61n"]
-lines = Array[Resource]([SubResource("RoseDialogLine_pdjfp")])
-resource_name = "Menu 6"
-
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_oli4d"]
-step = ExtResource("5_x3xf6")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_0jf2o"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_oli4d")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_qf6kr"]
-kind = "Answer"
-text = "I'm sorry, I promise I'll do a better job next time."
-on_choose = Array[Resource]([SubResource("RoseDialogCase_0jf2o")])
-resource_name = "You: I'm sorry, I promise I'll do a better job next t…"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bdbsr"]
-lines = Array[Resource]([SubResource("RoseDialogLine_qf6kr")])
-resource_name = "Menu 7"
+resource_name = "Menu 3"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_lq25y"]
 kind = "Answer"
@@ -285,7 +158,7 @@ resource_name = "You: Yes, well, it's a pretty strong wine."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gkgyi"]
 lines = Array[Resource]([SubResource("RoseDialogLine_lq25y")])
-resource_name = "Menu 8"
+resource_name = "Menu 4"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_ocpbq"]
 kind = "Answer"
@@ -294,247 +167,247 @@ resource_name = "You: Right, got it."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ibogq"]
 lines = Array[Resource]([SubResource("RoseDialogLine_ocpbq")])
-resource_name = "Menu 9"
+resource_name = "Menu 5"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_xruh6"]
 kind = "Answer"
 text = "I'll pass on the alcohol. Actually, I'd rather listen to a story about the Seven Knights, especially one about Kirnale and Lillith."
-next_menu = 11
+next_menu = 7
 resource_name = "You: I'll pass on the alcohol. Actually, I'd rather l…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_mv2oi"]
 lines = Array[Resource]([SubResource("RoseDialogLine_xruh6")])
-resource_name = "Menu 10"
+resource_name = "Menu 6"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_7revu"]
 text = "Those deep, mysterious eyes, that elegant nose, those noble features. Ah, if Kirnale were still alive, I would have loved to have seen him just once!"
-next_menu = 12
+next_menu = 8
 resource_name = "NPC: Those deep, mysterious eyes, that elegant nose, …"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6fk07"]
 lines = Array[Resource]([SubResource("RoseDialogLine_7revu")])
-resource_name = "Menu 11"
+resource_name = "Menu 7"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_1vbfv"]
 kind = "Answer"
 text = "Was Kirnale really that handsome?"
-next_menu = 13
+next_menu = 9
 resource_name = "You: Was Kirnale really that handsome?"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_0mnes"]
 kind = "Answer"
 text = "If you haven't met him, how would you know that Kirnale looked that good?"
-next_menu = 37
+next_menu = 33
 resource_name = "You: If you haven't met him, how would you know that …"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vt77h"]
 lines = Array[Resource]([SubResource("RoseDialogLine_1vbfv"), SubResource("RoseDialogLine_0mnes")])
-resource_name = "Menu 12"
+resource_name = "Menu 8"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_csmmf"]
 text = "He definitely was. Otherwise, why would Lillith follow him on the First Monster Expedition? She fell in love with him at first sight."
-next_menu = 14
+next_menu = 10
 resource_name = "NPC: He definitely was. Otherwise, why would Lillith …"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qkr55"]
 lines = Array[Resource]([SubResource("RoseDialogLine_csmmf")])
-resource_name = "Menu 13"
+resource_name = "Menu 9"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_dugus"]
 kind = "Answer"
 text = "I didn't know Lillith joined the First Monster Expedition because she fell in love with Kirnale."
-next_menu = 15
+next_menu = 11
 resource_name = "You: I didn't know Lillith joined the First Monster E…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_g2cka"]
 lines = Array[Resource]([SubResource("RoseDialogLine_dugus")])
-resource_name = "Menu 14"
+resource_name = "Menu 10"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_qsit3"]
 text = "Oh yes, she did. By chance, Kirnale passed through Lillith's town and once she set eyes upon him, she loved him for the rest of her life. Even though she was the precious daughter of a very wealthy man, she threw everything away to follow Kirnale."
-next_menu = 16
+next_menu = 12
 resource_name = "NPC: Oh yes, she did. By chance, Kirnale passed throu…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_cgrxh"]
 lines = Array[Resource]([SubResource("RoseDialogLine_qsit3")])
-resource_name = "Menu 15"
+resource_name = "Menu 11"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_mweer"]
 kind = "Answer"
 text = "But what about the others in the Seven Knights? Did they welcome her?"
-next_menu = 17
+next_menu = 13
 resource_name = "You: But what about the others in the Seven Knights? …"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_j6e3w"]
 lines = Array[Resource]([SubResource("RoseDialogLine_mweer")])
-resource_name = "Menu 16"
+resource_name = "Menu 12"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_alpai"]
 text = "At first, her father opposed her participation in the expedition, but she eventually persuaded him to fund the efforts of the Seven Knights. Lillith had a talent for trading, and was able to sell the rare items that the Seven Knights found for great prices, so her skills came to be greatly appreciated by the other six heroes."
-next_menu = 18
+next_menu = 14
 resource_name = "NPC: At first, her father opposed her participation i…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_we0n2"]
 lines = Array[Resource]([SubResource("RoseDialogLine_alpai")])
-resource_name = "Menu 17"
+resource_name = "Menu 13"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_iobpq"]
 kind = "Answer"
 text = "Wow, that's an amazing accomplishment, especially since she was so young. I still have trouble calculating my income and expenses. At any rate, was Kirnale in love with Lillith too?"
-next_menu = 19
+next_menu = 15
 resource_name = "You: Wow, that's an amazing accomplishment, especiall…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_sej17"]
 lines = Array[Resource]([SubResource("RoseDialogLine_iobpq")])
-resource_name = "Menu 18"
+resource_name = "Menu 14"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_jdbmu"]
 text = "Well, Kirnale was a really awkward person. Although the lovely Lillith was wholeheartedly showing her love for him, it seemed that he was only concerned with exploration and his inventions."
-next_menu = 20
+next_menu = 16
 resource_name = "NPC: Well, Kirnale was a really awkward person. Altho…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_076mg"]
 lines = Array[Resource]([SubResource("RoseDialogLine_jdbmu")])
-resource_name = "Menu 19"
+resource_name = "Menu 15"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_u6pd7"]
 kind = "Answer"
 text = "Wow. That's pretty heartless."
-next_menu = 21
+next_menu = 17
 resource_name = "You: Wow. That's pretty heartless."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_12eiu"]
 lines = Array[Resource]([SubResource("RoseDialogLine_u6pd7")])
-resource_name = "Menu 20"
+resource_name = "Menu 16"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_lb2hq"]
 text = "Heartless? To me, he just had a very masculine sense of romance! Oh, he was so dreamy! So anyway, wherever Kirnale went, Lillith would follow."
-next_menu = 22
+next_menu = 18
 resource_name = "NPC: Heartless? To me, he just had a very masculine s…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_72wjq"]
 lines = Array[Resource]([SubResource("RoseDialogLine_lb2hq")])
-resource_name = "Menu 21"
+resource_name = "Menu 17"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_pcq1q"]
 kind = "Answer"
 text = "I think I've heard something like this. She took Kirnale's side when he initially opposed the Second Monster Expedition. She also followed him into the monster stronghold from which the Seven Knights were never heard from again."
-next_menu = 23
+next_menu = 19
 resource_name = "You: I think I've heard something like this. She took…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_t4iyc"]
 lines = Array[Resource]([SubResource("RoseDialogLine_pcq1q")])
-resource_name = "Menu 22"
+resource_name = "Menu 18"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_e2l4s"]
 text = "That's right. Even though Kirnale outwardly never expressed it, he was moved by Lillith and deep in his heart, he appreciated her affection."
-next_menu = 24
+next_menu = 20
 resource_name = "NPC: That's right. Even though Kirnale outwardly neve…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ig4pd"]
 lines = Array[Resource]([SubResource("RoseDialogLine_e2l4s")])
-resource_name = "Menu 23"
+resource_name = "Menu 19"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_xnawq"]
 kind = "Answer"
 text = "He should have told her how he felt."
-next_menu = 25
+next_menu = 21
 resource_name = "You: He should have told her how he felt."
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_dvqnq"]
 kind = "Answer"
 text = "Kirnale truly was manly."
-next_menu = 35
+next_menu = 31
 resource_name = "You: Kirnale truly was manly."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vtxya"]
 lines = Array[Resource]([SubResource("RoseDialogLine_xnawq"), SubResource("RoseDialogLine_dvqnq")])
-resource_name = "Menu 24"
+resource_name = "Menu 20"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_qdve4"]
 text = "According to legend, Kirnale finally expressed his feelings to Lillith during their last moments together."
-next_menu = 26
+next_menu = 22
 resource_name = "NPC: According to legend, Kirnale finally expressed h…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_nmia0"]
 lines = Array[Resource]([SubResource("RoseDialogLine_qdve4")])
-resource_name = "Menu 25"
+resource_name = "Menu 21"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_jbdhi"]
 kind = "Answer"
 text = "How did he do that? Was it romantic?"
-next_menu = 27
+next_menu = 23
 resource_name = "You: How did he do that? Was it romantic?"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hvexf"]
 lines = Array[Resource]([SubResource("RoseDialogLine_jbdhi")])
-resource_name = "Menu 26"
+resource_name = "Menu 22"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_14coq"]
 text = "Because of his forgetfulness, Kirnale had a habit of always writing notes with his Phoenix Writing Quill. In the end, he gave his precious quill to Lillith. Now imagine. In a moment of sheer terror, facing a dreadful death from which there's no hope of escape, you awkwardly give a present to the one person that you love."
-next_menu = 28
+next_menu = 24
 resource_name = "NPC: Because of his forgetfulness, Kirnale had a habi…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xh584"]
 lines = Array[Resource]([SubResource("RoseDialogLine_14coq")])
-resource_name = "Menu 27"
+resource_name = "Menu 23"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_fl8kk"]
 kind = "Answer"
 text = "So in his final moments, Kirnale finally opened his heart. Lillith must have passed away happily."
-next_menu = 29
+next_menu = 25
 resource_name = "You: So in his final moments, Kirnale finally opened …"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jrphv"]
 lines = Array[Resource]([SubResource("RoseDialogLine_fl8kk")])
-resource_name = "Menu 28"
+resource_name = "Menu 24"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_sc0aw"]
 text = "Yes, it was in that beautiful way that Kirnale and Lillith left this world. Although it's sad, it must be wonderful to be with the one that you love in the very end. Even though I'll never be able to see Kirnale himself, I would love to be able to see his {fc=14}Phoenix Writing Quill{/fc}."
-next_menu = 30
+next_menu = 26
 resource_name = "NPC: Yes, it was in that beautiful way that Kirnale a…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_do1xc"]
 lines = Array[Resource]([SubResource("RoseDialogLine_sc0aw")])
-resource_name = "Menu 29"
+resource_name = "Menu 25"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_ksjlh"]
 kind = "Answer"
 text = "Phoenix Writing Quill? I've heard that some of the relics of the Seven Knights are buried in the Gorge of Desolation."
-next_menu = 31
+next_menu = 27
 resource_name = "You: Phoenix Writing Quill? I've heard that some of t…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_e74iu"]
 lines = Array[Resource]([SubResource("RoseDialogLine_ksjlh")])
-resource_name = "Menu 30"
+resource_name = "Menu 26"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_dpos6"]
 text = "Yes, that's right. Perhaps those {fc=12}Stone Golems{/fc} have already dug it up in the {fc=2}Gorge of Desolation{/fc} and are carrying it around. But how can anyone as delicate as me hope to find it? Oh! It's hopeless!"
-next_menu = 32
+next_menu = 28
 resource_name = "NPC: Yes, that's right. Perhaps those {fc=12}Stone Go…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5t73y"]
 lines = Array[Resource]([SubResource("RoseDialogLine_dpos6")])
-resource_name = "Menu 31"
+resource_name = "Menu 27"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_12ikr"]
 kind = "Answer"
 text = "Haha, are you? It doesn't look that way to me! Alright, leave it to me."
-next_menu = 33
+next_menu = 29
 resource_name = "You: Haha, are you? It doesn't look that way to me! A…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gietl"]
 lines = Array[Resource]([SubResource("RoseDialogLine_12ikr")])
-resource_name = "Menu 32"
+resource_name = "Menu 28"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_e83mj"]
 text = "Really? You'd look for Kirnale's Phoenix Writing Quill for me?"
-next_menu = 34
+next_menu = 30
 resource_name = "NPC: Really? You'd look for Kirnale's Phoenix Writing…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_u2e3l"]
 lines = Array[Resource]([SubResource("RoseDialogLine_e83mj")])
-resource_name = "Menu 33"
+resource_name = "Menu 29"
 
 [sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_7odh6"]
 step = ExtResource("8_2w8jp")
@@ -550,64 +423,64 @@ resource_name = "You: Sure. It sounds like a challenge, and it just mi…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_igkyo"]
 lines = Array[Resource]([SubResource("RoseDialogLine_736gb")])
-resource_name = "Menu 34"
+resource_name = "Menu 30"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_cebcu"]
 text = "Yes. He faced his final moments in the monster stronghold by giving his precious Phoenix Writing Quill to Lillith, which expressed his feelings of gratitude and regret."
-next_menu = 36
+next_menu = 32
 resource_name = "NPC: Yes. He faced his final moments in the monster s…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wnej7"]
 lines = Array[Resource]([SubResource("RoseDialogLine_cebcu")])
-resource_name = "Menu 35"
+resource_name = "Menu 31"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_nwf2q"]
 kind = "Answer"
 text = "Ah, that really is romantic."
-next_menu = 27
+next_menu = 23
 resource_name = "You: Ah, that really is romantic."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_h47ic"]
 lines = Array[Resource]([SubResource("RoseDialogLine_nwf2q")])
-resource_name = "Menu 36"
+resource_name = "Menu 32"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_pvven"]
 text = "Time and time again I've heard plenty of descriptions of Kirnale, so now I can envision him perfectly in my mind."
-next_menu = 38
+next_menu = 34
 resource_name = "NPC: Time and time again I've heard plenty of descrip…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_sy6gf"]
 lines = Array[Resource]([SubResource("RoseDialogLine_pvven")])
-resource_name = "Menu 37"
+resource_name = "Menu 33"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_jm8s7"]
 kind = "Answer"
 text = "Not only was he good looking, he was perfect in almost everything. Well, except for his memory."
-next_menu = 39
+next_menu = 35
 resource_name = "You: Not only was he good looking, he was perfect in …"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_y0t3j"]
 lines = Array[Resource]([SubResource("RoseDialogLine_jm8s7")])
-resource_name = "Menu 38"
+resource_name = "Menu 34"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_ogard"]
 text = "That's right, his forgetfulness seemed especially bad. Still, that must have been nothing compared to his good qualities. Even someone like Lillith fell in love with him at first sight and followed him to the First Monster Expedition."
-next_menu = 40
+next_menu = 36
 resource_name = "NPC: That's right, his forgetfulness seemed especiall…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_p70dt"]
 lines = Array[Resource]([SubResource("RoseDialogLine_ogard")])
-resource_name = "Menu 39"
+resource_name = "Menu 35"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_q0bs2"]
 kind = "Answer"
 text = "Is that why Lillith joined the First Monster Expedition? Interesting."
-next_menu = 15
+next_menu = 11
 resource_name = "You: Is that why Lillith joined the First Monster Exp…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_oqdq5"]
 lines = Array[Resource]([SubResource("RoseDialogLine_q0bs2")])
-resource_name = "Menu 40"
+resource_name = "Menu 36"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_1kijs"]
 kind = "Answer"
@@ -617,21 +490,21 @@ resource_name = "You: Leave it to me. I'll try to find it as soon as I…"
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_5xgjg"]
 kind = "Answer"
 text = "Do the Stone Golems in the Gorge of Silence really have the Phoenix Writing Quill?"
-next_menu = 42
+next_menu = 38
 resource_name = "You: Do the Stone Golems in the Gorge of Silence real…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5dvpe"]
 lines = Array[Resource]([SubResource("RoseDialogLine_1kijs"), SubResource("RoseDialogLine_5xgjg")])
-resource_name = "Menu 41"
+resource_name = "Menu 37"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_ynqdp"]
 text = "Yes. At least, that's what I want to believe."
-next_menu = 43
+next_menu = 39
 resource_name = "NPC: Yes. At least, that's what I want to believe."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_v470m"]
 lines = Array[Resource]([SubResource("RoseDialogLine_ynqdp")])
-resource_name = "Menu 42"
+resource_name = "Menu 38"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_pw1ej"]
 kind = "Answer"
@@ -640,102 +513,102 @@ resource_name = "You: Alright then, I'll keep looking for it among the…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3cwhn"]
 lines = Array[Resource]([SubResource("RoseDialogLine_pw1ej")])
-resource_name = "Menu 43"
+resource_name = "Menu 39"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_ambfh"]
 kind = "Answer"
 text = "No, thanks. I finally found the Phoenix Writing Quill."
-next_menu = 45
+next_menu = 41
 resource_name = "You: No, thanks. I finally found the Phoenix Writing …"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vs08k"]
 lines = Array[Resource]([SubResource("RoseDialogLine_ambfh")])
-resource_name = "Menu 44"
+resource_name = "Menu 40"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_sfxk1"]
 text = "Seriously?! Quick, let me see it!"
-next_menu = 46
+next_menu = 42
 resource_name = "NPC: Seriously?! Quick, let me see it!"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6hnsg"]
 lines = Array[Resource]([SubResource("RoseDialogLine_sfxk1")])
-resource_name = "Menu 45"
+resource_name = "Menu 41"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_vg3ww"]
 kind = "Answer"
 text = "Sure, look at it as much as you want. Still, I can't let you keep it."
-next_menu = 47
+next_menu = 43
 resource_name = "You: Sure, look at it as much as you want. Still, I c…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wqlcv"]
 lines = Array[Resource]([SubResource("RoseDialogLine_vg3ww")])
-resource_name = "Menu 46"
+resource_name = "Menu 42"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_5xnoi"]
 text = "Eh?! But why?"
-next_menu = 48
+next_menu = 44
 resource_name = "NPC: Eh?! But why?"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_uqm22"]
 lines = Array[Resource]([SubResource("RoseDialogLine_5xnoi")])
-resource_name = "Menu 47"
+resource_name = "Menu 43"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_cv4vw"]
 kind = "Answer"
 text = "I really should be put this quill in the custody of Jones the historian. After all, this is a priceless historical relic of Junon!"
-next_menu = 49
+next_menu = 45
 resource_name = "You: I really should be put this quill in the custody…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_pxmq5"]
 lines = Array[Resource]([SubResource("RoseDialogLine_cv4vw")])
-resource_name = "Menu 48"
+resource_name = "Menu 44"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_e52il"]
 text = "I understand that, but isn't there any way I could change your mind? I'd keep it a secret. Please let me have this memento of Kirnale!"
-next_menu = 50
+next_menu = 46
 resource_name = "NPC: I understand that, but isn't there any way I cou…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_lx2t1"]
 lines = Array[Resource]([SubResource("RoseDialogLine_e52il")])
-resource_name = "Menu 49"
+resource_name = "Menu 45"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_rhifl"]
 kind = "Answer"
 text = "Well, I'm a little worried. Just this once, I suppose I can let you keep it. But you've got to keep this a secret."
-next_menu = 51
+next_menu = 47
 resource_name = "You: Well, I'm a little worried. Just this once, I su…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7envx"]
 lines = Array[Resource]([SubResource("RoseDialogLine_rhifl")])
-resource_name = "Menu 50"
+resource_name = "Menu 46"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_q80mt"]
 text = "Thank you, thank you so much! You don't have to worry about me letting anyone else know, I'll keep our secret. Now, I just have to repay you! Let me write you a letter of recommendation that you can take to {fc=1}Darren{/fc}, the mayor of {fc=2}Junon Polis{/fc}. If you bring it to him, you should be able to be promoted to a higher job."
-next_menu = 52
+next_menu = 48
 resource_name = "NPC: Thank you, thank you so much! You don't have to …"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_v1dai"]
 lines = Array[Resource]([SubResource("RoseDialogLine_q80mt")])
-resource_name = "Menu 51"
+resource_name = "Menu 47"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_m8cs6"]
 kind = "Answer"
 text = "Ah, thank you so much! I guess I was looking forward to that kind of change."
-next_menu = 53
+next_menu = 49
 resource_name = "You: Ah, thank you so much! I guess I was looking for…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_g46nh"]
 lines = Array[Resource]([SubResource("RoseDialogLine_m8cs6")])
-resource_name = "Menu 52"
+resource_name = "Menu 48"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_irbut"]
 text = "Well then, have fun on your adventures! The next time you drop by, please enjoy yourself and have a drink."
-next_menu = 54
+next_menu = 50
 resource_name = "NPC: Well then, have fun on your adventures! The next…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_db0ky"]
 lines = Array[Resource]([SubResource("RoseDialogLine_irbut")])
-resource_name = "Menu 53"
+resource_name = "Menu 49"
 
 [sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_gtoxa"]
 step = ExtResource("9_sjnfb")
@@ -751,9 +624,9 @@ resource_name = "You: Haha, I'll remember that. Goodbye!"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_45d1n"]
 lines = Array[Resource]([SubResource("RoseDialogLine_hoqey")])
-resource_name = "Menu 54"
+resource_name = "Menu 50"
 
 [resource]
 key = "EM01-013.con"
 name = "[Tavern Owner] Sharlin"
-menus = Array[Resource]([SubResource("RoseDialogMenu_fdio7"), SubResource("RoseDialogMenu_su07l"), SubResource("RoseDialogMenu_c0dhk"), SubResource("RoseDialogMenu_h1hb8"), SubResource("RoseDialogMenu_mtn8l"), SubResource("RoseDialogMenu_klopt"), SubResource("RoseDialogMenu_jv61n"), SubResource("RoseDialogMenu_bdbsr"), SubResource("RoseDialogMenu_gkgyi"), SubResource("RoseDialogMenu_ibogq"), SubResource("RoseDialogMenu_mv2oi"), SubResource("RoseDialogMenu_6fk07"), SubResource("RoseDialogMenu_vt77h"), SubResource("RoseDialogMenu_qkr55"), SubResource("RoseDialogMenu_g2cka"), SubResource("RoseDialogMenu_cgrxh"), SubResource("RoseDialogMenu_j6e3w"), SubResource("RoseDialogMenu_we0n2"), SubResource("RoseDialogMenu_sej17"), SubResource("RoseDialogMenu_076mg"), SubResource("RoseDialogMenu_12eiu"), SubResource("RoseDialogMenu_72wjq"), SubResource("RoseDialogMenu_t4iyc"), SubResource("RoseDialogMenu_ig4pd"), SubResource("RoseDialogMenu_vtxya"), SubResource("RoseDialogMenu_nmia0"), SubResource("RoseDialogMenu_hvexf"), SubResource("RoseDialogMenu_xh584"), SubResource("RoseDialogMenu_jrphv"), SubResource("RoseDialogMenu_do1xc"), SubResource("RoseDialogMenu_e74iu"), SubResource("RoseDialogMenu_5t73y"), SubResource("RoseDialogMenu_gietl"), SubResource("RoseDialogMenu_u2e3l"), SubResource("RoseDialogMenu_igkyo"), SubResource("RoseDialogMenu_wnej7"), SubResource("RoseDialogMenu_h47ic"), SubResource("RoseDialogMenu_sy6gf"), SubResource("RoseDialogMenu_y0t3j"), SubResource("RoseDialogMenu_p70dt"), SubResource("RoseDialogMenu_oqdq5"), SubResource("RoseDialogMenu_5dvpe"), SubResource("RoseDialogMenu_v470m"), SubResource("RoseDialogMenu_3cwhn"), SubResource("RoseDialogMenu_vs08k"), SubResource("RoseDialogMenu_6hnsg"), SubResource("RoseDialogMenu_wqlcv"), SubResource("RoseDialogMenu_uqm22"), SubResource("RoseDialogMenu_pxmq5"), SubResource("RoseDialogMenu_lx2t1"), SubResource("RoseDialogMenu_7envx"), SubResource("RoseDialogMenu_v1dai"), SubResource("RoseDialogMenu_g46nh"), SubResource("RoseDialogMenu_db0ky"), SubResource("RoseDialogMenu_45d1n")])
+menus = Array[Resource]([SubResource("RoseDialogMenu_fdio7"), SubResource("RoseDialogMenu_su07l"), SubResource("RoseDialogMenu_c0dhk"), SubResource("RoseDialogMenu_mtn8l"), SubResource("RoseDialogMenu_gkgyi"), SubResource("RoseDialogMenu_ibogq"), SubResource("RoseDialogMenu_mv2oi"), SubResource("RoseDialogMenu_6fk07"), SubResource("RoseDialogMenu_vt77h"), SubResource("RoseDialogMenu_qkr55"), SubResource("RoseDialogMenu_g2cka"), SubResource("RoseDialogMenu_cgrxh"), SubResource("RoseDialogMenu_j6e3w"), SubResource("RoseDialogMenu_we0n2"), SubResource("RoseDialogMenu_sej17"), SubResource("RoseDialogMenu_076mg"), SubResource("RoseDialogMenu_12eiu"), SubResource("RoseDialogMenu_72wjq"), SubResource("RoseDialogMenu_t4iyc"), SubResource("RoseDialogMenu_ig4pd"), SubResource("RoseDialogMenu_vtxya"), SubResource("RoseDialogMenu_nmia0"), SubResource("RoseDialogMenu_hvexf"), SubResource("RoseDialogMenu_xh584"), SubResource("RoseDialogMenu_jrphv"), SubResource("RoseDialogMenu_do1xc"), SubResource("RoseDialogMenu_e74iu"), SubResource("RoseDialogMenu_5t73y"), SubResource("RoseDialogMenu_gietl"), SubResource("RoseDialogMenu_u2e3l"), SubResource("RoseDialogMenu_igkyo"), SubResource("RoseDialogMenu_wnej7"), SubResource("RoseDialogMenu_h47ic"), SubResource("RoseDialogMenu_sy6gf"), SubResource("RoseDialogMenu_y0t3j"), SubResource("RoseDialogMenu_p70dt"), SubResource("RoseDialogMenu_oqdq5"), SubResource("RoseDialogMenu_5dvpe"), SubResource("RoseDialogMenu_v470m"), SubResource("RoseDialogMenu_3cwhn"), SubResource("RoseDialogMenu_vs08k"), SubResource("RoseDialogMenu_6hnsg"), SubResource("RoseDialogMenu_wqlcv"), SubResource("RoseDialogMenu_uqm22"), SubResource("RoseDialogMenu_pxmq5"), SubResource("RoseDialogMenu_lx2t1"), SubResource("RoseDialogMenu_7envx"), SubResource("RoseDialogMenu_v1dai"), SubResource("RoseDialogMenu_g46nh"), SubResource("RoseDialogMenu_db0ky"), SubResource("RoseDialogMenu_45d1n")])

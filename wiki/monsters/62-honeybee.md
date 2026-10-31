@@ -2,7 +2,7 @@
 kind: monster
 id: 62
 name: HoneyBee
-status: in-game
+status: changed-from-irose
 level: 12
 hp: 300
 hp_per_level: 25
@@ -51,66 +51,6 @@ quests:
 - '[[quests/852-solider-job-change-quest|Solider Job Change Quest]]'
 - '[[quests/2103-glowing-stingers|Glowing Stingers]]'
 spawns:
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5441.3
-  y: 5448.9
-  count: 3
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5194.9
-  y: 5354.2
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5338.5
-  y: 5330.4
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5502.7
-  y: 5303.6
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5399.8
-  y: 5165.5
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5428.1
-  y: 5122.2
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5428.1
-  y: 5122.2
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5410.4
-  y: 5212.4
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5220.5
-  y: 5049.7
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5269.2
-  y: 5049.3
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5366.7
-  y: 5067.6
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5330.5
-  y: 5051.8
-  count: 1
-  group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
   x: 5294
   y: 5338
@@ -166,6 +106,21 @@ spawns:
   y: 5148
   count: 1
   group: reinforcements
+- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
+  x: 5230.0
+  y: 5372.0
+  count: 4
+  group: basic
+- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
+  x: 5300.0
+  y: 5398.0
+  count: 4
+  group: basic
+- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
+  x: 5346.0
+  y: 5352.0
+  count: 4
+  group: basic
 source:
   data: godot/data/monsters/62-honeybee.tres, drop table godot/data/drop_tables/125-honeybee.tres
   code:
@@ -178,3 +133,7 @@ Speeds are in centimetres per second, attack range in metres. Spawn positions ar
 HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].
+
+## Changed from iROSE
+
+The Zant city hub redesign makes the HoneyBees the only fighting monster of [[zones/1-canyon-city-of-zant|Canyon City of Zant]]'s fields: three spawn points of 4 on the Training Grounds north of the walls (around 5230-5346, 5352-5398), coming back 20 seconds after they fall. They never attack first, so new arrivals can practise on them.

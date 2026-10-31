@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2408-stones-and-sockets.tres" id="z_9632af"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_dc9ee0"]
+quest = ExtResource("z_9632af")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ea4f5e"]
+quest = ExtResource("z_9632af")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_eb9a66"]
+equation = 0
+value = 400
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_e52592"]
+equation = 0
+value = 300
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_fbccdd"]
+switch = 647
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_64e032"]
+
+[resource]
+name = "2408-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_dc9ee0")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_ea4f5e"), SubResource("RoseRewardCalculatedExperiencePoints_eb9a66"), SubResource("RoseRewardCalculatedMoney_e52592"), SubResource("RoseRewardSetQuestSwitch_fbccdd"), SubResource("RoseRewardRemoveSelectedQuest_64e032")])

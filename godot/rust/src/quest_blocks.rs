@@ -949,6 +949,11 @@ pub struct RoseRewardAddItem {
     /// How many.
     #[export]
     quantity: i64,
+    /// Equipment only: how much of its life the item has left when it is handed out, in %
+    /// (100: new; 30: worn, so it can be repaired at once).
+    #[export(range = (0.0, 100.0))]
+    #[init(val = 100)]
+    life_percent: i64,
     base: Base<Resource>,
 }
 

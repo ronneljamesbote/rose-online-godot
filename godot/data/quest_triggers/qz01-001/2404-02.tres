@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2404-potions-and-scrolls.tres" id="z_7a14b0"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_2e90d9"]
+quest = ExtResource("z_7a14b0")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_081836"]
+quest = ExtResource("z_7a14b0")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_6f39ba"]
+equation = 0
+value = 400
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_1951ed"]
+equation = 0
+value = 300
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_b06f4b"]
+switch = 643
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_5aea84"]
+
+[resource]
+name = "2404-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_2e90d9")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_081836"), SubResource("RoseRewardCalculatedExperiencePoints_6f39ba"), SubResource("RoseRewardCalculatedMoney_1951ed"), SubResource("RoseRewardSetQuestSwitch_b06f4b"), SubResource("RoseRewardRemoveSelectedQuest_5aea84")])

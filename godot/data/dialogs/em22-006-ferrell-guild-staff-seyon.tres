@@ -2,17 +2,9 @@
 
 [ext_resource type="RoseQuest" uid="uid://dj2gr1b54cdt3" path="res://data/quests/101-dreadful-epidemic.tres" id="1_t6kth"]
 [ext_resource type="RoseQuestTrigger" uid="uid://dwg7jfm8cv0o8" path="res://data/quest_triggers/qp103/103-01.tres" id="2_hd4hr"]
-[ext_resource type="RoseItemQuest" uid="uid://cfpyuiydmitwp" path="res://data/items/quest/111-small-metal-board.tres" id="3_3io1c"]
-[ext_resource type="RoseQuest" uid="uid://ckmc17bwap5bk" path="res://data/quests/1002-dealer-job-change-quest.tres" id="4_l2n2s"]
-[ext_resource type="RoseQuest" uid="uid://bhvp11ehgx75w" path="res://data/quests/5031-seyon-s-price-checklist-delivery.tres" id="5_poe1i"]
-[ext_resource type="RoseQuest" uid="uid://bp53cf48f0jkb" path="res://data/quests/5004-ulysses-price-chart-delivery.tres" id="6_vb0w1"]
 [ext_resource type="RoseQuest" uid="uid://dwhcn6okj7jok" path="res://data/quests/102-dreadful-epidemic.tres" id="7_7ji7l"]
 [ext_resource type="RoseQuestTrigger" uid="uid://dx280i2axci61" path="res://data/quest_triggers/qp103/102-03.tres" id="8_x4ecb"]
 [ext_resource type="RoseItemQuest" uid="uid://b08xjqbkh0a5d" path="res://data/items/quest/601-enigmatic-emblem.tres" id="9_75vox"]
-[ext_resource type="RoseQuestTrigger" uid="uid://s3lw80advjf1" path="res://data/quest_triggers/qj000-01/1002-03.tres" id="10_wxfrk"]
-[ext_resource type="RoseQuestTrigger" uid="uid://h66u6hro0kra" path="res://data/quest_triggers/qs10-001/5031-01.tres" id="11_cyfy7"]
-[ext_resource type="RoseQuestTrigger" uid="uid://ddffh30b3fppk" path="res://data/quest_triggers/qs10-001/5004-02.tres" id="12_e61be"]
-[ext_resource type="RoseQuestTrigger" uid="uid://bi5b1ddy78j6j" path="res://data/quest_triggers/qs10-001/5004-03.tres" id="13_fs2li"]
 [ext_resource type="RoseQuestTrigger" uid="uid://lapm3kgxags5" path="res://data/quest_triggers/qp103/101-02.tres" id="14_ommnd"]
 
 [sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_bnl17"]
@@ -40,7 +32,7 @@ conditions = Array[Resource]([SubResource("RoseDialogIfQuest_edx53")])
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_ugac8"]
 text = "I don’t know why, but lately my body's been feeling pretty sluggish. I have to struggle just to do even little things…"
-next_menu = 15
+next_menu = 4
 show_if = Array[Resource]([SubResource("RoseDialogCase_f8t5a")])
 resource_name = "NPC: I don’t know why, but lately my body's been feel…"
 
@@ -52,7 +44,7 @@ conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_xmahw")])
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_na0av"]
 text = "Have you found anything suspicious around the mushroom field?"
-next_menu = 20
+next_menu = 9
 show_if = Array[Resource]([SubResource("RoseDialogCase_vccjy")])
 resource_name = "NPC: Have you found anything suspicious around the mu…"
 
@@ -79,21 +71,6 @@ resource_name = "You: It's really simple~"
 lines = Array[Resource]([SubResource("RoseDialogLine_y4vis")])
 resource_name = "Menu 2"
 
-[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_se3k0"]
-quest = ExtResource("4_l2n2s")
-item = ExtResource("3_3io1c")
-operator = "=="
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_spego"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_se3k0")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_o0te2"]
-kind = "Answer"
-text = "I need to get some Small Metal Boards."
-next_menu = 4
-show_if = Array[Resource]([SubResource("RoseDialogCase_spego")])
-resource_name = "You: I need to get some Small Metal Boards."
-
 [sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_knjih"]
 
 [sub_resource type="RoseDialogCase" id="RoseDialogCase_8vl3j"]
@@ -110,37 +87,6 @@ kind = "Answer"
 text = "How can I make a trade with an NPC?"
 next_menu = 1
 resource_name = "You: How can I make a trade with an NPC?"
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_aiqhq"]
-quest = ExtResource("5_poe1i")
-active = false
-
-[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_28t1o"]
-operator = "<="
-value = 20
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_urt76"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_aiqhq"), SubResource("RoseDialogIfAbility_28t1o")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_l3r56"]
-kind = "Answer"
-text = "I was told that you need my help."
-next_menu = 8
-show_if = Array[Resource]([SubResource("RoseDialogCase_urt76")])
-resource_name = "You: I was told that you need my help."
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_y1y2k"]
-quest = ExtResource("6_vb0w1")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_olnne"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_y1y2k")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_lsyh6"]
-kind = "Answer"
-text = "I brought the Daily Price Checklist."
-next_menu = 12
-show_if = Array[Resource]([SubResource("RoseDialogCase_olnne")])
-resource_name = "You: I brought the Daily Price Checklist."
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_b7wsh"]
 kind = "Answer"
@@ -160,7 +106,7 @@ conditions = Array[Resource]([SubResource("RoseDialogIfQuest_hi47d"), SubResourc
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_3hyhj"]
 kind = "Answer"
 text = "I don't remember what you told me very well, so would you tell me again? How did those red robed men start this disease?"
-next_menu = 23
+next_menu = 12
 show_if = Array[Resource]([SubResource("RoseDialogCase_2rpwn")])
 resource_name = "You: I don't remember what you told me very well, so …"
 
@@ -179,248 +125,66 @@ conditions = Array[Resource]([SubResource("RoseDialogIfQuest_m2s65"), SubResourc
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_ufy3h"]
 kind = "Answer"
 text = "I couldn’t find those mushrooms. Would you tell me how to get there again?"
-next_menu = 27
+next_menu = 16
 show_if = Array[Resource]([SubResource("RoseDialogCase_15u5d")])
 resource_name = "You: I couldn’t find those mushrooms. Would you tell …"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_kgoyk"]
-lines = Array[Resource]([SubResource("RoseDialogLine_o0te2"), SubResource("RoseDialogLine_ghsbk"), SubResource("RoseDialogLine_ot323"), SubResource("RoseDialogLine_l3r56"), SubResource("RoseDialogLine_lsyh6"), SubResource("RoseDialogLine_b7wsh"), SubResource("RoseDialogLine_3hyhj"), SubResource("RoseDialogLine_ufy3h")])
+lines = Array[Resource]([SubResource("RoseDialogLine_ghsbk"), SubResource("RoseDialogLine_ot323"), SubResource("RoseDialogLine_b7wsh"), SubResource("RoseDialogLine_3hyhj"), SubResource("RoseDialogLine_ufy3h")])
 resource_name = "Menu 3"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_a3prk"]
-text = "Small Metal Boards? I don't have any of those."
-next_menu = 5
-resource_name = "NPC: Small Metal Boards? I don't have any of those."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_n4uph"]
-lines = Array[Resource]([SubResource("RoseDialogLine_a3prk")])
-resource_name = "Menu 4"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_8s72p"]
-kind = "Answer"
-text = "Crow told me you have them."
-next_menu = 6
-resource_name = "You: Crow told me you have them."
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_4l0ca"]
-kind = "Answer"
-text = "You don't? I'm sorry, I must have mixed you up with somebody else."
-resource_name = "You: You don't? I'm sorry, I must have mixed you up w…"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_k7mx1"]
-lines = Array[Resource]([SubResource("RoseDialogLine_8s72p"), SubResource("RoseDialogLine_4l0ca")])
-resource_name = "Menu 5"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_ea8ub"]
-text = "Ah, you were sent by Crow? Why didn't you tell me earlier? All I can give you is 5 Small Metal Boards. I'm running low on them, to tell the truth."
-next_menu = 7
-resource_name = "NPC: Ah, you were sent by Crow? Why didn't you tell m…"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_go1sd"]
-lines = Array[Resource]([SubResource("RoseDialogLine_ea8ub")])
-resource_name = "Menu 6"
-
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_wop6o"]
-step = ExtResource("10_wxfrk")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_kxf8p"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_wop6o")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_1d7iv"]
-kind = "Answer"
-text = "I see."
-on_choose = Array[Resource]([SubResource("RoseDialogCase_kxf8p")])
-resource_name = "You: I see."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5jwdi"]
-lines = Array[Resource]([SubResource("RoseDialogLine_1d7iv")])
-resource_name = "Menu 7"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_kyxaj"]
-text = "Welcome. The Ferrell Guild branches in towns are exchanging Daily Price Checklists in order to balance the prices of items."
-next_menu = 9
-resource_name = "NPC: Welcome. The Ferrell Guild branches in towns are…"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bfcg8"]
-lines = Array[Resource]([SubResource("RoseDialogLine_kyxaj")])
-resource_name = "Menu 8"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_wa7ya"]
-kind = "Answer"
-text = "I must say, you guys seem really fussy."
-next_menu = 10
-resource_name = "You: I must say, you guys seem really fussy."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_xjrws"]
-lines = Array[Resource]([SubResource("RoseDialogLine_wa7ya")])
-resource_name = "Menu 9"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_01iiy"]
-text = "Well, that's not true, since we believe this is one of the basics of trading. By the way, would you deliver this Daily Price Checklist to {fc=1}Ulysses{/fc} in {fc=2}Zant{/fc}?"
-next_menu = 11
-resource_name = "NPC: Well, that's not true, since we believe this is …"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_du117"]
-lines = Array[Resource]([SubResource("RoseDialogLine_01iiy")])
-resource_name = "Menu 10"
-
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_llsba"]
-step = ExtResource("11_cyfy7")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_t1t4r"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_llsba")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_4vv8b"]
-kind = "Answer"
-text = "Sure."
-on_choose = Array[Resource]([SubResource("RoseDialogCase_t1t4r")])
-resource_name = "You: Sure."
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_mbkhg"]
-kind = "Answer"
-text = "I'm sorry, but I'm a little busy right now."
-resource_name = "You: I'm sorry, but I'm a little busy right now."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_yv6x4"]
-lines = Array[Resource]([SubResource("RoseDialogLine_4vv8b"), SubResource("RoseDialogLine_mbkhg")])
-resource_name = "Menu 11"
-
-[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_3dk0u"]
-operator = ">"
-value = 20
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_ot4bw"]
-conditions = Array[Resource]([SubResource("RoseDialogIfAbility_3dk0u")])
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_56p1r"]
-quest = ExtResource("5_poe1i")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_gyk7s"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_56p1r")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_v7fkd"]
-text = "Thank you for your trouble. I hope you continue to support the Ferrell Guild."
-next_menu = 13
-show_if = Array[Resource]([SubResource("RoseDialogCase_ot4bw"), SubResource("RoseDialogCase_gyk7s")])
-resource_name = "NPC: Thank you for your trouble. I hope you continue …"
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_c3vcy"]
-quest = ExtResource("5_poe1i")
-active = false
-
-[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_4iswe"]
-operator = "<="
-value = 20
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_241vs"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_c3vcy"), SubResource("RoseDialogIfAbility_4iswe")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_wm2uy"]
-text = "Ah, thank you so much! Oh wow… The prices have dramatically changed. I'll need to send this Daily Price Checklist of mine to Zant. Can you do that for me?"
-next_menu = 14
-show_if = Array[Resource]([SubResource("RoseDialogCase_241vs")])
-resource_name = "NPC: Ah, thank you so much! Oh wow… The prices have d…"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ffht0"]
-lines = Array[Resource]([SubResource("RoseDialogLine_v7fkd"), SubResource("RoseDialogLine_wm2uy")])
-resource_name = "Menu 12"
-
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_0gnv5"]
-step = ExtResource("12_e61be")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_nb0iy"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_0gnv5")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_3skin"]
-kind = "Answer"
-text = "Sure, why not?"
-on_choose = Array[Resource]([SubResource("RoseDialogCase_nb0iy")])
-resource_name = "You: Sure, why not?"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_pisvu"]
-lines = Array[Resource]([SubResource("RoseDialogLine_3skin")])
-resource_name = "Menu 13"
-
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_1ar2e"]
-step = ExtResource("13_fs2li")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_mjxlq"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_1ar2e")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_1x3mo"]
-kind = "Answer"
-text = "Of course. I can do that."
-on_choose = Array[Resource]([SubResource("RoseDialogCase_mjxlq")])
-resource_name = "You: Of course. I can do that."
-
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_whv1p"]
-step = ExtResource("12_e61be")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_indct"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_whv1p")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_ildn6"]
-kind = "Answer"
-text = "I'm a little busy right now. I'm sorry I can't do this for you."
-on_choose = Array[Resource]([SubResource("RoseDialogCase_indct")])
-resource_name = "You: I'm a little busy right now. I'm sorry I can't d…"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fsobg"]
-lines = Array[Resource]([SubResource("RoseDialogLine_1x3mo"), SubResource("RoseDialogLine_ildn6")])
-resource_name = "Menu 14"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_n15fx"]
 kind = "Answer"
 text = "Do you know anything about the epidemic that's been spreading around recently?"
-next_menu = 16
+next_menu = 5
 resource_name = "You: Do you know anything about the epidemic that's b…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hn5h1"]
 lines = Array[Resource]([SubResource("RoseDialogLine_n15fx")])
-resource_name = "Menu 15"
+resource_name = "Menu 4"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_p0eek"]
 text = "Epidemic? Oh, you must be the one that Myad sent. Well, I don’t know anything about this disease. After all, I'm not really a doctor. But now that I think about it, I saw some people in red robes camping around that field where the mushrooms grow. Then, after a few days, they just disappeared. It didn't really bother me at the time since adventurers are always coming and going in this area, but now it does seem too coincidental."
-next_menu = 17
+next_menu = 6
 resource_name = "NPC: Epidemic? Oh, you must be the one that Myad sent…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b5qfb"]
 lines = Array[Resource]([SubResource("RoseDialogLine_p0eek")])
-resource_name = "Menu 16"
+resource_name = "Menu 5"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_tkj1y"]
 kind = "Answer"
 text = "You're saying the men in the red robes are related to this epidemic somehow?"
-next_menu = 18
+next_menu = 7
 resource_name = "You: You're saying the men in the red robes are relat…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_oakgu"]
 lines = Array[Resource]([SubResource("RoseDialogLine_tkj1y")])
-resource_name = "Menu 17"
+resource_name = "Menu 6"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_wtba5"]
 text = "Goodness, no! Still, as soon as they left, the mushrooms started to spoil, and then the epidemic began to spread. For now, the best thing to do would be to find any kind of evidence before pointing at any suspects. Why don't you investigate the field where the mushrooms grow?"
-next_menu = 19
+next_menu = 8
 resource_name = "NPC: Goodness, no! Still, as soon as they left, the m…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_q4782"]
 lines = Array[Resource]([SubResource("RoseDialogLine_wtba5")])
-resource_name = "Menu 18"
+resource_name = "Menu 7"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_fk10g"]
 kind = "Answer"
 text = "Alright, I'll check it out. Where can I find these strange mushrooms?"
-next_menu = 25
+next_menu = 14
 resource_name = "You: Alright, I'll check it out. Where can I find the…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b3xjf"]
 lines = Array[Resource]([SubResource("RoseDialogLine_fk10g")])
-resource_name = "Menu 19"
+resource_name = "Menu 8"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_4rx7k"]
 kind = "Answer"
 text = "I found this, um, {fc=14}Enigmatic Emblem{/fc}?"
-next_menu = 21
+next_menu = 10
 resource_name = "You: I found this, um, {fc=14}Enigmatic Emblem{/fc}?"
 
 [sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_in1br"]
@@ -434,31 +198,18 @@ text = "Well, first I wanted to make a trade with you."
 on_choose = Array[Resource]([SubResource("RoseDialogCase_24yic")])
 resource_name = "You: Well, first I wanted to make a trade with you."
 
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_lic5o"]
-quest = ExtResource("6_vb0w1")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_4153a"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_lic5o")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_2l080"]
-kind = "Answer"
-text = "Well, I found something. But before that, would you take this Daily Price Checklist to {fc=1}Ulysses{/fc} for me?"
-next_menu = 12
-show_if = Array[Resource]([SubResource("RoseDialogCase_4153a")])
-resource_name = "You: Well, I found something. But before that, would …"
-
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_sthmh"]
-lines = Array[Resource]([SubResource("RoseDialogLine_4rx7k"), SubResource("RoseDialogLine_4hlrb"), SubResource("RoseDialogLine_2l080")])
-resource_name = "Menu 20"
+lines = Array[Resource]([SubResource("RoseDialogLine_4rx7k"), SubResource("RoseDialogLine_4hlrb")])
+resource_name = "Menu 9"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_3tul2"]
 text = "An emblem? Well, I can't help you much just by looking at it, but why don’t you show it to {fc=1}Myad{/fc}?"
-next_menu = 22
+next_menu = 11
 resource_name = "NPC: An emblem? Well, I can't help you much just by l…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_76lnd"]
 lines = Array[Resource]([SubResource("RoseDialogLine_3tul2")])
-resource_name = "Menu 21"
+resource_name = "Menu 10"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_p3voe"]
 kind = "Answer"
@@ -467,16 +218,16 @@ resource_name = "You: Maybe that’s a good idea."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_85x52"]
 lines = Array[Resource]([SubResource("RoseDialogLine_p3voe")])
-resource_name = "Menu 22"
+resource_name = "Menu 11"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_yn0a8"]
 text = "Goodness, I didn't say it like that! I just said that as soon as they left, the mushrooms started to spoil, and then the epidemic began to spread. For now, the best thing to do would be to find any kind of evidence before pointing at any suspects. Why don't you investigate the field where the mushrooms grow?"
-next_menu = 24
+next_menu = 13
 resource_name = "NPC: Goodness, I didn't say it like that! I just said…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5ps2p"]
 lines = Array[Resource]([SubResource("RoseDialogLine_yn0a8")])
-resource_name = "Menu 23"
+resource_name = "Menu 12"
 
 [sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_kk5g6"]
 step = ExtResource("8_x4ecb")
@@ -492,16 +243,16 @@ resource_name = "You: Alright, I'll check it out. Where can I find the…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b20m4"]
 lines = Array[Resource]([SubResource("RoseDialogLine_hyasb")])
-resource_name = "Menu 24"
+resource_name = "Menu 13"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_ceh51"]
 text = "Head South from here and look around the West bank for the mushrooms. Be careful though, it might be tough getting there."
-next_menu = 26
+next_menu = 15
 resource_name = "NPC: Head South from here and look around the West ba…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_63vcf"]
 lines = Array[Resource]([SubResource("RoseDialogLine_ceh51")])
-resource_name = "Menu 25"
+resource_name = "Menu 14"
 
 [sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_3b7es"]
 step = ExtResource("14_ommnd")
@@ -517,16 +268,16 @@ resource_name = "You: Alright, I'll go check it out."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_x68eb"]
 lines = Array[Resource]([SubResource("RoseDialogLine_p14wb")])
-resource_name = "Menu 26"
+resource_name = "Menu 15"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_ho2du"]
 text = "Head South from here and look around the West bank for the mushrooms. Be careful though, it might be tough getting there."
-next_menu = 28
+next_menu = 17
 resource_name = "NPC: Head South from here and look around the West ba…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_hcd8c"]
 lines = Array[Resource]([SubResource("RoseDialogLine_ho2du")])
-resource_name = "Menu 27"
+resource_name = "Menu 16"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_j305h"]
 kind = "Answer"
@@ -535,9 +286,9 @@ resource_name = "You: Right. I'm going off to look for them."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1gkhy"]
 lines = Array[Resource]([SubResource("RoseDialogLine_j305h")])
-resource_name = "Menu 28"
+resource_name = "Menu 17"
 
 [resource]
 key = "EM22-006.con"
 name = "[Ferrell Guild Staff] Seyon"
-menus = Array[Resource]([SubResource("RoseDialogMenu_pc6sn"), SubResource("RoseDialogMenu_vimmg"), SubResource("RoseDialogMenu_s65kl"), SubResource("RoseDialogMenu_kgoyk"), SubResource("RoseDialogMenu_n4uph"), SubResource("RoseDialogMenu_k7mx1"), SubResource("RoseDialogMenu_go1sd"), SubResource("RoseDialogMenu_5jwdi"), SubResource("RoseDialogMenu_bfcg8"), SubResource("RoseDialogMenu_xjrws"), SubResource("RoseDialogMenu_du117"), SubResource("RoseDialogMenu_yv6x4"), SubResource("RoseDialogMenu_ffht0"), SubResource("RoseDialogMenu_pisvu"), SubResource("RoseDialogMenu_fsobg"), SubResource("RoseDialogMenu_hn5h1"), SubResource("RoseDialogMenu_b5qfb"), SubResource("RoseDialogMenu_oakgu"), SubResource("RoseDialogMenu_q4782"), SubResource("RoseDialogMenu_b3xjf"), SubResource("RoseDialogMenu_sthmh"), SubResource("RoseDialogMenu_76lnd"), SubResource("RoseDialogMenu_85x52"), SubResource("RoseDialogMenu_5ps2p"), SubResource("RoseDialogMenu_b20m4"), SubResource("RoseDialogMenu_63vcf"), SubResource("RoseDialogMenu_x68eb"), SubResource("RoseDialogMenu_hcd8c"), SubResource("RoseDialogMenu_1gkhy")])
+menus = Array[Resource]([SubResource("RoseDialogMenu_pc6sn"), SubResource("RoseDialogMenu_vimmg"), SubResource("RoseDialogMenu_s65kl"), SubResource("RoseDialogMenu_kgoyk"), SubResource("RoseDialogMenu_hn5h1"), SubResource("RoseDialogMenu_b5qfb"), SubResource("RoseDialogMenu_oakgu"), SubResource("RoseDialogMenu_q4782"), SubResource("RoseDialogMenu_b3xjf"), SubResource("RoseDialogMenu_sthmh"), SubResource("RoseDialogMenu_76lnd"), SubResource("RoseDialogMenu_85x52"), SubResource("RoseDialogMenu_5ps2p"), SubResource("RoseDialogMenu_b20m4"), SubResource("RoseDialogMenu_63vcf"), SubResource("RoseDialogMenu_x68eb"), SubResource("RoseDialogMenu_hcd8c"), SubResource("RoseDialogMenu_1gkhy")])

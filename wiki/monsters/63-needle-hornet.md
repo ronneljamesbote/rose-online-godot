@@ -2,7 +2,7 @@
 kind: monster
 id: 63
 name: Needle Hornet
-status: in-game
+status: changed-from-irose
 level: 15
 hp: 420
 hp_per_level: 28
@@ -19,7 +19,7 @@ run_speed: 400
 xp: 22
 drop_item_rate: 64
 drop_money_rate: 12
-zones: 3
+zones: 2
 drops:
 - item: '[[items/material/177-insect-wing|Insect Wing]]'
   slots_of_30: 5
@@ -62,111 +62,6 @@ drops:
 quests:
 - '[[quests/2108-hornets-in-the-dig|Hornets in the Dig]]'
 spawns:
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5245.2
-  y: 5390.4
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5194.9
-  y: 5354.2
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5338.5
-  y: 5330.4
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5338.5
-  y: 5330.4
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5502.7
-  y: 5303.6
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5399.8
-  y: 5165.5
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5428.1
-  y: 5122.2
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5428.1
-  y: 5122.2
-  count: 0
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5428.1
-  y: 5122.2
-  count: 1
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5410.4
-  y: 5212.4
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5410.4
-  y: 5212.4
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5220.5
-  y: 5049.7
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5220.5
-  y: 5049.7
-  count: 1
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5269.2
-  y: 5049.3
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5269.2
-  y: 5049.3
-  count: 1
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5234.5
-  y: 5055.6
-  count: 1
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5366.7
-  y: 5067.6
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5366.7
-  y: 5067.6
-  count: 1
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5330.5
-  y: 5051.8
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5330.5
-  y: 5051.8
-  count: 1
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5280.7
-  y: 5046.1
-  count: 1
-  group: reinforcements
 - zone: '[[zones/24-el-verloon-desert|El Verloon Desert]]'
   x: 5084.7
   y: 5379.9
@@ -294,3 +189,7 @@ Speeds are in centimetres per second, attack range in metres. Spawn positions ar
 HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].
+
+## Changed from iROSE
+
+The Zant city hub redesign makes [[zones/1-canyon-city-of-zant|Canyon City of Zant]] a safe city: this monster no longer spawns in or around Zant.

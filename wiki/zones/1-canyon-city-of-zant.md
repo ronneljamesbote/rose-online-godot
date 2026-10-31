@@ -2,7 +2,7 @@
 kind: zone
 id: 1
 name: Canyon City of Zant
-status: in-game
+status: changed-from-irose
 planet: Junon
 pvp: no
 monster_levels: 1–25
@@ -15,105 +15,30 @@ map:
   right: 5760
   bottom: 4800
 monster_spawns:
-- monsters: '[[monsters/62-honeybee|HoneyBee]] ×3, [[monsters/64-hornet|Hornet]] ×2, [[monsters/102-woopie-chef|Woopie Chef]] ×1, [[monsters/102-woopie-chef|Woopie Chef]] ×2, [[monsters/101-woopie|Woopie]] ×3'
-  reinforcements: '[[monsters/103-woopie-glutton|Woopie Glutton]] ×2, [[monsters/205-woopie-king|Woopie King]] ×1'
-  x: 5441.3
-  y: 5448.9
-  radius: 26
-  max_alive: 9
-  respawn_seconds: 8
-- monsters: '[[monsters/63-needle-hornet|Needle Hornet]] ×1, [[monsters/101-woopie|Woopie]] ×2, [[monsters/101-woopie|Woopie]] ×1, [[monsters/102-woopie-chef|Woopie Chef]] ×2, [[monsters/131-mini-porkie|Mini-Porkie]] ×1'
-  reinforcements: '[[monsters/64-hornet|Hornet]] ×2, [[monsters/103-woopie-glutton|Woopie Glutton]] ×1'
-  x: 5245.2
-  y: 5390.4
-  radius: 25
-  max_alive: 6
-  respawn_seconds: 8
-- monsters: '[[monsters/63-needle-hornet|Needle Hornet]] ×1, [[monsters/62-honeybee|HoneyBee]] ×2, [[monsters/101-woopie|Woopie]] ×2, [[monsters/101-woopie|Woopie]] ×1, [[monsters/64-hornet|Hornet]] ×2'
-  reinforcements: '[[monsters/102-woopie-chef|Woopie Chef]] ×2, [[monsters/103-woopie-glutton|Woopie Glutton]] ×1'
-  x: 5194.9
-  y: 5354.2
-  radius: 25
-  max_alive: 10
-  respawn_seconds: 8
 - monsters: '[[monsters/316-butterfly|ButterFly]] ×2, [[monsters/317-butterfly|ButterFly]] ×2, [[monsters/318-butterfly|ButterFly]] ×2'
   x: 5255.6
   y: 5355.8
   radius: 50
   max_alive: 9
   respawn_seconds: 10
-- monsters: '[[monsters/101-woopie|Woopie]] ×2, [[monsters/102-woopie-chef|Woopie Chef]] ×1, [[monsters/102-woopie-chef|Woopie Chef]] ×2, [[monsters/64-hornet|Hornet]] ×2, [[monsters/103-woopie-glutton|Woopie Glutton]] ×1'
-  reinforcements: '[[monsters/204-wandering-rackie|Wandering Rackie]] ×1, [[monsters/131-mini-porkie|Mini-Porkie]] ×2'
-  x: 5261.4
-  y: 5361.4
-  radius: 43
-  max_alive: 10
-  respawn_seconds: 8
-- monsters: '[[monsters/101-woopie|Woopie]] ×2, [[monsters/101-woopie|Woopie]] ×1, [[monsters/102-woopie-chef|Woopie Chef]] ×2, [[monsters/64-hornet|Hornet]] ×1, [[monsters/101-woopie|Woopie]] ×2'
-  reinforcements: '[[monsters/103-woopie-glutton|Woopie Glutton]] ×1, [[monsters/131-mini-porkie|Mini-Porkie]] ×2'
-  x: 5301.3
-  y: 5395.8
-  radius: 24
-  max_alive: 7
-  respawn_seconds: 8
-- monsters: '[[monsters/61-needle-honeybee|Needle HoneyBee]] ×2, [[monsters/61-needle-honeybee|Needle HoneyBee]] ×1, [[monsters/62-honeybee|HoneyBee]] ×2, [[monsters/63-needle-hornet|Needle Hornet]] ×1, [[monsters/63-needle-hornet|Needle Hornet]] ×2'
-  reinforcements: '[[monsters/64-hornet|Hornet]] ×3'
-  x: 5338.5
-  y: 5330.4
-  radius: 45
-  max_alive: 8
-  respawn_seconds: 8
-- monsters: '[[monsters/101-woopie|Woopie]] ×1, [[monsters/102-woopie-chef|Woopie Chef]] ×1, [[monsters/101-woopie|Woopie]] ×1, [[monsters/102-woopie-chef|Woopie Chef]] ×2, [[monsters/103-woopie-glutton|Woopie Glutton]] ×2'
-  reinforcements: '[[monsters/131-mini-porkie|Mini-Porkie]] ×1, [[monsters/205-woopie-king|Woopie King]] ×1'
-  x: 5332
-  y: 5339.6
-  radius: 35
-  max_alive: 8
-  respawn_seconds: 10
-- monsters: '[[monsters/101-woopie|Woopie]] ×2, [[monsters/101-woopie|Woopie]] ×1, [[monsters/102-woopie-chef|Woopie Chef]] ×2, [[monsters/64-hornet|Hornet]] ×1, [[monsters/101-woopie|Woopie]] ×2'
-  reinforcements: '[[monsters/103-woopie-glutton|Woopie Glutton]] ×1, [[monsters/131-mini-porkie|Mini-Porkie]] ×2'
-  x: 5377
-  y: 5394.4
-  radius: 16
+- monsters: '[[monsters/62-honeybee|HoneyBee]] ×4'
+  x: 5230.0
+  y: 5372.0
+  radius: 14
   max_alive: 4
-  respawn_seconds: 12
-- monsters: '[[monsters/101-woopie|Woopie]] ×2, [[monsters/101-woopie|Woopie]] ×1, [[monsters/102-woopie-chef|Woopie Chef]] ×2, [[monsters/64-hornet|Hornet]] ×1, [[monsters/101-woopie|Woopie]] ×2'
-  reinforcements: '[[monsters/103-woopie-glutton|Woopie Glutton]] ×1, [[monsters/131-mini-porkie|Mini-Porkie]] ×2'
-  x: 5423.8
-  y: 5418.3
-  radius: 16
-  max_alive: 4
-  respawn_seconds: 13
-- monsters: '[[monsters/64-hornet|Hornet]] ×1, [[monsters/61-needle-honeybee|Needle HoneyBee]] ×1, [[monsters/101-woopie|Woopie]] ×1, [[monsters/102-woopie-chef|Woopie Chef]] ×1'
-  x: 5469.3
-  y: 5398.7
-  radius: 11
-  max_alive: 4
-  respawn_seconds: 10
-- monsters: '[[monsters/62-honeybee|HoneyBee]] ×1, [[monsters/64-hornet|Hornet]] ×1, [[monsters/63-needle-hornet|Needle Hornet]] ×2'
-  x: 5502.7
-  y: 5303.6
-  radius: 7
-  max_alive: 3
-  respawn_seconds: 13
-- monsters: '[[monsters/301-mini-bee|Mini Bee]] ×2'
-  x: 5238.4
-  y: 5171.1
-  radius: 100
-  max_alive: 24
   respawn_seconds: 20
-- monsters: '[[monsters/301-mini-bee|Mini Bee]] ×3'
-  x: 5120.8
-  y: 5135.7
-  radius: 85
-  max_alive: 14
-  respawn_seconds: 16
-- monsters: '[[monsters/301-mini-bee|Mini Bee]] ×3'
-  x: 5139.8
-  y: 5194.5
-  radius: 70
-  max_alive: 17
-  respawn_seconds: 21
+- monsters: '[[monsters/62-honeybee|HoneyBee]] ×4'
+  x: 5300.0
+  y: 5398.0
+  radius: 14
+  max_alive: 4
+  respawn_seconds: 20
+- monsters: '[[monsters/62-honeybee|HoneyBee]] ×4'
+  x: 5346.0
+  y: 5352.0
+  radius: 14
+  max_alive: 4
+  respawn_seconds: 20
 - monsters: '[[monsters/316-butterfly|ButterFly]] ×2, [[monsters/317-butterfly|ButterFly]] ×3, [[monsters/318-butterfly|ButterFly]] ×2'
   reinforcements: '[[monsters/318-butterfly|ButterFly]] ×2'
   x: 5198.5
@@ -121,100 +46,34 @@ monster_spawns:
   radius: 80
   max_alive: 18
   respawn_seconds: 10
-- monsters: '[[monsters/62-honeybee|HoneyBee]] ×2, [[monsters/63-needle-hornet|Needle Hornet]] ×2, [[monsters/101-woopie|Woopie]] ×1, [[monsters/64-hornet|Hornet]] ×2, [[monsters/102-woopie-chef|Woopie Chef]] ×1'
-  reinforcements: '[[monsters/64-hornet|Hornet]] ×2, [[monsters/103-woopie-glutton|Woopie Glutton]] ×2'
-  x: 5399.8
-  y: 5165.5
-  radius: 36
-  max_alive: 7
-  respawn_seconds: 8
-- monsters: '[[monsters/62-honeybee|HoneyBee]] ×2, [[monsters/62-honeybee|HoneyBee]] ×2, [[monsters/63-needle-hornet|Needle Hornet]] ×2, [[monsters/64-hornet|Hornet]] ×0, [[monsters/63-needle-hornet|Needle Hornet]] ×0'
-  reinforcements: '[[monsters/63-needle-hornet|Needle Hornet]] ×1, [[monsters/64-hornet|Hornet]] ×0'
-  x: 5428.1
-  y: 5122.2
-  radius: 60
-  max_alive: 8
-  respawn_seconds: 13
-- monsters: '[[monsters/101-woopie|Woopie]] ×1, [[monsters/102-woopie-chef|Woopie Chef]] ×1, [[monsters/101-woopie|Woopie]] ×1, [[monsters/102-woopie-chef|Woopie Chef]] ×2, [[monsters/103-woopie-glutton|Woopie Glutton]] ×2'
-  reinforcements: '[[monsters/131-mini-porkie|Mini-Porkie]] ×1, [[monsters/205-woopie-king|Woopie King]] ×1'
-  x: 5382.9
-  y: 5244.3
-  radius: 24
-  max_alive: 6
-  respawn_seconds: 10
-- monsters: '[[monsters/62-honeybee|HoneyBee]] ×2, [[monsters/63-needle-hornet|Needle Hornet]] ×1, [[monsters/63-needle-hornet|Needle Hornet]] ×1, [[monsters/64-hornet|Hornet]] ×1, [[monsters/64-hornet|Hornet]] ×2'
-  reinforcements: '[[monsters/204-wandering-rackie|Wandering Rackie]] ×1, [[monsters/64-hornet|Hornet]] ×1'
-  x: 5410.4
-  y: 5212.4
-  radius: 32
-  max_alive: 7
-  respawn_seconds: 8
-- monsters: '[[monsters/101-woopie|Woopie]] ×2, [[monsters/102-woopie-chef|Woopie Chef]] ×1, [[monsters/101-woopie|Woopie]] ×1, [[monsters/102-woopie-chef|Woopie Chef]] ×2, [[monsters/101-woopie|Woopie]] ×2'
-  reinforcements: '[[monsters/103-woopie-glutton|Woopie Glutton]] ×1, [[monsters/102-woopie-chef|Woopie Chef]] ×3'
-  x: 5393.8
-  y: 5191.6
-  radius: 28
-  max_alive: 6
-  respawn_seconds: 6
-- monsters: '[[monsters/101-woopie|Woopie]] ×2, [[monsters/102-woopie-chef|Woopie Chef]] ×1, [[monsters/101-woopie|Woopie]] ×1, [[monsters/102-woopie-chef|Woopie Chef]] ×2, [[monsters/101-woopie|Woopie]] ×2'
-  reinforcements: '[[monsters/103-woopie-glutton|Woopie Glutton]] ×1, [[monsters/102-woopie-chef|Woopie Chef]] ×3'
-  x: 5449.5
-  y: 5197.6
-  radius: 28
-  max_alive: 8
-  respawn_seconds: 7
-- monsters: '[[monsters/61-needle-honeybee|Needle HoneyBee]] ×1, [[monsters/62-honeybee|HoneyBee]] ×1, [[monsters/101-woopie|Woopie]] ×1, [[monsters/63-needle-hornet|Needle Hornet]] ×1, [[monsters/101-woopie|Woopie]] ×1'
-  reinforcements: '[[monsters/63-needle-hornet|Needle Hornet]] ×1, [[monsters/64-hornet|Hornet]] ×1'
-  x: 5220.5
-  y: 5049.7
-  radius: 18
-  max_alive: 6
-  respawn_seconds: 12
-- monsters: '[[monsters/61-needle-honeybee|Needle HoneyBee]] ×1, [[monsters/62-honeybee|HoneyBee]] ×1, [[monsters/317-butterfly|ButterFly]] ×1, [[monsters/63-needle-hornet|Needle Hornet]] ×1, [[monsters/101-woopie|Woopie]] ×1'
-  reinforcements: '[[monsters/63-needle-hornet|Needle Hornet]] ×1, [[monsters/131-mini-porkie|Mini-Porkie]] ×1'
-  x: 5269.2
-  y: 5049.3
-  radius: 18
-  max_alive: 6
-  respawn_seconds: 11
-- monsters: '[[monsters/101-woopie|Woopie]] ×1, [[monsters/101-woopie|Woopie]] ×1, [[monsters/317-butterfly|ButterFly]] ×1, [[monsters/102-woopie-chef|Woopie Chef]] ×1, [[monsters/101-woopie|Woopie]] ×1'
-  reinforcements: '[[monsters/63-needle-hornet|Needle Hornet]] ×1, [[monsters/131-mini-porkie|Mini-Porkie]] ×1'
-  x: 5234.5
-  y: 5055.6
-  radius: 12
-  max_alive: 5
-  respawn_seconds: 10
-- monsters: '[[monsters/63-needle-hornet|Needle Hornet]] ×1, [[monsters/101-woopie|Woopie]] ×1, [[monsters/62-honeybee|HoneyBee]] ×2, [[monsters/102-woopie-chef|Woopie Chef]] ×1, [[monsters/101-woopie|Woopie]] ×2'
-  reinforcements: '[[monsters/63-needle-hornet|Needle Hornet]] ×1, [[monsters/64-hornet|Hornet]] ×1'
-  x: 5366.7
-  y: 5067.6
-  radius: 23
-  max_alive: 6
-  respawn_seconds: 7
-- monsters: '[[monsters/61-needle-honeybee|Needle HoneyBee]] ×1, [[monsters/62-honeybee|HoneyBee]] ×1, [[monsters/101-woopie|Woopie]] ×1, [[monsters/63-needle-hornet|Needle Hornet]] ×1, [[monsters/101-woopie|Woopie]] ×2'
-  reinforcements: '[[monsters/63-needle-hornet|Needle Hornet]] ×1, [[monsters/64-hornet|Hornet]] ×1'
-  x: 5330.5
-  y: 5051.8
-  radius: 28
-  max_alive: 7
-  respawn_seconds: 9
 - monsters: '[[monsters/316-butterfly|ButterFly]] ×2, [[monsters/317-butterfly|ButterFly]] ×1'
   x: 5387.3
   y: 5103.1
   radius: 40
   max_alive: 5
   respawn_seconds: 13
-- monsters: '[[monsters/101-woopie|Woopie]] ×1, [[monsters/101-woopie|Woopie]] ×1, [[monsters/317-butterfly|ButterFly]] ×1, [[monsters/102-woopie-chef|Woopie Chef]] ×1, [[monsters/101-woopie|Woopie]] ×1'
-  reinforcements: '[[monsters/63-needle-hornet|Needle Hornet]] ×1, [[monsters/131-mini-porkie|Mini-Porkie]] ×1'
-  x: 5280.7
-  y: 5046.1
-  radius: 18
-  max_alive: 6
-  respawn_seconds: 9
+- monsters: '[[monsters/205-woopie-king|Woopie King]] ×1'
+  x: 5430.0
+  y: 5090.0
+  radius: 4
+  max_alive: 1
+  respawn_seconds: 180
+- monsters: '[[monsters/101-woopie|Woopie]] ×3'
+  x: 5430.0
+  y: 5090.0
+  radius: 12
+  max_alive: 3
+  respawn_seconds: 30
 npcs:
 - npc: '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
   x: 5109.4
   y: 5363.7
+- npc: '[[npcs/1018-canyon-guard-hadric|Canyon Guard Hadric]]'
+  x: 5374.0
+  y: 5339.0
+- npc: '[[npcs/1019-bridge-guard-tamsin|Bridge Guard Tamsin]]'
+  x: 5283.0
+  y: 5428.0
 - npc: '[[npcs/1004-ferrell-guild-staff-crow|Ferrell Guild Staff Crow]]'
   x: 5094.4
   y: 5259.9
@@ -223,7 +82,7 @@ npcs:
   y: 5206.9
 - npc: '[[npcs/1005-righteous-crusader-leonard|Righteous Crusader Leonard]]'
   x: 5261.1
-  y: 5167
+  y: 5167.0
 - npc: '[[npcs/1010-designer-keenu|Designer Keenu]]'
   x: 5273.5
   y: 5256.8
@@ -241,7 +100,7 @@ npcs:
   y: 5124.6
 - npc: '[[npcs/1201-event-info-judy|Event Info Judy]]'
   x: 5261.9
-  y: 5213
+  y: 5213.0
 - npc: '[[npcs/1006-arumic-merchant-tryteh|Arumic Merchant Tryteh]]'
   x: 5313.3
   y: 5153.7
@@ -254,6 +113,9 @@ npcs:
 - npc: '[[npcs/1009-armor-seller-carrion|Armor Seller Carrion]]'
   x: 5313.5
   y: 5198.1
+- npc: '[[npcs/1017-caravan-master-odell|Caravan Master Odell]]'
+  x: 5507.0
+  y: 5182.0
 - npc: '[[npcs/1003-co-founder-of-the-junon-order-francis|Co-Founder of the Junon Order Francis]]'
   x: 5080.3
   y: 5066.3
@@ -301,7 +163,76 @@ reinforcements show up once a point has been refilled many times (see
 [[rules/monster-spawns|Monster spawns]]). Zone drops can come from any monster here (see
 [[rules/drops|Drops]]).
 
-Canyon City of Zant is edited in Godot: its spawn points, NPCs and start and revive spots
-are markers in the zone's scenes, and the server reads them from
-`export/zones/1-canyon-city-of-zant.toml`, which is exported from those scenes. They are
-the same as in iROSE's map files.
+Canyon City of Zant is edited in Godot: its spawn points, NPCs, props and start and revive
+spots are markers in the zone's scenes, and the server reads them from
+`export/zones/1-canyon-city-of-zant.toml`, which is exported from those scenes.
+
+Zant is the safe city where Visitors learn the game. You arrive from the
+[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]] at level 15 or so, Guide Lena walks you
+through a tour of twelve lessons, one per city service, and the last lesson sends you east into
+[[zones/23-breezy-hills|Breezy Hills]]. There are no hunting fields around the city: only
+butterflies, the passive HoneyBees of the Training Grounds and the Woopie King's court in
+Woopie Hollow.
+
+## Areas
+
+| Area | Where | Levels | What is there |
+| --- | --- | --- | --- |
+| The city | middle, inside the walls | safe | every NPC of the tour, the shops, storage, the save point |
+| Market Square | the city plaza | safe | open space for personal shops (lesson 10) |
+| Lampa's Ranch | north-west meadow | safe | fenced pens and a summon paddock with a well, a hive and crates; [[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]] sells monster capsules (lesson 11) |
+| Training Grounds | open sand north of the walls | 12 | three spawn points of 4 [[monsters/62-honeybee|HoneyBees]], which never attack first; a sign, benches, crates and guard posts |
+| Canyon Watchtower | foot of the north-east mesa | safe | [[npcs/1018-canyon-guard-hadric|Canyon Guard Hadric]]'s post; he tells you where the roads go and warns about the Woopie King |
+| Wind Road Caravan Camp | east, by the gate to Breezy Hills | safe | tents, wagons, a fire and crates; [[npcs/1017-caravan-master-odell|Caravan Master Odell]], where the tour ends |
+| Luxem Road Gate | south road to the Luxem gate | safe | a signpost and lamps, butterflies |
+| North Bridge | the bridge to the north gate | safe | [[npcs/1019-bridge-guard-tamsin|Bridge Guard Tamsin]], who warns that the [[zones/24-el-verloon-desert|El Verloon Desert]] is no place for beginners |
+| Woopie Hollow | south-east, below the cliffs (5430, 5090) | 16–25 | the [[monsters/205-woopie-king|Woopie King]] (level 25 elite) and three [[monsters/101-woopie|Woopies]] |
+
+One elite lives here: the [[monsters/205-woopie-king|Woopie King]] in Woopie Hollow. He comes
+back 3 minutes after he falls, his three Woopies 30 seconds after theirs. Killing him counts for
+[[quests/113-hourglass-of-purification|Hourglass of Purification]] as in iROSE.
+
+## Lessons
+
+Guide Lena offers the tour from level 15. Each lesson gives its gifts when you take it and
+400 experience and 300 Zuly (base, see [[rules/quests|Quests]]) when you talk to the NPC again;
+nothing in a lesson is checked. The Wind Road gives 800 experience and 500 Zuly. The gifts are
+practice items that are worth next to nothing and can't be traded.
+
+| # | Lesson | NPC | What you learn |
+| --- | --- | --- | --- |
+| 1 | [[quests/2401-welcome-to-zant|Welcome to Zant]] | [[npcs/1014-guide-lena|Guide Lena]] | Read Lena's map of Zant. |
+| 2 | [[quests/2402-a-place-to-return|A Place to Return]] | [[npcs/1003-co-founder-of-the-junon-order-francis|Co-Founder of the Junon Order Francis]] | Make Zant your save point. |
+| 3 | [[quests/2403-safe-keeping|Safe Keeping]] | [[npcs/1004-ferrell-guild-staff-crow|Ferrell Guild Staff Crow]] | Put Scrap Gloves in storage and take them out. |
+| 4 | [[quests/2404-potions-and-scrolls|Potions and Scrolls]] | [[npcs/1006-arumic-merchant-tryteh|Arumic Merchant Tryteh]] | Get potions and a Zant Return Scroll; put the potions on your hotbar. |
+| 5 | [[quests/2405-dressed-for-the-road|Dressed for the Road]] | [[npcs/1009-armor-seller-carrion|Armor Seller Carrion]] | Look at an armour shop: buying, selling, armour slots. |
+| 6 | [[quests/2406-mending-steel|Mending Steel]] | [[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]] | Have a worn Practice Sword repaired. |
+| 7 | [[quests/2407-sharper-steel|Sharper Steel]] | [[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]] | Refine a Practice Sword to grade 1. |
+| 8 | [[quests/2408-stones-and-sockets|Stones and Sockets]] | [[npcs/1007-gypsy-jewel-seller-mina|Gypsy Jewel Seller Mina]] | Set the Practice Stone in the Practice Ring. |
+| 9 | [[quests/2409-nothing-goes-to-waste|Nothing Goes to Waste]] | [[npcs/1012-ferrell-guild-staff-ulysses|Ferrell Guild Staff Ulysses]] | Have Scrap Gloves taken apart. |
+| 10 | [[quests/2410-stronger-together|Stronger Together]] | [[npcs/1014-guide-lena|Guide Lena]] | Parties, trading and personal shops. |
+| 11 | [[quests/2411-beasts-for-hire|Beasts for Hire]] | [[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]] | Get a Jelly Bean capsule; see the capsule shop. |
+| 12 | [[quests/2412-the-wind-road|The Wind Road]] | [[npcs/1014-guide-lena|Guide Lena]] | Go east to Caravan Master Odell at the Wind Road Caravan Camp. |
+
+**Skipping the tour.** Lena's first answers are "Show me around.", "I know my way around." and
+"Maybe later.". "I know my way around." asks twice before it skips: first "Are you sure?"
+(with "You're right, show me around." offered first), then a warning that the skip is for good
+(with "Wait, I'll take the tour after all." offered first). Only "Skip the tour for good." skips:
+step `2401-03` counts lessons 1 to 11 as done, without their gifts or rewards, and gives
+[[quests/2412-the-wind-road|The Wind Road]].
+
+## Changed from iROSE
+
+- Zant is a safe learning hub. iROSE fills the land outside the walls with Woopies, Woopie
+  Chefs, Woopie Gluttons, Hornets, Needle Hornets, Needle HoneyBees, Mini-Porkies and a Wandering
+  Rackie, and the plaza with a Mini Bee swarm; all of these are gone. The butterflies stay.
+- New: the HoneyBees of the Training Grounds, the Woopie King as a permanent elite in Woopie
+  Hollow (iROSE has him as a rare reinforcement at three spawn points), the twelve-lesson tour,
+  [[npcs/1017-caravan-master-odell|Caravan Master Odell]], [[npcs/1018-canyon-guard-hadric|Canyon Guard Hadric]] and [[npcs/1019-bridge-guard-tamsin|Bridge Guard Tamsin]], and props in the open spaces (the caravan camp, the
+  ranch pens, the training ground, the watchtower post, market stalls, signposts and lamps).
+- The first job change quests and the odd jobs (fetch quests, deliveries, stockpiling) iROSE has
+  in Zant are gone; first jobs come from the job mentors in the
+  [[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]. The second job change and job
+  follow-up quests stay.
+- [[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]] also refines, [[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]] sells monster capsules, and [[npcs/1007-gypsy-jewel-seller-mina|Gypsy Jewel Seller Mina]] no longer appraises
+  (items are never unappraised in this game).

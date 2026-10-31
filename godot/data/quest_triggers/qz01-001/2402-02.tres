@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2402-a-place-to-return.tres" id="z_4470bf"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_1708da"]
+quest = ExtResource("z_4470bf")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_bf052f"]
+quest = ExtResource("z_4470bf")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_155c70"]
+equation = 0
+value = 400
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_70ec57"]
+equation = 0
+value = 300
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_3988cd"]
+switch = 641
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_bf798d"]
+
+[resource]
+name = "2402-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_1708da")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_bf052f"), SubResource("RoseRewardCalculatedExperiencePoints_155c70"), SubResource("RoseRewardCalculatedMoney_70ec57"), SubResource("RoseRewardSetQuestSwitch_3988cd"), SubResource("RoseRewardRemoveSelectedQuest_bf798d")])

@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2408-stones-and-sockets.tres" id="z_e258be"]
+[ext_resource type="RoseItemJewellery" path="res://data/items/jewellery/253-practice-ring.tres" id="z_311333"]
+[ext_resource type="RoseItemGem" path="res://data/items/gem/371-practice-stone.tres" id="z_d81ee0"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_e2d9c3"]
+switch = 646
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_a95d91"]
+switch = 647
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_804630"]
+quest = ExtResource("z_e258be")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_ad476e"]
+quest = ExtResource("z_e258be")
+
+[sub_resource type="RoseRewardCalculatedItem" id="RoseRewardCalculatedItem_cc86a9"]
+item = ExtResource("z_311333")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_639df6"]
+item = ExtResource("z_d81ee0")
+quantity = 1
+
+[resource]
+name = "2408-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_e2d9c3"), SubResource("RoseConditionQuestSwitch_a95d91")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_804630"), SubResource("RoseRewardSelectQuest_ad476e"), SubResource("RoseRewardCalculatedItem_cc86a9"), SubResource("RoseRewardAddItem_639df6")])

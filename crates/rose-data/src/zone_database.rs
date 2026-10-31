@@ -88,6 +88,9 @@ pub struct ZoneData {
     pub event_objects: Vec<ZoneEventObject>,
     pub monster_spawns: Vec<ZoneMonsterSpawnPoint>,
     pub npcs: Vec<ZoneNpcSpawn>,
+    /// The warp gates placed in this zone (IFO warp objects, or the zone scene's): the server
+    /// only lets a player in this zone use these.
+    pub warp_gates: Vec<u16>,
     pub sectors_base_position: Vec2,
     pub num_sectors_x: u32,
     pub num_sectors_y: u32,

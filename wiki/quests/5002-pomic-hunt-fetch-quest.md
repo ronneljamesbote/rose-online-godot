@@ -2,7 +2,7 @@
 kind: quest
 id: 5002
 name: Pomic Hunt (Fetch Quest)
-status: in-game
+status: changed-from-irose
 given_by:
 - '[[npcs/1008-weapon-seller-raffle|Weapon Seller Raffle]]'
 monsters:
@@ -16,6 +16,10 @@ source:
   - crates/rose-quest/src/lib.rs
 ---
 # Pomic Hunt (Fetch Quest)
+
+**Can't be done any more.** The Zant city hub redesign took Zant's odd jobs (fetch quests,
+deliveries and stockpiling) out of the game: nobody offers this quest now. The steps below are
+iROSE's and are kept in the game data.
 
 Raffle asked you to bring him 10 Pomic Skins, and will give you a better reward if you can complete this task earlier than your rivals.  
 

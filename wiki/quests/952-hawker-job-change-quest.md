@@ -2,7 +2,7 @@
 kind: quest
 id: 952
 name: Hawker Job Change Quest
-status: in-game
+status: changed-from-irose
 npcs:
 - '[[npcs/1052-mountain-guide-shannon|Mountain Guide Shannon]]'
 monsters:
@@ -17,6 +17,12 @@ source:
   - crates/rose-quest/src/lib.rs
 ---
 # Hawker Job Change Quest
+
+**Can't be done any more.** First jobs come from the job mentors at the Sandwind Caravan Camp in
+the [[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]] (see
+[[quests/801-junon-planet-identification|Junon Planet Identification]]), and the Zant city hub
+redesign took this quest's steps out of the Zant NPCs' dialogs. The steps below are iROSE's and
+are kept in the game data.
 
 Before Shannon will give you to Tarren Earring, you must bring twenty 20 Crystal Dew. Hunt Mother Choropy, Spotted Choropy, and Jelly King to get Crystal Dew.  
 

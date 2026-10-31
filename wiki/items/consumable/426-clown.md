@@ -16,6 +16,8 @@ dropped_by:
 - monster: '[[monsters/182-clown|Clown]]'
   level: 49
   slots_of_30: 1
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/426-clown.tres
   code: module/src/items.rs

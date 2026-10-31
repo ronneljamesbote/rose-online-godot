@@ -18,8 +18,9 @@ source:
 **Can't be started any more.** In iROSE Warren in Zant starts this quest when you hand him your
 identification papers. In our game first jobs come from the job mentors at the Sandwind Caravan
 Camp in the [[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]], and Warren sends you
-there instead (see [[quests/801-junon-planet-identification|Junon Planet Identification]]). A
-character already on this quest can still finish it. The steps below are iROSE's and are kept
+there instead (see [[quests/801-junon-planet-identification|Junon Planet Identification]]). Since the Zant city hub
+redesign the Zant NPCs no longer run its later steps either, so a character already on it can't
+finish it. The steps below are iROSE's and are kept
 in the game data.
 
 Warren said that he'd recognize you as a Muse if you had a simple potion created for him. Let’s make one with Tryteh's help.  

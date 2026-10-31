@@ -16,6 +16,8 @@ dropped_by:
 - monster: '[[monsters/62-honeybee|HoneyBee]]'
   level: 12
   slots_of_30: 2
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/406-honey-bee.tres
   code: module/src/items.rs

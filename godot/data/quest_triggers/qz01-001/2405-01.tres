@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2405-dressed-for-the-road.tres" id="z_020466"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_8b2c3a"]
+switch = 643
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_f73862"]
+switch = 644
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_d8ca35"]
+quest = ExtResource("z_020466")
+
+[resource]
+name = "2405-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_8b2c3a"), SubResource("RoseConditionQuestSwitch_f73862")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_d8ca35")])

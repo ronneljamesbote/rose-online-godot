@@ -2,7 +2,7 @@
 kind: quest
 id: 5006
 name: Stockpiling Bronze Fragments
-status: in-game
+status: changed-from-irose
 given_by:
 - '[[npcs/1014-guide-lena|Guide Lena]]'
 monsters:
@@ -18,6 +18,10 @@ source:
   - crates/rose-quest/src/lib.rs
 ---
 # Stockpiling Bronze Fragments
+
+**Can't be done any more.** The Zant city hub redesign took Zant's odd jobs (fetch quests,
+deliveries and stockpiling) out of the game: nobody offers this quest now. The steps below are
+iROSE's and are kept in the game data.
 
 Lena has asked you to gather Bronze Fragments to help alleviate the dwindling supply problem in Zant. You can hunt Pomic type monsters to obtain Bronze Fragments.  
 

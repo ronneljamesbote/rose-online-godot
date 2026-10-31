@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2401-welcome-to-zant.tres" id="z_c24360"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_26c71f"]
+quest = ExtResource("z_c24360")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_33fa0b"]
+quest = ExtResource("z_c24360")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_e8f76a"]
+equation = 0
+value = 400
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_f727c0"]
+equation = 0
+value = 300
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_d2ee24"]
+switch = 640
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_395ecd"]
+
+[resource]
+name = "2401-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_26c71f")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_33fa0b"), SubResource("RoseRewardCalculatedExperiencePoints_e8f76a"), SubResource("RoseRewardCalculatedMoney_f727c0"), SubResource("RoseRewardSetQuestSwitch_d2ee24"), SubResource("RoseRewardRemoveSelectedQuest_395ecd")])

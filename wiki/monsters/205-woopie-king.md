@@ -2,7 +2,7 @@
 kind: monster
 id: 205
 name: Woopie King
-status: in-game
+status: changed-from-irose
 level: 25
 hp: 1850
 hp_per_level: 74
@@ -69,20 +69,10 @@ quests:
 - '[[quests/113-hourglass-of-purification|Hourglass of Purification]]'
 spawns:
 - zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5441.3
-  y: 5448.9
+  x: 5430.0
+  y: 5090.0
   count: 1
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5332
-  y: 5339.6
-  count: 1
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5382.9
-  y: 5244.3
-  count: 1
-  group: reinforcements
+  group: basic
 source:
   data: godot/data/monsters/205-woopie-king.tres, drop table godot/data/drop_tables/200-woopie-king.tres
   code:
@@ -95,3 +85,7 @@ Speeds are in centimetres per second, attack range in metres. Spawn positions ar
 HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].
+
+## Changed from iROSE
+
+The Zant city hub redesign makes it [[zones/1-canyon-city-of-zant|Canyon City of Zant]]'s one elite: a single Woopie King lives in Woopie Hollow, south-east of the city (5430, 5090), with three [[monsters/101-woopie|Woopies]] as his court, and comes back 3 minutes after he falls (iROSE has him as a rare reinforcement at three spawn points). Killing him still runs step `113-31` of [[quests/113-hourglass-of-purification|Hourglass of Purification]]. [[npcs/1018-canyon-guard-hadric|Canyon Guard Hadric]] warns about him.

@@ -4,18 +4,18 @@
 [ext_resource type="RoseQuest" uid="uid://cwicjfrwuwmn0" path="res://data/quests/856-living-as-a-true-soldier.tres" id="2_03ck3"]
 [ext_resource type="RoseQuest" uid="uid://btife5giwkikt" path="res://data/quests/857-living-as-a-true-soldier.tres" id="3_tau7o"]
 [ext_resource type="RoseItemQuest" uid="uid://dtctymne4tqo4" path="res://data/items/quest/131-queen-bibi-s-staff.tres" id="4_es686"]
-[ext_resource type="RoseQuest" uid="uid://ddx0vck2q6n87" path="res://data/quests/5002-pomic-hunt-fetch-quest.tres" id="5_rorou"]
 [ext_resource type="RoseQuestTrigger" uid="uid://bb053ey1gr6v0" path="res://data/quest_triggers/qj111-01/857-01.tres" id="6_jx47m"]
 [ext_resource type="RoseQuestTrigger" uid="uid://dhcxwls68p4rq" path="res://data/quest_triggers/qj111-01/857-02.tres" id="7_cmuyv"]
 [ext_resource type="RoseQuestTrigger" uid="uid://ce1atuyjyy4mi" path="res://data/quest_triggers/qj111-01/857-03.tres" id="8_0g2r1"]
 [ext_resource type="RoseQuestTrigger" uid="uid://bluvlg0uh8rvy" path="res://data/quest_triggers/qj111-01/856-01.tres" id="9_c5bop"]
 [ext_resource type="RoseQuestTrigger" uid="uid://wcre2nwawefv" path="res://data/quest_triggers/qj111-01/855-02.tres" id="10_i4ucl"]
 [ext_resource type="RoseQuestTrigger" uid="uid://blot10211n41a" path="res://data/quest_triggers/qj111-01/855-01.tres" id="11_cdg0c"]
-[ext_resource type="RoseItemQuest" uid="uid://cmatiwafxij80" path="res://data/items/quest/110-pomic-skin.tres" id="12_cexdv"]
-[ext_resource type="RoseQuestTrigger" uid="uid://bxjwvrkqaxql4" path="res://data/quest_triggers/qs12-001/5002-04.tres" id="13_0wjaq"]
-[ext_resource type="RoseQuestTrigger" uid="uid://cj82qejrtruo4" path="res://data/quest_triggers/qs12-001/5002-02.tres" id="14_scs7w"]
-[ext_resource type="RoseQuestTrigger" uid="uid://diis6gc55m2cm" path="res://data/quest_triggers/qs12-001/5002-03.tres" id="15_vw2j5"]
-[ext_resource type="RoseQuestTrigger" uid="uid://cjlyg4f3rihhy" path="res://data/quest_triggers/qs12-001/5002-01.tres" id="16_qvukw"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qz01-001/2407-01.tres" id="z_abf815"]
+[ext_resource type="RoseQuest" path="res://data/quests/2407-sharper-steel.tres" id="z_429328"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qz01-001/2407-02.tres" id="z_b50094"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qz01-001/2406-01.tres" id="z_fab215"]
+[ext_resource type="RoseQuest" path="res://data/quests/2406-mending-steel.tres" id="z_8d9a20"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qz01-001/2406-02.tres" id="z_bc7ff4"]
 
 [sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ad8io"]
 quest = ExtResource("1_t5tyt")
@@ -242,8 +242,40 @@ next_menu = 6
 show_if = Array[Resource]([SubResource("RoseDialogCase_j2n5k")])
 resource_name = "NPC: Queen Bibi's Staff! Excellent, you have just com…"
 
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_5cb2e7"]
+quest = ExtResource("z_8d9a20")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_772062"]
+step = ExtResource("z_fab215")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7d4aa9"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_5cb2e7"), SubResource("RoseDialogIfQuestStep_772062")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_275283"]
+text = "One of Lena's pupils? Let me show you how gear wears down."
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_7d4aa9")])
+resource_name = "NPC: One of Lena's pupils? Let me show you how gear wea…"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_cd6bc0"]
+quest = ExtResource("z_429328")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_d50b18"]
+step = ExtResource("z_abf815")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_553c4d"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_cd6bc0"), SubResource("RoseDialogIfQuestStep_d50b18")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d30a9d"]
+text = "Ready for the next lesson? Steel can be made sharper."
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_553c4d")])
+resource_name = "NPC: Ready for the next lesson? Steel can be made sharp…"
+
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_djl1i"]
-lines = Array[Resource]([SubResource("RoseDialogLine_475vq"), SubResource("RoseDialogLine_va8er"), SubResource("RoseDialogLine_7b860"), SubResource("RoseDialogLine_d2kc5"), SubResource("RoseDialogLine_o5sek"), SubResource("RoseDialogLine_huuee"), SubResource("RoseDialogLine_rcxqa"), SubResource("RoseDialogLine_fg8om")])
+lines = Array[Resource]([SubResource("RoseDialogLine_475vq"), SubResource("RoseDialogLine_275283"), SubResource("RoseDialogLine_d30a9d"), SubResource("RoseDialogLine_va8er"), SubResource("RoseDialogLine_7b860"), SubResource("RoseDialogLine_d2kc5"), SubResource("RoseDialogLine_o5sek"), SubResource("RoseDialogLine_huuee"), SubResource("RoseDialogLine_rcxqa"), SubResource("RoseDialogLine_fg8om")])
 resource_name = "Menu 0"
 
 [sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_ytjmd"]
@@ -263,31 +295,6 @@ text = "Is there any way that I can use my weapon more effectively?"
 next_menu = 2
 resource_name = "You: Is there any way that I can use my weapon more e…"
 
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_7befw"]
-value = 1
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_qj5x3"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_7befw")])
-
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_nobkb"]
-value = 2
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_3q3ja"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_nobkb")])
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_e6r6p"]
-quest = ExtResource("5_rorou")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_l8bao"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_e6r6p")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_g3hr3"]
-kind = "Answer"
-text = "I'd like to participate in the [Fetch Quest]."
-next_menu = 35
-show_if = Array[Resource]([SubResource("RoseDialogCase_qj5x3"), SubResource("RoseDialogCase_3q3ja"), SubResource("RoseDialogCase_l8bao")])
-resource_name = "You: I'd like to participate in the [Fetch Quest]."
-
 [sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_nkomr"]
 window = "Repair"
 
@@ -300,8 +307,94 @@ text = "I would like to repair my equipment."
 on_choose = Array[Resource]([SubResource("RoseDialogCase_5wp1f")])
 resource_name = "You: I would like to repair my equipment."
 
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_84141a"]
+quest = ExtResource("z_8d9a20")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_3763a7"]
+step = ExtResource("z_fab215")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_a146cc"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_84141a"), SubResource("RoseDialogIfQuestStep_3763a7")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1c15f4"]
+kind = "Answer"
+text = "About \"Mending Steel\""
+next_menu = 41
+show_if = Array[Resource]([SubResource("RoseDialogCase_a146cc")])
+resource_name = "You: About \"Mending Steel\""
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_0d877a"]
+step = ExtResource("z_bc7ff4")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_a9bf31"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_0d877a")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_c005f0"]
+step = ExtResource("z_bc7ff4")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_bf0778"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_c005f0")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ea228d"]
+kind = "Answer"
+text = "\"Mending Steel\": done."
+next_menu = 46
+show_if = Array[Resource]([SubResource("RoseDialogCase_a9bf31")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_bf0778")])
+resource_name = "You: \"Mending Steel\": done."
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_022a34"]
+quest = ExtResource("z_429328")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_1b38d3"]
+step = ExtResource("z_abf815")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_c054bd"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_022a34"), SubResource("RoseDialogIfQuestStep_1b38d3")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_896c56"]
+kind = "Answer"
+text = "About \"Sharper Steel\""
+next_menu = 35
+show_if = Array[Resource]([SubResource("RoseDialogCase_c054bd")])
+resource_name = "You: About \"Sharper Steel\""
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_6fd9f3"]
+step = ExtResource("z_b50094")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_27aaeb"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_6fd9f3")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_1456c6"]
+step = ExtResource("z_b50094")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2123f9"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_1456c6")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_76b4aa"]
+kind = "Answer"
+text = "\"Sharper Steel\": done."
+next_menu = 40
+show_if = Array[Resource]([SubResource("RoseDialogCase_27aaeb")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_2123f9")])
+resource_name = "You: \"Sharper Steel\": done."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_587ca0"]
+window = "Refining"
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_bb3304"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_587ca0")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d4cdad"]
+kind = "Answer"
+text = "I would like to refine my equipment."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_bb3304")])
+resource_name = "You: I would like to refine my equipment."
+
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bnh61"]
-lines = Array[Resource]([SubResource("RoseDialogLine_unxy2"), SubResource("RoseDialogLine_s2m64"), SubResource("RoseDialogLine_g3hr3"), SubResource("RoseDialogLine_y2dut")])
+lines = Array[Resource]([SubResource("RoseDialogLine_1c15f4"), SubResource("RoseDialogLine_ea228d"), SubResource("RoseDialogLine_896c56"), SubResource("RoseDialogLine_76b4aa"), SubResource("RoseDialogLine_unxy2"), SubResource("RoseDialogLine_s2m64"), SubResource("RoseDialogLine_y2dut"), SubResource("RoseDialogLine_d4cdad")])
 resource_name = "Menu 1"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_gu7vb"]
@@ -394,31 +487,6 @@ kind = "Answer"
 text = "Let me think a little more, and I'll come back."
 resource_name = "You: Let me think a little more, and I'll come back."
 
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_h0kap"]
-value = 1
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_hc7et"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_h0kap")])
-
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_0c12k"]
-value = 2
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_slulp"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_0c12k")])
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_nto6n"]
-quest = ExtResource("5_rorou")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_fw7tf"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_nto6n")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_mumc3"]
-kind = "Answer"
-text = "I'd like to participate in the [Fetch Quest]."
-next_menu = 35
-show_if = Array[Resource]([SubResource("RoseDialogCase_hc7et"), SubResource("RoseDialogCase_slulp"), SubResource("RoseDialogCase_fw7tf")])
-resource_name = "You: I'd like to participate in the [Fetch Quest]."
-
 [sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_n2lt0"]
 window = "Repair"
 
@@ -432,7 +500,7 @@ on_choose = Array[Resource]([SubResource("RoseDialogCase_c56g7")])
 resource_name = "You: I would like to repair my equipment."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_d05xc"]
-lines = Array[Resource]([SubResource("RoseDialogLine_7oxw6"), SubResource("RoseDialogLine_b7ey8"), SubResource("RoseDialogLine_2a4jt"), SubResource("RoseDialogLine_q8c7o"), SubResource("RoseDialogLine_ux7kv"), SubResource("RoseDialogLine_mumc3"), SubResource("RoseDialogLine_2ufpi")])
+lines = Array[Resource]([SubResource("RoseDialogLine_7oxw6"), SubResource("RoseDialogLine_b7ey8"), SubResource("RoseDialogLine_2a4jt"), SubResource("RoseDialogLine_q8c7o"), SubResource("RoseDialogLine_ux7kv"), SubResource("RoseDialogLine_2ufpi")])
 resource_name = "Menu 6"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_ot5l8"]
@@ -457,31 +525,6 @@ text = "First, I'd like to look around the store."
 on_choose = Array[Resource]([SubResource("RoseDialogCase_ojc8g")])
 resource_name = "You: First, I'd like to look around the store."
 
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_tdg0g"]
-value = 1
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_4wk1q"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_tdg0g")])
-
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_5xjvb"]
-value = 2
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_pgjag"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_5xjvb")])
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_4q68n"]
-quest = ExtResource("5_rorou")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_hqqs4"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_4q68n")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_b6qr1"]
-kind = "Answer"
-text = "I'd like to participate in the [Fetch Quest]."
-next_menu = 35
-show_if = Array[Resource]([SubResource("RoseDialogCase_4wk1q"), SubResource("RoseDialogCase_pgjag"), SubResource("RoseDialogCase_hqqs4")])
-resource_name = "You: I'd like to participate in the [Fetch Quest]."
-
 [sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_aqtlb"]
 window = "Repair"
 
@@ -495,7 +538,7 @@ on_choose = Array[Resource]([SubResource("RoseDialogCase_dyqsw")])
 resource_name = "You: I would like to repair my equipment."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gyj6h"]
-lines = Array[Resource]([SubResource("RoseDialogLine_ot5l8"), SubResource("RoseDialogLine_f5y2w"), SubResource("RoseDialogLine_2qiix"), SubResource("RoseDialogLine_b6qr1"), SubResource("RoseDialogLine_y1yxe")])
+lines = Array[Resource]([SubResource("RoseDialogLine_ot5l8"), SubResource("RoseDialogLine_f5y2w"), SubResource("RoseDialogLine_2qiix"), SubResource("RoseDialogLine_y1yxe")])
 resource_name = "Menu 7"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_mjkqo"]
@@ -538,31 +581,6 @@ text = "For the time being, I'd like to look around the store."
 on_choose = Array[Resource]([SubResource("RoseDialogCase_2vgyp")])
 resource_name = "You: For the time being, I'd like to look around the …"
 
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_crksv"]
-value = 1
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_qlhte"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_crksv")])
-
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_2qddq"]
-value = 2
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_8mrwi"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_2qddq")])
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_rdgpp"]
-quest = ExtResource("5_rorou")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_v8401"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_rdgpp")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_0txny"]
-kind = "Answer"
-text = "I'd like to participate in the [Fetch Quest]."
-next_menu = 35
-show_if = Array[Resource]([SubResource("RoseDialogCase_qlhte"), SubResource("RoseDialogCase_8mrwi"), SubResource("RoseDialogCase_v8401")])
-resource_name = "You: I'd like to participate in the [Fetch Quest]."
-
 [sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_6ug03"]
 window = "Repair"
 
@@ -576,7 +594,7 @@ on_choose = Array[Resource]([SubResource("RoseDialogCase_vyrhu")])
 resource_name = "You: I would like to repair my equipment."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fv4sv"]
-lines = Array[Resource]([SubResource("RoseDialogLine_yvuby"), SubResource("RoseDialogLine_hlyxo"), SubResource("RoseDialogLine_08ywg"), SubResource("RoseDialogLine_0txny"), SubResource("RoseDialogLine_8syl0")])
+lines = Array[Resource]([SubResource("RoseDialogLine_yvuby"), SubResource("RoseDialogLine_hlyxo"), SubResource("RoseDialogLine_08ywg"), SubResource("RoseDialogLine_8syl0")])
 resource_name = "Menu 10"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_dmqvr"]
@@ -674,31 +692,6 @@ text = "I would like to look around the store first."
 on_choose = Array[Resource]([SubResource("RoseDialogCase_v8ekl")])
 resource_name = "You: I would like to look around the store first."
 
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_qb86b"]
-value = 1
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_3dx3g"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_qb86b")])
-
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_5y6fx"]
-value = 2
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_ph6tn"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_5y6fx")])
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_p2v3l"]
-quest = ExtResource("5_rorou")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_aijj1"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_p2v3l")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_llo1s"]
-kind = "Answer"
-text = "I'd like to participate in the [Fetch Quest]."
-next_menu = 35
-show_if = Array[Resource]([SubResource("RoseDialogCase_3dx3g"), SubResource("RoseDialogCase_ph6tn"), SubResource("RoseDialogCase_aijj1")])
-resource_name = "You: I'd like to participate in the [Fetch Quest]."
-
 [sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_vjfle"]
 window = "Repair"
 
@@ -712,7 +705,7 @@ on_choose = Array[Resource]([SubResource("RoseDialogCase_cg7bw")])
 resource_name = "You: I would like to repair my equipment."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_nsrba"]
-lines = Array[Resource]([SubResource("RoseDialogLine_i36ma"), SubResource("RoseDialogLine_luhcl"), SubResource("RoseDialogLine_llo1s"), SubResource("RoseDialogLine_d684p")])
+lines = Array[Resource]([SubResource("RoseDialogLine_i36ma"), SubResource("RoseDialogLine_luhcl"), SubResource("RoseDialogLine_d684p")])
 resource_name = "Menu 17"
 
 [sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ypjvj"]
@@ -743,31 +736,6 @@ kind = "Answer"
 text = "Sorry, but I'm sort of busy. Come back later."
 resource_name = "You: Sorry, but I'm sort of busy. Come back later."
 
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_q4tdv"]
-value = 1
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_xvwvc"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_q4tdv")])
-
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_ejjog"]
-value = 2
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_mv4x1"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_ejjog")])
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_w44rd"]
-quest = ExtResource("5_rorou")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_68eua"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_w44rd")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_3x1ty"]
-kind = "Answer"
-text = "I'd like to participate in the [Fetch Quest]."
-next_menu = 35
-show_if = Array[Resource]([SubResource("RoseDialogCase_xvwvc"), SubResource("RoseDialogCase_mv4x1"), SubResource("RoseDialogCase_68eua")])
-resource_name = "You: I'd like to participate in the [Fetch Quest]."
-
 [sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_w02uq"]
 window = "Repair"
 
@@ -781,7 +749,7 @@ on_choose = Array[Resource]([SubResource("RoseDialogCase_huxto")])
 resource_name = "You: I'd like to repair my equipment."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_miokw"]
-lines = Array[Resource]([SubResource("RoseDialogLine_1bijn"), SubResource("RoseDialogLine_wsh7d"), SubResource("RoseDialogLine_n77tw"), SubResource("RoseDialogLine_3x1ty"), SubResource("RoseDialogLine_3ws30")])
+lines = Array[Resource]([SubResource("RoseDialogLine_1bijn"), SubResource("RoseDialogLine_wsh7d"), SubResource("RoseDialogLine_n77tw"), SubResource("RoseDialogLine_3ws30")])
 resource_name = "Menu 18"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_25wlt"]
@@ -806,31 +774,6 @@ text = "I'd like to look around the store first."
 on_choose = Array[Resource]([SubResource("RoseDialogCase_obhm4")])
 resource_name = "You: I'd like to look around the store first."
 
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_5wdv6"]
-value = 1
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_x2l0l"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_5wdv6")])
-
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_8estv"]
-value = 2
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_crynv"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_8estv")])
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_x4n04"]
-quest = ExtResource("5_rorou")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_rvcrv"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_x4n04")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_slpna"]
-kind = "Answer"
-text = "I'd like to participate in the [Fetch Quest]."
-next_menu = 35
-show_if = Array[Resource]([SubResource("RoseDialogCase_x2l0l"), SubResource("RoseDialogCase_crynv"), SubResource("RoseDialogCase_rvcrv")])
-resource_name = "You: I'd like to participate in the [Fetch Quest]."
-
 [sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_dpt41"]
 window = "Repair"
 
@@ -844,7 +787,7 @@ on_choose = Array[Resource]([SubResource("RoseDialogCase_d2hb8")])
 resource_name = "You: I would like to repair my equipment."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_71uki"]
-lines = Array[Resource]([SubResource("RoseDialogLine_25wlt"), SubResource("RoseDialogLine_gul1j"), SubResource("RoseDialogLine_bm8r3"), SubResource("RoseDialogLine_slpna"), SubResource("RoseDialogLine_61acb")])
+lines = Array[Resource]([SubResource("RoseDialogLine_25wlt"), SubResource("RoseDialogLine_gul1j"), SubResource("RoseDialogLine_bm8r3"), SubResource("RoseDialogLine_61acb")])
 resource_name = "Menu 19"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_lr1kl"]
@@ -888,31 +831,6 @@ text = "I'd like to look around the store first, check me out some goods."
 on_choose = Array[Resource]([SubResource("RoseDialogCase_rxptk")])
 resource_name = "You: I'd like to look around the store first, check m…"
 
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_7l0ot"]
-value = 1
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_qpjqo"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_7l0ot")])
-
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_oks4i"]
-value = 2
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_ru77k"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_oks4i")])
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_5x4w5"]
-quest = ExtResource("5_rorou")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_fasym"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_5x4w5")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_006oj"]
-kind = "Answer"
-text = "I'd like to participate in the [Fetch Quest]."
-next_menu = 35
-show_if = Array[Resource]([SubResource("RoseDialogCase_qpjqo"), SubResource("RoseDialogCase_ru77k"), SubResource("RoseDialogCase_fasym")])
-resource_name = "You: I'd like to participate in the [Fetch Quest]."
-
 [sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_05wqj"]
 window = "Repair"
 
@@ -926,7 +844,7 @@ on_choose = Array[Resource]([SubResource("RoseDialogCase_tlfih")])
 resource_name = "You: I'd like to repair my equipment."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_usvyy"]
-lines = Array[Resource]([SubResource("RoseDialogLine_o8n7l"), SubResource("RoseDialogLine_qcvh2"), SubResource("RoseDialogLine_e60gu"), SubResource("RoseDialogLine_006oj"), SubResource("RoseDialogLine_0lypo")])
+lines = Array[Resource]([SubResource("RoseDialogLine_o8n7l"), SubResource("RoseDialogLine_qcvh2"), SubResource("RoseDialogLine_e60gu"), SubResource("RoseDialogLine_0lypo")])
 resource_name = "Menu 22"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_v3fey"]
@@ -1065,183 +983,165 @@ resource_name = "You: Is there any way I can act rationally in that si…"
 lines = Array[Resource]([SubResource("RoseDialogLine_iol6a")])
 resource_name = "Menu 34"
 
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_fco0s"]
-value = 1
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_cjc2w"]
-quest = ExtResource("5_rorou")
-active = false
-
-[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_dvanx"]
-operator = "<"
-value = 19
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_a0x6m"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_fco0s"), SubResource("RoseDialogIfQuest_cjc2w"), SubResource("RoseDialogIfAbility_dvanx")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_lbqt3"]
-text = "Alright, let's get started. Go find {fc=14}10 Pomic Skin{/fc} as soon as you can. You'll receive a greater reward if you could find them more quickly than the competition."
-next_menu = 36
-show_if = Array[Resource]([SubResource("RoseDialogCase_a0x6m")])
-resource_name = "NPC: Alright, let's get started. Go find {fc=14}10 Po…"
-
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_pflv0"]
-value = 2
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_r8lf4"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_pflv0")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_m3uwq"]
-text = "I'm sorry, but it's too late to participate. Try to join next time."
-next_menu = 37
-show_if = Array[Resource]([SubResource("RoseDialogCase_r8lf4")])
-resource_name = "NPC: I'm sorry, but it's too late to participate. Try…"
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_inkfn"]
-quest = ExtResource("5_rorou")
-
-[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_ddxrd"]
-quest = ExtResource("5_rorou")
-item = ExtResource("12_cexdv")
-operator = "<"
-value = 10
-
-[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_y456u"]
-step = ExtResource("13_0wjaq")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_wl8rd"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_inkfn"), SubResource("RoseDialogIfQuestItem_ddxrd"), SubResource("RoseDialogIfQuestStep_y456u")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_07585"]
-text = "What are you doing? The longer you take, the less of a reward you'll get!"
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c5504e"]
+text = "Refining raises a weapon or a piece of armour a grade, and every grade makes it stronger. It takes materials: for a weapon at grade 0, five chemicals, any powder will do, and seven Low Essence. Here they are, with a fresh practice sword. Ask me to refine it. At higher grades refining can fail and drop the item back a grade, so think before you risk a good weapon."
+resource_name = "NPC: Refining raises a weapon or a piece of armour a gr…"
 next_menu = 38
-show_if = Array[Resource]([SubResource("RoseDialogCase_wl8rd")])
-resource_name = "NPC: What are you doing? The longer you take, the les…"
 
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_200p0"]
-quest = ExtResource("5_rorou")
-
-[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_3i0cj"]
-step = ExtResource("13_0wjaq")
-passes = false
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_tgol6"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_200p0"), SubResource("RoseDialogIfQuestStep_3i0cj")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_ulx8x"]
-text = "Hey. You can't fool me, this quest is past expiration. There's no way I can give you a reward!"
-next_menu = 39
-show_if = Array[Resource]([SubResource("RoseDialogCase_tgol6")])
-resource_name = "NPC: Hey. You can't fool me, this quest is past expir…"
-
-[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_rsw3d"]
-step = ExtResource("14_scs7w")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_eyuvr"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_rsw3d")])
-
-[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_gd288"]
-step = ExtResource("15_vw2j5")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_b1yp2"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_gd288")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_2neal"]
-text = "Excellent, you've gathered the items sooner that I thought. Okay, here's a reward for you. I am determining the reward according to the time you spent to gather items, so don't blame me for that. "
-next_menu = 40
-show_if = Array[Resource]([SubResource("RoseDialogCase_eyuvr"), SubResource("RoseDialogCase_b1yp2")])
-resource_name = "NPC: Excellent, you've gathered the items sooner that…"
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ww24g"]
-quest = ExtResource("5_rorou")
-active = false
-
-[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_bcn7p"]
-operator = ">"
-value = 18
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_n3xxk"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_ww24g"), SubResource("RoseDialogIfAbility_bcn7p")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_k7srx"]
-text = "In order to make this quest fair, characters higher than Level 18 cannot participate. All you higher level characters should find a quest that's suitable for you."
-next_menu = 41
-show_if = Array[Resource]([SubResource("RoseDialogCase_n3xxk")])
-resource_name = "NPC: In order to make this quest fair, characters hig…"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wsth0"]
-lines = Array[Resource]([SubResource("RoseDialogLine_lbqt3"), SubResource("RoseDialogLine_m3uwq"), SubResource("RoseDialogLine_07585"), SubResource("RoseDialogLine_ulx8x"), SubResource("RoseDialogLine_2neal"), SubResource("RoseDialogLine_k7srx")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_a8d358"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c5504e")])
 resource_name = "Menu 35"
 
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_f7yta"]
-step = ExtResource("16_qvukw")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_6u7qx"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_f7yta")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_qxvg2"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4084fe"]
 kind = "Answer"
-text = "Right. I understand."
-on_choose = Array[Resource]([SubResource("RoseDialogCase_6u7qx")])
-resource_name = "You: Right. I understand."
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b4ts6"]
-lines = Array[Resource]([SubResource("RoseDialogLine_qxvg2")])
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_42bbab"]
+kind = "Answer"
+text = "Goodbye."
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ad3138"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4084fe"), SubResource("RoseDialogLine_42bbab")])
 resource_name = "Menu 36"
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_lw5ms"]
-kind = "Answer"
-text = "I see, I'll try to come as quickly as I can next time."
-resource_name = "You: I see, I'll try to come as quickly as I can next…"
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e5cde2"]
+text = "Ask me to refine the practice sword."
+next_menu = 36
+resource_name = "NPC: Ask me to refine the practice sword."
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3v28x"]
-lines = Array[Resource]([SubResource("RoseDialogLine_lw5ms")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6fc87b"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e5cde2")])
 resource_name = "Menu 37"
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_8w73d"]
-kind = "Answer"
-text = "Alright."
-resource_name = "You: Alright."
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_0a961e"]
+step = ExtResource("z_abf815")
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_i1ecw"]
-lines = Array[Resource]([SubResource("RoseDialogLine_8w73d")])
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_68f53f"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_0a961e")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1327cf"]
+kind = "Answer"
+text = "I'll try it."
+next_menu = 37
+on_choose = Array[Resource]([SubResource("RoseDialogCase_68f53f")])
+resource_name = "You: I'll try it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b86b29"]
+kind = "Answer"
+text = "Not now."
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_d4f7e9"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1327cf"), SubResource("RoseDialogLine_b86b29")])
 resource_name = "Menu 38"
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_dajx8"]
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_de07e2"]
 kind = "Answer"
-text = "Yes, now I understand."
-resource_name = "You: Yes, now I understand."
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gkxpa"]
-lines = Array[Resource]([SubResource("RoseDialogLine_dajx8")])
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a697da"]
+kind = "Answer"
+text = "Goodbye."
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_573ef6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_de07e2"), SubResource("RoseDialogLine_a697da")])
 resource_name = "Menu 39"
 
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_1loyt"]
-step = ExtResource("14_scs7w")
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4c3f6e"]
+text = "That's a smith's work. {fc=1}Mina{/fc}, the jewel seller on the east side, will show you gems."
+next_menu = 39
+resource_name = "NPC: That's a smith's work. {fc=1}Mina{/fc}, the jewel …"
 
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_vdlg3"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_1loyt")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_nmr70"]
-kind = "Answer"
-text = "Okay, you got it."
-on_choose = Array[Resource]([SubResource("RoseDialogCase_vdlg3")])
-resource_name = "You: Okay, you got it."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_tf8e8"]
-lines = Array[Resource]([SubResource("RoseDialogLine_nmr70")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_75730d"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4c3f6e")])
 resource_name = "Menu 40"
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_a3t0p"]
-kind = "Answer"
-text = "Yes, of course."
-resource_name = "You: Yes, of course."
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_89dba8"]
+text = "Every swing and every hit wears your gear down. When an item's life runs out, it stops working until it is repaired. This practice sword is nearly worn through: ask me to repair it, then talk to me again. Out in the field, a repair hammer does the same job."
+resource_name = "NPC: Every swing and every hit wears your gear down. Wh…"
+next_menu = 44
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_on510"]
-lines = Array[Resource]([SubResource("RoseDialogLine_a3t0p")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3c7a8a"]
+lines = Array[Resource]([SubResource("RoseDialogLine_89dba8")])
 resource_name = "Menu 41"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_94b7c2"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fe76fa"]
+kind = "Answer"
+text = "Goodbye."
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_170ac9"]
+lines = Array[Resource]([SubResource("RoseDialogLine_94b7c2"), SubResource("RoseDialogLine_fe76fa")])
+resource_name = "Menu 42"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_49b249"]
+text = "Ask me to repair the practice sword."
+next_menu = 42
+resource_name = "NPC: Ask me to repair the practice sword."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fb5256"]
+lines = Array[Resource]([SubResource("RoseDialogLine_49b249")])
+resource_name = "Menu 43"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_604002"]
+step = ExtResource("z_fab215")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3df85b"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_604002")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e56844"]
+kind = "Answer"
+text = "I'll try it."
+next_menu = 43
+on_choose = Array[Resource]([SubResource("RoseDialogCase_3df85b")])
+resource_name = "You: I'll try it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4b62a8"]
+kind = "Answer"
+text = "Not now."
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_16fa1e"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e56844"), SubResource("RoseDialogLine_4b62a8")])
+resource_name = "Menu 44"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_202249"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ab8a3a"]
+kind = "Answer"
+text = "Goodbye."
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_904aef"]
+lines = Array[Resource]([SubResource("RoseDialogLine_202249"), SubResource("RoseDialogLine_ab8a3a")])
+resource_name = "Menu 45"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_f1a32f"]
+text = "Good as new. Now let me show you something better than repairs."
+next_menu = 45
+resource_name = "NPC: Good as new. Now let me show you something better …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3b7145"]
+lines = Array[Resource]([SubResource("RoseDialogLine_f1a32f")])
+resource_name = "Menu 46"
 
 [resource]
 key = "EM01-008.con"
 name = "[Weapon Seller] Raffle"
-menus = Array[Resource]([SubResource("RoseDialogMenu_djl1i"), SubResource("RoseDialogMenu_bnh61"), SubResource("RoseDialogMenu_rmpk2"), SubResource("RoseDialogMenu_6xjcq"), SubResource("RoseDialogMenu_3mrgb"), SubResource("RoseDialogMenu_lpdhx"), SubResource("RoseDialogMenu_d05xc"), SubResource("RoseDialogMenu_gyj6h"), SubResource("RoseDialogMenu_q5ru0"), SubResource("RoseDialogMenu_ohyw1"), SubResource("RoseDialogMenu_fv4sv"), SubResource("RoseDialogMenu_7i06p"), SubResource("RoseDialogMenu_8bcxo"), SubResource("RoseDialogMenu_43ued"), SubResource("RoseDialogMenu_wt303"), SubResource("RoseDialogMenu_tdwmy"), SubResource("RoseDialogMenu_j8qjq"), SubResource("RoseDialogMenu_nsrba"), SubResource("RoseDialogMenu_miokw"), SubResource("RoseDialogMenu_71uki"), SubResource("RoseDialogMenu_0t083"), SubResource("RoseDialogMenu_yjgce"), SubResource("RoseDialogMenu_usvyy"), SubResource("RoseDialogMenu_1r3t5"), SubResource("RoseDialogMenu_r4jn2"), SubResource("RoseDialogMenu_uhlxy"), SubResource("RoseDialogMenu_nfl5x"), SubResource("RoseDialogMenu_uuabc"), SubResource("RoseDialogMenu_3710i"), SubResource("RoseDialogMenu_xrgbc"), SubResource("RoseDialogMenu_h55ox"), SubResource("RoseDialogMenu_vb8w3"), SubResource("RoseDialogMenu_e7xmr"), SubResource("RoseDialogMenu_cofdt"), SubResource("RoseDialogMenu_mbmyy"), SubResource("RoseDialogMenu_wsth0"), SubResource("RoseDialogMenu_b4ts6"), SubResource("RoseDialogMenu_3v28x"), SubResource("RoseDialogMenu_i1ecw"), SubResource("RoseDialogMenu_gkxpa"), SubResource("RoseDialogMenu_tf8e8"), SubResource("RoseDialogMenu_on510")])
+menus = Array[Resource]([SubResource("RoseDialogMenu_djl1i"), SubResource("RoseDialogMenu_bnh61"), SubResource("RoseDialogMenu_rmpk2"), SubResource("RoseDialogMenu_6xjcq"), SubResource("RoseDialogMenu_3mrgb"), SubResource("RoseDialogMenu_lpdhx"), SubResource("RoseDialogMenu_d05xc"), SubResource("RoseDialogMenu_gyj6h"), SubResource("RoseDialogMenu_q5ru0"), SubResource("RoseDialogMenu_ohyw1"), SubResource("RoseDialogMenu_fv4sv"), SubResource("RoseDialogMenu_7i06p"), SubResource("RoseDialogMenu_8bcxo"), SubResource("RoseDialogMenu_43ued"), SubResource("RoseDialogMenu_wt303"), SubResource("RoseDialogMenu_tdwmy"), SubResource("RoseDialogMenu_j8qjq"), SubResource("RoseDialogMenu_nsrba"), SubResource("RoseDialogMenu_miokw"), SubResource("RoseDialogMenu_71uki"), SubResource("RoseDialogMenu_0t083"), SubResource("RoseDialogMenu_yjgce"), SubResource("RoseDialogMenu_usvyy"), SubResource("RoseDialogMenu_1r3t5"), SubResource("RoseDialogMenu_r4jn2"), SubResource("RoseDialogMenu_uhlxy"), SubResource("RoseDialogMenu_nfl5x"), SubResource("RoseDialogMenu_uuabc"), SubResource("RoseDialogMenu_3710i"), SubResource("RoseDialogMenu_xrgbc"), SubResource("RoseDialogMenu_h55ox"), SubResource("RoseDialogMenu_vb8w3"), SubResource("RoseDialogMenu_e7xmr"), SubResource("RoseDialogMenu_cofdt"), SubResource("RoseDialogMenu_mbmyy"), SubResource("RoseDialogMenu_a8d358"), SubResource("RoseDialogMenu_ad3138"), SubResource("RoseDialogMenu_6fc87b"), SubResource("RoseDialogMenu_d4f7e9"), SubResource("RoseDialogMenu_573ef6"), SubResource("RoseDialogMenu_75730d"), SubResource("RoseDialogMenu_3c7a8a"), SubResource("RoseDialogMenu_170ac9"), SubResource("RoseDialogMenu_fb5256"), SubResource("RoseDialogMenu_16fa1e"), SubResource("RoseDialogMenu_904aef"), SubResource("RoseDialogMenu_3b7145")])

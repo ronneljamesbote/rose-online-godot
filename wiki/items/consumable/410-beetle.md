@@ -16,6 +16,8 @@ dropped_by:
 - monster: '[[monsters/82-beetle-fighter|Beetle Fighter]]'
   level: 22
   slots_of_30: 2
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/410-beetle.tres
   code: module/src/items.rs

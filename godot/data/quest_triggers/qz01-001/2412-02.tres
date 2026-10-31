@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2412-the-wind-road.tres" id="z_cbfed7"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_c7436d"]
+quest = ExtResource("z_cbfed7")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_2d3d2e"]
+quest = ExtResource("z_cbfed7")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_28f8a1"]
+equation = 0
+value = 800
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_b5e6ba"]
+equation = 0
+value = 500
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_58717c"]
+switch = 651
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_46b1c7"]
+
+[resource]
+name = "2412-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_c7436d")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_2d3d2e"), SubResource("RoseRewardCalculatedExperiencePoints_28f8a1"), SubResource("RoseRewardCalculatedMoney_b5e6ba"), SubResource("RoseRewardSetQuestSwitch_58717c"), SubResource("RoseRewardRemoveSelectedQuest_46b1c7")])

@@ -22,6 +22,8 @@ dropped_by:
 - monster: '[[monsters/15-spotted-choropy|Spotted Choropy]]'
   level: 11
   slots_of_30: 2
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/403-choropy.tres
   code: module/src/items.rs

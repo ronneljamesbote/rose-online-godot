@@ -16,6 +16,8 @@ dropped_by:
 - monster: '[[monsters/173-aqua-captain|Aqua Captain]]'
   level: 34
   slots_of_30: 1
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/425-aqua-guard.tres
   code: module/src/items.rs

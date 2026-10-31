@@ -9,6 +9,8 @@ effect: teaches skill 2812, uses skill 2812, fuel +2812
 needs: Level 19
 price: 240
 weight: 20
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/412-crack.tres
   code: module/src/items.rs

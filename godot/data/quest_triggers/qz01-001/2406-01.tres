@@ -1,0 +1,27 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2406-mending-steel.tres" id="z_e2e520"]
+[ext_resource type="RoseItemWeapon" path="res://data/items/weapon/1133-practice-sword.tres" id="z_aa21c9"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_0d69d6"]
+switch = 644
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_3f779d"]
+switch = 645
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_2dec9c"]
+quest = ExtResource("z_e2e520")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_2be804"]
+quest = ExtResource("z_e2e520")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_c78ffa"]
+item = ExtResource("z_aa21c9")
+quantity = 1
+life_percent = 30
+
+[resource]
+name = "2406-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_0d69d6"), SubResource("RoseConditionQuestSwitch_3f779d")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_2dec9c"), SubResource("RoseRewardSelectQuest_2be804"), SubResource("RoseRewardAddItem_c78ffa")])

@@ -414,6 +414,9 @@ pub enum RewardExport {
         #[serde(default)]
         item: String,
         quantity: u32,
+        /// Equipment only: the life it has left when handed out, in % (100: new).
+        #[serde(default = "full_life", skip_serializing_if = "is_full_life")]
+        life_percent: u8,
     },
     RemoveItem {
         #[serde(default)]
@@ -785,7 +788,9 @@ impl RewardExport {
                 E::ChangeSelectedQuest { quest: id16(*id, "quest")?, keep_data: *keep_data }
             }
             R::SelectQuest { id } => E::SelectQuest { quest: id16(*id, "quest")? },
-            R::AddItem { item, quantity } => E::AddItem { item: codes.item(*item)?, quantity: id32(*quantity, "quantity")? },
+            R::AddItem { item, quantity, life_percent } => {
+                E::AddItem { item: codes.item(*item)?, quantity: id32(*quantity, "quantity")?, life_percent: *life_percent }
+            }
             R::RemoveItem { item, quantity } => {
                 E::RemoveItem { item: codes.item(*item)?, quantity: id32(*quantity, "quantity")? }
             }
@@ -910,7 +915,9 @@ impl RewardExport {
             E::AddQuest { quest } => R::AddQuest { id: *quest as usize },
             E::ChangeSelectedQuest { quest, keep_data } => R::ChangeSelectedQuest { id: *quest as usize, keep_data: *keep_data },
             E::SelectQuest { quest } => R::SelectQuest { id: *quest as usize },
-            E::AddItem { item: name, quantity } => R::AddItem { item: item(name, "AddItem")?, quantity: *quantity as usize },
+            E::AddItem { item: name, quantity, life_percent } => {
+                R::AddItem { item: item(name, "AddItem")?, quantity: *quantity as usize, life_percent: (*life_percent).min(100) }
+            }
             E::RemoveItem { item: name, quantity } => {
                 R::RemoveItem { item: item(name, "RemoveItem")?, quantity: *quantity as usize }
             }
@@ -1344,4 +1351,12 @@ pub fn compare_quest_databases(
         }
     }
     Ok(out)
+}
+
+fn full_life() -> u8 {
+    100
+}
+
+fn is_full_life(life_percent: &u8) -> bool {
+    *life_percent >= 100
 }

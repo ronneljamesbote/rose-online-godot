@@ -28,6 +28,10 @@ dropped_by:
 - monster: '[[monsters/10-butterfly|ButterFly]]'
   level: 2
   slots_of_30: 2
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
+quest_reward:
+- '[[quests/2411-beasts-for-hire|Beasts for Hire]]'
 source:
   data: godot/data/items/consumable/401-jelly-bean.tres
   code: module/src/items.rs

@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2410-stronger-together.tres" id="z_d9513b"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_db966d"]
+quest = ExtResource("z_d9513b")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_23a5ee"]
+quest = ExtResource("z_d9513b")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_8d986f"]
+equation = 0
+value = 400
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_956703"]
+equation = 0
+value = 300
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_e2d273"]
+switch = 649
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_ca445e"]
+
+[resource]
+name = "2410-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_db966d")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_23a5ee"), SubResource("RoseRewardCalculatedExperiencePoints_8d986f"), SubResource("RoseRewardCalculatedMoney_956703"), SubResource("RoseRewardSetQuestSwitch_e2d273"), SubResource("RoseRewardRemoveSelectedQuest_ca445e")])

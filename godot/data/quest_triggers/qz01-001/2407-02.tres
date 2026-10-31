@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2407-sharper-steel.tres" id="z_13498c"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_8df617"]
+quest = ExtResource("z_13498c")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_4ad7c4"]
+quest = ExtResource("z_13498c")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_3b6757"]
+equation = 0
+value = 400
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_f72a7b"]
+equation = 0
+value = 300
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_b07dd7"]
+switch = 646
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_a54a50"]
+
+[resource]
+name = "2407-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_8df617")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_4ad7c4"), SubResource("RoseRewardCalculatedExperiencePoints_3b6757"), SubResource("RoseRewardCalculatedMoney_f72a7b"), SubResource("RoseRewardSetQuestSwitch_b07dd7"), SubResource("RoseRewardRemoveSelectedQuest_a54a50")])

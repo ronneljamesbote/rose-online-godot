@@ -46,6 +46,7 @@ quest_reward:
 - '[[quests/903-muse-job-change-quest|Muse Job Change Quest]]'
 - '[[quests/1002-dealer-job-change-quest|Dealer Job Change Quest]]'
 - '[[quests/1003-dealer-job-change-quest|Dealer Job Change Quest]]'
+- '[[quests/2404-potions-and-scrolls|Potions and Scrolls]]'
 source:
   data: godot/data/items/consumable/1-health-vial-s.tres
   code: module/src/items.rs

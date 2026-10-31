@@ -10,6 +10,8 @@ price: 1000
 weight: 1
 sold_by:
 - '[[npcs/1006-arumic-merchant-tryteh|Arumic Merchant Tryteh]]'
+quest_reward:
+- '[[quests/2404-potions-and-scrolls|Potions and Scrolls]]'
 source:
   data: godot/data/items/consumable/351-zant-return-scroll.tres
   code: module/src/items.rs

@@ -13,6 +13,8 @@ dropped_by:
 - monster: '[[monsters/152-elder-doonga|Elder Doonga]]'
   level: 58
   slots_of_30: 1
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/421-doonga.tres
   code: module/src/items.rs

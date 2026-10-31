@@ -4,6 +4,7 @@
 #   godot --headless --path godot -- --export-data
 # Positions are metres (x east, y north, z up). See export/README.md.
 zone = 1
+warp = [21, 22, 23]  # warp gates in this zone
 
 [[event]]
 name = "WARP-JD01-JDT01"
@@ -35,39 +36,6 @@ x = 5512.29
 y = 5177.15
 z = -2.32
 
-[[spawn]]  # Block_34_30/Spawns/Spawn_0
-x = 5441.33
-y = 5448.90
-z = 11.27
-interval = 8
-limit = 9
-range = 26
-tactic_points = 90
-basic = [[62, 3], [64, 2], [102, 1], [102, 2], [101, 3]]  # HoneyBee x3, Hornet x2, Woopie Chef x1, Woopie Chef x2, Woopie x3
-tactic = [[103, 2], [205, 1]]  # Woopie Glutton x2, Woopie King x1
-
-[[spawn]]  # Block_32_31/Spawns/Spawn_0
-x = 5245.20
-y = 5390.36
-z = 9.11
-interval = 8
-limit = 6
-range = 25
-tactic_points = 90
-basic = [[63, 1], [101, 2], [101, 1], [102, 2], [131, 1]]  # Needle Hornet x1, Woopie x2, Woopie x1, Woopie Chef x2, Mini-Porkie x1
-tactic = [[64, 2], [103, 1]]  # Hornet x2, Woopie Glutton x1
-
-[[spawn]]  # Block_32_31/Spawns/Spawn_1
-x = 5194.95
-y = 5354.19
-z = 6.76
-interval = 8
-limit = 10
-range = 25
-tactic_points = 100
-basic = [[63, 1], [62, 2], [101, 2], [101, 1], [64, 2]]  # Needle Hornet x1, HoneyBee x2, Woopie x2, Woopie x1, Hornet x2
-tactic = [[102, 2], [103, 1]]  # Woopie Chef x2, Woopie Glutton x1
-
 [[spawn]]  # Block_32_31/Spawns/Spawn_2
 x = 5255.55
 y = 5355.77
@@ -78,121 +46,35 @@ range = 50
 tactic_points = 100
 basic = [[316, 2], [317, 2], [318, 2]]  # ButterFly x2, ButterFly x2, ButterFly x2
 
-[[spawn]]  # Block_32_31/Spawns/Spawn_3
-x = 5261.42
-y = 5361.42
-z = 6.03
-interval = 8
-limit = 10
-range = 43
-tactic_points = 88
-basic = [[101, 2], [102, 1], [102, 2], [64, 2], [103, 1]]  # Woopie x2, Woopie Chef x1, Woopie Chef x2, Hornet x2, Woopie Glutton x1
-tactic = [[204, 1], [131, 2]]  # Wandering Rackie x1, Mini-Porkie x2
-
-[[spawn]]  # Block_33_31/Spawns/Spawn_0
-x = 5301.31
-y = 5395.78
-z = 9.20
-interval = 8
-limit = 7
-range = 24
-tactic_points = 88
-basic = [[101, 2], [101, 1], [102, 2], [64, 1], [101, 2]]  # Woopie x2, Woopie x1, Woopie Chef x2, Hornet x1, Woopie x2
-tactic = [[103, 1], [131, 2]]  # Woopie Glutton x1, Mini-Porkie x2
-
-[[spawn]]  # Block_33_31/Spawns/Spawn_1
-x = 5338.49
-y = 5330.36
-z = 1.49
-interval = 8
-limit = 8
-range = 45
-tactic_points = 100
-basic = [[61, 2], [61, 1], [62, 2], [63, 1], [63, 2]]  # Needle HoneyBee x2, Needle HoneyBee x1, HoneyBee x2, Needle Hornet x1, Needle Hornet x2
-tactic = [[64, 3]]  # Hornet x3
-
-[[spawn]]  # Block_33_31/Spawns/Spawn_2
-x = 5332.05
-y = 5339.63
-z = 2.19
-interval = 10
-limit = 8
-range = 35
-tactic_points = 87
-basic = [[101, 1], [102, 1], [101, 1], [102, 2], [103, 2]]  # Woopie x1, Woopie Chef x1, Woopie x1, Woopie Chef x2, Woopie Glutton x2
-tactic = [[131, 1], [205, 1]]  # Mini-Porkie x1, Woopie King x1
-
-[[spawn]]  # Block_33_31/Spawns/Spawn_3
-x = 5377.02
-y = 5394.41
-z = 8.70
-interval = 12
-limit = 4
-range = 16
-tactic_points = 91
-basic = [[101, 2], [101, 1], [102, 2], [64, 1], [101, 2]]  # Woopie x2, Woopie x1, Woopie Chef x2, Hornet x1, Woopie x2
-tactic = [[103, 1], [131, 2]]  # Woopie Glutton x1, Mini-Porkie x2
-
-[[spawn]]  # Block_33_31/Spawns/Spawn_4
-x = 5423.78
-y = 5418.25
-z = 13.59
-interval = 13
-limit = 4
-range = 16
-tactic_points = 91
-basic = [[101, 2], [101, 1], [102, 2], [64, 1], [101, 2]]  # Woopie x2, Woopie x1, Woopie Chef x2, Hornet x1, Woopie x2
-tactic = [[103, 1], [131, 2]]  # Woopie Glutton x1, Mini-Porkie x2
-
-[[spawn]]  # Block_34_31/Spawns/Spawn_0
-x = 5469.26
-y = 5398.66
-z = 6.94
-interval = 10
-limit = 4
-range = 11
-tactic_points = 100
-basic = [[64, 1], [61, 1], [101, 1], [102, 1]]  # Hornet x1, Needle HoneyBee x1, Woopie x1, Woopie Chef x1
-
-[[spawn]]  # Block_34_31/Spawns/Spawn_1
-x = 5502.75
-y = 5303.55
-z = 0.96
-interval = 13
-limit = 3
-range = 7
-tactic_points = 100
-basic = [[62, 1], [64, 1], [63, 2]]  # HoneyBee x1, Hornet x1, Needle Hornet x2
-
-[[spawn]]  # Block_32_32/Spawns/Spawn_0
-x = 5238.42
-y = 5171.13
-z = 4.38
+[[spawn]]  # Block_32_31/Spawns/Spawn_TrainingBees1
+x = 5230.00
+y = 5372.00
+z = 6.58
 interval = 20
-limit = 24
-range = 100
+limit = 4
+range = 14
 tactic_points = 100
-basic = [[301, 2]]  # Mini Bee x2
+basic = [[62, 4]]  # HoneyBee x4
 
-[[spawn]]  # Block_32_32/Spawns/Spawn_1
-x = 5120.83
-y = 5135.66
-z = 10.00
-interval = 16
-limit = 14
-range = 85
+[[spawn]]  # Block_33_31/Spawns/Spawn_TrainingBees2
+x = 5300.00
+y = 5398.00
+z = 8.97
+interval = 20
+limit = 4
+range = 14
 tactic_points = 100
-basic = [[301, 3]]  # Mini Bee x3
+basic = [[62, 4]]  # HoneyBee x4
 
-[[spawn]]  # Block_32_32/Spawns/Spawn_2
-x = 5139.82
-y = 5194.49
-z = 10.00
-interval = 21
-limit = 17
-range = 70
+[[spawn]]  # Block_33_31/Spawns/Spawn_TrainingBees3
+x = 5346.00
+y = 5352.00
+z = 5.46
+interval = 20
+limit = 4
+range = 14
 tactic_points = 100
-basic = [[301, 3]]  # Mini Bee x3
+basic = [[62, 4]]  # HoneyBee x4
 
 [[spawn]]  # Block_32_32/Spawns/Spawn_3
 x = 5198.54
@@ -205,127 +87,6 @@ tactic_points = 100
 basic = [[316, 2], [317, 3], [318, 2]]  # ButterFly x2, ButterFly x3, ButterFly x2
 tactic = [[318, 2]]  # ButterFly x2
 
-[[spawn]]  # Block_33_32/Spawns/Spawn_0
-x = 5399.75
-y = 5165.52
-z = -2.54
-interval = 8
-limit = 7
-range = 36
-tactic_points = 100
-basic = [[62, 2], [63, 2], [101, 1], [64, 2], [102, 1]]  # HoneyBee x2, Needle Hornet x2, Woopie x1, Hornet x2, Woopie Chef x1
-tactic = [[64, 2], [103, 2]]  # Hornet x2, Woopie Glutton x2
-
-[[spawn]]  # Block_33_32/Spawns/Spawn_1
-x = 5428.13
-y = 5122.24
-z = -0.46
-interval = 13
-limit = 8
-range = 60
-tactic_points = 95
-basic = [[62, 2], [62, 2], [63, 2], [64, 0], [63, 0]]  # HoneyBee x2, HoneyBee x2, Needle Hornet x2, Hornet x0, Needle Hornet x0
-tactic = [[63, 1], [64, 0]]  # Needle Hornet x1, Hornet x0
-
-[[spawn]]  # Block_33_32/Spawns/Spawn_2
-x = 5382.87
-y = 5244.32
-z = -1.95
-interval = 10
-limit = 6
-range = 24
-tactic_points = 87
-basic = [[101, 1], [102, 1], [101, 1], [102, 2], [103, 2]]  # Woopie x1, Woopie Chef x1, Woopie x1, Woopie Chef x2, Woopie Glutton x2
-tactic = [[131, 1], [205, 1]]  # Mini-Porkie x1, Woopie King x1
-
-[[spawn]]  # Block_33_32/Spawns/Spawn_3
-x = 5410.39
-y = 5212.39
-z = -2.59
-interval = 8
-limit = 7
-range = 32
-tactic_points = 100
-basic = [[62, 2], [63, 1], [63, 1], [64, 1], [64, 2]]  # HoneyBee x2, Needle Hornet x1, Needle Hornet x1, Hornet x1, Hornet x2
-tactic = [[204, 1], [64, 1]]  # Wandering Rackie x1, Hornet x1
-
-[[spawn]]  # Block_33_32/Spawns/Spawn_4
-x = 5393.80
-y = 5191.56
-z = -1.87
-interval = 6
-limit = 6
-range = 28
-tactic_points = 87
-basic = [[101, 2], [102, 1], [101, 1], [102, 2], [101, 2]]  # Woopie x2, Woopie Chef x1, Woopie x1, Woopie Chef x2, Woopie x2
-tactic = [[103, 1], [102, 3]]  # Woopie Glutton x1, Woopie Chef x3
-
-[[spawn]]  # Block_34_32/Spawns/Spawn_0
-x = 5449.46
-y = 5197.59
-z = -1.00
-interval = 7
-limit = 8
-range = 28
-tactic_points = 87
-basic = [[101, 2], [102, 1], [101, 1], [102, 2], [101, 2]]  # Woopie x2, Woopie Chef x1, Woopie x1, Woopie Chef x2, Woopie x2
-tactic = [[103, 1], [102, 3]]  # Woopie Glutton x1, Woopie Chef x3
-
-[[spawn]]  # Block_32_33/Spawns/Spawn_0
-x = 5220.55
-y = 5049.72
-z = -1.78
-interval = 12
-limit = 6
-range = 18
-tactic_points = 90
-basic = [[61, 1], [62, 1], [101, 1], [63, 1], [101, 1]]  # Needle HoneyBee x1, HoneyBee x1, Woopie x1, Needle Hornet x1, Woopie x1
-tactic = [[63, 1], [64, 1]]  # Needle Hornet x1, Hornet x1
-
-[[spawn]]  # Block_32_33/Spawns/Spawn_1
-x = 5269.22
-y = 5049.30
-z = -1.01
-interval = 11
-limit = 6
-range = 18
-tactic_points = 90
-basic = [[61, 1], [62, 1], [317, 1], [63, 1], [101, 1]]  # Needle HoneyBee x1, HoneyBee x1, ButterFly x1, Needle Hornet x1, Woopie x1
-tactic = [[63, 1], [131, 1]]  # Needle Hornet x1, Mini-Porkie x1
-
-[[spawn]]  # Block_32_33/Spawns/Spawn_2
-x = 5234.53
-y = 5055.65
-z = -0.92
-interval = 10
-limit = 5
-range = 12
-tactic_points = 90
-basic = [[101, 1], [101, 1], [317, 1], [102, 1], [101, 1]]  # Woopie x1, Woopie x1, ButterFly x1, Woopie Chef x1, Woopie x1
-tactic = [[63, 1], [131, 1]]  # Needle Hornet x1, Mini-Porkie x1
-
-[[spawn]]  # Block_33_33/Spawns/Spawn_0
-x = 5366.66
-y = 5067.57
-z = -0.38
-interval = 7
-limit = 6
-range = 23
-tactic_points = 100
-basic = [[63, 1], [101, 1], [62, 2], [102, 1], [101, 2]]  # Needle Hornet x1, Woopie x1, HoneyBee x2, Woopie Chef x1, Woopie x2
-tactic = [[63, 1], [64, 1]]  # Needle Hornet x1, Hornet x1
-
-[[spawn]]  # Block_33_33/Spawns/Spawn_1
-x = 5330.49
-y = 5051.84
-z = -0.66
-interval = 9
-limit = 7
-range = 28
-tactic_points = 100
-basic = [[61, 1], [62, 1], [101, 1], [63, 1], [101, 2]]  # Needle HoneyBee x1, HoneyBee x1, Woopie x1, Needle Hornet x1, Woopie x2
-tactic = [[63, 1], [64, 1]]  # Needle Hornet x1, Hornet x1
-
 [[spawn]]  # Block_33_33/Spawns/Spawn_2
 x = 5387.32
 y = 5103.07
@@ -336,16 +97,25 @@ range = 40
 tactic_points = 95
 basic = [[316, 2], [317, 1]]  # ButterFly x2, ButterFly x1
 
-[[spawn]]  # Block_33_33/Spawns/Spawn_3
-x = 5280.72
-y = 5046.15
-z = -0.28
-interval = 9
-limit = 6
-range = 18
-tactic_points = 90
-basic = [[101, 1], [101, 1], [317, 1], [102, 1], [101, 1]]  # Woopie x1, Woopie x1, ButterFly x1, Woopie Chef x1, Woopie x1
-tactic = [[63, 1], [131, 1]]  # Needle Hornet x1, Mini-Porkie x1
+[[spawn]]  # Block_33_33/Spawns/Spawn_WoopieKing
+x = 5430.00
+y = 5090.00
+z = 0.36
+interval = 180
+limit = 1
+range = 4
+tactic_points = 100
+basic = [[205, 1]]  # Woopie King x1
+
+[[spawn]]  # Block_33_33/Spawns/Spawn_WoopieCourt
+x = 5430.00
+y = 5090.00
+z = 0.36
+interval = 30
+limit = 3
+range = 12
+tactic_points = 100
+basic = [[101, 3]]  # Woopie x3
 
 [[npc]]  # Block_31_31/Npcs/Npc_0
 npc = 1016  # [Livestock Farmer]  Lampa
@@ -354,6 +124,22 @@ y = 5363.68
 z = 11.00
 direction = 168.0
 conversation = "EM01-016.con"
+
+[[npc]]  # Block_33_31/Npcs/Npc_1018
+npc = 1018  # [Canyon Guard] Hadric
+x = 5374.00
+y = 5339.00
+z = 5.89
+direction = 100.0
+conversation = "EM01-018.con"
+
+[[npc]]  # Block_33_31/Npcs/Npc_1019
+npc = 1019  # [Bridge Guard] Tamsin
+x = 5283.00
+y = 5428.00
+z = 10.00
+direction = -160.0
+conversation = "EM01-019.con"
 
 [[npc]]  # Block_31_32/Npcs/Npc_0
 npc = 1004  # [Ferrell Guild Staff] Crow
@@ -458,6 +244,14 @@ y = 5198.14
 z = 4.00
 direction = -87.0
 conversation = "EM01-009.con"
+
+[[npc]]  # Block_34_32/Npcs/Npc_1017
+npc = 1017  # [Caravan Master] Odell
+x = 5507.00
+y = 5182.00
+z = -3.24
+direction = 90.0
+conversation = "EM01-017.con"
 
 [[npc]]  # Block_31_33/Npcs/Npc_0
 npc = 1003  # [Co-Founder of the Junon Order] Francis

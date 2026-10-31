@@ -38,6 +38,7 @@ sold_by:
 - '[[npcs/1212-arumic-researcher-catherine-clara|Arumic Researcher Catherine Clara]]'
 quest_reward:
 - '[[quests/958-the-essence-of-speed|The Essence of Speed]]'
+- '[[quests/2404-potions-and-scrolls|Potions and Scrolls]]'
 source:
   data: godot/data/items/consumable/21-mana-vial-s.tres
   code: module/src/items.rs

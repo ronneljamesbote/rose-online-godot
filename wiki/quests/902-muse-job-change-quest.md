@@ -2,7 +2,7 @@
 kind: quest
 id: 902
 name: Muse Job Change Quest
-status: in-game
+status: changed-from-irose
 npcs:
 - '[[npcs/1006-arumic-merchant-tryteh|Arumic Merchant Tryteh]]'
 monsters:
@@ -16,6 +16,12 @@ source:
   - crates/rose-quest/src/lib.rs
 ---
 # Muse Job Change Quest
+
+**Can't be done any more.** First jobs come from the job mentors at the Sandwind Caravan Camp in
+the [[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]] (see
+[[quests/801-junon-planet-identification|Junon Planet Identification]]), and the Zant city hub
+redesign took this quest's steps out of the Zant NPCs' dialogs. The steps below are iROSE's and
+are kept in the game data.
 
 Tryteh told you about a recipe for creating a simple sleeping potion. First, bring 20 Flanae Seeds to Tryteh.  
 

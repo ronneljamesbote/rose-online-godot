@@ -16,6 +16,8 @@ dropped_by:
 - monster: '[[monsters/143-kaiman-warrior|Kaiman Warrior]]'
   level: 64
   slots_of_30: 1
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/420-kaiman.tres
   code: module/src/items.rs

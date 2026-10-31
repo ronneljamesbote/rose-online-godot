@@ -12,6 +12,8 @@ weight: 30
 quest_reward:
 - '[[quests/5064-darling-judy-1|Darling Judy (1)]]'
 - '[[quests/5065-darling-judy-2|Darling Judy (2)]]'
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/438-cherry-smouly.tres
   code: module/src/items.rs
