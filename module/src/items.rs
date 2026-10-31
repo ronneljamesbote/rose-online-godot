@@ -591,7 +591,7 @@ fn apply_consumable(ctx: &ReducerContext, game: &GameData, p: &mut Player, entit
 }
 
 /// Food shows as a buff while it restores: a status effect row (HP or MP Restoration) with
-/// its icon and time left, and its effect on the character for everyone. Only food makes
+/// its icon and time left. Only food makes
 /// these rows, so they stand for food alone.
 fn show_food_effect(ctx: &ReducerContext, entity_id: u64, effect: &rose_data::StatusEffectData, per_second: i32, total: i32) {
     let effect_type = effect.status_effect_type.into_usize() as u8;

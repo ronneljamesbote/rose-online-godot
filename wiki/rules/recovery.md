@@ -40,7 +40,7 @@ source:
     - module/src/lib.rs (passive_recovery, RECOVERY_INTERVAL_US, sit, stand_up, spawn_tick, Sitting)
     - crates/rose-game-irose/src/data/ability_values.rs (calculate_passive_recover_hp, calculate_passive_recover_mp, calculate additional_health_recovery and additional_mana_recovery)
     - module/src/items.rs (use_item, apply_consumable, regen_tick, clear_regen, Regen, ItemCooldown, show_food_effect)
-    - godot/rust/src/net.rs (set_item_cooldown, get_entities auras), godot/scripts/net_entity.gd (_show_auras)
+    - godot/rust/src/net.rs (set_item_cooldown)
     - module/src/ability.rs (add_value)
   data: the consumable resources in godot/data/items/consumable/ (amount status_effect_value, recovery effect status_effect_id; iROSE's LIST_USEITEM.STB columns 20 and 24), the status effect resources 1 to 6 in godot/data/status_effects/ (amount per second, apply_status_effect_1_value; iROSE's LIST_STATUS.STB rows 1-6)
 ---
@@ -147,10 +147,9 @@ has a 3 second cooldown; [[items/consumable/136-shavshav|ShavShav]] (700 HP) res
 ## Food buffs
 
 While food restores HP or MP it shows as a buff (HP Restoration or MP Restoration) in your
-buff row, with the time left, and its effect plays on the character for everyone to see
-(the healing glow for HP food, the blue one for MP food). Both go when the food has given
-all it has, when another food of the same kind replaces it, or when you fall or log out.
-Potions show no buff.
+buff row, with the time left. It goes when the food has given all it has, when another
+food of the same kind replaces it, or when you fall or log out. Potions show no buff, and
+no effect plays on the character for either (Ronnel, 2026-10-31: none for now).
 
 ## How they stack
 
@@ -173,4 +172,4 @@ seconds after the Apple.
 - iROSE has no waiting time between potions or food; here they have the four cooldown
   groups above (Ronnel's design).
 - In iROSE (and rose-offline) food and a potion of the same kind replace each other; here
-  they restore side by side, and food shows a buff and its effect while it lasts.
+  they restore side by side, and food shows a buff while it lasts.

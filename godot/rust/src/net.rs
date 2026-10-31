@@ -619,22 +619,8 @@ impl RoseNet {
         let looks: std::collections::HashMap<u64, VarArray> =
             c.db.player().iter().filter_map(|p| p.entity_id.map(|id| (id, player_look(&p)))).collect();
         let mut effects: std::collections::HashMap<u64, Vec<u8>> = std::collections::HashMap::new();
-        // Food's HP or MP Restoration (only food makes these rows, module/src/items.rs):
-        // its effect plays on the character while it lasts ("auras", effect file numbers).
-        let restore = [rose_data::StatusEffectType::IncreaseHp, rose_data::StatusEffectType::IncreaseMp]
-            .map(|t| enum_map::Enum::into_usize(t) as u8);
-        let mut auras: std::collections::HashMap<u64, PackedInt32Array> = std::collections::HashMap::new();
-        let game = crate::data::get();
         for r in c.db.status_effect().iter() {
             effects.entry(r.entity_id).or_default().push(r.effect_type);
-            if restore.contains(&r.effect_type) {
-                let file = rose_data::StatusEffectId::new(r.status_effect_id)
-                    .and_then(|id| game?.status_effects.get_status_effect(id))
-                    .and_then(|d| d.effect_file_id);
-                if let Some(file) = file {
-                    auras.entry(r.entity_id).or_default().push(file.get() as i32);
-                }
-            }
         }
         let area = self.area();
 
@@ -714,9 +700,6 @@ impl RoseNet {
             }
             if !conditions.is_empty() {
                 d.set("conditions", conditions.join(", ").as_str());
-            }
-            if let Some(files) = auras.get(&e.entity_id) {
-                d.set("auras", files);
             }
             if let Some(npc) = c.db.npc().entity_id().find(&e.entity_id) {
                 d.set("direction", npc.direction);

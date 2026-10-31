@@ -76,7 +76,6 @@ var _died_sound := false
 var is_summon := false  # a player's summon: fights on the players' side
 var hidden := false  # under Stealth or a disguise: drawn faded
 var _conditions: Label3D  # stunned, asleep, silenced, taunted
-var _auras := {}  # effect file number -> its RoseEffect while food restores HP or MP (false: nothing to show)
 
 
 func setup(zone_node: Node, state: Dictionary, is_me_: bool) -> void:
@@ -153,28 +152,6 @@ func _build() -> void:
 	height = _model_height()
 	_play(_idle)
 	_apply_fade()
-
-
-## The effects of food restoring HP or MP, on the character while it lasts. An effect that
-## ends sooner starts again; one with nothing to show is not loaded again.
-func _show_auras(files: PackedInt32Array) -> void:
-	for file in _auras.keys():
-		if not files.has(file):
-			var old = _auras[file]
-			if typeof(old) == TYPE_OBJECT and is_instance_valid(old):
-				old.queue_free()
-			_auras.erase(file)
-	for file in files:
-		var playing = _auras.get(file)
-		if typeof(playing) == TYPE_BOOL or (typeof(playing) == TYPE_OBJECT and is_instance_valid(playing)):
-			continue
-		var effect := RoseEffect.new()
-		if effect.load_id(file):
-			add_child(effect)
-			_auras[file] = effect
-		else:
-			effect.free()
-			_auras[file] = false
 
 
 ## "Asleep", "Stunned" and the like, in small letters under the name tag.
@@ -258,7 +235,6 @@ func update_state(state: Dictionary, target_position) -> void:
 	if label.text != name_text:
 		label.text = name_text
 	_show_conditions(state.get("conditions", ""))
-	_show_auras(state.get("auras", PackedInt32Array()))
 	var is_hidden: bool = state.get("hidden", false)
 	if is_hidden != hidden:
 		hidden = is_hidden
