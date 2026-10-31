@@ -18,7 +18,7 @@ levels:
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 6'
   learn_points: 18
   cost: MP 40
-  power: 80
+  power: 212
   range: 4
   cooldown: 10
   duration: 20
@@ -30,7 +30,7 @@ levels:
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 7'
   learn_points: 22
   cost: MP 43
-  power: 95
+  power: 245
   range: 4.2
   cooldown: 10.2
   duration: 20
@@ -42,7 +42,7 @@ levels:
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 8'
   learn_points: 27
   cost: MP 46
-  power: 110
+  power: 277
   range: 4.4
   cooldown: 10.4
   duration: 20
@@ -54,7 +54,7 @@ levels:
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 9'
   learn_points: 32
   cost: MP 49
-  power: 125
+  power: 309
   range: 4.6
   cooldown: 10.6
   duration: 20
@@ -66,7 +66,7 @@ levels:
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 10'
   learn_points: 38
   cost: MP 52
-  power: 140
+  power: 342
   range: 4.8
   cooldown: 10.8
   duration: 20
@@ -78,7 +78,7 @@ levels:
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 11'
   learn_points: 46
   cost: MP 60
-  power: 160
+  power: 384
   range: 5
   cooldown: 11
   duration: 20
@@ -90,7 +90,7 @@ levels:
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 12'
   learn_points: 55
   cost: MP 65
-  power: 175
+  power: 415
   range: 5.2
   cooldown: 11.2
   duration: 20
@@ -102,7 +102,7 @@ levels:
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 13'
   learn_points: 66
   cost: MP 70
-  power: 190
+  power: 447
   range: 5.4
   cooldown: 11.4
   duration: 20
@@ -114,7 +114,7 @@ levels:
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 14'
   learn_points: 79
   cost: MP 75
-  power: 205
+  power: 478
   range: 5.6
   cooldown: 11.6
   duration: 20
@@ -126,7 +126,7 @@ levels:
   needs: '[[skills/1421-knuckle-mastery|Knuckle Mastery]] level 15'
   learn_points: 94
   cost: MP 85
-  power: 230
+  power: 530
   range: 5.8
   cooldown: 11.8
   duration: 20

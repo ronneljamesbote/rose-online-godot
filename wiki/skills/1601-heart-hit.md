@@ -17,7 +17,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 7, [[skills/1451-hawker-spirit|Hawker Spirit]] level 5'
   learn_points: 20
   cost: MP 40
-  power: 80
+  power: 135
   range: 22
   cooldown: 10
   duration: 15
@@ -29,7 +29,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 8'
   learn_points: 25
   cost: MP 43
-  power: 95
+  power: 169
   range: 22.3
   cooldown: 10.4
   duration: 15
@@ -41,7 +41,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 9'
   learn_points: 31
   cost: MP 46
-  power: 110
+  power: 203
   range: 22.6
   cooldown: 10.8
   duration: 16
@@ -53,7 +53,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 10'
   learn_points: 38
   cost: MP 49
-  power: 125
+  power: 236
   range: 22.9
   cooldown: 11.2
   duration: 16
@@ -64,7 +64,7 @@ levels:
   id: 1605
   learn_points: 46
   cost: MP 52
-  power: 140
+  power: 268
   range: 23.2
   cooldown: 11.6
   duration: 17
@@ -76,7 +76,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 11'
   learn_points: 54
   cost: MP 55
-  power: 155
+  power: 301
   range: 23.5
   cooldown: 12
   duration: 17
@@ -88,7 +88,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 12'
   learn_points: 64
   cost: MP 58
-  power: 170
+  power: 334
   range: 23.8
   cooldown: 12.4
   duration: 18
@@ -100,7 +100,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 13'
   learn_points: 75
   cost: MP 61
-  power: 185
+  power: 366
   range: 24.1
   cooldown: 12.8
   duration: 18
@@ -112,7 +112,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 14'
   learn_points: 88
   cost: MP 64
-  power: 200
+  power: 399
   range: 24.4
   cooldown: 13.2
   duration: 19
@@ -124,7 +124,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 15'
   learn_points: 103
   cost: MP 70
-  power: 220
+  power: 442
   range: 26
   cooldown: 13.6
   duration: 20

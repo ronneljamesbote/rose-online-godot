@@ -18,7 +18,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 10, [[skills/1601-heart-hit|Heart Hit]] level 5'
   learn_points: 30
   cost: MP 55
-  power: 200
+  power: 414
   range: 26
   cooldown: 18
 - level: 2
@@ -26,7 +26,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 11'
   learn_points: 35
   cost: MP 59
-  power: 220
+  power: 457
   range: 27.5
   cooldown: 18.4
 - level: 3
@@ -34,7 +34,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 12'
   learn_points: 41
   cost: MP 63
-  power: 240
+  power: 501
   range: 29
   cooldown: 18.8
 - level: 4
@@ -42,7 +42,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 13'
   learn_points: 48
   cost: MP 67
-  power: 260
+  power: 544
   range: 30.5
   cooldown: 19.2
 - level: 5
@@ -50,7 +50,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 14'
   learn_points: 56
   cost: MP 71
-  power: 280
+  power: 588
   range: 32
   cooldown: 19.6
 - level: 6
@@ -58,7 +58,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 15'
   learn_points: 65
   cost: MP 75
-  power: 300
+  power: 631
   range: 33.5
   cooldown: 20
 - level: 7
@@ -66,7 +66,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 16'
   learn_points: 75
   cost: MP 80
-  power: 320
+  power: 676
   range: 35
   cooldown: 20.4
 - level: 8
@@ -74,7 +74,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 17'
   learn_points: 87
   cost: MP 85
-  power: 340
+  power: 718
   range: 36.5
   cooldown: 20.8
 - level: 9
@@ -82,7 +82,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 18'
   learn_points: 100
   cost: MP 90
-  power: 365
+  power: 773
   range: 38
   cooldown: 21.2
 - level: 10
@@ -90,7 +90,7 @@ levels:
   needs: '[[skills/1461-combat-mastery|Combat Mastery]] level 20'
   learn_points: 115
   cost: MP 100
-  power: 400
+  power: 848
   range: 40
   cooldown: 21.6
 source:

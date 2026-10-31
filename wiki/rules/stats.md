@@ -25,13 +25,13 @@ stat_costs:
 level_1_character:
   - { value: "Max HP", amount: 134 }
   - { value: "Max MP", amount: 75 }
-  - { value: "Attack (Short Sword)", amount: 21 }
+  - { value: "Attack (Short Sword)", amount: 22 }
   - { value: "Hit", amount: 63 }
   - { value: "Defence", amount: 30 }
   - { value: "Magic resistance", amount: 27 }
-  - { value: "Critical", amount: 17 }
+  - { value: "Critical", amount: 25 }
   - { value: "Avoid", amount: 25 }
-  - { value: "Attack speed", amount: 107 }
+  - { value: "Attack speed", amount: 111 }
   - { value: "Attack range", amount: "2.7 m" }
   - { value: "Move speed", amount: "4.38 m/s" }
   - { value: "Max weight", amount: 1195 }
@@ -55,19 +55,22 @@ second_job_bonus:
   attack: 30
   defence: 25
   magic_resistance: 20
+increased_attack_per_point: "0.2% per point of the weapon stat"
+attack_speed_per_point: "0.3% per point of DEX (STR with bows, crossbows, katars and dual swords)"
+critical_rating: "CON + SEN + bonus"
 attack_formulas:
-  - { weapon: "One-handed and two-handed melee", formula: "STR x 0.75 + level x 0.2 + weapon x (STR x 0.05 + 29) / 30" }
-  - { weapon: "Bow, crossbow", formula: "DEX x 0.62 + STR x 0.2 + level x 0.2 + arrow + (weapon + arrow x 0.5 + 8) x (DEX x 0.04 + SEN x 0.03 + 29) / 30" }
-  - { weapon: "Gun", formula: "DEX x 0.4 + CON x 0.5 + level x 0.2 + bullet + (weapon + bullet x 0.6 + 8) x (CON x 0.03 + SEN x 0.05 + 29) / 30" }
-  - { weapon: "Launcher", formula: "STR x 0.52 + CON x 0.5 + level x 0.2 + shell + (weapon + shell + 12) x (CON x 0.04 + SEN x 0.05 + 29) / 30" }
-  - { weapon: "Staff (magic melee)", formula: "STR x 0.4 + INT x 0.4 + level x 0.2 + weapon x (INT x 0.05 + 29) / 30" }
-  - { weapon: "Wand (magic ranged)", formula: "INT x 0.6 + level x 0.2 + weapon x (SEN x 0.1 + 26) / 27" }
-  - { weapon: "Dual swords", formula: "STR x 0.63 + DEX x 0.45 + level x 0.2 + weapon x (DEX x 0.05 + 25) / 26" }
-  - { weapon: "Katar", formula: "STR x 0.42 + DEX x 0.55 + level x 0.2 + weapon x (DEX x 0.05 + 20) / 21" }
-  - { weapon: "No weapon (or a broken one)", formula: "STR x 0.5 + DEX x 0.3 + level x 0.2" }
+  - { weapon: "One-handed and two-handed melee", flat: "STR x 0.75 + level x 0.2 + weapon", weapon_stat: STR }
+  - { weapon: "Bow, crossbow", flat: "DEX x 0.62 + STR x 0.2 + level x 0.2 + arrow x 1.5 + weapon + 8", weapon_stat: DEX }
+  - { weapon: "Gun", flat: "DEX x 0.4 + CON x 0.5 + level x 0.2 + bullet x 1.6 + weapon + 8", weapon_stat: CON }
+  - { weapon: "Launcher", flat: "STR x 0.52 + CON x 0.5 + level x 0.2 + shell x 2 + weapon + 12", weapon_stat: STR }
+  - { weapon: "Staff (magic melee)", flat: "STR x 0.4 + INT x 0.4 + level x 0.2 + weapon", weapon_stat: INT }
+  - { weapon: "Wand (magic ranged)", flat: "INT x 0.6 + level x 0.2 + weapon", weapon_stat: INT }
+  - { weapon: "Dual swords", flat: "STR x 0.63 + DEX x 0.45 + level x 0.2 + weapon", weapon_stat: DEX }
+  - { weapon: "Katar", flat: "STR x 0.42 + DEX x 0.55 + level x 0.2 + weapon", weapon_stat: DEX }
+  - { weapon: "No weapon (or a broken one)", flat: "STR x 0.5 + DEX x 0.3 + level x 0.2", weapon_stat: STR }
 source:
   code:
-    - crates/rose-game-irose/src/data/ability_values.rs (calculate, calculate_max_health, calculate_max_mana, calculate_attack_power, calculate_attack_speed, calculate_attack_range, calculate_hit, calculate_defence, calculate_resistance, calculate_critical, calculate_avoid, calculate_run_speed, calculate_max_weight, calculate_basic_stat_increase_cost, basic_stat_increase_cost)
+    - crates/rose-game-irose/src/data/ability_values.rs (calculate, calculate_max_health, calculate_max_mana, calculate_attack_power, weapon_stat, attack_speed_stat, INCREASED_ATTACK_PER_POINT, ATTACK_SPEED_PER_POINT, calculate_attack_speed, calculate_attack_range, calculate_hit, calculate_defence, calculate_resistance, calculate_critical, calculate_avoid, calculate_run_speed, calculate_max_weight, calculate_basic_stat_increase_cost, basic_stat_increase_cost)
     - crates/rose-game-common/src/components/ability_values.rs (AbilityValues getters, AbilityValuesAdjust)
     - module/src/character.rs (new_player, ability_values, player_stats, refresh_player, add_basic_stat)
     - crates/rose-game-data/src/lib.rs (CharacterCreator)
@@ -89,12 +92,19 @@ back is on [[rules/recovery|Recovery]].
 
 | Stat | What it raises |
 | --- | --- |
-| STR (Strength) | Attack with melee weapons, max HP, defence, max weight |
-| DEX (Dexterity) | Attack with bows, guns, dual swords and katars, avoid, move speed |
-| INT (Intelligence) | Attack with staffs and wands, max MP, magic resistance, magic skill damage |
-| CON (Concentration) | Hit, critical, gun and launcher attack, HP and MP recovery |
+| STR (Strength) | Attack with melee weapons and launchers (flat, and +0.2% per point), attack speed with bows, crossbows, katars and dual swords, max HP, defence, max weight |
+| DEX (Dexterity) | Attack with bows, crossbows, dual swords and katars (flat, and +0.2% per point), attack speed with every other weapon, avoid, move speed |
+| INT (Intelligence) | Attack with staffs and wands (flat, and +0.2% per point), max MP, magic resistance, magic skill damage |
+| CON (Concentration) | Hit, critical rating, gun and launcher attack (+0.2% per point with guns), HP and MP recovery |
 | CHA (Charm) | Not used by any derived value; it raises quest rewards and drops (see [[rules/drops\|Drops]]) |
-| SEN (Sense) | Critical, bow, gun, launcher and wand attack, skill damage |
+| SEN (Sense) | Critical rating and critical damage |
+
+Each stat gives a little of several things, as in Path of Exile, so spreading points pays:
+the percent from your weapon stat adds into one pool with the percent from passive skills,
+while attack speed, critical chance and critical damage multiply on top of it. With the
+typical gear of each level, a level 60 sword user does the most damage with about 60% to
+70% of the points in STR and the rest split over DEX, CON and SEN; all in STR does about
+11% less (see [[rules/combat|Combat]] for how the values become damage).
 
 A basic stat can go up to **300**. Items, gems and passive skills can add to a stat on top
 of what you bought; those bonuses count everywhere a stat is used below.
@@ -162,25 +172,36 @@ Buffs and debuffs (see [[rules/status-effects|Status effects]]) are added after 
 
 ### Attack
 
-The formula depends on the weapon in your hand (table `attack_formulas`). "weapon" is the
-weapon's attack plus its grade bonus; "arrow", "bullet" and "shell" are the quality of the
-ammunition you have equipped. A broken weapon counts as no weapon. Item attack bonuses are
-added at the end.
+Attack is a **flat** part times an **increased** percent. The flat part depends on the weapon
+in your hand (table `attack_formulas`, column `flat`); "weapon" is the weapon's attack plus
+its grade bonus; "arrow", "bullet" and "shell" are the quality of the ammunition you have
+equipped. A broken weapon counts as no weapon. Item attack bonuses and the fixed amount of
+weapon passives are added to the flat part.
+
+The increased percent is **0.2% per point of the weapon's stat** (column `weapon_stat`: STR
+for melee weapons, launchers and no weapon, DEX for bows, crossbows, katars and dual swords,
+INT for staffs and wands, CON for guns), added together with the percent of weapon passive
+skills:
+
+```math
+\text{attack} = \text{flat} \times \left(1 + \frac{0.2 \times \text{weapon stat} + \text{passive percent}}{100}\right)
+```
 
 For one-handed and two-handed melee weapons:
 
 ```math
-\text{attack} = \text{STR} \times 0.75 + \text{level} \times 0.2 + \text{weapon attack} \times \frac{\text{STR} \times 0.05 + 29}{30}
+\text{attack} = (\text{STR} \times 0.75 + \text{level} \times 0.2 + \text{weapon attack}) \times (1 + 0.002 \times \text{STR})
 ```
 
 **Worked example:** level 1, 15 STR, Short Sword (attack 10):
-15 × 0.75 + 1 × 0.2 + 10 × (0.75 + 29) / 30 = 11.25 + 0.2 + 9.92 = 21.37, shown as **21**.
-With a weapon of attack 12 it would be 11.25 + 0.2 + 11.9 = 23.35, shown as 23.
+(11.25 + 0.2 + 10) × 1.03 = 22.09, shown as **22**. With a weapon of attack 12 it would be
+23.45 × 1.03 = 24.15, shown as 24.
 
-With no weapon: 15 × 0.5 + 15 × 0.3 + 0.2 = 12.2, shown as 12.
+With no weapon: (15 × 0.5 + 15 × 0.3 + 0.2) × 1.03 = 12.57, shown as 12.
 
 Whether your attacks do physical or magic damage depends on the weapon too: weapons marked
 as magic in the item data (staffs and wands) do magic damage, everything else physical.
+Magic skills use **magic attack**, attack × 0.8 + INT × 1.2 (see [[rules/skills|Skills]]).
 
 ### Hit
 
@@ -219,11 +240,18 @@ broken. With a shield in the off hand, shield passives add their amount or perce
 
 ### Critical
 
+The critical rating:
+
 ```math
-\text{critical} = \text{SEN} + (\text{CON} + 20) \times 0.2 + \text{bonus}
+\text{critical} = \text{CON} + \text{SEN} + \text{bonus}
 ```
 
-**Worked example:** 10 SEN, 15 CON: 10 + 35 × 0.2 = **17**.
+Passive skills add their amount or percent; buffs add on top. How the rating becomes a
+chance (it counts for less as you level up) and how SEN raises critical damage is on
+[[rules/combat|Combat]] "Critical hits".
+
+**Worked example:** 10 SEN, 15 CON: 10 + 15 = **25**, an 18% chance at level 1. The
+character window shows the chance next to the rating, and the critical damage below it.
 
 ### Avoid
 
@@ -240,15 +268,17 @@ items (not broken ones). "grades" adds up the grade of every worn item that has 
 ### Attack speed
 
 ```math
-\text{attack speed} = \frac{1500}{\text{weapon speed} + 5} + \text{bonus}
+\text{attack speed} = \frac{1500}{\text{weapon speed} + 5} \times \left(1 + \frac{0.3 \times \text{speed stat} + \text{passive percent}}{100}\right) + \text{passive amount} + \text{bonus}
 ```
 
 The weapon speed is the item's speed number (lower is faster). With no weapon the game
-uses speed 8. Passive skills for bows, guns and launchers, and for katars and dual swords,
-add to it. How attack speed turns into time between hits is on [[rules/combat|Combat]].
+uses speed 8. The **speed stat** is DEX, or STR with bows, crossbows, katars and dual swords
+(the weapons whose attack comes from DEX). Passive skills for bows, guns and launchers, and
+for katars and dual swords, add to it. How attack speed turns into time between hits is on
+[[rules/combat|Combat]]. The character window shows in brackets what your stat adds.
 
-**Worked example:** Short Sword (speed 9): 1500 / 14 = 107.1, shown as **107**. No weapon:
-1500 / 13 = 115.
+**Worked example:** Short Sword (speed 9), 15 DEX: 1500 / 14 × 1.045 = 111.96, shown as
+**111**. No weapon: 1500 / 13 × 1.045 = 120.6, shown as 120.
 
 ### Attack range
 
@@ -293,6 +323,12 @@ Artisan) get +300 max HP, +30 attack, +25 defence and +20 magic resistance, adde
 everything else.
 
 ## Changed from iROSE
+
+- Stats (2026-10-31): the weapon stat adds 0.2% increased attack per point instead of
+  scaling only the weapon's attack (iROSE: weapon × (STR × 0.05 + 29) / 30 and similar,
+  with SEN in the ranged formulas); DEX (or STR) adds attack speed; the critical rating is
+  CON + SEN (iROSE: SEN + (CON + 20) × 0.2) and SEN raises critical damage. In iROSE the
+  best build put about 90% of the points in the weapon stat.
 
 - New characters get a [[items/weapon/2-short-sword|Short Sword]] in hand and a
   [[items/weapon/202-short-bow|Short Bow]] with 999 arrows in the bag. In iROSE the

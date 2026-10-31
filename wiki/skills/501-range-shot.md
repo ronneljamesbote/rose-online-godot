@@ -18,7 +18,7 @@ levels:
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 6'
   learn_points: 15
   cost: MP 50
-  power: 100
+  power: 210
   range: 32
   cooldown: 12
 - level: 2
@@ -26,7 +26,7 @@ levels:
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 7'
   learn_points: 18
   cost: MP 55
-  power: 115
+  power: 233
   range: 32.5
   cooldown: 12.4
 - level: 3
@@ -34,7 +34,7 @@ levels:
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 8'
   learn_points: 22
   cost: MP 60
-  power: 130
+  power: 256
   range: 33
   cooldown: 12.8
 - level: 4
@@ -42,7 +42,7 @@ levels:
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 9'
   learn_points: 27
   cost: MP 65
-  power: 145
+  power: 279
   range: 33.5
   cooldown: 13.2
 - level: 5
@@ -50,42 +50,42 @@ levels:
   needs: '[[skills/271-crossbow-mastery|Crossbow Mastery]] level 10'
   learn_points: 32
   cost: MP 70
-  power: 160
+  power: 301
   range: 34
   cooldown: 13.6
 - level: 6
   id: 506
   learn_points: 38
   cost: MP 75
-  power: 175
+  power: 324
   range: 34.2
   cooldown: 14
 - level: 7
   id: 507
   learn_points: 45
   cost: MP 80
-  power: 190
+  power: 346
   range: 34.4
   cooldown: 14.4
 - level: 8
   id: 508
   learn_points: 53
   cost: MP 85
-  power: 205
+  power: 369
   range: 34.6
   cooldown: 14.8
 - level: 9
   id: 509
   learn_points: 62
   cost: MP 90
-  power: 220
+  power: 391
   range: 34.8
   cooldown: 15.2
 - level: 10
   id: 510
   learn_points: 73
   cost: MP 100
-  power: 250
+  power: 435
   range: 35
   cooldown: 15.6
 source:

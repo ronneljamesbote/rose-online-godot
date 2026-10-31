@@ -18,7 +18,7 @@ levels:
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 2'
   learn_points: 10
   cost: MP 30
-  power: 60
+  power: 120
   range: 25
   cooldown: 8.4
 - level: 2
@@ -26,7 +26,7 @@ levels:
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 4'
   learn_points: 13
   cost: MP 37
-  power: 80
+  power: 180
   range: 25.3
   cooldown: 8.8
 - level: 3
@@ -34,7 +34,7 @@ levels:
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 6'
   learn_points: 17
   cost: MP 44
-  power: 100
+  power: 240
   range: 25.6
   cooldown: 9.2
 - level: 4
@@ -42,7 +42,7 @@ levels:
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 8'
   learn_points: 22
   cost: MP 51
-  power: 120
+  power: 300
   range: 25.9
   cooldown: 9.6
 - level: 5
@@ -50,7 +50,7 @@ levels:
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 9'
   learn_points: 28
   cost: MP 58
-  power: 140
+  power: 360
   range: 26.2
   cooldown: 10
 - level: 6
@@ -58,7 +58,7 @@ levels:
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 10'
   learn_points: 36
   cost: MP 65
-  power: 160
+  power: 418
   range: 26.5
   cooldown: 10.4
   duration: 12
@@ -70,7 +70,7 @@ levels:
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 12'
   learn_points: 46
   cost: MP 75
-  power: 180
+  power: 477
   range: 26.8
   cooldown: 10.6
   duration: 13
@@ -82,7 +82,7 @@ levels:
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 14'
   learn_points: 59
   cost: MP 85
-  power: 200
+  power: 535
   range: 27.1
   cooldown: 10.8
   duration: 14
@@ -94,7 +94,7 @@ levels:
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 16'
   learn_points: 75
   cost: MP 95
-  power: 220
+  power: 594
   range: 27.4
   cooldown: 11
   duration: 15
@@ -106,7 +106,7 @@ levels:
   needs: '[[skills/841-spell-mastery|Spell Mastery]] level 18'
   learn_points: 96
   cost: MP 110
-  power: 250
+  power: 682
   range: 27.7
   cooldown: 11.2
   duration: 20

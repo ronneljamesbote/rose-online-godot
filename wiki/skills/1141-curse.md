@@ -17,7 +17,7 @@ levels:
   needs: '[[skills/821-meditation|Meditation]] level 8, [[skills/931-cure|Cure]] level 4'
   learn_points: 10
   cost: MP 15
-  power: 30
+  power: 39
   range: 25
   cooldown: 4
   duration: 3
@@ -28,7 +28,7 @@ levels:
   needs: '[[skills/821-meditation|Meditation]] level 9'
   learn_points: 13
   cost: MP 17
-  power: 38
+  power: 63
   range: 25.5
   cooldown: 4
   duration: 3
@@ -39,7 +39,7 @@ levels:
   needs: '[[skills/821-meditation|Meditation]] level 10'
   learn_points: 16
   cost: MP 19
-  power: 46
+  power: 86
   range: 26
   cooldown: 4
   duration: 4
@@ -50,7 +50,7 @@ levels:
   needs: '[[skills/821-meditation|Meditation]] level 11'
   learn_points: 20
   cost: MP 21
-  power: 54
+  power: 109
   range: 26.5
   cooldown: 4
   duration: 4
@@ -61,7 +61,7 @@ levels:
   needs: '[[skills/821-meditation|Meditation]] level 12'
   learn_points: 24
   cost: MP 23
-  power: 62
+  power: 132
   range: 27
   cooldown: 4
   duration: 5
@@ -72,7 +72,7 @@ levels:
   needs: '[[skills/821-meditation|Meditation]] level 13'
   learn_points: 29
   cost: MP 25
-  power: 70
+  power: 155
   range: 27.5
   cooldown: 4
   duration: 5
@@ -83,7 +83,7 @@ levels:
   needs: '[[skills/821-meditation|Meditation]] level 14'
   learn_points: 35
   cost: MP 27
-  power: 78
+  power: 178
   range: 28
   cooldown: 4
   duration: 6
@@ -94,7 +94,7 @@ levels:
   needs: '[[skills/821-meditation|Meditation]] level 15'
   learn_points: 42
   cost: MP 29
-  power: 86
+  power: 200
   range: 28.5
   cooldown: 4
   duration: 6
@@ -105,7 +105,7 @@ levels:
   needs: '[[skills/821-meditation|Meditation]] level 16'
   learn_points: 50
   cost: MP 31
-  power: 94
+  power: 223
   range: 29
   cooldown: 4
   duration: 7
@@ -116,7 +116,7 @@ levels:
   needs: '[[skills/821-meditation|Meditation]] level 17'
   learn_points: 59
   cost: MP 35
-  power: 110
+  power: 267
   range: 30
   cooldown: 4
   duration: 8

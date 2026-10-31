@@ -826,6 +826,25 @@ impl RoseNet {
             d.set("attack_speed", st.attack_speed);
             d.set("move_speed", st.move_speed);
             d.set("range", st.attack_range / 100.0);
+            // Critical chance and damage, and the attack speed the stats add
+            // (rose_game_irose::data, wiki/rules/combat.md and stats.md).
+            if let Ok(av) = serde_json::from_str::<rose_game_common::components::AbilityValues>(&st.ability_values) {
+                d.set("critical_chance", rose_game_irose::data::critical_chance_of(&av));
+                d.set("critical_damage", rose_game_irose::data::critical_damage_percent(&av));
+                let weapon_type = equipment
+                    .get_equipment_item(rose_data::EquipmentIndex::Weapon)
+                    .and_then(|w| crate::data::get()?.items.get_weapon_item(w.item.item_number))
+                    .and_then(|w| rose_data::ItemWeaponType::from(w.item_data.class));
+                let stats = rose_game_common::components::BasicStats {
+                    strength: av.strength,
+                    dexterity: av.dexterity,
+                    intelligence: av.intelligence,
+                    concentration: av.concentration,
+                    charm: av.charm,
+                    sense: av.sense,
+                };
+                d.set("attack_speed_bonus", rose_game_irose::data::attack_speed_stat_percent(weapon_type, &stats));
+            }
         }
         d
     }

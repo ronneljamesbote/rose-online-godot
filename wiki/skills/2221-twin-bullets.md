@@ -18,70 +18,70 @@ levels:
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 1'
   learn_points: 8
   cost: MP 20
-  power: 40
+  power: 15
   cooldown: 6
 - level: 2
   id: 2222
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 2'
   learn_points: 10
   cost: MP 22
-  power: 45
+  power: 20
   cooldown: 6
 - level: 3
   id: 2223
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 3'
   learn_points: 12
   cost: MP 24
-  power: 50
+  power: 24
   cooldown: 5.8
 - level: 4
   id: 2224
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 4'
   learn_points: 14
   cost: MP 26
-  power: 55
+  power: 28
   cooldown: 5.8
 - level: 5
   id: 2225
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 5'
   learn_points: 16
   cost: MP 28
-  power: 60
+  power: 32
   cooldown: 5.6
 - level: 6
   id: 2226
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 6'
   learn_points: 19
   cost: MP 30
-  power: 65
+  power: 37
   cooldown: 5.6
 - level: 7
   id: 2227
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 7'
   learn_points: 22
   cost: MP 32
-  power: 70
+  power: 41
   cooldown: 5.4
 - level: 8
   id: 2228
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 8'
   learn_points: 25
   cost: MP 34
-  power: 75
+  power: 46
   cooldown: 5.4
 - level: 9
   id: 2229
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 9'
   learn_points: 29
   cost: MP 36
-  power: 82
+  power: 51
   cooldown: 5.2
 - level: 10
   id: 2230
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 10'
   learn_points: 33
   cost: MP 38
-  power: 90
+  power: 58
   cooldown: 5.2
 - level: 11
   id: 2231
@@ -89,63 +89,63 @@ levels:
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 11'
   learn_points: 37
   cost: MP 40
-  power: 45
+  power: 20
   cooldown: 7
 - level: 12
   id: 2232
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 12'
   learn_points: 41
   cost: MP 42
-  power: 50
+  power: 24
   cooldown: 7
 - level: 13
   id: 2233
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 13'
   learn_points: 45
   cost: MP 44
-  power: 55
+  power: 28
   cooldown: 6.8
 - level: 14
   id: 2234
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 14'
   learn_points: 50
   cost: MP 46
-  power: 60
+  power: 32
   cooldown: 6.8
 - level: 15
   id: 2235
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 15'
   learn_points: 55
   cost: MP 48
-  power: 65
+  power: 37
   cooldown: 6.6
 - level: 16
   id: 2236
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 16'
   learn_points: 60
   cost: MP 50
-  power: 70
+  power: 41
   cooldown: 6.6
 - level: 17
   id: 2237
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 17'
   learn_points: 66
   cost: MP 52
-  power: 75
+  power: 45
   cooldown: 6.4
 - level: 18
   id: 2238
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 18'
   learn_points: 72
   cost: MP 54
-  power: 80
+  power: 50
   cooldown: 6.4
 - level: 19
   id: 2239
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 19'
   learn_points: 79
   cost: MP 56
-  power: 88
+  power: 56
   cooldown: 6.2
   duration: 10
   success: 15
@@ -156,7 +156,7 @@ levels:
   needs: '[[skills/2021-marksmanship|Marksmanship]] level 20'
   learn_points: 86
   cost: MP 60
-  power: 100
+  power: 66
   cooldown: 6.2
   duration: 15
   success: 20
