@@ -2,8 +2,8 @@ extends "res://demos/demo.gd"
 
 ## Offline, --demo=interface: shows what the interface settings (`res://data/interface/`)
 ## link. The loading screen over the zone for two seconds, the character creation backdrop,
-## then every mouse cursor three times its size with a red dot on the pixel it clicks at,
-## and the cursor over the screen turning through them. --shots=DIR saves a picture of each
+## then every mouse cursor drawn 96 pixels wide (our own, and the Classic ones below) with a
+## red dot on the pixel it clicks at. --shots=DIR saves a picture of each
 ## (loading.png, character-create.png, cursors.png). Then quits.
 
 
@@ -40,32 +40,37 @@ func run() -> void:
 	style.set_content_margin_all(24)
 	panel.add_theme_stylebox_override("panel", style)
 	layer.add_child(panel)
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 28)
-	panel.add_child(row)
+	var rows := VBoxContainer.new()
+	rows.add_theme_constant_override("separation", 18)
+	panel.add_child(rows)
 	var cursors := 0
-	for state in preload("res://scripts/ui/game_cursor.gd").CURSORS:
-		var cursor: Dictionary = RoseData.cursor(state)
-		var column := VBoxContainer.new()
-		var picture := TextureRect.new()
-		picture.custom_minimum_size = Vector2(96, 96)
-		picture.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		picture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		if not cursor.is_empty():
-			cursors += 1
-			picture.texture = ImageTexture.create_from_image(cursor["image"])
-			var dot := ColorRect.new()
-			dot.color = Color.RED
-			dot.size = Vector2(5, 5)
-			dot.position = cursor["click"] * 3.0 - Vector2(1, 1)
-			picture.add_child(dot)
-		column.add_child(picture)
-		var label := Label.new()
-		label.text = state
-		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		column.add_child(label)
-		row.add_child(column)
-		_say("cursor %s: %s" % [state, ("click at %s" % cursor["click"]) if not cursor.is_empty() else "none"])
+	for classic in [false, true]:
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 28)
+		rows.add_child(row)
+		for state in preload("res://scripts/ui/game_cursor.gd").CURSORS:
+			var cursor: Dictionary = RoseData.classic_cursor(state) if classic else RoseData.cursor(state)
+			var column := VBoxContainer.new()
+			var picture := TextureRect.new()
+			picture.custom_minimum_size = Vector2(96, 96)
+			picture.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST if classic else CanvasItem.TEXTURE_FILTER_LINEAR
+			picture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			if not cursor.is_empty():
+				cursors += 1
+				var image: Image = cursor["image"]
+				picture.texture = ImageTexture.create_from_image(image)
+				var dot := ColorRect.new()
+				dot.color = Color.RED
+				dot.size = Vector2(5, 5)
+				dot.position = (cursor["click"] + Vector2(0.5, 0.5)) * 96.0 / image.get_width() - Vector2(2.5, 2.5)
+				picture.add_child(dot)
+			column.add_child(picture)
+			var label := Label.new()
+			label.text = state + (" (classic)" if classic else "")
+			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			column.add_child(label)
+			row.add_child(column)
+			_say("%scursor %s: %s" % ["classic " if classic else "", state, ("click at %s" % cursor["click"]) if not cursor.is_empty() else "none"])
 	_say("%d cursors" % cursors)
 	await tree.create_timer(0.5).timeout
 	_shot(shots, "cursors")

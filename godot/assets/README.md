@@ -128,7 +128,7 @@ each model by path, so the import makes those files too:
 | `3ddata/control/res/item1/919.tres` and so on | One `AtlasTexture` per icon, a region of its sheet: 2,366 item icons, 338 skill icons, 168 status effect icons. It is a few hundred bytes and loads only its sheet, so the Inspector shows its thumbnail without slowing the editor. |
 | `3ddata/item/list_fielditem/12.tscn` and so on | One scene per item model lying on the ground (`LIST_FIELDITEM.ZSC`, 441 of them). |
 | `3ddata/control/res/loading.rtex` | The loading picture (also behind character creation), which the interface settings link. |
-| `res/attack.res` and so on | The nine mouse cursors (the client's `RES/*.CUR` files) as `ImageTexture`s, which the interface settings link. |
+| `res/attack.res` and so on | The nine mouse cursors (the client's `RES/*.CUR` files) as `ImageTexture`s: the Classic cursor style (the interface settings link our own in `ours/cursors/`). |
 
 New art goes in `ours/` under any path, for example `ours/items/my_sword.png` for an icon (any
 texture works, a whole picture or an `AtlasTexture` of a sheet) or `ours/items/my_sword.tscn`

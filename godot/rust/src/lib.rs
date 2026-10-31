@@ -131,6 +131,23 @@ impl RoseData {
         out
     }
 
+    /// A Classic mouse cursor (the Cursor Style option): the client's own cursor file for
+    /// that name (imported in `res://assets/rose/res/`, or read from the client data), with
+    /// its original click point, as `cursor` gives it. {} when it has none.
+    #[func]
+    fn classic_cursor(name: GString) -> VarDictionary {
+        let mut out = VarDictionary::new();
+        let name = name.to_string();
+        let Some((_, file, click)) = rose_data_export::interface::CURSORS.iter().find(|(n, _, _)| *n == name) else { return out };
+        let imported = format!("{}{}.res", assets::ROSE, assets::stem(file));
+        let image = if godot::classes::ResourceLoader::singleton().exists(imported.as_str()) { cursor::load(&imported) } else { cursor::load(file) };
+        if let Some(image) = image {
+            out.set("image", &image);
+            out.set("click", Vector2::new(click[0] as f32, click[1] as f32));
+        }
+        out
+    }
+
     /// Item numbers a new character wears (its `RoseNewCharacter`), as RoseCharacter.build
     /// takes them: head, body, hands, feet, weapon (with the server's starting Short Sword).
     #[func]

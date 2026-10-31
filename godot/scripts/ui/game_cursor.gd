@@ -1,4 +1,5 @@
-## The mouse cursor: ROSE's own cursors (the interface settings link them), switched by what the mouse is
+## The mouse cursor: our painted cursors (the interface settings link them), or the client's
+## own pixel cursors with the Classic style, switched by what the mouse is
 ## over like the original client (CGameStateMain::UpdateCheckFrame): crossed blades over a
 ## monster or an enemy player, a speech bubble over a town NPC, a hand over an item on the
 ## ground. Over windows it is the normal sword, with the gold hand over items that can be
@@ -8,16 +9,16 @@
 extends Node
 
 ## The cursor states. Each one's picture and click point are in the interface settings
-## (`res://data/interface/interface.tres`, the client's own cursor files by default).
+## (`res://data/interface/interface.tres`, our pictures in `res://assets/ours/cursors/`).
 const CURSORS := ["default", "attack", "talk", "player", "pick_up", "drag", "dragging", "repair", "camera"]
-## Cursor size setting -> how many times the original 32 pixels. Whole steps keep the pixel
-## art sharp.
-const SIZES := {"normal": 1, "large": 2, "huge": 3}
+## Cursor size setting -> how wide the cursor is drawn, in pixels.
+const SIZES := {"small": 32, "normal": 40, "large": 48, "huge": 64}
 ## Godot shows these shapes while something is dragged; they get the blue hand.
 const DRAG_SHAPES := [Input.CURSOR_CAN_DROP, Input.CURSOR_FORBIDDEN]
 
 var online: Node
-var _images := {}  # state -> [Image at normal size, click point]
+var _images := {}  # state -> [Image as the picture is, click point in its pixels]
+var _style := ""  # the Cursor Style _images were loaded for: "new" or "classic"
 var _cursors := {}  # state -> [Image at the chosen size, click point]
 var _shown := ""  # the state on the arrow shape now, "" when the system cursor is in use
 var _next_try := 0
@@ -73,26 +74,44 @@ func state_at(mouse: Vector2) -> String:
 	return "default"
 
 
+## Reads the nine pictures once (and again when the Cursor Style changes).
 func _load() -> bool:
+	_style = UI.settings.get("cursor_style", "new")
+	_images.clear()
 	for state in CURSORS:
-		var cursor: Dictionary = RoseData.cursor(state)
+		var cursor: Dictionary = RoseData.classic_cursor(state) if _style == "classic" else RoseData.cursor(state)
 		if cursor.is_empty():
 			# Without the cursor pictures the system cursor stays.
 			_images.clear()
+			if _shown != "":
+				_clear()
 			return false
-		_images[state] = [cursor["image"], cursor["click"]]
+		var image: Image = cursor["image"]
+		# See-through pixels take their neighbours' colour, so smoothing leaves no dark rim.
+		image.fix_alpha_edges()
+		_images[state] = [image, cursor["click"]]
 	_scale()
+	_shown = ""
 	return true
 
 
-## Enlarges every cursor to the chosen size, keeping the pixels sharp.
+## Draws every cursor at the chosen size: our pictures smoothly scaled, the Classic pixel
+## art enlarged in whole steps so it stays sharp.
 func _scale() -> void:
 	_cursors.clear()
-	var times: int = SIZES.get(UI.settings.get("cursor_size", "large"), 2)
+	var size: int = SIZES.get(UI.settings.get("cursor_size", "large"), 48)
 	for state in _images:
 		var image: Image = _images[state][0].duplicate()
-		image.resize(image.get_width() * times, image.get_height() * times, Image.INTERPOLATE_NEAREST)
-		_cursors[state] = [image, _images[state][1] * times + Vector2(times - 1, times - 1) * 0.5]
+		var width := image.get_width()
+		var click: Vector2 = _images[state][1]
+		if _style == "classic":
+			var times := maxi(1, roundi(float(size) / width))
+			image.resize(width * times, image.get_height() * times, Image.INTERPOLATE_NEAREST)
+			_cursors[state] = [image, click * times + Vector2(times - 1, times - 1) * 0.5]
+		else:
+			var scale := float(size) / width
+			image.resize(size, maxi(1, roundi(image.get_height() * scale)), Image.INTERPOLATE_LANCZOS)
+			_cursors[state] = [image, ((click + Vector2(0.5, 0.5)) * scale).floor()]
 
 
 func _show(state: String) -> void:
@@ -126,6 +145,9 @@ func _on_settings() -> void:
 		if _shown != "":
 			_clear()
 		return
-	if not _images.is_empty():
+	if _style != UI.settings.get("cursor_style", "new"):
+		_images.clear()  # the other style's pictures load next frame
+		_next_try = 0
+	elif not _images.is_empty():
 		_scale()
 		_shown = ""  # sets every shape again at the new size next frame

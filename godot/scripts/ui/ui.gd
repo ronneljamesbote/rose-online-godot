@@ -35,7 +35,8 @@ var settings := {
 	"damage_numbers": true,
 	"portrait": "live",  # live (moves) or static (a still picture) character portrait
 	"game_cursor": true,  # ROSE's own mouse cursors instead of the system arrow
-	"cursor_size": "large",  # normal, large or huge (1, 2 or 3 times the original 32 pixels)
+	"cursor_size": "large",  # small, normal, large or huge (32, 40, 48 or 64 pixels wide)
+	"cursor_style": "new",  # new (our painted cursors) or classic (the client's pixel cursors)
 	"sticky_target": false,  # walking keeps the selected target instead of dropping it
 	"shadows": "medium",  # off, low, medium or high (RoseSun.set_quality)
 }

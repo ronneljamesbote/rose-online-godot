@@ -168,11 +168,13 @@ zone on Junon above ground). The numbers count from 0 as iROSE's LIST_SKY.STB ro
 
 `interface/interface.tres` (a `RoseInterface`) holds the interface's own pictures, the
 loading screen's `loading_picture` and character creation's `character_create_picture`, and a
-picture and click point (`cursor_attack` and `cursor_attack_click`, in pixels from the
-top-left corner at normal size) for each mouse cursor. `--import-rose` imports the client's
-loading picture (`res://assets/rose/3ddata/control/res/loading.rtex`) and cursors
-(`res://assets/rose/res/attack.res` ...); a PNG of our own in `res://assets/ours/` works the
-same way. An empty picture is the client's own. The rest of the interface (windows, fonts,
+picture and click point (`cursor_attack` and `cursor_attack_click`, in the picture's own
+pixels from its top-left corner) for each mouse cursor. The cursors are our painted 128
+pixel PNGs in `res://assets/ours/cursors/`, which the game scales smoothly to the Cursor
+Size setting. `--import-rose` imports the client's loading picture
+(`res://assets/rose/3ddata/control/res/loading.rtex`) and cursors
+(`res://assets/rose/res/attack.res` ...); the game uses those cursors for the Classic
+cursor style, whatever this resource links. An empty picture is the client's own. The rest of the interface (windows, fonts,
 colours) is our own and lives in `res://ui/` and the themes.
 
 Skies and the interface are only drawn by the game: the export writes them (`skies.toml`,

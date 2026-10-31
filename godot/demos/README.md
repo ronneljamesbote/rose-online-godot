@@ -57,8 +57,8 @@ another.
   then clicks the ground three times and walks there; `--shots=DIR` saves a picture every
   eighth of the turn. Then quits.
 - `--demo=interface` (`interface.gd`): shows what the interface settings link: the loading
-  screen, the character creation backdrop, then every mouse cursor three times its size
-  with a red dot where it clicks; `--shots=DIR` saves `loading.png`, `character-create.png`
+  screen, the character creation backdrop, then every mouse cursor 96 pixels wide (ours,
+  and the Classic ones below them) with a red dot where it clicks; `--shots=DIR` saves `loading.png`, `character-create.png`
   and `cursors.png`. Then quits.
 - `--demo=zones` (`zones.gd`): loads the zones of `--zones=ID,ID,...` one after another the
   way a warp gate does (loading screen, the zone built in steps beside the old one) and
