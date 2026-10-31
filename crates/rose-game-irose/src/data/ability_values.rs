@@ -255,7 +255,8 @@ impl AbilityValueCalculator for AbilityValuesData {
             hit,
             defence,
             resistance,
-            critical: (npc_data.level as f32 * 2.5) as i32,
+            // Monsters crit a flat 5% (critical_chance_of); they have no critical rating.
+            critical: 0,
             avoid,
             vehicle_attack_power: 0,
             vehicle_attack_range: 0,
@@ -328,6 +329,7 @@ impl AbilityValueCalculator for AbilityValuesData {
         */
         let (attack_speed, passive_attack_speed) = calculate_attack_speed(
             &self.item_database,
+            &basic_stats,
             equipment,
             &equipment_ability_values,
             &passive_ability_values,
@@ -512,31 +514,23 @@ impl AbilityValueCalculator for AbilityValuesData {
     ) -> Damage {
         let mut rng = crate::rng::SharedRng;
         if !roll_hit(&mut rng, attacker, defender) {
-            Damage {
+            return Damage {
                 amount: 0,
                 apply_hit_stun: false,
                 is_critical: false,
-            }
-        } else {
-            // The success value only scales the damage now; a hit never takes the missed path.
-            let success_rate = calculate_damage_success_rate(&mut rng, attacker, defender).max(20);
-            match attacker.get_attack_damage_type() {
-                DamageType::Magic => calculate_attack_damage_magic(
-                    &mut rng,
-                    attacker,
-                    defender,
-                    hit_count,
-                    success_rate,
-                ),
-                DamageType::Physical => calculate_attack_damage_physical(
-                    &mut rng,
-                    attacker,
-                    defender,
-                    hit_count,
-                    success_rate,
-                ),
-            }
+            };
         }
+        // Staffs, wands and magic monsters do magic damage: magic resistance only.
+        let magic = matches!(attacker.get_attack_damage_type(), DamageType::Magic);
+        let hit = DamageHit {
+            base_attack: attacker.get_attack_power() as f32,
+            power: 0,
+            magic,
+            hit_count,
+            pvp_cap: PVP_CAP_NORMAL,
+            pvp_cap_critical: PVP_CAP_CRITICAL,
+        };
+        roll_damage(&mut rng, attacker, defender, &hit)
     }
 
     fn calculate_skill_adjust_value(
@@ -558,116 +552,10 @@ impl AbilityValueCalculator for AbilityValuesData {
         hit_count: i32,
     ) -> Damage {
         let mut rng = crate::rng::SharedRng;
-        let mut damage = match skill_data.damage_type {
-            SkillDamageType::WeaponAttack => {
-                // Weapon skills share the plain-attack hit chance; on a hit, normal damage.
-                if !roll_hit(&mut rng, attacker, defender) {
-                    return Damage {
-                        amount: 0,
-                        is_critical: false,
-                        apply_hit_stun: false,
-                    };
-                }
-                if matches!(attacker.damage_category, DamageCategory::Character)
-                    && matches!(defender.damage_category, DamageCategory::Character)
-                {
-                    ((skill_data.power as f32 + attacker.get_attack_power() as f32 * 0.2)
-                        * (attacker.get_attack_power() as f32 + 60.0)
-                        * (rng.gen_range(1..=30) as f32
-                            + attacker.get_sense() as f32 * 0.7
-                            + 370.0))
-                        * 0.01
-                        * (320 - defender.get_level() + attacker.get_level()) as f32
-                        / (defender.get_defence() as f32
-                            + defender.get_resistance() as f32 * 0.8
-                            + defender.get_avoid() as f32 * 0.4
-                            + 40.0)
-                        / 1600.0
-                        + 60.0
-                } else {
-                    ((skill_data.power as f32 + attacker.get_attack_power() as f32 * 0.2)
-                        * (attacker.get_attack_power() as f32 + 60.0)
-                        * (rng.gen_range(1..=30) as f32
-                            + attacker.get_sense() as f32 * 0.7
-                            + 370.0))
-                        * 0.01
-                        * (120 - defender.get_level() + attacker.get_level()) as f32
-                        / (defender.get_defence() as f32
-                            + defender.get_resistance() as f32 * 0.8
-                            + defender.get_avoid() as f32 * 0.4
-                            + 20.0)
-                        / 270.0
-                        + 20.0
-                }
-            }
-            SkillDamageType::MagicAttack => {
-                // Magic never misses: always the normal damage tier.
-                if matches!(attacker.damage_category, DamageCategory::Character)
-                    && matches!(defender.damage_category, DamageCategory::Character)
-                {
-                    ((skill_data.power as f32 + 50.0)
-                        * (attacker.get_attack_power() as f32 * 0.8
-                            + (attacker.get_intelligence() as f32 * 1.2)
-                            + 100.0)
-                        * (rng.gen_range(1..=30) as f32
-                            + attacker.get_sense() as f32 * 0.7
-                            + 350.0)
-                        * 0.01)
-                        * (380 - defender.get_level() + attacker.get_level()) as f32
-                        / (defender.get_defence() as f32 * 0.4
-                            + defender.get_resistance() as f32
-                            + defender.get_avoid() as f32 * 0.3
-                            + 60.0)
-                        / 2500.0
-                        + 60.0
-                } else {
-                    (skill_data.power as f32
-                        * (attacker.get_attack_power() as f32 * 0.8
-                            + (attacker.get_intelligence() as f32 * 1.2)
-                            + 100.0)
-                        * (rng.gen_range(1..=30) as f32
-                            + attacker.get_sense() as f32 * 0.7
-                            + 350.0)
-                        * 0.01)
-                        * (150 - defender.get_level() + attacker.get_level()) as f32
-                        / (defender.get_defence() as f32 * 0.3
-                            + defender.get_resistance() as f32
-                            + defender.get_avoid() as f32 * 0.3
-                            + 60.0)
-                        / 350.0
-                        + 20.0
-                }
-            }
-            SkillDamageType::NaturalMagic => {
-                // Magic never misses: always the normal damage tier.
-                if matches!(attacker.damage_category, DamageCategory::Character)
-                    && matches!(defender.damage_category, DamageCategory::Character)
-                {
-                    ((skill_data.power as f32 + 35.0)
-                        * (skill_data.power as f32 + attacker.get_intelligence() as f32 + 140.0)
-                        * (rng.gen_range(1..=30) + attacker.get_sense() + 380) as f32
-                        * 0.01)
-                        * (400 - defender.get_level() + attacker.get_level()) as f32
-                        / (defender.get_defence() as f32 * 0.5
-                            + defender.get_resistance() as f32 * 1.2
-                            + defender.get_avoid() as f32 * 0.4
-                            + 20.0)
-                        / 3400.0
-                        + 40.0
-                } else {
-                    ((skill_data.power as f32 + 35.0)
-                        * (skill_data.power as f32 + attacker.get_intelligence() as f32 + 140.0)
-                        * (rng.gen_range(1..=30) + attacker.get_sense() + 380) as f32
-                        * 0.01)
-                        * (150 - defender.get_level() + attacker.get_level()) as f32
-                        / (defender.get_defence() as f32 * 0.35
-                            + defender.get_resistance() as f32 * 1.2
-                            + defender.get_avoid() as f32 * 0.4
-                            + 10.0)
-                        / 730.0
-                        + 20.0
-                }
-            }
+        let missed = match skill_data.damage_type {
+            // Weapon skills share the plain-attack hit chance (wiki/rules/combat.md "Hit or miss").
+            SkillDamageType::WeaponAttack => !roll_hit(&mut rng, attacker, defender),
+            // Continuous attacks keep their own success roll, now only for hit or miss.
             SkillDamageType::ContinuousAttack => {
                 let success = ((attacker.get_level() + 8) - defender.get_level()
                     + rng.gen_range(1..=80)) as f32
@@ -675,76 +563,35 @@ impl AbilityValueCalculator for AbilityValuesData {
                         + rng.gen_range(1..=50) as f32
                         + 50.0)
                     / 90.0;
-                if success < 10.0 {
-                    0.0
-                } else if success < 20.0 {
-                    ((skill_data.power as f32 + 40.0)
-                        * (attacker.get_attack_power() as f32 + 40.0)
-                        * (rng.gen_range(1..=30) as f32
-                            + attacker.get_critical() as f32 * 0.2
-                            + 40.0))
-                        * 0.4
-                        / (defender.get_defence() as f32
-                            + defender.get_resistance() as f32 * 0.3
-                            + defender.get_avoid() as f32 * 0.4
-                            + 10.0)
-                        / 80.0
-                        + 5.0
-                } else if matches!(attacker.damage_category, DamageCategory::Character)
-                    && matches!(defender.damage_category, DamageCategory::Character)
-                {
-                    ((skill_data.power as f32 + attacker.get_critical() as f32 * 0.15 + 40.0)
-                        * attacker.get_attack_power() as f32
-                        * (rng.gen_range(1..=30) as f32
-                            + attacker.get_critical() as f32 * 0.32
-                            + 35.0))
-                        * 0.01
-                        * (350 - defender.get_level() + attacker.get_level()) as f32
-                        / (defender.get_defence() as f32
-                            + defender.get_resistance() as f32 * 0.3
-                            + defender.get_avoid() as f32 * 0.4
-                            + 35.0)
-                        / 400.0
-                        + 20.0
-                } else {
-                    ((skill_data.power as f32 + attacker.get_critical() as f32 * 0.15 + 40.0)
-                        * attacker.get_attack_power() as f32
-                        * (rng.gen_range(1..=30) as f32
-                            + attacker.get_critical() as f32 * 0.32
-                            + 35.0))
-                        * 0.01
-                        * (120 - defender.get_level() + attacker.get_level()) as f32
-                        / (defender.get_defence() as f32
-                            + defender.get_resistance() as f32 * 0.3
-                            + defender.get_avoid() as f32 * 0.4
-                            + 10.0)
-                        / 100.0
-                        + 20.0
-                }
+                success < 10.0
             }
+            // Magic never misses.
+            SkillDamageType::MagicAttack | SkillDamageType::NaturalMagic => false,
         };
-
-        damage += damage * attacker.get_additional_damage_multiplier();
-        damage = f32::max(damage, 5.0) * hit_count as f32;
-
-        if attacker.get_damage_category() == DamageCategory::Character
-            && defender.get_damage_category() == DamageCategory::Character
-        {
-            damage = f32::min(damage, defender.get_max_health() as f32 * 0.45);
+        if missed {
+            return Damage {
+                amount: 0,
+                is_critical: false,
+                apply_hit_stun: false,
+            };
         }
-
-        damage = f32::min(damage, 2047.0);
-
-        let apply_hit_stun = (damage * (rng.gen_range(1..=100) as f32 + 100.0)
-            / (defender.get_avoid() as f32 + 40.0)
-            / 14.0)
-            >= 10.0;
-
-        Damage {
-            amount: damage as u32,
-            is_critical: false,
-            apply_hit_stun,
-        }
+        let magic = matches!(
+            skill_data.damage_type,
+            SkillDamageType::MagicAttack | SkillDamageType::NaturalMagic
+        );
+        let hit = DamageHit {
+            base_attack: if magic {
+                magic_attack(attacker)
+            } else {
+                attacker.get_attack_power() as f32
+            },
+            power: skill_data.power as i32,
+            magic,
+            hit_count,
+            pvp_cap: PVP_CAP_SKILL,
+            pvp_cap_critical: PVP_CAP_SKILL,
+        };
+        roll_damage(&mut rng, attacker, defender, &hit)
     }
 
     fn calculate_give_xp(
@@ -1102,221 +949,177 @@ fn roll_hit(rng: &mut impl Rng, attacker: &AbilityValues, defender: &AbilityValu
     rng.gen_range(0.0f32..100.0) < hit_chance(attacker, defender)
 }
 
-fn calculate_damage_success_rate(
-    rng: &mut impl Rng,
+// ---------------------------------------------------------------------------------------------
+// Damage (wiki/rules/combat.md "Damage", wiki/rules/skills.md "Skill damage"). Every tuning
+// constant of the damage, critical and level-gap rules is here.
+// ---------------------------------------------------------------------------------------------
+
+/// Raw damage is attack × this for players (and anything a player drives).
+pub const PLAYER_RAW_SCALE: f32 = 1.2;
+/// Raw damage is attack × this for monsters and summons.
+pub const MONSTER_RAW_SCALE: f32 = 0.5;
+/// Defence (or magic resistance) takes off `DEF / (DEF + 0.75 × raw + 80)` of a hit.
+pub const DEFENCE_RAW_WEIGHT: f32 = 0.75;
+pub const DEFENCE_CONSTANT: f32 = 80.0;
+/// Defence takes off at most this much of a hit.
+pub const MAX_DAMAGE_REDUCTION: f32 = 0.75;
+/// Each hit rolls between 90% and 110% of its raw damage.
+pub const DAMAGE_SPREAD_MIN: f32 = 0.9;
+pub const DAMAGE_SPREAD_MAX: f32 = 1.1;
+/// Percent more (or less) damage per level the attacker is above (or below) the defender.
+pub const LEVEL_GAP_PERCENT_PER_LEVEL: f32 = 2.0;
+/// Level difference counted at most, either way.
+pub const LEVEL_GAP_CAP: i32 = 10;
+/// Player critical chance in percent: `5 + 45 × rating / (rating + 1.5 × level + 60)`, at most 50.
+pub const CRITICAL_CHANCE_BASE: f32 = 5.0;
+pub const CRITICAL_CHANCE_SPAN: f32 = 45.0;
+pub const CRITICAL_LEVEL_WEIGHT: f32 = 1.5;
+pub const CRITICAL_CONSTANT: f32 = 60.0;
+pub const CRITICAL_CHANCE_MAX: f32 = 50.0;
+/// Player critical damage in percent of a normal hit: 150 + 1.2 per point of Sense.
+pub const CRITICAL_DAMAGE_BASE: f32 = 150.0;
+pub const CRITICAL_DAMAGE_PER_SENSE: f32 = 1.2;
+/// Monsters and summons crit a flat 5% of the time, for 150%.
+pub const MONSTER_CRITICAL_CHANCE: f32 = 5.0;
+pub const MONSTER_CRITICAL_DAMAGE: f32 = 150.0;
+/// A player hitting a player does half damage, and at most this share of the target's max HP.
+pub const PVP_DAMAGE_SCALE: f32 = 0.5;
+pub const PVP_CAP_NORMAL: f32 = 0.25;
+pub const PVP_CAP_CRITICAL: f32 = 0.35;
+pub const PVP_CAP_SKILL: f32 = 0.45;
+pub const MIN_DAMAGE: f32 = 1.0;
+pub const MAX_DAMAGE: f32 = 2047.0;
+
+/// Share of a hit (0 to 0.75) that defence or magic resistance takes off:
+/// `DEF / (DEF + 0.75 × raw + 80)`. A bigger hit loses a smaller share.
+pub fn damage_reduction(defence: f32, raw: f32) -> f32 {
+    let defence = defence.max(0.0);
+    let raw = raw.max(0.0);
+    (defence / (defence + DEFENCE_RAW_WEIGHT * raw + DEFENCE_CONSTANT)).min(MAX_DAMAGE_REDUCTION)
+}
+
+/// Percent chance of a critical hit for a critical rating at a level.
+pub fn critical_chance(rating: i32, level: i32) -> f32 {
+    let rating = rating.max(0) as f32;
+    let level = level.max(1) as f32;
+    (CRITICAL_CHANCE_BASE
+        + CRITICAL_CHANCE_SPAN * rating
+            / (rating + CRITICAL_LEVEL_WEIGHT * level + CRITICAL_CONSTANT))
+        .min(CRITICAL_CHANCE_MAX)
+}
+
+/// Percent chance that this attacker's hit is critical.
+pub fn critical_chance_of(attacker: &AbilityValues) -> f32 {
+    match attacker.get_damage_category() {
+        DamageCategory::Character => critical_chance(attacker.get_critical(), attacker.get_level()),
+        DamageCategory::Npc => MONSTER_CRITICAL_CHANCE,
+    }
+}
+
+/// A critical hit of this attacker does this percent of a normal hit.
+pub fn critical_damage_percent(attacker: &AbilityValues) -> f32 {
+    match attacker.get_damage_category() {
+        DamageCategory::Character => {
+            CRITICAL_DAMAGE_BASE + CRITICAL_DAMAGE_PER_SENSE * attacker.get_sense().max(0) as f32
+        }
+        DamageCategory::Npc => MONSTER_CRITICAL_DAMAGE,
+    }
+}
+
+/// Damage multiplier for the level difference: ±2% per level, at most 10 levels counted.
+pub fn level_gap_multiplier(attacker_level: i32, defender_level: i32) -> f32 {
+    let gap = (attacker_level - defender_level).clamp(-LEVEL_GAP_CAP, LEVEL_GAP_CAP) as f32;
+    1.0 + gap * LEVEL_GAP_PERCENT_PER_LEVEL / 100.0
+}
+
+/// The attack magic skills use: attack × 0.8 + INT × 1.2.
+pub fn magic_attack(attacker: &AbilityValues) -> f32 {
+    attacker.get_attack_power().max(0) as f32 * 0.8 + attacker.get_intelligence().max(0) as f32 * 1.2
+}
+
+fn raw_scale(attacker: &AbilityValues) -> f32 {
+    match attacker.get_damage_category() {
+        DamageCategory::Character => PLAYER_RAW_SCALE,
+        DamageCategory::Npc => MONSTER_RAW_SCALE,
+    }
+}
+
+/// What a hit is made of: the attack it starts from, a skill's power, and how it is defended.
+pub struct DamageHit {
+    /// Attack (or magic attack for magic skills).
+    pub base_attack: f32,
+    /// Skill power in percent on top of the attack; 0 for a plain attack.
+    pub power: i32,
+    /// Magic: reduced by magic resistance instead of defence.
+    pub magic: bool,
+    /// Hits in the attack animation.
+    pub hit_count: i32,
+    /// Most of the target's max HP one hit may take between players.
+    pub pvp_cap: f32,
+    pub pvp_cap_critical: f32,
+}
+
+/// The damage of a hit that landed, with the random parts given: `spread` is 0.9 to 1.1 and
+/// `critical` whether it is critical. Not rounded.
+pub fn hit_damage(
     attacker: &AbilityValues,
     defender: &AbilityValues,
-) -> i32 {
+    hit: &DamageHit,
+    spread: f32,
+    critical: bool,
+) -> f32 {
+    let raw = hit.base_attack.max(0.0)
+        * raw_scale(attacker)
+        * (1.0 + hit.power.max(0) as f32 / 100.0)
+        * spread;
+    let defence = if hit.magic {
+        defender.get_resistance()
+    } else {
+        defender.get_defence()
+    } as f32;
+    let mut damage = raw * (1.0 - damage_reduction(defence, raw));
+    if critical {
+        damage *= critical_damage_percent(attacker) / 100.0;
+    }
+    damage *= level_gap_multiplier(attacker.get_level(), defender.get_level());
+    damage += damage * attacker.get_additional_damage_multiplier();
+    damage *= hit.hit_count.max(1) as f32;
+
     if attacker.get_damage_category() == DamageCategory::Character
         && defender.get_damage_category() == DamageCategory::Character
     {
-        // Only scales PvP damage now (the hit roll is `roll_hit`); avoid 0 no longer divides by 0.
-        40 - 60 * ((attacker.get_hit() + defender.get_avoid()) / attacker.get_avoid().max(1))
-            + rng.gen_range(1..=100)
-    } else {
-        let value = (attacker.get_level() + 10) - (defender.get_level() as f32 * 1.1) as i32
-            + rng.gen_range(1..=50);
-        if value <= 0 {
-            0
+        damage *= PVP_DAMAGE_SCALE;
+        let cap = if critical {
+            hit.pvp_cap_critical
         } else {
-            (value as f32
-                * ((attacker.get_hit() as f32 * 1.1 - defender.get_avoid() as f32 * 0.93
-                    + rng.gen_range(1..=60) as f32
-                    + 5.0
-                    + attacker.get_level() as f32 * 0.2)
-                    / 80.0)) as i32
-        }
+            hit.pvp_cap
+        };
+        damage = damage.min(defender.get_max_health() as f32 * cap);
     }
+
+    damage.clamp(MIN_DAMAGE, MAX_DAMAGE)
 }
 
-fn calculate_attack_damage_physical(
+/// Rolls the spread and the critical, then works out the hit.
+fn roll_damage(
     rng: &mut impl Rng,
     attacker: &AbilityValues,
     defender: &AbilityValues,
-    hit_count: i32,
-    success_rate: i32,
+    hit: &DamageHit,
 ) -> Damage {
-    let crit_success_rate = 16 * (3 * rng.gen_range(1..=100) + attacker.get_level() + 30)
-        / (attacker.get_critical() + 70);
-    let apply_hit_stun = ((28 - crit_success_rate) * (attacker.get_attack_power() + 20)
-        / (defender.get_defence() + 5))
-        >= 10;
-
-    if crit_success_rate < 20 {
-        // Critical physical damage
-        let mut damage = if attacker.get_damage_category() == DamageCategory::Character
-            && defender.get_damage_category() == DamageCategory::Character
-        {
-            attacker.get_attack_power() as f32
-                * (success_rate as f32 * 0.05 + 35.0)
-                * ((attacker.get_attack_power() - defender.get_defence() + 430) as f32
-                    / (300.0
-                        * (defender.get_defence() as f32
-                            + defender.get_avoid() as f32 * 0.4
-                            + 10.0)))
-                + 25.0
-        } else {
-            attacker.get_attack_power() as f32
-                * (success_rate as f32 * 0.05 + 29.0)
-                * ((attacker.get_attack_power() - defender.get_defence() + 230) as f32
-                    / (100.0
-                        * (defender.get_defence() as f32
-                            + defender.get_avoid() as f32 * 0.3
-                            + 5.0)))
-        };
-
-        damage += damage * attacker.get_additional_damage_multiplier();
-        damage = f32::max(damage * hit_count as f32, 10.0);
-
-        if attacker.get_damage_category() == DamageCategory::Character
-            && defender.get_damage_category() == DamageCategory::Character
-        {
-            damage = f32::min(damage, defender.get_max_health() as f32 * 0.35);
-        }
-
-        damage = f32::min(damage, 2047.0);
-
-        Damage {
-            amount: damage as u32,
-            is_critical: true,
-            apply_hit_stun,
-        }
-    } else {
-        // Normal physical damage
-        let mut damage = if attacker.get_damage_category() == DamageCategory::Character
-            && defender.get_damage_category() == DamageCategory::Character
-        {
-            attacker.get_attack_power() as f32
-                * (success_rate as f32 * 0.05 + 25.0)
-                * ((attacker.get_attack_power() - defender.get_defence() + 400) as f32
-                    / (420.0
-                        * (defender.get_defence() as f32
-                            + defender.get_avoid() as f32 * 0.4
-                            + 5.0)))
-                + 20.0
-        } else {
-            attacker.get_attack_power() as f32
-                * (success_rate as f32 * 0.03 + 26.0)
-                * ((attacker.get_attack_power() - defender.get_defence() + 250) as f32
-                    / (145.0
-                        * (defender.get_defence() as f32
-                            + defender.get_avoid() as f32 * 0.4
-                            + 5.0)))
-        };
-
-        damage += damage * attacker.get_additional_damage_multiplier();
-        damage = f32::max(damage * hit_count as f32, 5.0);
-
-        if attacker.get_damage_category() == DamageCategory::Character
-            && defender.get_damage_category() == DamageCategory::Character
-        {
-            damage = f32::min(damage, defender.get_max_health() as f32 * 0.25);
-        }
-
-        damage = f32::min(damage, 2047.0);
-
-        Damage {
-            amount: damage as u32,
-            is_critical: false,
-            apply_hit_stun,
-        }
-    }
-}
-
-fn calculate_attack_damage_magic(
-    rng: &mut impl Rng,
-    attacker: &AbilityValues,
-    defender: &AbilityValues,
-    hit_count: i32,
-    success_rate: i32,
-) -> Damage {
-    let crit_success_rate = 16 * (3 * rng.gen_range(1..=100) + attacker.get_level() + 30)
-        / (attacker.get_critical() + 70);
-    let apply_hit_stun = ((28 - crit_success_rate) * (attacker.get_attack_power() + 20)
-        / (defender.get_defence() + 5))
-        >= 10;
-
-    if crit_success_rate < 20 {
-        // Critical magic damage
-        let mut damage = if attacker.get_damage_category() == DamageCategory::Character
-            && defender.get_damage_category() == DamageCategory::Character
-        {
-            attacker.get_attack_power() as f32
-                * (success_rate as f32 * 0.05 + 33.0)
-                * ((attacker.get_attack_power() - defender.get_defence() + 340) as f32
-                    / (360.0
-                        * (defender.get_resistance() as f32
-                            + defender.get_avoid() as f32 * 0.3
-                            + 20.0)))
-                + 25.0
-        } else {
-            attacker.get_attack_power() as f32
-                * (success_rate as f32 * 0.05 + 33.0)
-                * ((attacker.get_attack_power() as f32 - defender.get_defence() as f32 * 0.8
-                    + 310.0)
-                    / (200.0
-                        * (defender.get_resistance() as f32
-                            + defender.get_avoid() as f32 * 0.3
-                            + 5.0)))
-        };
-
-        damage += damage * attacker.get_additional_damage_multiplier();
-        damage = f32::max(damage * hit_count as f32, 10.0);
-
-        if attacker.get_damage_category() == DamageCategory::Character
-            && defender.get_damage_category() == DamageCategory::Character
-        {
-            damage = f32::min(damage, defender.get_max_health() as f32 * 0.35);
-        }
-
-        damage = f32::min(damage, 2047.0);
-
-        Damage {
-            amount: damage as u32,
-            is_critical: true,
-            apply_hit_stun,
-        }
-    } else {
-        // Normal magic damage
-        let mut damage = if attacker.get_damage_category() == DamageCategory::Character
-            && defender.get_damage_category() == DamageCategory::Character
-        {
-            attacker.get_attack_power() as f32
-                * (success_rate as f32 * 0.06 + 29.0)
-                * ((attacker.get_attack_power() as f32 - defender.get_defence() as f32 * 0.8
-                    + 350.0)
-                    / (640.0
-                        * (defender.get_resistance() as f32
-                            + defender.get_avoid() as f32 * 0.3
-                            + 5.0)))
-                + 20.0
-        } else {
-            attacker.get_attack_power() as f32
-                * (success_rate as f32 * 0.03 + 30.0)
-                * ((attacker.get_attack_power() as f32 - defender.get_defence() as f32 * 0.8
-                    + 280.0)
-                    / (280.0
-                        * (defender.get_resistance() as f32
-                            + defender.get_avoid() as f32 * 0.3
-                            + 5.0)))
-        };
-
-        damage += damage * attacker.get_additional_damage_multiplier();
-        damage = f32::max(damage * hit_count as f32, 5.0);
-
-        if attacker.get_damage_category() == DamageCategory::Character
-            && defender.get_damage_category() == DamageCategory::Character
-        {
-            damage = f32::min(damage, defender.get_max_health() as f32 * 0.25);
-        }
-
-        damage = f32::min(damage, 2047.0);
-
-        Damage {
-            amount: damage as u32,
-            is_critical: false,
-            apply_hit_stun,
-        }
+    let spread = rng.gen_range(DAMAGE_SPREAD_MIN..=DAMAGE_SPREAD_MAX);
+    let is_critical = rng.gen_range(0.0f32..100.0) < critical_chance_of(attacker);
+    let damage = hit_damage(attacker, defender, hit, spread, is_critical);
+    // iROSE's hard-hit check; the server works it out but doesn't apply hit stun yet.
+    let apply_hit_stun = is_critical
+        || (damage * (rng.gen_range(1..=100) as f32 + 100.0)
+            / (defender.get_avoid().max(0) as f32 + 40.0)
+            / 14.0)
+            >= 10.0;
+    Damage {
+        amount: damage as u32,
+        is_critical,
+        apply_hit_stun,
     }
 }
 
@@ -1822,7 +1625,6 @@ fn calculate_attack_power(
     let concentration = basic_stats.concentration as f32;
     let strength = basic_stats.strength as f32;
     let intelligence = basic_stats.intelligence as f32;
-    let sense = basic_stats.sense as f32;
     let level = level.level as f32;
 
     let get_ammo_quality = |item_database: &ItemDatabase, equipment: &Equipment, ammo_index| {
@@ -1855,68 +1657,86 @@ fn calculate_attack_power(
     let weapon_type =
         weapon.and_then(|(_, weapon_data)| ItemWeaponType::from(weapon_data.item_data.class));
 
-    let attack_power = match weapon_type {
+    // Flat attack: the stats' flat parts, level, weapon, ammunition, item bonuses and passive
+    // amounts. The weapon stat then adds 0.2% increased attack per point, in one pool with
+    // the weapon passives' percent (wiki/rules/stats.md "Attack").
+    let flat_attack = match weapon_type {
         Some(ItemWeaponType::Bow) | Some(ItemWeaponType::Crossbow) => {
             let ammo_quality = get_ammo_quality(item_database, equipment, AmmoIndex::Arrow);
-            dexterity * 0.62
-                + strength * 0.2
-                + level * 0.2
-                + ammo_quality
-                + (weapon_attack + ammo_quality * 0.5 + 8.0)
-                    * ((dexterity * 0.04 + sense * 0.03 + 29.0) / 30.0)
+            dexterity * 0.62 + strength * 0.2 + level * 0.2 + ammo_quality * 1.5 + weapon_attack + 8.0
         }
         Some(ItemWeaponType::Gun) => {
             let ammo_quality = get_ammo_quality(item_database, equipment, AmmoIndex::Bullet);
-            dexterity * 0.4
-                + concentration * 0.5
-                + level * 0.2
-                + ammo_quality
-                + (weapon_attack + ammo_quality * 0.6 + 8.0)
-                    * ((concentration * 0.03 + sense * 0.05 + 29.0) / 30.0)
+            dexterity * 0.4 + concentration * 0.5 + level * 0.2 + ammo_quality * 1.6 + weapon_attack + 8.0
         }
         Some(ItemWeaponType::Launcher) => {
             let ammo_quality = get_ammo_quality(item_database, equipment, AmmoIndex::Throw);
-            strength * 0.52
-                + concentration * 0.5
-                + level * 0.2
-                + ammo_quality
-                + (weapon_attack + ammo_quality + 12.0)
-                    * ((concentration * 0.04 + sense * 0.05 + 29.0) / 30.0)
+            strength * 0.52 + concentration * 0.5 + level * 0.2 + ammo_quality * 2.0 + weapon_attack + 12.0
         }
         Some(ItemWeaponType::OneHanded) | Some(ItemWeaponType::TwoHanded) => {
-            strength * 0.75 + level * 0.2 + weapon_attack * ((strength * 0.05 + 29.0) / 30.0)
+            strength * 0.75 + level * 0.2 + weapon_attack
         }
         Some(ItemWeaponType::MagicMelee) => {
-            strength * 0.4
-                + intelligence * 0.4
-                + level * 0.2
-                + weapon_attack * ((intelligence * 0.05 + 29.0) / 30.0)
+            strength * 0.4 + intelligence * 0.4 + level * 0.2 + weapon_attack
         }
-        Some(ItemWeaponType::MagicRanged) => {
-            intelligence * 0.6 + level * 0.2 + weapon_attack * ((sense * 0.1 + 26.0) / 27.0)
-        }
+        Some(ItemWeaponType::MagicRanged) => intelligence * 0.6 + level * 0.2 + weapon_attack,
         Some(ItemWeaponType::DualWield) => {
-            strength * 0.63
-                + dexterity * 0.45
-                + level * 0.2
-                + weapon_attack * ((dexterity * 0.05 + 25.0) / 26.0)
+            strength * 0.63 + dexterity * 0.45 + level * 0.2 + weapon_attack
         }
         Some(ItemWeaponType::Katar) => {
-            strength * 0.42
-                + dexterity * 0.55
-                + level * 0.2
-                + weapon_attack * ((dexterity * 0.05 + 20.0) / 21.0)
+            strength * 0.42 + dexterity * 0.55 + level * 0.2 + weapon_attack
         }
         None => strength * 0.5 + dexterity * 0.3 + level * 0.2,
-    } + equipment_ability_values.attack as f32;
+    } + equipment_ability_values.attack as f32
+        + passive_ability_values.get_passive_weapon_attack_power_value(weapon_type) as f32;
 
-    let passive_attack_rate =
-        passive_ability_values.get_passive_weapon_attack_power_rate(weapon_type) as f32 / 100.0;
-    let passive_attack_power = passive_ability_values
-        .get_passive_weapon_attack_power_value(weapon_type) as f32
-        + (attack_power * passive_attack_rate);
+    let increased_percent = weapon_stat(weapon_type, basic_stats) as f32 * INCREASED_ATTACK_PER_POINT
+        + passive_ability_values.get_passive_weapon_attack_power_rate(weapon_type) as f32;
 
-    (attack_power + passive_attack_power) as i32
+    (flat_attack * (1.0 + increased_percent / 100.0)) as i32
+}
+
+/// Percent increased attack per point of the weapon's stat.
+pub const INCREASED_ATTACK_PER_POINT: f32 = 0.2;
+/// Percent increased attack speed per point of the speed stat.
+pub const ATTACK_SPEED_PER_POINT: f32 = 0.3;
+
+/// Bows, crossbows, katars and dual swords are Dexterity weapons.
+fn is_dexterity_weapon(weapon_type: Option<ItemWeaponType>) -> bool {
+    matches!(
+        weapon_type,
+        Some(ItemWeaponType::Bow)
+            | Some(ItemWeaponType::Crossbow)
+            | Some(ItemWeaponType::Katar)
+            | Some(ItemWeaponType::DualWield)
+    )
+}
+
+/// The stat that adds increased attack: DEX for bows, crossbows, katars and dual swords,
+/// INT for staffs and wands, CON for guns, STR for everything else (and no weapon).
+pub fn weapon_stat(weapon_type: Option<ItemWeaponType>, basic_stats: &BasicStats) -> i32 {
+    match weapon_type {
+        _ if is_dexterity_weapon(weapon_type) => basic_stats.dexterity,
+        Some(ItemWeaponType::MagicMelee) | Some(ItemWeaponType::MagicRanged) => {
+            basic_stats.intelligence
+        }
+        Some(ItemWeaponType::Gun) => basic_stats.concentration,
+        _ => basic_stats.strength,
+    }
+}
+
+/// The stat that adds attack speed: STR for Dexterity weapons, DEX for everything else.
+pub fn attack_speed_stat(weapon_type: Option<ItemWeaponType>, basic_stats: &BasicStats) -> i32 {
+    if is_dexterity_weapon(weapon_type) {
+        basic_stats.strength
+    } else {
+        basic_stats.dexterity
+    }
+}
+
+/// Percent attack speed the stat adds with this weapon (for the character window).
+pub fn attack_speed_stat_percent(weapon_type: Option<ItemWeaponType>, basic_stats: &BasicStats) -> f32 {
+    attack_speed_stat(weapon_type, basic_stats).max(0) as f32 * ATTACK_SPEED_PER_POINT
 }
 
 fn calculate_vehicle_attack_power(
@@ -1947,6 +1767,7 @@ fn calculate_vehicle_attack_power(
 
 fn calculate_attack_speed(
     item_database: &ItemDatabase,
+    basic_stats: &BasicStats,
     equipment: &Equipment,
     equipment_ability_values: &EquipmentAbilityValue,
     passive_ability_values: &PassiveSkillAbilityValues,
@@ -1979,10 +1800,15 @@ fn calculate_attack_speed(
         _ => (0, 0),
     };
 
+    // The speed stat's percent and the passives' percent add into one pool.
+    let weapon_type = weapon_item_class.and_then(ItemWeaponType::from);
+    let stat_percent = attack_speed_stat_percent(weapon_type, basic_stats);
     let passive_attack_speed = passive_value as f32 + attack_speed * (passive_rate as f32 / 100.0);
 
     (
-        (attack_speed + passive_attack_speed + equipment_ability_values.attack_speed as f32) as i32,
+        (attack_speed * (1.0 + (passive_rate as f32 + stat_percent) / 100.0)
+            + passive_value as f32
+            + equipment_ability_values.attack_speed as f32) as i32,
         passive_attack_speed as i32,
     )
 }
@@ -2210,7 +2036,8 @@ fn calculate_critical(
 ) -> i32 {
     let concentration = basic_stats.concentration as f32;
     let sense = basic_stats.sense as f32;
-    let critical = sense + (concentration + 20.0) * 0.2 + equipment_ability_values.critical as f32;
+    // Critical rating: one per point of CON and of SEN (wiki/rules/combat.md "Critical hits").
+    let critical = concentration + sense + equipment_ability_values.critical as f32;
 
     let passive_critical_rate = passive_ability_values.rate.critical as f32 / 100.0;
     let passive_critical =
