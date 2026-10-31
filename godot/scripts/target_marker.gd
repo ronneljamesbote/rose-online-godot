@@ -13,7 +13,7 @@ const ENTITY_LAYER := 2  # render layer bit of entity models; the decal leaves t
 const TEXTURE_SIZE := 256
 const DISC := 0.92  # the disc's edge, as part of the decal's half width
 const CENTRE := 0.55  # alpha in the middle; it rises to 1 at the rim
-const ALPHA := 0.8  # the whole disc is this see-through
+const ALPHA := 0.5  # the whole disc is this see-through
 const DEPTH := 3.0  # metres the decal reaches up and down, for slopes and stairs
 const SELECT_SECONDS := 0.22  # the pop when something is selected
 const DROP_SECONDS := 0.18  # the shrink when it is dropped
@@ -45,7 +45,7 @@ func _init() -> void:
 		_emission = ImageTexture.create_from_image(ring)
 	texture_albedo = _albedo
 	texture_emission = _emission
-	emission_energy = 0.6
+	emission_energy = 0.35
 	albedo_mix = 1.0
 	upper_fade = 0.3
 	lower_fade = 0.3
