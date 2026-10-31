@@ -1,0 +1,49 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://q84od73oc5eox"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2209-the-jelly-king.tres" id="x_a2c3c4"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/718-jelly-king-s-crown.tres" id="x_02962c"]
+[ext_resource type="RoseItemConsumable" path="res://data/items/consumable/351-zant-return-scroll.tres" id="x_417ea6"]
+[ext_resource type="RoseItemBody" path="res://data/items/body/655-riverford-coat.tres" id="x_e30df0"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_0b8348"]
+quest = ExtResource("x_a2c3c4")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_4d2260"]
+item = ExtResource("x_02962c")
+equipment_index = 13
+count = 1
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_f04a17"]
+quest = ExtResource("x_a2c3c4")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_7f53fe"]
+item = ExtResource("x_02962c")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_f86555"]
+equation = 0
+value = 400
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_bf9099"]
+equation = 0
+value = 400
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_4f2812"]
+item = ExtResource("x_417ea6")
+quantity = 1
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_f556c4"]
+item = ExtResource("x_e30df0")
+quantity = 1
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_91b8d0"]
+switch = 631
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_d0e1f2"]
+
+[resource]
+name = "2209-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_0b8348"), SubResource("RoseConditionQuestItem_4d2260")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_f04a17"), SubResource("RoseRewardRemoveItem_7f53fe"), SubResource("RoseRewardCalculatedExperiencePoints_f86555"), SubResource("RoseRewardCalculatedMoney_bf9099"), SubResource("RoseRewardAddItem_4f2812"), SubResource("RoseRewardAddItem_f556c4"), SubResource("RoseRewardSetQuestSwitch_91b8d0"), SubResource("RoseRewardRemoveSelectedQuest_d0e1f2")])

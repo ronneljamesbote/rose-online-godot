@@ -1,0 +1,203 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://btkwhfd9tprwl"]
+
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2207-02.tres" id="x_3b4748"]
+[ext_resource type="RoseQuest" path="res://data/quests/2208-poisoned-seed.tres" id="x_da860b"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2208-01.tres" id="x_54626d"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2208-02.tres" id="x_61b52f"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_dac29f"]
+text = "Quiet. They might come back. Whoever camped here left in a hurry, and left this place poisoned."
+next_menu = 1
+resource_name = "NPC: Quiet. They might come back. Whoever camped here…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4787c7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_dac29f")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_71a5ed"]
+step = ExtResource("x_3b4748")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_cd62b0"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_71a5ed")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_17148d"]
+step = ExtResource("x_3b4748")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_631c8b"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_17148d")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2d163d"]
+kind = "Answer"
+text = "Corvel sent me to find you."
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_cd62b0")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_631c8b")])
+resource_name = "You: Corvel sent me to find you."
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_3281e3"]
+quest = ExtResource("x_da860b")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_3aa04b"]
+step = ExtResource("x_54626d")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_e8d785"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_3281e3"), SubResource("RoseDialogIfQuestStep_3aa04b")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a39a9e"]
+kind = "Answer"
+text = "About \"Poisoned Seed\""
+next_menu = 4
+show_if = Array[Resource]([SubResource("RoseDialogCase_e8d785")])
+resource_name = "You: About \"Poisoned Seed\""
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_c0a397"]
+quest = ExtResource("x_da860b")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_d25dff"]
+step = ExtResource("x_61b52f")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_1d546a"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_c0a397"), SubResource("RoseDialogIfQuestStep_d25dff")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cdac31"]
+kind = "Answer"
+text = "About \"Poisoned Seed\""
+next_menu = 7
+show_if = Array[Resource]([SubResource("RoseDialogCase_1d546a")])
+resource_name = "You: About \"Poisoned Seed\""
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_114622"]
+step = ExtResource("x_61b52f")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_c0a6d1"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_114622")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_79a883"]
+step = ExtResource("x_61b52f")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_67ad67"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_79a883")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_9ffd41"]
+kind = "Answer"
+text = "\"Poisoned Seed\": it's done."
+next_menu = 8
+show_if = Array[Resource]([SubResource("RoseDialogCase_c0a6d1")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_67ad67")])
+resource_name = "You: \"Poisoned Seed\": it's done."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e66070"]
+kind = "Answer"
+text = "What is in the hollow?"
+next_menu = 9
+resource_name = "You: What is in the hollow?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7760d5"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2131de"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2d163d"), SubResource("RoseDialogLine_a39a9e"), SubResource("RoseDialogLine_cdac31"), SubResource("RoseDialogLine_9ffd41"), SubResource("RoseDialogLine_e66070"), SubResource("RoseDialogLine_7760d5")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d156d4"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_855f6b"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_a83ac3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_d156d4"), SubResource("RoseDialogLine_855f6b")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_85ca04"]
+text = "Corvel sent you? Good. Look at this camp: cold fire, torn tents, and seed sacks gone black. Somebody poisoned that seed and fed it to the plain."
+next_menu = 2
+resource_name = "NPC: Corvel sent you? Good. Look at this camp: cold f…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_289a7c"]
+lines = Array[Resource]([SubResource("RoseDialogLine_85ca04")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a6ba30"]
+text = "The Choropies round here dragged the sacks off. Bring me six of them back so Corvel can see what we're dealing with."
+next_menu = 5
+resource_name = "NPC: The Choropies round here dragged the sacks off. …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2bd2da"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a6ba30")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_d249db"]
+step = ExtResource("x_54626d")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_f836a8"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_d249db")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_38f479"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 6
+on_choose = Array[Resource]([SubResource("RoseDialogCase_f836a8")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b956d7"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_c72d42"]
+lines = Array[Resource]([SubResource("RoseDialogLine_38f479"), SubResource("RoseDialogLine_b956d7")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4ec68e"]
+text = "The Spotted and Mother Choropies round the camp have them. They're tougher than they look."
+next_menu = 2
+resource_name = "NPC: The Spotted and Mother Choropies round the camp …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4d087e"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4ec68e")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_289dea"]
+text = "Six Rotten Seed Sacks, from the Choropies round the camp."
+next_menu = 2
+resource_name = "NPC: Six Rotten Seed Sacks, from the Choropies round …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bb99c5"]
+lines = Array[Resource]([SubResource("RoseDialogLine_289dea")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ec5f16"]
+text = "Six. All poisoned, and all from the same red-sealed sacks. Go back to Corvel and tell him. And watch the hollow to the west."
+next_menu = 2
+resource_name = "NPC: Six. All poisoned, and all from the same red-sea…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_31faef"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ec5f16")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_43436a"]
+text = "The Jelly King. It gorged itself on the seed and it's twice the size it was. Don't go in alone."
+next_menu = 2
+resource_name = "NPC: The Jelly King. It gorged itself on the seed and…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4b67e2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_43436a")])
+resource_name = "Menu 9"
+
+[resource]
+key = "EM22-014.con"
+name = "[Scout] Rhys"
+menus = Array[Resource]([SubResource("RoseDialogMenu_4787c7"), SubResource("RoseDialogMenu_2131de"), SubResource("RoseDialogMenu_a83ac3"), SubResource("RoseDialogMenu_289a7c"), SubResource("RoseDialogMenu_2bd2da"), SubResource("RoseDialogMenu_c72d42"), SubResource("RoseDialogMenu_4d087e"), SubResource("RoseDialogMenu_bb99c5"), SubResource("RoseDialogMenu_31faef"), SubResource("RoseDialogMenu_4b67e2")])

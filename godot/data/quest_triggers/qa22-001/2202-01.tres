@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://q6i7e1ysajx2v"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2202-jelly-on-the-jetty.tres" id="x_b7cf68"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_5d771d"]
+switch = 620
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_bf1e29"]
+switch = 624
+value = false
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_3b1fbb"]
+quest = ExtResource("x_b7cf68")
+
+[resource]
+name = "2202-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_5d771d"), SubResource("RoseConditionQuestSwitch_bf1e29")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_3b1fbb")])

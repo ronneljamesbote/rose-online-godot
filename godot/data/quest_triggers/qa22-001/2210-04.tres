@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://fn88ph3w5ua30"]
+
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/601-enigmatic-emblem.tres" id="x_2b09a3"]
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_ca6e59"]
+item = ExtResource("x_2b09a3")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_f1be96"]
+item = ExtResource("x_2b09a3")
+quantity = 1
+
+[resource]
+name = "2210-04"
+conditions = Array[Resource]([SubResource("RoseConditionQuestItem_ca6e59")])
+rewards = Array[Resource]([SubResource("RoseRewardAddItem_f1be96")])

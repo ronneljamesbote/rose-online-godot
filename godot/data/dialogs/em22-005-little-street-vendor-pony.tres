@@ -2,6 +2,37 @@
 
 [ext_resource type="RoseQuestTrigger" uid="uid://bitsyp34x3ota" path="res://data/quest_triggers/qp103/107-02.tres" id="1_agcln"]
 
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2201-13.tres" id="ap_f51ee9"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ap76bad3"]
+text = "Hi! I sell fresh fruit. Eat it when you're hurt and you'll feel better. Tell Ronway I said hello!"
+next_menu = 1
+resource_name = "NPC: Hi! I sell fresh fruit. Eat it when you're hurt …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ap2318b8"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ap76bad3")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_apccbaa6"]
+step = ExtResource("ap_f51ee9")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ap75f75e"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_apccbaa6")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ape00e86"]
+step = ExtResource("ap_f51ee9")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_apc213aa"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_ape00e86")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ap9ca3e4"]
+kind = "Answer"
+text = "Ronway asked me to meet you."
+next_menu = 12
+show_if = Array[Resource]([SubResource("RoseDialogCase_ap75f75e")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_apc213aa")])
+resource_name = "You: Ronway asked me to meet you."
+
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_xuut8"]
 text = "Don't look down on me just because of my age. I've got a good understanding of changes in the market."
 next_menu = 1
@@ -47,7 +78,7 @@ show_if = Array[Resource]([SubResource("RoseDialogCase_51ori")])
 resource_name = "You: Hurry and take the antidote!"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bs3l6"]
-lines = Array[Resource]([SubResource("RoseDialogLine_fbu0h"), SubResource("RoseDialogLine_hpvm0"), SubResource("RoseDialogLine_qd72x"), SubResource("RoseDialogLine_ki03b")])
+lines = Array[Resource]([SubResource("RoseDialogLine_fbu0h"), SubResource("RoseDialogLine_hpvm0"), SubResource("RoseDialogLine_qd72x"), SubResource("RoseDialogLine_ki03b"), SubResource("RoseDialogLine_ap9ca3e4")])
 resource_name = "Menu 1"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_4tti7"]
@@ -166,4 +197,4 @@ resource_name = "Menu 11"
 [resource]
 key = "EM22-005.con"
 name = "[Little Street Vendor] Pony"
-menus = Array[Resource]([SubResource("RoseDialogMenu_52aor"), SubResource("RoseDialogMenu_bs3l6"), SubResource("RoseDialogMenu_qibwe"), SubResource("RoseDialogMenu_brx2d"), SubResource("RoseDialogMenu_055kw"), SubResource("RoseDialogMenu_2lkle"), SubResource("RoseDialogMenu_msuo3"), SubResource("RoseDialogMenu_eh7wr"), SubResource("RoseDialogMenu_78gjp"), SubResource("RoseDialogMenu_1ybks"), SubResource("RoseDialogMenu_ffj2m"), SubResource("RoseDialogMenu_4pkea")])
+menus = Array[Resource]([SubResource("RoseDialogMenu_52aor"), SubResource("RoseDialogMenu_bs3l6"), SubResource("RoseDialogMenu_qibwe"), SubResource("RoseDialogMenu_brx2d"), SubResource("RoseDialogMenu_055kw"), SubResource("RoseDialogMenu_2lkle"), SubResource("RoseDialogMenu_msuo3"), SubResource("RoseDialogMenu_eh7wr"), SubResource("RoseDialogMenu_78gjp"), SubResource("RoseDialogMenu_1ybks"), SubResource("RoseDialogMenu_ffj2m"), SubResource("RoseDialogMenu_4pkea"), SubResource("RoseDialogMenu_ap2318b8")])

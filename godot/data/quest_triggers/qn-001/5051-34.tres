@@ -4,6 +4,8 @@
 [ext_resource type="RoseItemQuest" uid="uid://br4njvuii4kb1" path="res://data/items/quest/500-proof-of-monster-extermination.tres" id="2_fv83j"]
 [ext_resource type="RoseItemConsumable" uid="uid://rl234dvfqtdo" path="res://data/items/consumable/103-grapes.tres" id="3_637ts"]
 
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2202-31.tres" id="ap_next"]
+
 [sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_ip64e"]
 quest = ExtResource("1_c1u3d")
 
@@ -31,7 +33,11 @@ value = true
 
 [sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_lvb1b"]
 
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_apb61441"]
+trigger = "2202-31"
+
 [resource]
 name = "5051-34"
 conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_ip64e"), SubResource("RoseConditionQuestItem_2j6ws")])
-rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_pohcb"), SubResource("RoseRewardCalculatedItem_3eusb"), SubResource("RoseRewardCalculatedMoney_b5i0f"), SubResource("RoseRewardSetQuestSwitch_7w3xf"), SubResource("RoseRewardRemoveSelectedQuest_lvb1b")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_pohcb"), SubResource("RoseRewardCalculatedItem_3eusb"), SubResource("RoseRewardCalculatedMoney_b5i0f"), SubResource("RoseRewardSetQuestSwitch_7w3xf"), SubResource("RoseRewardRemoveSelectedQuest_lvb1b"), SubResource("RoseRewardTrigger_apb61441")])
+next_trigger = ExtResource("ap_next")

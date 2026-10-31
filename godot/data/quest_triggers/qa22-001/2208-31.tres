@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://o6x82stdjttap"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2208-poisoned-seed.tres" id="x_da860b"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/717-rotten-seed-sack.tres" id="x_cda4e7"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_a57c8b"]
+quest = ExtResource("x_da860b")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_a5867e"]
+to = 60
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_cb15bf"]
+item = ExtResource("x_cda4e7")
+equipment_index = 13
+count = 6
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_adb8f3"]
+quest = ExtResource("x_da860b")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_3d50bd"]
+item = ExtResource("x_cda4e7")
+quantity = 1
+
+[resource]
+name = "2208-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_a57c8b"), SubResource("RoseConditionRandomPercent_a5867e"), SubResource("RoseConditionQuestItem_cb15bf")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_adb8f3"), SubResource("RoseRewardAddItem_3d50bd")])

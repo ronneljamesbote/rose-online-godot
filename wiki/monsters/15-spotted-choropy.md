@@ -66,78 +66,39 @@ drops:
 - item: '[[items/weapon/32-monkey-wrench|Monkey Wrench]]'
   slots_of_30: 0.2
 quests:
+- '[[quests/2208-poisoned-seed|Poisoned Seed]]'
 - '[[quests/952-hawker-job-change-quest|Hawker Job Change Quest]]'
 spawns:
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5473.1
-  y: 5315.5
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5492.6
-  y: 5280.5
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5233.6
-  y: 5226.6
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5203.2
-  y: 5181.3
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5203.2
-  y: 5181.3
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5176.1
-  y: 5255.8
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5176.1
-  y: 5255.8
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5145.7
-  y: 5256.9
+  x: 5045.59
+  y: 5309
   count: 2
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5204.5
-  y: 5221.1
+  x: 5050.95
+  y: 5224
+  count: 3
+  group: basic
+- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
+  x: 5230
+  y: 5240
   count: 2
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5457.8
-  y: 5245.1
-  count: 1
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5457.8
-  y: 5245.1
-  count: 1
+  x: 5215
+  y: 5150
+  count: 3
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5482.8
-  y: 5249.6
-  count: 1
+  x: 5150
+  y: 5215
+  count: 2
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5482.8
-  y: 5249.6
-  count: 1
+  x: 5253
+  y: 5189.8
+  count: 3
   group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5405.1
-  y: 5107.8
-  count: 1
-  group: reinforcements
 source:
   data: godot/data/monsters/15-spotted-choropy.tres, drop table godot/data/drop_tables/107-spotted-choropy.tres
   code:
@@ -150,3 +111,7 @@ Speeds are in centimetres per second, attack range in metres. Spawn positions ar
 HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].
+
+## Changed from iROSE
+
+The Adventurer's Plain redesign moved its spawn points there (see [[zones/22-adventurer-s-plain|Adventurer's Plain]]). Its kills also count for [[quests/2208-poisoned-seed|Poisoned Seed]].

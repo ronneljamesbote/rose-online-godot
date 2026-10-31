@@ -1,0 +1,22 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://3yl23bm8bp15j"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2201-first-steps.tres" id="x_d7736b"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_eeae0c"]
+quest = ExtResource("x_d7736b")
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_9c4513"]
+switch = 623
+value = false
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_945c91"]
+quest = ExtResource("x_d7736b")
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_908dfa"]
+switch = 623
+value = true
+
+[resource]
+name = "2201-13"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_eeae0c"), SubResource("RoseConditionQuestSwitch_9c4513")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_945c91"), SubResource("RoseRewardSetQuestSwitch_908dfa")])

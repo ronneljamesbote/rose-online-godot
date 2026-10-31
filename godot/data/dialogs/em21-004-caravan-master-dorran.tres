@@ -26,6 +26,37 @@
 [ext_resource type="RoseQuest" path="res://data/quests/2116-the-broker-s-trial.tres" id="x_41e0fa"]
 [ext_resource type="RoseQuest" path="res://data/quests/2117-on-to-zant.tres" id="x_d1180a"]
 
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2210-02.tres" id="ap_45479c"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ap9ff902"]
+text = "From Riverford? Corvel's seal, and... this emblem. The same patterns we found on the raiders' crates. You did right to bring it here. Rest at the camp, then come and talk to me about the road."
+next_menu = 2
+resource_name = "NPC: From Riverford? Corvel's seal, and... this emble…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ap9ccd25"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ap9ff902")])
+resource_name = "Menu 18"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_ap2afbd7"]
+step = ExtResource("ap_45479c")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_apafbb1f"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_ap2afbd7")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ap00bb15"]
+step = ExtResource("ap_45479c")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ap6a1e13"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_ap00bb15")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ap08d21e"]
+kind = "Answer"
+text = "\"Over the Ridge\": Corvel sent me with this emblem."
+next_menu = 18
+show_if = Array[Resource]([SubResource("RoseDialogCase_apafbb1f")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_ap6a1e13")])
+resource_name = "You: \"Over the Ridge\": Corvel sent me with this emble…"
+
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_59df8d"]
 text = "Welcome to the Sandwind Caravan Camp. We trade between the Adventurer's Plain and Zant, when the road lets us."
 next_menu = 1
@@ -370,7 +401,7 @@ lines = Array[Resource]([SubResource("RoseDialogLine_59df8d")])
 resource_name = "Menu 0"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_f1dde8"]
-lines = Array[Resource]([SubResource("RoseDialogLine_6e681a"), SubResource("RoseDialogLine_81ec9f"), SubResource("RoseDialogLine_dc12a5"), SubResource("RoseDialogLine_f02fc0"), SubResource("RoseDialogLine_3f05ad"), SubResource("RoseDialogLine_4e85d8"), SubResource("RoseDialogLine_840717"), SubResource("RoseDialogLine_4d129c")])
+lines = Array[Resource]([SubResource("RoseDialogLine_6e681a"), SubResource("RoseDialogLine_81ec9f"), SubResource("RoseDialogLine_dc12a5"), SubResource("RoseDialogLine_f02fc0"), SubResource("RoseDialogLine_3f05ad"), SubResource("RoseDialogLine_4e85d8"), SubResource("RoseDialogLine_840717"), SubResource("RoseDialogLine_ap08d21e"), SubResource("RoseDialogLine_4d129c")])
 resource_name = "Menu 1"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6c4396"]
@@ -440,4 +471,4 @@ resource_name = "Menu 17"
 [resource]
 key = "EM21-004.con"
 name = "[Caravan Master] Dorran"
-menus = Array[Resource]([SubResource("RoseDialogMenu_6d66ea"), SubResource("RoseDialogMenu_f1dde8"), SubResource("RoseDialogMenu_6c4396"), SubResource("RoseDialogMenu_5709a8"), SubResource("RoseDialogMenu_eb01e1"), SubResource("RoseDialogMenu_044131"), SubResource("RoseDialogMenu_47e9ea"), SubResource("RoseDialogMenu_366842"), SubResource("RoseDialogMenu_22281b"), SubResource("RoseDialogMenu_37bfe4"), SubResource("RoseDialogMenu_8e5a29"), SubResource("RoseDialogMenu_2da651"), SubResource("RoseDialogMenu_9e9993"), SubResource("RoseDialogMenu_857301"), SubResource("RoseDialogMenu_9fc018"), SubResource("RoseDialogMenu_f73d1b"), SubResource("RoseDialogMenu_e56fa0"), SubResource("RoseDialogMenu_695956")])
+menus = Array[Resource]([SubResource("RoseDialogMenu_6d66ea"), SubResource("RoseDialogMenu_f1dde8"), SubResource("RoseDialogMenu_6c4396"), SubResource("RoseDialogMenu_5709a8"), SubResource("RoseDialogMenu_eb01e1"), SubResource("RoseDialogMenu_044131"), SubResource("RoseDialogMenu_47e9ea"), SubResource("RoseDialogMenu_366842"), SubResource("RoseDialogMenu_22281b"), SubResource("RoseDialogMenu_37bfe4"), SubResource("RoseDialogMenu_8e5a29"), SubResource("RoseDialogMenu_2da651"), SubResource("RoseDialogMenu_9e9993"), SubResource("RoseDialogMenu_857301"), SubResource("RoseDialogMenu_9fc018"), SubResource("RoseDialogMenu_f73d1b"), SubResource("RoseDialogMenu_e56fa0"), SubResource("RoseDialogMenu_695956"), SubResource("RoseDialogMenu_ap9ccd25")])

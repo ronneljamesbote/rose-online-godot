@@ -62,183 +62,54 @@ drops:
 - item: '[[items/weapon/401-knuckle|Knuckle]]'
   slots_of_30: 0.2
 quests:
+- '[[quests/2208-poisoned-seed|Poisoned Seed]]'
 - '[[quests/952-hawker-job-change-quest|Hawker Job Change Quest]]'
 spawns:
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5239.3
-  y: 5453.5
-  count: 1
-  group: reinforcements
+  x: 5019.8
+  y: 5499.8
+  count: 3
+  group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5263.7
-  y: 5478.3
-  count: 1
-  group: reinforcements
+  x: 5400
+  y: 5440
+  count: 3
+  group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5277.4
-  y: 5459
-  count: 1
-  group: reinforcements
+  x: 5052
+  y: 5390
+  count: 3
+  group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5465.8
-  y: 5348.3
+  x: 5045.59
+  y: 5309
   count: 2
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5233.6
-  y: 5226.6
+  x: 5050.95
+  y: 5224
   count: 1
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5155.9
-  y: 5188.2
+  x: 5230
+  y: 5240
   count: 2
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5155.9
-  y: 5188.2
+  x: 5215
+  y: 5150
   count: 1
-  group: reinforcements
+  group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5206.7
-  y: 5150.9
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5176.1
-  y: 5255.8
+  x: 5150
+  y: 5215
   count: 2
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5145.7
-  y: 5256.9
+  x: 5253
+  y: 5189.8
   count: 1
   group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5204.5
-  y: 5221.1
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5346.4
-  y: 5165.8
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5346.4
-  y: 5165.8
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5381.5
-  y: 5180.6
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5381.5
-  y: 5180.6
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5435.5
-  y: 5225.7
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5457.8
-  y: 5245.1
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5457.8
-  y: 5245.1
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5482.8
-  y: 5249.6
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5482.8
-  y: 5249.6
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5644.6
-  y: 5247.9
-  count: 2
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5644.6
-  y: 5247.9
-  count: 2
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5661.2
-  y: 5193.4
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5661.2
-  y: 5193.4
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5608.5
-  y: 5150.5
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5608.5
-  y: 5150.5
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5689.5
-  y: 5155.6
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5689.5
-  y: 5155.6
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5633.9
-  y: 5197.8
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5633.9
-  y: 5197.8
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5405.1
-  y: 5107.8
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5405.1
-  y: 5107.8
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5533.3
-  y: 5080.1
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5533.3
-  y: 5080.1
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5533.3
-  y: 5080.1
-  count: 1
-  group: reinforcements
 source:
   data: godot/data/monsters/13-mother-choropy.tres, drop table godot/data/drop_tables/106-mother-choropy.tres
   code:
@@ -251,3 +122,7 @@ Speeds are in centimetres per second, attack range in metres. Spawn positions ar
 HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].
+
+## Changed from iROSE
+
+The Adventurer's Plain redesign moved its spawn points there (see [[zones/22-adventurer-s-plain|Adventurer's Plain]]). Its kills also count for [[quests/2208-poisoned-seed|Poisoned Seed]].

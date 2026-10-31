@@ -1,0 +1,45 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://o4sqpr091wwae"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2201-first-steps.tres" id="x_d7736b"]
+[ext_resource type="RoseItemConsumable" path="res://data/items/consumable/1-health-vial-s.tres" id="x_95cade"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_a08300"]
+quest = ExtResource("x_d7736b")
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_3dc7b5"]
+switch = 621
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_9bfdac"]
+switch = 622
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_b2c6d7"]
+switch = 623
+value = true
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_16eb06"]
+quest = ExtResource("x_d7736b")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_cb77d2"]
+equation = 0
+value = 40
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_1aa44b"]
+equation = 0
+value = 50
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_91bbfd"]
+item = ExtResource("x_95cade")
+quantity = 5
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_be69a0"]
+switch = 620
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_00607e"]
+
+[resource]
+name = "2201-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_a08300"), SubResource("RoseConditionQuestSwitch_3dc7b5"), SubResource("RoseConditionQuestSwitch_9bfdac"), SubResource("RoseConditionQuestSwitch_b2c6d7")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_16eb06"), SubResource("RoseRewardCalculatedExperiencePoints_cb77d2"), SubResource("RoseRewardCalculatedMoney_1aa44b"), SubResource("RoseRewardAddItem_91bbfd"), SubResource("RoseRewardSetQuestSwitch_be69a0"), SubResource("RoseRewardRemoveSelectedQuest_00607e")])

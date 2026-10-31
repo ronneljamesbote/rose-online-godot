@@ -136,6 +136,24 @@
 [ext_resource type="PackedScene" path="res://assets/rose/3ddata/effect/pokposu01.scn" id="237_3y5mz"]
 [ext_resource type="PackedScene" path="res://assets/rose/3ddata/effect/pokposu01_top.scn" id="238_f5obr"]
 
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/166.tscn" id="ap22_1"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/157.tscn" id="ap22_2"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/208.tscn" id="ap22_3"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/213.tscn" id="ap22_4"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/217.tscn" id="ap22_5"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/232.tscn" id="ap22_6"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/180.tscn" id="ap22_7"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/24.tscn" id="ap22_8"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/26.tscn" id="ap22_9"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/189.tscn" id="ap22_10"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/200.tscn" id="ap22_11"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/160.tscn" id="ap22_12"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/192.tscn" id="ap22_13"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/191.tscn" id="ap22_14"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/169.tscn" id="ap22_15"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/168.tscn" id="ap22_16"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/167.tscn" id="ap22_17"]
+[ext_resource type="PackedScene" path="res://assets/rose/3ddata/junon/list_deco_jg/222.tscn" id="ap22_18"]
 [sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_gjt1m"]
 world_background = 0
 shader_override_enabled = true
@@ -147,6 +165,8 @@ zone_id = 22
 [node name="Block_31_30" type="RoseBlock" parent="." unique_id=1492513451]
 block_x = 31
 block_y = 30
+
+[node name="Spawns" type="Node3D" parent="Block_31_30" unique_id=2114315835]
 
 [node name="Decorations" type="Node3D" parent="Block_31_30" unique_id=1071119401]
 
@@ -787,36 +807,6 @@ transform = Transform3D(-1.3709068e-06, 2.287401, 0.24041012, 2.3, 9.596348e-07,
 
 [node name="Spawns" type="Node3D" parent="Block_32_30" unique_id=215493737]
 
-[node name="Spawn_0" type="RoseSpawnSpot" parent="Block_32_30/Spawns" unique_id=809912029]
-basic_monster_ids = PackedInt32Array(41, 41, 41, 41, 41)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(13, 203)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 5
-limit = 4
-range = 16
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5239.33, 31.073132, -5453.4893)
-
-[node name="Spawn_1" type="RoseSpawnSpot" parent="Block_32_30/Spawns" unique_id=569466994]
-basic_monster_ids = PackedInt32Array(41, 41, 42, 41, 42)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(13)
-tactic_counts = PackedInt32Array(1)
-interval = 5
-limit = 2
-range = 13
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5263.6626, 32.504753, -5478.341)
-
-[node name="Spawn_2" type="RoseSpawnSpot" parent="Block_32_30/Spawns" unique_id=478653415]
-basic_monster_ids = PackedInt32Array(41, 41, 42, 42, 41)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(13)
-tactic_counts = PackedInt32Array(1)
-interval = 5
-limit = 3
-range = 14
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5277.4053, 30.20532, -5459.036)
-
 [node name="Block_33_30" type="RoseBlock" parent="." unique_id=293680423]
 block_x = 33
 block_y = 30
@@ -1115,14 +1105,6 @@ transform = Transform3D(-1.3709068e-06, 2.287401, 0.24041012, 2.3, 9.596348e-07,
 
 [node name="Spawns" type="Node3D" parent="Block_33_30" unique_id=582345749]
 
-[node name="Spawn_0" type="RoseSpawnSpot" parent="Block_33_30/Spawns" unique_id=1039355624]
-basic_monster_ids = PackedInt32Array(41, 41, 41, 42, 41)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 1)
-interval = 2
-limit = 1
-range = 13
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5420.296, 16.603485, -5490.9985)
-
 [node name="Block_34_30" type="RoseBlock" parent="." unique_id=599112032]
 block_x = 34
 block_y = 30
@@ -1318,6 +1300,8 @@ transform = Transform3D(-1.3709068e-06, 2.287401, 0.24041012, 2.3, 9.596348e-07,
 block_x = 35
 block_y = 30
 
+[node name="Spawns" type="Node3D" parent="Block_35_30" unique_id=150715282]
+
 [node name="Water0" type="RoseWater" parent="Block_35_30" unique_id=788733455]
 start = Vector3(5620, 40, -5560)
 end = Vector3(5700, 40, -5500)
@@ -1402,6 +1386,10 @@ transform = Transform3D(-1.3709068e-06, 2.287401, 0.24041012, 2.3, 9.596348e-07,
 block_x = 36
 block_y = 30
 
+[node name="Npcs" type="Node3D" parent="Block_36_30" unique_id=1206579827]
+
+[node name="Spawns" type="Node3D" parent="Block_36_30" unique_id=401439263]
+
 [node name="Water0" type="RoseWater" parent="Block_36_30" unique_id=1416506280]
 start = Vector3(5760, 0, -5600)
 end = Vector3(5920, 0, -5440)
@@ -1437,6 +1425,8 @@ tile_size = 20.0
 [node name="Block_31_31" type="RoseBlock" parent="." unique_id=123472637]
 block_x = 31
 block_y = 31
+
+[node name="Spawns" type="Node3D" parent="Block_31_31" unique_id=1924949814]
 
 [node name="Decorations" type="Node3D" parent="Block_31_31" unique_id=891295715]
 
@@ -2274,71 +2264,6 @@ transform = Transform3D(-1.3709068e-06, 2.287401, 0.24041012, 2.3, 9.596348e-07,
 
 [node name="Spawns" type="Node3D" parent="Block_32_31" unique_id=2044741396]
 
-[node name="Spawn_0" type="RoseSpawnSpot" parent="Block_32_31/Spawns" unique_id=161744550]
-basic_monster_ids = PackedInt32Array(5, 2, 3, 3, 41)
-basic_counts = PackedInt32Array(2, 1, 1, 2, 1)
-tactic_monster_ids = PackedInt32Array(3, 42)
-tactic_counts = PackedInt32Array(2, 1)
-interval = 7
-limit = 9
-range = 27
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5260.4453, 1.4610546, -5363.5894)
-
-[node name="Spawn_1" type="RoseSpawnSpot" parent="Block_32_31/Spawns" unique_id=980843200]
-basic_monster_ids = PackedInt32Array(2, 2, 3, 41, 3)
-basic_counts = PackedInt32Array(2, 1, 2, 1, 1)
-tactic_monster_ids = PackedInt32Array(3, 42)
-tactic_counts = PackedInt32Array(3, 1)
-interval = 6
-limit = 13
-range = 28
-tactic_points = 70
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5160.3853, 7.09205, -5352.938)
-
-[node name="Spawn_2" type="RoseSpawnSpot" parent="Block_32_31/Spawns" unique_id=821213946]
-basic_monster_ids = PackedInt32Array(2, 3, 2, 41, 42)
-basic_counts = PackedInt32Array(2, 1, 2, 1, 1)
-tactic_monster_ids = PackedInt32Array(3, 42)
-tactic_counts = PackedInt32Array(3, 1)
-interval = 7
-limit = 12
-range = 22
-tactic_points = 80
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5215.4873, 3.0936227, -5321.637)
-
-[node name="Spawn_3" type="RoseSpawnSpot" parent="Block_32_31/Spawns" unique_id=1618494583]
-basic_monster_ids = PackedInt32Array(3, 3, 41, 12, 3)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(61, 203)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 7
-limit = 8
-range = 50
-tactic_points = 70
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5207.101, 2.15, -5356.586)
-
-[node name="Spawn_4" type="RoseSpawnSpot" parent="Block_32_31/Spawns" unique_id=415731329]
-basic_monster_ids = PackedInt32Array(2, 2, 3, 41, 3)
-basic_counts = PackedInt32Array(1, 1, 2, 1, 1)
-tactic_monster_ids = PackedInt32Array(3, 42)
-tactic_counts = PackedInt32Array(2, 1)
-interval = 9
-limit = 9
-range = 22
-tactic_points = 70
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5156.64, 1.81, -5314.14)
-
-[node name="Spawn_5" type="RoseSpawnSpot" parent="Block_32_31/Spawns" unique_id=645890991]
-basic_monster_ids = PackedInt32Array(3, 3, 41, 12, 3)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(61, 203)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 9
-limit = 6
-range = 20
-tactic_points = 70
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5145.52, 5.38, -5416.9)
-
 [node name="Block_33_31" type="RoseBlock" parent="." unique_id=1454305406]
 block_x = 33
 block_y = 31
@@ -2717,59 +2642,11 @@ transform = Transform3D(-1.3709068e-06, 2.287401, 0.24041012, 2.3, 9.596348e-07,
 
 [node name="Spawns" type="Node3D" parent="Block_33_31" unique_id=597554782]
 
-[node name="Spawn_0" type="RoseSpawnSpot" parent="Block_33_31/Spawns" unique_id=978257259]
-basic_monster_ids = PackedInt32Array(3, 2, 2, 3, 5)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(3, 3)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 5
-limit = 9
-range = 30
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5335.4126, 2.99999, -5371.168)
-
-[node name="Spawn_1" type="RoseSpawnSpot" parent="Block_33_31/Spawns" unique_id=161134359]
-basic_monster_ids = PackedInt32Array(3, 2, 2, 2, 5)
-basic_counts = PackedInt32Array(1, 2, 1, 1, 2)
-tactic_monster_ids = PackedInt32Array(3, 3)
-tactic_counts = PackedInt32Array(2, 1)
-interval = 6
-limit = 10
-range = 25
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5320.19, 8.1, -5331.45)
-
-[node name="Spawn_2" type="RoseSpawnSpot" parent="Block_33_31/Spawns" unique_id=1880774040]
-basic_monster_ids = PackedInt32Array(2, 5, 2, 2, 3)
-basic_counts = PackedInt32Array(1, 2, 1, 1, 2)
-tactic_monster_ids = PackedInt32Array(3, 3)
-tactic_counts = PackedInt32Array(2, 1)
-interval = 6
-limit = 8
-range = 21
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5296.59, 7.62, -5332.89)
-
-[node name="Spawn_3" type="RoseSpawnSpot" parent="Block_33_31/Spawns" unique_id=831890258]
-basic_monster_ids = PackedInt32Array(2, 2, 2, 3, 3)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(3, 41)
-tactic_counts = PackedInt32Array(2, 1)
-interval = 5
-limit = 8
-range = 21
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5358.88, 5.19, -5428.17)
-
-[node name="Spawn_4" type="RoseSpawnSpot" parent="Block_33_31/Spawns" unique_id=1860361978]
-basic_monster_ids = PackedInt32Array(3, 2, 5, 2, 5)
-basic_counts = PackedInt32Array(1, 2, 1, 1, 2)
-tactic_monster_ids = PackedInt32Array(3, 3)
-tactic_counts = PackedInt32Array(2, 1)
-interval = 6
-limit = 8
-range = 25
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5346.25, 8.02, -5337.41)
-
 [node name="Block_34_31" type="RoseBlock" parent="." unique_id=1636751410]
 block_x = 34
 block_y = 31
+
+[node name="Npcs" type="Node3D" parent="Block_34_31" unique_id=1585816702]
 
 [node name="Water0" type="RoseWater" parent="Block_34_31" unique_id=1894495580]
 start = Vector3(5560, 0.02, -5440)
@@ -3256,83 +3133,11 @@ transform = Transform3D(-1.3709068e-06, 2.287401, 0.24041012, 2.3, 9.596348e-07,
 
 [node name="Spawns" type="Node3D" parent="Block_34_31" unique_id=1670631004]
 
-[node name="Spawn_0" type="RoseSpawnSpot" parent="Block_34_31/Spawns" unique_id=1866581780]
-basic_monster_ids = PackedInt32Array(2, 2, 12, 2, 3)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 2)
-tactic_monster_ids = PackedInt32Array(15, 3)
-tactic_counts = PackedInt32Array(1, 2)
-interval = 4
-limit = 8
-range = 17
-tactic_points = 77
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5473.0674, 12.351815, -5315.472)
-
-[node name="Spawn_1" type="RoseSpawnSpot" parent="Block_34_31/Spawns" unique_id=1272063607]
-basic_monster_ids = PackedInt32Array(1, 2, 2, 3, 5)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 2)
-tactic_monster_ids = PackedInt32Array(3, 3)
-tactic_counts = PackedInt32Array(1, 2)
-interval = 5
-limit = 7
-range = 18
-tactic_points = 60
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5480.355, 4.9895406, -5378.7036)
-
-[node name="Spawn_2" type="RoseSpawnSpot" parent="Block_34_31/Spawns" unique_id=1296211214]
-basic_monster_ids = PackedInt32Array(1, 1, 1, 2, 1)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(3, 12)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 7
-limit = 6
-range = 15
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5515.01, 8.131132, -5424.6504)
-
-[node name="Spawn_3" type="RoseSpawnSpot" parent="Block_34_31/Spawns" unique_id=276653591]
-basic_monster_ids = PackedInt32Array(1, 2, 2, 3, 3)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 2)
-tactic_monster_ids = PackedInt32Array(3, 5)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 7
-limit = 7
-range = 19
-tactic_points = 60
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5575.17, 1.78, -5319.04)
-
-[node name="Spawn_4" type="RoseSpawnSpot" parent="Block_34_31/Spawns" unique_id=136773442]
-basic_monster_ids = PackedInt32Array(1, 2, 2, 3, 5)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 2)
-tactic_monster_ids = PackedInt32Array(3, 3)
-tactic_counts = PackedInt32Array(1, 2)
-interval = 5
-range = 18
-tactic_points = 60
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5496.2, 10.06, -5398.78)
-
-[node name="Spawn_5" type="RoseSpawnSpot" parent="Block_34_31/Spawns" unique_id=1393370425]
-basic_monster_ids = PackedInt32Array(1, 2, 12, 3, 13)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 2)
-tactic_monster_ids = PackedInt32Array(3, 3)
-tactic_counts = PackedInt32Array(1, 2)
-interval = 5
-range = 18
-tactic_points = 60
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5465.8, 9.03, -5348.34)
-
-[node name="Spawn_6" type="RoseSpawnSpot" parent="Block_34_31/Spawns" unique_id=1816165936]
-basic_monster_ids = PackedInt32Array(2, 2, 12, 2, 3)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 2)
-tactic_monster_ids = PackedInt32Array(15, 3)
-tactic_counts = PackedInt32Array(1, 2)
-interval = 4
-limit = 4
-range = 13
-tactic_points = 77
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5492.59, 19.05, -5280.5)
-
 [node name="Block_35_31" type="RoseBlock" parent="." unique_id=1477147983]
 block_x = 35
 block_y = 31
+
+[node name="Npcs" type="Node3D" parent="Block_35_31" unique_id=700277267]
 
 [node name="Water0" type="RoseWater" parent="Block_35_31" unique_id=65205794]
 start = Vector3(5600, 0, -5440)
@@ -3424,28 +3229,6 @@ transform = Transform3D(2.2, 0, 0, 0, 2.1879482, -0.22996263, 0, 0.22996263, 2.1
 part_tints = PackedColorArray(0.896, 0.918, 0.542, 1)
 
 [node name="Spawns" type="Node3D" parent="Block_35_31" unique_id=679672708]
-
-[node name="Spawn_0" type="RoseSpawnSpot" parent="Block_35_31/Spawns" unique_id=632555123]
-basic_monster_ids = PackedInt32Array(1, 2, 2, 3, 3)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 2)
-tactic_monster_ids = PackedInt32Array(3, 5)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 7
-limit = 10
-range = 26
-tactic_points = 60
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5608.51, 1.77, -5294.62)
-
-[node name="Spawn_1" type="RoseSpawnSpot" parent="Block_35_31/Spawns" unique_id=1359673562]
-basic_monster_ids = PackedInt32Array(1, 2, 2, 3, 3)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 2)
-tactic_monster_ids = PackedInt32Array(3, 5)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 7
-limit = 4
-range = 15
-tactic_points = 60
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5629.51, 17.06, -5348.91)
 
 [node name="Block_36_31" type="RoseBlock" parent="." unique_id=42092449]
 block_x = 36
@@ -3810,17 +3593,6 @@ part_tints = PackedColorArray(1, 0.816, 0.558, 1)
 
 [node name="Spawns" type="Node3D" parent="Block_36_31" unique_id=316391913]
 
-[node name="Spawn_0" type="RoseSpawnSpot" parent="Block_36_31/Spawns" unique_id=700580642]
-basic_monster_ids = PackedInt32Array(2, 3, 2, 5, 3)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(3, 3)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 10
-limit = 4
-range = 36
-tactic_points = 60
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5792.27, 2.72, -5439.44)
-
 [node name="Npcs" type="Node3D" parent="Block_36_31" unique_id=1548339852]
 
 [node name="Npc_0" type="RoseNpcSpot" parent="Block_36_31/Npcs" unique_id=900820854]
@@ -3840,6 +3612,8 @@ tile_size = 20.0
 [node name="Block_31_32" type="RoseBlock" parent="." unique_id=1554010105]
 block_x = 31
 block_y = 32
+
+[node name="Spawns" type="Node3D" parent="Block_31_32" unique_id=231365665]
 
 [node name="Water0" type="RoseWater" parent="Block_31_32" unique_id=227259050]
 start = Vector3(4960, 0, -5180)
@@ -3928,6 +3702,8 @@ part_tints = PackedColorArray(1, 0.989, 0.59, 1, 0.964, 0.959, 0.964, 1)
 [node name="Block_32_32" type="RoseBlock" parent="." unique_id=988688836]
 block_x = 32
 block_y = 32
+
+[node name="Npcs" type="Node3D" parent="Block_32_32" unique_id=835337545]
 
 [node name="Water0" type="RoseWater" parent="Block_32_32" unique_id=1015569391]
 start = Vector3(5240, 0.02, -5280)
@@ -4723,94 +4499,6 @@ transform = Transform3D(-1.3709068e-06, 2.287401, 0.24041012, 2.3, 9.596348e-07,
 
 [node name="Spawns" type="Node3D" parent="Block_32_32" unique_id=1073844089]
 
-[node name="Spawn_0" type="RoseSpawnSpot" parent="Block_32_32/Spawns" unique_id=599890054]
-basic_monster_ids = PackedInt32Array(11, 12, 41, 15, 13)
-basic_counts = PackedInt32Array(2, 2, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(3, 42)
-tactic_counts = PackedInt32Array(2, 1)
-interval = 8
-limit = 8
-range = 17
-tactic_points = 90
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5233.644, 6.9527435, -5226.572)
-
-[node name="Spawn_1" type="RoseSpawnSpot" parent="Block_32_32/Spawns" unique_id=785327553]
-basic_monster_ids = PackedInt32Array(11, 12, 3, 41, 13)
-basic_counts = PackedInt32Array(2, 2, 2, 1, 2)
-tactic_monster_ids = PackedInt32Array(13, 42)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 6
-limit = 12
-range = 25
-tactic_points = 89
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5155.9185, 2.061328, -5188.169)
-
-[node name="Spawn_2" type="RoseSpawnSpot" parent="Block_32_32/Spawns" unique_id=2076164176]
-basic_monster_ids = PackedInt32Array(11, 11, 12, 12, 11)
-basic_counts = PackedInt32Array(1, 1, 1, 2, 2)
-tactic_monster_ids = PackedInt32Array(13, 42)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 7
-limit = 7
-range = 20
-tactic_points = 92
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5206.6953, 1.5421386, -5150.9053)
-
-[node name="Spawn_3" type="RoseSpawnSpot" parent="Block_32_32/Spawns" unique_id=2044801448]
-basic_monster_ids = PackedInt32Array(2, 15, 3, 12, 41)
-basic_counts = PackedInt32Array(2, 1, 2, 1, 1)
-tactic_monster_ids = PackedInt32Array(15, 203)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 8
-limit = 9
-range = 27
-tactic_points = 75
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5203.207, 1.51041, -5181.2876)
-
-[node name="Spawn_4" type="RoseSpawnSpot" parent="Block_32_32/Spawns" unique_id=343608251]
-basic_monster_ids = PackedInt32Array(12, 13, 41, 15, 15)
-basic_counts = PackedInt32Array(2, 2, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(3, 42)
-tactic_counts = PackedInt32Array(2, 1)
-interval = 7
-limit = 9
-range = 32
-tactic_points = 90
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5176.11, 2.68, -5255.75)
-
-[node name="Spawn_5" type="RoseSpawnSpot" parent="Block_32_32/Spawns" unique_id=1460388270]
-basic_monster_ids = PackedInt32Array(15, 13, 41, 12, 3)
-basic_counts = PackedInt32Array(2, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(3, 42)
-tactic_counts = PackedInt32Array(2, 1)
-interval = 8
-limit = 7
-range = 26
-tactic_points = 90
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5145.72, 4.97, -5256.88)
-
-[node name="Spawn_6" type="RoseSpawnSpot" parent="Block_32_32/Spawns" unique_id=807483563]
-basic_monster_ids = PackedInt32Array(5, 12, 2, 13, 2)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 2)
-tactic_monster_ids = PackedInt32Array(15, 203)
-tactic_counts = PackedInt32Array(2, 1)
-interval = 9
-limit = 7
-range = 30
-tactic_points = 95
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5204.52, 0.99, -5221.1)
-
-[node name="Spawn_7" type="RoseSpawnSpot" parent="Block_32_32/Spawns" unique_id=1895477604]
-basic_monster_ids = PackedInt32Array(2, 3, 2, 41, 42)
-basic_counts = PackedInt32Array(2, 1, 2, 1, 1)
-tactic_monster_ids = PackedInt32Array(3, 42)
-tactic_counts = PackedInt32Array(3, 1)
-interval = 11
-limit = 8
-range = 18
-tactic_points = 80
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5225.67, 3.77, -5262.22)
-
 [node name="Block_33_32" type="RoseBlock" parent="." unique_id=903853063]
 block_x = 33
 block_y = 32
@@ -5308,39 +4996,6 @@ range = 3.0
 transform = Transform3D(-1.3709068e-06, 2.287401, 0.24041012, 2.3, 9.596348e-07, 0, -1.1995435e-07, 0.24041012, -2.2874014, 5329.7026, 14.0935335, -5159.192)
 
 [node name="Spawns" type="Node3D" parent="Block_33_32" unique_id=2074835306]
-
-[node name="Spawn_0" type="RoseSpawnSpot" parent="Block_33_32/Spawns" unique_id=1244037633]
-basic_monster_ids = PackedInt32Array(12, 13, 12, 12, 41)
-basic_counts = PackedInt32Array(2, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(13, 42)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 5
-limit = 7
-range = 16
-tactic_points = 70
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5346.444, 12.649423, -5165.773)
-
-[node name="Spawn_1" type="RoseSpawnSpot" parent="Block_33_32/Spawns" unique_id=579540385]
-basic_monster_ids = PackedInt32Array(11, 12, 13, 41, 41)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(13, 42)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 8
-limit = 3
-range = 22
-tactic_points = 80
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5381.5073, 5.9999995, -5180.65)
-
-[node name="Spawn_2" type="RoseSpawnSpot" parent="Block_33_32/Spawns" unique_id=1014999791]
-basic_monster_ids = PackedInt32Array(41, 41, 12, 41, 12)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(42, 13)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 6
-limit = 3
-range = 16
-tactic_points = 80
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5435.472, 20.209515, -5225.7495)
 
 [node name="Block_34_32" type="RoseBlock" parent="." unique_id=1176071772]
 block_x = 34
@@ -6104,28 +5759,6 @@ transform = Transform3D(-1.3709068e-06, 2.287401, 0.24041012, 2.3, 9.596348e-07,
 
 [node name="Spawns" type="Node3D" parent="Block_34_32" unique_id=113011]
 
-[node name="Spawn_0" type="RoseSpawnSpot" parent="Block_34_32/Spawns" unique_id=309548442]
-basic_monster_ids = PackedInt32Array(41, 15, 12, 13, 15)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(42, 13)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 5
-limit = 3
-range = 16
-tactic_points = 80
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5457.79, 21.06, -5245.15)
-
-[node name="Spawn_1" type="RoseSpawnSpot" parent="Block_34_32/Spawns" unique_id=1558778521]
-basic_monster_ids = PackedInt32Array(41, 15, 12, 13, 15)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(42, 13)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 5
-limit = 8
-range = 22
-tactic_points = 80
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5482.76, 22.28, -5249.64)
-
 [node name="Block_35_32" type="RoseBlock" parent="." unique_id=1437842309]
 block_x = 35
 block_y = 32
@@ -6406,71 +6039,6 @@ interval = 3.0
 transform = Transform3D(-1.3709068e-06, 2.287401, 0.24041012, 2.3, 9.596348e-07, 0, -1.1995435e-07, 0.24041012, -2.2874014, 5609.0073, 4.8866596, -5233.649)
 
 [node name="Spawns" type="Node3D" parent="Block_35_32" unique_id=1533340337]
-
-[node name="Spawn_0" type="RoseSpawnSpot" parent="Block_35_32/Spawns" unique_id=212949524]
-basic_monster_ids = PackedInt32Array(1, 2, 12, 3, 13)
-basic_counts = PackedInt32Array(2, 1, 1, 1, 2)
-tactic_monster_ids = PackedInt32Array(3, 13)
-tactic_counts = PackedInt32Array(2, 2)
-interval = 5
-limit = 12
-range = 40
-tactic_points = 60
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5644.63, 4.92, -5247.89)
-
-[node name="Spawn_1" type="RoseSpawnSpot" parent="Block_35_32/Spawns" unique_id=393525989]
-basic_monster_ids = PackedInt32Array(11, 1, 12, 13, 3)
-basic_counts = PackedInt32Array(2, 2, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(12, 13)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 6
-limit = 13
-range = 36
-tactic_points = 50
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5661.16, 4.4, -5193.36)
-
-[node name="Spawn_2" type="RoseSpawnSpot" parent="Block_35_32/Spawns" unique_id=1437001888]
-basic_monster_ids = PackedInt32Array(11, 11, 12, 13, 3)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(12, 13)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 6
-range = 18
-tactic_points = 50
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5608.47, 5.16, -5150.49)
-
-[node name="Spawn_3" type="RoseSpawnSpot" parent="Block_35_32/Spawns" unique_id=2006603594]
-basic_monster_ids = PackedInt32Array(11, 12, 11, 13, 3)
-basic_counts = PackedInt32Array(3, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(12, 13)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 6
-limit = 10
-range = 26
-tactic_points = 50
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5689.49, 5.99, -5155.62)
-
-[node name="Spawn_4" type="RoseSpawnSpot" parent="Block_35_32/Spawns" unique_id=1584966616]
-basic_monster_ids = PackedInt32Array(1, 2, 1, 3, 3)
-basic_counts = PackedInt32Array(2, 1, 2, 1, 2)
-tactic_monster_ids = PackedInt32Array(3, 5)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 7
-limit = 12
-range = 32
-tactic_points = 60
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5665.06, 7.65, -5279.82)
-
-[node name="Spawn_5" type="RoseSpawnSpot" parent="Block_35_32/Spawns" unique_id=1743527458]
-basic_monster_ids = PackedInt32Array(11, 11, 12, 13, 3)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(12, 13)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 6
-limit = 8
-range = 23
-tactic_points = 50
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5633.87, 4.29, -5197.84)
 
 [node name="Npcs" type="Node3D" parent="Block_35_32" unique_id=1656506958]
 
@@ -7670,17 +7238,6 @@ part_tints = PackedColorArray(0.836, 0.928, 0.486, 1, 0.685, 0.817, 1, 1)
 
 [node name="Spawns" type="Node3D" parent="Block_33_33" unique_id=834229875]
 
-[node name="Spawn_0" type="RoseSpawnSpot" parent="Block_33_33/Spawns" unique_id=134769839]
-basic_monster_ids = PackedInt32Array(11, 12, 12, 13, 12)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(15, 13)
-tactic_counts = PackedInt32Array(1, 1)
-interval = 6
-limit = 3
-range = 12
-tactic_points = 50
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5405.089, 16.587069, -5107.8354)
-
 [node name="Block_34_33" type="RoseBlock" parent="." unique_id=1762903511]
 block_x = 34
 block_y = 33
@@ -8009,20 +7566,13 @@ transform = Transform3D(-1.3709068e-06, 2.287401, 0.24041012, 2.3, 9.596348e-07,
 
 [node name="Spawns" type="Node3D" parent="Block_34_33" unique_id=1735020793]
 
-[node name="Spawn_0" type="RoseSpawnSpot" parent="Block_34_33/Spawns" unique_id=1966348498]
-basic_monster_ids = PackedInt32Array(3, 12, 12, 13, 13)
-basic_counts = PackedInt32Array(1, 1, 1, 1, 1)
-tactic_monster_ids = PackedInt32Array(12, 13)
-tactic_counts = PackedInt32Array(3, 1)
-interval = 6
-limit = 3
-range = 12
-tactic_points = 50
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5533.34, 6.61, -5080.11)
-
 [node name="Block_35_33" type="RoseBlock" parent="." unique_id=805655172]
 block_x = 35
 block_y = 33
+
+[node name="Npcs" type="Node3D" parent="Block_35_33" unique_id=681117163]
+
+[node name="Spawns" type="Node3D" parent="Block_35_33" unique_id=495681686]
 
 [node name="Water0" type="RoseWater" parent="Block_35_33" unique_id=883731350]
 start = Vector3(5660, 0, -5080)
@@ -9139,30 +8689,835 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5342.6045, 12.744447, -5506.9
 event_name = "WARP-JD01-JG01"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5114.1206, 14.959012, -5515.189)
 
-[node name="Event_2_restore" type="RoseZoneEvent" parent="Events" unique_id=2131968842]
-event_name = "restore"
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5303.6216, 3.0000095, -5099.92)
-
-[node name="Event_3_restore" type="RoseZoneEvent" parent="Events" unique_id=2002863655]
-event_name = "restore"
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5080.1826, 23.036257, -5331.803)
-
-[node name="Event_4_restore" type="RoseZoneEvent" parent="Events" unique_id=1670084593]
-event_name = "restore"
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5283.506, 4.9999995, -5267.4077)
-
 [node name="Event_5_start" type="RoseZoneEvent" parent="Events" unique_id=691445261]
 event_name = "start"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5760.45, 0.65, -5166.6)
-
-[node name="Event_6_restore" type="RoseZoneEvent" parent="Events" unique_id=616570674]
-event_name = "restore"
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5687.81, 29.12, -5376.89)
 
 [node name="Event_7_WARPJZ01JG01" type="RoseZoneEvent" parent="Events" unique_id=501975941]
 event_name = "WARP-JZ01-JG01"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5174.16, 0.99, -5132.11)
 
-[node name="Event_8_restore" type="RoseZoneEvent" parent="Events" unique_id=569313363]
+[node name="Spawn_Tidewater1" type="RoseSpawnSpot" parent="Block_36_31/Spawns" unique_id=2048548100]
+basic_monster_ids = PackedInt32Array(1)
+basic_counts = PackedInt32Array(4)
+interval = 8
+limit = 4
+range = 14
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5765.00, 2.620, -5415.00)
+
+[node name="Spawn_Tidewater2" type="RoseSpawnSpot" parent="Block_36_30/Spawns" unique_id=621016169]
+basic_monster_ids = PackedInt32Array(1)
+basic_counts = PackedInt32Array(4)
+interval = 8
+limit = 4
+range = 14
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5790.00, 1.884, -5490.00)
+
+[node name="Spawn_Tidewater3" type="RoseSpawnSpot" parent="Block_35_30/Spawns" unique_id=1416594021]
+basic_monster_ids = PackedInt32Array(1)
+basic_counts = PackedInt32Array(4)
+interval = 8
+limit = 4
+range = 14
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5752.00, 2.261, -5455.00)
+
+[node name="Spawn_Tidewater4" type="RoseSpawnSpot" parent="Block_36_31/Spawns" unique_id=1060211763]
+basic_monster_ids = PackedInt32Array(1)
+basic_counts = PackedInt32Array(4)
+interval = 8
+limit = 4
+range = 14
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5770.00, 1.952, -5370.00)
+
+[node name="Spawn_Tidewater5" type="RoseSpawnSpot" parent="Block_35_33/Spawns" unique_id=1607434550]
+basic_monster_ids = PackedInt32Array(1)
+basic_counts = PackedInt32Array(4)
+interval = 8
+limit = 4
+range = 14
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5745.00, 5.175, -5085.00)
+
+[node name="Spawn_Tidewater6" type="RoseSpawnSpot" parent="Block_35_33/Spawns" unique_id=358969487]
+basic_monster_ids = PackedInt32Array(1)
+basic_counts = PackedInt32Array(4)
+interval = 8
+limit = 4
+range = 14
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5741.00, 2.977, -5050.00)
+
+[node name="Spawn_Meadow1" type="RoseSpawnSpot" parent="Block_35_31/Spawns" unique_id=1688264534]
+basic_monster_ids = PackedInt32Array(2)
+basic_counts = PackedInt32Array(4)
+interval = 8
+limit = 4
+range = 14
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5620.00, 16.321, -5340.00)
+
+[node name="Spawn_Meadow2" type="RoseSpawnSpot" parent="Block_35_31/Spawns" unique_id=1498916457]
+basic_monster_ids = PackedInt32Array(2, 4)
+basic_counts = PackedInt32Array(3, 1)
+interval = 8
+limit = 4
+range = 14
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5640.00, 6.561, -5290.00)
+
+[node name="Spawn_Meadow3" type="RoseSpawnSpot" parent="Block_35_31/Spawns" unique_id=1986833683]
+basic_monster_ids = PackedInt32Array(2)
+basic_counts = PackedInt32Array(4)
+interval = 8
+limit = 4
+range = 14
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5660.00, 28.470, -5420.00)
+
+[node name="Spawn_Meadow4" type="RoseSpawnSpot" parent="Block_35_31/Spawns" unique_id=842266634]
+basic_monster_ids = PackedInt32Array(2, 4)
+basic_counts = PackedInt32Array(3, 1)
+interval = 8
+limit = 4
+range = 14
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5600.00, 14.000, -5385.00)
+
+[node name="Spawn_Stones1" type="RoseSpawnSpot" parent="Block_35_31/Spawns" unique_id=1802045651]
+basic_monster_ids = PackedInt32Array(3)
+basic_counts = PackedInt32Array(4)
+interval = 8
+limit = 4
+range = 10
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5672.00, 27.328, -5395.00)
+
+[node name="Spawn_Stones2" type="RoseSpawnSpot" parent="Block_35_31/Spawns" unique_id=2010296108]
+basic_monster_ids = PackedInt32Array(3)
+basic_counts = PackedInt32Array(4)
+interval = 8
+limit = 4
+range = 10
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5702.00, 32.208, -5355.00)
+
+[node name="Spawn_Stones3" type="RoseSpawnSpot" parent="Block_35_31/Spawns" unique_id=271063083]
+basic_monster_ids = PackedInt32Array(3)
+basic_counts = PackedInt32Array(4)
+interval = 8
+limit = 4
+range = 10
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5668.00, 29.808, -5360.00)
+
+[node name="Spawn_Whisperwood1" type="RoseSpawnSpot" parent="Block_35_32/Spawns" unique_id=597661061]
+basic_monster_ids = PackedInt32Array(11, 12)
+basic_counts = PackedInt32Array(3, 1)
+interval = 10
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5620.00, 5.785, -5150.00)
+
+[node name="Spawn_Whisperwood2" type="RoseSpawnSpot" parent="Block_34_33/Spawns" unique_id=678244075]
+basic_monster_ids = PackedInt32Array(11, 12)
+basic_counts = PackedInt32Array(3, 1)
+interval = 10
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5565.00, 3.072, -5075.00)
+
+[node name="Spawn_Whisperwood3" type="RoseSpawnSpot" parent="Block_35_33/Spawns" unique_id=206646875]
+basic_monster_ids = PackedInt32Array(11, 12)
+basic_counts = PackedInt32Array(3, 1)
+interval = 10
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5680.00, 9.961, -5115.00)
+
+[node name="Spawn_Whisperwood4" type="RoseSpawnSpot" parent="Block_35_33/Spawns" unique_id=786017599]
+basic_monster_ids = PackedInt32Array(12, 11)
+basic_counts = PackedInt32Array(2, 2)
+interval = 10
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5605.00, 13.104, -5085.00)
+
+[node name="Spawn_Whisperwood5" type="RoseSpawnSpot" parent="Block_35_32/Spawns" unique_id=1390943240]
+basic_monster_ids = PackedInt32Array(12, 11)
+basic_counts = PackedInt32Array(2, 2)
+interval = 10
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5660.00, 6.105, -5160.00)
+
+[node name="Spawn_RiverBank1" type="RoseSpawnSpot" parent="Block_34_31/Spawns" unique_id=484690436]
+basic_monster_ids = PackedInt32Array(5)
+basic_counts = PackedInt32Array(4)
+interval = 10
+limit = 4
+range = 10
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5537.00, 16.827, -5398.86)
+
+[node name="Spawn_RiverBank2" type="RoseSpawnSpot" parent="Block_34_31/Spawns" unique_id=2101642884]
+basic_monster_ids = PackedInt32Array(5)
+basic_counts = PackedInt32Array(4)
+interval = 10
+limit = 4
+range = 10
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5544.00, 5.412, -5320.00)
+
+[node name="Spawn_RiverBank3" type="RoseSpawnSpot" parent="Block_33_31/Spawns" unique_id=1285407232]
+basic_monster_ids = PackedInt32Array(5)
+basic_counts = PackedInt32Array(4)
+interval = 10
+limit = 4
+range = 10
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5397.17, 7.762, -5407.83)
+
+[node name="Spawn_RiverBank4" type="RoseSpawnSpot" parent="Block_33_31/Spawns" unique_id=1571585436]
+basic_monster_ids = PackedInt32Array(5)
+basic_counts = PackedInt32Array(4)
+interval = 10
+limit = 4
+range = 10
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5387.27, 7.523, -5337.07)
+
+[node name="Spawn_RiverBank5" type="RoseSpawnSpot" parent="Block_34_32/Spawns" unique_id=1674381231]
+basic_monster_ids = PackedInt32Array(5)
+basic_counts = PackedInt32Array(4)
+interval = 10
+limit = 4
+range = 10
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5571.59, 4.000, -5243.11)
+
+[node name="Spawn_TwinRivers1" type="RoseSpawnSpot" parent="Block_34_32/Spawns" unique_id=2083950977]
+basic_monster_ids = PackedInt32Array(12, 5)
+basic_counts = PackedInt32Array(3, 1)
+interval = 10
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5450.00, 21.295, -5250.00)
+
+[node name="Spawn_TwinRivers2" type="RoseSpawnSpot" parent="Block_33_32/Spawns" unique_id=1023441589]
+basic_monster_ids = PackedInt32Array(12, 5)
+basic_counts = PackedInt32Array(3, 1)
+interval = 10
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5370.00, 5.000, -5235.00)
+
+[node name="Spawn_TwinRivers3" type="RoseSpawnSpot" parent="Block_33_31/Spawns" unique_id=1620665330]
+basic_monster_ids = PackedInt32Array(12, 5)
+basic_counts = PackedInt32Array(3, 1)
+interval = 10
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5330.00, 8.628, -5300.00)
+
+[node name="Spawn_TwinRivers4" type="RoseSpawnSpot" parent="Block_34_32/Spawns" unique_id=1997484781]
+basic_monster_ids = PackedInt32Array(12, 5)
+basic_counts = PackedInt32Array(3, 1)
+interval = 10
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5488.27, 3.276, -5199.00)
+
+[node name="Spawn_TwinRiversWest" type="RoseSpawnSpot" parent="Block_33_31/Spawns" unique_id=204024831]
+basic_monster_ids = PackedInt32Array(41)
+basic_counts = PackedInt32Array(3)
+interval = 10
+limit = 3
+range = 10
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5300.00, 1.139, -5355.00)
+
+[node name="Spawn_Terraces1" type="RoseSpawnSpot" parent="Block_32_30/Spawns" unique_id=1339408069]
+basic_monster_ids = PackedInt32Array(41, 42)
+basic_counts = PackedInt32Array(3, 1)
+interval = 10
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5260.00, 32.927, -5478.00)
+
+[node name="Spawn_Terraces2" type="RoseSpawnSpot" parent="Block_32_30/Spawns" unique_id=1992722061]
+basic_monster_ids = PackedInt32Array(42, 41)
+basic_counts = PackedInt32Array(2, 2)
+interval = 10
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5222.00, 32.370, -5455.00)
+
+[node name="Spawn_Terraces3" type="RoseSpawnSpot" parent="Block_33_30/Spawns" unique_id=145781250]
+basic_monster_ids = PackedInt32Array(41, 42)
+basic_counts = PackedInt32Array(3, 1)
+interval = 10
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5290.00, 29.754, -5468.00)
+
+[node name="Spawn_Terraces4" type="RoseSpawnSpot" parent="Block_32_31/Spawns" unique_id=1366061483]
+basic_monster_ids = PackedInt32Array(42, 41)
+basic_counts = PackedInt32Array(2, 2)
+interval = 10
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5180.00, 8.000, -5420.00)
+
+[node name="Spawn_Terraces5" type="RoseSpawnSpot" parent="Block_32_30/Spawns" unique_id=666876625]
+basic_monster_ids = PackedInt32Array(41, 42)
+basic_counts = PackedInt32Array(3, 1)
+interval = 10
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5205.00, 33.165, -5480.00)
+
+[node name="Spawn_Terraces6" type="RoseSpawnSpot" parent="Block_32_31/Spawns" unique_id=767182803]
+basic_monster_ids = PackedInt32Array(42, 41)
+basic_counts = PackedInt32Array(2, 2)
+interval = 10
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5150.00, 6.287, -5395.00)
+
+[node name="Spawn_GatehillBees1" type="RoseSpawnSpot" parent="Block_32_30/Spawns" unique_id=1005204331]
+basic_monster_ids = PackedInt32Array(301)
+basic_counts = PackedInt32Array(3)
+interval = 12
+limit = 3
+range = 10
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5179.20, 7.578, -5556.55)
+
+[node name="Spawn_GatehillBees2" type="RoseSpawnSpot" parent="Block_32_30/Spawns" unique_id=508307115]
+basic_monster_ids = PackedInt32Array(301)
+basic_counts = PackedInt32Array(3)
+interval = 12
+limit = 3
+range = 10
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5255.00, 19.563, -5545.00)
+
+[node name="Spawn_GatehillBees3" type="RoseSpawnSpot" parent="Block_33_30/Spawns" unique_id=487687631]
+basic_monster_ids = PackedInt32Array(301)
+basic_counts = PackedInt32Array(3)
+interval = 12
+limit = 3
+range = 10
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5410.00, 14.203, -5470.00)
+
+[node name="Spawn_GatehillFlanae" type="RoseSpawnSpot" parent="Block_31_31/Spawns" unique_id=339589888]
+basic_monster_ids = PackedInt32Array(42)
+basic_counts = PackedInt32Array(3)
+interval = 12
+limit = 3
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5056.89, 6.500, -5438.41)
+
+[node name="Spawn_GatehillMothers1" type="RoseSpawnSpot" parent="Block_31_31/Spawns" unique_id=1351604772]
+basic_monster_ids = PackedInt32Array(13)
+basic_counts = PackedInt32Array(3)
+interval = 12
+limit = 3
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5052.00, 9.698, -5390.00)
+
+[node name="Spawn_GatehillMothers2" type="RoseSpawnSpot" parent="Block_33_30/Spawns" unique_id=1239975588]
+basic_monster_ids = PackedInt32Array(13)
+basic_counts = PackedInt32Array(3)
+interval = 12
+limit = 3
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5400.00, 13.000, -5440.00)
+
+[node name="Spawn_GatehillMothers3" type="RoseSpawnSpot" parent="Block_31_30/Spawns" unique_id=1665268099]
+basic_monster_ids = PackedInt32Array(13)
+basic_counts = PackedInt32Array(3)
+interval = 12
+limit = 3
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5019.80, 15.910, -5499.80)
+
+[node name="Spawn_BrambleFord1" type="RoseSpawnSpot" parent="Block_32_32/Spawns" unique_id=1762049555]
+basic_monster_ids = PackedInt32Array(15, 13)
+basic_counts = PackedInt32Array(2, 2)
+interval = 12
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5230.00, 5.842, -5240.00)
+
+[node name="Spawn_BrambleFord2" type="RoseSpawnSpot" parent="Block_32_32/Spawns" unique_id=2140610490]
+basic_monster_ids = PackedInt32Array(15, 13)
+basic_counts = PackedInt32Array(3, 1)
+interval = 12
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5215.00, 1.995, -5150.00)
+
+[node name="Spawn_BrambleFord3" type="RoseSpawnSpot" parent="Block_32_32/Spawns" unique_id=1316147732]
+basic_monster_ids = PackedInt32Array(15, 13)
+basic_counts = PackedInt32Array(2, 2)
+interval = 12
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5150.00, 4.155, -5215.00)
+
+[node name="Spawn_BrambleFord4" type="RoseSpawnSpot" parent="Block_31_32/Spawns" unique_id=1599771030]
+basic_monster_ids = PackedInt32Array(15, 13)
+basic_counts = PackedInt32Array(3, 1)
+interval = 12
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5050.95, 7.797, -5224.00)
+
+[node name="Spawn_BrambleFord5" type="RoseSpawnSpot" parent="Block_31_31/Spawns" unique_id=801011183]
+basic_monster_ids = PackedInt32Array(15, 13)
+basic_counts = PackedInt32Array(2, 2)
+interval = 12
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5045.59, 58.122, -5309.00)
+
+[node name="Spawn_BrambleFord6" type="RoseSpawnSpot" parent="Block_32_32/Spawns" unique_id=1414957114]
+basic_monster_ids = PackedInt32Array(15, 13)
+basic_counts = PackedInt32Array(3, 1)
+interval = 12
+limit = 4
+range = 12
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5253.00, 15.925, -5189.80)
+
+[node name="Spawn_JellyKing" type="RoseSpawnSpot" parent="Block_32_32/Spawns" unique_id=819005800]
+basic_monster_ids = PackedInt32Array(203)
+basic_counts = PackedInt32Array(1)
+interval = 180
+limit = 1
+range = 4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5122.00, 2.497, -5272.00)
+
+[node name="Spawn_Butterflies1" type="RoseSpawnSpot" parent="Block_35_32/Spawns" unique_id=654933201]
+basic_monster_ids = PackedInt32Array(8)
+basic_counts = PackedInt32Array(2)
+interval = 20
+limit = 2
+range = 16
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5600.00, 5.817, -5260.00)
+
+[node name="Spawn_Butterflies2" type="RoseSpawnSpot" parent="Block_35_31/Spawns" unique_id=496106493]
+basic_monster_ids = PackedInt32Array(9)
+basic_counts = PackedInt32Array(2)
+interval = 20
+limit = 2
+range = 16
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5730.00, 3.818, -5300.00)
+
+[node name="Spawn_Butterflies3" type="RoseSpawnSpot" parent="Block_33_31/Spawns" unique_id=944343736]
+basic_monster_ids = PackedInt32Array(10)
+basic_counts = PackedInt32Array(2)
+interval = 20
+limit = 2
+range = 16
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5360.00, 3.167, -5370.00)
+
+[node name="Spawn_Butterflies4" type="RoseSpawnSpot" parent="Block_32_31/Spawns" unique_id=771029309]
+basic_monster_ids = PackedInt32Array(316)
+basic_counts = PackedInt32Array(2)
+interval = 20
+limit = 2
+range = 16
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5240.00, 7.000, -5330.00)
+
+[node name="Spawn_Fireflies1" type="RoseSpawnSpot" parent="Block_35_33/Spawns" unique_id=2034307425]
+basic_monster_ids = PackedInt32Array(315)
+basic_counts = PackedInt32Array(2)
+interval = 20
+limit = 2
+range = 14
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5638.00, 14.675, -5103.46)
+
+[node name="Spawn_Fireflies2" type="RoseSpawnSpot" parent="Block_34_32/Spawns" unique_id=1777420065]
+basic_monster_ids = PackedInt32Array(315)
+basic_counts = PackedInt32Array(2)
+interval = 20
+limit = 2
+range = 14
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5594.00, 3.951, -5170.00)
+
+[node name="Spawn_PondFish" type="RoseSpawnSpot" parent="Block_34_32/Spawns" unique_id=1969837642]
+basic_monster_ids = PackedInt32Array(319, 320)
+basic_counts = PackedInt32Array(1, 1)
+interval = 30
+limit = 2
+range = 5
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5499.36, -7.072, -5147.95)
+
+[node name="Npc_1039" type="RoseNpcSpot" parent="Block_36_31/Npcs" unique_id=1497745657]
+npc_id = 1039
+quest_file = "EM22-009.con"
+transform = Transform3D(0.481919, 0, -0.876216, 0, 1, 0, 0.876216, 0, 0.481919, 5840.000, 5.000, -5302.000)
+
+[node name="Npc_1046" type="RoseNpcSpot" parent="Block_36_30/Npcs" unique_id=405422407]
+npc_id = 1046
+quest_file = "EM22-016.con"
+transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 5784.000, 3.062, -5452.000)
+
+[node name="Npc_1040" type="RoseNpcSpot" parent="Block_35_31/Npcs" unique_id=1872159252]
+npc_id = 1040
+quest_file = "EM22-010.con"
+transform = Transform3D(0.664364, 0, -0.747409, 0, 1, 0, 0.747409, 0, 0.664364, 5708.000, 30.941, -5396.000)
+
+[node name="Npc_1047" type="RoseNpcSpot" parent="Block_35_33/Npcs" unique_id=1533446972]
+npc_id = 1047
+quest_file = "EM22-017.con"
+transform = Transform3D(0.759257, 0, -0.650791, 0, 1, 0, 0.650791, 0, 0.759257, 5652.000, 15.000, -5072.000)
+
+[node name="Npc_1041" type="RoseNpcSpot" parent="Block_34_31/Npcs" unique_id=497345393]
+npc_id = 1041
+quest_file = "EM22-011.con"
+transform = Transform3D(0.928477, 0, 0.371391, 0, 1, 0, -0.371391, 0, 0.928477, 5462.000, 6.500, -5370.000)
+
+[node name="Npc_1042" type="RoseNpcSpot" parent="Block_34_31/Npcs" unique_id=1027519057]
+npc_id = 1042
+quest_file = "EM22-012.con"
+transform = Transform3D(-0.274721, 0, 0.961524, 0, 1, 0, -0.961524, 0, -0.274721, 5448.000, 6.500, -5356.000)
+
+[node name="Npc_1043" type="RoseNpcSpot" parent="Block_34_31/Npcs" unique_id=205495368]
+npc_id = 1043
+quest_file = "EM22-013.con"
+transform = Transform3D(-0.21693, 0, -0.976187, 0, 1, 0, 0.976187, 0, -0.21693, 5488.000, 6.533, -5356.000)
+
+[node name="Npc_1044" type="RoseNpcSpot" parent="Block_32_32/Npcs" unique_id=1242067385]
+npc_id = 1044
+quest_file = "EM22-014.con"
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 5208.000, 1.428, -5196.000)
+
+[node name="Npc_1045" type="RoseNpcSpot" parent="Block_32_32/Npcs" unique_id=2035365583]
+npc_id = 1045
+quest_file = "EM22-015.con"
+transform = Transform3D(0.737154, 0, -0.675725, 0, 1, 0, 0.675725, 0, 0.737154, 5188.000, 1.611, -5124.000)
+
+[node name="Ap_166" parent="Block_35_32/Decorations" unique_id=169287123 instance=ExtResource("ap22_1")]
+transform = Transform3D(0.344146, 0, 0.491491, 0, 0.6, 0, -0.491491, 0, 0.344146, 5726.000, 0.642, -5176.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_157" parent="Block_35_32/Decorations" unique_id=1000625411 instance=ExtResource("ap22_2")]
+transform = Transform3D(0.657785, 0, 0.239414, 0, 0.7, 0, -0.239414, 0, 0.657785, 5744.000, 1.373, -5190.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_208" parent="Block_35_32/Decorations" unique_id=2086596099 instance=ExtResource("ap22_3")]
+transform = Transform3D(1.52169, 0, -0.494427, 0, 1.6, 0, 0.494427, 0, 1.52169, 5717.315, 3.006, -5244.326)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_208_2" parent="Block_35_32/Decorations" unique_id=640273944 instance=ExtResource("ap22_3")]
+transform = Transform3D(0.940456, 0, -1.294427, 0, 1.6, 0, 1.294427, 0, 0.940456, 5712.229, 3.654, -5251.326)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_208_3" parent="Block_35_32/Decorations" unique_id=1187227354 instance=ExtResource("ap22_3")]
+transform = Transform3D(0, 0, -1.6, 0, 1.6, 0, 1.6, 0, 0, 5704.000, 3.434, -5254.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_208_4" parent="Block_35_32/Decorations" unique_id=710475788 instance=ExtResource("ap22_3")]
+transform = Transform3D(-0.940456, 0, -1.294427, 0, 1.6, 0, 1.294427, 0, -0.940456, 5695.771, 3.227, -5251.326)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_208_5" parent="Block_35_32/Decorations" unique_id=1210918303 instance=ExtResource("ap22_3")]
+transform = Transform3D(-1.52169, 0, -0.494427, 0, 1.6, 0, 0.494427, 0, -1.52169, 5690.685, 2.850, -5244.326)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_208_6" parent="Block_35_32/Decorations" unique_id=1994592510 instance=ExtResource("ap22_3")]
+transform = Transform3D(-1.52169, 0, 0.494427, 0, 1.6, 0, -0.494427, 0, -1.52169, 5690.685, 3.492, -5235.674)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_208_7" parent="Block_35_32/Decorations" unique_id=979270269 instance=ExtResource("ap22_3")]
+transform = Transform3D(-0.940456, 0, 1.294427, 0, 1.6, 0, -1.294427, 0, -0.940456, 5695.771, 3.522, -5228.674)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_208_8" parent="Block_35_32/Decorations" unique_id=953131572 instance=ExtResource("ap22_3")]
+transform = Transform3D(0.940456, 0, 1.294427, 0, 1.6, 0, -1.294427, 0, 0.940456, 5712.229, 2.731, -5228.674)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_208_9" parent="Block_35_32/Decorations" unique_id=1519486322 instance=ExtResource("ap22_3")]
+transform = Transform3D(1.52169, 0, 0.494427, 0, 1.6, 0, -0.494427, 0, 1.52169, 5717.315, 4.037, -5235.674)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_213" parent="Block_35_32/Decorations" unique_id=2085274728 instance=ExtResource("ap22_4")]
+transform = Transform3D(0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, 5700.000, 3.858, -5236.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_213_2" parent="Block_35_32/Decorations" unique_id=2068090509 instance=ExtResource("ap22_4")]
+transform = Transform3D(-0.34202, 0, 0.939693, 0, 1, 0, -0.939693, 0, -0.34202, 5708.000, 3.612, -5245.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_217" parent="Block_35_30/Decorations" unique_id=1309617142 instance=ExtResource("ap22_5")]
+transform = Transform3D(0.35817, 0, 0.82566, 0, 0.9, 0, -0.82566, 0, 0.35817, 5752.000, 0.735, -5472.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_217_2" parent="Block_35_30/Decorations" unique_id=1351110804 instance=ExtResource("ap22_5")]
+transform = Transform3D(-0.631493, 0, 0.641262, 0, 0.9, 0, -0.641262, 0, -0.631493, 5757.000, 0.921, -5480.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_217" parent="Block_36_30/Decorations" unique_id=1335947092 instance=ExtResource("ap22_5")]
+transform = Transform3D(0.888739, 0, 0.141925, 0, 0.9, 0, -0.141925, 0, 0.888739, 5800.000, 1.061, -5440.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_232" parent="Block_36_31/Decorations" unique_id=1266342422 instance=ExtResource("ap22_6")]
+transform = Transform3D(-0.329933, 0, -0.22615, 0, 0.4, 0, 0.22615, 0, -0.329933, 5770.000, 2.502, -5430.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_232" parent="Block_36_30/Decorations" unique_id=1726818339 instance=ExtResource("ap22_6")]
+transform = Transform3D(-0.3942, 0, -0.067868, 0, 0.4, 0, 0.067868, 0, -0.3942, 5795.000, 1.116, -5470.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_232" parent="Block_35_31/Decorations" unique_id=1234388298 instance=ExtResource("ap22_6")]
+transform = Transform3D(-0.185531, 0, -0.35437, 0, 0.4, 0, 0.35437, 0, -0.185531, 5740.000, 2.260, -5420.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_232_2" parent="Block_36_31/Decorations" unique_id=294494283 instance=ExtResource("ap22_6")]
+transform = Transform3D(-0.359037, 0, 0.176331, 0, 0.4, 0, -0.176331, 0, -0.359037, 5780.000, 1.767, -5395.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_232" parent="Block_35_32/Decorations" unique_id=863859250 instance=ExtResource("ap22_6")]
+transform = Transform3D(0.399902, 0, -0.008836, 0, 0.4, 0, 0.008836, 0, 0.399902, 5730.000, 5.534, -5120.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_232" parent="Block_35_33/Decorations" unique_id=1777673383 instance=ExtResource("ap22_6")]
+transform = Transform3D(0.325705, 0, 0.232199, 0, 0.4, 0, -0.232199, 0, 0.325705, 5712.000, 20.814, -5070.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_157" parent="Block_35_31/Decorations" unique_id=965013203 instance=ExtResource("ap22_2")]
+transform = Transform3D(0.779423, 0, 0.45, 0, 0.9, 0, -0.45, 0, 0.779423, 5680.000, 28.593, -5372.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_180" parent="Block_35_31/Decorations" unique_id=224680635 instance=ExtResource("ap22_7")]
+transform = Transform3D(0.772741, 0, -0.207055, 0, 0.8, 0, 0.207055, 0, 0.772741, 5695.000, 28.975, -5392.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_157_2" parent="Block_35_31/Decorations" unique_id=2096095051 instance=ExtResource("ap22_2")]
+transform = Transform3D(0.181173, 0, 0.676148, 0, 0.7, 0, -0.676148, 0, 0.181173, 5674.000, 27.065, -5390.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_237" parent="Block_35_31/Decorations" unique_id=1906424654 instance=ExtResource("152_a3hn6")]
+transform = Transform3D(0.196962, 0, 0.03473, 0, 0.2, 0, -0.03473, 0, 0.196962, 5716.000, 30.762, -5404.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_213" parent="Block_35_33/Decorations" unique_id=1199497613 instance=ExtResource("ap22_4")]
+transform = Transform3D(1.146188, 0, -0.355321, 0, 1.2, 0, 0.355321, 0, 1.146188, 5655.455, 14.850, -5062.141)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_24" parent="Block_35_33/Decorations" unique_id=114512288 instance=ExtResource("ap22_8")]
+transform = Transform3D(0.070664, 0, 0.9975, 0, 1, 0, -0.9975, 0, 0.070664, 5644.141, 14.850, -5073.455)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_26" parent="Block_35_33/Decorations" unique_id=2023072471 instance=ExtResource("ap22_9")]
+transform = Transform3D(0.821511, 0, 0.570193, 0, 1, 0, -0.570193, 0, 0.821511, 5628.686, 15.705, -5069.314)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_213_2" parent="Block_35_33/Decorations" unique_id=164752576 instance=ExtResource("ap22_4")]
+transform = Transform3D(0.347923, 0, 0.937523, 0, 1, 0, -0.937523, 0, 0.347923, 5624.545, 14.849, -5053.859)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_24_2" parent="Block_35_33/Decorations" unique_id=849769821 instance=ExtResource("ap22_8")]
+transform = Transform3D(-0.861654, 0, -0.259909, 0, 0.9, 0, 0.259909, 0, -0.861654, 5635.859, 14.850, -5042.545)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_26_2" parent="Block_35_33/Decorations" unique_id=2053725873 instance=ExtResource("ap22_9")]
+transform = Transform3D(0.345815, 0, 0.721396, 0, 0.8, 0, -0.721396, 0, 0.345815, 5651.314, 14.668, -5046.686)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_189" parent="Block_34_31/Decorations" unique_id=867098666 instance=ExtResource("ap22_10")]
+transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, 5483.651, 5.962, -5374.500)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_189_2" parent="Block_34_31/Decorations" unique_id=1451933028 instance=ExtResource("ap22_10")]
+transform = Transform3D(-0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866025, 5474.500, 6.145, -5383.651)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_189_3" parent="Block_34_31/Decorations" unique_id=510728441 instance=ExtResource("ap22_10")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 5462.000, 6.263, -5387.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_189_4" parent="Block_34_31/Decorations" unique_id=1052591265 instance=ExtResource("ap22_10")]
+transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 5449.500, 6.276, -5383.651)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_189_5" parent="Block_34_31/Decorations" unique_id=179403729 instance=ExtResource("ap22_10")]
+transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, 5440.349, 6.124, -5374.500)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_189_6" parent="Block_34_31/Decorations" unique_id=234901793 instance=ExtResource("ap22_10")]
+transform = Transform3D(0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, 5440.349, 6.353, -5349.500)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_189_7" parent="Block_34_31/Decorations" unique_id=1249875495 instance=ExtResource("ap22_10")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 5449.500, 6.354, -5340.349)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_200" parent="Block_34_31/Decorations" unique_id=389037828 instance=ExtResource("ap22_11")]
+transform = Transform3D(-1.31557, 0, -0.478828, 0, 1.4, 0, 0.478828, 0, -1.31557, 5478.000, 5.928, -5384.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_160" parent="Block_34_31/Decorations" unique_id=1809197877 instance=ExtResource("ap22_12")]
+transform = Transform3D(-0.6, 0, 0, 0, 0.6, 0, 0, 0, -0.6, 5444.000, 5.901, -5382.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_192" parent="Block_34_31/Decorations" unique_id=1772550595 instance=ExtResource("ap22_13")]
+transform = Transform3D(0.676148, 0, 0.181173, 0, 0.7, 0, -0.181173, 0, 0.676148, 5480.000, 6.878, -5340.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_191" parent="Block_34_31/Decorations" unique_id=1489588580 instance=ExtResource("ap22_14")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 5466.000, 6.350, -5356.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_169" parent="Block_32_30/Decorations" unique_id=1687081448 instance=ExtResource("ap22_15")]
+transform = Transform3D(1.181769, 0, 0.208378, 0, 1.2, 0, -0.208378, 0, 1.181769, 5232.000, 34.519, -5476.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_168" parent="Block_32_30/Decorations" unique_id=532734005 instance=ExtResource("ap22_16")]
+transform = Transform3D(0.9, 0, 0, 0, 0.891241, -0.125256, 0, 0.125256, 0.891241, 5226.000, 33.779, -5486.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_167" parent="Block_32_30/Decorations" unique_id=1507842563 instance=ExtResource("ap22_17")]
+transform = Transform3D(0.612836, 0, 0.51423, 0, 0.8, 0, -0.51423, 0, 0.612836, 5240.000, 32.745, -5490.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_191" parent="Block_32_30/Decorations" unique_id=1589610497 instance=ExtResource("ap22_14")]
+transform = Transform3D(0.779423, 0, 0.45, 0, 0.9, 0, -0.45, 0, 0.779423, 5246.000, 33.151, -5462.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_208" parent="Block_32_30/Decorations" unique_id=316893250 instance=ExtResource("ap22_3")]
+transform = Transform3D(0, 0, 1.6, 0, 1.6, 0, -1.6, 0, 0, 5214.000, 32.816, -5468.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_208_2" parent="Block_32_30/Decorations" unique_id=211866897 instance=ExtResource("ap22_3")]
+transform = Transform3D(1.6, 0, 0, 0, 1.565036, -0.332659, 0, 0.332659, 1.565036, 5270.000, 31.196, -5460.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_208" parent="Block_33_30/Decorations" unique_id=518875157 instance=ExtResource("ap22_3")]
+transform = Transform3D(0.277837, 0, 1.575692, 0, 1.6, 0, -1.575692, 0, 0.277837, 5282.000, 30.084, -5482.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_208_3" parent="Block_32_30/Decorations" unique_id=982071683 instance=ExtResource("ap22_3")]
+transform = Transform3D(1.503508, 0.141634, 0.528586, 0, 1.545481, -0.41411, -0.547232, 0.389137, 1.452277, 5200.000, 30.947, -5440.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_26" parent="Block_32_30/Decorations" unique_id=416899586 instance=ExtResource("ap22_9")]
+transform = Transform3D(0.792376, 0, 0.762981, 0, 1.1, 0, -0.762981, 0, 0.792376, 5150.000, 40.998, -5500.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_26_2" parent="Block_32_30/Decorations" unique_id=1089079304 instance=ExtResource("ap22_9")]
+transform = Transform3D(0.967298, 0, -0.52377, 0, 1.1, 0, 0.52377, 0, 0.967298, 5170.000, 43.527, -5530.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_26" parent="Block_33_30/Decorations" unique_id=357838652 instance=ExtResource("ap22_9")]
+transform = Transform3D(1.05969, 0, 0.295055, 0, 1.1, 0, -0.295055, 0, 1.05969, 5300.000, 38.778, -5520.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_26_2" parent="Block_33_30/Decorations" unique_id=1225185861 instance=ExtResource("ap22_9")]
+transform = Transform3D(-1.099953, 0, 0.010148, 0, 1.1, 0, -0.010148, 0, -1.099953, 5330.000, 13.876, -5490.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_26" parent="Block_31_30/Decorations" unique_id=710324635 instance=ExtResource("ap22_9")]
+transform = Transform3D(0.724486, 0, 0.82772, 0, 1.1, 0, -0.82772, 0, 0.724486, 5090.000, 34.728, -5470.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_26_3" parent="Block_33_30/Decorations" unique_id=1697036870 instance=ExtResource("ap22_9")]
+transform = Transform3D(1.098351, 0, -0.060208, 0, 1.1, 0, 0.060208, 0, 1.098351, 5380.000, 46.756, -5520.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_24" parent="Block_32_30/Decorations" unique_id=1122572424 instance=ExtResource("ap22_8")]
+transform = Transform3D(0.629365, 0, -0.77711, 0, 1, 0, 0.77711, 0, 0.629365, 5130.000, 9.737, -5480.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_24_2" parent="Block_32_30/Decorations" unique_id=1481406910 instance=ExtResource("ap22_8")]
+transform = Transform3D(-0.142431, 0, -0.989805, 0, 1, 0, 0.989805, 0, -0.142431, 5200.000, 21.662, -5540.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_24" parent="Block_33_30/Decorations" unique_id=1784001757 instance=ExtResource("ap22_8")]
+transform = Transform3D(-0.223743, 0, -0.974648, 0, 1, 0, 0.974648, 0, -0.223743, 5280.000, 32.303, -5500.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_24_2" parent="Block_33_30/Decorations" unique_id=1834552507 instance=ExtResource("ap22_8")]
+transform = Transform3D(0.767401, 0, 0.641168, 0, 1, 0, -0.641168, 0, 0.767401, 5360.000, 12.293, -5470.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_24" parent="Block_31_30/Decorations" unique_id=2124492607 instance=ExtResource("ap22_8")]
+transform = Transform3D(-0.776851, 0, -0.629684, 0, 1, 0, 0.629684, 0, -0.776851, 5070.000, 53.292, -5500.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_24_3" parent="Block_32_30/Decorations" unique_id=501216593 instance=ExtResource("ap22_8")]
+transform = Transform3D(0.731193, 0, 0.682171, 0, 1, 0, -0.682171, 0, 0.731193, 5240.000, 32.488, -5560.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_222" parent="Block_32_30/Decorations" unique_id=1462743354 instance=ExtResource("ap22_18")]
+transform = Transform3D(-1, 0, -0.000053, 0, 1, 0, 0.000053, 0, -1, 5190.000, 17.296, -5560.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_222_2" parent="Block_32_30/Decorations" unique_id=308844099 instance=ExtResource("ap22_18")]
+transform = Transform3D(0.920111, 0, 0.391659, 0, 1, 0, -0.391659, 0, 0.920111, 5262.000, 8.840, -5550.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_222" parent="Block_33_30/Decorations" unique_id=1586226295 instance=ExtResource("ap22_18")]
+transform = Transform3D(0.474144, 0, 0.880447, 0, 1, 0, -0.880447, 0, 0.474144, 5415.000, 13.777, -5475.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_200" parent="Block_33_30/Decorations" unique_id=1381817040 instance=ExtResource("ap22_11")]
+transform = Transform3D(-1.299038, 0, 0.75, 0, 1.5, 0, -0.75, 0, -1.299038, 5400.000, 17.333, -5495.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_237" parent="Block_32_32/Decorations" unique_id=1032865308 instance=ExtResource("152_a3hn6")]
+transform = Transform3D(0.24432, 0.009295, 0.088438, 0, 0.258576, -0.027177, -0.088925, 0.025538, 0.242982, 5190.000, 1.444, -5194.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_237_2" parent="Block_32_32/Decorations" unique_id=1603116749 instance=ExtResource("152_a3hn6")]
+transform = Transform3D(0.05694, -0.029575, 0.210436, 0, 0.217859, 0.030618, -0.212504, -0.007925, 0.056386, 5207.000, 1.440, -5172.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_213" parent="Block_32_32/Decorations" unique_id=677665990 instance=ExtResource("ap22_4")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 5196.000, 1.450, -5186.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_213_2" parent="Block_32_32/Decorations" unique_id=480789216 instance=ExtResource("ap22_4")]
+transform = Transform3D(-0.069725, 0, 0.796956, 0, 0.8, 0, -0.796956, 0, -0.069725, 5199.000, 1.450, -5181.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_217" parent="Block_32_32/Decorations" unique_id=189908933 instance=ExtResource("ap22_5")]
+transform = Transform3D(0.68944, 0.100457, 0.56972, 0, 0.886327, -0.156283, -0.578509, 0.11972, 0.678966, 5214.000, 1.476, -5188.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_24" parent="Block_32_32/Decorations" unique_id=509256842 instance=ExtResource("ap22_8")]
+transform = Transform3D(0.798186, 0, 0.415812, 0, 0.9, 0, -0.415812, 0, 0.798186, 5182.000, 1.451, -5178.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_224" parent="Block_31_31/Decorations" unique_id=856513441 instance=ExtResource("166_hdr43")]
+transform = Transform3D(-1.385641, 0, 0.8, 0, 1.6, 0, -0.8, 0, -1.385641, 5110.000, 3.629, -5284.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_26" parent="Block_32_31/Decorations" unique_id=564601684 instance=ExtResource("ap22_9")]
+transform = Transform3D(-0.432391, 0, -0.901686, 0, 1, 0, 0.901686, 0, -0.432391, 5136.000, 3.953, -5282.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_26" parent="Block_31_32/Decorations" unique_id=1145042466 instance=ExtResource("ap22_9")]
+transform = Transform3D(-0.879038, 0, -0.193111, 0, 0.9, 0, 0.193111, 0, -0.879038, 5108.000, 3.188, -5258.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_24_2" parent="Block_32_32/Decorations" unique_id=487950394 instance=ExtResource("ap22_8")]
+transform = Transform3D(0.666932, 0, -0.745119, 0, 1, 0, 0.745119, 0, 0.666932, 5132.000, 2.201, -5258.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_189" parent="Block_32_33/Decorations" unique_id=150072884 instance=ExtResource("ap22_10")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5146.000, -6.216, -5112.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_189_2" parent="Block_32_33/Decorations" unique_id=693490234 instance=ExtResource("ap22_10")]
+transform = Transform3D(0.984808, 0, 0.173648, 0, 1, 0, -0.173648, 0, 0.984808, 5196.000, -0.249, -5110.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Ap_180" parent="Block_32_33/Decorations" unique_id=1716049819 instance=ExtResource("ap22_7")]
+transform = Transform3D(-0.8, 0, 0, 0, 0.8, 0, 0, 0, -0.8, 5162.000, 0.578, -5118.000)
+tint = Color(0.92, 0.87, 0.66, 1)
+
+[node name="Event_restore_1" type="RoseZoneEvent" parent="Events" unique_id=309066524]
 event_name = "restore"
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5752.08, 3.64, -5108.01)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5748.00, 1.519, -5182.00)
+
+[node name="Event_restore_2" type="RoseZoneEvent" parent="Events" unique_id=1347519854]
+event_name = "restore"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5466.00, 6.800, -5352.00)
+
+[node name="Event_restore_3" type="RoseZoneEvent" parent="Events" unique_id=1109232794]
+event_name = "restore"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5125.00, 11.033, -5490.00)
+
+[node name="Event_restore_4" type="RoseZoneEvent" parent="Events" unique_id=1428097730]
+event_name = "restore"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5345.00, 10.117, -5480.00)
+
+[node name="Event_restore_5" type="RoseZoneEvent" parent="Events" unique_id=546061051]
+event_name = "restore"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5190.00, 1.300, -5148.00)

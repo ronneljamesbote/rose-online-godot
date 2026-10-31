@@ -53,77 +53,54 @@ drops:
   slots_of_30: 0.6
 - item: '[[items/hands/3-leather-gloves|Leather Gloves]]'
   slots_of_30: 0.6
+quests:
+- '[[quests/2205-ford-watch|Ford Watch]]'
 spawns:
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5260.4
-  y: 5363.6
-  count: 2
+  x: 5397.17
+  y: 5407.83
+  count: 4
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5335.4
-  y: 5371.2
+  x: 5387.27
+  y: 5337.07
+  count: 4
+  group: basic
+- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
+  x: 5330
+  y: 5300
   count: 1
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5320.2
-  y: 5331.5
-  count: 2
+  x: 5537
+  y: 5398.86
+  count: 4
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5296.6
-  y: 5332.9
-  count: 2
+  x: 5544
+  y: 5320
+  count: 4
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5346.3
-  y: 5337.4
+  x: 5370
+  y: 5235
   count: 1
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5346.3
-  y: 5337.4
-  count: 2
+  x: 5571.59
+  y: 5243.11
+  count: 4
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5480.4
-  y: 5378.7
-  count: 2
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5575.2
-  y: 5319
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5496.2
-  y: 5398.8
-  count: 2
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5608.5
-  y: 5294.6
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5629.5
-  y: 5348.9
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5792.3
-  y: 5439.4
+  x: 5450
+  y: 5250
   count: 1
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5204.5
-  y: 5221.1
+  x: 5488.27
+  y: 5199
   count: 1
   group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5665.1
-  y: 5279.8
-  count: 1
-  group: reinforcements
 source:
   data: godot/data/monsters/5-red-jelly-bean.tres, drop table godot/data/drop_tables/103-red-jelly-bean.tres
   code:
@@ -136,3 +113,7 @@ Speeds are in centimetres per second, attack range in metres. Spawn positions ar
 HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].
+
+## Changed from iROSE
+
+The Adventurer's Plain redesign moved its spawn points there (see [[zones/22-adventurer-s-plain|Adventurer's Plain]]). Its kills also count for [[quests/2205-ford-watch|Ford Watch]].

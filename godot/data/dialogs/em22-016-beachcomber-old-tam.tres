@@ -1,0 +1,87 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://oav3i00mpr1dm"]
+
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2203-11.tres" id="x_9d297b"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1d4e3e"]
+text = "Bones, shells, bottles. The sea gives back everything in the end, if you wait long enough."
+next_menu = 1
+resource_name = "NPC: Bones, shells, bottles. The sea gives back every…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_76540b"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1d4e3e")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_5a5af0"]
+step = ExtResource("x_9d297b")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2b988b"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_5a5af0")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_4942e5"]
+step = ExtResource("x_9d297b")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_174ab9"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_4942e5")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6ec8d6"]
+kind = "Answer"
+text = "Wade sent me to find the whale bones."
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_2b988b")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_174ab9")])
+resource_name = "You: Wade sent me to find the whale bones."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_9e16b7"]
+kind = "Answer"
+text = "What happened to the whale?"
+next_menu = 4
+resource_name = "You: What happened to the whale?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_af1f36"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_c3b4fa"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6ec8d6"), SubResource("RoseDialogLine_9e16b7"), SubResource("RoseDialogLine_af1f36")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_451121"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8de2c8"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_e8e6b7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_451121"), SubResource("RoseDialogLine_8de2c8")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cfd17a"]
+text = "Wade sent you? Ha. Here, take this tooth. I carved a gull on it. Tell him the old whale is still here, and so am I."
+next_menu = 2
+resource_name = "NPC: Wade sent you? Ha. Here, take this tooth. I carv…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_644146"]
+lines = Array[Resource]([SubResource("RoseDialogLine_cfd17a")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d8d3af"]
+text = "Washed up before the village had a jetty. The Mini-Jelly Beans like the shade under its ribs. Mind them, they bite more than they look."
+next_menu = 2
+resource_name = "NPC: Washed up before the village had a jetty. The Mi…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_e5f56c"]
+lines = Array[Resource]([SubResource("RoseDialogLine_d8d3af")])
+resource_name = "Menu 4"
+
+[resource]
+key = "EM22-016.con"
+name = "[Beachcomber] Old Tam"
+menus = Array[Resource]([SubResource("RoseDialogMenu_76540b"), SubResource("RoseDialogMenu_c3b4fa"), SubResource("RoseDialogMenu_e8e6b7"), SubResource("RoseDialogMenu_644146"), SubResource("RoseDialogMenu_e5f56c")])

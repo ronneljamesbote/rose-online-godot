@@ -3,6 +3,8 @@
 [ext_resource type="RoseQuest" uid="uid://c3if5ockng008" path="res://data/quests/5035-stockpiling-on-flanae-petals.tres" id="1_dj5q5"]
 [ext_resource type="RoseItemQuest" uid="uid://mr72bwunelet" path="res://data/items/quest/806-flanae-petal.tres" id="2_pju8s"]
 
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2206-31.tres" id="ap_next"]
+
 [sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_fgu1v"]
 quest = ExtResource("1_dj5q5")
 
@@ -31,7 +33,11 @@ variable = 9
 operator = "Add"
 value = 1
 
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_ap3c7b0f"]
+trigger = "2206-31"
+
 [resource]
 name = "5035-32"
 conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_fgu1v"), SubResource("RoseConditionRandomPercent_iywif"), SubResource("RoseConditionQuestItem_37a3m"), SubResource("RoseConditionAbilityValue_q256s")])
-rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_jbfsh"), SubResource("RoseRewardAddItem_danff"), SubResource("RoseRewardQuestVariable_136ad")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_jbfsh"), SubResource("RoseRewardAddItem_danff"), SubResource("RoseRewardQuestVariable_136ad"), SubResource("RoseRewardTrigger_ap3c7b0f")])
+next_trigger = ExtResource("ap_next")

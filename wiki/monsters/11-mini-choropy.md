@@ -53,74 +53,29 @@ quests:
 - '[[quests/5052-hunting-practice-2|Hunting Practice (2)]]'
 spawns:
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5233.6
-  y: 5226.6
-  count: 2
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5155.9
-  y: 5188.2
-  count: 2
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5206.7
-  y: 5150.9
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5206.7
-  y: 5150.9
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5206.7
-  y: 5150.9
-  count: 2
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5381.5
-  y: 5180.6
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5661.2
-  y: 5193.4
-  count: 2
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5608.5
-  y: 5150.5
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5608.5
-  y: 5150.5
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5689.5
-  y: 5155.6
+  x: 5620
+  y: 5150
   count: 3
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5689.5
-  y: 5155.6
-  count: 1
+  x: 5660
+  y: 5160
+  count: 2
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5633.9
-  y: 5197.8
-  count: 1
+  x: 5565
+  y: 5075
+  count: 3
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5633.9
-  y: 5197.8
-  count: 1
+  x: 5680
+  y: 5115
+  count: 3
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5405.1
-  y: 5107.8
-  count: 1
+  x: 5605
+  y: 5085
+  count: 2
   group: basic
 source:
   data: godot/data/monsters/11-mini-choropy.tres, drop table godot/data/drop_tables/104-mini-choropy.tres
@@ -134,3 +89,7 @@ Speeds are in centimetres per second, attack range in metres. Spawn positions ar
 HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].
+
+## Changed from iROSE
+
+The Adventurer's Plain redesign moved its spawn points there (see [[zones/22-adventurer-s-plain|Adventurer's Plain]]).

@@ -1,0 +1,158 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://kcixvbvgvphnh"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2206-tibbs-farm.tres" id="x_db01bf"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2206-01.tres" id="x_880a04"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2206-02.tres" id="x_4d46b1"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_172a9d"]
+text = "Twenty years I farmed the terraces up the hill. Then the Flanae came up between the rows, and now they're the ones growing."
+next_menu = 1
+resource_name = "NPC: Twenty years I farmed the terraces up the hill. …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fa1036"]
+lines = Array[Resource]([SubResource("RoseDialogLine_172a9d")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_9330c5"]
+quest = ExtResource("x_db01bf")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_a44841"]
+step = ExtResource("x_880a04")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3723e5"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_9330c5"), SubResource("RoseDialogIfQuestStep_a44841")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8e48fa"]
+kind = "Answer"
+text = "About \"Tibbs' Farm\""
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_3723e5")])
+resource_name = "You: About \"Tibbs' Farm\""
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_a98e0b"]
+quest = ExtResource("x_db01bf")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_d47531"]
+step = ExtResource("x_4d46b1")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_99e3c3"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_a98e0b"), SubResource("RoseDialogIfQuestStep_d47531")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7a5fd2"]
+kind = "Answer"
+text = "About \"Tibbs' Farm\""
+next_menu = 6
+show_if = Array[Resource]([SubResource("RoseDialogCase_99e3c3")])
+resource_name = "You: About \"Tibbs' Farm\""
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_f12b17"]
+step = ExtResource("x_4d46b1")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_941eec"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_f12b17")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_4fff42"]
+step = ExtResource("x_4d46b1")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7fa400"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_4fff42")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ffa59d"]
+kind = "Answer"
+text = "\"Tibbs' Farm\": it's done."
+next_menu = 7
+show_if = Array[Resource]([SubResource("RoseDialogCase_941eec")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_7fa400")])
+resource_name = "You: \"Tibbs' Farm\": it's done."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_56f617"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_accebd"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8e48fa"), SubResource("RoseDialogLine_7a5fd2"), SubResource("RoseDialogLine_ffa59d"), SubResource("RoseDialogLine_56f617")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_756468"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8374b9"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2e51c0"]
+lines = Array[Resource]([SubResource("RoseDialogLine_756468"), SubResource("RoseDialogLine_8374b9")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c1b036"]
+text = "If somebody showed me those Flanae can be beaten, I'd go back. Bring me ten petals from the ones on my farm, west of the river."
+next_menu = 4
+resource_name = "NPC: If somebody showed me those Flanae can be beaten…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_9d5de2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c1b036")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_6076a3"]
+step = ExtResource("x_880a04")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_f8f95f"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_6076a3")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_71b8c8"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+on_choose = Array[Resource]([SubResource("RoseDialogCase_f8f95f")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d8bfe9"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_a10e26"]
+lines = Array[Resource]([SubResource("RoseDialogLine_71b8c8"), SubResource("RoseDialogLine_d8bfe9")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e5bfb6"]
+text = "Up the hill west of the post, where the fences are broken. That was my farm."
+next_menu = 2
+resource_name = "NPC: Up the hill west of the post, where the fences a…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_fab3cf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e5bfb6")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c60f7a"]
+text = "Ten Farm Flanae Petals, from the Flanae on the terraces."
+next_menu = 2
+resource_name = "NPC: Ten Farm Flanae Petals, from the Flanae on the t…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_d80827"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c60f7a")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8c67e4"]
+text = "Ten! Maybe there's hope for the old place. Take these bananas, they're the last of my store."
+next_menu = 2
+resource_name = "NPC: Ten! Maybe there's hope for the old place. Take …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_649425"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8c67e4")])
+resource_name = "Menu 7"
+
+[resource]
+key = "EM22-012.con"
+name = "[Farmer] Tibbs"
+menus = Array[Resource]([SubResource("RoseDialogMenu_fa1036"), SubResource("RoseDialogMenu_accebd"), SubResource("RoseDialogMenu_2e51c0"), SubResource("RoseDialogMenu_9d5de2"), SubResource("RoseDialogMenu_a10e26"), SubResource("RoseDialogMenu_fab3cf"), SubResource("RoseDialogMenu_d80827"), SubResource("RoseDialogMenu_649425")])

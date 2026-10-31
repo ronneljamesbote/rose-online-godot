@@ -81,6 +81,7 @@ Then:
 
 - works on [[quests/902-muse-job-change-quest|Muse Job Change Quest]]
 - you get 1 × [[items/quest/106-flanae-seed|Flanae Seed]]
+- then runs step `2206-31` ([[quests/2206-tibbs-farm|Tibbs' Farm]])
 
 If the checks fail, step `5035-31` is tried instead.
 
@@ -98,5 +99,10 @@ Then:
 
 - works on [[quests/902-muse-job-change-quest|Muse Job Change Quest]]
 - you get 1 × [[items/quest/106-flanae-seed|Flanae Seed]]
+- then runs step `2206-31` ([[quests/2206-tibbs-farm|Tibbs' Farm]])
 
 If the checks fail, step `5035-32` is tried instead.
+
+## Changed from iROSE
+
+The Adventurer's Plain redesign made this quest's kill steps also run the matching steps of the plain's new quests, so one kill counts for both.

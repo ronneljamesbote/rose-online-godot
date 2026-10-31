@@ -5,6 +5,7 @@ name: '[Caravan Master] Dorran'
 status: in-game
 zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
 quests:
+- '[[quests/2210-over-the-ridge|Over the Ridge]]'
 - '[[quests/2101-dust-on-the-road|Dust on the Road]]'
 - '[[quests/2104-the-wagon-that-never-came|The Wagon That Never Came]]'
 - '[[quests/2105-stolen-supplies|Stolen Supplies]]'
@@ -57,6 +58,8 @@ it are your choices. See [[rules/npc-dialogs|NPC dialogs]].
       - **You:** I'll take the Luxem Broker Gloves.  *(if quest step `2105-23` passes)*  → runs quest step `2105-23` ([[quests/2105-stolen-supplies|Stolen Supplies]])
         - **NPC:** Wear it well, <NAME>.
       - **You:** Let me think about it.
+  - **You:** "Over the Ridge": Corvel sent me with this emblem.  *(if quest step `2210-02` passes)*  → runs quest step `2210-02` ([[quests/2210-over-the-ridge|Over the Ridge]])
+    - **NPC:** From Riverford? Corvel's seal, and... this emblem. The same patterns we found on the raiders' crates. You did right to bring it here. Rest at the camp, then come and talk to me about the road.
   - **You:** Goodbye.
 
 After an answer the NPC offers "Something else." (back to the first list) and "Goodbye."
@@ -64,3 +67,5 @@ After an answer the NPC offers "Something else." (back to the first list) and "G
 ## Changed from iROSE
 
 A new NPC of the Valley of Luxem Tower redesign, using an existing iROSE model.
+
+The Adventurer's Plain redesign added the "Over the Ridge" answer: [[quests/2210-over-the-ridge|Over the Ridge]] ends here, where the plain's story hands over to this valley's.

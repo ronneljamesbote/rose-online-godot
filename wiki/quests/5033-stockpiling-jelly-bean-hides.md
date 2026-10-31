@@ -96,6 +96,7 @@ Then:
 - works on [[quests/5033-stockpiling-jelly-bean-hides|Stockpiling Jelly Bean Hides]]
 - you get 1 × [[items/quest/804-jelly-bean-hide|Jelly Bean Hide]]
 - add 1 to quest variable 9
+- then runs step `2202-31` ([[quests/2202-jelly-on-the-jetty|Jelly on the Jetty]])
 
 If the checks fail, step `5051-33` is tried instead.
 
@@ -114,3 +115,10 @@ Then:
 - works on [[quests/5033-stockpiling-jelly-bean-hides|Stockpiling Jelly Bean Hides]]
 - you get 1 × [[items/quest/804-jelly-bean-hide|Jelly Bean Hide]]
 - add 1 to quest variable 9
+- then runs step `2204-31` ([[quests/2204-the-humming-stones|The Humming Stones]])
+
+If the checks fail, step `2204-31` ([[quests/2204-the-humming-stones|The Humming Stones]]) is tried instead.
+
+## Changed from iROSE
+
+The Adventurer's Plain redesign made this quest's kill steps also run the matching steps of the plain's new quests, so one kill counts for both.

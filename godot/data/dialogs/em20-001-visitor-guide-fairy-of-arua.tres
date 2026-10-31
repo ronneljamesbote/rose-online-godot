@@ -21,6 +21,57 @@
 [ext_resource type="RoseQuestTrigger" uid="uid://c04gqnkhuu45l" path="res://data/quest_triggers/tutorial/T65.tres" id="19_3j1no"]
 [ext_resource type="RoseQuestTrigger" uid="uid://ddlukac5opsql" path="res://data/quest_triggers/tutorial/T-warp.tres" id="20_tq8r8"]
 
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2201-11.tres" id="ap_deaf0b"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ap842188"]
+text = "Ronway sent you? Then you've met me! I teach Visitors the basics here, and later I'll have hunting practice for you."
+next_menu = 1
+resource_name = "NPC: Ronway sent you? Then you've met me! I teach Vis…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ap6a7354"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ap842188")])
+resource_name = "Menu 81"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_ap28342b"]
+step = ExtResource("ap_deaf0b")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ap2e41cd"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_ap28342b")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ap29c4c2"]
+step = ExtResource("ap_deaf0b")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ap0f3f9d"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_ap29c4c2")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_apf2374d"]
+kind = "Answer"
+text = "Ronway asked me to meet you."
+next_menu = 81
+show_if = Array[Resource]([SubResource("RoseDialogCase_ap2e41cd")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_ap0f3f9d")])
+resource_name = "You: Ronway asked me to meet you."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_apc41fb5"]
+step = ExtResource("ap_deaf0b")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_apa772be"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_apc41fb5")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ap16bef3"]
+step = ExtResource("ap_deaf0b")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ap6bd4c2"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_ap16bef3")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ap0e57bd"]
+kind = "Answer"
+text = "Ronway asked me to meet you."
+next_menu = 81
+show_if = Array[Resource]([SubResource("RoseDialogCase_apa772be")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_ap6bd4c2")])
+resource_name = "You: Ronway asked me to meet you."
+
 [sub_resource type="RoseDialogIfQuestSwitch" id="RoseDialogIfQuestSwitch_ll2tu"]
 switch = 64
 
@@ -69,7 +120,7 @@ next_menu = 8
 resource_name = "You: I don't know what's going on. Would you help me?"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_3p3ty"]
-lines = Array[Resource]([SubResource("RoseDialogLine_t3voq"), SubResource("RoseDialogLine_83kp4"), SubResource("RoseDialogLine_vh2j6")])
+lines = Array[Resource]([SubResource("RoseDialogLine_t3voq"), SubResource("RoseDialogLine_83kp4"), SubResource("RoseDialogLine_vh2j6"), SubResource("RoseDialogLine_apf2374d")])
 resource_name = "Menu 1"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_xhfhk"]
@@ -207,7 +258,7 @@ next_menu = 66
 resource_name = "You: I think I'll learn faster by experiencing things…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jyf16"]
-lines = Array[Resource]([SubResource("RoseDialogLine_5cq4u"), SubResource("RoseDialogLine_n3jsu"), SubResource("RoseDialogLine_qv3i3"), SubResource("RoseDialogLine_qh4cl"), SubResource("RoseDialogLine_u0itp")])
+lines = Array[Resource]([SubResource("RoseDialogLine_5cq4u"), SubResource("RoseDialogLine_n3jsu"), SubResource("RoseDialogLine_qv3i3"), SubResource("RoseDialogLine_qh4cl"), SubResource("RoseDialogLine_u0itp"), SubResource("RoseDialogLine_ap0e57bd")])
 resource_name = "Menu 12"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_qno1v"]
@@ -1203,4 +1254,4 @@ resource_name = "Menu 80"
 [resource]
 key = "EM20-001.con"
 name = "[Visitor Guide] Fairy of Arua"
-menus = Array[Resource]([SubResource("RoseDialogMenu_ammaq"), SubResource("RoseDialogMenu_3p3ty"), SubResource("RoseDialogMenu_2q8js"), SubResource("RoseDialogMenu_ws7ft"), SubResource("RoseDialogMenu_2uqdk"), SubResource("RoseDialogMenu_4uycx"), SubResource("RoseDialogMenu_ifx5k"), SubResource("RoseDialogMenu_1737r"), SubResource("RoseDialogMenu_gvsdl"), SubResource("RoseDialogMenu_d5i8u"), SubResource("RoseDialogMenu_pjrpe"), SubResource("RoseDialogMenu_j8b36"), SubResource("RoseDialogMenu_jyf16"), SubResource("RoseDialogMenu_p6cev"), SubResource("RoseDialogMenu_4rjad"), SubResource("RoseDialogMenu_tvhnf"), SubResource("RoseDialogMenu_fbeao"), SubResource("RoseDialogMenu_ltygi"), SubResource("RoseDialogMenu_v6v7m"), SubResource("RoseDialogMenu_nsn0v"), SubResource("RoseDialogMenu_86uil"), SubResource("RoseDialogMenu_a5ifg"), SubResource("RoseDialogMenu_ux52j"), SubResource("RoseDialogMenu_su3p3"), SubResource("RoseDialogMenu_l3b3r"), SubResource("RoseDialogMenu_qx1x1"), SubResource("RoseDialogMenu_doqgv"), SubResource("RoseDialogMenu_ortvw"), SubResource("RoseDialogMenu_daxkn"), SubResource("RoseDialogMenu_t7yf2"), SubResource("RoseDialogMenu_u4kkt"), SubResource("RoseDialogMenu_g4i1e"), SubResource("RoseDialogMenu_b4ucy"), SubResource("RoseDialogMenu_sqke2"), SubResource("RoseDialogMenu_hfciw"), SubResource("RoseDialogMenu_cr7hm"), SubResource("RoseDialogMenu_r47d6"), SubResource("RoseDialogMenu_1fvrk"), SubResource("RoseDialogMenu_3ware"), SubResource("RoseDialogMenu_43cdg"), SubResource("RoseDialogMenu_tunfp"), SubResource("RoseDialogMenu_skeg5"), SubResource("RoseDialogMenu_dfgbf"), SubResource("RoseDialogMenu_un1id"), SubResource("RoseDialogMenu_r8ti6"), SubResource("RoseDialogMenu_rnf42"), SubResource("RoseDialogMenu_7my5g"), SubResource("RoseDialogMenu_3f577"), SubResource("RoseDialogMenu_7cf0o"), SubResource("RoseDialogMenu_wbfv2"), SubResource("RoseDialogMenu_gqth2"), SubResource("RoseDialogMenu_4yqwo"), SubResource("RoseDialogMenu_ahbd0"), SubResource("RoseDialogMenu_elr3p"), SubResource("RoseDialogMenu_ybana"), SubResource("RoseDialogMenu_lefcw"), SubResource("RoseDialogMenu_1p31f"), SubResource("RoseDialogMenu_f2e6s"), SubResource("RoseDialogMenu_45ggb"), SubResource("RoseDialogMenu_njagf"), SubResource("RoseDialogMenu_ww1vt"), SubResource("RoseDialogMenu_4n7lc"), SubResource("RoseDialogMenu_e64pf"), SubResource("RoseDialogMenu_ntx04"), SubResource("RoseDialogMenu_uuadc"), SubResource("RoseDialogMenu_gft2p"), SubResource("RoseDialogMenu_ahvv1"), SubResource("RoseDialogMenu_5q3uk"), SubResource("RoseDialogMenu_rpwp6"), SubResource("RoseDialogMenu_vxc51"), SubResource("RoseDialogMenu_ktx1c"), SubResource("RoseDialogMenu_1tii7"), SubResource("RoseDialogMenu_vhhr2"), SubResource("RoseDialogMenu_14g1l"), SubResource("RoseDialogMenu_rp6m3"), SubResource("RoseDialogMenu_xw8ke"), SubResource("RoseDialogMenu_3ynkl"), SubResource("RoseDialogMenu_1xbwp"), SubResource("RoseDialogMenu_8je6u"), SubResource("RoseDialogMenu_ebrqa"), SubResource("RoseDialogMenu_dyvul")])
+menus = Array[Resource]([SubResource("RoseDialogMenu_ammaq"), SubResource("RoseDialogMenu_3p3ty"), SubResource("RoseDialogMenu_2q8js"), SubResource("RoseDialogMenu_ws7ft"), SubResource("RoseDialogMenu_2uqdk"), SubResource("RoseDialogMenu_4uycx"), SubResource("RoseDialogMenu_ifx5k"), SubResource("RoseDialogMenu_1737r"), SubResource("RoseDialogMenu_gvsdl"), SubResource("RoseDialogMenu_d5i8u"), SubResource("RoseDialogMenu_pjrpe"), SubResource("RoseDialogMenu_j8b36"), SubResource("RoseDialogMenu_jyf16"), SubResource("RoseDialogMenu_p6cev"), SubResource("RoseDialogMenu_4rjad"), SubResource("RoseDialogMenu_tvhnf"), SubResource("RoseDialogMenu_fbeao"), SubResource("RoseDialogMenu_ltygi"), SubResource("RoseDialogMenu_v6v7m"), SubResource("RoseDialogMenu_nsn0v"), SubResource("RoseDialogMenu_86uil"), SubResource("RoseDialogMenu_a5ifg"), SubResource("RoseDialogMenu_ux52j"), SubResource("RoseDialogMenu_su3p3"), SubResource("RoseDialogMenu_l3b3r"), SubResource("RoseDialogMenu_qx1x1"), SubResource("RoseDialogMenu_doqgv"), SubResource("RoseDialogMenu_ortvw"), SubResource("RoseDialogMenu_daxkn"), SubResource("RoseDialogMenu_t7yf2"), SubResource("RoseDialogMenu_u4kkt"), SubResource("RoseDialogMenu_g4i1e"), SubResource("RoseDialogMenu_b4ucy"), SubResource("RoseDialogMenu_sqke2"), SubResource("RoseDialogMenu_hfciw"), SubResource("RoseDialogMenu_cr7hm"), SubResource("RoseDialogMenu_r47d6"), SubResource("RoseDialogMenu_1fvrk"), SubResource("RoseDialogMenu_3ware"), SubResource("RoseDialogMenu_43cdg"), SubResource("RoseDialogMenu_tunfp"), SubResource("RoseDialogMenu_skeg5"), SubResource("RoseDialogMenu_dfgbf"), SubResource("RoseDialogMenu_un1id"), SubResource("RoseDialogMenu_r8ti6"), SubResource("RoseDialogMenu_rnf42"), SubResource("RoseDialogMenu_7my5g"), SubResource("RoseDialogMenu_3f577"), SubResource("RoseDialogMenu_7cf0o"), SubResource("RoseDialogMenu_wbfv2"), SubResource("RoseDialogMenu_gqth2"), SubResource("RoseDialogMenu_4yqwo"), SubResource("RoseDialogMenu_ahbd0"), SubResource("RoseDialogMenu_elr3p"), SubResource("RoseDialogMenu_ybana"), SubResource("RoseDialogMenu_lefcw"), SubResource("RoseDialogMenu_1p31f"), SubResource("RoseDialogMenu_f2e6s"), SubResource("RoseDialogMenu_45ggb"), SubResource("RoseDialogMenu_njagf"), SubResource("RoseDialogMenu_ww1vt"), SubResource("RoseDialogMenu_4n7lc"), SubResource("RoseDialogMenu_e64pf"), SubResource("RoseDialogMenu_ntx04"), SubResource("RoseDialogMenu_uuadc"), SubResource("RoseDialogMenu_gft2p"), SubResource("RoseDialogMenu_ahvv1"), SubResource("RoseDialogMenu_5q3uk"), SubResource("RoseDialogMenu_rpwp6"), SubResource("RoseDialogMenu_vxc51"), SubResource("RoseDialogMenu_ktx1c"), SubResource("RoseDialogMenu_1tii7"), SubResource("RoseDialogMenu_vhhr2"), SubResource("RoseDialogMenu_14g1l"), SubResource("RoseDialogMenu_rp6m3"), SubResource("RoseDialogMenu_xw8ke"), SubResource("RoseDialogMenu_3ynkl"), SubResource("RoseDialogMenu_1xbwp"), SubResource("RoseDialogMenu_8je6u"), SubResource("RoseDialogMenu_ebrqa"), SubResource("RoseDialogMenu_dyvul"), SubResource("RoseDialogMenu_ap6a7354")])

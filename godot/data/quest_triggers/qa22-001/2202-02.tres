@@ -1,0 +1,44 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://5psbrvqjcdnv5"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2202-jelly-on-the-jetty.tres" id="x_b7cf68"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/712-jelly-goo.tres" id="x_4de7d7"]
+[ext_resource type="RoseItemConsumable" path="res://data/items/consumable/103-grapes.tres" id="x_2c65ad"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_7ffd28"]
+quest = ExtResource("x_b7cf68")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_7acf4a"]
+item = ExtResource("x_4de7d7")
+equipment_index = 13
+count = 6
+operator = ">="
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_54e263"]
+quest = ExtResource("x_b7cf68")
+
+[sub_resource type="RoseRewardRemoveItem" id="RoseRewardRemoveItem_c04b1b"]
+item = ExtResource("x_4de7d7")
+quantity = 6
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_a5ef6f"]
+equation = 0
+value = 60
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_850014"]
+equation = 0
+value = 80
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_ac18e9"]
+item = ExtResource("x_2c65ad")
+quantity = 10
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_40bd27"]
+switch = 624
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_0ba7da"]
+
+[resource]
+name = "2202-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_7ffd28"), SubResource("RoseConditionQuestItem_7acf4a")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_54e263"), SubResource("RoseRewardRemoveItem_c04b1b"), SubResource("RoseRewardCalculatedExperiencePoints_a5ef6f"), SubResource("RoseRewardCalculatedMoney_850014"), SubResource("RoseRewardAddItem_ac18e9"), SubResource("RoseRewardSetQuestSwitch_40bd27"), SubResource("RoseRewardRemoveSelectedQuest_0ba7da")])

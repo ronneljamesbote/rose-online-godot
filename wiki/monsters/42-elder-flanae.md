@@ -50,118 +50,44 @@ drops:
 - item: '[[items/feet/4-leather-shoes|Leather Shoes]]'
   slots_of_30: 0.4
 quests:
+- '[[quests/2206-tibbs-farm|Tibbs'' Farm]]'
 - '[[quests/902-muse-job-change-quest|Muse Job Change Quest]]'
 spawns:
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5263.7
-  y: 5478.3
+  x: 5260
+  y: 5478
   count: 1
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5263.7
-  y: 5478.3
+  x: 5222
+  y: 5455
+  count: 2
+  group: basic
+- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
+  x: 5205
+  y: 5480
   count: 1
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5277.4
-  y: 5459
+  x: 5290
+  y: 5468
   count: 1
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5277.4
-  y: 5459
-  count: 1
+  x: 5056.89
+  y: 5438.41
+  count: 3
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5420.3
-  y: 5491
-  count: 1
+  x: 5180
+  y: 5420
+  count: 2
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5260.4
-  y: 5363.6
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5160.4
-  y: 5352.9
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5215.5
-  y: 5321.6
-  count: 1
+  x: 5150
+  y: 5395
+  count: 2
   group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5215.5
-  y: 5321.6
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5156.6
-  y: 5314.1
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5233.6
-  y: 5226.6
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5155.9
-  y: 5188.2
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5206.7
-  y: 5150.9
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5176.1
-  y: 5255.8
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5145.7
-  y: 5256.9
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5225.7
-  y: 5262.2
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5225.7
-  y: 5262.2
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5346.4
-  y: 5165.8
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5381.5
-  y: 5180.6
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5435.5
-  y: 5225.7
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5457.8
-  y: 5245.1
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5482.8
-  y: 5249.6
-  count: 1
-  group: reinforcements
 - zone: '[[zones/23-breezy-hills|Breezy Hills]]'
   x: 5068.3
   y: 5300.7
@@ -234,3 +160,7 @@ Speeds are in centimetres per second, attack range in metres. Spawn positions ar
 HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].
+
+## Changed from iROSE
+
+The Adventurer's Plain redesign moved its spawn points there (see [[zones/22-adventurer-s-plain|Adventurer's Plain]]). Its kills also count for [[quests/2206-tibbs-farm|Tibbs' Farm]].

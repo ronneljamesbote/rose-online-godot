@@ -68,6 +68,9 @@ Then:
 
 - works on [[quests/952-hawker-job-change-quest|Hawker Job Change Quest]]
 - you get 1 × [[items/quest/130-crystal-dew|Crystal Dew]]
+- then runs step `2208-31` ([[quests/2208-poisoned-seed|Poisoned Seed]])
+
+If the checks fail, step `2208-31` ([[quests/2208-poisoned-seed|Poisoned Seed]]) is tried instead.
 
 ### `952-32`
 
@@ -83,6 +86,9 @@ Then:
 
 - works on [[quests/952-hawker-job-change-quest|Hawker Job Change Quest]]
 - you get 1 × [[items/quest/130-crystal-dew|Crystal Dew]]
+- then runs step `2208-31` ([[quests/2208-poisoned-seed|Poisoned Seed]])
+
+If the checks fail, step `2208-31` ([[quests/2208-poisoned-seed|Poisoned Seed]]) is tried instead.
 
 ### `952-33`
 
@@ -97,3 +103,10 @@ Then:
 
 - works on [[quests/952-hawker-job-change-quest|Hawker Job Change Quest]]
 - you get 3 × [[items/quest/130-crystal-dew|Crystal Dew]]
+- then runs step `2209-31` ([[quests/2209-the-jelly-king|The Jelly King]])
+
+If the checks fail, step `2209-31` ([[quests/2209-the-jelly-king|The Jelly King]]) is tried instead.
+
+## Changed from iROSE
+
+The Adventurer's Plain redesign made this quest's kill steps also run the matching steps of the plain's new quests, so one kill counts for both.

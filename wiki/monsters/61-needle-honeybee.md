@@ -19,7 +19,7 @@ run_speed: 350
 xp: 20
 drop_item_rate: 62
 drop_money_rate: 8
-zones: 3
+zones: 2
 drops:
 - item: '[[items/material/176-insect-leg|Insect Leg]]'
   slots_of_30: 7
@@ -89,16 +89,6 @@ spawns:
   y: 5051.8
   count: 1
   group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5207.1
-  y: 5356.6
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5145.5
-  y: 5416.9
-  count: 1
-  group: reinforcements
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
   x: 5294
   y: 5338
@@ -161,3 +151,7 @@ Speeds are in centimetres per second, attack range in metres. Spawn positions ar
 HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].
+
+## Changed from iROSE
+
+The Adventurer's Plain redesign took it out of that zone.

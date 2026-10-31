@@ -39207,6 +39207,23 @@ kind = "Answer"
 text = "I don't know what's going on. Would you help me?"
 next_menu = 8
 
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Ronway asked me to meet you."
+next_menu = 81
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2201-11"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2201-11"
+
 [[dialog.menu]]
 
 [[dialog.menu.line]]
@@ -39311,6 +39328,23 @@ next_menu = 35
 kind = "Answer"
 text = "I think I'll learn faster by experiencing things firsthand."
 next_menu = 66
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Ronway asked me to meet you."
+next_menu = 81
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2201-11"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2201-11"
 
 [[dialog.menu]]
 
@@ -40121,6 +40155,13 @@ text = "Thank you."
 [[dialog.menu.line.on_choose.action]]
 kind = "QuestStep"
 step = "T-warp"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Ronway sent you? Then you've met me! I teach Visitors the basics here, and later I'll have hunting practice for you."
+next_menu = 1
 
 [[dialog]]
 key = "EM21-001.con"
@@ -42359,6 +42400,23 @@ step = "2105-02"
 
 [[dialog.menu.line]]
 kind = "Answer"
+text = '"Over the Ridge": Corvel sent me with this emblem.'
+next_menu = 18
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2210-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2210-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
 text = "Goodbye."
 
 [[dialog.menu]]
@@ -42572,6 +42630,13 @@ text = "Let me think about it."
 [[dialog.menu.line]]
 kind = "Npc"
 text = "Wear it well, <NAME>."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "From Riverford? Corvel's seal, and... this emblem. The same patterns we found on the raiders' crates. You did right to bring it here. Rest at the camp, then come and talk to me about the road."
 next_menu = 2
 
 [[dialog]]
@@ -44863,6 +44928,55 @@ next_menu = 1
 
 [[dialog.menu.line]]
 kind = "Answer"
+text = 'About "First Steps"'
+next_menu = 26
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2201
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2201-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "First Steps"'
+next_menu = 29
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2201
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2201-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"First Steps": I've met them all."""
+next_menu = 30
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2201-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2201-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
 text = "I want to know about job classes."
 next_menu = 2
 
@@ -44975,7 +45089,7 @@ next_menu = 0
 
 [[dialog.menu.line]]
 kind = "Npc"
-text = "When you moved here from Birth Island, you were probably given identification. Open your Quest Window to check if you have it. If you don't, please speak to Mairard so that he can give you one."
+text = "When you arrived here, you were given identification papers. Open your Quest Window to check if you have them. If you don't, please speak to Mairard so that he can give you one."
 next_menu = 13
 
 [[dialog.menu]]
@@ -44989,7 +45103,7 @@ next_menu = 14
 
 [[dialog.menu.line]]
 kind = "Npc"
-text = "Once you reach Level 10, please go talk to Warren in Zant. Choose the class to which you want to be promoted, and he will give you a job change quest. When you complete the quest, you'll be eligible for the job change."
+text = "Once you reach Level 10, go to the Sandwind Caravan Camp in the Valley of Luxem Tower, past the gates on Gatehill. Four job mentors wait there, one for each class. Pass a mentor's trial and they change your job right at the camp."
 next_menu = 15
 
 [[dialog.menu]]
@@ -45074,6 +45188,51 @@ kind = "Answer"
 text = "I see."
 next_menu = 0
 
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Before you set off, meet the people who look after Visitors here: the Fairy of Arua beside me, Ronk the smith and Pony who sells fruit, up on the piers. Come back to me when you've met all three."
+next_menu = 27
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll go and meet them."
+next_menu = 28
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2201-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Off you go. They're all within a few steps of here."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Have you met the Fairy of Arua, Ronk and Pony yet? All three, then come back."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Now you know the Landing. Here, some potions for the road. When you're ready, Dockmaster Wade on the north jetty has work for a Visitor, and the road west leads to Riverford Post and on to the Valley of Luxem Tower."
+next_menu = 1
+
 [[dialog]]
 key = "EM22-002.con"
 name = "[Akram Minister] Mairard"
@@ -45145,951 +45304,6 @@ quest = 801
 active = false
 
 [[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 851
-
-[[dialog.menu.line.show_if]]
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Level"
-operator = ">="
-value = 3
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Job"
-operator = "<="
-value = 0
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 801
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 851
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 852
-
-[[dialog.menu.line.show_if]]
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Level"
-operator = ">="
-value = 3
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Job"
-operator = "<="
-value = 0
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 801
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 851
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 852
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 853
-
-[[dialog.menu.line.show_if]]
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Level"
-operator = ">="
-value = 3
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Job"
-operator = "<="
-value = 0
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 801
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 851
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 852
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 853
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 854
-
-[[dialog.menu.line.show_if]]
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Level"
-operator = ">="
-value = 3
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Job"
-operator = "<="
-value = 0
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 801
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 851
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 852
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 853
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 854
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 901
-
-[[dialog.menu.line.show_if]]
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Level"
-operator = ">="
-value = 3
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Job"
-operator = "<="
-value = 0
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 801
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 851
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 852
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 853
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 854
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 901
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 902
-
-[[dialog.menu.line.show_if]]
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Level"
-operator = ">="
-value = 3
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Job"
-operator = "<="
-value = 0
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 801
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 851
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 852
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 853
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 854
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 901
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 902
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 903
-
-[[dialog.menu.line.show_if]]
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Level"
-operator = ">="
-value = 3
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Job"
-operator = "<="
-value = 0
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 801
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 851
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 852
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 853
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 854
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 901
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 902
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 903
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 904
-
-[[dialog.menu.line.show_if]]
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Level"
-operator = ">="
-value = 3
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Job"
-operator = "<="
-value = 0
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 801
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 851
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 852
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 853
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 854
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 901
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 902
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 903
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 904
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 951
-
-[[dialog.menu.line.show_if]]
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Level"
-operator = ">="
-value = 3
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Job"
-operator = "<="
-value = 0
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 801
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 851
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 852
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 853
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 854
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 901
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 902
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 903
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 904
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 951
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 952
-
-[[dialog.menu.line.show_if]]
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Level"
-operator = ">="
-value = 3
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Job"
-operator = "<="
-value = 0
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 801
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 851
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 852
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 853
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 854
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 901
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 902
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 903
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 904
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 951
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 952
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 953
-
-[[dialog.menu.line.show_if]]
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Level"
-operator = ">="
-value = 3
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Job"
-operator = "<="
-value = 0
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 801
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 851
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 852
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 853
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 854
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 901
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 902
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 903
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 904
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 951
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 952
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 953
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 1001
-
-[[dialog.menu.line.show_if]]
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Level"
-operator = ">="
-value = 3
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Job"
-operator = "<="
-value = 0
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 801
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 851
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 852
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 853
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 854
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 901
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 902
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 903
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 904
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 951
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 952
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 953
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 1001
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 1002
-
-[[dialog.menu.line.show_if]]
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Level"
-operator = ">="
-value = 3
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Job"
-operator = "<="
-value = 0
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 801
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 851
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 852
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 853
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 854
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 901
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 902
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 903
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 904
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 951
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 952
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 953
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 1001
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 1002
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 1003
-
-[[dialog.menu.line.show_if]]
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Level"
-operator = ">="
-value = 3
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Job"
-operator = "<="
-value = 0
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 801
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 851
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 852
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 853
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 854
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 901
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 902
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 903
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 904
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 951
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 952
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 953
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 1001
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 1002
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 1003
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 1004
-
-[[dialog.menu.line.show_if]]
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Level"
-operator = ">="
-value = 3
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Ability"
-ability = "Job"
-operator = "<="
-value = 0
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 801
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 851
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 852
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 853
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 854
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 901
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 902
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 903
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 904
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 951
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 952
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 953
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 1001
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 1002
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 1003
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 1004
-active = false
-
-[[dialog.menu.line.show_if.condition]]
 kind = "Variable"
 variable = "Job"
 index = 0
@@ -46118,81 +45332,6 @@ value = 1
 [[dialog.menu.line.show_if.condition]]
 kind = "Quest"
 quest = 801
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 851
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 852
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 853
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 854
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 901
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 902
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 903
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 904
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 951
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 952
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 953
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 1001
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 1002
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 1003
-active = false
-
-[[dialog.menu.line.show_if.condition]]
-kind = "Quest"
-quest = 1004
 active = false
 
 [[dialog.menu.line]]
@@ -46447,14 +45586,14 @@ next_menu = 2
 
 [[dialog.menu.line]]
 kind = "Answer"
-text = "Since I want to change my job, I need to know where in Zant I can find Warren."
+text = "Since I want to change my job, I need to know where I can find the job mentors."
 next_menu = 25
 
 [[dialog.menu]]
 
 [[dialog.menu.line]]
 kind = "Npc"
-text = "Zant is located North of here past the Valley of Luxem Tower. Warren is standing in front of the Town Hall."
+text = "Go north up to Gatehill and through either gate into the Valley of Luxem Tower. The four job mentors wait at the Sandwind Caravan Camp, right past the gates."
 next_menu = 26
 
 [[dialog.menu]]
@@ -46660,6 +45799,23 @@ text = "I'd like to have my item repaired."
 kind = "Open"
 window = "Repair"
 
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Ronway asked me to meet you."
+next_menu = 4
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2201-12"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2201-12"
+
 [[dialog.menu]]
 
 [[dialog.menu.line]]
@@ -46678,6 +45834,13 @@ text = "Alright, I will."
 [[dialog.menu.line.on_choose.action]]
 kind = "QuestStep"
 step = "107-01"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Ronway's new Visitor, eh? I sell weapons and clothes for Visitors, and I repair what you break. Come back when your gear needs it."
+next_menu = 1
 
 [[dialog]]
 key = "EM22-005.con"
@@ -46721,6 +45884,23 @@ next_menu = 8
 [[dialog.menu.line.show_if.condition]]
 kind = "QuestStep"
 step = "107-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Ronway asked me to meet you."
+next_menu = 12
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2201-13"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2201-13"
 
 [[dialog.menu]]
 
@@ -46806,6 +45986,13 @@ text = "Sure, sure."
 [[dialog.menu.line.on_choose.action]]
 kind = "QuestStep"
 step = "107-02"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Hi! I sell fresh fruit. Eat it when you're hurt and you'll feel better. Tell Ronway I said hello!"
+next_menu = 1
 
 [[dialog]]
 key = "EM22-006.con"
@@ -47307,7 +46494,7 @@ value = 0
 
 [[dialog.menu.line]]
 kind = "Npc"
-text = "{fc=1}Karitte{/fc} may be taking care of {fc=1}Lutis.{/fc}"
+text = "Take that emblem to {fc=1}Warden Corvel{/fc} at {fc=1}Riverford Post{/fc}, by the bridges west of here."
 next_menu = 44
 
 [[dialog.menu.line.show_if]]
@@ -48457,14 +47644,14 @@ next_menu = 75
 
 [[dialog.menu.line]]
 kind = "Npc"
-text = "Have you heard about Luxem Tower? It's North of the Adventurer's Plains in the Valley of Luxem Tower. Go and meet {fc=1}Karitte{/fc} in Luxem Tower, since she might know something about this emblem."
+text = "The strangers came from the west. {fc=1}Warden Corvel{/fc} keeps watch at {fc=1}Riverford Post{/fc}, where the road crosses the two rivers. Take him this emblem. And wear these boots, the walk is long."
 next_menu = 76
 
 [[dialog.menu]]
 
 [[dialog.menu.line]]
 kind = "Answer"
-text = "Alright, I'll go and talk to this {fc=1}Karitte{/fc}, then."
+text = "Alright, I'll take it to {fc=1}Corvel{/fc}, then."
 
 [[dialog.menu.line.on_choose]]
 
@@ -48476,7 +47663,7 @@ step = "103-01"
 
 [[dialog.menu.line]]
 kind = "Npc"
-text = "Are you really that forgetful? Oh well. Go and meet {fc=1}Karitte{/fc} in Luxem Tower. Now, Luxem Tower is to the North of the Adventurer's Plains. Now hurry up, we're running out of time!"
+text = "Are you really that forgetful? Oh well. Take the emblem to {fc=1}Warden Corvel{/fc} at {fc=1}Riverford Post{/fc}. Follow the road west from the beach to the bridges. Now hurry up, we're running out of time!"
 next_menu = 78
 
 [[dialog.menu]]
@@ -49342,6 +48529,1360 @@ text = "No, I think I'll quit for now."
 [[dialog.menu.line.on_choose.action]]
 kind = "QuestStep"
 step = "5035-03"
+
+[[dialog]]
+key = "EM22-009.con"
+name = "[Dockmaster] Wade"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Mind the planks, they're slick. I'm Wade, I keep the jetties of Arua's Landing in one piece. Mostly."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Jelly on the Jetty"'
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2202
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2202-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Jelly on the Jetty"'
+next_menu = 6
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2202
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2202-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"Jelly on the Jetty": it's done."""
+next_menu = 7
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2202-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2202-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Bones on the Beach"'
+next_menu = 8
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2203
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2203-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Bones on the Beach"'
+next_menu = 11
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2203
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2203-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"Bones on the Beach": it's done."""
+next_menu = 12
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2203-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2203-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "What is there to see on the plain?"
+next_menu = 13
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The Mini-Jelly Beans on the beach leave a goo that sets hard as tar. Bring me six blobs of Jelly Goo and I can seal these planks before the tide gets under them."
+next_menu = 4
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2202-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Mini-Jelly Beans are all along the sand, north and south of the village. Easy work for a new arrival."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Six blobs of Jelly Goo. The Mini-Jelly Beans on the beach drop it."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "That'll do nicely. Here, some grapes from the ship's stores. Don't tell the captain."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Every Visitor should walk the whole shore once. Up north there are the bones of an old whale, and Old Tam, who combs the beach there. Bring me something from him so I know you went."
+next_menu = 9
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 10
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2203-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Follow the sand north past the standing stones' hill. You can't miss the bones."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Old Tam is at the whale bones, up the beach to the north."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "A carved tooth! Tam only gives those to people he likes. Take these gloves, Riverford made, better than anything Ronk has for Visitors."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "East is the sea, west is everything else. The road runs west over two rivers to Riverford Post, then up to the gates of the Valley of Luxem Tower. The further you go from the sea, the meaner the monsters."
+next_menu = 2
+
+[[dialog]]
+key = "EM22-010.con"
+name = "[Stone-reader] Ilene"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Hush. Can you hear them? The stones hum when the wind is from the sea."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "The Humming Stones"'
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2204
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2204-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "The Humming Stones"'
+next_menu = 6
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2204
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2204-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"The Humming Stones": it's done."""
+next_menu = 7
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2204-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2204-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Who raised these stones?"
+next_menu = 8
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The JellyNuts gather round the standing stones, and the little cores inside them hum the same note as the stones. Bring me eight Jelly Cores and I'll find out why."
+next_menu = 4
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2204-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The JellyNuts stay close to the stones, up here on the meadow."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Eight Jelly Cores, from the JellyNuts round the standing stones."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Eight, and every one humming. The stones are calling the jellies here, but something else is sickening the plain. Old Myad on the pier has been asking for help. Go and see him."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Nobody remembers. The rune stones are older than Arua's Landing. I read what I can of them, and write down the rest."
+next_menu = 2
+
+[[dialog]]
+key = "EM22-011.con"
+name = "[Warden] Corvel"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Riverford Post holds the bridges, and the bridges hold the plain together. I'm Corvel, the warden here. What do you need?"
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Myad sent me with this emblem."
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "104-21"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "104-21"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Ford Watch"'
+next_menu = 4
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2205
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2205-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Ford Watch"'
+next_menu = 7
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2205
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2205-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"Ford Watch": it's done."""
+next_menu = 8
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2205-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Tracks to the Ford"'
+next_menu = 11
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2207
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2207-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Tracks to the Ford"'
+next_menu = 14
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2207
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "The Jelly King"'
+next_menu = 15
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2209
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2209-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "The Jelly King"'
+next_menu = 18
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2209
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2209-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"The Jelly King": it's done."""
+next_menu = 19
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2209-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2209-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Over the Ridge"'
+next_menu = 20
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2210
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2210-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Over the Ridge"'
+next_menu = 23
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2210
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "What is Riverford Post?"
+next_menu = 24
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "So this is the emblem Myad told me about. Red cloaks, poisoned mushrooms, and now this. Keep it safe for now: it will need to go to Luxem in the end. But first, my bridges."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Red Jelly Beans have taken the river banks by both bridges, and the farmers won't cross. Bring me eight Red Jelly Drops and the road is open again."
+next_menu = 5
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 6
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2205-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "They sit along the banks, right by the bridges. Watch your back on the planks."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Eight Red Jelly Drops, from the Red Jelly Beans by the bridges."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The banks are clear. Pick a weapon from the armoury. Riverford made, any Visitor can use it."
+next_menu = 9
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Riverford Sword."
+next_menu = 10
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2205-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2205-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Riverford Spear."
+next_menu = 10
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2205-21"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2205-21"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Riverford Bow and arrows."
+next_menu = 10
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2205-22"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2205-22"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll take the Riverford Gun and bullets."
+next_menu = 10
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2205-23"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2205-23"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Let me think about it."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Use it well, <NAME>."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Scout Rhys went south-west to Bramble Ford two days ago, after a fire was seen there. He hasn't sent word. Find him."
+next_menu = 12
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 13
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2207-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Follow the road south from the post, past the river mouth. Rhys will be near the old camp."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Rhys is at the strangers' camp in Bramble Ford, south-west of here."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Rhys says the Jelly King is back in its hollow at Bramble Ford, fat on the poisoned seed. Drive it out and bring me its crown. Take friends: it hits harder than anything else on the plain."
+next_menu = 16
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 17
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2209-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The hollow is west of the strangers' camp. It comes back every few minutes, so don't linger."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Bring me the Jelly King's Crown. Its hollow is west of the strangers' camp."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The crown! The plain owes you. Wear this coat, the last of the Riverford set, and take a return scroll for the road."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Red cloaks, poisoned seed, that emblem... This is bigger than Riverford. Take the emblem over the ridge to Dorran, the caravan master at the Sandwind Caravan Camp in the Valley of Luxem Tower. Either gate on Gatehill gets you there."
+next_menu = 21
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 22
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2210-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Up the road to Gatehill, then through either gate. Dorran's camp is right on the other side."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Dorran, at the Sandwind Caravan Camp, just past the Luxem gates."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "A ferry stop that grew a palisade. Maeve runs the ferry and sells what travellers need, and Tibbs is staying with us since the Flanae took his farm."
+next_menu = 2
+
+[[dialog]]
+key = "EM22-012.con"
+name = "[Farmer] Tibbs"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Twenty years I farmed the terraces up the hill. Then the Flanae came up between the rows, and now they're the ones growing."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """About "Tibbs' Farm""""
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2206
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2206-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """About "Tibbs' Farm""""
+next_menu = 6
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2206
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2206-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"Tibbs' Farm": it's done."""
+next_menu = 7
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2206-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2206-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "If somebody showed me those Flanae can be beaten, I'd go back. Bring me ten petals from the ones on my farm, west of the river."
+next_menu = 4
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2206-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Up the hill west of the post, where the fences are broken. That was my farm."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Ten Farm Flanae Petals, from the Flanae on the terraces."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Ten! Maybe there's hope for the old place. Take these bananas, they're the last of my store."
+next_menu = 2
+
+[[dialog]]
+key = "EM22-013.con"
+name = "[Ferrywoman] Maeve"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Ferry's free for the warden's friends, and the shop is open for everybody. Food, potions, anything for the road."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Show me what you sell."
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "Open"
+window = "Shop"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'd like to make Riverford Post my save point."
+next_menu = 3
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "SetSavePoint"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "There. If you fall on the plain, you'll get back up here at the post."
+next_menu = 2
+
+[[dialog]]
+key = "EM22-014.con"
+name = "[Scout] Rhys"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Quiet. They might come back. Whoever camped here left in a hurry, and left this place poisoned."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Corvel sent me to find you."
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2207-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2207-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Poisoned Seed"'
+next_menu = 4
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2208
+active = false
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2208-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = 'About "Poisoned Seed"'
+next_menu = 7
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "Quest"
+quest = 2208
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2208-02"
+passes = false
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = """"Poisoned Seed": it's done."""
+next_menu = 8
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2208-02"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2208-02"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "What is in the hollow?"
+next_menu = 9
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Corvel sent you? Good. Look at this camp: cold fire, torn tents, and seed sacks gone black. Somebody poisoned that seed and fed it to the plain."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The Choropies round here dragged the sacks off. Bring me six of them back so Corvel can see what we're dealing with."
+next_menu = 5
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 6
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2208-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Not now."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The Spotted and Mother Choropies round the camp have them. They're tougher than they look."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Six Rotten Seed Sacks, from the Choropies round the camp."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Six. All poisoned, and all from the same red-sealed sacks. Go back to Corvel and tell him. And watch the hollow to the west."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "The Jelly King. It gorged itself on the seed and it's twice the size it was. Don't go in alone."
+next_menu = 2
+
+[[dialog]]
+key = "EM22-015.con"
+name = "[Gate Guard] Bram"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Halt, Visitor! That gate leads down into the Goblin Cave. The goblins there would eat a newcomer alive."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "How strong are they?"
+next_menu = 3
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Can I go in anyway?"
+next_menu = 4
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Level 45 and up, and they come in packs. Come back when you've made a name for yourself far from here. The road to Luxem is north, up on Gatehill."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "I can't stop you. I can only tell you that nobody your size has walked back out."
+next_menu = 2
+
+[[dialog]]
+key = "EM22-016.con"
+name = "[Beachcomber] Old Tam"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Bones, shells, bottles. The sea gives back everything in the end, if you wait long enough."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Wade sent me to find the whale bones."
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "2203-11"
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "2203-11"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "What happened to the whale?"
+next_menu = 4
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Wade sent you? Ha. Here, take this tooth. I carved a gull on it. Tell him the old whale is still here, and so am I."
+next_menu = 2
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Washed up before the village had a jetty. The Mini-Jelly Beans like the shade under its ribs. Mind them, they bite more than they look."
+next_menu = 2
+
+[[dialog]]
+key = "EM22-017.con"
+name = "[Herbalist] Linnea"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Careful where you step. The mushrooms of this ring were healthy a month ago. Now look at them."
+next_menu = 1
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'm looking for clues about the epidemic."
+next_menu = 3
+
+[[dialog.menu.line.show_if]]
+
+[[dialog.menu.line.show_if.condition]]
+kind = "QuestStep"
+step = "102-01"
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "What made them rot?"
+next_menu = 7
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Goodbye."
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "Seyon sent you too? Then look here, at the edge of the ring. Something is half buried in the rot."
+next_menu = 4
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "Dig it up with your hands."
+next_menu = 5
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "You pull out an emblem decorated with strange patterns."
+next_menu = 6
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Answer"
+text = "I'd better show this to Myad."
+
+[[dialog.menu.line.on_choose]]
+
+[[dialog.menu.line.on_choose.action]]
+kind = "QuestStep"
+step = "102-01"
+
+[[dialog.menu]]
+
+[[dialog.menu.line]]
+kind = "Npc"
+text = "People in red camped here, I saw their fire from the wood. They left, and the ring started to die. Whatever they carried, they took it south-west, towards the ford."
+next_menu = 2
 
 [[dialog]]
 key = "EM23-001.con"

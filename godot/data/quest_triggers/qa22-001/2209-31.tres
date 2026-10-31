@@ -1,0 +1,25 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://yhqqabv8att3x"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2209-the-jelly-king.tres" id="x_a2c3c4"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/718-jelly-king-s-crown.tres" id="x_02962c"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_7b07b3"]
+quest = ExtResource("x_a2c3c4")
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_558df8"]
+item = ExtResource("x_02962c")
+equipment_index = 13
+count = 1
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_7ff298"]
+quest = ExtResource("x_a2c3c4")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_3728e7"]
+item = ExtResource("x_02962c")
+quantity = 1
+
+[resource]
+name = "2209-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_7b07b3"), SubResource("RoseConditionQuestItem_558df8")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_7ff298"), SubResource("RoseRewardAddItem_3728e7")])

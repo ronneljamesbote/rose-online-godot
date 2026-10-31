@@ -3,6 +3,8 @@
 [ext_resource type="RoseQuest" uid="uid://bsepecuvu0oge" path="res://data/quests/5033-stockpiling-jelly-bean-hides.tres" id="1_ai4ob"]
 [ext_resource type="RoseItemQuest" uid="uid://b1vadkkeysngn" path="res://data/items/quest/804-jelly-bean-hide.tres" id="2_cdgf0"]
 
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2204-31.tres" id="ap_next"]
+
 [sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_15rgp"]
 quest = ExtResource("1_ai4ob")
 
@@ -25,7 +27,11 @@ variable = 9
 operator = "Add"
 value = 1
 
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_ap47d3b7"]
+trigger = "2204-31"
+
 [resource]
 name = "5033-33"
 conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_15rgp"), SubResource("RoseConditionRandomPercent_m3qga"), SubResource("RoseConditionAbilityValue_bnmhc")])
-rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_aeryf"), SubResource("RoseRewardAddItem_kuldi"), SubResource("RoseRewardQuestVariable_57osp")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_aeryf"), SubResource("RoseRewardAddItem_kuldi"), SubResource("RoseRewardQuestVariable_57osp"), SubResource("RoseRewardTrigger_ap47d3b7")])
+next_trigger = ExtResource("ap_next")

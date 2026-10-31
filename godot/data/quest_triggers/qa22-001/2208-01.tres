@@ -1,0 +1,19 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://4l1fmue2sq932"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2208-poisoned-seed.tres" id="x_da860b"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_6de382"]
+switch = 629
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_f02401"]
+switch = 630
+value = false
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_9bee2b"]
+quest = ExtResource("x_da860b")
+
+[resource]
+name = "2208-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_6de382"), SubResource("RoseConditionQuestSwitch_f02401")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_9bee2b")])

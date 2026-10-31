@@ -62,33 +62,14 @@ drops:
 - item: '[[items/weapon/162-javelin|Javelin]]'
   slots_of_30: 0.4
 quests:
+- '[[quests/2209-the-jelly-king|The Jelly King]]'
 - '[[quests/952-hawker-job-change-quest|Hawker Job Change Quest]]'
 spawns:
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5239.3
-  y: 5453.5
+  x: 5122
+  y: 5272
   count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5207.1
-  y: 5356.6
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5145.5
-  y: 5416.9
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5203.2
-  y: 5181.3
-  count: 1
-  group: reinforcements
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5204.5
-  y: 5221.1
-  count: 1
-  group: reinforcements
+  group: basic
 source:
   data: godot/data/monsters/203-jelly-king.tres, drop table godot/data/drop_tables/198-jelly-king.tres
   code:
@@ -101,3 +82,7 @@ Speeds are in centimetres per second, attack range in metres. Spawn positions ar
 HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].
+
+## Changed from iROSE
+
+The Adventurer's Plain redesign makes it the plain's one elite: a single Jelly King lives in its hollow at Bramble Ford (5122, 5272) and comes back 3 minutes after it falls (iROSE has it as a rare reinforcement at five spawn points). Killing it also runs step `2209-31` of [[quests/2209-the-jelly-king|The Jelly King]], which gives the Jelly King's Crown.

@@ -1,0 +1,173 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://ce8v8cfiyl11k"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2204-the-humming-stones.tres" id="x_f77b58"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2204-01.tres" id="x_63fd75"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2204-02.tres" id="x_2febda"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d55313"]
+text = "Hush. Can you hear them? The stones hum when the wind is from the sea."
+next_menu = 1
+resource_name = "NPC: Hush. Can you hear them? The stones hum when the…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_18d953"]
+lines = Array[Resource]([SubResource("RoseDialogLine_d55313")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_3cd002"]
+quest = ExtResource("x_f77b58")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_c32c9a"]
+step = ExtResource("x_63fd75")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2252b5"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_3cd002"), SubResource("RoseDialogIfQuestStep_c32c9a")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_f9c345"]
+kind = "Answer"
+text = "About \"The Humming Stones\""
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_2252b5")])
+resource_name = "You: About \"The Humming Stones\""
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_93c50d"]
+quest = ExtResource("x_f77b58")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_c78546"]
+step = ExtResource("x_2febda")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_21c134"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_93c50d"), SubResource("RoseDialogIfQuestStep_c78546")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_827f37"]
+kind = "Answer"
+text = "About \"The Humming Stones\""
+next_menu = 6
+show_if = Array[Resource]([SubResource("RoseDialogCase_21c134")])
+resource_name = "You: About \"The Humming Stones\""
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_3ce934"]
+step = ExtResource("x_2febda")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_cb2358"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_3ce934")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_3077e2"]
+step = ExtResource("x_2febda")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_45255c"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_3077e2")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a21969"]
+kind = "Answer"
+text = "\"The Humming Stones\": it's done."
+next_menu = 7
+show_if = Array[Resource]([SubResource("RoseDialogCase_cb2358")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_45255c")])
+resource_name = "You: \"The Humming Stones\": it's done."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6fb56d"]
+kind = "Answer"
+text = "Who raised these stones?"
+next_menu = 8
+resource_name = "You: Who raised these stones?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_48f03c"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2e1bc6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_f9c345"), SubResource("RoseDialogLine_827f37"), SubResource("RoseDialogLine_a21969"), SubResource("RoseDialogLine_6fb56d"), SubResource("RoseDialogLine_48f03c")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_390dcf"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a00d58"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_44daac"]
+lines = Array[Resource]([SubResource("RoseDialogLine_390dcf"), SubResource("RoseDialogLine_a00d58")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_f63b68"]
+text = "The JellyNuts gather round the standing stones, and the little cores inside them hum the same note as the stones. Bring me eight Jelly Cores and I'll find out why."
+next_menu = 4
+resource_name = "NPC: The JellyNuts gather round the standing stones, …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_624375"]
+lines = Array[Resource]([SubResource("RoseDialogLine_f63b68")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_5a8320"]
+step = ExtResource("x_63fd75")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_08ab8d"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_5a8320")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_94e908"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 5
+on_choose = Array[Resource]([SubResource("RoseDialogCase_08ab8d")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a80085"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_df0e0d"]
+lines = Array[Resource]([SubResource("RoseDialogLine_94e908"), SubResource("RoseDialogLine_a80085")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_41c590"]
+text = "The JellyNuts stay close to the stones, up here on the meadow."
+next_menu = 2
+resource_name = "NPC: The JellyNuts stay close to the stones, up here …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_f2618b"]
+lines = Array[Resource]([SubResource("RoseDialogLine_41c590")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_82c18e"]
+text = "Eight Jelly Cores, from the JellyNuts round the standing stones."
+next_menu = 2
+resource_name = "NPC: Eight Jelly Cores, from the JellyNuts round the …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_39d9fd"]
+lines = Array[Resource]([SubResource("RoseDialogLine_82c18e")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a3fb61"]
+text = "Eight, and every one humming. The stones are calling the jellies here, but something else is sickening the plain. Old Myad on the pier has been asking for help. Go and see him."
+next_menu = 2
+resource_name = "NPC: Eight, and every one humming. The stones are cal…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_922671"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a3fb61")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_723a16"]
+text = "Nobody remembers. The rune stones are older than Arua's Landing. I read what I can of them, and write down the rest."
+next_menu = 2
+resource_name = "NPC: Nobody remembers. The rune stones are older than…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_c3543c"]
+lines = Array[Resource]([SubResource("RoseDialogLine_723a16")])
+resource_name = "Menu 8"
+
+[resource]
+key = "EM22-010.con"
+name = "[Stone-reader] Ilene"
+menus = Array[Resource]([SubResource("RoseDialogMenu_18d953"), SubResource("RoseDialogMenu_2e1bc6"), SubResource("RoseDialogMenu_44daac"), SubResource("RoseDialogMenu_624375"), SubResource("RoseDialogMenu_df0e0d"), SubResource("RoseDialogMenu_f2618b"), SubResource("RoseDialogMenu_39d9fd"), SubResource("RoseDialogMenu_922671"), SubResource("RoseDialogMenu_c3543c")])

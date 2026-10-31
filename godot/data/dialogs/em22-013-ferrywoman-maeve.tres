@@ -1,0 +1,74 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://y1imbute3xkcw"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cc0a97"]
+text = "Ferry's free for the warden's friends, and the shop is open for everybody. Food, potions, anything for the road."
+next_menu = 1
+resource_name = "NPC: Ferry's free for the warden's friends, and the s…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b0746b"]
+lines = Array[Resource]([SubResource("RoseDialogLine_cc0a97")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_cf39be"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ca84d5"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_cf39be")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b3edf4"]
+kind = "Answer"
+text = "Show me what you sell."
+next_menu = -1
+on_choose = Array[Resource]([SubResource("RoseDialogCase_ca84d5")])
+resource_name = "You: Show me what you sell."
+
+[sub_resource type="RoseDialogDoSetSavePoint" id="RoseDialogDoSetSavePoint_14d0b0"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2388ca"]
+actions = Array[Resource]([SubResource("RoseDialogDoSetSavePoint_14d0b0")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fdbd1f"]
+kind = "Answer"
+text = "I'd like to make Riverford Post my save point."
+next_menu = 3
+on_choose = Array[Resource]([SubResource("RoseDialogCase_2388ca")])
+resource_name = "You: I'd like to make Riverford Post my save point."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6bb1ce"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_74fc3c"]
+lines = Array[Resource]([SubResource("RoseDialogLine_b3edf4"), SubResource("RoseDialogLine_fdbd1f"), SubResource("RoseDialogLine_6bb1ce")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_37baf8"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0ddcc7"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_783755"]
+lines = Array[Resource]([SubResource("RoseDialogLine_37baf8"), SubResource("RoseDialogLine_0ddcc7")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1298bf"]
+text = "There. If you fall on the plain, you'll get back up here at the post."
+next_menu = 2
+resource_name = "NPC: There. If you fall on the plain, you'll get back…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_04dd6b"]
+lines = Array[Resource]([SubResource("RoseDialogLine_1298bf")])
+resource_name = "Menu 3"
+
+[resource]
+key = "EM22-013.con"
+name = "[Ferrywoman] Maeve"
+menus = Array[Resource]([SubResource("RoseDialogMenu_b0746b"), SubResource("RoseDialogMenu_74fc3c"), SubResource("RoseDialogMenu_783755"), SubResource("RoseDialogMenu_04dd6b")])

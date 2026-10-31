@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3 uid="uid://m5uk5fts9im9x"]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2205-ford-watch.tres" id="x_abde18"]
+[ext_resource type="RoseItemQuest" path="res://data/items/quest/715-red-jelly-drop.tres" id="x_c5283f"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_2924bf"]
+quest = ExtResource("x_abde18")
+
+[sub_resource type="RoseConditionRandomPercent" id="RoseConditionRandomPercent_176b6c"]
+to = 70
+
+[sub_resource type="RoseConditionQuestItem" id="RoseConditionQuestItem_d70bcf"]
+item = ExtResource("x_c5283f")
+equipment_index = 13
+count = 8
+operator = "<"
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_156bbd"]
+quest = ExtResource("x_abde18")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_d92306"]
+item = ExtResource("x_c5283f")
+quantity = 1
+
+[resource]
+name = "2205-31"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_2924bf"), SubResource("RoseConditionRandomPercent_176b6c"), SubResource("RoseConditionQuestItem_d70bcf")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_156bbd"), SubResource("RoseRewardAddItem_d92306")])

@@ -1,0 +1,578 @@
+[gd_resource type="RoseDialog" format=3 uid="uid://kt1pe5wr9s5wh"]
+
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/104-21.tres" id="x_fdc6a3"]
+[ext_resource type="RoseQuest" path="res://data/quests/2205-ford-watch.tres" id="x_abde18"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2205-01.tres" id="x_0ba27d"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2205-02.tres" id="x_7fcc99"]
+[ext_resource type="RoseQuest" path="res://data/quests/2207-tracks-to-the-ford.tres" id="x_225e03"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2207-01.tres" id="x_3242d3"]
+[ext_resource type="RoseQuest" path="res://data/quests/2209-the-jelly-king.tres" id="x_a2c3c4"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2209-01.tres" id="x_65b75c"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2209-02.tres" id="x_70aea5"]
+[ext_resource type="RoseQuest" path="res://data/quests/2210-over-the-ridge.tres" id="x_027ce0"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2210-01.tres" id="x_44ff99"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2205-21.tres" id="x_981a58"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2205-22.tres" id="x_6dbb90"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2205-23.tres" id="x_c608ce"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_528659"]
+text = "Riverford Post holds the bridges, and the bridges hold the plain together. I'm Corvel, the warden here. What do you need?"
+next_menu = 1
+resource_name = "NPC: Riverford Post holds the bridges, and the bridge…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0d054d"]
+lines = Array[Resource]([SubResource("RoseDialogLine_528659")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_591ab9"]
+step = ExtResource("x_fdc6a3")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_95806c"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_591ab9")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_90ccf2"]
+step = ExtResource("x_fdc6a3")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_1513d1"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_90ccf2")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_76ec70"]
+kind = "Answer"
+text = "Myad sent me with this emblem."
+next_menu = 3
+show_if = Array[Resource]([SubResource("RoseDialogCase_95806c")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_1513d1")])
+resource_name = "You: Myad sent me with this emblem."
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_68c2fd"]
+quest = ExtResource("x_abde18")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_167d4d"]
+step = ExtResource("x_0ba27d")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_4a18df"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_68c2fd"), SubResource("RoseDialogIfQuestStep_167d4d")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7adf13"]
+kind = "Answer"
+text = "About \"Ford Watch\""
+next_menu = 4
+show_if = Array[Resource]([SubResource("RoseDialogCase_4a18df")])
+resource_name = "You: About \"Ford Watch\""
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_f1e55f"]
+quest = ExtResource("x_abde18")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_6da81a"]
+step = ExtResource("x_7fcc99")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_d87970"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_f1e55f"), SubResource("RoseDialogIfQuestStep_6da81a")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_25def0"]
+kind = "Answer"
+text = "About \"Ford Watch\""
+next_menu = 7
+show_if = Array[Resource]([SubResource("RoseDialogCase_d87970")])
+resource_name = "You: About \"Ford Watch\""
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_9d13f3"]
+step = ExtResource("x_7fcc99")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_a5e0a4"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_9d13f3")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8cef46"]
+kind = "Answer"
+text = "\"Ford Watch\": it's done."
+next_menu = 8
+show_if = Array[Resource]([SubResource("RoseDialogCase_a5e0a4")])
+resource_name = "You: \"Ford Watch\": it's done."
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_27f935"]
+quest = ExtResource("x_225e03")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_8810a7"]
+step = ExtResource("x_3242d3")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_32fdc9"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_27f935"), SubResource("RoseDialogIfQuestStep_8810a7")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a8e914"]
+kind = "Answer"
+text = "About \"Tracks to the Ford\""
+next_menu = 11
+show_if = Array[Resource]([SubResource("RoseDialogCase_32fdc9")])
+resource_name = "You: About \"Tracks to the Ford\""
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ec1313"]
+quest = ExtResource("x_225e03")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_54881d"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_ec1313")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_38843d"]
+kind = "Answer"
+text = "About \"Tracks to the Ford\""
+next_menu = 14
+show_if = Array[Resource]([SubResource("RoseDialogCase_54881d")])
+resource_name = "You: About \"Tracks to the Ford\""
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_1e99e2"]
+quest = ExtResource("x_a2c3c4")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_173474"]
+step = ExtResource("x_65b75c")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_efbb40"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_1e99e2"), SubResource("RoseDialogIfQuestStep_173474")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d9295f"]
+kind = "Answer"
+text = "About \"The Jelly King\""
+next_menu = 15
+show_if = Array[Resource]([SubResource("RoseDialogCase_efbb40")])
+resource_name = "You: About \"The Jelly King\""
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_f6520b"]
+quest = ExtResource("x_a2c3c4")
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_a4893a"]
+step = ExtResource("x_70aea5")
+passes = false
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_a3a68e"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_f6520b"), SubResource("RoseDialogIfQuestStep_a4893a")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2734c9"]
+kind = "Answer"
+text = "About \"The Jelly King\""
+next_menu = 18
+show_if = Array[Resource]([SubResource("RoseDialogCase_a3a68e")])
+resource_name = "You: About \"The Jelly King\""
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_a783d6"]
+step = ExtResource("x_70aea5")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_01a30d"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_a783d6")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_563b5f"]
+step = ExtResource("x_70aea5")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ecfb08"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_563b5f")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_9eff9a"]
+kind = "Answer"
+text = "\"The Jelly King\": it's done."
+next_menu = 19
+show_if = Array[Resource]([SubResource("RoseDialogCase_01a30d")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_ecfb08")])
+resource_name = "You: \"The Jelly King\": it's done."
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_c5bafe"]
+quest = ExtResource("x_027ce0")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_2f434e"]
+step = ExtResource("x_44ff99")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7557bf"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_c5bafe"), SubResource("RoseDialogIfQuestStep_2f434e")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4abf53"]
+kind = "Answer"
+text = "About \"Over the Ridge\""
+next_menu = 20
+show_if = Array[Resource]([SubResource("RoseDialogCase_7557bf")])
+resource_name = "You: About \"Over the Ridge\""
+
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_fcaedc"]
+quest = ExtResource("x_027ce0")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_2be268"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_fcaedc")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8fa747"]
+kind = "Answer"
+text = "About \"Over the Ridge\""
+next_menu = 23
+show_if = Array[Resource]([SubResource("RoseDialogCase_2be268")])
+resource_name = "You: About \"Over the Ridge\""
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_706639"]
+kind = "Answer"
+text = "What is Riverford Post?"
+next_menu = 24
+resource_name = "You: What is Riverford Post?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c353c2"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_36100f"]
+lines = Array[Resource]([SubResource("RoseDialogLine_76ec70"), SubResource("RoseDialogLine_7adf13"), SubResource("RoseDialogLine_25def0"), SubResource("RoseDialogLine_8cef46"), SubResource("RoseDialogLine_a8e914"), SubResource("RoseDialogLine_38843d"), SubResource("RoseDialogLine_d9295f"), SubResource("RoseDialogLine_2734c9"), SubResource("RoseDialogLine_9eff9a"), SubResource("RoseDialogLine_4abf53"), SubResource("RoseDialogLine_8fa747"), SubResource("RoseDialogLine_706639"), SubResource("RoseDialogLine_c353c2")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_2d7af8"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_0abbe8"]
+kind = "Answer"
+text = "Goodbye."
+next_menu = -1
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_c1da98"]
+lines = Array[Resource]([SubResource("RoseDialogLine_2d7af8"), SubResource("RoseDialogLine_0abbe8")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c954e4"]
+text = "So this is the emblem Myad told me about. Red cloaks, poisoned mushrooms, and now this. Keep it safe for now: it will need to go to Luxem in the end. But first, my bridges."
+next_menu = 2
+resource_name = "NPC: So this is the emblem Myad told me about. Red cl…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ec2bd6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c954e4")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_cc7824"]
+text = "Red Jelly Beans have taken the river banks by both bridges, and the farmers won't cross. Bring me eight Red Jelly Drops and the road is open again."
+next_menu = 5
+resource_name = "NPC: Red Jelly Beans have taken the river banks by bo…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dc4a3b"]
+lines = Array[Resource]([SubResource("RoseDialogLine_cc7824")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_e90268"]
+step = ExtResource("x_0ba27d")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_c782a3"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_e90268")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bc9808"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 6
+on_choose = Array[Resource]([SubResource("RoseDialogCase_c782a3")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_75df56"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ffa3bb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bc9808"), SubResource("RoseDialogLine_75df56")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_160e05"]
+text = "They sit along the banks, right by the bridges. Watch your back on the planks."
+next_menu = 2
+resource_name = "NPC: They sit along the banks, right by the bridges. …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2466da"]
+lines = Array[Resource]([SubResource("RoseDialogLine_160e05")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_412c01"]
+text = "Eight Red Jelly Drops, from the Red Jelly Beans by the bridges."
+next_menu = 2
+resource_name = "NPC: Eight Red Jelly Drops, from the Red Jelly Beans …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7b3668"]
+lines = Array[Resource]([SubResource("RoseDialogLine_412c01")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_9e6bba"]
+text = "The banks are clear. Pick a weapon from the armoury. Riverford made, any Visitor can use it."
+next_menu = 9
+resource_name = "NPC: The banks are clear. Pick a weapon from the armo…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_c786c2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_9e6bba")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_b1ec09"]
+step = ExtResource("x_7fcc99")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_fd8934"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_b1ec09")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_5094c4"]
+step = ExtResource("x_7fcc99")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_56cb3f"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_5094c4")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_6ba21f"]
+kind = "Answer"
+text = "I'll take the Riverford Sword."
+next_menu = 10
+show_if = Array[Resource]([SubResource("RoseDialogCase_fd8934")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_56cb3f")])
+resource_name = "You: I'll take the Riverford Sword."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_d3586c"]
+step = ExtResource("x_981a58")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_640b43"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_d3586c")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_a1a211"]
+step = ExtResource("x_981a58")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_d5a3ed"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_a1a211")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a025e4"]
+kind = "Answer"
+text = "I'll take the Riverford Spear."
+next_menu = 10
+show_if = Array[Resource]([SubResource("RoseDialogCase_640b43")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_d5a3ed")])
+resource_name = "You: I'll take the Riverford Spear."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_fed9f1"]
+step = ExtResource("x_6dbb90")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_41c31e"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_fed9f1")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_a0f5ac"]
+step = ExtResource("x_6dbb90")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_c70b13"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_a0f5ac")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fb46b8"]
+kind = "Answer"
+text = "I'll take the Riverford Bow and arrows."
+next_menu = 10
+show_if = Array[Resource]([SubResource("RoseDialogCase_41c31e")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_c70b13")])
+resource_name = "You: I'll take the Riverford Bow and arrows."
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_adeb38"]
+step = ExtResource("x_c608ce")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_7b82da"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_adeb38")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_e652d2"]
+step = ExtResource("x_c608ce")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_9e811c"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_e652d2")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_77978b"]
+kind = "Answer"
+text = "I'll take the Riverford Gun and bullets."
+next_menu = 10
+show_if = Array[Resource]([SubResource("RoseDialogCase_7b82da")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_9e811c")])
+resource_name = "You: I'll take the Riverford Gun and bullets."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c8e236"]
+kind = "Answer"
+text = "Let me think about it."
+next_menu = -1
+resource_name = "You: Let me think about it."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_29b6d1"]
+lines = Array[Resource]([SubResource("RoseDialogLine_6ba21f"), SubResource("RoseDialogLine_a025e4"), SubResource("RoseDialogLine_fb46b8"), SubResource("RoseDialogLine_77978b"), SubResource("RoseDialogLine_c8e236")])
+resource_name = "Menu 9"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_be56c5"]
+text = "Use it well, <NAME>."
+next_menu = 2
+resource_name = "NPC: Use it well, <NAME>."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_c2171d"]
+lines = Array[Resource]([SubResource("RoseDialogLine_be56c5")])
+resource_name = "Menu 10"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_eb989e"]
+text = "Scout Rhys went south-west to Bramble Ford two days ago, after a fire was seen there. He hasn't sent word. Find him."
+next_menu = 12
+resource_name = "NPC: Scout Rhys went south-west to Bramble Ford two d…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_313235"]
+lines = Array[Resource]([SubResource("RoseDialogLine_eb989e")])
+resource_name = "Menu 11"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_003360"]
+step = ExtResource("x_3242d3")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_65104f"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_003360")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_44b90a"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 13
+on_choose = Array[Resource]([SubResource("RoseDialogCase_65104f")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8817fc"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_85fd30"]
+lines = Array[Resource]([SubResource("RoseDialogLine_44b90a"), SubResource("RoseDialogLine_8817fc")])
+resource_name = "Menu 12"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_9f8e7c"]
+text = "Follow the road south from the post, past the river mouth. Rhys will be near the old camp."
+next_menu = 2
+resource_name = "NPC: Follow the road south from the post, past the ri…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0a20e6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_9f8e7c")])
+resource_name = "Menu 13"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_76d114"]
+text = "Rhys is at the strangers' camp in Bramble Ford, south-west of here."
+next_menu = 2
+resource_name = "NPC: Rhys is at the strangers' camp in Bramble Ford, …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_17eaa7"]
+lines = Array[Resource]([SubResource("RoseDialogLine_76d114")])
+resource_name = "Menu 14"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8142a5"]
+text = "Rhys says the Jelly King is back in its hollow at Bramble Ford, fat on the poisoned seed. Drive it out and bring me its crown. Take friends: it hits harder than anything else on the plain."
+next_menu = 16
+resource_name = "NPC: Rhys says the Jelly King is back in its hollow a…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_f26164"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8142a5")])
+resource_name = "Menu 15"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_fdf400"]
+step = ExtResource("x_65b75c")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_07367f"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_fdf400")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bdaf22"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 17
+on_choose = Array[Resource]([SubResource("RoseDialogCase_07367f")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_786a1a"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b58972"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bdaf22"), SubResource("RoseDialogLine_786a1a")])
+resource_name = "Menu 16"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_50d3ff"]
+text = "The hollow is west of the strangers' camp. It comes back every few minutes, so don't linger."
+next_menu = 2
+resource_name = "NPC: The hollow is west of the strangers' camp. It co…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ccc230"]
+lines = Array[Resource]([SubResource("RoseDialogLine_50d3ff")])
+resource_name = "Menu 17"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b98f31"]
+text = "Bring me the Jelly King's Crown. Its hollow is west of the strangers' camp."
+next_menu = 2
+resource_name = "NPC: Bring me the Jelly King's Crown. Its hollow is w…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_a0f06b"]
+lines = Array[Resource]([SubResource("RoseDialogLine_b98f31")])
+resource_name = "Menu 18"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_394205"]
+text = "The crown! The plain owes you. Wear this coat, the last of the Riverford set, and take a return scroll for the road."
+next_menu = 2
+resource_name = "NPC: The crown! The plain owes you. Wear this coat, t…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_8c0fed"]
+lines = Array[Resource]([SubResource("RoseDialogLine_394205")])
+resource_name = "Menu 19"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c17c6b"]
+text = "Red cloaks, poisoned seed, that emblem... This is bigger than Riverford. Take the emblem over the ridge to Dorran, the caravan master at the Sandwind Caravan Camp in the Valley of Luxem Tower. Either gate on Gatehill gets you there."
+next_menu = 21
+resource_name = "NPC: Red cloaks, poisoned seed, that emblem... This i…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_42662b"]
+lines = Array[Resource]([SubResource("RoseDialogLine_c17c6b")])
+resource_name = "Menu 20"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_36191e"]
+step = ExtResource("x_44ff99")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_a2c915"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_36191e")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e2fcbd"]
+kind = "Answer"
+text = "I'll do it."
+next_menu = 22
+on_choose = Array[Resource]([SubResource("RoseDialogCase_a2c915")])
+resource_name = "You: I'll do it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_938af8"]
+kind = "Answer"
+text = "Not now."
+next_menu = -1
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_402ba3"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e2fcbd"), SubResource("RoseDialogLine_938af8")])
+resource_name = "Menu 21"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_5c3c52"]
+text = "Up the road to Gatehill, then through either gate. Dorran's camp is right on the other side."
+next_menu = 2
+resource_name = "NPC: Up the road to Gatehill, then through either gat…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_e86469"]
+lines = Array[Resource]([SubResource("RoseDialogLine_5c3c52")])
+resource_name = "Menu 22"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_8ecc01"]
+text = "Dorran, at the Sandwind Caravan Camp, just past the Luxem gates."
+next_menu = 2
+resource_name = "NPC: Dorran, at the Sandwind Caravan Camp, just past …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_a533bc"]
+lines = Array[Resource]([SubResource("RoseDialogLine_8ecc01")])
+resource_name = "Menu 23"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a6cb16"]
+text = "A ferry stop that grew a palisade. Maeve runs the ferry and sells what travellers need, and Tibbs is staying with us since the Flanae took his farm."
+next_menu = 2
+resource_name = "NPC: A ferry stop that grew a palisade. Maeve runs th…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_d44e5d"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a6cb16")])
+resource_name = "Menu 24"
+
+[resource]
+key = "EM22-011.con"
+name = "[Warden] Corvel"
+menus = Array[Resource]([SubResource("RoseDialogMenu_0d054d"), SubResource("RoseDialogMenu_36100f"), SubResource("RoseDialogMenu_c1da98"), SubResource("RoseDialogMenu_ec2bd6"), SubResource("RoseDialogMenu_dc4a3b"), SubResource("RoseDialogMenu_ffa3bb"), SubResource("RoseDialogMenu_2466da"), SubResource("RoseDialogMenu_7b3668"), SubResource("RoseDialogMenu_c786c2"), SubResource("RoseDialogMenu_29b6d1"), SubResource("RoseDialogMenu_c2171d"), SubResource("RoseDialogMenu_313235"), SubResource("RoseDialogMenu_85fd30"), SubResource("RoseDialogMenu_0a20e6"), SubResource("RoseDialogMenu_17eaa7"), SubResource("RoseDialogMenu_f26164"), SubResource("RoseDialogMenu_b58972"), SubResource("RoseDialogMenu_ccc230"), SubResource("RoseDialogMenu_a0f06b"), SubResource("RoseDialogMenu_8c0fed"), SubResource("RoseDialogMenu_42662b"), SubResource("RoseDialogMenu_402ba3"), SubResource("RoseDialogMenu_e86469"), SubResource("RoseDialogMenu_a533bc"), SubResource("RoseDialogMenu_d44e5d")])

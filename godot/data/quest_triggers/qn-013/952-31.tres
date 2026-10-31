@@ -3,6 +3,8 @@
 [ext_resource type="RoseQuest" uid="uid://cxbpjyrut81at" path="res://data/quests/952-hawker-job-change-quest.tres" id="1_v772j"]
 [ext_resource type="RoseItemQuest" uid="uid://bapvceiy4yvtp" path="res://data/items/quest/130-crystal-dew.tres" id="2_xtu6h"]
 
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qa22-001/2208-31.tres" id="ap_next"]
+
 [sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_tc1ep"]
 quest = ExtResource("1_v772j")
 
@@ -22,7 +24,11 @@ quest = ExtResource("1_v772j")
 item = ExtResource("2_xtu6h")
 quantity = 1
 
+[sub_resource type="RoseRewardTrigger" id="RoseRewardTrigger_ap33c591"]
+trigger = "2208-31"
+
 [resource]
 name = "952-31"
 conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_tc1ep"), SubResource("RoseConditionRandomPercent_45nkw"), SubResource("RoseConditionQuestItem_4kl07")])
-rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_6nyln"), SubResource("RoseRewardAddItem_tdhub")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_6nyln"), SubResource("RoseRewardAddItem_tdhub"), SubResource("RoseRewardTrigger_ap33c591")])
+next_trigger = ExtResource("ap_next")

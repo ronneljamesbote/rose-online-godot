@@ -50,77 +50,38 @@ drops:
 - item: '[[items/feet/3-waterproof-shoes|Waterproof Shoes]]'
   slots_of_30: 0.6
 quests:
+- '[[quests/2202-jelly-on-the-jetty|Jelly on the Jetty]]'
 - '[[quests/5033-stockpiling-jelly-bean-hides|Stockpiling Jelly Bean Hides]]'
 spawns:
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5480.4
-  y: 5378.7
-  count: 1
+  x: 5752
+  y: 5455
+  count: 4
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5515
-  y: 5424.7
-  count: 1
+  x: 5790
+  y: 5490
+  count: 4
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5515
-  y: 5424.7
-  count: 1
+  x: 5765
+  y: 5415
+  count: 4
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5515
-  y: 5424.7
-  count: 1
+  x: 5770
+  y: 5370
+  count: 4
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5515
-  y: 5424.7
-  count: 1
+  x: 5745
+  y: 5085
+  count: 4
   group: basic
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5575.2
-  y: 5319
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5496.2
-  y: 5398.8
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5465.8
-  y: 5348.3
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5608.5
-  y: 5294.6
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5629.5
-  y: 5348.9
-  count: 1
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5644.6
-  y: 5247.9
-  count: 2
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5661.2
-  y: 5193.4
-  count: 2
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5665.1
-  y: 5279.8
-  count: 2
-  group: basic
-- zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
-  x: 5665.1
-  y: 5279.8
-  count: 2
+  x: 5741
+  y: 5050
+  count: 4
   group: basic
 - zone: '[[zones/62-shady-jungle|Shady Jungle]]'
   x: 5329.9
@@ -144,3 +105,7 @@ Speeds are in centimetres per second, attack range in metres. Spawn positions ar
 HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].
+
+## Changed from iROSE
+
+The Adventurer's Plain redesign moved its spawn points there (see [[zones/22-adventurer-s-plain|Adventurer's Plain]]). Its kills also count for [[quests/2202-jelly-on-the-jetty|Jelly on the Jetty]].
