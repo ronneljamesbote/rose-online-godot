@@ -6,7 +6,7 @@ status: changed-from-irose
 keys:
   - { key: "Left-click ground", does: "walk there; a glowing crystal drops onto the spot" }
   - { key: "Hold left button on the ground", does: "keep running toward the cursor" }
-  - { key: "Left-click monster", does: "attack it (also an enemy player in a PvP zone)" }
+  - { key: "Left-click monster", does: "attack it (also an enemy player in a PvP zone); with Double-click to attack, select it, and attack on a double click or a second click" }
   - { key: "Left-click NPC", does: "walk over and talk" }
   - { key: "Left-click player", does: "target them; opens their shop if they have one" }
   - { key: "Left-click item on the ground or its label", does: "walk over and pick it up" }
@@ -47,6 +47,8 @@ cursors:
 cursor_size_px: { small: 32, normal: 40, large: 48, huge: 64, default: large }
 cursor_styles: [New, Classic]
 sticky_target_default: false
+attack_click: [Click to attack, Double-click to attack]
+attack_click_default: Click to attack
 item_label_range_m: 30
 source:
   code:
@@ -101,7 +103,12 @@ is in the `keys` table above.
   frame stays up and skills still go to it. Clicking another monster or player changes it,
   and Esc with no window open drops it.
 - **Left-click a monster** to attack it. In a PvP zone, clicking a player you may fight
-  attacks them too (see [[rules/pvp|PvP]]).
+  attacks them too (see [[rules/pvp|PvP]]). With **Double-click to attack** (Options,
+  Gameplay tab; the default is Click to attack) the first click only selects the monster:
+  its frame comes up and skills go to it, but you don't walk or swing. Double-clicking it,
+  or clicking it again while it is selected, attacks. A monster that is already your
+  target (one you were fighting, or one that attacked you) is attacked by a single click.
+  NPCs, players and items work the same in both modes.
 - **Left-click a town NPC** to walk over (you talk from within 3 m) and open its dialog
   (see [[rules/npc-dialogs|NPC dialogs]]).
 - **Left-click another player** to target them, for example for a heal. If they have a
@@ -252,7 +259,8 @@ Esc or clicking outside the chat box stops typing.
   - **World labels**: your own name tag, chat bubbles, damage numbers, and whether item
     labels on the ground show always or only while Alt is held. Labels show for items
     within 30 m.
-  - **Gameplay**: Sticky target (walking keeps your target; off by default).
+  - **Gameplay**: Click to attack or Double-click to attack (Click to attack by default),
+    and Sticky target (walking keeps your target; off by default).
   - **Graphics**: Shadows: Off, Low (shadows drawn up to 80 m away), Medium (120 m, the
     default) or High (200 m, softer edges). Off keeps the sun's shading without shadows.
   - **Sound**: music and sound effect volume.
@@ -275,7 +283,8 @@ sword, O opens the options (sound volume and shadows).
   within 40 m of your block. The colours the lightmaps gave the world are kept without the
   lightmaps' shadows: the ground's colour (Zant's blue canal, Birth Island's sea floor) and
   one warm colour per part of each building and decoration.
-- Sticky target is new; with it off, walking drops the target as in iROSE. Esc dropping
+- Sticky target is new; with it off, walking drops the target as in iROSE. Double-click
+  to attack is new too; Click to attack is iROSE's way. Esc dropping
   the target is new too.
 - The cursors are new pictures in iROSE's shapes (iROSE's own are the Classic style),
   chosen the same way, except: pushing the mouse against the left
