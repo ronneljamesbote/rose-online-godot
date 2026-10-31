@@ -6,6 +6,8 @@ status: in-game
 icon: item/1654
 class: Food
 effect: MP +400, MP Restoration (400), teaches [[skills/391-divine-force|Divine Force]] level 10, uses [[skills/391-divine-force|Divine Force]] level 10, fuel +400
+cooldown_group: MP food
+cooldown_seconds: 24
 price: 220
 weight: 1
 sold_by:

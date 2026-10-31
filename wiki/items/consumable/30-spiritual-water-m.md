@@ -6,6 +6,8 @@ status: in-game
 icon: item/1595
 class: Medicine
 effect: MP +400, teaches [[skills/391-divine-force|Divine Force]] level 10, uses [[skills/391-divine-force|Divine Force]] level 10, fuel +400
+cooldown_group: MP potion
+cooldown_seconds: 15
 price: 1080
 weight: 1
 dropped_by:

@@ -619,8 +619,22 @@ impl RoseNet {
         let looks: std::collections::HashMap<u64, VarArray> =
             c.db.player().iter().filter_map(|p| p.entity_id.map(|id| (id, player_look(&p)))).collect();
         let mut effects: std::collections::HashMap<u64, Vec<u8>> = std::collections::HashMap::new();
+        // Food's HP or MP Restoration (only food makes these rows, module/src/items.rs):
+        // its effect plays on the character while it lasts ("auras", effect file numbers).
+        let restore = [rose_data::StatusEffectType::IncreaseHp, rose_data::StatusEffectType::IncreaseMp]
+            .map(|t| enum_map::Enum::into_usize(t) as u8);
+        let mut auras: std::collections::HashMap<u64, PackedInt32Array> = std::collections::HashMap::new();
+        let game = crate::data::get();
         for r in c.db.status_effect().iter() {
             effects.entry(r.entity_id).or_default().push(r.effect_type);
+            if restore.contains(&r.effect_type) {
+                let file = rose_data::StatusEffectId::new(r.status_effect_id)
+                    .and_then(|id| game?.status_effects.get_status_effect(id))
+                    .and_then(|d| d.effect_file_id);
+                if let Some(file) = file {
+                    auras.entry(r.entity_id).or_default().push(file.get() as i32);
+                }
+            }
         }
         let area = self.area();
 
@@ -700,6 +714,9 @@ impl RoseNet {
             }
             if !conditions.is_empty() {
                 d.set("conditions", conditions.join(", ").as_str());
+            }
+            if let Some(files) = auras.get(&e.entity_id) {
+                d.set("auras", files);
             }
             if let Some(npc) = c.db.npc().entity_id().find(&e.entity_id) {
                 d.set("direction", npc.direction);
@@ -1076,11 +1093,16 @@ impl RoseNet {
         let inventory: Inventory = serde_json::from_str(&p.inventory).unwrap_or_default();
         let equipment: Equipment = serde_json::from_str(&p.equipment).unwrap_or_default();
         d.set("money", inventory.money.0);
+        let cooldowns = our_item_cooldowns(c, &p);
         let mut pages = VarArray::new();
         for page in [&inventory.equipment, &inventory.consumables, &inventory.materials, &inventory.vehicles] {
             let mut slots = VarArray::new();
             for slot in page.slots.iter() {
-                slots.push(&slot.as_ref().map_or(Variant::nil(), |item| item_dict(item).to_variant()));
+                slots.push(&slot.as_ref().map_or(Variant::nil(), |item| {
+                    let mut d = item_dict(item);
+                    set_item_cooldown(&mut d, item, &cooldowns);
+                    d.to_variant()
+                }));
             }
             pages.push(&slots.to_variant());
         }
@@ -1164,10 +1186,12 @@ impl RoseNet {
         let inventory: Inventory = serde_json::from_str(&p.inventory).unwrap_or_default();
         let skill_list: SkillList = serde_json::from_str(&p.skill_list).unwrap_or_default();
         let cooldowns = our_cooldowns(c, &p);
+        let item_cooldowns = our_item_cooldowns(c, &p);
         for slot in hotbar.pages[0].iter() {
             let entry = match slot {
                 Some(HotbarSlot::Inventory(item_slot @ ItemSlot::Inventory(page, index))) => inventory.get_item(*item_slot).map(|item| {
                     let mut d = item_dict(item);
+                    set_item_cooldown(&mut d, item, &item_cooldowns);
                     d.set("kind", "item");
                     d.set("page", *page as i64);
                     d.set("index", *index as i64);
@@ -2435,6 +2459,27 @@ fn set_cooldown(d: &mut VarDictionary, skill: &rose_data::SkillData, cooldowns: 
     let (until, total) = if global > own { (global, GLOBAL_COOLDOWN_S) } else { (own, duration.as_secs_f64()) };
     d.set("cooldown_end_ms", until as f64 / 1000.0);
     d.set("cooldown_total", total);
+}
+
+/// Our item cooldowns (module/src/items.rs ItemCooldown: one per cooldown type, kept with
+/// the character).
+fn our_item_cooldowns(c: &DbConnection, p: &Player) -> Vec<ItemCooldown> {
+    c.db.item_cooldown().iter().filter(|r| r.identity == p.identity).collect()
+}
+
+/// Adds the cooldown of a consumable's cooldown type (HP food, MP food, HP potion, MP
+/// potion) to its dictionary, as set_cooldown does for skills. The whole type shares it, so
+/// its length is the one of the item that started it.
+fn set_item_cooldown(d: &mut VarDictionary, item: &rose_data::Item, cooldowns: &[ItemCooldown]) {
+    let reference = item.get_item_reference();
+    if reference.item_type != rose_data::ItemType::Consumable {
+        return;
+    }
+    let Some(data) = crate::data::get().and_then(|g| g.items.get_consumable_item(reference.item_number)) else { return };
+    let kind = data.cooldown_type_id as u32;
+    let Some(r) = cooldowns.iter().find(|r| kind > 0 && r.cooldown_type == kind) else { return };
+    d.set("cooldown_end_ms", r.until_us as f64 / 1000.0);
+    d.set("cooldown_total", (r.until_us - r.from_us) as f64 / 1e6);
 }
 
 /// module/src/skills.rs GLOBAL_COOLDOWN_US, in seconds.

@@ -12,7 +12,9 @@ extends "res://demos/demo.gd"
 ## "inventory [close] [TAB]", "vehicle" (prints our vehicle parts, fuel and stats), "savepoint" and "me" (prints our zone, level, experience and whether we lie fallen),
 ## "say TEXT" (a chat line, or a GM command on a dev client), "type TEXT" (leaves it typed
 ## in the chat box, for screenshots of the GM suggestions), "sheet" (prints job, level,
-## points, stats, skill count, hotbar slots and worn weapon) and "hotbarskill SLOT ID".
+## points, stats, skill count, hotbar slots and worn weapon), "hotbarskill SLOT ID",
+## "hotbaritem SLOT PAGE INDEX" (a bag item on hotbar key SLOT + 1), "key SLOT" (presses
+## hotbar key SLOT + 1) and "cooldowns" (prints the cooldown left on each hotbar item).
 func run() -> void:
 	var steps := String(options.get("steps", ""))
 	await get_tree().create_timer(3.0).timeout
@@ -225,6 +227,14 @@ func run() -> void:
 						var skill = pages[page][index]
 						if skill != null and int(skill["id"]) == int(words[2]):
 							online.net.set_hotbar(int(arg), "skill", page, index)
+			"hotbaritem":
+				online.net.set_hotbar(int(arg), "item", int(words[2]), int(words[3]))
+			"key":
+				online.hotbar.use_slot(int(arg))
+			"cooldowns":
+				var now: float = online.net.server_time_ms()
+				var left := func(e): return "-" if e == null else "%s %.1f s" % [e["name"], maxf(0.0, (float(e.get("cooldown_end_ms", 0.0)) - now) / 1000.0)]
+				print("rose net demo: hotbar cooldowns ", online.net.get_hotbar().map(left))
 			"status":
 				var mine: Array = online.net.get_status_effects(online.my_id)
 				var theirs: Array = online.net.get_status_effects(online.my_target) if online.my_target >= 0 else []

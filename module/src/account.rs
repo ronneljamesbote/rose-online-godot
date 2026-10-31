@@ -132,6 +132,7 @@ pub fn assign_character(ctx: &ReducerContext, name: String, account: Identity) -
     crate::friends::rekey(ctx, old, account);
     crate::death::rekey(ctx, old, account);
     crate::stamina::rekey(ctx, old, account);
+    crate::items::rekey_item_cooldowns(ctx, old, account);
     ctx.db.player().identity().delete(old);
     p.identity = account;
     p.connection = None;

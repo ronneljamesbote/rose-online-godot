@@ -6,6 +6,8 @@ status: in-game
 icon: item/1591
 class: Medicine
 effect: MP +150, MP Restoration (150), teaches skill 150, uses skill 150, fuel +150
+cooldown_group: MP potion
+cooldown_seconds: 15
 price: 150
 weight: 1
 dropped_by:

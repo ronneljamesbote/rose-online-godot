@@ -6,6 +6,8 @@ status: in-game
 icon: item/1591
 class: Medicine
 effect: MP +300, MP Restoration (300), teaches [[skills/291-spiritual-training|Spiritual Training]] level 10, uses [[skills/291-spiritual-training|Spiritual Training]] level 10, fuel +300
+cooldown_group: MP potion
+cooldown_seconds: 15
 price: 330
 weight: 1
 dropped_by:

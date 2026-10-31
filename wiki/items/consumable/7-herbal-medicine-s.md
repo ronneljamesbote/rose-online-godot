@@ -6,6 +6,8 @@ status: in-game
 icon: item/1588
 class: Medicine
 effect: HP +500, HP Restoration (500), teaches [[skills/491-slow-shot|Slow Shot]] level 10, uses [[skills/491-slow-shot|Slow Shot]] level 10, fuel +500
+cooldown_group: HP potion
+cooldown_seconds: 30
 price: 175
 weight: 1
 sold_by:

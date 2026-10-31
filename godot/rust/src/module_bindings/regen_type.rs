@@ -13,6 +13,7 @@ pub struct Regen {
     pub total: i32,
     pub per_second: i32,
     pub applied: i32,
+    pub food: bool,
 }
 
 impl __sdk::InModule for Regen {
@@ -29,6 +30,7 @@ pub struct RegenCols {
     pub total: __sdk::__query_builder::Col<Regen, i32>,
     pub per_second: __sdk::__query_builder::Col<Regen, i32>,
     pub applied: __sdk::__query_builder::Col<Regen, i32>,
+    pub food: __sdk::__query_builder::Col<Regen, bool>,
 }
 
 impl __sdk::__query_builder::HasCols for Regen {
@@ -41,6 +43,7 @@ impl __sdk::__query_builder::HasCols for Regen {
             total: __sdk::__query_builder::Col::new(table_name, "total"),
             per_second: __sdk::__query_builder::Col::new(table_name, "per_second"),
             applied: __sdk::__query_builder::Col::new(table_name, "applied"),
+            food: __sdk::__query_builder::Col::new(table_name, "food"),
         }
     }
 }

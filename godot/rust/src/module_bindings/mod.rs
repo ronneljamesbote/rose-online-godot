@@ -73,6 +73,8 @@ pub mod gm_state_type;
 pub mod ground_item_table;
 pub mod ground_item_type;
 pub mod insert_gem_reducer;
+pub mod item_cooldown_table;
+pub mod item_cooldown_type;
 pub mod level_up_skill_reducer;
 pub mod monster_ai_type;
 pub mod monster_chase_type;
@@ -272,6 +274,8 @@ pub use gm_state_type::GmState;
 pub use ground_item_table::*;
 pub use ground_item_type::GroundItem;
 pub use insert_gem_reducer::insert_gem;
+pub use item_cooldown_table::*;
+pub use item_cooldown_type::ItemCooldown;
 pub use level_up_skill_reducer::level_up_skill;
 pub use monster_ai_type::MonsterAi;
 pub use monster_chase_type::MonsterChase;
@@ -1414,6 +1418,7 @@ pub struct DbUpdate {
     fallen: __sdk::TableUpdate<Fallen>,
     game_data_status: __sdk::TableUpdate<GameDataStatus>,
     ground_item: __sdk::TableUpdate<GroundItem>,
+    item_cooldown: __sdk::TableUpdate<ItemCooldown>,
     motion: __sdk::TableUpdate<Motion>,
     my_chat: __sdk::TableUpdate<ChatMessage>,
     my_friend_requests: __sdk::TableUpdate<FriendRequest>,
@@ -1482,6 +1487,9 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "ground_item" => db_update
                     .ground_item
                     .append(ground_item_table::parse_table_update(table_update)?),
+                "item_cooldown" => db_update
+                    .item_cooldown
+                    .append(item_cooldown_table::parse_table_update(table_update)?),
                 "motion" => db_update
                     .motion
                     .append(motion_table::parse_table_update(table_update)?),
@@ -1632,6 +1640,9 @@ impl __sdk::DbUpdate for DbUpdate {
         diff.ground_item = cache
             .apply_diff_to_table::<GroundItem>("ground_item", &self.ground_item)
             .with_updates_by_pk(|row| &row.drop_id);
+        diff.item_cooldown = cache
+            .apply_diff_to_table::<ItemCooldown>("item_cooldown", &self.item_cooldown)
+            .with_updates_by_pk(|row| &row.id);
         diff.motion = cache
             .apply_diff_to_table::<Motion>("motion", &self.motion)
             .with_updates_by_pk(|row| &row.entity_id);
@@ -1754,6 +1765,9 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "ground_item" => db_update
                     .ground_item
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "item_cooldown" => db_update
+                    .item_cooldown
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "motion" => db_update
                     .motion
@@ -1894,6 +1908,9 @@ impl __sdk::DbUpdate for DbUpdate {
                 "ground_item" => db_update
                     .ground_item
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "item_cooldown" => db_update
+                    .item_cooldown
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "motion" => db_update
                     .motion
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
@@ -2017,6 +2034,7 @@ pub struct AppliedDiff<'r> {
     fallen: __sdk::TableAppliedDiff<'r, Fallen>,
     game_data_status: __sdk::TableAppliedDiff<'r, GameDataStatus>,
     ground_item: __sdk::TableAppliedDiff<'r, GroundItem>,
+    item_cooldown: __sdk::TableAppliedDiff<'r, ItemCooldown>,
     motion: __sdk::TableAppliedDiff<'r, Motion>,
     my_chat: __sdk::TableAppliedDiff<'r, ChatMessage>,
     my_friend_requests: __sdk::TableAppliedDiff<'r, FriendRequest>,
@@ -2084,6 +2102,11 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
             event,
         );
         callbacks.invoke_table_row_callbacks::<GroundItem>("ground_item", &self.ground_item, event);
+        callbacks.invoke_table_row_callbacks::<ItemCooldown>(
+            "item_cooldown",
+            &self.item_cooldown,
+            event,
+        );
         callbacks.invoke_table_row_callbacks::<Motion>("motion", &self.motion, event);
         callbacks.invoke_table_row_callbacks::<ChatMessage>("my_chat", &self.my_chat, event);
         callbacks.invoke_table_row_callbacks::<FriendRequest>(
@@ -2822,6 +2845,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
         fallen_table::register_table(client_cache);
         game_data_status_table::register_table(client_cache);
         ground_item_table::register_table(client_cache);
+        item_cooldown_table::register_table(client_cache);
         motion_table::register_table(client_cache);
         my_chat_table::register_table(client_cache);
         my_friend_requests_table::register_table(client_cache);
@@ -2866,6 +2890,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
         "fallen",
         "game_data_status",
         "ground_item",
+        "item_cooldown",
         "motion",
         "my_chat",
         "my_friend_requests",

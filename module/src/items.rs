@@ -2,6 +2,7 @@
 //! using consumables. Rules follow rose-offline's npc_ai_system (drops), pickup_item_system,
 //! equipment_event_system, use_ammo and use_item_system.
 
+use enum_map::Enum;
 use rand::Rng;
 use rose_data::{
     AmmoIndex, EquipmentIndex, Item, ItemClass, ItemType, JobId, NpcId, StackError, StackableSlotBehaviour,
@@ -13,6 +14,7 @@ use rose_game_common::components::{
 use rose_game_data::GameData;
 use spacetimedb::{Identity, ReducerContext, Table};
 
+use crate::skills::{status_effect, StatusEffectRow};
 use crate::{
     ability, character, combat, distance, game_data::game, my_player, now_us, player, position, stats,
     world_rates_row, Player,
@@ -64,6 +66,48 @@ pub struct Regen {
     pub total: i32,
     pub per_second: i32,
     pub applied: i32,
+    /// Food's and a potion's restoration run side by side; a new one replaces only its own kind.
+    #[default(false)]
+    pub food: bool,
+}
+
+/// When a character can next use an item of a cooldown type (the item's cooldown_type_id:
+/// 1 HP food, 2 MP food, 3 HP potion, 4 MP potion). Kept per character, not per entity, so
+/// logging out, dying or changing zone doesn't reset it.
+#[spacetimedb::table(accessor = item_cooldown, public)]
+pub struct ItemCooldown {
+    #[primary_key]
+    #[auto_inc]
+    pub id: u64,
+    #[index(btree)]
+    pub identity: Identity,
+    pub cooldown_type: u32,
+    /// When it started, so a slot can show how much of it is left.
+    pub from_us: i64,
+    pub until_us: i64,
+}
+
+fn item_cooldown_until(ctx: &ReducerContext, identity: Identity, cooldown_type: u32) -> i64 {
+    ctx.db.item_cooldown().identity().filter(identity).find(|r| r.cooldown_type == cooldown_type).map_or(0, |r| r.until_us)
+}
+
+fn set_item_cooldown(ctx: &ReducerContext, identity: Identity, cooldown_type: u32, from_us: i64, until_us: i64) {
+    if let Some(mut r) = ctx.db.item_cooldown().identity().filter(identity).find(|r| r.cooldown_type == cooldown_type) {
+        r.from_us = from_us;
+        r.until_us = until_us;
+        ctx.db.item_cooldown().id().update(r);
+    } else {
+        ctx.db.item_cooldown().insert(ItemCooldown { id: 0, identity, cooldown_type, from_us, until_us });
+    }
+}
+
+/// A character given to another account keeps its item cooldowns.
+pub fn rekey_item_cooldowns(ctx: &ReducerContext, old: Identity, new: Identity) {
+    let rows: Vec<ItemCooldown> = ctx.db.item_cooldown().identity().filter(old).collect();
+    for mut r in rows {
+        r.identity = new;
+        ctx.db.item_cooldown().id().update(r);
+    }
 }
 
 pub fn notify(ctx: &ReducerContext, identity: Identity, text: impl Into<String>) {
@@ -493,6 +537,7 @@ pub fn has_ammo(p: &Player, ammo: AmmoIndex, count: u32) -> bool {
 /// A consumable's effect: a potion's HP/MP over time, or a direct ability change.
 fn apply_consumable(ctx: &ReducerContext, game: &GameData, p: &mut Player, entity_id: u64, item_number: usize) -> bool {
     let Some(data) = game.items.get_consumable_item(item_number) else { return false };
+    let food = data.item_data.class == ItemClass::Food;
     if let Some((status_effect, total)) = data.apply_status_effect {
         let Some(base) = game.status_effects.get_status_effect(status_effect) else { return false };
         let mut applied = false;
@@ -509,19 +554,23 @@ fn apply_consumable(ctx: &ReducerContext, game: &GameData, p: &mut Player, entit
             if per_second <= 0 {
                 continue;
             }
-            // A new potion of the same kind replaces the one still working (StatusEffects::can_apply).
+            // A new potion of the same kind replaces the one still working (StatusEffects::can_apply);
+            // food and potions are kinds of their own and work side by side.
             let old: Vec<u64> = ctx
                 .db
                 .regen()
                 .entity_id()
                 .filter(entity_id)
-                .filter(|r| r.mana == mana)
+                .filter(|r| r.mana == mana && r.food == food)
                 .map(|r| r.id)
                 .collect();
             for id in old {
                 ctx.db.regen().id().delete(id);
             }
-            ctx.db.regen().insert(Regen { id: 0, entity_id, mana, total, per_second, applied: 0 });
+            ctx.db.regen().insert(Regen { id: 0, entity_id, mana, total, per_second, applied: 0, food });
+            if food {
+                show_food_effect(ctx, entity_id, effect, per_second, total);
+            }
             applied = true;
         }
         applied
@@ -539,6 +588,35 @@ fn apply_consumable(ctx: &ReducerContext, game: &GameData, p: &mut Player, entit
     } else {
         false
     }
+}
+
+/// Food shows as a buff while it restores: a status effect row (HP or MP Restoration) with
+/// its icon and time left, and its effect on the character for everyone. Only food makes
+/// these rows, so they stand for food alone.
+fn show_food_effect(ctx: &ReducerContext, entity_id: u64, effect: &rose_data::StatusEffectData, per_second: i32, total: i32) {
+    let effect_type = effect.status_effect_type.into_usize() as u8;
+    clear_food_effect(ctx, entity_id, effect_type);
+    let seconds = (total + per_second - 1) / per_second;
+    ctx.db.status_effect().insert(StatusEffectRow {
+        id: 0,
+        entity_id,
+        effect_type,
+        status_effect_id: effect.id.get(),
+        value: per_second,
+        expires_at_us: now_us(ctx) + seconds as i64 * 1_000_000,
+    });
+}
+
+fn clear_food_effect(ctx: &ReducerContext, entity_id: u64, effect_type: u8) {
+    let old: Vec<u64> =
+        ctx.db.status_effect().entity_id().filter(entity_id).filter(|r| r.effect_type == effect_type).map(|r| r.id).collect();
+    for id in old {
+        ctx.db.status_effect().id().delete(id);
+    }
+}
+
+fn food_effect_type(mana: bool) -> u8 {
+    (if mana { StatusEffectType::IncreaseMp } else { StatusEffectType::IncreaseHp }).into_usize() as u8
 }
 
 /// Use a consumable from the inventory (potions, food). Skill books and scrolls come with skills.
@@ -592,11 +670,24 @@ pub fn use_item(ctx: &ReducerContext, page: u8, index: u16) -> Result<(), String
             return Err(format!("needs {ability_type:?} {required}"));
         }
     }
+    // Items of one cooldown type share a cooldown (HP food, MP food, HP potion, MP potion).
+    let cooldown_type = data.cooldown_type_id as u32;
+    let t = now_us(ctx);
+    if cooldown_type > 0 {
+        let left = item_cooldown_until(ctx, p.identity, cooldown_type) - t;
+        if left > 0 {
+            return Err(format!("You can use that again in {} s", (left + 999_999) / 1_000_000));
+        }
+    }
+    let cooldown_us = data.cooldown_duration.as_micros() as i64;
     let item_number = item.get_item_number();
     inventory.try_take_quantity(slot, 1).ok_or("nothing there")?;
     p.set_inventory(&inventory);
     if !apply_consumable(ctx, &game, &mut p, id, item_number) {
         return Err("it had no effect".into());
+    }
+    if cooldown_type > 0 && cooldown_us > 0 {
+        set_item_cooldown(ctx, p.identity, cooldown_type, t, t + cooldown_us);
     }
     // apply_consumable saved the player when it changed abilities; save the inventory too.
     let mut saved = ctx.db.player().identity().find(p.identity).unwrap_or(p.clone());
@@ -607,13 +698,14 @@ pub fn use_item(ctx: &ReducerContext, page: u8, index: u16) -> Result<(), String
 
 /// One second of potion regeneration (rose-offline's status_effect_system).
 pub fn regen_tick(ctx: &ReducerContext) {
-    for mut r in ctx.db.regen().iter() {
+    let rows: Vec<Regen> = ctx.db.regen().iter().collect();
+    for mut r in rows {
         let Some(mut c) = ctx.db.combat().entity_id().find(r.entity_id) else {
-            ctx.db.regen().id().delete(r.id);
+            end_regen(ctx, &r);
             continue;
         };
         if c.dead_until_us.is_some() || c.hp <= 0 {
-            ctx.db.regen().id().delete(r.id);
+            end_regen(ctx, &r);
             continue;
         }
         let step = r.per_second.min(r.total - r.applied);
@@ -625,17 +717,25 @@ pub fn regen_tick(ctx: &ReducerContext) {
         }
         ctx.db.combat().entity_id().update(c);
         if r.applied >= r.total {
-            ctx.db.regen().id().delete(r.id);
+            end_regen(ctx, &r);
         } else {
             ctx.db.regen().id().update(r);
         }
     }
 }
 
+/// A restoration is over: food's buff goes with it.
+fn end_regen(ctx: &ReducerContext, r: &Regen) {
+    if r.food {
+        clear_food_effect(ctx, r.entity_id, food_effect_type(r.mana));
+    }
+    ctx.db.regen().id().delete(r.id);
+}
+
 pub fn clear_regen(ctx: &ReducerContext, entity_id: u64) {
-    let ids: Vec<u64> = ctx.db.regen().entity_id().filter(entity_id).map(|r| r.id).collect();
-    for id in ids {
-        ctx.db.regen().id().delete(id);
+    let rows: Vec<Regen> = ctx.db.regen().entity_id().filter(entity_id).collect();
+    for r in rows {
+        end_regen(ctx, &r);
     }
 }
 

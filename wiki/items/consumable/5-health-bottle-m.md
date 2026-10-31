@@ -6,6 +6,8 @@ status: in-game
 icon: item/1587
 class: Medicine
 effect: HP +600, HP Restoration (600), teaches skill 600, uses skill 600, fuel +600
+cooldown_group: HP potion
+cooldown_seconds: 30
 price: 570
 weight: 1
 dropped_by:

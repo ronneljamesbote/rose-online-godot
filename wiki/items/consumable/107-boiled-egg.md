@@ -6,6 +6,8 @@ status: in-game
 icon: item/1631
 class: Food
 effect: HP +220, HP Restoration (220), teaches [[skills/211-one-handed-mastery|One-Handed Mastery]] level 10, uses [[skills/211-one-handed-mastery|One-Handed Mastery]] level 10, fuel +220
+cooldown_group: HP food
+cooldown_seconds: 7
 price: 66
 weight: 1
 dropped_in_zones:

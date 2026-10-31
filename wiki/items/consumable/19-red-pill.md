@@ -6,6 +6,8 @@ status: in-game
 icon: item/1590
 class: Medicine
 effect: HP +2000, teaches skill 2000, uses skill 2000, fuel +2000
+cooldown_group: HP potion
+cooldown_seconds: 30
 price: 4500
 weight: 1
 source:

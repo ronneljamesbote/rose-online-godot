@@ -490,9 +490,11 @@ item_resource!(
         status_effect_id: i64,
         /// The strength of that status effect.
         status_effect_value: i64,
-        /// Items with the same cooldown type share one cooldown.
+        /// Items with the same cooldown type share one cooldown, kept with the character:
+        /// 1 HP food, 2 MP food, 3 HP potion, 4 MP potion (0 = none).
         cooldown_type_id: i64,
-        /// Seconds before an item of the same cooldown type can be used again.
+        /// Seconds before an item of the same cooldown type can be used again (food: its
+        /// restoring time minus 1).
         cooldown_seconds: i64,
         /// The effect played when it is used (empty = none): drag a `RoseEffectFile` in from
         /// `res://data/effect_files/`.

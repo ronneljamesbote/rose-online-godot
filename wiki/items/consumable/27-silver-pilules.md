@@ -6,6 +6,8 @@ status: in-game
 icon: item/1593
 class: Medicine
 effect: MP +50, teaches [[skills/50-applause|Applause]], uses [[skills/50-applause|Applause]], fuel +50
+cooldown_group: MP potion
+cooldown_seconds: 15
 price: 100
 weight: 1
 source:
