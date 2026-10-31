@@ -6,6 +6,8 @@ status: in-game
 icon: item/1586
 class: Medicine
 effect: HP +400, HP Restoration (400), teaches [[skills/391-divine-force|Divine Force]] level 10, uses [[skills/391-divine-force|Divine Force]] level 10, fuel +400
+cooldown_group: HP potion
+cooldown_seconds: 30
 price: 220
 weight: 1
 dropped_by:

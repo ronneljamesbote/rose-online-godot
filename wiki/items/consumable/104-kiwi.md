@@ -6,6 +6,8 @@ status: in-game
 icon: item/1628
 class: Food
 effect: HP +160, HP Restoration (160), teaches skill 160, uses skill 160, fuel +160
+cooldown_group: HP food
+cooldown_seconds: 5
 price: 48
 weight: 1
 dropped_by:

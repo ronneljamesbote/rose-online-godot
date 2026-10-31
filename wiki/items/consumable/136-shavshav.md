@@ -6,6 +6,8 @@ status: in-game
 icon: item/1660
 class: Food
 effect: HP +700, HP Restoration (700), teaches skill 700, uses skill 700, fuel +700
+cooldown_group: HP food
+cooldown_seconds: 23
 price: 245
 weight: 1
 sold_by:

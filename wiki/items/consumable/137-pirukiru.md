@@ -6,6 +6,8 @@ status: in-game
 icon: item/1661
 class: Food
 effect: MP +500, MP Restoration (500), teaches [[skills/491-slow-shot|Slow Shot]] level 10, uses [[skills/491-slow-shot|Slow Shot]] level 10, fuel +500
+cooldown_group: MP food
+cooldown_seconds: 31
 price: 275
 weight: 1
 sold_by:

@@ -6,6 +6,8 @@ status: in-game
 icon: item/1640
 class: Food
 effect: HP +380, HP Restoration (380), teaches [[skills/361-berserk|Berserk]] level 20, uses [[skills/361-berserk|Berserk]] level 20, fuel +380
+cooldown_group: HP food
+cooldown_seconds: 12
 price: 114
 weight: 1
 source:

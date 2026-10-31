@@ -30,11 +30,17 @@ potions:
   - { item: "[[items/consumable/29-spiritual-water-s|Spiritual Water (S)]]", restores: "200 MP", per_second: "all at once", seconds: 0 }
   - { item: "[[items/consumable/101-apple|Apple]] and other food", restores: "100 HP (Apple)", per_second: 30, seconds: 4 }
   - { item: "[[items/consumable/120-milk|Milk]] and other drinks", restores: "60 MP (Milk)", per_second: 16, seconds: 4 }
+cooldowns:
+  - { group: HP food, items: "food that restores HP (Apple, Cooked Meat, ShavShav ...)", seconds: "its restoring time - 1" }
+  - { group: MP food, items: "drinks and food that restore MP (Milk, juices, Sweet Honey, PiruKiru ...)", seconds: "its restoring time - 1" }
+  - { group: HP potion, items: "Health Vial, Health Bottle, Herbal Medicine, Vital Water, Red Pill, Flanae Root, Tree Sap", seconds: 30 }
+  - { group: MP potion, items: "Mana Vial, Mana Bottle, Pilules, Spiritual Water, Blue Pill, Royal Jelly", seconds: 15 }
 source:
   code:
     - module/src/lib.rs (passive_recovery, RECOVERY_INTERVAL_US, sit, stand_up, spawn_tick, Sitting)
     - crates/rose-game-irose/src/data/ability_values.rs (calculate_passive_recover_hp, calculate_passive_recover_mp, calculate additional_health_recovery and additional_mana_recovery)
-    - module/src/items.rs (use_item, apply_consumable, regen_tick, clear_regen, Regen)
+    - module/src/items.rs (use_item, apply_consumable, regen_tick, clear_regen, Regen, ItemCooldown, show_food_effect)
+    - godot/rust/src/net.rs (set_item_cooldown)
     - module/src/ability.rs (add_value)
   data: the consumable resources in godot/data/items/consumable/ (amount status_effect_value, recovery effect status_effect_id; iROSE's LIST_USEITEM.STB columns 20 and 24), the status effect resources 1 to 6 in godot/data/status_effects/ (amount per second, apply_status_effect_1_value; iROSE's LIST_STATUS.STB rows 1-6)
 ---
@@ -110,18 +116,60 @@ Restoring never goes above your max HP or MP, and what doesn't fit is lost. The 
 **Worked example:** a [[items/consumable/1-health-vial-s|Health Vial (S)]] restores 200 HP:
 76 after 1 second, 76 after 2, the last 48 after 3.
 
-There is no waiting time between uses.
+## Cooldowns
+
+Potions and food have a cooldown, shared by everything of the same group. There are four
+groups, each with its own cooldown (the table `cooldowns` above):
+
+| Group | Cooldown |
+| --- | --- |
+| HP food | the food's restoring time minus 1 second |
+| MP food (drinks) | the food's restoring time minus 1 second |
+| HP potion | 30 seconds |
+| MP potion | 15 seconds |
+
+A food's restoring time is its total divided by what it gives per second, rounded up, so
+an [[items/consumable/101-apple|Apple]] (100 HP at 30 a second) restores for 4 seconds and
+has a 3 second cooldown; [[items/consumable/136-shavshav|ShavShav]] (700 HP) restores for
+24 and waits 23. Each item's page shows its group and seconds.
+
+- Using any item of a group starts that group's cooldown for its own length; another
+  item of the same group can't be used until it ends. The other three groups are not held
+  up: you can drink an HP potion right after eating an Apple.
+- The cooldown belongs to the character. Logging out, changing zone, falling, dropping
+  and picking up items, trading, banking or buying more don't reset it; the time keeps
+  running while you are offline.
+- Using an item during its cooldown does nothing and tells you how many seconds are left.
+  The item keeps its place in the bag.
+- The hotbar and the inventory show the cooldown on every item of the group as a dark
+  sweep with the seconds left.
+
+## Food buffs
+
+While food restores HP or MP it shows as a buff (HP Restoration or MP Restoration) in your
+buff row, with the time left. It goes when the food has given all it has, when another
+food of the same kind replaces it, or when you fall or log out. Potions show no buff, and
+no effect plays on the character for either (Ronnel, 2026-10-31: none for now).
 
 ## How they stack
 
-- One HP effect and one MP effect can run at the same time.
-- A second HP potion or food **replaces** the HP effect still running, and what the first
-  one had not given yet is lost. The same goes for MP.
+- One HP effect and one MP effect from potions, and one of each from food, can run at the
+  same time: an HP potion and HP food both restore side by side.
+- A second HP potion **replaces** the HP potion effect still running, and what the first
+  one had not given yet is lost; a second HP food replaces the HP food. The same goes for
+  MP. With the cooldowns, a potion can only replace one that has run for 30 (HP) or 15
+  (MP) seconds, and food the last second of the food before it.
 - Potions and natural recovery add up: both keep working at the same time, sitting or not.
-- Falling ends all running potion effects.
+- Falling ends all running potion and food effects, and logging out ends them too.
 
-**Worked example:** you drink a Health Vial (L) (800 HP) and eat an Apple 2 seconds later.
-The vial has given 152 HP; the Apple replaces it, so you get 100 more over 4 seconds and the
-other 648 HP of the vial are lost. A Mana Vial taken at the same time keeps running.
+**Worked example:** you drink a Health Vial (L) (800 HP, 11 seconds) and eat an Apple 2
+seconds later. The vial keeps giving 76 HP a second and the Apple adds 30 a second for 4
+seconds. Another Health Vial waits until 30 seconds after the first; another Apple until 3
+seconds after the Apple.
 
-> Open question: there is no wait between using potions or food; a new one simply replaces the one running. The cooldown fields (`cooldown_type_id`, `cooldown_seconds`) were converted from LIST_USEITEM.STB columns 25 and 26, which may be the wrong columns. Not checked against iROSE.
+## Changed from iROSE
+
+- iROSE has no waiting time between potions or food; here they have the four cooldown
+  groups above (Ronnel's design).
+- In iROSE (and rose-offline) food and a potion of the same kind replace each other; here
+  they restore side by side, and food shows a buff while it lasts.

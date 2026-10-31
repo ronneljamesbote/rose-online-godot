@@ -6,6 +6,8 @@ status: in-game
 icon: item/1591
 class: Medicine
 effect: MP +500, MP Restoration (500), teaches [[skills/491-slow-shot|Slow Shot]] level 10, uses [[skills/491-slow-shot|Slow Shot]] level 10, fuel +500
+cooldown_group: MP potion
+cooldown_seconds: 15
 price: 600
 weight: 1
 dropped_by:

@@ -6,6 +6,8 @@ status: in-game
 icon: item/1589
 class: Medicine
 effect: HP +1000, teaches [[skills/991-enchant-armor|Enchant Armor]] level 10, uses [[skills/991-enchant-armor|Enchant Armor]] level 10, fuel +1000
+cooldown_group: HP potion
+cooldown_seconds: 30
 price: 2100
 weight: 1
 source:

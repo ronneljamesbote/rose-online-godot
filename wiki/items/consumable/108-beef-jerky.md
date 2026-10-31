@@ -6,6 +6,8 @@ status: in-game
 icon: item/1632
 class: Food
 effect: HP +240, HP Restoration (240), teaches [[skills/231-physical-training|Physical Training]] level 10, uses [[skills/231-physical-training|Physical Training]] level 10, fuel +240
+cooldown_group: HP food
+cooldown_seconds: 7
 price: 72
 weight: 1
 dropped_in_zones:

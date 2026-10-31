@@ -6,6 +6,8 @@ status: in-game
 icon: item/1596
 class: Medicine
 effect: MP +1500, teaches skill 1500, uses skill 1500, fuel +1500
+cooldown_group: MP potion
+cooldown_seconds: 15
 price: 4125
 weight: 1
 source:

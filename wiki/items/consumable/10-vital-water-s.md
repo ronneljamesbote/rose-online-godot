@@ -6,6 +6,8 @@ status: in-game
 icon: item/1589
 class: Medicine
 effect: HP +250, teaches [[skills/231-physical-training|Physical Training]] level 20, uses [[skills/231-physical-training|Physical Training]] level 20, fuel +250
+cooldown_group: HP potion
+cooldown_seconds: 30
 price: 450
 weight: 1
 dropped_by:

@@ -10,6 +10,7 @@ pub struct GmState {
     pub identity: __sdk::Identity,
     pub god: bool,
     pub speed_percent: u32,
+    pub free_skills: Vec<u16>,
 }
 
 impl __sdk::InModule for GmState {
@@ -23,6 +24,7 @@ pub struct GmStateCols {
     pub identity: __sdk::__query_builder::Col<GmState, __sdk::Identity>,
     pub god: __sdk::__query_builder::Col<GmState, bool>,
     pub speed_percent: __sdk::__query_builder::Col<GmState, u32>,
+    pub free_skills: __sdk::__query_builder::Col<GmState, Vec<u16>>,
 }
 
 impl __sdk::__query_builder::HasCols for GmState {
@@ -32,6 +34,7 @@ impl __sdk::__query_builder::HasCols for GmState {
             identity: __sdk::__query_builder::Col::new(table_name, "identity"),
             god: __sdk::__query_builder::Col::new(table_name, "god"),
             speed_percent: __sdk::__query_builder::Col::new(table_name, "speed_percent"),
+            free_skills: __sdk::__query_builder::Col::new(table_name, "free_skills"),
         }
     }
 }

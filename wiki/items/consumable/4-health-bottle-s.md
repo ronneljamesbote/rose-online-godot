@@ -6,6 +6,8 @@ status: in-game
 icon: item/1587
 class: Medicine
 effect: HP +300, HP Restoration (300), teaches [[skills/291-spiritual-training|Spiritual Training]] level 10, uses [[skills/291-spiritual-training|Spiritual Training]] level 10, fuel +300
+cooldown_group: HP potion
+cooldown_seconds: 30
 price: 270
 weight: 1
 dropped_by:

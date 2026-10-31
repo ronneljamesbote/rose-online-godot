@@ -6,6 +6,8 @@ status: in-game
 icon: item/1645
 class: Food
 effect: MP +80, MP Restoration (80), teaches skill 80, uses skill 80, fuel +80
+cooldown_group: MP food
+cooldown_seconds: 4
 price: 40
 weight: 1
 dropped_in_zones:

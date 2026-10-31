@@ -6,6 +6,8 @@ status: in-game
 icon: item/1639
 class: Food
 effect: HP +340, HP Restoration (340), teaches [[skills/321-double-attack|Double Attack]] level 20, uses [[skills/321-double-attack|Double Attack]] level 20, fuel +340
+cooldown_group: HP food
+cooldown_seconds: 11
 price: 102
 weight: 1
 source:

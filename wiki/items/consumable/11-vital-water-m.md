@@ -6,6 +6,8 @@ status: in-game
 icon: item/1589
 class: Medicine
 effect: HP +500, teaches [[skills/491-slow-shot|Slow Shot]] level 10, uses [[skills/491-slow-shot|Slow Shot]] level 10, fuel +500
+cooldown_group: HP potion
+cooldown_seconds: 30
 price: 950
 weight: 1
 dropped_by:
