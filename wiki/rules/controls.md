@@ -54,7 +54,7 @@ target_ring:
   player: blue (other players, party members, summons)
   pvp_enemy_player: red
   size: the target's model width
-  look: a thick, see-through ring with a faint fill
+  look: a filled, see-through disc, stronger towards its soft edge
   motion: stands still; pops in on select, shrinks away on deselect
 attack_click: [Click to attack, Double-click to attack]
 attack_click_default: Click to attack
@@ -113,8 +113,8 @@ is in the `keys` table above.
   off by default) walking keeps it: the attack stops, but the target stays selected, its
   frame stays up and skills still go to it. Clicking another monster or player changes it,
   and Esc with no window open drops it.
-- **A circle on the ground** marks your target: a thick, see-through ring with a faint
-  fill, sized to it and lying on the ground under it (on slopes, stairs and bridges too).
+- **A disc on the ground** marks your target: filled and see-through, stronger towards its
+  soft edge, sized to it and lying on the ground under it (on slopes, stairs and bridges too).
   Its colour says what it is: red a monster (or a player you may fight in a PvP zone),
   green an NPC, blue another player or a party member. It stands still; it pops in when you
   select something and shrinks away when the target is dropped, dies or leaves.
@@ -300,7 +300,7 @@ sword, O opens the options (sound volume and shadows).
   within 40 m of your block. The colours the lightmaps gave the world are kept without the
   lightmaps' shadows: the ground's colour (Zant's blue canal, Birth Island's sea floor) and
   one warm colour per part of each building and decoration.
-- The circle under the target is new.
+- The disc under the target is new.
 - Sticky target is new; with it off, walking drops the target as in iROSE. Double-click
   to attack is new too; Click to attack is iROSE's way. Esc dropping
   the target is new too.

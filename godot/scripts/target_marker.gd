@@ -2,8 +2,8 @@
 ## the current target every frame, so it lies on the terrain, stairs and floors under the
 ## target's feet. Its size follows the target's model, its colour what the target is:
 ## red a monster (or a player we may fight in PvP), green an NPC, blue another player.
-## A thick, see-through ring with a faint fill. It stands still; it pops in when something
-## is selected and shrinks away when it is dropped.
+## A filled, see-through disc, stronger towards its soft edge (as in WoW). It stands still;
+## it pops in when something is selected and shrinks away when it is dropped.
 ##
 ## Characters, monsters and NPCs draw on render layer 2 (net_entity.gd), which the decal
 ## skips, so the circle never paints the target's feet or anyone standing on it.
@@ -11,10 +11,9 @@ extends Decal
 
 const ENTITY_LAYER := 2  # render layer bit of entity models; the decal leaves them out
 const TEXTURE_SIZE := 256
-const RING_INNER := 0.72  # the ring's inner and outer edge, as parts of the decal's half width
-const RING_OUTER := 0.94
-const FILL := 0.18  # alpha of the fill inside the ring
-const ALPHA := 0.75  # the whole circle is this see-through
+const DISC := 0.92  # the disc's edge, as part of the decal's half width
+const CENTRE := 0.55  # alpha in the middle; it rises to 1 at the rim
+const ALPHA := 0.8  # the whole disc is this see-through
 const DEPTH := 3.0  # metres the decal reaches up and down, for slopes and stairs
 const SELECT_SECONDS := 0.22  # the pop when something is selected
 const DROP_SECONDS := 0.18  # the shrink when it is dropped
@@ -96,7 +95,7 @@ func _process(delta: float) -> void:
 			_colour = NPC
 		elif (_shown.is_monster and not _shown.is_summon) or _enemy_player:
 			_colour = MONSTER
-		_half = _shown.radius / ((RING_INNER + RING_OUTER) * 0.5)
+		_half = _shown.radius / DISC
 		global_position = _shown.global_position
 	var colour := _colour
 	colour.a = ALPHA * alpha
@@ -110,19 +109,19 @@ func _showable(target: Node3D) -> bool:
 	return target != null and is_instance_valid(target) and not target.dead and not target.dying and target.visible
 
 
-## A white ring, solid between RING_INNER and RING_OUTER with soft edges, filled faintly
-## inside. Made once, at sign in.
+## A white disc: CENTRE alpha in the middle, rising to full near its rim, with a soft
+## edge. Made once, at sign in.
 static func _draw_ring() -> Image:
 	var image := Image.create_empty(TEXTURE_SIZE, TEXTURE_SIZE, true, Image.FORMAT_RGBA8)
 	var c := TEXTURE_SIZE * 0.5
-	var edge := 2.0 / TEXTURE_SIZE  # about two pixels of soft edge
+	var edge := 3.0 / TEXTURE_SIZE  # a few pixels of soft edge
 	for y in TEXTURE_SIZE:
 		for x in TEXTURE_SIZE:
 			var dx := (x + 0.5 - c) / c
 			var dy := (y + 0.5 - c) / c
-			var r := sqrt(dx * dx + dy * dy)
-			var ring := clampf((r - RING_INNER) / edge + 0.5, 0.0, 1.0) * clampf((RING_OUTER - r) / edge + 0.5, 0.0, 1.0)
-			var inside := FILL * clampf((RING_INNER - r) / edge + 0.5, 0.0, 1.0)
-			image.set_pixel(x, y, Color(1, 1, 1, maxf(ring, inside)))
+			var r := sqrt(dx * dx + dy * dy) / DISC
+			var a := lerpf(CENTRE, 1.0, smoothstep(0.35, 0.92, r))
+			a *= clampf((1.0 - r) * DISC / edge + 0.5, 0.0, 1.0)
+			image.set_pixel(x, y, Color(1, 1, 1, a))
 	image.generate_mipmaps()
 	return image
