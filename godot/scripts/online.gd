@@ -7,6 +7,8 @@ signal zone_needed(zone_id: int)
 signal warp_gate_near(zone_id: int)  # the zone behind a gate we stand near, 0 when none
 ## The server turned the connection down or closed it.
 signal connection_failed(reason: String)
+## Our logout finished: the character has left the world.
+signal logged_out
 
 const NetEntity := preload("res://scripts/net_entity.gd")
 const CharacterWindow := preload("res://scripts/character_window.gd")
@@ -94,6 +96,9 @@ var work_window: PanelContainer
 var trade_window: PanelContainer
 var player_menu: PopupMenu
 var ride_panel: PanelContainer
+var logout_panel: PanelContainer  # the logout countdown, with a Cancel button
+var logout_label: Label
+var _logged_out := false
 var ride_label: Label
 var _ride_offer := -1
 var _menu_player := -1
@@ -365,6 +370,20 @@ func start(zone_node: Node, uri: String, token_path: String, name_text: String, 
 			ride_panel.visible = false)
 		ride_box.add_child(b)
 	_popup(ride_panel, 260)
+	logout_panel = PanelContainer.new()
+	logout_panel.visible = false
+	var logout_box := HBoxContainer.new()
+	logout_box.add_theme_constant_override("separation", 10)
+	logout_panel.add_child(logout_box)
+	logout_label = Label.new()
+	logout_label.custom_minimum_size.x = 170
+	logout_box.add_child(logout_label)
+	var logout_cancel := Button.new()
+	logout_cancel.text = "Cancel"
+	logout_cancel.focus_mode = Control.FOCUS_NONE
+	logout_cancel.pressed.connect(func(): net.cancel_logout())
+	logout_box.add_child(logout_cancel)
+	_popup(logout_panel, 200)
 	for frame in ui_root.get_children():
 		if frame is UiWindow:
 			frame.restore_open()
@@ -414,6 +433,7 @@ func _on_menu(which: String) -> void:
 		"friends": toggle_friends_window()
 		"map": toggle_map_window()
 		"options": toggle_options_window()
+		"logout": net.request_logout()
 
 
 ## Esc: closes the window on top. False when none was open.
@@ -901,6 +921,17 @@ func _process(_delta: float) -> void:
 	if ranged and not _ranged_equipped and Time.get_ticks_msec() >= _next_equip_try_ms:
 		_next_equip_try_ms = Time.get_ticks_msec() + 2000
 		_ranged_equipped = _equip_bow()
+
+	# Logging out: the countdown, then back to the start once the character has left.
+	var logout: Dictionary = net.logout_state()
+	logout_panel.visible = logout.get("pending", false)
+	if logout_panel.visible:
+		logout_label.text = "Logging out in %d seconds" % ceili(logout["seconds"])
+	if logout.get("left", false) and not _logged_out:
+		_logged_out = true
+		print("rose net: logged out")
+		logged_out.emit()
+		return
 
 	var character: Dictionary = net.get_character()
 	var my_zone: int = character.get("zone", 0)

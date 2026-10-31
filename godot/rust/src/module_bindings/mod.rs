@@ -24,6 +24,7 @@ pub mod bank_table;
 pub mod bank_type;
 pub mod bank_withdraw_reducer;
 pub mod begin_game_data_upload_reducer;
+pub mod cancel_logout_reducer;
 pub mod cast_plan_type;
 pub mod cast_skill_reducer;
 pub mod chat_channel_type;
@@ -53,6 +54,7 @@ pub mod entity_type;
 pub mod equip_item_reducer;
 pub mod fallen_table;
 pub mod fallen_type;
+pub mod fight_tag_type;
 pub mod finish_game_data_upload_reducer;
 pub mod friend_answer_reducer;
 pub mod friend_ask_reducer;
@@ -76,6 +78,9 @@ pub mod insert_gem_reducer;
 pub mod item_cooldown_table;
 pub mod item_cooldown_type;
 pub mod level_up_skill_reducer;
+pub mod linger_type;
+pub mod logout_table;
+pub mod logout_type;
 pub mod monster_ai_type;
 pub mod monster_chase_type;
 pub mod monster_idle_type;
@@ -121,6 +126,7 @@ pub mod refine_item_reducer;
 pub mod regen_type;
 pub mod repair_at_npc_reducer;
 pub mod repair_with_item_reducer;
+pub mod request_logout_reducer;
 pub mod reset_monsters_reducer;
 pub mod revive_player_reducer;
 pub mod revive_shield_table;
@@ -225,6 +231,7 @@ pub use bank_table::*;
 pub use bank_type::Bank;
 pub use bank_withdraw_reducer::bank_withdraw;
 pub use begin_game_data_upload_reducer::begin_game_data_upload;
+pub use cancel_logout_reducer::cancel_logout;
 pub use cast_plan_type::CastPlan;
 pub use cast_skill_reducer::cast_skill;
 pub use chat_channel_type::ChatChannel;
@@ -254,6 +261,7 @@ pub use entity_type::Entity;
 pub use equip_item_reducer::equip_item;
 pub use fallen_table::*;
 pub use fallen_type::Fallen;
+pub use fight_tag_type::FightTag;
 pub use finish_game_data_upload_reducer::finish_game_data_upload;
 pub use friend_answer_reducer::friend_answer;
 pub use friend_ask_reducer::friend_ask;
@@ -277,6 +285,9 @@ pub use insert_gem_reducer::insert_gem;
 pub use item_cooldown_table::*;
 pub use item_cooldown_type::ItemCooldown;
 pub use level_up_skill_reducer::level_up_skill;
+pub use linger_type::Linger;
+pub use logout_table::*;
+pub use logout_type::Logout;
 pub use monster_ai_type::MonsterAi;
 pub use monster_chase_type::MonsterChase;
 pub use monster_idle_type::MonsterIdle;
@@ -322,6 +333,7 @@ pub use refine_item_reducer::refine_item;
 pub use regen_type::Regen;
 pub use repair_at_npc_reducer::repair_at_npc;
 pub use repair_with_item_reducer::repair_with_item;
+pub use request_logout_reducer::request_logout;
 pub use reset_monsters_reducer::reset_monsters;
 pub use revive_player_reducer::revive_player;
 pub use revive_shield_table::*;
@@ -475,6 +487,7 @@ pub enum Reducer {
         quantity: u32,
     },
     BeginGameDataUpload,
+    CancelLogout,
     CastSkill {
         page: u8,
         index: u16,
@@ -623,6 +636,7 @@ pub enum Reducer {
         slot: u8,
         index: u16,
     },
+    RequestLogout,
     ResetMonsters,
     RevivePlayer {
         at_save_point: bool,
@@ -773,6 +787,7 @@ impl __sdk::Reducer for Reducer {
             Reducer::BankMove { .. } => "bank_move",
             Reducer::BankWithdraw { .. } => "bank_withdraw",
             Reducer::BeginGameDataUpload => "begin_game_data_upload",
+            Reducer::CancelLogout => "cancel_logout",
             Reducer::CastSkill { .. } => "cast_skill",
             Reducer::CraftItem { .. } => "craft_item",
             Reducer::CreateCharacter { .. } => "create_character",
@@ -809,6 +824,7 @@ impl __sdk::Reducer for Reducer {
             Reducer::RefineItem { .. } => "refine_item",
             Reducer::RepairAtNpc { .. } => "repair_at_npc",
             Reducer::RepairWithItem { .. } => "repair_with_item",
+            Reducer::RequestLogout => "request_logout",
             Reducer::ResetMonsters => "reset_monsters",
             Reducer::RevivePlayer { .. } => "revive_player",
             Reducer::RideAnswer { .. } => "ride_answer",
@@ -951,6 +967,9 @@ impl __sdk::Reducer for Reducer {
             }),
             Reducer::BeginGameDataUpload => {
                 __sats::bsatn::to_vec(&begin_game_data_upload_reducer::BeginGameDataUploadArgs {})
+            }
+            Reducer::CancelLogout => {
+                __sats::bsatn::to_vec(&cancel_logout_reducer::CancelLogoutArgs {})
             }
             Reducer::CastSkill {
                 page,
@@ -1193,6 +1212,9 @@ impl __sdk::Reducer for Reducer {
                 slot: slot.clone(),
                 index: index.clone(),
             }),
+            Reducer::RequestLogout => {
+                __sats::bsatn::to_vec(&request_logout_reducer::RequestLogoutArgs {})
+            }
             Reducer::ResetMonsters => {
                 __sats::bsatn::to_vec(&reset_monsters_reducer::ResetMonstersArgs {})
             }
@@ -1419,6 +1441,7 @@ pub struct DbUpdate {
     game_data_status: __sdk::TableUpdate<GameDataStatus>,
     ground_item: __sdk::TableUpdate<GroundItem>,
     item_cooldown: __sdk::TableUpdate<ItemCooldown>,
+    logout: __sdk::TableUpdate<Logout>,
     motion: __sdk::TableUpdate<Motion>,
     my_chat: __sdk::TableUpdate<ChatMessage>,
     my_friend_requests: __sdk::TableUpdate<FriendRequest>,
@@ -1490,6 +1513,9 @@ impl TryFrom<__ws::v2::TransactionUpdate> for DbUpdate {
                 "item_cooldown" => db_update
                     .item_cooldown
                     .append(item_cooldown_table::parse_table_update(table_update)?),
+                "logout" => db_update
+                    .logout
+                    .append(logout_table::parse_table_update(table_update)?),
                 "motion" => db_update
                     .motion
                     .append(motion_table::parse_table_update(table_update)?),
@@ -1643,6 +1669,9 @@ impl __sdk::DbUpdate for DbUpdate {
         diff.item_cooldown = cache
             .apply_diff_to_table::<ItemCooldown>("item_cooldown", &self.item_cooldown)
             .with_updates_by_pk(|row| &row.id);
+        diff.logout = cache
+            .apply_diff_to_table::<Logout>("logout", &self.logout)
+            .with_updates_by_pk(|row| &row.identity);
         diff.motion = cache
             .apply_diff_to_table::<Motion>("motion", &self.motion)
             .with_updates_by_pk(|row| &row.entity_id);
@@ -1768,6 +1797,9 @@ impl __sdk::DbUpdate for DbUpdate {
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "item_cooldown" => db_update
                     .item_cooldown
+                    .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
+                "logout" => db_update
+                    .logout
                     .append(__sdk::parse_row_list_as_inserts(table_rows.rows)?),
                 "motion" => db_update
                     .motion
@@ -1911,6 +1943,9 @@ impl __sdk::DbUpdate for DbUpdate {
                 "item_cooldown" => db_update
                     .item_cooldown
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
+                "logout" => db_update
+                    .logout
+                    .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
                 "motion" => db_update
                     .motion
                     .append(__sdk::parse_row_list_as_deletes(table_rows.rows)?),
@@ -2035,6 +2070,7 @@ pub struct AppliedDiff<'r> {
     game_data_status: __sdk::TableAppliedDiff<'r, GameDataStatus>,
     ground_item: __sdk::TableAppliedDiff<'r, GroundItem>,
     item_cooldown: __sdk::TableAppliedDiff<'r, ItemCooldown>,
+    logout: __sdk::TableAppliedDiff<'r, Logout>,
     motion: __sdk::TableAppliedDiff<'r, Motion>,
     my_chat: __sdk::TableAppliedDiff<'r, ChatMessage>,
     my_friend_requests: __sdk::TableAppliedDiff<'r, FriendRequest>,
@@ -2107,6 +2143,7 @@ impl<'r> __sdk::AppliedDiff<'r> for AppliedDiff<'r> {
             &self.item_cooldown,
             event,
         );
+        callbacks.invoke_table_row_callbacks::<Logout>("logout", &self.logout, event);
         callbacks.invoke_table_row_callbacks::<Motion>("motion", &self.motion, event);
         callbacks.invoke_table_row_callbacks::<ChatMessage>("my_chat", &self.my_chat, event);
         callbacks.invoke_table_row_callbacks::<FriendRequest>(
@@ -2846,6 +2883,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
         game_data_status_table::register_table(client_cache);
         ground_item_table::register_table(client_cache);
         item_cooldown_table::register_table(client_cache);
+        logout_table::register_table(client_cache);
         motion_table::register_table(client_cache);
         my_chat_table::register_table(client_cache);
         my_friend_requests_table::register_table(client_cache);
@@ -2891,6 +2929,7 @@ impl __sdk::SpacetimeModule for RemoteModule {
         "game_data_status",
         "ground_item",
         "item_cooldown",
+        "logout",
         "motion",
         "my_chat",
         "my_friend_requests",

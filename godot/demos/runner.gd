@@ -21,6 +21,7 @@ const NET_DEMOS := {
 	"combat-test": "combat_test.gd",
 	"hotkey": "hotkey.gd",
 	"sticky": "sticky.gd",
+	"attack-click": "attack_click.gd",
 	"hotbar-items": "hotbar_items.gd",
 	"hotbar-clear": "hotbar_clear.gd",
 }

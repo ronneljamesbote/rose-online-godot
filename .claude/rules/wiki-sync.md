@@ -22,6 +22,7 @@ log changes need no wiki change.
 | `module/src/quests.rs`, `crates/rose-quest/` | `wiki/quests/` |
 | `module/src/items.rs`, `module/src/durability.rs`, `module/src/craft.rs`, `module/src/vehicle.rs` | `wiki/items/`, `wiki/rules/durability.md`, `wiki/rules/crafting.md`, `wiki/rules/carts.md` |
 | `module/src/death.rs`, `stamina.rs`, `party.rs`, `pvp.rs`, `trade.rs`, `friends.rs`, `chat.rs`, `bank.rs` | the matching `wiki/rules/<topic>.md` |
+| `module/src/logout.rs`, `client_connected` / `client_disconnected` / `leave_world` in `module/src/lib.rs` | `wiki/rules/logging-out.md` |
 | `module/src/gm.rs`, `godot/gm/` (GM commands, dev servers only) | `wiki/rules/gm-commands.md` |
 | `godot/` (controls, windows, what the player sees) | `wiki/rules/controls.md` and the page of the system shown |
 | `godot/data/items/` (item resources), `export/data/items/` (exported from them) | the `wiki/items/` page of every item whose value changed; for refine grades `wiki/rules/refining.md` |

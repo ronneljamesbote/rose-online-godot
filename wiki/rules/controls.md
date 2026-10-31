@@ -6,7 +6,7 @@ status: changed-from-irose
 keys:
   - { key: "Left-click ground", does: "walk there; a glowing crystal drops onto the spot" }
   - { key: "Hold left button on the ground", does: "keep running toward the cursor" }
-  - { key: "Left-click monster", does: "attack it (also an enemy player in a PvP zone)" }
+  - { key: "Left-click monster", does: "attack it (also an enemy player in a PvP zone); with Double-click to attack, select it, and attack on a double click or a second click" }
   - { key: "Left-click NPC", does: "walk over and talk" }
   - { key: "Left-click player", does: "target them; opens their shop if they have one" }
   - { key: "Left-click item on the ground or its label", does: "walk over and pick it up" }
@@ -28,6 +28,7 @@ keys:
   - { key: "F", does: "friends" }
   - { key: "M", does: "zone map" }
   - { key: "O", does: "options (interface, world labels, gameplay, graphics, sound)" }
+  - { key: "Log out button (menu bar)", does: "log out after 15 seconds; not during a fight" }
   - { key: "Esc", does: "close the top window, the dialog, or leave repair mode; with nothing open, drop the target" }
   - { key: "Delete", does: "drop the selected bag item" }
   - { key: "Alt", does: "hide ground item labels while held (or show them, as set in Options)" }
@@ -54,6 +55,8 @@ target_ring:
   pvp_enemy_player: red
   size: the target's model width
   motion: turns slowly and pulses
+attack_click: [Click to attack, Double-click to attack]
+attack_click_default: Click to attack
 item_label_range_m: 30
 source:
   code:
@@ -70,6 +73,7 @@ source:
     - godot/scripts/bank_window.gd
     - godot/scripts/chat_window.gd
     - godot/scripts/ui/options_window.gd
+    - godot/scripts/ui/hud/menu_bar.gd
     - godot/scripts/ui/ui_window.gd
     - godot/scripts/ui/theme_builder.gd (tooltips)
     - godot/scripts/ui/hud/hover_tooltip.gd
@@ -114,7 +118,12 @@ is in the `keys` table above.
   member. It turns slowly and pulses gently, and goes when the target is dropped, dies or
   leaves.
 - **Left-click a monster** to attack it. In a PvP zone, clicking a player you may fight
-  attacks them too (see [[rules/pvp|PvP]]).
+  attacks them too (see [[rules/pvp|PvP]]). With **Double-click to attack** (Options,
+  Gameplay tab; the default is Click to attack) the first click only selects the monster:
+  its frame comes up and skills go to it, but you don't walk or swing. Double-clicking it,
+  or clicking it again while it is selected, attacks. A monster that is already your
+  target (one you were fighting, or one that attacked you) is attacked by a single click.
+  NPCs, players and items work the same in both modes.
 - **Left-click a town NPC** to walk over (you talk from within 3 m) and open its dialog
   (see [[rules/npc-dialogs|NPC dialogs]]).
 - **Left-click another player** to target them, for example for a heal. If they have a
@@ -174,6 +183,7 @@ system cursor stays.
 | F | friends (see [[rules/friends\|Friends]]) |
 | M | zone map |
 | O | options |
+| Log out (menu bar) | log out after 15 seconds, not during a fight (see [[rules/logging-out\|Logging out]]) |
 | Esc | close the top window; with none open, drop the target |
 | Delete | drop the selected bag item on the ground |
 | Alt | item labels on the ground: held, it hides them (or shows them, if Options says "Only while Alt is held") |
@@ -265,7 +275,8 @@ Esc or clicking outside the chat box stops typing.
   - **World labels**: your own name tag, chat bubbles, damage numbers, and whether item
     labels on the ground show always or only while Alt is held. Labels show for items
     within 30 m.
-  - **Gameplay**: Sticky target (walking keeps your target; off by default).
+  - **Gameplay**: Click to attack or Double-click to attack (Click to attack by default),
+    and Sticky target (walking keeps your target; off by default).
   - **Graphics**: Shadows: Off, Low (shadows drawn up to 80 m away), Medium (120 m, the
     default) or High (200 m, softer edges). Off keeps the sun's shading without shadows.
   - **Sound**: music and sound effect volume.
@@ -289,7 +300,8 @@ sword, O opens the options (sound volume and shadows).
   lightmaps' shadows: the ground's colour (Zant's blue canal, Birth Island's sea floor) and
   one warm colour per part of each building and decoration.
 - The ring under the target is new.
-- Sticky target is new; with it off, walking drops the target as in iROSE. Esc dropping
+- Sticky target is new; with it off, walking drops the target as in iROSE. Double-click
+  to attack is new too; Click to attack is iROSE's way. Esc dropping
   the target is new too.
 - The cursors are new pictures in iROSE's shapes (iROSE's own are the Classic style),
   chosen the same way, except: pushing the mouse against the left
