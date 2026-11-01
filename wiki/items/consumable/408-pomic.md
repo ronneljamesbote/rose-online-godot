@@ -19,6 +19,8 @@ dropped_by:
 - monster: '[[monsters/73-red-pomic|Red Pomic]]'
   level: 15
   slots_of_30: 2
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/408-pomic.tres
   code: module/src/items.rs

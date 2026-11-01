@@ -1,0 +1,26 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2403-safe-keeping.tres" id="z_a8b85b"]
+[ext_resource type="RoseItemHands" path="res://data/items/hands/656-scrap-gloves.tres" id="z_e4b3f7"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_7973d6"]
+switch = 641
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_c1be9d"]
+switch = 642
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_4ecb8d"]
+quest = ExtResource("z_a8b85b")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_c137d3"]
+quest = ExtResource("z_a8b85b")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_3f1c57"]
+item = ExtResource("z_e4b3f7")
+quantity = 1
+
+[resource]
+name = "2403-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_7973d6"), SubResource("RoseConditionQuestSwitch_c1be9d")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_4ecb8d"), SubResource("RoseRewardSelectQuest_c137d3"), SubResource("RoseRewardAddItem_3f1c57")])

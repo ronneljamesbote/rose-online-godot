@@ -19,6 +19,8 @@ dropped_by:
 - monster: '[[monsters/273-gold-mine-goblin-worker|Gold Mine Goblin Worker]]'
   level: 65
   slots_of_30: 1
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/428-goblin-worker.tres
   code: module/src/items.rs

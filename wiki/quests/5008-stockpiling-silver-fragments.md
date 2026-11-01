@@ -2,7 +2,7 @@
 kind: quest
 id: 5008
 name: Stockpiling Silver Fragments
-status: in-game
+status: changed-from-irose
 given_by:
 - '[[npcs/1014-guide-lena|Guide Lena]]'
 monsters:
@@ -19,6 +19,10 @@ source:
   - crates/rose-quest/src/lib.rs
 ---
 # Stockpiling Silver Fragments
+
+**Can't be done any more.** The Zant city hub redesign took Zant's odd jobs (fetch quests,
+deliveries and stockpiling) out of the game: nobody offers this quest now. The steps below are
+iROSE's and are kept in the game data.
 
 Lena has asked you to gather Silver Fragments to help alleviate the dwindling supply problem in Zant. You can hunt Rackie and Turtle type monsters to obtain Silver Fragments.  
 
@@ -154,3 +158,7 @@ Then:
 - works on [[quests/5008-stockpiling-silver-fragments|Stockpiling Silver Fragments]]
 - you get 1 × [[items/quest/23-silver-fragment|Silver Fragment]]
 - add 1 to quest variable 9
+
+## Changed from iROSE
+
+Not in the game any more: see the note at the top.

@@ -513,6 +513,9 @@ pub fn apply_zone_layout(
     let list = |pairs: &[[u32; 2]]| -> Result<Vec<(NpcId, usize)>, anyhow::Error> {
         pairs.iter().map(|[m, count]| Ok((npc_id(*m)?, *count as usize))).collect()
     };
+    if !layout.warp.is_empty() {
+        zone.warp_gates = layout.warp.clone();
+    }
     zone.event_positions = layout.event.iter().map(|e| (e.name.clone(), at(e.x, e.y, e.z))).collect();
     if let Some(start) = zone.event_positions.get(start_name) {
         zone.start_position = *start;

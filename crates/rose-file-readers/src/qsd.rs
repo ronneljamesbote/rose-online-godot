@@ -393,6 +393,9 @@ pub enum QsdReward {
     AddItem {
         item: QsdItem,
         quantity: usize,
+        /// Equipment only: how much of its life the item has left when handed out, in % (100:
+        /// new). Ours; iROSE always hands out new items.
+        life_percent: u8,
     },
     RemoveItem {
         item: QsdItem,
@@ -1134,7 +1137,7 @@ pub mod editor_friendly {
                                 writer.write_u8(4);
                                 writer.write_padding(3);
                             }
-                            &QsdReward::AddItem { item, quantity } => {
+                            &QsdReward::AddItem { item, quantity, .. } => {
                                 writer.write_u32(8 + 12);
                                 writer.write_u32(1);
 
@@ -1973,7 +1976,7 @@ fn read_trigger(
                 reader.skip(3); // padding
 
                 if add_or_remove {
-                    rewards.push(QsdReward::AddItem { item, quantity });
+                    rewards.push(QsdReward::AddItem { item, quantity, life_percent: 100 });
                 } else {
                     rewards.push(QsdReward::RemoveItem { item, quantity });
                 }

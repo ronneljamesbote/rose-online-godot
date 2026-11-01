@@ -2,7 +2,7 @@
 kind: quest
 id: 1003
 name: Dealer Job Change Quest
-status: in-game
+status: changed-from-irose
 npcs:
 - '[[npcs/1004-ferrell-guild-staff-crow|Ferrell Guild Staff Crow]]'
 monsters:
@@ -15,6 +15,12 @@ source:
   - crates/rose-quest/src/lib.rs
 ---
 # Dealer Job Change Quest
+
+**Can't be done any more.** First jobs come from the job mentors at the Sandwind Caravan Camp in
+the [[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]] (see
+[[quests/801-junon-planet-identification|Junon Planet Identification]]), and the Zant city hub
+redesign took this quest's steps out of the Zant NPCs' dialogs. The steps below are iROSE's and
+are kept in the game data.
 
 Crow asked you to bring him 15 HoneyBee Stingers. HoneyBee Stingers can found from hunting Needle HoneyBees.  
 

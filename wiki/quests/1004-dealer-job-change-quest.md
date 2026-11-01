@@ -2,7 +2,7 @@
 kind: quest
 id: 1004
 name: Dealer Job Change Quest
-status: in-game
+status: changed-from-irose
 npcs:
 - '[[npcs/1002-akram-kingdom-minister-warren|Akram Kingdom Minister Warren]]'
 - '[[npcs/1004-ferrell-guild-staff-crow|Ferrell Guild Staff Crow]]'
@@ -14,6 +14,12 @@ source:
   - crates/rose-quest/src/lib.rs
 ---
 # Dealer Job Change Quest
+
+**Can't be done any more.** First jobs come from the job mentors at the Sandwind Caravan Camp in
+the [[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]] (see
+[[quests/801-junon-planet-identification|Junon Planet Identification]]), and the Zant city hub
+redesign took this quest's steps out of the Zant NPCs' dialogs. The steps below are iROSE's and
+are kept in the game data.
 
 Crow appreciates your work for getting him the materials, saying that he can sell them at a good price. He has written a recommendation that you can take to Warren to become a Dealer.  
 
@@ -56,3 +62,7 @@ Then:
 - HP set to 100% and MP to 100%
 - you get [[items/head/121-brown-turban|Brown Turban]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
+
+## Changed from iROSE
+
+Not in the game any more: see the note at the top.

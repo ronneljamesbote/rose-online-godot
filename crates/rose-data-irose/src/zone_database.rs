@@ -217,6 +217,7 @@ fn load_zone(
     let mut monster_spawns = Vec::new();
     let mut npcs = Vec::new();
     let mut event_objects = Vec::new();
+    let mut warp_gates = Vec::new();
 
     let mut num_blocks = 0;
     let mut min_block_x = None;
@@ -243,7 +244,7 @@ fn load_zone(
         skip_effect_objects: true,
         skip_sound_objects: true,
         skip_water_planes: true,
-        skip_warp_objects: true,
+        skip_warp_objects: false,
     };
 
     for block_y in 0..64u32 {
@@ -274,6 +275,7 @@ fn load_zone(
                         block_y as i32,
                     )
                 }));
+                warp_gates.extend(ifo_file.warps.iter().map(|w| w.warp_id));
                 num_blocks += 1;
 
                 min_block_x = Some(min_block_x.map_or(block_x, |value| u32::min(value, block_x)));
@@ -342,6 +344,7 @@ fn load_zone(
         event_objects,
         monster_spawns,
         npcs,
+        warp_gates,
         sectors_base_position: Vec2::new((min_x as f32) * block_size, (min_y as f32) * block_size),
         num_sectors_x,
         num_sectors_y,

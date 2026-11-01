@@ -124,6 +124,7 @@ Rewards:
 | the quest becomes *X* (progress kept) | swaps the quest for the next one and keeps its items, switches, variables and timer; without "progress kept" it starts fresh |
 | works on *X* | picks which of your quests the next rewards change |
 | you get N × *item*, *item* is taken | quest items go into the quest, other items into your bag; a full bag drops the item at your feet |
+| you get N × *item* with P% of its life left | equipment that comes worn (to have it repaired), from the reward's `life_percent` (100, new, unless set) |
 | experience, Zuly, item count with "reward formula N" | a calculated reward, see Reward formulas below |
 | set / add / take for stats, Zuly, skill points | changes your character; taking Zuly you don't have fails the step |
 | the quest ends (removed from your list) | the quest is done |
@@ -235,5 +236,7 @@ A calculated reward of 0 or less gives nothing.
   0, 3 and 5 is three times what a rate of 100 gives, and formula 1 is three times as large.
 - Clans, fame and teams are not in the game: clan rewards fail the step, fame counts as 0
   and team rewards do nothing.
+- An item reward can hand out worn equipment (`life_percent` below 100); iROSE always gives
+  new items. The Zant tour's [[quests/2406-mending-steel|Mending Steel]] uses it.
 
 > Open question: only the player who lands the killing blow runs a monster's death step; party members get no kill credit or quest drops. Is that how iROSE shares quest kills?

@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2411-beasts-for-hire.tres" id="z_55e57a"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_cf9644"]
+quest = ExtResource("z_55e57a")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_547462"]
+quest = ExtResource("z_55e57a")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_8f129f"]
+equation = 0
+value = 400
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_3284c4"]
+equation = 0
+value = 300
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_cc7711"]
+switch = 650
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_9ed9da"]
+
+[resource]
+name = "2411-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_cf9644")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_547462"), SubResource("RoseRewardCalculatedExperiencePoints_8f129f"), SubResource("RoseRewardCalculatedMoney_3284c4"), SubResource("RoseRewardSetQuestSwitch_cc7711"), SubResource("RoseRewardRemoveSelectedQuest_9ed9da")])

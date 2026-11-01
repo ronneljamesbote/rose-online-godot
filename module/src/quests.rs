@@ -319,12 +319,16 @@ impl<'a> Run<'a> {
         }
     }
 
-    fn add_item(&mut self, cx: &QuestContext, item: QsdItem, quantity: usize) -> bool {
+    fn add_item(&mut self, cx: &QuestContext, item: QsdItem, quantity: usize, life_percent: u8) -> bool {
         let Some(reference) = self.game.data_decoder.decode_item_reference(item.item_number, item.item_type) else {
             return false;
         };
         let Some(data) = self.game.items.get_base_item(reference) else { return false };
-        let Some(item) = Item::from_item_data(data, quantity as u32) else { return false };
+        let Some(mut item) = Item::from_item_data(data, quantity as u32) else { return false };
+        // A worn item (a practice item to repair): life is out of 1000.
+        if let Item::Equipment(equipment) = &mut item {
+            equipment.life = life_after_wear(life_percent);
+        }
         if reference.item_type.is_quest_item() {
             let Some(quest) = cx.selected_quest_index.and_then(|i| self.ch.quest_state.get_quest_mut(i)) else {
                 return false;
@@ -380,12 +384,13 @@ impl<'a> Run<'a> {
                 equipment.gem = gem.get() as u16;
             }
             if equipment.gem == 0 {
+                // Rare type 2 always has a socket, 1 sometimes (as crafting and the GM's give).
                 match data.rare_type {
-                    1 => {
+                    crate::craft::RARE_TYPE_SOCKETED => {
                         equipment.has_socket = true;
                         equipment.is_appraised = true;
                     }
-                    2 if data.quality as i32 + 60 > self.ctx.rng().gen_range(0..400) => {
+                    crate::craft::RARE_TYPE_MAYBE_SOCKETED if data.quality as i32 + 60 > self.ctx.rng().gen_range(0..400) => {
                         equipment.has_socket = true;
                         equipment.is_appraised = true;
                     }
@@ -555,7 +560,7 @@ impl<'a> Run<'a> {
                 QsdReward::AbilityValue { ability_type, operator, value } => {
                     self.ability_reward(ability_type.get(), operator, value)
                 }
-                QsdReward::AddItem { item, quantity } => self.add_item(cx, item, quantity),
+                QsdReward::AddItem { item, quantity, life_percent } => self.add_item(cx, item, quantity, life_percent),
                 QsdReward::RemoveItem { item, quantity } => self.remove_item(cx, item, quantity),
                 QsdReward::AddSkill { id } => self.add_skill(id),
                 QsdReward::RemoveSkill { id } => self.remove_skill(id),
@@ -740,7 +745,7 @@ pub(crate) fn give_quest_to(ctx: &ReducerContext, game: &GameData, p: Player, qu
     let mut rewards = vec![QsdReward::AddQuest { id: quest_id as usize }];
     if quantity > 0 {
         let item = QsdItem { item_number: item_number as usize, item_type: 13 };
-        rewards.push(QsdReward::AddItem { item, quantity: quantity as usize });
+        rewards.push(QsdReward::AddItem { item, quantity: quantity as usize, life_percent: 100 });
     }
     let trigger = rose_data::QuestTrigger { name: String::new(), conditions: Vec::new(), rewards, next_trigger_name: None };
     let mut run = Run::new(ctx, game, p);
@@ -774,4 +779,10 @@ pub fn admin_clear_quests(ctx: &ReducerContext, player_name: String) -> Result<(
     p.set_quest_state(&state);
     ctx.db.player().identity().update(p);
     Ok(())
+}
+
+/// An equipment item's life (out of 1000) when a quest hands it out with `life_percent` of
+/// its life left: 100 or more is new, 0 is the least that still works (1).
+fn life_after_wear(life_percent: u8) -> u16 {
+    if life_percent >= 100 { 1000 } else { (life_percent as u16 * 10).max(1) }
 }

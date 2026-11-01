@@ -166,7 +166,7 @@ pub fn reward(cx: &Ctx, r: &QsdReward) -> String {
             if *keep_data { " (progress kept)" } else { "" }
         ),
         QsdReward::SelectQuest { id } => format!("works on {}", cx.quest_link(*id)),
-        QsdReward::AddItem { item, quantity } => format!("you get {quantity} × {}", cx.item_link_sn(item.to_sn())),
+        QsdReward::AddItem { item, quantity, .. } => format!("you get {quantity} × {}", cx.item_link_sn(item.to_sn())),
         QsdReward::RemoveItem { item, quantity } => format!("{quantity} × {} is taken", cx.item_link_sn(item.to_sn())),
         QsdReward::QuestVariable { variable_type, variable_id, operator, value } => {
             set_op(*operator, &variable(*variable_type, *variable_id), *value)

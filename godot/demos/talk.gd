@@ -1,9 +1,15 @@
 extends "res://demos/demo.gd"
 
 ## Walks to the NPC named --npc (part of the name), prints what it says, and answers with
-## --answers (1-based, comma separated; "q" prints the quest list), then prints our quests.
+## --answers (1-based, comma separated; "q" prints the quest list, "shot=PATH" saves a
+## picture, "say=LINE" says a chat line, "~TEXT" picks the
+## answer with that text, "cam=DIST:YAW:PITCH" moves the camera; see demos/README.md for the rest), then prints our quests.
 func run() -> void:
 	await get_tree().create_timer(3.0).timeout
+	if options.has("goto"):
+		# Dev server: stand next to that NPC first (the /goto GM command).
+		online.chat_window.say("/goto " + String(options["goto"]))
+		await get_tree().create_timer(4.0).timeout
 	var wanted := String(options.get("npc", "")).to_lower()
 	var npc := -1
 	var nearest := INF
@@ -78,6 +84,30 @@ func run() -> void:
 						online.use_skill(page, index, skill)
 			await get_tree().create_timer(1.0).timeout
 			continue
+		if answer.begins_with("shot="):
+			await get_tree().create_timer(0.5).timeout
+			main.get_viewport().get_texture().get_image().save_png(answer.trim_prefix("shot="))
+			print("rose net demo: saved ", answer.trim_prefix("shot="))
+			continue
+		if answer.begins_with("cam="):
+			# cam=DISTANCE:YAW:PITCH (metres, degrees) for a wider picture; closes the bag.
+			var parts := answer.trim_prefix("cam=").split(":")
+			main.camera.distance = float(parts[0])
+			if parts.size() > 2:
+				main.camera.yaw = deg_to_rad(float(parts[1]))
+				main.camera.pitch = deg_to_rad(float(parts[2]))
+			online.inventory_window.visible = false
+			await get_tree().create_timer(1.0).timeout
+			continue
+		if answer.begins_with("say="):
+			# A chat line, e.g. a GM command on a dev server.
+			online.chat_window.say(answer.trim_prefix("say="))
+			await get_tree().create_timer(2.0).timeout
+			continue
+		if answer == "revive":
+			online.net.revive(false)
+			await get_tree().create_timer(2.0).timeout
+			continue
 		if answer == "wait":
 			await get_tree().create_timer(6.0).timeout
 			continue
@@ -130,8 +160,16 @@ func run() -> void:
 			await get_tree().create_timer(1.0).timeout
 			_print_conversation()
 			continue
+		var choice := int(answer) - 1
+		if answer.begins_with("~"):
+			# The first answer whose text has these words.
+			var responses: Array = online.net.get_conversation().get("responses", [])
+			choice = responses.find_custom(func(r): return answer.trim_prefix("~").to_lower() in String(r).to_lower())
+			if choice < 0:
+				print("rose net demo: no answer like ", answer)
+				continue
 		print("rose net demo: answer ", answer)
-		online.conversation_window.choose(int(answer) - 1)
+		online.conversation_window.choose(choice)
 		await get_tree().create_timer(0.5).timeout
 		_print_conversation()
 	await get_tree().create_timer(2.0).timeout

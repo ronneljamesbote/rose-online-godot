@@ -16,6 +16,8 @@ dropped_by:
 - monster: '[[monsters/85-turtle-guard|Turtle Guard]]'
   level: 29
   slots_of_30: 2
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/411-turtle.tres
   code: module/src/items.rs

@@ -13,6 +13,8 @@ dropped_by:
 - monster: '[[monsters/3-jellynut|JellyNut]]'
   level: 5
   slots_of_30: 2
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/402-jelly-nut.tres
   code: module/src/items.rs

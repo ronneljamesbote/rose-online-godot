@@ -2,7 +2,7 @@
 kind: monster
 id: 103
 name: Woopie Glutton
-status: in-game
+status: changed-from-irose
 level: 18
 hp: 612
 hp_per_level: 34
@@ -19,7 +19,7 @@ run_speed: 390
 xp: 30
 drop_item_rate: 65
 drop_money_rate: 35
-zones: 2
+zones: 1
 drops:
 - item: '[[items/material/185-white-animal-tail-fur|White Animal Tail Fur]]'
   slots_of_30: 5
@@ -54,66 +54,6 @@ drops:
 - item: '[[items/subweapon/1-wooden-shield|Wooden Shield]]'
   slots_of_30: 0.4
 spawns:
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5441.3
-  y: 5448.9
-  count: 2
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5245.2
-  y: 5390.4
-  count: 1
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5194.9
-  y: 5354.2
-  count: 1
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5261.4
-  y: 5361.4
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5301.3
-  y: 5395.8
-  count: 1
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5332
-  y: 5339.6
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5377
-  y: 5394.4
-  count: 1
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5423.8
-  y: 5418.3
-  count: 1
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5399.8
-  y: 5165.5
-  count: 2
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5382.9
-  y: 5244.3
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5393.8
-  y: 5191.6
-  count: 1
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5449.5
-  y: 5197.6
-  count: 1
-  group: reinforcements
 - zone: '[[zones/24-el-verloon-desert|El Verloon Desert]]'
   x: 5119.9
   y: 5164.1
@@ -136,3 +76,7 @@ Speeds are in centimetres per second, attack range in metres. Spawn positions ar
 HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].
+
+## Changed from iROSE
+
+The Zant city hub redesign makes [[zones/1-canyon-city-of-zant|Canyon City of Zant]] a safe city: this monster no longer spawns in or around Zant.

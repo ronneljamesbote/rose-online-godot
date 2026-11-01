@@ -16,6 +16,8 @@ dropped_by:
 - monster: '[[monsters/157-doonga-leader|Doonga Leader]]'
   level: 70
   slots_of_30: 1
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/423-doonga-captain.tres
   code: module/src/items.rs

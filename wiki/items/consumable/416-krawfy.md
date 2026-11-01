@@ -16,6 +16,8 @@ dropped_by:
 - monster: '[[monsters/123-krawfy-captain|Krawfy Captain]]'
   level: 68
   slots_of_30: 1
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/416-krawfy.tres
   code: module/src/items.rs

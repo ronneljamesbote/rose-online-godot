@@ -24,6 +24,10 @@ pub fn zone_game_file(zone: u16) -> String {
 pub struct ZoneLayout {
     /// The zone number (its `RoseZoneSettings` id).
     pub zone: u16,
+    /// The warp gates placed in the zone, by number (`RoseWarpGate` id): the server lets a
+    /// player use only the gates of the zone they are in.
+    #[serde(default)]
+    pub warp: Vec<u16>,
     #[serde(default)]
     pub event: Vec<ZoneEvent>,
     #[serde(default)]
@@ -137,6 +141,10 @@ impl ZoneLayout {
              zone = {}\n",
             self.zone
         );
+        if !self.warp.is_empty() {
+            let warps: Vec<String> = self.warp.iter().map(|w| w.to_string()).collect();
+            out.push_str(&format!("warp = [{}]  # warp gates in this zone\n", warps.join(", ")));
+        }
         for event in &self.event {
             out.push_str(&format!(
                 "\n[[event]]\nname = {:?}\nx = {}\ny = {}\nz = {}\n",
@@ -195,6 +203,7 @@ mod tests {
     fn round_trips() {
         let layout = ZoneLayout {
             zone: 20,
+            warp: vec![21, 22],
             event: vec![ZoneEvent { name: "start".into(), x: 5300.5, y: 5200.25, z: 12.0 }],
             spawn: vec![ZoneSpawn {
                 node: "Block_32_34/Spawns/Spawn_0".into(),

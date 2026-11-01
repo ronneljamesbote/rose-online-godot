@@ -16,6 +16,8 @@ dropped_by:
 - monster: '[[monsters/139-grunter-captain|Grunter Captain]]'
   level: 55
   slots_of_30: 1
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/419-grunter-leader.tres
   code: module/src/items.rs

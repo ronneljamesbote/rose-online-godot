@@ -1,47 +1,32 @@
 [gd_resource type="RoseDialog" format=3 uid="uid://cqrf1jdho5krw"]
 
-[ext_resource type="RoseQuest" uid="uid://ckmc17bwap5bk" path="res://data/quests/1002-dealer-job-change-quest.tres" id="1_gq37a"]
-[ext_resource type="RoseItemQuest" uid="uid://bbh8t87ixdgb3" path="res://data/items/quest/112-fleece.tres" id="2_ra5lc"]
-[ext_resource type="RoseQuestTrigger" uid="uid://dwjq2pucw1gm4" path="res://data/quest_triggers/qj000-01/1002-02.tres" id="3_1jgnl"]
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_c6hrw"]
-quest = ExtResource("1_gq37a")
-active = false
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_q2br6"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_c6hrw")])
-
-[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_b3sh6"]
-quest = ExtResource("1_gq37a")
-item = ExtResource("2_ra5lc")
-operator = "=="
-value = 5
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_pr0j3"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_b3sh6")])
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qz01-001/2411-01.tres" id="z_c4116e"]
+[ext_resource type="RoseQuest" path="res://data/quests/2411-beasts-for-hire.tres" id="z_c0c544"]
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qz01-001/2411-02.tres" id="z_16d75f"]
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_oi1xp"]
-text = "Holy~! You freaked out my precious animals! What's with you?"
+text = "Holy~! You freaked out my precious animals! Oh, a customer? I raise beasts and sell them in capsules. Call one out and it fights at your side."
 next_menu = 1
-show_if = Array[Resource]([SubResource("RoseDialogCase_q2br6"), SubResource("RoseDialogCase_pr0j3")])
 resource_name = "NPC: Holy~! You freaked out my precious animals! What…"
 
-[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_b4ekg"]
-quest = ExtResource("1_gq37a")
-item = ExtResource("2_ra5lc")
-operator = "=="
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_df33b8"]
+quest = ExtResource("z_c0c544")
+active = false
 
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_0nj5w"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuestItem_b4ekg")])
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_4f4386"]
+step = ExtResource("z_c4116e")
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_sc0qp"]
-text = "Goodness, you've scared my precious animals! What's with you?!"
-next_menu = 4
-show_if = Array[Resource]([SubResource("RoseDialogCase_0nj5w")])
-resource_name = "NPC: Goodness, you've scared my precious animals! Wha…"
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_ca7b09"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_df33b8"), SubResource("RoseDialogIfQuestStep_4f4386")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b446d0"]
+text = "You must be Lena's pupil. My beasts don't bite, much."
+next_menu = 1
+show_if = Array[Resource]([SubResource("RoseDialogCase_ca7b09")])
+resource_name = "NPC: You must be Lena's pupil. My beasts don't bite, mu…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ivmes"]
-lines = Array[Resource]([SubResource("RoseDialogLine_oi1xp"), SubResource("RoseDialogLine_sc0qp")])
+lines = Array[Resource]([SubResource("RoseDialogLine_oi1xp"), SubResource("RoseDialogLine_b446d0")])
 resource_name = "Menu 0"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_wv5g5"]
@@ -55,8 +40,56 @@ kind = "Answer"
 text = "I'm sorry if I surprised you. I'll come back later."
 resource_name = "You: I'm sorry if I surprised you. I'll come back lat…"
 
+[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_47ef0f"]
+quest = ExtResource("z_c0c544")
+active = false
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_2ebfa0"]
+step = ExtResource("z_c4116e")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_bc2dcd"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuest_47ef0f"), SubResource("RoseDialogIfQuestStep_2ebfa0")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_aab2d3"]
+kind = "Answer"
+text = "About \"Beasts for Hire\""
+next_menu = 4
+show_if = Array[Resource]([SubResource("RoseDialogCase_bc2dcd")])
+resource_name = "You: About \"Beasts for Hire\""
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_9f665c"]
+step = ExtResource("z_16d75f")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_f9ae65"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_9f665c")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_a7b96e"]
+step = ExtResource("z_16d75f")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_818e60"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_a7b96e")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_322313"]
+kind = "Answer"
+text = "\"Beasts for Hire\": done."
+next_menu = 9
+show_if = Array[Resource]([SubResource("RoseDialogCase_f9ae65")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_818e60")])
+resource_name = "You: \"Beasts for Hire\": done."
+
+[sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_4d6931"]
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_4028e4"]
+actions = Array[Resource]([SubResource("RoseDialogDoOpen_4d6931")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_1a93b4"]
+kind = "Answer"
+text = "Show me your monster capsules."
+on_choose = Array[Resource]([SubResource("RoseDialogCase_4028e4")])
+resource_name = "You: Show me your monster capsules."
+
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_kuijb"]
-lines = Array[Resource]([SubResource("RoseDialogLine_wv5g5"), SubResource("RoseDialogLine_qdipj")])
+lines = Array[Resource]([SubResource("RoseDialogLine_aab2d3"), SubResource("RoseDialogLine_322313"), SubResource("RoseDialogLine_1a93b4"), SubResource("RoseDialogLine_wv5g5"), SubResource("RoseDialogLine_qdipj")])
 resource_name = "Menu 1"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_qcrsb"]
@@ -78,53 +111,86 @@ resource_name = "You: Really? Thank you so much."
 lines = Array[Resource]([SubResource("RoseDialogLine_8hv1v")])
 resource_name = "Menu 3"
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_hcysd"]
-kind = "Answer"
-text = "I'd like to have some Fleece."
-next_menu = 5
-resource_name = "You: I'd like to have some Fleece."
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_93bd2b"]
+text = "A monster capsule holds a beast that fights for you. Use it and it comes out to fight by your side for a while. Calling one costs Stamina, so mind how tired you are. Here's a Jelly Bean: try it in the paddock. I sell capsules from Jelly Beans all the way up to the Goblin King."
+resource_name = "NPC: A monster capsule holds a beast that fights for yo…"
+next_menu = 7
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_hmf02"]
-kind = "Answer"
-text = "Precious animals?"
-next_menu = 2
-resource_name = "You: Precious animals?"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_dytg8"]
-kind = "Answer"
-text = "I'm sorry if I surprised you. I'll come back later."
-resource_name = "You: I'm sorry if I surprised you. I'll come back lat…"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_o2lj2"]
-lines = Array[Resource]([SubResource("RoseDialogLine_hcysd"), SubResource("RoseDialogLine_hmf02"), SubResource("RoseDialogLine_dytg8")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_df4030"]
+lines = Array[Resource]([SubResource("RoseDialogLine_93bd2b")])
 resource_name = "Menu 4"
 
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_i3wpf"]
-text = "You must have heard that my Fleece is the best that you can get. Okay, I see no problem in letting you have some."
-next_menu = 6
-resource_name = "NPC: You must have heard that my Fleece is the best t…"
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7dd42c"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
 
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_cofq4"]
-lines = Array[Resource]([SubResource("RoseDialogLine_i3wpf")])
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3cc24d"]
+kind = "Answer"
+text = "Goodbye."
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4bc311"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7dd42c"), SubResource("RoseDialogLine_3cc24d")])
 resource_name = "Menu 5"
 
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_uw0ai"]
-step = ExtResource("3_1jgnl")
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3eb99b"]
+text = "Use the capsule in the paddock if you like."
+next_menu = 5
+resource_name = "NPC: Use the capsule in the paddock if you like."
 
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_nfnos"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_uw0ai")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_dx885"]
-kind = "Answer"
-text = "You're so kind. Thank you."
-on_choose = Array[Resource]([SubResource("RoseDialogCase_nfnos")])
-resource_name = "You: You're so kind. Thank you."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jm710"]
-lines = Array[Resource]([SubResource("RoseDialogLine_dx885")])
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_e6b0fe"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3eb99b")])
 resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_edfeba"]
+step = ExtResource("z_c4116e")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3914a4"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_edfeba")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3b89af"]
+kind = "Answer"
+text = "I'll try it."
+next_menu = 6
+on_choose = Array[Resource]([SubResource("RoseDialogCase_3914a4")])
+resource_name = "You: I'll try it."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_96e813"]
+kind = "Answer"
+text = "Not now."
+resource_name = "You: Not now."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0e1f38"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3b89af"), SubResource("RoseDialogLine_96e813")])
+resource_name = "Menu 7"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bbb2a4"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_234672"]
+kind = "Answer"
+text = "Goodbye."
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_508f4d"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bbb2a4"), SubResource("RoseDialogLine_234672")])
+resource_name = "Menu 8"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_86c514"]
+text = "There, nothing to fear. Go back to {fc=1}Lena{/fc}, she has your road."
+next_menu = 8
+resource_name = "NPC: There, nothing to fear. Go back to {fc=1}Lena{/fc}…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_561463"]
+lines = Array[Resource]([SubResource("RoseDialogLine_86c514")])
+resource_name = "Menu 9"
 
 [resource]
 key = "EM01-016.con"
 name = "[Livestock Farmer]  Lampa"
-menus = Array[Resource]([SubResource("RoseDialogMenu_ivmes"), SubResource("RoseDialogMenu_kuijb"), SubResource("RoseDialogMenu_yui1r"), SubResource("RoseDialogMenu_85rp1"), SubResource("RoseDialogMenu_o2lj2"), SubResource("RoseDialogMenu_cofq4"), SubResource("RoseDialogMenu_jm710")])
+menus = Array[Resource]([SubResource("RoseDialogMenu_ivmes"), SubResource("RoseDialogMenu_kuijb"), SubResource("RoseDialogMenu_yui1r"), SubResource("RoseDialogMenu_85rp1"), SubResource("RoseDialogMenu_df4030"), SubResource("RoseDialogMenu_4bc311"), SubResource("RoseDialogMenu_e6b0fe"), SubResource("RoseDialogMenu_0e1f38"), SubResource("RoseDialogMenu_508f4d"), SubResource("RoseDialogMenu_561463")])

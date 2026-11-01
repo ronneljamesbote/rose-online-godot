@@ -1,27 +1,12 @@
 [gd_resource type="RoseDialog" format=3 uid="uid://8w6p45sg3f3g"]
 
-[ext_resource type="RoseQuest" uid="uid://bw2objbqyprx7" path="res://data/quests/5005-spero-s-top-secret-cart-schematic.tres" id="1_v3dit"]
-[ext_resource type="RoseQuestTrigger" uid="uid://cquxbv26g6gro" path="res://data/quest_triggers/qs10-001/5005-01.tres" id="2_vkgbk"]
-
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_1fdts"]
 text = "Haha! My inventions are ahead of their time! Come! Take a look at the fruits of my genius!"
 next_menu = 1
 resource_name = "NPC: Haha! My inventions are ahead of their time! Com…"
 
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_csj6b"]
-quest = ExtResource("1_v3dit")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_d0qsu"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_csj6b")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_0vqyr"]
-text = "You haven't finished what I've asked you to do? What's so hard about it?"
-next_menu = 8
-show_if = Array[Resource]([SubResource("RoseDialogCase_d0qsu")])
-resource_name = "NPC: You haven't finished what I've asked you to do? …"
-
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ihi1g"]
-lines = Array[Resource]([SubResource("RoseDialogLine_1fdts"), SubResource("RoseDialogLine_0vqyr")])
+lines = Array[Resource]([SubResource("RoseDialogLine_1fdts")])
 resource_name = "Menu 0"
 
 [sub_resource type="RoseDialogDoOpen" id="RoseDialogDoOpen_hld7q"]
@@ -35,10 +20,6 @@ text = "I heard you're an expert creator of Guns and Carts. Would you mind if I 
 on_choose = Array[Resource]([SubResource("RoseDialogCase_sy50a")])
 resource_name = "You: I heard you're an expert creator of Guns and Car…"
 
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_huke1"]
-quest = ExtResource("1_v3dit")
-active = false
-
 [sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_irpf2"]
 operator = "<="
 value = 20
@@ -47,7 +28,7 @@ value = 20
 switch = 33
 
 [sub_resource type="RoseDialogCase" id="RoseDialogCase_w6ixq"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_huke1"), SubResource("RoseDialogIfAbility_irpf2"), SubResource("RoseDialogIfQuestSwitch_84cx6")])
+conditions = Array[Resource]([SubResource("RoseDialogIfAbility_irpf2"), SubResource("RoseDialogIfQuestSwitch_84cx6")])
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_t56mj"]
 kind = "Answer"
@@ -94,24 +75,6 @@ resource_name = "NPC: Belz is staying in the Windmill Village that's l…"
 lines = Array[Resource]([SubResource("RoseDialogLine_lifyh")])
 resource_name = "Menu 4"
 
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_pa3ah"]
-step = ExtResource("2_vkgbk")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_27v2m"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_pa3ah")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_5fwtk"]
-kind = "Answer"
-text = "Okay, I'll leave right away."
-on_choose = Array[Resource]([SubResource("RoseDialogCase_27v2m")])
-resource_name = "You: Okay, I'll leave right away."
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_0kcqo"]
-kind = "Answer"
-text = "Can you tell me more about Belz's specific location?"
-next_menu = 6
-resource_name = "You: Can you tell me more about Belz's specific locat…"
-
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_olpxl"]
 kind = "Answer"
 text = "Um, I'm a bit busy. Sorry about that."
@@ -119,63 +82,10 @@ next_menu = 0
 resource_name = "You: Um, I'm a bit busy. Sorry about that."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_vxycm"]
-lines = Array[Resource]([SubResource("RoseDialogLine_5fwtk"), SubResource("RoseDialogLine_0kcqo"), SubResource("RoseDialogLine_olpxl")])
+lines = Array[Resource]([SubResource("RoseDialogLine_olpxl")])
 resource_name = "Menu 5"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_5w6hu"]
-text = "If you travel East from Zant, it shouldn't be too hard for you to find the Breezy Hills."
-next_menu = 7
-resource_name = "NPC: If you travel East from Zant, it shouldn't be to…"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_haef8"]
-lines = Array[Resource]([SubResource("RoseDialogLine_5w6hu")])
-resource_name = "Menu 6"
-
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_sjnpo"]
-step = ExtResource("2_vkgbk")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_3c2lq"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_sjnpo")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_g81jq"]
-kind = "Answer"
-text = "I see."
-on_choose = Array[Resource]([SubResource("RoseDialogCase_3c2lq")])
-resource_name = "You: I see."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_35kur"]
-lines = Array[Resource]([SubResource("RoseDialogLine_g81jq")])
-resource_name = "Menu 7"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_0v7l1"]
-kind = "Answer"
-text = "Yes, I'm not sure where Belz is."
-next_menu = 9
-resource_name = "You: Yes, I'm not sure where Belz is."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_gnj7n"]
-lines = Array[Resource]([SubResource("RoseDialogLine_0v7l1")])
-resource_name = "Menu 8"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_g3p6x"]
-text = "The Breezy Hills are to the East of Zant Village."
-next_menu = 10
-resource_name = "NPC: The Breezy Hills are to the East of Zant Village…"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jhq62"]
-lines = Array[Resource]([SubResource("RoseDialogLine_g3p6x")])
-resource_name = "Menu 9"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_rlkhu"]
-kind = "Answer"
-text = "Alright, I got it."
-resource_name = "You: Alright, I got it."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6rhy8"]
-lines = Array[Resource]([SubResource("RoseDialogLine_rlkhu")])
-resource_name = "Menu 10"
 
 [resource]
 key = "EM01-011.con"
 name = "[Eccentric Inventor] Spero"
-menus = Array[Resource]([SubResource("RoseDialogMenu_ihi1g"), SubResource("RoseDialogMenu_0l6y1"), SubResource("RoseDialogMenu_nqqy8"), SubResource("RoseDialogMenu_tb8tb"), SubResource("RoseDialogMenu_b425n"), SubResource("RoseDialogMenu_vxycm"), SubResource("RoseDialogMenu_haef8"), SubResource("RoseDialogMenu_35kur"), SubResource("RoseDialogMenu_gnj7n"), SubResource("RoseDialogMenu_jhq62"), SubResource("RoseDialogMenu_6rhy8")])
+menus = Array[Resource]([SubResource("RoseDialogMenu_ihi1g"), SubResource("RoseDialogMenu_0l6y1"), SubResource("RoseDialogMenu_nqqy8"), SubResource("RoseDialogMenu_tb8tb"), SubResource("RoseDialogMenu_b425n"), SubResource("RoseDialogMenu_vxycm")])

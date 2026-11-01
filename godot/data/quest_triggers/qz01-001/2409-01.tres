@@ -1,0 +1,30 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2409-nothing-goes-to-waste.tres" id="z_b38af3"]
+[ext_resource type="RoseItemHands" path="res://data/items/hands/656-scrap-gloves.tres" id="z_004444"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_467f3f"]
+switch = 647
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_20e5d8"]
+switch = 648
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_330c2d"]
+quest = ExtResource("z_b38af3")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_bac2cf"]
+quest = ExtResource("z_b38af3")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_63f3a8"]
+item = ExtResource("z_004444")
+quantity = 1
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_e4a23e"]
+equation = 0
+value = 100
+
+[resource]
+name = "2409-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_467f3f"), SubResource("RoseConditionQuestSwitch_20e5d8")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_330c2d"), SubResource("RoseRewardSelectQuest_bac2cf"), SubResource("RoseRewardAddItem_63f3a8"), SubResource("RoseRewardCalculatedMoney_e4a23e")])

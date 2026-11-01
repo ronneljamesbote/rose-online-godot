@@ -1,0 +1,130 @@
+[gd_resource type="RoseDialog" format=3]
+
+[ext_resource type="RoseQuestTrigger" path="res://data/quest_triggers/qz01-001/2412-02.tres" id="z_6c6e9f"]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3cd0b8"]
+text = "The Wind Road starts right here, at this gate. Caravans leave for Breezy Hills every morning, if the Rackies let them."
+next_menu = 1
+resource_name = "NPC: The Wind Road starts right here, at this gate. Car…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_eb3804"]
+lines = Array[Resource]([SubResource("RoseDialogLine_3cd0b8")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_70f578"]
+step = ExtResource("z_6c6e9f")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_3dcae1"]
+conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_70f578")])
+
+[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_9e4b05"]
+step = ExtResource("z_6c6e9f")
+
+[sub_resource type="RoseDialogCase" id="RoseDialogCase_c245e6"]
+actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_9e4b05")])
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_15e9f9"]
+kind = "Answer"
+text = "\"The Wind Road\": Lena sent me."
+next_menu = 7
+show_if = Array[Resource]([SubResource("RoseDialogCase_3dcae1")])
+on_choose = Array[Resource]([SubResource("RoseDialogCase_c245e6")])
+resource_name = "You: \"The Wind Road\": Lena sent me."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_669009"]
+kind = "Answer"
+text = "What's in Breezy Hills?"
+next_menu = 3
+resource_name = "You: What's in Breezy Hills?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_50f621"]
+kind = "Answer"
+text = "What is this camp?"
+next_menu = 5
+resource_name = "You: What is this camp?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4701f5"]
+kind = "Answer"
+text = "Goodbye."
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_d1bc8c"]
+lines = Array[Resource]([SubResource("RoseDialogLine_15e9f9"), SubResource("RoseDialogLine_669009"), SubResource("RoseDialogLine_50f621"), SubResource("RoseDialogLine_4701f5")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_b28d9a"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_d04d9d"]
+kind = "Answer"
+text = "Goodbye."
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dc4fd6"]
+lines = Array[Resource]([SubResource("RoseDialogLine_b28d9a"), SubResource("RoseDialogLine_d04d9d")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_73f086"]
+text = "Windy hills, farms and a big lake. The Woopies and Honeybees out there are tougher than the ones by Zant, and the Rackies rob our wagons further on. Go carefully, and come back to Zant to rest and trade."
+next_menu = 2
+resource_name = "NPC: Windy hills, farms and a big lake. The Woopies and…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_676cbb"]
+lines = Array[Resource]([SubResource("RoseDialogLine_73f086")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_76a34c"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c07c0c"]
+kind = "Answer"
+text = "Goodbye."
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_e29a1c"]
+lines = Array[Resource]([SubResource("RoseDialogLine_76a34c"), SubResource("RoseDialogLine_c07c0c")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_555bfb"]
+text = "The Wind Road Caravan Camp. Every caravan to Breezy Hills and back stops here: we load, mend the wagons and wait for the road to be safe."
+next_menu = 4
+resource_name = "NPC: The Wind Road Caravan Camp. Every caravan to Breez…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4b8853"]
+lines = Array[Resource]([SubResource("RoseDialogLine_555bfb")])
+resource_name = "Menu 5"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_10300b"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_aa5950"]
+kind = "Answer"
+text = "Goodbye."
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_b8ab58"]
+lines = Array[Resource]([SubResource("RoseDialogLine_10300b"), SubResource("RoseDialogLine_aa5950")])
+resource_name = "Menu 6"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_13a78f"]
+text = "Lena's pupil? Then you know your way around Zant. The Wind Road runs east through this gate into Breezy Hills. Keep a Zant Return Scroll in your bag, and good luck out there."
+next_menu = 6
+resource_name = "NPC: Lena's pupil? Then you know your way around Zant. …"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_49b92f"]
+lines = Array[Resource]([SubResource("RoseDialogLine_13a78f")])
+resource_name = "Menu 7"
+
+[resource]
+key = "EM01-017.con"
+name = "[Caravan Master] Odell"
+menus = Array[Resource]([SubResource("RoseDialogMenu_eb3804"), SubResource("RoseDialogMenu_d1bc8c"), SubResource("RoseDialogMenu_dc4fd6"), SubResource("RoseDialogMenu_676cbb"), SubResource("RoseDialogMenu_e29a1c"), SubResource("RoseDialogMenu_4b8853"), SubResource("RoseDialogMenu_b8ab58"), SubResource("RoseDialogMenu_49b92f")])

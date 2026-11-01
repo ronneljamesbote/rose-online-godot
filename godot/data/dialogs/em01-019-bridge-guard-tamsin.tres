@@ -1,0 +1,84 @@
+[gd_resource type="RoseDialog" format=3]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_a99438"]
+text = "Halt. The bridge leads to the El Verloon Desert. Are you sure you want to go that way?"
+next_menu = 1
+resource_name = "NPC: Halt. The bridge leads to the El Verloon Desert. A…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4ad3f2"]
+lines = Array[Resource]([SubResource("RoseDialogLine_a99438")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e28d35"]
+kind = "Answer"
+text = "What's in El Verloon?"
+next_menu = 3
+resource_name = "You: What's in El Verloon?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_872f2e"]
+kind = "Answer"
+text = "I'm just looking."
+next_menu = 5
+resource_name = "You: I'm just looking."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_03be03"]
+kind = "Answer"
+text = "Goodbye."
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_60d224"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e28d35"), SubResource("RoseDialogLine_872f2e"), SubResource("RoseDialogLine_03be03")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7ebf9c"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_3e7151"]
+kind = "Answer"
+text = "Goodbye."
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_1c7177"]
+lines = Array[Resource]([SubResource("RoseDialogLine_7ebf9c"), SubResource("RoseDialogLine_3e7151")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_ab57dd"]
+text = "Sand, heat, and monsters of every strength mixed together. Strong travellers go there; new ones come back on a stretcher, if at all. Try Breezy Hills to the east first."
+next_menu = 2
+resource_name = "NPC: Sand, heat, and monsters of every strength mixed t…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_771229"]
+lines = Array[Resource]([SubResource("RoseDialogLine_ab57dd")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_05df96"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_fd36e8"]
+kind = "Answer"
+text = "Goodbye."
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4c7a10"]
+lines = Array[Resource]([SubResource("RoseDialogLine_05df96"), SubResource("RoseDialogLine_fd36e8")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_e1aafd"]
+text = "Look all you like. The river's pretty from here."
+next_menu = 4
+resource_name = "NPC: Look all you like. The river's pretty from here."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_4da34b"]
+lines = Array[Resource]([SubResource("RoseDialogLine_e1aafd")])
+resource_name = "Menu 5"
+
+[resource]
+key = "EM01-019.con"
+name = "[Bridge Guard] Tamsin"
+menus = Array[Resource]([SubResource("RoseDialogMenu_4ad3f2"), SubResource("RoseDialogMenu_60d224"), SubResource("RoseDialogMenu_1c7177"), SubResource("RoseDialogMenu_771229"), SubResource("RoseDialogMenu_4c7a10"), SubResource("RoseDialogMenu_4da34b")])

@@ -2,7 +2,7 @@
 kind: quest
 id: 5004
 name: Ulysses' Price Chart Delivery
-status: in-game
+status: changed-from-irose
 given_by:
 - '[[npcs/1012-ferrell-guild-staff-ulysses|Ferrell Guild Staff Ulysses]]'
 npcs:
@@ -15,6 +15,10 @@ source:
   - crates/rose-quest/src/lib.rs
 ---
 # Ulysses' Price Chart Delivery
+
+**Can't be done any more.** The Zant city hub redesign took Zant's odd jobs (fetch quests,
+deliveries and stockpiling) out of the game: nobody offers this quest now. The steps below are
+iROSE's and are kept in the game data.
 
 Ulysses has asked you to deliver his Daily Price Checklist to Seyon in the Adventurer's Plains.  
 
@@ -95,3 +99,7 @@ Then:
 - 1 × [[items/quest/803-daily-price-checklist|Daily Price Checklist]] is taken
 - experience, base 4000 (reward formula 0: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
+
+## Changed from iROSE
+
+Not in the game any more: see the note at the top.

@@ -2,7 +2,7 @@
 kind: quest
 id: 5032
 name: Piety and a Bribe?
-status: in-game
+status: changed-from-irose
 given_by:
 - '[[npcs/1038-village-chief-gray|Village Chief Gray]]'
 npcs:
@@ -15,6 +15,10 @@ source:
   - crates/rose-quest/src/lib.rs
 ---
 # Piety and a Bribe?
+
+**Can't be done any more.** The Zant city hub redesign took Zant's odd jobs (fetch quests,
+deliveries and stockpiling) out of the game: nobody offers this quest now. The steps below are
+iROSE's and are kept in the game data.
 
 Bring Gray's Pearl Oysters to Ulysses who is at the temple in Zant. Afterwards, return to Gray with the Elder Appointment Letter from Ulysses.  
 
@@ -71,3 +75,7 @@ Then:
 - Zuly, base 700 (reward formula 3: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - you get [[items/consumable/56-vital-jam-1|Vital Jam (+1)]], base count 1 (reward formula 5: base plus a bonus from Charm, smaller at higher levels, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
+
+## Changed from iROSE
+
+Not in the game any more: see the note at the top.

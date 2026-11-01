@@ -1,0 +1,66 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2412-the-wind-road.tres" id="z_3d9aeb"]
+
+[sub_resource type="RoseConditionAbilityValue" id="RoseConditionAbilityValue_c86b8e"]
+operator = ">="
+value = 15
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_7eeae5"]
+switch = 640
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_517e69"]
+switch = 640
+value = true
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_8f30da"]
+switch = 641
+value = true
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_c39ba0"]
+switch = 642
+value = true
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_3b15b7"]
+switch = 643
+value = true
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_18689b"]
+switch = 644
+value = true
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_509de4"]
+switch = 645
+value = true
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_790070"]
+switch = 646
+value = true
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_0e3512"]
+switch = 647
+value = true
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_31bd93"]
+switch = 648
+value = true
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_c9275b"]
+switch = 649
+value = true
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_bb7cf6"]
+switch = 650
+value = true
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_170386"]
+switch = 652
+value = true
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_9c7e7e"]
+quest = ExtResource("z_3d9aeb")
+
+[resource]
+name = "2401-03"
+conditions = Array[Resource]([SubResource("RoseConditionAbilityValue_c86b8e"), SubResource("RoseConditionQuestSwitch_7eeae5")])
+rewards = Array[Resource]([SubResource("RoseRewardSetQuestSwitch_517e69"), SubResource("RoseRewardSetQuestSwitch_8f30da"), SubResource("RoseRewardSetQuestSwitch_c39ba0"), SubResource("RoseRewardSetQuestSwitch_3b15b7"), SubResource("RoseRewardSetQuestSwitch_18689b"), SubResource("RoseRewardSetQuestSwitch_509de4"), SubResource("RoseRewardSetQuestSwitch_790070"), SubResource("RoseRewardSetQuestSwitch_0e3512"), SubResource("RoseRewardSetQuestSwitch_31bd93"), SubResource("RoseRewardSetQuestSwitch_c9275b"), SubResource("RoseRewardSetQuestSwitch_bb7cf6"), SubResource("RoseRewardSetQuestSwitch_170386"), SubResource("RoseRewardAddQuest_9c7e7e")])

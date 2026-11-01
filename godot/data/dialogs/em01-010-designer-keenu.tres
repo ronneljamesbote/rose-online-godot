@@ -3,16 +3,10 @@
 [ext_resource type="RoseQuest" uid="uid://bl6s7kawe58r0" path="res://data/quests/905-solitary-orias.tres" id="1_clg7y"]
 [ext_resource type="RoseQuest" uid="uid://doj53vfrh1cs" path="res://data/quests/906-solitary-orias.tres" id="2_sovdb"]
 [ext_resource type="RoseQuest" uid="uid://peqhbhyjctvy" path="res://data/quests/907-solitary-orias.tres" id="3_1axsw"]
-[ext_resource type="RoseQuest" uid="uid://81l04hnr6see" path="res://data/quests/5003-dalping-hunt-fetch-quest.tres" id="4_vimcd"]
 [ext_resource type="RoseQuestTrigger" uid="uid://bpu346cxyu6ib" path="res://data/quest_triggers/qj211-01/905-01.tres" id="5_ts2uh"]
 [ext_resource type="RoseQuestTrigger" uid="uid://s71k3jqts474" path="res://data/quest_triggers/qj211-01/907-01.tres" id="6_ci7v5"]
 [ext_resource type="RoseQuestTrigger" uid="uid://dc2p5p12aw1pg" path="res://data/quest_triggers/qj211-01/907-02.tres" id="7_ptcy6"]
 [ext_resource type="RoseQuestTrigger" uid="uid://bok1gc0uukcyq" path="res://data/quest_triggers/qj211-01/907-03.tres" id="8_cpt0q"]
-[ext_resource type="RoseItemQuest" uid="uid://dedb7ixfou8mv" path="res://data/items/quest/802-dalping-egg.tres" id="9_06hht"]
-[ext_resource type="RoseQuestTrigger" uid="uid://dnrfosxsssygr" path="res://data/quest_triggers/qs12-001/5003-04.tres" id="10_sfntx"]
-[ext_resource type="RoseQuestTrigger" uid="uid://b2hlqvsyxamxo" path="res://data/quest_triggers/qs12-001/5003-02.tres" id="11_ke8ta"]
-[ext_resource type="RoseQuestTrigger" uid="uid://clypr5ajqwpkj" path="res://data/quest_triggers/qs12-001/5003-03.tres" id="12_p1aw8"]
-[ext_resource type="RoseQuestTrigger" uid="uid://bji5s8dd1eo6" path="res://data/quest_triggers/qs12-001/5003-01.tres" id="13_1oobl"]
 
 [sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_kdx7b"]
 quest = ExtResource("1_clg7y")
@@ -163,38 +157,13 @@ text = "I'd rather talk to you."
 next_menu = 2
 resource_name = "You: I'd rather talk to you."
 
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_2uqxr"]
-value = 1
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_5u512"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_2uqxr")])
-
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_42paa"]
-value = 2
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_mn42o"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_42paa")])
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_at5ne"]
-quest = ExtResource("4_vimcd")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_xrudg"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_at5ne")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_n7arm"]
-kind = "Answer"
-text = "I'd like to participate in the [Fetch Quest]."
-next_menu = 27
-show_if = Array[Resource]([SubResource("RoseDialogCase_5u512"), SubResource("RoseDialogCase_mn42o"), SubResource("RoseDialogCase_xrudg")])
-resource_name = "You: I'd like to participate in the [Fetch Quest]."
-
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_eobwu"]
 kind = "Answer"
 text = "Maybe later. Bye~"
 resource_name = "You: Maybe later. Bye~"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_6dd0p"]
-lines = Array[Resource]([SubResource("RoseDialogLine_dq73f"), SubResource("RoseDialogLine_ouv8q"), SubResource("RoseDialogLine_n7arm"), SubResource("RoseDialogLine_eobwu")])
+lines = Array[Resource]([SubResource("RoseDialogLine_dq73f"), SubResource("RoseDialogLine_ouv8q"), SubResource("RoseDialogLine_eobwu")])
 resource_name = "Menu 1"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_pbltk"]
@@ -283,33 +252,8 @@ text = "I want to trade first."
 on_choose = Array[Resource]([SubResource("RoseDialogCase_o1mg4")])
 resource_name = "You: I want to trade first."
 
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_6m0mv"]
-value = 1
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_pe7t0"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_6m0mv")])
-
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_qxvn6"]
-value = 2
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_vhvhe"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_qxvn6")])
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_e34y8"]
-quest = ExtResource("4_vimcd")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_tcc3x"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_e34y8")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_wa84b"]
-kind = "Answer"
-text = "I'd like to participate in the [Fetch Quest]."
-next_menu = 27
-show_if = Array[Resource]([SubResource("RoseDialogCase_pe7t0"), SubResource("RoseDialogCase_vhvhe"), SubResource("RoseDialogCase_tcc3x")])
-resource_name = "You: I'd like to participate in the [Fetch Quest]."
-
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_2gtgy"]
-lines = Array[Resource]([SubResource("RoseDialogLine_8b6dv"), SubResource("RoseDialogLine_ui7h2"), SubResource("RoseDialogLine_wa84b")])
+lines = Array[Resource]([SubResource("RoseDialogLine_8b6dv"), SubResource("RoseDialogLine_ui7h2")])
 resource_name = "Menu 8"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_1kw0w"]
@@ -429,33 +373,8 @@ text = "I would like to trade first."
 on_choose = Array[Resource]([SubResource("RoseDialogCase_ghu7r")])
 resource_name = "You: I would like to trade first."
 
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_s8es1"]
-value = 1
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_8nkso"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_s8es1")])
-
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_krldi"]
-value = 2
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_g88ub"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_krldi")])
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_fhab2"]
-quest = ExtResource("4_vimcd")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_yj5fv"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_fhab2")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_msgyx"]
-kind = "Answer"
-text = "I'd like to participate in the [Fetch Quest]."
-next_menu = 27
-show_if = Array[Resource]([SubResource("RoseDialogCase_8nkso"), SubResource("RoseDialogCase_g88ub"), SubResource("RoseDialogCase_yj5fv")])
-resource_name = "You: I'd like to participate in the [Fetch Quest]."
-
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_k4ia2"]
-lines = Array[Resource]([SubResource("RoseDialogLine_mlc17"), SubResource("RoseDialogLine_f43xg"), SubResource("RoseDialogLine_dxtqu"), SubResource("RoseDialogLine_msgyx")])
+lines = Array[Resource]([SubResource("RoseDialogLine_mlc17"), SubResource("RoseDialogLine_f43xg"), SubResource("RoseDialogLine_dxtqu")])
 resource_name = "Menu 17"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_n4n8t"]
@@ -500,33 +419,8 @@ text = "Nah, don't mention it."
 next_menu = 23
 resource_name = "You: Nah, don't mention it."
 
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_cij06"]
-value = 1
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_5j2y6"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_cij06")])
-
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_51um2"]
-value = 2
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_b2lru"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_51um2")])
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_xv1dr"]
-quest = ExtResource("4_vimcd")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_cgha2"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_xv1dr")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_o7nh2"]
-kind = "Answer"
-text = "I'd like to participate in the [Fetch Quest]."
-next_menu = 27
-show_if = Array[Resource]([SubResource("RoseDialogCase_5j2y6"), SubResource("RoseDialogCase_b2lru"), SubResource("RoseDialogCase_cgha2")])
-resource_name = "You: I'd like to participate in the [Fetch Quest]."
-
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_qrti4"]
-lines = Array[Resource]([SubResource("RoseDialogLine_evano"), SubResource("RoseDialogLine_o7nh2")])
+lines = Array[Resource]([SubResource("RoseDialogLine_evano")])
 resource_name = "Menu 22"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_pvius"]
@@ -602,183 +496,7 @@ resource_name = "You: Hmm… Let me reconsider."
 lines = Array[Resource]([SubResource("RoseDialogLine_c3cbd"), SubResource("RoseDialogLine_8q4pl")])
 resource_name = "Menu 26"
 
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_lrubh"]
-value = 1
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_tsrw4"]
-quest = ExtResource("4_vimcd")
-active = false
-
-[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_e3cy4"]
-operator = "<"
-value = 28
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_a8vp8"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_lrubh"), SubResource("RoseDialogIfQuest_tsrw4"), SubResource("RoseDialogIfAbility_e3cy4")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_eh1sd"]
-text = "Excellent, let's get started. I love love loooove eating {fc=14}Dalping Eggs{/fc}. So, I'll give you a reward according to the time it takes for you to gather these eggs."
-next_menu = 33
-show_if = Array[Resource]([SubResource("RoseDialogCase_a8vp8")])
-resource_name = "NPC: Excellent, let's get started. I love love loooov…"
-
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_3k3bm"]
-value = 2
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_51jni"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_3k3bm")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_8fahh"]
-text = "Oh, I'm sooo sorry, but it's too late to join. Please participate next time~"
-next_menu = 32
-show_if = Array[Resource]([SubResource("RoseDialogCase_51jni")])
-resource_name = "NPC: Oh, I'm sooo sorry, but it's too late to join. P…"
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_ro7an"]
-quest = ExtResource("4_vimcd")
-
-[sub_resource type="RoseDialogIfQuestItem" id="RoseDialogIfQuestItem_3euh7"]
-quest = ExtResource("4_vimcd")
-item = ExtResource("9_06hht")
-operator = "<"
-value = 10
-
-[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_0nren"]
-step = ExtResource("10_sfntx")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_ilbr1"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_ro7an"), SubResource("RoseDialogIfQuestItem_3euh7"), SubResource("RoseDialogIfQuestStep_0nren")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_7uhlp"]
-text = "What are you doing? The later you are, the less I can reward you~"
-next_menu = 31
-show_if = Array[Resource]([SubResource("RoseDialogCase_ilbr1")])
-resource_name = "NPC: What are you doing? The later you are, the less …"
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_o0lgv"]
-quest = ExtResource("4_vimcd")
-
-[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_3i6rf"]
-step = ExtResource("10_sfntx")
-passes = false
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_bnfc0"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_o0lgv"), SubResource("RoseDialogIfQuestStep_3i6rf")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_awsyw"]
-text = "Wha~? I can't eat rotten Dalping Eggs. Don't ask me to pay for spoiled goods."
-next_menu = 30
-show_if = Array[Resource]([SubResource("RoseDialogCase_bnfc0")])
-resource_name = "NPC: Wha~? I can't eat rotten Dalping Eggs. Don't ask…"
-
-[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_m8wwp"]
-step = ExtResource("11_ke8ta")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_311ro"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_m8wwp")])
-
-[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_gfbo3"]
-step = ExtResource("12_p1aw8")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_ckmun"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_gfbo3")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_nd6q3"]
-text = "Thank you for the scrumptious Dalping Eggs. I'll reward you according to the time you've spent in gathering these eggs."
-next_menu = 29
-show_if = Array[Resource]([SubResource("RoseDialogCase_311ro"), SubResource("RoseDialogCase_ckmun")])
-resource_name = "NPC: Thank you for the scrumptious Dalping Eggs. I'll…"
-
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_jnjbr"]
-quest = ExtResource("4_vimcd")
-active = false
-
-[sub_resource type="RoseDialogIfAbility" id="RoseDialogIfAbility_l7wp4"]
-operator = ">"
-value = 27
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_kugsd"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuest_jnjbr"), SubResource("RoseDialogIfAbility_l7wp4")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_cchx3"]
-text = "To make things fair, characters above Level 27 cannot participate in this quest. Please go find another quest that is suitable for you."
-next_menu = 28
-show_if = Array[Resource]([SubResource("RoseDialogCase_kugsd")])
-resource_name = "NPC: To make things fair, characters above Level 27 c…"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_l2lnn"]
-lines = Array[Resource]([SubResource("RoseDialogLine_eh1sd"), SubResource("RoseDialogLine_8fahh"), SubResource("RoseDialogLine_7uhlp"), SubResource("RoseDialogLine_awsyw"), SubResource("RoseDialogLine_nd6q3"), SubResource("RoseDialogLine_cchx3")])
-resource_name = "Menu 27"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_3vkac"]
-kind = "Answer"
-text = "Alright."
-resource_name = "You: Alright."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_mpyk2"]
-lines = Array[Resource]([SubResource("RoseDialogLine_3vkac")])
-resource_name = "Menu 28"
-
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_2kcsf"]
-step = ExtResource("11_ke8ta")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_c1vtr"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_2kcsf")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_0vrye"]
-kind = "Answer"
-text = "Alright, you got it."
-on_choose = Array[Resource]([SubResource("RoseDialogCase_c1vtr")])
-resource_name = "You: Alright, you got it."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_imika"]
-lines = Array[Resource]([SubResource("RoseDialogLine_0vrye")])
-resource_name = "Menu 29"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_226rw"]
-kind = "Answer"
-text = "Yes, understood."
-resource_name = "You: Yes, understood."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_78liu"]
-lines = Array[Resource]([SubResource("RoseDialogLine_226rw")])
-resource_name = "Menu 30"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_mhksn"]
-kind = "Answer"
-text = "Yes, of course."
-resource_name = "You: Yes, of course."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_m1dp7"]
-lines = Array[Resource]([SubResource("RoseDialogLine_mhksn")])
-resource_name = "Menu 31"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_kp5i4"]
-kind = "Answer"
-text = "Is that a fact? Alright, I'll try to speed things up next time."
-resource_name = "You: Is that a fact? Alright, I'll try to speed thing…"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ttaxk"]
-lines = Array[Resource]([SubResource("RoseDialogLine_kp5i4")])
-resource_name = "Menu 32"
-
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_1d8rh"]
-step = ExtResource("13_1oobl")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_bplij"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_1d8rh")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_vjdlf"]
-kind = "Answer"
-text = "So… You like those kinds of things? Alright."
-on_choose = Array[Resource]([SubResource("RoseDialogCase_bplij")])
-resource_name = "You: So… You like those kinds of things? Alright."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_eri6v"]
-lines = Array[Resource]([SubResource("RoseDialogLine_vjdlf")])
-resource_name = "Menu 33"
-
 [resource]
 key = "EM01-010.con"
 name = "[Designer] Keenu"
-menus = Array[Resource]([SubResource("RoseDialogMenu_57crh"), SubResource("RoseDialogMenu_6dd0p"), SubResource("RoseDialogMenu_7qs8v"), SubResource("RoseDialogMenu_6lbr8"), SubResource("RoseDialogMenu_ox1rq"), SubResource("RoseDialogMenu_jhhna"), SubResource("RoseDialogMenu_l3si3"), SubResource("RoseDialogMenu_388jj"), SubResource("RoseDialogMenu_2gtgy"), SubResource("RoseDialogMenu_boxva"), SubResource("RoseDialogMenu_8jg55"), SubResource("RoseDialogMenu_qw0jg"), SubResource("RoseDialogMenu_aanpb"), SubResource("RoseDialogMenu_hv6q5"), SubResource("RoseDialogMenu_sxvl4"), SubResource("RoseDialogMenu_bkpwd"), SubResource("RoseDialogMenu_wphkf"), SubResource("RoseDialogMenu_k4ia2"), SubResource("RoseDialogMenu_v4a22"), SubResource("RoseDialogMenu_n64yb"), SubResource("RoseDialogMenu_2wqxo"), SubResource("RoseDialogMenu_cfnfm"), SubResource("RoseDialogMenu_qrti4"), SubResource("RoseDialogMenu_g8n72"), SubResource("RoseDialogMenu_sph78"), SubResource("RoseDialogMenu_jtj1t"), SubResource("RoseDialogMenu_3s4cu"), SubResource("RoseDialogMenu_l2lnn"), SubResource("RoseDialogMenu_mpyk2"), SubResource("RoseDialogMenu_imika"), SubResource("RoseDialogMenu_78liu"), SubResource("RoseDialogMenu_m1dp7"), SubResource("RoseDialogMenu_ttaxk"), SubResource("RoseDialogMenu_eri6v")])
+menus = Array[Resource]([SubResource("RoseDialogMenu_57crh"), SubResource("RoseDialogMenu_6dd0p"), SubResource("RoseDialogMenu_7qs8v"), SubResource("RoseDialogMenu_6lbr8"), SubResource("RoseDialogMenu_ox1rq"), SubResource("RoseDialogMenu_jhhna"), SubResource("RoseDialogMenu_l3si3"), SubResource("RoseDialogMenu_388jj"), SubResource("RoseDialogMenu_2gtgy"), SubResource("RoseDialogMenu_boxva"), SubResource("RoseDialogMenu_8jg55"), SubResource("RoseDialogMenu_qw0jg"), SubResource("RoseDialogMenu_aanpb"), SubResource("RoseDialogMenu_hv6q5"), SubResource("RoseDialogMenu_sxvl4"), SubResource("RoseDialogMenu_bkpwd"), SubResource("RoseDialogMenu_wphkf"), SubResource("RoseDialogMenu_k4ia2"), SubResource("RoseDialogMenu_v4a22"), SubResource("RoseDialogMenu_n64yb"), SubResource("RoseDialogMenu_2wqxo"), SubResource("RoseDialogMenu_cfnfm"), SubResource("RoseDialogMenu_qrti4"), SubResource("RoseDialogMenu_g8n72"), SubResource("RoseDialogMenu_sph78"), SubResource("RoseDialogMenu_jtj1t"), SubResource("RoseDialogMenu_3s4cu")])

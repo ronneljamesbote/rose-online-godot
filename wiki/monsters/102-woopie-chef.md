@@ -2,7 +2,7 @@
 kind: monster
 id: 102
 name: Woopie Chef
-status: in-game
+status: changed-from-irose
 level: 17
 hp: 391
 hp_per_level: 23
@@ -19,7 +19,7 @@ run_speed: 480
 xp: 23
 drop_item_rate: 63
 drop_money_rate: 30
-zones: 2
+zones: 1
 drops:
 - item: '[[items/material/185-white-animal-tail-fur|White Animal Tail Fur]]'
   slots_of_30: 7
@@ -60,126 +60,6 @@ drops:
 - item: '[[items/subweapon/1-wooden-shield|Wooden Shield]]'
   slots_of_30: 0.2
 spawns:
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5441.3
-  y: 5448.9
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5441.3
-  y: 5448.9
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5245.2
-  y: 5390.4
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5194.9
-  y: 5354.2
-  count: 2
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5261.4
-  y: 5361.4
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5261.4
-  y: 5361.4
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5301.3
-  y: 5395.8
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5332
-  y: 5339.6
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5332
-  y: 5339.6
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5377
-  y: 5394.4
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5423.8
-  y: 5418.3
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5469.3
-  y: 5398.7
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5399.8
-  y: 5165.5
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5382.9
-  y: 5244.3
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5382.9
-  y: 5244.3
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5393.8
-  y: 5191.6
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5393.8
-  y: 5191.6
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5393.8
-  y: 5191.6
-  count: 3
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5449.5
-  y: 5197.6
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5449.5
-  y: 5197.6
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5449.5
-  y: 5197.6
-  count: 3
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5234.5
-  y: 5055.6
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5366.7
-  y: 5067.6
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5280.7
-  y: 5046.1
-  count: 1
-  group: basic
 - zone: '[[zones/24-el-verloon-desert|El Verloon Desert]]'
   x: 5119.9
   y: 5164.1
@@ -202,3 +82,7 @@ Speeds are in centimetres per second, attack range in metres. Spawn positions ar
 HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].
+
+## Changed from iROSE
+
+The Zant city hub redesign makes [[zones/1-canyon-city-of-zant|Canyon City of Zant]] a safe city: this monster no longer spawns in or around Zant.

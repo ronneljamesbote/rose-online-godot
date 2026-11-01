@@ -2,7 +2,7 @@
 //! Spawning follows rose-offline's monster_spawn_system (spawn point "tactics").
 
 use rand::Rng;
-use rose_data::{NpcId, NpcMotionAction, WarpGateId};
+use rose_data::{NpcId, NpcMotionAction, WarpGateId, ZoneId};
 use rose_game_common::components::StatusEffects;
 use rose_game_data::GameData;
 use spacetimedb::{ReducerContext, SpacetimeType, Table};
@@ -311,6 +311,11 @@ pub fn use_warp_gate(ctx: &ReducerContext, warp_id: u16) -> Result<(), String> {
         return Err("dead".into());
     }
     let gate = game.warp_gates.get_warp_gate(WarpGateId::new(warp_id)).ok_or("no such warp gate")?;
+    // Only the gates placed in the zone the player is in (a client can't warp from anywhere).
+    let here = game.zones.get_zone(ZoneId::new(p.zone_id).ok_or("no such zone")?).ok_or("no such zone")?;
+    if !here.warp_gates.contains(&warp_id) {
+        return Err("that warp gate isn't in this zone".into());
+    }
     let zone = game.zones.get_zone(gate.target_zone).ok_or("the warp gate leads nowhere")?;
     let at = zone.event_positions.get(&gate.target_event_object).ok_or("the warp gate leads nowhere")?;
     teleport(ctx, &mut p, gate.target_zone.get(), (at.x, at.y));

@@ -2,7 +2,7 @@
 kind: monster
 id: 301
 name: Mini Bee
-status: in-game
+status: changed-from-irose
 level: 9
 hp: 153
 hp_per_level: 17
@@ -19,7 +19,7 @@ run_speed: 400
 xp: 18
 drop_item_rate: 15
 drop_money_rate: 1
-zones: 3
+zones: 2
 spawns:
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
   x: 5179.2
@@ -34,21 +34,6 @@ spawns:
 - zone: '[[zones/22-adventurer-s-plain|Adventurer''s Plain]]'
   x: 5410
   y: 5470
-  count: 3
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5238.4
-  y: 5171.1
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5120.8
-  y: 5135.7
-  count: 3
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5139.8
-  y: 5194.5
   count: 3
   group: basic
 - zone: '[[zones/61-refuge-xita|Refuge Xita]]'
@@ -77,3 +62,5 @@ how the XP value turns into experience is on [[rules/experience|Experience]].
 ## Changed from iROSE
 
 The Adventurer's Plain redesign moved its spawn points there (see [[zones/22-adventurer-s-plain|Adventurer's Plain]]).
+
+The Zant city hub redesign makes [[zones/1-canyon-city-of-zant|Canyon City of Zant]] a safe city: this monster no longer spawns in or around Zant.

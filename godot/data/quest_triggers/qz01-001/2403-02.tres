@@ -1,0 +1,28 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2403-safe-keeping.tres" id="z_bb0bce"]
+
+[sub_resource type="RoseConditionSelectQuest" id="RoseConditionSelectQuest_dff0ab"]
+quest = ExtResource("z_bb0bce")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_da1d82"]
+quest = ExtResource("z_bb0bce")
+
+[sub_resource type="RoseRewardCalculatedExperiencePoints" id="RoseRewardCalculatedExperiencePoints_8b629c"]
+equation = 0
+value = 400
+
+[sub_resource type="RoseRewardCalculatedMoney" id="RoseRewardCalculatedMoney_df8ef6"]
+equation = 0
+value = 300
+
+[sub_resource type="RoseRewardSetQuestSwitch" id="RoseRewardSetQuestSwitch_01cd17"]
+switch = 642
+value = true
+
+[sub_resource type="RoseRewardRemoveSelectedQuest" id="RoseRewardRemoveSelectedQuest_600a59"]
+
+[resource]
+name = "2403-02"
+conditions = Array[Resource]([SubResource("RoseConditionSelectQuest_dff0ab")])
+rewards = Array[Resource]([SubResource("RoseRewardSelectQuest_da1d82"), SubResource("RoseRewardCalculatedExperiencePoints_8b629c"), SubResource("RoseRewardCalculatedMoney_df8ef6"), SubResource("RoseRewardSetQuestSwitch_01cd17"), SubResource("RoseRewardRemoveSelectedQuest_600a59")])

@@ -19,6 +19,8 @@ dropped_by:
 - monster: '[[monsters/133-porkie-hooligan|Porkie Hooligan]]'
   level: 35
   slots_of_30: 1
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/417-porkie.tres
   code: module/src/items.rs

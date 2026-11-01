@@ -1,0 +1,36 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2407-sharper-steel.tres" id="z_44b1b9"]
+[ext_resource type="RoseItemWeapon" path="res://data/items/weapon/1133-practice-sword.tres" id="z_969dcf"]
+[ext_resource type="RoseItemMaterial" path="res://data/items/material/71-gray-powder.tres" id="z_e0580c"]
+[ext_resource type="RoseItemMaterial" path="res://data/items/material/61-low-essence.tres" id="z_06f10b"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_a70060"]
+switch = 645
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_5a7cdf"]
+switch = 646
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_502484"]
+quest = ExtResource("z_44b1b9")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_579f22"]
+quest = ExtResource("z_44b1b9")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_d40900"]
+item = ExtResource("z_969dcf")
+quantity = 1
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_aad702"]
+item = ExtResource("z_e0580c")
+quantity = 5
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_d295dc"]
+item = ExtResource("z_06f10b")
+quantity = 7
+
+[resource]
+name = "2407-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_a70060"), SubResource("RoseConditionQuestSwitch_5a7cdf")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_502484"), SubResource("RoseRewardSelectQuest_579f22"), SubResource("RoseRewardAddItem_d40900"), SubResource("RoseRewardAddItem_aad702"), SubResource("RoseRewardAddItem_d295dc")])

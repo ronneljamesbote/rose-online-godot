@@ -22,6 +22,8 @@ dropped_by:
 - monster: '[[monsters/114-captain-moldie|Captain Moldie]]'
   level: 42
   slots_of_30: 1
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/415-moldie.tres
   code: module/src/items.rs

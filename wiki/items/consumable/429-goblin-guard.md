@@ -16,6 +16,8 @@ dropped_by:
 - monster: '[[monsters/277-gem-goblin-guard|Gem Goblin Guard]]'
   level: 85
   slots_of_30: 1
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/429-goblin-guard.tres
   code: module/src/items.rs

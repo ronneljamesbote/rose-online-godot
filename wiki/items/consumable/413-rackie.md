@@ -19,6 +19,8 @@ dropped_by:
 - monster: '[[monsters/93-fighter-rackie|Fighter Rackie]]'
   level: 28
   slots_of_30: 2
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/413-rackie.tres
   code: module/src/items.rs

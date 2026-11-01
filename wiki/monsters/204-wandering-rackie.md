@@ -2,7 +2,7 @@
 kind: monster
 id: 204
 name: Wandering Rackie
-status: in-game
+status: changed-from-irose
 level: 20
 hp: 680
 hp_per_level: 34
@@ -19,7 +19,7 @@ run_speed: 540
 xp: 33
 drop_item_rate: 60
 drop_money_rate: 25
-zones: 2
+zones: 1
 drops:
 - item: '[[items/material/185-white-animal-tail-fur|White Animal Tail Fur]]'
   slots_of_30: 7
@@ -64,16 +64,6 @@ drops:
 - item: '[[items/weapon/4-khukuri|Khukuri]]'
   slots_of_30: 0.2
 spawns:
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5261.4
-  y: 5361.4
-  count: 1
-  group: reinforcements
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5410.4
-  y: 5212.4
-  count: 1
-  group: reinforcements
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
   x: 5465
   y: 5448
@@ -106,3 +96,7 @@ Speeds are in centimetres per second, attack range in metres. Spawn positions ar
 HP is the monster's real maximum: its level × `hp_per_level`, the value in the game data.
 How drops are picked (the zone's table, slots, money) is on [[rules/drops|Drops]];
 how the XP value turns into experience is on [[rules/experience|Experience]].
+
+## Changed from iROSE
+
+The Zant city hub redesign makes [[zones/1-canyon-city-of-zant|Canyon City of Zant]] a safe city: this monster no longer spawns in or around Zant.

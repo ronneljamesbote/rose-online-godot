@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2402-a-place-to-return.tres" id="z_d0b1fd"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_913f7f"]
+switch = 640
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_5db3a1"]
+switch = 641
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_458d1e"]
+quest = ExtResource("z_d0b1fd")
+
+[resource]
+name = "2402-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_913f7f"), SubResource("RoseConditionQuestSwitch_5db3a1")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_458d1e")])

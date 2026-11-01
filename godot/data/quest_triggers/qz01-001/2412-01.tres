@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2412-the-wind-road.tres" id="z_46f894"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_da14cb"]
+switch = 650
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_38197b"]
+switch = 651
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_b9e374"]
+quest = ExtResource("z_46f894")
+
+[resource]
+name = "2412-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_da14cb"), SubResource("RoseConditionQuestSwitch_38197b")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_b9e374")])

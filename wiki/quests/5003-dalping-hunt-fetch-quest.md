@@ -2,7 +2,7 @@
 kind: quest
 id: 5003
 name: Dalping Hunt (Fetch Quest)
-status: in-game
+status: changed-from-irose
 given_by:
 - '[[npcs/1010-designer-keenu|Designer Keenu]]'
 monsters:
@@ -16,6 +16,10 @@ source:
   - crates/rose-quest/src/lib.rs
 ---
 # Dalping Hunt (Fetch Quest)
+
+**Can't be done any more.** The Zant city hub redesign took Zant's odd jobs (fetch quests,
+deliveries and stockpiling) out of the game: nobody offers this quest now. The steps below are
+iROSE's and are kept in the game data.
 
 Keenu has a weakness for Dalping Eggs. Bring him 13 Dalping Eggs, and he'll give you a reward depending on how much sooner you bring him the eggs than your rivals.  
 
@@ -119,3 +123,7 @@ Then:
 - you get 1 × [[items/quest/802-dalping-egg|Dalping Egg]]
 
 If the checks fail, step `1007-32` is tried instead.
+
+## Changed from iROSE
+
+Not in the game any more: see the note at the top.

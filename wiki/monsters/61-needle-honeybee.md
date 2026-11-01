@@ -2,7 +2,7 @@
 kind: monster
 id: 61
 name: Needle HoneyBee
-status: in-game
+status: changed-from-irose
 level: 11
 hp: 275
 hp_per_level: 25
@@ -19,7 +19,7 @@ run_speed: 350
 xp: 20
 drop_item_rate: 62
 drop_money_rate: 8
-zones: 2
+zones: 1
 drops:
 - item: '[[items/material/176-insect-leg|Insect Leg]]'
   slots_of_30: 7
@@ -59,36 +59,6 @@ quests:
 - '[[quests/1003-dealer-job-change-quest|Dealer Job Change Quest]]'
 - '[[quests/2103-glowing-stingers|Glowing Stingers]]'
 spawns:
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5338.5
-  y: 5330.4
-  count: 2
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5338.5
-  y: 5330.4
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5469.3
-  y: 5398.7
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5220.5
-  y: 5049.7
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5269.2
-  y: 5049.3
-  count: 1
-  group: basic
-- zone: '[[zones/1-canyon-city-of-zant|Canyon City of Zant]]'
-  x: 5330.5
-  y: 5051.8
-  count: 1
-  group: basic
 - zone: '[[zones/21-valley-of-luxem-tower|Valley of Luxem Tower]]'
   x: 5294
   y: 5338
@@ -155,3 +125,5 @@ how the XP value turns into experience is on [[rules/experience|Experience]].
 ## Changed from iROSE
 
 The Adventurer's Plain redesign took it out of that zone.
+
+The Zant city hub redesign makes [[zones/1-canyon-city-of-zant|Canyon City of Zant]] a safe city: this monster no longer spawns in or around Zant.

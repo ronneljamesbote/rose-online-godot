@@ -19,6 +19,8 @@ dropped_by:
 - monster: '[[monsters/24-cowboy-pumpkin|Cowboy Pumpkin]]'
   level: 14
   slots_of_30: 2
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/404-pumpkin.tres
   code: module/src/items.rs

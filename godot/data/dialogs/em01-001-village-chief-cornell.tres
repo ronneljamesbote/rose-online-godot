@@ -1,12 +1,6 @@
 [gd_resource type="RoseDialog" format=3 uid="uid://dgl6h16beqya6"]
 
 [ext_resource type="RoseQuestTrigger" uid="uid://b4oaqv0prv6up" path="res://data/quest_triggers/qj000-01/ReStat-07.tres" id="1_n3bpw"]
-[ext_resource type="RoseQuestTrigger" uid="uid://dkrqyjkujs14l" path="res://data/quest_triggers/qs12-001/5009-11.tres" id="2_6uaiq"]
-[ext_resource type="RoseQuestTrigger" uid="uid://dlf18hhc85l2u" path="res://data/quest_triggers/qs12-001/5009-02.tres" id="3_fjcvo"]
-[ext_resource type="RoseQuestTrigger" uid="uid://cv6gvsckrwmh0" path="res://data/quest_triggers/qs12-001/5009-10.tres" id="4_qorma"]
-[ext_resource type="RoseQuest" uid="uid://dj7x4lj3ncqmi" path="res://data/quests/5009-candle-ghost-extermination-fetch-quest.tres" id="5_2t88k"]
-[ext_resource type="RoseQuestTrigger" uid="uid://rq7av8sn3rb" path="res://data/quest_triggers/qs12-001/5009-01.tres" id="6_kouvs"]
-[ext_resource type="RoseQuestTrigger" uid="uid://67024fr7yok" path="res://data/quest_triggers/qs12-001/5009-09.tres" id="7_ai3hn"]
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_qeilg"]
 text = "I am the chief of Zant. I know everything about this town, so is there anything you'd like to ask?"
@@ -137,68 +131,16 @@ resource_name = "You: Right, I understand."
 lines = Array[Resource]([SubResource("RoseDialogLine_xll3q")])
 resource_name = "Menu 7"
 
-[sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_x3dgw"]
-value = 1
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_3novo"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_x3dgw")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_6bqd3"]
-text = "How about it, do you wanna help us out?"
-next_menu = 9
-show_if = Array[Resource]([SubResource("RoseDialogCase_3novo")])
-resource_name = "NPC: How about it, do you wanna help us out?"
-
-[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_51tga"]
-step = ExtResource("2_6uaiq")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_gwoh0"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_51tga")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_qlcwm"]
-text = "That's why I'm asked this of you. How about killing some Candle Ghosts, eh?"
-next_menu = 16
-show_if = Array[Resource]([SubResource("RoseDialogCase_gwoh0")])
-resource_name = "NPC: That's why I'm asked this of you. How about kill…"
-
-[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_ej4c2"]
-step = ExtResource("3_fjcvo")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_ax3xv"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_ej4c2")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_53x82"]
-text = "Thanks to you, we can relax a little more."
-next_menu = 17
-show_if = Array[Resource]([SubResource("RoseDialogCase_ax3xv")])
-resource_name = "NPC: Thanks to you, we can relax a little more."
-
-[sub_resource type="RoseDialogIfQuestStep" id="RoseDialogIfQuestStep_0s3m8"]
-step = ExtResource("4_qorma")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_ma3ak"]
-conditions = Array[Resource]([SubResource("RoseDialogIfQuestStep_0s3m8")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_7m45f"]
-text = "Man, you're way too late to receive any kind of prize. You're better off taking on a new challenge instead of trying to cash in on an old task."
-next_menu = 20
-show_if = Array[Resource]([SubResource("RoseDialogCase_ma3ak")])
-resource_name = "NPC: Man, you're way too late to receive any kind of …"
-
 [sub_resource type="RoseDialogIfNpcSwitch" id="RoseDialogIfNpcSwitch_p3bar"]
 operator = "!="
 value = 1
 
-[sub_resource type="RoseDialogIfQuest" id="RoseDialogIfQuest_l1okj"]
-quest = ExtResource("5_2t88k")
-active = false
-
 [sub_resource type="RoseDialogCase" id="RoseDialogCase_bww4w"]
-conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_p3bar"), SubResource("RoseDialogIfQuest_l1okj")])
+conditions = Array[Resource]([SubResource("RoseDialogIfNpcSwitch_p3bar")])
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_pxarl"]
 text = "I'm thinking about a full-blown extermination of the Candle Ghosts, but it's still not time. Would you come again later?"
-next_menu = 21
+next_menu = 9
 show_if = Array[Resource]([SubResource("RoseDialogCase_bww4w")])
 resource_name = "NPC: I'm thinking about a full-blown extermination of…"
 
@@ -211,163 +153,13 @@ conditions = Array[Resource]([SubResource("RoseDialogIfAbility_uuqe1")])
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_6gfol"]
 text = "I appreciate your help, but you must be above Level 15."
-next_menu = 22
+next_menu = 10
 show_if = Array[Resource]([SubResource("RoseDialogCase_kixpv")])
 resource_name = "NPC: I appreciate your help, but you must be above Le…"
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_0jlop"]
-lines = Array[Resource]([SubResource("RoseDialogLine_6bqd3"), SubResource("RoseDialogLine_qlcwm"), SubResource("RoseDialogLine_53x82"), SubResource("RoseDialogLine_7m45f"), SubResource("RoseDialogLine_pxarl"), SubResource("RoseDialogLine_6gfol")])
+lines = Array[Resource]([SubResource("RoseDialogLine_pxarl"), SubResource("RoseDialogLine_6gfol")])
 resource_name = "Menu 8"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_bdmln"]
-kind = "Answer"
-text = "Yes, I'll fight them with you!"
-next_menu = 10
-resource_name = "You: Yes, I'll fight them with you!"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_36i4j"]
-lines = Array[Resource]([SubResource("RoseDialogLine_bdmln")])
-resource_name = "Menu 9"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_it53j"]
-text = "Good. It's said that {fc=12}Candle Ghosts{/fc} become weak once their masks are removed. Bring me {fc=14}20 Candle Ghost Masks{/fc}, and we'll see that you've been getting rid of them."
-next_menu = 11
-resource_name = "NPC: Good. It's said that {fc=12}Candle Ghosts{/fc} b…"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_k2cto"]
-lines = Array[Resource]([SubResource("RoseDialogLine_it53j")])
-resource_name = "Menu 10"
-
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_rm2h1"]
-step = ExtResource("6_kouvs")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_jyfiw"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_rm2h1")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_ci26y"]
-kind = "Answer"
-text = "Right, gotcha."
-on_choose = Array[Resource]([SubResource("RoseDialogCase_jyfiw")])
-resource_name = "You: Right, gotcha."
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_du0of"]
-kind = "Answer"
-text = "But what kind of Candle Ghost do I have to fight?"
-next_menu = 12
-resource_name = "You: But what kind of Candle Ghost do I have to fight…"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_mdclo"]
-kind = "Answer"
-text = "If I bring the 20 masks, what kind of reward will I get?"
-next_menu = 14
-resource_name = "You: If I bring the 20 masks, what kind of reward wil…"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_wymwt"]
-lines = Array[Resource]([SubResource("RoseDialogLine_ci26y"), SubResource("RoseDialogLine_du0of"), SubResource("RoseDialogLine_mdclo")])
-resource_name = "Menu 11"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_u64wk"]
-text = "We won't count the masks of any Candle Ghosts that are much weaker than you. Otherwise, Candle Ghosts in any place are fair game."
-next_menu = 13
-resource_name = "NPC: We won't count the masks of any Candle Ghosts th…"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_bm6ne"]
-lines = Array[Resource]([SubResource("RoseDialogLine_u64wk")])
-resource_name = "Menu 12"
-
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_ddq8u"]
-step = ExtResource("6_kouvs")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_d34jo"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_ddq8u")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_btitx"]
-kind = "Answer"
-text = "Okay, I'm ready to go!"
-on_choose = Array[Resource]([SubResource("RoseDialogCase_d34jo")])
-resource_name = "You: Okay, I'm ready to go!"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7n1sg"]
-lines = Array[Resource]([SubResource("RoseDialogLine_btitx")])
-resource_name = "Menu 13"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_ax771"]
-text = "I'm giving out the best prize, a Mana Jam that can be used to get skill points, to the first person to complete this objective. But anyone else who comes later will have to settle for the leftovers…"
-next_menu = 15
-resource_name = "NPC: I'm giving out the best prize, a Mana Jam that c…"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_68aic"]
-lines = Array[Resource]([SubResource("RoseDialogLine_ax771")])
-resource_name = "Menu 14"
-
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_qeky8"]
-step = ExtResource("6_kouvs")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_o17w1"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_qeky8")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_odmdb"]
-kind = "Answer"
-text = "Well, I better hurry then. I'm off!"
-on_choose = Array[Resource]([SubResource("RoseDialogCase_o17w1")])
-resource_name = "You: Well, I better hurry then. I'm off!"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_dpp23"]
-lines = Array[Resource]([SubResource("RoseDialogLine_odmdb")])
-resource_name = "Menu 15"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_bcv3q"]
-kind = "Answer"
-text = "Gotcha, I understand."
-resource_name = "You: Gotcha, I understand."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_sfb24"]
-lines = Array[Resource]([SubResource("RoseDialogLine_bcv3q")])
-resource_name = "Menu 16"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_lsomv"]
-kind = "Answer"
-text = "Yes, I hope so too. "
-next_menu = 18
-resource_name = "You: Yes, I hope so too."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_jxda3"]
-lines = Array[Resource]([SubResource("RoseDialogLine_lsomv")])
-resource_name = "Menu 17"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_ilfqe"]
-text = "Alright, here's your reward. As I said, I'm giving out prizes according to the order in which people have completed this task, so don't complain."
-next_menu = 19
-resource_name = "NPC: Alright, here's your reward. As I said, I'm givi…"
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_7k1nn"]
-lines = Array[Resource]([SubResource("RoseDialogLine_ilfqe")])
-resource_name = "Menu 18"
-
-[sub_resource type="RoseDialogDoQuestStep" id="RoseDialogDoQuestStep_uo0em"]
-step = ExtResource("7_ai3hn")
-
-[sub_resource type="RoseDialogCase" id="RoseDialogCase_hlvn7"]
-actions = Array[Resource]([SubResource("RoseDialogDoQuestStep_uo0em")])
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_1fnu8"]
-kind = "Answer"
-text = "I understand."
-on_choose = Array[Resource]([SubResource("RoseDialogCase_hlvn7")])
-resource_name = "You: I understand."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ju3ky"]
-lines = Array[Resource]([SubResource("RoseDialogLine_1fnu8")])
-resource_name = "Menu 19"
-
-[sub_resource type="RoseDialogLine" id="RoseDialogLine_xwrt1"]
-kind = "Answer"
-text = "Oh, okay."
-resource_name = "You: Oh, okay."
-
-[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_mrxit"]
-lines = Array[Resource]([SubResource("RoseDialogLine_xwrt1")])
-resource_name = "Menu 20"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_c1b60"]
 kind = "Answer"
@@ -376,7 +168,7 @@ resource_name = "You: Sure, alright."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_45ssm"]
 lines = Array[Resource]([SubResource("RoseDialogLine_c1b60")])
-resource_name = "Menu 21"
+resource_name = "Menu 9"
 
 [sub_resource type="RoseDialogLine" id="RoseDialogLine_tjiqd"]
 kind = "Answer"
@@ -385,9 +177,9 @@ resource_name = "You: Alright, I understand."
 
 [sub_resource type="RoseDialogMenu" id="RoseDialogMenu_sg5dm"]
 lines = Array[Resource]([SubResource("RoseDialogLine_tjiqd")])
-resource_name = "Menu 22"
+resource_name = "Menu 10"
 
 [resource]
 key = "EM01-001.con"
 name = "[Village Chief] Cornell"
-menus = Array[Resource]([SubResource("RoseDialogMenu_vsehp"), SubResource("RoseDialogMenu_jt36p"), SubResource("RoseDialogMenu_xw7ur"), SubResource("RoseDialogMenu_x35md"), SubResource("RoseDialogMenu_0q3hl"), SubResource("RoseDialogMenu_0e34s"), SubResource("RoseDialogMenu_hujsy"), SubResource("RoseDialogMenu_1xxqi"), SubResource("RoseDialogMenu_0jlop"), SubResource("RoseDialogMenu_36i4j"), SubResource("RoseDialogMenu_k2cto"), SubResource("RoseDialogMenu_wymwt"), SubResource("RoseDialogMenu_bm6ne"), SubResource("RoseDialogMenu_7n1sg"), SubResource("RoseDialogMenu_68aic"), SubResource("RoseDialogMenu_dpp23"), SubResource("RoseDialogMenu_sfb24"), SubResource("RoseDialogMenu_jxda3"), SubResource("RoseDialogMenu_7k1nn"), SubResource("RoseDialogMenu_ju3ky"), SubResource("RoseDialogMenu_mrxit"), SubResource("RoseDialogMenu_45ssm"), SubResource("RoseDialogMenu_sg5dm")])
+menus = Array[Resource]([SubResource("RoseDialogMenu_vsehp"), SubResource("RoseDialogMenu_jt36p"), SubResource("RoseDialogMenu_xw7ur"), SubResource("RoseDialogMenu_x35md"), SubResource("RoseDialogMenu_0q3hl"), SubResource("RoseDialogMenu_0e34s"), SubResource("RoseDialogMenu_hujsy"), SubResource("RoseDialogMenu_1xxqi"), SubResource("RoseDialogMenu_0jlop"), SubResource("RoseDialogMenu_45ssm"), SubResource("RoseDialogMenu_sg5dm")])

@@ -2496,6 +2496,7 @@ pub fn zone_export(zone_id: u16, collision: Option<bool>) -> Result<(rose_data_e
     for (_, block) in &blocks {
         collect_markers(block, transform_of(block), &block.get_name().to_string(), &mut layout);
     }
+    layout.warp.sort();
     let baked = match collision {
         Some(check) => Some(export_collision(&folder, &root, check)),
         None => None,
@@ -2552,6 +2553,11 @@ fn collect_markers(node: &Gd<Node>, transform: Transform3D, path: &str, layout: 
     } else if let Ok(spot) = node.clone().try_cast::<RoseZoneEvent>() {
         let (x, y, z) = server_metres(transform.origin);
         layout.event.push(rose_data_export::ZoneEvent { name: spot.bind().event_name.to_string(), x, y, z });
+    } else if let Ok(object) = node.clone().try_cast::<RoseZoneObject>() {
+        let o = object.bind();
+        if o.list == "warp" && o.warp_id >= 0 && o.warp_id <= u16::MAX as i32 && !layout.warp.contains(&(o.warp_id as u16)) {
+            layout.warp.push(o.warp_id as u16);
+        }
     }
     for child in node.get_children().iter_shared() {
         let child_path = format!("{path}/{}", child.get_name());

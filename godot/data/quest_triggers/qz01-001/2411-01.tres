@@ -1,0 +1,26 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2411-beasts-for-hire.tres" id="z_f98fc6"]
+[ext_resource type="RoseItemConsumable" path="res://data/items/consumable/401-jelly-bean.tres" id="z_a21d95"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_423c25"]
+switch = 649
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_da7b19"]
+switch = 650
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_03b6be"]
+quest = ExtResource("z_f98fc6")
+
+[sub_resource type="RoseRewardSelectQuest" id="RoseRewardSelectQuest_1c213c"]
+quest = ExtResource("z_f98fc6")
+
+[sub_resource type="RoseRewardAddItem" id="RoseRewardAddItem_54a657"]
+item = ExtResource("z_a21d95")
+quantity = 1
+
+[resource]
+name = "2411-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_423c25"), SubResource("RoseConditionQuestSwitch_da7b19")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_03b6be"), SubResource("RoseRewardSelectQuest_1c213c"), SubResource("RoseRewardAddItem_54a657")])

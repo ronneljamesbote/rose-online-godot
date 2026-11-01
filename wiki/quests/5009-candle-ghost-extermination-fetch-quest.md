@@ -2,7 +2,7 @@
 kind: quest
 id: 5009
 name: Candle Ghost Extermination (Fetch Quest)
-status: in-game
+status: changed-from-irose
 given_by:
 - '[[npcs/1001-village-chief-cornell|Village Chief Cornell]]'
 monsters:
@@ -36,6 +36,10 @@ source:
   - crates/rose-quest/src/lib.rs
 ---
 # Candle Ghost Extermination (Fetch Quest)
+
+**Can't be done any more.** The Zant city hub redesign took Zant's odd jobs (fetch quests,
+deliveries and stockpiling) out of the game: nobody offers this quest now. The steps below are
+iROSE's and are kept in the game data.
 
 Cornell, the mayor of Zant, has organized a campaign to exterminate the Candle Ghosts. Bring him 20 Candle Ghost Masks from the Candle Ghosts you've defeated, and he'll reward you according to your performance in comparison to your competition.  
 
@@ -629,3 +633,7 @@ Then:
 
 - works on [[quests/5009-candle-ghost-extermination-fetch-quest|Candle Ghost Extermination (Fetch Quest)]]
 - you get 1 × [[items/quest/809-candle-ghost-mask|Candle Ghost Mask]]
+
+## Changed from iROSE
+
+Not in the game any more: see the note at the top.

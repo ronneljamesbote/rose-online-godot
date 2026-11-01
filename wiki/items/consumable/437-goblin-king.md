@@ -11,6 +11,8 @@ price: 3440
 weight: 30
 quest_reward:
 - '[[quests/158-leaders-in-the-abyss|Leaders in the Abyss]]'
+sold_by:
+- '[[npcs/1016-livestock-farmer-lampa|Livestock Farmer Lampa]]'
 source:
   data: godot/data/items/consumable/437-goblin-king.tres
   code: module/src/items.rs

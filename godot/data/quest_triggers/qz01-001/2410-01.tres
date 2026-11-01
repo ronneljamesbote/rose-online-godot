@@ -1,0 +1,18 @@
+[gd_resource type="RoseQuestTrigger" format=3]
+
+[ext_resource type="RoseQuest" path="res://data/quests/2410-stronger-together.tres" id="z_ba47e8"]
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_8b1c5e"]
+switch = 648
+value = true
+
+[sub_resource type="RoseConditionQuestSwitch" id="RoseConditionQuestSwitch_fa4191"]
+switch = 649
+
+[sub_resource type="RoseRewardAddQuest" id="RoseRewardAddQuest_900fe5"]
+quest = ExtResource("z_ba47e8")
+
+[resource]
+name = "2410-01"
+conditions = Array[Resource]([SubResource("RoseConditionQuestSwitch_8b1c5e"), SubResource("RoseConditionQuestSwitch_fa4191")])
+rewards = Array[Resource]([SubResource("RoseRewardAddQuest_900fe5")])

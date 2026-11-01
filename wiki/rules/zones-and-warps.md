@@ -156,6 +156,8 @@ only), about 120 of them would be in that square.
 - The gate's warp gate resource (`godot/data/warp_gates/`) says which zone it leads to and the named spot there; you arrive on that
   spot.
 - You can't use a gate while dead.
+- The server only takes a gate placed in the zone you are in (the zone's `warp` list, exported
+  from the gates in its scene or read from its map files), so a gate of another zone is refused.
 - Warping (by gate, scroll, quest or getting up at a save point in another zone) closes your
   [[rules/personal-shops|shop]], takes you off a [[rules/carts|cart]], stops attacks and
   skills being cast. A cart's passenger comes along and lands 1 m to the side.
@@ -260,7 +262,7 @@ day) counts ticks of 10 seconds of real time, the same for everyone.
   your character walks into a wall, the client tells the server where it stopped. The server
   only accepts a stop on your current path, never ahead of where it has you.
 
-> Open question: the server does not check that you are near a warp gate when you use it, so a changed client could use any gate from anywhere (the server has no zone geometry to check the gate's position).
+> Open question: the server checks that a gate is in your zone, but not that you are near it, so a changed client could use any gate of its zone from anywhere in the zone (the server has no zone geometry to check the gate's position).
 
 ## Changed from iROSE
 

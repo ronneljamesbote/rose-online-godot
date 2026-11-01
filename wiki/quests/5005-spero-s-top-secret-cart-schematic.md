@@ -2,7 +2,7 @@
 kind: quest
 id: 5005
 name: Spero's Top Secret Cart Schematic
-status: in-game
+status: changed-from-irose
 given_by:
 - '[[npcs/1011-eccentric-inventor-spero|Eccentric Inventor Spero]]'
 npcs:
@@ -15,6 +15,10 @@ source:
   - crates/rose-quest/src/lib.rs
 ---
 # Spero's Top Secret Cart Schematic
+
+**Can't be done any more.** The Zant city hub redesign took Zant's odd jobs (fetch quests,
+deliveries and stockpiling) out of the game: nobody offers this quest now. The steps below are
+iROSE's and are kept in the game data.
 
 Spero has asked you to deliver his Top Secret Cart Schematic to Belz, who is in the Windmill Village in the Breezy Hills.  
 
@@ -54,3 +58,7 @@ Then:
 - quest switch 33 on
 - experience, base 220 (reward formula 1: grows with your level and Charm, see [[rules/quests|Quests]])
 - the quest ends (removed from your list)
+
+## Changed from iROSE
+
+Not in the game any more: see the note at the top.

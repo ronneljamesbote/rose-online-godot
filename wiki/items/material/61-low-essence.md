@@ -17,6 +17,8 @@ used_to_craft:
 - '[[items/vehicle/101-first-engine|First Engine]]'
 - '[[items/vehicle/201-wooden-wheels|Wooden Wheels]]'
 - '[[items/vehicle/202-carbon-wheels|Carbon Wheels]]'
+quest_reward:
+- '[[quests/2407-sharper-steel|Sharper Steel]]'
 source:
   data: godot/data/items/material/61-low-essence.tres
   code: module/src/items.rs

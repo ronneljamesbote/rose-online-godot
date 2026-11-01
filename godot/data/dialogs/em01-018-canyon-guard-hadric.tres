@@ -1,0 +1,84 @@
+[gd_resource type="RoseDialog" format=3]
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_f9220c"]
+text = "From up here I can see every road out of Zant. Lost already?"
+next_menu = 1
+resource_name = "NPC: From up here I can see every road out of Zant. Los…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_f7d0ec"]
+lines = Array[Resource]([SubResource("RoseDialogLine_f9220c")])
+resource_name = "Menu 0"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4d01f7"]
+kind = "Answer"
+text = "Where do the roads go?"
+next_menu = 3
+resource_name = "You: Where do the roads go?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4c6aed"]
+kind = "Answer"
+text = "What do you watch for?"
+next_menu = 5
+resource_name = "You: What do you watch for?"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_4b52f2"]
+kind = "Answer"
+text = "Goodbye."
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_73fb5b"]
+lines = Array[Resource]([SubResource("RoseDialogLine_4d01f7"), SubResource("RoseDialogLine_4c6aed"), SubResource("RoseDialogLine_4b52f2")])
+resource_name = "Menu 1"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_49c572"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_7b7055"]
+kind = "Answer"
+text = "Goodbye."
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_d0e613"]
+lines = Array[Resource]([SubResource("RoseDialogLine_49c572"), SubResource("RoseDialogLine_7b7055")])
+resource_name = "Menu 2"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_870f6b"]
+text = "East, through the Wind Road Caravan Camp, is Breezy Hills: start there. South is the gate to the Valley of Luxem Tower, where you came from. North, over the bridge, is the El Verloon Desert, and that's no place for a beginner."
+next_menu = 2
+resource_name = "NPC: East, through the Wind Road Caravan Camp, is Breez…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_46afbf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_870f6b")])
+resource_name = "Menu 3"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_878c4e"]
+kind = "Answer"
+text = "Something else."
+next_menu = 0
+resource_name = "You: Something else."
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_c12a36"]
+kind = "Answer"
+text = "Goodbye."
+resource_name = "You: Goodbye."
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_5bc67a"]
+lines = Array[Resource]([SubResource("RoseDialogLine_878c4e"), SubResource("RoseDialogLine_c12a36")])
+resource_name = "Menu 4"
+
+[sub_resource type="RoseDialogLine" id="RoseDialogLine_bf0370"]
+text = "Rackies on the Wind Road, sandstorms from El Verloon, and Woopies. A big Woopie that calls himself king sits in the hollow south-east of the city with his court. Leave him be unless you're ready for him."
+next_menu = 4
+resource_name = "NPC: Rackies on the Wind Road, sandstorms from El Verlo…"
+
+[sub_resource type="RoseDialogMenu" id="RoseDialogMenu_ca56bf"]
+lines = Array[Resource]([SubResource("RoseDialogLine_bf0370")])
+resource_name = "Menu 5"
+
+[resource]
+key = "EM01-018.con"
+name = "[Canyon Guard] Hadric"
+menus = Array[Resource]([SubResource("RoseDialogMenu_f7d0ec"), SubResource("RoseDialogMenu_73fb5b"), SubResource("RoseDialogMenu_d0e613"), SubResource("RoseDialogMenu_46afbf"), SubResource("RoseDialogMenu_5bc67a"), SubResource("RoseDialogMenu_ca56bf")])
